@@ -1,0 +1,11 @@
+#btnLogin {width: 100%; border-radius: 4px; color: #fff !important; background: #494ca2 !important; }
+#btnCaptchaNew { position: absolute; right: -27px; top: -7px;}
+#btnCaptchaNew i {color:#494ca2 !important;}
+.loginBg {border-radius: 10px; width: 35%; box-shadow: 0 0 8px rgba(0,0,0,0.2); background: #fff;}
+.loginBg h3 {font-size: 22px; text-align:center; color:#494ca2; margin: 0;}
+.loginBg p {color:#494ca2;}
+.loginBg label {color: #494ca2 !important;}
+
+.navbar {background:#494ca2}
+.loginBg .form-control {color:#494ca2}
+

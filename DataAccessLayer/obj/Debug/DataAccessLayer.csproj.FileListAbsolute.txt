@@ -1,0 +1,14 @@
+F:\FDIFINAL\DataAccessLayer\bin\Debug\DataAccessLayer.dll
+F:\FDIFINAL\DataAccessLayer\bin\Debug\DataAccessLayer.pdb
+F:\FDIFINAL\DataAccessLayer\bin\Debug\Encryption.dll
+F:\FDIFINAL\DataAccessLayer\bin\Debug\Encryption.pdb
+F:\FDIFINAL\DataAccessLayer\obj\Debug\DataAccessLayer.csprojResolveAssemblyReference.cache
+F:\FDIFINAL\DataAccessLayer\obj\Debug\DataAccessLayer.dll
+F:\FDIFINAL\DataAccessLayer\obj\Debug\DataAccessLayer.pdb
+G:\wali\FDIFINAL\DataAccessLayer\bin\Debug\DataAccessLayer.dll
+G:\wali\FDIFINAL\DataAccessLayer\bin\Debug\DataAccessLayer.pdb
+G:\wali\FDIFINAL\DataAccessLayer\bin\Debug\Encryption.dll
+G:\wali\FDIFINAL\DataAccessLayer\bin\Debug\Encryption.pdb
+G:\wali\FDIFINAL\DataAccessLayer\obj\Debug\DataAccessLayer.csprojResolveAssemblyReference.cache
+G:\wali\FDIFINAL\DataAccessLayer\obj\Debug\DataAccessLayer.dll
+G:\wali\FDIFINAL\DataAccessLayer\obj\Debug\DataAccessLayer.pdb
