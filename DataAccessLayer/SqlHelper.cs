@@ -207,7 +207,7 @@ namespace DataAccessLayer
                     db.AddInParameter(cmd, "@Pincode", DbType.String, HyCompSave["Pincode"]);
                     db.AddInParameter(cmd, "@ContactPersonName", DbType.String, HyCompSave["ContactPersonName"]);
                     db.AddInParameter(cmd, "@ContactPersonEmailID", DbType.String, HyCompSave["ContactPersonEmailID"]);
-                    db.AddInParameter(cmd, "@ContactPersonContactNo", DbType.String, HyCompSave["ContactPersonContactNo"]);
+                    db.AddInParameter(cmd, "@ContactPersonContactNo", DbType.Int64, HyCompSave["ContactPersonContactNo"]);
                     db.AddInParameter(cmd, "@CINNo", DbType.String, HyCompSave["CINNo"]);
                     db.AddInParameter(cmd, "@PANNo", DbType.String, HyCompSave["PANNo"]);
                     db.AddInParameter(cmd, "@GSTNo", DbType.String, HyCompSave["GSTNo"]);
@@ -215,7 +215,7 @@ namespace DataAccessLayer
                     db.AddInParameter(cmd, "@IsDefenceActivity", DbType.String, HyCompSave["IsDefenceActivity"]);
                     db.AddInParameter(cmd, "@CEOEmail", DbType.String, HyCompSave["CEOEmail"]);
                     db.AddInParameter(cmd, "@CEOName", DbType.String, HyCompSave["CEOName"]);
-                    db.AddOutParameter(cmd, "@ReturnID", DbType.Int64, 50);
+                    db.AddOutParameter(cmd, "@ReturnID", DbType.String, 20);
                     db.ExecuteNonQuery(cmd, dbTran);
                     mCurrentID = db.GetParameterValue(cmd, "@ReturnID").ToString();
                     dbTran.Commit();
@@ -351,7 +351,7 @@ namespace DataAccessLayer
                 }
             }
         }
-        public DataTable RetriveCompany(string text)
+        public DataTable RetriveCompany(string text,Int64 id,string value)
         {
             using (DbConnection dbCon = db.CreateConnection())
             {
@@ -359,8 +359,8 @@ namespace DataAccessLayer
                 try
                 {
                     DbCommand cmd = db.GetStoredProcCommand("sp_Company");
-                    db.AddInParameter(cmd, "@CompanyID", DbType.Int64, 0);
-                    db.AddInParameter(cmd, "@CompanyName", DbType.String, "");
+                    db.AddInParameter(cmd, "@CompanyID", DbType.Int64, id);
+                    db.AddInParameter(cmd, "@CompanyName", DbType.String, value);
                     db.AddInParameter(cmd, "@WorkCodeFor", DbType.String, text);
                     IDataReader dr = db.ExecuteReader(cmd);
                     DataTable dt = new DataTable();

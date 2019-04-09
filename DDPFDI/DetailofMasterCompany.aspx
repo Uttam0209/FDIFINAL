@@ -57,7 +57,7 @@
                                 <div class="table-wrapper">
                                     <br />
                                     <div class="col-sm-4 row">
-                                        <asp:TextBox ID="txtserch" runat="server" CssClass="form-cascade-control form-control" Placeholder="Search"></asp:TextBox>
+                                        <asp:TextBox ID="txtserch" runat="server" CssClass="form-cascade-control form-control" Placeholder="Type keyword to search"></asp:TextBox>
                                     </div>
                                     <div class="col-sm-2 row">
                                         <asp:LinkButton runat="server" ID="btnsearch" class="text-black btn btn-warning pull-left btn-md" OnClick="Search_Click" Text="Search"></asp:LinkButton>
@@ -72,12 +72,12 @@
                                                     <%#Container.DataItemIndex+1 %>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
+                                            <asp:BoundField DataField="CompanyRefNo" HeaderText="Reference No" NullDisplayText="#" SortExpression="CompanyRefNo" />
                                             <asp:BoundField DataField="CompanyName" HeaderText="Company Name" NullDisplayText="#" SortExpression="CompanyName" />
-                                            <asp:BoundField DataField="Address" HeaderText="Address" NullDisplayText="#" SortExpression="Address" />
+                                            <asp:BoundField DataField="StateName" HeaderText="State Name" NullDisplayText="#" SortExpression="StateName" />
                                             <asp:BoundField DataField="ContactPersonName" HeaderText="Contact Person Name" NullDisplayText="#" SortExpression="ContactPersonName" />
                                             <asp:BoundField DataField="ContactPersonEmailID" HeaderText="ContactPerson Email" NullDisplayText="#" SortExpression="ContactPersonEmailID" />
                                             <asp:BoundField DataField="PANNo" HeaderText="PAN No" NullDisplayText="#" SortExpression="PANNo" />
-                                            <asp:BoundField DataField="GSTNo" HeaderText="GST No" NullDisplayText="#" SortExpression="GSTNo" />
                                             <asp:TemplateField HeaderText="Edit">
                                                 <ItemTemplate>
                                                     <asp:LinkButton ID="lbledit" runat="server" CssClass="fa fa-edit" CommandName="EditComp" CommandArgument='<%#Eval("CompanyID") %>'></asp:LinkButton>
@@ -91,6 +91,11 @@
                                             <asp:TemplateField HeaderText="Delete">
                                                 <ItemTemplate>
                                                     <asp:LinkButton ID="lbldel" runat="server" CssClass="fa fa-trash" CommandName="DeleteComp" CommandArgument='<%#Eval("CompanyID") %>'></asp:LinkButton>
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField HeaderText="Send Login">
+                                                <ItemTemplate>
+                                                    <asp:LinkButton ID="lbllogindetail" runat="server" CssClass=" fa fa-paper-plane" CommandName="SendLogin" CommandArgument='<%#Eval("CompanyID") %>'></asp:LinkButton>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                         </Columns>
@@ -115,17 +120,17 @@
                                 <div class="tab-pane fade active in" id="add-form">
                                     <table class="table table-bordered">
                                         <tbody>
-                                            <tr>
-                                                <td></td>
-                                                <td>
-                                                    <h3 class="hhead">Indian Company Details</h3>
-                                                </td>
-                                            </tr>
 
                                             <tr>
                                                 <td width="30%" class="pass">Joint Venture </td>
                                                 <td>
                                                     <asp:Label ID="lbljointventure" runat="server"></asp:Label>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td width="30%" class="pass">Reference No </td>
+                                                <td>
+                                                    <asp:Label ID="lblrefno" runat="server"></asp:Label>
                                                 </td>
                                             </tr>
                                             <tr>
