@@ -62,9 +62,7 @@
                                     <div class="col-sm-2 row">
                                         <asp:LinkButton runat="server" ID="btnsearch" class="text-black btn btn-warning pull-left btn-md" OnClick="Search_Click" Text="Search"></asp:LinkButton>
                                     </div>
-                                    <a href='<%=ResolveUrl("FDIRegistration") %>' class="text-black btn btn-warning pull-right btn-md">Add FDI-Inflow</a>
-                                    <br />
-                                    <br />
+                                    <div class="clearfix"></div>
                                     <asp:GridView ID="gvcompanydetail" runat="server" Width="100%" Class="commonAjaxTbl table display responsive no-wrap table-hover manage-user" AutoGenerateColumns="false" AllowPaging="true"
                                         OnPageIndexChanging="OnPageIndexChanging" PageSize="10" AllowSorting="true" OnSorting="OnSorting" OnRowCommand="gvcompanydetail_RowCommand">
                                         <PagerStyle HorizontalAlign="Center" CssClass="GridPager" />
