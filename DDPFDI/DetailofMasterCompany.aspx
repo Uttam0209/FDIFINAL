@@ -124,13 +124,16 @@
                     <div class="modal-content">
                         <div class="modal-header modal-header1">
                             <button type="button" class="close close1" data-dismiss="modal">&times;</button>
-                            <h4 class="modal-title" modal-title1>Detail of Company</h4>
+                            <h4 class="modal-title">Company Detail</h4>
                         </div>
                         <form class="form-horizontal changepassword" role="form">
                             <div class="modal-body">
                                 <div class="tab-pane fade active in" id="add-form">
                                     <table class="table table-bordered">
                                         <tbody>
+<<<<<<< HEAD
+                                            
+=======
 
                                             <tr>
                                                 <td width="30%" class="pass">Joint Venture </td>
@@ -138,6 +141,7 @@
                                                     <asp:Label ID="lbljointventure" runat="server"></asp:Label>
                                                 </td>
                                             </tr>
+>>>>>>> 8d184f4924064080d88edd09ea8e8b5693a8d5e6
                                             <tr>
                                                 <td class="pass">Defence Activities </td>
                                                 <td>
