@@ -43,6 +43,7 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
                     gvcompanydetail.DataSource = DtGrid;
                 }
                 gvcompanydetail.DataBind();
+                lbltotal.Text = DtGrid.Rows.Count.ToString();
             }
         }
         catch (Exception ex)
@@ -138,6 +139,8 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
             {
                 gvcompanydetail.DataSource = DtGrid;
                 gvcompanydetail.DataBind();
+
+                lbltotal.Text = DtGrid.Rows.Count.ToString();
             }
         }
         else
