@@ -1,5 +1,8 @@
+ul {list-style: none;}
+
 #btnLogin {width: 100%; border-radius: 4px; color: #fff !important; background: #494ca2 !important; }
 #btnCaptchaNew { position: absolute; right: -27px; top: -7px;}
+.btn-nav-toggle { width: 100%; text-align:right;}
 #btnCaptchaNew i {color:#494ca2 !important;}
 .loginBg {border-radius: 10px; width: 35%; box-shadow: 0 0 8px rgba(0,0,0,0.2); background: #fff;}
 .loginBg h3 {font-size: 22px; text-align:center; color:#494ca2; margin: 0;}
@@ -10,7 +13,8 @@
 
 .user.dropdown-toggle:focus { color: #fff !important;}
 .user-login-dropdown { margin: 0; padding: 0;}
-.user-login-dropdown li a { text-align:center; padding: 6px 20px; }
+.user-login-dropdown li a { text-align:left; padding: 6px 20px; }
+.user-login-dropdown li a i { margin-right: 10px; font-size: 11px;}
 .sidebar-holder ul li a {background: #8186d5; color: #fff !important;}
 .fa-tachometer:before { content: "\f0e4"; }
 .fa-tachometer { font: normal normal normal 14px/1 FontAwesome; }
@@ -28,3 +32,23 @@
 .sideBg .table tr th { white-space: nowrap; border:0 !important; background: #494ca2 !important; color: #fff;}
 .sideBg .table tr th a { color: #fff;}
 .sideBg .table tr td { white-space: nowrap; border: 0 !important;}
+
+/*---tabing Design----*/
+.fdi-tab ul {display: flex; padding: 0; margin-top: 20px;}
+.fdi-tab ul li a { padding: 10px 20px; font-size: 16px; line-height: 24px; background: #494ca2; text-align: center;  color: #fff; border-right: 1px solid #fff;}
+.fdi-tab ul li.active a { background: #5db9f9;}
+.fdi-tab ul li a:hover,.fdi-tab ul li a:focus { text-decoration: none;}
+.fdi-add-content .fade {display :none;}
+.fdi-add-content .fade.in {display:block;}
+.fdi-add-content ul { padding: 0;}
+.fdi-add-content { margin-top: 18px;}
+.fdi-add-content  .hhead {font-size: 20px; }
+.add-inflow-tab ul li a { padding: 10px 45px;}
+
+
+/*---Admin Dashboard----*/
+.admin-dashboard .white-box { padding: 4%; box-shadow: 0 0 6px rgba(0,0,0,.2); border-radius: 4px;}
+.admin-dashboard .white-box h3 { margin: 0 0 10px 0; font-size: 16px; text-transform: uppercase;}
+.admin-dashboard .white-box ul li { width: 100%;}
+.admin-dashboard .white-box ul li .counter { font-size: 18px;}
+.admin-dashboard .white-box .fa-file-export { position: absolute; right: 25px; top: 10px;}
