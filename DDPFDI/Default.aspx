@@ -13,44 +13,51 @@
     <link href="assets/css/style.css" rel="stylesheet" type="text/css">
     <link href="assets/css/custom.css" rel="stylesheet" type="text/css">
 
-   <script type="text/javascript" src="assets/js/loader.js"></script>
-  <style>
-    .swal2-container.swal2-center.swal2-shown {
-	    z-index: 22222;
-    }
-    .modal {
-	    margin-top: 70px !important;
-    }
-</style>
+    <script type="text/javascript" src="assets/js/loader.js"></script>
+    <style>
+        .swal2-container.swal2-center.swal2-shown {
+            z-index: 22222;
+        }
 
-  <!-- HTML5 shim, for IE6-8 support of HTML5 elements. All other JS at the end of file. -->
-  <!--[if lt IE 9]>
+        .modal {
+            margin-top: 70px !important;
+        }
+    </style>
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements. All other JS at the end of file. -->
+    <!--[if lt IE 9]>
       <script src="js/html5shiv.js"></script>
       <![endif]-->
-  <style type="text/css">
-    .form-group {
-	    margin: 8px 0px;
-    }
-    .hhead {
-	    background-color: #f5f5f5;
-	    color: #000;
-	    border:0px;
-	    margin-top: 8px !important;
-	    margin-bottom: 8px !important;
-	    padding: 10px 10px;
-	    border-radius:0px;
-	    font:normal 14px/18px Arial, Helvetica, sans-serif;
-    }
-   /* .indiacompanydetails
+    <style type="text/css">
+        .form-group {
+            margin: 8px 0px;
+        }
+
+        .hhead {
+            background-color: #f5f5f5;
+            color: #000;
+            border: 0px;
+            margin-top: 8px !important;
+            margin-bottom: 8px !important;
+            padding: 10px 10px;
+            border-radius: 0px;
+            font: normal 14px/18px Arial, Helvetica, sans-serif;
+        }
+        /* .indiacompanydetails
     {
       display: none;
     }*/
-</style>
-  </head>
-<body >
+    </style>
+
+
+
+    
+
+</head>
+<body>
     <form id="form1" runat="server">
         <nav class="navbar" role="navigation">
-
+           
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
                 <a class="navbar-brand" href="#"><i class="fa fa-list btn-nav-toggle-responsive text-white"></i>
@@ -66,6 +73,7 @@
             <div class="row">
                 <div class="loginBg clearfix">
                     <h3>Login</h3>
+                   
                     <label for="uname" class=" tetLable">
                         Email
                     </label>
@@ -103,6 +111,7 @@
                     <div class="clearfix" style="border-bottom: 1px solid #fff; margin-top: 15px;">
                     </div>
                     <br>
+
                     <asp:CustomValidator ID="CustomValidator1" ErrorMessage="" OnServerValidate="ValidateCaptcha"
                         runat="server" />
                     <div class="clearfix p10">

@@ -5,6 +5,12 @@ using Encryption;
 using System.Collections.Specialized;
 using System.Web.UI;
 using System.Text.RegularExpressions;
+using System.Web.Services;
+using System.Configuration;
+using System.Data.SqlClient;
+using System.Collections.Generic;
+using System.IO;
+
 
 public partial class Admin_frmAddFDI : System.Web.UI.Page
 {
@@ -36,6 +42,19 @@ public partial class Admin_frmAddFDI : System.Web.UI.Page
         else
         {
             ddlcompany.Items.Insert(0, "Select Company");
+        }
+    }
+    protected void BindFY()
+    {
+        DataTable Dtfy = Lo.RetriveCompany("FY", 0, "");
+        if (Dtfy.Rows.Count > 0 && Dtfy != null)
+        {
+            Co.FillDropdownlist(ddlyear, Dtfy, "FY", "FYID");
+            ddlyear.Items.Insert(0, "Select Financial Year");
+        }
+        else
+        {
+            ddlyear.Items.Insert(0, "Select Financial Year");
         }
     }
     protected void EditCOde()
@@ -319,16 +338,22 @@ public partial class Admin_frmAddFDI : System.Web.UI.Page
         if (Select2.SelectedItem.Value == "Quarterly")
         {
             periodofquater.Visible = true;
+            divhalfyear.Visible = false;
+            BindFY();
             year.Visible = true;
         }
         else if (Select2.SelectedItem.Value == "Half Yearly")
         {
             periodofquater.Visible = false;
+            divhalfyear.Visible = true;
+            BindFY();
             year.Visible = true;
         }
         else if (Select2.SelectedItem.Value == "Annual")
         {
             periodofquater.Visible = false;
+            divhalfyear.Visible = false;
+            BindFY();
             year.Visible = true;
         }
         else if (Select2.SelectedItem.Value == "")
@@ -345,6 +370,42 @@ public partial class Admin_frmAddFDI : System.Web.UI.Page
             int exchangeraterbi = Convert.ToInt32(exchangerate.Text);
             int total = Totalfdiqty * exchangeraterbi;
             afterexchnagerate.Text = total.ToString();
+        }
+    }
+    [System.Web.Services.WebMethod]
+    [System.Web.Script.Services.ScriptMethod()]
+    public static string[] GetCustomers(string prefix)
+    {
+        Cryptography objCrypto1 = new Cryptography();
+        List<string> customers = new List<string>();
+        using (SqlConnection conn = new SqlConnection())
+        {
+            conn.ConnectionString = objCrypto1.DecryptData(ConfigurationManager.ConnectionStrings["connectiondb"].ConnectionString);
+            using (SqlCommand cmd = new SqlCommand())
+            {
+                cmd.CommandText = "select NicCode, NicCodeID from tbl_mst_NicCode where NicCode like @SearchText + '%'";
+                cmd.Parameters.AddWithValue("@SearchText", prefix);
+                cmd.Connection = conn;
+                conn.Open();
+                using (SqlDataReader sdr = cmd.ExecuteReader())
+                {
+                    while (sdr.Read())
+                    {
+                        customers.Add(string.Format("{0}-{1}", sdr["NicCode"], sdr["NicCodeID"]));
+                    }
+                }
+                conn.Close();
+            }
+        }
+        return customers.ToArray();
+    }
+    protected void businesscode_TextChanged(object sender, EventArgs e)
+    {
+        DataTable DtDes = Lo.RetriveCompany("Description", 0, businesscode.Text);
+        if (DtDes.Rows.Count > 0 && DtDes != null)
+        {
+            tbdescription.Text = DtDes.Rows[0]["NicDesc"].ToString();
+            tbdescription.ReadOnly = true;
         }
     }
 }
