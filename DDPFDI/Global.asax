@@ -41,6 +41,7 @@
         routes.MapPageRoute("Detail-Company", "Detail-Company", "~/Admin/DetailofMasterCompany.aspx", true);
         routes.MapPageRoute("Dashboard", "Dashboard", "~/Admin/Dashboard.aspx", true);
         routes.MapPageRoute("AdminLogin", "AdminLogin", "~/Admin/AdminLogin.aspx", true);
+        routes.MapPageRoute("D", "D", "~/Admin/Default2.aspx", true);
     }
        
 </script>

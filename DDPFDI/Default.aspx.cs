@@ -10,6 +10,12 @@ using System.Web.UI.WebControls;
 using System.Data.SqlClient;
 using Encryption;
 
+using System.Web.Services;
+using System.Configuration;
+using System.Data.SqlClient;
+using System.Collections.Generic;
+
+
 public partial class _Default : System.Web.UI.Page
 {
     #region "Variables"
@@ -80,4 +86,5 @@ public partial class _Default : System.Web.UI.Page
         Image2.ImageUrl = "~/CaptchaCall.aspx?random=" + DateTime.Now.Ticks.ToString();
     }
     #endregion
+ 
 }
