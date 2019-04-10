@@ -108,20 +108,14 @@
                     <div class="modal-content">
                         <div class="modal-header modal-header1">
                             <button type="button" class="close close1" data-dismiss="modal">&times;</button>
-                            <h4 class="modal-title" modal-title1>Detail of Company</h4>
+                            <h4 class="modal-title">Company Detail</h4>
                         </div>
                         <form class="form-horizontal changepassword" role="form">
                             <div class="modal-body">
                                 <div class="tab-pane fade active in" id="add-form">
                                     <table class="table table-bordered">
                                         <tbody>
-                                            <tr>
-                                                <td></td>
-                                                <td>
-                                                    <h3 class="hhead">Indian Company Details</h3>
-                                                </td>
-                                            </tr>
-
+                                            
                                             <tr>
                                                 <td width="30%" class="pass">Joint Venture </td>
                                                 <td>
