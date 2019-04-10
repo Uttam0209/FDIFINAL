@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="CompanyDetail.aspx.cs" Inherits="CompanyDetail" MasterPageFile="~/MasterPage.master" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="CompanyDetail.aspx.cs" Inherits="Admin_CompanyDetail" MasterPageFile="~/Admin/MasterPage.master" %>
 
 <asp:Content ID="head" runat="server" ContentPlaceHolderID="head">
     <script>
@@ -71,7 +71,7 @@
                                                     <label for="seldistrict" class="control-label">District </label>
                                                     <asp:TextBox runat="server" ID="seldistrict" name="tdistrict" class="form-control form-cascade-control" placeholder="Enter Your District"></asp:TextBox>
                                                 </div>
-                                                
+
 
                                             </div>
                                         </div>
@@ -83,7 +83,7 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="tpanno" class="control-label">PAN No </label>
-                                                    <asp:TextBox runat="server" ID="tpanno" name="tpanno"  class="form-control form-cascade-control" placeholder="PAN No"></asp:TextBox>
+                                                    <asp:TextBox runat="server" ID="tpanno" name="tpanno" class="form-control form-cascade-control" placeholder="PAN No"></asp:TextBox>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="tgstno" class="control-label">GST No(If you use multiple gst no use with comma seprated)</label>

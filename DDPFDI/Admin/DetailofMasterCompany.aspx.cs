@@ -8,7 +8,7 @@ using System.Text.RegularExpressions;
 using System.Text;
 using System.IO;
 
-public partial class DetailofMasterCompany : System.Web.UI.Page
+public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
 {
     Logic Lo = new Logic();
     DataUtility Co = new DataUtility();

@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Default.aspx.cs" Inherits="_Default" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="AdminLogin.aspx.cs" Inherits="Admin_AdminLogin" %>
 
 <!DOCTYPE html>
 
@@ -7,11 +7,11 @@
     <title>Login</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link type="text/css" rel="shortcut icon" href="assets/images/favicon.ico">
-    <link type="text/css" href="assets/css/bootstrap.min.css" rel="stylesheet">
-    <link href="assets/css/font-awesome.css" rel="stylesheet">
-    <link href="assets/css/style.css" rel="stylesheet" type="text/css">
-    <link href="assets/css/custom.css" rel="stylesheet" type="text/css">
+    <link type="text/css" rel="shortcut icon" href="~/assets/images/favicon.ico">
+    <link type="text/css" href="~/assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/assets/css/font-awesome.css" rel="stylesheet">
+    <link href="~/assets/css/style.css" rel="stylesheet" type="text/css">
+    <link href="~/assets/css/custom.css" rel="stylesheet" type="text/css">
 
    <script type="text/javascript" src="assets/js/loader.js"></script>
   <style>
@@ -65,7 +65,7 @@
         <div class="container">
             <div class="row">
                 <div class="loginBg clearfix">
-                    <h3>Login</h3>
+                    <h3>Admin Login</h3>
                     <label for="uname" class=" tetLable">
                         Email
                     </label>

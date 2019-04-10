@@ -43,5 +43,19 @@ Copyright (C) Microsoft Corporation. All rights reserved.
       <Value>$(AssemblyVersion)</Value>
     </AssemblyAttributes>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BusinessLayer\BusinessLayer.csproj">
+      <Project>{F46EF828-E2FB-453A-96CE-36EE29A19101}</Project>
+      <Name>BusinessLayer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DataAccessLayer\DataAccessLayer.csproj">
+      <Project>{0AAACD15-A345-4B24-8A41-9E8A9E2AD9BB}</Project>
+      <Name>DataAccessLayer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Encryption\Encryption.csproj">
+      <Project>{59F4B655-5353-4282-A76D-F180D9BB37C7}</Project>
+      <Name>Encryption</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(_WebPublishTargetsPath)\Web\Microsoft.WebSite.Publishing.targets" />
 </Project>

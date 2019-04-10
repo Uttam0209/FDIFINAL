@@ -6,7 +6,7 @@ using System.Collections.Specialized;
 using System.Web.UI;
 using System.Text.RegularExpressions;
 
-public partial class frmAddFDI : System.Web.UI.Page
+public partial class Admin_frmAddFDI : System.Web.UI.Page
 {
     Logic Lo = new Logic();
     HybridDictionary HySave = new HybridDictionary();

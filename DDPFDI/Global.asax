@@ -34,11 +34,13 @@
     {
         routes.MapPageRoute("Login", "Login", "~/Default.aspx", true);
         routes.MapPageRoute("Error", "Error", "~/Error.aspx", true);
-        routes.MapPageRoute("FDIRegistration", "FDIRegistration", "~/frmAddFDI.aspx", true);
-        routes.MapPageRoute("ChangePassword", "ChangePassword", "~/ChangePassword.aspx", true);
-        routes.MapPageRoute("ViewFDI-Detail", "ViewFDI-Detail", "~/DetailFDIRegistration.aspx", true);
-        routes.MapPageRoute("Add-Company", "Add-Company", "~/CompanyDetail.aspx", true);
-        routes.MapPageRoute("Detail-Company", "Detail-Company", "~/DetailofMasterCompany.aspx", true);
+        routes.MapPageRoute("FDIRegistration", "FDIRegistration", "~/Admin/frmAddFDI.aspx", true);
+        routes.MapPageRoute("ChangePassword", "ChangePassword", "~/Admin/ChangePassword.aspx", true);
+        routes.MapPageRoute("ViewFDI-Detail", "ViewFDI-Detail", "~/Admin/DetailFDIRegistration.aspx", true);
+        routes.MapPageRoute("Add-Company", "Add-Company", "~/Admin/CompanyDetail.aspx", true);
+        routes.MapPageRoute("Detail-Company", "Detail-Company", "~/Admin/DetailofMasterCompany.aspx", true);
+        routes.MapPageRoute("Dashboard", "Dashboard", "~/Admin/Dashboard.aspx", true);
+        routes.MapPageRoute("AdminLogin", "AdminLogin", "~/Admin/AdminLogin.aspx", true);
     }
        
 </script>

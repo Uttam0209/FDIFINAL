@@ -7,7 +7,7 @@ using System.Web.UI.WebControls;
 using Encryption;
 using BusinessLayer;
 
-public partial class MasterPage : System.Web.UI.MasterPage
+public partial class Admin_MasterPage : System.Web.UI.MasterPage
 {
     Logic Lo = new Logic();
     Cryptography ObjEnc = new Cryptography();

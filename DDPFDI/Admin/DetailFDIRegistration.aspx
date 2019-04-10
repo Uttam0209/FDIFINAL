@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="DetailFDIRegistration.aspx.cs" Inherits="DetailFDIRegistration" MasterPageFile="~/MasterPage.master" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="DetailFDIRegistration.aspx.cs" Inherits="Admin_DetailFDIRegistration" MasterPageFile="~/Admin/MasterPage.master" %>
 
 <asp:Content ID="head" runat="server" ContentPlaceHolderID="head">
     <style>
@@ -61,7 +61,9 @@
                                     <div class="col-sm-2 row">
                                         <asp:LinkButton runat="server" ID="btnsearch" class="text-black btn btn-warning pull-left btn-md" OnClick="Search_Click" Text="Search"></asp:LinkButton>
                                     </div>
+
                                     <a href='<%=ResolveUrl("FDIRegistration") %>' class="text-black btn btn-warning pull-right btn-md">Add FDI-Inflow</a>
+
                                     <br />
                                     <br />
                                     <asp:GridView ID="gvdetail" runat="server" Width="100%" Class="commonAjaxTbl table display responsive no-wrap table-hover manage-user" AutoGenerateColumns="false" AllowPaging="true"

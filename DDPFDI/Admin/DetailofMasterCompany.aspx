@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="DetailofMasterCompany.aspx.cs" Inherits="DetailofMasterCompany" MasterPageFile="~/MasterPage.master" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="DetailofMasterCompany.aspx.cs" Inherits="Admin_DetailofMasterCompany" MasterPageFile="~/Admin/MasterPage.master" %>
 
 <asp:Content ID="head" runat="server" ContentPlaceHolderID="head">
 
@@ -62,6 +62,9 @@
                                     <div class="col-sm-2 row">
                                         <asp:LinkButton runat="server" ID="btnsearch" class="text-black btn btn-warning pull-left btn-md" OnClick="Search_Click" Text="Search"></asp:LinkButton>
                                     </div>
+                                    
+                                        <a href="<%=ResolveUrl("Add-Company") %>" class="text-black btn btn-success pull-right btn-md">Add master companies</a>
+                              
                                     <div class="clearfix"></div>
                                     <asp:GridView ID="gvcompanydetail" runat="server" Width="100%" Class="commonAjaxTbl table display responsive no-wrap table-hover manage-user" AutoGenerateColumns="false" AllowPaging="true"
                                         OnPageIndexChanging="OnPageIndexChanging" PageSize="10" AllowSorting="true" OnSorting="OnSorting" OnRowCommand="gvcompanydetail_RowCommand">
@@ -79,12 +82,12 @@
                                             </asp:TemplateField>
                                             <asp:BoundField DataField="CompanyName" HeaderText="Company" NullDisplayText="#" SortExpression="CompanyName" />
                                             <asp:BoundField DataField="StateName" HeaderText="State" NullDisplayText="#" SortExpression="StateName" />
-                                            <asp:TemplateField HeaderText="Nodel Person">
+                                            <asp:TemplateField HeaderText="Nodal Person">
                                                 <ItemTemplate>
                                                     <asp:Label ID="lblnodelname" runat="server" Text='<%#Eval("ContactPersonName") %>' NullDisplayText="#" SortExpression="ContactPersonName"></asp:Label>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
-                                            <asp:TemplateField HeaderText="Nodel Person Email">
+                                            <asp:TemplateField HeaderText="Nodal Person Email">
                                                 <ItemTemplate>
                                                     <asp:Label ID="lblnodelemail" runat="server" Text='<%#Eval("ContactPersonEmailID") %>' NullDisplayText="#" SortExpression="ContactPersonEmailID"></asp:Label>
                                                 </ItemTemplate>
@@ -131,7 +134,7 @@
                                 <div class="tab-pane fade active in" id="add-form">
                                     <table class="table table-bordered">
                                         <tbody>
-<<<<<<< HEAD
+                                            <<<<<<< HEAD
                                             
 =======
 
@@ -141,7 +144,7 @@
                                                     <asp:Label ID="lbljointventure" runat="server"></asp:Label>
                                                 </td>
                                             </tr>
->>>>>>> 8d184f4924064080d88edd09ea8e8b5693a8d5e6
+                                            >>>>>>> 8d184f4924064080d88edd09ea8e8b5693a8d5e6
                                             <tr>
                                                 <td class="pass">Defence Activities </td>
                                                 <td>

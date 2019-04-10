@@ -8,7 +8,7 @@ using System.Text.RegularExpressions;
 using System.Text;
 using System.IO;
 
-public partial class CompanyDetail : System.Web.UI.Page
+public partial class Admin_CompanyDetail : System.Web.UI.Page
 {
     Logic Lo = new Logic();
     HybridDictionary HySave = new HybridDictionary();

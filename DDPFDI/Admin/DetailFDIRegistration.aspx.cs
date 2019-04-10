@@ -5,7 +5,7 @@ using BusinessLayer;
 using Encryption;
 using System.Data;
 
-public partial class DetailFDIRegistration : System.Web.UI.Page
+public partial class Admin_DetailFDIRegistration : System.Web.UI.Page
 {
     Logic Lo = new Logic();
     DataUtility Co = new DataUtility();

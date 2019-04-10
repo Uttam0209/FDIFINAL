@@ -3,7 +3,7 @@ using System.Web.UI;
 using Encryption;
 using BusinessLayer;
 
-public partial class ChangePassword : System.Web.UI.Page
+public partial class Admin_ChangePassword : System.Web.UI.Page
 {
     Logic Lo = new Logic();
     Cryptography ObjEnc = new Cryptography();
