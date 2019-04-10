@@ -71,19 +71,19 @@
                                                     <label for="seldistrict" class="control-label">District </label>
                                                     <asp:TextBox runat="server" ID="seldistrict" name="tdistrict" class="form-control form-cascade-control" placeholder="Enter Your District"></asp:TextBox>
                                                 </div>
-                                                <div class="form-group">
-                                                    <label for="cinno" class=" control-label">CIN No</label>
-                                                    <asp:TextBox runat="server" ID="tcinno" name="tcinno" class="form-control form-cascade-control" placeholder="CIN No"></asp:TextBox>
-                                                </div>
+                                                
 
                                             </div>
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="indiacompanydetails">
-
                                                 <div class="form-group">
-                                                    <label for="tpanno" class="control-label">PAN No <span class="mandatory">*</span> </label>
-                                                    <asp:TextBox runat="server" ID="tpanno" name="tpanno" required="" class="form-control form-cascade-control" placeholder="PAN No"></asp:TextBox>
+                                                    <label for="cinno" class=" control-label">CIN No <span class="mandatory">*</span> </label>
+                                                    <asp:TextBox runat="server" ID="tcinno" name="tcinno" required="" class="form-control form-cascade-control" placeholder="CIN No"></asp:TextBox>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="tpanno" class="control-label">PAN No </label>
+                                                    <asp:TextBox runat="server" ID="tpanno" name="tpanno"  class="form-control form-cascade-control" placeholder="PAN No"></asp:TextBox>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="tgstno" class="control-label">GST No(If you use multiple gst no use with comma seprated)</label>

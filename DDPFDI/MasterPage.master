@@ -33,7 +33,7 @@
                         </li>
                     </ul>
                     <ul class="nav navbar-nav user-menu navbar-right ">
-                        <li><a href="#" class="user dropdown-toggle" data-toggle="dropdown">Welcome Admin User | 
+                        <li><a href="#" class="user dropdown-toggle" data-toggle="dropdown">
                             <asp:Label ID="lblusername" runat="server"></asp:Label>
                             &nbsp;&nbsp;<i class="fa fa-sort-down"></i></span> &nbsp;</a>
                             <ul class="dropdown-menu">
@@ -50,9 +50,9 @@
                 <div class="left-sidebar oem-sidebar">
                     <div class="sidebar-holder">
                         <ul class="nav  nav-list">
-                            <li class="active"><a href='<%=ResolveUrl("Detail-Company") %>' data-original-title="Master Company Detail"><i class="fa fa-group"></i><span class="hidden-minibar">DashBoard</span></a></li>
-                            <li class="active"><a href='<%=ResolveUrl("Add-Company") %>' data-original-title="Master Company"><i class="fa fa-group"></i><span class="hidden-minibar">Add Master Company</span></a></li>
-                            <li class="active"><a href='<%=ResolveUrl("ViewFDI-Detail") %>' data-original-title="Dashboard"><i class="fa fa-dashboard"></i><span class="hidden-minibar">View FDI Inflow Detail</span></a></li>
+                            <li class="active"><a href='<%=ResolveUrl("Detail-Company") %>' data-original-title="Master Company Detail"><i class="fa fa-group"></i><span class="hidden-minibar">Company Detail</span></a></li>
+                            <li class="active"><a href='<%=ResolveUrl("ViewFDI-Detail") %>' data-original-title="Dashboard"><i class="fa fa-dashboard"></i><span class="hidden-minibar">FDI Inflow Detail</span></a></li>
+                            <li class="active"><a href='<%=ResolveUrl("Add-Company") %>' data-original-title="Master Company"><i class="fa fa-group"></i><span class="hidden-minibar">Add Company</span></a></li>
                             <li class="active"><a href='<%=ResolveUrl("FDIRegistration") %>' data-original-title="Add FDI"><i class="fa fa-group"></i><span class="hidden-minibar">Add FDI Inflow</span></a></li>
 
                         </ul>

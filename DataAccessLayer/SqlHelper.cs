@@ -202,7 +202,7 @@ namespace DataAccessLayer
                     db.AddInParameter(cmd, "@IsJointVenture", DbType.String, HyCompSave["IsJointVenture"]);
                     db.AddInParameter(cmd, "@CompanyName", DbType.String, HyCompSave["CompanyName"].ToString().Trim());
                     db.AddInParameter(cmd, "@Address", DbType.String, HyCompSave["Address"].ToString().Trim());
-                    db.AddInParameter(cmd, "@State", DbType.Int64, HyCompSave["State"].ToString().Trim());
+                    db.AddInParameter(cmd, "@State", DbType.Int64, HyCompSave["State"]);
                     db.AddInParameter(cmd, "@District", DbType.String, HyCompSave["District"]);
                     db.AddInParameter(cmd, "@Pincode", DbType.String, HyCompSave["Pincode"]);
                     db.AddInParameter(cmd, "@ContactPersonName", DbType.String, HyCompSave["ContactPersonName"]);

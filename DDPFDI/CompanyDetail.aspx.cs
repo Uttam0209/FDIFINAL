@@ -5,6 +5,8 @@ using Encryption;
 using System.Collections.Specialized;
 using System.Web.UI;
 using System.Text.RegularExpressions;
+using System.Text;
+using System.IO;
 
 public partial class CompanyDetail : System.Web.UI.Page
 {
@@ -75,12 +77,26 @@ public partial class CompanyDetail : System.Web.UI.Page
         HySave["IsJointVenture"] = Co.RSQandSQLInjection(seljvventure.SelectedItem.Value, "soft");
         HySave["CompanyName"] = Co.RSQandSQLInjection(tcompanyname.Text.Trim(), "soft");
         HySave["Address"] = Co.RSQandSQLInjection(taddress.Text.Trim(), "soft");
-        HySave["State"] = Co.RSQandSQLInjection(selstate.SelectedItem.Value, "soft");
+        if (selstate.SelectedItem.Text == "Select State")
+        {
+            HySave["State"] = null;
+        }
+        else
+        {
+            HySave["State"] = Co.RSQandSQLInjection(selstate.SelectedItem.Value, "soft");
+        }
         HySave["District"] = Co.RSQandSQLInjection(seldistrict.Text.Trim(), "soft");
         HySave["Pincode"] = Co.RSQandSQLInjection(tpincode.Text.Trim(), "soft");
         HySave["ContactPersonName"] = Co.RSQandSQLInjection(tpersonname.Text.Trim(), "soft");
         HySave["ContactPersonEmailID"] = Co.RSQandSQLInjection(temailid.Text.Trim(), "soft");
-        HySave["ContactPersonContactNo"] = Co.RSQandSQLInjection(tcontactno.Text.Trim(), "soft");
+        if (tcontactno.Text == "")
+        {
+            HySave["ContactPersonContactNo"] = null;
+        }
+        else
+        {
+            HySave["ContactPersonContactNo"] = Co.RSQandSQLInjection(tcontactno.Text.Trim(), "soft");
+        }
         HySave["CINNo"] = Co.RSQandSQLInjection(tcinno.Text.Trim(), "soft");
         HySave["PANNo"] = Co.RSQandSQLInjection(tpanno.Text.Trim(), "soft");
         HySave["GSTNo"] = Co.RSQandSQLInjection(tgstno.Text.Trim(), "soft");
@@ -107,26 +123,25 @@ public partial class CompanyDetail : System.Web.UI.Page
         {
             mCon = "Email format is invalid";
         }
-        if (IsValidEmailId(txtCEOEmailId.Text) == true)
+        if (txtCEOEmailId.Text != "")
         {
-        }
-        else
-        {
-            mCon = "Email format is invalid";
-        }
-        if (tcontactno.Text == "")
-        {
-            mCon = "Contact no is mandatory";
-        }
-        if (tpanno.Text != "")
-        {
-            DataTable Dt = Lo.RetriveCompany("CheckPanMo", 0, tpanno.Text);
-            if (Dt.Rows.Count > 0 && Dt != null)
+            if (IsValidEmailId(txtCEOEmailId.Text) == true)
             {
-                mCon = "PanNo already registerd.";
+            }
+            else
+            {
+                mCon = "Email format is invalid";
             }
         }
-        if (temailid.Text != "")
+        if (tcinno.Text != "" && hfid.Value == "")
+        {
+            DataTable Dt = Lo.RetriveCompany("CheckPanMo", 0, tcinno.Text);
+            if (Dt.Rows.Count > 0 && Dt != null)
+            {
+                mCon = "CIN No already registerd.";
+            }
+        }
+        if (temailid.Text != "" && hfid.Value == "")
         {
             DataTable Dt = Lo.RetriveCompany("CheckEmailNodel", 0, temailid.Text);
             if (Dt.Rows.Count > 0 && Dt != null)
@@ -147,7 +162,7 @@ public partial class CompanyDetail : System.Web.UI.Page
     }
     protected void btndemofirst_Click(object sender, EventArgs e)
     {
-        if (tcompanyname.Text != "" && tpersonname.Text != "" && temailid.Text != "")
+        if (tcompanyname.Text != "" && temailid.Text != "" && tcinno.Text != "")
         {
             string msg = this.ValidatePreview();
             if (msg != "")
@@ -202,5 +217,6 @@ public partial class CompanyDetail : System.Web.UI.Page
         txtCEOEmailId.Text = "";
         txtceoname.Text = "";
     }
+  
 
 }

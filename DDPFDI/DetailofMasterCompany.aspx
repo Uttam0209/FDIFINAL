@@ -67,17 +67,28 @@
                                         OnPageIndexChanging="OnPageIndexChanging" PageSize="10" AllowSorting="true" OnSorting="OnSorting" OnRowCommand="gvcompanydetail_RowCommand">
                                         <PagerStyle HorizontalAlign="Center" CssClass="GridPager" />
                                         <Columns>
-                                            <asp:TemplateField HeaderText="Sr.No">
+                                            <asp:TemplateField HeaderText="S.No">
                                                 <ItemTemplate>
                                                     <%#Container.DataItemIndex+1 %>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
-                                            <asp:BoundField DataField="CompanyRefNo" HeaderText="Reference No" NullDisplayText="#" SortExpression="CompanyRefNo" />
-                                            <asp:BoundField DataField="CompanyName" HeaderText="Company Name" NullDisplayText="#" SortExpression="CompanyName" />
-                                            <asp:BoundField DataField="StateName" HeaderText="State Name" NullDisplayText="#" SortExpression="StateName" />
-                                            <asp:BoundField DataField="ContactPersonName" HeaderText="Contact Person Name" NullDisplayText="#" SortExpression="ContactPersonName" />
-                                            <asp:BoundField DataField="ContactPersonEmailID" HeaderText="ContactPerson Email" NullDisplayText="#" SortExpression="ContactPersonEmailID" />
-                                            <asp:BoundField DataField="PANNo" HeaderText="PAN No" NullDisplayText="#" SortExpression="PANNo" />
+                                            <asp:TemplateField HeaderText="Reference No">
+                                                <ItemTemplate>
+                                                    <asp:Label ID="lblrefno" runat="server" Text='<%#Eval("CompanyRefNo") %>' NullDisplayText="#" SortExpression="CompanyRefNo"></asp:Label>
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:BoundField DataField="CompanyName" HeaderText="Company" NullDisplayText="#" SortExpression="CompanyName" />
+                                            <asp:BoundField DataField="StateName" HeaderText="State" NullDisplayText="#" SortExpression="StateName" />
+                                            <asp:TemplateField HeaderText="Nodel Person">
+                                                <ItemTemplate>
+                                                    <asp:Label ID="lblnodelname" runat="server" Text='<%#Eval("ContactPersonName") %>' NullDisplayText="#" SortExpression="ContactPersonName"></asp:Label>
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField HeaderText="Nodel Person Email">
+                                                <ItemTemplate>
+                                                    <asp:Label ID="lblnodelemail" runat="server" Text='<%#Eval("ContactPersonEmailID") %>' NullDisplayText="#" SortExpression="ContactPersonEmailID"></asp:Label>
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
                                             <asp:TemplateField HeaderText="Edit">
                                                 <ItemTemplate>
                                                     <asp:LinkButton ID="lbledit" runat="server" CssClass="fa fa-edit" CommandName="EditComp" CommandArgument='<%#Eval("CompanyID") %>'></asp:LinkButton>
@@ -125,6 +136,12 @@
                                                 <td width="30%" class="pass">Joint Venture </td>
                                                 <td>
                                                     <asp:Label ID="lbljointventure" runat="server"></asp:Label>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="pass">Defence Activities </td>
+                                                <td>
+                                                    <asp:Label ID="lbldefactivity" runat="server"></asp:Label>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -194,21 +211,15 @@
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td class="pass">PAN No. </td>
+                                                <td class="pass">PAN No</td>
                                                 <td>
                                                     <asp:Label ID="lblpanno" runat="server"></asp:Label>
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td class="pass">GST No. (If you use multiple gst no use with comma seprated)</td>
+                                                <td class="pass">GST No (If you use multiple gst no use with comma seprated)</td>
                                                 <td>
                                                     <asp:Label ID="lblgstno" runat="server"></asp:Label>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="pass">Company engaged in Defence Activities </td>
-                                                <td>
-                                                    <asp:Label ID="lbldefactivity" runat="server"></asp:Label>
                                                 </td>
                                             </tr>
                                         </tbody>
