@@ -52,22 +52,23 @@
             <li id="fdistep1" class="tab-pane fade in active">
                                                      <!-- NIC Details -->
                                             <div class="codeofbusiness">
-
-                                                <h3 class="hhead">FDI Value </h3>
+ <div class="form-group">
+ <label for="businesscode" class=" control-label">FDI reporting </label>
+                                              
                                                     <asp:DropDownList ID="nstate" runat="server" name="companyengaged" class="form-control form-cascade-control">
-                                                        <asp:ListItem Value="">Select Fdi value Type</asp:ListItem>
+                                                        <asp:ListItem Value="">FDI Reporting</asp:ListItem>
                                                         <asp:ListItem Value="Actual">Actual</asp:ListItem>
                                                         <asp:ListItem Value="Proposed">Proposed</asp:ListItem>
                                                         <asp:ListItem Value="Revised FDI Value">Revised FDI Value</asp:ListItem>
                                                     </asp:DropDownList>
                                                 </div>
-                                        
                                             </div>
+                                        
                                             <div class="form-group">
                                                 <label for="businesscode" class=" control-label">Period of reporting </label>
 
                                                 <asp:DropDownList ID="Select2" runat="server" name="companyengaged" AutoPostBack="true" class="form-control form-cascade-control" OnSelectedIndexChanged="Select2_SelectedIndexChanged">
-                                                    <asp:ListItem Value="">Select Period of reporting</asp:ListItem>
+                                                    <asp:ListItem Value="">Period of reporting</asp:ListItem>
                                                     <asp:ListItem Value="Quarterly">Quarterly</asp:ListItem>
                                                     <asp:ListItem Value="Half Yearly">Half Yearly</asp:ListItem>
                                                     <asp:ListItem Value="Annual">Annual</asp:ListItem>
@@ -159,6 +160,13 @@
                                                     <li id="fdistep3" class="tab-pane fade">
                                                          <div class="foreignvender">
                                                 <h3 class="hhead">Foreign Investor Details</h3>
+                                                 <div class="form-group">
+                                                <label for="tcountry" class="control-label">Select Country. </label>
+
+                                                <asp:DropDownList runat="server" ID="ncountry" name="ncountry" class="form-control form-cascade-control" placeholder="Select Country">
+                                                </asp:DropDownList>
+
+                                            </div>
                                                 <div class="form-group">
                                                     <label for="tforeignname" class="control-label">Foreign Company Name.</label>
 
@@ -171,20 +179,14 @@
                                                 <asp:TextBox runat="server" TextMode="MultiLine" ID="tforeignaddress" name="tforeignaddress" class="form-control form-cascade-control" placeholder="Address"></asp:TextBox>
 
                                             </div>
-                                            <div class="form-group">
-                                                <label for="tcountry" class="control-label">Select Country. </label>
-
-                                                <asp:DropDownList runat="server" ID="ncountry" name="ncountry" class="form-control form-cascade-control" placeholder="Select Country">
-                                                </asp:DropDownList>
-
-                                            </div>
+                                           
                                             <div class="form-group">
                                                 <label for="tzipcode" class="control-label">Zip Code. </label>
 
                                                 <asp:TextBox runat="server" type="text" ID="tzipcode" name="tzipcode" class="form-control form-cascade-control" placeholder="Zip Code" pattern="[0-9]{6}"></asp:TextBox>
                                             </div>
                                             <div class="form-group">
-                                                <label for="activityname" class="control-label">Foreign engaged in Defence Activities .</label>
+                                                <label for="activityname" class="control-label">Foreign investor engaged in Defence Activities .</label>
                                                 <asp:DropDownList ID="Select1" runat="server" name="companyengaged" class="form-control form-cascade-control">
                                                     <asp:ListItem Value="Yes">Yes</asp:ListItem>
                                                     <asp:ListItem Value="No">No</asp:ListItem>
@@ -235,7 +237,7 @@
                                                     <asp:TextBox runat="server" ID="tremarks" name="tremarks" TextMode="MultiLine" Height="77px" class="form-control form-cascade-control" placeholder="Remarks"></asp:TextBox>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="selsource" class="control-label">Document attached if any (Email/Letter etc.)</label>
+                                                    <label for="selsource" class="control-label">Document attached if any (Email/Letter etc in pdf format only.) </label>
                                                     <asp:FileUpload runat="server" type="file" ID="attachfile" name="attachfile" class="form-control form-cascade-control" placeholder="Attachfile" />
                                                     <asp:Label ID="lblfuupdate" runat="server"></asp:Label>
                                                 </div>
