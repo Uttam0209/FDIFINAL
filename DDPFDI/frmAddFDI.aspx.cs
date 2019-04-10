@@ -27,7 +27,7 @@ public partial class frmAddFDI : System.Web.UI.Page
     }
     protected void BindCompany()
     {
-        DataTable Dt = Lo.RetriveCompany("Select");
+        DataTable Dt = Lo.RetriveCompany("Select", 0, "");
         if (Dt.Rows.Count > 0 && Dt != null)
         {
             Co.FillDropdownlist(ddlcompany, Dt, "CompanyName", "CompanyID");

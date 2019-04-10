@@ -68,6 +68,7 @@ public partial class DetailofMasterCompany : System.Web.UI.Page
             DataTable DtView = Lo.RetriveGridViewCompany(Convert.ToInt64(e.CommandArgument.ToString()));
             if (DtView.Rows.Count > 0)
             {
+                lblrefno.Text = DtView.Rows[0]["CompanyRefNo"].ToString();
                 lbladdress.Text = DtView.Rows[0]["Address"].ToString();
                 lblcinno.Text = DtView.Rows[0]["CINNo"].ToString();
                 lblceoname.Text = DtView.Rows[0]["CEOName"].ToString();
@@ -99,6 +100,26 @@ public partial class DetailofMasterCompany : System.Web.UI.Page
                 {
                     ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not deleted.')", true);
                 }
+            }
+            catch (Exception ex)
+            {
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not deleted.')", true);
+            }
+        }
+        else if (e.CommandName == "SendLogin")
+        {
+            try
+            {
+                //string DeleteRec = Lo.DeleteRecord(Convert.ToInt64(e.CommandArgument.ToString()));
+                //if (DeleteRec == "true")
+                //{
+                //    BindGridView();
+                //    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record delete succssfully.')", true);
+                //}
+                //else
+                //{
+                //    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not deleted.')", true);
+                //}
             }
             catch (Exception ex)
             {

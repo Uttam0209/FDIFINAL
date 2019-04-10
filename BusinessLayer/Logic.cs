@@ -32,7 +32,7 @@ namespace BusinessLayer
         }
         #endregion
         #region UpdateCode
-        public string UpdateLoginPassword(string NewPass,string OldPass,string User)
+        public string UpdateLoginPassword(string NewPass, string OldPass, string User)
         {
             return SqlHelper.Instance.UpdateLoginPassword(NewPass, OldPass, User);
         }
@@ -54,9 +54,9 @@ namespace BusinessLayer
         {
             return SqlHelper.Instance.RetriveGridViewCompany(ID);
         }
-        public DataTable RetriveCompany(string text)
+        public DataTable RetriveCompany(string text, Int64 id, string value)
         {
-            return SqlHelper.Instance.RetriveCompany(text);
+            return SqlHelper.Instance.RetriveCompany(text,id,value);
         }
         #endregion
         #region DeleteCode

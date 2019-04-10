@@ -92,10 +92,6 @@ public partial class CompanyDetail : System.Web.UI.Page
     public string ValidatePreview()
     {
         string mCon = "";
-        if (seljvventure.SelectedItem.Text == "Select JV")
-        {
-            mCon = "Select JV is mandatory";
-        }
         if (tcompanyname.Text == "")
         {
             mCon = "Company name is mandatory";
@@ -111,9 +107,32 @@ public partial class CompanyDetail : System.Web.UI.Page
         {
             mCon = "Email format is invalid";
         }
+        if (IsValidEmailId(txtCEOEmailId.Text) == true)
+        {
+        }
+        else
+        {
+            mCon = "Email format is invalid";
+        }
         if (tcontactno.Text == "")
         {
             mCon = "Contact no is mandatory";
+        }
+        if (tpanno.Text != "")
+        {
+            DataTable Dt = Lo.RetriveCompany("CheckPanMo", 0, tpanno.Text);
+            if (Dt.Rows.Count > 0 && Dt != null)
+            {
+                mCon = "PanNo already registerd.";
+            }
+        }
+        if (temailid.Text != "")
+        {
+            DataTable Dt = Lo.RetriveCompany("CheckEmailNodel", 0, temailid.Text);
+            if (Dt.Rows.Count > 0 && Dt != null)
+            {
+                mCon = "Nodel person email-id already registerd";
+            }
         }
         return mCon;
     }
@@ -128,7 +147,7 @@ public partial class CompanyDetail : System.Web.UI.Page
     }
     protected void btndemofirst_Click(object sender, EventArgs e)
     {
-        if (tcompanyname.Text != "" && tpersonname.Text != "")
+        if (tcompanyname.Text != "" && tpersonname.Text != "" && temailid.Text != "")
         {
             string msg = this.ValidatePreview();
             if (msg != "")
@@ -183,4 +202,5 @@ public partial class CompanyDetail : System.Web.UI.Page
         txtCEOEmailId.Text = "";
         txtceoname.Text = "";
     }
+
 }
