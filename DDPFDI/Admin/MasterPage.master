@@ -18,7 +18,7 @@
     <form id="form1" runat="server" enctype="multipart/form-data">
         <div class="site-holder">
             <div id="preloader">
-                <img src="assets/images/preloader.gif" alt="" />
+                <img src="~/assets/images/preloader.gif" alt="" />
             </div>
             <nav class="navbar" role="navigation">
                 <div class="navbar-header">
@@ -49,12 +49,12 @@
                     <div class="sidebar-holder">
                         <button class="btn  btn-nav-toggle"><i class="fa fa-angle-double-left toggle-left"></i></button>
                         <ul class="nav  nav-list">
-                            <li class="active"><a href='<%=ResolveUrl("Dashboard") %>' data-original-title="Dashboard">
+                            <li class="active"><a href='<%=ResolveUrl("~/Dashboard") %>' data-original-title="Dashboard">
                                 <i class="fas fa-tachometer" aria-hidden="true"></i><span class="hidden-minibar">Dashboard</span></a></li>
-                            <li><a href='<%=ResolveUrl("ViewFDI-Detail") %>' data-original-title="ViewFDI-Detail"><i
+                            <li><a href='<%=ResolveUrl("~/ViewFDI-Detail") %>' data-original-title="ViewFDI-Detail"><i
                                 class="fa fa-tachometer" aria-hidden="true"></i><span class="hidden-minibar">FDI Inflow
                                 Detail</span></a></li>
-                            <li class="active"><a href='<%=ResolveUrl("Detail-Company") %>' data-original-title="Master Company Detail">
+                            <li class="active"><a href='<%=ResolveUrl("~/Detail-Company") %>' data-original-title="Master Company Detail">
                                 <i class="fas fa-tachometer" aria-hidden="true"></i><span class="hidden-minibar">Master
                                 Companies</span></a></li>
                         </ul>
