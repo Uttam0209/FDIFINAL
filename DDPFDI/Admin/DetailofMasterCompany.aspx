@@ -48,7 +48,7 @@
                     <div class="col-mod-12">
                         <ul class="breadcrumb">
                             <li><a href='<%=ResolveUrl("~/Detail-Company") %>'>Dashboard</a></li>
-                            <li class="active">Company Registration Detail</li>
+                            <li class="active">Company Registration Detail</li> 
                         </ul>
                     </div>
                     <form method="post" class="addfdi">
@@ -63,8 +63,10 @@
                                         <asp:LinkButton runat="server" ID="btnsearch" class="text-black btn btn-warning pull-left btn-md" OnClick="Search_Click" Text="Search"></asp:LinkButton>
                                     </div>
                                     
-                                        <a href="<%=ResolveUrl("~/Add-Company") %>" class="text-black btn btn-success pull-right btn-md">Add master companies</a>
+                                        <a href="<%=ResolveUrl("~/Add-Company") %>" class="text-black btn btn-success pull-right btn-md">Add company</a>
                               
+                                    <div class="clearfix"></div>
+                                    <div class="text-center" style="font-size:16px; margin-top:10px;">Total number of  active company :<strong>  <asp:Label ID="lbltotal" runat="server" Text=""></asp:Label></strong></div>
                                     <div class="clearfix"></div>
                                     <asp:GridView ID="gvcompanydetail" runat="server" Width="100%" Class="commonAjaxTbl table display responsive no-wrap table-hover manage-user" AutoGenerateColumns="false" AllowPaging="true"
                                         OnPageIndexChanging="OnPageIndexChanging" PageSize="10" AllowSorting="true" OnSorting="OnSorting" OnRowCommand="gvcompanydetail_RowCommand">
@@ -81,15 +83,15 @@
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                             <asp:BoundField DataField="CompanyName" HeaderText="Company" NullDisplayText="#" SortExpression="CompanyName" />
-                                            <asp:BoundField DataField="StateName" HeaderText="State" NullDisplayText="#" SortExpression="StateName" />
-                                            <asp:TemplateField HeaderText="Nodal Person">
+                                            <asp:BoundField DataField="IsJointVenture" HeaderText="Joint Venture" NullDisplayText="#" SortExpression="Joint Venture" />
+                                            <asp:TemplateField HeaderText="Defence Activities">
                                                 <ItemTemplate>
-                                                    <asp:Label ID="lblnodelname" runat="server" Text='<%#Eval("ContactPersonName") %>' NullDisplayText="#" SortExpression="ContactPersonName"></asp:Label>
+                                                    <asp:Label ID="lblnodelname" runat="server" Text='<%#Eval("IsDefenceActivity") %>' NullDisplayText="#" SortExpression="ContactPersonName"></asp:Label>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
-                                            <asp:TemplateField HeaderText="Nodal Person Email">
+                                            <asp:TemplateField HeaderText="Is Active">
                                                 <ItemTemplate>
-                                                    <asp:Label ID="lblnodelemail" runat="server" Text='<%#Eval("ContactPersonEmailID") %>' NullDisplayText="#" SortExpression="ContactPersonEmailID"></asp:Label>
+                                                    <asp:Label ID="lblnodelemail" runat="server" Text='<%#Eval("IsActive") %>' NullDisplayText="#" SortExpression="ContactPersonEmailID"></asp:Label>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="Edit">

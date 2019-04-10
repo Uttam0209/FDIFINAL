@@ -34,6 +34,7 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
             DtView = Lo.RetriveGridView(Convert.ToInt64(hfid.Value));
             if (DtView.Rows.Count > 0)
             {
+                //if(DtView.Rows[0]["IsJointVenture"].ToString()=="Yes"
                 seljvventure.Text = DtView.Rows[0]["IsJointVenture"].ToString();
                 tcompanyname.Text = DtView.Rows[0]["CompanyName"].ToString();
                 taddress.Text = DtView.Rows[0]["Address"].ToString();

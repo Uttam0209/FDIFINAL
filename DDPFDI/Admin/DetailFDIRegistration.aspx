@@ -66,6 +66,9 @@
 
                                     <br />
                                     <br />
+                                    <div class="clearfix"></div>
+                                    <div class="text-center" style="font-size:16px; margin-top:10px;">Total cumulative value :<strong>  <asp:Label ID="lbltotal" runat="server" Text=""></asp:Label></strong></div>
+                                    <div class="clearfix"></div>
                                     <asp:GridView ID="gvdetail" runat="server" Width="100%" Class="commonAjaxTbl table display responsive no-wrap table-hover manage-user" AutoGenerateColumns="false" AllowPaging="true"
                                         OnPageIndexChanging="OnPageIndexChanging" PageSize="10" AllowSorting="true" OnSorting="OnSorting" OnRowCommand="gvdetail_RowCommand">
                                         <PagerStyle HorizontalAlign="Center" CssClass="GridPager" />
@@ -76,11 +79,11 @@
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                             <asp:BoundField DataField="CompanyName" HeaderText="Company Name" NullDisplayText="#" SortExpression="CompanyName" />
-                                            <asp:BoundField DataField="ApprovalNo" HeaderText="Approved Code" NullDisplayText="#" SortExpression="ApprovalNo" />
-                                            <asp:BoundField DataField="CodeofBusiness" HeaderText="Business Code" NullDisplayText="#" SortExpression="CodeofBusiness" />
-                                            <asp:BoundField DataField="BriefDescription" HeaderText="Brief Description" NullDisplayText="#" SortExpression="BriefDescription" />
-                                            <asp:BoundField DataField="CountryName" HeaderText="Country" NullDisplayText="#" SortExpression="CountryName" />
-                                            <asp:BoundField DataField="Currency" HeaderText="Currency" NullDisplayText="#" SortExpression="Currency" />
+                                            <asp:BoundField DataField="NICCode" HeaderText="NIC Code" NullDisplayText="" SortExpression="NICCode" />
+                                            <asp:BoundField DataField="FDIValueType" HeaderText="FDI Reporting" NullDisplayText="#" SortExpression="FDIValueType" />
+                                            <asp:BoundField DataField="PeriodOfQuater" HeaderText="Reporting Period" NullDisplayText="#" SortExpression="PeriodOfQuater" />
+                                            <asp:BoundField DataField="FY" HeaderText="Financial Year" NullDisplayText="#" SortExpression="FY" />
+                                             <asp:BoundField DataField="ExchangeTotalAmount" HeaderText="Amount" NullDisplayText="#" SortExpression="ExchangeTotalAmount" />
                                             <asp:TemplateField HeaderText="Edit">
                                                 <ItemTemplate>
                                                     <asp:LinkButton ID="lbledit" runat="server" CssClass="fa fa-edit" CommandName="Edit" CommandArgument='<%#Eval("CompanyID") %>'></asp:LinkButton>

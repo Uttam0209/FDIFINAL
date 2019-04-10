@@ -56,7 +56,7 @@ public partial class Admin_AdminLogin : System.Web.UI.Page
                     if (_EmpId != "0" && _EmpId != "1" && _msg != "0")
                     {
                         Session["User"] = objEnc.EncryptData(txtUserName.Text);
-                        Response.RedirectToRoute("Detail-Company");
+                        Response.RedirectToRoute("Dashboard");
                     }
                     else
                     {
