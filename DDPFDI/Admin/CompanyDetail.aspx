@@ -18,7 +18,7 @@
         <div class="sideBg">
             <div class="col-mod-12">
                 <ul class="breadcrumb">
-                    <li><a href='<%=ResolveUrl("ViewFDI-Detail") %>'>Dashboard</a></li>
+                    <li><a href='<%=ResolveUrl("~/ViewFDI-Detail") %>'>Dashboard</a></li>
                     <li class="active">Master Company</li>
                 </ul>
             </div>

@@ -10,7 +10,7 @@
                 <div class="sideBg">
                     <div class="col-mod-12">
                         <ul class="breadcrumb">
-                            <li><a href='<%=ResolveUrl("Dashboard") %>'>Dashboard</a></li>
+                            <li><a href='<%=ResolveUrl("~/Dashboard") %>'>Dashboard</a></li>
                         </ul>
                     </div>
                     <form method="post" class="addfdi">

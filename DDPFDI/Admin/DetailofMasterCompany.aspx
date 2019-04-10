@@ -47,7 +47,7 @@
                 <div class="sideBg">
                     <div class="col-mod-12">
                         <ul class="breadcrumb">
-                            <li><a href='<%=ResolveUrl("Detail-Company") %>'>Dashboard</a></li>
+                            <li><a href='<%=ResolveUrl("~/Detail-Company") %>'>Dashboard</a></li>
                             <li class="active">Company Registration Detail</li>
                         </ul>
                     </div>
@@ -63,7 +63,7 @@
                                         <asp:LinkButton runat="server" ID="btnsearch" class="text-black btn btn-warning pull-left btn-md" OnClick="Search_Click" Text="Search"></asp:LinkButton>
                                     </div>
                                     
-                                        <a href="<%=ResolveUrl("Add-Company") %>" class="text-black btn btn-success pull-right btn-md">Add master companies</a>
+                                        <a href="<%=ResolveUrl("~/Add-Company") %>" class="text-black btn btn-success pull-right btn-md">Add master companies</a>
                               
                                     <div class="clearfix"></div>
                                     <asp:GridView ID="gvcompanydetail" runat="server" Width="100%" Class="commonAjaxTbl table display responsive no-wrap table-hover manage-user" AutoGenerateColumns="false" AllowPaging="true"

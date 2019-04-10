@@ -145,7 +145,7 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
             BindGridView();
         }
     }
-    #region ValidateOPT
+    #region Send Mail
     public void SendEmailCode()
     {
         try

@@ -62,7 +62,7 @@
                                         <asp:LinkButton runat="server" ID="btnsearch" class="text-black btn btn-warning pull-left btn-md" OnClick="Search_Click" Text="Search"></asp:LinkButton>
                                     </div>
 
-                                    <a href='<%=ResolveUrl("FDIRegistration") %>' class="text-black btn btn-warning pull-right btn-md">Add FDI-Inflow</a>
+                                    <a href='<%=ResolveUrl("~/FDIRegistration") %>' class="text-black btn btn-warning pull-right btn-md">Add FDI-Inflow</a>
 
                                     <br />
                                     <br />
