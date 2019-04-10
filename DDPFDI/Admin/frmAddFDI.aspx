@@ -14,7 +14,7 @@
 </asp:Content>
 <asp:Content ID="inner" runat="server" ContentPlaceHolderID="ContentPlaceHolder1">
     <div class="content oem-content">
-        <asp:ScriptManager ID="sc" runat="server"></asp:ScriptManager>
+        <%--<asp:ScriptManager ID="sc" runat="server"></asp:ScriptManager>--%>
         <div class="sideBg">
             <div class="col-mod-12">
                 <ul class="breadcrumb">
@@ -23,8 +23,8 @@
                 </ul>
             </div>
             <div class="col-sm-12">
-                <asp:UpdatePanel ID="up" runat="server">
-                    <ContentTemplate>
+               <%-- <asp:UpdatePanel ID="up" runat="server">
+                    <ContentTemplate>--%>
                         <asp:HiddenField ID="hfid" runat="server" />
                         <div id="demo1" runat="server">
                             <div class="addfdi">
@@ -41,12 +41,13 @@
                                             <div class="codeofbusiness">
                                                 <h3 class="hhead">National Industrial Classification(NIC)</h3>
                                                 <div class="form-group">
-                                                    <label for="businesscode" class="control-label">Code of Business. </label>
-                                                    <asp:TextBox runat="server" ID="businesscode" name="businesscode" class="form-control form-cascade-control" placeholder="Business code"></asp:TextBox>
+                                                    <label for="businesscode" class="control-label">NIC code of business. </label>
+                                                    <asp:TextBox runat="server" ID="businesscode" name="businesscode" class="form-control form-cascade-control" UseSubmitBehavior="false"
+                                                        CausesValidation="false" placeholder="NIC business code"></asp:TextBox>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="tbdescription" class=" control-label">Brief Description. </label>
-                                                    <asp:TextBox runat="server" ID="tbdescription" name="tbdescription" TextMode="MultiLine" Height="107px" class="form-control form-cascade-control" placeholder="Brief Description"></asp:TextBox>
+                                                    <label for="tbdescription" class=" control-label">Description. </label>
+                                                    <asp:TextBox runat="server" ID="tbdescription" name="tbdescription" TextMode="MultiLine" Height="107px" class="form-control form-cascade-control" placeholder="Description"></asp:TextBox>
                                                 </div>
                                             </div>
                                             <div class="clearfix"></div>
@@ -243,11 +244,11 @@
                                 </div>
                             </div>
                         </div>
-                    </ContentTemplate>
+                  <%--  </ContentTemplate>
                     <Triggers>
                         <asp:PostBackTrigger ControlID="btnsub" />
                     </Triggers>
-                </asp:UpdatePanel>
+                </asp:UpdatePanel>--%>
             </div>
             <div class="clearfix"></div>
         </div>
