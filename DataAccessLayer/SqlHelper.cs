@@ -136,7 +136,7 @@ namespace DataAccessLayer
         #region SaveCode
         public string SaveFDI(HybridDictionary HySave, out string _sysMsg, out string _msg)
         {
-            string mCurrentID = "";
+           // string mCurrentID = "";
             using (DbConnection dbCon = db.CreateConnection())
             {
                 dbCon.Open();
@@ -145,9 +145,8 @@ namespace DataAccessLayer
                 {
                     DbCommand cmdUser = db.GetStoredProcCommand("sp_trn_company");
                     db.AddInParameter(cmdUser, "@MID", DbType.Int64, HySave["MID"]);
-                    db.AddInParameter(cmdUser, "@CompanyID", DbType.Int64, HySave["CompanyID"]);
-                    db.AddInParameter(cmdUser, "@CodeofBusiness", DbType.String, HySave["CodeofBusiness"]);
-                    db.AddInParameter(cmdUser, "@BriefDescription", DbType.String, HySave["BriefDescription"]);
+                    db.AddInParameter(cmdUser, "@CompanyRefNo", DbType.String, HySave["CompanyRefNo"]);
+                    db.AddInParameter(cmdUser, "@NicCodeID", DbType.Int64, HySave["NicCodeID"]);
                     db.AddInParameter(cmdUser, "@InCaseOf", DbType.String, HySave["InCaseOf"]);
                     db.AddInParameter(cmdUser, "@ApprovalNo", DbType.String, HySave["ApprovalNo"]);
                     db.AddInParameter(cmdUser, "@ApprovalDate", DbType.Date, HySave["ApprovalDate"]);
@@ -159,7 +158,7 @@ namespace DataAccessLayer
                     db.AddInParameter(cmdUser, "@FDIValueType", DbType.String, HySave["FDIValueType"]);
                     db.AddInParameter(cmdUser, "@PeriodofReporting", DbType.String, HySave["PeriodofReporting"]);
                     db.AddInParameter(cmdUser, "@PeriodOfQuater", DbType.String, HySave["PeriodOfQuater"]);
-                    db.AddInParameter(cmdUser, "@Year", DbType.String, HySave["Year"]);
+                    db.AddInParameter(cmdUser, "@FYID", DbType.Int64, HySave["FYID"]);
                     db.AddInParameter(cmdUser, "@Currency", DbType.String, HySave["Currency"]);
                     db.AddInParameter(cmdUser, "@TotalFDIInFlow", DbType.String, HySave["TotalFDIInFlow"]);
                     db.AddInParameter(cmdUser, "@EquINRExchangeRate", DbType.String, HySave["EquINRExchangeRate"]);
