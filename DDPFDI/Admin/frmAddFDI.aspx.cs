@@ -17,6 +17,9 @@ public partial class Admin_frmAddFDI : System.Web.UI.Page
     Cryptography objCrypto = new Cryptography();
     Int64 Mid = 0;
     DataUtility Co = new DataUtility();
+    public static Int64 Comparer = 0;
+    public static Int64 NicCode = 0;
+    public static Int64 CountryID = 0;
     string _msg = string.Empty;
     string _sysMsg = string.Empty;
     DataTable DtView = new DataTable();
@@ -24,24 +27,11 @@ public partial class Admin_frmAddFDI : System.Web.UI.Page
     {
         if (!IsPostBack)
         {
-           // BindCompany();
-            BindCountry();
+            // BindCompany();
+            //  BindCountry();
             EditCOde();
         }
     }
-    //protected void BindCompany()
-    //{
-    //    DataTable Dt = Lo.RetriveCompany("Select", 0, "");
-    //    if (Dt.Rows.Count > 0 && Dt != null)
-    //    {
-    //        Co.FillDropdownlist(ddlcompany, Dt, "CompanyName", "CompanyID");
-    //        ddlcompany.Items.Insert(0, "Select Company");
-    //    }
-    //    else
-    //    {
-    //        ddlcompany.Items.Insert(0, "Select Company");
-    //    }
-    //}
     protected void BindFY()
     {
         DataTable Dtfy = Lo.RetriveCompany("FY", 0, "");
@@ -82,7 +72,7 @@ public partial class Admin_frmAddFDI : System.Web.UI.Page
                 ViewState["DAteApp"] = tapprovaldate.Text;
                 tforeignname.Text = DtView.Rows[0]["ForeignCompanyName"].ToString();
                 tforeignaddress.Text = DtView.Rows[0]["Address"].ToString();
-                ncountry.Text = DtView.Rows[0]["Country"].ToString();
+                txtcount.Text = DtView.Rows[0]["Country"].ToString();
                 tzipcode.Text = DtView.Rows[0]["ZipCode"].ToString();
                 Select1.Text = DtView.Rows[0]["ForeignDefenceActivity"].ToString();
                 nstate.Text = DtView.Rows[0]["FDIValueType"].ToString();
@@ -120,33 +110,32 @@ public partial class Admin_frmAddFDI : System.Web.UI.Page
             }
         }
     }
-    protected void BindCountry()
-    {
-        DataTable Dt = Lo.RetriveCountry("Select");
-        if (Dt.Rows.Count > 0 && Dt != null)
-        {
-            Co.FillDropdownlist(ncountry, Dt, "CountryName", "CountryID");
-            ncountry.Items.Insert(0, "Select Country");
-        }
-        else
-        {
-            ncountry.Items.Insert(0, "Select Country");
-        }
-    }
+    //protected void BindCountry()
+    //{
+    //    DataTable Dt = Lo.RetriveCountry("Select");
+    //    if (Dt.Rows.Count > 0 && Dt != null)
+    //    {
+    //        Co.FillDropdownlist(ncountry, Dt, "CountryName", "CountryID");
+    //        ncountry.Items.Insert(0, "Select Country");
+    //    }
+    //    else
+    //    {
+    //        ncountry.Items.Insert(0, "Select Country");
+    //    }
+    //}
     protected void SaveFDI()
     {
         if (hfid.Value != "")
         {
-            HySave["CompanyID"] = Convert.ToInt64(hfid.Value);
+            HySave["CompanyRefNo"] = Convert.ToInt64(hfid.Value);
             HySave["MID"] = Convert.ToInt64(hfid.Value);
         }
         else
         {
-            HySave["CompanyID"] = txtcomp.Text; //ddlcompany.SelectedItem.Value;
+            HySave["CompanyRefNo"] = Comparer;
             HySave["MID"] = Mid;
         }
-        HySave["CodeofBusiness"] = Co.RSQandSQLInjection(businesscode.Text.Trim(), "soft");
-        HySave["BriefDescription"] = Co.RSQandSQLInjection(tbdescription.Text.Trim(), "soft");
+        HySave["NicCodeID"] = Co.RSQandSQLInjection(NicCode.ToString(), "soft");
         HySave["InCaseOf"] = Co.RSQandSQLInjection(casetype.SelectedItem.Value, "soft");
         if (tapprovalno.Text == "")
         {
@@ -172,7 +161,7 @@ public partial class Admin_frmAddFDI : System.Web.UI.Page
         }
         HySave["ForeignCompanyName"] = Co.RSQandSQLInjection(tforeignname.Text.Trim(), "soft");
         HySave["Address"] = Co.RSQandSQLInjection(tforeignaddress.Text.Trim(), "soft");
-        HySave["Country"] = Co.RSQandSQLInjection(ncountry.SelectedItem.Value, "soft");
+        HySave["Country"] = Co.RSQandSQLInjection(CountryID.ToString(), "soft");
         HySave["ZipCode"] = Co.RSQandSQLInjection(tzipcode.Text.Trim(), "soft");
         HySave["ForeignDefenceActivity"] = Co.RSQandSQLInjection(Select1.SelectedItem.Value, "soft");
         HySave["FDIValueType"] = Co.RSQandSQLInjection(nstate.SelectedItem.Value, "soft");
@@ -180,11 +169,11 @@ public partial class Admin_frmAddFDI : System.Web.UI.Page
         HySave["PeriodOfQuater"] = Co.RSQandSQLInjection(ddlquater.SelectedItem.Value, "soft");
         if (ddlyear.SelectedValue != "")
         {
-            HySave["Year"] = Co.RSQandSQLInjection(ddlyear.SelectedItem.Value, "soft");
+            HySave["FYID"] = Co.RSQandSQLInjection(ddlyear.SelectedItem.Value, "soft");
         }
         else
         {
-            HySave["Year"] = null;
+            HySave["FYID"] = null;
         }
         HySave["Currency"] = Co.RSQandSQLInjection(Select3.SelectedItem.Value, "soft");
         HySave["TotalFDIInFlow"] = Co.RSQandSQLInjection(fdiinflow.Text.Trim(), "soft");
@@ -203,7 +192,7 @@ public partial class Admin_frmAddFDI : System.Web.UI.Page
         }
         if (attachfile.HasFile != false && attachfile.PostedFile.FileName != "" && lblfuupdate.Text == "")
         {
-        //    string ImgPath = Co.RSQandSQLInjection(ddlcompany.Text.Trim().Replace(" ", "-"), "soft") + "_" + DateTime.Now.ToString("ddMMMHHmm") + "_" + attachfile.PostedFile.FileName;
+            //    string ImgPath = Co.RSQandSQLInjection(ddlcompany.Text.Trim().Replace(" ", "-"), "soft") + "_" + DateTime.Now.ToString("ddMMMHHmm") + "_" + attachfile.PostedFile.FileName;
             string ImgPath = Co.RSQandSQLInjection(txtcomp.Text.Trim().Replace(" ", "-"), "soft") + "_" + DateTime.Now.ToString("ddMMMHHmm") + "_" + attachfile.PostedFile.FileName;
             attachfile.PostedFile.SaveAs(Server.MapPath("~/CompDocument/") + ImgPath);
             HySave["DocumentAttach"] = ImgPath.ToString();
@@ -241,8 +230,8 @@ public partial class Admin_frmAddFDI : System.Web.UI.Page
     }
     protected void btnsub_Click(object sender, EventArgs e)
     {
-      //  if (ddlcompany.SelectedItem.Text != "Select Company")
-            if (txtcomp.Text != "Select Company")
+        //  if (ddlcompany.SelectedItem.Text != "Select Company")
+        if (txtcomp.Text != "Select Company")
         {
             if (attachfile.PostedFile != null && attachfile.PostedFile.FileName != "")
             {
@@ -300,7 +289,7 @@ public partial class Admin_frmAddFDI : System.Web.UI.Page
     protected void cleartext()
     {
         txtcomp.Text = "";
-       // ddlcompany.Text = "Select Company";
+        // ddlcompany.Text = "Select Company";
         businesscode.Text = "";
         tbdescription.Text = "";
         casetype.SelectedIndex = 0;
@@ -308,7 +297,8 @@ public partial class Admin_frmAddFDI : System.Web.UI.Page
         tapprovaldate.Text = "";
         tforeignname.Text = "";
         tforeignaddress.Text = "";
-        ncountry.SelectedIndex = 0;
+        // ncountry.SelectedIndex = 0;
+        txtcount.Text = "";
         tzipcode.Text = "";
         Select1.SelectedIndex = 0;
         nstate.SelectedIndex = 0;
@@ -377,18 +367,29 @@ public partial class Admin_frmAddFDI : System.Web.UI.Page
             afterexchnagerate.Text = total.ToString();
         }
     }
+    protected void businesscode_TextChanged(object sender, EventArgs e)
+    {
+        DataTable DtDes = Lo.RetriveCompany("Description", 0, businesscode.Text);
+        if (DtDes.Rows.Count > 0 && DtDes != null)
+        {
+            tbdescription.Text = DtDes.Rows[0]["NicDesc"].ToString();
+            tbdescription.ReadOnly = true;
+        }
+    }
+    #region AutoComplete NicCode
     [System.Web.Services.WebMethod]
     [System.Web.Script.Services.ScriptMethod()]
     public static string[] GetCustomers(string prefix)
     {
         Cryptography objCrypto1 = new Cryptography();
         List<string> customers = new List<string>();
+        string FinalNicCode = "";
         using (SqlConnection conn = new SqlConnection())
         {
             conn.ConnectionString = objCrypto1.DecryptData(ConfigurationManager.ConnectionStrings["connectiondb"].ConnectionString);
             using (SqlCommand cmd = new SqlCommand())
             {
-                cmd.CommandText = "select NicCode, NicCodeID from tbl_mst_NicCode where NicCode like @SearchText + '%'";
+                cmd.CommandText = "select NicCode, NicCodeID from tbl_mst_NicCode where NicCode like @SearchText + '%' and isactive='Y'";
                 cmd.Parameters.AddWithValue("@SearchText", prefix);
                 cmd.Connection = conn;
                 conn.Open();
@@ -397,25 +398,30 @@ public partial class Admin_frmAddFDI : System.Web.UI.Page
                     while (sdr.Read())
                     {
                         customers.Add(string.Format("{0}-{1}", sdr["NicCode"], sdr["NicCodeID"]));
+                        FinalNicCode = sdr["NicCodeID"].ToString();
                     }
                 }
                 conn.Close();
             }
         }
+        NicCode = Convert.ToInt64(FinalNicCode.ToString());
         return customers.ToArray();
     }
+    #endregion
+    #region AutoComplete Company
     [System.Web.Services.WebMethod]
     [System.Web.Script.Services.ScriptMethod()]
     public static string[] GetCustomers1(string prefix)
     {
         Cryptography objCrypto1 = new Cryptography();
         List<string> customers1 = new List<string>();
+        string FCompID = "";
         using (SqlConnection conn = new SqlConnection())
         {
             conn.ConnectionString = objCrypto1.DecryptData(ConfigurationManager.ConnectionStrings["connectiondb"].ConnectionString);
             using (SqlCommand cmd = new SqlCommand())
             {
-                cmd.CommandText = "select CompanyName, CompanyID from tbl_mst_Company where CompanyName like @SearchText + '%'";
+                cmd.CommandText = "select CompanyName, CompanyRefNo from tbl_mst_Company where CompanyName like @SearchText + '%' and IsActive='Y'";
                 cmd.Parameters.AddWithValue("@SearchText", prefix);
                 cmd.Connection = conn;
                 conn.Open();
@@ -423,22 +429,54 @@ public partial class Admin_frmAddFDI : System.Web.UI.Page
                 {
                     while (sdr.Read())
                     {
-                        customers1.Add(string.Format("{0}-{1}", sdr["CompanyName"], sdr["CompanyID"]));
+                        customers1.Add(string.Format("{0}-{1}", sdr["CompanyName"], sdr["CompanyRefNo"]));
+                        FCompID = sdr["CompanyRefNo"].ToString();
                     }
                 }
                 conn.Close();
             }
         }
+        Comparer = Convert.ToInt64(FCompID.ToString());
         return customers1.ToArray();
+
     }
-    protected void businesscode_TextChanged(object sender, EventArgs e)
+    #endregion
+    #region AutoComplete Country
+    [System.Web.Services.WebMethod]
+    [System.Web.Script.Services.ScriptMethod()]
+    public static string[] GetCountry(string prefix)
     {
-        DataTable DtDes = Lo.RetriveCompany("Description", 0, businesscode.Text);
-        if (DtDes.Rows.Count > 0 && DtDes != null)
+        Cryptography objCrypto1 = new Cryptography();
+        List<string> Country = new List<string>();
+        string FCountry = "";
+        using (SqlConnection conn = new SqlConnection())
         {
+<<<<<<< HEAD
             tbdescription.Text = DtDes.Rows[0]["NicDesc"].ToString();
             tbdescription.ReadOnly = true;
             Int64 id = Convert.ToInt64(Request.Form[hfcompid.Value]);
+=======
+            conn.ConnectionString = objCrypto1.DecryptData(ConfigurationManager.ConnectionStrings["connectiondb"].ConnectionString);
+            using (SqlCommand cmd = new SqlCommand())
+            {
+                cmd.CommandText = "select CountryName, CountryID from tbl_mst_Country where CountryName like @SearchText + '%' and Isactive='Y'";
+                cmd.Parameters.AddWithValue("@SearchText", prefix);
+                cmd.Connection = conn;
+                conn.Open();
+                using (SqlDataReader sdr = cmd.ExecuteReader())
+                {
+                    while (sdr.Read())
+                    {
+                        Country.Add(string.Format("{0}-{1}", sdr["CountryName"], sdr["CountryID"]));
+                        FCountry = sdr["CountryID"].ToString();
+                    }
+                }
+                conn.Close();
+            }
+>>>>>>> 136ff71ddbdb229303b755ad8b2e5f65211bdc71
         }
+        CountryID = Convert.ToInt64(FCountry.ToString());
+        return Country.ToArray();
     }
+    #endregion
 }

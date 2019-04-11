@@ -24,4 +24,8 @@ C:\Users\Aarav\Desktop\Backup Drive (D)\CurrentProject2019\FDFinalProject\FDIFIN
 C:\Users\Aarav\Desktop\Backup Drive (D)\CurrentProject2019\FDFinalProject\FDIFINAL\DataAccessLayer\bin\Debug\Encryption.pdb
 C:\Users\Aarav\Desktop\Backup Drive (D)\CurrentProject2019\FDFinalProject\FDIFINAL\DataAccessLayer\obj\Debug\DataAccessLayer.dll
 C:\Users\Aarav\Desktop\Backup Drive (D)\CurrentProject2019\FDFinalProject\FDIFINAL\DataAccessLayer\obj\Debug\DataAccessLayer.pdb
+<<<<<<< HEAD
 C:\Users\Aarav\Desktop\Backup Drive (D)\CurrentProject2019\FDFinalProject\FDIFINAL\DataAccessLayer\obj\Debug\DataAccessLayer.csprojResolveAssemblyReference.cache
+=======
+F:\FDIFINAL\DataAccessLayer\obj\Debug\DataAccessLayer.csprojResolveAssemblyReference.cache
+>>>>>>> 136ff71ddbdb229303b755ad8b2e5f65211bdc71
