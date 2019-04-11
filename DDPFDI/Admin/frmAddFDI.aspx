@@ -34,9 +34,8 @@
                                         <div class="col-sm-12">
                                             <div class="form-group">
                                                 <label for="businesscode" class="control-label">Select Company </label>
-                                                <%--<asp:DropDownList runat="server" ID="ddlcompany" name="Company" class="form-control form-cascade-control"></asp:DropDownList>--%>
                                                 <asp:TextBox ID="txtcomp" runat="server" class="form-control form-cascade-control"></asp:TextBox>
-                                                <asp:HiddenField ID="hfcompid" runat="server" />
+                                                <asp:Label ID="lbl" runat="server"></asp:Label>
                                             </div>
                                         </div>
 
@@ -46,7 +45,7 @@
                                                     <li class="active"><a href="#fdistep1" data-toggle="tab">FDI Value</a></li>
                                                     <li><a href="#fdistep2" data-toggle="tab">FDI Route</a></li>
                                                     <li><a href="#fdistep3" data-toggle="tab">Foreign Investor Details</a></li>
-                                                    <li><a href="#fdistep4" data-toggle="tab">Source of Information collected</a></li>
+                                                    <li><a href="#fdistep4" data-toggle="tab">Source of Information</a></li>
                                                 </ul>
                                             </div>
                                             <div class="fdi-add-content">
@@ -112,15 +111,15 @@
                                                         </div>
                                                         <div class="form-group">
                                                             <label for="fdiinflow" class="control-label">FDI Inflow</label>
-                                                            <asp:TextBox runat="server" type="text" ID="fdiinflow" name="fdiinflow" onkeypress="return isNumber(event)" class="form-control form-cascade-control" placeholder="Total FDI Inflow"></asp:TextBox>
+                                                            <asp:TextBox runat="server" type="text" ID="fdiinflow" name="fdiinflow" onkeypress="return isNumber(event)" class="form-control form-cascade-control"></asp:TextBox>
                                                         </div>
                                                         <div class="form-group">
                                                             <label for="exchangerate" class="control-label">Average Exchange Rate of RBI</label>
-                                                            <asp:TextBox runat="server" type="text" ID="exchangerate" name="exchangerate" AutoPostBack="true" Text="1" class="form-control form-cascade-control" placeholder="Exchange Rate of RBI" OnTextChanged="exchangerate_TextChanged"></asp:TextBox>
+                                                            <asp:TextBox runat="server" type="text" ID="exchangerate" name="exchangerate" AutoPostBack="true" Text="1" class="form-control form-cascade-control" OnTextChanged="exchangerate_TextChanged"></asp:TextBox>
                                                         </div>
                                                         <div class="form-group">
                                                             <label for="afterexchnagerate" class="control-label">Equivalent INR</label>
-                                                            <asp:TextBox runat="server" type="text" ID="afterexchnagerate" ReadOnly="true" name="afterexchnagerate" class="form-control form-cascade-control" placeholder="Equivalent INR"></asp:TextBox>
+                                                            <asp:TextBox runat="server" type="text" ID="afterexchnagerate" ReadOnly="true" name="afterexchnagerate" class="form-control form-cascade-control"></asp:TextBox>
                                                         </div>
                                                     </li>
 
@@ -130,29 +129,29 @@
                                                             <h3 class="hhead">FDI Route</h3>
                                                             <div class="form-group">
                                                                 <label for="casetype" class="control-label"></label>
-                                                                <asp:DropDownList runat="server" ID="casetype" name="casetype" AutoPostBack="true" required class="form-control form-cascade-control" placeholder="Select District" OnSelectedIndexChanged="casetype_SelectedIndexChanged">
+                                                                <asp:DropDownList runat="server" ID="casetype" name="casetype" AutoPostBack="true" required class="form-control form-cascade-control" OnSelectedIndexChanged="casetype_SelectedIndexChanged">
                                                                     <asp:ListItem Value="Government">Government</asp:ListItem>
                                                                     <asp:ListItem Value="Automatic">Automatic</asp:ListItem>
                                                                 </asp:DropDownList>
                                                             </div>
                                                             <div class="form-group" runat="server" id="divapproval">
                                                                 <label for="tapprovalno" class=" control-label">Approval No</label>
-                                                                <asp:TextBox runat="server" type="text" ID="tapprovalno" name="tapprovalno" class="form-control form-cascade-control" placeholder="Approval No"></asp:TextBox>
+                                                                <asp:TextBox runat="server" type="text" ID="tapprovalno" name="tapprovalno" class="form-control form-cascade-control"></asp:TextBox>
                                                             </div>
                                                             <div class="form-group" runat="server" id="divapprovaldate">
                                                                 <label for="tapprovaldate" class=" control-label">Approval Date</label>
-                                                                <asp:TextBox runat="server" ID="tapprovaldate" type="date" name="tapprovaldate" class="form-control form-cascade-control" placeholder="Approval Date"></asp:TextBox>
+                                                                <asp:TextBox runat="server" ID="tapprovaldate" type="date" name="tapprovaldate" class="form-control form-cascade-control"></asp:TextBox>
                                                             </div>
                                                         </div>
                                                         <div class="codeofbusiness">
                                                             <h3 class="hhead">National Industrial Classification(NIC)</h3>
                                                             <div class="form-group">
                                                                 <label for="businesscode" class="control-label">NIC code of business</label>
-                                                                <asp:TextBox runat="server" ID="businesscode" name="businesscode" class="form-control form-cascade-control" AutoPostBack="true" placeholder="NIC business code" OnTextChanged="businesscode_TextChanged"></asp:TextBox>
+                                                                <asp:TextBox runat="server" ID="businesscode" name="businesscode" class="form-control form-cascade-control" AutoPostBack="true" OnTextChanged="businesscode_TextChanged"></asp:TextBox>
                                                             </div>
                                                             <div class="form-group">
                                                                 <label for="tbdescription" class=" control-label">Description</label>
-                                                                <asp:TextBox runat="server" ID="tbdescription" name="tbdescription" class="form-control form-cascade-control" placeholder="Description"></asp:TextBox>
+                                                                <asp:TextBox runat="server" ID="tbdescription" name="tbdescription" class="form-control form-cascade-control"></asp:TextBox>
                                                             </div>
                                                         </div>
 
@@ -164,28 +163,26 @@
                                                             <h3 class="hhead">Foreign Investor Details</h3>
                                                             <div class="form-group">
                                                                 <label for="tcountry" class="control-label">Select Country. </label>
-
-                                                                <asp:DropDownList runat="server" ID="ncountry" name="ncountry" class="form-control form-cascade-control" placeholder="Select Country">
-                                                                </asp:DropDownList>
+                                                                <asp:TextBox ID="txtcount" runat="server" CssClass="form-control form-cascade-control"></asp:TextBox>
 
                                                             </div>
                                                             <div class="form-group">
                                                                 <label for="tforeignname" class="control-label">Foreign Company Name.</label>
 
-                                                                <asp:TextBox runat="server" type="text" ID="tforeignname" name="tforeignname" class="form-control form-cascade-control" placeholder="Company Name"></asp:TextBox>
+                                                                <asp:TextBox runat="server" type="text" ID="tforeignname" name="tforeignname" class="form-control form-cascade-control"></asp:TextBox>
                                                             </div>
 
                                                             <div class="form-group">
                                                                 <label for="tforeignaddress" class="control-label">Address. </label>
 
-                                                                <asp:TextBox runat="server" TextMode="MultiLine" ID="tforeignaddress" name="tforeignaddress" class="form-control form-cascade-control" placeholder="Address"></asp:TextBox>
+                                                                <asp:TextBox runat="server" TextMode="MultiLine" ID="tforeignaddress" name="tforeignaddress" class="form-control form-cascade-control"></asp:TextBox>
 
                                                             </div>
 
                                                             <div class="form-group">
                                                                 <label for="tzipcode" class="control-label">Zip Code. </label>
 
-                                                                <asp:TextBox runat="server" type="text" ID="tzipcode" name="tzipcode" class="form-control form-cascade-control" placeholder="Zip Code" pattern="[0-9]{6}"></asp:TextBox>
+                                                                <asp:TextBox runat="server" type="text" ID="tzipcode" name="tzipcode" class="form-control form-cascade-control" pattern="[0-9]{6}"></asp:TextBox>
                                                             </div>
                                                             <div class="form-group">
                                                                 <label for="activityname" class="control-label">Foreign investor engaged in Defence Activities .</label>
@@ -221,8 +218,7 @@
                                                             <div class="form-group">
                                                                 <label for="tdateofreceiving" class="control-label">Date of receiving information</label>
 
-                                                                <asp:TextBox runat="server" type="date" ID="tdateofreceiving" name="tdateofreceiving" class="form-control form-cascade-control"
-                                                                    placeholder="Date of receiving information"></asp:TextBox>
+                                                                <asp:TextBox runat="server" type="date" ID="tdateofreceiving" name="tdateofreceiving" class="form-control form-cascade-control"></asp:TextBox>
                                                             </div>
                                                             <div class="form-group">
                                                                 <label for="selsource" class="control-label">Authenticity of Information </label>
@@ -236,11 +232,11 @@
 
                                                             <div class="form-group">
                                                                 <label for="tremarks" class="control-label">Remarks </label>
-                                                                <asp:TextBox runat="server" ID="tremarks" name="tremarks" TextMode="MultiLine" Height="77px" class="form-control form-cascade-control" placeholder="Remarks"></asp:TextBox>
+                                                                <asp:TextBox runat="server" ID="tremarks" name="tremarks" TextMode="MultiLine" Height="77px" class="form-control form-cascade-control"></asp:TextBox>
                                                             </div>
                                                             <div class="form-group">
                                                                 <label for="selsource" class="control-label">Document attached if any (Email/Letter etc in pdf format only.) </label>
-                                                                <asp:FileUpload runat="server" type="file" ID="attachfile" name="attachfile" class="form-control form-cascade-control" placeholder="Attachfile" />
+                                                                <asp:FileUpload runat="server" type="file" ID="attachfile" name="attachfile" class="form-control form-cascade-control" />
                                                                 <asp:Label ID="lblfuupdate" runat="server"></asp:Label>
                                                             </div>
 
