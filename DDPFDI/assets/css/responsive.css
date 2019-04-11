@@ -5,7 +5,7 @@
     height: 100%;
     min-height: 100%;
     position: absolute;
-    left: -280px;
+    left: -292px;
   }
   .content {
     margin-left: 0 !important;
@@ -45,10 +45,30 @@
     display: inline-block;
     margin-right: 20px;
   }
+
+/*----Shiv---------*/
+ .main-logo {
+    font-size: 34px !important;
+    margin-left: 10px;
+    
+  }
+  .loginBg { width: 90% !important;}
+  .navbar-header .navbar-brand { display: flex; align-items: center;}
+  .btn-nav-toggle-responsive {cursor: pointer;}
+  .slide-leftbar { left: 0 !important;}
+  .navbar .user-menu { margin-right: 0;}
+  .add-inflow-tab ul li a { padding: 10px 52px; display: block; }
+  .add-inflow-tab { width: 100%; float: left}
+  #btnCaptchaNew { right: -8px; top: -37px;}
+
+  .fdi-tab ul { flex-direction: column;}
+
+
 }
 
 
-/*----Shiv---------*/
+/*--- For Tab Device ----*/
+
 @media (min-width: 768px) and (max-width: 1024px) {
   .main-logo {
     font-size: 34px !important;
@@ -60,5 +80,14 @@
   .btn-nav-toggle-responsive {cursor: pointer;}
   .slide-leftbar { left: 0 !important;}
   .navbar .user-menu { margin-right: 0;}
+  .add-inflow-tab ul li a { padding: 10px 52px; }
+  .add-inflow-tab { width: 100%; float: left}
 
 }
+
+
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
+  .add-inflow-tab ul li a {
+        padding: 10px 20px;
+  }
+ }

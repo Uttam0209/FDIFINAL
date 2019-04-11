@@ -52,13 +52,32 @@
                     <div class="sidebar-holder">
                         <button class="btn  btn-nav-toggle"><i class="fa fa-angle-double-left toggle-left"></i></button>
                         <ul class="nav  nav-list">
-                            <li class="active"><a href='<%=ResolveUrl("~/Dashboard") %>' data-original-title="Dashboard">
-                                <i class="fas fa-tachometer-alt"></i><span class="hidden-minibar">Dashboard</span></a></li>
-                            <li><a href='<%=ResolveUrl("~/ViewFDI-Detail") %>' data-original-title="ViewFDI-Detail"><i class="fas fa-tachometer-alt"></i><span class="hidden-minibar">FDI Inflow
-                                Detail</span></a></li>
-                            <li><a href='<%=ResolveUrl("~/Detail-Company") %>' data-original-title="Master Company Detail">
-                                <i class="fas fa-building"></i><span class="hidden-minibar">Master
-                                Companies</span></a></li>
+                            <li class="parent-nav"><a href="#"><i class="fas fa-user-lock"></i><span class="hidden-minibar">Admin</span> <i class="fas fa-angle-down"></i></a>
+                                <ul class="parent-nav-child">
+                                    <li class="active"><a href='<%=ResolveUrl("~/Dashboard") %>' data-original-title="Dashboard">
+                                    <i class="fas fa-tachometer-alt"></i><span class="hidden-minibar">Dashboard</span></a></li>
+                                    <li><a href='<%=ResolveUrl("~/ViewFDI-Detail") %>' data-original-title="ViewFDI-Detail"><i class="fas fa-tachometer-alt"></i><span class="hidden-minibar">FDI Inflow
+                                    Detail</span></a></li>
+
+                                    <li><a href='<%=ResolveUrl("~/Detail-Company") %>' data-original-title="Master Company Detail">
+                                    <i class="fas fa-building"></i><span class="hidden-minibar">Master
+                                    Companies</span></a></li>
+                                </ul>
+                            </li>
+                            <li class="parent-nav"><a href="#"><i class="fas fa-user-tie"></i><span class="hidden-minibar">User </span><i class="fas fa-angle-down"></i></a>
+                                <ul class="parent-nav-child">
+                                    <li class="active"><a href='<%=ResolveUrl("~/Dashboard") %>' data-original-title="Dashboard">
+                                    <i class="fas fa-tachometer-alt"></i><span class="hidden-minibar">Dashboard</span></a></li>
+                                    <li><a href='<%=ResolveUrl("~/ViewFDI-Detail") %>' data-original-title="ViewFDI-Detail"><i class="fas fa-tachometer-alt"></i><span class="hidden-minibar">FDI Inflow
+                                    Detail</span></a></li>
+
+                                    <li><a href='<%=ResolveUrl("~/Detail-Company") %>' data-original-title="Master Company Detail">
+                                    <i class="fas fa-building"></i><span class="hidden-minibar">Master
+                                    Companies</span></a></li>
+                                </ul>
+                            </li>
+
+                           
                         </ul>
                     </div>
                 </div>
