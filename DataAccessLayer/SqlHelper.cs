@@ -263,7 +263,7 @@ namespace DataAccessLayer
         }
         #endregion
         #region retriveCode
-        public DataTable RetriveGridView(Int64 ID)
+        public DataTable RetriveGridView(string ID)
         {
             using (DbConnection dbCon = db.CreateConnection())
             {
@@ -271,7 +271,7 @@ namespace DataAccessLayer
                 try
                 {
                     DbCommand cmd = db.GetStoredProcCommand("sp_SearchFDIGrid");
-                    db.AddInParameter(cmd, "@CompID", DbType.Int64, ID);
+                    db.AddInParameter(cmd, "@CompanyRefno", DbType.Int64, ID);
                     IDataReader dr = db.ExecuteReader(cmd);
                     DataTable dt = new DataTable();
                     if (dr != null)

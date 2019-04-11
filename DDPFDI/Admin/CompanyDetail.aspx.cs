@@ -31,7 +31,7 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
         if (Request.QueryString["mcurrentID"] != null)
         {
             hfid.Value = objCrypto.DecryptData(Request.QueryString["mcurrentID"].ToString());
-            DtView = Lo.RetriveGridView(Convert.ToInt64(hfid.Value));
+            DtView = Lo.RetriveGridView(hfid.Value);
             if (DtView.Rows.Count > 0)
             {
                 //if(DtView.Rows[0]["IsJointVenture"].ToString()=="Yes"

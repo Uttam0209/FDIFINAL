@@ -60,7 +60,7 @@ public partial class Admin_frmAddFDI : System.Web.UI.Page
         if (Request.QueryString["mcurrentID"] != null)
         {
             hfid.Value = objCrypto.DecryptData(Request.QueryString["mcurrentID"].ToString());
-            DtView = Lo.RetriveGridView(Convert.ToInt64(hfid.Value));
+            DtView = Lo.RetriveGridView(hfid.Value);
             if (DtView.Rows.Count > 0)
             {
                 txtcomp.Text = DtView.Rows[0]["CompanyName"].ToString(); // ddlcompany.Text
@@ -438,7 +438,7 @@ public partial class Admin_frmAddFDI : System.Web.UI.Page
         {
             tbdescription.Text = DtDes.Rows[0]["NicDesc"].ToString();
             tbdescription.ReadOnly = true;
-            Int64 id = Request.Form[hfcompid.Value];
+            Int64 id = Convert.ToInt64(Request.Form[hfcompid.Value]);
         }
     }
 }
