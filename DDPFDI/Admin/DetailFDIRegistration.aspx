@@ -47,7 +47,7 @@
                     <div class="col-mod-12">
                         <ul class="breadcrumb">
                             <li><a href="home">Dashboard</a></li>
-                            <li class="active">FDI Registration Detail</li>
+                            <li class="active">FDI Reporting Detail</li>
                         </ul>
                     </div>
                     <form method="post" class="addfdi">
@@ -62,12 +62,12 @@
                                         <asp:LinkButton runat="server" ID="btnsearch" class="text-black btn btn-warning pull-left btn-md" OnClick="Search_Click" Text="Search"></asp:LinkButton>
                                     </div>
 
-                                    <a href='<%=ResolveUrl("~/FDIRegistration") %>' class="text-black btn btn-warning pull-right btn-md">Add FDI</a>
+                                    <a href='<%=ResolveUrl("~/FDIRegistration") %>' class="text-black btn btn-warning pull-right btn-md">Add FDI Reporting</a>
 
                                     <br />
                                     <br />
                                     <div class="clearfix"></div>
-                                    <div class="text-center" style="font-size:16px; margin-top:10px;">Total cumulative value :<strong>  <asp:Label ID="lbltotal" runat="server" Text=""></asp:Label></strong></div>
+                                    <div class="text-center" style="font-size:16px; margin-top:20px;">Total cumulative value in INR :<strong>  <asp:Label ID="lbltotal" runat="server" Text=""></asp:Label></strong></div>
                                     <div class="clearfix"></div>
                                     <asp:GridView ID="gvdetail" runat="server" Width="100%" Class="commonAjaxTbl table display responsive no-wrap table-hover manage-user" AutoGenerateColumns="false" AllowPaging="true"
                                         OnPageIndexChanging="OnPageIndexChanging" PageSize="10" AllowSorting="true" OnSorting="OnSorting" OnRowCommand="gvdetail_RowCommand">
@@ -78,25 +78,26 @@
                                                     <%#Container.DataItemIndex+1 %>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
+                                            <asp:BoundField DataField="FDIRefNo" HeaderText="FDI Reference No" NullDisplayText="" SortExpression="FDIRefNo" />
                                             <asp:BoundField DataField="CompanyName" HeaderText="Company Name" NullDisplayText="#" SortExpression="CompanyName" />
-                                            <asp:BoundField DataField="NICCode" HeaderText="NIC Code" NullDisplayText="" SortExpression="NICCode" />
-                                            <asp:BoundField DataField="FDIValueType" HeaderText="FDI Reporting" NullDisplayText="#" SortExpression="FDIValueType" />
-                                            <asp:BoundField DataField="PeriodOfQuater" HeaderText="Reporting Period" NullDisplayText="#" SortExpression="PeriodOfQuater" />
+                                            <asp:BoundField DataField="FDIValueType" HeaderText="FDI" NullDisplayText="#" SortExpression="FDIValueType" />
+                                            <asp:BoundField DataField="PeriodOfQuater" HeaderText="Period" NullDisplayText="#" SortExpression="PeriodOfQuater" />
                                             <asp:BoundField DataField="FY" HeaderText="Financial Year" NullDisplayText="#" SortExpression="FY" />
-                                             <asp:BoundField DataField="ExchangeTotalAmount" HeaderText="Amount" DataFormatString="{0:N0}" NullDisplayText="#" SortExpression="ExchangeTotalAmount" />
+                                             <asp:BoundField DataField="ExchangeTotalAmount" HeaderText="Amount(INR)" DataFormatString="{0:N0}" NullDisplayText="#" SortExpression="ExchangeTotalAmount" />
+                                            <asp:BoundField DataField="IsActive" HeaderText="Is Active" NullDisplayText="#" SortExpression="IsActive" />
                                             <asp:TemplateField HeaderText="Edit">
                                                 <ItemTemplate>
-                                                    <asp:LinkButton ID="lbledit" runat="server" CssClass="fa fa-edit" CommandName="Edit" CommandArgument='<%#Eval("CompanyID") %>'></asp:LinkButton>
+                                                    <asp:LinkButton ID="lbledit" runat="server" CssClass="fa fa-edit" CommandName="Edit" CommandArgument='<%#Eval("CompanyRefNo") %>'></asp:LinkButton>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="View">
                                                 <ItemTemplate>
-                                                    <asp:LinkButton ID="lblview" runat="server" CssClass="fa fa-eye" CommandName="View" CommandArgument='<%#Eval("CompanyID") %>'></asp:LinkButton>
+                                                    <asp:LinkButton ID="lblview" runat="server" CssClass="fa fa-eye" CommandName="View" CommandArgument='<%#Eval("CompanyRefNo") %>'></asp:LinkButton>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="Delete">
                                                 <ItemTemplate>
-                                                    <asp:LinkButton ID="lbldel" runat="server" CssClass="fa fa-trash" CommandName="Delete" CommandArgument='<%#Eval("CompanyID") %>'></asp:LinkButton>
+                                                    <asp:LinkButton ID="lbldel" runat="server" CssClass="fa fa-trash" CommandName="Delete" CommandArgument='<%#Eval("CompanyRefNo") %>'></asp:LinkButton>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                         </Columns>

@@ -161,23 +161,23 @@
             });
         }
     </script>
-     <script type="text/javascript">
-         $(function () {
-             SetAutoCompleteCountry();
-         });
-         var prm = Sys.WebForms.PageRequestManager.getInstance();
-         if (prm != null) {
-             prm.add_endRequest(function (sender, e) {
-                 if (sender._postBackSettings.panelsToUpdate != null) {
-                     SetAutoCompleteCountry();
-                 }
-             });
-         };
-         function SetAutoCompleteCountry() {
-             $("[id$=txtcount]").autocomplete({
-                 source: function (request, response) {
-                     $.ajax({
-                         url: '<%=ResolveUrl("~/Admin/frmAddFDI.aspx/GetCountry") %>',
+    <script type="text/javascript">
+        $(function () {
+            SetAutoCompleteCountry();
+        });
+        var prm = Sys.WebForms.PageRequestManager.getInstance();
+        if (prm != null) {
+            prm.add_endRequest(function (sender, e) {
+                if (sender._postBackSettings.panelsToUpdate != null) {
+                    SetAutoCompleteCountry();
+                }
+            });
+        };
+        function SetAutoCompleteCountry() {
+            $("[id$=txtcount]").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: '<%=ResolveUrl("~/Admin/frmAddFDI.aspx/GetCountry") %>',
                         data: "{ 'prefix': '" + request.term + "'}",
                         dataType: "json",
                         type: "POST",
@@ -192,9 +192,18 @@
                         }
                     });
                 }
-
             });
         }
+    </script>
+    <script>
+        function isNumber(evt) {
+            evt = (evt) ? evt : window.event;
+            var charCode = (evt.which) ? evt.which : evt.keyCode;
+            if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+                return false;
+            }
+            return true;
+        };
     </script>
 </body>
 </html>

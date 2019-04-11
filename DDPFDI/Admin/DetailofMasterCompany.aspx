@@ -7,6 +7,17 @@
             $('#changePass').modal('show');
         }
     </script>
+
+    <script>
+        function isNumber(evt) {
+            evt = (evt) ? evt : window.event;
+            var charCode = (evt.which) ? evt.which : evt.keyCode;
+            if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+                return false;
+            }
+            return true;
+        };
+    </script>
 </asp:Content>
 <asp:Content ID="inner" runat="server" ContentPlaceHolderID="ContentPlaceHolder1">
     <asp:ScriptManager ID="sc" runat="server"></asp:ScriptManager>
@@ -17,7 +28,7 @@
                     <div class="col-mod-12">
                         <ul class="breadcrumb">
                             <li><a href='<%=ResolveUrl("~/Detail-Company") %>'>Dashboard</a></li>
-                            <li class="active">Company Registration Detail</li> 
+                            <li class="active">Companies Detail</li> 
                         </ul>
                     </div>
                     <form method="post" class="addfdi">
@@ -32,10 +43,10 @@
                                         <asp:LinkButton runat="server" ID="btnsearch" class="text-black btn btn-warning pull-left btn-md" OnClick="Search_Click" Text="Search"></asp:LinkButton>
                                     </div>
                                     
-                                        <a href="<%=ResolveUrl("~/Add-Company") %>" class="text-black btn btn-success pull-right btn-md">Add company</a>
+                                        <a href="<%=ResolveUrl("~/Add-Company") %>" class="text-black btn btn-warning pull-right btn-md">Add company</a>
                               
                                     <div class="clearfix"></div>
-                                    <div class="text-center" style="font-size:16px; margin-top:10px;">Total number of  active company :<strong>  <asp:Label ID="lbltotal" runat="server" Text=""></asp:Label></strong></div>
+                                    <div class="text-center" style="font-size:16px; margin-top:10px;">Total number of  active companies :<strong>  <asp:Label ID="lbltotal" runat="server" Text=""></asp:Label></strong></div>
                                     <div class="clearfix"></div>
                                     <div class="table-wraper">
                                     <asp:GridView ID="gvcompanydetail" runat="server" Width="100%" Class="commonAjaxTbl table display responsive no-wrap table-hover manage-user" AutoGenerateColumns="false" AllowPaging="true"
@@ -66,22 +77,22 @@
                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="Edit">
                                                 <ItemTemplate>
-                                                    <asp:LinkButton ID="lbledit" runat="server" CssClass="fa fa-edit" CommandName="EditComp" CommandArgument='<%#Eval("CompanyID") %>'></asp:LinkButton>
+                                                    <asp:LinkButton ID="lbledit" runat="server" CssClass="fa fa-edit" CommandName="EditComp" CommandArgument='<%#Eval("CompanyRefNo") %>'></asp:LinkButton>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="View">
                                                 <ItemTemplate>
-                                                    <asp:LinkButton ID="lblview" runat="server" CssClass="fa fa-eye" CommandName="ViewComp" CommandArgument='<%#Eval("CompanyID") %>'></asp:LinkButton>
+                                                    <asp:LinkButton ID="lblview" runat="server" CssClass="fa fa-eye" CommandName="ViewComp" CommandArgument='<%#Eval("CompanyRefNo") %>'></asp:LinkButton>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="Delete">
                                                 <ItemTemplate>
-                                                    <asp:LinkButton ID="lbldel" runat="server" CssClass="fa fa-trash" CommandName="DeleteComp" CommandArgument='<%#Eval("CompanyID") %>'></asp:LinkButton>
+                                                    <asp:LinkButton ID="lbldel" runat="server" CssClass="fa fa-trash" CommandName="DeleteComp" CommandArgument='<%#Eval("CompanyRefNo") %>'></asp:LinkButton>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="Send Login">
                                                 <ItemTemplate>
-                                                    <asp:LinkButton ID="lbllogindetail" runat="server" CssClass=" fa fa-paper-plane" CommandName="SendLogin" CommandArgument='<%#Eval("CompanyID") %>'></asp:LinkButton>
+                                                    <asp:LinkButton ID="lbllogindetail" runat="server" CssClass=" fa fa-paper-plane" CommandName="SendLogin" CommandArgument='<%#Eval("CompanyRefNo") %>'></asp:LinkButton>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                         </Columns>

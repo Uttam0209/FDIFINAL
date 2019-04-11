@@ -143,7 +143,7 @@ namespace DataAccessLayer
                 DbTransaction dbTran = dbCon.BeginTransaction();
                 try
                 {
-                    DbCommand cmdUser = db.GetStoredProcCommand("sp_trn_company");
+                    DbCommand cmdUser = db.GetStoredProcCommand("sp_Trn_FDI");
                     db.AddInParameter(cmdUser, "@MID", DbType.Int64, HySave["MID"]);
                     db.AddInParameter(cmdUser, "@CompanyRefNo", DbType.String, HySave["CompanyRefNo"]);
                     db.AddInParameter(cmdUser, "@NicCodeID", DbType.Int64, HySave["NicCodeID"]);
@@ -152,7 +152,7 @@ namespace DataAccessLayer
                     db.AddInParameter(cmdUser, "@ApprovalDate", DbType.Date, HySave["ApprovalDate"]);
                     db.AddInParameter(cmdUser, "@ForeignCompanyName", DbType.String, HySave["ForeignCompanyName"]);
                     db.AddInParameter(cmdUser, "@Address", DbType.String, HySave["Address"]);
-                    db.AddInParameter(cmdUser, "@Country", DbType.String, HySave["Country"]);
+                    db.AddInParameter(cmdUser, "@Country", DbType.Int64, HySave["Country"]);
                     db.AddInParameter(cmdUser, "@ZipCode", DbType.String, HySave["ZipCode"]);
                     db.AddInParameter(cmdUser, "@ForeignDefenceActivity", DbType.String, HySave["ForeignDefenceActivity"]);
                     db.AddInParameter(cmdUser, "@FDIValueType", DbType.String, HySave["FDIValueType"]);
@@ -262,7 +262,7 @@ namespace DataAccessLayer
         }
         #endregion
         #region retriveCode
-        public DataTable RetriveGridView(Int64 ID)
+        public DataTable RetriveGridView(string ID)
         {
             using (DbConnection dbCon = db.CreateConnection())
             {
@@ -270,7 +270,7 @@ namespace DataAccessLayer
                 try
                 {
                     DbCommand cmd = db.GetStoredProcCommand("sp_SearchFDIGrid");
-                    db.AddInParameter(cmd, "@CompID", DbType.Int64, ID);
+                    db.AddInParameter(cmd, "@CompanyRefNo", DbType.String, ID);
                     IDataReader dr = db.ExecuteReader(cmd);
                     DataTable dt = new DataTable();
                     if (dr != null)
