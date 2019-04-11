@@ -83,7 +83,7 @@
                                             <asp:BoundField DataField="FDIValueType" HeaderText="FDI Reporting" NullDisplayText="#" SortExpression="FDIValueType" />
                                             <asp:BoundField DataField="PeriodOfQuater" HeaderText="Reporting Period" NullDisplayText="#" SortExpression="PeriodOfQuater" />
                                             <asp:BoundField DataField="FY" HeaderText="Financial Year" NullDisplayText="#" SortExpression="FY" />
-                                             <asp:BoundField DataField="ExchangeTotalAmount" HeaderText="Amount" NullDisplayText="#" SortExpression="ExchangeTotalAmount" />
+                                             <asp:BoundField DataField="ExchangeTotalAmount" HeaderText="Amount" DataFormatString="{0:N0}" NullDisplayText="#" SortExpression="ExchangeTotalAmount" />
                                             <asp:TemplateField HeaderText="Edit">
                                                 <ItemTemplate>
                                                     <asp:LinkButton ID="lbledit" runat="server" CssClass="fa fa-edit" CommandName="Edit" CommandArgument='<%#Eval("CompanyID") %>'></asp:LinkButton>

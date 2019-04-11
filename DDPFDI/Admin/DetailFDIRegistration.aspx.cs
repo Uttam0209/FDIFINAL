@@ -38,14 +38,16 @@ public partial class Admin_DetailFDIRegistration : System.Web.UI.Page
                 }
                 gvdetail.DataBind();
 
-                decimal total = 0;
+                double total = 0;
                 for (int i = 0; i < DtGrid.Rows.Count; i++)
                 {
 
-                    total = total + Convert.ToDecimal(DtGrid.Rows[i]["ExchangeTotalAmount"].ToString());
+                    total = total + Convert.ToDouble(DtGrid.Rows[i]["ExchangeTotalAmount"].ToString());
                 }
 
-                lbltotal.Text =  String.Format("{0:C}", total.ToString());
+                lbltotal.Text = Math.Round(total, 0).ToString("N0");
+
+                
             }
         }
         catch (Exception ex)
@@ -145,14 +147,15 @@ public partial class Admin_DetailFDIRegistration : System.Web.UI.Page
             {
                 gvdetail.DataSource = DtGrid;
                 gvdetail.DataBind();
-                decimal total=0;
+                double total=0;
                 for (int i = 0; i < DtGrid.Rows.Count; i++)
                 {
 
-                    total = total + Convert.ToDecimal(DtGrid.Rows[i]["ExchangeTotalAmount"].ToString());
+                    total = total + Convert.ToDouble(DtGrid.Rows[i]["ExchangeTotalAmount"].ToString());
                 }
 
-                lbltotal.Text = String.Format("{0:C}", total.ToString());
+                lbltotal.Text = Math.Round(total, 0).ToString("N0");
+                
             }
             else
             {
