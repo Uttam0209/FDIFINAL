@@ -79,15 +79,19 @@ public partial class Admin_DetailFDIRegistration : System.Web.UI.Page
             DataTable DtView = Lo.RetriveGridView(e.CommandArgument.ToString());
             if (DtView.Rows.Count > 0)
             {
+                DateTime date = new DateTime();
                 lbladdress.Text = DtView.Rows[0]["Address"].ToString();
                 lbladdress1.Text = DtView.Rows[0]["Address"].ToString();
-                DateTime date = Convert.ToDateTime(DtView.Rows[0]["ApprovalDate"].ToString());
+                if (DtView.Rows[0]["ApprovalDate"].ToString() != "")
+                {
+                    date = Convert.ToDateTime(DtView.Rows[0]["ApprovalDate"].ToString());
+                }
                 lblapprovaldate.Text = date.ToString("dd-MMM-yyyy");
                 lblaprrovalno.Text = DtView.Rows[0]["ApprovalNo"].ToString();
                 lblauthinfo.Text = DtView.Rows[0]["AuthencityofInformation"].ToString();
                 lblcaseof.Text = DtView.Rows[0]["InCaseOf"].ToString();
                 lblcinno.Text = DtView.Rows[0]["CINNo"].ToString();
-                lblcodeofbuis.Text = DtView.Rows[0]["CodeofBusiness"].ToString();
+                lblcodeofbuis.Text = DtView.Rows[0]["NicCode"].ToString();
                 lblcompanyname.Text = DtView.Rows[0]["CompanyName"].ToString();
                 lblcontactperemailid.Text = DtView.Rows[0]["ContactPersonEmailID"].ToString();
                 lblcontactpersonmobno.Text = DtView.Rows[0]["ContactPersonContactNo"].ToString();
@@ -106,7 +110,7 @@ public partial class Admin_DetailFDIRegistration : System.Web.UI.Page
                 lblpanno.Text = DtView.Rows[0]["PANNo"].ToString();
                 lblperiodofreprot.Text = DtView.Rows[0]["PeriodofReporting"].ToString();
                 lblpincode.Text = DtView.Rows[0]["Pincode"].ToString();
-                lblrecinfo.Text = DtView.Rows[0]["RecInsTime"].ToString();
+                //lblrecinfo.Text = DtView.Rows[0]["RecInsTime"].ToString();
                 lblremark.Text = DtView.Rows[0]["Remarks"].ToString();
                 lblsourceinfo.Text = DtView.Rows[0]["SourceofInformation"].ToString();
                 lblstate.Text = DtView.Rows[0]["StateName"].ToString();
