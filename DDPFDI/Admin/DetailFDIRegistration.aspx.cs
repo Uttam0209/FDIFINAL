@@ -21,7 +21,7 @@ public partial class Admin_DetailFDIRegistration : System.Web.UI.Page
     {
         try
         {
-            DataTable DtGrid = Lo.RetriveGridView(0);
+            DataTable DtGrid = Lo.RetriveGridView("");
             if (DtGrid.Rows.Count > 0)
             {
                 if (sortExpression != null)
@@ -76,7 +76,7 @@ public partial class Admin_DetailFDIRegistration : System.Web.UI.Page
         }
         else if (e.CommandName == "View")
         {
-            DataTable DtView = Lo.RetriveGridView(Convert.ToInt64(e.CommandArgument.ToString()));
+            DataTable DtView = Lo.RetriveGridView(e.CommandArgument.ToString());
             if (DtView.Rows.Count > 0)
             {
                 lbladdress.Text = DtView.Rows[0]["Address"].ToString();

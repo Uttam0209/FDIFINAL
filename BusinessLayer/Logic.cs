@@ -38,7 +38,7 @@ namespace BusinessLayer
         }
         #endregion
         #region retriveCode
-        public DataTable RetriveGridView(Int64 ID)
+        public DataTable RetriveGridView(string ID)
         {
             return SqlHelper.Instance.RetriveGridView(ID);
         }

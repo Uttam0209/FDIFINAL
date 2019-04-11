@@ -86,17 +86,17 @@
                                              <asp:BoundField DataField="ExchangeTotalAmount" HeaderText="Amount" DataFormatString="{0:N0}" NullDisplayText="#" SortExpression="ExchangeTotalAmount" />
                                             <asp:TemplateField HeaderText="Edit">
                                                 <ItemTemplate>
-                                                    <asp:LinkButton ID="lbledit" runat="server" CssClass="fa fa-edit" CommandName="Edit" CommandArgument='<%#Eval("CompanyID") %>'></asp:LinkButton>
+                                                    <asp:LinkButton ID="lbledit" runat="server" CssClass="fa fa-edit" CommandName="Edit" CommandArgument='<%#Eval("CompanyRefNo") %>'></asp:LinkButton>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="View">
                                                 <ItemTemplate>
-                                                    <asp:LinkButton ID="lblview" runat="server" CssClass="fa fa-eye" CommandName="View" CommandArgument='<%#Eval("CompanyID") %>'></asp:LinkButton>
+                                                    <asp:LinkButton ID="lblview" runat="server" CssClass="fa fa-eye" CommandName="View" CommandArgument='<%#Eval("CompanyRefNo") %>'></asp:LinkButton>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="Delete">
                                                 <ItemTemplate>
-                                                    <asp:LinkButton ID="lbldel" runat="server" CssClass="fa fa-trash" CommandName="Delete" CommandArgument='<%#Eval("CompanyID") %>'></asp:LinkButton>
+                                                    <asp:LinkButton ID="lbldel" runat="server" CssClass="fa fa-trash" CommandName="Delete" CommandArgument='<%#Eval("CompanyRefNo") %>'></asp:LinkButton>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                         </Columns>

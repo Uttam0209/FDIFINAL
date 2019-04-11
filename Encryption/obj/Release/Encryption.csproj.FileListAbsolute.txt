@@ -1,8 +1,0 @@
-C:\Users\Mohammad Wali\Desktop\DDPFDI\Encryption\bin\Release\Encryption.dll
-C:\Users\Mohammad Wali\Desktop\DDPFDI\Encryption\bin\Release\Encryption.pdb
-C:\Users\Mohammad Wali\Desktop\DDPFDI\Encryption\obj\Release\Encryption.dll
-C:\Users\Mohammad Wali\Desktop\DDPFDI\Encryption\obj\Release\Encryption.pdb
-F:\FDIFINAL\Encryption\bin\Release\Encryption.dll
-F:\FDIFINAL\Encryption\bin\Release\Encryption.pdb
-F:\FDIFINAL\Encryption\obj\Release\Encryption.dll
-F:\FDIFINAL\Encryption\obj\Release\Encryption.pdb
