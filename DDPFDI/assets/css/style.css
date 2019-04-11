@@ -95,7 +95,7 @@ box-shadow: -1px 13px 5px -6px rgba(0,0,0,0.75); color:#FFF;}
     height: 100%;
     min-height: 100%;
     position: absolute;
-    left: -280px;
+    left: -291px;
   }
   .content {
     margin-left: 0 !important;
@@ -133,7 +133,6 @@ box-shadow: -1px 13px 5px -6px rgba(0,0,0,0.75); color:#FFF;}
   .navbar .btn-nav-toggle-responsive {
     color: #FFFFFF;
     display: inline-block;
-    margin-top:-10px;
   }
     
 
@@ -3643,8 +3642,10 @@ p.domw {
     width: 17em;
     margin: 0px 0 0 -28.6em;
 }
-p.domw span.sp-domw {
-  font: 300 1.3em "Open sans", sans-serif;
+.main-logo {
+    font-family: "Open sans", sans-serif;
+    font-weight: 400;
+    line-height: 48px;
     letter-spacing: 0;
     padding:0px;
     display: block;
