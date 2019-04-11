@@ -1,0 +1,11 @@
+F:\FDIFINAL\DataAccessLayer\bin\Release\DataAccessLayer.dll
+F:\FDIFINAL\DataAccessLayer\bin\Release\DataAccessLayer.pdb
+F:\FDIFINAL\DataAccessLayer\bin\Release\Encryption.dll
+F:\FDIFINAL\DataAccessLayer\bin\Release\Microsoft.Practices.EnterpriseLibrary.Common.dll
+F:\FDIFINAL\DataAccessLayer\bin\Release\Microsoft.Practices.EnterpriseLibrary.Data.dll
+F:\FDIFINAL\DataAccessLayer\bin\Release\Microsoft.Practices.Unity.dll
+F:\FDIFINAL\DataAccessLayer\bin\Release\Microsoft.Practices.Unity.Interception.dll
+F:\FDIFINAL\DataAccessLayer\bin\Release\Encryption.pdb
+F:\FDIFINAL\DataAccessLayer\obj\Release\DataAccessLayer.csprojResolveAssemblyReference.cache
+F:\FDIFINAL\DataAccessLayer\obj\Release\DataAccessLayer.dll
+F:\FDIFINAL\DataAccessLayer\obj\Release\DataAccessLayer.pdb
