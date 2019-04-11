@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Data;
 using BusinessLayer;
-using Encryption;
 using System.Collections.Specialized;
 using System.Web.UI;
 using System.Text.RegularExpressions;
-using System.Web.Services;
 using System.Configuration;
 using System.Data.SqlClient;
 using System.Collections.Generic;
-using System.IO;
+using Encryption;
 
 
 public partial class Admin_frmAddFDI : System.Web.UI.Page
@@ -26,24 +24,24 @@ public partial class Admin_frmAddFDI : System.Web.UI.Page
     {
         if (!IsPostBack)
         {
-            BindCompany();
+           // BindCompany();
             BindCountry();
             EditCOde();
         }
     }
-    protected void BindCompany()
-    {
-        DataTable Dt = Lo.RetriveCompany("Select", 0, "");
-        if (Dt.Rows.Count > 0 && Dt != null)
-        {
-            Co.FillDropdownlist(ddlcompany, Dt, "CompanyName", "CompanyID");
-            ddlcompany.Items.Insert(0, "Select Company");
-        }
-        else
-        {
-            ddlcompany.Items.Insert(0, "Select Company");
-        }
-    }
+    //protected void BindCompany()
+    //{
+    //    DataTable Dt = Lo.RetriveCompany("Select", 0, "");
+    //    if (Dt.Rows.Count > 0 && Dt != null)
+    //    {
+    //        Co.FillDropdownlist(ddlcompany, Dt, "CompanyName", "CompanyID");
+    //        ddlcompany.Items.Insert(0, "Select Company");
+    //    }
+    //    else
+    //    {
+    //        ddlcompany.Items.Insert(0, "Select Company");
+    //    }
+    //}
     protected void BindFY()
     {
         DataTable Dtfy = Lo.RetriveCompany("FY", 0, "");
@@ -65,7 +63,7 @@ public partial class Admin_frmAddFDI : System.Web.UI.Page
             DtView = Lo.RetriveGridView(Convert.ToInt64(hfid.Value));
             if (DtView.Rows.Count > 0)
             {
-                ddlcompany.Text = DtView.Rows[0]["CompanyName"].ToString();
+                txtcomp.Text = DtView.Rows[0]["CompanyName"].ToString(); // ddlcompany.Text
                 businesscode.Text = DtView.Rows[0]["CodeofBusiness"].ToString();
                 tbdescription.Text = DtView.Rows[0]["BriefDescription"].ToString();
                 casetype.Text = DtView.Rows[0]["InCaseOf"].ToString();
@@ -144,7 +142,7 @@ public partial class Admin_frmAddFDI : System.Web.UI.Page
         }
         else
         {
-            HySave["CompanyID"] = ddlcompany.SelectedItem.Value;
+            HySave["CompanyID"] = txtcomp.Text; //ddlcompany.SelectedItem.Value;
             HySave["MID"] = Mid;
         }
         HySave["CodeofBusiness"] = Co.RSQandSQLInjection(businesscode.Text.Trim(), "soft");
@@ -205,7 +203,8 @@ public partial class Admin_frmAddFDI : System.Web.UI.Page
         }
         if (attachfile.HasFile != false && attachfile.PostedFile.FileName != "" && lblfuupdate.Text == "")
         {
-            string ImgPath = Co.RSQandSQLInjection(ddlcompany.Text.Trim().Replace(" ", "-"), "soft") + "_" + DateTime.Now.ToString("ddMMMHHmm") + "_" + attachfile.PostedFile.FileName;
+        //    string ImgPath = Co.RSQandSQLInjection(ddlcompany.Text.Trim().Replace(" ", "-"), "soft") + "_" + DateTime.Now.ToString("ddMMMHHmm") + "_" + attachfile.PostedFile.FileName;
+            string ImgPath = Co.RSQandSQLInjection(txtcomp.Text.Trim().Replace(" ", "-"), "soft") + "_" + DateTime.Now.ToString("ddMMMHHmm") + "_" + attachfile.PostedFile.FileName;
             attachfile.PostedFile.SaveAs(Server.MapPath("~/CompDocument/") + ImgPath);
             HySave["DocumentAttach"] = ImgPath.ToString();
         }
@@ -221,7 +220,11 @@ public partial class Admin_frmAddFDI : System.Web.UI.Page
     {
         string mCon = "";
 
-        if (ddlcompany.SelectedItem.Text == "Select Company")
+        //if (ddlcompany.SelectedItem.Text == "Select Company")
+        //{
+        //    mCon = "Contact no is mandatory";
+        //}
+        if (txtcomp.Text == "Select Company")
         {
             mCon = "Contact no is mandatory";
         }
@@ -238,7 +241,8 @@ public partial class Admin_frmAddFDI : System.Web.UI.Page
     }
     protected void btnsub_Click(object sender, EventArgs e)
     {
-        if (ddlcompany.SelectedItem.Text != "Select Company")
+      //  if (ddlcompany.SelectedItem.Text != "Select Company")
+            if (txtcomp.Text != "Select Company")
         {
             if (attachfile.PostedFile != null && attachfile.PostedFile.FileName != "")
             {
@@ -295,7 +299,8 @@ public partial class Admin_frmAddFDI : System.Web.UI.Page
     }
     protected void cleartext()
     {
-        ddlcompany.Text = "Select Company";
+        txtcomp.Text = "";
+       // ddlcompany.Text = "Select Company";
         businesscode.Text = "";
         tbdescription.Text = "";
         casetype.SelectedIndex = 0;
@@ -399,6 +404,33 @@ public partial class Admin_frmAddFDI : System.Web.UI.Page
         }
         return customers.ToArray();
     }
+    [System.Web.Services.WebMethod]
+    [System.Web.Script.Services.ScriptMethod()]
+    public static string[] GetCustomers1(string prefix)
+    {
+        Cryptography objCrypto1 = new Cryptography();
+        List<string> customers1 = new List<string>();
+        using (SqlConnection conn = new SqlConnection())
+        {
+            conn.ConnectionString = objCrypto1.DecryptData(ConfigurationManager.ConnectionStrings["connectiondb"].ConnectionString);
+            using (SqlCommand cmd = new SqlCommand())
+            {
+                cmd.CommandText = "select CompanyName, CompanyID from tbl_mst_Company where CompanyName like @SearchText + '%'";
+                cmd.Parameters.AddWithValue("@SearchText", prefix);
+                cmd.Connection = conn;
+                conn.Open();
+                using (SqlDataReader sdr = cmd.ExecuteReader())
+                {
+                    while (sdr.Read())
+                    {
+                        customers1.Add(string.Format("{0}-{1}", sdr["CompanyName"], sdr["CompanyID"]));
+                    }
+                }
+                conn.Close();
+            }
+        }
+        return customers1.ToArray();
+    }
     protected void businesscode_TextChanged(object sender, EventArgs e)
     {
         DataTable DtDes = Lo.RetriveCompany("Description", 0, businesscode.Text);
@@ -406,6 +438,7 @@ public partial class Admin_frmAddFDI : System.Web.UI.Page
         {
             tbdescription.Text = DtDes.Rows[0]["NicDesc"].ToString();
             tbdescription.ReadOnly = true;
+            Int64 id = Request.Form[hfcompid.Value];
         }
     }
 }
