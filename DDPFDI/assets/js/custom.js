@@ -6,4 +6,10 @@
         $('.hidden-minibar').toggleClass('hide');
         return false;
     });
+
+    //Slide Sidebar in Responsive
+
+    $(".btn-nav-toggle-responsive").click(function(){
+        $(".left-sidebar").toggleClass("slide-leftbar")
+    });
 });

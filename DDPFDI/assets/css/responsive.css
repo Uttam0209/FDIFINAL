@@ -46,8 +46,19 @@
     margin-right: 20px;
   }
 }
-@media (min-width: 768px) {
-  .navbar .btn-nav-toggle-responsive {
-    display: none;
+
+
+/*----Shiv---------*/
+@media (min-width: 768px) and (max-width: 1024px) {
+  .main-logo {
+    font-size: 34px !important;
+    margin-left: 10px;
+    
   }
+  .loginBg { width: 40% !important;}
+  .navbar-header .navbar-brand { display: flex; align-items: center;}
+  .btn-nav-toggle-responsive {cursor: pointer;}
+  .slide-leftbar { left: 0 !important;}
+  .navbar .user-menu { margin-right: 0;}
+
 }

@@ -12,6 +12,7 @@
     <link href="assets/css/font-awesome.css" rel="stylesheet">
     <link href="assets/css/style.css" rel="stylesheet" type="text/css">
     <link href="assets/css/custom.css" rel="stylesheet" type="text/css">
+    <link href="assets/css/responsive.css" rel="stylesheet" type="text/css">
 
     <script type="text/javascript" src="assets/js/loader.js"></script>
     <style>
@@ -60,8 +61,8 @@
            
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
-                <a class="navbar-brand" href="#"><i class="fa fa-list btn-nav-toggle-responsive text-white"></i>
-                    <p class="domw"><span class="sp-domw" title="Foreign Direct Investment">FDI </span></p>
+                <a class="navbar-brand" href="#">
+                    <span class="main-logo" title="Foreign Direct Investment">FDI </span>
                 </a>
             </div>
 

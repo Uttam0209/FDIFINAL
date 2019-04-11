@@ -52,3 +52,5 @@ ul {list-style: none;}
 .admin-dashboard .white-box ul li { width: 100%;}
 .admin-dashboard .white-box ul li .counter { font-size: 18px;}
 .admin-dashboard .white-box .fa-file-export { position: absolute; right: 25px; top: 10px;}
+
+.btn-nav-toggle-responsive { display: none; }
