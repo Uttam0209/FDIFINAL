@@ -42,6 +42,14 @@
         routes.MapPageRoute("Dashboard", "Dashboard", "~/Admin/Dashboard.aspx", true);
         routes.MapPageRoute("AdminLogin", "AdminLogin", "~/Admin/AdminLogin.aspx", true);
         routes.MapPageRoute("D", "D", "~/Admin/Default2.aspx", true);
+        //----UserControl SectionInformation Rewrite------------------------------------------//
+        routes.MapPageRoute("FDI-Inflow", "FDI-Inflow", "~/Admin/FDIInflow.aspx", true);
+        routes.MapPageRoute("General-Info", "General-Info", "~/Admin/GeneralInformation.aspx", true);
+        routes.MapPageRoute("MSME", "MSME", "~/Admin/MSME.aspx", true);
+        routes.MapPageRoute("Profile", "Profile", "~/Admin/Profile.aspx", true);
+        routes.MapPageRoute("Registerd-As", "Registerd-As", "~/Admin/RegisterdAs.aspx", true);
+        routes.MapPageRoute("Startup", "Startup", "~/Admin/Startup.aspx", true);
+        routes.MapPageRoute("Specilization", "Specilization", "~/Admin/Specilization.aspx", true);
     }
        
 </script>
