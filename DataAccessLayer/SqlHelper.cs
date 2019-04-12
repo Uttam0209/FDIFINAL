@@ -19,6 +19,7 @@ namespace DataAccessLayer
         Database db;
         Cryptography objCrypto = new Cryptography();
         private string constring = string.Empty;
+        string File = "";
         # endregion
         # region "Constructor"
         private SqlHelper()
