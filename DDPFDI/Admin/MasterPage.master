@@ -67,7 +67,7 @@
                             <li class="parent-nav"><a href="#"><i class="fas fa-user-tie"></i><span class="hidden-minibar">User </span><i class="fas fa-angle-down"></i></a>
                                 <ul class="parent-nav-child">
                                     <li ><a href='<%=ResolveUrl("~/Add-Company") %>' data-original-title="Dashboard">
-                                     <i class="fas fa-building"></i><span class="hidden-minibar">Registered As</span></a></li>
+                                     <i class="fas fa-registered"></i><span class="hidden-minibar">Registered As</span></a></li>
                                     <li><a href='<%=ResolveUrl("~Add-Company") %>' data-original-title="Dashboard">
                                      <i class="fas fa-building"></i><span class="hidden-minibar">General Information</span></a></li>
                                     <li><a href='<%=ResolveUrl("~/Add-Company") %>' data-original-title="ViewFDI-Detail">

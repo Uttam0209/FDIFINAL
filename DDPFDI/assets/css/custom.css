@@ -79,3 +79,8 @@ ul {list-style: none;}
 .table-wraper { overflow-x: auto;}
 .sidebar-holder .nav li a i.fa-angle-down { position: absolute; right: 10px;}
 .sidebar-holder .nav li a .rotate-icon { transform:rotate(180deg)};
+
+.nav > li > a:focus { background:#5db9f9 !important;}
+.nav .parent-nav > a { text-transform: uppercase;}
+.parent-nav-child li a { padding-left: 30px !important;}
+.nav .parent-nav:nth-child(even)> a { background: #4d5190}
