@@ -38,7 +38,7 @@
                             <asp:Label ID="lblusername" runat="server"></asp:Label>
                             &nbsp;&nbsp;<i class="fa fa-sort-down"></i></span> &nbsp;</a>
                             <ul class="dropdown-menu user-login-dropdown">
-                                <li><a href='<%=ResolveUrl("ChangePassword") %>'><i class="fa fa-key" aria-hidden="true"></i>Change Password</a></li>
+                                <li><a href='<%=ResolveUrl("~/ChangePassword") %>'><i class="fa fa-key" aria-hidden="true"></i>Change Password</a></li>
 
                                 <li>
                                     <asp:LinkButton ID="lbllogout" runat="server" class="" OnClick="lbllogout_Click"><i class="fa fa-lock" aria-hidden="true"></i>Logout</asp:LinkButton></li>
@@ -67,21 +67,21 @@
                             </li>
                             <li class="parent-nav" runat="server" id="liuser"><a href="#"><i class="fas fa-user-tie"></i><span class="hidden-minibar">User </span><i class="fas fa-angle-down"></i></a>
                                 <ul class="parent-nav-child">
-                                    <li ><a href='<%=ResolveUrl("~/Add-Company") %>' data-original-title="Dashboard">
-                                     <i class="fas fa-building"></i><span class="hidden-minibar">Registered As</span></a></li>
-                                    <li><a href='<%=ResolveUrl("~Add-Company") %>' data-original-title="Dashboard">
+                                    <li ><a href='<%=ResolveUrl("~/Registerd-As") %>' data-original-title="Dashboard">
+                                     <i class="fas fa-registered"></i><span class="hidden-minibar">Registered As</span></a></li>
+                                    <li><a href='<%=ResolveUrl("~/General-Info") %>' data-original-title="Dashboard">
                                      <i class="fas fa-building"></i><span class="hidden-minibar">General Information</span></a></li>
-                                    <li><a href='<%=ResolveUrl("~/Add-Company") %>' data-original-title="ViewFDI-Detail">
+                                    <li><a href='<%=ResolveUrl("~/Profile") %>' data-original-title="ViewFDI-Detail">
                                         <i class="fas fa-building"></i><span class="hidden-minibar">Profile</span></a></li>
 
-                                    <li><a href='<%=ResolveUrl("~/Add-Company") %>' data-original-title="Master Company Detail">
+                                    <li><a href='<%=ResolveUrl("~/Specilization") %>' data-original-title="Master Company Detail">
                                     <i class="fas fa-building"></i><span class="hidden-minibar">Specialization</span></a></li>
                                     
-                                     <li><a href='<%=ResolveUrl("~/Add-Company") %>' data-original-title="Master Company Detail">
+                                     <li><a href='<%=ResolveUrl("~/Startup") %>' data-original-title="Master Company Detail">
                                     <i class="fas fa-building"></i><span class="hidden-minibar">Startup</span></a></li>
-                                    <li><a href='<%=ResolveUrl("~/Add-Company") %>' data-original-title="Master Company Detail">
+                                    <li><a href='<%=ResolveUrl("~/MSME") %>' data-original-title="Master Company Detail">
                                     <i class="fas fa-building"></i><span class="hidden-minibar">MSME</span></a></li>
-                                    <li><a href='<%=ResolveUrl("~/FDIRegistration") %>' data-original-title="Master Company Detail">
+                                    <li><a href='<%=ResolveUrl("~/FDI-Inflow") %>' data-original-title="Master Company Detail">
                                     <i class="fas fa-building"></i><span class="hidden-minibar">FDI Inflow</span></a></li>
                                 </ul>
                             </li>
