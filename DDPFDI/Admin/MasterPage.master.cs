@@ -21,7 +21,7 @@ public partial class Admin_MasterPage : System.Web.UI.MasterPage
             if (UType == "Admin")
             {
                 liadmin.Visible = true;
-                liuser.Visible = false;
+                liuser.Visible = true;
             }
             else
             {
