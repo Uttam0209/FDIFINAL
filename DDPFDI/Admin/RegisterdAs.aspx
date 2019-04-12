@@ -7,10 +7,34 @@
         <div class="sideBg">
             <div class="col-mod-12">
                 <h3 class="page-header"><i class="fas fa-folder-plus"></i>Registerd As</h3>
-                <div class="col-md-12 col-mod-12">
-                    <div class="row">
-                    </div>
+                <div class="UserInnerpage">
+                        <div class="resitered">
+                            <form>
+                                <div class="form-group">
+                                    <input type="checkbox">
+                                    <label>FDI Received</label>
+                                </div>
+                                <div class="form-group">
+                                    <input type="checkbox">
+                                    <label>Indigenisation</label>
+                                </div>
+                                <div class="form-group">
+                                     <input type="checkbox">
+                                      <label>Defence Export</label>
+                                </div>
+                                <div class="form-group">
+                                    <input type="checkbox">
+                                    <label>Defence Production</label>
+                                </div>
+                                <div class="form-group">
+                                    <input type="checkbox">
+                                    <label>Export Lead</label>
+                                </div>
+
+                            </form>
+                        </div>
                 </div>
+
             </div>
             <div class="clearfix"></div>
         </div>
