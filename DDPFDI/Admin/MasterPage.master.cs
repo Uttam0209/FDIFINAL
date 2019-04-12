@@ -11,11 +11,23 @@ public partial class Admin_MasterPage : System.Web.UI.MasterPage
 {
     Logic Lo = new Logic();
     Cryptography ObjEnc = new Cryptography();
+    string UType = "";
     protected void Page_Load(object sender, EventArgs e)
     {
         if (Session["User"] != null)
         {
+            UType = ObjEnc.DecryptData(Session["Type"].ToString());
             lblusername.Text = ObjEnc.DecryptData(Session["User"].ToString());
+            if (UType == "Admin")
+            {
+                liadmin.Visible = true;
+                liuser.Visible = true;
+            }
+            else
+            {
+                liadmin.Visible = false;
+                liuser.Visible = true;
+            }
         }
         else
         {
@@ -28,5 +40,5 @@ public partial class Admin_MasterPage : System.Web.UI.MasterPage
         Session.Clear();
         Response.RedirectToRoute("Login");
     }
- 
+
 }

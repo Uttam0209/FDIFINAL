@@ -19,6 +19,7 @@ namespace DataAccessLayer
         Database db;
         Cryptography objCrypto = new Cryptography();
         private string constring = string.Empty;
+        string File = "";
         # endregion
         # region "Constructor"
         private SqlHelper()
@@ -115,9 +116,9 @@ namespace DataAccessLayer
                 DbCommand _dbCmd = db.GetStoredProcCommand("sp_verify_Login");
                 db.AddInParameter(_dbCmd, "@UserName", DbType.String, hyLogin["UserName"]);
                 db.AddInParameter(_dbCmd, "@Password", DbType.String, hyLogin["Password"]);
-                db.AddOutParameter(_dbCmd, "@ID", DbType.String, 50);
+                db.AddOutParameter(_dbCmd, "@CompanyRefNo", DbType.String, 50);
                 db.ExecuteNonQuery(_dbCmd);
-                string Comp_ID = db.GetParameterValue(_dbCmd, "@ID").ToString();
+                string Comp_ID = db.GetParameterValue(_dbCmd, "@CompanyRefNo").ToString();
                 _msg = "";
                 return Comp_ID;
             }

@@ -29,6 +29,7 @@ public partial class _Default : System.Web.UI.Page
     #endregion
     protected void Page_Load(object sender, EventArgs e)
     {
+
     }
     #region "Login Code"
     public static bool IsValidEmailId(string InputEmail)
@@ -61,8 +62,18 @@ public partial class _Default : System.Web.UI.Page
                     string _EmpId = LO.VerifyEmployee(hyLogin, out _msg);
                     if (_EmpId != "0" && _EmpId != "1" && _msg != "0")
                     {
-                        Session["User"] = objEnc.EncryptData(txtUserName.Text);
-                        Response.RedirectToRoute("Dashboard");
+                        if (_EmpId.Substring(3, 1) == "A")
+                        {
+                            Session["Type"] = objEnc.EncryptData("Admin");
+                            Session["User"] = objEnc.EncryptData(txtUserName.Text);
+                            Response.RedirectToRoute("Dashboard");
+                        }
+                        else
+                        {
+                            Session["Type"] = objEnc.EncryptData("User");
+                            Session["User"] = objEnc.EncryptData(txtUserName.Text);
+                            Response.RedirectToRoute("Dashboard");
+                        }
                     }
                     else
                     {
@@ -85,6 +96,5 @@ public partial class _Default : System.Web.UI.Page
     {
         Image2.ImageUrl = "~/CaptchaCall.aspx?random=" + DateTime.Now.Ticks.ToString();
     }
-    #endregion
- 
+    #endregion 
 }
