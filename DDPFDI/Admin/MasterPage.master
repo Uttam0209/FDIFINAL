@@ -67,6 +67,7 @@
                                     <li class="parent-nav">
                                     <a href="#"><i class="fas fa-user-tie"></i><span class="hidden-minibar">General Information </span><i class="fas fa-angle-down"></i></a>
                                          <ul class="parent-nav-child">
+                                         
                                                  <li><a href="#"><i class="far fa-building"></i> Company Detail</a></li>
                                                  <li><a href="#"><i class="fas fa-briefcase"></i> Nodal Officer Detail</a></li>
                                                  <li><a href="#"><i class="fas fa-briefcase"></i> GST Detail</a></li>
