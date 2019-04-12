@@ -20,12 +20,12 @@ public partial class Admin_MasterPage : System.Web.UI.MasterPage
             lblusername.Text = ObjEnc.DecryptData(Session["User"].ToString());
             if (UType == "Admin")
             {
-                liadmin.Visible = true;
+                //liadmin.Visible = true;
                 liuser.Visible = true;
             }
             else
             {
-                liadmin.Visible = false;
+                //liadmin.Visible = false;
                 liuser.Visible = true;
             }
         }
