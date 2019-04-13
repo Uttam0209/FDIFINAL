@@ -67,7 +67,9 @@ public partial class Admin_MasterPage : System.Web.UI.MasterPage
                     sb.Append("<a href='#'><i class=" + Fontawsomeclass + "></i><span class='hidden-minibar'>" + Title + " </span><i class='fas fa-angle-down'></i></a>");
                     sb.Append("<ul id='" + Title + "' class='parent-nav-child'>");
                     foreach (var item in rows)
-                    {
+                   {
+                     
+                    
                         sb.Append("<li><a href='" + item["MenuUrl"] + "'>");
                         sb.Append("<i class='" + Fontawsomeclass + "' >");
                         sb.Append("</i>");
@@ -77,7 +79,7 @@ public partial class Admin_MasterPage : System.Web.UI.MasterPage
                     }
                     sb.Append("</ul>");
                     sb.Append("</li>");
-                    (e.Item.FindControl("ltrlSubMenu") as Literal).Text = sb.ToString();
+                    (e.Item.FindControl("SubMenu") as Literal).Text = sb.ToString();
                 }
             }
         }

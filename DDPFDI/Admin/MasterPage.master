@@ -51,7 +51,6 @@
                     <div class="sidebar-holder">
                         <button class="btn  btn-nav-toggle"><i class="fa fa-angle-double-left toggle-left"></i></button>
                         <ul class="nav  nav-list">
-
                             <li class="parent-nav" runat="server" id="liuser">
                                 <a href="#"><i class="fas fa-user-tie"></i>
                                     <span class="hidden-minibar">
@@ -64,7 +63,7 @@
                                         <ItemTemplate>
                                             <li class="active"><a href='<%#Eval("MenuUrl") %>' data-original-title='<%#Eval("MenuName") %>'><i class='<%#Eval("Fontawsomeclass") %>'></i>
                                                 <span class="hidden-minibar"><%#Eval("MenuName") %></span></a> </li>
-                                            <asp:Literal ID="ltrlSubMenu" runat="server"></asp:Literal>
+                                            <asp:Literal ID="SubMenu" runat="server"></asp:Literal>
                                         </ItemTemplate>
                                     </asp:Repeater>
                                 </ul>
