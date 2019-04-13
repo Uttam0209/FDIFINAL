@@ -116,10 +116,13 @@ namespace DataAccessLayer
                 db.AddInParameter(_dbCmd, "@UserName", DbType.String, hyLogin["UserName"]);
                 db.AddInParameter(_dbCmd, "@Password", DbType.String, hyLogin["Password"]);
                 db.AddOutParameter(_dbCmd, "@CompanyRefNo", DbType.String, 50);
+                db.AddOutParameter(_dbCmd, "@LType", DbType.String, 50);
                 db.ExecuteNonQuery(_dbCmd);
                 string Comp_ID = db.GetParameterValue(_dbCmd, "@CompanyRefNo").ToString();
-                _msg = "";
+                string ID = db.GetParameterValue(_dbCmd, "@LType").ToString();
+                _msg = ID;
                 return Comp_ID;
+
             }
             catch (SqlException ex)
             {
@@ -136,7 +139,7 @@ namespace DataAccessLayer
         #region SaveCode
         public string SaveFDI(HybridDictionary HySave, out string _sysMsg, out string _msg)
         {
-           // string mCurrentID = "";
+            // string mCurrentID = "";
             using (DbConnection dbCon = db.CreateConnection())
             {
                 dbCon.Open();
@@ -350,7 +353,7 @@ namespace DataAccessLayer
                 }
             }
         }
-        public DataTable RetriveCompany(string text,Int64 id,string value)
+        public DataTable RetriveCompany(string text, Int64 id, string value)
         {
             using (DbConnection dbCon = db.CreateConnection())
             {

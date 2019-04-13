@@ -52,12 +52,8 @@
                         <button class="btn  btn-nav-toggle"><i class="fa fa-angle-double-left toggle-left"></i></button>
                         <ul class="nav  nav-list">
                             <li class="parent-nav" runat="server" id="liuser">
-                                <a href="#"><i class="fas fa-user-tie"></i>
-                                    <span class="hidden-minibar">
-                                        <asp:Label ID="lblAcessType" runat="server"></asp:Label>
-                                    </span>
-                                    <i class="fas fa-angle-down"></i>
-                                </a>
+                                <a href="#"><i class="fas fa-user-tie"></i><span class="hidden-minibar"><asp:Label ID="lblAcessType" runat="server"></asp:Label></span>
+                                    <i class="fas fa-angle-down"></i></a>
                                 <ul class="parent-nav-child">
                                     <asp:Repeater ID="rptCategories" runat="server" OnItemDataBound="rptMenu_OnItemBound">
                                         <ItemTemplate>
@@ -194,6 +190,22 @@
             }
             return true;
         };
+    </script>
+    <script type="text/javascript">
+        $(function () {
+            $('li[data-toggle="collapse"]').each(function () {
+                if ($(this).next('ul').length == 0) {
+                    $(this).removeAttr('data-toggle').removeAttr('data-target').removeClass('collapsed');
+                    $(this).find('span.arrow').remove();
+                }
+            });
+            $('ul#menu-content > ul').on('show.bs.collapse', function (e, obj) {
+                $("ul#menu-content > ul").not(this).removeClass("in");
+                var currentHead = $(this).prev("li");
+                $("ul#menu-content > li").not(currentHead).removeClass("active");
+                $(currentHead).addClass("active");
+            })
+        });
     </script>
 </body>
 </html>

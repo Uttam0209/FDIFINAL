@@ -60,20 +60,11 @@ public partial class _Default : System.Web.UI.Page
                     hyLogin["UserName"] = Co.RSQandSQLInjection(txtUserName.Text.Trim() + "'", "hard" + "'");
                     hyLogin["Password"] = objEnc.EncryptData(txtPwd.Text.Trim());
                     string _EmpId = LO.VerifyEmployee(hyLogin, out _msg);
-                    if (_EmpId != "0" && _EmpId != "1" && _msg != "0")
+                    if (_EmpId != "0" && _EmpId != "1" && _msg != "")
                     {
-                        if (_EmpId.Substring(3, 1) == "A")
-                        {
-                            Session["Type"] = objEnc.EncryptData("Admin");
-                            Session["User"] = objEnc.EncryptData(txtUserName.Text);
-                            Response.RedirectToRoute("Dashboard");
-                        }
-                        else
-                        {
-                            Session["Type"] = objEnc.EncryptData("User");
-                            Session["User"] = objEnc.EncryptData(txtUserName.Text);
-                            Response.RedirectToRoute("Dashboard");
-                        }
+                        Session["Type"] = objEnc.EncryptData(_msg);
+                        Session["User"] = objEnc.EncryptData(txtUserName.Text);
+                        Response.RedirectToRoute("Dashboard");
                     }
                     else
                     {
@@ -96,5 +87,5 @@ public partial class _Default : System.Web.UI.Page
     {
         Image2.ImageUrl = "~/CaptchaCall.aspx?random=" + DateTime.Now.Ticks.ToString();
     }
-    #endregion 
+    #endregion
 }

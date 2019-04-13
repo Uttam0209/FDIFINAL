@@ -20,9 +20,7 @@ public partial class Admin_MasterPage : System.Web.UI.MasterPage
     {
         if (Session["User"] != null)
         {
-            lblAcessType.Text = ObjEnc.DecryptData(Session["Type"].ToString());
-            lblusername.Text = ObjEnc.DecryptData(Session["User"].ToString());
-            bindMenu();
+            MenuLogin();    
         }
         else
         {
@@ -38,7 +36,7 @@ public partial class Admin_MasterPage : System.Web.UI.MasterPage
     protected void bindMenu()
     {
 
-        dtMenu = Lo.RetriveCompany("MenuMain", 0, "");
+        dtMenu = Lo.RetriveCompany("MenuMain", 0, lblAcessType.Text);
         if (dtMenu.Rows.Count > 0)
         {
             DataView view = new DataView(dtMenu);
@@ -67,15 +65,8 @@ public partial class Admin_MasterPage : System.Web.UI.MasterPage
                     sb.Append("<a href='#'><i class=" + Fontawsomeclass + "></i><span class='hidden-minibar'>" + Title + " </span><i class='fas fa-angle-down'></i></a>");
                     sb.Append("<ul id='" + Title + "' class='parent-nav-child'>");
                     foreach (var item in rows)
-                   {
-                     
-                    
-                        sb.Append("<li><a href='" + item["MenuUrl"] + "'>");
-                        sb.Append("<i class='" + Fontawsomeclass + "' >");
-                        sb.Append("</i>");
-                        sb.Append(item["MenuName"]);
-                        sb.Append("</a>");
-                        sb.Append("</li>");
+                    {
+                        sb.Append("<li><a href='" + item["MenuUrl"] + "'><i class='" + Fontawsomeclass + "' ></i>" + item["MenuName"] + "</a></li>");
                     }
                     sb.Append("</ul>");
                     sb.Append("</li>");
@@ -84,4 +75,12 @@ public partial class Admin_MasterPage : System.Web.UI.MasterPage
             }
         }
     }
+    #region Menu Wise Login
+    protected void MenuLogin()
+    {
+        lblAcessType.Text = ObjEnc.DecryptData(Session["Type"].ToString());
+        lblusername.Text = ObjEnc.DecryptData(Session["User"].ToString());
+        bindMenu();
+    }
+    #endregion
 }
