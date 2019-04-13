@@ -58,6 +58,10 @@ namespace BusinessLayer
         {
             return SqlHelper.Instance.RetriveCompany(text,id,value);
         }
+        public DataTable RetriveCompany1(string text, string id, string value)
+        {
+            return SqlHelper.Instance.RetriveCompany1(text, id, value);
+        }
         #endregion
         #region DeleteCode
         public string DeleteRecord(Int64 ID)

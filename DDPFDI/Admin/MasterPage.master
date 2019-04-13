@@ -37,7 +37,7 @@
                             <asp:Label ID="lblusername" runat="server"></asp:Label>
                             &nbsp;&nbsp;<i class="fa fa-sort-down"></i></span> &nbsp;</a>
                             <ul class="dropdown-menu user-login-dropdown">
-                                <li><a href='<%=ResolveUrl("~/ChangePassword") %>'><i class="fa fa-key" aria-hidden="true"></i>Change Password</a></li>
+                                <li><a href='<%=ResolveUrl("ChangePassword") %>'><i class="fa fa-key" aria-hidden="true"></i>Change Password</a></li>
 
                                 <li>
                                     <asp:LinkButton ID="lbllogout" runat="server" class="" OnClick="lbllogout_Click"><i class="fa fa-lock" aria-hidden="true"></i>Logout</asp:LinkButton></li>
@@ -50,21 +50,46 @@
                 <div class="left-sidebar oem-sidebar">
                     <div class="sidebar-holder">
                         <button class="btn  btn-nav-toggle"><i class="fa fa-angle-double-left toggle-left"></i></button>
-                        <ul class="nav  nav-list">
-                            <li class="parent-nav" runat="server" id="liuser">
-                                <a href="#"><i class="fas fa-user-tie"></i><span class="hidden-minibar"><asp:Label ID="lblAcessType" runat="server"></asp:Label></span>
-                                    <i class="fas fa-angle-down"></i></a>
+                         <div runat="server" id="me"></div>
+                     <%--   <ul class="nav  nav-list">
+
+                            <li class="parent-nav"><a href="#"><i class="fas fa-user-tie"></i><span class="hidden-minibar"><asp:Label ID="lbllogfrom" runat="server"></asp:Label>
+                            </span><i class="fas fa-angle-down"></i></a>
+                               
                                 <ul class="parent-nav-child">
-                                    <asp:Repeater ID="rptCategories" runat="server" OnItemDataBound="rptMenu_OnItemBound">
-                                        <ItemTemplate>
-                                            <li class="active"><a href='<%#Eval("MenuUrl") %>' data-original-title='<%#Eval("MenuName") %>'><i class='<%#Eval("Fontawsomeclass") %>'></i>
-                                                <span class="hidden-minibar"><%#Eval("MenuName") %></span></a> </li>
-                                            <asp:Literal ID="SubMenu" runat="server"></asp:Literal>
-                                        </ItemTemplate>
-                                    </asp:Repeater>
+                                    <li class="active"><a href='<%=ResolveUrl("~/Dashboard") %>' data-original-title="Dashboard">
+                                        <i class="fas fa-tachometer-alt"></i><span class="hidden-minibar">Dashboard</span></a></li>
+
+                                    <li><a href='<%=ResolveUrl("~/Add-Company") %>' data-original-title="ViewFDI-Detail">
+                                        <i class="fas fa-building"></i><span class="hidden-minibar">Add
+                                    Company</span></a></li>
+                                    <li><a href='<%=ResolveUrl("~/Registerd-As") %>' data-original-title="Dashboard">
+                                        <i class="fas fa-registered"></i><span class="hidden-minibar">Registered As</span></a></li>
+                                    <li class="parent-nav">
+                                        <a href="#"><i class="fas fa-user-tie"></i><span class="hidden-minibar">General Information </span><i class="fas fa-angle-down"></i></a>
+                                        <ul class="parent-nav-child">
+
+                                            <li><a href="#"><i class="far fa-building"></i>Company Detail</a></li>
+                                            <li><a href="#"><i class="fas fa-briefcase"></i>Nodal Officer Detail</a></li>
+                                            <li><a href="#"><i class="fas fa-briefcase"></i>GST Detail</a></li>
+                                        </ul>
+                                    </li>
+
+                                    <li><a href='<%=ResolveUrl("~/Profile") %>' data-original-title="ViewFDI-Detail">
+                                        <i class="fas fa-building"></i><span class="hidden-minibar">Profile</span></a></li>
+
+                                    <li><a href='<%=ResolveUrl("~/Specilization") %>' data-original-title="Master Company Detail">
+                                        <i class="fas fa-building"></i><span class="hidden-minibar">Specialization</span></a></li>
+
+                                    <li><a href='<%=ResolveUrl("~/Startup") %>' data-original-title="Master Company Detail">
+                                        <i class="fas fa-building"></i><span class="hidden-minibar">Startup</span></a></li>
+                                    <li><a href='<%=ResolveUrl("~/MSME") %>' data-original-title="Master Company Detail">
+                                        <i class="fas fa-building"></i><span class="hidden-minibar">MSME</span></a></li>
+                                    <li><a href='<%=ResolveUrl("~/FDI-Inflowss") %>' data-original-title="Master Company Detail">
+                                        <i class="fas fa-building"></i><span class="hidden-minibar">FDI Inflow</span></a></li>
                                 </ul>
                             </li>
-                        </ul>
+                        </ul>--%>
                     </div>
                 </div>
                 <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
@@ -190,22 +215,6 @@
             }
             return true;
         };
-    </script>
-    <script type="text/javascript">
-        $(function () {
-            $('li[data-toggle="collapse"]').each(function () {
-                if ($(this).next('ul').length == 0) {
-                    $(this).removeAttr('data-toggle').removeAttr('data-target').removeClass('collapsed');
-                    $(this).find('span.arrow').remove();
-                }
-            });
-            $('ul#menu-content > ul').on('show.bs.collapse', function (e, obj) {
-                $("ul#menu-content > ul").not(this).removeClass("in");
-                var currentHead = $(this).prev("li");
-                $("ul#menu-content > li").not(currentHead).removeClass("active");
-                $(currentHead).addClass("active");
-            })
-        });
     </script>
 </body>
 </html>

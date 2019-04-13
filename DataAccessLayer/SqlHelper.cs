@@ -376,6 +376,29 @@ namespace DataAccessLayer
                 }
             }
         }
+        public DataTable RetriveCompany1(string text, string id, string value)
+        {
+            using (DbConnection dbCon = db.CreateConnection())
+            {
+                dbCon.Open();
+                try
+                {
+                    DbCommand cmd = db.GetStoredProcCommand("sp_SubMenu");
+                    db.AddInParameter(cmd, "@CompanyID", DbType.String, id);
+                    db.AddInParameter(cmd, "@CompanyName", DbType.String, value);
+                    db.AddInParameter(cmd, "@WorkCodeFor", DbType.String, text);
+                    IDataReader dr = db.ExecuteReader(cmd);
+                    DataTable dt = new DataTable();
+                    if (dr != null)
+                        dt.Load(dr);
+                    return dt;
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+        }
         #endregion
         #region DeleteCode
         public string DeleteRecord(Int64 ID)
