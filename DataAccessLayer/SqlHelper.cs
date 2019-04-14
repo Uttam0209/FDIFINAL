@@ -116,10 +116,13 @@ namespace DataAccessLayer
                 db.AddInParameter(_dbCmd, "@UserName", DbType.String, hyLogin["UserName"]);
                 db.AddInParameter(_dbCmd, "@Password", DbType.String, hyLogin["Password"]);
                 db.AddOutParameter(_dbCmd, "@CompanyRefNo", DbType.String, 50);
+                db.AddOutParameter(_dbCmd, "@LType", DbType.String, 50);
                 db.ExecuteNonQuery(_dbCmd);
                 string Comp_ID = db.GetParameterValue(_dbCmd, "@CompanyRefNo").ToString();
-                _msg = "";
+                string ID = db.GetParameterValue(_dbCmd, "@LType").ToString();
+                _msg = ID;
                 return Comp_ID;
+
             }
             catch (SqlException ex)
             {
@@ -136,7 +139,7 @@ namespace DataAccessLayer
         #region SaveCode
         public string SaveFDI(HybridDictionary HySave, out string _sysMsg, out string _msg)
         {
-           // string mCurrentID = "";
+            // string mCurrentID = "";
             using (DbConnection dbCon = db.CreateConnection())
             {
                 dbCon.Open();
@@ -350,7 +353,7 @@ namespace DataAccessLayer
                 }
             }
         }
-        public DataTable RetriveCompany(string text,Int64 id,string value)
+        public DataTable RetriveCompany(string text, Int64 id, string value)
         {
             using (DbConnection dbCon = db.CreateConnection())
             {
@@ -359,6 +362,29 @@ namespace DataAccessLayer
                 {
                     DbCommand cmd = db.GetStoredProcCommand("sp_Company");
                     db.AddInParameter(cmd, "@CompanyID", DbType.Int64, id);
+                    db.AddInParameter(cmd, "@CompanyName", DbType.String, value);
+                    db.AddInParameter(cmd, "@WorkCodeFor", DbType.String, text);
+                    IDataReader dr = db.ExecuteReader(cmd);
+                    DataTable dt = new DataTable();
+                    if (dr != null)
+                        dt.Load(dr);
+                    return dt;
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+        }
+        public DataTable RetriveCompany1(string text, string id, string value)
+        {
+            using (DbConnection dbCon = db.CreateConnection())
+            {
+                dbCon.Open();
+                try
+                {
+                    DbCommand cmd = db.GetStoredProcCommand("sp_SubMenu");
+                    db.AddInParameter(cmd, "@CompanyID", DbType.String, id);
                     db.AddInParameter(cmd, "@CompanyName", DbType.String, value);
                     db.AddInParameter(cmd, "@WorkCodeFor", DbType.String, text);
                     IDataReader dr = db.ExecuteReader(cmd);
