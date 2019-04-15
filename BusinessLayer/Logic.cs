@@ -56,7 +56,7 @@ namespace BusinessLayer
         }
         public DataTable RetriveCompany(string text, Int64 id, string value)
         {
-            return SqlHelper.Instance.RetriveCompany(text,id,value);
+            return SqlHelper.Instance.RetriveCompany(text, id, value);
         }
         public DataTable RetriveCompany1(string text, string id, string value)
         {
@@ -77,6 +77,20 @@ namespace BusinessLayer
         public DataTable SearchResultCompany(string SearchText)
         {
             return SqlHelper.Instance.SearchResultCompany(SearchText);
+        }
+        #endregion
+        #region "DashBoard"
+        public DataTable RetriveAggregateValue(string function, string entity)
+        {
+            return SqlHelper.Instance.RetriveAggregateValue(function, entity);
+        }
+        public DataTable RetriveAggregateValueWithParam(string function, string entity, string clmn, string val)
+        {
+            return SqlHelper.Instance.RetriveAggregateValueWithParam(function, entity, clmn, val);
+        }
+        public DataTable GetChartData()
+        {
+            return SqlHelper.Instance.GetDataTable("SELECT CompanyName, FY, ExchangeTotalAmount from vw_Chart order by fyid");
         }
         #endregion
     }

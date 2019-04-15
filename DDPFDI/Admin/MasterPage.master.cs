@@ -48,26 +48,18 @@ public partial class Admin_MasterPage : System.Web.UI.MasterPage
                 DataTable Submenu = Lo.RetriveCompany1("SubMenu", row["MenuRefNo"].ToString(), type);
                 if (Submenu.Rows.Count > 0)
                 {
-                    //strMenu.Append("<li class='parent-nav'>");
-                    //strMenu.Append(" <a href='#'><i class='fas fa-user-tie'></i><span class='hidden-minibar'>" + row["MenuName"].ToString() + " </span><i class='fas fa-angle-down'></i></a>");
-                    //strMenu.Append("<i class='fas fa-angle-down'></i></a>");
                     strMenu.Append("<i class='fas fa-angle-down'></i></a>");
-                    strMenu.Append("<ul class='parent-nav'>");
+                    strMenu.Append("<ul class='parent-nav-child'>");
                     foreach (DataRow row1 in Submenu.Rows)
                     {
-
                         strMenu.Append("<li><a href='" + row1["MenuUrl"].ToString() + "'><i class='far fa-building'></i>" + row1["MenuName"].ToString() + "</a></li>");
-
                     }
                     strMenu.Append("</ul>");
-                    
-                   
                 }
-                
                 strMenu.Append("</li>");
                 me.InnerHtml = strMenu.ToString();
             }
-            
+
             strMenu.Append("</ul>");
             strMenu.Append(" </li> ");
             strMenu.Append("</ul");
