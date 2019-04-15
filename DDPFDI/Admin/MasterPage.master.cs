@@ -40,7 +40,7 @@ public partial class Admin_MasterPage : System.Web.UI.MasterPage
         if (dtMenu.Rows.Count > 0)
         {
             strMenu.Append("<ul class='nav  nav-list'>");
-            strMenu.Append(" <li class='parent-nav'><a href='javascript:void(0)'><i class='fas fa-user-tie'></i><span class='hidden-minibar'>" + type + "</span><i class='fas fa-angle-down'></i></a>");
+            strMenu.Append(" <li class='parent-nav'><a href='javascript:void(0)' id='main-admin'><i class='fas fa-user-tie'></i><span class='hidden-minibar'>" + type + "</span><i class='fas fa-angle-down'></i></a>");
             strMenu.Append("<ul class='parent-nav-child'>");
             foreach (DataRow row in dtMenu.Rows)
             {

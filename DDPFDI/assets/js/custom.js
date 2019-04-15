@@ -27,6 +27,10 @@
     var $Sidebar = $(".left-sidebar");
     $Sidebar.find('a[href="'+CURRENT_URL+'"]').parents(".parent-nav-child").slideDown();
     $Sidebar.find('a[href="'+CURRENT_URL+'"]').parents("li").addClass('active').siblings("li").removeClass("active");
+    if(CURRENT_URL ===! '/DDPFDI/Dashboard') {
+        $('#main-admin').next('.parent-nav-child').slideDown();
+    }
+
     console.log(CURRENT_URL);
 
 
