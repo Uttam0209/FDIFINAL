@@ -223,8 +223,7 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
     }
     protected void PanelHideShow()
     {
-        DataTable DtHide = Lo.RetriveCompany("HideShowMenuPanel", 0, currentPage);
-        if (DtHide.Rows.Count > 0 && DtHide != null)
+        try
         {
             if (objCrypto.DecryptData(Request.QueryString["mu"].ToString()) == "Panel1")
             {
@@ -239,7 +238,7 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
                 fdistep3.Visible = true;
             }
         }
-        else
+        catch (Exception ex)
         {
         }
     }

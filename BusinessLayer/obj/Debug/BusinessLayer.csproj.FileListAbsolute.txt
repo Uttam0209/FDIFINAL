@@ -37,3 +37,16 @@ D:\Shiv\FDIFINAL\BusinessLayer\bin\Debug\Encryption.pdb
 D:\Shiv\FDIFINAL\BusinessLayer\obj\Debug\BusinessLayer.csprojResolveAssemblyReference.cache
 D:\Shiv\FDIFINAL\BusinessLayer\obj\Debug\BusinessLayer.dll
 D:\Shiv\FDIFINAL\BusinessLayer\obj\Debug\BusinessLayer.pdb
+D:\GitHub\FDIFINAL\BusinessLayer\bin\Debug\BusinessLayer.dll
+D:\GitHub\FDIFINAL\BusinessLayer\bin\Debug\BusinessLayer.pdb
+D:\GitHub\FDIFINAL\BusinessLayer\bin\Debug\DataAccessLayer.dll
+D:\GitHub\FDIFINAL\BusinessLayer\bin\Debug\Encryption.dll
+D:\GitHub\FDIFINAL\BusinessLayer\bin\Debug\Microsoft.Practices.EnterpriseLibrary.Data.dll
+D:\GitHub\FDIFINAL\BusinessLayer\bin\Debug\Microsoft.Practices.EnterpriseLibrary.Common.dll
+D:\GitHub\FDIFINAL\BusinessLayer\bin\Debug\Microsoft.Practices.Unity.dll
+D:\GitHub\FDIFINAL\BusinessLayer\bin\Debug\Microsoft.Practices.Unity.Interception.dll
+D:\GitHub\FDIFINAL\BusinessLayer\bin\Debug\DataAccessLayer.pdb
+D:\GitHub\FDIFINAL\BusinessLayer\bin\Debug\Encryption.pdb
+D:\GitHub\FDIFINAL\BusinessLayer\obj\Debug\BusinessLayer.csprojResolveAssemblyReference.cache
+D:\GitHub\FDIFINAL\BusinessLayer\obj\Debug\BusinessLayer.dll
+D:\GitHub\FDIFINAL\BusinessLayer\obj\Debug\BusinessLayer.pdb

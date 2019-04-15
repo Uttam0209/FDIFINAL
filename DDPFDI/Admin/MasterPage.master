@@ -62,11 +62,44 @@
         </div>
     </form>
 
-    <script type="text/javascript" src="assets/js/jquery-3.2.1.min.js"></script>
-    <script src="assets/js/bootstrap.min.js"></script>
     <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.10.0.min.js" type="text/javascript"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+  
     <script src="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.9.2/jquery-ui.min.js" type="text/javascript"></script>
     <script src="assets/js/custom.js"></script>
+    <script type="text/javascript" src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script> 
+     <script type="text/javascript" src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>
+
+             <script type="text/javascript">
+                 window.onload = function () {
+                     
+
+                     var options = {
+                         title: {
+                             text: "FDI Detail"
+                         },
+                         data: [{
+                             type: "pie",
+                             startAngle: 45,
+                             showInLegend: "true",
+                             legendText: "{label}",
+                             indexLabel: "{label} ({y})",
+                             yValueFormatString: "#,##0.#" % "",
+                             dataPoints: [
+                                 { label: "2008-09", y: 20.91 },
+                                 { label: "2009-10", y: 9.71 },
+                                 { label: "2014-15", y: 55.71 },
+                                 { label: "2015-16", y: 22.12 },
+                                 { label: "2016-17", y: 36.76 },
+                               
+                             ]
+                         }]
+                     };
+                     $("#chartContainer").CanvasJSChart(options);
+                    
+                 }
+    </script>
+
     <script type="text/javascript">
         $(function () {
             SetAutoComplete();
