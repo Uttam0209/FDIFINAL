@@ -5,3 +5,10 @@ F:\FDIFINAL\DataAccessLayer\bin\Debug\Encryption.pdb
 F:\FDIFINAL\DataAccessLayer\obj\Debug\DataAccessLayer.csprojResolveAssemblyReference.cache
 F:\FDIFINAL\DataAccessLayer\obj\Debug\DataAccessLayer.dll
 F:\FDIFINAL\DataAccessLayer\obj\Debug\DataAccessLayer.pdb
+D:\GitHub\FDIFINAL\DataAccessLayer\bin\Debug\DataAccessLayer.dll
+D:\GitHub\FDIFINAL\DataAccessLayer\bin\Debug\DataAccessLayer.pdb
+D:\GitHub\FDIFINAL\DataAccessLayer\bin\Debug\Encryption.dll
+D:\GitHub\FDIFINAL\DataAccessLayer\bin\Debug\Encryption.pdb
+D:\GitHub\FDIFINAL\DataAccessLayer\obj\Debug\DataAccessLayer.csprojResolveAssemblyReference.cache
+D:\GitHub\FDIFINAL\DataAccessLayer\obj\Debug\DataAccessLayer.dll
+D:\GitHub\FDIFINAL\DataAccessLayer\obj\Debug\DataAccessLayer.pdb
