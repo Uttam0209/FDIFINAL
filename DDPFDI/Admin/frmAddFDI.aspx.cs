@@ -30,6 +30,7 @@ public partial class Admin_frmAddFDI : System.Web.UI.Page
     {
         if (!IsPostBack)
         {
+            PanelHideShow();
             EditCOde();
         }
     }
@@ -469,4 +470,29 @@ public partial class Admin_frmAddFDI : System.Web.UI.Page
         }
     }
     #endregion
+    protected void PanelHideShow()
+    {
+        try
+        {
+            if (objCrypto.DecryptData(Request.QueryString["mu"].ToString()) == "Panel1")
+            {
+                fdistep1.Visible = true;
+            }
+            else if (objCrypto.DecryptData(Request.QueryString["mu"].ToString()) == "Panel2")
+            {
+                fdistep2.Visible = true;
+            }
+            else if (objCrypto.DecryptData(Request.QueryString["mu"].ToString()) == "Panel3")
+            {
+                fdistep3.Visible = true;
+            }
+            else if (objCrypto.DecryptData(Request.QueryString["mu"].ToString()) == "Panel4")
+            {
+                fdistep4.Visible = true;
+            }
+        }
+        catch (Exception ex)
+        {
+        }
+    }
 }
