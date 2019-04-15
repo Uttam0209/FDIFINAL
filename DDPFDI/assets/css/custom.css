@@ -127,5 +127,5 @@ form .form-group label { font-size: 15px !important}
 .nav > li > a:focus { background:#5db9f9 !important;}
 .nav .parent-nav > a { text-transform: uppercase;}
 .parent-nav-child li a { padding-left: 30px !important;}
-.nav .parent-nav:nth-child(even)> a { background: #4d5190}
 .parent-nav-child .parent-nav li a { padding-left: 75px !important;}
+.nav > li > a:hover, .nav > li > a:focus { background: #5db9f9 !important; }

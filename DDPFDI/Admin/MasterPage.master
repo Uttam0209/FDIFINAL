@@ -52,52 +52,8 @@
                         <button class="btn  btn-nav-toggle"><i class="fa fa-angle-double-left toggle-left"></i></button>
                         
                          <div runat="server" id="me"></div>
-                     <%--   <ul class="nav  nav-list">
-
-                            <li class="parent-nav"><a href="#"><i class="fas fa-user-tie"></i><span class="hidden-minibar"><asp:Label ID="lbllogfrom" runat="server"></asp:Label>
-                            </span><i class="fas fa-angle-down"></i></a>
-                               
-                                <ul class="parent-nav-child">
-                                    <li class="active"><a href='<%=ResolveUrl("~/Dashboard") %>' data-original-title="Dashboard">
-                                        <i class="fas fa-tachometer-alt"></i><span class="hidden-minibar">Dashboard</span></a></li>
-
-                                    <li><a href='<%=ResolveUrl("~/Add-Company") %>' data-original-title="ViewFDI-Detail">
-                                        <i class="fas fa-building"></i><span class="hidden-minibar">Add
-                                    Company</span></a></li>
-                                    <li><a href='<%=ResolveUrl("~/Registerd-As") %>' data-original-title="Dashboard">
-                                        <i class="fas fa-registered"></i><span class="hidden-minibar">Registered As</span></a></li>
-                                    <li class="parent-nav">
-                                        <a href="#"><i class="fas fa-user-tie"></i><span class="hidden-minibar">General Information </span><i class="fas fa-angle-down"></i></a>
-                                        <ul class="parent-nav-child">
-
-                                            <li><a href="#"><i class="far fa-building"></i>Company Detail</a></li>
-                                            <li><a href="#"><i class="fas fa-briefcase"></i>Nodal Officer Detail</a></li>
-                                            <li><a href="#"><i class="fas fa-briefcase"></i>GST Detail</a></li>
-                                        </ul>
-                                    </li>
-
-                                    <li><a href='<%=ResolveUrl("~/Profile") %>' data-original-title="ViewFDI-Detail">
-                                        <i class="fas fa-building"></i><span class="hidden-minibar">Profile</span></a></li>
-
-                                    <li><a href='<%=ResolveUrl("~/Specilization") %>' data-original-title="Master Company Detail">
-                                        <i class="fas fa-building"></i><span class="hidden-minibar">Specialization</span></a></li>
-
-                                    <li><a href='<%=ResolveUrl("~/Startup") %>' data-original-title="Master Company Detail">
-                                        <i class="fas fa-building"></i><span class="hidden-minibar">Startup</span></a></li>
-                                    <li><a href='<%=ResolveUrl("~/MSME") %>' data-original-title="Master Company Detail">
-<<<<<<< HEAD
-                                    <i class="fas fa-building"></i><span class="hidden-minibar">MSME</span></a></li>
-                                    <li><a href='<%=ResolveUrl("~/FDI-Inflowss") %>' data-original-title="Master Company Detail">
-                                    <i class="fas fa-building"></i><span class="hidden-minibar">FDI Inflow</span></a></li>
-=======
-                                        <i class="fas fa-building"></i><span class="hidden-minibar">MSME</span></a></li>
-                                    <li><a href='<%=ResolveUrl("~/FDI-Inflowss") %>' data-original-title="Master Company Detail">
-                                        <i class="fas fa-building"></i><span class="hidden-minibar">FDI Inflow</span></a></li>
->>>>>>> 2454381a7028e9a77616ea58b3e8a3bfc397a3de
-                                </ul>
-                            </li>
-                        </ul>--%>
-                    </div>
+                    
+                     </div>
                 </div>
                 <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
                 </asp:ContentPlaceHolder>
