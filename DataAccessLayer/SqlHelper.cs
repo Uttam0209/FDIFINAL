@@ -467,5 +467,55 @@ namespace DataAccessLayer
             }
         }
         #endregion
+        #region "Dashboard"
+        public DataTable RetriveAggregateValue(string function, string entity)
+        {
+            using (DbConnection dbCon = db.CreateConnection())
+            {
+                dbCon.Open();
+                try
+                {
+                    DbCommand cmd = db.GetStoredProcCommand("sp_AggregateValue");
+                    db.AddInParameter(cmd, "@Function", DbType.String, function);
+                    db.AddInParameter(cmd, "@Table", DbType.String, entity);
+
+                    IDataReader dr = db.ExecuteReader(cmd);
+                    DataTable dt = new DataTable();
+                    if (dr != null)
+                        dt.Load(dr);
+                    return dt;
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+        }
+        public DataTable RetriveAggregateValueWithParam(string function, string entity, string clmn, string val)
+        {
+            using (DbConnection dbCon = db.CreateConnection())
+            {
+                dbCon.Open();
+                try
+                {
+                    DbCommand cmd = db.GetStoredProcCommand("sp_AggregateValue");
+                    db.AddInParameter(cmd, "@Function", DbType.String, function);
+                    db.AddInParameter(cmd, "@Table", DbType.String, entity);
+                    db.AddInParameter(cmd, "@Colmn", DbType.String, clmn);
+                    db.AddInParameter(cmd, "@Value", DbType.String, val);
+
+                    IDataReader dr = db.ExecuteReader(cmd);
+                    DataTable dt = new DataTable();
+                    if (dr != null)
+                        dt.Load(dr);
+                    return dt;
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+        }
+        #endregion
     }
 }

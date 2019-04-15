@@ -18,10 +18,13 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
     string _msg = string.Empty;
     string _sysMsg = string.Empty;
     DataTable DtView = new DataTable();
+    string currentPage = "";
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
         {
+            currentPage = System.IO.Path.GetFileName(Request.Url.AbsolutePath);
+            PanelHideShow();
             BindState();
             EditCOde();
         }
@@ -218,6 +221,26 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
         txtCEOEmailId.Text = "";
         txtceoname.Text = "";
     }
-  
-
+    protected void PanelHideShow()
+    {
+        DataTable DtHide = Lo.RetriveCompany("HideShowMenuPanel", 0, currentPage);
+        if (DtHide.Rows.Count > 0 && DtHide != null)
+        {
+            if (DtHide.Rows[0]["Spanclass"].ToString() == "Panel1")
+            {
+                fdistep1.Visible = true;
+            }
+            else if (DtHide.Rows[0]["Spanclass"].ToString() == "Panel2")
+            {
+                fdistep2.Visible = true;
+            }
+            else if (DtHide.Rows[0]["Spanclass"].ToString() == "Panel3")
+            {
+                fdistep3.Visible = true;
+            }
+        }
+        else
+        {
+        }
+    }
 }
