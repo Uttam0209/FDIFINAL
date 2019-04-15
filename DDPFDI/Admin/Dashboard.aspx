@@ -1,8 +1,11 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Dashboard.aspx.cs" Inherits="Admin_Dashboard" MasterPageFile="~/Admin/MasterPage.master" %>
 
+<%@ Register Assembly="System.Web.DataVisualization, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" Namespace="System.Web.UI.DataVisualization.Charting" TagPrefix="asp" %>
+
 <asp:Content ID="conhead" runat="server" ContentPlaceHolderID="head">
 </asp:Content>
 <asp:Content ID="coninner" runat="server" ContentPlaceHolderID="ContentPlaceHolder1">
+
     <asp:ScriptManager ID="sc" runat="server"></asp:ScriptManager>
     <asp:UpdatePanel ID="up" runat="server">
         <ContentTemplate>
@@ -15,74 +18,116 @@
                     </div>
                     <form method="post" class="addfdi">
                         <div class="admin-dashboard">
-                             <div class="row">
-                            <div class="col-md-12">
-                                <div class="fdi-tab add-inflow-tab">
-                                    <ul>
-                                        <li class="active"><a href="#fdistep1" data-toggle="tab">FDI</a></li>
-                                        <li><a href="#fdistep2" data-toggle="tab">Export</a></li>
-                                        <li><a href="#fdistep3" data-toggle="tab">Production</a></li>
-                                    </ul>
-                                </div>
-                                <div class="fdi-add-content">
-                                    <li id="fdistep1" class="tab-pane fade in active">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="fdi-tab add-inflow-tab">
+                                        <ul>
+                                            <li class="active"><a href="#fdistep1" data-toggle="tab">FDI</a></li>
+                                            <li><a href="#fdistep2" data-toggle="tab">Export</a></li>
+                                            <li><a href="#fdistep3" data-toggle="tab">Production</a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="fdi-add-content">
+                                        <li id="fdistep1" class="tab-pane fade in active">
 
-                                        <div class="row">
-                                            <div class="col-lg-4 col-sm-6 col-xs-12">
-                                                <div class="white-box analytics-info">
-                                                    <h3 class="box-title">Total Visit</h3>
-                                                    <ul class="list-inline two-part">
-                                                        <li>
-                                                           
-                                                        </li>
-                                                        <li class="text-right"><i class="ti-arrow-up text-success"></i><span class="counter text-success">659</span></li>
-                                                       
-                                                    </ul>
-                                                     <div class="file-export"><i class="fas fa-file-export"></i></div>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-4 col-sm-6 col-xs-12">
-                                                <div class="white-box analytics-info">
-                                                    <h3 class="box-title">Total Page Views</h3>
-                                                    <ul class="list-inline two-part">
-                                                        <li>
-                                                           
-                                                        </li>
-                                                        <li class="text-right"><i class="ti-arrow-up text-purple"></i><span class="counter text-purple">869</span></li>
-                                                       
-                                                    </ul>
-                                                     <div class="file-export"><i class="fas fa-file-export"></i></div>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-4 col-sm-6 col-xs-12">
-                                                <div class="white-box analytics-info">
-                                                    <h3 class="box-title">Unique Visitor</h3>
-                                                    <ul class="list-inline two-part">
-                                                        <li>
-                                                            
-                                                        </li>
-                                                        <li class="text-right"><i class="ti-arrow-up text-info"></i><span class="counter text-info">911</span></li>
-                                                        
-                                                    </ul>
-                                                    <div class="file-export"><i class="fas fa-file-export"></i></div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                            <div class="row">
+                                                <div class="col-lg-4 col-sm-6 col-xs-12">
+                                                    <div class="white-box analytics-info">
+                                                        <h3 class="box-title">Total Companies</h3>
+                                                        <ul class="list-inline two-part">
 
-                                    </li>
-                                    <li id="fdistep2" class="tab-pane fade in"></li>
-                                    <li id="fdistep3" class="tab-pane fade in "></li>
+                                                            <li><i class="ti-arrow-up text-success"></i>
+                                                                <asp:LinkButton ID="lnkbtnTotComp" runat="server" Text="0" ForeColor="Green"></asp:LinkButton></li>
+
+                                                        </ul>
+                                                        <div class="file-export">
+                                                            <button class="btn btn-primary pull-right">Export</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4 col-sm-6 col-xs-12">
+                                                    <div class="white-box analytics-info">
+                                                        <h3 class="box-title">Total FDI</h3>
+                                                        <ul class="list-inline two-part">
+
+                                                            <li><i class="ti-arrow-up text-purple"></i>
+                                                                <asp:LinkButton ID="lnkbtnFDI" runat="server" Text="0" ForeColor="Blue"></asp:LinkButton></li>
+
+                                                        </ul>
+                                                        <div class="file-export">
+                                                            <button class="btn btn-primary pull-right">Export</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4 col-sm-6 col-xs-12">
+                                                    <div class="white-box analytics-info">
+                                                        <h3 class="box-title">Last Year FDI</h3>
+                                                        <ul class="list-inline two-part">
+
+                                                            <li>
+
+
+                                                                <asp:LinkButton ID="lnkbtnLYFDI" runat="server" Text="0" ForeColor="Brown"></asp:LinkButton></li>
+
+                                                        </ul>
+                                                        <div class="file-export">
+                                                            <button class="btn btn-primary pull-right">Export</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row" style="margin-top: 10px;">
+                                                <div class="col-md-6">
+                                                    <asp:DropDownList ID="ddlGraphType" runat="server" CssClass="form-control">
+                                                        <%--<asp:ListItem>Column Chart</asp:ListItem>--%>
+                                                        <asp:ListItem>Pie Chart</asp:ListItem>
+                                                        <%--<asp:ListItem>Trend Chart</asp:ListItem>--%>
+                                                    </asp:DropDownList>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <asp:DropDownList ID="ddlRange" runat="server" CssClass="form-control">
+                                                        <asp:ListItem>All</asp:ListItem>
+                                                       <%-- <asp:ListItem>2001-02</asp:ListItem>
+                                                        <asp:ListItem>2002-03</asp:ListItem>
+                                                        <asp:ListItem>2003-04</asp:ListItem>
+                                                        <asp:ListItem>2004-05</asp:ListItem>
+                                                        <asp:ListItem>2005-06</asp:ListItem>
+                                                        <asp:ListItem>2006-07</asp:ListItem>
+                                                        <asp:ListItem>2007-08</asp:ListItem>
+                                                        <asp:ListItem>2008-09</asp:ListItem>
+                                                        <asp:ListItem>2009-10</asp:ListItem>
+                                                        <asp:ListItem>2010-11</asp:ListItem>
+                                                        <asp:ListItem>2011-12</asp:ListItem>
+                                                        <asp:ListItem>2012-13</asp:ListItem>
+                                                        <asp:ListItem>2013-14</asp:ListItem>
+                                                        <asp:ListItem>2014-15</asp:ListItem>
+                                                        <asp:ListItem>20015-16</asp:ListItem>
+                                                        <asp:ListItem>2016-17</asp:ListItem>
+                                                        <asp:ListItem>20017-18</asp:ListItem>
+                                                        <asp:ListItem>2018-19</asp:ListItem>--%>
+                                                    </asp:DropDownList>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div id="chartContainer" style="height: 370px; width: 100%; margin-top: 20px"></div>
+                                                </div>
+                                            </div>
+                                            <div>
+                                            </div>
+                                        </li>
+                                        <li id="fdistep2" class="tab-pane fade">Export Data</li>
+                                        <li id="fdistep3" class="tab-pane fade">Production Data</li>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        </div>
-                       
+
                     </form>
                 </div>
                 <div class="footer">© 2019 <a href="#">Department of Defence Production</a> </div>
             </div>
 
-            </div>
         </ContentTemplate>
     </asp:UpdatePanel>
 </asp:Content>
