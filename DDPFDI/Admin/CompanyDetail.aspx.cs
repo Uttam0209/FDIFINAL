@@ -226,15 +226,15 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
         DataTable DtHide = Lo.RetriveCompany("HideShowMenuPanel", 0, currentPage);
         if (DtHide.Rows.Count > 0 && DtHide != null)
         {
-            if (DtHide.Rows[0]["Spanclass"].ToString() == "Panel1")
+            if (objCrypto.DecryptData(Request.QueryString["mu"].ToString()) == "Panel1")
             {
                 fdistep1.Visible = true;
             }
-            else if (DtHide.Rows[0]["Spanclass"].ToString() == "Panel2")
+            else if (objCrypto.DecryptData(Request.QueryString["mu"].ToString()) == "Panel2")
             {
                 fdistep2.Visible = true;
             }
-            else if (DtHide.Rows[0]["Spanclass"].ToString() == "Panel3")
+            else if (objCrypto.DecryptData(Request.QueryString["mu"].ToString()) == "Panel3")
             {
                 fdistep3.Visible = true;
             }

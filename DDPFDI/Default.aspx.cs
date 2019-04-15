@@ -29,7 +29,7 @@ public partial class _Default : System.Web.UI.Page
     #endregion
     protected void Page_Load(object sender, EventArgs e)
     {
-        //string a = objEnc.DecryptData("CD6oXxLM7jIizyO+rNNCIw==");
+       // string a = objEnc.EncryptData("Data Source=103.73.189.114;Initial Catalog=DDP_FDI;User ID=ddp;Password=%>#%7ZeL3");
     }
     #region "Login Code"
     public static bool IsValidEmailId(string InputEmail)
