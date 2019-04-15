@@ -40,8 +40,8 @@ public partial class Admin_MasterPage : System.Web.UI.MasterPage
         if (dtMenu.Rows.Count > 0)
         {
             strMenu.Append("<ul class='nav  nav-list'>");
-            strMenu.Append(" <li class='parent-nav'><a href='#'><i class='fas fa-user-tie'></i><span class='hidden-minibar'>" + type + "</span><i class='fas fa-angle-down'></i></a>");
-            strMenu.Append("<ul class='parent-nav'>");
+            strMenu.Append(" <li class='parent-nav'><a href='#'><i class='fas fa-user-tie '></i><span class='hidden-minibar'>" + type + "</span><i class='fas fa-angle-down'></i></a>");
+            strMenu.Append("<ul class='parent-nav' style='display:block;'>");
             foreach (DataRow row in dtMenu.Rows)
             {
                 strMenu.Append("<li class='parent-nav'><a href='" + row["MenuUrl"].ToString() + "' data-original-title='Dashboard'><i class='fas fa-tachometer-alt'></i><span class='hidden-minibar'>" + row["MenuName"].ToString() + "</span>");
@@ -52,7 +52,7 @@ public partial class Admin_MasterPage : System.Web.UI.MasterPage
                     strMenu.Append("<ul class='parent-nav-child'>");
                     foreach (DataRow row1 in Submenu.Rows)
                     {
-                        strMenu.Append("<li><a href='" + row1["MenuUrl"].ToString() + "'><i class='far fa-building'></i>" + row1["MenuName"].ToString() + "</a></li>");
+                        strMenu.Append("<li><a href='" + row1["MenuUrl"].ToString() + "?mu=" + ObjEnc.EncryptData(row1["Spanclass"].ToString()) + "'><i class='far fa-building'></i>" + row1["MenuName"].ToString() + "</a></li>");
                     }
                     strMenu.Append("</ul>");
                 }
