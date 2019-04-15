@@ -20,74 +20,66 @@
                         <div class="admin-dashboard">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <div class="fdi-tab add-inflow-tab">
-                                        <ul>
-                                            <li class="active"><a href="#fdistep1" data-toggle="tab">FDI</a></li>
-                                            <li><a href="#fdistep2" data-toggle="tab">Export</a></li>
-                                            <li><a href="#fdistep3" data-toggle="tab">Production</a></li>
-                                        </ul>
-                                    </div>
-                                    <div class="fdi-add-content">
-                                        <li id="fdistep1" class="tab-pane fade in active">
-
-                                            <div class="row">
-                                                <div class="col-lg-4 col-sm-6 col-xs-12">
-                                                    <div class="white-box analytics-info">
-                                                        <h3 class="box-title">Total Companies</h3>
-                                                        <ul class="list-inline two-part">
-
-                                                            <li><i class="ti-arrow-up text-success"></i>
-                                                                <asp:LinkButton ID="lnkbtnTotComp" runat="server" Text="0" ForeColor="Green"></asp:LinkButton></li>
-
-                                                        </ul>
-                                                        <div class="file-export">
-                                                            <button class="btn btn-primary pull-right">Export</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-4 col-sm-6 col-xs-12">
-                                                    <div class="white-box analytics-info">
-                                                        <h3 class="box-title">Total FDI</h3>
-                                                        <ul class="list-inline two-part">
-
-                                                            <li><i class="ti-arrow-up text-purple"></i>
-                                                                <asp:LinkButton ID="lnkbtnFDI" runat="server" Text="0" ForeColor="Blue"></asp:LinkButton></li>
-
-                                                        </ul>
-                                                        <div class="file-export">
-                                                            <button class="btn btn-primary pull-right">Export</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-4 col-sm-6 col-xs-12">
-                                                    <div class="white-box analytics-info">
-                                                        <h3 class="box-title">Last Year FDI</h3>
-                                                        <ul class="list-inline two-part">
-
-                                                            <li>
 
 
-                                                                <asp:LinkButton ID="lnkbtnLYFDI" runat="server" Text="0" ForeColor="Brown"></asp:LinkButton></li>
+                                    <div class="row">
+                                        <div class="col-lg-4 col-sm-6 col-xs-12">
+                                            <div class="white-box analytics-info">
+                                                <h3 class="box-title">Total Companies</h3>
+                                                <ul class="list-inline two-part">
 
-                                                        </ul>
-                                                        <div class="file-export">
-                                                            <button class="btn btn-primary pull-right">Export</button>
-                                                        </div>
-                                                    </div>
+                                                    <li><i class="ti-arrow-up text-success"></i>
+                                                        <asp:LinkButton ID="lnkbtnTotComp" runat="server" Text="0" ForeColor="Green"></asp:LinkButton></li>
+
+                                                </ul>
+                                                <div class="file-export">
+                                                    <button class="btn btn-primary pull-right">Export</button>
                                                 </div>
                                             </div>
-                                            <div class="row" style="margin-top: 10px;">
-                                                <div class="col-md-6">
-                                                    <asp:DropDownList ID="ddlGraphType" runat="server" CssClass="form-control">
-                                                        <%--<asp:ListItem>Column Chart</asp:ListItem>--%>
-                                                        <asp:ListItem>Pie Chart</asp:ListItem>
-                                                        <%--<asp:ListItem>Trend Chart</asp:ListItem>--%>
-                                                    </asp:DropDownList>
+                                        </div>
+                                        <div class="col-lg-4 col-sm-6 col-xs-12">
+                                            <div class="white-box analytics-info">
+                                                <h3 class="box-title">Total FDI</h3>
+                                                <ul class="list-inline two-part">
+
+                                                    <li><i class="ti-arrow-up text-purple"></i>
+                                                        <asp:LinkButton ID="lnkbtnFDI" runat="server" Text="0" ForeColor="Blue"></asp:LinkButton></li>
+
+                                                </ul>
+                                                <div class="file-export">
+                                                    <button class="btn btn-primary pull-right">Export</button>
                                                 </div>
-                                                <div class="col-md-6">
-                                                    <asp:DropDownList ID="ddlRange" runat="server" CssClass="form-control">
-                                                        <asp:ListItem>All</asp:ListItem>
-                                                       <%-- <asp:ListItem>2001-02</asp:ListItem>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 col-sm-6 col-xs-12">
+                                            <div class="white-box analytics-info">
+                                                <h3 class="box-title">Last Year FDI</h3>
+                                                <ul class="list-inline two-part">
+
+                                                    <li>
+
+
+                                                        <asp:LinkButton ID="lnkbtnLYFDI" runat="server" Text="0" ForeColor="Brown"></asp:LinkButton></li>
+
+                                                </ul>
+                                                <div class="file-export">
+                                                    <button class="btn btn-primary pull-right">Export</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row" style="margin-top: 10px;">
+                                        <div class="col-md-6">
+                                            <asp:DropDownList ID="ddlGraphType" runat="server" CssClass="form-control">
+                                                <%--<asp:ListItem>Column Chart</asp:ListItem>--%>
+                                                <asp:ListItem>Pie Chart</asp:ListItem>
+                                                <%--<asp:ListItem>Trend Chart</asp:ListItem>--%>
+                                            </asp:DropDownList>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <asp:DropDownList ID="ddlRange" runat="server" CssClass="form-control">
+                                                <asp:ListItem>All</asp:ListItem>
+                                                <%-- <asp:ListItem>2001-02</asp:ListItem>
                                                         <asp:ListItem>2002-03</asp:ListItem>
                                                         <asp:ListItem>2003-04</asp:ListItem>
                                                         <asp:ListItem>2004-05</asp:ListItem>
@@ -105,20 +97,18 @@
                                                         <asp:ListItem>2016-17</asp:ListItem>
                                                         <asp:ListItem>20017-18</asp:ListItem>
                                                         <asp:ListItem>2018-19</asp:ListItem>--%>
-                                                    </asp:DropDownList>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <div id="chartContainer" style="height: 370px; width: 100%; margin-top: 20px"></div>
-                                                </div>
-                                            </div>
-                                            <div>
-                                            </div>
-                                        </li>
-                                        <li id="fdistep2" class="tab-pane fade">Export Data</li>
-                                        <li id="fdistep3" class="tab-pane fade">Production Data</li>
+                                            </asp:DropDownList>
+                                        </div>
                                     </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div id="chartContainer" style="height: 370px; width: 100%; margin-top: 20px"></div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                    </div>
+
+                                </div>
                                 </div>
                             </div>
                         </div>
