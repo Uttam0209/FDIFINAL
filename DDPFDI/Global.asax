@@ -3,7 +3,6 @@
 <%@ Import Namespace="System.Net" %>
 
 <script RunAt="server">
-
     void Application_Start(object sender, EventArgs e)
     {
         System.Net.ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls12;
@@ -29,7 +28,6 @@
     void Session_Start(object sender, EventArgs e)
     {
     }
-
     static void RegisterRoutes(RouteCollection routes)
     {
         routes.MapPageRoute("Login", "Login", "~/Default.aspx", true);
@@ -50,6 +48,5 @@
         routes.MapPageRoute("Registerd-As", "Registerd-As", "~/Admin/RegisterdAs.aspx", true);
         routes.MapPageRoute("Startup", "Startup", "~/Admin/Startup.aspx", true);
         routes.MapPageRoute("Specilization", "Specilization", "~/Admin/Specilization.aspx", true);
-    }
-       
+    }    
 </script>
