@@ -104,7 +104,7 @@ public partial class Admin_DetailFDIRegistration : System.Web.UI.Page
                 lblfdivalue.Text = DtView.Rows[0]["FDIValueType"].ToString();
                 lblfordefactivity.Text = DtView.Rows[0]["ForeignDefenceActivity"].ToString();
                 lblforeigncompname.Text = DtView.Rows[0]["ForeignCompanyName"].ToString();
-                lblgstno.Text = DtView.Rows[0]["GSTNo"].ToString();
+               // lblgstno.Text = DtView.Rows[0]["GSTNo"].ToString();
                 lblceoemail.Text = DtView.Rows[0]["CEOEmail"].ToString();
                 lbljointventure.Text = DtView.Rows[0]["IsJointVenture"].ToString();
                 lblpanno.Text = DtView.Rows[0]["PANNo"].ToString();

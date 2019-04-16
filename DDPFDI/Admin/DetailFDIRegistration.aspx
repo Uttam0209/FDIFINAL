@@ -50,7 +50,7 @@
                             <li class="active">FDI Reporting Detail</li>
                         </ul>
                     </div>
-                    <form method="post" class="addfdi">
+                    <div class="addfdi">
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="table-wrapper">
@@ -67,10 +67,13 @@
                                     <br />
                                     <br />
                                     <div class="clearfix"></div>
-                                    <div class="text-center" style="font-size:16px; margin-top:20px;">Total cumulative value in INR :<strong>  <asp:Label ID="lbltotal" runat="server" Text=""></asp:Label></strong></div>
+                                    <div class="text-center" style="font-size: 16px; margin-top: 20px;">
+                                        Total cumulative value in INR :<strong>
+                                            <asp:Label ID="lbltotal" runat="server" Text=""></asp:Label></strong>
+                                    </div>
                                     <div class="clearfix"></div>
                                     <asp:GridView ID="gvdetail" runat="server" Width="100%" Class="commonAjaxTbl table display responsive no-wrap table-hover manage-user" AutoGenerateColumns="false" AllowPaging="true"
-                                        OnPageIndexChanging="OnPageIndexChanging" PageSize="10" AllowSorting="true" OnSorting="OnSorting" OnRowCommand="gvdetail_RowCommand">
+                                        OnPageIndexChanging="OnPageIndexChanging" PageSize="25" AllowSorting="true" OnSorting="OnSorting" OnRowCommand="gvdetail_RowCommand">
                                         <PagerStyle HorizontalAlign="Center" CssClass="GridPager" />
                                         <Columns>
                                             <asp:TemplateField HeaderText="Sr.No">
@@ -83,7 +86,7 @@
                                             <asp:BoundField DataField="FDIValueType" HeaderText="FDI" NullDisplayText="#" SortExpression="FDIValueType" />
                                             <asp:BoundField DataField="PeriodOfQuater" HeaderText="Period" NullDisplayText="#" SortExpression="PeriodOfQuater" />
                                             <asp:BoundField DataField="FY" HeaderText="Financial Year" NullDisplayText="#" SortExpression="FY" />
-                                             <asp:BoundField DataField="ExchangeTotalAmount" HeaderText="Amount(INR)" DataFormatString="{0:N0}" NullDisplayText="#" SortExpression="ExchangeTotalAmount" />
+                                            <asp:BoundField DataField="ExchangeTotalAmount" HeaderText="Amount(INR)" DataFormatString="{0:N0}" NullDisplayText="#" SortExpression="ExchangeTotalAmount" />
                                             <asp:BoundField DataField="IsActive" HeaderText="Is Active" NullDisplayText="#" SortExpression="IsActive" />
                                             <asp:TemplateField HeaderText="Edit">
                                                 <ItemTemplate>
@@ -105,7 +108,7 @@
                                 </div>
                             </div>
                         </div>
-                    </form>
+                    </div>
                 </div>
                 <div class="footer">© 2019 <a href="#">Department of Defence Production</a> </div>
             </div>
@@ -196,12 +199,12 @@
                                                     <asp:Label ID="lblpanno" runat="server"></asp:Label>
                                                 </td>
                                             </tr>
-                                            <tr>
+                                            <%-- <tr>
                                                 <td class="pass">GST No. (If you use multiple gst no use with comma seprated)</td>
                                                 <td>
                                                     <asp:Label ID="lblgstno" runat="server"></asp:Label>
                                                 </td>
-                                            </tr>
+                                            </tr>--%>
 
                                             <tr>
                                                 <td class="pass">Company engaged in Defence Activities </td>
@@ -375,7 +378,6 @@
                         </form>
                     </div>
                 </div>
-            </div>
             </div>
         </ContentTemplate>
     </asp:UpdatePanel>
