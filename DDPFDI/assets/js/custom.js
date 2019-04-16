@@ -33,5 +33,22 @@
 
     console.log(CURRENT_URL);
 
+    //Hide Show Chart
+
+    $(".GraphType").on('change', function () {
+        var $Chartvalue = $(this).val();
+        console.log($Chartvalue);
+        if ($Chartvalue == 'Pie Chart') {
+            $("#divPieChart").show();
+            $("#divLineChart").hide();
+        }
+
+        else if ($Chartvalue == 'Line Chart') {
+            $("#divLineChart").show();
+            $("#divPieChart").hide();
+        }
+
+    });
+
 
 });
