@@ -4,6 +4,7 @@
     $('.btn-nav-toggle').click(function () {
         $('.site-holder').toggleClass('mini-sidebar');
         $('.hidden-minibar').toggleClass('hide');
+        $('.toggle-left').toggleClass('rotate-toggle-btn');
         return false;
     });
 
@@ -23,7 +24,7 @@
     });
 
 // Add Current Page in Sidebar
-    var CURRENT_URL= window.location.pathname;
+    var CURRENT_URL= window.location.href.split('/').slice(3).join('/');
     var $Sidebar = $(".left-sidebar");
     $Sidebar.find('a[href="'+CURRENT_URL+'"]').parents(".parent-nav-child").slideDown();
     $Sidebar.find('a[href="'+CURRENT_URL+'"]').parents("li").addClass('active').siblings("li").removeClass("active");

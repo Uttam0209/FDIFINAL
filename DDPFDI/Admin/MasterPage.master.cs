@@ -40,8 +40,8 @@ public partial class Admin_MasterPage : System.Web.UI.MasterPage
         if (dtMenu.Rows.Count > 0)
         {
             strMenu.Append("<ul class='nav  nav-list'>");
-            strMenu.Append(" <li class='parent-nav'><a href='javascript:void(0)' id='main-admin'><i class='fas fa-user-tie'></i><span class='hidden-minibar'>" + type + "</span><i class='fas fa-angle-down'></i></a>");
-            strMenu.Append("<ul class='parent-nav-child' style='display:block;'>");
+            //strMenu.Append(" <li class='parent-nav'><a href='javascript:void(0)' id='main-admin'><i class='fas fa-user-tie'></i><span class='hidden-minibar'>" + type + "</span><i class='fas fa-angle-down'></i></a>");
+            //strMenu.Append("<ul class='parent-nav-child' style='display:block;'>");
 
             foreach (DataRow row in dtMenu.Rows)
             {
@@ -61,8 +61,8 @@ public partial class Admin_MasterPage : System.Web.UI.MasterPage
                 me.InnerHtml = strMenu.ToString();
             }
 
-            strMenu.Append("</ul>");
-            strMenu.Append(" </li> ");
+            //strMenu.Append("</ul>");
+           // strMenu.Append(" </li> ");
             strMenu.Append("</ul");
         }
     }
