@@ -45,10 +45,11 @@ public partial class Admin_MasterPage : System.Web.UI.MasterPage
             foreach (DataRow row in dtMenu.Rows)
             {
                 strMenu.Append("<li class='parent-nav'><a href='" + row["MenuUrl"].ToString() + "' data-original-title='Dashboard'><i class='fas fa-tachometer-alt'></i><span class='hidden-minibar'>" + row["MenuName"].ToString() + "</span></a>");
-                DataTable Submenu = Lo.RetriveCompany1("SubMenu", row["MenuRefNo"].ToString(), type);
+                DataTable Submenu = Lo.RetriveCompany1("SubMenu", row["MenuID"].ToString(), type);
+
                 if (Submenu.Rows.Count > 0)
                 {
-                    
+                    //strMenu.Append("<i class='fas fa-angle-down'></i>");
                     strMenu.Append("<ul class='parent-nav-child'>");
                     foreach (DataRow row1 in Submenu.Rows)
                     {
