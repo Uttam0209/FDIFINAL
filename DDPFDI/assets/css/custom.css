@@ -126,7 +126,7 @@ form .form-group label { font-size: 15px !important}
 
 .sidebar-holder .nav > li > a:focus { background:#5db9f9 !important;}
 .sidebar-holder .nav .parent-nav > a { text-transform: uppercase;}
-.parent-nav-child li a { padding-left: 30px !important;}
+.parent-nav-child li a { padding-left: 30px !important; background: #494ca2 !important}
 .parent-nav-child .parent-nav li a { padding-left: 75px !important;}
 .sidebar-holder .nav > li > a:hover, .sidebar-holder .nav > li > a:focus { background: #5db9f9 !important; }
 .parent-nav-child .parent-nav li a { padding-left: 75px !important;}
