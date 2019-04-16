@@ -61,40 +61,71 @@
 
     <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.10.0.min.js" type="text/javascript"></script>
     <script src="assets/js/bootstrap.min.js"></script>
-  
+
     <script src="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.9.2/jquery-ui.min.js" type="text/javascript"></script>
     <script src="assets/js/custom.js"></script>
-    <script type="text/javascript" src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script> 
-     <script type="text/javascript" src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>
+    <script type="text/javascript" src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>
 
-             <script type="text/javascript">
-                 window.onload = function () {
-                     
+    <script type="text/javascript">
+        window.onload = function () {
 
-                     var options = {
-                         title: {
-                             text: "FDI Detail"
-                         },
-                         data: [{
-                             type: "pie",
-                             startAngle: 45,
-                             showInLegend: "true",
-                             legendText: "{label}",
-                             indexLabel: "{label} ({y})",
-                             yValueFormatString: "#,##0.#" % "",
-                             dataPoints: [
-                                 { label: "2008-09", y: 20.91 },
-                                 { label: "2009-10", y: 9.71 },
-                                 { label: "2014-15", y: 55.71 },
-                                 { label: "2015-16", y: 22.12 },
-                                 { label: "2016-17", y: 36.76 },
-                               
-                             ]
-                         }]
-                     };
-                     $("#chartContainer").CanvasJSChart(options);
-                    
-                 }
+            //pie chart
+            var options = {
+                title: {
+                    text: "FDI Detail"
+                },
+                data: [{
+                    type: "pie",
+                    startAngle: 45,
+                    showInLegend: "true",
+                    legendText: "{label}",
+                    indexLabel: "{label} ({y})",
+                    yValueFormatString: "#,##0.#" % "",
+                    dataPoints: [
+                        { label: " <= 2014", y: 20.91 },
+                        { label: "2015-16", y: 9.71 },
+                        { label: "2016-17", y: 55.71 },
+                        { label: "2017-18", y: 22.12 },
+                        { label: "2018-19", y: 36.76 },
+
+                    ]
+                }]
+            };
+            $("#chartPie").CanvasJSChart(options);
+            //end pie chart
+
+            // bar chart
+            var options1 = {
+                animationEnabled: true,
+                title: {
+                    text: "FDI Detail"
+                },
+                axisX: {
+                    valueFormatString: "YYYY"
+                },
+                axisY: {
+                    title: "Revenue (in Cr)",
+                    prefix: "Rs.",
+                    includeZero: false
+                },
+                data: [{
+                    yValueFormatString: "$#,###",
+                    xValueFormatString: "YYYY",
+                    type: "spline",
+                    dataPoints: [
+                        { x: new Date(2013, 0), y: 1000 },
+                        { x: new Date(2014, 1), y: 150 },
+                        { x: new Date(2015, 2), y: 1200 },
+                        { x: new Date(2016, 3), y: 1440 },
+                        { x: new Date(2017, 4), y: 1800 },
+                        { x: new Date(2018, 5), y: 700 },
+                        { x: new Date(2019, 6), y: 2290 }
+                    ]
+                }]
+            };
+            $("#chartLine").CanvasJSChart(options1);
+        }
     </script>
 
     <script type="text/javascript">

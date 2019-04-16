@@ -70,9 +70,9 @@
                                     </div>
                                     <div class="row" style="margin-top: 10px;">
                                         <div class="col-md-6">
-                                            <asp:DropDownList ID="ddlGraphType" runat="server" CssClass="form-control">
-                                                <%--<asp:ListItem>Column Chart</asp:ListItem>--%>
-                                                <asp:ListItem>Pie Chart</asp:ListItem>
+                                            <asp:DropDownList ID="ddlGraphType" runat="server" CssClass="form-control GraphType">
+                                                <asp:ListItem Value="Pie Chart">Pie Chart</asp:ListItem>
+                                                <asp:ListItem Value="Line Chart">Line Chart</asp:ListItem>
                                                 <%--<asp:ListItem>Trend Chart</asp:ListItem>--%>
                                             </asp:DropDownList>
                                         </div>
@@ -102,13 +102,17 @@
                                     </div>
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <div id="chartContainer" style="height: 370px; width: 100%; margin-top: 20px"></div>
+                                            <div id="divPieChart">
+                                                <div id="chartPie" style="height: 370px; width: 100%; margin-top: 20px"></div>
+                                            </div>
+                                            <div id="divLineChart" style="display: none">
+                                                <div id="chartLine" style="height: 370px; width: 100%; margin-top: 20px"></div>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div>
-                                    </div>
+                                        <div>
+                                        </div>
 
-                                </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

@@ -28,10 +28,10 @@ public partial class Admin_Dashboard : System.Web.UI.Page
                 dt.Columns.Add(new DataColumn("Total", typeof(int)));
                 Double total = Convert.ToDouble(dt.Compute("Sum(ExchangeTotalAmount)", "").ToString());
 
-                lnkbtnFDI.Text = Math.Round((total/10000000),2).ToString()+" Crore";
+                lnkbtnFDI.Text = Math.Round((total / 10000000), 2).ToString() + " Crore";
 
                 total = Convert.ToDouble(dt.Compute("Sum(ExchangeTotalAmount)", "FYID=17").ToString());
-                lnkbtnLYFDI.Text = Math.Round((total / 10000000),2).ToString() + " Crore";
+                lnkbtnLYFDI.Text = Math.Round((total / 10000000), 2).ToString() + " Crore";
             }
         }
         else
