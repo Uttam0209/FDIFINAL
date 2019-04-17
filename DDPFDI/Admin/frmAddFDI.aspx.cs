@@ -36,7 +36,7 @@ public partial class Admin_frmAddFDI : System.Web.UI.Page
     }
     protected void BindFY()
     {
-        DataTable Dtfy = Lo.RetriveCompany("FY", 0, "");
+        DataTable Dtfy = Lo.RetriveCompany("FY", 0, "","");
         if (Dtfy.Rows.Count > 0 && Dtfy != null)
         {
             Co.FillDropdownlist(ddlyear, Dtfy, "FY", "FYID");
@@ -354,7 +354,7 @@ public partial class Admin_frmAddFDI : System.Web.UI.Page
     }
     protected void businesscode_TextChanged(object sender, EventArgs e)
     {
-        DataTable DtDes = Lo.RetriveCompany("Description", 0, businesscode.Text);
+        DataTable DtDes = Lo.RetriveCompany("Description", 0, businesscode.Text,"");
         if (DtDes.Rows.Count > 0 && DtDes != null)
         {
             tbdescription.Text = DtDes.Rows[0]["NicDesc"].ToString();

@@ -64,6 +64,7 @@ public partial class _Default : System.Web.UI.Page
                     {
                         Session["Type"] = objEnc.EncryptData(_msg);
                         Session["User"] = objEnc.EncryptData(txtUserName.Text);
+                        Session["CompanyRefNo"] = _EmpId;
                         Response.RedirectToRoute("Dashboard");
                     }
                     else
