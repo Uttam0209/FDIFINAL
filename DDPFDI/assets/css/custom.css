@@ -124,11 +124,20 @@ form .form-group label { font-size: 15px !important}
 .sidebar-holder .nav li a i.fa-angle-down { position: absolute; right: 10px;}
 .sidebar-holder .nav li a .rotate-icon { transform:rotate(180deg);}
 
+<<<<<<< HEAD
 .nav > li > a:focus { background:#5db9f9 !important;}
 .nav .parent-nav > a { text-transform: uppercase;}
 .parent-nav-child li a { padding-left: 30px !important;}
 
+=======
+.sidebar-holder .nav > li > a:focus { background:#5db9f9 !important;}
+.sidebar-holder .nav .parent-nav > a { text-transform: uppercase;}
+.parent-nav-child li a { padding-left: 30px !important; background: #494ca2 !important}
+.parent-nav-child .parent-nav li a { padding-left: 75px !important;}
+.sidebar-holder .nav > li > a:hover, .sidebar-holder .nav > li > a:focus { background: #5db9f9 !important; }
+>>>>>>> 2442a4b7664292124bc1d24833db1e84860bd39c
 .parent-nav-child .parent-nav li a { padding-left: 75px !important;}
 
 .admin-dashboard .white-box { float: left; width:100% }
 .admin-dashboard .white-box a { display: inline-block; font-size: 21px; margin-top: 10px;}
+.rotate-toggle-btn {transform: rotate(180deg);}
