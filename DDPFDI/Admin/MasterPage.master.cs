@@ -49,10 +49,10 @@ public partial class Admin_MasterPage : System.Web.UI.MasterPage
             foreach (DataRow row in dtArea.Rows)
             {
                 strMenu.Append("<li class='parent-nav'><a href='#' data-original-title='Dashboard'><i class='fas fa-tachometer-alt'></i><span class='hidden-minibar'>" + row["InterestArea"].ToString() + "</span>");
-
+                 strMenu.Append("<i class='fas fa-angle-down'></i></a>");
                 string[] Categ1 = dtArea.Rows[0]["MenuId"].ToString().Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries);
                 string mCval1 = "";
-                strMenu.Append("<ul class='parent-nav'>");
+                strMenu.Append("<ul class='parent-nav-child'>");
                 for (int j = 0; j < Categ1.Length; j++)
                 {
                     mCval1 = Categ1[j];
