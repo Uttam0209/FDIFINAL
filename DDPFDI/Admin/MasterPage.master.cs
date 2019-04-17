@@ -37,35 +37,55 @@ public partial class Admin_MasterPage : System.Web.UI.MasterPage
     private void bindMenu()
     {
         StringBuilder strMenu = new StringBuilder();
-        DataTable dtMenu = Lo.RetriveCompany("MenuMain",0, type,strInterestedArea);
-        if (dtMenu.Rows.Count > 0)
+        strMenu.Append("<ul class='nav  nav-list'>");
+        string[] Categ = strInterestedArea.Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries);
+        string mCval = "";
+        for (int x = 0; x < Categ.Length; x++)
         {
-            strMenu.Append("<ul class='nav  nav-list'>");
-            //strMenu.Append(" <li class='parent-nav'><a href='javascript:void(0)' id='main-admin'><i class='fas fa-user-tie'></i><span class='hidden-minibar'>" + type + "</span><i class='fas fa-angle-down'></i></a>");
-            //strMenu.Append("<ul class='parent-nav-child' style='display:block;'>");
+            mCval = Categ[x];
+            DataTable dtArea = Lo.RetriveCompany("InterestedAreaMenuId", Convert.ToInt64(mCval), Session["CompanyRefNo"].ToString(), "0");
 
-            foreach (DataRow row in dtMenu.Rows)
+            
+            foreach (DataRow row in dtArea.Rows)
             {
-                strMenu.Append("<li class='parent-nav'><a href='" + row["MenuUrl"].ToString() + "' data-original-title='Dashboard'><i class='fas fa-tachometer-alt'></i><span class='hidden-minibar'>" + row["MenuName"].ToString() + "</span>");
-                DataTable Submenu = Lo.RetriveCompany1("SubMenu", row["MenuID"].ToString(), type);
+                strMenu.Append("<li class='parent-nav'><a href='#' data-original-title='Dashboard'><i class='fas fa-tachometer-alt'></i><span class='hidden-minibar'>" + row["InterestArea"].ToString() + "</span>");
 
-                if (Submenu.Rows.Count > 0)
+                string[] Categ1 = dtArea.Rows[0]["MenuId"].ToString().Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries);
+                string mCval1 = "";
+                strMenu.Append("<ul class='parent-nav'>");
+                for (int j = 0; j < Categ1.Length; j++)
                 {
-                    strMenu.Append("<i class='fas fa-angle-down'></i></a>");
-                    strMenu.Append("<ul class='parent-nav-child'>");
-                    foreach (DataRow row1 in Submenu.Rows)
+                    mCval1 = Categ1[j];
+                    DataTable dtMenu = Lo.RetriveCompany("MenuMain", Convert.ToInt64(mCval1), type, "0");
+                    
+                    
+                    foreach (DataRow row2 in dtMenu.Rows)
                     {
-                        strMenu.Append("<li><a href='" + row1["MenuUrl"].ToString() + "?mu=" + ObjEnc.EncryptData(row1["Spanclass"].ToString()) + "'><i class='far fa-building'></i>" + row1["MenuName"].ToString() + "</a></li>");
-                    }
-                    strMenu.Append("</ul>");
-                }
-                strMenu.Append("</li>");
-                me.InnerHtml = strMenu.ToString();
-            }
+                        strMenu.Append("<li class='parent-nav'><a href='#' data-original-title='Dashboard'><i class='fas fa-tachometer-alt'></i><span class='hidden-minibar'>" + row2["MenuName"].ToString() + "</span>");
 
-            //strMenu.Append("</ul>");
-           // strMenu.Append(" </li> ");
+                        DataTable Submenu = Lo.RetriveCompany1("SubMenu", row2["MenuID"].ToString(), type);
+
+                        if (Submenu.Rows.Count > 0)
+                        {
+                            strMenu.Append("<i class='fas fa-angle-down'></i></a>");
+                            strMenu.Append("<ul class='parent-nav-child'>");
+                            foreach (DataRow row1 in Submenu.Rows)
+                            {
+                                strMenu.Append("<li><a href='" + row1["MenuUrl"].ToString() + "?mu=" + ObjEnc.EncryptData(row1["Spanclass"].ToString()) + "'><i class='far fa-building'></i>" + row1["MenuName"].ToString() + "</a></li>");
+                            }
+                            strMenu.Append("</ul>");
+                            strMenu.Append("</li>");
+                        }
+                        strMenu.Append("</li>");
+                    }
+                       
+                }
+                strMenu.Append("</ul>");
+ 
+            }
+            me.InnerHtml = strMenu.ToString();
             strMenu.Append("</ul");
+            
         }
     }
     #region Menu Wise Login
@@ -79,6 +99,7 @@ public partial class Admin_MasterPage : System.Web.UI.MasterPage
             if (dtCompany.Rows.Count > 0)
             {
                 strInterestedArea = dtCompany.Rows[0]["InterestedArea"].ToString();
+
             }
         }
         bindMenu();
