@@ -24,14 +24,10 @@
     });
 
 // Add Current Page in Sidebar
-    var CURRENT_URL= window.location.href.split('/').slice(3).join('/');
+    var CURRENT_URL= window.location.href.split('/').slice(4).join('/');
     var $Sidebar = $(".left-sidebar");
     $Sidebar.find('a[href="'+CURRENT_URL+'"]').parents(".parent-nav-child").slideDown();
-    $Sidebar.find('a[href="'+CURRENT_URL+'"]').parents("li").addClass('active').siblings("li").removeClass("active");
-    if(CURRENT_URL ===! '/DDPFDI/Dashboard') {
-        $('#main-admin').next('.parent-nav-child').slideDown();
-    }
-
+    $Sidebar.find('a[href="'+CURRENT_URL+'"]').parents(".parent-nav-child").addClass('active').siblings(".parent-nav-child").removeClass("active");
     console.log(CURRENT_URL);
 
     //Hide Show Chart
