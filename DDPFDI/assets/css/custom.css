@@ -39,7 +39,7 @@ input[type=checkbox]:checked + span:before {
 .checkbox-col {margin-right: 10px;}
 
 form .form-group { position: relative; margin-bottom: 10px; width: 100%; float: left;}
-form .form-group input[type=checkbox ]{ position: absolute;  width: 20px;  height: 20px; left: 7px; opacity: 0; cursor: pointer}
+/*form .form-group input[type=checkbox ]{ position: absolute;  width: 20px;  height: 20px; left: 7px; opacity: 0; cursor: pointer}*/
 form .form-group label span { margin-right: 10px; cursor: pointer;}
 form .form-group label { font-size: 15px !important}
 /*------Custom Checkbox------*/

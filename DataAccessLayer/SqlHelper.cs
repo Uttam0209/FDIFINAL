@@ -238,6 +238,41 @@ namespace DataAccessLayer
                 }
             }
         }
+        public string SaveMasterComp(HybridDictionary hysavecomp, out string _sysMsg, out string _msg)
+        {
+            string mCurrentID = "";
+            using (DbConnection dbCon = db.CreateConnection())
+            {
+                dbCon.Open();
+                DbTransaction dbTran = dbCon.BeginTransaction();
+                try
+                {
+                    DbCommand cmd = db.GetStoredProcCommand("sp_mst_company");
+                    db.AddInParameter(cmd, "@CompanyID", DbType.Int64, hysavecomp["CompanyID"]);
+                    db.AddInParameter(cmd, "@CompanyName", DbType.String, hysavecomp["CompanyName"]);
+                    db.AddInParameter(cmd, "@InterestedArea", DbType.String, hysavecomp["InterestedArea"].ToString().Trim());
+                    db.AddInParameter(cmd, "@MasterAllowed", DbType.String, hysavecomp["MasterAllowed"].ToString().Trim());
+                    db.AddInParameter(cmd, "@Role", DbType.Int64, hysavecomp["Role"]);
+                    db.ExecuteNonQuery(cmd, dbTran);
+                    mCurrentID = db.GetParameterValue(cmd, "@ReturnID").ToString();
+                    dbTran.Commit();
+                    _msg = "Save";
+                    _sysMsg = "Save";
+                    return mCurrentID;
+                }
+                catch (Exception ex)
+                {
+                    dbTran.Rollback();
+                    _msg = ex.Message;
+                    _sysMsg = ex.Message;
+                    return "-1";
+                }
+                finally
+                {
+                    dbCon.Close();
+                }
+            }
+        }
         #endregion
         #region UpdateCode
         public string UpdateLoginPassword(string NewPass, string OldPass, string User)
@@ -353,7 +388,7 @@ namespace DataAccessLayer
                 }
             }
         }
-        public DataTable RetriveCompany(string text, Int64 id, string value, string InterestedArea)
+        public DataTable RetriveCompany(string text, Int64 id, string value, int InterestedArea)
         {
             using (DbConnection dbCon = db.CreateConnection())
             {
@@ -364,7 +399,7 @@ namespace DataAccessLayer
                     db.AddInParameter(cmd, "@CompanyID", DbType.Int64, id);
                     db.AddInParameter(cmd, "@CompanyName", DbType.String, value);
                     db.AddInParameter(cmd, "@WorkCodeFor", DbType.String, text);
-                    db.AddInParameter(cmd, "@MenuId", DbType.String, InterestedArea);
+                    db.AddInParameter(cmd, "@MenuId", DbType.Int16, InterestedArea);
                     IDataReader dr = db.ExecuteReader(cmd);
                     DataTable dt = new DataTable();
                     if (dr != null)

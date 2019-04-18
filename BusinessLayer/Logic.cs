@@ -30,6 +30,10 @@ namespace BusinessLayer
         {
             return SqlHelper.Instance.SaveFDIComp(HyCompSave, out _sysMsg, out _msg);
         }
+        public string SaveMasterComp(HybridDictionary hysavecomp, out string _sysMsg, out string _msg)
+        {
+            return SqlHelper.Instance.SaveMasterComp(hysavecomp, out _sysMsg, out _msg);
+        }
         #endregion
         #region UpdateCode
         public string UpdateLoginPassword(string NewPass, string OldPass, string User)
@@ -54,7 +58,7 @@ namespace BusinessLayer
         {
             return SqlHelper.Instance.RetriveGridViewCompany(ID);
         }
-        public DataTable RetriveCompany(string text, Int64 id, string value, string InterestedArea)
+        public DataTable RetriveCompany(string text, Int64 id, string value, int InterestedArea)
         {
             return SqlHelper.Instance.RetriveCompany(text, id, value,InterestedArea);
         }

@@ -8,8 +8,7 @@
         <div class="sideBg">
             <div class="col-mod-12">
                 <ul class="breadcrumb">
-                    <li><a href="home">Dashboard</a></li>
-                    <li class="active">Add FDI Inflow</li>
+                    <li class="active">Add Master Company</li>
                 </ul>
             </div>
             <div class="col-sm-12">
@@ -18,8 +17,13 @@
                     <div class="addfdi">
                         <div class="col-md-12 col-mod-12">
                             <div class="row">
-                                <asp:UpdatePanel ID="upfdival" runat="server" ChildrenAsTriggers="true">
+                                <asp:UpdatePanel ID="upfdival" runat="server">
                                     <ContentTemplate>
+                                        <div class="form-group" runat="server" id="mastercompany" visible="False">
+                                            <label for="businesscode" id="lblmaster" class="control-label">Company</label>
+                                            <asp:DropDownList runat="server" ID="ddlmaster" class="form-control-feedback form-control">
+                                            </asp:DropDownList>
+                                        </div>
                                         <div class="col-md-6">
                                             <div class="fdi-add-content">
                                                 <div runat="server">
@@ -48,17 +52,18 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="fdiinflow" class="control-label">Role</label>
-                                                    <asp:CheckBoxList ID="chkrole" runat="server" RepeatColumns="4" RepeatDirection="Horizontal" RepeatLayout="Flow">
+                                                    <asp:CheckBoxList ID="chkrole" runat="server" RepeatColumns="5" RepeatDirection="Horizontal" RepeatLayout="Flow">
+
                                                         <asp:ListItem Value="SuperAdmin">SuperAdmin</asp:ListItem>
                                                         <asp:ListItem Value="Admin">Admin</asp:ListItem>
-                                                        <asp:ListItem Value="ParentCompany">ParentCompany</asp:ListItem>
-                                                        <asp:ListItem Value="SubCompany">SubCompany</asp:ListItem>
+                                                        <asp:ListItem Value="Company">Company</asp:ListItem>
+                                                        <asp:ListItem Value="Factory">Factory</asp:ListItem>
                                                         <asp:ListItem Value="Unit">Unit</asp:ListItem>
                                                     </asp:CheckBoxList>
                                                 </div>
                                                 <div class="form-group">
-                                                    <asp:Button ID="btncancel" runat="server" Text="Cancel" CssClass="btn btn-warning btn-sm pull-right" />
-                                                    <asp:Button ID="btnsubmit" runat="server" Text="Submit & Save" CssClass="btn btn-success btn-sm pull-right" />
+                                                    <asp:Button ID="btncancel" runat="server" Text="Cancel" CssClass="btn btn-warning btn-sm pull-right" OnClick="btncancel_Click" />
+                                                    <asp:Button ID="btnsubmit" runat="server" Text="Submit & Save" CssClass="btn btn-success btn-sm pull-right" OnClick="btnsubmit_Click" />
                                                 </div>
                                             </div>
                                         </div>
