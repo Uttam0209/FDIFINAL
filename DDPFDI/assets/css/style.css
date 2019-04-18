@@ -864,9 +864,7 @@ a {
 .content.navbar-fixedBottom {
   margin-bottom: 90px;
 }
-.content .row {
-  margin-right: 0px;
-}
+
 .content .row .holder {
   background: #ebeff2;
 }

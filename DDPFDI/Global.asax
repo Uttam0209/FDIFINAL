@@ -44,6 +44,7 @@
         routes.MapPageRoute("General-Info", "General-Info", "~/Admin/GeneralInformation.aspx", true);
         routes.MapPageRoute("MSME", "MSME", "~/Admin/MSME.aspx", true);
         routes.MapPageRoute("Profile", "Profile", "~/Admin/Profile.aspx", true);
+        routes.MapPageRoute("AddProduct", "AddProduct", "~/Admin/AddProduct.aspx", true);
         routes.MapPageRoute("Registerd-As", "Registerd-As", "~/Admin/RegisterdAs.aspx", true);
         routes.MapPageRoute("Startup", "Startup", "~/Admin/Startup.aspx", true);
         routes.MapPageRoute("Specilization", "Specilization", "~/Admin/Specilization.aspx", true);
