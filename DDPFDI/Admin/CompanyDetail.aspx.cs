@@ -139,7 +139,7 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
         }
         if (tcinno.Text != "" && hfid.Value == "")
         {
-            DataTable Dt = Lo.RetriveCompany("CheckPanMo", 0, tcinno.Text,"");
+            DataTable Dt = Lo.RetriveCompany("CheckPanMo", 0, tcinno.Text,0);
             if (Dt.Rows.Count > 0 && Dt != null)
             {
                 mCon = "CIN No already registerd.";
@@ -147,7 +147,7 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
         }
         if (temailid.Text != "" && hfid.Value == "")
         {
-            DataTable Dt = Lo.RetriveCompany("CheckEmailNodel", 0, temailid.Text,"");
+            DataTable Dt = Lo.RetriveCompany("CheckEmailNodel", 0, temailid.Text,0);
             if (Dt.Rows.Count > 0 && Dt != null)
             {
                 mCon = "Nodel person email-id already registerd";
