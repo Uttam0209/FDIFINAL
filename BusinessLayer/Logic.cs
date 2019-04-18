@@ -54,14 +54,17 @@ namespace BusinessLayer
         {
             return SqlHelper.Instance.RetriveGridViewCompany(ID);
         }
-        public DataTable RetriveCompany(string text, Int64 id, string value)
+        public DataTable RetriveCompany(string text, Int64 id, string value, string InterestedArea)
         {
-            return SqlHelper.Instance.RetriveCompany(text, id, value);
+            return SqlHelper.Instance.RetriveCompany(text, id, value,InterestedArea);
         }
+        
         public DataTable RetriveCompany1(string text, string id, string value)
         {
             return SqlHelper.Instance.RetriveCompany1(text, id, value);
         }
+        
+        
         #endregion
         #region DeleteCode
         public string DeleteRecord(Int64 ID)

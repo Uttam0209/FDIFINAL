@@ -353,7 +353,7 @@ namespace DataAccessLayer
                 }
             }
         }
-        public DataTable RetriveCompany(string text, Int64 id, string value)
+        public DataTable RetriveCompany(string text, Int64 id, string value, string InterestedArea)
         {
             using (DbConnection dbCon = db.CreateConnection())
             {
@@ -364,6 +364,7 @@ namespace DataAccessLayer
                     db.AddInParameter(cmd, "@CompanyID", DbType.Int64, id);
                     db.AddInParameter(cmd, "@CompanyName", DbType.String, value);
                     db.AddInParameter(cmd, "@WorkCodeFor", DbType.String, text);
+                    db.AddInParameter(cmd, "@MenuId", DbType.String, InterestedArea);
                     IDataReader dr = db.ExecuteReader(cmd);
                     DataTable dt = new DataTable();
                     if (dr != null)
