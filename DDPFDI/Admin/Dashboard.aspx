@@ -24,12 +24,12 @@
 
                                     <div class="row">
                                         <div class="col-lg-4 col-sm-6 col-xs-12">
-                                            <div class="white-box analytics-info">
+                                            <div class="white-box analytics-info total-comp">
                                                 <h3 class="box-title">Total Companies</h3>
                                                 <ul class="list-inline two-part">
 
-                                                    <li><i class="ti-arrow-up text-success"></i>
-                                                        <asp:LinkButton ID="lnkbtnTotComp" runat="server" Text="0" ForeColor="Green"></asp:LinkButton></li>
+                                                    <li><i class="ti-arrow-up"></i>
+                                                        <asp:LinkButton ID="lnkbtnTotComp" runat="server" Text="0"></asp:LinkButton></li>
 
                                                 </ul>
                                                 <div class="file-export">
@@ -38,12 +38,12 @@
                                             </div>
                                         </div>
                                         <div class="col-lg-4 col-sm-6 col-xs-12">
-                                            <div class="white-box analytics-info">
+                                            <div class="white-box analytics-info total-fdi">
                                                 <h3 class="box-title">Total FDI</h3>
                                                 <ul class="list-inline two-part">
 
                                                     <li><i class="ti-arrow-up text-purple"></i>
-                                                        <asp:LinkButton ID="lnkbtnFDI" runat="server" Text="0" ForeColor="Blue"></asp:LinkButton></li>
+                                                        <asp:LinkButton ID="lnkbtnFDI" runat="server" Text="0"></asp:LinkButton></li>
 
                                                 </ul>
                                                 <div class="file-export">
@@ -52,14 +52,14 @@
                                             </div>
                                         </div>
                                         <div class="col-lg-4 col-sm-6 col-xs-12">
-                                            <div class="white-box analytics-info">
+                                            <div class="white-box analytics-info last-fdi">
                                                 <h3 class="box-title">Last Year FDI</h3>
                                                 <ul class="list-inline two-part">
 
                                                     <li>
 
 
-                                                        <asp:LinkButton ID="lnkbtnLYFDI" runat="server" Text="0" ForeColor="Brown"></asp:LinkButton></li>
+                                                        <asp:LinkButton ID="lnkbtnLYFDI" runat="server" Text="0"></asp:LinkButton></li>
 
                                                 </ul>
                                                 <div class="file-export">

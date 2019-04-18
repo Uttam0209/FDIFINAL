@@ -39,8 +39,7 @@
         routes.MapPageRoute("Detail-Company", "Detail-Company", "~/Admin/DetailofMasterCompany.aspx", true);
         routes.MapPageRoute("Dashboard", "Dashboard", "~/Admin/Dashboard.aspx", true);
         routes.MapPageRoute("AdminLogin", "AdminLogin", "~/Admin/AdminLogin.aspx", true);
-        routes.MapPageRoute("D", "D", "~/Admin/Default2.aspx", true);
-        //----UserControl SectionInformation Rewrite------------------------------------------//
+        routes.MapPageRoute("AddMasterCompany", "AddMasterCompany", "~/Admin/AddMasterCompany.aspx", true);
         routes.MapPageRoute("FDI-Inflow", "FDI-Inflow", "~/Admin/FDIInflow.aspx", true);
         routes.MapPageRoute("General-Info", "General-Info", "~/Admin/GeneralInformation.aspx", true);
         routes.MapPageRoute("MSME", "MSME", "~/Admin/MSME.aspx", true);
