@@ -44,7 +44,7 @@ public partial class Admin_MasterPage : System.Web.UI.MasterPage
         for (int x = 0; x < Categ.Length; x++)
         {
             mCval = Categ[x];
-            DataTable dtArea = Lo.RetriveCompany("InterestedAreaMenuId", Convert.ToInt64(mCval), Session["CompanyRefNo"].ToString(), "0");
+            DataTable dtArea = Lo.RetriveCompany("InterestedAreaMenuId", Convert.ToInt64(mCval), Session["CompanyRefNo"].ToString(), 0);
 
             
             foreach (DataRow row in dtArea.Rows)
@@ -57,7 +57,7 @@ public partial class Admin_MasterPage : System.Web.UI.MasterPage
                 for (int j = 0; j < Categ1.Length; j++)
                 {
                     mCval1 = Categ1[j];
-                    DataTable dtMenu = Lo.RetriveCompany("MenuMain", Convert.ToInt64(mCval1), type, "0");
+                    DataTable dtMenu = Lo.RetriveCompany("MenuMain", Convert.ToInt64(mCval1), type, 0);
                     
                     
                     foreach (DataRow row2 in dtMenu.Rows)
@@ -98,7 +98,7 @@ public partial class Admin_MasterPage : System.Web.UI.MasterPage
         for (int x = 0; x < MCateg.Length; x++)
         {
             MmCval = MCateg[x];
-            DataTable dtMArea = Lo.RetriveCompany("InterestedAreaMenuId", Convert.ToInt64(MmCval), Session["CompanyRefNo"].ToString(), "0");
+            DataTable dtMArea = Lo.RetriveCompany("InterestedAreaMenuId", Convert.ToInt64(MmCval), Session["CompanyRefNo"].ToString(), 0);
 
 
             foreach (DataRow row in dtMArea.Rows)
@@ -111,7 +111,7 @@ public partial class Admin_MasterPage : System.Web.UI.MasterPage
                 for (int j = 0; j < MCateg1.Length; j++)
                 {
                     MmCval1 = MCateg1[j];
-                    DataTable dtMMenu = Lo.RetriveCompany("MenuMain", Convert.ToInt64(MmCval1), type, "0");
+                    DataTable dtMMenu = Lo.RetriveCompany("MenuMain", Convert.ToInt64(MmCval1), type, 0);
 
 
                     foreach (DataRow row2 in dtMMenu.Rows)
@@ -150,7 +150,7 @@ public partial class Admin_MasterPage : System.Web.UI.MasterPage
         lblusername.Text = ObjEnc.DecryptData(Session["User"].ToString());
         if (Session["CompanyRefNo"] != null)
         {
-            DataTable dtCompany = Lo.RetriveCompany("InterestedArea", 0, Session["CompanyRefNo"].ToString(), "0");
+            DataTable dtCompany = Lo.RetriveCompany("InterestedArea", 0, Session["CompanyRefNo"].ToString(), 0);
             if (dtCompany.Rows.Count > 0)
             {
                 strInterestedArea = dtCompany.Rows[0]["InterestedArea"].ToString();
