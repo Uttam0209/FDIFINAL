@@ -63,7 +63,7 @@ public partial class Admin_MasterPage : System.Web.UI.MasterPage
                    
                     foreach (DataRow row2 in dtMenu.Rows)
                     {
-                        strMenu.Append("<li class='parent-nav'><a href='" + row2["MenuUrl"].ToString() + "?mu=" + ObjEnc.EncryptData(row2["Spanclass"].ToString()) + "' data-original-title='Dashboard'><i class='fas fa-tachometer-alt'></i><span class='hidden-minibar'>" + row2["MenuName"].ToString() + "</span>");
+                        strMenu.Append("<li class='parent-nav'><a href='" + row2["MenuUrl"].ToString() + "?mu=" + ObjEnc.EncryptData(row2["Spanclass"].ToString()) + "' data-original-title='Dashboard'><i class='fas fa-tachometer-alt'></i><span class='hidden-minibar'>" + row2["MenuName"].ToString() + "</span></a>");
                         DataTable Submenu = Lo.RetriveCompany1("SubMenu", row2["MenuID"].ToString(), type);
                         if (Submenu.Rows.Count > 0)
                         {
@@ -115,7 +115,7 @@ public partial class Admin_MasterPage : System.Web.UI.MasterPage
 
                     foreach (DataRow row2 in dtMMenu.Rows)
                     {
-                        strMasterMenu.Append("<li class='parent-nav'><a href='" + row2["MenuUrl"].ToString() + "?mu=" + ObjEnc.EncryptData(row2["Spanclass"].ToString()) + "' data-original-title='Dashboard'><i class='fas fa-tachometer-alt'></i><span class='hidden-minibar'>" + row2["MenuName"].ToString() + "</span>");
+                        strMasterMenu.Append("<li class='parent-nav'><a href='" + row2["MenuUrl"].ToString() + "?mu=" + ObjEnc.EncryptData(row2["Spanclass"].ToString()) + "' data-original-title='Dashboard'><i class='fas fa-tachometer-alt'></i><span class='hidden-minibar'>" + row2["MenuName"].ToString() + "</span></a>");
                         DataTable SubMmenu = Lo.RetriveCompany1("SubMenu", row2["MenuID"].ToString(), type);
 
                         if (SubMmenu.Rows.Count > 0)

@@ -252,7 +252,7 @@ namespace DataAccessLayer
                     db.AddInParameter(cmd, "@CompanyName", DbType.String, hysavecomp["CompanyName"]);
                     db.AddInParameter(cmd, "@InterestedArea", DbType.String, hysavecomp["InterestedArea"].ToString().Trim());
                     db.AddInParameter(cmd, "@MasterAllowed", DbType.String, hysavecomp["MasterAllowed"].ToString().Trim());
-                    db.AddInParameter(cmd, "@Role", DbType.Int64, hysavecomp["Role"]);
+                    db.AddInParameter(cmd, "@Role", DbType.String, hysavecomp["Role"]);
                     db.ExecuteNonQuery(cmd, dbTran);
                     mCurrentID = db.GetParameterValue(cmd, "@ReturnID").ToString();
                     dbTran.Commit();

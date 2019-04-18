@@ -58,11 +58,12 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
         hysavecomp["ContactPersonEmailID"] = Co.RSQandSQLInjection(txtemail.Text.Trim(), "soft");
         foreach (ListItem li in chkintrestedarea.Items)
         {
-            if (li.Selected == true) {
+            if (li.Selected == true)
+            {
                 intrestedare = intrestedare + "," + li.Value;
             }
         }
-        hysavecomp["InterestedArea"] = Co.RSQandSQLInjection(intrestedare.ToString(), "soft");
+        hysavecomp["InterestedArea"] = Co.RSQandSQLInjection(intrestedare.Substring(1).ToString(), "soft");
         foreach (ListItem chkmasallow in chkmastermenuallot.Items)
         {
             if (chkmasallow.Selected == true)
@@ -70,7 +71,7 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
                 Masterallowed = Masterallowed + "," + chkmasallow.Value;
             }
         }
-        hysavecomp["MasterAllowed"] = Co.RSQandSQLInjection(Masterallowed.ToString(), "soft");
+        hysavecomp["MasterAllowed"] = Co.RSQandSQLInjection(Masterallowed.Substring(1).ToString(), "soft");
         foreach (ListItem chkro in chkrole.Items)
         {
             if (chkro.Selected == true)
@@ -78,7 +79,7 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
                 role = role + "," + chkro.Value;
             }
         }
-        hysavecomp["Role"] = Co.RSQandSQLInjection(role.ToString(), "soft");
+        hysavecomp["Role"] = Co.RSQandSQLInjection(role.Substring(1).ToString(), "soft");
         string StrSaveComp = Lo.SaveMasterComp(hysavecomp, out _sysMsg, out _msg);
         if (StrSaveComp != "")
         {

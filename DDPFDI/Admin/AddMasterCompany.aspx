@@ -13,7 +13,7 @@
             </div>
             <div class="col-sm-12">
                 <asp:HiddenField ID="hfid" runat="server" />
-                <div id="demo1" runat="server">
+               
                     <div class="addfdi">
                         <div class="col-md-12 col-mod-12">
                             <div class="row">
@@ -72,7 +72,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                
                 <div class="clearfix"></div>
             </div>
             <div class="footer"><i class="far fa-copyright"></i>2019 <a href="#">Department of Defence Production</a> </div>
