@@ -49,7 +49,8 @@
                 <div class="left-sidebar oem-sidebar">
                     <div class="sidebar-holder">
                         <button class="btn  btn-nav-toggle">
-                            <span class="user-box "><i class="fas fa-user-circle"></i>Admin</span><i class="fa fa-angle-double-left toggle-left"></i>
+                            <span class="user-box "><i class="fas fa-user-circle"></i>
+                                <asp:Label runat="server" ID="lbltypelogin"></asp:Label></span><i class="fa fa-angle-double-left toggle-left"></i>
                         </button>
                         <div runat="server" id="menu"></div>
                         <div runat="server" id="MasterMenu"></div>

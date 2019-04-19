@@ -16,6 +16,7 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
     Logic Lo = new Logic();
     Cryptography Enc = new Cryptography();
     DataUtility Co = new DataUtility();
+    private Int64 id = 0;
     private string _sysMsg = string.Empty;
     private string _msg = string.Empty;
     private string comprefno = "";
@@ -27,7 +28,32 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
     {
         if (!IsPostBack)
         {
-            BindMasterData();
+            if (Enc.DecryptData(Request.QueryString["mu"].ToString()) == "Panel1")
+            {
+                mastercompany.Visible = true;
+                BindMasterCompany();
+                BindMasterData();
+            }
+            else
+            {
+                mastercompany.Visible = false;
+                BindMasterData();
+            }
+
+        }
+    }
+    protected void BindMasterCompany()
+    {
+        DataTable Dtchkintrestedarea = Lo.RetriveCompany("Select", 0, "", 0);
+        if (Dtchkintrestedarea != null)
+        {
+            Co.FillDropdownlist(ddlmaster, Dtchkintrestedarea, "CompanyName", "CompanyId");
+            ddlmaster.Enabled = false;
+        }
+        else
+        {
+            ddlmaster.Items.Insert(0, "Select Company");
+            ddlmaster.Enabled = false;
         }
     }
     protected void BindMasterData()
@@ -53,7 +79,7 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
     }
     protected void SaveComp()
     {
-        hysavecomp["CompanyID"] = Convert.ToInt64(0);
+        hysavecomp["CompanyID"] = id;
         hysavecomp["CompanyName"] = Co.RSQandSQLInjection(txtcomp.Text.Trim(), "soft");
         hysavecomp["ContactPersonEmailID"] = Co.RSQandSQLInjection(txtemail.Text.Trim(), "soft");
         foreach (ListItem li in chkintrestedarea.Items)
