@@ -85,7 +85,7 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
                 lblcontactpersonname.Text = DtView.Rows[0]["ContactPersonName"].ToString();
                 lblceoemail.Text = DtView.Rows[0]["CEOEmail"].ToString();
                 lbldefactivity.Text = DtView.Rows[0]["IsDefenceActivity"].ToString();
-              //  lblgstno.Text = DtView.Rows[0]["GSTNo"].ToString();
+                //  lblgstno.Text = DtView.Rows[0]["GSTNo"].ToString();
                 lbljointventure.Text = DtView.Rows[0]["IsJointVenture"].ToString();
                 lblpanno.Text = DtView.Rows[0]["PANNo"].ToString();
                 lblpincode.Text = DtView.Rows[0]["Pincode"].ToString();
@@ -121,7 +121,7 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
                 int rowIndex = gvr.RowIndex;
                 RefNo = (gvcompanydetail.Rows[rowIndex].FindControl("lblrefno") as Label).Text;
                 UserName = (gvcompanydetail.Rows[rowIndex].FindControl("lblnodelname") as Label).Text;
-                UserEmail = (gvcompanydetail.Rows[rowIndex].FindControl("lblnodelemail") as Label).Text;
+                UserEmail = (gvcompanydetail.Rows[rowIndex].FindControl("hfemail") as HiddenField).Value;
                 SendEmailCode();
             }
             catch (Exception ex)
@@ -165,6 +165,7 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
             s = new SendMail();
             s.CreateMail("aeroindia-ddp@gov.in", UserEmail, "Create Password", body);
             s.sendMail();
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Password change mail send successfully.')", true);
         }
         catch (Exception ex)
         {

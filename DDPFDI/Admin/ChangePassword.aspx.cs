@@ -16,7 +16,7 @@ public partial class Admin_ChangePassword : System.Web.UI.Page
         {
             if (txtnewpass.Text == txtreppass.Text)
             {
-                string UpdatePassword = Lo.UpdateLoginPassword(ObjEnc.EncryptData(txtnewpass.Text), ObjEnc.EncryptData(txtoldpass.Text), ObjEnc.DecryptData(Session["User"].ToString()));
+                string UpdatePassword = Lo.UpdateLoginPassword(ObjEnc.EncryptData(txtnewpass.Text), ObjEnc.EncryptData(txtoldpass.Text), ObjEnc.DecryptData(Session["User"].ToString()), "LoginOld");
                 if (UpdatePassword == "true")
                 {
                     divmsg.InnerHtml = "Password change successfully";

@@ -37,7 +37,7 @@
                             <asp:Label ID="lblusername" runat="server"></asp:Label><span>
                             &nbsp;&nbsp;<i class="fa fa-sort-down"></i></span> &nbsp;</a>
                             <ul class="dropdown-menu user-login-dropdown">
-                                <li><a href='<%=ResolveUrl("ChangePassword") %>'><i class="fa fa-key" aria-hidden="true"></i>Change Password</a></li>
+                                <li><a href='<%=ResolveUrl("~/ChangePassword") %>'><i class="fa fa-key" aria-hidden="true"></i>Change Password</a></li>
                                 <li>
                                     <asp:LinkButton ID="lbllogout" runat="server" class="" OnClick="lbllogout_Click"><i class="fa fa-lock" aria-hidden="true"></i>Logout</asp:LinkButton></li>
                             </ul>

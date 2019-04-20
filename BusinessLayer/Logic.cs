@@ -36,10 +36,11 @@ namespace BusinessLayer
         }
         #endregion
         #region UpdateCode
-        public string UpdateLoginPassword(string NewPass, string OldPass, string User)
+        public string UpdateLoginPassword(string NewPass, string OldPass, string User,string type)
         {
-            return SqlHelper.Instance.UpdateLoginPassword(NewPass, OldPass, User);
+            return SqlHelper.Instance.UpdateLoginPassword(NewPass, OldPass, User,type);
         }
+ 
         #endregion
         #region retriveCode
         public DataTable RetriveGridView(string ID)
