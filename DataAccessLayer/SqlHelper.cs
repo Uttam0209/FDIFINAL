@@ -247,12 +247,14 @@ namespace DataAccessLayer
                 DbTransaction dbTran = dbCon.BeginTransaction();
                 try
                 {
-                    DbCommand cmd = db.GetStoredProcCommand("sp_mst_company");
+                    DbCommand cmd = db.GetStoredProcCommand("sp_CompanySuperAdminEntered");
                     db.AddInParameter(cmd, "@CompanyID", DbType.Int64, hysavecomp["CompanyID"]);
                     db.AddInParameter(cmd, "@CompanyName", DbType.String, hysavecomp["CompanyName"]);
+                    db.AddInParameter(cmd, "@ContactPersonEmailID", DbType.String, hysavecomp["ContactPersonEmailID"]);
                     db.AddInParameter(cmd, "@InterestedArea", DbType.String, hysavecomp["InterestedArea"].ToString().Trim());
                     db.AddInParameter(cmd, "@MasterAllowed", DbType.String, hysavecomp["MasterAllowed"].ToString().Trim());
                     db.AddInParameter(cmd, "@Role", DbType.String, hysavecomp["Role"]);
+                    db.AddOutParameter(cmd, "@ReturnID", DbType.String, 20);
                     db.ExecuteNonQuery(cmd, dbTran);
                     mCurrentID = db.GetParameterValue(cmd, "@ReturnID").ToString();
                     dbTran.Commit();
@@ -275,7 +277,7 @@ namespace DataAccessLayer
         }
         #endregion
         #region UpdateCode
-        public string UpdateLoginPassword(string NewPass, string OldPass, string User)
+        public string UpdateLoginPassword(string NewPass, string OldPass, string User, string type)
         {
             using (DbConnection dbCon = db.CreateConnection())
             {
@@ -284,9 +286,10 @@ namespace DataAccessLayer
                 try
                 {
                     DbCommand cmd = db.GetStoredProcCommand("sp_UpdateLoginPassword");
-                    db.AddInParameter(cmd, "@UserName", DbType.String, User);
+                    db.AddInParameter(cmd, "@CompanyRefNo", DbType.String, User);
                     db.AddInParameter(cmd, "@Password", DbType.String, NewPass);
                     db.AddInParameter(cmd, "@OldPass", DbType.String, OldPass);
+                    db.AddInParameter(cmd, "@Type", DbType.String, type);
                     db.ExecuteNonQuery(cmd, dbTran);
                     dbTran.Commit();
                     return "true";

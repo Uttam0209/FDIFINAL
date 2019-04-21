@@ -28,7 +28,7 @@
                     <div class="col-mod-12">
                         <ul class="breadcrumb">
                             <li><a href='<%=ResolveUrl("~/Detail-Company") %>'>Dashboard</a></li>
-                            <li class="active">Companies Detail</li> 
+                            <li class="active">Companies Detail</li>
                         </ul>
                     </div>
                     <form method="post" class="addfdi">
@@ -42,61 +42,65 @@
                                     <div class="col-sm-2 row">
                                         <asp:LinkButton runat="server" ID="btnsearch" class="text-black btn btn-warning pull-left btn-md" OnClick="Search_Click" Text="Search"></asp:LinkButton>
                                     </div>
-                                    
-                                        <a href="<%=ResolveUrl("~/Add-Company") %>" class="text-black btn btn-warning pull-right btn-md">Add company</a>
-                              
+
+                                    <a href="<%=ResolveUrl("~/Add-Company") %>" class="text-black btn btn-warning pull-right btn-md">Add company</a>
+
                                     <div class="clearfix"></div>
-                                    <div class="text-center" style="font-size:16px; margin-top:10px;">Total number of  active companies :<strong>  <asp:Label ID="lbltotal" runat="server" Text=""></asp:Label></strong></div>
+                                    <div class="text-center" style="font-size: 16px; margin-top: 10px;">
+                                        Total number of  active companies :<strong>
+                                            <asp:Label ID="lbltotal" runat="server" Text=""></asp:Label></strong>
+                                    </div>
                                     <div class="clearfix"></div>
                                     <div class="table-wraper">
-                                    <asp:GridView ID="gvcompanydetail" runat="server" Width="100%" Class="commonAjaxTbl table display responsive no-wrap table-hover manage-user" AutoGenerateColumns="false" AllowPaging="true"
-                                        OnPageIndexChanging="OnPageIndexChanging" PageSize="25" AllowSorting="true" OnSorting="OnSorting" OnRowCommand="gvcompanydetail_RowCommand">
-                                        <PagerStyle HorizontalAlign="Center" CssClass="GridPager" />
-                                        <Columns>
-                                            <asp:TemplateField HeaderText="S.No">
-                                                <ItemTemplate>
-                                                    <%#Container.DataItemIndex+1 %>
-                                                </ItemTemplate>
-                                            </asp:TemplateField>
-                                            <asp:TemplateField HeaderText="Reference No">
-                                                <ItemTemplate>
-                                                    <asp:Label ID="lblrefno" runat="server" Text='<%#Eval("CompanyRefNo") %>' NullDisplayText="#" SortExpression="CompanyRefNo"></asp:Label>
-                                                </ItemTemplate>
-                                            </asp:TemplateField>
-                                            <asp:BoundField DataField="CompanyName" HeaderText="Company" NullDisplayText="#" SortExpression="CompanyName" />
-                                            <asp:BoundField DataField="IsJointVenture" HeaderText="Joint Venture" NullDisplayText="#" SortExpression="Joint Venture" />
-                                            <asp:TemplateField HeaderText="Defence Activities">
-                                                <ItemTemplate>
-                                                    <asp:Label ID="lblnodelname" runat="server" Text='<%#Eval("IsDefenceActivity") %>' NullDisplayText="#" SortExpression="ContactPersonName"></asp:Label>
-                                                </ItemTemplate>
-                                            </asp:TemplateField>
-                                            <asp:TemplateField HeaderText="Is Active">
-                                                <ItemTemplate>
-                                                    <asp:Label ID="lblnodelemail" runat="server" Text='<%#Eval("IsActive") %>' NullDisplayText="#" SortExpression="ContactPersonEmailID"></asp:Label>
-                                                </ItemTemplate>
-                                            </asp:TemplateField>
-                                            <asp:TemplateField HeaderText="Edit">
-                                                <ItemTemplate>
-                                                    <asp:LinkButton ID="lbledit" runat="server" CssClass="fa fa-edit" CommandName="EditComp" CommandArgument='<%#Eval("CompanyID") %>'></asp:LinkButton>
-                                                </ItemTemplate>
-                                            </asp:TemplateField>
-                                            <asp:TemplateField HeaderText="View">
-                                                <ItemTemplate>
-                                                    <asp:LinkButton ID="lblview" runat="server" CssClass="fa fa-eye" CommandName="ViewComp" CommandArgument='<%#Eval("CompanyID") %>'></asp:LinkButton>
-                                                </ItemTemplate>
-                                            </asp:TemplateField>
-                                            <asp:TemplateField HeaderText="Delete">
-                                                <ItemTemplate>
-                                                    <asp:LinkButton ID="lbldel" runat="server" CssClass="fa fa-trash" CommandName="DeleteComp" CommandArgument='<%#Eval("CompanyID") %>'></asp:LinkButton>
-                                                </ItemTemplate>
-                                            </asp:TemplateField>
-                                            <asp:TemplateField HeaderText="Send Login">
-                                                <ItemTemplate>
-                                                    <asp:LinkButton ID="lbllogindetail" runat="server" CssClass=" fa fa-paper-plane" CommandName="SendLogin" CommandArgument='<%#Eval("CompanyID") %>'></asp:LinkButton>
-                                                </ItemTemplate>
-                                            </asp:TemplateField>
-                                        </Columns>
-                                    </asp:GridView>
+                                        <asp:GridView ID="gvcompanydetail" runat="server" Width="100%" Class="commonAjaxTbl table display responsive no-wrap table-hover manage-user" AutoGenerateColumns="false" AllowPaging="true"
+                                            OnPageIndexChanging="OnPageIndexChanging" PageSize="25" AllowSorting="true" OnSorting="OnSorting" OnRowCommand="gvcompanydetail_RowCommand">
+                                            <PagerStyle HorizontalAlign="Center" CssClass="GridPager" />
+                                            <Columns>
+                                                <asp:TemplateField HeaderText="S.No">
+                                                    <ItemTemplate>
+                                                        <%#Container.DataItemIndex+1 %>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="Reference No">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="lblrefno" runat="server" Text='<%#Eval("CompanyRefNo") %>' NullDisplayText="#" SortExpression="CompanyRefNo"></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:BoundField DataField="CompanyName" HeaderText="Company" NullDisplayText="#" SortExpression="CompanyName" />
+                                                <asp:BoundField DataField="IsJointVenture" HeaderText="Joint Venture" NullDisplayText="#" SortExpression="IsJointVenture" />
+                                                <asp:TemplateField HeaderText="Defence Activities">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="lblnodelname" runat="server" Text='<%#Eval("IsDefenceActivity") %>' NullDisplayText="#" SortExpression="IsDefenceActivity"></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="Is Active">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="lblisactive" runat="server" Text='<%#Eval("IsActive") %>' NullDisplayText="#" SortExpression="IsActive"></asp:Label>
+                                                        <asp:HiddenField runat="server" ID="hfemail" Value='<%#Eval("ContactPersonEmailID") %>' />
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="Edit" Visible="False">
+                                                    <ItemTemplate>
+                                                        <asp:LinkButton ID="lbledit" runat="server" CssClass="fa fa-edit" CommandName="EditComp" CommandArgument='<%#Eval("CompanyID") %>'></asp:LinkButton>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="View">
+                                                    <ItemTemplate>
+                                                        <asp:LinkButton ID="lblview" runat="server" CssClass="fa fa-eye" CommandName="ViewComp" CommandArgument='<%#Eval("CompanyID") %>'></asp:LinkButton>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="Delete" Visible="False">
+                                                    <ItemTemplate>
+                                                        <asp:LinkButton ID="lbldel" runat="server" CssClass="fa fa-trash" CommandName="DeleteComp" CommandArgument='<%#Eval("CompanyID") %>'></asp:LinkButton>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="Send Login">
+                                                    <ItemTemplate>
+                                                        <asp:LinkButton ID="lbllogindetail" runat="server" CssClass=" fa fa-paper-plane" CommandName="SendLogin" CommandArgument='<%#Eval("CompanyID") %>'></asp:LinkButton>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                            </Columns>
+                                        </asp:GridView>
                                     </div>
                                 </div>
                             </div>
@@ -119,7 +123,7 @@
                                     <table class="table table-bordered">
                                         <tbody>
                                             <caption>
-                                              
+
                                                 <tr>
                                                     <td class="pass" width="30%">Joint Venture </td>
                                                     <td>
@@ -127,7 +131,7 @@
                                                     </td>
                                                 </tr>
                                                 <caption>
-                                                   
+
                                                     <tr>
                                                         <td class="pass">Defence Activities </td>
                                                         <td>
@@ -206,7 +210,7 @@
                                                             <asp:Label ID="lblpanno" runat="server"></asp:Label>
                                                         </td>
                                                     </tr>
-                                                   <%-- <tr>
+                                                    <%-- <tr>
                                                         <td class="pass">GST No (If you use multiple gst no use with comma seprated)</td>
                                                         <td>
                                                             <asp:Label ID="lblgstno" runat="server"></asp:Label>

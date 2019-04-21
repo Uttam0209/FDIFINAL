@@ -15,14 +15,13 @@ public partial class Admin_MasterPage : System.Web.UI.MasterPage
 {
     Logic Lo = new Logic();
     Cryptography ObjEnc = new Cryptography();
-    string type = "";
     string strInterestedArea = "";
     string strMasterAlloted = "";
     protected void Page_Load(object sender, EventArgs e)
     {
         if (Session["User"] != null)
         {
-            MenuLogin();
+                MenuLogin();
         }
         else
         {
@@ -46,7 +45,7 @@ public partial class Admin_MasterPage : System.Web.UI.MasterPage
             mCval = Categ[x];
             DataTable dtArea = Lo.RetriveCompany("InterestedAreaMenuId", Convert.ToInt64(mCval), Session["CompanyRefNo"].ToString(), 0);
 
-          
+
             foreach (DataRow row in dtArea.Rows)
             {
                 strMenu.Append("<li class='parent-nav'><a href='#' data-original-title='Dashboard'><i class='fas fa-tachometer-alt'></i><span class='hidden-minibar'>" + row["InterestArea"].ToString() + "</span>");
@@ -58,13 +57,13 @@ public partial class Admin_MasterPage : System.Web.UI.MasterPage
                 {
                     mCval1 = Categ1[j];
 
-                    DataTable dtMenu = Lo.RetriveCompany("MenuMain", Convert.ToInt64(mCval1), type, 0);
-                    
-                   
+                    DataTable dtMenu = Lo.RetriveCompany("MenuMain", Convert.ToInt64(mCval1), lbltypelogin.Text, 0);
+
+
                     foreach (DataRow row2 in dtMenu.Rows)
                     {
                         strMenu.Append("<li class='parent-nav'><a href='" + row2["MenuUrl"].ToString() + "?mu=" + ObjEnc.EncryptData(row2["Spanclass"].ToString()) + "' data-original-title='Dashboard'><i class='fas fa-tachometer-alt'></i><span class='hidden-minibar'>" + row2["MenuName"].ToString() + "</span></a>");
-                        DataTable Submenu = Lo.RetriveCompany1("SubMenu", row2["MenuID"].ToString(), type);
+                        DataTable Submenu = Lo.RetriveCompany1("SubMenu", row2["MenuID"].ToString(), lbltypelogin.Text);
                         if (Submenu.Rows.Count > 0)
                         {
                             strMenu.Append("<i class='fas fa-angle-down'></i></a>");
@@ -109,14 +108,14 @@ public partial class Admin_MasterPage : System.Web.UI.MasterPage
                 {
                     MmCval1 = MCateg1[j];
 
-                    DataTable dtMMenu = Lo.RetriveCompany("MenuMain", Convert.ToInt64(MmCval1), type, 0);
+                    DataTable dtMMenu = Lo.RetriveCompany("MenuMain", Convert.ToInt64(MmCval1), lbltypelogin.Text, 0);
 
 
 
                     foreach (DataRow row2 in dtMMenu.Rows)
                     {
                         strMasterMenu.Append("<li class='parent-nav'><a href='" + row2["MenuUrl"].ToString() + "?mu=" + ObjEnc.EncryptData(row2["Spanclass"].ToString()) + "' data-original-title='Dashboard'><i class='fas fa-tachometer-alt'></i><span class='hidden-minibar'>" + row2["MenuName"].ToString() + "</span></a>");
-                        DataTable SubMmenu = Lo.RetriveCompany1("SubMenu", row2["MenuID"].ToString(), type);
+                        DataTable SubMmenu = Lo.RetriveCompany1("SubMenu", row2["MenuID"].ToString(), lbltypelogin.Text);
 
                         if (SubMmenu.Rows.Count > 0)
                         {
@@ -141,7 +140,7 @@ public partial class Admin_MasterPage : System.Web.UI.MasterPage
     #region Menu Wise Login
     protected void MenuLogin()
     {
-        type = ObjEnc.DecryptData(Session["Type"].ToString());
+        lbltypelogin.Text = ObjEnc.DecryptData(Session["Type"].ToString());
         lblusername.Text = ObjEnc.DecryptData(Session["User"].ToString());
         if (Session["CompanyRefNo"] != null)
         {
