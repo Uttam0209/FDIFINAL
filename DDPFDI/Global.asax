@@ -34,17 +34,18 @@
         routes.MapPageRoute("Error", "Error", "~/Error.aspx", true);
         routes.MapPageRoute("FDIRegistration", "FDIRegistration", "~/Admin/frmAddFDI.aspx", true);
         routes.MapPageRoute("ChangePassword", "ChangePassword", "~/Admin/ChangePassword.aspx", true);
+        routes.MapPageRoute("ChngePass", "ChngePass", "~/Admin/CreatePasswordCompany.aspx", true);
         routes.MapPageRoute("ViewFDI-Detail", "ViewFDI-Detail", "~/Admin/DetailFDIRegistration.aspx", true);
         routes.MapPageRoute("Add-Company", "Add-Company", "~/Admin/CompanyDetail.aspx", true);
         routes.MapPageRoute("Detail-Company", "Detail-Company", "~/Admin/DetailofMasterCompany.aspx", true);
         routes.MapPageRoute("Dashboard", "Dashboard", "~/Admin/Dashboard.aspx", true);
         routes.MapPageRoute("AdminLogin", "AdminLogin", "~/Admin/AdminLogin.aspx", true);
-        routes.MapPageRoute("D", "D", "~/Admin/Default2.aspx", true);
-        //----UserControl SectionInformation Rewrite------------------------------------------//
+        routes.MapPageRoute("AddMasterCompany", "AddMasterCompany", "~/Admin/AddMasterCompany.aspx", true);
         routes.MapPageRoute("FDI-Inflow", "FDI-Inflow", "~/Admin/FDIInflow.aspx", true);
         routes.MapPageRoute("General-Info", "General-Info", "~/Admin/GeneralInformation.aspx", true);
         routes.MapPageRoute("MSME", "MSME", "~/Admin/MSME.aspx", true);
         routes.MapPageRoute("Profile", "Profile", "~/Admin/Profile.aspx", true);
+        routes.MapPageRoute("AddProduct", "AddProduct", "~/Admin/AddProduct.aspx", true);
         routes.MapPageRoute("Registerd-As", "Registerd-As", "~/Admin/RegisterdAs.aspx", true);
         routes.MapPageRoute("Startup", "Startup", "~/Admin/Startup.aspx", true);
         routes.MapPageRoute("Specilization", "Specilization", "~/Admin/Specilization.aspx", true);

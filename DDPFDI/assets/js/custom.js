@@ -23,12 +23,19 @@
         $(this).find('.fa-angle-down').toggleClass('rotate-icon');
     });
 
-// Add Current Page in Sidebar
+
+$(window).on('load', function(){
+    // Add Current Page in Sidebar
     var CURRENT_URL= window.location.href.split('/').slice(4).join('/');
     var $Sidebar = $(".left-sidebar");
     $Sidebar.find('a[href="'+CURRENT_URL+'"]').parents(".parent-nav-child").slideDown();
     $Sidebar.find('a[href="'+CURRENT_URL+'"]').parents(".parent-nav-child").addClass('active').siblings(".parent-nav-child").removeClass("active");
     console.log(CURRENT_URL);
+    
+});
+
+
+   
 
     //Hide Show Chart
 
@@ -46,6 +53,11 @@
         }
 
     });
+
+
+    //Remove Blank Element from DOM
+
+
 
 
 });

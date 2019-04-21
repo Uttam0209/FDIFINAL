@@ -34,11 +34,10 @@
                     </ul>
                     <ul class="nav navbar-nav user-menu navbar-right " >
                         <li><a href="javascript:void(0)" class="user dropdown-toggle" data-toggle="dropdown">
-                            <asp:Label ID="lblusername" runat="server"></asp:Label>
+                            <asp:Label ID="lblusername" runat="server"></asp:Label><span>
                             &nbsp;&nbsp;<i class="fa fa-sort-down"></i></span> &nbsp;</a>
                             <ul class="dropdown-menu user-login-dropdown">
-                                <li><a href='<%=ResolveUrl("ChangePassword") %>'><i class="fa fa-key" aria-hidden="true"></i>Change Password</a></li>
-
+                                <li><a href='<%=ResolveUrl("~/ChangePassword") %>'><i class="fa fa-key" aria-hidden="true"></i>Change Password</a></li>
                                 <li>
                                     <asp:LinkButton ID="lbllogout" runat="server" class="" OnClick="lbllogout_Click"><i class="fa fa-lock" aria-hidden="true"></i>Logout</asp:LinkButton></li>
                             </ul>
@@ -49,13 +48,13 @@
             <div class="box-holder">
                 <div class="left-sidebar oem-sidebar">
                     <div class="sidebar-holder">
-                        <button class="btn  btn-nav-toggle"><i class="fa fa-angle-double-left toggle-left"></i></button>
-                       
-                         <div runat="server" id="menu"></div>
-                         <div runat="server" id="MasterMenu"></div>
-                    
-                     </div>
-                       
+                        <button class="btn  btn-nav-toggle">
+                            <span class="user-box "><i class="fas fa-user-circle"></i>
+                                <asp:Label runat="server" ID="lbltypelogin"></asp:Label></span><i class="fa fa-angle-double-left toggle-left"></i>
+                        </button>
+                        <div runat="server" id="menu"></div>
+                        <div runat="server" id="MasterMenu"></div>
+                    </div>
                 </div>
                 <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
                 </asp:ContentPlaceHolder>
@@ -68,8 +67,6 @@
     <script type="text/javascript" src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>
     <script src="assets/js/bootstrap.min.js"></script>
     <script src="assets/js/custom.js"></script>
-    
-
     <script type="text/javascript">
         window.onload = function () {
 
@@ -130,7 +127,6 @@
             $("#chartLine").CanvasJSChart(options1);
         }
     </script>
-
     <script type="text/javascript">
         $(function () {
             SetAutoComplete();

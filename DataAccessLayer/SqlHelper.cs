@@ -190,7 +190,7 @@ namespace DataAccessLayer
                 }
             }
         }
-        public string SaveFDIComp(HybridDictionary HyCompSave, out string _sysMsg, out string _msg)
+        public string SaveMasterCompany(HybridDictionary HyCompSave, out string _sysMsg, out string _msg)
         {
             string mCurrentID = "";
             using (DbConnection dbCon = db.CreateConnection())
@@ -212,11 +212,50 @@ namespace DataAccessLayer
                     db.AddInParameter(cmd, "@ContactPersonContactNo", DbType.Int64, HyCompSave["ContactPersonContactNo"]);
                     db.AddInParameter(cmd, "@CINNo", DbType.String, HyCompSave["CINNo"]);
                     db.AddInParameter(cmd, "@PANNo", DbType.String, HyCompSave["PANNo"]);
-                    db.AddInParameter(cmd, "@GSTNo", DbType.String, HyCompSave["GSTNo"]);
                     db.AddInParameter(cmd, "@HSNo", DbType.String, HyCompSave["HSNo"]);
                     db.AddInParameter(cmd, "@IsDefenceActivity", DbType.String, HyCompSave["IsDefenceActivity"]);
                     db.AddInParameter(cmd, "@CEOEmail", DbType.String, HyCompSave["CEOEmail"]);
                     db.AddInParameter(cmd, "@CEOName", DbType.String, HyCompSave["CEOName"]);
+                    db.AddInParameter(cmd, "@InterestedArea", DbType.String, HyCompSave["InterestedArea"]);
+                    db.AddInParameter(cmd, "@MasterAllowed", DbType.String, HyCompSave["MasterAllowed"]);
+                    db.AddInParameter(cmd, "@Role", DbType.String, HyCompSave["Role"]);
+                    db.AddOutParameter(cmd, "@ReturnID", DbType.String, 20);
+                    db.ExecuteNonQuery(cmd, dbTran);
+                    mCurrentID = db.GetParameterValue(cmd, "@ReturnID").ToString();
+                    dbTran.Commit();
+                    _msg = "Save";
+                    _sysMsg = "Save";
+                    return mCurrentID;
+                }
+                catch (Exception ex)
+                {
+                    dbTran.Rollback();
+                    _msg = ex.Message;
+                    _sysMsg = ex.Message;
+                    return "-1";
+                }
+                finally
+                {
+                    dbCon.Close();
+                }
+            }
+        }
+        public string SaveMasterComp(HybridDictionary hysavecomp, out string _sysMsg, out string _msg)
+        {
+            string mCurrentID = "";
+            using (DbConnection dbCon = db.CreateConnection())
+            {
+                dbCon.Open();
+                DbTransaction dbTran = dbCon.BeginTransaction();
+                try
+                {
+                    DbCommand cmd = db.GetStoredProcCommand("sp_CompanySuperAdminEntered");
+                    db.AddInParameter(cmd, "@CompanyID", DbType.Int64, hysavecomp["CompanyID"]);
+                    db.AddInParameter(cmd, "@CompanyName", DbType.String, hysavecomp["CompanyName"]);
+                    db.AddInParameter(cmd, "@ContactPersonEmailID", DbType.String, hysavecomp["ContactPersonEmailID"]);
+                    db.AddInParameter(cmd, "@InterestedArea", DbType.String, hysavecomp["InterestedArea"].ToString().Trim());
+                    db.AddInParameter(cmd, "@MasterAllowed", DbType.String, hysavecomp["MasterAllowed"].ToString().Trim());
+                    db.AddInParameter(cmd, "@Role", DbType.String, hysavecomp["Role"]);
                     db.AddOutParameter(cmd, "@ReturnID", DbType.String, 20);
                     db.ExecuteNonQuery(cmd, dbTran);
                     mCurrentID = db.GetParameterValue(cmd, "@ReturnID").ToString();
@@ -240,7 +279,7 @@ namespace DataAccessLayer
         }
         #endregion
         #region UpdateCode
-        public string UpdateLoginPassword(string NewPass, string OldPass, string User)
+        public string UpdateLoginPassword(string NewPass, string OldPass, string User, string type)
         {
             using (DbConnection dbCon = db.CreateConnection())
             {
@@ -249,9 +288,10 @@ namespace DataAccessLayer
                 try
                 {
                     DbCommand cmd = db.GetStoredProcCommand("sp_UpdateLoginPassword");
-                    db.AddInParameter(cmd, "@UserName", DbType.String, User);
+                    db.AddInParameter(cmd, "@CompanyRefNo", DbType.String, User);
                     db.AddInParameter(cmd, "@Password", DbType.String, NewPass);
                     db.AddInParameter(cmd, "@OldPass", DbType.String, OldPass);
+                    db.AddInParameter(cmd, "@Type", DbType.String, type);
                     db.ExecuteNonQuery(cmd, dbTran);
                     dbTran.Commit();
                     return "true";
@@ -286,7 +326,7 @@ namespace DataAccessLayer
                 }
             }
         }
-        public DataTable RetriveGridViewCompany(Int64 ID)
+        public DataTable RetriveGridViewCompany(string ID)
         {
             using (DbConnection dbCon = db.CreateConnection())
             {
@@ -294,7 +334,7 @@ namespace DataAccessLayer
                 try
                 {
                     DbCommand cmd = db.GetStoredProcCommand("sp_SearchCompanyGrid");
-                    db.AddInParameter(cmd, "@CompID", DbType.Int64, ID);
+                    db.AddInParameter(cmd, "@CompanyRefNo", DbType.String, ID);
                     IDataReader dr = db.ExecuteReader(cmd);
                     DataTable dt = new DataTable();
                     if (dr != null)

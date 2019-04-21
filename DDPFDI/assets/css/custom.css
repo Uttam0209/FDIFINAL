@@ -39,7 +39,7 @@ input[type=checkbox]:checked + span:before {
 .checkbox-col {margin-right: 10px;}
 
 form .form-group { position: relative; margin-bottom: 10px; width: 100%; float: left;}
-form .form-group input[type=checkbox ]{ position: absolute;  width: 20px;  height: 20px; left: 7px; opacity: 0; cursor: pointer}
+/*form .form-group input[type=checkbox ]{ position: absolute;  width: 20px;  height: 20px; left: 7px; opacity: 0; cursor: pointer}*/
 form .form-group label span { margin-right: 10px; cursor: pointer;}
 form .form-group label { font-size: 15px !important}
 /*------Custom Checkbox------*/
@@ -138,3 +138,6 @@ form .form-group label { font-size: 15px !important}
 .admin-dashboard .white-box.total-fdi { background: #ff8b6a !important; color: #fff !important;}
 .admin-dashboard .white-box.last-fdi { background: #480032 !important; color: #fff !important;}
 .parent-nav-child li.active a {background:#5db9f9 !important;}
+
+.sidebar-holder .user-box { float: left; display: flex; font-size: 15px; font-weight: bold;}
+.sidebar-holder .user-box i { margin-right: 10px; color: #494ca2 !important;  font-size: 21px !important}
