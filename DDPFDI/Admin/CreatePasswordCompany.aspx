@@ -5,18 +5,32 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title></title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link type="text/css" rel="shortcut icon" href="~/assets/images/favicon.ico">
+    <link type="text/css" href="~/assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/assets/css/font-awesome.css" rel="stylesheet">
+    <link href="~/assets/css/style.css" rel="stylesheet" type="text/css">
+    <link href="~/assets/css/custom.css" rel="stylesheet" type="text/css">
+    <link href="~/assets/css/responsive.css" rel="stylesheet" type="text/css">
 </head>
 <body>
     <form id="form1" runat="server">
-        <div style="text-align: center; margin-top: 50px;">
-            <div>
-                <asp:TextBox runat="server" ID="txtpassword"></asp:TextBox>
-                <br />
-                <asp:TextBox runat="server" ID="txttnewpass"></asp:TextBox>
-                <br />
-                <asp:Button runat="server" ID="btnchangepass" Text="Submit" OnClick="btnchangepass_Click" />
+         <div class="loginBg clearfix">
+                    <h3>Create New Password</h3>
+                   
+                    <label for="pass" class="tetLable">
+                        Password
+                    </label>
+                <asp:TextBox runat="server" ID="txtpassword" CssClass="form-control"></asp:TextBox>
+                <label for="pass" class="tetLable">
+                        Repeat Password
+                    </label>
+                <asp:TextBox runat="server" ID="txttnewpass" CssClass="form-control"></asp:TextBox>
+                
+                <asp:Button runat="server" ID="btnchangepass" Text="Submit" CssClass="btn btn-primary createLoginPass" OnClick="btnchangepass_Click" />
             </div>
-        </div>
+    
     </form>
 </body>
 </html>

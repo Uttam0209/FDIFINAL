@@ -66,7 +66,7 @@ form .form-group label { font-size: 15px !important}
         }
 /*---Table pagination---*/
 
-#btnLogin {width: 100%; border-radius: 4px; color: #fff !important; background: #494ca2 !important; }
+#btnLogin,.createLoginPass {width: 100%; border-radius: 4px; color: #fff !important; background: #494ca2 !important; }
 #btnCaptchaNew { position: absolute; right: -27px; top: -7px;}
 .btn-nav-toggle { width: 100%; text-align:right;}
 #btnCaptchaNew i {color:#494ca2 !important;}
@@ -141,3 +141,8 @@ form .form-group label { font-size: 15px !important}
 
 .sidebar-holder .user-box { float: left; display: flex; font-size: 15px; font-weight: bold;}
 .sidebar-holder .user-box i { margin-right: 10px; color: #494ca2 !important;  font-size: 21px !important}
+#ContentPlaceHolder1_chkintrestedarea, #ContentPlaceHolder1_chkmastermenuallot, #ContentPlaceHolder1_chkrole { display: flex; align-items: center;}
+#ContentPlaceHolder1_chkintrestedarea label,#ContentPlaceHolder1_chkmastermenuallot label, #ContentPlaceHolder1_chkrole label { margin: 0 10px 0 0 !important}
+#ContentPlaceHolder1_chkintrestedarea input[type="checkbox"],#ContentPlaceHolder1_chkmastermenuallot input[type="checkbox"], #ContentPlaceHolder1_chkrole input[type="checkbox"] {margin: 0 !important;}
+.secondary-heading { font-size: 16px; color: #494ca2;}
+.createLoginPass {margin-top: 10px;}
