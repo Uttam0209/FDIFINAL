@@ -26,9 +26,9 @@ namespace BusinessLayer
         {
             return SqlHelper.Instance.SaveFDI(HySave, out _sysMsg, out _msg);
         }
-        public string SaveFDIComp(HybridDictionary HyCompSave, out string _sysMsg, out string _msg)
+        public string SaveMasterCompany(HybridDictionary HyCompSave, out string _sysMsg, out string _msg)
         {
-            return SqlHelper.Instance.SaveFDIComp(HyCompSave, out _sysMsg, out _msg);
+            return SqlHelper.Instance.SaveMasterCompany(HyCompSave, out _sysMsg, out _msg);
         }
         public string SaveMasterComp(HybridDictionary hysavecomp, out string _sysMsg, out string _msg)
         {
@@ -55,7 +55,7 @@ namespace BusinessLayer
         {
             return SqlHelper.Instance.RetriveState(text);
         }
-        public DataTable RetriveGridViewCompany(Int64 ID)
+        public DataTable RetriveGridViewCompany(string ID)
         {
             return SqlHelper.Instance.RetriveGridViewCompany(ID);
         }

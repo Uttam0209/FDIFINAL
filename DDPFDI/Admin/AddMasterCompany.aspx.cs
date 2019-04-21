@@ -23,7 +23,7 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
     private string intrestedare = "";
     private string Masterallowed = "";
     private string role = "";
-    HybridDictionary hysavecomp = new HybridDictionary();
+    HybridDictionary HySave = new HybridDictionary();
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
@@ -33,18 +33,33 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
                 mastercompany.Visible = true;
                 BindMasterCompany();
                 BindMasterData();
+                Intrested.Visible = true;
+                MenuAlot.Visible = true;
+                Role.Visible = true;
+            }
+            else if (Enc.DecryptData(Request.QueryString["mu"].ToString()) == "Panel2")
+            {
+                mastercompany.Visible = true;
+                BindMasterCompany();
+                Intrested.Visible = false;
+                MenuAlot.Visible = false;
+                Role.Visible = false;
+
             }
             else
             {
                 mastercompany.Visible = false;
                 BindMasterData();
+                Intrested.Visible = true;
+                MenuAlot.Visible = true;
+                Role.Visible = true;
             }
 
         }
     }
     protected void BindMasterCompany()
     {
-        DataTable Dtchkintrestedarea = Lo.RetriveCompany("Select", 0, "", 0);
+        DataTable Dtchkintrestedarea = Lo.RetriveCompany("InterestedArea", 0, Session["CompanyRefNo"].ToString(), 0);
         if (Dtchkintrestedarea != null)
         {
             Co.FillDropdownlist(ddlmaster, Dtchkintrestedarea, "CompanyName", "CompanyId");
@@ -79,9 +94,33 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
     }
     protected void SaveComp()
     {
-        hysavecomp["CompanyID"] = id;
-        hysavecomp["CompanyName"] = Co.RSQandSQLInjection(txtcomp.Text.Trim(), "soft");
-        hysavecomp["ContactPersonEmailID"] = Co.RSQandSQLInjection(txtemail.Text.Trim(), "soft");
+        if (hfid.Value != "")
+        {
+            HySave["CompanyID"] = Convert.ToInt64(hfid.Value);
+        }
+        else
+        {
+            HySave["CompanyID"] = id;
+        }
+        HySave["IsJointVenture"] = "";
+        HySave["CompanyName"] = Co.RSQandSQLInjection(txtcomp.Text.Trim(), "soft");
+        HySave["Address"] = "";
+
+        HySave["State"] = "";
+
+        HySave["District"] = "";
+        HySave["Pincode"] = "";
+        HySave["ContactPersonName"] = "";
+        HySave["ContactPersonEmailID"] = Co.RSQandSQLInjection(txtemail.Text.Trim(), "soft");
+
+        HySave["ContactPersonContactNo"] = "";
+
+        HySave["CINNo"] = "";
+        HySave["PANNo"] = "";
+        HySave["HSNo"] = "";
+        HySave["IsDefenceActivity"] = "";
+        HySave["CEOName"] = "";
+        HySave["CEOEmail"] = "";
         foreach (ListItem li in chkintrestedarea.Items)
         {
             if (li.Selected == true)
@@ -89,7 +128,7 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
                 intrestedare = intrestedare + "," + li.Value;
             }
         }
-        hysavecomp["InterestedArea"] = Co.RSQandSQLInjection(intrestedare.Substring(1).ToString(), "soft");
+        HySave["InterestedArea"] = Co.RSQandSQLInjection(intrestedare.Substring(1).ToString(), "soft");
         foreach (ListItem chkmasallow in chkmastermenuallot.Items)
         {
             if (chkmasallow.Selected == true)
@@ -97,7 +136,7 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
                 Masterallowed = Masterallowed + "," + chkmasallow.Value;
             }
         }
-        hysavecomp["MasterAllowed"] = Co.RSQandSQLInjection(Masterallowed.Substring(1).ToString(), "soft");
+        HySave["MasterAllowed"] = Co.RSQandSQLInjection(Masterallowed.Substring(1).ToString(), "soft");
         foreach (ListItem chkro in chkrole.Items)
         {
             if (chkro.Selected == true)
@@ -105,8 +144,9 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
                 role = role + "," + chkro.Value;
             }
         }
-        hysavecomp["Role"] = Co.RSQandSQLInjection(role.Substring(1).ToString(), "soft");
-        string StrSaveComp = Lo.SaveMasterComp(hysavecomp, out _sysMsg, out _msg);
+        HySave["Role"] = Co.RSQandSQLInjection(role.Substring(1).ToString(), "soft");
+
+        string StrSaveComp = Lo.SaveMasterCompany(HySave, out _sysMsg, out _msg);
         if (StrSaveComp != "")
         {
             Cleartext();
@@ -116,8 +156,8 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
         {
             ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not saved.')", true);
         }
-
     }
+    
     protected void btncancel_Click(object sender, EventArgs e)
     {
         Cleartext();

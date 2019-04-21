@@ -32,7 +32,7 @@
                     <ul class="nav navbar-nav" style="margin: 10px 0px 0px 260px;">
                         <li class="nav-toggle"></li>
                     </ul>
-                    <ul class="nav navbar-nav user-menu navbar-right ">
+                    <ul class="nav navbar-nav user-menu navbar-right " >
                         <li><a href="javascript:void(0)" class="user dropdown-toggle" data-toggle="dropdown">
                             <asp:Label ID="lblusername" runat="server"></asp:Label>
                             &nbsp;&nbsp;<i class="fa fa-sort-down"></i></span> &nbsp;</a>

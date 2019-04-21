@@ -190,7 +190,7 @@ namespace DataAccessLayer
                 }
             }
         }
-        public string SaveFDIComp(HybridDictionary HyCompSave, out string _sysMsg, out string _msg)
+        public string SaveMasterCompany(HybridDictionary HyCompSave, out string _sysMsg, out string _msg)
         {
             string mCurrentID = "";
             using (DbConnection dbCon = db.CreateConnection())
@@ -212,11 +212,13 @@ namespace DataAccessLayer
                     db.AddInParameter(cmd, "@ContactPersonContactNo", DbType.Int64, HyCompSave["ContactPersonContactNo"]);
                     db.AddInParameter(cmd, "@CINNo", DbType.String, HyCompSave["CINNo"]);
                     db.AddInParameter(cmd, "@PANNo", DbType.String, HyCompSave["PANNo"]);
-                    db.AddInParameter(cmd, "@GSTNo", DbType.String, HyCompSave["GSTNo"]);
                     db.AddInParameter(cmd, "@HSNo", DbType.String, HyCompSave["HSNo"]);
                     db.AddInParameter(cmd, "@IsDefenceActivity", DbType.String, HyCompSave["IsDefenceActivity"]);
                     db.AddInParameter(cmd, "@CEOEmail", DbType.String, HyCompSave["CEOEmail"]);
                     db.AddInParameter(cmd, "@CEOName", DbType.String, HyCompSave["CEOName"]);
+                    db.AddInParameter(cmd, "@InterestedArea", DbType.String, HyCompSave["InterestedArea"]);
+                    db.AddInParameter(cmd, "@MasterAllowed", DbType.String, HyCompSave["MasterAllowed"]);
+                    db.AddInParameter(cmd, "@Role", DbType.String, HyCompSave["Role"]);
                     db.AddOutParameter(cmd, "@ReturnID", DbType.String, 20);
                     db.ExecuteNonQuery(cmd, dbTran);
                     mCurrentID = db.GetParameterValue(cmd, "@ReturnID").ToString();
@@ -324,7 +326,7 @@ namespace DataAccessLayer
                 }
             }
         }
-        public DataTable RetriveGridViewCompany(Int64 ID)
+        public DataTable RetriveGridViewCompany(string ID)
         {
             using (DbConnection dbCon = db.CreateConnection())
             {
@@ -332,7 +334,7 @@ namespace DataAccessLayer
                 try
                 {
                     DbCommand cmd = db.GetStoredProcCommand("sp_SearchCompanyGrid");
-                    db.AddInParameter(cmd, "@CompID", DbType.Int64, ID);
+                    db.AddInParameter(cmd, "@CompanyRefNo", DbType.String, ID);
                     IDataReader dr = db.ExecuteReader(cmd);
                     DataTable dt = new DataTable();
                     if (dr != null)

@@ -19,6 +19,7 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
     string _sysMsg = string.Empty;
     DataTable DtView = new DataTable();
     string currentPage = "";
+    string lbltypelogin = "";
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
@@ -31,27 +32,53 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
     }
     protected void EditCOde()
     {
-        if (Request.QueryString["mcurrentID"] != null)
+        if (Session["CompanyRefNo"]!= null)
         {
-            hfid.Value = objCrypto.DecryptData(Request.QueryString["mcurrentID"].ToString());
-            DtView = Lo.RetriveGridView(hfid.Value);
+            DtView = Lo.RetriveGridViewCompany(Session["CompanyRefNo"].ToString());
             if (DtView.Rows.Count > 0)
             {
-                //if(DtView.Rows[0]["IsJointVenture"].ToString()=="Yes"
+                hfid.Value = DtView.Rows[0]["CompanyID"].ToString();
                 seljvventure.Text = DtView.Rows[0]["IsJointVenture"].ToString();
                 tcompanyname.Text = DtView.Rows[0]["CompanyName"].ToString();
+                tcompanyname.ReadOnly = true;
                 taddress.Text = DtView.Rows[0]["Address"].ToString();
                 selstate.Text = DtView.Rows[0]["State"].ToString();
                 txtceoname.Text = DtView.Rows[0]["CEOName"].ToString();
                 tpincode.Text = DtView.Rows[0]["Pincode"].ToString();
                 tpersonname.Text = DtView.Rows[0]["ContactPersonName"].ToString();
                 temailid.Text = DtView.Rows[0]["ContactPersonEmailID"].ToString();
+                temailid.ReadOnly = true;
                 tcontactno.Text = DtView.Rows[0]["ContactPersonContactNo"].ToString();
                 tcinno.Text = DtView.Rows[0]["CINNo"].ToString();
                 tpanno.Text = DtView.Rows[0]["PANNo"].ToString();
-                tgstno.Text = DtView.Rows[0]["GSTNo"].ToString();
                 txtCEOEmailId.Text = DtView.Rows[0]["CEOEmail"].ToString();
                 companyengaged.Text = DtView.Rows[0]["IsDefenceActivity"].ToString();
+                lbltypelogin = DtView.Rows[0]["Role"].ToString();
+                DataTable dtCompany = Lo.RetriveCompany("btn", 0, currentPage, 0);
+                if (dtCompany.Rows.Count > 0)
+                {
+                    if (lbltypelogin == dtCompany.Rows[0]["Admin"].ToString())
+                    {
+
+                    }
+                    else if (lbltypelogin == dtCompany.Rows[0]["Company"].ToString())
+                    {
+
+                    }
+                    else if (lbltypelogin == dtCompany.Rows[0]["Factory"].ToString())
+                    {
+
+                    }
+                    else if (lbltypelogin == dtCompany.Rows[0]["Unit"].ToString())
+                    {
+
+                    }
+                    else
+                    {
+
+                    }
+                    
+                }
             }
         }
     }
@@ -72,7 +99,7 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
     {
         if (hfid.Value != "")
         {
-            HySave["CompanyID"] = Convert.ToInt64(hfid.Value);
+            HySave["CompanyID"] = hfid.Value;
         }
         else
         {
@@ -103,11 +130,13 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
         }
         HySave["CINNo"] = Co.RSQandSQLInjection(tcinno.Text.Trim(), "soft");
         HySave["PANNo"] = Co.RSQandSQLInjection(tpanno.Text.Trim(), "soft");
-        HySave["GSTNo"] = Co.RSQandSQLInjection(tgstno.Text.Trim(), "soft");
         HySave["HSNo"] = Co.RSQandSQLInjection(thssnono.Text.Trim(), "soft");
         HySave["IsDefenceActivity"] = Co.RSQandSQLInjection(companyengaged.SelectedItem.Value, "soft");
         HySave["CEOName"] = Co.RSQandSQLInjection(txtceoname.Text, "soft");
         HySave["CEOEmail"] = Co.RSQandSQLInjection(txtCEOEmailId.Text, "soft");
+        HySave["InterestedArea"] = "";
+        HySave["MasterAllowed"] = "";
+        HySave["Role"] = "";
     }
     public string ValidatePreview()
     {
@@ -166,7 +195,7 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
     }
     protected void btndemofirst_Click(object sender, EventArgs e)
     {
-        if (tcompanyname.Text != "" && temailid.Text != "" && tcinno.Text != "")
+        if (tcompanyname.Text != "" && temailid.Text != "")
         {
             string msg = this.ValidatePreview();
             if (msg != "")
@@ -176,18 +205,18 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
             else
             {
                 SaveFDI();
-                string StrSaveFDIComp = Lo.SaveFDIComp(HySave, out _msg, out _sysMsg);
+                string StrSaveFDIComp = Lo.SaveMasterCompany(HySave, out _msg, out _sysMsg);
                 if (StrSaveFDIComp != "0" && StrSaveFDIComp != "-1")
                 {
                     if (hfid.Value != "")
                     {
                         cleartext();
-                        ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "alert('Record updated successfully');window.location='Detail-Company';", true);
+                        ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "alert('Record updated successfully');window.location='Add-Company';", true);
                     }
                     else
                     {
                         cleartext();
-                        ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "alert('Record save successfully');window.location='Detail-Company';", true);
+                        ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "alert('Record save successfully');window.location='Add-Company';", true);
                     }
                 }
                 else
