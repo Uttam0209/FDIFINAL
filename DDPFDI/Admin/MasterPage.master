@@ -34,7 +34,7 @@
                     </ul>
                     <ul class="nav navbar-nav user-menu navbar-right " >
                         <li><a href="javascript:void(0)" class="user dropdown-toggle" data-toggle="dropdown">
-                            <asp:Label ID="lblusername" runat="server"></asp:Label>
+                             <asp:Label ID="lblCompany" runat="server"></asp:Label> <asp:Label ID="lblfactoryName" runat="server"></asp:Label> <asp:Label ID="lblusername" runat="server"></asp:Label>
                             &nbsp;&nbsp;<i class="fa fa-sort-down"></i></span> &nbsp;</a>
                             <ul class="dropdown-menu user-login-dropdown">
                                 <li><a href='<%=ResolveUrl("~/ChangePassword") %>'><i class="fa fa-key" aria-hidden="true"></i>Change Password</a></li>
