@@ -151,7 +151,9 @@ public partial class Admin_MasterPage : System.Web.UI.MasterPage
                 DataTable dtFactory = Lo.RetriveCompany("FactoryName1", 0, Session["CompanyRefNo"].ToString(), 0);
                 if (dtFactory.Rows.Count > 0)
                 {
+
                     lblfactory.Text = "Division/PlantName - " + dtFactory.Rows[0]["FactoryName"].ToString();
+
                     sType = dtFactory.Rows[0]["CompanyRefNo"].ToString();
                 }
             }
@@ -173,7 +175,9 @@ public partial class Admin_MasterPage : System.Web.UI.MasterPage
             if (dtCompany.Rows.Count > 0)
             {
 
+
                 lblmastercompany.Text = "CompanyName - " + dtCompany.Rows[0]["CompanyName"].ToString();
+
                 strInterestedArea = dtCompany.Rows[0]["InterestedArea"].ToString();
                 strMasterAlloted = dtCompany.Rows[0]["MasterAllowed"].ToString();
             }
