@@ -108,7 +108,7 @@ namespace DataAccessLayer
         }
         #endregion
         #region "Login"
-        public string VerifyEmployee(HybridDictionary hyLogin, out string _msg)
+        public string VerifyEmployee(HybridDictionary hyLogin, out string _msg, out string Defaultpage)
         {
             try
             {
@@ -117,9 +117,11 @@ namespace DataAccessLayer
                 db.AddInParameter(_dbCmd, "@Password", DbType.String, hyLogin["Password"]);
                 db.AddOutParameter(_dbCmd, "@CompanyRefNo", DbType.String, 50);
                 db.AddOutParameter(_dbCmd, "@LType", DbType.String, 50);
+                db.AddOutParameter(_dbCmd, "@Defaultpage", DbType.String, 50);
                 db.ExecuteNonQuery(_dbCmd);
                 string Comp_ID = db.GetParameterValue(_dbCmd, "@CompanyRefNo").ToString();
                 string ID = db.GetParameterValue(_dbCmd, "@LType").ToString();
+                Defaultpage = db.GetParameterValue(_dbCmd, "@Defaultpage").ToString();
                 _msg = ID;
                 return Comp_ID;
 
@@ -127,10 +129,12 @@ namespace DataAccessLayer
             catch (SqlException ex)
             {
                 _msg = "0";
+                Defaultpage = "0";
                 return "";
             }
             catch (Exception ex)
             {
+                Defaultpage = "0";
                 _msg = "0";
                 return "";
             }
@@ -190,7 +194,7 @@ namespace DataAccessLayer
                 }
             }
         }
-        public string SaveFDIComp(HybridDictionary HyCompSave, out string _sysMsg, out string _msg)
+        public string SaveMasterCompany(HybridDictionary HyCompSave, out string _sysMsg, out string _msg)
         {
             string mCurrentID = "";
             using (DbConnection dbCon = db.CreateConnection())
@@ -210,13 +214,16 @@ namespace DataAccessLayer
                     db.AddInParameter(cmd, "@ContactPersonName", DbType.String, HyCompSave["ContactPersonName"]);
                     db.AddInParameter(cmd, "@ContactPersonEmailID", DbType.String, HyCompSave["ContactPersonEmailID"]);
                     db.AddInParameter(cmd, "@ContactPersonContactNo", DbType.Int64, HyCompSave["ContactPersonContactNo"]);
+                    db.AddInParameter(cmd, "@GSTNo", DbType.String, HyCompSave["GSTNo"]);
                     db.AddInParameter(cmd, "@CINNo", DbType.String, HyCompSave["CINNo"]);
                     db.AddInParameter(cmd, "@PANNo", DbType.String, HyCompSave["PANNo"]);
-                    db.AddInParameter(cmd, "@GSTNo", DbType.String, HyCompSave["GSTNo"]);
                     db.AddInParameter(cmd, "@HSNo", DbType.String, HyCompSave["HSNo"]);
                     db.AddInParameter(cmd, "@IsDefenceActivity", DbType.String, HyCompSave["IsDefenceActivity"]);
                     db.AddInParameter(cmd, "@CEOEmail", DbType.String, HyCompSave["CEOEmail"]);
                     db.AddInParameter(cmd, "@CEOName", DbType.String, HyCompSave["CEOName"]);
+                    db.AddInParameter(cmd, "@InterestedArea", DbType.String, HyCompSave["InterestedArea"]);
+                    db.AddInParameter(cmd, "@MasterAllowed", DbType.String, HyCompSave["MasterAllowed"]);
+                    db.AddInParameter(cmd, "@Role", DbType.String, HyCompSave["Role"]);
                     db.AddOutParameter(cmd, "@ReturnID", DbType.String, 20);
                     db.ExecuteNonQuery(cmd, dbTran);
                     mCurrentID = db.GetParameterValue(cmd, "@ReturnID").ToString();
@@ -260,6 +267,80 @@ namespace DataAccessLayer
                     dbTran.Commit();
                     _msg = "Save";
                     _sysMsg = "Save";
+                    return mCurrentID;
+                }
+                catch (Exception ex)
+                {
+                    dbTran.Rollback();
+                    _msg = ex.Message;
+                    _sysMsg = ex.Message;
+                    return "-1";
+                }
+                finally
+                {
+                    dbCon.Close();
+                }
+            }
+        }
+
+        public string SaveFactoryComp(HybridDictionary hysavecomp, out string _sysMsg, out string _msg)
+        {
+            string mCurrentID = "";
+            using (DbConnection dbCon = db.CreateConnection())
+            {
+                dbCon.Open();
+                DbTransaction dbTran = dbCon.BeginTransaction();
+                try
+                {
+                    DbCommand cmd = db.GetStoredProcCommand("sp_CompanyEntered");
+                    db.AddInParameter(cmd, "@FactoryID", DbType.Int64, hysavecomp["CompanyID"]);
+                    db.AddInParameter(cmd, "@FactoryName", DbType.String, hysavecomp["CompanyName"]);
+                    db.AddInParameter(cmd, "@FactoryEmailId", DbType.String, hysavecomp["ContactPersonEmailID"]);
+                    db.AddInParameter(cmd, "@CompanyRefNo", DbType.String, hysavecomp["CompanyRefNo"].ToString().Trim());
+                    db.AddInParameter(cmd, "@Role", DbType.String, hysavecomp["Role"]);
+                    db.AddOutParameter(cmd, "@ReturnID", DbType.String, 20);
+                    db.ExecuteNonQuery(cmd, dbTran);
+                    mCurrentID = db.GetParameterValue(cmd, "@ReturnID").ToString();
+                    dbTran.Commit();
+                    _msg = "Save";
+                    _sysMsg = mCurrentID;
+                    return mCurrentID;
+                }
+                catch (Exception ex)
+                {
+                    dbTran.Rollback();
+                    _msg = ex.Message;
+                    _sysMsg = ex.Message;
+                    return "-1";
+                }
+                finally
+                {
+                    dbCon.Close();
+                }
+            }
+        }
+
+        public string SaveUnitComp(HybridDictionary hysavecomp, out string _sysMsg, out string _msg)
+        {
+            string mCurrentID = "";
+            using (DbConnection dbCon = db.CreateConnection())
+            {
+                dbCon.Open();
+                DbTransaction dbTran = dbCon.BeginTransaction();
+                try
+                {
+                    DbCommand cmd = db.GetStoredProcCommand("sp_FactoryEntered");
+                    db.AddInParameter(cmd, "@UnitID", DbType.Int64, hysavecomp["CompanyID"]);
+                    db.AddInParameter(cmd, "@UnitName", DbType.String, hysavecomp["CompanyName"]);
+                    db.AddInParameter(cmd, "@UnitEmailId", DbType.String, hysavecomp["ContactPersonEmailID"]);
+                    db.AddInParameter(cmd, "@FactoryRefNo", DbType.String, hysavecomp["CompanyRefNo"].ToString().Trim());
+                    db.AddInParameter(cmd, "@Role", DbType.String, hysavecomp["Role"]);
+                    db.AddOutParameter(cmd, "@ReturnID", DbType.String, 20);
+                    db.ExecuteNonQuery(cmd, dbTran);
+                    mCurrentID = db.GetParameterValue(cmd, "@ReturnID").ToString();
+                    dbTran.Commit();
+                    _msg = "Save";
+                    _sysMsg = mCurrentID;
                     return mCurrentID;
                 }
                 catch (Exception ex)
@@ -324,7 +405,7 @@ namespace DataAccessLayer
                 }
             }
         }
-        public DataTable RetriveGridViewCompany(Int64 ID)
+        public DataTable RetriveGridViewCompany(string ID)
         {
             using (DbConnection dbCon = db.CreateConnection())
             {
@@ -332,7 +413,7 @@ namespace DataAccessLayer
                 try
                 {
                     DbCommand cmd = db.GetStoredProcCommand("sp_SearchCompanyGrid");
-                    db.AddInParameter(cmd, "@CompID", DbType.Int64, ID);
+                    db.AddInParameter(cmd, "@CompanyRefNo", DbType.String, ID);
                     IDataReader dr = db.ExecuteReader(cmd);
                     DataTable dt = new DataTable();
                     if (dr != null)

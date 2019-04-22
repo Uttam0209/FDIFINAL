@@ -16,9 +16,9 @@ namespace BusinessLayer
             return ds;
         }
         #region Login"
-        public string VerifyEmployee(HybridDictionary hyLogin, out string _msg)
+        public string VerifyEmployee(HybridDictionary hyLogin, out string _msg , out string Defaultpage)
         {
-            return SqlHelper.Instance.VerifyEmployee(hyLogin, out _msg);
+            return SqlHelper.Instance.VerifyEmployee(hyLogin, out _msg, out Defaultpage);
         }
         #endregion
         #region SaveCode
@@ -26,13 +26,21 @@ namespace BusinessLayer
         {
             return SqlHelper.Instance.SaveFDI(HySave, out _sysMsg, out _msg);
         }
-        public string SaveFDIComp(HybridDictionary HyCompSave, out string _sysMsg, out string _msg)
+        public string SaveMasterCompany(HybridDictionary HyCompSave, out string _sysMsg, out string _msg)
         {
-            return SqlHelper.Instance.SaveFDIComp(HyCompSave, out _sysMsg, out _msg);
+            return SqlHelper.Instance.SaveMasterCompany(HyCompSave, out _sysMsg, out _msg);
         }
         public string SaveMasterComp(HybridDictionary hysavecomp, out string _sysMsg, out string _msg)
         {
             return SqlHelper.Instance.SaveMasterComp(hysavecomp, out _sysMsg, out _msg);
+        }
+        public string SaveFactoryComp(HybridDictionary hysavecomp, out string _sysMsg, out string _msg)
+        {
+            return SqlHelper.Instance.SaveFactoryComp(hysavecomp, out _sysMsg, out _msg);
+        }
+        public string SaveUnitComp(HybridDictionary hysavecomp, out string _sysMsg, out string _msg)
+        {
+            return SqlHelper.Instance.SaveUnitComp(hysavecomp, out _sysMsg, out _msg);
         }
         #endregion
         #region UpdateCode
@@ -55,7 +63,7 @@ namespace BusinessLayer
         {
             return SqlHelper.Instance.RetriveState(text);
         }
-        public DataTable RetriveGridViewCompany(Int64 ID)
+        public DataTable RetriveGridViewCompany(string ID)
         {
             return SqlHelper.Instance.RetriveGridViewCompany(ID);
         }

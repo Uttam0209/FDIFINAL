@@ -24,12 +24,13 @@ public partial class _Default : System.Web.UI.Page
     Cryptography objEnc = new Cryptography();
     HybridDictionary hyLogin = new HybridDictionary();
     string _msg = string.Empty;
+    string Defaultpage = string.Empty;
     string _sysMsg = string.Empty;
     string notvalidate = string.Empty;
     #endregion
     protected void Page_Load(object sender, EventArgs e)
     {
-        string a = objEnc.EncryptData("ai4hal@4321");
+        string a = objEnc.DecryptData("CD6oXxLM7jIizyO+rNNCIw==");
     }
     #region "Login Code"
     public static bool IsValidEmailId(string InputEmail)
@@ -59,13 +60,13 @@ public partial class _Default : System.Web.UI.Page
                 {
                     hyLogin["UserName"] = Co.RSQandSQLInjection(txtUserName.Text.Trim() + "'", "hard" + "'");
                     hyLogin["Password"] = objEnc.EncryptData(txtPwd.Text.Trim());
-                    string _EmpId = LO.VerifyEmployee(hyLogin, out _msg);
+                    string _EmpId = LO.VerifyEmployee(hyLogin, out _msg,out Defaultpage);
                     if (_EmpId != "0" && _EmpId != "1" && _msg != "")
                     {
                         Session["Type"] = objEnc.EncryptData(_msg);
                         Session["User"] = objEnc.EncryptData(txtUserName.Text);
                         Session["CompanyRefNo"] = _EmpId;
-                        Response.RedirectToRoute("Dashboard");
+                        Response.RedirectToRoute(Defaultpage);
                     }
                     else
                     {
