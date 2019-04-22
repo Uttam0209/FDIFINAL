@@ -48,6 +48,7 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
                 mastercompany.Visible = true;
                 masterfacotry.Visible = false;
                 BindMasterCompany(Session["CompanyRefNo"].ToString());
+
                 lblName.Text = "Divison/Plant Name";
                 btnsubmit.Text = "Save Divison";
                 Intrested.Visible = false;
@@ -60,6 +61,7 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
                 mastercompany.Visible = true;
                 masterfacotry.Visible = true;
                 BindMasterCompany(Session["CompanyRefNo"].ToString());
+                this.ddlmaster_SelectedIndexChanged(sender, e);
                 lblName.Text = "Unit Name";
                 btnsubmit.Text = "Save Unit";
                 Intrested.Visible = false;
@@ -84,12 +86,42 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
     protected void BindMasterCompany(string mRefNo)
     {
         string sType = "", sName = "", sID = "", mSID = "";
+        Int16 id = 0;
         if (Enc.DecryptData(Session["Type"].ToString()) == "SuperAdmin")
         {
             sType = "Select";
             sName = "CompanyName";
             sID = "CompanyRefNo";
             mSID = "";
+            id = 0;
+
+        }
+        else if (Enc.DecryptData(Session["Type"].ToString()) == "Company")
+        {
+        
+            sType = "CompanyName";
+            sName = "CompanyName";
+            sID = "CompanyRefNo";
+            mSID = Session["CompanyRefNo"].ToString();
+            id = 2;
+        }
+        else if (Enc.DecryptData(Session["Type"].ToString()) == "Factory")
+        {
+
+            sType = "CompanyName";
+            sName = "CompanyName";
+            sID = "CompanyRefNo";
+            mSID = Session["CompanyRefNo"].ToString();
+            id = 3;
+        }
+        else if (Enc.DecryptData(Session["Type"].ToString()) == "Unit")
+        {
+
+            sType = "CompanyName";
+            sName = "CompanyName";
+            sID = "CompanyRefNo";
+            mSID = Session["CompanyRefNo"].ToString();
+            id = 4;
         }
         else
         {
@@ -100,7 +132,7 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
         }
 
         mddlControl = ddlmaster;
-        DataTable Dtchkintrestedarea = Lo.RetriveCompany(sType, 0, mSID, 0);
+        DataTable Dtchkintrestedarea = Lo.RetriveCompany(sType, id, mSID, 0);
         if (Dtchkintrestedarea.Rows.Count > 0 && Dtchkintrestedarea != null)
         {
             hfrole.Value = "";
