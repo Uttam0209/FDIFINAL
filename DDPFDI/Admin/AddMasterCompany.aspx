@@ -21,7 +21,7 @@
                             <asp:UpdatePanel ID="upfdival" runat="server">
                                 <ContentTemplate>
                                     <div class="form-group" runat="server" id="mastercompany" visible="False">
-                                        <label for="businesscode" id="lblmaster" class="control-label">Company</label>
+                                        <label for="businesscode" id="lblmaster" class="control-label"> <asp:Label ID="lblMastcompany" runat="server" Text=""></asp:Label> </label></label>
                                         <asp:DropDownList runat="server" ID="ddlmaster" CssClass="form-control form-cascade-control">
                                         </asp:DropDownList>
                                     </div>
@@ -32,7 +32,8 @@
                                                 <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                    <label for="businesscode" class="control-label">Company Name </label>
+                                                    <label for="businesscode" class="control-label">
+                                                        <asp:Label ID="lblName" runat="server" Text=""></asp:Label> </label>
                                                     <asp:TextBox ID="txtcomp" runat="server" class="form-control form-cascade-control"></asp:TextBox>
                                                 </div>
                                                 </div>

@@ -17,6 +17,7 @@ public partial class Admin_MasterPage : System.Web.UI.MasterPage
     Cryptography ObjEnc = new Cryptography();
     string strInterestedArea = "";
     string strMasterAlloted = "";
+    string sType = "";
     protected void Page_Load(object sender, EventArgs e)
     {
         if (Session["User"] != null)
@@ -34,7 +35,7 @@ public partial class Admin_MasterPage : System.Web.UI.MasterPage
         Session.Clear();
         Response.RedirectToRoute("Login");
     }
-    private void bindMenu()
+    private void bindMenu(string sType)
     {
         StringBuilder strMenu = new StringBuilder();
         strMenu.Append("<ul class='nav  nav-list'>");
@@ -43,7 +44,7 @@ public partial class Admin_MasterPage : System.Web.UI.MasterPage
         for (int x = 0; x < Categ.Length; x++)
         {
             mCval = Categ[x];
-            DataTable dtArea = Lo.RetriveCompany("InterestedAreaMenuId", Convert.ToInt64(mCval), Session["CompanyRefNo"].ToString(), 0);
+            DataTable dtArea = Lo.RetriveCompany("InterestedAreaMenuId", Convert.ToInt64(mCval), sType, 0);
 
 
             foreach (DataRow row in dtArea.Rows)
@@ -84,7 +85,7 @@ public partial class Admin_MasterPage : System.Web.UI.MasterPage
             strMenu.Append("</ul");
         }
     }
-    private void bindMasterMenu()
+    private void bindMasterMenu(string sType)
     {
         StringBuilder strMasterMenu = new StringBuilder();
         strMasterMenu.Append("<ul class='nav  nav-list'>");
@@ -94,7 +95,7 @@ public partial class Admin_MasterPage : System.Web.UI.MasterPage
         {
             MmCval = MCateg[x];
 
-            DataTable dtMArea = Lo.RetriveCompany("InterestedAreaMenuId", Convert.ToInt64(MmCval), Session["CompanyRefNo"].ToString(), 0);
+            DataTable dtMArea = Lo.RetriveCompany("InterestedAreaMenuId", Convert.ToInt64(MmCval), sType, 0);
 
 
             foreach (DataRow row in dtMArea.Rows)
@@ -145,7 +146,30 @@ public partial class Admin_MasterPage : System.Web.UI.MasterPage
         lblusername.Text = ObjEnc.DecryptData(Session["User"].ToString());
         if (Session["CompanyRefNo"] != null)
         {
-            DataTable dtCompany = Lo.RetriveCompany("InterestedArea", 0, Session["CompanyRefNo"].ToString(), 0);
+           
+            if (Session["CompanyRefNo"].ToString().Substring(0, 1) == "F")
+            {
+                DataTable dtFactory = Lo.RetriveCompany("FactoryName", 0, Session["CompanyRefNo"].ToString(), 0);
+                if (dtFactory.Rows.Count > 0)
+                {
+                    sType = dtFactory.Rows[0]["CompanyRefNo"].ToString();
+                }
+            }
+            else if (Session["CompanyRefNo"].ToString().Substring(0, 1) == "U")
+            {
+                DataTable dtUnit = Lo.RetriveCompany("UnitName", 0, Session["CompanyRefNo"].ToString(), 0);
+                if (dtUnit.Rows.Count > 0)
+                {
+                    sType = dtUnit.Rows[0]["CompanyRefNo"].ToString();
+                }
+            }
+            
+            else
+            {
+                sType = Session["CompanyRefNo"].ToString();
+            }
+
+            DataTable dtCompany = Lo.RetriveCompany("InterestedArea", 0, sType, 0);
             if (dtCompany.Rows.Count > 0)
             {
                 strInterestedArea = dtCompany.Rows[0]["InterestedArea"].ToString();
@@ -154,11 +178,11 @@ public partial class Admin_MasterPage : System.Web.UI.MasterPage
         }
         if (strInterestedArea != "")
         {
-            bindMenu();
+            bindMenu(sType);
         }
         if (strMasterAlloted != "")
         {
-            bindMasterMenu();
+            bindMasterMenu(sType);
         }
     }
     #endregion

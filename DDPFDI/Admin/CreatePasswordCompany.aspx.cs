@@ -30,7 +30,20 @@ public partial class Admin_CreatePasswordCompany : System.Web.UI.Page
         {
             if (txtpassword.Text == txttnewpass.Text)
             {
-                string Updatepass = Lo.UpdateLoginPassword(Enc.EncryptData(txtpassword.Text), "", ViewState["Refno"].ToString(), "LoginNew");
+                string sType = "";
+                if (((ViewState["Refno"].ToString()).Substring(0, 1)) == "F")
+                {
+                    sType = "LoginNewFactory";
+                }
+                else if (((ViewState["Refno"].ToString()).Substring(0, 1)) == "U")
+                {
+                    sType = "LoginNewUnit";
+                }
+                else
+                {
+                    sType = "LoginNew";
+                }
+                string Updatepass = Lo.UpdateLoginPassword(Enc.EncryptData(txtpassword.Text), "", ViewState["Refno"].ToString(), sType);
                 if (Updatepass == "true")
                 {
                     ScriptManager.RegisterStartupScript(this, this.GetType(), "alert", "alert('Password create successfully.Please login with new password.');window.location ='Login';", true);

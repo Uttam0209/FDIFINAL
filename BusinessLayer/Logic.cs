@@ -34,6 +34,14 @@ namespace BusinessLayer
         {
             return SqlHelper.Instance.SaveMasterComp(hysavecomp, out _sysMsg, out _msg);
         }
+        public string SaveFactoryComp(HybridDictionary hysavecomp, out string _sysMsg, out string _msg)
+        {
+            return SqlHelper.Instance.SaveFactoryComp(hysavecomp, out _sysMsg, out _msg);
+        }
+        public string SaveUnitComp(HybridDictionary hysavecomp, out string _sysMsg, out string _msg)
+        {
+            return SqlHelper.Instance.SaveUnitComp(hysavecomp, out _sysMsg, out _msg);
+        }
         #endregion
         #region UpdateCode
         public string UpdateLoginPassword(string NewPass, string OldPass, string User,string type)

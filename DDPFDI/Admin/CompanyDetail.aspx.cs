@@ -49,6 +49,7 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
                 temailid.Text = DtView.Rows[0]["ContactPersonEmailID"].ToString();
                 temailid.ReadOnly = true;
                 tcontactno.Text = DtView.Rows[0]["ContactPersonContactNo"].ToString();
+                tgstno.Text = DtView.Rows[0]["GSTNo"].ToString();
                 tcinno.Text = DtView.Rows[0]["CINNo"].ToString();
                 tpanno.Text = DtView.Rows[0]["PANNo"].ToString();
                 txtCEOEmailId.Text = DtView.Rows[0]["CEOEmail"].ToString();
@@ -57,25 +58,55 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
                 DataTable dtCompany = Lo.RetriveCompany("btn", 0, currentPage, 0);
                 if (dtCompany.Rows.Count > 0)
                 {
-                    if (lbltypelogin == dtCompany.Rows[0]["Admin"].ToString())
+                    if (dtCompany.Rows[0]["Admin"].ToString()=="2")
                     {
-
+                        btndemofirst.Visible = true;
+                        btnDelete.Visible = false;
                     }
-                    else if (lbltypelogin == dtCompany.Rows[0]["Company"].ToString())
+                    else if (dtCompany.Rows[0]["Admin"].ToString() == "3")
                     {
-
+                        btndemofirst.Visible = true;
+                        btnDelete.Visible = true;
                     }
-                    else if (lbltypelogin == dtCompany.Rows[0]["Factory"].ToString())
+                    else if (dtCompany.Rows[0]["Company"].ToString()=="2")
                     {
-
+                        btndemofirst.Visible = true;
+                        btnDelete.Visible = false;
                     }
-                    else if (lbltypelogin == dtCompany.Rows[0]["Unit"].ToString())
+                    else if (dtCompany.Rows[0]["Company"].ToString() == "3")
                     {
-
+                        btndemofirst.Visible = true;
+                        btnDelete.Visible = true;
+                    }
+                    else if (dtCompany.Rows[0]["Factory"].ToString()=="2")
+                    {
+                        btndemofirst.Visible = true;
+                        btnDelete.Visible = false;
+                    }
+                    else if (dtCompany.Rows[0]["Factory"].ToString() == "3")
+                    {
+                        btndemofirst.Visible = true;
+                        btnDelete.Visible = true;
+                    }
+                    else if (dtCompany.Rows[0]["Unit"].ToString()=="2")
+                    {
+                        btndemofirst.Visible = true;
+                        btnDelete.Visible = false;
+                    }
+                    else if (dtCompany.Rows[0]["Unit"].ToString() == "3")
+                    {
+                        btndemofirst.Visible = true;
+                        btnDelete.Visible = true;
+                    }
+                    else if (dtCompany.Rows[0]["SuperAdmin"].ToString() == "1")
+                    {
+                        btndemofirst.Visible = true;
+                        btnDelete.Visible = true;
                     }
                     else
                     {
-
+                        btndemofirst.Visible = false;
+                        btnDelete.Visible = false;
                     }
                     
                 }
@@ -128,6 +159,7 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
         {
             HySave["ContactPersonContactNo"] = Co.RSQandSQLInjection(tcontactno.Text.Trim(), "soft");
         }
+        HySave["GSTNo"] = Co.RSQandSQLInjection(tgstno.Text.Trim(), "soft");
         HySave["CINNo"] = Co.RSQandSQLInjection(tcinno.Text.Trim(), "soft");
         HySave["PANNo"] = Co.RSQandSQLInjection(tpanno.Text.Trim(), "soft");
         HySave["HSNo"] = Co.RSQandSQLInjection(thssnono.Text.Trim(), "soft");
@@ -262,10 +294,7 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
             {
                 fdistep2.Visible = true;
             }
-            else if (objCrypto.DecryptData(Request.QueryString["mu"].ToString()) == "Panel3")
-            {
-                fdistep3.Visible = true;
-            }
+            
         }
         catch (Exception ex)
         {

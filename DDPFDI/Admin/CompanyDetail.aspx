@@ -67,7 +67,15 @@
                                                         <label for="seldistrict" class="control-label">District </label>
                                                         <asp:TextBox runat="server" ID="seldistrict" name="tdistrict" class="form-control form-cascade-control" placeholder=""></asp:TextBox>
                                                     </div>
-
+                                                    <div class="form-group">
+                                                        <label for="selstate" class="control-label">State </label>
+                                                        <asp:DropDownList ID="selstate" runat="server" class="form-control form-cascade-control">
+                                                        </asp:DropDownList>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="tgstno" class="control-label">GST No(If you use multiple gst no use with comma seprated)</label>
+                                                        <asp:TextBox runat="server" ID="tgstno" name="tgstno" class="form-control form-cascade-control" placeholder=""></asp:TextBox>
+                                                    </div>
                                                     <div class="form-group">
                                                         <label for="cinno" class=" control-label">CIN No <span class="mandatory">*</span> </label>
                                                         <asp:TextBox runat="server" ID="tcinno" name="tcinno" required="" class="form-control form-cascade-control" placeholder=""></asp:TextBox>
@@ -76,7 +84,7 @@
                                                         <label for="tpanno" class="control-label">PAN No </label>
                                                         <asp:TextBox runat="server" ID="tpanno" name="tpanno" class="form-control form-cascade-control" placeholder=""></asp:TextBox>
                                                     </div>
-                                                    <asp:Button ID="Button1" runat="server" CssClass="buttonBg pull-right" Text="Save & Submit" OnClick="btndemofirst_Click" />
+
                                                 </div>
                                                 <div class="indiacompanydetails" id="fdistep2" runat="server" visible="false">
 
@@ -108,27 +116,17 @@
 
                                                     <div class="clearfix"></div>
                                                     <br />
-                                                    <asp:Button ID="btndemofirst" runat="server" CssClass="buttonBg pull-right" Text="Save & Submit" OnClick="btndemofirst_Click" />
                                                 </div>
-                                                <div class="indiacompanydetails" id="fdistep3" runat="server" visible="false">
-                                                    <div class="form-group">
-                                                        <label for="selstate" class="control-label">State </label>
-                                                        <asp:DropDownList ID="selstate" runat="server" class="form-control form-cascade-control">
-                                                        </asp:DropDownList>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="tgstno" class="control-label">GST No(If you use multiple gst no use with comma seprated)</label>
-                                                        <asp:TextBox runat="server" ID="tgstno" name="tgstno" class="form-control form-cascade-control" placeholder=""></asp:TextBox>
-                                                    </div>
-                                                    <div class="clearfix"></div>
-                                                    <br />
 
-                                                    <asp:Button ID="btnAddMore" runat="server" CssClass="buttonBg pull-right" Text="Add More GST" OnClick="btndemofirst_Click" />
-
-                                                </div>
                                             </div>
                                         </div>
                                         <div class="col-sm-6">
+
+                                            <div class="form-submit">
+
+                                                <asp:Button ID="btndemofirst" runat="server" CssClass="btn btn-danger pull-right" Text="Edit" OnClick="btndemofirst_Click" Visible="false" />
+                                                <asp:Button ID="btnDelete" runat="server" CssClass="btn btn-primary pull-right" Text="Delete" Visible="false" />
+                                            </div>
                                         </div>
 
 
@@ -139,6 +137,7 @@
                     </ContentTemplate>
                     <Triggers>
                         <asp:AsyncPostBackTrigger ControlID="btndemofirst" EventName="Click" />
+                        <asp:AsyncPostBackTrigger ControlID="btnDelete" EventName="Click" />
                     </Triggers>
                 </asp:UpdatePanel>
             </div>
