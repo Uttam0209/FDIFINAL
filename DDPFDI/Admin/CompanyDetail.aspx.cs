@@ -55,7 +55,7 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
                 txtCEOEmailId.Text = DtView.Rows[0]["CEOEmail"].ToString();
                 companyengaged.Text = DtView.Rows[0]["IsDefenceActivity"].ToString();
                 lbltypelogin = DtView.Rows[0]["Role"].ToString();
-                DataTable dtCompany = Lo.RetriveCompany("btn", 0, currentPage, 0);
+                DataTable dtCompany = Lo.RetriveMasterData(0, "", "", 0, currentPage, "", "btn");
                 if (dtCompany.Rows.Count > 0)
                 {
                     if (dtCompany.Rows[0]["Admin"].ToString()=="2")
@@ -200,7 +200,7 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
         }
         if (tcinno.Text != "" && hfid.Value == "")
         {
-            DataTable Dt = Lo.RetriveCompany("CheckPanMo", 0, tcinno.Text,0);
+            DataTable Dt = Lo.RetriveMasterData(0, tcinno.Text, "", 0, "", "", "CheckPanMo");
             if (Dt.Rows.Count > 0 && Dt != null)
             {
                 mCon = "CIN No already registerd.";
@@ -208,7 +208,7 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
         }
         if (temailid.Text != "" && hfid.Value == "")
         {
-            DataTable Dt = Lo.RetriveCompany("CheckEmailNodel", 0, temailid.Text,0);
+            DataTable Dt = Lo.RetriveMasterData(0, temailid.Text, "", 0, "", "", "CheckEmailNodel");
             if (Dt.Rows.Count > 0 && Dt != null)
             {
                 mCon = "Nodel person email-id already registerd";

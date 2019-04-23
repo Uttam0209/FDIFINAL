@@ -164,17 +164,17 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
     }
     protected void gvfactory_OnRowDataBound(object sender, GridViewRowEventArgs e)
     {
-        if (e.Row.RowType == DataControlRowType.DataRow)
-        {
-            Label lblfactroyrefno = e.Row.FindControl("lblfactoryrefno") as Label;
-            GridView gvunit = e.Row.FindControl("gvunit") as GridView;
-            DataTable DtGrid = Lo.RetriveGridViewCompany(lblfactroyrefno.Text, "InnerGridViewUnit");
-            if (DtGrid.Rows.Count > 0)
-            {
-                gvunit.DataSource = DtGrid;
-                gvunit.DataBind();
-            }
-        }
+        //if (e.Row.RowType == DataControlRowType.DataRow)
+        //{
+        //    Label lblfactroyrefno = e.Row.FindControl("lblfactoryrefno") as Label;
+        //    GridView gvunit = e.Row.FindControl("gvunit") as GridView;
+        //    DataTable DtGrid = Lo.RetriveGridViewCompany(lblfactroyrefno.Text, "InnerGridViewUnit");
+        //    if (DtGrid.Rows.Count > 0)
+        //    {
+        //        gvunit.DataSource = DtGrid;
+        //        gvunit.DataBind();
+        //    }
+        //}
     }
     #region Send Mail
     public void SendEmailCode()
