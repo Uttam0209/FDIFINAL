@@ -34,7 +34,7 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
     {
         if (Session["CompanyRefNo"]!= null)
         {
-            DtView = Lo.RetriveGridViewCompany(Session["CompanyRefNo"].ToString());
+            DtView = Lo.RetriveGridViewCompany(Session["CompanyRefNo"].ToString(), "CompanyMainGridView");
             if (DtView.Rows.Count > 0)
             {
                 hfid.Value = DtView.Rows[0]["CompanyID"].ToString();
