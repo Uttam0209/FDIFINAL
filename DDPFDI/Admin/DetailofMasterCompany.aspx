@@ -7,7 +7,6 @@
             $('#changePass').modal('show');
         }
     </script>
-
     <script>
         function isNumber(evt) {
             evt = (evt) ? evt : window.event;
@@ -18,6 +17,25 @@
             return true;
         };
     </script>
+
+    <!-------------------------------Gridview-------------------------------------->
+
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(".toggle-table.fa-plus").on("click", function () {
+            $(this).closest("tr").after("<tr><td></td><td colspan = '999'>" + $(this).next().html() + "</td></tr>")
+            $(this).addClass('fa-minus');
+            $(this).removeClass('fa-plus');
+        });
+        $(".toggle-table.fa-minus").on("click", function () {
+            $(this).removeClass('fa-minus');
+            $(this).addClass('fa-plus');
+            $(this).closest("tr").next().remove();
+        });
+    </script>
+
+    <!-----------------------------------End--------------------------------------->
+
 </asp:Content>
 <asp:Content ID="inner" runat="server" ContentPlaceHolderID="ContentPlaceHolder1">
     <asp:ScriptManager ID="sc" runat="server"></asp:ScriptManager>
@@ -42,7 +60,7 @@
                                         <asp:LinkButton runat="server" ID="btnsearch" class="text-black btn btn-warning pull-left btn-md" OnClick="Search_Click" Text="Search"></asp:LinkButton>
                                     </div>
 
-                                   <%-- <a href="<%=ResolveUrl("~/Add-Company") %>" class="text-black btn btn-warning pull-right btn-md">Add company</a>--%>
+                                    <%-- <a href="<%=ResolveUrl("~/Add-Company") %>" class="text-black btn btn-warning pull-right btn-md">Add company</a>--%>
 
                                     <div class="clearfix"></div>
                                     <div class="text-center" style="font-size: 16px; margin-top: 10px;">
@@ -51,10 +69,81 @@
                                     </div>
                                     <div class="clearfix"></div>
                                     <div class="table-wraper">
-                                        <asp:GridView ID="gvcompanydetail" runat="server" Width="100%" Class="commonAjaxTbl table display responsive no-wrap table-hover manage-user" AutoGenerateColumns="false" AllowPaging="true"
-                                            OnPageIndexChanging="OnPageIndexChanging" PageSize="25" AllowSorting="true" OnSorting="OnSorting" OnRowCommand="gvcompanydetail_RowCommand">
+                                        <asp:GridView ID="gvcompanydetail" runat="server" Width="100%" Class="commonAjaxTbl table display responsive no-wrap table-hover manage-user Grid" AutoGenerateColumns="false" AllowPaging="true"
+                                            OnPageIndexChanging="OnPageIndexChanging" PageSize="25" AllowSorting="true" OnSorting="OnSorting" OnRowCommand="gvcompanydetail_RowCommand" OnRowDataBound="OnRowDataBound">
                                             <PagerStyle HorizontalAlign="Center" CssClass="GridPager" />
                                             <Columns>
+                                                <asp:TemplateField>
+                                                    <ItemTemplate>
+                                                        <div>
+                                                            <i class="toggle-table fa fa-plus" aria-hidden="true"></i>
+                                                            <asp:Panel ID="pnlOrders" runat="server" Style="display: none">
+                                                                <asp:GridView ID="gvfactory" runat="server" AutoGenerateColumns="false" Class="table table-hover ChildGrid" OnRowDataBound="gvfactory_OnRowDataBound">
+                                                                    <Columns>
+                                                                        <asp:BoundField ItemStyle-Width="150px" DataField="FactoryName" HeaderText="FactoryName" />
+                                                                        <asp:TemplateField HeaderText="FactroyRefNo">
+                                                                            <ItemTemplate>
+                                                                                <asp:Label runat="server" ID="lblfactoryrefno" Text='<%#Eval("FactoryRefNo") %>'></asp:Label>
+                                                                            </ItemTemplate>
+                                                                        </asp:TemplateField>
+                                                                        <asp:TemplateField HeaderText="Edit">
+                                                                            <ItemTemplate>
+                                                                                <asp:LinkButton ID="lbleditfactory" runat="server" CssClass="fa fa-edit" CommandName="EditComp" CommandArgument='<%#Eval("FactoryRefNo") %>'></asp:LinkButton>
+                                                                            </ItemTemplate>
+                                                                        </asp:TemplateField>
+                                                                        <asp:TemplateField HeaderText="View">
+                                                                            <ItemTemplate>
+                                                                                <asp:LinkButton ID="lblviewfactory" runat="server" CssClass="fa fa-eye" CommandName="ViewComp" CommandArgument='<%#Eval("FactoryRefNo") %>'></asp:LinkButton>
+                                                                            </ItemTemplate>
+                                                                        </asp:TemplateField>
+                                                                        <asp:TemplateField HeaderText="Delete">
+                                                                            <ItemTemplate>
+                                                                                <asp:LinkButton ID="lbldelfactory" runat="server" CssClass="fa fa-trash" CommandName="DeleteComp" CommandArgument='<%#Eval("FactoryRefNo") %>'></asp:LinkButton>
+                                                                            </ItemTemplate>
+                                                                        </asp:TemplateField>
+                                                                        <asp:TemplateField HeaderText="Send Login">
+                                                                            <ItemTemplate>
+                                                                                <asp:LinkButton ID="lbllogindetailfactory" runat="server" CssClass=" fa fa-paper-plane" CommandName="SendLogin" CommandArgument='<%#Eval("FactoryRefNo") %>'></asp:LinkButton>
+                                                                            </ItemTemplate>
+                                                                        </asp:TemplateField>
+                                                                        <%--<asp:TemplateField>
+                                                                        <ItemTemplate>
+                                                                            <img alt="" style="cursor: pointer" src="assets/images/plus.jpg" />
+                                                                            <asp:GridView ID="gvunit" runat="server" AutoGenerateColumns="false" CssClass="ChildGrid">
+                                                                                <Columns>
+                                                                                    <asp:BoundField ItemStyle-Width="150px" DataField="UnitName" HeaderText="UnitName" />
+                                                                                    <asp:BoundField ItemStyle-Width="150px" DataField="FactoryRefNo" HeaderText="FactroyRefNo" />
+                                                                                    <asp:BoundField ItemStyle-Width="150px" DataField="UnitRefNo" HeaderText="UnitRefNo" />
+                                                                                    <asp:TemplateField HeaderText="Edit">
+                                                                                        <ItemTemplate>
+                                                                                            <asp:LinkButton ID="lbleditunit" runat="server" CssClass="fa fa-edit" CommandName="EditComp" CommandArgument='<%#Eval("UnitRefNo") %>'></asp:LinkButton>
+                                                                                        </ItemTemplate>
+                                                                                    </asp:TemplateField>
+                                                                                    <asp:TemplateField HeaderText="View">
+                                                                                        <ItemTemplate>
+                                                                                            <asp:LinkButton ID="lblviewunit" runat="server" CssClass="fa fa-eye" CommandName="ViewComp" CommandArgument='<%#Eval("UnitRefNo") %>'></asp:LinkButton>
+                                                                                        </ItemTemplate>
+                                                                                    </asp:TemplateField>
+                                                                                    <asp:TemplateField HeaderText="Delete">
+                                                                                        <ItemTemplate>
+                                                                                            <asp:LinkButton ID="lbldelunit" runat="server" CssClass="fa fa-trash" CommandName="DeleteComp" CommandArgument='<%#Eval("UnitRefNo") %>'></asp:LinkButton>
+                                                                                        </ItemTemplate>
+                                                                                    </asp:TemplateField>
+                                                                                    <asp:TemplateField HeaderText="Send Login">
+                                                                                        <ItemTemplate>
+                                                                                            <asp:LinkButton ID="lbllogindetailunit" runat="server" CssClass=" fa fa-paper-plane" CommandName="SendLogin" CommandArgument='<%#Eval("UnitRefNo") %>'></asp:LinkButton>
+                                                                                        </ItemTemplate>
+                                                                                    </asp:TemplateField>
+                                                                                </Columns>
+                                                                            </asp:GridView>
+                                                                        </ItemTemplate>
+                                                                    </asp:TemplateField>--%>
+                                                                    </Columns>
+                                                                </asp:GridView>
+                                                            </asp:Panel>
+                                                        </div>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
                                                 <asp:TemplateField HeaderText="S.No">
                                                     <ItemTemplate>
                                                         <%#Container.DataItemIndex+1 %>
@@ -79,17 +168,17 @@
                                                       
                                                     </ItemTemplate>
                                                 </asp:TemplateField>--%>
-                                                <asp:TemplateField HeaderText="Edit" >
+                                                <asp:TemplateField HeaderText="Edit">
                                                     <ItemTemplate>
                                                         <asp:LinkButton ID="lbledit" runat="server" CssClass="fa fa-edit" CommandName="EditComp" CommandArgument='<%#Eval("CompanyID") %>'></asp:LinkButton>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
-                                               <asp:TemplateField HeaderText="View">
+                                                <asp:TemplateField HeaderText="View">
                                                     <ItemTemplate>
                                                         <asp:LinkButton ID="lblview" runat="server" CssClass="fa fa-eye" CommandName="ViewComp" CommandArgument='<%#Eval("CompanyID") %>'></asp:LinkButton>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
-                                                <asp:TemplateField HeaderText="Delete" >
+                                                <asp:TemplateField HeaderText="Delete">
                                                     <ItemTemplate>
                                                         <asp:LinkButton ID="lbldel" runat="server" CssClass="fa fa-trash" CommandName="DeleteComp" CommandArgument='<%#Eval("CompanyID") %>'></asp:LinkButton>
                                                     </ItemTemplate>

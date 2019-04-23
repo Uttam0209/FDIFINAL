@@ -32,7 +32,8 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
     {
         try
         {
-            DataTable DtGrid = Lo.RetriveGridViewCompany("0","");
+
+            DataTable DtGrid = Lo.RetriveGridViewCompany("0", "CompanyMainGridView");
             if (DtGrid.Rows.Count > 0)
             {
                 if (sortExpression != null)
@@ -77,7 +78,8 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
         }
         else if (e.CommandName == "ViewComp")
         {
-            DataTable DtView = Lo.RetriveGridViewCompany(e.CommandArgument.ToString(),"");
+
+            DataTable DtView = Lo.RetriveGridViewCompany(e.CommandArgument.ToString(), "CompanyMainGridView");
             if (DtView.Rows.Count > 0)
             {
                 lblrefno.Text = DtView.Rows[0]["CompanyRefNo"].ToString();
@@ -152,6 +154,34 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
         {
             BindGridView();
         }
+    }
+    protected void OnRowDataBound(object sender, GridViewRowEventArgs e)
+    {
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            Label lblrefno = e.Row.FindControl("lblrefno") as Label;
+            GridView gvfactory = e.Row.FindControl("gvfactory") as GridView;
+            DataTable DtGrid = Lo.RetriveGridViewCompany(lblrefno.Text, "InnerGridViewFactory");
+            if (DtGrid.Rows.Count > 0)
+            {
+                gvfactory.DataSource = DtGrid;
+                gvfactory.DataBind();
+            }
+        }
+    }
+    protected void gvfactory_OnRowDataBound(object sender, GridViewRowEventArgs e)
+    {
+        //if (e.Row.RowType == DataControlRowType.DataRow)
+        //{
+        //    Label lblfactroyrefno = e.Row.FindControl("lblfactoryrefno") as Label;
+        //    GridView gvunit = e.Row.FindControl("gvunit") as GridView;
+        //    DataTable DtGrid = Lo.RetriveGridViewCompany(lblfactroyrefno.Text, "InnerGridViewUnit");
+        //    if (DtGrid.Rows.Count > 0)
+        //    {
+        //        gvunit.DataSource = DtGrid;
+        //        gvunit.DataBind();
+        //    }
+        //}
     }
     #region Send Mail
     public void SendEmailCode()
