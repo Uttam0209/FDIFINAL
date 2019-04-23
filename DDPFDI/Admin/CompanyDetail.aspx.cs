@@ -24,6 +24,11 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
     {
         if (!IsPostBack)
         {
+            if (Request.QueryString["id"] != null)
+            {
+                string id = Request.QueryString["id"].ToString().Replace(" ", "+");
+                lblPageName.Text = objCrypto.DecryptData(id);
+            }
             currentPage = System.IO.Path.GetFileName(Request.Url.AbsolutePath);
             PanelHideShow();
             BindState();

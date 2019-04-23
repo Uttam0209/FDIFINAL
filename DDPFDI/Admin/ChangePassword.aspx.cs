@@ -7,8 +7,14 @@ public partial class Admin_ChangePassword : System.Web.UI.Page
 {
     Logic Lo = new Logic();
     Cryptography ObjEnc = new Cryptography();
+    Cryptography objEnc = new Cryptography();
     protected void Page_Load(object sender, EventArgs e)
     {
+        if (Request.QueryString["id"] != null)
+        {
+            string id = Request.QueryString["id"].ToString().Replace(" ", "+");
+            lblPageName.Text = objEnc.DecryptData(id);
+        }
     }
     protected void btnsub_Click(object sender, EventArgs e)
     {

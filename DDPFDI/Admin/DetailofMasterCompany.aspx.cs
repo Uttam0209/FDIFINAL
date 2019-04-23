@@ -20,6 +20,11 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
     {
         if (!IsPostBack)
         {
+            if (Request.QueryString["id"] != null)
+            {
+                string id = Request.QueryString["id"].ToString().Replace(" ", "+");
+                lblPageName.Text = objEnc.DecryptData(id);
+            }
             BindGridView();
         }
     }
@@ -27,6 +32,7 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
     {
         try
         {
+
             DataTable DtGrid = Lo.RetriveGridViewCompany("0", "CompanyMainGridView");
             if (DtGrid.Rows.Count > 0)
             {
@@ -72,6 +78,7 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
         }
         else if (e.CommandName == "ViewComp")
         {
+
             DataTable DtView = Lo.RetriveGridViewCompany(e.CommandArgument.ToString(), "CompanyMainGridView");
             if (DtView.Rows.Count > 0)
             {

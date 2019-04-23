@@ -20,7 +20,6 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
     private Int64 id = 0;
     private string _sysMsg = string.Empty;
     private string _msg = string.Empty;
-    private string comprefno = "";
     private string intrestedare = "";
     private string Masterallowed = "";
     private string role = "";
@@ -32,7 +31,8 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
         {
             if (Request.QueryString["mu"] != null)
             {
-                lblPageName.Text = Request.QueryString["id"].ToString();
+                string id = Request.QueryString["id"].ToString().Replace(" ","+");
+                lblPageName.Text = Enc.DecryptData(id);
                 if (Enc.DecryptData(Request.QueryString["mu"].ToString()) == "Panel1")
                 {
                     mastercompany.Visible = true;
@@ -150,7 +150,6 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
     {
         txtemail.Text = "";
         txtcomp.Text = "";
-        comprefno = "";
         Masterallowed = "";
         role = "";
     }
