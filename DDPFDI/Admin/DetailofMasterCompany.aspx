@@ -52,19 +52,32 @@
                     <form method="post" class="addfdi">
                         <div class="row">
                             <div class="col-md-12">
+                                <asp:HiddenField runat="server" id="hfrole"/>
                                 <div class="table-wrapper">
                                     <br />
-                                    <div class="col-sm-4 row">
-                                        <asp:TextBox ID="txtserch" runat="server" CssClass="form-cascade-control form-control" Placeholder="Type keyword to search"></asp:TextBox>
+                                    <div runat="server" visible="False">
+                                        <div class="col-sm-4 row">
+                                            <asp:TextBox ID="txtserch" runat="server" CssClass="form-cascade-control form-control" Placeholder="Type keyword to search"></asp:TextBox>
+                                        </div>
+                                        <div class="col-sm-2 row">
+                                            <asp:LinkButton runat="server" ID="btnsearch" class="text-black btn btn-warning pull-left btn-md" OnClick="Search_Click" Text="Search"></asp:LinkButton>
+                                        </div>
                                     </div>
-                                    <div class="col-sm-2 row">
-                                        <asp:LinkButton runat="server" ID="btnsearch" class="text-black btn btn-warning pull-left btn-md" OnClick="Search_Click" Text="Search"></asp:LinkButton>
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <asp:DropDownList runat="server" ID="ddlcompany" CssClass="form-control" AutoPostBack="True"></asp:DropDownList>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <asp:DropDownList runat="server" ID="ddldivision" CssClass="form-control" AutoPostBack="True"></asp:DropDownList>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <asp:DropDownList runat="server" ID="ddlunit" CssClass="form-control" AutoPostBack="True"></asp:DropDownList>
+                                        </div>
                                     </div>
 
-                                    <%-- <a href="<%=ResolveUrl("~/Add-Company") %>" class="text-black btn btn-warning pull-right btn-md">Add company</a>--%>
 
                                     <div class="clearfix"></div>
-                                    <div class="text-center" style="font-size: 16px; margin-top: 10px;">
+                                    <div class="text-center" style="font-size: 16px; margin-top: 10px;" runat="server" Visible="False">
                                         Total number of  active companies :<strong>
                                             <asp:Label ID="lbltotal" runat="server" Text=""></asp:Label></strong>
                                     </div>
@@ -102,7 +115,7 @@
                                                                                 <asp:LinkButton ID="lbldelfactory" runat="server" CssClass="fa fa-trash" CommandName="DeleteComp" CommandArgument='<%#Eval("FactoryRefNo") %>'></asp:LinkButton>
                                                                             </ItemTemplate>
                                                                         </asp:TemplateField>
-                                                                        <asp:TemplateField HeaderText="Send Login">
+                                                                        <asp:TemplateField HeaderText="Send Login" runat="server" Visible="False">
                                                                             <ItemTemplate>
                                                                                 <asp:LinkButton ID="lbllogindetailfactory" runat="server" CssClass=" fa fa-paper-plane" CommandName="SendLogin" CommandArgument='<%#Eval("FactoryRefNo") %>'></asp:LinkButton>
                                                                             </ItemTemplate>
@@ -184,7 +197,7 @@
                                                         <asp:LinkButton ID="lbldel" runat="server" CssClass="fa fa-trash" CommandName="DeleteComp" CommandArgument='<%#Eval("CompanyID") %>'></asp:LinkButton>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
-                                                <asp:TemplateField HeaderText="Send Login">
+                                                <asp:TemplateField HeaderText="Send Login" runat="server" Visible="False">
                                                     <ItemTemplate>
                                                         <asp:LinkButton ID="lbllogindetail" runat="server" CssClass=" fa fa-paper-plane" CommandName="SendLogin" CommandArgument='<%#Eval("CompanyID") %>'></asp:LinkButton>
                                                     </ItemTemplate>

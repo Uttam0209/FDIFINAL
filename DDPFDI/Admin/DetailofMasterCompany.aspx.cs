@@ -16,10 +16,13 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
     string UserName;
     string RefNo;
     string UserEmail;
+    string currentPage = "";
+    string lbltypelogin = "";
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
         {
+            currentPage = System.IO.Path.GetFileName(Request.Url.AbsolutePath);
             BindGridView();
         }
     }
@@ -160,6 +163,75 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
                 gvfactory.DataSource = DtGrid;
                 gvfactory.DataBind();
             }
+
+            DataTable dtCompany = Lo.RetriveMasterData(0, "", "", 0, currentPage, "", "btn");
+            if (dtCompany.Rows.Count > 0)
+            {
+
+                if (dtCompany.Rows[0]["Company"].ToString() == "1")
+                {
+                    gvcompanydetail.Columns[4].Visible = false;
+                    gvcompanydetail.Columns[5].Visible = true;
+                    gvcompanydetail.Columns[6].Visible = false;
+                    gvfactory.Columns[2].Visible = false;
+                    gvfactory.Columns[3].Visible = true;
+                    gvfactory.Columns[4].Visible = false;
+                }
+                else if (dtCompany.Rows[0]["Company"].ToString() == "2")
+                {
+                    gvcompanydetail.Columns[4].Visible = true;
+                    gvcompanydetail.Columns[5].Visible = true;
+                    gvcompanydetail.Columns[6].Visible = false;
+
+                    gvfactory.Columns[2].Visible = true;
+                    gvfactory.Columns[3].Visible = true;
+                    gvfactory.Columns[4].Visible = false;
+
+
+
+                }
+                else if (dtCompany.Rows[0]["Company"].ToString() == "3")
+                {
+                    gvcompanydetail.Columns[4].Visible = true;
+                    gvcompanydetail.Columns[5].Visible = true;
+                    gvcompanydetail.Columns[6].Visible = true;
+                    gvfactory.Columns[2].Visible = true;
+                    gvfactory.Columns[3].Visible = true;
+                    gvfactory.Columns[4].Visible = true;
+
+                }
+                else if (dtCompany.Rows[0]["Factory"].ToString() == "2")
+                {
+                    // btndemofirst.Visible = true;
+                    //  btnDelete.Visible = false;
+                }
+                else if (dtCompany.Rows[0]["Factory"].ToString() == "3")
+                {
+                    //   btndemofirst.Visible = true;
+                    //   btnDelete.Visible = true;
+                }
+                else if (dtCompany.Rows[0]["Unit"].ToString() == "2")
+                {
+                    //     btndemofirst.Visible = true;
+                    //     btnDelete.Visible = false;
+                }
+                else if (dtCompany.Rows[0]["Unit"].ToString() == "3")
+                {
+                    //     btndemofirst.Visible = true;
+                    //    btnDelete.Visible = true;
+                }
+                else if (dtCompany.Rows[0]["SuperAdmin"].ToString() == "1")
+                {
+                    gvcompanydetail.Columns[4].Visible = true;
+                    gvcompanydetail.Columns[5].Visible = true;
+                    gvcompanydetail.Columns[6].Visible = true;
+                    gvfactory.Columns[2].Visible = true;
+                    gvfactory.Columns[3].Visible = true;
+                    gvfactory.Columns[4].Visible = true;
+
+                }
+
+            }
         }
     }
     protected void gvfactory_OnRowDataBound(object sender, GridViewRowEventArgs e)
@@ -215,4 +287,13 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
         return res.ToString();
     }
     #endregion
+    protected void BindCompany()
+    {
+
+    }
+    protected void ShowFalseGridControl()
+    {
+
+    }
+
 }
