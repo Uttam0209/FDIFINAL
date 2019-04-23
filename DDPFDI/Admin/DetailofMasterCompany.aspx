@@ -27,8 +27,7 @@
                 <div class="sideBg">
                     <div class="col-mod-12">
                         <ul class="breadcrumb">
-                            <li><a href='<%=ResolveUrl("~/Detail-Company") %>'>Dashboard</a></li>
-                            <li class="active">Companies Detail</li>
+                            <asp:Label ID="lblPageName" runat="server" Text=""></asp:Label></li>
                         </ul>
                     </div>
                     <form method="post" class="addfdi">

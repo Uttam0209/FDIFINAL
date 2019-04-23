@@ -30,6 +30,11 @@ public partial class Admin_frmAddFDI : System.Web.UI.Page
     {
         if (!IsPostBack)
         {
+            if (Request.QueryString["id"] != null)
+            {
+                string id = Request.QueryString["id"].ToString().Replace(" ", "+");
+                lblPageName.Text = objCrypto.DecryptData(id);
+            }
             PanelHideShow();
             EditCOde();
         }

@@ -405,7 +405,7 @@ namespace DataAccessLayer
                 }
             }
         }
-        public DataTable RetriveGridViewCompany(string ID)
+        public DataTable RetriveGridViewCompany(string ID,string strPurpose)
         {
             using (DbConnection dbCon = db.CreateConnection())
             {
@@ -414,6 +414,7 @@ namespace DataAccessLayer
                 {
                     DbCommand cmd = db.GetStoredProcCommand("sp_SearchCompanyGrid");
                     db.AddInParameter(cmd, "@CompanyRefNo", DbType.String, ID);
+                    db.AddInParameter(cmd, "@Purpose", DbType.String, strPurpose);
                     IDataReader dr = db.ExecuteReader(cmd);
                     DataTable dt = new DataTable();
                     if (dr != null)

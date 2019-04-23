@@ -7,7 +7,7 @@
         <div class="sideBg">
             <div class="row">
                 <div class="col-md-12">
-                    <h3 class="page-header"><i class="fas fa-folder-plus"></i>Add Product</h3>
+                    <h3 class="page-header"><i class="fas fa-folder-plus"></i><asp:Label ID="lblPageName" runat="server" Text=""></asp:Label></h3>
                 
                  </div>
                  <div class="row">
