@@ -405,7 +405,7 @@ namespace DataAccessLayer
                 }
             }
         }
-        public DataTable RetriveGridViewCompany(string ID)
+        public DataTable RetriveGridViewCompany(string ID,string Purpose)
         {
             using (DbConnection dbCon = db.CreateConnection())
             {
@@ -414,6 +414,7 @@ namespace DataAccessLayer
                 {
                     DbCommand cmd = db.GetStoredProcCommand("sp_SearchCompanyGrid");
                     db.AddInParameter(cmd, "@CompanyRefNo", DbType.String, ID);
+                    db.AddInParameter(cmd, "@Purpose", DbType.String, Purpose);
                     IDataReader dr = db.ExecuteReader(cmd);
                     DataTable dt = new DataTable();
                     if (dr != null)
@@ -472,41 +473,21 @@ namespace DataAccessLayer
                 }
             }
         }
-        public DataTable RetriveCompany(string text, Int64 id, string value, int InterestedArea)
+        public DataTable RetriveMasterData(Int64 Companyid, string strRefNo, string strRole, int MenuId, string strMenuUrl, string strInterestedAreaFlag, string strCriteria)
         {
             using (DbConnection dbCon = db.CreateConnection())
             {
                 dbCon.Open();
                 try
                 {
-                    DbCommand cmd = db.GetStoredProcCommand("sp_Company");
-                    db.AddInParameter(cmd, "@CompanyID", DbType.Int64, id);
-                    db.AddInParameter(cmd, "@CompanyName", DbType.String, value);
-                    db.AddInParameter(cmd, "@WorkCodeFor", DbType.String, text);
-                    db.AddInParameter(cmd, "@MenuId", DbType.Int16, InterestedArea);
-                    IDataReader dr = db.ExecuteReader(cmd);
-                    DataTable dt = new DataTable();
-                    if (dr != null)
-                        dt.Load(dr);
-                    return dt;
-                }
-                catch (Exception ex)
-                {
-                    throw ex;
-                }
-            }
-        }
-        public DataTable RetriveCompany1(string text, string id, string value)
-        {
-            using (DbConnection dbCon = db.CreateConnection())
-            {
-                dbCon.Open();
-                try
-                {
-                    DbCommand cmd = db.GetStoredProcCommand("sp_SubMenu");
-                    db.AddInParameter(cmd, "@CompanyID", DbType.String, id);
-                    db.AddInParameter(cmd, "@CompanyName", DbType.String, value);
-                    db.AddInParameter(cmd, "@WorkCodeFor", DbType.String, text);
+                    DbCommand cmd = db.GetStoredProcCommand("sp_GetDataOnCriteria");
+                    db.AddInParameter(cmd, "@CompanyID", DbType.Int64, Companyid);
+                    db.AddInParameter(cmd, "@RefNo", DbType.String, strRefNo);
+                    db.AddInParameter(cmd, "@Role", DbType.String, strRole);
+                    db.AddInParameter(cmd, "@MenuId", DbType.Int16, MenuId);
+                    db.AddInParameter(cmd, "@MenuUrl", DbType.String, strMenuUrl);
+                    db.AddInParameter(cmd, "@InterestedAreaFlag", DbType.String, strInterestedAreaFlag);
+                    db.AddInParameter(cmd, "@Criteria", DbType.String, strCriteria);
                     IDataReader dr = db.ExecuteReader(cmd);
                     DataTable dt = new DataTable();
                     if (dr != null)

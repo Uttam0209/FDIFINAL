@@ -1,68 +1,24 @@
 ul {list-style: none;}
 
 /*---Progress Bar Animation ---*/
-@keyframes loader {
-
-	0% {
-		width: 0;
-	}
-
-	20% {
-		width: 10%;
-	}
-
-	25% {
-		width: 24%;
-	}
-
-	43% {
-		width: 41%;
-	}
-
-	56% {
-		width: 50%;
-	}
-
-	66% {
-		width: 52%;
-	}
-
-	71% {
-		width: 60%;
-	}
-
-	75% {
-		width: 76%;
-    
-	}
-
-	94% {
-		width: 86%;
-	}
-
-	100% {
-		width: 100%;
-	}
-
+.custom-progress-bar { width: 500px; max-width: 100%; height: 10px; border-radius: 5px; position: absolute; top: 15px; left: 0; right: 0; margin: 0 auto; 
+    z-index: 99999;            
+}
+.custom-progress-bar span { display: inline-block; height: 100%; border-radius: 3px; box-shadow: 0 1px 0 rgba(255, 255, 255, .5) inset;
+    transition: width .4s ease-in-out;    
+} 
+/*
+.stripes span { background-size: 30px 30px; background-image: linear-gradient(135deg, rgba(255, 255, 255, .15) 25%, transparent 25%,
+                        transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent);             
+                        animation: animate-stripes 3s linear infinite;             
+}   
+*/
+.blue span { background-color: #34c2e3; width: 100%; }
+@keyframes animate-stripes {
+   /* 0% {background-position: 0 0;} 100% {background-position: 60px 0;} */
+     0% {} 100% {background-position: 60px 0;}
 }
 
-.progress-bar { border-radius: 60px; overflow: hidden;  width: 100%; }
-.progress-bar span { display: block}
-.bar { background: rgba(0,0,0,0.075); }
-
-.progress { animation: loader 8s ease forwards; background:#008000;  color: #fff;   padding: 5px;
-  width: 0;
-}
-
-.progress-bar {
-  left: 50%;
-  max-width: 50%;
-  position: absolute;
-  top: 50%;
-  transform: translate3d(-50%,-50%,0);
-}
-
-.loader-progress { position: fixed; left: 50%;}
 
 /*---Progress Bar Animation ---*/
 

@@ -248,12 +248,9 @@
             return true;
         };
     </script>
-
 <!---Progress Bar ---->
-<div class="progress-bar loader-progress">
-    <span class="bar">
-        <span class="progress"></span>
-    </span>
+<div class="custom-progress-bar blue stripes">
+    <span></span>
 </div>
 <!---Progress Bar ---->
 </body>
