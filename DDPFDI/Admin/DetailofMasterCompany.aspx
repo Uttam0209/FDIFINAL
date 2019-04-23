@@ -18,8 +18,6 @@
         };
     </script>
 
-   
-    <!-----------------------------------End--------------------------------------->
 
 </asp:Content>
 <asp:Content ID="inner" runat="server" ContentPlaceHolderID="ContentPlaceHolder1">
@@ -60,8 +58,10 @@
                                             <Columns>
                                                 <asp:TemplateField>
                                                     <ItemTemplate>
-                                                        <div>
-                                                            <i class="toggle-table fa fa-plus" aria-hidden="true"></i>
+                                                        <div class="acordian-table">
+                                                            <i class="toggle-table-minus fa fa-minus" aria-hidden="true" style="display:none"></i>
+                                                            <i class="toggle-table-plus fa fa-plus" aria-hidden="true"></i>
+                                                            
                                                             <asp:Panel ID="pnlOrders" runat="server" Style="display: none">
                                                                 <asp:GridView ID="gvfactory" runat="server" AutoGenerateColumns="false" Class="table table-hover ChildGrid" OnRowDataBound="gvfactory_OnRowDataBound">
                                                                     <Columns>
