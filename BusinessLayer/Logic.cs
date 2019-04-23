@@ -16,9 +16,9 @@ namespace BusinessLayer
             return ds;
         }
         #region Login"
-        public string VerifyEmployee(HybridDictionary hyLogin, out string _msg)
+        public string VerifyEmployee(HybridDictionary hyLogin, out string _msg , out string Defaultpage)
         {
-            return SqlHelper.Instance.VerifyEmployee(hyLogin, out _msg);
+            return SqlHelper.Instance.VerifyEmployee(hyLogin, out _msg, out Defaultpage);
         }
         #endregion
         #region SaveCode

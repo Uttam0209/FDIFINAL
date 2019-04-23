@@ -24,7 +24,8 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
     private string intrestedare = "";
     private string Masterallowed = "";
     private string role = "";
-    string Mrole = "";
+    private string MRole = "";
+    private DropDownList mddlControl;
     HybridDictionary HySave = new HybridDictionary();
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -33,16 +34,36 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
             if (Enc.DecryptData(Request.QueryString["mu"].ToString()) == "Panel1")
             {
                 mastercompany.Visible = true;
-                BindMasterCompany();
+                masterfacotry.Visible = false;
+                BindMasterCompany(Session["CompanyRefNo"].ToString());
                 BindMasterData();
                 Intrested.Visible = true;
+                lblName.Text = "Company Name";
+                btnsubmit.Text = "Save Company";
                 MenuAlot.Visible = true;
                 Role.Visible = true;
             }
             else if (Enc.DecryptData(Request.QueryString["mu"].ToString()) == "Panel2")
             {
                 mastercompany.Visible = true;
-                BindMasterCompany();
+                masterfacotry.Visible = false;
+                BindMasterCompany(Session["CompanyRefNo"].ToString());
+
+                lblName.Text = "Divison/Plant Name";
+                btnsubmit.Text = "Save Divison";
+                Intrested.Visible = false;
+                MenuAlot.Visible = false;
+                Role.Visible = false;
+
+            }
+            else if (Enc.DecryptData(Request.QueryString["mu"].ToString()) == "Panel3")
+            {
+                mastercompany.Visible = true;
+                masterfacotry.Visible = true;
+                BindMasterCompany(Session["CompanyRefNo"].ToString());
+                this.ddlmaster_SelectedIndexChanged(sender, e);
+                lblName.Text = "Unit Name";
+                btnsubmit.Text = "Save Unit";
                 Intrested.Visible = false;
                 MenuAlot.Visible = false;
                 Role.Visible = false;
@@ -51,8 +72,9 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
             else
             {
                 mastercompany.Visible = false;
+                masterfacotry.Visible = false;
                 BindMasterData();
-                BindMasterCompany();
+                BindMasterCompany(Session["CompanyRefNo"].ToString());
                 Intrested.Visible = true;
                 MenuAlot.Visible = true;
                 Role.Visible = true;
@@ -60,50 +82,69 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
 
         }
     }
-    protected void BindMasterCompany()
+
+    protected void BindMasterCompany(string mRefNo)
     {
-        string sType = "", sName = "", sID = "";
-        if (Session["CompanyRefNo"].ToString().Substring(0, 1) == "F")
+        string sType = "", sName = "", sID = "", mSID = "";
+        Int16 id = 0;
+        if (Enc.DecryptData(Session["Type"].ToString()) == "SuperAdmin")
         {
-            sType = "FactoryName";
-            sName = "FactoryName";
-            sID = "FactoryID";
-        }
-        else
-        {
-            sType = "InterestedArea";
+            sType = "Select";
             sName = "CompanyName";
-            sID = "CompanyId";
+            sID = "CompanyRefNo";
+            mSID = "";
+            id = 0;
+
         }
-        DataTable Dtchkintrestedarea = Lo.RetriveCompany(sType, 0, Session["CompanyRefNo"].ToString(), 0);
-        if (Dtchkintrestedarea != null)
+        else if (Enc.DecryptData(Session["Type"].ToString()) == "Company")
         {
-            Mrole = Dtchkintrestedarea.Rows[0]["Role"].ToString();
-            Co.FillDropdownlist(ddlmaster, Dtchkintrestedarea,sName,sID);
-            ddlmaster.Enabled = false;
-            if (Mrole == "Company")
-            {
-                lblMastcompany.Text = "Company Name";
-                lblName.Text = "Factory Name";
-            }
-            else if (Mrole == "Factory")
-            {
-                lblMastcompany.Text = "Factory Name";
-                lblName.Text = "Unit Name";
-            }
-            else
-            {
-                lblMastcompany.Text = "Company Name";
-                lblName.Text = "Company Name";
-            }
+        
+            sType = "CompanyName";
+            sName = "CompanyName";
+            sID = "CompanyRefNo";
+            mSID = Session["CompanyRefNo"].ToString();
+            id = 2;
+        }
+        else if (Enc.DecryptData(Session["Type"].ToString()) == "Factory")
+        {
+
+            sType = "CompanyName";
+            sName = "CompanyName";
+            sID = "CompanyRefNo";
+            mSID = Session["CompanyRefNo"].ToString();
+            id = 3;
+        }
+        else if (Enc.DecryptData(Session["Type"].ToString()) == "Unit")
+        {
+
+            sType = "CompanyName";
+            sName = "CompanyName";
+            sID = "CompanyRefNo";
+            mSID = Session["CompanyRefNo"].ToString();
+            id = 4;
         }
         else
         {
-            ddlmaster.Items.Insert(0, "Select Company");
-            ddlmaster.Enabled = false;
+            sType = "CompanyName";
+            sName = "CompanyName";
+            sID = "CompanyRefNo";
+            mSID = Session["CompanyRefNo"].ToString();
+        }
+
+        mddlControl = ddlmaster;
+        DataTable Dtchkintrestedarea = Lo.RetriveCompany(sType, id, mSID, 0);
+        if (Dtchkintrestedarea.Rows.Count > 0 && Dtchkintrestedarea != null)
+        {
+            hfrole.Value = "";
+            hfrole.Value = Dtchkintrestedarea.Rows[0]["Role"].ToString();
+            Co.FillDropdownlist(mddlControl, Dtchkintrestedarea, sName, sID);
+        }
+        else
+        {
             lblName.Text = "Company Name";
         }
     }
+
     protected void BindMasterData()
     {
         DataTable Dtchkintrestedarea = Lo.RetriveCompany("IntrestedAreaCheck", 0, "I", 0);
@@ -124,7 +165,9 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
         comprefno = "";
         Masterallowed = "";
         role = "";
+        hfrole.Value = "";
     }
+
     protected void SaveComp()
     {
 
@@ -133,21 +176,20 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
         HySave["CompanyName"] = Co.RSQandSQLInjection(txtcomp.Text.Trim(), "soft");
 
         HySave["ContactPersonEmailID"] = Co.RSQandSQLInjection(txtemail.Text.Trim(), "soft");
-
-        BindMasterCompany();
-
         string StrSaveComp = "";
-        if (Mrole == "Company")
+
+        //BindMasterCompany(ddlmaster.SelectedItem.Value);
+        if (btnsubmit.Text == "Save Divison")
         {
-            HySave["CompanyRefNo"] = Session["CompanyRefNo"].ToString();
+            HySave["CompanyRefNo"] = ddlmaster.SelectedItem.Value;
 
             HySave["Role"] = "Factory";
 
             StrSaveComp = Lo.SaveFactoryComp(HySave, out _sysMsg, out _msg);
         }
-        if (Mrole == "Factory")
+        else if (btnsubmit.Text == "Save Unit")
         {
-            HySave["CompanyRefNo"] = Session["CompanyRefNo"].ToString();
+            HySave["CompanyRefNo"] = ddlfacotry.SelectedItem.Value;
 
             HySave["Role"] = "Unit";
 
@@ -185,12 +227,12 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
         }
         if (StrSaveComp != "")
         {
-            
-            if (Mrole == "Company" || Mrole=="Factory")
+
+            if (hfrole.Value == "Company" || hfrole.Value == "Factory")
             {
                 try
                 {
-                   
+
                     SendEmailCode();
                 }
                 catch (Exception ex)
@@ -207,7 +249,7 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
             ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not saved.')", true);
         }
     }
-    
+
     protected void btncancel_Click(object sender, EventArgs e)
     {
         Cleartext();
@@ -255,4 +297,19 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
         return res.ToString();
     }
     #endregion
+    protected void ddlmaster_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        DataTable DtBindSubFactory = Lo.RetriveCompany("FactoryName", 0, ddlmaster.SelectedItem.Value, 0);
+        if (DtBindSubFactory.Rows.Count > 0)
+        {
+            Co.FillDropdownlist(ddlfacotry, DtBindSubFactory, "FactoryName", "FactoryRefNo");
+            ddlfacotry.Items.Insert(0, "Select Factory");
+        }
+        else
+        {
+            ddlfacotry.Items.Insert(0, "Select Factory");
+        }
+
+    }
+
 }

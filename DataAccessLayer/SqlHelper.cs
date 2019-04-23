@@ -108,7 +108,7 @@ namespace DataAccessLayer
         }
         #endregion
         #region "Login"
-        public string VerifyEmployee(HybridDictionary hyLogin, out string _msg)
+        public string VerifyEmployee(HybridDictionary hyLogin, out string _msg, out string Defaultpage)
         {
             try
             {
@@ -117,9 +117,11 @@ namespace DataAccessLayer
                 db.AddInParameter(_dbCmd, "@Password", DbType.String, hyLogin["Password"]);
                 db.AddOutParameter(_dbCmd, "@CompanyRefNo", DbType.String, 50);
                 db.AddOutParameter(_dbCmd, "@LType", DbType.String, 50);
+                db.AddOutParameter(_dbCmd, "@Defaultpage", DbType.String, 50);
                 db.ExecuteNonQuery(_dbCmd);
                 string Comp_ID = db.GetParameterValue(_dbCmd, "@CompanyRefNo").ToString();
                 string ID = db.GetParameterValue(_dbCmd, "@LType").ToString();
+                Defaultpage = db.GetParameterValue(_dbCmd, "@Defaultpage").ToString();
                 _msg = ID;
                 return Comp_ID;
 
@@ -127,10 +129,12 @@ namespace DataAccessLayer
             catch (SqlException ex)
             {
                 _msg = "0";
+                Defaultpage = "0";
                 return "";
             }
             catch (Exception ex)
             {
+                Defaultpage = "0";
                 _msg = "0";
                 return "";
             }

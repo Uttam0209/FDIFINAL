@@ -43,7 +43,7 @@
                                         <asp:LinkButton runat="server" ID="btnsearch" class="text-black btn btn-warning pull-left btn-md" OnClick="Search_Click" Text="Search"></asp:LinkButton>
                                     </div>
 
-                                    <a href="<%=ResolveUrl("~/Add-Company") %>" class="text-black btn btn-warning pull-right btn-md">Add company</a>
+                                   <%-- <a href="<%=ResolveUrl("~/Add-Company") %>" class="text-black btn btn-warning pull-right btn-md">Add company</a>--%>
 
                                     <div class="clearfix"></div>
                                     <div class="text-center" style="font-size: 16px; margin-top: 10px;">
@@ -67,29 +67,30 @@
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                                 <asp:BoundField DataField="CompanyName" HeaderText="Company" NullDisplayText="#" SortExpression="CompanyName" />
-                                                <asp:BoundField DataField="IsJointVenture" HeaderText="Joint Venture" NullDisplayText="#" SortExpression="IsJointVenture" />
-                                                <asp:TemplateField HeaderText="Defence Activities">
+                                                <%--<asp:BoundField DataField="IsJointVenture" HeaderText="Joint Venture" NullDisplayText="#" SortExpression="IsJointVenture" />--%>
+                                                <asp:TemplateField HeaderText="Nodel Person Email">
                                                     <ItemTemplate>
-                                                        <asp:Label ID="lblnodelname" runat="server" Text='<%#Eval("IsDefenceActivity") %>' NullDisplayText="#" SortExpression="IsDefenceActivity"></asp:Label>
-                                                    </ItemTemplate>
-                                                </asp:TemplateField>
-                                                <asp:TemplateField HeaderText="Is Active">
-                                                    <ItemTemplate>
-                                                        <asp:Label ID="lblisactive" runat="server" Text='<%#Eval("IsActive") %>' NullDisplayText="#" SortExpression="IsActive"></asp:Label>
+                                                        <asp:Label ID="lblnodelname" runat="server" Text='<%#Eval("ContactPersonEmailID") %>' NullDisplayText="#" SortExpression="ContactPersonEmailID"></asp:Label>
                                                         <asp:HiddenField runat="server" ID="hfemail" Value='<%#Eval("ContactPersonEmailID") %>' />
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
-                                                <asp:TemplateField HeaderText="Edit" Visible="False">
+                                                <%-- <asp:TemplateField HeaderText="Is Active">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="lblisactive" runat="server" Text='<%#Eval("IsActive") %>' NullDisplayText="#" SortExpression="IsActive"></asp:Label>
+                                                      
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>--%>
+                                                <asp:TemplateField HeaderText="Edit" >
                                                     <ItemTemplate>
                                                         <asp:LinkButton ID="lbledit" runat="server" CssClass="fa fa-edit" CommandName="EditComp" CommandArgument='<%#Eval("CompanyID") %>'></asp:LinkButton>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
-                                                <asp:TemplateField HeaderText="View">
+                                               <asp:TemplateField HeaderText="View">
                                                     <ItemTemplate>
                                                         <asp:LinkButton ID="lblview" runat="server" CssClass="fa fa-eye" CommandName="ViewComp" CommandArgument='<%#Eval("CompanyID") %>'></asp:LinkButton>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
-                                                <asp:TemplateField HeaderText="Delete" Visible="False">
+                                                <asp:TemplateField HeaderText="Delete" >
                                                     <ItemTemplate>
                                                         <asp:LinkButton ID="lbldel" runat="server" CssClass="fa fa-trash" CommandName="DeleteComp" CommandArgument='<%#Eval("CompanyID") %>'></asp:LinkButton>
                                                     </ItemTemplate>
