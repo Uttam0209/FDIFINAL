@@ -55,9 +55,15 @@ $(window).on('load', function(){
     });
 
 
-    //Remove Blank Element from DOM
+    //Table Accordian
+        $(".fa-plus").on("click", function () {
+            $(this).closest("tr").after("<tr class='clone-row'><td></td><td colspan='9'>" + $(this).next().html() + "</td></tr>")
+            $(this).addClass('fa-minus'); 
+            $(this).removeClass('fa-plus'); 
+           console.log('test');        
+           
 
-
-
+        });
+ 
 
 });

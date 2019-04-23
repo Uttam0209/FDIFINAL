@@ -15,7 +15,7 @@
     <link href="~/assets/css/responsive.css" rel="stylesheet" type="text/css">
     <style>
         .error-box {
-            max-width: 400px;
+            max-width: 85%;
             width: 100%;
             margin: 14% auto;
             text-align: center;
@@ -25,12 +25,15 @@
                 font-size: 80px;
                 line-height: 80px;
             }
+            .error-box h3 { font-size: 28px;}
 
             .error-box p {
-                font-size: 28px;
-                margin-top: 22px;
+                font-size: 18px;
+                margin-top: 15px;
                 font-family: sans-serif;
             }
+
+            .error-box a { color: #494ca2; text-decoration: underline;}
     </style>
 </head>
 <body class="error-page">
@@ -38,14 +41,10 @@
         <div>
             <div class="error-box">
                 <h2 class="main-logo">404</h2>
-                <p>Page Not Found !</p>
-                <br />
-                <br />
-                <p>Error Rendering Page.</p>
-                <br />
-                <h3>We encountered an error when rendering this page.
-                This is a generic and non-specific error message. Sorry we do not have more information.</h3>
-                <br />
+                <h3>Error Rendering Page.</h3>
+               
+                <p>We encountered an error when rendering this page.</p>
+               <p> This is a generic and non-specific error message. Sorry we do not have more information.</p>
                 <p>You may wish to: Check the error logs or  <a href="https://rgera@gov.in" rel="nofollow">Contact Support</a></p>
 
             </div>

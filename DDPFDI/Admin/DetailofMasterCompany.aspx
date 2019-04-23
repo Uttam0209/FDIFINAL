@@ -18,22 +18,7 @@
         };
     </script>
 
-    <!-------------------------------Gridview-------------------------------------->
-
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-    <script type="text/javascript">
-        $(".toggle-table.fa-plus").on("click", function () {
-            $(this).closest("tr").after("<tr><td></td><td colspan = '999'>" + $(this).next().html() + "</td></tr>")
-            $(this).addClass('fa-minus');
-            $(this).removeClass('fa-plus');
-        });
-        $(".toggle-table.fa-minus").on("click", function () {
-            $(this).removeClass('fa-minus');
-            $(this).addClass('fa-plus');
-            $(this).closest("tr").next().remove();
-        });
-    </script>
-
+   
     <!-----------------------------------End--------------------------------------->
 
 </asp:Content>
