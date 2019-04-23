@@ -13,6 +13,7 @@ using Encryption;
 
 public partial class Admin_Dashboard : System.Web.UI.Page
 {
+    Cryptography objCrypto = new Cryptography();
     Logic Lo = new Logic();
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -20,6 +21,11 @@ public partial class Admin_Dashboard : System.Web.UI.Page
         {
             if (!IsPostBack)
             {
+                if (Request.QueryString["id"] != null)
+                {
+                    string id = Request.QueryString["id"].ToString().Replace(" ", "+");
+                    lblPageName.Text = objCrypto.DecryptData(id);
+                }
                 DataTable dt = Lo.RetriveAggregateValue("Count", "Company");
                 lnkbtnTotComp.Text = dt.Rows[0][0].ToString();
 

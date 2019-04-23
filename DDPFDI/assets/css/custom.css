@@ -126,9 +126,8 @@ form .form-group label { font-size: 15px !important}
 .sidebar-holder .nav > li > a:focus { background:#5db9f9 !important;}
 .sidebar-holder .nav .parent-nav > a { text-transform: uppercase; position: relative;}
 .parent-nav-child li a { padding-left: 30px !important; background: #494ca2 !important}
-.parent-nav-child .parent-nav li a { padding-left: 75px !important;}
 .sidebar-holder .nav > li > a:hover, .sidebar-holder .nav > li > a:focus { background: #5db9f9 !important; }
-.parent-nav-child .parent-nav li a { padding-left: 75px !important; background: #5a5ee2 !important;}
+.parent-nav-child .parent-nav li a { padding-left: 75px !important; background: #5a5ee2 !important; position:relative;}
 
 .admin-dashboard .white-box { float: left; width:100% }
 .admin-dashboard .white-box a { display: inline-block; font-size: 21px; margin-top: 10px;}

@@ -20,7 +20,7 @@
 
     <!-------------------------------Gridview-------------------------------------->
 
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <%--<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>--%>
     <script type="text/javascript">
         $(".toggle-table.fa-plus").on("click", function () {
             $(this).closest("tr").after("<tr><td></td><td colspan = '999'>" + $(this).next().html() + "</td></tr>")
@@ -45,8 +45,7 @@
                 <div class="sideBg">
                     <div class="col-mod-12">
                         <ul class="breadcrumb">
-                            <li><a href='<%=ResolveUrl("~/Detail-Company") %>'>Dashboard</a></li>
-                            <li class="active">Companies Detail</li>
+                            <asp:Label ID="lblPageName" runat="server" Text=""></asp:Label></li>
                         </ul>
                     </div>
                     <form method="post" class="addfdi">

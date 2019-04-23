@@ -14,6 +14,11 @@ public partial class Admin_DetailFDIRegistration : System.Web.UI.Page
     {
         if (!IsPostBack)
         {
+            if (Request.QueryString["id"] != null)
+            {
+                string id = Request.QueryString["id"].ToString().Replace(" ", "+");
+                lblPageName.Text = objEnc.DecryptData(id);
+            }
             BindGridView();
         }
     }

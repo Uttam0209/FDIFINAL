@@ -8,8 +8,7 @@
         <div class="sideBg">
             <div class="col-mod-12">
                 <ul class="breadcrumb">
-                    <li><a href="home">Dashboard</a></li>
-                    <li class="active">Add FDI Inflow</li>
+                    <li class="active"><asp:Label ID="lblPageName" runat="server" Text=""></asp:Label></li>
                 </ul>
             </div>
             <div class="col-sm-12">

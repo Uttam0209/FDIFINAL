@@ -20,7 +20,6 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
     private Int64 id = 0;
     private string _sysMsg = string.Empty;
     private string _msg = string.Empty;
-    private string comprefno = "";
     private string intrestedare = "";
     private string Masterallowed = "";
     private string role = "";
@@ -32,16 +31,17 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
         {
             if (Request.QueryString["mu"] != null)
             {
-                lblPageName.Text = Request.QueryString["id"].ToString();
+                string id = Request.QueryString["id"].ToString().Replace(" ","+");
+                lblPageName.Text = Enc.DecryptData(id);
                 if (Enc.DecryptData(Request.QueryString["mu"].ToString()) == "Panel1")
                 {
                     mastercompany.Visible = true;
                     masterfacotry.Visible = false;
+                    lblName.Text = "Company Name";
+                    btnsubmit.Text = "Save Company";
                     BindMasterCompany();
                     BindMasterData();
                     Intrested.Visible = true;
-                    lblName.Text = "Company Name";
-                    btnsubmit.Text = "Save Company";
                     MenuAlot.Visible = true;
                     Role.Visible = true;
                 }
@@ -73,14 +73,15 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
                 {
                     mastercompany.Visible = false;
                     masterfacotry.Visible = false;
+                    lblName.Text = "Company/Organization Name";
                     BindMasterData();
                     BindMasterCompany();
                     Intrested.Visible = true;
                     MenuAlot.Visible = true;
                     Role.Visible = true;
                 }
-                lblMastcompany.Text = "Company Name";
-                lblfactoryName.Text = "Divison/Plant Name";
+                lblMastcompany.Text = "Select Company ";
+                lblfactoryName.Text = "Select Divison/Plant ";
             }
         }
     }
@@ -150,7 +151,6 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
     {
         txtemail.Text = "";
         txtcomp.Text = "";
-        comprefno = "";
         Masterallowed = "";
         role = "";
     }
@@ -267,11 +267,11 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
         if (DtBindSubFactory.Rows.Count > 0)
         {
             Co.FillDropdownlist(ddlfacotry, DtBindSubFactory, "FactoryName", "FactoryRefNo");
-            ddlfacotry.Items.Insert(0, "Select Factory");
+            
         }
         else
         {
-            ddlfacotry.Items.Insert(0, "Select Factory");
+            //ddlfacotry.Items.Insert(0, "Select Factory");
         }
 
     }
