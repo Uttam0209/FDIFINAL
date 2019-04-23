@@ -8,14 +8,11 @@
         <div class="sideBg">
             <div class="col-mod-12">
                 <ul class="breadcrumb">
-                    <li><a href="home">Dashboard</a></li>
-                    <li class="active">Add Master Company</li>
+                    <li class="active">
+                        <asp:Label ID="lblPageName" runat="server" Text=""></asp:Label></li>
                 </ul>
             </div>
             <div class="col-sm-12">
-                <asp:HiddenField ID="hfid" runat="server" />
-                <asp:HiddenField ID="hfrole" runat="server" />
-
                 <div class="addfdi">
                     <div class="col-md-12 col-mod-12">
                         <div class="row">
@@ -67,7 +64,7 @@
                                             <div class="fdi-add-content">
 
                                                 <div class="form-group">
-                                                    <h3 for="fdiinflow" class="secondary-heading">Intrested Area</h3>
+                                                    <h3 for="fdiinflow" class="secondary-heading">Intrested In</h3>
                                                     <asp:CheckBoxList ID="chkintrestedarea" runat="server" RepeatColumns="4" RepeatDirection="Horizontal" RepeatLayout="Flow">
                                                     </asp:CheckBoxList>
                                                 </div>
@@ -78,7 +75,7 @@
                                         <div class="col-md-12" id="MenuAlot" visible="False" runat="server">
                                             <div class="fdi-add-content">
                                                 <div class="form-group">
-                                                    <h3 for="fdiinflow" class="secondary-heading">Master Menu Alot</h3>
+                                                    <h3 for="fdiinflow" class="secondary-heading">Menu Alotted</h3>
                                                     <asp:CheckBoxList ID="chkmastermenuallot" runat="server" RepeatColumns="4" RepeatDirection="Horizontal" RepeatLayout="Flow">
                                                     </asp:CheckBoxList>
                                                 </div>
@@ -92,11 +89,8 @@
                                                 <div class="form-group">
                                                     <h3 for="fdiinflow" class="secondary-heading">Role</h3>
                                                     <asp:CheckBoxList ID="chkrole" runat="server" RepeatColumns="5" RepeatDirection="Horizontal" RepeatLayout="Flow">
-                                                        <asp:ListItem Value="SuperAdmin">SuperAdmin</asp:ListItem>
                                                         <asp:ListItem Value="Admin">Admin</asp:ListItem>
                                                         <asp:ListItem Value="Company">Company</asp:ListItem>
-                                                        <%-- <asp:ListItem Value="Factory">Factory</asp:ListItem>
-                                                    <asp:ListItem Value="Unit">Unit</asp:ListItem>--%>
                                                     </asp:CheckBoxList>
                                                 </div>
                                             </div>
