@@ -30,7 +30,7 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
                 lblPageName.Text = objCrypto.DecryptData(id);
             }
             currentPage = System.IO.Path.GetFileName(Request.Url.AbsolutePath);
-            PanelHideShow();
+            
             BindState();
             EditCOde();
         }
@@ -39,7 +39,7 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
     {
         if (Session["CompanyRefNo"]!= null)
         {
-            DtView = Lo.RetriveGridViewCompany(Session["CompanyRefNo"].ToString(), "CompanyMainGridView");
+            DtView = Lo.RetriveGridViewCompany(Session["CompanyRefNo"].ToString(), "CompanyMainGridView","","");
             if (DtView.Rows.Count > 0)
             {
                 hfid.Value = DtView.Rows[0]["CompanyID"].ToString();
@@ -57,9 +57,20 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
                 tgstno.Text = DtView.Rows[0]["GSTNo"].ToString();
                 tcinno.Text = DtView.Rows[0]["CINNo"].ToString();
                 tpanno.Text = DtView.Rows[0]["PANNo"].ToString();
+                thssnono.Text = DtView.Rows[0]["HSNO"].ToString();
                 txtCEOEmailId.Text = DtView.Rows[0]["CEOEmail"].ToString();
                 companyengaged.Text = DtView.Rows[0]["IsDefenceActivity"].ToString();
                 lbltypelogin = DtView.Rows[0]["Role"].ToString();
+                if(lbltypelogin=="SuperAdmin" || lbltypelogin=="Admin")
+                {
+                    DivJointVenture.Visible = false;
+                    DivGST.Visible = false;
+                    DivHSNO.Visible = false;
+                    DivPAN.Visible = false;
+                    DivCIN.Visible = false;
+                    DivActivities.Visible = false;
+
+                }
                 DataTable dtCompany = Lo.RetriveMasterData(0, "", "", 0, currentPage, "", "btn");
                 if (dtCompany.Rows.Count > 0)
                 {
@@ -287,22 +298,5 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
         txtCEOEmailId.Text = "";
         txtceoname.Text = "";
     }
-    protected void PanelHideShow()
-    {
-        try
-        {
-            if (objCrypto.DecryptData(Request.QueryString["mu"].ToString()) == "Panel1")
-            {
-                fdistep1.Visible = true;
-            }
-            else if (objCrypto.DecryptData(Request.QueryString["mu"].ToString()) == "Panel2")
-            {
-                fdistep2.Visible = true;
-            }
-            
-        }
-        catch (Exception ex)
-        {
-        }
-    }
+    
 }

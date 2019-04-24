@@ -33,7 +33,7 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
         try
         {
 
-            DataTable DtGrid = Lo.RetriveGridViewCompany("0", "CompanyMainGridView");
+            DataTable DtGrid = Lo.RetriveGridViewCompany("0", "CompanyMainGridView","","");
             if (DtGrid.Rows.Count > 0)
             {
                 if (sortExpression != null)
@@ -79,7 +79,7 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
         else if (e.CommandName == "ViewComp")
         {
 
-            DataTable DtView = Lo.RetriveGridViewCompany(e.CommandArgument.ToString(), "CompanyMainGridView");
+            DataTable DtView = Lo.RetriveGridViewCompany(e.CommandArgument.ToString(), "CompanyMainGridView","","");
             if (DtView.Rows.Count > 0)
             {
                 lblrefno.Text = DtView.Rows[0]["CompanyRefNo"].ToString();
@@ -161,7 +161,7 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
         {
             Label lblrefno = e.Row.FindControl("lblrefno") as Label;
             GridView gvfactory = e.Row.FindControl("gvfactory") as GridView;
-            DataTable DtGrid = Lo.RetriveGridViewCompany(lblrefno.Text, "InnerGridViewFactory");
+            DataTable DtGrid = Lo.RetriveGridViewCompany(lblrefno.Text, "InnerGridViewFactory","","");
             if (DtGrid.Rows.Count > 0)
             {
                 gvfactory.DataSource = DtGrid;
