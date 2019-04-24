@@ -30,6 +30,7 @@ $(window).on('load', function(){
     var $Sidebar = $(".left-sidebar");
     $Sidebar.find('a[href="'+CURRENT_URL+'"]').parents(".parent-nav-child").slideDown();
     $Sidebar.find('a[href="'+CURRENT_URL+'"]').parents(".parent-nav-child").addClass('active').siblings(".parent-nav-child").removeClass("active");
+    $Sidebar.find('a[href="'+CURRENT_URL+'"]').addClass('active');
     console.log(CURRENT_URL);
     
 });

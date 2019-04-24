@@ -45,7 +45,7 @@
                
                 <p>We encountered an error when rendering this page.</p>
                <p> This is a generic and non-specific error message. Sorry we do not have more information.</p>
-                <p>You may wish to: Check the error logs or  <a href="https://rgera@gov.in" rel="nofollow">Contact Support</a></p>
+                <p>You may wish to Check the error logs or  <a href="https://rgera@gov.in" rel="nofollow">Contact Support</a></p>
 
             </div>
         </div>
