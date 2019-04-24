@@ -232,9 +232,9 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
             {
                 if (dtCompany.Rows[0]["Company"].ToString() == "1")
                 {
-                    LinkButton lbledit = (LinkButton)e.Row.FindControl("lbledit");
-                    LinkButton lblview = (LinkButton)e.Row.FindControl("lblview");
-                    LinkButton lbldel = (LinkButton)e.Row.FindControl("lbldel");
+                    LinkButton lbledit = e.Row.FindControl("lbledit") as LinkButton;
+                    LinkButton lblview = (LinkButton)e.Row.FindControl("lblview") as LinkButton;
+                    LinkButton lbldel = (LinkButton)e.Row.FindControl("lbldel") as LinkButton;
                     lbledit.Visible = false;
                     lblview.Visible = true;
                     lbldel.Visible = false;
@@ -254,15 +254,15 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
                 }
                 else if (dtCompany.Rows[0]["Company"].ToString() == "2")
                 {
-                    LinkButton lbledit = (LinkButton)e.Row.FindControl("lbledit");
-                    LinkButton lblview = (LinkButton)e.Row.FindControl("lblview");
-                    LinkButton lbldel = (LinkButton)e.Row.FindControl("lbldel");
+                    LinkButton lbledit = (LinkButton)e.Row.FindControl("lbledit") as LinkButton;
+                    LinkButton lblview = (LinkButton)e.Row.FindControl("lblview") as LinkButton;
+                    LinkButton lbldel = (LinkButton)e.Row.FindControl("lbldel") as LinkButton;
                     lbledit.Visible = true;
                     lblview.Visible = true;
                     lbldel.Visible = false;
-                    LinkButton lbleditfactory = (LinkButton)e.Row.FindControl("lbleditfactory");
-                    LinkButton lblviewfactory = (LinkButton)e.Row.FindControl("lblviewfactory");
-                    LinkButton lbldelfactory = (LinkButton)e.Row.FindControl("lbldelfactory");
+                    LinkButton lbleditfactory = (LinkButton)e.Row.FindControl("lbleditfactory") as LinkButton;
+                    LinkButton lblviewfactory = (LinkButton)e.Row.FindControl("lblviewfactory") as LinkButton;
+                    LinkButton lbldelfactory = (LinkButton)e.Row.FindControl("lbldelfactory") as LinkButton;
                     // if (lbleditfactory != null)
                     // {
                     //lbleditfactory.Visible = true;
@@ -272,9 +272,9 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
                 }
                 else if (dtCompany.Rows[0]["Company"].ToString() == "3")
                 {
-                    LinkButton lbledit = (LinkButton)e.Row.FindControl("lbledit");
-                    LinkButton lblview = (LinkButton)e.Row.FindControl("lblview");
-                    LinkButton lbldel = (LinkButton)e.Row.FindControl("lbldel");
+                    LinkButton lbledit = (LinkButton)e.Row.FindControl("lbledit") as LinkButton;
+                    LinkButton lblview = (LinkButton)e.Row.FindControl("lblview") as LinkButton;
+                    LinkButton lbldel = (LinkButton)e.Row.FindControl("lbldel") as LinkButton;
                     lbledit.Visible = true;
                     lblview.Visible = true;
                     lbldel.Visible = true;
@@ -311,9 +311,9 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
                 }
                 else if (dtCompany.Rows[0]["SuperAdmin"].ToString() == "1")
                 {
-                    LinkButton lbledit = (LinkButton)e.Row.FindControl("lbledit");
-                    LinkButton lblview = (LinkButton)e.Row.FindControl("lblview");
-                    LinkButton lbldel = (LinkButton)e.Row.FindControl("lbldel");
+                    LinkButton lbledit = (LinkButton)e.Row.FindControl("lbledit") as LinkButton;
+                    LinkButton lblview = (LinkButton)e.Row.FindControl("lblview") as LinkButton;
+                    LinkButton lbldel = (LinkButton)e.Row.FindControl("lbldel") as LinkButton;
                     lbledit.Visible = true;
                     lblview.Visible = true;
                     lbldel.Visible = true;
@@ -502,7 +502,7 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
             }
             else
             {
-                ddlunit.Enabled = false;
+                ddlunit.Visible = false;
             }
         }
         else if (mType == "Unit")

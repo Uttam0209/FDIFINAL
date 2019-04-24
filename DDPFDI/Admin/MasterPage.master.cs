@@ -113,11 +113,12 @@ public partial class Admin_MasterPage : System.Web.UI.MasterPage
                     foreach (DataRow row2 in dtMMenu.Rows)
                     {
                         strMasterMenu.Append("<li class='parent-nav'><a href='" + row2["MenuUrl"].ToString() + "?mu=" + ObjEnc.EncryptData(row2["Spanclass"].ToString()) + "&id=" + ObjEnc.EncryptData(row2["MenuName"].ToString()) + "' ><i class='fas fa-tachometer-alt'></i><span class='hidden-minibar'>" + row2["MenuName"].ToString() + "</span><span style='position:absolute; right:40px;top:10px;'>C" + row2["MenuId"].ToString() + "</span>");
-                        strMasterMenu.Append("<i class='fas fa-angle-down'></i></a>");
+                        strMasterMenu.Append("</a>");
                         DataTable SubMmenu = Lo.RetriveMasterData(0, "", lbltypelogin.Text, Convert.ToInt16(row2["MenuID"].ToString()), "", "", "SubMenu");
-                        strMasterMenu.Append("<i class='fas fa-angle-down'></i></a>");
+                        //strMasterMenu.Append("</a>");
                         if (SubMmenu.Rows.Count > 0)
                         {
+                            strMasterMenu.Append("<i class='fas fa-angle-down'></i>");
                             strMasterMenu.Append("<ul class='parent-nav-child'>");
                             foreach (DataRow row1 in SubMmenu.Rows)
                             {
@@ -130,6 +131,7 @@ public partial class Admin_MasterPage : System.Web.UI.MasterPage
                     }
                 }
                 strMasterMenu.Append("</ul>");
+                
             }
             MasterMenu.InnerHtml = strMasterMenu.ToString();
             strMasterMenu.Append("</ul");
@@ -159,7 +161,7 @@ public partial class Admin_MasterPage : System.Web.UI.MasterPage
                 if (dtUnit.Rows.Count > 0)
                 {
                     lblfactory.Text = "Division/Plant - " + dtUnit.Rows[0]["FactoryName"].ToString();
-                    lblunit.Text = "UnitName - " + dtUnit.Rows[0]["UnitName"].ToString();
+                    lblunit.Text = "Unit - " + dtUnit.Rows[0]["UnitName"].ToString();
                     sType = dtUnit.Rows[0]["CompanyRefNo"].ToString();
                 }
             }

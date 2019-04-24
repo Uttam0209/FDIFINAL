@@ -34,10 +34,11 @@
                     </ul>
                     <ul class="nav navbar-nav user-menu navbar-right ">
                         <li><a href="javascript:void(0)" class="user dropdown-toggle" data-toggle="dropdown">
-
-                            <asp:Label ID="lblmastercompany" runat="server"></asp:Label>
-                            <asp:Label ID="lblfactory" runat="server"></asp:Label>
+                            <span style='display:inline-block; margin-right: 20px;'>
+                            <asp:Label ID="lblmastercompany" runat="server"></asp:Label>, 
+                            <asp:Label ID="lblfactory" runat="server"></asp:Label>,
                             <asp:Label ID="lblunit" runat="server"></asp:Label>
+                            </span>
                             <asp:Label ID="lblusername" runat="server"></asp:Label>
 
                             

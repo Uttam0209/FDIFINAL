@@ -90,11 +90,13 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
     {
         string sType = "", sName = "", sID = "", mSID = "";
         Int16 id = 0;
+        string sRole = "";
         if (Enc.DecryptData(Session["Type"].ToString()) == "SuperAdmin")
         {
             sType = "Select";
             mSID = "";
             id = 0;
+            sRole = "SuperAdmin";
 
         }
         else if (Enc.DecryptData(Session["Type"].ToString()) == "Company")
@@ -103,6 +105,7 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
             sType = "CompanyName";
             mSID = Session["CompanyRefNo"].ToString();
             id = 2;
+            sRole = "Company";
         }
         else if (Enc.DecryptData(Session["Type"].ToString()) == "Factory")
         {
@@ -110,6 +113,7 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
             sType = "CompanyName";
             mSID = Session["CompanyRefNo"].ToString();
             id = 3;
+            sRole = "Factory";
         }
         else if (Enc.DecryptData(Session["Type"].ToString()) == "Unit")
         {
@@ -117,6 +121,7 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
             sType = "CompanyName";
             mSID = Session["CompanyRefNo"].ToString();
             id = 4;
+            sRole = "Unit";
         }
         else
         {
@@ -126,7 +131,7 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
         sName = "CompanyName";
         sID = "CompanyRefNo";
         mddlControl = ddlmaster;
-        DataTable Dtchkintrestedarea = Lo.RetriveMasterData(id, mSID, "", 0, "", "", sType);
+        DataTable Dtchkintrestedarea = Lo.RetriveMasterData(id, mSID, sRole, 0, "", "", sType);
         if (Dtchkintrestedarea.Rows.Count > 0 && Dtchkintrestedarea != null)
         {
             Co.FillDropdownlist(mddlControl, Dtchkintrestedarea, sName, sID);
@@ -263,7 +268,7 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
     #endregion
     protected void ddlmaster_SelectedIndexChanged(object sender, EventArgs e)
     {
-        DataTable DtBindSubFactory = Lo.RetriveMasterData(0, ddlmaster.SelectedItem.Value, "", 0, "", "M", "FactoryName");
+        DataTable DtBindSubFactory = Lo.RetriveMasterData(0, ddlmaster.SelectedItem.Value, "", 0, "", "M", "FactoryJoin1");
         if (DtBindSubFactory.Rows.Count > 0)
         {
             Co.FillDropdownlist(ddlfacotry, DtBindSubFactory, "FactoryName", "FactoryRefNo");
