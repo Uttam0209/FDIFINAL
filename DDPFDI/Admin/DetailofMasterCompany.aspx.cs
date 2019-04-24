@@ -39,7 +39,11 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
         {
             if (mType == "SuperAdmin")
             {
+<<<<<<< HEAD
                 DataTable DtGrid = Lo.RetriveGridViewCompany("0","","" ,"CompanyMainGridView");
+=======
+                DataTable DtGrid = Lo.RetriveGridViewCompany("0","","", "CompanyMainGridView");
+>>>>>>> 1b1eb733c3ffa3edbee0a4bca6007d7e648b9616
                 if (DtGrid.Rows.Count > 0)
                 {
                     if (sortExpression != null)
@@ -60,7 +64,11 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
             }
             else if (mType == "Company" && mRefNo != "")
             {
+<<<<<<< HEAD
                 DataTable DtGrid = Lo.RetriveGridViewCompany(mRefNo, "","","CompanyMainGridView");
+=======
+                DataTable DtGrid = Lo.RetriveGridViewCompany(mRefNo,"","", "CompanyMainGridView");
+>>>>>>> 1b1eb733c3ffa3edbee0a4bca6007d7e648b9616
                 if (DtGrid.Rows.Count > 0)
                 {
                     gvcompanydetail.DataSource = DtGrid;
@@ -532,6 +540,22 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
                 }
             }
         }
+        else if (ddlcompany.SelectedItem.Value == "All")
+        {
+            DataTable DtGrid = Lo.RetriveGridViewCompany("0","","", "CompanyMainGridView");
+            if (DtGrid.Rows.Count > 0)
+            {
+                gvcompanydetail.DataSource = DtGrid;
+                gvcompanydetail.DataBind();
+                ddldivision.Visible = false;
+                ddlunit.Visible = false;
+            }
+            else
+            {
+                ddldivision.Visible = false;
+                ddlunit.Visible = false;
+            }
+        }
         else
         {
             ddldivision.Visible = false;
@@ -541,16 +565,26 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
     GridView gvinnerfactory;
     protected void ddldivision_OnSelectedIndexChanged(object sender, EventArgs e)
     {
-      
+
         if (ddlcompany.SelectedItem.Text != "All")
         {
+            DataTable DtGrid = Lo.RetriveGridViewCompany(ddlcompany.SelectedItem.Value, ddldivision.SelectedItem.Value, "", "InnerGVFactoryID");
+            if (DtGrid.Rows.Count > 0)
+            {
+                foreach (GridViewRow row in gvcompanydetail.Rows)
+                {
+                    gvinnerfactory = ((GridView)row.FindControl("gvfactory"));
+                }
+                gvinnerfactory.DataSource = DtGrid;
+                gvinnerfactory.DataBind();
+            }
             DtCompanyDDL = Lo.RetriveMasterData(0, ddldivision.SelectedItem.Value, "", 0, "", "", "UnitSelectID");
             if (DtCompanyDDL.Rows.Count > 0)
             {
                 Co.FillDropdownlist(ddlunit, DtCompanyDDL, "UnitName", "UnitRefNo");
                 ddlunit.Items.Insert(0, "All");
-                ddlunit.Enabled = true;
                 ddlunit.Visible = true;
+<<<<<<< HEAD
                 DataTable DtGrid = Lo.RetriveGridViewCompany(ddlcompany.SelectedItem.Value,"","", "InnerGridViewFactory");
                 if (DtGrid.Rows.Count > 0)
                 {
@@ -561,26 +595,27 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
                     gvinnerfactory.DataSource = DtGrid;
                     gvinnerfactory.DataBind();
                 }
+=======
+>>>>>>> 1b1eb733c3ffa3edbee0a4bca6007d7e648b9616
             }
             else
             {
                 ddlunit.Visible = false;
-                ddlunit.Enabled = false;
             }
         }
-        else
-        {
-            ddldivision.Visible = false;
-            ddlunit.Visible = false;
-        }
+
     }
     GridView gvinunit;
     protected void ddlunit_OnSelectedIndexChanged(object sender, EventArgs e)
     {
-       
+
         if (ddlunit.SelectedItem.Text != "All")
         {
+<<<<<<< HEAD
             DataTable DtGrid = Lo.RetriveGridViewCompany(ddlunit.SelectedItem.Value,"","", "InnerGridViewUnit");
+=======
+            DataTable DtGrid = Lo.RetriveGridViewCompany(ddlunit.SelectedItem.Value, "", "", "InnerGVUnitID");
+>>>>>>> 1b1eb733c3ffa3edbee0a4bca6007d7e648b9616
             if (DtGrid.Rows.Count > 0)
             {
                 foreach (GridViewRow row in gvcompanydetail.Rows)
