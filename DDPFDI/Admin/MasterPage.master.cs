@@ -69,7 +69,7 @@ public partial class Admin_MasterPage : System.Web.UI.MasterPage
                             strMenu.Append("<ul class='parent-nav-child'>");
                             foreach (DataRow row1 in Submenu.Rows)
                             {
-                                strMenu.Append("<li><a href='" + row1["MenuUrl"].ToString() + "?mu=" + ObjEnc.EncryptData(row1["Spanclass"].ToString()) + "&id=" + ObjEnc.EncryptData(row1["MenuName"].ToString()) + "'><i class='far fa-building'></i>" + row1["MenuName"].ToString() + "<span style='position:absolute; right:20px;top:10px;'>SC" + row1["MenuId"].ToString() + "</span></a></li> ");
+                                strMenu.Append("<li><a href='" + row1["MenuUrl"].ToString() + "?mu=" + ObjEnc.EncryptData(row1["Spanclass"].ToString()) + "&id=" + ObjEnc.EncryptData(row1["MenuName"].ToString()) + "'><i class='far fa-building'></i>" + row1["MenuName"].ToString() + "<span style='position:absolute; right:20px;top:10px;'>L" + row1["MenuId"].ToString() + "</span></a></li> ");
                             }
                             strMenu.Append("</ul>");
                            
@@ -121,7 +121,7 @@ public partial class Admin_MasterPage : System.Web.UI.MasterPage
                             strMasterMenu.Append("<ul class='parent-nav-child'>");
                             foreach (DataRow row1 in SubMmenu.Rows)
                             {
-                                strMasterMenu.Append("<li><a href='" + row1["MenuUrl"].ToString() + "?mu=" + ObjEnc.EncryptData(row1["Spanclass"].ToString()) + "&id=" + ObjEnc.EncryptData(row1["MenuName"].ToString()) + "'><i class='far fa-building'></i>" + row1["MenuName"].ToString() + "</span><span style='position:absolute; right:20px;top:10px;'>SC" + row1["MenuId"].ToString() + "</span></a></li>");
+                                strMasterMenu.Append("<li><a href='" + row1["MenuUrl"].ToString() + "?mu=" + ObjEnc.EncryptData(row1["Spanclass"].ToString()) + "&id=" + ObjEnc.EncryptData(row1["MenuName"].ToString()) + "'><i class='far fa-building'></i>" + row1["MenuName"].ToString() + "</span><span style='position:absolute; right:20px;top:10px;'>L" + row1["MenuId"].ToString() + "</span></a></li>");
                             }
                             strMasterMenu.Append("</ul>");
                             strMasterMenu.Append("</li>");

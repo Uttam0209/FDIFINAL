@@ -19,7 +19,6 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
     string RefNo;
     string UserEmail;
     string currentPage = "";
-    string lbltypelogin = "";
     private string mType = "";
     private string mRefNo = "";
     protected void Page_Load(object sender, EventArgs e)
@@ -37,6 +36,7 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
     {
         try
         {
+
             if (mType == "SuperAdmin")
             {
                 DataTable DtGrid = Lo.RetriveGridViewCompany("0", "", "", "CompanyMainGridView");
@@ -220,6 +220,7 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
             Label lblrefno = e.Row.FindControl("lblrefno") as Label;
             GridView gvfactory = e.Row.FindControl("gvfactory") as GridView;
             DataTable DtGrid = Lo.RetriveGridViewCompany(lblrefno.Text, "", "", "InnerGridViewFactory");
+
             if (DtGrid.Rows.Count > 0)
             {
                 gvfactory.DataSource = DtGrid;
@@ -335,6 +336,7 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
         {
             Label lblfactroyrefno = e.Row.FindControl("lblfactoryrefno") as Label;
             GridView gvunit = e.Row.FindControl("gvunit") as GridView;
+
             DataTable DtGrid = Lo.RetriveGridViewCompany("", lblfactroyrefno.Text, "", "InnerGridViewUnit");
             if (DtGrid.Rows.Count > 0)
             {
