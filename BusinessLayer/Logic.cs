@@ -68,16 +68,13 @@ namespace BusinessLayer
         public DataTable RetriveGridViewCompany(string ID,string FactoryRefNo,string UnitRefNo,string Purpose)
         {
             return SqlHelper.Instance.RetriveGridViewCompany(ID, FactoryRefNo, UnitRefNo,Purpose);
-
-
         }
-        public DataTable RetriveMasterData(Int64 Companyid, string strRefNo, string strRole, int MenuId, string strMenuUrl, string strInterestedAreaFlag, string strCriteria)
+
+        public DataTable RetriveMasterData(Int64 Companyid, string strRefNo, string strRole, int MenuId,string strMenuUrl, string strInterestedAreaFlag, string strCriteria)
         {
-            return SqlHelper.Instance.RetriveMasterData(Companyid, strRefNo, strRole, MenuId, strMenuUrl, strInterestedAreaFlag, strCriteria);
+            return SqlHelper.Instance.RetriveMasterData(Companyid, strRefNo, strRole, MenuId, strMenuUrl,strInterestedAreaFlag, strCriteria);
         }
-        
-        
-        
+
         #endregion
         #region DeleteCode
         public string DeleteRecord(Int64 ID)

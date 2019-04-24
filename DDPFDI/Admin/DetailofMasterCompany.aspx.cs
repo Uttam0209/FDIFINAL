@@ -137,7 +137,6 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
         }
         else if (e.CommandName == "ViewComp")
         {
-
             DataTable DtView = Lo.RetriveGridViewCompany(e.CommandArgument.ToString(), "", "", "CompanyMainGridView");
             if (DtView.Rows.Count > 0)
             {
@@ -337,7 +336,8 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
         {
             Label lblfactroyrefno = e.Row.FindControl("lblfactoryrefno") as Label;
             GridView gvunit = e.Row.FindControl("gvunit") as GridView;
-            DataTable DtGrid = Lo.RetriveGridViewCompany(lblfactroyrefno.Text, "", "", "InnerGridViewUnit");
+
+            DataTable DtGrid = Lo.RetriveGridViewCompany("", lblfactroyrefno.Text, "", "InnerGridViewUnit");
             if (DtGrid.Rows.Count > 0)
             {
                 gvunit.DataSource = DtGrid;
@@ -524,13 +524,13 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
                 {
                     Co.FillDropdownlist(ddldivision, DtCompanyDDL, "FactoryName", "FactoryRefNo");
                     ddldivision.Items.Insert(0, "All");
-                    ddldivision.Enabled = true;
+                    lblselectdivison.Visible = true;
                     ddldivision.Visible = true;
                 }
                 else
                 {
-                    ddldivision.Visible = false;
-                    ddldivision.Enabled = false;
+                    ddldivision.Visible = false; 
+                    lblselectdivison.Visible = false;
                 }
             }
         }
@@ -543,15 +543,20 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
                 gvcompanydetail.DataBind();
                 ddldivision.Visible = false;
                 ddlunit.Visible = false;
+                lblselectunit.Visible = false;
+                lblselectdivison.Visible = false;
             }
             else
             {
+                lblselectunit.Visible = false;
+                lblselectdivison.Visible = false;
                 ddldivision.Visible = false;
                 ddlunit.Visible = false;
             }
         }
         else
         {
+            lblselectunit.Visible = false;
             ddldivision.Visible = false;
             ddlunit.Visible = false;
         }
@@ -559,8 +564,7 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
     GridView gvinnerfactory;
     protected void ddldivision_OnSelectedIndexChanged(object sender, EventArgs e)
     {
-
-        if (ddlcompany.SelectedItem.Text != "All")
+        if (ddldivision.SelectedItem.Text != "All")
         {
             DataTable DtGrid = Lo.RetriveGridViewCompany(ddlcompany.SelectedItem.Value, ddldivision.SelectedItem.Value, "", "InnerGVFactoryID");
             if (DtGrid.Rows.Count > 0)
@@ -578,24 +582,61 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
                 Co.FillDropdownlist(ddlunit, DtCompanyDDL, "UnitName", "UnitRefNo");
                 ddlunit.Items.Insert(0, "All");
                 ddlunit.Visible = true;
+                lblselectunit.Visible = true;
             }
             else
             {
+                lblselectunit.Visible = false;
                 ddlunit.Visible = false;
             }
         }
-
-    }
-    GridView gvinunit;
-    protected void ddlunit_OnSelectedIndexChanged(object sender, EventArgs e)
-    {
-
-        if (ddlunit.SelectedItem.Text != "All")
+        else if (ddldivision.SelectedItem.Text == "All")
         {
-            DataTable DtGrid = Lo.RetriveGridViewCompany(ddlunit.SelectedItem.Value, "", "", "InnerGVUnitID");
+            DataTable DtGrid = Lo.RetriveGridViewCompany(ddlcompany.SelectedItem.Value, "", "", "InnerGridViewFactory");
             if (DtGrid.Rows.Count > 0)
             {
                 foreach (GridViewRow row in gvcompanydetail.Rows)
+                {
+                    gvinnerfactory = ((GridView)row.FindControl("gvfactory"));
+                }
+                gvinnerfactory.DataSource = DtGrid;
+                gvinnerfactory.DataBind();
+                ddlunit.Visible = false;
+                lblselectunit.Visible = false;
+            }
+        }
+    }
+    GridView gvinunit;
+    private GridView gvinnerfactroyforunit;
+    protected void ddlunit_OnSelectedIndexChanged(object sender, EventArgs e)
+    {
+        if (ddlunit.SelectedItem.Text != "All")
+        {
+            DataTable DtGrid = Lo.RetriveGridViewCompany("", ddldivision.SelectedItem.Value, ddlunit.SelectedItem.Value, "InnerGVUnitID");
+            if (DtGrid.Rows.Count > 0)
+            {
+                foreach (GridViewRow row in gvcompanydetail.Rows)
+                {
+                    gvinnerfactroyforunit = ((GridView)row.FindControl("gvfactory"));
+                }
+                foreach (GridViewRow row in gvinnerfactroyforunit.Rows)
+                {
+                    gvinunit = ((GridView)row.FindControl("gvunit"));
+                }
+                gvinunit.DataSource = DtGrid;
+                gvinunit.DataBind();
+            }
+        }
+        else if (ddlunit.SelectedItem.Text == "All")
+        {
+            DataTable DtGrid = Lo.RetriveGridViewCompany("", ddldivision.SelectedItem.Value, "", "InnerGridViewUnit");
+            if (DtGrid.Rows.Count > 0)
+            {
+                foreach (GridViewRow row in gvcompanydetail.Rows)
+                {
+                    gvinnerfactroyforunit = ((GridView)row.FindControl("gvfactory"));
+                }
+                foreach (GridViewRow row in gvinnerfactroyforunit.Rows)
                 {
                     gvinunit = ((GridView)row.FindControl("gvunit"));
                 }
@@ -605,6 +646,7 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
         }
         else
         {
+            lblselectunit.Visible = false;
             ddlunit.Visible = false;
         }
     }

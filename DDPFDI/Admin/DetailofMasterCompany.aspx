@@ -45,12 +45,15 @@
                             </div>
                             <div class="row">
                                 <div class="col-sm-4">
+                                    <label>Select Company</label>
                                     <asp:DropDownList runat="server" ID="ddlcompany" CssClass="form-control" AutoPostBack="True" OnSelectedIndexChanged="ddlcompany_OnSelectedIndexChanged"></asp:DropDownList>
                                 </div>
                                 <div class="col-sm-4">
+                                    <label runat="server" id="lblselectdivison" Visible="False">Select Division/Plant</label>
                                     <asp:DropDownList runat="server" ID="ddldivision" CssClass="form-control" AutoPostBack="True" OnSelectedIndexChanged="ddldivision_OnSelectedIndexChanged"></asp:DropDownList>
                                 </div>
                                 <div class="col-sm-4">
+                                    <label runat="server" id="lblselectunit" Visible="False">Select Unit</label>
                                     <asp:DropDownList runat="server" ID="ddlunit" CssClass="form-control" AutoPostBack="True" OnSelectedIndexChanged="ddlunit_OnSelectedIndexChanged"></asp:DropDownList>
                                 </div>
                             </div>
@@ -74,7 +77,7 @@
                                                 <asp:Panel ID="pnlOrders" runat="server" Style="display: none">
                                                     <asp:GridView ID="gvfactory" runat="server" AutoGenerateColumns="false" Class="table table-hover ChildGrid" OnRowDataBound="gvfactory_OnRowDataBound">
                                                         <Columns>
-                                                           <asp:TemplateField>
+                                                            <asp:TemplateField>
                                                                 <ItemTemplate>
                                                                     <div class="acordian-table">
                                                                         <i class="toggle-table-minus fa fa-minus" aria-hidden="true" style="display: none"></i>
@@ -88,8 +91,9 @@
                                                                                             <%#Container.DataItemIndex+1 %>
                                                                                         </ItemTemplate>
                                                                                     </asp:TemplateField>
+                                                                                    <asp:BoundField ItemStyle-Width="150px" DataField="UnitRefNo" HeaderText="UnitRefNo" />
                                                                                     <asp:BoundField ItemStyle-Width="150px" DataField="UnitName" HeaderText="UnitName" />
-                                                                                    <asp:BoundField ItemStyle-Width="150px" DataField="FactoryRefNo" HeaderText="FactroyRefNo" />
+                                                                                    <asp:BoundField runat="server" DataField="Role" HeaderText="Role" />
                                                                                     <asp:TemplateField HeaderText="Nodel Person Email">
                                                                                         <ItemTemplate>
                                                                                             <asp:Label ID="lblunitnodelname" runat="server" Text='<%#Eval("UnitEmailId") %>' NullDisplayText="#" SortExpression="ContactPersonEmailID"></asp:Label>
@@ -98,8 +102,8 @@
                                                                                     </asp:TemplateField>
                                                                                     <asp:TemplateField HeaderText="Action">
                                                                                         <ItemTemplate>
-                                                                                            <asp:LinkButton ID="lbleditunit" runat="server" CssClass="fa fa-edit" CommandName="EditComp" CommandArgument='<%#Eval("UnitRefNo") %>'></asp:LinkButton>
                                                                                             <asp:LinkButton ID="lblviewunit" runat="server" CssClass="fa fa-eye" CommandName="ViewComp" CommandArgument='<%#Eval("UnitRefNo") %>'></asp:LinkButton>
+                                                                                            <asp:LinkButton ID="lbleditunit" runat="server" CssClass="fa fa-edit" CommandName="EditComp" CommandArgument='<%#Eval("UnitRefNo") %>'></asp:LinkButton>
                                                                                             <asp:LinkButton ID="lbldelunit" runat="server" CssClass="fa fa-trash" CommandName="DeleteComp" CommandArgument='<%#Eval("UnitRefNo") %>'></asp:LinkButton>
                                                                                             <asp:LinkButton ID="lbllogindetailunit" Visible="False" runat="server" CssClass=" fa fa-paper-plane" CommandName="SendLogin" CommandArgument='<%#Eval("UnitRefNo") %>'></asp:LinkButton>
                                                                                         </ItemTemplate>
@@ -115,12 +119,14 @@
                                                                     <%#Container.DataItemIndex+1 %>
                                                                 </ItemTemplate>
                                                             </asp:TemplateField>
-                                                            <asp:BoundField ItemStyle-Width="150px" DataField="FactoryName" HeaderText="FactoryName" />
+
                                                             <asp:TemplateField HeaderText="FactroyRefNo">
                                                                 <ItemTemplate>
                                                                     <asp:Label runat="server" ID="lblfactoryrefno" Text='<%#Eval("FactoryRefNo") %>'></asp:Label>
                                                                 </ItemTemplate>
                                                             </asp:TemplateField>
+                                                            <asp:BoundField ItemStyle-Width="150px" DataField="FactoryName" HeaderText="FactoryName" />
+                                                            <asp:BoundField runat="server" DataField="Role" HeaderText="Role" />
                                                             <asp:TemplateField HeaderText="Nodel Person Email">
                                                                 <ItemTemplate>
                                                                     <asp:Label ID="lblfactorynodelname" runat="server" Text='<%#Eval("FactoryEmailId") %>' NullDisplayText="#" SortExpression="ContactPersonEmailID"></asp:Label>
@@ -129,8 +135,8 @@
                                                             </asp:TemplateField>
                                                             <asp:TemplateField HeaderText="Action">
                                                                 <ItemTemplate>
-                                                                    <asp:LinkButton ID="lbleditfactory" runat="server" CssClass="fa fa-edit" CommandName="EditComp" CommandArgument='<%#Eval("FactoryRefNo") %>'></asp:LinkButton>
                                                                     <asp:LinkButton ID="lblviewfactory" runat="server" CssClass="fa fa-eye" CommandName="ViewComp" CommandArgument='<%#Eval("FactoryRefNo") %>'></asp:LinkButton>
+                                                                    <asp:LinkButton ID="lbleditfactory" runat="server" CssClass="fa fa-edit" CommandName="EditComp" CommandArgument='<%#Eval("FactoryRefNo") %>'></asp:LinkButton>
                                                                     <asp:LinkButton ID="lbldelfactory" runat="server" CssClass="fa fa-trash" CommandName="DeleteComp" CommandArgument='<%#Eval("FactoryRefNo") %>'></asp:LinkButton>
                                                                     <asp:LinkButton ID="lbllogindetailfactory" runat="server" Visible="False" CssClass=" fa fa-paper-plane" CommandName="SendLogin" CommandArgument='<%#Eval("FactoryRefNo") %>'></asp:LinkButton>
                                                                 </ItemTemplate>
@@ -153,16 +159,18 @@
                                         </ItemTemplate>
                                     </asp:TemplateField>
                                     <asp:BoundField DataField="CompanyName" HeaderText="Company" NullDisplayText="#" SortExpression="CompanyName" />
+                                    <asp:BoundField runat="server" DataField="Role" HeaderText="Role" />
                                     <asp:TemplateField HeaderText="Nodel Person Email">
                                         <ItemTemplate>
                                             <asp:Label ID="lblnodelname" runat="server" Text='<%#Eval("ContactPersonEmailID") %>' NullDisplayText="#" SortExpression="ContactPersonEmailID"></asp:Label>
                                             <asp:HiddenField runat="server" ID="hfemail" Value='<%#Eval("ContactPersonEmailID") %>' />
                                         </ItemTemplate>
                                     </asp:TemplateField>
+
                                     <asp:TemplateField HeaderText="Action">
                                         <ItemTemplate>
-                                            <asp:LinkButton ID="lbledit" runat="server" CssClass="fa fa-edit" CommandName="EditComp" CommandArgument='<%#Eval("CompanyID") %>'></asp:LinkButton>
                                             <asp:LinkButton ID="lblview" runat="server" CssClass="fa fa-eye" CommandName="ViewComp" CommandArgument='<%#Eval("CompanyID") %>'></asp:LinkButton>
+                                            <asp:LinkButton ID="lbledit" runat="server" CssClass="fa fa-edit" CommandName="EditComp" CommandArgument='<%#Eval("CompanyID") %>'></asp:LinkButton>
                                             <asp:LinkButton ID="lbldel" runat="server" CssClass="fa fa-trash" CommandName="DeleteComp" CommandArgument='<%#Eval("CompanyID") %>'></asp:LinkButton>
                                             <asp:LinkButton ID="lbllogindetail" runat="server" Visible="False" CssClass=" fa fa-paper-plane" CommandName="SendLogin" CommandArgument='<%#Eval("CompanyID") %>'></asp:LinkButton>
                                         </ItemTemplate>
@@ -174,7 +182,7 @@
                 </div>
             </form>
         </div>
-       
+
     </div>
     <div class="footer">© 2019 <a href="#">Department of Defence Production</a> </div>
 

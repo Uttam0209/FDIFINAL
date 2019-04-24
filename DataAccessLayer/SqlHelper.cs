@@ -406,10 +406,7 @@ namespace DataAccessLayer
             }
         }
 
-
         public DataTable RetriveGridViewCompany(string ID,string FactoryRefNo,string UnitRefNo,string Purpose)
-
-
         {
             using (DbConnection dbCon = db.CreateConnection())
             {

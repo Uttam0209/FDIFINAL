@@ -613,13 +613,13 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
                 {
                     Co.FillDropdownlist(ddldivision, DtCompanyDDL, "FactoryName", "FactoryRefNo");
                     ddldivision.Items.Insert(0, "All");
-                    ddldivision.Enabled = true;
+                    lblselectdivison.Visible = true;
                     ddldivision.Visible = true;
                 }
                 else
                 {
                     ddldivision.Visible = false;
-                    ddldivision.Enabled = false;
+                    lblselectdivison.Visible = false;
                 }
             }
         }
@@ -629,17 +629,23 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
             if (DtGrid.Rows.Count > 0)
             {
                 EditCOde(DtGrid);
+                ddlunit.Visible = true;
                 ddldivision.Visible = false;
                 ddlunit.Visible = false;
+                lblselectunit.Visible = false;
+                lblselectdivison.Visible = false;
             }
             else
             {
+                lblselectunit.Visible = false;
+                lblselectdivison.Visible = false;
                 ddldivision.Visible = false;
                 ddlunit.Visible = false;
             }
         }
         else
         {
+            lblselectunit.Visible = false;
             ddldivision.Visible = false;
             ddlunit.Visible = false;
         }
@@ -660,10 +666,12 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
             {
                 Co.FillDropdownlist(ddlunit, DtCompanyDDL, "UnitName", "UnitRefNo");
                 ddlunit.Items.Insert(0, "All");
+                lblselectunit.Visible = true;
                 ddlunit.Visible = true;
             }
             else
             {
+                lblselectunit.Visible = false;
                 ddlunit.Visible = false;
             }
         }

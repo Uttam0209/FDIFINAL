@@ -177,3 +177,4 @@ form .form-group label { font-size: 15px !important}
 form .form-group input[type="submit"] { margin-right: 10px;}
 .fa-minus:before {content: "\f068" !important;}
 .toggle-table-plus,.toggle-table-minus { cursor: pointer}
+.sidebar-holder .nav .parent-nav-child .parent-nav a + i { display: none}
