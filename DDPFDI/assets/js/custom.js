@@ -56,14 +56,14 @@ $(window).on('load', function(){
 
 
     //Table Accordian
-        $(".acordian-table .toggle-table-plus").on("click", function () {
+        $(document).on('click', '.toggle-table-plus', function () {
             $(this).closest("tr").after("<tr class='clone-row'><td></td><td colspan='9'>" + $(this).next().html() + "</td></tr>")
             $(this).hide();
             $(this).parents('.acordian-table').find('.toggle-table-minus').show();
+           
         });
 
-        $(".acordian-table .toggle-table-minus").click(function() {
-            console.log('test');
+        $(document).on('click','.toggle-table-minus', function() {
             $(this).parents('tr').next('.clone-row').remove();
             $(this).hide();
             $(this).parents('.acordian-table').find('.toggle-table-plus').show();

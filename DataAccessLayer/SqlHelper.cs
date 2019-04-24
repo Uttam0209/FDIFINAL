@@ -406,8 +406,12 @@ namespace DataAccessLayer
             }
         }
 
+<<<<<<< HEAD
+        public DataTable RetriveGridViewCompany(string ID, string Factory,string unit,string Purpose)
+=======
         public DataTable RetriveGridViewCompany(string ID,string FactoryRefNo,string UnitRefNo,string Purpose)
 
+>>>>>>> 1b1eb733c3ffa3edbee0a4bca6007d7e648b9616
         {
             using (DbConnection dbCon = db.CreateConnection())
             {
@@ -416,8 +420,15 @@ namespace DataAccessLayer
                 {
                     DbCommand cmd = db.GetStoredProcCommand("sp_SearchCompanyGrid");
                     db.AddInParameter(cmd, "@CompanyRefNo", DbType.String, ID);
+<<<<<<< HEAD
+
+                    db.AddInParameter(cmd, "@FactoryRefNo", DbType.String, Factory);
+
+                    db.AddInParameter(cmd, "@UnitRefNo", DbType.String, unit);
+=======
                     db.AddInParameter(cmd, "@FactoryRefNo", DbType.String, FactoryRefNo);
                     db.AddInParameter(cmd, "@UnitRefNo", DbType.String, UnitRefNo);
+>>>>>>> 1b1eb733c3ffa3edbee0a4bca6007d7e648b9616
                     db.AddInParameter(cmd, "@Purpose", DbType.String, Purpose);
                     IDataReader dr = db.ExecuteReader(cmd);
                     DataTable dt = new DataTable();
