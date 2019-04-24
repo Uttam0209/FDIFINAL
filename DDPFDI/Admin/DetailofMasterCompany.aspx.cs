@@ -582,7 +582,6 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
                 ddlunit.Visible = false;
             }
         }
-
     }
     GridView gvinunit;
     protected void ddlunit_OnSelectedIndexChanged(object sender, EventArgs e)
