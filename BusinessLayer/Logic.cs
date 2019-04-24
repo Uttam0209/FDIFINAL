@@ -64,9 +64,11 @@ namespace BusinessLayer
             return SqlHelper.Instance.RetriveState(text);
         }
 
-        public DataTable RetriveGridViewCompany(string ID, string Purpose, string FactoryRefNo, string UnitRefNo)
+
+        public DataTable RetriveGridViewCompany(string ID,string FactoryRefNo,string UnitRefNo,string Purpose)
         {
-            return SqlHelper.Instance.RetriveGridViewCompany(ID, Purpose, FactoryRefNo, UnitRefNo);
+            return SqlHelper.Instance.RetriveGridViewCompany(ID, FactoryRefNo, UnitRefNo,Purpose);
+
 
         }
         public DataTable RetriveMasterData(Int64 Companyid, string strRefNo, string strRole, int MenuId, string strMenuUrl, string strInterestedAreaFlag, string strCriteria)

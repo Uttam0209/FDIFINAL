@@ -13,18 +13,22 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
     Logic Lo = new Logic();
     DataUtility Co = new DataUtility();
     Cryptography objEnc = new Cryptography();
+    DataTable DtGrid = new DataTable();
+    DataTable DtCompanyDDL = new DataTable();
     string UserName;
     string RefNo;
     string UserEmail;
+    string currentPage = "";
+    private string mType = "";
+    private string mRefNo = "";
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
         {
-            if (Request.QueryString["id"] != null)
-            {
-                string id = Request.QueryString["id"].ToString().Replace(" ", "+");
-                lblPageName.Text = objEnc.DecryptData(id);
-            }
+            currentPage = System.IO.Path.GetFileName(Request.Url.AbsolutePath);
+            mType = objEnc.DecryptData(Session["Type"].ToString());
+            mRefNo = Session["CompanyRefNo"].ToString();
+            BindCompany();
             BindGridView();
         }
     }
@@ -33,24 +37,79 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
         try
         {
 
-            DataTable DtGrid = Lo.RetriveGridViewCompany("0", "CompanyMainGridView","","");
-            if (DtGrid.Rows.Count > 0)
+            if (mType == "SuperAdmin")
             {
-                if (sortExpression != null)
+                DataTable DtGrid = Lo.RetriveGridViewCompany("0", "", "", "CompanyMainGridView");
+                if (DtGrid.Rows.Count > 0)
                 {
-                    DataView dv = DtGrid.AsDataView();
-                    this.SortDirection = this.SortDirection == "ASC" ? "DESC" : "ASC";
+                    if (sortExpression != null)
+                    {
+                        DataView dv = DtGrid.AsDataView();
+                        this.SortDirection = this.SortDirection == "ASC" ? "DESC" : "ASC";
 
-                    dv.Sort = sortExpression + " " + this.SortDirection;
-                    gvcompanydetail.DataSource = dv;
+                        dv.Sort = sortExpression + " " + this.SortDirection;
+                        gvcompanydetail.DataSource = dv;
+                    }
+                    else
+                    {
+                        gvcompanydetail.DataSource = DtGrid;
+                    }
+                    gvcompanydetail.DataBind();
+                    lbltotal.Text = DtGrid.Rows.Count.ToString();
                 }
-                else
+            }
+            else if (mType == "Company" && mRefNo != "")
+            {
+                DataTable DtGrid = Lo.RetriveGridViewCompany(mRefNo, "", "", "CompanyMainGridView");
+                if (DtGrid.Rows.Count > 0)
                 {
                     gvcompanydetail.DataSource = DtGrid;
+                    gvcompanydetail.DataBind();
                 }
-                gvcompanydetail.DataBind();
-                lbltotal.Text = DtGrid.Rows.Count.ToString();
             }
+            else if (mType != "Factroy" && mRefNo != "")
+            {
+                DataTable DtGrid = Lo.RetriveGridViewCompany(mRefNo, "", "", "InnerGridViewFactory");
+                if (DtGrid.Rows.Count > 0)
+                {
+                    if (sortExpression != null)
+                    {
+                        DataView dv = DtGrid.AsDataView();
+                        this.SortDirection = this.SortDirection == "ASC" ? "DESC" : "ASC";
+
+                        dv.Sort = sortExpression + " " + this.SortDirection;
+                        gvcompanydetail.DataSource = dv;
+                    }
+                    else
+                    {
+                        gvcompanydetail.DataSource = DtGrid;
+                    }
+                    gvcompanydetail.DataBind();
+                    lbltotal.Text = DtGrid.Rows.Count.ToString();
+                }
+            }
+            else if (mType != "Unit" && mRefNo != "")
+            {
+                DataTable DtGrid = Lo.RetriveGridViewCompany(mRefNo, "", "", "InnerGridViewUnit");
+                if (DtGrid.Rows.Count > 0)
+                {
+                    if (sortExpression != null)
+                    {
+                        DataView dv = DtGrid.AsDataView();
+                        this.SortDirection = this.SortDirection == "ASC" ? "DESC" : "ASC";
+
+                        dv.Sort = sortExpression + " " + this.SortDirection;
+                        gvcompanydetail.DataSource = dv;
+                    }
+                    else
+                    {
+                        gvcompanydetail.DataSource = DtGrid;
+                    }
+                    gvcompanydetail.DataBind();
+                    lbltotal.Text = DtGrid.Rows.Count.ToString();
+                }
+            }
+
         }
         catch (Exception ex)
         {
@@ -79,7 +138,7 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
         else if (e.CommandName == "ViewComp")
         {
 
-            DataTable DtView = Lo.RetriveGridViewCompany(e.CommandArgument.ToString(), "CompanyMainGridView","","");
+            DataTable DtView = Lo.RetriveGridViewCompany(e.CommandArgument.ToString(), "", "", "CompanyMainGridView");
             if (DtView.Rows.Count > 0)
             {
                 lblrefno.Text = DtView.Rows[0]["CompanyRefNo"].ToString();
@@ -161,27 +220,130 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
         {
             Label lblrefno = e.Row.FindControl("lblrefno") as Label;
             GridView gvfactory = e.Row.FindControl("gvfactory") as GridView;
-            DataTable DtGrid = Lo.RetriveGridViewCompany(lblrefno.Text, "InnerGridViewFactory","","");
+            DataTable DtGrid = Lo.RetriveGridViewCompany(lblrefno.Text, "", "", "InnerGridViewFactory");
+
             if (DtGrid.Rows.Count > 0)
             {
                 gvfactory.DataSource = DtGrid;
                 gvfactory.DataBind();
             }
+
+            DataTable dtCompany = Lo.RetriveMasterData(0, "", "", 0, currentPage, "", "btn");
+            if (dtCompany.Rows.Count > 0)
+            {
+                if (dtCompany.Rows[0]["Company"].ToString() == "1")
+                {
+                    LinkButton lbledit = (LinkButton)e.Row.FindControl("lbledit");
+                    LinkButton lblview = (LinkButton)e.Row.FindControl("lblview");
+                    LinkButton lbldel = (LinkButton)e.Row.FindControl("lbldel");
+                    lbledit.Visible = false;
+                    lblview.Visible = true;
+                    lbldel.Visible = false;
+                    LinkButton lbleditfactory = (LinkButton)e.Row.FindControl("lbleditfactory");
+                    LinkButton lblviewfactory = (LinkButton)e.Row.FindControl("lblviewfactory");
+                    LinkButton lbldelfactory = (LinkButton)e.Row.FindControl("lbldelfactory");
+                    if (lbleditfactory != null)
+                    {
+                        lbleditfactory.Visible = false;
+                        lblviewfactory.Visible = true;
+                        lbldelfactory.Visible = false;
+                    }
+
+
+
+
+                }
+                else if (dtCompany.Rows[0]["Company"].ToString() == "2")
+                {
+                    LinkButton lbledit = (LinkButton)e.Row.FindControl("lbledit");
+                    LinkButton lblview = (LinkButton)e.Row.FindControl("lblview");
+                    LinkButton lbldel = (LinkButton)e.Row.FindControl("lbldel");
+                    lbledit.Visible = true;
+                    lblview.Visible = true;
+                    lbldel.Visible = false;
+                    LinkButton lbleditfactory = (LinkButton)e.Row.FindControl("lbleditfactory");
+                    LinkButton lblviewfactory = (LinkButton)e.Row.FindControl("lblviewfactory");
+                    LinkButton lbldelfactory = (LinkButton)e.Row.FindControl("lbldelfactory");
+                    if (lbleditfactory != null)
+                    {
+                        lbleditfactory.Visible = true;
+                        lblviewfactory.Visible = true;
+                        lbldelfactory.Visible = false;
+                    }
+                }
+                else if (dtCompany.Rows[0]["Company"].ToString() == "3")
+                {
+                    LinkButton lbledit = (LinkButton)e.Row.FindControl("lbledit");
+                    LinkButton lblview = (LinkButton)e.Row.FindControl("lblview");
+                    LinkButton lbldel = (LinkButton)e.Row.FindControl("lbldel");
+                    lbledit.Visible = true;
+                    lblview.Visible = true;
+                    lbldel.Visible = true;
+                    LinkButton lbleditfactory = (LinkButton)e.Row.FindControl("lbleditfactory");
+                    LinkButton lblviewfactory = (LinkButton)e.Row.FindControl("lblviewfactory");
+                    LinkButton lbldelfactory = (LinkButton)e.Row.FindControl("lbldelfactory");
+                    if (lbleditfactory != null)
+                    {
+                        lbleditfactory.Visible = true;
+                        lblviewfactory.Visible = true;
+                        lbldelfactory.Visible = true;
+                    }
+
+                }
+                else if (dtCompany.Rows[0]["Factory"].ToString() == "2")
+                {
+                    // btndemofirst.Visible = true;
+                    //  btnDelete.Visible = false;
+                }
+                else if (dtCompany.Rows[0]["Factory"].ToString() == "3")
+                {
+                    //   btndemofirst.Visible = true;
+                    //   btnDelete.Visible = true;
+                }
+                else if (dtCompany.Rows[0]["Unit"].ToString() == "2")
+                {
+                    //     btndemofirst.Visible = true;
+                    //     btnDelete.Visible = false;
+                }
+                else if (dtCompany.Rows[0]["Unit"].ToString() == "3")
+                {
+                    //     btndemofirst.Visible = true;
+                    //    btnDelete.Visible = true;
+                }
+                else if (dtCompany.Rows[0]["SuperAdmin"].ToString() == "1")
+                {
+                    LinkButton lbledit = (LinkButton)e.Row.FindControl("lbledit");
+                    LinkButton lblview = (LinkButton)e.Row.FindControl("lblview");
+                    LinkButton lbldel = (LinkButton)e.Row.FindControl("lbldel");
+                    lbledit.Visible = true;
+                    lblview.Visible = true;
+                    lbldel.Visible = true;
+                    LinkButton lbleditfactory = (LinkButton)e.Row.FindControl("lbleditfactory");
+                    LinkButton lblviewfactory = (LinkButton)e.Row.FindControl("lblviewfactory");
+                    LinkButton lbldelfactory = (LinkButton)e.Row.FindControl("lbldelfactory");
+                    if (lbleditfactory != null)
+                    {
+                        lbleditfactory.Visible = true;
+                        lblviewfactory.Visible = true;
+                        lbldelfactory.Visible = true;
+                    }
+                }
+            }
         }
     }
     protected void gvfactory_OnRowDataBound(object sender, GridViewRowEventArgs e)
     {
-        //if (e.Row.RowType == DataControlRowType.DataRow)
-        //{
-        //    Label lblfactroyrefno = e.Row.FindControl("lblfactoryrefno") as Label;
-        //    GridView gvunit = e.Row.FindControl("gvunit") as GridView;
-        //    DataTable DtGrid = Lo.RetriveGridViewCompany(lblfactroyrefno.Text, "InnerGridViewUnit");
-        //    if (DtGrid.Rows.Count > 0)
-        //    {
-        //        gvunit.DataSource = DtGrid;
-        //        gvunit.DataBind();
-        //    }
-        //}
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            Label lblfactroyrefno = e.Row.FindControl("lblfactoryrefno") as Label;
+            GridView gvunit = e.Row.FindControl("gvunit") as GridView;
+            DataTable DtGrid = Lo.RetriveGridViewCompany(lblfactroyrefno.Text, "", "", "InnerGridViewUnit");
+            if (DtGrid.Rows.Count > 0)
+            {
+                gvunit.DataSource = DtGrid;
+                gvunit.DataBind();
+            }
+        }
     }
     #region Send Mail
     public void SendEmailCode()
@@ -222,4 +384,228 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
         return res.ToString();
     }
     #endregion
+    protected void BindCompany()
+    {
+        if (mType == "SuperAdmin")
+        {
+            DtCompanyDDL = Lo.RetriveMasterData(0, "", "", 0, "", "", "Select");
+            if (DtCompanyDDL.Rows.Count > 0)
+            {
+                Co.FillDropdownlist(ddlcompany, DtCompanyDDL, "CompanyName", "CompanyRefNo");
+                ddlcompany.Items.Insert(0, "All");
+                ddlcompany.Enabled = true;
+            }
+            else
+            {
+                ddlcompany.Enabled = false;
+            }
+
+            ddldivision.Visible = false;
+            ddlunit.Visible = false;
+            //DtCompanyDDL = Lo.RetriveMasterData(0, "", "", 0, "", "", "FactorySelect");
+            //if (DtCompanyDDL.Rows.Count > 0)
+            //{
+            //    Co.FillDropdownlist(ddldivision, DtCompanyDDL, "FactoryName", "FactoryRefNo");
+            //    ddldivision.Items.Insert(0, "All");
+            //    ddldivision.Enabled = true;
+            //}
+            //else
+            //{
+            //    ddldivision.Enabled = false;
+            //}
+
+            //DtCompanyDDL = Lo.RetriveMasterData(0, "", "", 0, "", "", "UnitSelect");
+            //if (DtCompanyDDL.Rows.Count > 0)
+            //{
+            //    Co.FillDropdownlist(ddlunit, DtCompanyDDL, "UnitName", "UnitRefNo");
+            //    ddlunit.Items.Insert(0, "All");
+            //    ddlunit.Enabled = true;
+            //}
+            //else
+            //{
+            //    ddlunit.Enabled = false;
+            //}
+        }
+        else if (mType == "Admin")
+        {
+        }
+        else if (mType == "Company")
+        {
+            DtCompanyDDL = Lo.RetriveMasterData(0, mRefNo, "Company", 0, "", "", "CompanyName");
+            if (DtCompanyDDL.Rows.Count > 0)
+            {
+                Co.FillDropdownlist(ddlcompany, DtCompanyDDL, "CompanyName", "CompanyRefNo");
+                ddlcompany.Items.Insert(0, "All");
+                ddlcompany.Enabled = false;
+            }
+            else
+            {
+                ddlcompany.Enabled = false;
+            }
+            DtCompanyDDL = Lo.RetriveMasterData(0, ddlcompany.SelectedItem.Value, "Factory", 0, "", "", "CompanyName");
+            if (DtCompanyDDL.Rows.Count > 0)
+            {
+                Co.FillDropdownlist(ddldivision, DtCompanyDDL, "FactoryName", "FactoryRefNo");
+                ddldivision.Items.Insert(0, "All");
+                if (mType == "Company")
+                {
+                    ddldivision.Enabled = true;
+                }
+                else
+                {
+                    ddldivision.Enabled = false;
+                }
+            }
+            else
+            {
+                ddldivision.Enabled = false;
+            }
+            DtCompanyDDL = Lo.RetriveMasterData(0, ddldivision.SelectedItem.Value, "Unit", 0, "", "", "CompanyName");
+            if (DtCompanyDDL.Rows.Count > 0)
+            {
+                Co.FillDropdownlist(ddlunit, DtCompanyDDL, "UnitName", "UnitRefNo");
+                ddlunit.Items.Insert(0, "All");
+                ddlunit.Enabled = true;
+            }
+            else
+            {
+                ddlunit.Enabled = false;
+            }
+        }
+        //else if (mType == "Factory")
+        //{
+        //    DtCompanyDDL = Lo.RetriveMasterData(0, mRefNo, "Company", 0, "", "", "CompanyName");
+        //    if (DtCompanyDDL.Rows.Count > 0)
+        //    {
+        //        Co.FillDropdownlist(ddlcompany, DtCompanyDDL, "CompanyName", "CompanyRefNo");
+        //        ddlcompany.Items.Insert(0, "All");
+        //        ddlcompany.Enabled = false;
+        //    }
+        //    else
+        //    {
+        //        ddlcompany.Enabled = false;
+        //    }
+        //    DtCompanyDDL = Lo.RetriveMasterData(0, ddlcompany.SelectedItem.Value, "Factory", 0, "", "", "CompanyName");
+        //    if (DtCompanyDDL.Rows.Count > 0)
+        //    {
+        //        Co.FillDropdownlist(ddldivision, DtCompanyDDL, "FactoryName", "FactoryRefNo");
+        //        ddldivision.Items.Insert(0, "All");
+        //        ddldivision.Enabled = false;
+        //    }
+        //    else
+        //    {
+        //        ddldivision.Enabled = false;
+        //    }
+
+        //    DtCompanyDDL = Lo.RetriveMasterData(0, ddldivision.SelectedItem.Value, "Unit", 0, "", "", "CompanyName");
+        //    if (DtCompanyDDL.Rows.Count > 0)
+        //    {
+        //        Co.FillDropdownlist(ddlunit, DtCompanyDDL, "UnitName", "UnitRefNo");
+        //        ddlunit.Items.Insert(0, "All");
+        //        ddlunit.Enabled = true;
+        //    }
+        //    else
+        //    {
+        //        ddlunit.Enabled = false;
+        //    }
+        //}
+    }
+    protected void ddlcompany_OnSelectedIndexChanged(object sender, EventArgs e)
+    {
+        if (ddlcompany.SelectedItem.Text != "All")
+        {
+            DataTable DtGrid = Lo.RetriveGridViewCompany(ddlcompany.SelectedItem.Value, "", "", "CompanyMainGridView");
+            if (DtGrid.Rows.Count > 0)
+            {
+                gvcompanydetail.DataSource = DtGrid;
+                gvcompanydetail.DataBind();
+                DtCompanyDDL = Lo.RetriveMasterData(0, ddlcompany.SelectedItem.Value, "", 0, "", "", "FactoryCompanyID");
+                if (DtCompanyDDL.Rows.Count > 0)
+                {
+                    Co.FillDropdownlist(ddldivision, DtCompanyDDL, "FactoryName", "FactoryRefNo");
+                    ddldivision.Items.Insert(0, "All");
+                    ddldivision.Enabled = true;
+                    ddldivision.Visible = true;
+                }
+                else
+                {
+                    ddldivision.Visible = false;
+                    ddldivision.Enabled = false;
+                }
+            }
+        }
+        else if (ddlcompany.SelectedItem.Value == "All")
+        {
+            DataTable DtGrid = Lo.RetriveGridViewCompany("0", "", "", "CompanyMainGridView");
+            if (DtGrid.Rows.Count > 0)
+            {
+                gvcompanydetail.DataSource = DtGrid;
+                gvcompanydetail.DataBind();
+                ddldivision.Visible = false;
+                ddlunit.Visible = false;
+            }
+            else
+            {
+                ddldivision.Visible = false;
+                ddlunit.Visible = false;
+            }
+        }
+        else
+        {
+            ddldivision.Visible = false;
+            ddlunit.Visible = false;
+        }
+    }
+    GridView gvinnerfactory;
+    protected void ddldivision_OnSelectedIndexChanged(object sender, EventArgs e)
+    {
+
+        if (ddlcompany.SelectedItem.Text != "All")
+        {
+            DataTable DtGrid = Lo.RetriveGridViewCompany(ddlcompany.SelectedItem.Value, ddldivision.SelectedItem.Value, "", "InnerGVFactoryID");
+            if (DtGrid.Rows.Count > 0)
+            {
+                foreach (GridViewRow row in gvcompanydetail.Rows)
+                {
+                    gvinnerfactory = ((GridView)row.FindControl("gvfactory"));
+                }
+                gvinnerfactory.DataSource = DtGrid;
+                gvinnerfactory.DataBind();
+            }
+            DtCompanyDDL = Lo.RetriveMasterData(0, ddldivision.SelectedItem.Value, "", 0, "", "", "UnitSelectID");
+            if (DtCompanyDDL.Rows.Count > 0)
+            {
+                Co.FillDropdownlist(ddlunit, DtCompanyDDL, "UnitName", "UnitRefNo");
+                ddlunit.Items.Insert(0, "All");
+                ddlunit.Visible = true;
+            }
+            else
+            {
+                ddlunit.Visible = false;
+            }
+        }
+
+    }
+    GridView gvinunit;
+    protected void ddlunit_OnSelectedIndexChanged(object sender, EventArgs e)
+    {
+
+        if (ddlunit.SelectedItem.Text != "All")
+        {
+            DataTable DtGrid = Lo.RetriveGridViewCompany(ddlunit.SelectedItem.Value, "", "", "InnerGVUnitID");
+            if (DtGrid.Rows.Count > 0)
+            {
+                foreach (GridViewRow row in gvcompanydetail.Rows)
+                {
+                    gvinunit = ((GridView)row.FindControl("gvunit"));
+                }
+                gvinunit.DataSource = DtGrid;
+                gvinunit.DataBind();
+            }
+        }
+        else
+        {
+            ddlunit.Visible = false;
+        }
+    }
 }

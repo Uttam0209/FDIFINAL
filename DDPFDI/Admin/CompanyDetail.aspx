@@ -24,6 +24,18 @@
             </div>
 
             <div class="col-sm-12">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <asp:DropDownList runat="server" ID="ddlcompany" CssClass="form-control" AutoPostBack="True" OnSelectedIndexChanged="ddlcompany_OnSelectedIndexChanged"></asp:DropDownList>
+                    </div>
+                    <div class="col-sm-4">
+                        <asp:DropDownList runat="server" ID="ddldivision" CssClass="form-control" AutoPostBack="True" OnSelectedIndexChanged="ddldivision_OnSelectedIndexChanged"></asp:DropDownList>
+                    </div>
+                    <div class="col-sm-4">
+                        <asp:DropDownList runat="server" ID="ddlunit" CssClass="form-control" AutoPostBack="True" OnSelectedIndexChanged="ddlunit_OnSelectedIndexChanged"></asp:DropDownList>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
                 <div class="fdi-tab add-inflow-tab">
                     <ul>
                         <li class="active"><a href="#fdistep1" data-toggle="tab">Company Detail</a></li>
@@ -48,15 +60,15 @@
                                             <div class="form-group" id="DivJointVenture" runat="server">
                                                 <label for="activityname" class="control-label">Joint Venture <span class="mandatory">*</span></label>
                                                 <asp:DropDownList runat="server" ID="seljvventure" required="" name="seljvventure" class="form-control form-cascade-control">
-                                                    <asp:ListItem Value="Yes">Yes</asp:ListItem>
-                                                    <asp:ListItem Value="No">No</asp:ListItem>
+                                                    <asp:ListItem Value="Y">Yes</asp:ListItem>
+                                                    <asp:ListItem Value="N">No</asp:ListItem>
                                                 </asp:DropDownList>
                                             </div>
                                             <div class="form-group" id="DivActivities" runat="server">
                                                 <label for="companyengaged" class="control-label">Company engaged in Defence Activities</label>
                                                 <asp:DropDownList runat="server" ID="companyengaged" required="" name="companyengaged" class="form-control form-cascade-control">
-                                                    <asp:ListItem Value="Yes">Yes</asp:ListItem>
-                                                    <asp:ListItem Value="No">No</asp:ListItem>
+                                                    <asp:ListItem Value="Y">Yes</asp:ListItem>
+                                                    <asp:ListItem Value="N">No</asp:ListItem>
                                                 </asp:DropDownList>
                                             </div>
                                             <div class="form-group">
@@ -102,11 +114,11 @@
                                         <div class="indiacompanydetails fade" id="fdistep2">
 
 
-                                            <div class="form-group">
+                                            <div class="form-group" id="DivCEOName" runat="server">
                                                 <label for="CeoName" class="control-label">CEO Name </label>
                                                 <asp:TextBox runat="server" ID="txtceoname" name="CEO Name" class="form-control form-cascade-control" placeholder=""></asp:TextBox>
                                             </div>
-                                            <div class="form-group">
+                                            <div class="form-group" id="DivCEOEmail" runat="server">
                                                 <label for="tceoname" class="control-label">CEO Email ID </label>
                                                 <asp:TextBox runat="server" ID="txtCEOEmailId" name="tceoemailid" class="form-control form-cascade-control" placeholder=""></asp:TextBox>
                                             </div>
