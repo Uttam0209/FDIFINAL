@@ -19,6 +19,7 @@
     $(".sidebar-holder .parent-nav > a").click(function(){
         $(this).next().slideToggle();
         $(this).parents('.parent-nav').siblings().find('.parent-nav-child').slideUp();
+        //$(this).siblings('.parent-nav-child').slideUp();
 
         $(this).find('.fa-angle-down').toggleClass('rotate-icon');
     });
@@ -32,13 +33,10 @@ $(window).on('load', function(){
     $Sidebar.find('a[href="'+CURRENT_URL+'"]').parents(".parent-nav-child").addClass('active').siblings(".parent-nav-child").removeClass("active");
     $Sidebar.find('a[href="'+CURRENT_URL+'"]').addClass('active');
     console.log(CURRENT_URL);
-    
+
 });
 
-
-   
-
-    //Hide Show Chart
+//Hide Show Chart
 
     $(".GraphType").on('change', function () {
         var $Chartvalue = $(this).val();
