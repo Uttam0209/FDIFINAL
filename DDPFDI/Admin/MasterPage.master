@@ -248,5 +248,10 @@
             return true;
         };
     </script>
+<!---Progress Bar ---->
+<div class="custom-progress-bar blue stripes" style="display:none">
+    <span></span>
+</div>
+<!---Progress Bar ---->
 </body>
 </html>
