@@ -7,12 +7,12 @@
         }
     </script>
     <script type="text/javascript">
-        function showPopup() {
+        function showPopup1() {
             $('#divfactoryshow').modal('show');
         }
     </script>
     <script type="text/javascript">
-        function showPopup() {
+        function showPopup2() {
             $('#divunitshow').modal('show');
         }
     </script>
@@ -224,20 +224,6 @@
                                 <div class="tab-pane fade active in" id="add-form">
                                     <table class="table table-bordered">
                                         <tbody>
-                                            <%-- <caption>
-                                                <tr>
-                                                    <td class="pass" width="30%">Joint Venture </td>
-                                                    <td>
-                                                        <asp:Label ID="lbljointventure" runat="server"></asp:Label>
-                                                    </td>
-                                                </tr>
-                                                <caption>--%>
-                                            <%--  <tr>
-                                                        <td class="pass">Defence Activities </td>
-                                                        <td>
-                                                            <asp:Label ID="lbldefactivity" runat="server"></asp:Label>
-                                                        </td>
-                                                    </tr>--%>
                                             <tr>
                                                 <td class="pass" width="30%">Reference No </td>
                                                 <td>
@@ -281,7 +267,7 @@
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td class="pass">Contact Person Name</td>
+                                                <td class="pass">Name</td>
                                                 <td>
                                                     <asp:Label ID="lblcontactpersonname" runat="server"></asp:Label>
                                                 </td>
@@ -329,97 +315,71 @@
                     <div class="modal-content">
                         <div class="modal-header modal-header1">
                             <button type="button" class="close close1" data-dismiss="modal">&times;</button>
-                            <h4 class="modal-title">Company Detail</h4>
+                            <h4 class="modal-title">Division/Plant Detail</h4>
                         </div>
                         <form class="form-horizontal changepassword" role="form">
                             <div class="modal-body">
                                 <div class="tab-pane fade active in" id="Div2">
                                     <table class="table table-bordered">
                                         <tbody>
-                                            <%-- <caption>
-                                                <tr>
-                                                    <td class="pass" width="30%">Joint Venture </td>
-                                                    <td>
-                                                        <asp:Label ID="lbljointventure" runat="server"></asp:Label>
-                                                    </td>
-                                                </tr>
-                                                <caption>--%>
-                                            <%--  <tr>
-                                                        <td class="pass">Defence Activities </td>
-                                                        <td>
-                                                            <asp:Label ID="lbldefactivity" runat="server"></asp:Label>
-                                                        </td>
-                                                    </tr>--%>
                                             <tr>
                                                 <td class="pass" width="30%">Reference No </td>
                                                 <td>
-                                                    <asp:Label ID="Label1" runat="server"></asp:Label>
+                                                    <asp:Label ID="lblfacrefno" runat="server"></asp:Label>
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td class="pass">Company Name</td>
+                                                <td class="pass">Division Name</td>
                                                 <td>
-                                                    <asp:Label ID="Label2" runat="server"></asp:Label>
+                                                    <asp:Label ID="lblfacname" runat="server"></asp:Label>
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td class="pass">Address</td>
                                                 <td>
-                                                    <asp:Label ID="Label3" runat="server"></asp:Label>
+                                                    <asp:Label ID="lblfacaddress" runat="server"></asp:Label>
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td class="pass">State</td>
                                                 <td>
-                                                    <asp:Label ID="Label4" runat="server"></asp:Label>
+                                                    <asp:Label ID="lblfacstate" runat="server"></asp:Label>
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td class="pass">Pin Code</td>
                                                 <td>
-                                                    <asp:Label ID="Label5" runat="server"></asp:Label>
+                                                    <asp:Label ID="lblfacpincode" runat="server"></asp:Label>
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td class="pass">CEO Name</td>
+                                                <td class="pass">Nodal Name</td>
                                                 <td>
-                                                    <asp:Label ID="Label6" runat="server"></asp:Label>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="pass">CEO Email</td>
-                                                <td>
-                                                    <asp:Label ID="Label7" runat="server"></asp:Label>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="pass">Contact Person Name</td>
-                                                <td>
-                                                    <asp:Label ID="Label8" runat="server"></asp:Label>
+                                                    <asp:Label ID="lblfacnodalname" runat="server"></asp:Label>
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td class="pass">Official Contact No</td>
                                                 <td>
-                                                    <asp:Label ID="Label9" runat="server"></asp:Label>
+                                                    <asp:Label ID="lblfacmobno" runat="server"></asp:Label>
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td class="pass">Official Email ID</td>
                                                 <td>
-                                                    <asp:Label ID="Label10" runat="server"></asp:Label>
+                                                    <asp:Label ID="lblfacemail" runat="server"></asp:Label>
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td class="pass">CIN No</td>
+                                                <td class="pass">CIN</td>
                                                 <td>
-                                                    <asp:Label ID="Label11" runat="server"></asp:Label>
+                                                    <asp:Label ID="lblfaccin" runat="server"></asp:Label>
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td class="pass">PAN No</td>
                                                 <td>
-                                                    <asp:Label ID="Label12" runat="server"></asp:Label>
+                                                    <asp:Label ID="lblfacpan" runat="server"></asp:Label>
                                                 </td>
                                             </tr>
                                             </caption>
@@ -441,97 +401,59 @@
                     <div class="modal-content">
                         <div class="modal-header modal-header1">
                             <button type="button" class="close close1" data-dismiss="modal">&times;</button>
-                            <h4 class="modal-title">Company Detail</h4>
+                            <h4 class="modal-title">Unit Detail</h4>
                         </div>
                         <form class="form-horizontal changepassword" role="form">
                             <div class="modal-body">
                                 <div class="tab-pane fade active in" id="Div4">
                                     <table class="table table-bordered">
                                         <tbody>
-                                            <%-- <caption>
-                                                <tr>
-                                                    <td class="pass" width="30%">Joint Venture </td>
-                                                    <td>
-                                                        <asp:Label ID="lbljointventure" runat="server"></asp:Label>
-                                                    </td>
-                                                </tr>
-                                                <caption>--%>
-                                            <%--  <tr>
-                                                        <td class="pass">Defence Activities </td>
-                                                        <td>
-                                                            <asp:Label ID="lbldefactivity" runat="server"></asp:Label>
-                                                        </td>
-                                                    </tr>--%>
                                             <tr>
                                                 <td class="pass" width="30%">Reference No </td>
                                                 <td>
-                                                    <asp:Label ID="Label13" runat="server"></asp:Label>
+                                                    <asp:Label ID="lblurefno" runat="server"></asp:Label>
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td class="pass">Company Name</td>
+                                                <td class="pass">Unit Name</td>
                                                 <td>
-                                                    <asp:Label ID="Label14" runat="server"></asp:Label>
+                                                    <asp:Label ID="lbluname" runat="server"></asp:Label>
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td class="pass">Address</td>
                                                 <td>
-                                                    <asp:Label ID="Label15" runat="server"></asp:Label>
+                                                    <asp:Label ID="lbluaddress" runat="server"></asp:Label>
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td class="pass">State</td>
                                                 <td>
-                                                    <asp:Label ID="Label16" runat="server"></asp:Label>
+                                                    <asp:Label ID="lblustate" runat="server"></asp:Label>
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td class="pass">Pin Code</td>
                                                 <td>
-                                                    <asp:Label ID="Label17" runat="server"></asp:Label>
+                                                    <asp:Label ID="lblupin" runat="server"></asp:Label>
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td class="pass">CEO Name</td>
+                                                <td class="pass">Nodal Name</td>
                                                 <td>
-                                                    <asp:Label ID="Label18" runat="server"></asp:Label>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="pass">CEO Email</td>
-                                                <td>
-                                                    <asp:Label ID="Label19" runat="server"></asp:Label>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="pass">Contact Person Name</td>
-                                                <td>
-                                                    <asp:Label ID="Label20" runat="server"></asp:Label>
+                                                    <asp:Label ID="lblnodalname" runat="server"></asp:Label>
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td class="pass">Official Contact No</td>
                                                 <td>
-                                                    <asp:Label ID="Label21" runat="server"></asp:Label>
+                                                    <asp:Label ID="lblnofficialcontact" runat="server"></asp:Label>
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td class="pass">Official Email ID</td>
                                                 <td>
-                                                    <asp:Label ID="Label22" runat="server"></asp:Label>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="pass">CIN No</td>
-                                                <td>
-                                                    <asp:Label ID="Label23" runat="server"></asp:Label>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="pass">PAN No</td>
-                                                <td>
-                                                    <asp:Label ID="Label24" runat="server"></asp:Label>
+                                                    <asp:Label ID="lbluemail" runat="server"></asp:Label>
                                                 </td>
                                             </tr>
                                             </caption>

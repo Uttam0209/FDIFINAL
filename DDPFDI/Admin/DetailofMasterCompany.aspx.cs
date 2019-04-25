@@ -344,9 +344,6 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
                 lblcontactpersonmobno.Text = DtView.Rows[0]["ContactPersonContactNo"].ToString();
                 lblcontactpersonname.Text = DtView.Rows[0]["ContactPersonName"].ToString();
                 lblceoemail.Text = DtView.Rows[0]["CEOEmail"].ToString();
-                //  lbldefactivity.Text = DtView.Rows[0]["IsDefenceActivity"].ToString();
-                //  lblgstno.Text = DtView.Rows[0]["GSTNo"].ToString();
-                // lbljointventure.Text = DtView.Rows[0]["IsJointVenture"].ToString();
                 lblpanno.Text = DtView.Rows[0]["PANNo"].ToString();
                 lblpincode.Text = DtView.Rows[0]["Pincode"].ToString();
                 lblstate.Text = DtView.Rows[0]["StateName"].ToString();
@@ -404,17 +401,17 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
             DataTable DtView = Lo.RetriveGridViewCompany("", e.CommandArgument.ToString(), "", "DisplayFactory");
             if (DtView.Rows.Count > 0)
             {
-                lblrefno.Text = DtView.Rows[0]["FactoryRefNo"].ToString();
-                lbladdress.Text = DtView.Rows[0]["FactoryAddress"].ToString();
-                lblcinno.Text = DtView.Rows[0]["FactoryCINNo"].ToString();
-                lblcompanyname.Text = DtView.Rows[0]["FactoryName"].ToString();
-                lblcontactperemailid.Text = DtView.Rows[0]["FactoryEmailId"].ToString();
-                lblcontactpersonmobno.Text = DtView.Rows[0]["FactoryContactNo"].ToString();
-                lblcontactpersonname.Text = DtView.Rows[0]["FactoryNodalPerson"].ToString();
-                lblpanno.Text = DtView.Rows[0]["FactoryPANNo"].ToString();
-                lblpincode.Text = DtView.Rows[0]["FactoryPincode"].ToString();
-                lblstate.Text = DtView.Rows[0]["StateName"].ToString();
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "divfactoryshow", "showPopup();", true);
+                lblfacrefno.Text = DtView.Rows[0]["FactoryRefNo"].ToString();
+                lblfacaddress.Text = DtView.Rows[0]["FactoryAddress"].ToString();
+                lblfaccin.Text = DtView.Rows[0]["FactoryCINNo"].ToString();
+                lblfacname.Text = DtView.Rows[0]["FactoryName"].ToString();
+                lblfacemail.Text = DtView.Rows[0]["FactoryEmailId"].ToString();
+                lblfacmobno.Text = DtView.Rows[0]["FactoryContactNo"].ToString();
+                lblfacnodalname.Text = DtView.Rows[0]["FactoryNodalPerson"].ToString();
+                lblfacpan.Text = DtView.Rows[0]["FactoryPANNo"].ToString();
+                lblfacpincode.Text = DtView.Rows[0]["FactoryPincode"].ToString();
+                lblfacstate.Text = DtView.Rows[0]["StateName"].ToString();
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "divfactoryshow", "showPopup1();", true);
             }
         }
         else if (e.CommandName == "DeletefactoryComp")
@@ -468,16 +465,15 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
             DataTable DtView = Lo.RetriveGridViewCompany("", "", e.CommandArgument.ToString(), "GVUnitID");
             if (DtView.Rows.Count > 0)
             {
-                lblrefno.Text = DtView.Rows[0]["UnitRefNo"].ToString();
-                lbladdress.Text = DtView.Rows[0]["UnitAddress"].ToString();
-                lblcinno.Text = DtView.Rows[0]["CINNo"].ToString();
-                lblcompanyname.Text = DtView.Rows[0]["UnitName"].ToString();
-                lblcontactperemailid.Text = DtView.Rows[0]["UnitEmailId"].ToString();
-                lblcontactpersonmobno.Text = DtView.Rows[0]["UnitContactNo"].ToString();
-                lblcontactpersonname.Text = DtView.Rows[0]["UnitNodalPerson"].ToString();
-                lblpincode.Text = DtView.Rows[0]["UnitPincode"].ToString();
-                lblstate.Text = DtView.Rows[0]["StateName"].ToString();
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "divunitshow", "showPopup();", true);
+                lblurefno.Text = DtView.Rows[0]["UnitRefNo"].ToString();
+                lbluaddress.Text = DtView.Rows[0]["UnitAddress"].ToString();
+                lbluname.Text = DtView.Rows[0]["UnitName"].ToString();
+                lbluemail.Text = DtView.Rows[0]["UnitEmailId"].ToString();
+                lblnofficialcontact.Text = DtView.Rows[0]["UnitContactNo"].ToString();
+                lblnodalname.Text = DtView.Rows[0]["UnitNodalPerson"].ToString();
+                lblupin.Text = DtView.Rows[0]["UnitPincode"].ToString();
+                lblustate.Text = DtView.Rows[0]["StateName"].ToString();
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "divunitshow", "showPopup2();", true);
             }
         }
         else if (e.CommandName == "unitdel")
