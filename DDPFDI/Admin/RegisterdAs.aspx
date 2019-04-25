@@ -9,62 +9,78 @@
                 <h3 class="page-header"><i class="fas fa-folder-plus"></i><asp:Label ID="lblPageName" runat="server" Text=""></asp:Label></h3>
                 <div class="UserInnerpage">
                     <div class="resitered">
-
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <div class="form-group">
-                                    <label for="businesscode" class="control-label">Select Company </label>
-                                    <asp:TextBox ID="txtcomp" runat="server" class="form-control form-cascade-control"></asp:TextBox>
+                             <div class="row">
+                     
+                            <form>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Category 1</label>
+                                        <input type="text" class="form-control">
+                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-
-                                    <label>
-                                        <input type="checkbox">
-                                        <span></span>FDI Received</label>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                         <label>Category 2</label>
+                                         <input type="text" class="form-control">
+                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-
-                                    <label>
-                                        <input type="checkbox">
-                                        <span></span>Indigenisation </label>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                       <label>Category 3</label>
+                                       <input type="text" class="form-control">
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-
-                                    <label>
-                                        <input type="checkbox"><span></span>Defence Export </label>
+                                 <div class="col-md-12">
+                                     <div class="form-group">
+                                        <button type="button" value="Cancel" class="btn btn-danger pull-right" style="margin-right:0 !important;">Cancel</button>
+                                        <input type="submit" value="Save" class="btn btn-primary pull-right">
                                 </div>
-                            </div>
-                            <div class="col-md-4">
-
+                                 </div>
+                            
+                            </form>
+         
+                    </div>
+                    
+                    <div class="row">
+                    
+                            <form>
+                                 <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Category 1</label>
+                                        <select class="form-control">
+                                            <option>Category 1</option>
+                                            <option>Category 2</option>
+                                        </select>
+                                    </div>
+                                 </div>
+                                 <div class="col-md-4">
                                 <div class="form-group">
-
-                                    <label>
-                                        <input type="checkbox"><span></span>Defence Production </label>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
+                                    <label>Category 2</label>
+                                      <select class="form-control">
+                                        <option>Category 1</option>
+                                        <option>Category 2</option>
+                                     </select>
+                                 </div>
+                                 </div>
+                                 <div class="col-md-4">
                                 <div class="form-group">
-
-                                    <label>
-                                        <input type="checkbox">
-                                        <span></span>Export Lead </label>
-                                </div>
-
-                            </div>
-                            <div class="col-md-12">
-                                <div class="form-submit">
-                                    <input type="submit" value="Cancel" class="btn btn-danger pull-right">
+                                    <label>Category 3</label>
+                                     <select class="form-control">
+                                        <option>Category 1</option>
+                                        <option>Category 2</option>
+                                     </select>
+                                 </div>
+                                 </div>
+                                <div class="col-md-12">
+                                <div class="form-group">
+                                    <button type="button" value="Cancel" class="btn btn-danger pull-right" style="margin-right:0 !important;">Cancel</button>
                                     <input type="submit" value="Save" class="btn btn-primary pull-right">
                                 </div>
-                            </div>
-
-                        </div>
+                                </div>
+                            </form>
+                           
+                        
+                    </div>
 
                     </div>
                 </div>

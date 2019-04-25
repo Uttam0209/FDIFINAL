@@ -65,7 +65,7 @@
                         </div>
                         <div class="clearfix"></div>
                         <div class="table-wraper">
-                            <asp:GridView ID="gvcompanydetail" runat="server" Width="100%" Class="commonAjaxTbl table display responsive no-wrap table-hover manage-user Grid" AutoGenerateColumns="false" AllowPaging="true"
+                            <asp:GridView ID="gvcompanydetail" runat="server" Width="100%" Class="commonAjaxTbl master-company-table table display responsive no-wrap table-hover manage-user Grid" AutoGenerateColumns="false" AllowPaging="true"
                                 OnPageIndexChanging="OnPageIndexChanging" PageSize="25" AllowSorting="true" OnSorting="OnSorting" OnRowCommand="gvcompanydetail_RowCommand" OnRowDataBound="OnRowDataBound">
                                 <PagerStyle HorizontalAlign="Center" CssClass="GridPager" />
                                 <Columns>
@@ -86,6 +86,11 @@
                                                                             <asp:GridView ID="gvunit" runat="server" AutoGenerateColumns="false" Class="table table-hover ChildGrid">
                                                                                 <PagerStyle HorizontalAlign="Center" CssClass="GridPager" />
                                                                                 <Columns>
+                                                                                  <asp:TemplateField>
+                                                                                        <ItemTemplate>
+                                                                                            
+                                                                                        </ItemTemplate>
+                                                                                    </asp:TemplateField>
                                                                                     <asp:TemplateField HeaderText="S.No">
                                                                                         <ItemTemplate>
                                                                                             <%#Container.DataItemIndex+1 %>
