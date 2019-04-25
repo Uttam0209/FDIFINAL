@@ -146,7 +146,7 @@ public partial class Admin_MasterPage : System.Web.UI.MasterPage
         {
             if (Session["CompanyRefNo"].ToString().Substring(0, 1) == "F")
             {
-                DataTable dtFactory = Lo.RetriveMasterData(0, Session["CompanyRefNo"].ToString(), "", 0, "", "", "FactoryName");
+                DataTable dtFactory = Lo.RetriveMasterData(0, Session["CompanyRefNo"].ToString(), "", 0, "", "", "FactoryJoin");
                 if (dtFactory.Rows.Count > 0)
                 {
 
@@ -157,11 +157,11 @@ public partial class Admin_MasterPage : System.Web.UI.MasterPage
             }
             else if (Session["CompanyRefNo"].ToString().Substring(0, 1) == "U")
             {
-                DataTable dtUnit = Lo.RetriveMasterData(0, Session["CompanyRefNo"].ToString(), "", 0, "", "", "UnitName");
+                DataTable dtUnit = Lo.RetriveMasterData(0, Session["CompanyRefNo"].ToString(), "", 0, "", "", "UnitJoin");
                 if (dtUnit.Rows.Count > 0)
                 {
                     lblfactory.Text = "Division/Plant - " + dtUnit.Rows[0]["FactoryName"].ToString();
-                    lblunit.Text = "UnitName - " + dtUnit.Rows[0]["UnitName"].ToString();
+                    lblunit.Text = "Unit - " + dtUnit.Rows[0]["UnitName"].ToString();
                     sType = dtUnit.Rows[0]["CompanyRefNo"].ToString();
                 }
             }
@@ -172,8 +172,15 @@ public partial class Admin_MasterPage : System.Web.UI.MasterPage
             DataTable dtCompany = Lo.RetriveMasterData(0, sType, "", 0, "", "", "InterestedArea");
             if (dtCompany.Rows.Count > 0)
             {
-
-                lblmastercompany.Text = "Company - " + dtCompany.Rows[0]["CompanyName"].ToString();
+                if (lbltypelogin.Text == "SuperAdmin")
+                {
+                    lblmastercompany.Text = "";
+                }
+                else
+                {
+                    lblmastercompany.Text = "Company - " + dtCompany.Rows[0]["CompanyName"].ToString();
+                }
+                
 
                 strInterestedArea = dtCompany.Rows[0]["InterestedArea"].ToString();
                 strMasterAlloted = dtCompany.Rows[0]["MasterAllowed"].ToString();
