@@ -32,6 +32,7 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
             BindGridView();
         }
     }
+    #region Load
     protected void BindGridView(string sortExpression = null)
     {
         try
@@ -120,270 +121,6 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
         get { return ViewState["SortDirection"] != null ? ViewState["SortDirection"].ToString() : "ASC"; }
         set { ViewState["SortDirection"] = value; }
     }
-    protected void OnPageIndexChanging(object sender, GridViewPageEventArgs e)
-    {
-        gvcompanydetail.PageIndex = e.NewPageIndex;
-        this.BindGridView();
-    }
-    protected void OnSorting(object sender, GridViewSortEventArgs e)
-    {
-        this.BindGridView(e.SortExpression);
-    }
-    protected void gvcompanydetail_RowCommand(object sender, GridViewCommandEventArgs e)
-    {
-        if (e.CommandName == "EditComp")
-        {
-            Response.Redirect("Add-Company?mpath" + objEnc.EncryptData("CompanyNoOneCanTraceITCauseItValidatate") + "&mcurrentID=" + (objEnc.EncryptData(e.CommandArgument.ToString())));
-        }
-        else if (e.CommandName == "ViewComp")
-        {
-            DataTable DtView = Lo.RetriveGridViewCompany(e.CommandArgument.ToString(), "", "", "CompanyMainGridView");
-            if (DtView.Rows.Count > 0)
-            {
-                lblrefno.Text = DtView.Rows[0]["CompanyRefNo"].ToString();
-                lbladdress.Text = DtView.Rows[0]["Address"].ToString();
-                lblcinno.Text = DtView.Rows[0]["CINNo"].ToString();
-                lblceoname.Text = DtView.Rows[0]["CEOName"].ToString();
-                lblcompanyname.Text = DtView.Rows[0]["CompanyName"].ToString();
-                lblcontactperemailid.Text = DtView.Rows[0]["ContactPersonEmailID"].ToString();
-                lblcontactpersonmobno.Text = DtView.Rows[0]["ContactPersonContactNo"].ToString();
-                lblcontactpersonname.Text = DtView.Rows[0]["ContactPersonName"].ToString();
-                lblceoemail.Text = DtView.Rows[0]["CEOEmail"].ToString();
-                lbldefactivity.Text = DtView.Rows[0]["IsDefenceActivity"].ToString();
-                //  lblgstno.Text = DtView.Rows[0]["GSTNo"].ToString();
-                lbljointventure.Text = DtView.Rows[0]["IsJointVenture"].ToString();
-                lblpanno.Text = DtView.Rows[0]["PANNo"].ToString();
-                lblpincode.Text = DtView.Rows[0]["Pincode"].ToString();
-                lblstate.Text = DtView.Rows[0]["StateName"].ToString();
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "changePass", "showPopup();", true);
-            }
-        }
-        else if (e.CommandName == "DeleteComp")
-        {
-            try
-            {
-                string DeleteRec = Lo.DeleteRecord(Convert.ToInt64(e.CommandArgument.ToString()));
-                if (DeleteRec == "true")
-                {
-                    BindGridView();
-                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record delete succssfully.')", true);
-                }
-                else
-                {
-                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not deleted.')", true);
-                }
-            }
-            catch (Exception ex)
-            {
-                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not deleted.')", true);
-            }
-        }
-        else if (e.CommandName == "SendLogin")
-        {
-            try
-            {
-                GridViewRow gvr = (GridViewRow)((Control)e.CommandSource).NamingContainer;
-                int rowIndex = gvr.RowIndex;
-                RefNo = (gvcompanydetail.Rows[rowIndex].FindControl("lblrefno") as Label).Text;
-                UserName = (gvcompanydetail.Rows[rowIndex].FindControl("lblnodelname") as Label).Text;
-                UserEmail = (gvcompanydetail.Rows[rowIndex].FindControl("hfemail") as HiddenField).Value;
-                SendEmailCode();
-            }
-            catch (Exception ex)
-            {
-                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Mail not send error occured.')", true);
-            }
-        }
-    }
-    protected void Search_Click(object sender, EventArgs e)
-    {
-        if (txtserch.Text != "")
-        {
-            DataTable DtGrid = Lo.SearchResultCompany(Co.RSQandSQLInjection("'%" + txtserch.Text + "%'", "hard"));
-            if (DtGrid.Rows.Count > 0)
-            {
-                gvcompanydetail.DataSource = DtGrid;
-                gvcompanydetail.DataBind();
-
-                lbltotal.Text = DtGrid.Rows.Count.ToString();
-            }
-        }
-        else
-        {
-            BindGridView();
-        }
-    }
-    protected void OnRowDataBound(object sender, GridViewRowEventArgs e)
-    {
-        if (e.Row.RowType == DataControlRowType.DataRow)
-        {
-            Label lblrefno = e.Row.FindControl("lblrefno") as Label;
-            GridView gvfactory = e.Row.FindControl("gvfactory") as GridView;
-            DataTable DtGrid = Lo.RetriveGridViewCompany(lblrefno.Text, "", "", "InnerGridViewFactory");
-
-            if (DtGrid.Rows.Count > 0)
-            {
-                gvfactory.DataSource = DtGrid;
-                gvfactory.DataBind();
-            }
-
-            DataTable dtCompany = Lo.RetriveMasterData(0, "", "", 0, currentPage, "", "btn");
-            if (dtCompany.Rows.Count > 0)
-            {
-                if (dtCompany.Rows[0]["Company"].ToString() == "1")
-                {
-                    LinkButton lbledit = e.Row.FindControl("lbledit") as LinkButton;
-                    LinkButton lblview = (LinkButton)e.Row.FindControl("lblview") as LinkButton;
-                    LinkButton lbldel = (LinkButton)e.Row.FindControl("lbldel") as LinkButton;
-                    lbledit.Visible = false;
-                    lblview.Visible = true;
-                    lbldel.Visible = false;
-                    //LinkButton lbleditfactory = (LinkButton)e.Row.FindControl("lbleditfactory");
-                    //LinkButton lblviewfactory = (LinkButton)e.Row.FindControl("lblviewfactory");
-                    //LinkButton lbldelfactory = (LinkButton)e.Row.FindControl("lbldelfactory");
-                    //if (lbleditfactory != null)
-                    //{
-                    //lbleditfactory.Visible = false;
-                    //lblviewfactory.Visible = true;
-                    //lbldelfactory.Visible = false;
-                    // }
-
-
-
-
-                }
-                else if (dtCompany.Rows[0]["Company"].ToString() == "2")
-                {
-                    LinkButton lbledit = (LinkButton)e.Row.FindControl("lbledit") as LinkButton;
-                    LinkButton lblview = (LinkButton)e.Row.FindControl("lblview") as LinkButton;
-                    LinkButton lbldel = (LinkButton)e.Row.FindControl("lbldel") as LinkButton;
-                    lbledit.Visible = true;
-                    lblview.Visible = true;
-                    lbldel.Visible = false;
-                    LinkButton lbleditfactory = (LinkButton)e.Row.FindControl("lbleditfactory") as LinkButton;
-                    LinkButton lblviewfactory = (LinkButton)e.Row.FindControl("lblviewfactory") as LinkButton;
-                    LinkButton lbldelfactory = (LinkButton)e.Row.FindControl("lbldelfactory") as LinkButton;
-                    // if (lbleditfactory != null)
-                    // {
-                    //lbleditfactory.Visible = true;
-                    //lblviewfactory.Visible = true;
-                    //lbldelfactory.Visible = false;
-                    // }
-                }
-                else if (dtCompany.Rows[0]["Company"].ToString() == "3")
-                {
-                    LinkButton lbledit = (LinkButton)e.Row.FindControl("lbledit") as LinkButton;
-                    LinkButton lblview = (LinkButton)e.Row.FindControl("lblview") as LinkButton;
-                    LinkButton lbldel = (LinkButton)e.Row.FindControl("lbldel") as LinkButton;
-                    lbledit.Visible = true;
-                    lblview.Visible = true;
-                    lbldel.Visible = true;
-                    //LinkButton lbleditfactory = (LinkButton)e.Row.FindControl("lbleditfactory");
-                    //LinkButton lblviewfactory = (LinkButton)e.Row.FindControl("lblviewfactory");
-                    //LinkButton lbldelfactory = (LinkButton)e.Row.FindControl("lbldelfactory");
-                    //  if (lbleditfactory != null)
-                    //  {
-                    //lbleditfactory.Visible = true;
-                    //lblviewfactory.Visible = true;
-                    //lbldelfactory.Visible = true;
-                    // }
-
-                }
-                else if (dtCompany.Rows[0]["Factory"].ToString() == "2")
-                {
-                    // btndemofirst.Visible = true;
-                    //  btnDelete.Visible = false;
-                }
-                else if (dtCompany.Rows[0]["Factory"].ToString() == "3")
-                {
-                    //   btndemofirst.Visible = true;
-                    //   btnDelete.Visible = true;
-                }
-                else if (dtCompany.Rows[0]["Unit"].ToString() == "2")
-                {
-                    //     btndemofirst.Visible = true;
-                    //     btnDelete.Visible = false;
-                }
-                else if (dtCompany.Rows[0]["Unit"].ToString() == "3")
-                {
-                    //     btndemofirst.Visible = true;
-                    //    btnDelete.Visible = true;
-                }
-                else if (dtCompany.Rows[0]["SuperAdmin"].ToString() == "1")
-                {
-                    LinkButton lbledit = (LinkButton)e.Row.FindControl("lbledit") as LinkButton;
-                    LinkButton lblview = (LinkButton)e.Row.FindControl("lblview") as LinkButton;
-                    LinkButton lbldel = (LinkButton)e.Row.FindControl("lbldel") as LinkButton;
-                    lbledit.Visible = true;
-                    lblview.Visible = true;
-                    lbldel.Visible = true;
-                    //  LinkButton lbleditfactory = (LinkButton)e.Row.FindControl("lbleditfactory");
-                    //  LinkButton lblviewfactory = (LinkButton)e.Row.FindControl("lblviewfactory");
-                    //  LinkButton lbldelfactory = (LinkButton)e.Row.FindControl("lbldelfactory");
-                    ////  if (lbleditfactory != null)
-                    ////  {
-                    //      lbleditfactory.Visible = true;
-                    //      lblviewfactory.Visible = true;
-                    //      lbldelfactory.Visible = true;
-                    ////  }
-                }
-            }
-        }
-    }
-    protected void gvfactory_OnRowDataBound(object sender, GridViewRowEventArgs e)
-    {
-        if (e.Row.RowType == DataControlRowType.DataRow)
-        {
-            Label lblfactroyrefno = e.Row.FindControl("lblfactoryrefno") as Label;
-            GridView gvunit = e.Row.FindControl("gvunit") as GridView;
-
-            DataTable DtGrid = Lo.RetriveGridViewCompany("", lblfactroyrefno.Text, "", "InnerGridViewUnit");
-            if (DtGrid.Rows.Count > 0)
-            {
-                gvunit.DataSource = DtGrid;
-                gvunit.DataBind();
-            }
-        }
-    }
-    #region Send Mail
-    public void SendEmailCode()
-    {
-        try
-        {
-            string body;
-            using (StreamReader reader = new StreamReader(Server.MapPath("~/emailPage/GeneratePassword.html")))
-            {
-                body = reader.ReadToEnd();
-            }
-            body = body.Replace("{UserName}", UserName);
-            body = body.Replace("{refno}", objEnc.EncryptData(RefNo));
-            body = body.Replace("{mcurid}", Resturl(56));
-            SendMail s;
-            s = new SendMail();
-            s.CreateMail("aeroindia-ddp@gov.in", UserEmail, "Create Password", body);
-            s.sendMail();
-            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Password change mail send successfully.')", true);
-        }
-        catch (Exception ex)
-        {
-            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('" + ex.Message + "')", true);
-        }
-
-    }
-    #endregion
-    #region ReturnUrl Long"
-    public string Resturl(int length)
-    {
-        const string valid = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
-        StringBuilder res = new StringBuilder();
-        Random rnd = new Random();
-        while (0 < length--)
-        {
-            res.Append(valid[rnd.Next(valid.Length)]);
-        }
-        return res.ToString();
-    }
-    #endregion
     protected void BindCompany()
     {
         if (mType == "SuperAdmin")
@@ -571,6 +308,394 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
             }
         }
     }
+    #endregion
+    #region PageIndex or Sorting
+    protected void OnPageIndexChanging(object sender, GridViewPageEventArgs e)
+    {
+        gvcompanydetail.PageIndex = e.NewPageIndex;
+        this.BindGridView();
+    }
+    protected void OnSorting(object sender, GridViewSortEventArgs e)
+    {
+        this.BindGridView(e.SortExpression);
+    }
+    #endregion
+    #region RowCommand
+    protected void gvcompanydetail_RowCommand(object sender, GridViewCommandEventArgs e)
+    {
+        if (e.CommandName == "EditComp")
+        {
+            GridViewRow gvr = (GridViewRow)((Control)e.CommandSource).NamingContainer;
+            int rowIndex = gvr.RowIndex;
+            string Role = (gvcompanydetail.Rows[rowIndex].FindControl("lblcompanyrole") as Label).Text;
+            Response.Redirect("Add-Company?mrcreaterole=" + objEnc.EncryptData(Role) + "&mcurrentcompRefNo=" + (objEnc.EncryptData(e.CommandArgument.ToString())));
+        }
+        else if (e.CommandName == "ViewComp")
+        {
+            DataTable DtView = Lo.RetriveGridViewCompany(e.CommandArgument.ToString(), "", "", "CompanyMainGridView");
+            if (DtView.Rows.Count > 0)
+            {
+                lblrefno.Text = DtView.Rows[0]["CompanyRefNo"].ToString();
+                lbladdress.Text = DtView.Rows[0]["Address"].ToString();
+                lblcinno.Text = DtView.Rows[0]["CINNo"].ToString();
+                lblceoname.Text = DtView.Rows[0]["CEOName"].ToString();
+                lblcompanyname.Text = DtView.Rows[0]["CompanyName"].ToString();
+                lblcontactperemailid.Text = DtView.Rows[0]["ContactPersonEmailID"].ToString();
+                lblcontactpersonmobno.Text = DtView.Rows[0]["ContactPersonContactNo"].ToString();
+                lblcontactpersonname.Text = DtView.Rows[0]["ContactPersonName"].ToString();
+                lblceoemail.Text = DtView.Rows[0]["CEOEmail"].ToString();
+                //  lbldefactivity.Text = DtView.Rows[0]["IsDefenceActivity"].ToString();
+                //  lblgstno.Text = DtView.Rows[0]["GSTNo"].ToString();
+                // lbljointventure.Text = DtView.Rows[0]["IsJointVenture"].ToString();
+                lblpanno.Text = DtView.Rows[0]["PANNo"].ToString();
+                lblpincode.Text = DtView.Rows[0]["Pincode"].ToString();
+                lblstate.Text = DtView.Rows[0]["StateName"].ToString();
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "changePass", "showPopup();", true);
+            }
+        }
+        else if (e.CommandName == "DeleteComp")
+        {
+            try
+            {
+                string DeleteRec = Lo.DeleteRecord(e.CommandArgument.ToString(), "InActiveCompany");
+                if (DeleteRec == "true")
+                {
+                    BindGridView();
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record delete succssfully.')", true);
+                }
+                else
+                {
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not deleted.')", true);
+                }
+            }
+            catch (Exception ex)
+            {
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not deleted.')", true);
+            }
+        }
+        else if (e.CommandName == "SendLogin")
+        {
+            try
+            {
+                GridViewRow gvr = (GridViewRow)((Control)e.CommandSource).NamingContainer;
+                int rowIndex = gvr.RowIndex;
+                RefNo = (gvcompanydetail.Rows[rowIndex].FindControl("lblrefno") as Label).Text;
+                UserName = (gvcompanydetail.Rows[rowIndex].FindControl("lblnodelname") as Label).Text;
+                UserEmail = (gvcompanydetail.Rows[rowIndex].FindControl("hfemail") as HiddenField).Value;
+                SendEmailCode();
+            }
+            catch (Exception ex)
+            {
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Mail not send error occured.')", true);
+            }
+        }
+    }
+    protected void gvfactory_RowCommand(object sender, GridViewCommandEventArgs e)
+    {
+        if (e.CommandName == "EditfactoryComp")
+        {
+            GridViewRow gvr = (GridViewRow)((Control)e.CommandSource).NamingContainer;
+            int rowIndex = gvr.RowIndex;
+            string Role = (gvcompanydetail.Rows[rowIndex].FindControl("lblfactoryrole") as Label).Text;
+            Response.Redirect("Add-Company?mrcreaterole=" + objEnc.EncryptData(Role) + "&mcurrentFactroyRefNo=" + (objEnc.EncryptData(e.CommandArgument.ToString())));
+        }
+        else if (e.CommandName == "ViewfactoryComp")
+        {
+            DataTable DtView = Lo.RetriveGridViewCompany("", e.CommandArgument.ToString(), "", "DisplayFactory");
+            if (DtView.Rows.Count > 0)
+            {
+                lblrefno.Text = DtView.Rows[0]["FactoryRefNo"].ToString();
+                lbladdress.Text = DtView.Rows[0]["FactoryAddress"].ToString();
+                lblcinno.Text = DtView.Rows[0]["FactoryCINNo"].ToString();
+                lblcompanyname.Text = DtView.Rows[0]["FactoryName"].ToString();
+                lblcontactperemailid.Text = DtView.Rows[0]["FactoryEmailId"].ToString();
+                lblcontactpersonmobno.Text = DtView.Rows[0]["FactoryContactNo"].ToString();
+                lblcontactpersonname.Text = DtView.Rows[0]["FactoryNodalPerson"].ToString();
+                lblpanno.Text = DtView.Rows[0]["FactoryPANNo"].ToString();
+                lblpincode.Text = DtView.Rows[0]["FactoryPincode"].ToString();
+                lblstate.Text = DtView.Rows[0]["StateName"].ToString();
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "divfactoryshow", "showPopup();", true);
+            }
+        }
+        else if (e.CommandName == "DeletefactoryComp")
+        {
+            try
+            {
+                string DeleteRec = Lo.DeleteRecord(e.CommandArgument.ToString(), "InActiveFactory");
+                if (DeleteRec == "true")
+                {
+                    BindGridView();
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record delete succssfully.')", true);
+                }
+                else
+                {
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not deleted.')", true);
+                }
+            }
+            catch (Exception ex)
+            {
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not deleted.')", true);
+            }
+        }
+        else if (e.CommandName == "factorySendLogin")
+        {
+            try
+            {
+                GridViewRow gvr = (GridViewRow)((Control)e.CommandSource).NamingContainer;
+                int rowIndex = gvr.RowIndex;
+                RefNo = (gvcompanydetail.Rows[rowIndex].FindControl("lblrefno") as Label).Text;
+                UserName = (gvcompanydetail.Rows[rowIndex].FindControl("lblnodelname") as Label).Text;
+                UserEmail = (gvcompanydetail.Rows[rowIndex].FindControl("hfemail") as HiddenField).Value;
+                SendEmailCode();
+            }
+            catch (Exception ex)
+            {
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Mail not send error occured.')", true);
+            }
+        }
+    }
+    protected void gvunit_RowCommand(object sender, GridViewCommandEventArgs e)
+    {
+        if (e.CommandName == "unitEditComp")
+        {
+            GridViewRow gvr = (GridViewRow)((Control)e.CommandSource).NamingContainer;
+            int rowIndex = gvr.RowIndex;
+            string Role = (gvcompanydetail.Rows[rowIndex].FindControl("lblunitrole") as Label).Text;
+            Response.Redirect("Add-Company?mrcreaterole=" + objEnc.EncryptData(Role) + "&mcurrentUnitRefNo=" + (objEnc.EncryptData(e.CommandArgument.ToString())));
+        }
+        else if (e.CommandName == "unitViewComp")
+        {
+            DataTable DtView = Lo.RetriveGridViewCompany("", "", e.CommandArgument.ToString(), "GVUnitID");
+            if (DtView.Rows.Count > 0)
+            {
+                lblrefno.Text = DtView.Rows[0]["UnitRefNo"].ToString();
+                lbladdress.Text = DtView.Rows[0]["UnitAddress"].ToString();
+                lblcinno.Text = DtView.Rows[0]["CINNo"].ToString();
+                lblcompanyname.Text = DtView.Rows[0]["UnitName"].ToString();
+                lblcontactperemailid.Text = DtView.Rows[0]["UnitEmailId"].ToString();
+                lblcontactpersonmobno.Text = DtView.Rows[0]["UnitContactNo"].ToString();
+                lblcontactpersonname.Text = DtView.Rows[0]["UnitNodalPerson"].ToString();
+                lblpincode.Text = DtView.Rows[0]["UnitPincode"].ToString();
+                lblstate.Text = DtView.Rows[0]["StateName"].ToString();
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "divunitshow", "showPopup();", true);
+            }
+        }
+        else if (e.CommandName == "unitdel")
+        {
+            try
+            {
+                string DeleteRec = Lo.DeleteRecord(e.CommandArgument.ToString(), "InActiveUnit");
+                if (DeleteRec == "true")
+                {
+                    BindGridView();
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record delete succssfully.')", true);
+                }
+                else
+                {
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not deleted.')", true);
+                }
+            }
+            catch (Exception ex)
+            {
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not deleted.')", true);
+            }
+        }
+        else if (e.CommandName == "unitSendLogin")
+        {
+            try
+            {
+                GridViewRow gvr = (GridViewRow)((Control)e.CommandSource).NamingContainer;
+                int rowIndex = gvr.RowIndex;
+                RefNo = (gvcompanydetail.Rows[rowIndex].FindControl("lblrefno") as Label).Text;
+                UserName = (gvcompanydetail.Rows[rowIndex].FindControl("lblnodelname") as Label).Text;
+                UserEmail = (gvcompanydetail.Rows[rowIndex].FindControl("hfemail") as HiddenField).Value;
+                SendEmailCode();
+            }
+            catch (Exception ex)
+            {
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Mail not send error occured.')", true);
+            }
+        }
+    }
+    #endregion
+    #region RowDatabound
+    protected void OnRowDataBound(object sender, GridViewRowEventArgs e)
+    {
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            Label lblrefno = e.Row.FindControl("lblrefno") as Label;
+            GridView gvfactory = e.Row.FindControl("gvfactory") as GridView;
+            DataTable DtGrid = Lo.RetriveGridViewCompany(lblrefno.Text, "", "", "InnerGridViewFactory");
+
+            if (DtGrid.Rows.Count > 0)
+            {
+                gvfactory.DataSource = DtGrid;
+                gvfactory.DataBind();
+            }
+
+            DataTable dtCompany = Lo.RetriveMasterData(0, "", "", 0, currentPage, "", "btn");
+            if (dtCompany.Rows.Count > 0)
+            {
+                if (dtCompany.Rows[0]["Company"].ToString() == "1")
+                {
+                    LinkButton lbledit = e.Row.FindControl("lbledit") as LinkButton;
+                    LinkButton lblview = (LinkButton)e.Row.FindControl("lblview") as LinkButton;
+                    LinkButton lbldel = (LinkButton)e.Row.FindControl("lbldel") as LinkButton;
+                    lbledit.Visible = false;
+                    lblview.Visible = true;
+                    lbldel.Visible = false;
+                    //LinkButton lbleditfactory = (LinkButton)e.Row.FindControl("lbleditfactory");
+                    //LinkButton lblviewfactory = (LinkButton)e.Row.FindControl("lblviewfactory");
+                    //LinkButton lbldelfactory = (LinkButton)e.Row.FindControl("lbldelfactory");
+                    //if (lbleditfactory != null)
+                    //{
+                    //lbleditfactory.Visible = false;
+                    //lblviewfactory.Visible = true;
+                    //lbldelfactory.Visible = false;
+                    // }
+
+
+
+
+                }
+                else if (dtCompany.Rows[0]["Company"].ToString() == "2")
+                {
+                    LinkButton lbledit = (LinkButton)e.Row.FindControl("lbledit") as LinkButton;
+                    LinkButton lblview = (LinkButton)e.Row.FindControl("lblview") as LinkButton;
+                    LinkButton lbldel = (LinkButton)e.Row.FindControl("lbldel") as LinkButton;
+                    lbledit.Visible = true;
+                    lblview.Visible = true;
+                    lbldel.Visible = false;
+                    LinkButton lbleditfactory = (LinkButton)e.Row.FindControl("lbleditfactory") as LinkButton;
+                    LinkButton lblviewfactory = (LinkButton)e.Row.FindControl("lblviewfactory") as LinkButton;
+                    LinkButton lbldelfactory = (LinkButton)e.Row.FindControl("lbldelfactory") as LinkButton;
+                    // if (lbleditfactory != null)
+                    // {
+                    //lbleditfactory.Visible = true;
+                    //lblviewfactory.Visible = true;
+                    //lbldelfactory.Visible = false;
+                    // }
+                }
+                else if (dtCompany.Rows[0]["Company"].ToString() == "3")
+                {
+                    LinkButton lbledit = (LinkButton)e.Row.FindControl("lbledit") as LinkButton;
+                    LinkButton lblview = (LinkButton)e.Row.FindControl("lblview") as LinkButton;
+                    LinkButton lbldel = (LinkButton)e.Row.FindControl("lbldel") as LinkButton;
+                    lbledit.Visible = true;
+                    lblview.Visible = true;
+                    lbldel.Visible = true;
+                    //LinkButton lbleditfactory = (LinkButton)e.Row.FindControl("lbleditfactory");
+                    //LinkButton lblviewfactory = (LinkButton)e.Row.FindControl("lblviewfactory");
+                    //LinkButton lbldelfactory = (LinkButton)e.Row.FindControl("lbldelfactory");
+                    //  if (lbleditfactory != null)
+                    //  {
+                    //lbleditfactory.Visible = true;
+                    //lblviewfactory.Visible = true;
+                    //lbldelfactory.Visible = true;
+                    // }
+
+                }
+                else if (dtCompany.Rows[0]["Factory"].ToString() == "2")
+                {
+                    // btndemofirst.Visible = true;
+                    //  btnDelete.Visible = false;
+                }
+                else if (dtCompany.Rows[0]["Factory"].ToString() == "3")
+                {
+                    //   btndemofirst.Visible = true;
+                    //   btnDelete.Visible = true;
+                }
+                else if (dtCompany.Rows[0]["Unit"].ToString() == "2")
+                {
+                    //     btndemofirst.Visible = true;
+                    //     btnDelete.Visible = false;
+                }
+                else if (dtCompany.Rows[0]["Unit"].ToString() == "3")
+                {
+                    //     btndemofirst.Visible = true;
+                    //    btnDelete.Visible = true;
+                }
+                else if (dtCompany.Rows[0]["SuperAdmin"].ToString() == "1")
+                {
+                    LinkButton lbledit = (LinkButton)e.Row.FindControl("lbledit") as LinkButton;
+                    LinkButton lblview = (LinkButton)e.Row.FindControl("lblview") as LinkButton;
+                    LinkButton lbldel = (LinkButton)e.Row.FindControl("lbldel") as LinkButton;
+                    lbledit.Visible = true;
+                    lblview.Visible = true;
+                    lbldel.Visible = true;
+                    //  LinkButton lbleditfactory = (LinkButton)e.Row.FindControl("lbleditfactory");
+                    //  LinkButton lblviewfactory = (LinkButton)e.Row.FindControl("lblviewfactory");
+                    //  LinkButton lbldelfactory = (LinkButton)e.Row.FindControl("lbldelfactory");
+                    ////  if (lbleditfactory != null)
+                    ////  {
+                    //      lbleditfactory.Visible = true;
+                    //      lblviewfactory.Visible = true;
+                    //      lbldelfactory.Visible = true;
+                    ////  }
+                }
+            }
+            GridView gvFactoryRow = e.Row.FindControl("gvfactory") as GridView;
+            gvFactoryRow.RowCommand += new GridViewCommandEventHandler(gvfactory_RowCommand);
+        }
+    }
+    protected void gvfactory_OnRowDataBound(object sender, GridViewRowEventArgs e)
+    {
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            Label lblfactroyrefno = e.Row.FindControl("lblfactoryrefno") as Label;
+            GridView gvunit = e.Row.FindControl("gvunit") as GridView;
+
+            DataTable DtGrid = Lo.RetriveGridViewCompany("", lblfactroyrefno.Text, "", "InnerGridViewUnit");
+            if (DtGrid.Rows.Count > 0)
+            {
+                gvunit.DataSource = DtGrid;
+                gvunit.DataBind();
+            }
+            GridView gvUnitRow = e.Row.FindControl("gvunit") as GridView;
+            gvUnitRow.RowCommand += new GridViewCommandEventHandler(gvunit_RowCommand);
+        }
+    }
+    #endregion
+    #region Send Mail
+    public void SendEmailCode()
+    {
+        try
+        {
+            string body;
+            using (StreamReader reader = new StreamReader(Server.MapPath("~/emailPage/GeneratePassword.html")))
+            {
+                body = reader.ReadToEnd();
+            }
+            body = body.Replace("{UserName}", UserName);
+            body = body.Replace("{refno}", objEnc.EncryptData(RefNo));
+            body = body.Replace("{mcurid}", Resturl(56));
+            SendMail s;
+            s = new SendMail();
+            s.CreateMail("aeroindia-ddp@gov.in", UserEmail, "Create Password", body);
+            s.sendMail();
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Password change mail send successfully.')", true);
+        }
+        catch (Exception ex)
+        {
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('" + ex.Message + "')", true);
+        }
+
+    }
+    #endregion
+    #region ReturnUrl Long"
+    public string Resturl(int length)
+    {
+        const string valid = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+        StringBuilder res = new StringBuilder();
+        Random rnd = new Random();
+        while (0 < length--)
+        {
+            res.Append(valid[rnd.Next(valid.Length)]);
+        }
+        return res.ToString();
+    }
+    #endregion
+    #region DropDownList Code
     protected void ddlcompany_OnSelectedIndexChanged(object sender, EventArgs e)
     {
         if (ddlcompany.SelectedItem.Text != "All")
@@ -711,4 +836,23 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
             ddlunit.Visible = false;
         }
     }
+    protected void Search_Click(object sender, EventArgs e)
+    {
+        if (txtserch.Text != "")
+        {
+            DataTable DtGrid = Lo.SearchResultCompany(Co.RSQandSQLInjection("'%" + txtserch.Text + "%'", "hard"));
+            if (DtGrid.Rows.Count > 0)
+            {
+                gvcompanydetail.DataSource = DtGrid;
+                gvcompanydetail.DataBind();
+
+                lbltotal.Text = DtGrid.Rows.Count.ToString();
+            }
+        }
+        else
+        {
+            BindGridView();
+        }
+    }
+    #endregion
 }
