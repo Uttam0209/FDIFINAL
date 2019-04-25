@@ -90,7 +90,7 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
                 tpanno.Text = DtView.Rows[0]["PANNo"].ToString();
                 thssnono.Text = DtView.Rows[0]["HSNO"].ToString();
                 txtCEOEmailId.Text = DtView.Rows[0]["CEOEmail"].ToString();
-                //companyengaged.SelectedItem.Value = DtView.Rows[0]["IsDefenceActivity"].ToString();
+                companyengaged.SelectedItem.Value = DtView.Rows[0]["IsDefenceActivity"].ToString();
                 lbltypelogin = DtView.Rows[0]["Role"].ToString();
                 if (lbltypelogin == "SuperAdmin" || lbltypelogin == "Admin")
                 {
