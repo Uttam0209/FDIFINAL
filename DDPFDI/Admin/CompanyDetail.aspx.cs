@@ -28,24 +28,31 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
     {
         if (!IsPostBack)
         {
-           
-            if (Request.QueryString["id"] != null)
+
+            try
             {
-                string id = Request.QueryString["id"].ToString().Replace(" ", "+");
-                lblPageName.Text = objCrypto.DecryptData(id);
+                if (Request.QueryString["id"] != null)
+                {
+                    string id = Request.QueryString["id"].ToString().Replace(" ", "+");
+                    lblPageName.Text = objCrypto.DecryptData(id);
+                }
+                currentPage = System.IO.Path.GetFileName(Request.Url.AbsolutePath);
+                mType = objCrypto.DecryptData(Session["Type"].ToString());
+                mRefNo = Session["CompanyRefNo"].ToString();
+                BindState();
+
+                BindCompany();
+                EditCOde(dtViewDefault);
             }
-            currentPage = System.IO.Path.GetFileName(Request.Url.AbsolutePath);
-            mType = objCrypto.DecryptData(Session["Type"].ToString());
-            mRefNo = Session["CompanyRefNo"].ToString();
-            BindState();
-           
-            BindCompany();
-            EditCOde(dtViewDefault);
+            catch (Exception ex)
+            {
+               Response.RedirectToRoute("Login");
+            }
         }
     }
     protected void EditCOde(DataTable DtView)
     {
-        if (Session["CompanyRefNo"]!= null)
+        if (Session["CompanyRefNo"] != null)
         {
 
             if (DtView.Rows.Count > 0)
@@ -62,6 +69,11 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
                 hfid.Value = DtView.Rows[0]["CompanyID"].ToString();
                 seljvventure.SelectedItem.Value = DtView.Rows[0]["IsJointVenture"].ToString();
                 tcompanyname.Text = DtView.Rows[0]["CompanyName"].ToString();
+                txtMName.Text = DtView.Rows[0]["CompanyName"].ToString();
+                divmcName.Visible = false;
+                divmName.Visible = false;
+                lblMName.Text = "Company";
+                lblCName.Text = "Company/Organization Name";
                 tcompanyname.ReadOnly = true;
                 taddress.Text = DtView.Rows[0]["Address"].ToString();
 
@@ -78,7 +90,7 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
                 tpanno.Text = DtView.Rows[0]["PANNo"].ToString();
                 thssnono.Text = DtView.Rows[0]["HSNO"].ToString();
                 txtCEOEmailId.Text = DtView.Rows[0]["CEOEmail"].ToString();
-                companyengaged.SelectedItem.Value = DtView.Rows[0]["IsDefenceActivity"].ToString();
+                //companyengaged.SelectedItem.Value = DtView.Rows[0]["IsDefenceActivity"].ToString();
                 lbltypelogin = DtView.Rows[0]["Role"].ToString();
                 if (lbltypelogin == "SuperAdmin" || lbltypelogin == "Admin")
                 {
@@ -92,7 +104,7 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
                 }
                 else
                 {
-                    DivJointVenture.Visible = true;
+                    DivJointVenture.Visible = false;
                     DivGST.Visible = true;
                     DivHSNO.Visible = true;
                     DivPAN.Visible = true;
@@ -102,7 +114,7 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
                 DataTable dtCompany = Lo.RetriveMasterData(0, "", "", 0, currentPage, "", "btn");
                 if (dtCompany.Rows.Count > 0)
                 {
-                    if (dtCompany.Rows[0]["Admin"].ToString()=="2")
+                    if (dtCompany.Rows[0]["Admin"].ToString() == "2")
                     {
                         btndemofirst.Visible = true;
                         btnDelete.Visible = false;
@@ -112,7 +124,7 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
                         btndemofirst.Visible = true;
                         btnDelete.Visible = true;
                     }
-                    else if (dtCompany.Rows[0]["Company"].ToString()=="2")
+                    else if (dtCompany.Rows[0]["Company"].ToString() == "2")
                     {
                         btndemofirst.Visible = true;
                         btnDelete.Visible = false;
@@ -122,7 +134,7 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
                         btndemofirst.Visible = true;
                         btnDelete.Visible = true;
                     }
-                    else if (dtCompany.Rows[0]["Factory"].ToString()=="2")
+                    else if (dtCompany.Rows[0]["Factory"].ToString() == "2")
                     {
                         btndemofirst.Visible = true;
                         btnDelete.Visible = false;
@@ -132,7 +144,7 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
                         btndemofirst.Visible = true;
                         btnDelete.Visible = true;
                     }
-                    else if (dtCompany.Rows[0]["Unit"].ToString()=="2")
+                    else if (dtCompany.Rows[0]["Unit"].ToString() == "2")
                     {
                         btndemofirst.Visible = true;
                         btnDelete.Visible = false;
@@ -152,7 +164,7 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
                         btndemofirst.Visible = false;
                         btnDelete.Visible = false;
                     }
-                    
+
                 }
             }
         }
@@ -176,6 +188,11 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
                 hfid.Value = DtView.Rows[0]["FactoryID"].ToString();
                 seljvventure.Visible = false;
                 tcompanyname.Text = DtView.Rows[0]["FactoryName"].ToString();
+                divmcName.Visible = false;
+                divmName.Visible = true;
+                lblMCName.Text = "Divison/Plant Name";
+                txtMCName.Text = DtView.Rows[0]["FactoryName"].ToString();
+                lblCName.Text = "Divison/Plant Name";
                 tcompanyname.ReadOnly = true;
                 taddress.Text = DtView.Rows[0]["FactoryAddress"].ToString();
 
@@ -192,7 +209,6 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
                 tpanno.Text = DtView.Rows[0]["FactoryPANNo"].ToString();
                 thssnono.Text = DtView.Rows[0]["FactoryHSNO"].ToString();
                 DivCEOEmail.Visible = false;
-                companyengaged.Visible = false;
                 lbltypelogin = DtView.Rows[0]["Role"].ToString();
                 if (lbltypelogin == "SuperAdmin" || lbltypelogin == "Admin")
                 {
@@ -201,7 +217,6 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
                     DivHSNO.Visible = false;
                     DivPAN.Visible = false;
                     DivCIN.Visible = false;
-                    DivActivities.Visible = false;
 
                 }
                 else
@@ -289,7 +304,10 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
             {
                 hfid.Value = DtView.Rows[0]["UnitID"].ToString();
                 seljvventure.Visible = false;
+                divmName.Visible = true;
+                divmcName.Visible = true;
                 tcompanyname.Text = DtView.Rows[0]["UnitName"].ToString();
+                lblCName.Text = "Unit Name";
                 tcompanyname.ReadOnly = true;
                 taddress.Text = DtView.Rows[0]["UnitAddress"].ToString();
 
@@ -302,7 +320,6 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
                 temailid.ReadOnly = true;
                 tcontactno.Text = DtView.Rows[0]["UnitContactNo"].ToString();
                 DivCEOEmail.Visible = false;
-                companyengaged.Visible = false;
                 lbltypelogin = DtView.Rows[0]["Role"].ToString();
                 if (lbltypelogin == "SuperAdmin" || lbltypelogin == "Admin")
                 {
@@ -534,23 +551,21 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
     {
         if (mType == "SuperAdmin")
         {
-            DtCompanyDDL = Lo.RetriveMasterData(0, "", "", 0, "", "", "Select");
+            DtCompanyDDL = Lo.RetriveMasterData(0, "", mType, 0, "", "", "Select");
             if (DtCompanyDDL.Rows.Count > 0)
             {
                 Co.FillDropdownlist(ddlcompany, DtCompanyDDL, "CompanyName", "CompanyRefNo");
-                ddlcompany.Items.Insert(0, "All");
                 ddlcompany.Enabled = true;
+                lblSelectCompany.Text = "Company/Organization Name";
             }
             else
             {
+                lblSelectCompany.Text = "Company/Organization Name";
                 ddlcompany.Enabled = false;
             }
 
             ddldivision.Visible = false;
             ddlunit.Visible = false;
-            
-
-           
         }
         else if (mType == "Admin")
         {
@@ -562,21 +577,24 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
             if (DtCompanyDDL.Rows.Count > 0)
             {
                 Co.FillDropdownlist(ddlcompany, DtCompanyDDL, "CompanyName", "CompanyRefNo");
-                ddlcompany.Items.Insert(0, "All");
+                lblSelectCompany.Text = "Company Name";
                 ddlcompany.Enabled = false;
             }
             else
             {
+                lblSelectCompany.Text = "Company Name";
                 ddlcompany.Enabled = false;
             }
-            DtCompanyDDL = Lo.RetriveMasterData(0, ddlcompany.SelectedItem.Value, "Factory", 0, "", "", "CompanyName");
+            DtCompanyDDL = Lo.RetriveMasterData(0, ddlcompany.SelectedItem.Value, "Factory1", 0, "", "", "CompanyName");
             if (DtCompanyDDL.Rows.Count > 0)
             {
                 Co.FillDropdownlist(ddldivision, DtCompanyDDL, "FactoryName", "FactoryRefNo");
                 ddldivision.Items.Insert(0, "All");
                 if (mType == "Company")
                 {
+                    lblselectdivison.Visible = true;
                     ddldivision.Enabled = true;
+                    ddlunit.Visible = false;
                 }
                 else
                 {
@@ -587,19 +605,87 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
             {
                 ddldivision.Enabled = false;
             }
-            DtCompanyDDL = Lo.RetriveMasterData(0, ddldivision.SelectedItem.Value, "Unit", 0, "", "", "CompanyName");
+        }
+        else if (mType == "Factory")
+        {
+            DtCompanyDDL = Lo.RetriveMasterData(0, mRefNo, "Company1", 0, "", "", "CompanyName");
+            if (DtCompanyDDL.Rows.Count > 0)
+            {
+                Co.FillDropdownlist(ddlcompany, DtCompanyDDL, "CompanyName", "CompanyRefNo");
+                ddlcompany.Enabled = false;
+                lblSelectCompany.Text = "Company Name";
+            }
+            else
+            {
+                ddlcompany.Enabled = false;
+                lblSelectCompany.Text = "Company Name";
+            }
+            DtCompanyDDL = Lo.RetriveMasterData(0, ddlcompany.SelectedItem.Value, "Factory1", 0, "", "", "CompanyName");
+            if (DtCompanyDDL.Rows.Count > 0)
+            {
+                Co.FillDropdownlist(ddldivision, DtCompanyDDL, "FactoryName", "FactoryRefNo");
+                lblselectdivison.Visible = true;
+                ddldivision.Enabled = false;
+            }
+            else
+            {
+                ddldivision.Enabled = false;
+            }
+            DtCompanyDDL = Lo.RetriveMasterData(0, ddldivision.SelectedItem.Value, "Unit1", 0, "", "", "CompanyName");
             if (DtCompanyDDL.Rows.Count > 0)
             {
                 Co.FillDropdownlist(ddlunit, DtCompanyDDL, "UnitName", "UnitRefNo");
                 ddlunit.Items.Insert(0, "All");
                 ddlunit.Enabled = true;
+                lblselectunit.Visible = true;
             }
             else
             {
                 ddlunit.Enabled = false;
             }
         }
-        
+        else if (mType == "Unit")
+        {
+            DtCompanyDDL = Lo.RetriveMasterData(0, mRefNo, "Company2", 0, "", "", "CompanyName");
+            if (DtCompanyDDL.Rows.Count > 0)
+            {
+                Co.FillDropdownlist(ddlcompany, DtCompanyDDL, "CompanyName", "CompanyRefNo");
+                ddlcompany.Enabled = false;
+                lblSelectCompany.Text = "Company Name";
+            }
+            else
+            {
+                ddlcompany.Enabled = false;
+                lblSelectCompany.Text = "Company Name";
+            }
+            DtCompanyDDL = Lo.RetriveMasterData(0, ddlcompany.SelectedItem.Value, "Factory1", 0, "", "", "CompanyName");
+            if (DtCompanyDDL.Rows.Count > 0)
+            {
+                Co.FillDropdownlist(ddldivision, DtCompanyDDL, "FactoryName", "FactoryRefNo");
+                lblselectdivison.Visible = true;
+                ddldivision.Enabled = false;
+            }
+            else
+            {
+                ddldivision.Enabled = false;
+            }
+            DtCompanyDDL = Lo.RetriveMasterData(0, ddldivision.SelectedItem.Value, "Unit1", 0, "", "", "CompanyName");
+            if (DtCompanyDDL.Rows.Count > 0)
+            {
+                Co.FillDropdownlist(ddlunit, DtCompanyDDL, "UnitName", "UnitRefNo");
+                ddlunit.Enabled = false;
+                lblselectunit.Visible = true;
+                DataTable DtGrid = Lo.RetriveGridViewCompany("", ddldivision.SelectedItem.Value, ddlunit.SelectedItem.Value, "InnerGVUnitID");
+                if (DtGrid.Rows.Count > 0)
+                {
+                    EditUnit(DtGrid);
+                }
+            }
+            else
+            {
+                ddlunit.Enabled = false;
+            }
+        }
     }
     protected void ddlcompany_OnSelectedIndexChanged(object sender, EventArgs e)
     {
@@ -609,6 +695,7 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
             if (DtGrid.Rows.Count > 0)
             {
                 EditCOde(DtGrid);
+                DivActivities.Visible = true;
                 DtCompanyDDL = Lo.RetriveMasterData(0, ddlcompany.SelectedItem.Value, "", 0, "", "", "FactoryCompanyID");
                 if (DtCompanyDDL.Rows.Count > 0)
                 {
@@ -622,26 +709,7 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
                     ddldivision.Visible = false;
                     lblselectdivison.Visible = false;
                 }
-            }
-        }
-        else if (ddlcompany.SelectedItem.Value == "All")
-        {
-            DataTable DtGrid = Lo.RetriveGridViewCompany("0", "", "", "CompanyMainGridView");
-            if (DtGrid.Rows.Count > 0)
-            {
-                EditCOde(DtGrid);
-                ddlunit.Visible = true;
-                ddldivision.Visible = false;
-                ddlunit.Visible = false;
-                lblselectunit.Visible = false;
-                lblselectdivison.Visible = false;
-            }
-            else
-            {
-                lblselectunit.Visible = false;
-                lblselectdivison.Visible = false;
-                ddldivision.Visible = false;
-                ddlunit.Visible = false;
+                
             }
         }
         else
@@ -651,34 +719,42 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
             ddlunit.Visible = false;
         }
     }
-
     protected void ddldivision_OnSelectedIndexChanged(object sender, EventArgs e)
     {
 
-        if (ddlcompany.SelectedItem.Text != "All")
+        if (ddldivision.SelectedItem.Text != "All")
         {
             DataTable DtGrid = Lo.RetriveGridViewCompany(ddlcompany.SelectedItem.Value, ddldivision.SelectedItem.Value, "", "InnerGVFactoryID");
             if (DtGrid.Rows.Count > 0)
             {
                 EditDivison(DtGrid);
             }
-            DtCompanyDDL = Lo.RetriveMasterData(0, ddldivision.SelectedItem.Value, "", 0, "", "", "UnitSelectID");
-            if (DtCompanyDDL.Rows.Count > 0)
-            {
-                Co.FillDropdownlist(ddlunit, DtCompanyDDL, "UnitName", "UnitRefNo");
-                ddlunit.Items.Insert(0, "All");
-                lblselectunit.Visible = true;
-                ddlunit.Visible = true;
-            }
-            else
-            {
-                lblselectunit.Visible = false;
-                ddlunit.Visible = false;
-            }
+            
+                DtCompanyDDL = Lo.RetriveMasterData(0, ddldivision.SelectedItem.Value, "", 0, "", "", "UnitSelectID");
+                if (DtCompanyDDL.Rows.Count > 0)
+                {
+                    
+                    Co.FillDropdownlist(ddlunit, DtCompanyDDL, "UnitName", "UnitRefNo");
+                    ddlunit.Items.Insert(0, "All");
+                    lblselectunit.Visible = true;
+                    ddlunit.Visible = true;
+                }
+                else
+                {
+                    lblselectunit.Visible = false;
+                    ddlunit.Visible = false;
+                }
         }
+        else
+        {
+            lblselectunit.Visible = false;
+            ddlunit.Visible = false;
+            ddldivision.Visible = true;
+            ddlcompany_OnSelectedIndexChanged(sender, e);
+        }
+        
 
     }
-
     protected void ddlunit_OnSelectedIndexChanged(object sender, EventArgs e)
     {
 
@@ -692,10 +768,10 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
         }
         else
         {
-            ddlunit.Visible = false;
+            ddlunit.Visible = true;
+            ddldivision_OnSelectedIndexChanged(sender, e);
         }
     }
-
     protected void cleartext()
     {
         seljvventure.SelectedIndex = 0;
@@ -716,5 +792,5 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
         txtCEOEmailId.Text = "";
         txtceoname.Text = "";
     }
-    
+
 }

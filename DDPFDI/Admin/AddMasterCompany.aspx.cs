@@ -31,7 +31,7 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
         {
             if (Request.QueryString["mu"] != null)
             {
-                string id = Request.QueryString["id"].ToString().Replace(" ","+");
+                string id = Request.QueryString["id"].ToString().Replace(" ", "+");
                 lblPageName.Text = Enc.DecryptData(id);
                 if (Enc.DecryptData(Request.QueryString["mu"].ToString()) == "Panel1")
                 {
@@ -90,11 +90,13 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
     {
         string sType = "", sName = "", sID = "", mSID = "";
         Int16 id = 0;
+        string sRole = "";
         if (Enc.DecryptData(Session["Type"].ToString()) == "SuperAdmin")
         {
             sType = "Select";
             mSID = "";
             id = 0;
+            sRole = "SuperAdmin";
 
         }
         else if (Enc.DecryptData(Session["Type"].ToString()) == "Company")
@@ -103,6 +105,7 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
             sType = "CompanyName";
             mSID = Session["CompanyRefNo"].ToString();
             id = 2;
+            sRole = "Company";
         }
         else if (Enc.DecryptData(Session["Type"].ToString()) == "Factory")
         {
@@ -110,6 +113,7 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
             sType = "CompanyName";
             mSID = Session["CompanyRefNo"].ToString();
             id = 3;
+            sRole = "Factory";
         }
         else if (Enc.DecryptData(Session["Type"].ToString()) == "Unit")
         {
@@ -117,6 +121,7 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
             sType = "CompanyName";
             mSID = Session["CompanyRefNo"].ToString();
             id = 4;
+            sRole = "Unit";
         }
         else
         {
@@ -126,12 +131,12 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
         sName = "CompanyName";
         sID = "CompanyRefNo";
         mddlControl = ddlmaster;
-        DataTable Dtchkintrestedarea = Lo.RetriveMasterData(id, mSID, "", 0, "", "", sType);
+        DataTable Dtchkintrestedarea = Lo.RetriveMasterData(id, mSID, sRole, 0, "", "", sType);
         if (Dtchkintrestedarea.Rows.Count > 0 && Dtchkintrestedarea != null)
         {
             Co.FillDropdownlist(mddlControl, Dtchkintrestedarea, sName, sID);
         }
-        
+
     }
 
     protected void BindMasterData()
@@ -141,7 +146,7 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
         {
             Co.FillCheckBox(chkintrestedarea, Dtchkintrestedarea, "InterestArea", "Id");
         }
-        DataTable Dtchkmastermenuallot = Lo.RetriveMasterData(0, "", "", 0, "", "M", "IntrestedAreaCheck"); 
+        DataTable Dtchkmastermenuallot = Lo.RetriveMasterData(0, "", "", 0, "", "M", "IntrestedAreaCheck");
         if (Dtchkmastermenuallot != null)
         {
             Co.FillCheckBox(chkmastermenuallot, Dtchkmastermenuallot, "InterestArea", "Id");
@@ -220,33 +225,19 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
     }
     protected void btnsubmit_Click(object sender, EventArgs e)
     {
-        SaveComp();
+        
+        if (txtcomp.Text.Trim() != "" && txtemail.Text.Trim() != "")
+        {
+            SaveComp();
+        }
+        else
+        {
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('" + lblName.Text + " or offical email id can not be empty !')", true);
+        }
     }
 
-    public void SendEmailCode()
-    {
-        try
-        {
-            string body;
-            using (StreamReader reader = new StreamReader(Server.MapPath("~/emailPage/GeneratePassword.html")))
-            {
-                body = reader.ReadToEnd();
-            }
-            body = body.Replace("{UserName}", txtemail.Text);
-            body = body.Replace("{refno}", Enc.EncryptData(_sysMsg));
-            body = body.Replace("{mcurid}", Resturl(56));
-            SendMail s;
-            s = new SendMail();
-            s.CreateMail("aeroindia-ddp@gov.in", txtemail.Text, "Create Password", body);
-            s.sendMail();
-            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Password change mail send successfully.')", true);
-        }
-        catch (Exception ex)
-        {
-            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('" + ex.Message + "')", true);
-        }
+    
 
-    }
 
     #region ReturnUrl Long"
     public string Resturl(int length)
@@ -263,11 +254,11 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
     #endregion
     protected void ddlmaster_SelectedIndexChanged(object sender, EventArgs e)
     {
-        DataTable DtBindSubFactory = Lo.RetriveMasterData(0, ddlmaster.SelectedItem.Value, "", 0, "", "M", "FactoryName");
+        DataTable DtBindSubFactory = Lo.RetriveMasterData(0, ddlmaster.SelectedItem.Value, "", 0, "", "M", "FactoryJoin1");
         if (DtBindSubFactory.Rows.Count > 0)
         {
             Co.FillDropdownlist(ddlfacotry, DtBindSubFactory, "FactoryName", "FactoryRefNo");
-            
+
         }
         else
         {

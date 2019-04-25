@@ -49,11 +49,11 @@
                                     <asp:DropDownList runat="server" ID="ddlcompany" CssClass="form-control" AutoPostBack="True" OnSelectedIndexChanged="ddlcompany_OnSelectedIndexChanged"></asp:DropDownList>
                                 </div>
                                 <div class="col-sm-4">
-                                    <label runat="server" id="lblselectdivison" Visible="False">Select Division/Plant</label>
+                                    <label runat="server" id="lblselectdivison" visible="False">Select Division/Plant</label>
                                     <asp:DropDownList runat="server" ID="ddldivision" CssClass="form-control" AutoPostBack="True" OnSelectedIndexChanged="ddldivision_OnSelectedIndexChanged"></asp:DropDownList>
                                 </div>
                                 <div class="col-sm-4">
-                                    <label runat="server" id="lblselectunit" Visible="False">Select Unit</label>
+                                    <label runat="server" id="lblselectunit" visible="False">Select Unit</label>
                                     <asp:DropDownList runat="server" ID="ddlunit" CssClass="form-control" AutoPostBack="True" OnSelectedIndexChanged="ddlunit_OnSelectedIndexChanged"></asp:DropDownList>
                                 </div>
                             </div>
@@ -91,10 +91,10 @@
                                                                                             <%#Container.DataItemIndex+1 %>
                                                                                         </ItemTemplate>
                                                                                     </asp:TemplateField>
-                                                                                    <asp:BoundField ItemStyle-Width="150px" DataField="UnitRefNo" HeaderText="UnitRefNo" />
-                                                                                    <asp:BoundField ItemStyle-Width="150px" DataField="UnitName" HeaderText="UnitName" />
+                                                                                    <asp:BoundField ItemStyle-Width="150px" DataField="UnitRefNo" HeaderText="Refrence No" />
+                                                                                    <asp:BoundField ItemStyle-Width="150px" DataField="UnitName" HeaderText="Unit" />
                                                                                     <asp:BoundField runat="server" DataField="Role" HeaderText="Role" />
-                                                                                    <asp:TemplateField HeaderText="Nodel Person Email">
+                                                                                    <asp:TemplateField HeaderText="Official Email">
                                                                                         <ItemTemplate>
                                                                                             <asp:Label ID="lblunitnodelname" runat="server" Text='<%#Eval("UnitEmailId") %>' NullDisplayText="#" SortExpression="ContactPersonEmailID"></asp:Label>
                                                                                             <asp:HiddenField runat="server" ID="hfunitemail" Value='<%#Eval("UnitEmailId") %>' />
@@ -120,14 +120,14 @@
                                                                 </ItemTemplate>
                                                             </asp:TemplateField>
 
-                                                            <asp:TemplateField HeaderText="FactroyRefNo">
+                                                            <asp:TemplateField HeaderText="Refrence No">
                                                                 <ItemTemplate>
                                                                     <asp:Label runat="server" ID="lblfactoryrefno" Text='<%#Eval("FactoryRefNo") %>'></asp:Label>
                                                                 </ItemTemplate>
                                                             </asp:TemplateField>
-                                                            <asp:BoundField ItemStyle-Width="150px" DataField="FactoryName" HeaderText="FactoryName" />
+                                                            <asp:BoundField ItemStyle-Width="150px" DataField="FactoryName" HeaderText="Division" />
                                                             <asp:BoundField runat="server" DataField="Role" HeaderText="Role" />
-                                                            <asp:TemplateField HeaderText="Nodel Person Email">
+                                                            <asp:TemplateField HeaderText="Official Email">
                                                                 <ItemTemplate>
                                                                     <asp:Label ID="lblfactorynodelname" runat="server" Text='<%#Eval("FactoryEmailId") %>' NullDisplayText="#" SortExpression="ContactPersonEmailID"></asp:Label>
                                                                     <asp:HiddenField runat="server" ID="hffactoryemail" Value='<%#Eval("FactoryEmailId") %>' />
@@ -158,9 +158,9 @@
                                             <asp:Label ID="lblrefno" runat="server" Text='<%#Eval("CompanyRefNo") %>' NullDisplayText="#" SortExpression="CompanyRefNo"></asp:Label>
                                         </ItemTemplate>
                                     </asp:TemplateField>
-                                    <asp:BoundField DataField="CompanyName" HeaderText="Company" NullDisplayText="#" SortExpression="CompanyName" />
+                                    <asp:BoundField DataField="CompanyName" HeaderText="Company" NullDisplayText="#" SortExpression="Company" />
                                     <asp:BoundField runat="server" DataField="Role" HeaderText="Role" />
-                                    <asp:TemplateField HeaderText="Nodel Person Email">
+                                    <asp:TemplateField HeaderText="Official Email">
                                         <ItemTemplate>
                                             <asp:Label ID="lblnodelname" runat="server" Text='<%#Eval("ContactPersonEmailID") %>' NullDisplayText="#" SortExpression="ContactPersonEmailID"></asp:Label>
                                             <asp:HiddenField runat="server" ID="hfemail" Value='<%#Eval("ContactPersonEmailID") %>' />

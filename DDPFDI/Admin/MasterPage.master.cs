@@ -113,11 +113,12 @@ public partial class Admin_MasterPage : System.Web.UI.MasterPage
                     foreach (DataRow row2 in dtMMenu.Rows)
                     {
                         strMasterMenu.Append("<li class='parent-nav'><a href='" + row2["MenuUrl"].ToString() + "?mu=" + ObjEnc.EncryptData(row2["Spanclass"].ToString()) + "&id=" + ObjEnc.EncryptData(row2["MenuName"].ToString()) + "' ><i class='fas fa-tachometer-alt'></i><span class='hidden-minibar'>" + row2["MenuName"].ToString() + "</span><span style='position:absolute; right:40px;top:10px;'>C" + row2["MenuId"].ToString() + "</span>");
-                        strMasterMenu.Append("<i class='fas fa-angle-down'></i></a>");
+                        strMasterMenu.Append("</a>");
                         DataTable SubMmenu = Lo.RetriveMasterData(0, "", lbltypelogin.Text, Convert.ToInt16(row2["MenuID"].ToString()), "", "", "SubMenu");
-                        strMasterMenu.Append("<i class='fas fa-angle-down'></i></a>");
+                        //strMasterMenu.Append("</a>");
                         if (SubMmenu.Rows.Count > 0)
                         {
+                            strMasterMenu.Append("<i class='fas fa-angle-down'></i>");
                             strMasterMenu.Append("<ul class='parent-nav-child'>");
                             foreach (DataRow row1 in SubMmenu.Rows)
                             {
@@ -130,6 +131,7 @@ public partial class Admin_MasterPage : System.Web.UI.MasterPage
                     }
                 }
                 strMasterMenu.Append("</ul>");
+                
             }
             MasterMenu.InnerHtml = strMasterMenu.ToString();
             strMasterMenu.Append("</ul");
@@ -142,24 +144,25 @@ public partial class Admin_MasterPage : System.Web.UI.MasterPage
         lblusername.Text = ObjEnc.DecryptData(Session["User"].ToString());
         if (Session["CompanyRefNo"] != null)
         {
-            if (Session["CompanyRefNo"].ToString().Substring(0, 1) == "F")
+            if (lbltypelogin.Text == "Factory")
             {
-                DataTable dtFactory = Lo.RetriveMasterData(0, Session["CompanyRefNo"].ToString(), "", 0, "", "", "FactoryName");
+                DataTable dtFactory = Lo.RetriveMasterData(0, Session["CompanyRefNo"].ToString(), "", 0, "", "", "FactoryJoin");
                 if (dtFactory.Rows.Count > 0)
                 {
-
-                    lblfactory.Text = "Division/Plant - " + dtFactory.Rows[0]["FactoryName"].ToString();
+                    DivCompanyName.Visible = false;
+                    lblfactory.Text = "Division/Plant - " + dtFactory.Rows[0]["FactoryName"].ToString() + " ,";
 
                     sType = dtFactory.Rows[0]["CompanyRefNo"].ToString();
                 }
             }
-            else if (Session["CompanyRefNo"].ToString().Substring(0, 1) == "U")
+            else if (lbltypelogin.Text == "Unit")
             {
-                DataTable dtUnit = Lo.RetriveMasterData(0, Session["CompanyRefNo"].ToString(), "", 0, "", "", "UnitName");
+                DataTable dtUnit = Lo.RetriveMasterData(0, Session["CompanyRefNo"].ToString(), "", 0, "", "", "UnitJoin");
                 if (dtUnit.Rows.Count > 0)
                 {
-                    lblfactory.Text = "Division/Plant - " + dtUnit.Rows[0]["FactoryName"].ToString();
-                    lblunit.Text = "UnitName - " + dtUnit.Rows[0]["UnitName"].ToString();
+                    DivCompanyName.Visible = false;
+                    lblfactory.Text = "Division/Plant - " + dtUnit.Rows[0]["FactoryName"].ToString() + ", ";
+                    lblunit.Text = "Unit - " + dtUnit.Rows[0]["UnitName"].ToString() + " , ";
                     sType = dtUnit.Rows[0]["CompanyRefNo"].ToString();
                 }
             }
@@ -170,8 +173,21 @@ public partial class Admin_MasterPage : System.Web.UI.MasterPage
             DataTable dtCompany = Lo.RetriveMasterData(0, sType, "", 0, "", "", "InterestedArea");
             if (dtCompany.Rows.Count > 0)
             {
-
-                lblmastercompany.Text = "Company - " + dtCompany.Rows[0]["CompanyName"].ToString();
+                if (lbltypelogin.Text == "SuperAdmin")
+                {
+                    DivCompanyName.Visible = false;
+                }
+                else if (lbltypelogin.Text == "Admin")
+                {
+                    DivCompanyName.Visible = false;
+                }
+                else
+                {
+                
+                    DivCompanyName.Visible=true;
+                    lblmastercompany.Text = "Company - " + dtCompany.Rows[0]["CompanyName"].ToString() + " , ";
+                }
+                
 
                 strInterestedArea = dtCompany.Rows[0]["InterestedArea"].ToString();
                 strMasterAlloted = dtCompany.Rows[0]["MasterAllowed"].ToString();
