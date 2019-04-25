@@ -144,24 +144,25 @@ public partial class Admin_MasterPage : System.Web.UI.MasterPage
         lblusername.Text = ObjEnc.DecryptData(Session["User"].ToString());
         if (Session["CompanyRefNo"] != null)
         {
-            if (Session["CompanyRefNo"].ToString().Substring(0, 1) == "F")
+            if (lbltypelogin.Text == "Factory")
             {
                 DataTable dtFactory = Lo.RetriveMasterData(0, Session["CompanyRefNo"].ToString(), "", 0, "", "", "FactoryJoin");
                 if (dtFactory.Rows.Count > 0)
                 {
-
-                    lblfactory.Text = "Division/Plant - " + dtFactory.Rows[0]["FactoryName"].ToString();
+                    DivCompanyName.Visible = false;
+                    lblfactory.Text = "Division/Plant - " + dtFactory.Rows[0]["FactoryName"].ToString() + " ,";
 
                     sType = dtFactory.Rows[0]["CompanyRefNo"].ToString();
                 }
             }
-            else if (Session["CompanyRefNo"].ToString().Substring(0, 1) == "U")
+            else if (lbltypelogin.Text == "Unit")
             {
                 DataTable dtUnit = Lo.RetriveMasterData(0, Session["CompanyRefNo"].ToString(), "", 0, "", "", "UnitJoin");
                 if (dtUnit.Rows.Count > 0)
                 {
-                    lblfactory.Text = "Division/Plant - " + dtUnit.Rows[0]["FactoryName"].ToString();
-                    lblunit.Text = "Unit - " + dtUnit.Rows[0]["UnitName"].ToString();
+                    DivCompanyName.Visible = false;
+                    lblfactory.Text = "Division/Plant - " + dtUnit.Rows[0]["FactoryName"].ToString() + ", ";
+                    lblunit.Text = "Unit - " + dtUnit.Rows[0]["UnitName"].ToString() + " , ";
                     sType = dtUnit.Rows[0]["CompanyRefNo"].ToString();
                 }
             }
@@ -174,11 +175,17 @@ public partial class Admin_MasterPage : System.Web.UI.MasterPage
             {
                 if (lbltypelogin.Text == "SuperAdmin")
                 {
-                    lblmastercompany.Text = "";
+                    DivCompanyName.Visible = false;
+                }
+                else if (lbltypelogin.Text == "Admin")
+                {
+                    DivCompanyName.Visible = false;
                 }
                 else
                 {
-                    lblmastercompany.Text = "Company - " + dtCompany.Rows[0]["CompanyName"].ToString();
+                
+                    DivCompanyName.Visible=true;
+                    lblmastercompany.Text = "Company - " + dtCompany.Rows[0]["CompanyName"].ToString() + " , ";
                 }
                 
 

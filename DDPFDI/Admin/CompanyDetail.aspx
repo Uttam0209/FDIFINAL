@@ -26,15 +26,15 @@
             <div class="col-sm-12">
                 <div class="row">
                     <div class="col-sm-4">
-                        <label>Select Company</label>
+                        <asp:Label runat="server" ID="lblSelectCompany"></asp:Label>
                         <asp:DropDownList runat="server" ID="ddlcompany" CssClass="form-control" AutoPostBack="True" OnSelectedIndexChanged="ddlcompany_OnSelectedIndexChanged"></asp:DropDownList>
                     </div>
                     <div class="col-sm-4">
-                        <label runat="server" id="lblselectdivison" visible="False">Select Division/Plant</label>
+                        <asp:Label runat="server" ID="lblselectdivison" Visible="False">Select Division/Plant</asp:Label>
                         <asp:DropDownList runat="server" ID="ddldivision" CssClass="form-control" AutoPostBack="True" OnSelectedIndexChanged="ddldivision_OnSelectedIndexChanged"></asp:DropDownList>
                     </div>
                     <div class="col-sm-4">
-                        <label runat="server" id="lblselectunit" visible="False">Select Unit</label>
+                        <asp:Label runat="server" ID="lblselectunit" Visible="False">Select Unit</asp:Label>
                         <asp:DropDownList runat="server" ID="ddlunit" CssClass="form-control" AutoPostBack="True" OnSelectedIndexChanged="ddlunit_OnSelectedIndexChanged"></asp:DropDownList>
                     </div>
                 </div>
@@ -74,8 +74,24 @@
                                                     <asp:ListItem Value="N">No</asp:ListItem>
                                                 </asp:DropDownList>
                                             </div>
-                                            <div class="form-group">
-                                                <label for="tcompanyname" class=" control-label">Company Name <span class="mandatory">*</span></label>
+                                            <div class="form-group" id="divmName" runat="server">
+                                                <label for="tcompanyname" class=" control-label">
+                                                    <asp:Label ID="lblMName" runat="server" Text=""></asp:Label>
+                                                    <span class="mandatory">*</span></label>
+                                               <asp:TextBox runat="server" ID="txtMName" name="txtMName" ReadOnly="true" required="" class="form-control form-cascade-control" placeholder=""></asp:TextBox>
+
+                                            </div>
+                                            <div class="form-group" id="divmcName" runat="server">
+                                                <label for="tcompanyname" class=" control-label">
+                                                    <asp:Label ID="lblMCName" runat="server" Text=""></asp:Label>
+                                                    <span class="mandatory">*</span></label>
+                                                    <asp:TextBox runat="server" ID="txtMCName" name="txtMCName" ReadOnly="true" required="" class="form-control form-cascade-control" placeholder=""></asp:TextBox>
+
+                                            </div>
+                                            <div class="form-group" >
+                                                <label for="tcompanyname" class=" control-label">
+                                                    <asp:Label ID="lblCName" runat="server" Text="lblCName"></asp:Label>
+                                                    <span class="mandatory">*</span></label>
                                                 <asp:TextBox runat="server" ID="tcompanyname" name="tcompanyname" required="" class="form-control form-cascade-control" placeholder=""></asp:TextBox>
                                             </div>
                                             <div class="form-group">
