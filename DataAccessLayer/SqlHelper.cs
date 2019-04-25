@@ -505,7 +505,7 @@ namespace DataAccessLayer
         }
         #endregion
         #region DeleteCode
-        public string DeleteRecord(Int64 ID)
+        public string DeleteRecord(string CompRefNo, string Criteria)
         {
             using (DbConnection dbCon = db.CreateConnection())
             {
@@ -513,8 +513,9 @@ namespace DataAccessLayer
                 DbTransaction dbTran = dbCon.BeginTransaction();
                 try
                 {
-                    DbCommand cmd = db.GetStoredProcCommand("sp_DeleteRecordFDI");
-                    db.AddInParameter(cmd, "@CompID", DbType.Int64, ID);
+                    DbCommand cmd = db.GetStoredProcCommand("sp_DeleteMasterRecord");
+                    db.AddInParameter(cmd, "@CompRefNo", DbType.String, CompRefNo);
+                    db.AddInParameter(cmd, "@Criteria", DbType.String, Criteria);
                     db.ExecuteNonQuery(cmd, dbTran);
                     dbTran.Commit();
                     return "true";
