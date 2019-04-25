@@ -56,7 +56,7 @@ $(window).on('load', function(){
 
     //Table Accordian
         $(document).on('click', '.toggle-table-plus', function () {
-            $(this).closest("tr").after("<tr class='clone-row'><td></td><td colspan='9'>" + $(this).next().html() + "</td></tr>")
+            $(this).closest("tr").after("<tr class='clone-row'><td colspan='7' style='padding:0;'>" + $(this).next().html() + "</td></tr>")
             $(this).hide();
             $(this).parents('.acordian-table').find('.toggle-table-minus').show();
            

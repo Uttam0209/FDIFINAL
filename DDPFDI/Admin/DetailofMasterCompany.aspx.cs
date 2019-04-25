@@ -328,7 +328,7 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
             GridViewRow gvr = (GridViewRow)((Control)e.CommandSource).NamingContainer;
             int rowIndex = gvr.RowIndex;
             string Role = (gvcompanydetail.Rows[rowIndex].FindControl("lblcompanyrole") as Label).Text;
-            Response.Redirect("Add-Company?mrcreaterole" + objEnc.EncryptData(Role) + "&mcurrentcompRefNo=" + (objEnc.EncryptData(e.CommandArgument.ToString())));
+            Response.Redirect("Add-Company?mrcreaterole=" + objEnc.EncryptData(Role) + "&mcurrentcompRefNo=" + (objEnc.EncryptData(e.CommandArgument.ToString())));
         }
         else if (e.CommandName == "ViewComp")
         {
@@ -397,7 +397,7 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
             GridViewRow gvr = (GridViewRow)((Control)e.CommandSource).NamingContainer;
             int rowIndex = gvr.RowIndex;
             string Role = (gvcompanydetail.Rows[rowIndex].FindControl("lblfactoryrole") as Label).Text;
-            Response.Redirect("Add-Company?mrcreaterole" + objEnc.EncryptData(Role) + "&mcurrentFactroyRefNo=" + (objEnc.EncryptData(e.CommandArgument.ToString())));
+            Response.Redirect("Add-Company?mrcreaterole=" + objEnc.EncryptData(Role) + "&mcurrentFactroyRefNo=" + (objEnc.EncryptData(e.CommandArgument.ToString())));
         }
         else if (e.CommandName == "ViewfactoryComp")
         {
@@ -461,7 +461,7 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
             GridViewRow gvr = (GridViewRow)((Control)e.CommandSource).NamingContainer;
             int rowIndex = gvr.RowIndex;
             string Role = (gvcompanydetail.Rows[rowIndex].FindControl("lblunitrole") as Label).Text;
-            Response.Redirect("Add-Company?mrcreaterole" + objEnc.EncryptData(Role) + "&mcurrentUnitRefNo=" + (objEnc.EncryptData(e.CommandArgument.ToString())));
+            Response.Redirect("Add-Company?mrcreaterole=" + objEnc.EncryptData(Role) + "&mcurrentUnitRefNo=" + (objEnc.EncryptData(e.CommandArgument.ToString())));
         }
         else if (e.CommandName == "unitViewComp")
         {

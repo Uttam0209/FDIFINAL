@@ -68,13 +68,13 @@
                                     </div>
                                 </div>
                                 <div class="clearfix"></div>
-                                <div class="text-center" style="font-size: 16px; margin-top: 10px;" runat="server" visible="False">
+                                <div id="Div1" class="text-center" style="font-size: 16px; margin-top: 10px;" runat="server" visible="False">
                                     Total number of  active companies :<strong>
                                         <asp:Label ID="lbltotal" runat="server" Text=""></asp:Label></strong>
                                 </div>
                                 <div class="clearfix"></div>
                                 <div class="table-wraper">
-                                    <asp:GridView ID="gvcompanydetail" runat="server" Width="100%" Class="commonAjaxTbl table display responsive no-wrap table-hover manage-user Grid" AutoGenerateColumns="false" AllowPaging="true"
+                                    <asp:GridView ID="gvcompanydetail" runat="server" Width="100%" Class="commonAjaxTbl master-company-table table display responsive no-wrap table-hover manage-user Grid" AutoGenerateColumns="false" AllowPaging="true"
                                         OnPageIndexChanging="OnPageIndexChanging" PageSize="25" AllowSorting="true" OnSorting="OnSorting" OnRowCommand="gvcompanydetail_RowCommand" OnRowDataBound="OnRowDataBound">
                                         <PagerStyle HorizontalAlign="Center" CssClass="GridPager" />
                                         <Columns>
@@ -95,6 +95,10 @@
                                                                                     <asp:GridView ID="gvunit" runat="server" AutoGenerateColumns="false" Class="table table-hover ChildGrid" OnRowCommand="gvunit_RowCommand">
                                                                                         <PagerStyle HorizontalAlign="Center" CssClass="GridPager" />
                                                                                         <Columns>
+                                                                                            <asp:TemplateField>
+                                                                                                <ItemTemplate>
+                                                                                                </ItemTemplate>
+                                                                                            </asp:TemplateField>
                                                                                             <asp:TemplateField HeaderText="S.No">
                                                                                                 <ItemTemplate>
                                                                                                     <%#Container.DataItemIndex+1 %>
@@ -132,6 +136,7 @@
                                                                             <%#Container.DataItemIndex+1 %>
                                                                         </ItemTemplate>
                                                                     </asp:TemplateField>
+
                                                                     <asp:TemplateField HeaderText="Refrence No">
                                                                         <ItemTemplate>
                                                                             <asp:Label runat="server" ID="lblfactoryrefno" Text='<%#Eval("FactoryRefNo") %>'></asp:Label>
@@ -157,6 +162,7 @@
                                                                             <asp:LinkButton ID="lbllogindetailfactory" runat="server" Visible="False" CssClass=" fa fa-paper-plane" CommandName="factorySendLogin" CommandArgument='<%#Eval("FactoryRefNo") %>'></asp:LinkButton>
                                                                         </ItemTemplate>
                                                                     </asp:TemplateField>
+
                                                                 </Columns>
                                                             </asp:GridView>
                                                         </asp:Panel>
@@ -174,7 +180,7 @@
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                             <asp:BoundField DataField="CompanyName" HeaderText="Company" NullDisplayText="#" SortExpression="Company" />
-                                           <asp:TemplateField HeaderText="Role">
+                                            <asp:TemplateField HeaderText="Role">
                                                 <ItemTemplate>
                                                     <asp:Label runat="server" ID="lblcompanyrole" Text='<%#Eval("Role") %>'></asp:Label>
                                                 </ItemTemplate>
@@ -185,6 +191,7 @@
                                                     <asp:HiddenField runat="server" ID="hfemail" Value='<%#Eval("ContactPersonEmailID") %>' />
                                                 </ItemTemplate>
                                             </asp:TemplateField>
+
                                             <asp:TemplateField HeaderText="Action">
                                                 <ItemTemplate>
                                                     <asp:LinkButton ID="lblview" runat="server" CssClass="fa fa-eye" CommandName="ViewComp" CommandArgument='<%#Eval("CompanyRefNo") %>'></asp:LinkButton>
@@ -196,13 +203,14 @@
                                         </Columns>
                                     </asp:GridView>
                                 </div>
+
+
                             </div>
                         </div>
                     </form>
                 </div>
-
+                <div class="footer">© 2019 <a href="#">Department of Defence Production</a> </div>
             </div>
-            <div class="footer">© 2019 <a href="#">Department of Defence Production</a> </div>
             <div class="modal fade" id="changePass" role="dialog">
                 <div class="modal-dialog">
                     <!-- Modal content-->
@@ -539,8 +547,6 @@
                     </div>
                 </div>
             </div>
-
-
         </ContentTemplate>
     </asp:UpdatePanel>
 </asp:Content>

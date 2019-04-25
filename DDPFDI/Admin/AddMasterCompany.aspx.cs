@@ -31,7 +31,7 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
         {
             if (Request.QueryString["mu"] != null)
             {
-                string id = Request.QueryString["id"].ToString().Replace(" ","+");
+                string id = Request.QueryString["id"].ToString().Replace(" ", "+");
                 lblPageName.Text = Enc.DecryptData(id);
                 if (Enc.DecryptData(Request.QueryString["mu"].ToString()) == "Panel1")
                 {
@@ -135,7 +135,7 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
         {
             Co.FillDropdownlist(mddlControl, Dtchkintrestedarea, sName, sID);
         }
-        
+
     }
     protected void BindMasterData()
     {
@@ -144,7 +144,7 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
         {
             Co.FillCheckBox(chkintrestedarea, Dtchkintrestedarea, "InterestArea", "Id");
         }
-        DataTable Dtchkmastermenuallot = Lo.RetriveMasterData(0, "", "", 0, "", "M", "IntrestedAreaCheck"); 
+        DataTable Dtchkmastermenuallot = Lo.RetriveMasterData(0, "", "", 0, "", "M", "IntrestedAreaCheck");
         if (Dtchkmastermenuallot != null)
         {
             Co.FillCheckBox(chkmastermenuallot, Dtchkmastermenuallot, "InterestArea", "Id");
@@ -221,31 +221,14 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
     }
     protected void btnsubmit_Click(object sender, EventArgs e)
     {
-        SaveComp();
-    }
-    public void SendEmailCode()
-    {
-        try
+        if (txtcomp.Text.Trim() != "" && txtemail.Text.Trim() != "")
         {
-            string body;
-            using (StreamReader reader = new StreamReader(Server.MapPath("~/emailPage/GeneratePassword.html")))
-            {
-                body = reader.ReadToEnd();
-            }
-            body = body.Replace("{UserName}", txtemail.Text);
-            body = body.Replace("{refno}", Enc.EncryptData(_sysMsg));
-            body = body.Replace("{mcurid}", Resturl(56));
-            SendMail s;
-            s = new SendMail();
-            s.CreateMail("aeroindia-ddp@gov.in", txtemail.Text, "Create Password", body);
-            s.sendMail();
-            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Password change mail send successfully.')", true);
+            SaveComp();
         }
-        catch (Exception ex)
+        else
         {
-            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('" + ex.Message + "')", true);
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('" + lblName.Text + " or offical email id can not be empty !')", true);
         }
-
     }
     #region ReturnUrl Long"
     public string Resturl(int length)
@@ -266,7 +249,7 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
         if (DtBindSubFactory.Rows.Count > 0)
         {
             Co.FillDropdownlist(ddlfacotry, DtBindSubFactory, "FactoryName", "FactoryRefNo");
-            
+
         }
         else
         {
