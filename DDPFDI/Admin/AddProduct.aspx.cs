@@ -17,4 +17,15 @@ public partial class Admin_AddProduct : System.Web.UI.Page
             lblPageName.Text = objEnc.DecryptData(id);
         }
     }
+
+    protected void Cleartext()
+    {
+        
+    }
+    protected void btnclear_Click(object sender, EventArgs e)
+    {
+    }
+    protected void btnsave_Click(object sender, EventArgs e)
+    {     
+    }
 }
