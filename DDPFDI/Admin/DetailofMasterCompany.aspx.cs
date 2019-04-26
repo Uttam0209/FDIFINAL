@@ -383,7 +383,7 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
             }
             catch (Exception ex)
             {
-                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Mail not send error occured.')", true);
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Mail not sent error occured.')", true);
             }
         }
     }
@@ -393,7 +393,8 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
         {
             GridViewRow gvr = (GridViewRow)((Control)e.CommandSource).NamingContainer;
             int rowIndex = gvr.RowIndex;
-            string Role = (gvcompanydetail.Rows[rowIndex].FindControl("lblfactoryrole") as Label).Text;
+           // string Role = (gvcompanydetail.Rows[rowIndex].FindControl("lblfactoryrole") as Label).Text;
+            string Role = "ff";
             Response.Redirect("Add-Company?mrcreaterole=" + objEnc.EncryptData(Role) + "&mcurrentFactroyRefNo=" + (objEnc.EncryptData(e.CommandArgument.ToString())));
         }
         else if (e.CommandName == "ViewfactoryComp")

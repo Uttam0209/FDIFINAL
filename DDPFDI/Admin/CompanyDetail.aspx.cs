@@ -7,6 +7,7 @@ using System.Web.UI;
 using System.Text.RegularExpressions;
 using System.Text;
 using System.IO;
+using System.Net;
 
 public partial class Admin_CompanyDetail : System.Web.UI.Page
 {
@@ -206,7 +207,7 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
 
                 selstate.SelectedItem.Value = DtView.Rows[0]["FactoryStateID"].ToString();
 
-                DivCEOName.Visible = false;
+                DivCEOName.Visible = true;
                 tpincode.Text = DtView.Rows[0]["FactoryPincode"].ToString();
                 tpersonname.Text = DtView.Rows[0]["FactoryNodalPerson"].ToString();
                 temailid.Text = DtView.Rows[0]["FactoryEmailId"].ToString();
@@ -216,7 +217,7 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
                 tcinno.Text = DtView.Rows[0]["FactoryCINNo"].ToString();
                 tpanno.Text = DtView.Rows[0]["FactoryPANNo"].ToString();
                 thssnono.Text = DtView.Rows[0]["FactoryHSNO"].ToString();
-                DivCEOEmail.Visible = false;
+                DivCEOEmail.Visible = true;
                 lbltypelogin = DtView.Rows[0]["Role"].ToString();
                 if (lbltypelogin == "SuperAdmin" || lbltypelogin == "Admin")
                 {
@@ -321,13 +322,13 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
 
                 selstate.SelectedItem.Value = DtView.Rows[0]["UnitStateID"].ToString();
 
-                DivCEOName.Visible = false;
+                DivCEOName.Visible = true;
                 tpincode.Text = DtView.Rows[0]["UnitPincode"].ToString();
                 tpersonname.Text = DtView.Rows[0]["UnitNodalPerson"].ToString();
                 temailid.Text = DtView.Rows[0]["UnitEmailId"].ToString();
                 temailid.ReadOnly = true;
                 tcontactno.Text = DtView.Rows[0]["UnitContactNo"].ToString();
-                DivCEOEmail.Visible = false;
+                DivCEOEmail.Visible = true;
                 lbltypelogin = DtView.Rows[0]["Role"].ToString();
                 if (lbltypelogin == "SuperAdmin" || lbltypelogin == "Admin")
                 {
@@ -520,6 +521,8 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
     }
     protected void btndemofirst_Click(object sender, EventArgs e)
     {
+        //dd();
+
         if (tcompanyname.Text != "" && temailid.Text != "")
         {
             string msg = this.ValidatePreview();
@@ -819,4 +822,33 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
         txtceoname.Text = "";
     }
 
+
+    public DataTable dd()
+    {
+        DataTable dtCoordinates = new DataTable();
+        string url = "http://maps.googleapis.com/maps/api/geocode/json?address=" + taddress.Text + "&sensor=true_or_false";
+
+        WebRequest request = WebRequest.Create(url);
+
+        using (WebResponse response = (HttpWebResponse)request.GetResponse())
+        {
+            using (StreamReader reader = new StreamReader(response.GetResponseStream(), Encoding.UTF8))
+            {
+                DataSet dsResult = new DataSet();
+                dsResult.ReadXml(reader);
+                
+                dtCoordinates.Columns.AddRange(new DataColumn[4] { new DataColumn("Id", typeof(int)),
+                    new DataColumn("Address", typeof(string)),
+                    new DataColumn("Latitude",typeof(string)),
+                    new DataColumn("Longitude",typeof(string)) });
+                foreach (DataRow row in dsResult.Tables["result"].Rows)
+                {
+                    string geometry_id = dsResult.Tables["geometry"].Select("result_id = " + row["result_id"].ToString())[0]["geometry_id"].ToString();
+                    DataRow location = dsResult.Tables["location"].Select("geometry_id = " + geometry_id)[0];
+                    dtCoordinates.Rows.Add(row["result_id"], row["formatted_address"], location["lat"], location["lng"]);
+                }
+            }
+            return dtCoordinates;
+        }
+    }
 }
