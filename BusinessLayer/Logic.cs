@@ -74,7 +74,14 @@ namespace BusinessLayer
         {
             return SqlHelper.Instance.RetriveMasterData(Companyid, strRefNo, strRole, MenuId, strMenuUrl,strInterestedAreaFlag, strCriteria);
         }
-
+        public DataTable RetriveMasterCategoryDate(Int64 CatID, string CatName, string SCatValue, string Criteria)
+        {
+            return SqlHelper.Instance.RetriveMasterCategoryDate(CatID, CatName, SCatValue, Criteria);
+        }
+        public DataTable RetriveMasterSubCategoryDate(Int64 SCatID, string SCatName, string PId, string Criteria)
+        {
+            return SqlHelper.Instance.RetriveMasterSubCategoryDate(SCatID, SCatName, PId, Criteria);
+        }
         #endregion
         #region DeleteCode
         public string DeleteRecord(string CompRefNo,string Criteria)

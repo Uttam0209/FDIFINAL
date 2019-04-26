@@ -282,7 +282,6 @@ namespace DataAccessLayer
                 }
             }
         }
-
         public string SaveFactoryComp(HybridDictionary hysavecomp, out string _sysMsg, out string _msg)
         {
             string mCurrentID = "";
@@ -319,7 +318,6 @@ namespace DataAccessLayer
                 }
             }
         }
-
         public string SaveUnitComp(HybridDictionary hysavecomp, out string _sysMsg, out string _msg)
         {
             string mCurrentID = "";
@@ -405,8 +403,7 @@ namespace DataAccessLayer
                 }
             }
         }
-
-        public DataTable RetriveGridViewCompany(string ID,string FactoryRefNo,string UnitRefNo,string Purpose)
+        public DataTable RetriveGridViewCompany(string ID, string FactoryRefNo, string UnitRefNo, string Purpose)
         {
             using (DbConnection dbCon = db.CreateConnection())
             {
@@ -491,6 +488,54 @@ namespace DataAccessLayer
                     db.AddInParameter(cmd, "@MenuUrl", DbType.String, strMenuUrl);
                     db.AddInParameter(cmd, "@InterestedAreaFlag", DbType.String, strInterestedAreaFlag);
                     db.AddInParameter(cmd, "@Criteria", DbType.String, strCriteria);
+                    IDataReader dr = db.ExecuteReader(cmd);
+                    DataTable dt = new DataTable();
+                    if (dr != null)
+                        dt.Load(dr);
+                    return dt;
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+        }
+        public DataTable RetriveMasterCategoryDate(Int64 CatID, string CatName, string SCatValue, string Criteria)
+        {
+            using (DbConnection dbCon = db.CreateConnection())
+            {
+                dbCon.Open();
+                try
+                {
+                    DbCommand cmd = db.GetStoredProcCommand("sp_MasterCategory");
+                    db.AddInParameter(cmd, "@CatID", DbType.Int64, CatID);
+                    db.AddInParameter(cmd, "@CatName", DbType.String, CatName);
+                    db.AddInParameter(cmd, "@SCatValue", DbType.String, SCatValue);
+                    db.AddInParameter(cmd, "@Criteria", DbType.String, Criteria);
+                    IDataReader dr = db.ExecuteReader(cmd);
+                    DataTable dt = new DataTable();
+                    if (dr != null)
+                        dt.Load(dr);
+                    return dt;
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+        }
+        public DataTable RetriveMasterSubCategoryDate(Int64 SCatID, string SCatName, string PId, string Criteria)
+        {
+            using (DbConnection dbCon = db.CreateConnection())
+            {
+                dbCon.Open();
+                try
+                {
+                    DbCommand cmd = db.GetStoredProcCommand("sp_SubCategory");
+                    db.AddInParameter(cmd, "@SCatID", DbType.Int64, SCatID);
+                    db.AddInParameter(cmd, "@SCatName", DbType.String, SCatName);
+                    db.AddInParameter(cmd, "@PId", DbType.String, PId);
+                    db.AddInParameter(cmd, "@Criteria", DbType.String, Criteria);
                     IDataReader dr = db.ExecuteReader(cmd);
                     DataTable dt = new DataTable();
                     if (dr != null)
