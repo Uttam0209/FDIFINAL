@@ -130,7 +130,7 @@ public partial class Admin_DetailFDIRegistration : System.Web.UI.Page
         {
             try
             {
-                string DeleteRec = Lo.DeleteRecord(Convert.ToInt64(e.CommandArgument.ToString()));
+                string DeleteRec = Lo.DeleteRecord(e.CommandArgument.ToString(),"");
                 if (DeleteRec == "true")
                 {
                     BindGridView();

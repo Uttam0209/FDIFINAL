@@ -85,7 +85,6 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
             }
         }
     }
-
     protected void BindMasterCompany()
     {
         string sType = "", sName = "", sID = "", mSID = "";
@@ -138,7 +137,6 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
         }
 
     }
-
     protected void BindMasterData()
     {
         DataTable Dtchkintrestedarea = Lo.RetriveMasterData(0, "", "", 0, "", "I", "IntrestedAreaCheck");
@@ -159,7 +157,6 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
         Masterallowed = "";
         role = "";
     }
-
     protected void SaveComp()
     {
         string StrSaveComp = "";
@@ -218,14 +215,12 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
             ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not saved.')", true);
         }
     }
-
     protected void btncancel_Click(object sender, EventArgs e)
     {
         Cleartext();
     }
     protected void btnsubmit_Click(object sender, EventArgs e)
     {
-        
         if (txtcomp.Text.Trim() != "" && txtemail.Text.Trim() != "")
         {
             SaveComp();
@@ -235,10 +230,6 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
             ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('" + lblName.Text + " or offical email id can not be empty !')", true);
         }
     }
-
-    
-
-
     #region ReturnUrl Long"
     public string Resturl(int length)
     {
@@ -266,5 +257,4 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
         }
 
     }
-
 }

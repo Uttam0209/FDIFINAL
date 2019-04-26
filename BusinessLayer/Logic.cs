@@ -77,9 +77,9 @@ namespace BusinessLayer
 
         #endregion
         #region DeleteCode
-        public string DeleteRecord(Int64 ID)
+        public string DeleteRecord(string CompRefNo,string Criteria)
         {
-            return SqlHelper.Instance.DeleteRecord(ID);
+            return SqlHelper.Instance.DeleteRecord(CompRefNo,Criteria);
         }
         #endregion
         #region SearchCode
