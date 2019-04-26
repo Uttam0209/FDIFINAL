@@ -26,7 +26,7 @@
         <div class="sideBg">
             <div class="col-mod-12">
                 <ul class="breadcrumb">
-                    <asp:Label ID="lblPageName" runat="server" Text=""></asp:Label></li>
+                   <li> <asp:Label ID="lblPageName" runat="server" Text=""></asp:Label></li>
                 </ul>
             </div>
             <form method="post" class="addfdi">
@@ -34,7 +34,7 @@
                     <div class="col-md-12">
                         <asp:HiddenField runat="server" ID="hfrole" />
                         <div class="table-wrapper">
-                            <br />
+                           
                             <div runat="server" visible="False">
                                 <div class="col-sm-4 row">
                                     <asp:TextBox ID="txtserch" runat="server" CssClass="form-cascade-control form-control" Placeholder="Type keyword to search"></asp:TextBox>
@@ -119,26 +119,26 @@
                                                                     </div>
                                                                 </ItemTemplate>
                                                             </asp:TemplateField>
-                                                            <asp:TemplateField HeaderText="S.No">
+                                                            <asp:TemplateField >
                                                                 <ItemTemplate>
                                                                     <%#Container.DataItemIndex+1 %>
                                                                 </ItemTemplate>
                                                             </asp:TemplateField>
 
-                                                            <asp:TemplateField HeaderText="Refrence No">
+                                                            <asp:TemplateField >
                                                                 <ItemTemplate>
                                                                     <asp:Label runat="server" ID="lblfactoryrefno" Text='<%#Eval("FactoryRefNo") %>'></asp:Label>
                                                                 </ItemTemplate>
                                                             </asp:TemplateField>
                                                             <asp:BoundField ItemStyle-Width="150px" DataField="FactoryName" HeaderText="Division" />
-                                                            <asp:BoundField runat="server" DataField="Role" HeaderText="Role" />
-                                                            <asp:TemplateField HeaderText="Official Email">
+                                                            <asp:BoundField runat="server" DataField="Role"  />
+                                                            <asp:TemplateField >
                                                                 <ItemTemplate>
                                                                     <asp:Label ID="lblfactorynodelname" runat="server" Text='<%#Eval("FactoryEmailId") %>' NullDisplayText="#" SortExpression="ContactPersonEmailID"></asp:Label>
                                                                     <asp:HiddenField runat="server" ID="hffactoryemail" Value='<%#Eval("FactoryEmailId") %>' />
                                                                 </ItemTemplate>
                                                             </asp:TemplateField>
-                                                            <asp:TemplateField HeaderText="Action">
+                                                            <asp:TemplateField >
                                                                 <ItemTemplate>
                                                                     <asp:LinkButton ID="lblviewfactory" runat="server" CssClass="fa fa-eye" CommandName="ViewComp" CommandArgument='<%#Eval("FactoryRefNo") %>'></asp:LinkButton>
                                                                     <asp:LinkButton ID="lbleditfactory" runat="server" CssClass="fa fa-edit" CommandName="EditComp" CommandArgument='<%#Eval("FactoryRefNo") %>'></asp:LinkButton>
