@@ -82,15 +82,19 @@
     <div class="content oem-content">
         <asp:ScriptManager ID="sc" runat="server"></asp:ScriptManager>
         <div class="sideBg">
-            <div class="col-mod-12">
-                <ul class="breadcrumb">
-                    <li class="active">
-                        <asp:Label ID="lblPageName" runat="server" Text=""></asp:Label></li>
-                </ul>
+            <div class="row">
+                 <div class="col-md-12">
+                    <ul class="breadcrumb">
+                        <li class="active">
+                            <asp:Label ID="lblPageName" runat="server" Text=""></asp:Label></li>
+                    </ul>
+                </div>
             </div>
+           
             <div class="col-sm-12">
                 <div class="addfdi">
-                    <div class="col-md-12 col-mod-12">
+                    <div class="col-md-12">
+                         
                         <div class="row">
                             <asp:UpdatePanel ID="upfdival" runat="server">
                                 <ContentTemplate>
@@ -135,38 +139,34 @@
                                                 </div>
                                             </div>
                                         </div>
+                                       
                                     </div>
                                     <div class="row">
-                                        <div class="col-md-12" id="Intrested" visible="False" runat="server">
+                                        <div class="col-md-5" id="Intrested" visible="False" runat="server">
                                             <div class="fdi-add-content">
 
                                                 <div class="form-group">
                                                     <h3 for="fdiinflow" class="secondary-heading">Intrested In</h3>
-                                                    <asp:CheckBoxList ID="chkintrestedarea" runat="server" RepeatColumns="4" RepeatDirection="Horizontal" RepeatLayout="Flow">
+                                                    <asp:CheckBoxList ID="chkintrestedarea" runat="server" CssClass="checkbox-inline" RepeatColumns="5"  RepeatDirection="Vertical" RepeatLayout="Flow">
                                                     </asp:CheckBoxList>
 
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-12" id="MenuAlot" visible="False" runat="server">
+                                          <div class="col-md-4" id="MenuAlot" visible="False" runat="server">
                                             <div class="fdi-add-content">
                                                 <div class="form-group">
                                                     <h3 for="fdiinflow" class="secondary-heading">Menu Alotted</h3>
-                                                    <asp:CheckBoxList ID="chkmastermenuallot" runat="server" RepeatColumns="4" RepeatDirection="Horizontal" RepeatLayout="Flow">
+                                                    <asp:CheckBoxList ID="chkmastermenuallot" runat="server" CssClass="checkbox-inline" RepeatColumns="4" RepeatDirection="Horizontal" RepeatLayout="Flow">
                                                     </asp:CheckBoxList>
                                                 </div>
                                             </div>
                                         </div>
-
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-12" id="Role" visible="False" runat="server">
+                                        <div class="col-md-3" id="Role" visible="False" runat="server">
                                             <div class="fdi-add-content">
                                                 <div class="form-group">
                                                     <h3 for="fdiinflow" class="secondary-heading">Role</h3>
-                                                    <asp:CheckBoxList ID="chkrole" runat="server" RepeatColumns="5" RepeatDirection="Horizontal" RepeatLayout="Flow">
+                                                    <asp:CheckBoxList ID="chkrole" runat="server" RepeatColumns="5" CssClass="checkbox-inline" RepeatDirection="Horizontal" RepeatLayout="Flow">
                                                         <asp:ListItem Value="Admin">Admin</asp:ListItem>
                                                         <asp:ListItem Value="Company">Company</asp:ListItem>
                                                     </asp:CheckBoxList>
@@ -175,7 +175,7 @@
                                             </div>
                                         </div>
                                     </div>
-
+                                   
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="fdi-add-content">
