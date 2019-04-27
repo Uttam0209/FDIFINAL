@@ -42,11 +42,14 @@
                 <div class="clearfix"></div>
                 <div class="fdi-tab add-inflow-tab">
                     <ul>
-                        <li class="active"><a href="#fdistep1" data-toggle="tab">Company Detail</a></li>
-                        <li><a href="#fdistep2" data-toggle="tab">Officer's Detail</a></li>
-                        <li><a href="#fdistep3" data-toggle="tab">Specilization</a></li>
-                        <li><a href="#fdistep4" data-toggle="tab">MSME</a></li>
-                        <li><a href="#fdistep5" data-toggle="tab">Startup</a></li>
+                        <li class="active"><a href="#fdistep1" data-toggle="tab">Company</a></li>
+                        
+                       
+                       <li><a href="#fdistep4" data-toggle="tab">Statutory Registration</a></li>
+                        <li><a href="#fdistep5" data-toggle="tab">Social Media</a></li>
+                        <li><a href="#fdistep2" data-toggle="tab"> Officer</a></li>
+                         <li><a href="#fdistep3" data-toggle="tab">Customise Category</a></li>
+                        <%-- <li><a href="#fdistep2" data-toggle="tab">Location</a></li>--%>
                     </ul>
                 </div>
 
