@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Data;
-using System.Linq;
-using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
 using BusinessLayer;
 using Encryption;
 
@@ -141,15 +137,15 @@ public partial class Admin_RegisterdAs : System.Web.UI.Page
     }
     protected void BindMasterSubCategory()
     {
-        DataTable DtMasterCategroy = Lo.RetriveMasterCategoryDate(0, "", "", "SubSelect");
+        DataTable DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, "", "", "Select");
         if (DtMasterCategroy.Rows.Count > 0)
         {
             Co.FillDropdownlist(ddlcategroy2, DtMasterCategroy, "SCategoryName", "SCategoryId");
-            ddlcategroy2.Items.Insert(0, "Select Category");
+            ddlcategroy2.Items.Insert(0, "Select SubCategory");
         }
         else
         {
-            ddlcategroy2.Items.Insert(0, "Select Category");
+            ddlcategroy2.Items.Insert(0, "Select SubCategory");
         }
     }
 }

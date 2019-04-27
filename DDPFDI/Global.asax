@@ -49,5 +49,6 @@
         routes.MapPageRoute("Master-Category", "Master-Category", "~/Admin/RegisterdAs.aspx", true);
         routes.MapPageRoute("Startup", "Startup", "~/Admin/Startup.aspx", true);
         routes.MapPageRoute("Specilization", "Specilization", "~/Admin/Specilization.aspx", true);
+        routes.MapPageRoute("View-Category", "View-Category", "~/Admin/ViewCategory.aspx", true);
     }    
 </script>
