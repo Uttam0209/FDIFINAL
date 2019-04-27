@@ -200,3 +200,6 @@ form label { color: #494ca2;}
 .sidebar-holder .nav li a:hover { background: none;}
 .navbar .user-menu > li ul.dropdown-menu > li > a { color: #2b3d51; font-family: 'Open Sans', sans-serif;}
 .content .page-header { font-weight: 600; text-transform: uppercase; color: #2b3d51; font-family: 'Open Sans', sans-serif;}
+.tabing-section .nav { margin-bottom: 30px;}
+.tabing-section .nav-tabs > li > a { background: #ddd;}
+.tabing-section .nav-tabs > li.active > a { background: #fff !important;}
