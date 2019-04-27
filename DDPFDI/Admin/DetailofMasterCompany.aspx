@@ -44,7 +44,7 @@
                             <div class="col-md-12">
                                 <asp:HiddenField runat="server" ID="hfrole" />
                                 <div class="table-wrapper">
-                                    <br />
+                                    
                                     <div runat="server" visible="False">
                                         <div class="col-sm-4 row">
                                             <asp:TextBox ID="txtserch" runat="server" CssClass="form-cascade-control form-control" Placeholder="Type keyword to search"></asp:TextBox>
