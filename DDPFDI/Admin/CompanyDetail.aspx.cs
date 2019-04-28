@@ -45,6 +45,8 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
                 BindCompany();
 
                 EditCOde(dtViewDefault);
+
+                BindMasterCategory();
             }
             catch (Exception ex)
             {
@@ -52,6 +54,40 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
             }
         }
     }
+
+    protected void BindMasterCategory()
+    {
+        DataTable DtMasterCategroy = Lo.RetriveMasterCategoryDate(0, "", "", "Select");
+        if (DtMasterCategroy.Rows.Count > 0)
+        {
+            Co.FillDropdownlist(ddlmastercategory, DtMasterCategroy, "MCategoryName", "MCategoryID");
+            ddlmastercategory.Items.Insert(0, "Select Category");
+        }
+        else
+        {
+            ddlmastercategory.Items.Insert(0, "Select Category");
+        }
+    }
+
+    protected void ddlmastercategory_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        BindMasterSubCategory();
+    }
+
+    protected void BindMasterSubCategory()
+    {
+        DataTable DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(Convert.ToInt16(ddlmastercategory.SelectedItem.Value), "", "", "SubSelectID");
+        if (DtMasterCategroy.Rows.Count > 0)
+        {
+            Co.FillCheckBox(chkSubCategory, DtMasterCategroy, "SCategoryName", "SCategoryId");
+            
+        }
+        else
+        {
+           
+        }
+    }
+
     protected void EditCOde(DataTable DtView)
     {
         if (Session["CompanyRefNo"] != null)
@@ -131,7 +167,7 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
                     else if (dtCompany.Rows[0]["Admin"].ToString() == "3")
                     {
                         btndemofirst.Visible = true;
-                        btnDelete.Visible = true;
+                        btnDelete.Visible = false;
                     }
                     else if (dtCompany.Rows[0]["Company"].ToString() == "2")
                     {
@@ -141,7 +177,7 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
                     else if (dtCompany.Rows[0]["Company"].ToString() == "3")
                     {
                         btndemofirst.Visible = true;
-                        btnDelete.Visible = true;
+                        btnDelete.Visible = false;
                     }
                     else if (dtCompany.Rows[0]["Factory"].ToString() == "2")
                     {
@@ -151,7 +187,7 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
                     else if (dtCompany.Rows[0]["Factory"].ToString() == "3")
                     {
                         btndemofirst.Visible = true;
-                        btnDelete.Visible = true;
+                        btnDelete.Visible = false;
                     }
                     else if (dtCompany.Rows[0]["Unit"].ToString() == "2")
                     {
@@ -161,12 +197,12 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
                     else if (dtCompany.Rows[0]["Unit"].ToString() == "3")
                     {
                         btndemofirst.Visible = true;
-                        btnDelete.Visible = true;
+                        btnDelete.Visible = false;
                     }
                     else if (dtCompany.Rows[0]["SuperAdmin"].ToString() == "1")
                     {
                         btndemofirst.Visible = true;
-                        btnDelete.Visible = true;
+                        btnDelete.Visible = false;
                     }
                     else
                     {

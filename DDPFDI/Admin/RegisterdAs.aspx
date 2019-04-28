@@ -18,31 +18,31 @@
                                 <div class="row">
                                     <div class="col-md-4" runat="server" id="divcategory1textbox" visible="False">
                                         <div class="form-group">
-                                            <label>Category 1</label>
+                                            <label>Main Category</label>
                                             <asp:TextBox class="form-control" runat="server" ID="txtmastercategory"></asp:TextBox>
                                         </div>
                                     </div>
                                     <div class="col-md-4" runat="server" id="divcategory1dropdown" visible="False">
                                         <div class="form-group">
-                                            <label>Category 1</label>
+                                            <label>Main Category</label>
                                             <asp:DropDownList runat="server" ID="ddlmastercategory" class="form-control" AutoPostBack="True"></asp:DropDownList>
                                         </div>
                                     </div>
                                     <div class="col-md-4" runat="server" id="divcategory2textbox" visible="False">
                                         <div class="form-group">
-                                            <label>Category 2</label>
+                                            <label>Level 1 Category</label>
                                             <asp:TextBox class="form-control" runat="server" ID="txtsubcategory"></asp:TextBox>
                                         </div>
                                     </div>
                                     <div class="col-md-4" runat="server" id="divcategory2ddl" visible="False">
                                         <div class="form-group">
-                                            <label>Category 2</label>
+                                            <label>Level 1 Category</label>
                                             <asp:DropDownList runat="server" ID="ddlcategroy2" class="form-control" AutoPostBack="True"></asp:DropDownList>
                                         </div>
                                     </div>
                                     <div class="col-md-4" runat="server" id="divcategory3textbox" visible="False">
                                         <div class="form-group">
-                                            <label>Category 3</label>
+                                            <label>Level 2 Category</label>
                                             <asp:TextBox class="form-control" runat="server" ID="txtcategory3"></asp:TextBox>
                                         </div>
                                     </div>
