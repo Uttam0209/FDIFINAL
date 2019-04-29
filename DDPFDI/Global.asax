@@ -12,19 +12,19 @@
     {
         string currentUrl = HttpContext.Current.Request.Url.ToString().ToLower();
     }
-    void Application_Error(object sender, EventArgs e)
-    {
-        var serverError = Server.GetLastError() as HttpException;
-        if (null != serverError)
-        {
-            int errorCode = serverError.GetHttpCode();
-            if (404 == errorCode)
-            {
-                Server.ClearError();
-                Response.Redirect("~/Error");
-            }
-        }
-    }
+    //void Application_Error(object sender, EventArgs e)
+    //{
+    //    var serverError = Server.GetLastError() as HttpException;
+    //    if (null != serverError)
+    //    {
+    //        int errorCode = serverError.GetHttpCode();
+    //        if (404 == errorCode)
+    //        {
+    //            Server.ClearError();
+    //            //Response.Redirect("~/Error");
+    //        }
+    //    }
+    //}
     void Session_Start(object sender, EventArgs e)
     {
     }

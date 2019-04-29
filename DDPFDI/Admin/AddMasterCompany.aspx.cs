@@ -31,8 +31,8 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
         {
             if (Request.QueryString["mu"] != null)
             {
-                string id = Request.QueryString["id"].ToString().Replace(" ", "+");
-                lblPageName.Text = Enc.DecryptData(id);
+                string strid = Request.QueryString["id"].ToString().Replace(" ", "+");
+                lblPageName.Text = Enc.DecryptData(strid);
                 if (Enc.DecryptData(Request.QueryString["mu"].ToString()) == "Panel1")
                 {
                     mastercompany.Visible = true;
@@ -43,7 +43,7 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
                     BindMasterData();
                     Intrested.Visible = true;
                     MenuAlot.Visible = true;
-                    Role.Visible = true;
+                    divRole.Visible = true;
                 }
                 else if (Enc.DecryptData(Request.QueryString["mu"].ToString()) == "Panel2")
                 {
@@ -54,7 +54,7 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
                     btnsubmit.Text = "Save Divison";
                     Intrested.Visible = false;
                     MenuAlot.Visible = false;
-                    Role.Visible = false;
+                    divRole.Visible = false;
 
                 }
                 else if (Enc.DecryptData(Request.QueryString["mu"].ToString()) == "Panel3")
@@ -67,7 +67,7 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
                     btnsubmit.Text = "Save Unit";
                     Intrested.Visible = false;
                     MenuAlot.Visible = false;
-                    Role.Visible = false;
+                    divRole.Visible = false;
                 }
                 else
                 {
@@ -78,7 +78,7 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
                     BindMasterCompany();
                     Intrested.Visible = true;
                     MenuAlot.Visible = true;
-                    Role.Visible = true;
+                    divRole.Visible = true;
                 }
                 lblMastcompany.Text = "Select Company ";
                 lblfactoryName.Text = "Select Divison/Plant ";
