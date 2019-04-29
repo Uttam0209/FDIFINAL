@@ -14,13 +14,15 @@ public partial class Admin_RegisterdAs : System.Web.UI.Page
     HybridDictionary hySave = new HybridDictionary();
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (Request.QueryString["id"] != null && Request.QueryString["id"].ToString() != null)
+        if (!IsPostBack)
         {
-            string id = objEnc.DecryptData(Request.QueryString["id"].ToString().Replace(" ", "+"));
-            DisplayPanel = objEnc.DecryptData(Request.QueryString["mu"].ToString().Replace(" ", "+"));
-            lblPageName.Text = id;
-            ShowHidePanel();
-
+            if (Request.QueryString["id"] != null && Request.QueryString["id"].ToString() != null)
+            {
+                string id = objEnc.DecryptData(Request.QueryString["id"].ToString().Replace(" ", "+"));
+                DisplayPanel = objEnc.DecryptData(Request.QueryString["mu"].ToString().Replace(" ", "+"));
+                lblPageName.Text = id;
+                ShowHidePanel();
+            }
         }
     }
     protected void ShowHidePanel()

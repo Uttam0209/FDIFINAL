@@ -101,25 +101,25 @@
                                                                                                 <ItemTemplate>
                                                                                                 </ItemTemplate>
                                                                                             </asp:TemplateField>
-                                                                                            <asp:TemplateField HeaderText="S.No">
+                                                                                            <asp:TemplateField>
                                                                                                 <ItemTemplate>
                                                                                                     <%#Container.DataItemIndex+1 %>
                                                                                                 </ItemTemplate>
                                                                                             </asp:TemplateField>
-                                                                                            <asp:BoundField ItemStyle-Width="150px" DataField="UnitRefNo" HeaderText="Refrence No" />
+                                                                                            <asp:BoundField ItemStyle-Width="150px" DataField="UnitRefNo" />
                                                                                             <asp:BoundField ItemStyle-Width="150px" DataField="UnitName" HeaderText="Unit" />
-                                                                                            <asp:TemplateField HeaderText="Role">
+                                                                                            <asp:TemplateField >
                                                                                                 <ItemTemplate>
                                                                                                     <asp:Label runat="server" ID="lblunitrole" Text='<%#Eval("Role") %>'></asp:Label>
                                                                                                 </ItemTemplate>
                                                                                             </asp:TemplateField>
-                                                                                            <asp:TemplateField HeaderText="Official Email">
+                                                                                            <asp:TemplateField >
                                                                                                 <ItemTemplate>
                                                                                                     <asp:Label ID="lblunitnodelname" runat="server" Text='<%#Eval("UnitEmailId") %>' NullDisplayText="#" SortExpression="ContactPersonEmailID"></asp:Label>
                                                                                                     <asp:HiddenField runat="server" ID="hfunitemail" Value='<%#Eval("UnitEmailId") %>' />
                                                                                                 </ItemTemplate>
                                                                                             </asp:TemplateField>
-                                                                                            <asp:TemplateField HeaderText="Action">
+                                                                                            <asp:TemplateField>
                                                                                                 <ItemTemplate>
                                                                                                     <asp:LinkButton ID="lblviewunit" runat="server" CssClass="fa fa-eye" CommandName="unitViewComp" CommandArgument='<%#Eval("UnitRefNo") %>'></asp:LinkButton>
                                                                                                     <asp:LinkButton ID="lbleditunit" runat="server" CssClass="fa fa-edit" CommandName="unitEditComp" CommandArgument='<%#Eval("UnitRefNo") %>'></asp:LinkButton>
@@ -133,30 +133,30 @@
                                                                             </div>
                                                                         </ItemTemplate>
                                                                     </asp:TemplateField>
-                                                                    <asp:TemplateField HeaderText="S.No">
+                                                                    <asp:TemplateField >
                                                                         <ItemTemplate>
                                                                             <%#Container.DataItemIndex+1 %>
                                                                         </ItemTemplate>
                                                                     </asp:TemplateField>
 
-                                                                    <asp:TemplateField HeaderText="Refrence No">
+                                                                    <asp:TemplateField >
                                                                         <ItemTemplate>
                                                                             <asp:Label runat="server" ID="lblfactoryrefno" Text='<%#Eval("FactoryRefNo") %>'></asp:Label>
                                                                         </ItemTemplate>
                                                                     </asp:TemplateField>
                                                                     <asp:BoundField ItemStyle-Width="150px" DataField="FactoryName" HeaderText="Division" />
-                                                                    <asp:TemplateField HeaderText="Role">
+                                                                    <asp:TemplateField >
                                                                         <ItemTemplate>
                                                                             <asp:Label runat="server" ID="lblfactoryrole" Text='<%#Eval("Role") %>'></asp:Label>
                                                                         </ItemTemplate>
                                                                     </asp:TemplateField>
-                                                                    <asp:TemplateField HeaderText="Official Email">
+                                                                    <asp:TemplateField >
                                                                         <ItemTemplate>
                                                                             <asp:Label ID="lblfactorynodelname" runat="server" Text='<%#Eval("FactoryEmailId") %>' NullDisplayText="#" SortExpression="ContactPersonEmailID"></asp:Label>
                                                                             <asp:HiddenField runat="server" ID="hffactoryemail" Value='<%#Eval("FactoryEmailId") %>' />
                                                                         </ItemTemplate>
                                                                     </asp:TemplateField>
-                                                                    <asp:TemplateField HeaderText="Action">
+                                                                    <asp:TemplateField >
                                                                         <ItemTemplate>
                                                                             <asp:LinkButton ID="lblviewfactory" runat="server" CssClass="fa fa-eye" CommandName="ViewfactoryComp" CommandArgument='<%#Eval("FactoryRefNo") %>'></asp:LinkButton>
                                                                             <asp:LinkButton ID="lbleditfactory" runat="server" CssClass="fa fa-edit" CommandName="EditfactoryComp" CommandArgument='<%#Eval("FactoryRefNo") %>'></asp:LinkButton>
