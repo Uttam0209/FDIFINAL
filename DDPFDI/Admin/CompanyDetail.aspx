@@ -462,10 +462,10 @@
 
                     </div>
                     <div class="row">
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d7003.596347616748!2d77.36953357342753!3d28.63581042966584!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sin!4v1556380705305!5m2!1sen!2sin" width="300" height="250" frameborder="0" style="border: 0" allowfullscreen></iframe>
-                            </div>
+                        <div class="col-md-12">
+                            
+                                <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d7003.596347616748!2d77.36953357342753!3d28.63581042966584!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sin!4v1556380705305!5m2!1sen!2sin" width="100%" height="250" frameborder="0" style="border: 0" allowfullscreen></iframe>
+                            
                         </div>
                     </div>
 
