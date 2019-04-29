@@ -26,6 +26,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="add-profile">
+                                    <div class="section-pannel">
                                     <div class="row">
                                         <div class="col-md-4">
                                             <div class="form-group">
@@ -48,6 +49,8 @@
                                             </div>
                                         </div>
                                     </div>
+                                    </div>
+                                    <div class="section-pannel">
                                     <div class="row">
                                         <div class="col-md-4">
                                             <div class="form-group">
@@ -89,6 +92,8 @@
 
 
                                     </div>
+                                    </div>
+                                     <div class="section-pannel">
                                     <div class="row">
 
                                         <div class="col-md-4">
@@ -127,14 +132,15 @@
                                             </div>
                                         </div>
                                     </div>
-
+                                     </div>
+                                      <div class="section-pannel">
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>
                                                     Product Already Indeginized :
-                                                                <input type="radio">Yes
-                                                                <input type="radio">No</label>
+                                                                <input type="radio" name="product">Yes
+                                                                <input type="radio" name="product">No</label>
 
                                             </div>
                                         </div>
@@ -145,6 +151,8 @@
                                             </div>
                                         </div>
                                     </div>
+                                      </div>
+                                       <div class="section-pannel">
                                     <div class="row">
                                         <div class="col-md-3">
                                             <div class="form-group">
@@ -187,7 +195,7 @@
 
                                         </div>
                                     </div>
-
+                                       </div>
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group">
@@ -233,42 +241,42 @@
                                         <td></td>
                                     </tr>
                                     <tr>
-                                        <td>1</td>
+                                        <td>4</td>
                                         <td>Drawing</td>
                                         <td>
                                             <input type="checkbox"></td>
                                         <td></td>
                                     </tr>
                                     <tr>
-                                        <td>4</td>
+                                        <td>5</td>
                                         <td>Sample</td>
                                         <td>
                                             <input type="checkbox"></td>
                                         <td></td>
                                     </tr>
                                     <tr>
-                                        <td>5</td>
+                                        <td>6</td>
                                         <td>Funding Support for Development</td>
                                         <td>
                                             <input type="checkbox"></td>
                                         <td></td>
                                     </tr>
                                     <tr>
-                                        <td>6</td>
+                                        <td>7</td>
                                         <td>Funding Support for Testing</td>
                                         <td>
                                             <input type="checkbox"></td>
                                         <td></td>
                                     </tr>
                                     <tr>
-                                        <td>7</td>
+                                        <td>8</td>
                                         <td>Financial Support</td>
                                         <td>
                                             <input type="checkbox"></td>
                                         <td></td>
                                     </tr>
                                     <tr>
-                                        <td>8</td>
+                                        <td>9</td>
                                         <td>Assurance of Procurement</td>
                                         <td>
                                             <input type="checkbox"></td>
@@ -311,18 +319,17 @@
                                 <div class="form-group">
                                     <label>
                                         Tender Status
-                                        <input type="checkbox">Live
-                                        <input type="checkbox" style="margin-left: 20px;">Archive</label>
+                                        <input type="checkbox" name="tender">Live
+                                        <input type="checkbox" name="tender" style="margin-left: 20px;">Archive</label>
                                 </div>
-
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
+                                 <div class="form-group" id="live-box">
                                     <p>If live, please fill last date of tender submission.</p>
                                     <label>Last Date of Tender Submission</label>
                                     <input type="date" class="form-control">
                                 </div>
+
                             </div>
+                           
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label>Tender URL</label>
@@ -340,6 +347,7 @@
                         </div>
                     </div>
                     <div id="cd" class="tab-pane fade">
+                         <div class="section-pannel">
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
@@ -360,6 +368,7 @@
                                 </div>
                             </div>
                         </div>
+                        
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
@@ -380,6 +389,7 @@
                                 </div>
                             </div>
                         </div>
+                         </div>
                     </div>
                 </div>
             </div>
