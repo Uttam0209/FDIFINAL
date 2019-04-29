@@ -46,7 +46,7 @@
 </asp:Content>
 <asp:Content ID="inner2" runat="server" ContentPlaceHolderID="ContentPlaceHolder1">
     <div class="content oem-content">
-        <asp:ScriptManager ID="sc" runat="server"></asp:ScriptManager>
+        <asp:ScriptManager ID="sn" runat="server"></asp:ScriptManager>
         <div class="sideBg">
             <div class="row">
                 <div class="col-md-12">
@@ -115,7 +115,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-3" id="Role" visible="False" runat="server">
+                                        <div class="col-md-3" id="divRole" visible="False" runat="server">
                                             <div class="fdi-add-content">
                                                 <div class="form-group">
                                                     <h3 class="secondary-heading">Role</h3>
