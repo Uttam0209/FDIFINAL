@@ -12,8 +12,7 @@
         };
     </script>
     <style type="text/css">
-        #map_canvas
-        {
+        #map_canvas {
             height: 100%;
         }
     </style>
@@ -421,27 +420,27 @@
                     </div>
                 </div>
                 <div id="cc" class="tab-pane fade">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>Product Category </label>
-                                <asp:DropDownList runat="server" ID="ddlmastercategory" class="form-control" AutoPostBack="True" OnSelectedIndexChanged="ddlmastercategory_SelectedIndexChanged"></asp:DropDownList>
+                    <asp:UpdatePanel runat="server" ID="up">
+                        <ContentTemplate>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Product Category </label>
+                                        <asp:DropDownList runat="server" ID="ddlmastercategory" class="form-control" AutoPostBack="True" OnSelectedIndexChanged="ddlmastercategory_SelectedIndexChanged"></asp:DropDownList>
 
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <h3 for="fdiinflow" class="secondary-heading">Sub Category</h3>
+                                        <asp:CheckBoxList ID="chkSubCategory" runat="server" CssClass="checkbox-inline" RepeatColumns="25" RepeatDirection="Vertical" RepeatLayout="Flow">
+                                        </asp:CheckBoxList>
+
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-
-
-                   
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <h3 for="fdiinflow" class="secondary-heading">Sub Category</h3>
-                                <asp:CheckBoxList ID="chkSubCategory" runat="server" CssClass="checkbox-inline" RepeatColumns="5" RepeatDirection="Vertical" RepeatLayout="Flow">
-                                </asp:CheckBoxList>
-
-                            </div>
-                        </div>
-                    </div>
-
+                        </ContentTemplate>
+                    </asp:UpdatePanel>
                 </div>
                 <div id="Location" class="tab-pane fade">
                     <div class="row">
@@ -469,29 +468,19 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-sm-12">
 
-                            <div class="form-group">
-
-                                <asp:LinkButton ID="btndemofirst" runat="server" CssClass="btn btn-danger pull-right" Style="margin-left: 10px;" Text="Edit" OnClick="btndemofirst_Click"
-                                    Visible="false" />
-                                <asp:LinkButton ID="btnDelete" runat="server" CssClass="btn btn-primary pull-right" Text="Delete" Visible="false" />
-                            </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <asp:LinkButton ID="btndemofirst" runat="server" CssClass="btn btn-danger pull-right" Style="margin-left: 10px;" Text="Edit" OnClick="btndemofirst_Click"
+                                Visible="false" />
+                            <asp:LinkButton ID="btnDelete" runat="server" CssClass="btn btn-primary pull-right" Text="Delete" Visible="false" />
                         </div>
-
                     </div>
                 </div>
-
             </div>
-
         </div>
-
-
-
         <div class="footer">� 2019 <a href="#">Department of Defence Production</a> </div>
     </div>
-    </div>
-        </div>
-
 </asp:Content>
