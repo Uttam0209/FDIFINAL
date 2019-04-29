@@ -36,7 +36,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         DataTable DtMasterCategroy = Lo.RetriveMasterCategoryDate(0, "", "", "Select");
         if (DtMasterCategroy.Rows.Count > 0)
         {
-            Co.FillDropdownlist(ddlmastercategory, DtMasterCategroy, "MCategoryName", "MCategoryID");
+            Co.FillDropdownlist(ddlmastercategory, DtMasterCategroy, "SCategoryName", "SCategoryID");
             ddlmastercategory.Items.Insert(0, "Select Category");
         }
         else
