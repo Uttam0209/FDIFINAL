@@ -140,6 +140,33 @@ namespace DataAccessLayer
             }
         }
         #endregion
+        #region "Email and Company Name"
+        public string VerifyEmailandCompany(string strEmail, string strCompany, out string _msg)
+        {
+            try
+            {
+                DbCommand _dbCmd = db.GetStoredProcCommand("sp_Verify_EmailIdandCompany");
+                db.AddInParameter(_dbCmd, "@EmailId", DbType.String, strEmail);
+                db.AddInParameter(_dbCmd, "@Company", DbType.String, strCompany);
+                db.AddOutParameter(_dbCmd, "@LType", DbType.String, 50);
+                db.ExecuteNonQuery(_dbCmd);
+                string ID = db.GetParameterValue(_dbCmd, "@LType").ToString();
+                _msg = ID;
+                return _msg;
+
+            }
+            catch (SqlException ex)
+            {
+                _msg = "0";
+                return "";
+            }
+            catch (Exception ex)
+            {
+                _msg = "0";
+                return "";
+            }
+        }
+        #endregion
         #region SaveCode
         public string SaveFDI(HybridDictionary HySave, out string _sysMsg, out string _msg)
         {

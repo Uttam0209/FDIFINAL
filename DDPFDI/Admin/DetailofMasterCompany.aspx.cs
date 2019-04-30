@@ -25,11 +25,16 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
     {
         if (!IsPostBack)
         {
-            currentPage = System.IO.Path.GetFileName(Request.Url.AbsolutePath);
-            mType = objEnc.DecryptData(Session["Type"].ToString());
-            mRefNo = Session["CompanyRefNo"].ToString();
-            BindCompany();
-            BindGridView();
+            if (Request.QueryString["id"] != null)
+            {
+                string strid = Request.QueryString["id"].ToString().Replace(" ", "+");
+                lblPageName.Text = objEnc.DecryptData(strid);
+                currentPage = System.IO.Path.GetFileName(Request.Url.AbsolutePath);
+                mType = objEnc.DecryptData(Session["Type"].ToString());
+                mRefNo = Session["CompanyRefNo"].ToString();
+                BindCompany();
+                BindGridView();
+            }
         }
     }
     #region Load

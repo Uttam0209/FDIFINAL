@@ -42,27 +42,29 @@
     <div class="content oem-content crearfix">
         <asp:ScriptManager ID="sc" runat="server"></asp:ScriptManager>
         <div class="sideBg">
-            <div class="col-mod-12">
+            <div class="row">
+            <div class="col-md-12 padding_0">
                 <ul class="breadcrumb">
                     <li class="active">
                         <asp:Label ID="lblPageName" runat="server" Text=""></asp:Label>
                     </li>
                 </ul>
             </div>
+            </div>
             <label for="activityname" class="control-label pull-right">(<span class="mandatory">*</span>) are manadatory field</label>
             <div class="clearfix"></div>
 
             <div class="row">
                 <div class="col-sm-4">
-                    <asp:Label runat="server" ID="lblSelectCompany"></asp:Label>
+                    <asp:Label runat="server" ID="lblSelectCompany" CssClass="form-label"></asp:Label>
                     <asp:DropDownList runat="server" ID="ddlcompany" CssClass="form-control" AutoPostBack="True" OnSelectedIndexChanged="ddlcompany_OnSelectedIndexChanged"></asp:DropDownList>
                 </div>
                 <div class="col-sm-4">
-                    <asp:Label runat="server" ID="lblselectdivison" Visible="False">Select Division/Plant</asp:Label>
+                    <asp:Label runat="server" ID="lblselectdivison" Visible="False" CssClass="form-label">Select Division/Plant</asp:Label>
                     <asp:DropDownList runat="server" ID="ddldivision" CssClass="form-control" AutoPostBack="True" OnSelectedIndexChanged="ddldivision_OnSelectedIndexChanged"></asp:DropDownList>
                 </div>
                 <div class="col-sm-4">
-                    <asp:Label runat="server" ID="lblselectunit" Visible="False">Select Unit</asp:Label>
+                    <asp:Label runat="server" ID="lblselectunit" Visible="False" CssClass="form-label">Select Unit</asp:Label>
                     <asp:DropDownList runat="server" ID="ddlunit" CssClass="form-control" AutoPostBack="True" OnSelectedIndexChanged="ddlunit_OnSelectedIndexChanged"></asp:DropDownList>
                 </div>
             </div>

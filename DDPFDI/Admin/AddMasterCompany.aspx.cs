@@ -31,8 +31,8 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
         {
             if (Request.QueryString["mu"] != null)
             {
-                string id = Request.QueryString["id"].ToString().Replace(" ", "+");
-                lblPageName.Text = Enc.DecryptData(id);
+                string strid = Request.QueryString["id"].ToString().Replace(" ", "+");
+                lblPageName.Text = Enc.DecryptData(strid);
                 if (Enc.DecryptData(Request.QueryString["mu"].ToString()) == "Panel1")
                 {
                     mastercompany.Visible = true;
@@ -223,7 +223,16 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
     {
         if (txtcomp.Text.Trim() != "" && txtemail.Text.Trim() != "")
         {
-            SaveComp();
+            string strIsEmail = Lo.VerifyEmailandCompany(txtemail.Text, txtcomp.Text, out _msg);
+            if (_msg != "0" && _msg != "")
+            {
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('" + txtcomp.Text + " or offical email id already exist !')", true);
+            }
+            else
+            {
+                SaveComp();
+            }
+
         }
         else
         {

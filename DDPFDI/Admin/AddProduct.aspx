@@ -8,11 +8,10 @@
     <div class="content oem-content">
         <div class="sideBg">
             <div class="row">
-                <div class="col-md-12">
-                    <h3 class="page-header">
-                        <asp:Label ID="lblPageName" runat="server" Text=""></asp:Label>
-                    </h3>
-
+                <div class="col-md-12 padding_0">
+                    <ul class="breadcrumb">
+                        <li><asp:Label ID="lblPageName" runat="server" Text=""></asp:Label></li>
+                    </ul>
                 </div>
             </div>
             <asp:UpdatePanel runat="server" ID="UpdatePanel4">
@@ -47,7 +46,7 @@
                                                 </div>
                                                 <div class="col-md-4">
                                                     <div class="form-group">
-                                                        <label>End user part no</label>
+                                                        <label>End User Part Number</label>
                                                         <textarea class="form-control"></textarea>
                                                     </div>
                                                 </div>

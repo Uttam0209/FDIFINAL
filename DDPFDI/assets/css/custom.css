@@ -111,7 +111,7 @@ form .form-group .btn { min-width: 100px; border-radius: 4px;}
     list-style: none;
     background-color: #e6e9ed;
     margin-left: 0 !important;
-    margin-bottom: 0;
+    margin-bottom: 16px;;
 }
 .breadcrumb li:first-child {
     border-radius: 4px 0 0 4px;

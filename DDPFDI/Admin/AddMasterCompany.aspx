@@ -1,6 +1,8 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="AddMasterCompany.aspx.cs" Inherits="Admin_AddMasterCompany" MasterPageFile="~/Admin/MasterPage.master" %>
 
+
 <asp:Content ID="head123" runat="server" ContentPlaceHolderID="head">
+
     <script type="text/javascript">
         var atLeast = 1
         function Validate() {
@@ -44,6 +46,7 @@
         }
     </script>
 </asp:Content>
+
 <asp:Content ID="inner2" runat="server" ContentPlaceHolderID="ContentPlaceHolder1">
     <div class="content oem-content">
         <asp:ScriptManager ID="sn" runat="server"></asp:ScriptManager>
@@ -85,7 +88,7 @@
                                                         </div>
                                                         <div class="col-md-6">
                                                             <div class="form-group">
-                                                                <label for="businesscode" class=" control-label">Offical email id </label>
+                                                                <label class=" control-label">Offical email id </label>
                                                                 <asp:TextBox ID="txtemail" runat="server" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" class="form-control form-cascade-control"></asp:TextBox>
                                                                 <p class="note">*Note: will be used as username </p>
                                                             </div>
@@ -99,8 +102,10 @@
                                         <div class="col-md-5" id="Intrested" visible="False" runat="server">
                                             <div class="fdi-add-content">
                                                 <div class="form-group">
+
                                                     <h3 class="secondary-heading">Intrested In</h3>
                                                     <asp:CheckBoxList ID="chkintrestedarea" runat="server" CssClass="checkbox-inline" RepeatColumns="5" RepeatDirection="Vertical" RepeatLayout="Flow">
+
                                                     </asp:CheckBoxList>
 
                                                 </div>
@@ -109,6 +114,7 @@
                                         <div class="col-md-4" id="MenuAlot" visible="False" runat="server">
                                             <div class="fdi-add-content">
                                                 <div class="form-group">
+
                                                     <h3 class="secondary-heading">Menu Alotted</h3>
                                                     <asp:CheckBoxList ID="chkmastermenuallot" runat="server" CssClass="checkbox-inline" RepeatColumns="4" RepeatDirection="Horizontal" RepeatLayout="Flow">
                                                     </asp:CheckBoxList>
@@ -118,7 +124,9 @@
                                         <div class="col-md-3" id="divRole" visible="False" runat="server">
                                             <div class="fdi-add-content">
                                                 <div class="form-group">
+
                                                     <h3 class="secondary-heading">Role</h3>
+
                                                     <asp:CheckBoxList ID="chkrole" runat="server" RepeatColumns="5" CssClass="checkbox-inline" RepeatDirection="Horizontal" RepeatLayout="Flow">
                                                         <asp:ListItem Value="Admin">Admin</asp:ListItem>
                                                         <asp:ListItem Value="Company">Company</asp:ListItem>
