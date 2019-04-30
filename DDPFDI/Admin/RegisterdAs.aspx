@@ -18,7 +18,7 @@
                                 <div class="row">
                                     <div class="col-md-4" runat="server" id="divcategory1textbox" visible="False">
                                         <div class="form-group">
-                                            <label>Main Category</label>
+                                            <label>Product Category</label>
                                             <asp:TextBox class="form-control" runat="server" ID="txtmastercategory"></asp:TextBox>
                                         </div>
                                     </div>

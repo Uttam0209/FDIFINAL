@@ -12,8 +12,7 @@
         };
     </script>
     <style type="text/css">
-        #map_canvas
-        {
+        #map_canvas {
             height: 100%;
         }
     </style>
@@ -421,27 +420,27 @@
                     </div>
                 </div>
                 <div id="cc" class="tab-pane fade">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>Product Category </label>
-                                <asp:DropDownList runat="server" ID="ddlmastercategory" class="form-control" AutoPostBack="True" OnSelectedIndexChanged="ddlmastercategory_SelectedIndexChanged"></asp:DropDownList>
+                    <asp:UpdatePanel runat="server" ID="up">
+                        <ContentTemplate>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Product Category </label>
+                                        <asp:DropDownList runat="server" ID="ddlmastercategory" class="form-control" AutoPostBack="True" OnSelectedIndexChanged="ddlmastercategory_SelectedIndexChanged"></asp:DropDownList>
 
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <h3 for="fdiinflow" class="secondary-heading">Sub Category</h3>
+                                        <asp:CheckBoxList ID="chkSubCategory" runat="server" CssClass="checkbox-inline" RepeatColumns="25" RepeatDirection="Vertical" RepeatLayout="Flow">
+                                        </asp:CheckBoxList>
+
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-
-
-                   
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <h3 for="fdiinflow" class="secondary-heading">Sub Category</h3>
-                                <asp:CheckBoxList ID="chkSubCategory" runat="server" CssClass="checkbox-inline" RepeatColumns="5" RepeatDirection="Vertical" RepeatLayout="Flow">
-                                </asp:CheckBoxList>
-
-                            </div>
-                        </div>
-                    </div>
-
+                        </ContentTemplate>
+                    </asp:UpdatePanel>
                 </div>
                 <div id="Location" class="tab-pane fade">
                     <div class="row">
@@ -463,35 +462,25 @@
 
                     </div>
                     <div class="row">
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d7003.596347616748!2d77.36953357342753!3d28.63581042966584!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sin!4v1556380705305!5m2!1sen!2sin" width="300" height="250" frameborder="0" style="border: 0" allowfullscreen></iframe>
-                            </div>
+                        <div class="col-md-12">
+                            
+                                <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d7003.596347616748!2d77.36953357342753!3d28.63581042966584!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sin!4v1556380705305!5m2!1sen!2sin" width="100%" height="250" frameborder="0" style="border: 0" allowfullscreen></iframe>
+                            
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-sm-12">
 
-                            <div class="form-group">
-
-                                <asp:LinkButton ID="btndemofirst" runat="server" CssClass="btn btn-danger pull-right" Style="margin-left: 10px;" Text="Edit" OnClick="btndemofirst_Click"
-                                    Visible="false" />
-                                <asp:LinkButton ID="btnDelete" runat="server" CssClass="btn btn-primary pull-right" Text="Delete" Visible="false" />
-                            </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <asp:LinkButton ID="btndemofirst" runat="server" CssClass="btn btn-danger pull-right" Style="margin-left: 10px;" Text="Edit" OnClick="btndemofirst_Click"
+                                Visible="false" />
+                            <asp:LinkButton ID="btnDelete" runat="server" CssClass="btn btn-primary pull-right" Text="Delete" Visible="false" />
                         </div>
-
                     </div>
                 </div>
-
             </div>
-
         </div>
-
-
-
         <div class="footer">� 2019 <a href="#">Department of Defence Production</a> </div>
     </div>
-    </div>
-        </div>
-
 </asp:Content>

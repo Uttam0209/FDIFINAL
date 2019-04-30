@@ -2,6 +2,7 @@
 
     //Sidebar Toggle
     $('.btn-nav-toggle').click(function () {
+        $('.left-sidebar').toggleClass('sidebar-collapse');
         $('.site-holder').toggleClass('mini-sidebar');
         $('.hidden-minibar').toggleClass('hide');
         $('.toggle-left').toggleClass('rotate-toggle-btn');
