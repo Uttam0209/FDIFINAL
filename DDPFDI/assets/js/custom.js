@@ -69,5 +69,18 @@ $(window).on('load', function(){
             $(this).parents('.acordian-table').find('.toggle-table-plus').show();
         });
 
+// Hide Show when checkbox checked
+
+    $(".live-status-box input[type='radio']").on('change', function(){
+        var $inputChecked = $('.live-status-box .yes').is(":checked");
+       if($inputChecked == true) {
+           $(".live-status-box input[type='date']").show();
+
+       }
+       else {
+           $(".live-status-box input[type='date']").hide();
+       }
+    });
+
 
 });

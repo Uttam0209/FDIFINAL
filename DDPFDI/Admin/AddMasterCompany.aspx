@@ -49,7 +49,7 @@
         <asp:ScriptManager ID="sn" runat="server"></asp:ScriptManager>
         <div class="sideBg">
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-12 padding_0">
                     <ul class="breadcrumb">
                         <li class="active">
                             <asp:Label ID="lblPageName" runat="server" Text=""></asp:Label></li>
@@ -63,12 +63,12 @@
                             <asp:UpdatePanel ID="upfdival" runat="server">
                                 <ContentTemplate>
                                     <div class="form-group" runat="server" id="mastercompany" visible="False">
-                                        <asp:Label ID="lblMastcompany" runat="server" Text=""></asp:Label>
+                                        <asp:Label ID="lblMastcompany" runat="server" Text="" CssClass="form-label"></asp:Label>
                                         <asp:DropDownList runat="server" ID="ddlmaster" AutoPostBack="True" CssClass="form-control form-cascade-control" OnSelectedIndexChanged="ddlmaster_SelectedIndexChanged">
                                         </asp:DropDownList>
                                     </div>
                                     <div class="form-group" runat="server" id="masterfacotry" visible="False">
-                                        <asp:Label ID="lblfactoryName" runat="server" Text=""></asp:Label>
+                                        <asp:Label ID="lblfactoryName" runat="server" Text="" CssClass="form-label"></asp:Label>
                                         <asp:DropDownList runat="server" ID="ddlfacotry" AutoPostBack="True" CssClass="form-control form-cascade-control">
                                         </asp:DropDownList>
                                     </div>
@@ -79,7 +79,7 @@
                                                     <div class="row">
                                                         <div class="col-md-6">
                                                             <div class="form-group">
-                                                                <asp:Label ID="lblName" runat="server" Text=""></asp:Label>
+                                                                <asp:Label ID="lblName" runat="server" Text="" CssClass="form-label"></asp:Label>
                                                                 <asp:TextBox ID="txtcomp" runat="server" class="form-control form-cascade-control"></asp:TextBox>
                                                             </div>
                                                         </div>
@@ -95,7 +95,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row">
+                                    <div class="row is-flex">
                                         <div class="col-md-5" id="Intrested" visible="False" runat="server">
                                             <div class="fdi-add-content">
                                                 <div class="form-group">
@@ -132,8 +132,8 @@
                                         <div class="col-md-12">
                                             <div class="fdi-add-content">
                                                 <div class="form-group">
-                                                    <asp:Button ID="btncancel" runat="server" Text="Cancel" CssClass="btn btn-danger btn-sm pull-right" OnClick="btncancel_Click" />
-                                                    <asp:Button ID="btnsubmit" runat="server" Text="Save" CssClass="btn btn-primary btn-sm pull-right" OnClick="btnsubmit_Click" OnClientClick="return Validate()" />
+                                                    <asp:Button ID="btncancel" runat="server" Text="Cancel" CssClass="btn btn-danger pull-right" OnClick="btncancel_Click" />
+                                                    <asp:Button ID="btnsubmit" runat="server" Text="Save" CssClass="btn btn-primary pull-right" OnClick="btnsubmit_Click" OnClientClick="return Validate()" />
                                                 </div>
                                             </div>
                                             <div>
