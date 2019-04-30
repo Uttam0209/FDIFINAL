@@ -25,7 +25,7 @@
                                     <div class="col-md-4" runat="server" id="divcategory1dropdown" visible="False">
                                         <div class="form-group">
                                             <label>Main Category</label>
-                                            <asp:DropDownList runat="server" ID="ddlmastercategory" class="form-control" AutoPostBack="True"></asp:DropDownList>
+                                            <asp:DropDownList runat="server" ID="ddlmastercategory" class="form-control" AutoPostBack="True" OnSelectedIndexChanged="ddlmastercategory_SelectedIndexChanged"></asp:DropDownList>
                                         </div>
                                     </div>
                                     <div class="col-md-4" runat="server" id="divcategory2textbox" visible="False">
@@ -37,7 +37,7 @@
                                     <div class="col-md-4" runat="server" id="divcategory2ddl" visible="False">
                                         <div class="form-group">
                                             <label>Level 1 Category</label>
-                                            <asp:DropDownList runat="server" ID="ddlcategroy2" class="form-control" AutoPostBack="True"></asp:DropDownList>
+                                            <asp:DropDownList runat="server" ID="ddlcategroy2" class="form-control"></asp:DropDownList>
                                         </div>
                                     </div>
                                     <div class="col-md-4" runat="server" id="divcategory3textbox" visible="False">

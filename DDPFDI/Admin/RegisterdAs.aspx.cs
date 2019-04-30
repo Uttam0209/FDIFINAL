@@ -14,9 +14,9 @@ public partial class Admin_RegisterdAs : System.Web.UI.Page
     HybridDictionary hySave = new HybridDictionary();
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (!IsPostBack)
+        if (Request.QueryString["id"] != null && Request.QueryString["id"].ToString() != null)
         {
-            if (Request.QueryString["id"] != null && Request.QueryString["id"].ToString() != null)
+            if (!IsPostBack)
             {
                 string id = objEnc.DecryptData(Request.QueryString["id"].ToString().Replace(" ", "+"));
                 DisplayPanel = objEnc.DecryptData(Request.QueryString["mu"].ToString().Replace(" ", "+"));
@@ -37,8 +37,9 @@ public partial class Admin_RegisterdAs : System.Web.UI.Page
             divcategory1dropdown.Visible = true;
             divcategory2textbox.Visible = true;
             divcategory1textbox.Visible = false;
-            btnsave.Text = "Save SubCategroy";
+            btnsave.Text = "Save SubCategory";
             BindMasterCategory();
+            ddlmastercategory.AutoPostBack = false;
         }
         else if (DisplayPanel.ToString() == "Panel3")
         {
@@ -46,8 +47,9 @@ public partial class Admin_RegisterdAs : System.Web.UI.Page
             divcategory2ddl.Visible = true;
             divcategory3textbox.Visible = true;
             btnsave.Text = "Save";
-            BindMasterCategory();
-            BindMasterSubCategory();
+            BindMasterInnerSubCategory();
+         //   BindMasterSubCategory();
+            ddlmastercategory.AutoPostBack = true;
         }
     }
     protected void cleartext()
@@ -75,10 +77,10 @@ public partial class Admin_RegisterdAs : System.Web.UI.Page
     }
     protected void SaveCodeSub()
     {
-        DataTable StrCat = Lo.RetriveMasterSubCategoryDate(0, Co.RSQandSQLInjection(txtsubcategory.Text, "soft"), ddlmastercategory.SelectedItem.Value, "Insert");
+        DataTable StrCat = Lo.RetriveMasterSubCategoryDate(Convert.ToInt16(ddlmastercategory.SelectedItem.Value), Co.RSQandSQLInjection(txtsubcategory.Text, "soft"), "0", "InsertInnerID");
         if (StrCat != null)
         {
-            cleartext(); ddlcategroy2.SelectedIndex = 0;
+            cleartext();// ddlcategroy2.SelectedIndex = 0;
             ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record saved')", true);
         }
         else
@@ -139,15 +141,33 @@ public partial class Admin_RegisterdAs : System.Web.UI.Page
     }
     protected void BindMasterSubCategory()
     {
-        DataTable DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, "", "", "Select");
+        DataTable DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(Convert.ToInt16(ddlmastercategory.SelectedItem.Value), "", "", "Select");
         if (DtMasterCategroy.Rows.Count > 0)
         {
             Co.FillDropdownlist(ddlcategroy2, DtMasterCategroy, "SCategoryName", "SCategoryId");
-            ddlcategroy2.Items.Insert(0, "Select SubCategory");
+            ddlcategroy2.Items.Insert(0, "Select Label 2");
         }
         else
         {
-            ddlcategroy2.Items.Insert(0, "Select SubCategory");
+            ddlcategroy2.Items.Insert(0, "Select Label 2");
         }
+    }
+    protected void BindMasterInnerSubCategory()
+    {
+        DataTable DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, "", "", "SelectInnerMaster");
+        if (DtMasterCategroy.Rows.Count > 0)
+        {
+            Co.FillDropdownlist(ddlmastercategory, DtMasterCategroy, "SCategoryName", "SCategoryId");
+            ddlmastercategory.Items.Insert(0, "Select Level 1");
+        }
+        else
+        {
+            ddlmastercategory.Items.Insert(0, "Select Level 1");
+        }
+    }
+
+    protected void ddlmastercategory_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        BindMasterSubCategory();
     }
 }

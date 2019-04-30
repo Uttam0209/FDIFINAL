@@ -47,7 +47,7 @@
                                                 </div>
                                                 <div class="col-md-4">
                                                     <div class="form-group">
-                                                        <label>End user part no</label>
+                                                        <label>End User Part Number</label>
                                                         <textarea class="form-control"></textarea>
                                                     </div>
                                                 </div>

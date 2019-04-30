@@ -223,7 +223,16 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
     {
         if (txtcomp.Text.Trim() != "" && txtemail.Text.Trim() != "")
         {
-            SaveComp();
+            string strIsEmail = Lo.VerifyEmailandCompany(txtemail.Text, txtcomp.Text, out _msg);
+            if (_msg != "0" && _msg != "")
+            {
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('" + txtcomp.Text + " or offical email id already exist !')", true);
+            }
+            else
+            {
+                SaveComp();
+            }
+
         }
         else
         {
