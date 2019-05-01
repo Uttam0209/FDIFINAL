@@ -8,6 +8,7 @@ using System.Text.RegularExpressions;
 using System.Text;
 using System.IO;
 using System.Net;
+using System.Web.UI.WebControls;
 
 public partial class Admin_CompanyDetail : System.Web.UI.Page
 {
@@ -23,13 +24,13 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
     string lbltypelogin = "";
     private string mType = "";
     private string mRefNo = "";
+    private string Categoryintrestedare = "";
     DataTable DtCompanyDDL = new DataTable();
     DataTable dtViewDefault = new DataTable();
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
         {
-
             try
             {
                 if (Request.QueryString["id"] != null)
@@ -41,11 +42,8 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
                 mType = objCrypto.DecryptData(Session["Type"].ToString());
                 mRefNo = Session["CompanyRefNo"].ToString();
                 BindState();
-
                 BindCompany();
-
                 EditCOde(dtViewDefault);
-
                 BindMasterCategory();
             }
             catch (Exception ex)
@@ -54,7 +52,6 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
             }
         }
     }
-
     protected void BindMasterCategory()
     {
         DataTable DtMasterCategroy = Lo.RetriveMasterCategoryDate(0, "", "", "Select");
@@ -68,26 +65,18 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
             ddlmastercategory.Items.Insert(0, "Select Category");
         }
     }
-
     protected void ddlmastercategory_SelectedIndexChanged(object sender, EventArgs e)
     {
-        BindMasterSubCategory();
+        BindMasterInnerSubCategory();
     }
-
-    protected void BindMasterSubCategory()
+    protected void BindMasterInnerSubCategory()
     {
-        DataTable DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(Convert.ToInt16(ddlmastercategory.SelectedItem.Value), "", "", "SubSelectID");
+        DataTable DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(Convert.ToInt16(ddlmastercategory.SelectedItem.Value), "", "", "SelectInnerMaster");
         if (DtMasterCategroy.Rows.Count > 0)
         {
             Co.FillCheckBox(chkSubCategory, DtMasterCategroy, "SCategoryName", "SCategoryId");
-            
-        }
-        else
-        {
-           
         }
     }
-
     protected void EditCOde(DataTable DtView)
     {
         if (Session["CompanyRefNo"] != null)
@@ -500,6 +489,30 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
         HySave["MasterAllowed"] = "";
         HySave["Role"] = "";
     }
+    protected void SaveCompanyMenu()
+    {
+        HybridDictionary hyMasterCategory = new HybridDictionary();
+        hyMasterCategory["CompCatRelationId"] = 0;
+        hyMasterCategory["CompanyRefNo"] = Co.RSQandSQLInjection(Session["CompanyRefNo"].ToString(), "soft");
+        hyMasterCategory["MCategoryId"] = Co.RSQandSQLInjection(ddlmastercategory.SelectedItem.Value, "soft");
+        foreach (ListItem li in chkSubCategory.Items)
+        {
+            if (li.Selected == true)
+            {
+                Categoryintrestedare = Categoryintrestedare + "," + li.Value;
+            }
+        }
+        hyMasterCategory["SCategoryId"] = Co.RSQandSQLInjection(Categoryintrestedare.Substring(1).ToString(), "soft");
+        string mStrCategory = Lo.SaveMasterCategroyMenu(hyMasterCategory, out _sysMsg, out _msg);
+        if (mStrCategory == "Save")
+        {
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Master Category saved successfully.')", true);
+        }
+        else
+        {
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not saved')", true);
+        }
+    }
     public string ValidatePreview()
     {
         string mCon = "";
@@ -557,8 +570,6 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
     }
     protected void btndemofirst_Click(object sender, EventArgs e)
     {
-        //dd();
-
         if (tcompanyname.Text != "" && temailid.Text != "")
         {
             string msg = this.ValidatePreview();
@@ -572,6 +583,7 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
                 string StrSaveFDIComp = Lo.SaveMasterCompany(HySave, out _msg, out _sysMsg);
                 if (StrSaveFDIComp != "0" && StrSaveFDIComp != "-1")
                 {
+                    SaveCompanyMenu();
                     if (hfid.Value != "")
                     {
                         cleartext();
@@ -857,22 +869,17 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
         txtCEOEmailId.Text = "";
         txtceoname.Text = "";
     }
-
-
     public DataTable dd()
     {
         DataTable dtCoordinates = new DataTable();
         string url = "http://maps.googleapis.com/maps/api/geocode/json?address=" + taddress.Text + "&sensor=true_or_false";
-
         WebRequest request = WebRequest.Create(url);
-
         using (WebResponse response = (HttpWebResponse)request.GetResponse())
         {
             using (StreamReader reader = new StreamReader(response.GetResponseStream(), Encoding.UTF8))
             {
                 DataSet dsResult = new DataSet();
                 dsResult.ReadXml(reader);
-                
                 dtCoordinates.Columns.AddRange(new DataColumn[4] { new DataColumn("Id", typeof(int)),
                     new DataColumn("Address", typeof(string)),
                     new DataColumn("Latitude",typeof(string)),

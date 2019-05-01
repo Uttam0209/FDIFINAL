@@ -34,10 +34,12 @@
         <ContentTemplate>
             <div class="content oem-content">
                 <div class="sideBg">
-                    <div class="col-mod-12">
+                    <div class="row">
+                    <div class="col-md-12 padding_0">
                         <ul class="breadcrumb">
-                            <asp:Label ID="lblPageName" runat="server" Text=""></asp:Label></li>
+                            <li><asp:Label ID="lblPageName" runat="server" Text=""></asp:Label></li>
                         </ul>
+                    </div>
                     </div>
                     <form method="post" class="addfdi">
                         <div class="row">

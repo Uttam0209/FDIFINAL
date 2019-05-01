@@ -47,7 +47,7 @@ public partial class Admin_MasterPage : System.Web.UI.MasterPage
             DataTable dtArea = Lo.RetriveMasterData(Convert.ToInt64(mCval), sType, "", 0, "", "", "InterestedAreaMenuId");
             foreach (DataRow row in dtArea.Rows)
             {
-                strMenu.Append("<li class='parent-nav'><a href='#' data-original-title='Dashboard'><i class='fas fa-tachometer-alt'></i><span class='hidden-minibar'>" + row["InterestArea"].ToString() + " </span><span style='position:absolute; right:40px;top:10px;'>M" + row["Id"].ToString() + "</span> <i class='fas fa-angle-down'></i></a>");
+                strMenu.Append("<li class='parent-nav'><a href='#' data-original-title='Dashboard'><i class='fas fa-tachometer-alt'></i><span class='hidden-minibar'>" + row["InterestArea"].ToString() + " </span><span class='menuNo' style='position:absolute; right:40px;top:13px;'>M" + row["Id"].ToString() + "</span> <i class='fas fa-angle-down'></i></a>");
                
 
                 string[] Categ1 = dtArea.Rows[0]["MenuId"].ToString().Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries);
@@ -61,7 +61,7 @@ public partial class Admin_MasterPage : System.Web.UI.MasterPage
 
                     foreach (DataRow row2 in dtMenu.Rows)
                     {
-                        strMenu.Append("<li class='parent-nav'><a href='" + row2["MenuUrl"].ToString() + "?mu=" + ObjEnc.EncryptData(row2["Spanclass"].ToString()) + "&id=" + ObjEnc.EncryptData(row2["MenuName"].ToString()) + "' data-original-title='Dashboard'><i class='fas fa-tachometer-alt'></i><span class='hidden-minibar'>" + row2["MenuName"].ToString() + "</span><span style='position:absolute; right:40px;top:10px;'>C" + row2["MenuId"].ToString() + "</span>");
+                       strMenu.Append("<li class='parent-nav'><a href='" + row2["MenuUrl"].ToString() + "?mu=" + ObjEnc.EncryptData(row2["Spanclass"].ToString()) + "&id=" + ObjEnc.EncryptData(row["InterestArea"].ToString() +" >> " + row2["MenuName"].ToString()) + "' data-original-title='Dashboard'><i class='fas fa-tachometer-alt'></i><span class='hidden-minibar'>" + row2["MenuName"].ToString() + "</span><span class='menuNo' style='position:absolute; right:40px;top:13px;'>C" + row2["MenuId"].ToString() + "</span>");
                          strMenu.Append("<i class='fas fa-angle-down'></i></a>");
                            DataTable Submenu = Lo.RetriveMasterData(0, "", lbltypelogin.Text, Convert.ToInt16(row2["MenuID"].ToString()), "", "", "SubMenu");
                         if (Submenu.Rows.Count > 0)
@@ -69,7 +69,7 @@ public partial class Admin_MasterPage : System.Web.UI.MasterPage
                             strMenu.Append("<ul class='parent-nav-child'>");
                             foreach (DataRow row1 in Submenu.Rows)
                             {
-                                strMenu.Append("<li><a href='" + row1["MenuUrl"].ToString() + "?mu=" + ObjEnc.EncryptData(row1["Spanclass"].ToString()) + "&id=" + ObjEnc.EncryptData(row1["MenuName"].ToString()) + "'><i class='far fa-building'></i>" + row1["MenuName"].ToString() + "<span style='position:absolute; right:20px;top:10px;'>L" + row1["MenuId"].ToString() + "</span></a></li> ");
+                                strMenu.Append("<li><a href='" + row1["MenuUrl"].ToString() + "?mu=" + ObjEnc.EncryptData(row1["Spanclass"].ToString()) + "&id=" + ObjEnc.EncryptData(row["InterestArea"].ToString() +" >> " + row2["MenuName"].ToString() + " >> " + row1["MenuName"].ToString()) + "'><i class='far fa-building'></i><span class='hidden-minibar'>" + row1["MenuName"].ToString() + "</span><span class='menuNo' style='position:absolute; right:20px;top:13px;'>L" + row1["MenuId"].ToString() + "</span></a></li> ");
                             }
                             strMenu.Append("</ul>");
                            
@@ -97,7 +97,7 @@ public partial class Admin_MasterPage : System.Web.UI.MasterPage
             DataTable dtMArea = Lo.RetriveMasterData(Convert.ToInt64(MmCval), sType, "", 0, "", "", "InterestedAreaMenuId");
             foreach (DataRow row in dtMArea.Rows)
             {
-                strMasterMenu.Append("<li class='parent-nav'><a href='#' data-original-title='Dashboard'><i class='fas fa-tachometer-alt'></i><span class='hidden-minibar'>" + row["InterestArea"].ToString() + "</span><span style='position:absolute; right:40px;top:10px;'>M" + row["Id"].ToString() + "</span>");
+                strMasterMenu.Append("<li class='parent-nav'><a href='#' data-original-title='Dashboard'><i class='fas fa-tachometer-alt'></i><span class='hidden-minibar'>" + row["InterestArea"].ToString() + "</span><span class='menuNo' style='position:absolute; right:40px;top:13px;'>M" + row["Id"].ToString() + "</span>");
                 strMasterMenu.Append("<i class='fas fa-angle-down'></i></a>");
                 string[] MCateg1 = dtMArea.Rows[0]["MenuId"].ToString().Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries);
                 string MmCval1 = "";
@@ -112,7 +112,7 @@ public partial class Admin_MasterPage : System.Web.UI.MasterPage
 
                     foreach (DataRow row2 in dtMMenu.Rows)
                     {
-                        strMasterMenu.Append("<li class='parent-nav'><a href='" + row2["MenuUrl"].ToString() + "?mu=" + ObjEnc.EncryptData(row2["Spanclass"].ToString()) + "&id=" + ObjEnc.EncryptData(row2["MenuName"].ToString()) + "' ><i class='fas fa-tachometer-alt'></i><span class='hidden-minibar'>" + row2["MenuName"].ToString() + "</span><span style='position:absolute; right:40px;top:10px;'>C" + row2["MenuId"].ToString() + "</span>");
+                        strMasterMenu.Append("<li class='parent-nav'><a href='" + row2["MenuUrl"].ToString() + "?mu=" + ObjEnc.EncryptData(row2["Spanclass"].ToString()) + "&id=" + ObjEnc.EncryptData(row["InterestArea"].ToString() + " >> " + row2["MenuName"].ToString()) + "' ><i class='fas fa-tachometer-alt'></i><span class='hidden-minibar'>" + row2["MenuName"].ToString() + "</span><span class='menuNo' style='position:absolute; right:40px;top:13px;'>C" + row2["MenuId"].ToString() + "</span>");
                         strMasterMenu.Append("</a>");
                         DataTable SubMmenu = Lo.RetriveMasterData(0, "", lbltypelogin.Text, Convert.ToInt16(row2["MenuID"].ToString()), "", "", "SubMenu");
                         //strMasterMenu.Append("</a>");
@@ -122,7 +122,7 @@ public partial class Admin_MasterPage : System.Web.UI.MasterPage
                             strMasterMenu.Append("<ul class='parent-nav-child'>");
                             foreach (DataRow row1 in SubMmenu.Rows)
                             {
-                                strMasterMenu.Append("<li><a href='" + row1["MenuUrl"].ToString() + "?mu=" + ObjEnc.EncryptData(row1["Spanclass"].ToString()) + "&id=" + ObjEnc.EncryptData(row1["MenuName"].ToString()) + "'><i class='far fa-building'></i>" + row1["MenuName"].ToString() + "</span><span style='position:absolute; right:20px;top:10px;'>L" + row1["MenuId"].ToString() + "</span></a></li>");
+                                strMasterMenu.Append("<li><a href='" + row1["MenuUrl"].ToString() + "?mu=" + ObjEnc.EncryptData(row1["Spanclass"].ToString()) + "&id=" + ObjEnc.EncryptData(row["InterestArea"].ToString() + " >> " + row2["MenuName"].ToString() + " >> " + row1["MenuName"].ToString()) + "'><i class='far fa-building'></i><span class='hidden-minibar'>" + row1["MenuName"].ToString() + "</span><span class='menuNo' style='position:absolute; right:20px;top:13px;'>L" + row1["MenuId"].ToString() + "</span></a></li>");
                             }
                             strMasterMenu.Append("</ul>");
                             strMasterMenu.Append("</li>");

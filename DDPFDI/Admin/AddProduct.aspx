@@ -8,11 +8,10 @@
     <div class="content oem-content">
         <div class="sideBg">
             <div class="row">
-                <div class="col-md-12">
-                    <h3 class="page-header">
-                        <asp:Label ID="lblPageName" runat="server" Text=""></asp:Label>
-                    </h3>
-
+                <div class="col-md-12 padding_0">
+                    <ul class="breadcrumb">
+                        <li><asp:Label ID="lblPageName" runat="server" Text=""></asp:Label></li>
+                    </ul>
                 </div>
             </div>
             <asp:UpdatePanel runat="server" ID="UpdatePanel4">
@@ -322,13 +321,15 @@
                                         </div>
                                     </div>
                                     <div class="col-md-6">
-                                        <div class="form-group">
+                                        <div class="form-group ">
                                             <label style="display:block">
                                                 Tender Status</label>
-                                                <input type="checkbox">Live
-                                                <input type="checkbox" style="margin-left: 20px;">Archive
-                                            <input type="checkbox" style="margin-left: 20px;">Not Floated
-                                            <input type="checkbox" style="margin-left: 20px;">To be Floated shortly
+                                                <div class="tender-group">
+                                                <label><input type="checkbox">Live </label>
+                                                <label> <input type="checkbox" style="margin-left: 20px;">Archive </label>
+                                                 <label> <input type="checkbox" style="margin-left: 20px;">Not Floated</label>
+                                                 <label><input type="checkbox" style="margin-left: 20px;">To be Floated shortly</label>
+                                                </div>
                                         </div>
 
                                     </div>
@@ -336,10 +337,10 @@
                                 <div class="row">
 
                                     <div class="col-md-6">
-                                        <div class="form-group">
-                                            <p>If live, please fill last date of tender submission.</p>
-                                            <label>Last Date of Tender Submission</label>
-                                            <input type="date" class="form-control">
+                                        <div class="form-group live-status-box">
+                                            <label>If live, please fill last date of tender submission. <span class="checkbox-box"><input type="radio" name="tender" class="yes">Yes <input type="radio" name="tender" style="margin-left:10px;">No</span></label>
+                                            <input type="date" class="form-control" style="display:none">
+                                            
                                         </div>
                                     </div>
                                     <div class="col-md-6">

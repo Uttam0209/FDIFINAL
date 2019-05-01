@@ -1,8 +1,10 @@
 body {
-  font-family: 'Open Sans', sans-serif;
+  font-family: 'Roboto', sans-serif;
 }
 
 ul {list-style: none;}
+.padding_0 { padding:0 !important}
+.is-flex { display: flex;}
 
 /*---Progress Bar Animation ---*/
 .custom-progress-bar { width: 500px; max-width: 100%; height: 10px; border-radius: 5px; position: absolute; top: 15px; left: 0; right: 0; margin: 0 auto; 
@@ -74,7 +76,7 @@ input[type=checkbox]:checked + span:before {
 form .form-group { position: relative; margin-bottom: 20px; width: 100%; float: left;}
 /*form .form-group input[type=checkbox ]{ position: absolute;  width: 20px;  height: 20px; left: 7px; opacity: 0; cursor: pointer}*/
 form .form-group label span { margin-right: 10px; cursor: pointer;}
-form .form-group label { font-size: 15px !important; font-family: 'Open Sans', sans-serif !important; color: #2b3d51 !important; font-weight: 600;}
+form .form-group label, .form-label { font-size: 15px !important; font-family: 'Roboto', sans-serif !important; color: #2b3d51 !important;}
 form .form-group .btn { min-width: 100px; border-radius: 4px;}
 .note, .required { color: #f00;}
 
@@ -100,6 +102,96 @@ form .form-group .btn { min-width: 100px; border-radius: 4px;}
             text-shadow: 0px 0px 3px rgba(0,0,0, .5);
             border: 1px solid #3AC0F2;
         }
+
+/*---Breadcumb Design---*/
+.breadcrumb {
+    height: 36px;
+    padding: 0;
+    line-height: 36px;
+    list-style: none;
+    background-color: #e6e9ed;
+    margin-left: 0 !important;
+    margin-bottom: 16px;;
+}
+.breadcrumb li:first-child {
+    border-radius: 4px 0 0 4px;
+    -webkit-border-radius: 4px 0 0 4px;
+    -moz-border-radius: 4px 0 0 4px
+}
+.breadcrumb li, .breadcrumb li a, .breadcrumb li span {
+    display: inline-block;
+    vertical-align: top
+}
+.breadcrumb li:not(:first-child) {
+    margin-left: -5px
+}
+.breadcrumb li+li:before {
+    padding: 0;
+    content: "" !important;
+}
+.breadcrumb li span {
+    padding: 0 10px;
+    line-height: 31px;
+    color: #fff;
+}
+.breadcrumb li , .breadcrumb li:not(:first-child) span {
+    height: 36px;
+    padding: 0 10px 0 25px;
+    line-height: 36px
+}
+.breadcrumb li:first-child {
+    padding: 0 10px
+}
+.breadcrumb li {
+    position: relative;
+    color: #fff;
+    text-decoration: none;
+    background-color: #3bafda;
+    border: 1px solid #3bafda
+}
+.breadcrumb li:first-child {
+    padding-left: 10px
+}
+.breadcrumb li:after, .breadcrumb li:before {
+    position: absolute;
+    top: -1px;
+    width: 0;
+    height: 0;
+    content: '';
+    border-top: 18px solid transparent;
+    border-bottom: 18px solid transparent
+}
+.breadcrumb li:before {
+    right: -10px;
+    z-index: 3;
+    border-left-color: #3bafda;
+    border-left-style: solid;
+    border-left-width: 11px
+}
+.breadcrumb li:after {
+    right: -11px;
+    z-index: 2;
+    border-left: 11px solid #2494be
+}
+.breadcrumb li:focus, .breadcrumb li:hover {
+    background-color: #4fc1e9;
+    border: 1px solid #4fc1e9
+}
+.breadcrumb li:focus:before, .breadcrumb li:hover:before {
+    border-left-color: #4fc1e9
+}
+.breadcrumb li:active {
+    background-color: #2494be;
+    border: 1px solid #2494be
+}
+.breadcrumb li:active:after, .breadcrumb li:active:before {
+    border-left-color: #2494be
+}
+.breadcrumb li span {
+    color: #fff
+}
+/*---Breadcumb Design---*/
+
 /*---Table pagination---*/
 
 #btnLogin,.createLoginPass {width: 100%; border-radius: 4px; color: #fff !important; background: #494ca2 !important; }
@@ -164,6 +256,8 @@ form .form-group .btn { min-width: 100px; border-radius: 4px;}
 .parent-nav-child li a { padding-left: 30px !important;}
 .sidebar-holder .nav > li > a:hover, .sidebar-holder .nav > li > a:focus { background: #fff !important; }
 .parent-nav-child .parent-nav li a { padding-left: 57px !important;  position:relative;}
+.sidebar-holder .nav > li ul > li > a {padding: 15px 5px;}
+.sidebar-holder .nav li a { padding-top: 15px; padding-bottom: 15px;}
 
 .admin-dashboard .white-box { float: left; width:100% }
 .admin-dashboard .white-box a { display: inline-block; font-size: 21px; margin-top: 10px;}
@@ -175,7 +269,9 @@ form .form-group .btn { min-width: 100px; border-radius: 4px;}
 .parent-nav-child li.active a {background:#5db9f9 !important;}
 
 .sidebar-holder .user-box { float: left; display: flex; font-size: 15px; font-weight: bold;}
-.sidebar-holder .user-box i { margin-right: 10px; color: #494ca2 !important;  font-size: 21px !important}
+.sidebar-holder .user-box i { margin-right: 10px; color: #fff !important;  font-size: 30px !important}
+.sidebar-holder .user-box #lbltypelogin { font-size: 18px;}
+.sidebar-holder .btn-nav-toggle .fa-angle-double-left{ font-size: 26px !important;}
 #ContentPlaceHolder1_chkintrestedarea label,#ContentPlaceHolder1_chkmastermenuallot label, #ContentPlaceHolder1_chkrole label {    margin: -4px 10px 5px 20px !important;     white-space: nowrap;}
 #ContentPlaceHolder1_chkintrestedarea input[type="checkbox"],#ContentPlaceHolder1_chkmastermenuallot input[type="checkbox"], #ContentPlaceHolder1_chkrole input[type="checkbox"] {margin: 0 !important;}
 .secondary-heading { font-size: 16px; color: #494ca2; text-transform: uppercase; margin: 0 0 10px 0;}
@@ -198,8 +294,8 @@ form label { color: #494ca2;}
 .sidebar-holder .nav li a {box-shadow: 0 0 4px rgba(0,0,0,0.06); border: 0;  font-weight: 600 !important; font-size: 14px;}
 .sidebar-holder .nav li a i { color: #2b3d51 !important }
 .sidebar-holder .nav li a:hover { background: none;}
-.navbar .user-menu > li ul.dropdown-menu > li > a { color: #2b3d51; font-family: 'Open Sans', sans-serif;}
-.content .page-header { font-weight: 600; text-transform: uppercase; color: #2b3d51; font-family: 'Open Sans', sans-serif; padding-left: 0;}
+.navbar .user-menu > li ul.dropdown-menu > li > a { color: #2b3d51; font-family: 'Roboto', sans-serif;}
+.content .page-header { font-weight: 600; text-transform: uppercase; color: #2b3d51; font-family: 'Roboto', sans-serif; padding-left: 0;}
 .tabing-section .nav { margin-bottom: 30px;}
 .content .page-header i { display: none}
 .tabing-section .nav-tabs > li > a { background: #ddd; color: #2b3d51;}
@@ -207,3 +303,14 @@ form label { color: #494ca2;}
 .sidebar-collapse #lbltypelogin { display: none}
 .section-pannel { background:#eee; padding: 10px; border-radius: 4px; margin-bottom: 10px; }
 .page-header.secondary { margin-bottom: 10px; font-size: 15px;}
+.sidebar-holder .btn-nav-toggle {padding: 17px 10px;  background: #d95459 !important; color: #fff !important;}
+
+.sidebar-holder .nav li a:before { content: ""; border-bottom: 2px solid #d95459 ; height: 2px;  position: absolute;
+    left: 0; bottom: 0; width:0%; transition: all  ease-in-out 1s}
+.sidebar-holder .nav li a:hover::before,.sidebar-holder .nav li a.active::before { width: 100% !important;}
+.sidebar-collapse .menuNo,.sidebar-collapse .fa-angle-down { display: none;}
+.sidebar-collapse .parent-nav-child li a { padding-left: 0 !important; text-align: center;}
+.sidebar-collapse .sidebar-holder .user-box i { margin-right: 2px; font-size: 24px !important;}
+.sideBg { padding-top: 0;}
+#ContentPlaceHolder1_Intrested,#ContentPlaceHolder1_MenuAlot,#ContentPlaceHolder1_divRole { padding: 10px; box-shadow: 0 0 4px rgba(0,0,0,0.2); margin-right: 8px; border-radius: 4px;}
+.form-label { margin-bottom: 4px; display: inline-block;}

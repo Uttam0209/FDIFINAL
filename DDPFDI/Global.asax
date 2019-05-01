@@ -21,7 +21,7 @@
             if (404 == errorCode)
             {
                 Server.ClearError();
-                Response.Redirect("~/Error");
+                //Response.Redirect("~/Error");
             }
         }
     }
