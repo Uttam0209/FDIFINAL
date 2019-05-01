@@ -53,10 +53,7 @@
         <div class="sideBg">
             <div class="row">
                 <div class="col-md-12 padding_0">
-                    <ul class="breadcrumb">
-                        <li class="active">
-                            <asp:Label ID="lblPageName" runat="server" Text=""></asp:Label></li>
-                    </ul>
+                    <div id="divHeadPage" runat="server"></div>
                 </div>
             </div>
             <div class="col-sm-12">
