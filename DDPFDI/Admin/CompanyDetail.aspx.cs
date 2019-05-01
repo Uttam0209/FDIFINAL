@@ -225,6 +225,13 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
             }
         }
     }
+
+    protected void btnShowMap_Click(object sender, EventArgs e)
+    {
+        
+
+    }
+
     protected void EditDivison(DataTable DtView)
     {
         if (Session["CompanyRefNo"] != null)
@@ -869,33 +876,4 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
         txtceoname.Text = "";
     }
 
-
-    public DataTable dd()
-    {
-        DataTable dtCoordinates = new DataTable();
-        string url = "http://maps.googleapis.com/maps/api/geocode/json?address=" + taddress.Text + "&sensor=true_or_false";
-
-        WebRequest request = WebRequest.Create(url);
-
-        using (WebResponse response = (HttpWebResponse)request.GetResponse())
-        {
-            using (StreamReader reader = new StreamReader(response.GetResponseStream(), Encoding.UTF8))
-            {
-                DataSet dsResult = new DataSet();
-                dsResult.ReadXml(reader);
-                
-                dtCoordinates.Columns.AddRange(new DataColumn[4] { new DataColumn("Id", typeof(int)),
-                    new DataColumn("Address", typeof(string)),
-                    new DataColumn("Latitude",typeof(string)),
-                    new DataColumn("Longitude",typeof(string)) });
-                foreach (DataRow row in dsResult.Tables["result"].Rows)
-                {
-                    string geometry_id = dsResult.Tables["geometry"].Select("result_id = " + row["result_id"].ToString())[0]["geometry_id"].ToString();
-                    DataRow location = dsResult.Tables["location"].Select("geometry_id = " + geometry_id)[0];
-                    dtCoordinates.Rows.Add(row["result_id"], row["formatted_address"], location["lat"], location["lng"]);
-                }
-            }
-            return dtCoordinates;
-        }
-    }
 }
