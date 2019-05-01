@@ -102,7 +102,13 @@
                                             </div>
                                             <div class="row">
 
-                                                <div class="col-md-6">
+                                                <div class="col-md-12 is-flex company-flex-row">
+                                                    <div class="form-group">
+                                                        <label for="tcompanyname" class=" control-label">
+                                                            <asp:Label ID="lblCName" runat="server" Text="lblCName"></asp:Label>
+                                                            <span class="mandatory">*</span></label>
+                                                        <asp:TextBox runat="server" ID="tcompanyname" name="tcompanyname" required="" class="form-control form-cascade-control" placeholder=""></asp:TextBox>
+                                                    </div>
                                                     <div class="form-group" id="DivActivities" runat="server">
                                                         <label for="companyengaged" class="control-label">Company engaged in Defence Activities</label>
                                                         <asp:DropDownList runat="server" ID="companyengaged" required="" name="companyengaged" class="form-control form-cascade-control">
@@ -110,15 +116,35 @@
                                                             <asp:ListItem Value="N">No</asp:ListItem>
                                                         </asp:DropDownList>
                                                     </div>
+                                                      <div class="form-group" id="divmName" runat="server">
+                                                    <label for="tcompanyname" class=" control-label">
+                                                        <asp:Label ID="lblMName" runat="server" Text=""></asp:Label>
+                                                        <span class="mandatory">*</span></label>
+                                                    <asp:TextBox runat="server" ID="txtMName" name="txtMName" ReadOnly="true" required="" class="form-control form-cascade-control"
+                                                        placeholder=""></asp:TextBox>
+
                                                 </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label for="tcompanyname" class=" control-label">
-                                                            <asp:Label ID="lblCName" runat="server" Text="lblCName"></asp:Label>
-                                                            <span class="mandatory">*</span></label>
-                                                        <asp:TextBox runat="server" ID="tcompanyname" name="tcompanyname" required="" class="form-control form-cascade-control" placeholder=""></asp:TextBox>
-                                                    </div>
+                                                
+                                                <div class="form-group" id="divmcName" runat="server">
+                                                    <label for="tcompanyname" class=" control-label">
+                                                        <asp:Label ID="lblMCName" runat="server" Text=""></asp:Label>
+                                                        <span class="mandatory">*</span></label>
+                                                    <asp:TextBox runat="server" ID="txtMCName" name="txtMCName" ReadOnly="true" required="" class="form-control form-cascade-control"
+                                                        placeholder=""></asp:TextBox>
+
                                                 </div>
+                                                    <div id="Div1" class="form-group" runat="server" visible="false">
+                                                    <label for="seldistrict" class="control-label">District </label>
+                                                    <asp:TextBox runat="server" ID="seldistrict" name="tdistrict" class="form-control form-cascade-control" placeholder=""></asp:TextBox>
+                                                </div>
+                                                <div id="Div2" class="form-group" runat="server" visible="false">
+                                                    <label for="seldistrict" class="control-label">Location </label>
+                                                    <asp:TextBox runat="server" ID="TextBox3" name="tdistrict" class="form-control form-cascade-control" placeholder=""></asp:TextBox>
+                                                </div>
+
+                                                </div>
+                                            
+                                              
 
                                             </div>
                                             <div class="row">
@@ -191,46 +217,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-
-
-
-
-                                            <div class="indiacompanydetails">
-
-
-                                                <div class="form-group" id="divmName" runat="server">
-                                                    <label for="tcompanyname" class=" control-label">
-                                                        <asp:Label ID="lblMName" runat="server" Text=""></asp:Label>
-                                                        <span class="mandatory">*</span></label>
-                                                    <asp:TextBox runat="server" ID="txtMName" name="txtMName" ReadOnly="true" required="" class="form-control form-cascade-control"
-                                                        placeholder=""></asp:TextBox>
-
-                                                </div>
-                                                <div class="form-group" id="divmcName" runat="server">
-                                                    <label for="tcompanyname" class=" control-label">
-                                                        <asp:Label ID="lblMCName" runat="server" Text=""></asp:Label>
-                                                        <span class="mandatory">*</span></label>
-                                                    <asp:TextBox runat="server" ID="txtMCName" name="txtMCName" ReadOnly="true" required="" class="form-control form-cascade-control"
-                                                        placeholder=""></asp:TextBox>
-
-                                                </div>
-
-
-
-
-
-                                                <div id="Div1" class="form-group" runat="server" visible="false">
-                                                    <label for="seldistrict" class="control-label">District </label>
-                                                    <asp:TextBox runat="server" ID="seldistrict" name="tdistrict" class="form-control form-cascade-control" placeholder=""></asp:TextBox>
-                                                </div>
-                                                <div id="Div2" class="form-group" runat="server" visible="false">
-                                                    <label for="seldistrict" class="control-label">Location </label>
-                                                    <asp:TextBox runat="server" ID="TextBox3" name="tdistrict" class="form-control form-cascade-control" placeholder=""></asp:TextBox>
-                                                </div>
-
-
-
-                                            </div>
+                                           
 
                                         </div>
                                     </div>
@@ -446,7 +433,7 @@
                 </div>
                 <div id="Location" class="tab-pane fade">
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-5">
                             <div class="form-group">
                                 <label for="activityname" class="control-label">latitude </label>
                                 <asp:TextBox runat="server" ID="txtlatitude" name="txtlatitude" class="form-control form-cascade-control " placeholder=""></asp:TextBox>
@@ -454,11 +441,17 @@
 
 
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-5">
                             <div class="form-group">
                                 <label for="activityname" class="control-label">longitude</label>
                                 <asp:TextBox runat="server" ID="txtlongitude" name="txtlongitude" class="form-control form-cascade-control " placeholder=""></asp:TextBox>
 
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label style="display:block">&nbsp;</label>
+                                <input type="submit" value="Show Map" class="btn btn-primary">
                             </div>
                         </div>
 

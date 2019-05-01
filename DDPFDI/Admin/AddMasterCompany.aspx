@@ -55,7 +55,8 @@
                 <div class="col-md-12 padding_0">
                     <ul class="breadcrumb">
                         <li class="active">
-                            <asp:Label ID="lblPageName" runat="server" Text=""></asp:Label></li>
+                            <asp:Label ID="lblPageName" runat="server" Text=""></asp:Label>
+                        </li>
                     </ul>
                 </div>
             </div>
