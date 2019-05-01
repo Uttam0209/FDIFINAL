@@ -82,5 +82,12 @@ $(window).on('load', function(){
        }
     });
 
+    //Show Map
+
+    $('#ShowMap').click(function(){
+        $('.map-box').show();
+
+    });
+
 
 });
