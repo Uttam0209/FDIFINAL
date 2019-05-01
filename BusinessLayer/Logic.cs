@@ -50,6 +50,10 @@ namespace BusinessLayer
         {
             return SqlHelper.Instance.SaveUnitComp(hysavecomp, out _sysMsg, out _msg);
         }
+        public string SaveMasterCategroyMenu(HybridDictionary hyMasterCategory, out string _sysMsg, out string _msg)
+        {
+            return SqlHelper.Instance.SaveMasterCategroyMenu(hyMasterCategory, out _sysMsg, out _msg);
+        }
         #endregion
         #region UpdateCode
         public string UpdateLoginPassword(string NewPass, string OldPass, string User,string type)

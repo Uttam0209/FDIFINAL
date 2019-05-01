@@ -381,6 +381,41 @@ namespace DataAccessLayer
                 }
             }
         }
+        public string SaveMasterCategroyMenu(HybridDictionary HyCompSave, out string _sysMsg, out string _msg)
+        {
+            string mCurrentID = "";
+            using (DbConnection dbCon = db.CreateConnection())
+            {
+                dbCon.Open();
+                DbTransaction dbTran = dbCon.BeginTransaction();
+                try
+                {
+                    DbCommand cmd = db.GetStoredProcCommand("sp_mst_CompanySelectedCategory");
+                    db.AddInParameter(cmd, "@CompCatRelationId", DbType.Int64, HyCompSave["CompCatRelationId"]);
+                    db.AddInParameter(cmd, "@CompanyRefNo", DbType.String, HyCompSave["CompanyRefNo"]);
+                    db.AddInParameter(cmd, "@MCategoryId", DbType.Int16, HyCompSave["MCategoryId"].ToString().Trim());
+                    db.AddInParameter(cmd, "@SCategoryId", DbType.String, HyCompSave["SCategoryId"].ToString().Trim());
+                    db.ExecuteNonQuery(cmd, dbTran);
+                    dbTran.Commit();
+                    _msg = "Save";
+                    _sysMsg = "Save";
+                    return "Save";
+                }
+                catch (Exception ex)
+                {
+                    dbTran.Rollback();
+                    _msg = ex.Message;
+                    _sysMsg = ex.Message;
+                    return "-1";
+                }
+                finally
+                {
+                     _msg = "Save";
+                    _sysMsg = "Save";
+                    dbCon.Close();
+                }
+            }
+        }
         #endregion
         #region UpdateCode
         public string UpdateLoginPassword(string NewPass, string OldPass, string User, string type)
