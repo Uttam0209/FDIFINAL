@@ -945,4 +945,49 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
         txtCEOEmailId.Text = "";
         txtceoname.Text = "";
     }
+    protected void rdoMNo_CheckedChanged(object sender, EventArgs e)
+    {
+        if (rdoMNo.Checked == true)
+        {
+            divMSMe.Visible = false;
+        }
+        else
+        {
+            divMSMe.Visible = true;
+        }
+    }
+    protected void rdoMYes_CheckedChanged(object sender, EventArgs e)
+    {
+        if (rdoMNo.Checked == true)
+        {
+            divMSMe.Visible = false;
+        }
+        else
+        {
+            divMSMe.Visible = true;
+        }
+    }
+    protected void rdoNo_CheckedChanged(object sender, EventArgs e)
+    {
+        if (rdoNo.Checked == true)
+        {
+            divStartup.Visible = false;
+        }
+        else
+        {
+            divStartup.Visible = true;
+        }
+
+    }
+    protected void rdoYes_CheckedChanged(object sender, EventArgs e)
+    {
+        if (rdoNo.Checked == true)
+        {
+            divStartup.Visible = false;
+        }
+        else
+        {
+            divStartup.Visible = true;
+        }
+    }
 }

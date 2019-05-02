@@ -42,7 +42,29 @@
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label>End User Part Number</label>
-                                                    <textarea class="form-control"></textarea>
+                                                    <input type="text" class="form-control">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label>HSN Code</label>
+                                                    <input type="text" class="form-control">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label>NATO Code</label>
+                                                    <input type="text" class="form-control">
+                                                </div>
+
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label>ERP Refernce No</label>
+                                                    <input type="text" class="form-control">
                                                 </div>
                                             </div>
                                         </div>
