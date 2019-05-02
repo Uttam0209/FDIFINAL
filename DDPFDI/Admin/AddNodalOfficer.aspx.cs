@@ -38,8 +38,12 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
                 }
                 divHeadPage.InnerHtml = strheadPage.ToString();
                 strheadPage.Append("</ul");
-                SessionID = Session["CompanyRefNo"].ToString();
+                // currentPage = System.IO.Path.GetFileName(Request.Url.AbsolutePath);
+                mType = objEnc.DecryptData(Session["Type"].ToString());
+                mRefNo = Session["CompanyRefNo"].ToString();
                 BindCompany();
+                BindMasterDesignation();
+                BindMasterDepartment();
             }
         }
     }
@@ -60,8 +64,8 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
                 ddlcompany.Enabled = false;
             }
 
-            ddldivision.Visible = false;
-            ddlunit.Visible = false;
+            lblselectdivison.Visible = false;
+            lblselectunit.Visible = false;
         }
         else if (mType == "Admin")
         {
@@ -204,6 +208,11 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
                 lblselectdivison.Visible = false;
             }
         }
+        else if (ddlcompany.SelectedItem.Text == "All")
+        {
+            lblselectdivison.Visible = false;
+            lblselectunit.Visible = false;
+        }
     }
     protected void ddldivision_OnSelectedIndexChanged(object sender, EventArgs e)
     {
@@ -222,6 +231,40 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
                 lblselectunit.Visible = false;
                 ddlunit.Visible = false;
             }
+        }
+        else if (ddldivision.SelectedItem.Text == "All")
+        {
+            DtCompanyDDL = Lo.RetriveMasterData(0, ddlcompany.SelectedItem.Value, "", 0, "", "", "FactoryCompanyID");
+            if (DtCompanyDDL.Rows.Count > 0)
+            {
+                Co.FillDropdownlist(ddldivision, DtCompanyDDL, "FactoryName", "FactoryRefNo");
+                ddldivision.Items.Insert(0, "All");
+                lblselectdivison.Visible = true;
+                ddldivision.Visible = true;
+                lblselectdivison.Visible = false;
+            }
+        }
+    }
+    #endregion
+    #region For Department or Designation
+    protected void BindMasterDesignation()
+    {
+        ddldesignation.Items.Insert(0, "Designation");
+        DataTable DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, ddldesignation.SelectedItem.Value, "", "SelectProductCat", mRefNo.ToString());
+        if (DtMasterCategroy.Rows.Count > 0)
+        {
+            Co.FillDropdownlist(ddldesignation, DtMasterCategroy, "SCategoryName", "SCategoryID");
+            ddldesignation.Items.Insert(0, "Designation");
+        }
+    }
+    protected void BindMasterDepartment()
+    {
+        ddldepartment.Items.Insert(0, "Department");
+        DataTable DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, ddldepartment.SelectedItem.Value, "", "SelectProductCat", mRefNo.ToString());
+        if (DtMasterCategroy.Rows.Count > 0)
+        {
+            Co.FillDropdownlist(ddldepartment, DtMasterCategroy, "SCategoryName", "SCategoryID");
+            ddldepartment.Items.Insert(0, "Department");
         }
     }
     #endregion
