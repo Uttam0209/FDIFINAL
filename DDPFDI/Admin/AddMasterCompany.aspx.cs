@@ -32,7 +32,18 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
             if (Request.QueryString["mu"] != null)
             {
                 string strid = Request.QueryString["id"].ToString().Replace(" ", "+");
-                lblPageName.Text = Enc.DecryptData(strid);
+                string strPageName = Enc.DecryptData(strid);
+                StringBuilder strheadPage = new StringBuilder();
+                strheadPage.Append("<ul class='breadcrumb'>");
+                string[] MCateg = strPageName.Split(new string[] { ">>" }, StringSplitOptions.RemoveEmptyEntries);
+                string MmCval = "";
+                for (int x = 0; x < MCateg.Length; x++)
+                {
+                        MmCval = MCateg[x];
+                        strheadPage.Append("<li class=''><span>" + MmCval + "</span></li>");
+                }
+                divHeadPage.InnerHtml = strheadPage.ToString();
+                strheadPage.Append("</ul");
                 if (Enc.DecryptData(Request.QueryString["mu"].ToString()) == "Panel1")
                 {
                     mastercompany.Visible = true;
