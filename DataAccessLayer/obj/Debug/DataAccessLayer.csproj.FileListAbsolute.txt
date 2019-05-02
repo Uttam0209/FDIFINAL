@@ -17,3 +17,4 @@ D:\Shiv\FDIFINAL\DataAccessLayer\bin\Debug\Encryption.dll
 D:\Shiv\FDIFINAL\DataAccessLayer\bin\Debug\Encryption.pdb
 D:\Shiv\FDIFINAL\DataAccessLayer\obj\Debug\DataAccessLayer.dll
 D:\Shiv\FDIFINAL\DataAccessLayer\obj\Debug\DataAccessLayer.pdb
+D:\Shiv\FDIFINAL\DataAccessLayer\obj\Debug\DataAccessLayer.csprojResolveAssemblyReference.cache
