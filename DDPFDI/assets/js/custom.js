@@ -84,7 +84,7 @@ $(window).on('load', function(){
 
     //Show Map
 
-    $('#ShowMap').click(function(){
+    $('.showMap').click(function(){
         $('.map-box').show();
 
     });
