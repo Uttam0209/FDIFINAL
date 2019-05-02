@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Specialized;
 using System.Data;
+using System.Text;
 using System.Web.UI;
 using BusinessLayer;
 using Encryption;
@@ -18,9 +19,21 @@ public partial class Admin_RegisterdAs : System.Web.UI.Page
         {
             if (!IsPostBack)
             {
-                string id = objEnc.DecryptData(Request.QueryString["id"].ToString().Replace(" ", "+"));
+                string strid = Request.QueryString["id"].ToString().Replace(" ", "+");
+                string strPageName = objEnc.DecryptData(strid);
+                StringBuilder strheadPage = new StringBuilder();
+                strheadPage.Append("<ul class='breadcrumb'>");
+                string[] MCateg = strPageName.Split(new string[] { ">>" }, StringSplitOptions.RemoveEmptyEntries);
+                string MmCval = "";
+                for (int x = 0; x < MCateg.Length; x++)
+                {
+                    MmCval = MCateg[x];
+                    strheadPage.Append("<li class=''><span>" + MmCval + "</span></li>");
+                }
+                divHeadPage.InnerHtml = strheadPage.ToString();
+                strheadPage.Append("</ul");
                 DisplayPanel = objEnc.DecryptData(Request.QueryString["mu"].ToString().Replace(" ", "+"));
-                lblPageName.Text = id;
+                
                 ShowHidePanel();
             }
         }

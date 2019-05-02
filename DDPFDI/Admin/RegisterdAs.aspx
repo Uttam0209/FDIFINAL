@@ -9,10 +9,13 @@
             <div class="content oem-content">
                 <div class="sideBg">
                     <div class="col-mod-12">
-                        <asp:HiddenField runat="server" id="hfCatID"/>
-                        <asp:HiddenField runat="server" id="hfSubCatID"/>
-                        <h3 class="page-header"><i class="fas fa-folder-plus"></i>
-                            <asp:Label ID="lblPageName" runat="server" Text=""></asp:Label></h3>
+                        <asp:HiddenField runat="server" ID="hfCatID" />
+                        <asp:HiddenField runat="server" ID="hfSubCatID" />
+                        <div class="row">
+                            <div class="col-md-12 padding_0">
+                                <div id="divHeadPage" runat="server"></div>
+                            </div>
+                        </div>
                         <div class="UserInnerpage">
                             <div class="resitered">
                                 <div class="row">

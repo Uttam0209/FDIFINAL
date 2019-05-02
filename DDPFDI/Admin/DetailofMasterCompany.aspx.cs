@@ -28,7 +28,18 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
             if (Request.QueryString["id"] != null)
             {
                 string strid = Request.QueryString["id"].ToString().Replace(" ", "+");
-                lblPageName.Text = objEnc.DecryptData(strid);
+                string strPageName = objEnc.DecryptData(strid);
+                StringBuilder strheadPage = new StringBuilder();
+                strheadPage.Append("<ul class='breadcrumb'>");
+                string[] MCateg = strPageName.Split(new string[] { ">>" }, StringSplitOptions.RemoveEmptyEntries);
+                string MmCval = "";
+                for (int x = 0; x < MCateg.Length; x++)
+                {
+                    MmCval = MCateg[x];
+                    strheadPage.Append("<li class=''><span>" + MmCval + "</span></li>");
+                }
+                divHeadPage.InnerHtml = strheadPage.ToString();
+                strheadPage.Append("</ul");
                 currentPage = System.IO.Path.GetFileName(Request.Url.AbsolutePath);
                 mType = objEnc.DecryptData(Session["Type"].ToString());
                 mRefNo = Session["CompanyRefNo"].ToString();
@@ -333,7 +344,9 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
             GridViewRow gvr = (GridViewRow)((Control)e.CommandSource).NamingContainer;
             int rowIndex = gvr.RowIndex;
             string Role = (gvcompanydetail.Rows[rowIndex].FindControl("lblcompanyrole") as Label).Text;
-            Response.Redirect("Add-Company?mrcreaterole=" + objEnc.EncryptData(Role) + "&mcurrentcompRefNo=" + (objEnc.EncryptData(e.CommandArgument.ToString())));
+            string stridNew = Request.QueryString["id"].ToString().Replace(" ", "+");
+            string mstrid = objEnc.EncryptData((objEnc.DecryptData(stridNew) + " >> Edit Company"));
+            Response.Redirect("Add-Company?mrcreaterole=" + objEnc.EncryptData(Role) + "&mcurrentcompRefNo=" + (objEnc.EncryptData(e.CommandArgument.ToString())) + "&id=" + mstrid);
         }
         else if (e.CommandName == "ViewComp")
         {
@@ -400,7 +413,7 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
             int rowIndex = gvr.RowIndex;
            // string Role = (gvcompanydetail.Rows[rowIndex].FindControl("lblfactoryrole") as Label).Text;
             string Role = "ff";
-            Response.Redirect("Add-Company?mrcreaterole=" + objEnc.EncryptData(Role) + "&mcurrentFactroyRefNo=" + (objEnc.EncryptData(e.CommandArgument.ToString())));
+            Response.Redirect("Add-Company?mrcreaterole=" + objEnc.EncryptData(Role) + "&mcurrentFactroyRefNo=" + (objEnc.EncryptData(e.CommandArgument.ToString()))+"&id="+Request.QueryString["id"].ToString());
         }
         else if (e.CommandName == "ViewfactoryComp")
         {
@@ -464,7 +477,7 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
             GridViewRow gvr = (GridViewRow)((Control)e.CommandSource).NamingContainer;
             int rowIndex = gvr.RowIndex;
             string Role = (gvcompanydetail.Rows[rowIndex].FindControl("lblunitrole") as Label).Text;
-            Response.Redirect("Add-Company?mrcreaterole=" + objEnc.EncryptData(Role) + "&mcurrentUnitRefNo=" + (objEnc.EncryptData(e.CommandArgument.ToString())));
+            Response.Redirect("Add-Company?mrcreaterole=" + objEnc.EncryptData(Role) + "&mcurrentUnitRefNo=" + (objEnc.EncryptData(e.CommandArgument.ToString())) + "&id=" + Request.QueryString["id"].ToString());
         }
         else if (e.CommandName == "unitViewComp")
         {
