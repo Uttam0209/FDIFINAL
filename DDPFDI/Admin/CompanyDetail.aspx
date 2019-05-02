@@ -156,7 +156,7 @@
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label for="activityname" class="control-label">Webistie url</label>
+                                                        <label for="activityname" class="control-label">Website</label>
                                                         <asp:TextBox runat="server" ID="TextBox2" name="txtTelephone" class="form-control form-cascade-control " placeholder=""></asp:TextBox>
                                                     </div>
                                                 </div>
@@ -450,7 +450,7 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="form-group">
-                            <asp:LinkButton ID="btndemofirst" runat="server" CssClass="btn btn-danger pull-right" Style="margin-left: 10px;" Text="Edit" OnClick="btndemofirst_Click"
+                            <asp:LinkButton ID="btndemofirst" runat="server" CssClass="btn btn-danger pull-right" Style="margin-left: 10px;" Text="Save" OnClick="btndemofirst_Click"
                                 Visible="false" />
                             <asp:LinkButton ID="btnDelete" runat="server" CssClass="btn btn-primary pull-right" Text="Delete" Visible="false" />
                         </div>
