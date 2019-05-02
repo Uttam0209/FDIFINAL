@@ -123,7 +123,7 @@ form .form-group .btn { min-width: 100px; border-radius: 4px;}
     vertical-align: top
 }
 .breadcrumb li:not(:first-child) {
-    margin-left: -5px
+    margin-left: -2px
 }
 .breadcrumb li+li:before {
     padding: 0;

@@ -50,5 +50,6 @@
         routes.MapPageRoute("Startup", "Startup", "~/Admin/Startup.aspx", true);
         routes.MapPageRoute("Specilization", "Specilization", "~/Admin/Specilization.aspx", true);
         routes.MapPageRoute("View-Category", "View-Category", "~/Admin/ViewCategory.aspx", true);
+        routes.MapPageRoute("Add-Nodal", "Add-Nodal", "~/Admin/AddNodalOfficer.aspx", true);
     }    
 </script>
