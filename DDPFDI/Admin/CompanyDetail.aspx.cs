@@ -125,16 +125,62 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
                 selstate.SelectedItem.Value = DtView.Rows[0]["State"].ToString();
 
                 txtceoname.Text = DtView.Rows[0]["CEOName"].ToString();
+                txtCEOEmailId.Text = DtView.Rows[0]["CEOEmail"].ToString();
+                txtTelephone.Text = DtView.Rows[0]["TelephoneNo"].ToString();
+                txtFaxNo.Text = DtView.Rows[0]["FaxNo"].ToString();
+                txtEmailID.Text = DtView.Rows[0]["EmailID"].ToString();
+                txtWebsite.Text = DtView.Rows[0]["Website"].ToString();
                 tpincode.Text = DtView.Rows[0]["Pincode"].ToString();
-                tpersonname.Text = DtView.Rows[0]["ContactPersonName"].ToString();
-                temailid.Text = DtView.Rows[0]["ContactPersonEmailID"].ToString();
-                temailid.ReadOnly = true;
-                tcontactno.Text = DtView.Rows[0]["ContactPersonContactNo"].ToString();
+                txtNEmailId.Text = DtView.Rows[0]["ContactPersonEmailID"].ToString();
+                txtNEmailId.ReadOnly = true;
                 tgstno.Text = DtView.Rows[0]["GSTNo"].ToString();
                 tcinno.Text = DtView.Rows[0]["CINNo"].ToString();
                 tpanno.Text = DtView.Rows[0]["PANNo"].ToString();
-                thssnono.Text = DtView.Rows[0]["HSNO"].ToString();
-                txtCEOEmailId.Text = DtView.Rows[0]["CEOEmail"].ToString();
+                txtIECode.Text = DtView.Rows[0]["IECode"].ToString();
+
+                txtFacebook.Text = DtView.Rows[0]["Facebook"].ToString();
+                txtTwitter.Text = DtView.Rows[0]["Twitter"].ToString();
+                txtLinkedin.Text = DtView.Rows[0]["Linkedin"].ToString();
+                txtInstagram.Text = DtView.Rows[0]["Instagram"].ToString();
+
+                txtFacebook.Text = DtView.Rows[0]["Facebook"].ToString();
+                txtTwitter.Text = DtView.Rows[0]["Twitter"].ToString();
+                txtLinkedin.Text = DtView.Rows[0]["Linkedin"].ToString();
+                txtInstagram.Text = DtView.Rows[0]["Instagram"].ToString();
+                //ddlNodalOfficerEmail.SelectedItem.Value = DtView.Rows[0]["NodalOfficeRefNo"].ToString();
+
+                txtlatitude.Text = DtView.Rows[0]["latitude"].ToString();
+                txtlongitude.Text = DtView.Rows[0]["longitude"].ToString();
+
+                if (DtView.Rows[0]["Startup"].ToString() == "Y")
+                {
+                    rdoYes.Checked = true;
+                    divStartup.Visible = true;
+                }
+                else
+                {
+                    rdoNo.Checked = true;
+                    divStartup.Visible = false;
+                }
+                txtDIPP.Text = DtView.Rows[0]["DIPPNumber"].ToString();
+                txtDIPPMobile.Text = DtView.Rows[0]["DIPPMobile"].ToString();
+
+
+                if (DtView.Rows[0]["MSME"].ToString() == "Y")
+                {
+                    rdoMYes.Checked = true;
+                    divMSMe.Visible = true;
+                }
+                else
+                {
+                    rdoMNo.Checked = true;
+                    divMSMe.Visible = false;
+                }
+                txtDIPP.Text = DtView.Rows[0]["VAM"].ToString();
+                txtDIPPMobile.Text = DtView.Rows[0]["Aadhar_Mobile"].ToString();
+
+
+
                 companyengaged.SelectedItem.Value = DtView.Rows[0]["IsDefenceActivity"].ToString();
                 lbltypelogin = DtView.Rows[0]["Role"].ToString();
                 if (lbltypelogin == "SuperAdmin" || lbltypelogin == "Admin")
@@ -252,14 +298,11 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
 
                 DivCEOName.Visible = true;
                 tpincode.Text = DtView.Rows[0]["FactoryPincode"].ToString();
-                tpersonname.Text = DtView.Rows[0]["FactoryNodalPerson"].ToString();
-                temailid.Text = DtView.Rows[0]["FactoryEmailId"].ToString();
-                temailid.ReadOnly = true;
-                tcontactno.Text = DtView.Rows[0]["FactoryContactNo"].ToString();
+                txtNEmailId.Text = DtView.Rows[0]["FactoryEmailId"].ToString();
+                txtNEmailId.ReadOnly = true;
                 tgstno.Text = DtView.Rows[0]["FactoryGSTNo"].ToString();
                 tcinno.Text = DtView.Rows[0]["FactoryCINNo"].ToString();
                 tpanno.Text = DtView.Rows[0]["FactoryPANNo"].ToString();
-                thssnono.Text = DtView.Rows[0]["FactoryHSNO"].ToString();
                 DivCEOEmail.Visible = true;
                 lbltypelogin = DtView.Rows[0]["Role"].ToString();
                 if (lbltypelogin == "SuperAdmin" || lbltypelogin == "Admin")
@@ -367,10 +410,8 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
 
                 DivCEOName.Visible = true;
                 tpincode.Text = DtView.Rows[0]["UnitPincode"].ToString();
-                tpersonname.Text = DtView.Rows[0]["UnitNodalPerson"].ToString();
-                temailid.Text = DtView.Rows[0]["UnitEmailId"].ToString();
-                temailid.ReadOnly = true;
-                tcontactno.Text = DtView.Rows[0]["UnitContactNo"].ToString();
+                txtNEmailId.Text = DtView.Rows[0]["UnitEmailId"].ToString();
+                txtNEmailId.ReadOnly = true;
                 DivCEOEmail.Visible = true;
                 lbltypelogin = DtView.Rows[0]["Role"].ToString();
                 if (lbltypelogin == "SuperAdmin" || lbltypelogin == "Admin")
@@ -486,20 +527,13 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
         }
         HySave["District"] = Co.RSQandSQLInjection(seldistrict.Text.Trim(), "soft");
         HySave["Pincode"] = Co.RSQandSQLInjection(tpincode.Text.Trim(), "soft");
-        HySave["ContactPersonName"] = Co.RSQandSQLInjection(tpersonname.Text.Trim(), "soft");
-        HySave["ContactPersonEmailID"] = Co.RSQandSQLInjection(temailid.Text.Trim(), "soft");
-        if (tcontactno.Text == "")
-        {
-            HySave["ContactPersonContactNo"] = null;
-        }
-        else
-        {
-            HySave["ContactPersonContactNo"] = Co.RSQandSQLInjection(tcontactno.Text.Trim(), "soft");
-        }
+        HySave["NodalOfficeRefNo"] = ddlNodalOfficerEmail.SelectedItem.Value;
+        HySave["ContactPersonEmailID"] = Co.RSQandSQLInjection(txtNEmailId.Text.Trim(), "soft");
+        
         HySave["GSTNo"] = Co.RSQandSQLInjection(tgstno.Text.Trim(), "soft");
         HySave["CINNo"] = Co.RSQandSQLInjection(tcinno.Text.Trim(), "soft");
         HySave["PANNo"] = Co.RSQandSQLInjection(tpanno.Text.Trim(), "soft");
-        HySave["HSNo"] = Co.RSQandSQLInjection(thssnono.Text.Trim(), "soft");
+        HySave["IECode"] = Co.RSQandSQLInjection(txtIECode.Text.Trim(), "soft");
         HySave["IsDefenceActivity"] = Co.RSQandSQLInjection(companyengaged.SelectedItem.Value, "soft");
         HySave["CEOName"] = Co.RSQandSQLInjection(txtceoname.Text, "soft");
         HySave["CEOEmail"] = Co.RSQandSQLInjection(txtCEOEmailId.Text, "soft");
@@ -538,11 +572,11 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
         {
             mCon = "Company name is mandatory";
         }
-        if (temailid.Text == "")
+        if (txtNEmailId.Text == "")
         {
             mCon = "Email is mandatory";
         }
-        if (IsValidEmailId(temailid.Text) == true)
+        if (IsValidEmailId(txtNEmailId.Text) == true)
         {
         }
         else
@@ -567,9 +601,9 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
                 mCon = "CIN No already registerd.";
             }
         }
-        if (temailid.Text != "" && hfid.Value == "")
+        if (txtNEmailId.Text != "" && hfid.Value == "")
         {
-            DataTable Dt = Lo.RetriveMasterData(0, temailid.Text, "", 0, "", "", "CheckEmailNodel");
+            DataTable Dt = Lo.RetriveMasterData(0, txtNEmailId.Text, "", 0, "", "", "CheckEmailNodel");
             if (Dt.Rows.Count > 0 && Dt != null)
             {
                 mCon = "Nodel person email-id already registerd";
@@ -588,7 +622,7 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
     }
     protected void btndemofirst_Click(object sender, EventArgs e)
     {
-        if (tcompanyname.Text != "" && temailid.Text != "")
+        if (tcompanyname.Text != "" && txtNEmailId.Text != "")
         {
             string msg = this.ValidatePreview();
             if (msg != "")
@@ -782,6 +816,12 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
             }
         }
     }
+
+    protected void ddlNodalOfficerEmail_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        
+    }
+
     protected void ddlcompany_OnSelectedIndexChanged(object sender, EventArgs e)
     {
         if (ddlcompany.SelectedItem.Text != "All")
@@ -875,13 +915,11 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
         selstate.SelectedIndex = 0;
         seldistrict.Text = "";
         tpincode.Text = "";
-        tpersonname.Text = "";
-        temailid.Text = "";
-        tcontactno.Text = "";
+        
         tcinno.Text = "";
         tpanno.Text = "";
         tgstno.Text = "";
-        thssnono.Text = "";
+        
         companyengaged.SelectedIndex = 0;
         hfid.Value = "";
         txtCEOEmailId.Text = "";
