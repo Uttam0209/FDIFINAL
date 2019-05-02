@@ -410,8 +410,46 @@ namespace DataAccessLayer
                 }
                 finally
                 {
-                     _msg = "Save";
+                    _msg = "Save";
                     _sysMsg = "Save";
+                    dbCon.Close();
+                }
+            }
+        }
+        public string SaveMasterNodal(HybridDictionary hySaveNodal, out string _sysMsg, out string _msg)
+        {
+            string mCurrentID = "";
+            using (DbConnection dbCon = db.CreateConnection())
+            {
+                dbCon.Open();
+                DbTransaction dbTran = dbCon.BeginTransaction();
+                try
+                {
+                    DbCommand cmd = db.GetStoredProcCommand("sp_NodelPerson");
+                    db.AddInParameter(cmd, "@NodalOfficerID", DbType.Int64, hySaveNodal["NodalOfficerID"]);
+                    db.AddInParameter(cmd, "@NodalOfficerRefNo", DbType.String, hySaveNodal["NodalOfficerRefNo"]);
+                    db.AddInParameter(cmd, "@NodalOficerName", DbType.String, hySaveNodal["NodalOficerName"]);
+                    db.AddInParameter(cmd, "@NodalOfficerDepartment", DbType.Int16, hySaveNodal["NodalOfficerDepartment"].ToString().Trim());
+                    db.AddInParameter(cmd, "@NodalOfficerDesignation", DbType.Int16, hySaveNodal["NodalOfficerDesignation"].ToString().Trim());
+                    db.AddInParameter(cmd, "@NodalOfficerEmail", DbType.String, hySaveNodal["NodalOfficerEmail"]);
+                    db.AddInParameter(cmd, "@NodalOfficerMobile", DbType.String, hySaveNodal["NodalOfficerMobile"]);
+                    db.AddInParameter(cmd, "@NodalOfficerTelephone", DbType.String, hySaveNodal["NodalOfficerTelephone"]);
+                    db.AddInParameter(cmd, "@NodalOfficerFax", DbType.String, hySaveNodal["NodalOfficerFax"].ToString().Trim());
+                    db.ExecuteNonQuery(cmd, dbTran);
+                    dbTran.Commit();
+                    _msg = "Save";
+                    _sysMsg = "Save";
+                    return "Save";
+                }
+                catch (Exception ex)
+                {
+                    dbTran.Rollback();
+                    _msg = ex.Message;
+                    _sysMsg = ex.Message;
+                    return "-1";
+                }
+                finally
+                {
                     dbCon.Close();
                 }
             }
@@ -586,7 +624,7 @@ namespace DataAccessLayer
                 }
             }
         }
-        public DataTable RetriveMasterSubCategoryDate(Int64 SCatID, string SCatName, string PId, string Criteria,string CompRefNo)
+        public DataTable RetriveMasterSubCategoryDate(Int64 SCatID, string SCatName, string PId, string Criteria, string CompRefNo)
         {
             using (DbConnection dbCon = db.CreateConnection())
             {

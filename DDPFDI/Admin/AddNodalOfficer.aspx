@@ -36,7 +36,7 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label>Name</label>
-                                    <input type="text" class="form-control" />
+                                    <asp:textbox class="form-control" runat="server" id="txtname"></asp:textbox>
                                 </div>
                             </div>
 
@@ -57,27 +57,35 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label>Email ID</label>
-                                    <input type="text" class="form-control" />
+                                    <asp:textbox class="form-control" runat="server" id="txtemailid"></asp:textbox>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label>Mobile</label>
-                                    <input type="text" class="form-control" />
+                                    <asp:textbox class="form-control" runat="server" id="txtmobile"></asp:textbox>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label>Fax </label>
-                                    <input type="text" class="form-control" />
+                                    <asp:textbox class="form-control" runat="server" id="txtfax"></asp:textbox>
                                 </div>
                             </div>
 
                         </div>
                         <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Telephone </label>
+                                    <asp:textbox class="form-control" runat="server" id="txttelephone"></asp:textbox>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <asp:linkbutton id="btnsub" runat="server" text="Save" class="btn btn-primary pull-right"></asp:linkbutton>
+                                    <asp:linkbutton id="btnsub" runat="server" text="Save" class="btn btn-primary pull-right" onclick="btnsub_Click"></asp:linkbutton>
                                 </div>
                             </div>
                         </div>

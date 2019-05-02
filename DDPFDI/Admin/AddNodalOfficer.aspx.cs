@@ -1,8 +1,11 @@
 ﻿using BusinessLayer;
 using Encryption;
 using System;
+using System.Collections.Specialized;
+using System.Configuration;
 using System.Data;
 using System.Text;
+using System.Web.UI;
 
 public partial class Admin_AddNodalOfficer : System.Web.UI.Page
 {
@@ -11,14 +14,18 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
     Logic Lo = new Logic();
     private string DisplayPanel = "";
     private string SessionID = "";
+    private string _sysMsg = string.Empty;
+    private string _msg = string.Empty;
     DataTable DtGrid = new DataTable();
     DataTable DtCompanyDDL = new DataTable();
+    HybridDictionary hySaveNodal = new HybridDictionary();
     string UserName;
     string RefNo;
     string UserEmail;
     string currentPage = "";
     private string mType = "";
     private string mRefNo = "";
+    private Int16 Mid = 0;
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
@@ -268,4 +275,75 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
         }
     }
     #endregion
+    #region Save code
+    protected void SaveNodal()
+    {
+        if (Mid == 0)
+        {
+            hySaveNodal["NodalOfficerID"] = Mid;
+        }
+        else
+        {
+            hySaveNodal["NodalOfficerID"] = Mid;
+        }
+        if (objEnc.DecryptData(Session["Type"].ToString()) == "SuperAdmin")
+        {
+            if (ddlcompany.SelectedItem.Text != "All")
+            {
+                hySaveNodal["NodalOfficerRefNo"] = Co.RSQandSQLInjection(ddlcompany.SelectedItem.Value, "soft");
+            }
+            else if (ddldivision.SelectedItem.Text != "All")
+            {
+                hySaveNodal["NodalOfficerRefNo"] = Co.RSQandSQLInjection(ddlcompany.SelectedItem.Value, "soft");
+            }
+            else if (ddlunit.SelectedItem.Text != "All")
+            {
+                hySaveNodal["NodalOfficerRefNo"] = Co.RSQandSQLInjection(ddlcompany.SelectedItem.Value, "soft");
+            }
+        }
+        if (objEnc.DecryptData(Session["Type"].ToString()) == "Company")
+        {
+            hySaveNodal["NodalOfficerRefNo"] = Co.RSQandSQLInjection(ddlcompany.SelectedItem.Value, "soft");
+        }
+        else if (objEnc.DecryptData(Session["Type"].ToString()) == "Factory")
+        {
+            hySaveNodal["NodalOfficerRefNo"] = Co.RSQandSQLInjection(ddldivision.SelectedItem.Value, "soft");
+        }
+        if (objEnc.DecryptData(Session["Type"].ToString()) == "Unit")
+        {
+            hySaveNodal["NodalOfficerRefNo"] = Co.RSQandSQLInjection(ddlunit.SelectedItem.Value, "soft");
+        }
+        hySaveNodal["NodalOficerName"] = Co.RSQandSQLInjection(txtname.Text, "soft");
+        hySaveNodal["NodalOfficerDepartment"] = Co.RSQandSQLInjection(ddldepartment.SelectedItem.Value, "soft");
+        hySaveNodal["NodalOfficerDesignation"] = Co.RSQandSQLInjection(ddldesignation.SelectedItem.Value, "soft");
+        hySaveNodal["NodalOfficerEmail"] = Co.RSQandSQLInjection(txtemailid.Text, "soft");
+        hySaveNodal["NodalOfficerMobile"] = Co.RSQandSQLInjection(txtmobile.Text, "soft");
+        hySaveNodal["NodalOfficerTelephone"] = Co.RSQandSQLInjection(txttelephone.Text, "soft");
+        hySaveNodal["NodalOfficerFax"] = Co.RSQandSQLInjection(txtfax.Text, "soft");
+        string Str = Lo.SaveMasterNodal(hySaveNodal, out _sysMsg, out _msg);
+        if (Str == "Save")
+        {
+            Cleartext();
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record saved successsfully')", true);
+        }
+        else
+        {
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not saved successsfully')", true);
+        }
+    }
+    #endregion
+    protected void btnsub_Click(object sender, EventArgs e)
+    {
+        SaveNodal();
+    }
+    protected void Cleartext()
+    {
+        txtfax.Text = "";
+        txtemailid.Text = "";
+        txtmobile.Text = "";
+        txtname.Text = "";
+        txttelephone.Text = "";
+        ddldepartment.SelectedIndex = 0;
+        ddldesignation.SelectedIndex = 0;
+    }
 }
