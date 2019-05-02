@@ -90,9 +90,9 @@ namespace BusinessLayer
         {
             return SqlHelper.Instance.RetriveMasterCategoryDate(CatID, CatName, SCatValue, Criteria);
         }
-        public DataTable RetriveMasterSubCategoryDate(Int64 SCatID, string SCatName, string PId, string Criteria)
+        public DataTable RetriveMasterSubCategoryDate(Int64 SCatID, string SCatName, string PId, string Criteria, string CompRefNo)
         {
-            return SqlHelper.Instance.RetriveMasterSubCategoryDate(SCatID, SCatName, PId, Criteria);
+            return SqlHelper.Instance.RetriveMasterSubCategoryDate(SCatID, SCatName, PId, Criteria,CompRefNo);
         }
         #endregion
         #region DeleteCode

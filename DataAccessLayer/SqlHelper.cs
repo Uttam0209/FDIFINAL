@@ -586,7 +586,7 @@ namespace DataAccessLayer
                 }
             }
         }
-        public DataTable RetriveMasterSubCategoryDate(Int64 SCatID, string SCatName, string PId, string Criteria)
+        public DataTable RetriveMasterSubCategoryDate(Int64 SCatID, string SCatName, string PId, string Criteria,string CompRefNo)
         {
             using (DbConnection dbCon = db.CreateConnection())
             {
@@ -598,6 +598,7 @@ namespace DataAccessLayer
                     db.AddInParameter(cmd, "@SCatName", DbType.String, SCatName);
                     db.AddInParameter(cmd, "@PId", DbType.String, PId);
                     db.AddInParameter(cmd, "@Criteria", DbType.String, Criteria);
+                    db.AddInParameter(cmd, "@CompRefNo", DbType.String, CompRefNo);
                     IDataReader dr = db.ExecuteReader(cmd);
                     DataTable dt = new DataTable();
                     if (dr != null)
