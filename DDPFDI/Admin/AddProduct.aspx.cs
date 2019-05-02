@@ -2,6 +2,7 @@
 using Encryption;
 using System;
 using System.Data;
+using System.Text;
 
 public partial class Admin_AddProduct : System.Web.UI.Page
 {
@@ -15,8 +16,19 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         {
             if (Request.QueryString["id"] != null)
             {
-                string id = Request.QueryString["id"].ToString().Replace(" ", "+");
-                lblPageName.Text = objEnc.DecryptData(id);
+                string strid = Request.QueryString["id"].ToString().Replace(" ", "+");
+                string strPageName = objEnc.DecryptData(strid);
+                StringBuilder strheadPage = new StringBuilder();
+                strheadPage.Append("<ul class='breadcrumb'>");
+                string[] MCateg = strPageName.Split(new string[] { ">>" }, StringSplitOptions.RemoveEmptyEntries);
+                string MmCval = "";
+                for (int x = 0; x < MCateg.Length; x++)
+                {
+                    MmCval = MCateg[x];
+                    strheadPage.Append("<li class=''><span>" + MmCval + "</span></li>");
+                }
+                divHeadPage.InnerHtml = strheadPage.ToString();
+                strheadPage.Append("</ul");
                 BindMasterCategory();
             }
         }

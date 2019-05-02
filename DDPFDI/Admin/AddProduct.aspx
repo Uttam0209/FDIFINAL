@@ -9,9 +9,7 @@
         <div class="sideBg">
             <div class="row">
                 <div class="col-md-12 padding_0">
-                    <ul class="breadcrumb">
-                        <li><asp:Label ID="lblPageName" runat="server" Text=""></asp:Label></li>
-                    </ul>
+                    <div id="divHeadPage" runat="server"></div>
                 </div>
             </div>
             <asp:UpdatePanel runat="server" ID="UpdatePanel4">
@@ -29,180 +27,180 @@
                                     <div class="col-md-12">
                                         <div class="add-profile">
                                             <div class="section-pannel">
-                                            <div class="row">
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        <label>OEM Part Number</label>
-                                                        <input type="text" class="form-control">
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        <label>DPSU Part Number</label>
-                                                        <input type="text" class="form-control">
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            <label>OEM Part Number</label>
+                                                            <input type="text" class="form-control">
+                                                        </div>
                                                     </div>
 
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        <label>End User Part Number</label>
-                                                        <textarea class="form-control"></textarea>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            </div>
-                                            <div class="section-pannel"> 
-                                            <div class="row">
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        <label>Nomenclature of main system </label>
-                                                        <input type="text" class="form-control">
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        <label>Product Category </label>
-                                                        <asp:DropDownList runat="server" ID="ddlmastercategory" class="form-control" AutoPostBack="True" OnSelectedIndexChanged="ddlmastercategory_SelectedIndexChanged"></asp:DropDownList>
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            <label>DPSU Part Number</label>
+                                                            <input type="text" class="form-control">
+                                                        </div>
 
                                                     </div>
-
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        <label>Product Sub Category </label>
-                                                        <asp:DropDownList runat="server" ID="ddlsubcategory" class="form-control" AutoPostBack="True"></asp:DropDownList>
-
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            <label>End User Part Number</label>
+                                                            <textarea class="form-control"></textarea>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label>Product Description </label>
-                                                        <textarea class="form-control"></textarea>
+                                            <div class="section-pannel">
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            <label>Nomenclature of main system </label>
+                                                            <input type="text" class="form-control">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            <label>Product Category </label>
+                                                            <asp:DropDownList runat="server" ID="ddlmastercategory" class="form-control" AutoPostBack="True" OnSelectedIndexChanged="ddlmastercategory_SelectedIndexChanged"></asp:DropDownList>
+
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            <label>Product Sub Category </label>
+                                                            <asp:DropDownList runat="server" ID="ddlsubcategory" class="form-control" AutoPostBack="True"></asp:DropDownList>
+
+                                                        </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label>Product Image </label>
-                                                        <input type="file" class="btn">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label>Product Description </label>
+                                                            <textarea class="form-control"></textarea>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label>Product Image </label>
+                                                            <input type="file" class="btn">
+                                                        </div>
+
                                                     </div>
 
-                                                </div>
 
-
-                                            </div>
-                                            </div>
-                                             <div class="section-pannel">
-                                            <div class="row">
-
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        <label>Technology Category </label>
-                                                        <select class="form-control">
-                                                            <option>Select Category</option>
-                                                            <option>Mechanical</option>
-                                                            <option>Electrical</option>
-                                                            <option>Electronics</option>
-                                                            <option>Electro-Mechanical</option>
-                                                            <option>Casting</option>
-                                                            <option>Instrumentation</option>
-                                                            <option>Avionics</option>
-                                                            <option>Hydraulics</option>
-                                                            <option>Pneumatics</option>
-                                                            <option>Armaments</option>
-
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        <label>Technology Sub Category</label>
-                                                        <select class="form-control">
-                                                            <option>Select Sub Category</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        <label>End User</label>
-                                                        <select class="form-control">
-                                                            <option>Select</option>
-                                                        </select>
-                                                    </div>
                                                 </div>
                                             </div>
-                                             </div>
-                                              <div class="section-pannel">
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label>
-                                                            Product Already Indeginized :
+                                            <div class="section-pannel">
+                                                <div class="row">
+
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            <label>Technology Category </label>
+                                                            <select class="form-control">
+                                                                <option>Select Category</option>
+                                                                <option>Mechanical</option>
+                                                                <option>Electrical</option>
+                                                                <option>Electronics</option>
+                                                                <option>Electro-Mechanical</option>
+                                                                <option>Casting</option>
+                                                                <option>Instrumentation</option>
+                                                                <option>Avionics</option>
+                                                                <option>Hydraulics</option>
+                                                                <option>Pneumatics</option>
+                                                                <option>Armaments</option>
+
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            <label>Technology Sub Category</label>
+                                                            <select class="form-control">
+                                                                <option>Select Sub Category</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            <label>End User</label>
+                                                            <select class="form-control">
+                                                                <option>Select</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="section-pannel">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label>
+                                                                Product Already Indeginized :
                                                                 <input type="radio">Yes
                                                                 <input type="radio">No</label>
 
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <p><strong>NOTE:</strong> If Yes, please give manufacturer name</p>
-                                                        <input type="text" class="form-control">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <p><strong>NOTE:</strong> If Yes, please give manufacturer name</p>
+                                                            <input type="text" class="form-control">
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                              </div>
-                                               <div class="section-pannel">
-                                            <div class="row">
-                                                <div class="col-md-3">
-                                                    <div class="form-group">
-                                                        <label>Platform :</label>
-                                                        <select class="form-control">
-                                                            <option>Select</option>
-                                                            <option>Ships</option>
-                                                            <option>Tanks</option>
-                                                            <option>Submarines</option>
-                                                            <option>Armaments</option>
-                                                        </select>
+                                            <div class="section-pannel">
+                                                <div class="row">
+                                                    <div class="col-md-3">
+                                                        <div class="form-group">
+                                                            <label>Platform :</label>
+                                                            <select class="form-control">
+                                                                <option>Select</option>
+                                                                <option>Ships</option>
+                                                                <option>Tanks</option>
+                                                                <option>Submarines</option>
+                                                                <option>Armaments</option>
+                                                            </select>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <div class="form-group">
-                                                        <label>Purpose of Procurement :</label>
-                                                        <select class="form-control">
-                                                            <option>Select</option>
-                                                            <option>Alternate Source</option>
-                                                            <option>Import</option>
-                                                            <option>Substitution</option>
-                                                            <option>Prototype Development</option>
-                                                            <option>Research & Development</option>
-                                                        </select>
+                                                    <div class="col-md-3">
+                                                        <div class="form-group">
+                                                            <label>Purpose of Procurement :</label>
+                                                            <select class="form-control">
+                                                                <option>Select</option>
+                                                                <option>Alternate Source</option>
+                                                                <option>Import</option>
+                                                                <option>Substitution</option>
+                                                                <option>Prototype Development</option>
+                                                                <option>Research & Development</option>
+                                                            </select>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <div class="form-group">
-                                                        <label>Product Requirement :</label>
-                                                        <select class="form-control">
-                                                            <option>Select</option>
-                                                            <option>Short-Term 1-2 Years</option>
-                                                            <option>Mid-Term 3-5 Years</option>
-                                                            <option>Long-Term 5-7 Years</option>
+                                                    <div class="col-md-3">
+                                                        <div class="form-group">
+                                                            <label>Product Requirement :</label>
+                                                            <select class="form-control">
+                                                                <option>Select</option>
+                                                                <option>Short-Term 1-2 Years</option>
+                                                                <option>Mid-Term 3-5 Years</option>
+                                                                <option>Long-Term 5-7 Years</option>
 
-                                                        </select>
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-md-3">
-                                                    <div class="form-group">
-                                                        <label>Search Keywords :</label>
-                                                        <input type="search" class="form-control">
+                                                            </select>
+                                                        </div>
                                                     </div>
 
+                                                    <div class="col-md-3">
+                                                        <div class="form-group">
+                                                            <label>Search Keywords :</label>
+                                                            <input type="search" class="form-control">
+                                                        </div>
+
+                                                    </div>
                                                 </div>
                                             </div>
-                                               </div>
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <div class="form-group">
@@ -322,14 +320,18 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group ">
-                                            <label style="display:block">
+                                            <label style="display: block">
                                                 Tender Status</label>
-                                                <div class="tender-group">
-                                                <label><input type="checkbox">Live </label>
-                                                <label> <input type="checkbox" style="margin-left: 20px;">Archive </label>
-                                                 <label> <input type="checkbox" style="margin-left: 20px;">Not Floated</label>
-                                                 <label><input type="checkbox" style="margin-left: 20px;">To be Floated shortly</label>
-                                                </div>
+                                            <div class="tender-group">
+                                                <label>
+                                                    <input type="checkbox">Live </label>
+                                                <label>
+                                                    <input type="checkbox" style="margin-left: 20px;">Archive </label>
+                                                <label>
+                                                    <input type="checkbox" style="margin-left: 20px;">Not Floated</label>
+                                                <label>
+                                                    <input type="checkbox" style="margin-left: 20px;">To be Floated shortly</label>
+                                            </div>
                                         </div>
 
                                     </div>
@@ -338,9 +340,10 @@
 
                                     <div class="col-md-6">
                                         <div class="form-group live-status-box">
-                                            <label>If live, please fill last date of tender submission. <span class="checkbox-box"><input type="radio" name="tender" class="yes">Yes <input type="radio" name="tender" style="margin-left:10px;">No</span></label>
-                                            <input type="date" class="form-control" style="display:none">
-                                            
+                                            <label>If live, please fill last date of tender submission. <span class="checkbox-box">
+                                                <input type="radio" name="tender" class="yes">Yes
+                                                <input type="radio" name="tender" style="margin-left: 10px;">No</span></label>
+                                            <input type="date" class="form-control" style="display: none">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -354,107 +357,107 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                        <input type="submit" value="Save" class="btn btn-primary pull-right">
-                                        <input type="submit" value="Back" class="btn btn-default pull-right" style="margin-right: 10px;">
+                                            <input type="submit" value="Save" class="btn btn-primary pull-right">
+                                            <input type="submit" value="Back" class="btn btn-default pull-right" style="margin-right: 10px;">
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div id="cd" class="tab-pane fade">
                                 <div class="section-pannel">
-                                <h4 class="page-header secondary">Contact Detail 1</h4>
-                               
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>Officer's Name</label>
-                                            <input type="text" class="form-control">
+                                    <h4 class="page-header secondary">Contact Detail 1</h4>
+
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>Officer's Name</label>
+                                                <input type="text" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>Designation</label>
+                                                <input type="text" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>Department</label>
+                                                <input type="text" class="form-control">
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>Designation</label>
-                                            <input type="text" class="form-control">
+
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>Phone Number</label>
+                                                <input type="text" class="form-control">
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>Department</label>
-                                            <input type="text" class="form-control">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>Fax</label>
+                                                <input type="text" class="form-control">
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>
-                                
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>Phone Number</label>
-                                            <input type="text" class="form-control">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>Fax</label>
-                                            <input type="text" class="form-control">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>E-Mail ID</label>
-                                            <input type="text" class="form-control">
-                                        </div>
-                                    </div>
-                                </div>
-                                </div>
-                                 <div class="section-pannel">
-                                <h4 class="page-header secondary">Contact Detail 2</h4>
-                               
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>Officer's Name</label>
-                                            <input type="text" class="form-control">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>Designation</label>
-                                            <input type="text" class="form-control">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>Department</label>
-                                            <input type="text" class="form-control">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>E-Mail ID</label>
+                                                <input type="text" class="form-control">
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>Phone Number</label>
-                                            <input type="text" class="form-control">
+                                <div class="section-pannel">
+                                    <h4 class="page-header secondary">Contact Detail 2</h4>
+
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>Officer's Name</label>
+                                                <input type="text" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>Designation</label>
+                                                <input type="text" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>Department</label>
+                                                <input type="text" class="form-control">
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>Fax</label>
-                                            <input type="text" class="form-control">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>Phone Number</label>
+                                                <input type="text" class="form-control">
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>E-Mail ID</label>
-                                            <input type="text" class="form-control">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>Fax</label>
+                                                <input type="text" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>E-Mail ID</label>
+                                                <input type="text" class="form-control">
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                 </div>
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                        <input type="submit" value="Save" class="btn btn-primary pull-right">
-                                        <input type="submit" value="Back" class="btn btn-default pull-right" style="margin-right: 10px;">
+                                            <input type="submit" value="Save" class="btn btn-primary pull-right">
+                                            <input type="submit" value="Back" class="btn btn-default pull-right" style="margin-right: 10px;">
                                         </div>
                                     </div>
                                 </div>

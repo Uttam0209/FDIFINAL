@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Specialized;
 using System.Data;
+using System.Text;
 using System.Web.UI;
 using BusinessLayer;
 using Encryption;
@@ -18,9 +19,21 @@ public partial class Admin_RegisterdAs : System.Web.UI.Page
         {
             if (!IsPostBack)
             {
-                string id = objEnc.DecryptData(Request.QueryString["id"].ToString().Replace(" ", "+"));
+                string strid = Request.QueryString["id"].ToString().Replace(" ", "+");
+                string strPageName = objEnc.DecryptData(strid);
+                StringBuilder strheadPage = new StringBuilder();
+                strheadPage.Append("<ul class='breadcrumb'>");
+                string[] MCateg = strPageName.Split(new string[] { ">>" }, StringSplitOptions.RemoveEmptyEntries);
+                string MmCval = "";
+                for (int x = 0; x < MCateg.Length; x++)
+                {
+                    MmCval = MCateg[x];
+                    strheadPage.Append("<li class=''><span>" + MmCval + "</span></li>");
+                }
+                divHeadPage.InnerHtml = strheadPage.ToString();
+                strheadPage.Append("</ul");
                 DisplayPanel = objEnc.DecryptData(Request.QueryString["mu"].ToString().Replace(" ", "+"));
-                lblPageName.Text = id;
+                
                 ShowHidePanel();
             }
         }
@@ -47,8 +60,7 @@ public partial class Admin_RegisterdAs : System.Web.UI.Page
             divcategory2ddl.Visible = true;
             divcategory3textbox.Visible = true;
             btnsave.Text = "Save";
-            BindMasterInnerSubCategory();
-         //   BindMasterSubCategory();
+            BindMasterCategory();
             ddlmastercategory.AutoPostBack = true;
         }
     }
@@ -88,6 +100,19 @@ public partial class Admin_RegisterdAs : System.Web.UI.Page
             ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not saved')", true);
         }
     }
+    protected void SaveCodeInnerSub()
+    {
+        DataTable StrCat = Lo.RetriveMasterSubCategoryDate(Convert.ToInt16(ddlmastercategory.SelectedItem.Value), Co.RSQandSQLInjection(txtcategory3.Text, "soft"), "0", "InsertInnerSubID");
+        if (StrCat != null)
+        {
+            cleartext();
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record saved')", true);
+        }
+        else
+        {
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not saved')", true);
+        }
+    }
     protected void btnsave_Click(object sender, EventArgs e)
     {
         if (btnsave.Text == "Save Category")
@@ -118,6 +143,7 @@ public partial class Admin_RegisterdAs : System.Web.UI.Page
         {
             if (ddlmastercategory.SelectedIndex != 0 && ddlcategroy2.SelectedIndex != 0 && txtcategory3.Text != "")
             {
+                SaveCodeInnerSub();
                 ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record saved successfully')", true);
             }
             else
@@ -139,35 +165,21 @@ public partial class Admin_RegisterdAs : System.Web.UI.Page
             ddlmastercategory.Items.Insert(0, "Select Category");
         }
     }
-    protected void BindMasterSubCategory()
+    protected void BindMasterInnerSubCategory()
     {
-        DataTable DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(Convert.ToInt16(ddlmastercategory.SelectedItem.Value), "", "", "Select");
+        DataTable DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(Convert.ToInt16(ddlmastercategory.SelectedItem.Value), "", "", "SelectInnerMaster");
         if (DtMasterCategroy.Rows.Count > 0)
         {
             Co.FillDropdownlist(ddlcategroy2, DtMasterCategroy, "SCategoryName", "SCategoryId");
-            ddlcategroy2.Items.Insert(0, "Select Label 2");
+            ddlcategroy2.Items.Insert(0, "Select Level 1");
         }
         else
         {
-            ddlcategroy2.Items.Insert(0, "Select Label 2");
+            ddlcategroy2.Items.Insert(0, "Select Level 1");
         }
     }
-    protected void BindMasterInnerSubCategory()
-    {
-        DataTable DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, "", "", "SelectInnerMaster");
-        if (DtMasterCategroy.Rows.Count > 0)
-        {
-            Co.FillDropdownlist(ddlmastercategory, DtMasterCategroy, "SCategoryName", "SCategoryId");
-            ddlmastercategory.Items.Insert(0, "Select Level 1");
-        }
-        else
-        {
-            ddlmastercategory.Items.Insert(0, "Select Level 1");
-        }
-    }
-
     protected void ddlmastercategory_SelectedIndexChanged(object sender, EventArgs e)
     {
-        BindMasterSubCategory();
+        BindMasterInnerSubCategory();
     }
 }

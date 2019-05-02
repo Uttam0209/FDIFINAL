@@ -5,15 +5,13 @@
 <asp:Content ID="inner" runat="server" ContentPlaceHolderID="ContentPlaceHolder1">
     <div class="content oem-content">
         <div class="sideBg">
-            <div class="col-mod-12">
-                <h3 class="page-header"><i class="fas fa-folder-plus"></i><asp:Label ID="lblPageName" runat="server" Text=""></asp:Label></h3>
-                <div class="col-md-12 col-mod-12">
-                    <div class="row">
-                    </div>
+            <div class="row">
+                <div class="col-md-12 padding_0">
+                    <div id="divHeadPage" runat="server"></div>
                 </div>
             </div>
-            <div class="clearfix"></div>
-        </div>
-        <div class="footer">� 2019 <a href="#">Department of Defence Production</a> </div>
+        <div class="clearfix"></div>
+    </div>
+    <div class="footer">� 2019 <a href="#">Department of Defence Production</a> </div>
     </div>
 </asp:Content>

@@ -8,11 +8,11 @@
         <ContentTemplate>
             <div class="content oem-content">
                 <div class="sideBg">
-                    <div class="col-mod-12">
-                        <ul class="breadcrumb">
-                            <asp:Label ID="lblPageName" runat="server" Text=""></asp:Label></li>
-                        </ul>
-                    </div>
+                    <div class="row">
+                            <div class="col-md-12 padding_0">
+                                <div id="divHeadPage" runat="server"></div>
+                            </div>
+                        </div>
                     <form method="post" class="addfdi">
                         <div class="row">
                             <div class="col-md-12">

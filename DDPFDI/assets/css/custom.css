@@ -314,3 +314,8 @@ form label { color: #494ca2;}
 .sideBg { padding-top: 0;}
 #ContentPlaceHolder1_Intrested,#ContentPlaceHolder1_MenuAlot,#ContentPlaceHolder1_divRole { padding: 10px; box-shadow: 0 0 4px rgba(0,0,0,0.2); margin-right: 8px; border-radius: 4px;}
 .form-label { margin-bottom: 4px; display: inline-block;}
+.company-flex-row .form-group { margin-right: 30px;}
+.company-flex-row .form-group:last-child { margin-right: 0 !important;}
+#Location { margin-bottom: 20px;}
+.fa-trash { color: #df0054;}
+.fa-edit { color: #494ca2}
