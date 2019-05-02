@@ -37,33 +37,14 @@
                                                     <label>DPSU Part Number</label>
                                                     <input type="text" class="form-control">
                                                 </div>
-                                                    </div>
-                                                    <div class="col-md-4">
-                                                        <div class="form-group">
-                                                            <label>End User Part Number</label>
-                                                            <input type="text" class="form-control">
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-4">
-                                                        <div class="form-group">
-                                                            <label>HSN Code</label>
-                                                            <input type="text" class="form-control">
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-4">
-                                                        <div class="form-group">
-                                                            <label>NATO Code</label>
-                                                            <input type="text" class="form-control">
-                                                        </div>
-                                                    </div>
-                                                     <div class="col-md-4">
-                                                        <div class="form-group">
-                                                            <label>ERP Reference Number</label>
-                                                            <input type="text" class="form-control">
-                                                        </div>
-                                                    </div>
+
                                             </div>
-                                          
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label>End User Part Number</label>
+                                                    <textarea class="form-control"></textarea>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="section-pannel">
@@ -111,6 +92,7 @@
                                     </div>
                                     <div class="section-pannel">
                                         <div class="row">
+
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label>Technology Category </label>
@@ -142,6 +124,7 @@
                                                         Product Already Indeginized :
                                                                 <input type="radio">Yes
                                                                 <input type="radio">No</label>
+
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
@@ -330,8 +313,7 @@
                                         If live, please fill last date of tender submission. <span class="checkbox-box">
                                             <input type="radio" name="tender" class="yes">Yes
                                                 <input type="radio" name="tender" style="margin-left: 10px;">No</span></label>
-                                            <input type="date" class="form-control inputbox" style="display: none">
-                                        </div>
+                                    <input type="date" class="form-control" style="display: none">
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -456,4 +438,3 @@
     </div>
 
 </asp:Content>
-
