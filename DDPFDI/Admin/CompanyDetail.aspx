@@ -156,15 +156,11 @@
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label for="activityname" class="control-label">Webistie url</label>
+                                                        <label for="activityname" class="control-label">Website url</label>
                                                         <asp:TextBox runat="server" ID="TextBox2" name="txtTelephone" class="form-control form-cascade-control " placeholder=""></asp:TextBox>
                                                     </div>
                                                 </div>
                                             </div>
-
-
-
-
                                             <div class="indiacompanydetails">
 
 
@@ -433,7 +429,7 @@
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label for="activityname" class="control-label"></label><br />
+                                <label for="activityname" class="control-label"></label>
                                 <asp:LinkButton ID="btnShowMap" runat="server" CssClass="btn btn-primary" Text="Show Map" OnClick="btnShowMap_Click"></asp:LinkButton>
                             </div>
                         </div>

@@ -74,11 +74,11 @@ $(window).on('load', function(){
     $(".live-status-box input[type='radio']").on('change', function(){
         var $inputChecked = $('.live-status-box .yes').is(":checked");
        if($inputChecked == true) {
-           $(".live-status-box input[type='date']").show();
+           $(".live-status-box .inputbox").show();
 
        }
        else {
-           $(".live-status-box input[type='date']").hide();
+           $(".live-status-box .inputbox").hide();
        }
     });
 

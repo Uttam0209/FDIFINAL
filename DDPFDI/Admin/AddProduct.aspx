@@ -85,12 +85,9 @@
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label>Product Image </label>
-                                                            <input type="file" class="btn">
+                                                            <input type="file" class="btn form-control">
                                                         </div>
-
                                                     </div>
-
-
                                                 </div>
                                             </div>
                                             <div class="section-pannel">
@@ -137,15 +134,15 @@
                                                 <div class="row">
                                                     <div class="col-md-6">
                                                         <div class="form-group">
-                                                            <label>
+                                                            <label class="live-status-box">
                                                                 Product Already Indeginized :
-                                                                <input type="radio">Yes
-                                                                <input type="radio">No</label>
+                                                                <input type="radio" class="yes" name="product">Yes
+                                                                <input type="radio" name="product">No</label>
 
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-6">
-                                                        <div class="form-group">
+                                                    <div class="col-md-6 live-status-box">
+                                                        <div class="form-group inputbox" style="display:none">
                                                             <p><strong>NOTE:</strong> If Yes, please give manufacturer name</p>
                                                             <input type="text" class="form-control">
                                                         </div>
@@ -343,7 +340,7 @@
                                             <label>If live, please fill last date of tender submission. <span class="checkbox-box">
                                                 <input type="radio" name="tender" class="yes">Yes
                                                 <input type="radio" name="tender" style="margin-left: 10px;">No</span></label>
-                                            <input type="date" class="form-control" style="display: none">
+                                            <input type="date" class="form-control inputbox" style="display: none">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
