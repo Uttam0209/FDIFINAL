@@ -62,6 +62,8 @@
   #btnCaptchaNew { right: -8px; top: -37px;}
 
   .fdi-tab ul { flex-direction: column;}
+  .is-flex { flex-direction: column;}
+  #ContentPlaceHolder1_Intrested, #ContentPlaceHolder1_MenuAlot, #ContentPlaceHolder1_divRole { margin-right: 0;}
 
 
 }
