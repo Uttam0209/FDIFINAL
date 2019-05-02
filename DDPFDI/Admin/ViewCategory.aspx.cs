@@ -92,7 +92,7 @@ public partial class Admin_ViewCategory : System.Web.UI.Page
         {
             HiddenField lblrefno = e.Row.FindControl("hfcat") as HiddenField;
             GridView gvSubcat = e.Row.FindControl("gvsubcat") as GridView;
-            DataTable DtGrid = Lo.RetriveMasterSubCategoryDate(Convert.ToInt16(lblrefno.Value), "", "", "SubSelectID");
+            DataTable DtGrid = Lo.RetriveMasterSubCategoryDate(Convert.ToInt16(lblrefno.Value), "", "", "SubSelectID1", "");
             if (DtGrid.Rows.Count > 0)
             {
                 gvSubcat.DataSource = DtGrid;

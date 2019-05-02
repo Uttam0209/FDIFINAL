@@ -89,7 +89,7 @@ public partial class Admin_RegisterdAs : System.Web.UI.Page
     }
     protected void SaveCodeSub()
     {
-        DataTable StrCat = Lo.RetriveMasterSubCategoryDate(Convert.ToInt16(ddlmastercategory.SelectedItem.Value), Co.RSQandSQLInjection(txtsubcategory.Text, "soft"), "0", "InsertInnerID");
+        DataTable StrCat = Lo.RetriveMasterSubCategoryDate(Convert.ToInt16(ddlmastercategory.SelectedItem.Value), Co.RSQandSQLInjection(txtsubcategory.Text, "soft"), "0", "InsertInnerID","");
         if (StrCat != null)
         {
             cleartext();// ddlcategroy2.SelectedIndex = 0;
@@ -102,7 +102,7 @@ public partial class Admin_RegisterdAs : System.Web.UI.Page
     }
     protected void SaveCodeInnerSub()
     {
-        DataTable StrCat = Lo.RetriveMasterSubCategoryDate(Convert.ToInt16(ddlmastercategory.SelectedItem.Value), Co.RSQandSQLInjection(txtcategory3.Text, "soft"), "0", "InsertInnerSubID");
+        DataTable StrCat = Lo.RetriveMasterSubCategoryDate(Convert.ToInt16(ddlmastercategory.SelectedItem.Value), Co.RSQandSQLInjection(txtcategory3.Text, "soft"), "0", "InsertInnerSubID","");
         if (StrCat != null)
         {
             cleartext();
@@ -167,7 +167,7 @@ public partial class Admin_RegisterdAs : System.Web.UI.Page
     }
     protected void BindMasterInnerSubCategory()
     {
-        DataTable DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(Convert.ToInt16(ddlmastercategory.SelectedItem.Value), "", "", "SelectInnerMaster");
+        DataTable DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(Convert.ToInt16(ddlmastercategory.SelectedItem.Value), "", "", "SelectInnerMaster","");
         if (DtMasterCategroy.Rows.Count > 0)
         {
             Co.FillDropdownlist(ddlcategroy2, DtMasterCategroy, "SCategoryName", "SCategoryId");
