@@ -5,6 +5,7 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "DDPFDI(2)", "http://localho
 	ProjectSection(WebsiteProperties) = preProject
 		UseIISExpress = "true"
 		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.5.2"
+		ProjectReferences = "{f46ef828-e2fb-453a-96ce-36ee29a19101}|BusinessLayer.dll;{0AAACD15-A345-4B24-8A41-9E8A9E2AD9BB}|DataAccessLayer.dll;{59F4B655-5353-4282-A76D-F180D9BB37C7}|Encryption.dll;"
 		Debug.AspNetCompiler.VirtualPath = "/localhost_19213"
 		Debug.AspNetCompiler.PhysicalPath = "..\DDPFDI\"
 		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_19213\"
