@@ -419,6 +419,7 @@ namespace DataAccessLayer
         {
             using (DbConnection dbCon = db.CreateConnection())
             {
+                string mCurrentID = "";
                 dbCon.Open();
                 DbTransaction dbTran = dbCon.BeginTransaction();
                 try
@@ -427,7 +428,6 @@ namespace DataAccessLayer
                     db.AddInParameter(cmd, "@NodalOfficerID", DbType.Int64, hySaveNodal["NodalOfficerID"]);
                     db.AddInParameter(cmd, "@NodalOfficerRefNo", DbType.String, hySaveNodal["NodalOfficerRefNo"]);
                     db.AddInParameter(cmd, "@NodalOficerName", DbType.String, hySaveNodal["NodalOficerName"]);
-                    db.AddInParameter(cmd, "@NodalOfficerDepartment", DbType.Int16, hySaveNodal["NodalOfficerDepartment"].ToString().Trim());
                     db.AddInParameter(cmd, "@NodalOfficerDesignation", DbType.Int16, hySaveNodal["NodalOfficerDesignation"].ToString().Trim());
                     db.AddInParameter(cmd, "@NodalOfficerEmail", DbType.String, hySaveNodal["NodalOfficerEmail"]);
                     db.AddInParameter(cmd, "@NodalOfficerMobile", DbType.String, hySaveNodal["NodalOfficerMobile"]);
@@ -435,11 +435,13 @@ namespace DataAccessLayer
                     db.AddInParameter(cmd, "@NodalOfficerFax", DbType.String, hySaveNodal["NodalOfficerFax"].ToString().Trim());
                     db.AddInParameter(cmd, "@CompanyRefNo", DbType.String, hySaveNodal["CompanyRefNo"].ToString().Trim());
                     db.AddInParameter(cmd, "@Type", DbType.String, hySaveNodal["Type"].ToString().Trim());
+                    db.AddOutParameter(cmd, "@ReturnID", DbType.String, 20);
                     db.ExecuteNonQuery(cmd, dbTran);
+                    mCurrentID = db.GetParameterValue(cmd, "@ReturnID").ToString();
                     dbTran.Commit();
                     _msg = "Save";
                     _sysMsg = "Save";
-                    return "Save";
+                    return _msg;
                 }
                 catch (Exception ex)
                 {

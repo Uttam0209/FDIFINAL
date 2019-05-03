@@ -16,40 +16,46 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     {
         if (!IsPostBack)
         {
-            if (Request.QueryString["id"] != null)
+            try
             {
-                string strid = Request.QueryString["id"].ToString().Replace(" ", "+");
-                string strPageName = objEnc.DecryptData(strid);
-                StringBuilder strheadPage = new StringBuilder();
-                strheadPage.Append("<ul class='breadcrumb'>");
-                string[] MCateg = strPageName.Split(new string[] { ">>" }, StringSplitOptions.RemoveEmptyEntries);
-                string MmCval = "";
-                for (int x = 0; x < MCateg.Length; x++)
+                if (Request.QueryString["id"] != null)
                 {
-                    MmCval = MCateg[x];
-                    strheadPage.Append("<li class=''><span>" + MmCval + "</span></li>");
-                }
-                divHeadPage.InnerHtml = strheadPage.ToString();
-                strheadPage.Append("</ul");
-                SessionID = Session["CompanyRefNo"].ToString();
-                BindMasterCategory();
-                BindMasterTechnologyCategory();
-                BindMasterPlatCategory();
-                BindMasterProductReqCategory();
-                BindNodelEmail();
+                    string strid = Request.QueryString["id"].ToString().Replace(" ", "+");
+                    string strPageName = objEnc.DecryptData(strid);
+                    StringBuilder strheadPage = new StringBuilder();
+                    strheadPage.Append("<ul class='breadcrumb'>");
+                    string[] MCateg = strPageName.Split(new string[] { ">>" }, StringSplitOptions.RemoveEmptyEntries);
+                    string MmCval = "";
+                    for (int x = 0; x < MCateg.Length; x++)
+                    {
+                        MmCval = MCateg[x];
+                        strheadPage.Append("<li class=''><span>" + MmCval + "</span></li>");
+                    }
 
+                    divHeadPage.InnerHtml = strheadPage.ToString();
+                    strheadPage.Append("</ul");
+                    SessionID = Session["CompanyRefNo"].ToString();
+                    BindMasterCategory();
+                    BindMasterTechnologyCategory();
+                    BindMasterPlatCategory();
+                    BindMasterProductReqCategory();
+                    BindNodelEmail();
+                }
+            }
+            catch (Exception ex)
+            {
+               Response.RedirectToRoute("Login");
             }
         }
     }
-
     protected void BindNodelEmail()
     {
         DtCompanyDDL = Lo.RetriveMasterData(0, Session["CompanyRefNo"].ToString(), "", 0, "", "", "AllNodel");
         if (DtCompanyDDL.Rows.Count > 0)
         {
-            Co.FillDropdownlist(ddlNodalOfficerEmail, DtCompanyDDL, "NodalOfficerEmail", "NodalOfficerID");
+            Co.FillDropdownlist(ddlNodalOfficerEmail, DtCompanyDDL, "NodalOficerName", "NodalOfficerID");
             ddlNodalOfficerEmail.Items.Insert(0, "Select Nodel Officer");
-            Co.FillDropdownlist(ddlNodalOfficerEmail2, DtCompanyDDL, "NodalOfficerEmail", "NodalOfficerID");
+            Co.FillDropdownlist(ddlNodalOfficerEmail2, DtCompanyDDL, "NodalOficerName", "NodalOfficerID");
             ddlNodalOfficerEmail2.Items.Insert(0, "Select Nodel Officer");
         }
     }

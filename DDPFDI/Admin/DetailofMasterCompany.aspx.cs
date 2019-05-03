@@ -53,7 +53,6 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
     {
         try
         {
-
             if (mType == "SuperAdmin")
             {
                 DataTable DtGrid = Lo.RetriveGridViewCompany("0", "", "", "CompanyMainGridView");
