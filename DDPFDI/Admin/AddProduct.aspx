@@ -356,95 +356,119 @@
                         </div>
                     </div>
                     <div id="cd" class="tab-pane fade">
-                        <div class="section-pannel">
-                            <h4 class="page-header secondary">Contact Detail 1</h4>
+                        <asp:UpdatePanel runat="server" ID="UpdatePanel2">
+                            <ContentTemplate>
+                                <div class="section-pannel">
+                                    <h4 class="page-header secondary">Contact Detail 1
+                                <asp:DropDownList runat="server" ID="ddlNodalOfficerEmail" class="form-control" AutoPostBack="True" OnSelectedIndexChanged="ddlNodalOfficerEmail_SelectedIndexChanged"></asp:DropDownList>
+                                    </h4>
 
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label>Officer's Name</label>
-                                        <input type="text" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label>Designation</label>
-                                        <input type="text" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label>Department</label>
-                                        <input type="text" class="form-control">
-                                    </div>
-                                </div>
-                            </div>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>Officer's Name</label>
+                                                <asp:TextBox runat="server" ID="txtNName" name="" class="form-control form-cascade-control" placeholder=""></asp:TextBox>
 
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label>Phone Number</label>
-                                        <input type="text" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label>Fax</label>
-                                        <input type="text" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label>E-Mail ID</label>
-                                        <input type="text" class="form-control">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="section-pannel">
-                            <h4 class="page-header secondary">Contact Detail 2</h4>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>Designation</label>
+                                                <asp:TextBox runat="server" ID="txtDesignation" name="" class="form-control form-cascade-control" placeholder=""></asp:TextBox>
 
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label>Officer's Name</label>
-                                        <input type="text" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>Department</label>
+                                                <asp:TextBox runat="server" ID="txtDepartment" name="" class="form-control form-cascade-control" placeholder=""></asp:TextBox>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>Phone Number</label>
+                                                <asp:TextBox runat="server" ID="txtNTelephone" name="" class="form-control form-cascade-control" placeholder=""></asp:TextBox>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>Fax</label>
+                                                <asp:TextBox runat="server" ID="txtNFaxNo" name="" class="form-control form-cascade-control" placeholder=""></asp:TextBox>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>E-Mail ID</label>
+                                                <asp:TextBox runat="server" ID="txtNEmailId" name="" class="form-control form-cascade-control" placeholder=""></asp:TextBox>
+
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label>Designation</label>
-                                        <input type="text" class="form-control">
+                            </ContentTemplate>
+                        </asp:UpdatePanel>
+                        <asp:UpdatePanel runat="server" ID="UpdatePanel1">
+                            <ContentTemplate>
+                                <div class="section-pannel">
+                                    <h4 class="page-header secondary">Contact Detail 2
+                                <asp:DropDownList runat="server" ID="ddlNodalOfficerEmail2" class="form-control" AutoPostBack="True" OnSelectedIndexChanged="ddlNodalOfficerEmail2_SelectedIndexChanged"></asp:DropDownList>
+                                    </h4>
+
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>Officer's Name</label>
+                                                <asp:TextBox runat="server" ID="txtNName2" name="" class="form-control form-cascade-control" placeholder=""></asp:TextBox>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>Designation</label>
+                                                <asp:TextBox runat="server" ID="TextBox7" name="" class="form-control form-cascade-control" placeholder=""></asp:TextBox>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>Department</label>
+                                                <asp:TextBox runat="server" ID="TextBox8" name="" class="form-control form-cascade-control" placeholder=""></asp:TextBox>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>Phone Number</label>
+                                                <asp:TextBox runat="server" ID="txtNTelephone2" name="" class="form-control form-cascade-control" placeholder=""></asp:TextBox>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>Fax</label>
+                                                <asp:TextBox runat="server" ID="txtNFaxNo2" name="" class="form-control form-cascade-control" placeholder=""></asp:TextBox>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>E-Mail ID</label>
+                                                <asp:TextBox runat="server" ID="txtNEmailId2" name="" class="form-control form-cascade-control" placeholder=""></asp:TextBox>
+
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label>Department</label>
-                                        <input type="text" class="form-control">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label>Phone Number</label>
-                                        <input type="text" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label>Fax</label>
-                                        <input type="text" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label>E-Mail ID</label>
-                                        <input type="text" class="form-control">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                            </ContentTemplate>
+                        </asp:UpdatePanel>
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
