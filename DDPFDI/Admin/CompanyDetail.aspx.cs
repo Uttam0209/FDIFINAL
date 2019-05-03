@@ -56,6 +56,7 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
                 BindCompany();
                 EditCOde(dtViewDefault);
                 BindMasterCategory();
+                BindNodelEmail();
             }
             catch (Exception ex)
             {
@@ -82,7 +83,7 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
     }
     protected void BindMasterInnerSubCategory()
     {
-        DataTable DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(Convert.ToInt16(ddlmastercategory.SelectedItem.Value), "", "", "SelectInnerMaster","");
+        DataTable DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(Convert.ToInt16(ddlmastercategory.SelectedItem.Value), "", "", "SelectInnerMaster", "");
         if (DtMasterCategroy.Rows.Count > 0)
         {
             Co.FillCheckBox(chkSubCategory, DtMasterCategroy, "SCategoryName", "SCategoryId");
@@ -260,13 +261,11 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
             }
         }
     }
-
     protected void btnShowMap_Click(object sender, EventArgs e)
     {
 
 
     }
-
     protected void EditDivison(DataTable DtView)
     {
         if (Session["CompanyRefNo"] != null)
@@ -529,7 +528,7 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
         HySave["Pincode"] = Co.RSQandSQLInjection(tpincode.Text.Trim(), "soft");
         HySave["NodalOfficeRefNo"] = ddlNodalOfficerEmail.SelectedItem.Value;
         HySave["ContactPersonEmailID"] = Co.RSQandSQLInjection(txtNEmailId.Text.Trim(), "soft");
-        
+
         HySave["GSTNo"] = Co.RSQandSQLInjection(tgstno.Text.Trim(), "soft");
         HySave["CINNo"] = Co.RSQandSQLInjection(tcinno.Text.Trim(), "soft");
         HySave["PANNo"] = Co.RSQandSQLInjection(tpanno.Text.Trim(), "soft");
@@ -816,12 +815,33 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
             }
         }
     }
-
+    protected void BindNodelEmail()
+    {
+        DtCompanyDDL = Lo.RetriveMasterData(0, ddlcompany.SelectedItem.Value, "", 0, "", "", "NodelEmail");
+        if (DtCompanyDDL.Rows.Count > 0)
+        {
+            Co.FillDropdownlist(ddlNodalOfficerEmail, DtCompanyDDL, "NodalOfficerEmail", "NodalOfficerID");
+            ddlNodalOfficerEmail.Items.Insert(0, "Select Nodel Officer");
+        }
+    }
     protected void ddlNodalOfficerEmail_SelectedIndexChanged(object sender, EventArgs e)
     {
-        
+        if (ddlNodalOfficerEmail.SelectedItem.Text != "Select Nodel Officer")
+        {
+            DataTable DtGetNodel = Lo.RetriveMasterData(Convert.ToInt16(ddlNodalOfficerEmail.SelectedItem.Value), "", "", 0, "", "","CompleteNodelDetail");
+            if (DtGetNodel.Rows.Count > 0)
+            {
+                txtNName.Text = DtGetNodel.Rows[0]["NodalOficerName"].ToString();
+                txtNEmailId.Text = DtGetNodel.Rows[0]["NodalOfficerEmail"].ToString();
+                txtNMobile.Text = DtGetNodel.Rows[0]["NodalOfficerMobile"].ToString();
+                txtNTelephone.Text = DtGetNodel.Rows[0]["NodalOfficerTelephone"].ToString();
+                txtNFaxNo.Text = DtGetNodel.Rows[0]["NodalOfficerFax"].ToString();
+            }
+        }
+        else
+        {
+        }
     }
-
     protected void ddlcompany_OnSelectedIndexChanged(object sender, EventArgs e)
     {
         if (ddlcompany.SelectedItem.Text != "All")
@@ -915,11 +935,11 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
         selstate.SelectedIndex = 0;
         seldistrict.Text = "";
         tpincode.Text = "";
-        
+
         tcinno.Text = "";
         tpanno.Text = "";
         tgstno.Text = "";
-        
+
         companyengaged.SelectedIndex = 0;
         hfid.Value = "";
         txtCEOEmailId.Text = "";

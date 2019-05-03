@@ -21,14 +21,12 @@ namespace BusinessLayer
             return SqlHelper.Instance.VerifyEmployee(hyLogin, out _msg, out Defaultpage);
         }
         #endregion
-
         #region Email and Company Name"
         public string VerifyEmailandCompany(string strEmail,string strCompany, out string _msg)
         {
             return SqlHelper.Instance.VerifyEmailandCompany(strEmail, strCompany, out _msg);
         }
         #endregion
-
         #region SaveCode
         public string SaveFDI(HybridDictionary HySave, out string _sysMsg, out string _msg)
         {
@@ -53,6 +51,10 @@ namespace BusinessLayer
         public string SaveMasterCategroyMenu(HybridDictionary hyMasterCategory, out string _sysMsg, out string _msg)
         {
             return SqlHelper.Instance.SaveMasterCategroyMenu(hyMasterCategory, out _sysMsg, out _msg);
+        }
+        public string SaveMasterNodal(HybridDictionary hySaveNodal, out string _sysMsg, out string _msg)
+        {
+            return SqlHelper.Instance.SaveMasterNodal(hySaveNodal, out _sysMsg, out _msg);
         }
         #endregion
         #region UpdateCode

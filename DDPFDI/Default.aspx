@@ -61,7 +61,7 @@
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
                 <a class="navbar-brand" href="#">
-                    <span class="main-logo" title="Foreign Direct Investment">DDP</span>
+                    <span class="main-logo" title="DDP">DDP</span>
                 </a>
             </div>
 
