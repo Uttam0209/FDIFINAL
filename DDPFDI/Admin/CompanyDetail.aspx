@@ -468,7 +468,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-4">
-                                    <div class="form-group">
+                                    <div class="form-group text-right">
                                         <label for="activityname" class="control-label" style="display: block">&nbsp;</label>
                                         <asp:LinkButton ID="btnShowMap" runat="server" CssClass="btn btn-primary showMap" Text="Show Map"></asp:LinkButton>
                                     </div>
@@ -489,7 +489,7 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="form-group">
-                            <asp:LinkButton ID="btndemofirst" runat="server" CssClass="btn btn-danger pull-right" Style="margin-left: 10px;" Text="Save" OnClick="btndemofirst_Click"
+                            <asp:LinkButton ID="btndemofirst" runat="server" CssClass="btn btn-primary pull-right" Style="margin-left: 10px;" Text="Save" OnClick="btndemofirst_Click"
                                 Visible="false" />
                             <asp:LinkButton ID="btnDelete" runat="server" CssClass="btn btn-primary pull-right" Text="Delete" Visible="false" />
                         </div>

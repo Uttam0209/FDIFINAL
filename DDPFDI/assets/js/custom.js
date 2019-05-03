@@ -59,14 +59,14 @@ $(window).on('load', function(){
         $(document).on('click', '.toggle-table-plus', function () {
             $(this).closest("tr").after("<tr class='clone-row'><td colspan='7' style='padding:0;'>" + $(this).next().html() + "</td></tr>")
             $(this).hide();
-            $(this).parents('.acordian-table').find('.toggle-table-minus').show();
+            $(this).prev('.toggle-table-minus').show();
            
         });
 
         $(document).on('click','.toggle-table-minus', function() {
             $(this).parents('tr').next('.clone-row').remove();
             $(this).hide();
-            $(this).parents('.acordian-table').find('.toggle-table-plus').show();
+            $(this).next('.toggle-table-plus').show();
         });
 
 // Hide Show when checkbox checked
@@ -89,5 +89,11 @@ $(window).on('load', function(){
 
     });
 
+//Show Hide Contact Details
+$(".showMore i").click(function(){
+    console.log('clicked');
+    $(this).parents('.section-pannel').find('.contactFormRow').slideToggle();
+    $(this).toggleClass('fa-minus');
+});
 
 });

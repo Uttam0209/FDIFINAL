@@ -359,11 +359,17 @@
                         <asp:UpdatePanel runat="server" ID="UpdatePanel2">
                             <ContentTemplate>
                                 <div class="section-pannel">
-                                    <h4 class="page-header secondary">Contact Detail 1
-                                <asp:DropDownList runat="server" ID="ddlNodalOfficerEmail" class="form-control" AutoPostBack="True" OnSelectedIndexChanged="ddlNodalOfficerEmail_SelectedIndexChanged"></asp:DropDownList>
-                                    </h4>
-
                                     <div class="row">
+                                        <div class="col-md-12">
+                                             <h4 class="page-header secondary">Contact Detail 1  </h4>
+                                             <div class="form-group">
+                                                <asp:DropDownList runat="server" ID="ddlNodalOfficerEmail" class="form-control" AutoPostBack="True" OnSelectedIndexChanged="ddlNodalOfficerEmail_SelectedIndexChanged"></asp:DropDownList>
+                                             </div>
+                                             
+                                        </div>
+                                    </div>
+                                    <div class="contactFormRow" style="display:none">
+                                         <div class="row">
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label>Officer's Name</label>
@@ -410,16 +416,26 @@
                                             </div>
                                         </div>
                                     </div>
+                                    </div>
+                                   <div class="showMore">
+                                       <i class="fa fa-plus" aria-hidden="true"></i>
+                                   </div>
                                 </div>
                             </ContentTemplate>
                         </asp:UpdatePanel>
                         <asp:UpdatePanel runat="server" ID="UpdatePanel1">
                             <ContentTemplate>
                                 <div class="section-pannel">
-                                    <h4 class="page-header secondary">Contact Detail 2
-                                <asp:DropDownList runat="server" ID="ddlNodalOfficerEmail2" class="form-control" AutoPostBack="True" OnSelectedIndexChanged="ddlNodalOfficerEmail2_SelectedIndexChanged"></asp:DropDownList>
-                                    </h4>
-
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <h4 class="page-header secondary">Contact Detail 2</h4>
+                                            <div class="form-group">
+                                                 <asp:DropDownList runat="server" ID="ddlNodalOfficerEmail2" class="form-control" AutoPostBack="True" OnSelectedIndexChanged="ddlNodalOfficerEmail2_SelectedIndexChanged"></asp:DropDownList>
+                                             </div>
+                                        </div>
+                                    </div>
+                                      <div class="contactFormRow" style="display:none">
+                                         
                                     <div class="row">
                                         <div class="col-md-4">
                                             <div class="form-group">
@@ -466,6 +482,10 @@
                                             </div>
                                         </div>
                                     </div>
+                                      </div>
+                                      <div class="showMore">
+                                       <i class="fa fa-plus" aria-hidden="true"></i>
+                                   </div>
                                 </div>
                             </ContentTemplate>
                         </asp:UpdatePanel>
