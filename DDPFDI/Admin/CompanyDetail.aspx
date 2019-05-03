@@ -436,7 +436,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <h3 for="fdiinflow" class="secondary-heading">Sub Category</h3>
+                                        <h3 class="secondary-heading">Sub Category</h3>
                                         <asp:CheckBoxList ID="chkSubCategory" runat="server" CssClass="checkbox-inline" RepeatColumns="25" RepeatDirection="Vertical" RepeatLayout="Flow">
                                         </asp:CheckBoxList>
 
@@ -448,7 +448,7 @@
                 </div>
 
                 <div id="Location" class="tab-pane fade">
-                    <asp:UpdatePanel runat="server" ID="UpdatePanel2">
+                    <asp:UpdatePanel runat="server" ID="UpdatePanel3">
                         <ContentTemplate>
                             <div class="row">
                                 <div class="col-md-4">
