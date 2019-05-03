@@ -11,6 +11,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     Logic Lo = new Logic();
     private string DisplayPanel = "";
     private string SessionID = "";
+    DataTable DtCompanyDDL = new DataTable();
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
@@ -35,7 +36,55 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                 BindMasterTechnologyCategory();
                 BindMasterPlatCategory();
                 BindMasterProductReqCategory();
+                BindNodelEmail();
+
             }
+        }
+    }
+
+    protected void BindNodelEmail()
+    {
+        DtCompanyDDL = Lo.RetriveMasterData(0, Session["CompanyRefNo"].ToString(), "", 0, "", "", "AllNodel");
+        if (DtCompanyDDL.Rows.Count > 0)
+        {
+            Co.FillDropdownlist(ddlNodalOfficerEmail, DtCompanyDDL, "NodalOfficerEmail", "NodalOfficerID");
+            ddlNodalOfficerEmail.Items.Insert(0, "Select Nodel Officer");
+            Co.FillDropdownlist(ddlNodalOfficerEmail2, DtCompanyDDL, "NodalOfficerEmail", "NodalOfficerID");
+            ddlNodalOfficerEmail2.Items.Insert(0, "Select Nodel Officer");
+        }
+    }
+    protected void ddlNodalOfficerEmail_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        if (ddlNodalOfficerEmail.SelectedItem.Text != "Select Nodel Officer")
+        {
+            DataTable DtGetNodel = Lo.RetriveMasterData(Convert.ToInt16(ddlNodalOfficerEmail.SelectedItem.Value), "", "", 0, "", "", "CompleteNodelDetail");
+            if (DtGetNodel.Rows.Count > 0)
+            {
+                txtNName.Text = DtGetNodel.Rows[0]["NodalOficerName"].ToString();
+                txtNEmailId.Text = DtGetNodel.Rows[0]["NodalOfficerEmail"].ToString();
+                txtNTelephone.Text = DtGetNodel.Rows[0]["NodalOfficerTelephone"].ToString();
+                txtNFaxNo.Text = DtGetNodel.Rows[0]["NodalOfficerFax"].ToString();
+            }
+        }
+        else
+        {
+        }
+    }
+    protected void ddlNodalOfficerEmail2_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        if (ddlNodalOfficerEmail2.SelectedItem.Text != "Select Nodel Officer")
+        {
+            DataTable DtGetNodel = Lo.RetriveMasterData(Convert.ToInt16(ddlNodalOfficerEmail.SelectedItem.Value), "", "", 0, "", "", "CompleteNodelDetail");
+            if (DtGetNodel.Rows.Count > 0)
+            {
+                txtNName2.Text = DtGetNodel.Rows[0]["NodalOficerName"].ToString();
+                txtNEmailId2.Text = DtGetNodel.Rows[0]["NodalOfficerEmail"].ToString();
+                txtNTelephone2.Text = DtGetNodel.Rows[0]["NodalOfficerTelephone"].ToString();
+                txtNFaxNo2.Text = DtGetNodel.Rows[0]["NodalOfficerFax"].ToString();
+            }
+        }
+        else
+        {
         }
     }
     protected void Cleartext()
