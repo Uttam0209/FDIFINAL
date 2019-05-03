@@ -383,7 +383,6 @@ namespace DataAccessLayer
         }
         public string SaveMasterCategroyMenu(HybridDictionary HyCompSave, out string _sysMsg, out string _msg)
         {
-            string mCurrentID = "";
             using (DbConnection dbCon = db.CreateConnection())
             {
                 dbCon.Open();
@@ -418,7 +417,6 @@ namespace DataAccessLayer
         }
         public string SaveMasterNodal(HybridDictionary hySaveNodal, out string _sysMsg, out string _msg)
         {
-            string mCurrentID = "";
             using (DbConnection dbCon = db.CreateConnection())
             {
                 dbCon.Open();
@@ -435,6 +433,8 @@ namespace DataAccessLayer
                     db.AddInParameter(cmd, "@NodalOfficerMobile", DbType.String, hySaveNodal["NodalOfficerMobile"]);
                     db.AddInParameter(cmd, "@NodalOfficerTelephone", DbType.String, hySaveNodal["NodalOfficerTelephone"]);
                     db.AddInParameter(cmd, "@NodalOfficerFax", DbType.String, hySaveNodal["NodalOfficerFax"].ToString().Trim());
+                    db.AddInParameter(cmd, "@CompanyRefNo", DbType.String, hySaveNodal["CompanyRefNo"].ToString().Trim());
+                    db.AddInParameter(cmd, "@Type", DbType.String, hySaveNodal["Type"].ToString().Trim());
                     db.ExecuteNonQuery(cmd, dbTran);
                     dbTran.Commit();
                     _msg = "Save";
