@@ -1,8 +1,10 @@
 ﻿using BusinessLayer;
 using Encryption;
 using System;
+using System.Collections.Specialized;
 using System.Data;
 using System.Text;
+using System.Web.UI;
 
 public partial class Admin_AddProduct : System.Web.UI.Page
 {
@@ -12,6 +14,10 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     private string DisplayPanel = "";
     private string SessionID = "";
     DataTable DtCompanyDDL = new DataTable();
+    HybridDictionary HyPanel1 = new HybridDictionary();
+    HybridDictionary HyPanel2 = new HybridDictionary();
+    HybridDictionary HyPanel3 = new HybridDictionary();
+    HybridDictionary HyPanel4 = new HybridDictionary();
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
@@ -44,7 +50,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
             }
             catch (Exception ex)
             {
-               Response.RedirectToRoute("Login");
+                Response.RedirectToRoute("Login");
             }
         }
     }
@@ -207,4 +213,67 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     {
         BindMasterSubCategoryPlat();
     }
+    #region Panel1SaveCode Prod Descrip
+    #endregion
+    #region Panel2SaveCode DPSU
+    #endregion
+    #region Panel3SaveCode Quantity Required
+    #endregion
+    #region Panel4SaveCode Contact Detail
+    protected void SavePanel4()
+    {
+        HyPanel4["ProductID"] = "";
+        HyPanel4["ProductRefNo"] = "";
+        HyPanel4["CompanyRefNo"] = "";
+        HyPanel4["NodelDetail"] = "";
+        string str = Lo.SaveMasterCompany(HyPanel4, out _sysMsg, out _msg);
+        if (str != "")
+        {
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record updated.')", true);
+        }
+        else
+        {
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not updated.')", true);
+        }
+    }
+    protected void SavePanel3()
+    {
+        HyPanel3[""] = "";
+        HyPanel3[""] = "";
+        HyPanel3[""] = "";
+        HyPanel3[""] = "";
+        HyPanel3[""] = "";
+        HyPanel3[""] = "";
+        HyPanel3[""] = "";
+        HyPanel3[""] = "";
+        HyPanel3[""] = "";
+        HyPanel3[""] = "";
+    }
+    protected void SavePanel2()
+    {
+        HyPanel2[""] = "";
+        HyPanel2[""] = "";
+        HyPanel2[""] = "";
+        HyPanel2[""] = "";
+        HyPanel2[""] = "";
+        HyPanel2[""] = "";
+        HyPanel2[""] = "";
+        HyPanel2[""] = "";
+        HyPanel2[""] = "";
+        HyPanel2[""] = "";
+    }
+    protected void SavePanel1()
+    {
+        HyPanel1[""] = "";
+        HyPanel1[""] = "";
+        HyPanel1[""] = "";
+        HyPanel1[""] = "";
+        HyPanel1[""] = "";
+        HyPanel1[""] = "";
+        HyPanel1[""] = "";
+        HyPanel1[""] = "";
+        HyPanel1[""] = "";
+        HyPanel1[""] = "";
+    }
+    #endregion
 }

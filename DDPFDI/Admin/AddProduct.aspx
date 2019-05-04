@@ -193,8 +193,8 @@
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group">
-                                                <button class="btn btn-danger pull-right">Cancel</button>
-                                                <input type="submit" value="Save" class="btn btn-primary pull-right">
+                                                <asp:Button runat="server" ID="btnsubmitpanel1" class="btn btn-primary pull-right" Text="Save" />
+                                                <asp:Button runat="server" ID="btncancelpanel1" class="btn btn-default pull-right" Style="margin-right: 10px;" Text="Cancel" />
                                             </div>
                                         </div>
                                     </div>
@@ -281,9 +281,8 @@
                         </div>
                         <div class="row">
                             <div class="col-md-12">
-
-                                <input type="submit" value="Save" class="btn btn-primary pull-right">
-                                <input type="submit" value="Back" class="btn btn-default pull-right" style="margin-right: 10px;">
+                                <asp:Button runat="server" ID="btnsavepanel2" class="btn btn-primary pull-right" Text="Save" />
+                                <asp:Button runat="server" ID="btnbackpanel2" class="btn btn-default pull-right" Text="Back" Style="margin-right: 10px;" />
                             </div>
                         </div>
                     </div>
@@ -349,8 +348,8 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <input type="submit" value="Save" class="btn btn-primary pull-right">
-                                    <input type="submit" value="Back" class="btn btn-default pull-right" style="margin-right: 10px;">
+                                    <asp:Button runat="server" ID="btnsavepanel3" class="btn btn-primary pull-right" Text="Save" />
+                                    <asp:Button runat="server" ID="btnbackpanel3" class="btn btn-default pull-right" Text="Back" Style="margin-right: 10px;" />
                                 </div>
                             </div>
                         </div>
@@ -472,8 +471,8 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <input type="submit" value="Save" class="btn btn-primary pull-right">
-                                    <input type="submit" value="Back" class="btn btn-default pull-right" style="margin-right: 10px;">
+                                    <asp:Button runat="server" ID="btnsavepanel4" class="btn btn-primary pull-right" Text="Save" />
+                                    <asp:Button runat="server" ID="btnbackpanel4" class="btn btn-default pull-right" Text="Back" Style="margin-right: 10px;" />
                                 </div>
                             </div>
                         </div>
