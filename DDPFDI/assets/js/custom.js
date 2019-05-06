@@ -90,10 +90,10 @@ $(window).on('load', function(){
     });
 
 //Show Hide Contact Details
-$(".showMore i").click(function(){
+$(".showMore a").click(function(){
     console.log('clicked');
     $(this).parents('.section-pannel').find('.contactFormRow').slideToggle();
-    $(this).toggleClass('fa-minus');
+    $(this).text('Hide');
 });
 
 });
