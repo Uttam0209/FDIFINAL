@@ -45,6 +45,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                     BindMasterTechnologyCategory();
                     BindMasterPlatCategory();
                     BindMasterProductReqCategory();
+                    BindMasterProductNoenCletureCategory();
                     BindNodelEmail();
                 }
             }
@@ -201,6 +202,18 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         }
     }
     #endregion
+    #region For NomenClature
+    protected void BindMasterProductNoenCletureCategory()
+    {
+        ddlnomnclature.Items.Insert(0, "Nomenclature");
+        DataTable DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, ddlnomnclature.SelectedItem.Value, "", "SelectProductCat", SessionID.ToString());
+        if (DtMasterCategroy.Rows.Count > 0)
+        {
+            Co.FillDropdownlist(ddlnomnclature, DtMasterCategroy, "SCategoryName", "SCategoryID");
+            ddlnomnclature.Items.Insert(0, "Nomenclature");
+        }
+    }
+    #endregion
     protected void ddlmastercategory_SelectedIndexChanged(object sender, EventArgs e)
     {
         BindMasterSubCategory();
@@ -226,15 +239,15 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         HyPanel4["ProductRefNo"] = "";
         HyPanel4["CompanyRefNo"] = "";
         HyPanel4["NodelDetail"] = "";
-        string str = Lo.SaveMasterCompany(HyPanel4, out _sysMsg, out _msg);
-        if (str != "")
-        {
-            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record updated.')", true);
-        }
-        else
-        {
-            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not updated.')", true);
-        }
+      //  string str = Lo.SaveMasterCompany(HyPanel4, out _sysMsg, out _msg);
+      //  if (str != "")
+      //  {
+      //      ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record updated.')", true);
+      //  }
+       // else
+       // {
+       //     ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not updated.')", true);
+       // }
     }
     protected void SavePanel3()
     {

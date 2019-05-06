@@ -74,7 +74,8 @@
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label>Nomenclature of main system </label>
-                                                    <input type="text" class="form-control">
+                                                    <asp:DropDownList runat="server" ID="ddlnomnclature" class="form-control" AutoPostBack="True"></asp:DropDownList>
+
                                                 </div>
                                             </div>
 
