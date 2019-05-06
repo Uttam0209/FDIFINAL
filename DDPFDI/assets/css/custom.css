@@ -319,3 +319,6 @@ form label { color: #494ca2;}
 #Location { margin-bottom: 20px;}
 .fa-trash { color: #df0054;}
 .fa-edit { color: #494ca2}
+.showMore { text-align: right;}
+.showMore i { cursor: pointer; width: 30px; height: 20px;}
+.form-group label input[type='checkbox'],.form-group label input[type='radio'] { margin-right: 5px;}

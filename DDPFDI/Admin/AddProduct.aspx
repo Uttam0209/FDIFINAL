@@ -63,7 +63,7 @@
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="form-group">
-                                                    <label>ERP Refernce No</label>
+                                                    <label>ERP Reference No</label>
                                                     <input type="text" class="form-control">
                                                 </div>
                                             </div>
@@ -104,7 +104,7 @@
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>Product Image </label>
-                                                    <input type="file" class="btn">
+                                                    <input type="file" class="btn form-control">
                                                 </div>
 
                                             </div>
@@ -142,15 +142,15 @@
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <label>
+                                                    <label class="live-status-box">
                                                         Product Already Indeginized :
-                                                                <input type="radio">Yes
-                                                                <input type="radio">No</label>
+                                                                <input type="radio" name="manufacture" class="yes">Yes
+                                                                <input type="radio" name="manufacture">No</label>
 
                                                 </div>
                                             </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group">
+                                            <div class="col-md-6 live-status-box">
+                                                <div class="form-group inputbox" style="display:none">
                                                     <p><strong>NOTE:</strong> If Yes, please give manufacturer name</p>
                                                     <input type="text" class="form-control">
                                                 </div>
@@ -328,14 +328,20 @@
                         </div>
                         <div class="row">
 
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <div class="form-group live-status-box">
                                     <label>
                                         If live, please fill last date of tender submission. <span class="checkbox-box">
-                                            <input type="radio" name="tender" class="yes">Yes
-                                                <input type="radio" name="tender" style="margin-left: 10px;">No</span></label>
-                                    <input type="date" class="form-control" style="display: none">
+                                            <input type="radio" name="tender" class="yes">Yes </label>
+                                            
+                                               
                                 </div>
+                            </div>
+                            <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Tender Date</label>
+                                         <input type="date" class="form-control inputbox" style="display: none">
+                                    </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
@@ -358,11 +364,17 @@
                         <asp:UpdatePanel runat="server" ID="UpdatePanel2">
                             <ContentTemplate>
                                 <div class="section-pannel">
-                                    <h4 class="page-header secondary">Contact Detail 1
-                                <asp:DropDownList runat="server" ID="ddlNodalOfficerEmail" class="form-control" AutoPostBack="True" OnSelectedIndexChanged="ddlNodalOfficerEmail_SelectedIndexChanged"></asp:DropDownList>
-                                    </h4>
-
                                     <div class="row">
+                                        <div class="col-md-12">
+                                             <h4 class="page-header secondary">Contact Detail 1  </h4>
+                                             <div class="form-group">
+                                                <asp:DropDownList runat="server" ID="ddlNodalOfficerEmail" class="form-control" AutoPostBack="True" OnSelectedIndexChanged="ddlNodalOfficerEmail_SelectedIndexChanged"></asp:DropDownList>
+                                             </div>
+                                             
+                                        </div>
+                                    </div>
+                                    <div class="contactFormRow" style="display:none">
+                                         <div class="row">
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label>Officer's Name</label>
@@ -409,16 +421,26 @@
                                             </div>
                                         </div>
                                     </div>
+                                    </div>
+                                   <div class="showMore">
+                                       <i class="fa fa-plus" aria-hidden="true"></i>
+                                   </div>
                                 </div>
                             </ContentTemplate>
                         </asp:UpdatePanel>
                         <asp:UpdatePanel runat="server" ID="UpdatePanel1">
                             <ContentTemplate>
                                 <div class="section-pannel">
-                                    <h4 class="page-header secondary">Contact Detail 2
-                                <asp:DropDownList runat="server" ID="ddlNodalOfficerEmail2" class="form-control" AutoPostBack="True" OnSelectedIndexChanged="ddlNodalOfficerEmail2_SelectedIndexChanged"></asp:DropDownList>
-                                    </h4>
-
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <h4 class="page-header secondary">Contact Detail 2</h4>
+                                            <div class="form-group">
+                                                 <asp:DropDownList runat="server" ID="ddlNodalOfficerEmail2" class="form-control" AutoPostBack="True" OnSelectedIndexChanged="ddlNodalOfficerEmail2_SelectedIndexChanged"></asp:DropDownList>
+                                             </div>
+                                        </div>
+                                    </div>
+                                      <div class="contactFormRow" style="display:none">
+                                         
                                     <div class="row">
                                         <div class="col-md-4">
                                             <div class="form-group">
@@ -465,6 +487,10 @@
                                             </div>
                                         </div>
                                     </div>
+                                      </div>
+                                      <div class="showMore">
+                                       <i class="fa fa-plus" aria-hidden="true"></i>
+                                   </div>
                                 </div>
                             </ContentTemplate>
                         </asp:UpdatePanel>
@@ -483,4 +509,3 @@
     </div>
 
 </asp:Content>
-
