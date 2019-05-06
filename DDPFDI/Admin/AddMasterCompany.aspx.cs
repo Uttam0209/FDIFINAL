@@ -44,6 +44,7 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
                 }
                 divHeadPage.InnerHtml = strheadPage.ToString();
                 strheadPage.Append("</ul");
+                divOfficerEmail.Visible = false;
                 if (Enc.DecryptData(Request.QueryString["mu"].ToString()) == "Panel1")
                 {
                     mastercompany.Visible = true;
@@ -232,12 +233,12 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
     }
     protected void btnsubmit_Click(object sender, EventArgs e)
     {
-        if (txtcomp.Text.Trim() != "" && txtemail.Text.Trim() != "")
+        if (txtcomp.Text.Trim() != "")
         {
             string strIsEmail = Lo.VerifyEmailandCompany(txtemail.Text, txtcomp.Text, out _msg);
             if (_msg != "0" && _msg != "")
             {
-                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('" + txtcomp.Text + " or offical email id already exist !')", true);
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('" + txtcomp.Text + " name already exist !')", true);
             }
             else
             {
@@ -247,7 +248,7 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
         }
         else
         {
-            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('" + lblName.Text + " or offical email id can not be empty !')", true);
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('" + lblName.Text + " name can not be empty !')", true);
         }
     }
     #region ReturnUrl Long"

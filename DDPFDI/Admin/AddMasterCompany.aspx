@@ -83,9 +83,10 @@
                                                                 <asp:TextBox ID="txtcomp" runat="server" class="form-control form-cascade-control"></asp:TextBox>
                                                             </div>
                                                         </div>
-                                                        <div class="col-md-6">
+                                                        <div class="col-md-6" id="divOfficerEmail" runat="server">
                                                             <div class="form-group">
-                                                                <label class=" control-label">Official email id </label>
+
+                                                                <label class=" control-label">Officer email id </label>
                                                                 <asp:TextBox ID="txtemail" runat="server" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" class="form-control form-cascade-control"></asp:TextBox>
                                                                 <p class="note">*Note: will be used as username </p>
                                                             </div>

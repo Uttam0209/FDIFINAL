@@ -15,8 +15,12 @@ public partial class Admin_ViewCategory : System.Web.UI.Page
     Cryptography objEnc = new Cryptography();
     DataTable DtGrid = new DataTable();
     DataTable DtCompanyDDL = new DataTable();
+    string UserName;
+    string RefNo;
+    string UserEmail;
+    string currentPage = "";
     private string mType = "";
-    private string currentPage = "";
+    private string mRefNo = "";
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
@@ -38,7 +42,10 @@ public partial class Admin_ViewCategory : System.Web.UI.Page
                 strheadPage.Append("</ul");
             }
             currentPage = System.IO.Path.GetFileName(Request.Url.AbsolutePath);
+            currentPage = System.IO.Path.GetFileName(Request.Url.AbsolutePath);
             mType = objEnc.DecryptData(Session["Type"].ToString());
+            mRefNo = Session["CompanyRefNo"].ToString();
+          //  BindCompany();
             BindGridView();
         }
     }
@@ -47,21 +54,81 @@ public partial class Admin_ViewCategory : System.Web.UI.Page
     {
         try
         {
-            DataTable DtGrid = Lo.RetriveMasterCategoryDate(0, "", "", "Select");
-            if (DtGrid.Rows.Count > 0)
+            if (mType == "SuperAdmin")
             {
-                if (sortExpression != null)
+                DataTable DtGrid = Lo.RetriveMasterCategoryDate(0, "", "", "Select");
+                if (DtGrid.Rows.Count > 0)
                 {
-                    DataView dv = DtGrid.AsDataView();
-                    this.SortDirection = this.SortDirection == "ASC" ? "DESC" : "ASC";
-                    dv.Sort = sortExpression + " " + this.SortDirection;
-                    gvCategory.DataSource = dv;
+                    if (sortExpression != null)
+                    {
+                        DataView dv = DtGrid.AsDataView();
+                        this.SortDirection = this.SortDirection == "ASC" ? "DESC" : "ASC";
+                        dv.Sort = sortExpression + " " + this.SortDirection;
+                        gvCategory.DataSource = dv;
+                    }
+                    else
+                    {
+                        gvCategory.DataSource = DtGrid;
+                    }
+                    gvCategory.DataBind();
                 }
-                else
+            }
+            else if (mType == "Company" && mRefNo != "")
+            {
+                DataTable DtGrid = Lo.RetriveMasterSubCategoryDate(0, "", "", "SubCompCat", mRefNo);
+                if (DtGrid.Rows.Count > 0)
                 {
-                    gvCategory.DataSource = DtGrid;
+                    if (sortExpression != null)
+                    {
+                        DataView dv = DtGrid.AsDataView();
+                        this.SortDirection = this.SortDirection == "ASC" ? "DESC" : "ASC";
+                        dv.Sort = sortExpression + " " + this.SortDirection;
+                        gvCategory.DataSource = dv;
+                    }
+                    else
+                    {
+                        gvCategory.DataSource = DtGrid;
+                    }
+                    gvCategory.DataBind();
                 }
-                gvCategory.DataBind();
+            }
+            else if (mType == "Factroy" && mRefNo != "")
+            {
+                DataTable DtGrid = Lo.RetriveMasterSubCategoryDate(0, "", "", "SubCompCat", mRefNo);
+                if (DtGrid.Rows.Count > 0)
+                {
+                    if (sortExpression != null)
+                    {
+                        DataView dv = DtGrid.AsDataView();
+                        this.SortDirection = this.SortDirection == "ASC" ? "DESC" : "ASC";
+                        dv.Sort = sortExpression + " " + this.SortDirection;
+                        gvCategory.DataSource = dv;
+                    }
+                    else
+                    {
+                        gvCategory.DataSource = DtGrid;
+                    }
+                    gvCategory.DataBind();
+                }
+            }
+            else if (mType == "Unit" && mRefNo != "")
+            {
+                DataTable DtGrid = Lo.RetriveMasterSubCategoryDate(0, "", "", "SubCompCat", mRefNo);
+                if (DtGrid.Rows.Count > 0)
+                {
+                    if (sortExpression != null)
+                    {
+                        DataView dv = DtGrid.AsDataView();
+                        this.SortDirection = this.SortDirection == "ASC" ? "DESC" : "ASC";
+                        dv.Sort = sortExpression + " " + this.SortDirection;
+                        gvCategory.DataSource = dv;
+                    }
+                    else
+                    {
+                        gvCategory.DataSource = DtGrid;
+                    }
+                    gvCategory.DataBind();
+                }
             }
         }
         catch (Exception ex)
@@ -73,6 +140,198 @@ public partial class Admin_ViewCategory : System.Web.UI.Page
         get { return ViewState["SortDirection"] != null ? ViewState["SortDirection"].ToString() : "ASC"; }
         set { ViewState["SortDirection"] = value; }
     }
+    //protected void BindCompany()
+    //{
+    //    if (mType == "SuperAdmin")
+    //    {
+    //        DtCompanyDDL = Lo.RetriveMasterData(0, "", "", 0, "", "", "Select");
+    //        if (DtCompanyDDL.Rows.Count > 0)
+    //        {
+    //            Co.FillDropdownlist(ddlcompany, DtCompanyDDL, "CompanyName", "CompanyRefNo");
+    //            ddlcompany.Items.Insert(0, "All");
+    //            ddlcompany.Enabled = true;
+    //        }
+    //        else
+    //        {
+    //            ddlcompany.Enabled = false;
+    //        }
+
+    //        ddldivision.Visible = false;
+    //        ddlunit.Visible = false;
+    //    }
+    //    else if (mType == "Admin")
+    //    {
+    //    }
+    //    else if (mType == "Company")
+    //    {
+    //        DtCompanyDDL = Lo.RetriveMasterData(0, mRefNo, "Company", 0, "", "", "CompanyName");
+    //        if (DtCompanyDDL.Rows.Count > 0)
+    //        {
+    //            Co.FillDropdownlist(ddlcompany, DtCompanyDDL, "CompanyName", "CompanyRefNo");
+    //            ddlcompany.Enabled = false;
+    //        }
+    //        else
+    //        {
+    //            ddlcompany.Enabled = false;
+    //        }
+    //        DtCompanyDDL = Lo.RetriveMasterData(0, ddlcompany.SelectedItem.Value, "Factory1", 0, "", "", "CompanyName");
+    //        if (DtCompanyDDL.Rows.Count > 0)
+    //        {
+    //            Co.FillDropdownlist(ddldivision, DtCompanyDDL, "FactoryName", "FactoryRefNo");
+    //            ddldivision.Items.Insert(0, "All");
+    //            if (mType == "Company")
+    //            {
+    //                lblselectdivison.Visible = true;
+    //                ddldivision.Enabled = true;
+    //                ddlunit.Visible = false;
+    //            }
+    //            else
+    //            {
+    //                ddldivision.Enabled = false;
+    //            }
+    //        }
+    //        else
+    //        {
+    //            ddldivision.Enabled = false;
+    //        }
+    //    }
+    //    else if (mType == "Factory")
+    //    {
+    //        DtCompanyDDL = Lo.RetriveMasterData(0, mRefNo, "Company1", 0, "", "", "CompanyName");
+    //        if (DtCompanyDDL.Rows.Count > 0)
+    //        {
+    //            Co.FillDropdownlist(ddlcompany, DtCompanyDDL, "CompanyName", "CompanyRefNo");
+    //            ddlcompany.Enabled = false;
+    //            DataTable DtGrid =
+    //                Lo.RetriveGridViewCompany(ddlcompany.SelectedItem.Value, "", "", "CompanyMainGridView");
+    //            if (DtGrid.Rows.Count > 0)
+    //            {
+    //                //gvcompanydetail.DataSource = DtGrid;
+    //                // gvcompanydetail.DataBind();
+    //            }
+    //        }
+    //        else
+    //        {
+    //            ddlcompany.Enabled = false;
+    //        }
+
+    //        DtCompanyDDL = Lo.RetriveMasterData(0, ddlcompany.SelectedItem.Value, "Factory1", 0, "", "", "CompanyName");
+    //        if (DtCompanyDDL.Rows.Count > 0)
+    //        {
+    //            Co.FillDropdownlist(ddldivision, DtCompanyDDL, "FactoryName", "FactoryRefNo");
+    //            lblselectdivison.Visible = true;
+    //            ddldivision.Enabled = false;
+    //            DataTable DtGrid = Lo.RetriveGridViewCompany(ddlcompany.SelectedItem.Value,
+    //                ddldivision.SelectedItem.Value, "", "InnerGVFactoryID");
+    //            if (DtGrid.Rows.Count > 0)
+    //            {
+    //                //foreach (GridViewRow row in gvcompanydetail.Rows)
+    //                //{
+    //                //    gvinnerfactory = ((GridView)row.FindControl("gvfactory"));
+    //                //}
+    //                //gvinnerfactory.DataSource = DtGrid;
+    //                //gvinnerfactory.DataBind();
+    //            }
+    //        }
+    //        else
+    //        {
+    //            ddldivision.Enabled = false;
+    //        }
+
+    //        DtCompanyDDL = Lo.RetriveMasterData(0, ddldivision.SelectedItem.Value, "Unit1", 0, "", "", "CompanyName");
+    //        if (DtCompanyDDL.Rows.Count > 0)
+    //        {
+    //            Co.FillDropdownlist(ddlunit, DtCompanyDDL, "UnitName", "UnitRefNo");
+    //            ddlunit.Items.Insert(0, "All");
+    //            ddlunit.Enabled = true;
+    //            lblselectunit.Visible = true;
+    //            DataTable DtGrid = Lo.RetriveGridViewCompany("", ddldivision.SelectedItem.Value,
+    //                ddlunit.SelectedItem.Value, "InnerGVUnitID");
+    //            if (DtGrid.Rows.Count > 0)
+    //            {
+    //                //    foreach (GridViewRow row in gvcompanydetail.Rows)
+    //                //    {
+    //                //        gvinnerfactroyforunit = ((GridView)row.FindControl("gvfactory"));
+    //                //    }
+    //                //    foreach (GridViewRow row in gvinnerfactroyforunit.Rows)
+    //                //    {
+    //                //        gvinunit = ((GridView)row.FindControl("gvunit"));
+    //                //    }
+    //                //    gvinunit.DataSource = DtGrid;
+    //                //    gvinunit.DataBind();
+    //            }
+    //        }
+    //        else
+    //        {
+    //            ddlunit.Visible = false;
+    //        }
+    //    }
+    //    else if (mType == "Unit")
+    //    {
+    //        DtCompanyDDL = Lo.RetriveMasterData(0, mRefNo, "Company2", 0, "", "", "CompanyName");
+    //        if (DtCompanyDDL.Rows.Count > 0)
+    //        {
+    //            Co.FillDropdownlist(ddlcompany, DtCompanyDDL, "CompanyName", "CompanyRefNo");
+    //            ddlcompany.Enabled = false;
+    //            DataTable DtGrid = Lo.RetriveGridViewCompany(ddlcompany.SelectedItem.Value, "", "", "CompanyMainGridView");
+    //            if (DtGrid.Rows.Count > 0)
+    //            {
+    //                //gvcompanydetail.DataSource = DtGrid;
+    //                //gvcompanydetail.DataBind();
+    //            }
+    //        }
+    //        else
+    //        {
+    //            ddlcompany.Enabled = false;
+    //        }
+    //        DtCompanyDDL = Lo.RetriveMasterData(0, ddlcompany.SelectedItem.Value, "Factory1", 0, "", "", "CompanyName");
+    //        if (DtCompanyDDL.Rows.Count > 0)
+    //        {
+    //            Co.FillDropdownlist(ddldivision, DtCompanyDDL, "FactoryName", "FactoryRefNo");
+    //            lblselectdivison.Visible = true;
+    //            ddldivision.Enabled = false;
+    //            DataTable DtGrid = Lo.RetriveGridViewCompany(ddlcompany.SelectedItem.Value, ddldivision.SelectedItem.Value, "", "InnerGVFactoryID");
+    //            if (DtGrid.Rows.Count > 0)
+    //            {
+    //                //foreach (GridViewRow row in gvcompanydetail.Rows)
+    //                //{
+    //                //    gvinnerfactory = ((GridView)row.FindControl("gvfactory"));
+    //                //}
+    //                //gvinnerfactory.DataSource = DtGrid;
+    //                //gvinnerfactory.DataBind();
+    //            }
+    //        }
+    //        else
+    //        {
+    //            ddldivision.Enabled = false;
+    //        }
+    //        DtCompanyDDL = Lo.RetriveMasterData(0, ddldivision.SelectedItem.Value, "Unit1", 0, "", "", "CompanyName");
+    //        if (DtCompanyDDL.Rows.Count > 0)
+    //        {
+    //            Co.FillDropdownlist(ddlunit, DtCompanyDDL, "UnitName", "UnitRefNo");
+    //            ddlunit.Enabled = false;
+    //            lblselectunit.Visible = true;
+    //            DataTable DtGrid = Lo.RetriveGridViewCompany("", ddldivision.SelectedItem.Value, ddlunit.SelectedItem.Value, "InnerGVUnitID");
+    //            if (DtGrid.Rows.Count > 0)
+    //            {
+    //                //foreach (GridViewRow row in gvcompanydetail.Rows)
+    //                //{
+    //                //    gvinnerfactroyforunit = ((GridView)row.FindControl("gvfactory"));
+    //                //}
+    //                //foreach (GridViewRow row in gvinnerfactroyforunit.Rows)
+    //                //{
+    //                //    gvinunit = ((GridView)row.FindControl("gvunit"));
+    //                //}
+    //                //gvinunit.DataSource = DtGrid;
+    //                //gvinunit.DataBind();
+    //            }
+    //        }
+    //        else
+    //        {
+    //            ddlunit.Enabled = false;
+    //        }
+    //    }
+    //}
     #endregion
     #region PageIndex or Sorting
     protected void OnPageIndexChanging(object sender, GridViewPageEventArgs e)
@@ -88,19 +347,193 @@ public partial class Admin_ViewCategory : System.Web.UI.Page
     #region RowDatabound
     protected void OnRowDataBound(object sender, GridViewRowEventArgs e)
     {
+        if (mType == "SuperAdmin")
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                HiddenField lblCatId = e.Row.FindControl("hfcat") as HiddenField;
+                GridView gvSubcat = e.Row.FindControl("gvsubcatlevel1") as GridView;
+                DataTable DtGrid = Lo.RetriveMasterSubCategoryDate(Convert.ToInt16(lblCatId.Value), "", "", "SelectInnerMaster", "");
+                if (DtGrid.Rows.Count > 0)
+                {
+                    gvSubcat.DataSource = DtGrid;
+                    gvSubcat.DataBind();
+                }
+            }
+        }
+        else if (mType != "SuperAdmin")
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                HiddenField lblCatId = e.Row.FindControl("hfcat") as HiddenField;
+                GridView gvSubcat = e.Row.FindControl("gvsubcatlevel1") as GridView;
+                DataTable DtGrid = Lo.RetriveMasterSubCategoryDate(Convert.ToInt16(lblCatId.Value), "", "", "MasterCatComp", "");
+                if (DtGrid.Rows.Count > 0)
+                {
+                    gvSubcat.DataSource = DtGrid;
+                    gvSubcat.DataBind();
+                }
+            }
+        }
+    }
+    protected void gvsubcatlevel1_OnRowCommand(object sender, GridViewRowEventArgs e)
+    {
         if (e.Row.RowType == DataControlRowType.DataRow)
         {
-            HiddenField lblrefno = e.Row.FindControl("hfcat") as HiddenField;
-            GridView gvSubcat = e.Row.FindControl("gvsubcat") as GridView;
-            DataTable DtGrid = Lo.RetriveMasterSubCategoryDate(Convert.ToInt16(lblrefno.Value), "", "", "SubSelectID1", "");
+            HiddenField lblfactroyrefno = e.Row.FindControl("hfcatlevel1id") as HiddenField;
+            GridView gvsubcatlevel2 = e.Row.FindControl("gvsubcatlevel2") as GridView;
+
+            DataTable DtGrid = Lo.RetriveMasterSubCategoryDate(Convert.ToInt16(lblfactroyrefno.Value), "", "", "SubSelectID", "");
             if (DtGrid.Rows.Count > 0)
             {
-                gvSubcat.DataSource = DtGrid;
-                gvSubcat.DataBind();
+                gvsubcatlevel2.DataSource = DtGrid;
+                gvsubcatlevel2.DataBind();
             }
-            //GridView gvFactoryRow = e.Row.FindControl("gvfactory") as GridView;
-            // gvFactoryRow.RowCommand += new GridViewCommandEventHandler(gvfactory_RowCommand);
+            // GridView gvUnitRow = e.Row.FindControl("gvunit") as GridView;
+            //gvUnitRow.RowCommand += new GridViewCommandEventHandler(gvunit_RowCommand);
         }
     }
     #endregion
+    //#region DropDownList Code
+    //protected void ddlcompany_OnSelectedIndexChanged(object sender, EventArgs e)
+    //{
+    //    if (ddlcompany.SelectedItem.Text != "All")
+    //    {
+    //        DataTable DtGrid = Lo.RetriveMasterSubCategoryDate(0, "", "", "SubCompCat", ddlcompany.SelectedItem.Value);
+    //        if (DtGrid.Rows.Count > 0)
+    //        {
+    //            gvCategory.DataSource = DtGrid;
+    //            gvCategory.DataBind();
+    //            DtCompanyDDL = Lo.RetriveMasterData(0, ddlcompany.SelectedItem.Value, "", 0, "", "", "FactoryCompanyID");
+    //            if (DtCompanyDDL.Rows.Count > 0)
+    //            {
+    //                Co.FillDropdownlist(ddldivision, DtCompanyDDL, "FactoryName", "FactoryRefNo");
+    //                ddldivision.Items.Insert(0, "All");
+    //                lblselectdivison.Visible = true;
+    //                ddldivision.Visible = true;
+    //            }
+    //            else
+    //            {
+    //                ddldivision.Visible = false;
+    //                lblselectdivison.Visible = false;
+    //            }
+    //        }
+    //    }
+    //    else if (ddlcompany.SelectedItem.Value == "All")
+    //    {
+    //        DataTable DtGrid = Lo.RetriveMasterCategoryDate(0, "", "", "Select");
+    //        if (DtGrid.Rows.Count > 0)
+    //        {
+    //            gvCategory.DataSource = DtGrid;
+    //            gvCategory.DataBind();
+    //            ddldivision.Visible = false;
+    //            ddlunit.Visible = false;
+    //            lblselectunit.Visible = false;
+    //            lblselectdivison.Visible = false;
+    //        }
+    //        else
+    //        {
+    //            lblselectunit.Visible = false;
+    //            lblselectdivison.Visible = false;
+    //            ddldivision.Visible = false;
+    //            ddlunit.Visible = false;
+    //        }
+    //    }
+    //    else
+    //    {
+    //        lblselectunit.Visible = false;
+    //        ddldivision.Visible = false;
+    //        ddlunit.Visible = false;
+    //    }
+    //}
+    //GridView gvinnerfactory;
+    //protected void ddldivision_OnSelectedIndexChanged(object sender, EventArgs e)
+    //{
+    //    if (ddldivision.SelectedItem.Text != "All")
+    //    {
+    //        DataTable DtGrid = Lo.RetriveGridViewCompany(ddlcompany.SelectedItem.Value, ddldivision.SelectedItem.Value, "", "InnerGVFactoryID");
+    //        if (DtGrid.Rows.Count > 0)
+    //        {
+    //            foreach (GridViewRow row in gvCategory.Rows)
+    //            {
+    //                gvinnerfactory = ((GridView)row.FindControl("gvsubcatlevel1"));
+    //            }
+    //            gvinnerfactory.DataSource = DtGrid;
+    //            gvinnerfactory.DataBind();
+    //        }
+    //        DtCompanyDDL = Lo.RetriveMasterData(0, ddldivision.SelectedItem.Value, "", 0, "", "", "UnitSelectID");
+    //        if (DtCompanyDDL.Rows.Count > 0)
+    //        {
+    //            Co.FillDropdownlist(ddlunit, DtCompanyDDL, "UnitName", "UnitRefNo");
+    //            ddlunit.Items.Insert(0, "All");
+    //            ddlunit.Visible = true;
+    //            lblselectunit.Visible = true;
+    //        }
+    //        else
+    //        {
+    //            lblselectunit.Visible = false;
+    //            ddlunit.Visible = false;
+    //        }
+    //    }
+    //    else if (ddldivision.SelectedItem.Text == "All")
+    //    {
+    //        DataTable DtGrid = Lo.RetriveGridViewCompany(ddlcompany.SelectedItem.Value, "", "", "InnerGridViewFactory");
+    //        if (DtGrid.Rows.Count > 0)
+    //        {
+    //            foreach (GridViewRow row in gvCategory.Rows)
+    //            {
+    //                gvinnerfactory = ((GridView)row.FindControl("gvsubcatlevel1"));
+    //            }
+    //            gvinnerfactory.DataSource = DtGrid;
+    //            gvinnerfactory.DataBind();
+    //            ddlunit.Visible = false;
+    //            lblselectunit.Visible = false;
+    //        }
+    //    }
+    //}
+    //GridView gvinunit;
+    //private GridView gvinnerfactroyforunit;
+    //protected void ddlunit_OnSelectedIndexChanged(object sender, EventArgs e)
+    //{
+    //    if (ddlunit.SelectedItem.Text != "All")
+    //    {
+    //        DataTable DtGrid = Lo.RetriveGridViewCompany("", ddldivision.SelectedItem.Value, ddlunit.SelectedItem.Value, "InnerGVUnitID");
+    //        if (DtGrid.Rows.Count > 0)
+    //        {
+    //            foreach (GridViewRow row in gvCategory.Rows)
+    //            {
+    //                gvinnerfactroyforunit = ((GridView)row.FindControl("gvsubcatlevel1"));
+    //            }
+    //            foreach (GridViewRow row in gvinnerfactroyforunit.Rows)
+    //            {
+    //                gvinunit = ((GridView)row.FindControl("gvsubcatlevel2"));
+    //            }
+    //            gvinunit.DataSource = DtGrid;
+    //            gvinunit.DataBind();
+    //        }
+    //    }
+    //    else if (ddlunit.SelectedItem.Text == "All")
+    //    {
+    //        DataTable DtGrid = Lo.RetriveGridViewCompany("", ddldivision.SelectedItem.Value, "", "InnerGridViewUnit");
+    //        if (DtGrid.Rows.Count > 0)
+    //        {
+    //            foreach (GridViewRow row in gvCategory.Rows)
+    //            {
+    //                gvinnerfactroyforunit = ((GridView)row.FindControl("gvsubcatlevel1"));
+    //            }
+    //            foreach (GridViewRow row in gvinnerfactroyforunit.Rows)
+    //            {
+    //                gvinunit = ((GridView)row.FindControl("gvsubcatlevel2"));
+    //            }
+    //            gvinunit.DataSource = DtGrid;
+    //            gvinunit.DataBind();
+    //        }
+    //    }
+    //    else
+    //    {
+    //        lblselectunit.Visible = false;
+    //        ddlunit.Visible = false;
+    //    }
+    //}
+    //#endregion
 }

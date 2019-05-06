@@ -329,23 +329,18 @@
                         </div>
                         <div class="row">
 
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <div class="form-group live-status-box">
                                     <label>
                                         If live, please fill last date of tender submission. <span class="checkbox-box">
                                             <input type="radio" name="tender" class="yes">Yes
-                                                <input type="radio" name="tender" style="margin-left: 10px;">No</span></label>
-                                    <input type="date" class="form-control inputbox" style="display: none">
+                                               
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Tender URL</label>
-                                    <input type="text" class="form-control">
-                                </div>
-                            </div>
+                            
 
                         </div>
+                        <div class="row"></div>
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
