@@ -396,7 +396,7 @@
 
 
                 </div>
-            
+
                 <div id="sm" class="tab-pane fade">
                     <div class="row">
                         <div class="col-md-6">
@@ -427,59 +427,8 @@
                         </div>
                     </div>
                 </div>
-                <div id="officer" class="tab-pane fade">
-                    <asp:UpdatePanel runat="server" ChildrenAsTriggers="True">
-                        <ContentTemplate>
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label for="tpersonname" class="control-label">Select Nodal Officer </label>
-                                        <asp:DropDownList runat="server" ID="ddlNodalOfficerEmail" class="form-control" AutoPostBack="True" OnSelectedIndexChanged="ddlNodalOfficerEmail_SelectedIndexChanged"></asp:DropDownList>
-
-                                    </div>
 
 
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label for="tpersonname" class="control-label">Name </label>
-                                        <asp:TextBox runat="server" ID="txtNName" name="" class="form-control form-cascade-control" placeholder=""></asp:TextBox>
-                                    </div>
-
-
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label for="tpersonname" class="control-label">Designation </label>
-                                        <asp:TextBox runat="server" ID="txtDesignation" name="" class="form-control form-cascade-control" placeholder=""></asp:TextBox>
-                                    </div>
-
-
-                                </div>
-
-                            </div>
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label for="tpersonname" class="control-label">Department </label>
-                                        <asp:TextBox runat="server" ID="txtDepartment" name="" class="form-control form-cascade-control" placeholder=""></asp:TextBox>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label for="temailid" class=" control-label">Email ID <span class="mandatory">*</span></label>
-                                        <asp:TextBox runat="server" ID="txtNEmailId" name="" AutoCompleteType="Email" required="" class="form-control form-cascade-control"
-                                            placeholder=""></asp:TextBox>
-                                        <p class="note">*Note: will be used as username </p>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label for="tcontactno" class="control-label">Mobile</label>
-                                        <asp:TextBox runat="server" ID="txtNMobile" name="" MaxLength="16" onkeypress="return isNumber(event)" class="form-control form-cascade-control"
-                                            placeholder=""></asp:TextBox>
-                                    </div>
-                                </div>
 
                 <div id="cc" class="tab-pane fade">
                     <asp:UpdatePanel runat="server" ID="up">
@@ -506,7 +455,7 @@
                 </div>
 
                 <div id="Location" class="tab-pane fade">
-                    <asp:UpdatePanel runat="server" ID="UpdatePanel3">
+                    <asp:UpdatePanel ID="loc" runat="server" UpdateMode="Always">
                         <ContentTemplate>
                             <div class="row">
                                 <div class="col-md-4">
@@ -531,16 +480,17 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <div class="row">
+
+                                <div class="col-md-12">
+                                    <div class="map-box" style="display: none">
+                                        <iframe src="Admin/Map.aspx" width="100%" height="250" frameborder="0" style="border: 0" allowfullscreen></iframe>
+                                    </div>
+                                </div>
+                            </div>
                         </ContentTemplate>
                     </asp:UpdatePanel>
-                    <div class="row">
-
-                        <div class="col-md-12">
-                            <div class="map-box" style="display: none">
-                                <iframe src="Admin/Map.aspx" width="100%" height="250" frameborder="0" style="border: 0" allowfullscreen></iframe>
-                            </div>
-                        </div>
-                    </div>
                 </div>
 
                 <div class="row">
@@ -553,7 +503,6 @@
                     </div>
                 </div>
             </div>
+            <div class="footer"><i class="fa fa-copyright" aria-hidden="true"></i>2019 <a href="#">Department of Defence Production</a> </div>
         </div>
-        <div class="footer"><i class="fa fa-copyright" aria-hidden="true"></i>2019 <a href="#">Department of Defence Production</a> </div>
-    </div>
 </asp:Content>

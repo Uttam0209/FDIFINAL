@@ -226,15 +226,15 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         HyPanel4["ProductRefNo"] = "";
         HyPanel4["CompanyRefNo"] = "";
         HyPanel4["NodelDetail"] = "";
-        string str = Lo.SaveMasterCompany(HyPanel4, out _sysMsg, out _msg);
-        if (str != "")
-        {
-            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record updated.')", true);
-        }
-        else
-        {
-            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not updated.')", true);
-        }
+        //string str = Lo.SaveMasterCompany(HyPanel4, out _sysMsg, out _msg);
+        //if (str != "")
+        //{
+        //    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record updated.')", true);
+        //}
+        //else
+        //{
+        //    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not updated.')", true);
+        //}
     }
     protected void SavePanel3()
     {
