@@ -423,7 +423,7 @@
                                     </div>
                                     </div>
                                    <div class="showMore">
-                                       <a href="javascript:void(0)">More</a>
+                                       <a href="javascript:void(0)">Show Details</a>
                                    </div>
                                 </div>
                             </ContentTemplate>
@@ -489,7 +489,7 @@
                                     </div>
                                       </div>
                                       <div class="showMore">
-                                       <a href="javascript:void(0)">More</a>
+                                       <a href="javascript:void(0)">Show Details</a>
                                    </div>
                                 </div>
                             </ContentTemplate>
