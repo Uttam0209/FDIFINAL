@@ -281,7 +281,7 @@ form label { color: #494ca2;}
 .fa-minus:before {content: "\f068" !important;}
 .toggle-table-plus,.toggle-table-minus { cursor: pointer}
 .sidebar-holder .nav .parent-nav-child .parent-nav a + i { display: none}
-.sidebar-holder .nav .parent-nav a.active { color: #494ca2 !important}
+.sidebar-holder .nav .parent-nav a.active { color: #494ca2 !important; background: #ddd;}
 .master-company-table tr th { white-space: normal !important;}
 .master-company-table tr th:first-child { width: 30px;}
 .master-company-table tr th:nth-child(2) { width: 60px;}
