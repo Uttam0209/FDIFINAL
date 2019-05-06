@@ -164,10 +164,6 @@
                                                     </div>
                                                 </div>
                                             </div>
-
-
-
-
                                             <div class="indiacompanydetails">
 
 
@@ -217,13 +213,19 @@
                     <asp:UpdatePanel ID="UpdatePanel3" runat="server" ChildrenAsTriggers="True">
                         <ContentTemplate>
                             <div class="row">
-                                <div class="col-md-4">
+                                <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="tpersonname" class="control-label">Select Nodal Officer </label>
                                         <asp:DropDownList runat="server" ID="ddlNodalOfficerEmail" class="form-control" AutoPostBack="True" OnSelectedIndexChanged="ddlNodalOfficerEmail_SelectedIndexChanged"></asp:DropDownList>
 
                                     </div>
                                 </div>
+                               
+
+                            </div>
+                            <div class="section-pannel">
+                                  <div class="contactFormRow" style="display: none">
+                                 <div class="row">
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="tpersonname" class="control-label">Name </label>
@@ -240,9 +242,6 @@
 
 
                                 </div>
-
-                            </div>
-                            <div class="row">
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="tpersonname" class="control-label">Department </label>
@@ -251,7 +250,10 @@
 
 
                                 </div>
-                                <div class="col-md-4">
+                            </div>
+                            <div class="row">
+                                
+                                <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="temailid" class=" control-label">Email ID <span class="mandatory">*</span></label>
                                         <asp:TextBox runat="server" ID="txtNEmailId" name="" AutoCompleteType="Email" required="" class="form-control form-cascade-control"
@@ -259,7 +261,7 @@
                                         <p class="note">*Note: will be used as username </p>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="tcontactno" class="control-label">Mobile</label>
                                         <asp:TextBox runat="server" ID="txtNMobile" name="" MaxLength="16" onkeypress="return isNumber(event)" class="form-control form-cascade-control"
@@ -267,26 +269,32 @@
 
                                     </div>
                                 </div>
-
-                            </div>
-                            <div class="row">
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="tcontactno" class="control-label">Telephone</label>
                                         <asp:TextBox runat="server" ID="txtNTelephone" name="" MaxLength="16" onkeypress="return isNumber(event)" class="form-control form-cascade-control"
-                                            placeholder=""></asp:TextBox>
+                                                     placeholder=""></asp:TextBox>
 
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="tcontactno" class="control-label">Fax No</label>
                                         <asp:TextBox runat="server" ID="txtNFaxNo" name="tcontactno" MaxLength="16" onkeypress="return isNumber(event)" class="form-control form-cascade-control"
-                                            placeholder=""></asp:TextBox>
+                                                     placeholder=""></asp:TextBox>
 
                                     </div>
                                 </div>
+
                             </div>
+                            </div>
+                            <div class="showMore">
+                                <i class="fa fa-plus" aria-hidden="true"></i>
+                            </div>
+                            </div>
+                          
+                           
+                           
                         </ContentTemplate>
                     </asp:UpdatePanel>
                 </div>
@@ -400,7 +408,7 @@
 
 
                 </div>
-            
+
                 <div id="sm" class="tab-pane fade">
                     <div class="row">
                         <div class="col-md-6">
@@ -432,6 +440,8 @@
                     </div>
                 </div>
 
+
+
                 <div id="cc" class="tab-pane fade">
                     <asp:UpdatePanel runat="server" ID="up">
                         <ContentTemplate>
@@ -445,7 +455,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <h3 for="fdiinflow" class="secondary-heading">Sub Category</h3>
+                                        <h3 class="secondary-heading">Sub Category</h3>
                                         <asp:CheckBoxList ID="chkSubCategory" runat="server" CssClass="checkbox-inline" RepeatColumns="25" RepeatDirection="Vertical" RepeatLayout="Flow">
                                         </asp:CheckBoxList>
 
@@ -455,51 +465,56 @@
                         </ContentTemplate>
                     </asp:UpdatePanel>
                 </div>
+
                 <div id="Location" class="tab-pane fade">
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="activityname" class="control-label">latitude </label>
-                                <asp:TextBox runat="server" ID="txtlatitude" name="txtlatitude" class="form-control form-cascade-control " placeholder=""></asp:TextBox>
+                    <asp:UpdatePanel ID="loc" runat="server" UpdateMode="Always">
+                        <ContentTemplate>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="activityname" class="control-label">latitude </label>
+                                        <asp:TextBox runat="server" ID="txtlatitude" name="txtlatitude" class="form-control form-cascade-control " placeholder=""></asp:TextBox>
+                                    </div>
+
+
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="activityname" class="control-label">longitude</label>
+                                        <asp:TextBox runat="server" ID="txtlongitude" name="txtlongitude" class="form-control form-cascade-control " placeholder=""></asp:TextBox>
+
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group text-right">
+                                        <label for="activityname" class="control-label" style="display: block">&nbsp;</label>
+                                        <asp:LinkButton ID="btnShowMap" runat="server" CssClass="btn btn-primary showMap" Text="Show Map"></asp:LinkButton>
+                                    </div>
+                                </div>
                             </div>
 
+                            <div class="row">
 
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="activityname" class="control-label">longitude</label>
-                                <asp:TextBox runat="server" ID="txtlongitude" name="txtlongitude" class="form-control form-cascade-control " placeholder=""></asp:TextBox>
-
+                                <div class="col-md-12">
+                                    <div class="map-box" style="display: none">
+                                        <iframe src="Admin/Map.aspx" width="100%" height="250" frameborder="0" style="border: 0" allowfullscreen></iframe>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="activityname" class="control-label"></label>
-                                <br />
-                                <asp:LinkButton ID="btnShowMap" runat="server" CssClass="btn btn-primary" Text="Show Map" OnClick="btnShowMap_Click"></asp:LinkButton>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-
-                        <div class="col-md-12">
-
-                            <iframe src="Admin/Map.aspx" width="100%" height="250" frameborder="0" style="border: 0" allowfullscreen></iframe>
-                        </div>
-                    </div>
-
+                        </ContentTemplate>
+                    </asp:UpdatePanel>
                 </div>
+
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="form-group">
-                            <asp:LinkButton ID="btndemofirst" runat="server" CssClass="btn btn-danger pull-right" Style="margin-left: 10px;" Text="Save" OnClick="btndemofirst_Click"
+                            <asp:LinkButton ID="btndemofirst" runat="server" CssClass="btn btn-primary pull-right" Style="margin-left: 10px;" Text="Save" OnClick="btndemofirst_Click"
                                 Visible="false" />
                             <asp:LinkButton ID="btnDelete" runat="server" CssClass="btn btn-primary pull-right" Text="Delete" Visible="false" />
                         </div>
                     </div>
                 </div>
             </div>
+            <div class="footer"><i class="fa fa-copyright" aria-hidden="true"></i>2019 <a href="#">Department of Defence Production</a> </div>
         </div>
-        <div class="footer">� 2019 <a href="#">Department of Defence Production</a> </div>
-    </div>
 </asp:Content>

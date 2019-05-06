@@ -817,7 +817,7 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
     }
     protected void BindNodelEmail()
     {
-        DtCompanyDDL = Lo.RetriveMasterData(0, ddlcompany.SelectedItem.Value, "", 0, "", "", "NodelEmail");
+        DtCompanyDDL = Lo.RetriveMasterData(0, txtNEmailId.Text, "", 0, "", "", "NodelEmailByEmail");
         if (DtCompanyDDL.Rows.Count > 0)
         {
             Co.FillDropdownlist(ddlNodalOfficerEmail, DtCompanyDDL, "NodalOficerName", "NodalOfficerID");

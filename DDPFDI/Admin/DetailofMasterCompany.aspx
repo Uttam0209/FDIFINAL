@@ -83,8 +83,10 @@
                                             <asp:TemplateField>
                                                 <ItemTemplate>
                                                     <div class="acordian-table">
+                                                       
                                                         <i class="toggle-table-minus fa fa-minus" aria-hidden="true" style="display: none"></i>
                                                         <i class="toggle-table-plus fa fa-plus" aria-hidden="true"></i>
+                                                        
                                                         <asp:Panel ID="pnlOrders" runat="server" Style="display: none">
                                                             <asp:GridView ID="gvfactory" runat="server" AutoGenerateColumns="false" Class="table table-hover ChildGrid" OnRowDataBound="gvfactory_OnRowDataBound" OnRowCommand="gvfactory_RowCommand">
                                                                 <Columns>

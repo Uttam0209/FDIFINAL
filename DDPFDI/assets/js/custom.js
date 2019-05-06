@@ -59,14 +59,14 @@ $(window).on('load', function(){
         $(document).on('click', '.toggle-table-plus', function () {
             $(this).closest("tr").after("<tr class='clone-row'><td colspan='7' style='padding:0;'>" + $(this).next().html() + "</td></tr>")
             $(this).hide();
-            $(this).parents('.acordian-table').find('.toggle-table-minus').show();
+            $(this).prev('.toggle-table-minus').show();
            
         });
 
         $(document).on('click','.toggle-table-minus', function() {
             $(this).parents('tr').next('.clone-row').remove();
             $(this).hide();
-            $(this).parents('.acordian-table').find('.toggle-table-plus').show();
+            $(this).next('.toggle-table-plus').show();
         });
 
 // Hide Show when checkbox checked
@@ -74,20 +74,26 @@ $(window).on('load', function(){
     $(".live-status-box input[type='radio']").on('change', function(){
         var $inputChecked = $('.live-status-box .yes').is(":checked");
        if($inputChecked == true) {
-           $(".live-status-box input[type='date']").show();
+           $(".live-status-box .inputbox").show();
 
        }
        else {
-           $(".live-status-box input[type='date']").hide();
+           $(".live-status-box .inputbox").hide();
        }
     });
 
     //Show Map
 
-    $('#ShowMap').click(function(){
+    $('.showMap').click(function(){
         $('.map-box').show();
 
     });
 
+//Show Hide Contact Details
+$(".showMore i").click(function(){
+    console.log('clicked');
+    $(this).parents('.section-pannel').find('.contactFormRow').slideToggle();
+    $(this).toggleClass('fa-minus');
+});
 
 });

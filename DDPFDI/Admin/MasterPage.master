@@ -139,7 +139,6 @@
             $("#chartLine").CanvasJSChart(options1);
         }
     </script>
-
     <script type="text/javascript">
         $(function () {
             SetAutoComplete();
