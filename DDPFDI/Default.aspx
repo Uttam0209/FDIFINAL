@@ -61,7 +61,7 @@
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
                 <a class="navbar-brand" href="#">
-                    <span class="main-logo" title="DDP">DDP</span>
+                    <span class="main-logo" title="Department of Defense Product">DDP</span>
                 </a>
             </div>
 
@@ -77,7 +77,7 @@
                     <label for="uname" class=" tetLable">
                         Email
                     </label>
-                    <asp:TextBox runat="server" ID="txtUserName" class="form-control" autocomplete="off" type="email" placeholder="Email" required="" autofocus=""></asp:TextBox>
+                    <asp:TextBox runat="server" ID="txtUserName" class="form-control" TabIndex="0" autocomplete="off" type="email" placeholder="Email" required="" autofocus=""></asp:TextBox>
                     <label for="psw" class=" tetLable">
                         Password
                     </label>
@@ -92,7 +92,7 @@
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="row">
-                                    <asp:TextBox runat="server" name="txtCaptcha" type="text" ID="txtCaptcha" TabIndex="3" class="form-control" autocomplete="off" placeholder="Captcha" required=""></asp:TextBox>
+                                    <asp:TextBox runat="server" name="txtCaptcha" type="text" ID="txtCaptcha" TabIndex="2" class="form-control" autocomplete="off" placeholder="Captcha" required=""></asp:TextBox>
                                 </div>
                             </div>
                             <div class="col-sm-6">
@@ -101,7 +101,7 @@
                                         Width="120px" />
                                 </div>
                                 <div class="col-sm-1" style="margin-top: 15px;">
-                                    <asp:LinkButton ID="btnCaptchaNew" runat="server" class="" CausesValidation="false" OnClick="btnCaptchaNew_Click"><i class="fas fa-sync-alt fa-lg"></i></asp:LinkButton>
+                                    <asp:LinkButton ID="btnCaptchaNew" runat="server" class="" TabIndex="3" CausesValidation="false" OnClick="btnCaptchaNew_Click"><i class="fas fa-sync-alt fa-lg"></i></asp:LinkButton>
                                 </div>
                             </div>
                         </div>
