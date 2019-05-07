@@ -88,9 +88,9 @@ namespace BusinessLayer
         {
             return SqlHelper.Instance.RetriveMasterData(Companyid, strRefNo, strRole, MenuId, strMenuUrl,strInterestedAreaFlag, strCriteria);
         }
-        public DataTable RetriveMasterCategoryDate(Int64 CatID, string CatName, string SCatValue, string Criteria)
+        public DataTable RetriveMasterCategoryDate(Int64 CatID, string CatName, string SCatValue,string Flag, string Criteria)
         {
-            return SqlHelper.Instance.RetriveMasterCategoryDate(CatID, CatName, SCatValue, Criteria);
+            return SqlHelper.Instance.RetriveMasterCategoryDate(CatID, CatName, SCatValue,Flag, Criteria);
         }
         public DataTable RetriveMasterSubCategoryDate(Int64 SCatID, string SCatName, string PId, string Criteria, string CompRefNo)
         {

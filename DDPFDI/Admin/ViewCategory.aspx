@@ -33,7 +33,7 @@
                                 <div class="table-wrapper">
                                     <div class="table-wraper">
                                         <asp:GridView ID="gvCategory" runat="server" Width="100%" Class="commonAjaxTbl master-company-table table display responsive no-wrap table-hover manage-user Grid" AutoGenerateColumns="false" AllowPaging="true"
-                                            OnPageIndexChanging="OnPageIndexChanging" PageSize="25" AllowSorting="true" OnSorting="OnSorting" OnRowDataBound="OnRowDataBound">
+                                            OnPageIndexChanging="OnPageIndexChanging" PageSize="25" AllowSorting="true" OnSorting="OnSorting" OnRowDataBound="OnRowDataBound" OnRowCommand="gvCategory_RowCommand">
                                             <PagerStyle HorizontalAlign="Center" CssClass="GridPager" />
                                             <Columns>
                                                 <asp:TemplateField>
@@ -42,7 +42,7 @@
                                                             <i class="toggle-table-minus fa fa-minus" aria-hidden="true" style="display: none"></i>
                                                             <i class="toggle-table-plus fa fa-plus" aria-hidden="true"></i>
                                                             <asp:Panel ID="pnlOrders" runat="server" Style="display: none">
-                                                                <asp:GridView ID="gvsubcatlevel1" runat="server" AutoGenerateColumns="false" Class="table table-hover ChildGrid" OnRowDataBound="gvsubcatlevel1_OnRowCommand">
+                                                                <asp:GridView ID="gvsubcatlevel1" runat="server" AutoGenerateColumns="false" Class="table table-hover ChildGrid" OnRowDataBound="gvsubcatlevel1_OnRowCommand" OnRowCommand="gvsubcatlevel1_RowCommand">
                                                                     <Columns>
                                                                         <asp:TemplateField>
                                                                             <ItemTemplate>
@@ -50,7 +50,7 @@
                                                                                     <i class="toggle-table-minus fa fa-minus" aria-hidden="true" style="display: none"></i>
                                                                                     <i class="toggle-table-plus fa fa-plus" aria-hidden="true"></i>
                                                                                     <asp:Panel ID="pnlunit" runat="server" Style="display: none">
-                                                                                        <asp:GridView ID="gvsubcatlevel2" runat="server" AutoGenerateColumns="false" Class="table table-hover ChildGrid">
+                                                                                        <asp:GridView ID="gvsubcatlevel2" runat="server" AutoGenerateColumns="false" Class="table table-hover ChildGrid" OnRowCommand="gvsublevel2_RowCommand">
                                                                                             <PagerStyle HorizontalAlign="Center" CssClass="GridPager" />
                                                                                             <Columns>
                                                                                                 <asp:TemplateField>
@@ -62,10 +62,16 @@
                                                                                                         <%#Container.DataItemIndex+1 %>
                                                                                                     </ItemTemplate>
                                                                                                 </asp:TemplateField>
-                                                                                                <asp:TemplateField HeaderText="Level 2">
+                                                                                                <asp:TemplateField HeaderText="Level 2 Values">
                                                                                                     <ItemTemplate>
                                                                                                         <asp:Label ID="lblsubcatlevelinner2" runat="server" Text='<%#Eval("SCategoryName") %>' NullDisplayText="#" SortExpression="SCategoryName"></asp:Label>
                                                                                                         <asp:HiddenField runat="server" ID="hfcatlevel2" Value='<%#Eval("SCategoryId") %>' />
+                                                                                                    </ItemTemplate>
+                                                                                                </asp:TemplateField>
+                                                                                                <asp:TemplateField>
+                                                                                                    <ItemTemplate>
+                                                                                                        <%--<asp:LinkButton ID="lbleditlevel2values" runat="server" CssClass="fa fa-edit" CommandName="level2edit" CommandArgument='<%#Eval("SCategoryId") %>'></asp:LinkButton>--%>
+                                                                                                        <asp:LinkButton ID="lbldellevel2values" runat="server" CssClass="fa fa-trash" CommandName="level2delete" OnClientClick="return confirm('Are you sure you want to delete this level 2 values?');" CommandArgument='<%#Eval("SCategoryId") %>'></asp:LinkButton>
                                                                                                     </ItemTemplate>
                                                                                                 </asp:TemplateField>
                                                                                             </Columns>
@@ -78,15 +84,21 @@
                                                                             <ItemTemplate>
                                                                             </ItemTemplate>
                                                                         </asp:TemplateField>
-                                                                        <asp:TemplateField HeaderText="S.No">
+                                                                        <asp:TemplateField>
                                                                             <ItemTemplate>
                                                                                 <%#Container.DataItemIndex+1 %>
                                                                             </ItemTemplate>
                                                                         </asp:TemplateField>
-                                                                        <asp:TemplateField HeaderText="Level1">
+                                                                        <asp:TemplateField HeaderText="Level 1 Values">
                                                                             <ItemTemplate>
                                                                                 <asp:Label runat="server" ID="lblfactoryrefno" Text='<%#Eval("SCategoryName") %>'></asp:Label>
                                                                                 <asp:HiddenField runat="server" ID="hfcatlevel1id" Value='<%#Eval("SCategoryID") %>' />
+                                                                            </ItemTemplate>
+                                                                        </asp:TemplateField>
+                                                                        <asp:TemplateField>
+                                                                            <ItemTemplate>
+                                                                                <%--<asp:LinkButton ID="lbllevel1edit" runat="server" CssClass="fa fa-edit" CommandName="level1edit" CommandArgument='<%#Eval("SCategoryId") %>'></asp:LinkButton>--%>
+                                                                                <asp:LinkButton ID="lbllevel1del" runat="server" CssClass="fa fa-trash" CommandName="level2del" OnClientClick="return confirm('Are you sure you want to delete this level 1 values?');" CommandArgument='<%#Eval("SCategoryId") %>'></asp:LinkButton>
                                                                             </ItemTemplate>
                                                                         </asp:TemplateField>
                                                                     </Columns>
@@ -100,10 +112,15 @@
                                                         <%#Container.DataItemIndex+1 %>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
-                                                <asp:TemplateField HeaderText="Main Category">
+                                                <asp:TemplateField HeaderText="Level">
                                                     <ItemTemplate>
                                                         <asp:Label ID="lblrefno" runat="server" Text='<%#Eval("MCategoryName") %>' NullDisplayText="#" SortExpression="CompanyRefNo"></asp:Label>
                                                         <asp:HiddenField ID="hfcat" runat="server" Value='<%#Eval("MCategoryId") %>' />
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="Action">
+                                                    <ItemTemplate>
+                                                        <asp:LinkButton ID="lbllabeldel" runat="server" CssClass="fa fa-trash" CommandName="labeldel" OnClientClick="return confirm('Are you sure you want to delete this Lable?');" CommandArgument='<%#Eval("MCategoryId") %>'></asp:LinkButton>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                             </Columns>

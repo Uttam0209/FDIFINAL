@@ -37,17 +37,15 @@
                         <li><a href="javascript:void(0)" class="user dropdown-toggle" data-toggle="dropdown">
                             <div id="DivCompanyName" runat="server">
                                 <span style='display: inline-block; margin-right: 30px;'>
-                                    <asp:Label ID="lblmastercompany" runat="server"></asp:Label> 
+                                    <asp:Label ID="lblmastercompany" runat="server"></asp:Label>
                                     <asp:Label ID="lblfactory" runat="server"></asp:Label>
                                     <asp:Label ID="lblunit" runat="server"></asp:Label>
 
                                 </span>
                             </div>
-                            <asp:Label ID="lblusername" runat="server"></asp:Label>
-
-
-
-                            &nbsp;&nbsp;<i class="fa fa-sort-down"></i></span> &nbsp;</a>
+                            <span>
+                                <asp:Label ID="lblusername" runat="server"></asp:Label>
+                                &nbsp;&nbsp;<i class="fa fa-sort-down"></i></span> &nbsp;</a>
                             <ul class="dropdown-menu user-login-dropdown">
                                 <li><a href='<%=ResolveUrl("~/ChangePassword") %>'><i class="fa fa-key" aria-hidden="true"></i>Change Password</a></li>
                                 <li>
@@ -254,16 +252,16 @@
     </script>
     <!---Progress Bar ---->
     <div class="overlay-progress" style="display: none">
-    <div class="custom-progress-bar blue stripes">
-        <span></span>
-        <p>Processing</p>
-    </div>
+        <div class="custom-progress-bar blue stripes">
+            <span></span>
+            <p>Processing</p>
+        </div>
     </div>
 
     <!---Progress Bar ---->
 
 
-   
+
 
 </body>
 </html>

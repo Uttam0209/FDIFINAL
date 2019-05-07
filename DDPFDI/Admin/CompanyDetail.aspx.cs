@@ -66,7 +66,7 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
     }
     protected void BindMasterCategory()
     {
-        DataTable DtMasterCategroy = Lo.RetriveMasterCategoryDate(0, "", "", "Select");
+        DataTable DtMasterCategroy = Lo.RetriveMasterCategoryDate(0, "", "", "","Select");
         if (DtMasterCategroy.Rows.Count > 0)
         {
             Co.FillDropdownlist(ddlmastercategory, DtMasterCategroy, "MCategoryName", "MCategoryID");

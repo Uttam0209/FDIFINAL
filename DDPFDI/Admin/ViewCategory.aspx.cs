@@ -45,7 +45,7 @@ public partial class Admin_ViewCategory : System.Web.UI.Page
             currentPage = System.IO.Path.GetFileName(Request.Url.AbsolutePath);
             mType = objEnc.DecryptData(Session["Type"].ToString());
             mRefNo = Session["CompanyRefNo"].ToString();
-          //  BindCompany();
+            //  BindCompany();
             BindGridView();
         }
     }
@@ -56,7 +56,7 @@ public partial class Admin_ViewCategory : System.Web.UI.Page
         {
             if (mType == "SuperAdmin")
             {
-                DataTable DtGrid = Lo.RetriveMasterCategoryDate(0, "", "", "Select");
+                DataTable DtGrid = Lo.RetriveMasterCategoryDate(0, "", "", "", "Select");
                 if (DtGrid.Rows.Count > 0)
                 {
                     if (sortExpression != null)
@@ -347,9 +347,9 @@ public partial class Admin_ViewCategory : System.Web.UI.Page
     #region RowDatabound
     protected void OnRowDataBound(object sender, GridViewRowEventArgs e)
     {
-        if (mType == "SuperAdmin")
+        if (e.Row.RowType == DataControlRowType.DataRow)
         {
-            if (e.Row.RowType == DataControlRowType.DataRow)
+            if (mType == "SuperAdmin")
             {
                 HiddenField lblCatId = e.Row.FindControl("hfcat") as HiddenField;
                 GridView gvSubcat = e.Row.FindControl("gvsubcatlevel1") as GridView;
@@ -360,10 +360,7 @@ public partial class Admin_ViewCategory : System.Web.UI.Page
                     gvSubcat.DataBind();
                 }
             }
-        }
-        else if (mType != "SuperAdmin")
-        {
-            if (e.Row.RowType == DataControlRowType.DataRow)
+            else if (mType != "SuperAdmin")
             {
                 HiddenField lblCatId = e.Row.FindControl("hfcat") as HiddenField;
                 GridView gvSubcat = e.Row.FindControl("gvsubcatlevel1") as GridView;
@@ -374,6 +371,8 @@ public partial class Admin_ViewCategory : System.Web.UI.Page
                     gvSubcat.DataBind();
                 }
             }
+            GridView gvsubcatlevel1 = e.Row.FindControl("gvsubcatlevel1") as GridView;
+            gvsubcatlevel1.RowCommand += new GridViewCommandEventHandler(gvsubcatlevel1_RowCommand);
         }
     }
     protected void gvsubcatlevel1_OnRowCommand(object sender, GridViewRowEventArgs e)
@@ -382,15 +381,14 @@ public partial class Admin_ViewCategory : System.Web.UI.Page
         {
             HiddenField lblfactroyrefno = e.Row.FindControl("hfcatlevel1id") as HiddenField;
             GridView gvsubcatlevel2 = e.Row.FindControl("gvsubcatlevel2") as GridView;
-
             DataTable DtGrid = Lo.RetriveMasterSubCategoryDate(Convert.ToInt16(lblfactroyrefno.Value), "", "", "SubSelectID", "");
             if (DtGrid.Rows.Count > 0)
             {
                 gvsubcatlevel2.DataSource = DtGrid;
                 gvsubcatlevel2.DataBind();
             }
-            // GridView gvUnitRow = e.Row.FindControl("gvunit") as GridView;
-            //gvUnitRow.RowCommand += new GridViewCommandEventHandler(gvunit_RowCommand);
+            GridView gvsublevel2 = e.Row.FindControl("gvsubcatlevel2") as GridView;
+            gvsublevel2.RowCommand += new GridViewCommandEventHandler(gvsublevel2_RowCommand);
         }
     }
     #endregion
@@ -536,4 +534,89 @@ public partial class Admin_ViewCategory : System.Web.UI.Page
     //    }
     //}
     //#endregion
+    #region RowCommand
+    protected void gvCategory_RowCommand(object sender, GridViewCommandEventArgs e)
+    {
+        if (e.CommandName == "labeldel")
+        {
+            try
+            {
+                string DeleteRec = Lo.DeleteRecord(e.CommandArgument.ToString(), "InActiveLabel");
+                if (DeleteRec == "true")
+                {
+                    BindGridView();
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record delete succssfully.')", true);
+                }
+                else
+                {
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not deleted.')", true);
+                }
+            }
+            catch (Exception ex)
+            {
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not deleted.')", true);
+            }
+        }
+    }
+    protected void gvsubcatlevel1_RowCommand(object sender, GridViewCommandEventArgs e)
+    {
+        if (e.CommandName == "level1edit")
+        {
+            GridViewRow gvr = (GridViewRow)((Control)e.CommandSource).NamingContainer;
+            int rowIndex = gvr.RowIndex;
+            string Role = "ff";
+            Response.Redirect("Master-Category?mrcreaterole=" + objEnc.EncryptData(Role) + "&mcurrentFactroyRefNo=" + (objEnc.EncryptData(e.CommandArgument.ToString())) + "&id=" + Request.QueryString["id"].ToString());
+        }
+        else if (e.CommandName == "level2del")
+        {
+            try
+            {
+                string DeleteRec = Lo.DeleteRecord(e.CommandArgument.ToString(), "InActiveLabel1");
+                if (DeleteRec == "true")
+                {
+                    BindGridView();
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record delete succssfully.')", true);
+                }
+                else
+                {
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not deleted.')", true);
+                }
+            }
+            catch (Exception ex)
+            {
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not deleted.')", true);
+            }
+        }
+    }
+    protected void gvsublevel2_RowCommand(object sender, GridViewCommandEventArgs e)
+    {
+        if (e.CommandName == "level2edit")
+        {
+            GridViewRow gvr = (GridViewRow)((Control)e.CommandSource).NamingContainer;
+            int rowIndex = gvr.RowIndex;
+            string Role = (gvCategory.Rows[rowIndex].FindControl("lblunitrole") as Label).Text;
+            Response.Redirect("Master-Category?mrcreaterole=" + objEnc.EncryptData(Role) + "&mcurrentUnitRefNo=" + (objEnc.EncryptData(e.CommandArgument.ToString())) + "&id=" + Request.QueryString["id"].ToString());
+        }
+        else if (e.CommandName == "level2delete")
+        {
+            try
+            {
+                string DeleteRec = Lo.DeleteRecord(e.CommandArgument.ToString(), "InActiveLabel2");
+                if (DeleteRec == "true")
+                {
+                    BindGridView();
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record delete succssfully.')", true);
+                }
+                else
+                {
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not deleted.')", true);
+                }
+            }
+            catch (Exception ex)
+            {
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not deleted.')", true);
+            }
+        }
+    }
+    #endregion
 }
