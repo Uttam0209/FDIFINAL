@@ -3,6 +3,7 @@ using Encryption;
 using System;
 using System.Collections.Specialized;
 using System.Data;
+using System.ServiceModel.Description;
 using System.Text;
 using System.Web.UI;
 
@@ -50,6 +51,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                     BindMasterProductReqCategory();
                     BindMasterProductNoenCletureCategory();
                     BindNodelEmail();
+                    BindServcies();
                 }
             }
             catch (Exception ex)
@@ -113,6 +115,17 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     protected void btnsave_Click(object sender, EventArgs e)
     {
     }
+    #region BindServices
+    protected void BindServcies()
+    {
+        DataTable Dtservices = Lo.RetriveMasterSubCategoryDate(20, "Services", "", "SelectInnerMaster", SessionID.ToString());
+        if (Dtservices.Rows.Count > 0)
+        {
+            gvservices.DataSource = Dtservices;
+            gvservices.DataBind();
+        }
+    }
+    #endregion
     #region For ProductCode
     protected void BindMasterCategory()
     {
@@ -233,33 +246,42 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     #region PanelSaveCode
     protected void SaveProductDescription()
     {
-        HyPanel1["ProductID"] = "";
-        HyPanel1["CompanyRefNo"] = "";
-        HyPanel1["OEMPartNumber"] = "";
-        HyPanel1["DPSUPartNumber"] = "";
-        HyPanel1["EndUserPartNumber"] = "";
-        HyPanel1["HSNCode"] = "";
-        HyPanel1["NatoCode"] = "";
-        HyPanel1["ERPRefNo"] = "";
-        HyPanel1["NomenclatureOfMainSystem"] = "";
-        HyPanel1["ProductLevel1"] = "";
-        HyPanel1["ProductLevel2"] = "";
-        HyPanel1["ProductDescription"] = "";
-        HyPanel1["TechnologyLevel1"] = "";
-        HyPanel1["TechnologyLevel2"] = "";
-        HyPanel1["EndUser"] = "";
-        HyPanel1["Platform"] = "";
-        HyPanel1["PurposeofProcurement"] = "";
-        HyPanel1["ProductRequirment"] = "";
-        HyPanel1["IsIndeginized"] = "";
-        HyPanel1["ManufactureName"] = "";
-        HyPanel1["SearchKeyword"] = "";
-        string StrProductDescription = Lo.SaveMasterCompany(HyPanel1, out _sysMsg, out _msg);
-        if (StrProductDescription != "")
+        if (hfprodid.Value != "")
         {
+            HyPanel1["ProductID"] = ""; //Co.RSQandSQLInjection(Convert.ToInt16(hfprodid.Value), "soft");
         }
         else
         {
+            HyPanel1["ProductID"] = 0;
+        }
+        HyPanel1["CompanyRefNo"] = Co.RSQandSQLInjection(SessionID.ToString(), "soft");
+        HyPanel1["OEMPartNumber"] = Co.RSQandSQLInjection(txtoempartnumber.Text, "soft");
+        HyPanel1["DPSUPartNumber"] = Co.RSQandSQLInjection(txtdpsupartnumber.Text, "soft");
+        HyPanel1["EndUserPartNumber"] = Co.RSQandSQLInjection(txtenduserpartnumber.Text, "soft");
+        HyPanel1["HSNCode"] = Co.RSQandSQLInjection(txthsncode.Text, "soft");
+        HyPanel1["NatoCode"] = Co.RSQandSQLInjection(txtnatocode.Text, "soft");
+        HyPanel1["ERPRefNo"] = Co.RSQandSQLInjection(txterprefno.Text, "soft");
+        HyPanel1["NomenclatureOfMainSystem"] = Co.RSQandSQLInjection(ddlnomnclature.SelectedItem.Value, "soft");
+        HyPanel1["ProductLevel1"] = Co.RSQandSQLInjection(ddlmastercategory.SelectedItem.Value, "soft");
+        HyPanel1["ProductLevel2"] = Co.RSQandSQLInjection(ddlsubcategory.SelectedItem.Value, "soft");
+        HyPanel1["ProductDescription"] = Co.RSQandSQLInjection(txtproductdescription.Text, "soft");
+        HyPanel1["TechnologyLevel1"] = Co.RSQandSQLInjection(ddltechnologycat.SelectedItem.Value, "soft");
+        HyPanel1["TechnologyLevel2"] = Co.RSQandSQLInjection(ddlsubtech.SelectedItem.Value, "soft");
+        HyPanel1["EndUser"] = Co.RSQandSQLInjection(ddlenduser.SelectedItem.Value, "soft");
+        HyPanel1["Platform"] = Co.RSQandSQLInjection(ddlplatform.SelectedItem.Value, "soft");
+        HyPanel1["PurposeofProcurement"] = Co.RSQandSQLInjection(ddlplatformsubcat.SelectedItem.Value, "soft");
+        HyPanel1["ProductRequirment"] = Co.RSQandSQLInjection(ddlprodreqir.SelectedItem.Value, "soft");
+        HyPanel1["IsIndeginized"] = Co.RSQandSQLInjection(rbisindinised.SelectedItem.Value, "soft");
+        HyPanel1["ManufactureName"] = Co.RSQandSQLInjection(txtmanufacturename.Text, "soft");
+        HyPanel1["SearchKeyword"] = Co.RSQandSQLInjection(txtsearchkeyword.Text, "soft");
+        string StrProductDescription = Lo.SaveMasterCompany(HyPanel1, out _sysMsg, out _msg);
+        if (StrProductDescription != "")
+        {
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record Saved.')", true);
+        }
+        else
+        {
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not saved.')", true);
         }
     }
     protected void SaveProductImage()
@@ -273,9 +295,11 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         string StrImage = Lo.SaveMasterCompany(HyPanel2, out _sysMsg, out _msg);
         if (StrImage != "")
         {
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record updated.')", true);
         }
         else
-        {           
+        {
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not updated.')", true);
         }
     }
     protected void SaveSPDPSU()
@@ -308,8 +332,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     }
     protected void SaveNodalDetail()
     {
-        HyPanel5[""] = "";
-        HyPanel5[""] = "";
+        HyPanel5["NodelDetail"] = "";
         string StrNodal = Lo.SaveMasterCompany(HyPanel3, out _sysMsg, out _msg);
         if (StrNodal != "")
         {

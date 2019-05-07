@@ -20,6 +20,7 @@
                     <li><a data-toggle="tab" href="#cd">Contact Details</a></li>
                 </ul>
                 <div class="tab-content">
+                    <asp:HiddenField runat="server" ID="hfprodid" />
                     <div id="pd" class="tab-pane fade in active">
                         <div class="row">
                             <div class="col-md-12">
@@ -124,7 +125,9 @@
                                                 <div class="form-group">
                                                     <label>End User</label>
                                                     <asp:DropDownList runat="server" ID="ddlenduser" class="form-control">
-                                                      
+                                                        <asp:ListItem Text="static item 1" Value="1" />
+                                                        <asp:ListItem Text="static item 2" Value="2" />
+                                                        <asp:ListItem Text="static item 3" Value="3" />
                                                     </asp:DropDownList>
                                                 </div>
                                             </div>
@@ -169,8 +172,10 @@
                                                 <div class="form-group">
                                                     <label class="live-status-box">
                                                         Product Already Indeginized :
-                                                                <input type="radio" name="manufacture" class="yes">Yes
-                                                                <input type="radio" name="manufacture">No
+                                                               <asp:RadioButtonList runat="server" ID="rbisindinised" RepeatColumns="2" RepeatLayout="Flow" RepeatDirection="Horizontal">
+                                                                   <asp:ListItem Value="Y" class="yes">Yes</asp:ListItem>
+                                                                   <asp:ListItem Value="N">No</asp:ListItem>
+                                                               </asp:RadioButtonList>
                                                         <span>(<strong>NOTE:</strong> If Yes, please give manufacturer name)</span>
                                                     </label>
                                                     <asp:TextBox runat="server" ID="txtmanufacturename" Visible="False" class="form-control Turl_Tdate"></asp:TextBox>
@@ -216,95 +221,6 @@
                     <div id="spd" class="tab-pane fade">
                         <div class="row">
                             <div class="col-md-12">
-                                <table class=" table responsive no-wrap table-hover manage-user Grid">
-                                    <tr>
-                                        <th>S.No</th>
-                                        <th>Services</th>
-                                        <th>Checkbox</th>
-                                        <th>Remarks</th>
-                                    </tr>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Drawing</td>
-                                        <td>
-                                            <input type="checkbox"></td>
-                                        <td>
-                                            <textarea class="form-control" style="height: 30px; resize: none; overflow: hidden"></textarea>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td>Demosntration</td>
-                                        <td>
-                                            <input type="checkbox"></td>
-                                        <td>
-                                            <textarea class="form-control" style="height: 30px; resize: none; overflow: hidden"></textarea>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>3</td>
-                                        <td>Technical Specification</td>
-                                        <td>
-                                            <input type="checkbox"></td>
-                                        <td>
-                                            <textarea class="form-control" style="height: 30px; resize: none; overflow: hidden"></textarea>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Drawing</td>
-                                        <td>
-                                            <input type="checkbox"></td>
-                                        <td>
-                                            <textarea class="form-control" style="height: 30px; resize: none; overflow: hidden"></textarea>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>4</td>
-                                        <td>Sample</td>
-                                        <td>
-                                            <input type="checkbox"></td>
-                                        <td>
-                                            <textarea class="form-control" style="height: 30px; resize: none; overflow: hidden"></textarea>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>5</td>
-                                        <td>Funding Support for Development</td>
-                                        <td>
-                                            <input type="checkbox"></td>
-                                        <td>
-                                            <textarea class="form-control" style="height: 30px; resize: none; overflow: hidden"></textarea>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>6</td>
-                                        <td>Funding Support for Testing</td>
-                                        <td>
-                                            <input type="checkbox"></td>
-                                        <td>
-                                            <textarea class="form-control" style="height: 30px; resize: none; overflow: hidden"></textarea>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>7</td>
-                                        <td>Financial Support</td>
-                                        <td>
-                                            <input type="checkbox"></td>
-                                        <td>
-                                            <textarea class="form-control" style="height: 30px; resize: none; overflow: hidden"></textarea>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>8</td>
-                                        <td>Assurance of Procurement</td>
-                                        <td>
-                                            <input type="checkbox"></td>
-                                        <td>
-                                            <textarea class="form-control" style="height: 30px; resize: none; overflow: hidden"></textarea>
-                                        </td>
-                                    </tr>
-                                </table>
                                 <asp:GridView runat="server" ID="gvservices" AutoGenerateColumns="False" class=" table responsive no-wrap table-hover manage-user Grid">
                                     <Columns>
                                         <asp:TemplateField>
@@ -314,7 +230,8 @@
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="Services">
                                             <ItemTemplate>
-                                                <asp:Label runat="server" ID="lblservices" Text='<%#Eval("Services") %>'></asp:Label>
+                                                <asp:Label runat="server" ID="lblservices" Text='<%#Eval("SCategoryName") %>'></asp:Label>
+                                                <asp:HiddenField runat="server" ID="hfservicesid" Value='<%#Eval("SCategoryId") %>' />
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="CheckBox">
