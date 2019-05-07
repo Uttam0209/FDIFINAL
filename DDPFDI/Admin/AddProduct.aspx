@@ -14,7 +14,7 @@
             <div class="tabing-section">
                 <ul class="nav nav-tabs">
                     <li class="active"><a data-toggle="tab" href="#pd">Product Description</a></li>
-                    <li><a data-toggle="tab" href="#pdimage">Product Images</a></li>
+                    <li><a data-toggle="tab" href="#pimg">Product Image</a></li>
                     <li><a data-toggle="tab" href="#spd">Support Provided by DPSU</a></li>
                     <li><a data-toggle="tab" href="#qpt">Quantity Required</a></li>
                     <li><a data-toggle="tab" href="#cd">Contact Details</a></li>
@@ -75,14 +75,13 @@
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label>Nomenclature of main system </label>
-                                                    <asp:DropDownList runat="server" ID="ddlnomnclature" class="form-control" AutoPostBack="True"></asp:DropDownList>
-
+                                                    <asp:DropDownList runat="server" ID="ddlnomnclature" class="form-control" />
                                                 </div>
                                             </div>
 
                                             <div class="col-md-4">
                                                 <div class="form-group">
-                                                    <label>Product Category</label>
+                                                    <label>Product Level 1</label>
                                                     <asp:DropDownList runat="server" ID="ddlmastercategory" class="form-control" AutoPostBack="True" OnSelectedIndexChanged="ddlmastercategory_SelectedIndexChanged"></asp:DropDownList>
 
                                                 </div>
@@ -90,7 +89,7 @@
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="form-group">
-                                                    <label>Product Sub Category</label>
+                                                    <label>Product Level 2</label>
                                                     <asp:DropDownList runat="server" ID="ddlsubcategory" class="form-control"></asp:DropDownList>
 
                                                 </div>
@@ -104,8 +103,6 @@
                                                 </div>
                                             </div>
 
-
-
                                         </div>
                                     </div>
                                     <div class="section-pannel">
@@ -113,14 +110,14 @@
 
                                             <div class="col-md-4">
                                                 <div class="form-group">
-                                                    <label>Technology Category </label>
+                                                    <label>Technology Level 1 </label>
                                                     <asp:DropDownList runat="server" ID="ddltechnologycat" class="form-control" AutoPostBack="True" OnSelectedIndexChanged="ddltechnologycat_SelectedIndexChanged"></asp:DropDownList>
 
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="form-group">
-                                                    <label>Technology Sub Category</label>
+                                                    <label>Technology Level 2</label>
                                                     <asp:DropDownList runat="server" ID="ddlsubtech" class="form-control"></asp:DropDownList>
                                                 </div>
                                             </div>
@@ -134,42 +131,24 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="section-pannel">
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label class="live-status-box">
-                                                        Product Already Indeginized :
-                                                                <input type="radio" name="manufacture" class="yes">Yes
-                                                                <input type="radio" name="manufacture">No</label>
 
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6 live-status-box">
-                                                <div class="form-group inputbox" style="display: none">
-                                                    <p><strong>NOTE:</strong> If Yes, please give manufacturer name</p>
-                                                    <input type="text" class="form-control">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
                                     <div class="section-pannel">
                                         <div class="row">
-                                            <div class="col-md-3">
+                                            <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label>Platform :</label>
                                                     <asp:DropDownList runat="server" ID="ddlplatform" class="form-control" AutoPostBack="True" OnSelectedIndexChanged="ddlplatform_SelectedIndexChanged"></asp:DropDownList>
 
                                                 </div>
                                             </div>
-                                            <div class="col-md-3">
+                                            <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label>Purpose of Procurement :</label>
 
                                                     <asp:DropDownList runat="server" ID="ddlplatformsubcat" class="form-control"></asp:DropDownList>
                                                 </div>
                                             </div>
-                                            <div class="col-md-3">
+                                            <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label>Product Requirement :</label>
 
@@ -177,20 +156,41 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-md-3">
+
+                                        </div>
+                                    </div>
+                                    <div class="section-pannel">
+                                        <div class="row">
+                                            <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label>Search Keywords :</label>
                                                     <input type="search" class="form-control">
                                                 </div>
 
                                             </div>
+                                            <div class="col-md-8">
+
+                                                <div class="form-group">
+                                                    <label class="live-status-box">
+                                                        Product Already Indeginized :
+                                                                <input type="radio" name="manufacture" class="yes">Yes
+                                                                <input type="radio" name="manufacture">No
+
+                                                        <span>(<strong>NOTE:</strong> If Yes, please give manufacturer name)</span>
+                                                    </label>
+                                                    <input type="text" class="form-control Turl_Tdate" style="display: none">
+                                                </div>
+
+                                            </div>
+
                                         </div>
                                     </div>
+
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <asp:Button runat="server" ID="btnsubmitpanel1" class="btn btn-primary pull-right" Text="Save" />
-                                                <asp:Button runat="server" ID="btncancelpanel1" class="btn btn-default pull-right" Style="margin-right: 10px;" Text="Cancel" />
+                                                <asp:Button runat="server" ID="btncancelpanel1" class="btn btn-default pull-right" Style="margin-right: 10px;" Text="Back" />
                                             </div>
                                         </div>
                                     </div>
@@ -199,31 +199,25 @@
                             </div>
                         </div>
                     </div>
-                    <div id="pdimage" class="tab-pane fade">
+                    <div id="pimg" class="tab-pane fade in">
+                        <div class="section-pannel">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Product Image</label>
+                                        <input type="file" class="form-control" />
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
                         <div class="row">
                             <div class="col-md-12">
-                                <div class="add-profile">
-                                    <div class="section-pannel">
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <div class="form-group">
-                                                    <label>Product Image </label>
-                                                    <asp:FileUpload runat="server" ID="fuprodimages" files="multiple" class="form-control" />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="form-group">
-                                                <asp:Button runat="server" ID="btnsavepanel2" class="btn btn-primary pull-right" Text="Save" />
-                                                <asp:Button runat="server" ID="btncancelpanel2" class="btn btn-default pull-right" Style="margin-right: 10px;" Text="Back" />
-                                            </div>
-                                        </div>
-                                    </div>
-
+                                <div class="form-group">
+                                    <asp:Button runat="server" ID="Button1" class="btn btn-primary pull-right" Text="Save" />
+                                    <asp:Button runat="server" ID="Button2" class="btn btn-default pull-right" Text="Back" Style="margin-right: 10px;" />
                                 </div>
+
                             </div>
                         </div>
                     </div>
@@ -243,7 +237,7 @@
                                         <td>
                                             <input type="checkbox"></td>
                                         <td>
-                                            <asp:TextBox runat="server" ID="txtdrwaing"></asp:TextBox>
+                                            <textarea class="form-control" style="height: 30px; resize: none; overflow: hidden"></textarea>
                                         </td>
                                     </tr>
                                     <tr>
@@ -252,7 +246,8 @@
                                         <td>
                                             <input type="checkbox"></td>
                                         <td>
-                                            <asp:TextBox runat="server" ID="txtDemosntration"></asp:TextBox></td>
+                                            <textarea class="form-control" style="height: 30px; resize: none; overflow: hidden"></textarea>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td>3</td>
@@ -260,7 +255,8 @@
                                         <td>
                                             <input type="checkbox"></td>
                                         <td>
-                                            <asp:TextBox runat="server" ID="txttechspec"></asp:TextBox></td>
+                                            <textarea class="form-control" style="height: 30px; resize: none; overflow: hidden"></textarea>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td>1</td>
@@ -268,7 +264,8 @@
                                         <td>
                                             <input type="checkbox"></td>
                                         <td>
-                                            <asp:TextBox runat="server" ID="txtdrawing"></asp:TextBox></td>
+                                            <textarea class="form-control" style="height: 30px; resize: none; overflow: hidden"></textarea>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td>4</td>
@@ -276,7 +273,8 @@
                                         <td>
                                             <input type="checkbox"></td>
                                         <td>
-                                            <asp:TextBox runat="server" ID="txtsample"></asp:TextBox></td>
+                                            <textarea class="form-control" style="height: 30px; resize: none; overflow: hidden"></textarea>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td>5</td>
@@ -284,7 +282,8 @@
                                         <td>
                                             <input type="checkbox"></td>
                                         <td>
-                                            <asp:TextBox runat="server" ID="txtfsfd"></asp:TextBox></td>
+                                            <textarea class="form-control" style="height: 30px; resize: none; overflow: hidden"></textarea>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td>6</td>
@@ -292,7 +291,8 @@
                                         <td>
                                             <input type="checkbox"></td>
                                         <td>
-                                            <asp:TextBox runat="server" ID="txtfsft"></asp:TextBox></td>
+                                            <textarea class="form-control" style="height: 30px; resize: none; overflow: hidden"></textarea>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td>7</td>
@@ -300,7 +300,8 @@
                                         <td>
                                             <input type="checkbox"></td>
                                         <td>
-                                            <asp:TextBox runat="server" ID="txtfs"></asp:TextBox></td>
+                                            <textarea class="form-control" style="height: 30px; resize: none; overflow: hidden"></textarea>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td>8</td>
@@ -308,83 +309,96 @@
                                         <td>
                                             <input type="checkbox"></td>
                                         <td>
-                                            <asp:TextBox runat="server" ID="txtassureproc"></asp:TextBox></td>
+                                            <textarea class="form-control" style="height: 30px; resize: none; overflow: hidden"></textarea>
+                                        </td>
                                     </tr>
                                 </table>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-12">
-                                <asp:Button runat="server" ID="btnsavepanel3" class="btn btn-primary pull-right" Text="Save" />
-                                <asp:Button runat="server" ID="btnbackpanel3" class="btn btn-default pull-right" Text="Back" Style="margin-right: 10px;" />
+                                <div class="form-group">
+                                    <asp:Button runat="server" ID="btnsavepanel2" class="btn btn-primary pull-right" Text="Save" />
+                                    <asp:Button runat="server" ID="btnbackpanel2" class="btn btn-default pull-right" Text="Back" Style="margin-right: 10px;" />
+                                </div>
+
                             </div>
                         </div>
                     </div>
                     <div id="qpt" class="tab-pane fade">
-                        <div class="row">
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label>Estimated Quantity</label>
-                                    <input type="text" class="form-control">
+                        <div class="section-pannel">
+                            <div class="row">
+                                <%--<div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Part Number</label>
+                                            <input type="text" class="form-control">
+                                        </div>
+                                    </div>--%>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Estimated Quantity</label>
+                                        <input type="text" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Estimated Price / LLP</label>
+                                        <input type="text" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group ">
+                                        <label>
+                                            Tender Status</label>
+                                        <select class="form-control">
+                                            <option>Live</option>
+                                            <option>Archive</option>
+                                            <option>Not Floated</option>
+                                            <option>To be Floated shortly</option>
+                                        </select>
+
+                                    </div>
+
                                 </div>
                             </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label>Estimated Price / LLP</label>
-                                    <input type="text" class="form-control">
+                            <div class="row">
+
+                                <div class="col-md-12">
+                                    <div class="form-group live-status-box">
+                                        <label>
+                                            <strong>Note:</strong> If live, please fill last date of tender submission. 
+                                            <span class="checkbox-box">
+                                                <input type="radio" name="tender" class="yes">Yes
+                                                <input type="radio" name="tender" class="no">No
+                                            </span>
+                                        </label>
+
+
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group ">
-                                    <label style="display: block">
-                                        Tender Status</label>
-                                    <div class="tender-group">
-                                        <label>
-                                            <input type="checkbox">Live
-                                        </label>
-                                        <label>
-                                            <input type="checkbox" style="margin-left: 20px;">Archive
-                                        </label>
-                                        <label>
-                                            <input type="checkbox" style="margin-left: 20px;">Not Floated</label>
-                                        <label>
-                                            <input type="checkbox" style="margin-left: 20px;">To be Floated shortly</label>
+                                <div class="Turl_Tdate" style="display: none">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Tender Date</label>
+                                            <input type="date" class="form-control inputbox">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Tender URL</label>
+                                            <input type="text" class="form-control">
+                                        </div>
                                     </div>
                                 </div>
 
                             </div>
                         </div>
-                        <div class="row">
 
-                            <div class="col-md-12">
-                                <div class="form-group live-status-box">
-                                    <label>
-                                        If live, please fill last date of tender submission. <span class="checkbox-box">
-                                            <input type="radio" name="tender" class="yes">Yes
-                                    </label>
-
-
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Tender Date</label>
-                                    <input type="date" class="form-control inputbox" style="display: none">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Tender URL</label>
-                                    <input type="text" class="form-control">
-                                </div>
-                            </div>
-
-                        </div>
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <asp:Button runat="server" ID="btnsavepanel4" class="btn btn-primary pull-right" Text="Save" />
-                                    <asp:Button runat="server" ID="btnbackpanel4" class="btn btn-default pull-right" Text="Back" Style="margin-right: 10px;" />
+                                    <asp:Button runat="server" ID="btnsavepanel3" class="btn btn-primary pull-right" Text="Save" />
+                                    <asp:Button runat="server" ID="btnbackpanel3" class="btn btn-default pull-right" Text="Back" Style="margin-right: 10px;" />
                                 </div>
                             </div>
                         </div>
@@ -396,7 +410,7 @@
                                     <div class="row">
                                         <div class="col-md-12">
                                             <h4 class="page-header secondary">Contact Detail 1  </h4>
-                                            <div class="form-group">
+                                            <div class="form-group contactD1Select">
                                                 <asp:DropDownList runat="server" ID="ddlNodalOfficerEmail" class="form-control" AutoPostBack="True" OnSelectedIndexChanged="ddlNodalOfficerEmail_SelectedIndexChanged"></asp:DropDownList>
                                             </div>
 
@@ -406,7 +420,7 @@
                                         <div class="row">
                                             <div class="col-md-4">
                                                 <div class="form-group">
-                                                    <label>Officer's Name</label>
+                                                    <label>Name</label>
                                                     <asp:TextBox runat="server" ID="txtNName" name="" class="form-control form-cascade-control" placeholder=""></asp:TextBox>
 
                                                 </div>
@@ -452,18 +466,14 @@
                                         </div>
                                     </div>
                                     <div class="showMore">
-                                        <i class="fa fa-plus" aria-hidden="true"></i>
+                                        <a href="javascript:void(0)" class="showMoreLink">Show Details</a>
                                     </div>
                                 </div>
-                            </ContentTemplate>
-                        </asp:UpdatePanel>
-                        <asp:UpdatePanel runat="server" ID="UpdatePanel1">
-                            <ContentTemplate>
                                 <div class="section-pannel">
                                     <div class="row">
                                         <div class="col-md-12">
                                             <h4 class="page-header secondary">Contact Detail 2</h4>
-                                            <div class="form-group">
+                                            <div class="form-group select-box">
                                                 <asp:DropDownList runat="server" ID="ddlNodalOfficerEmail2" class="form-control" AutoPostBack="True" OnSelectedIndexChanged="ddlNodalOfficerEmail2_SelectedIndexChanged"></asp:DropDownList>
                                             </div>
                                         </div>
@@ -473,7 +483,7 @@
                                         <div class="row">
                                             <div class="col-md-4">
                                                 <div class="form-group">
-                                                    <label>Officer's Name</label>
+                                                    <label>Name</label>
                                                     <asp:TextBox runat="server" ID="txtNName2" name="" class="form-control form-cascade-control" placeholder=""></asp:TextBox>
 
                                                 </div>
@@ -518,22 +528,27 @@
                                         </div>
                                     </div>
                                     <div class="showMore">
-                                        <i class="fa fa-plus" aria-hidden="true"></i>
+                                        <a href="javascript:void(0)" class="showMoreLink">Show Details</a>
                                     </div>
                                 </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <asp:Button runat="server" ID="btnsavepanel4" class="btn btn-primary pull-right" Text="Save" />
+                                            <asp:Button runat="server" ID="btnbackpanel4" class="btn btn-default pull-right" Text="Back" Style="margin-right: 10px;" />
+                                        </div>
+                                    </div>
+                                </div>
+
+
                             </ContentTemplate>
                         </asp:UpdatePanel>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <asp:Button runat="server" ID="btnpanelsave5" class="btn btn-primary pull-right" Text="Save" />
-                                    <asp:Button runat="server" ID="btnpanelback5" class="btn btn-default pull-right" Text="Back" Style="margin-right: 10px;" />
-                                </div>
-                            </div>
-                        </div>
+
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
 </asp:Content>
+

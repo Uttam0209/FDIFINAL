@@ -17,18 +17,10 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="row">
-                                    <%--<div class="col-sm-4">
-                                        <label>Select Company</label>
-                                        <asp:DropDownList runat="server" ID="ddlcompany" CssClass="form-control" AutoPostBack="True" OnSelectedIndexChanged="ddlcompany_OnSelectedIndexChanged"></asp:DropDownList>
-                                    </div>
                                     <div class="col-sm-4">
-                                        <label runat="server" id="lblselectdivison" visible="False">Select Division/Plant</label>
-                                        <asp:DropDownList runat="server" ID="ddldivision" CssClass="form-control" AutoPostBack="True" OnSelectedIndexChanged="ddldivision_OnSelectedIndexChanged"></asp:DropDownList>
+                                        <label>Search</label>
+                                        <asp:DropDownList runat="server" ID="ddlsearch" CssClass="form-control" AutoPostBack="True" OnSelectedIndexChanged="ddlsearch_OnSelectedIndexChanged"></asp:DropDownList>
                                     </div>
-                                    <div class="col-sm-4">
-                                        <label runat="server" id="lblselectunit" visible="False">Select Unit</label>
-                                        <asp:DropDownList runat="server" ID="ddlunit" CssClass="form-control" AutoPostBack="True" OnSelectedIndexChanged="ddlunit_OnSelectedIndexChanged"></asp:DropDownList>
-                                    </div>--%>
                                 </div>
                                 <div class="table-wrapper">
                                     <div class="table-wraper">
@@ -120,6 +112,7 @@
                                                 </asp:TemplateField>
                                                 <asp:TemplateField HeaderText="Action">
                                                     <ItemTemplate>
+                                                        <%--<asp:LinkButton ID="lblactive" runat="server" CssClass="fa fa-check" CommandName="labelactive" OnClientClick="return confirm('Are you sure you want to active this Lable?');" CommandArgument='<%#Eval("MCategoryId") %>'></asp:LinkButton>--%>
                                                         <asp:LinkButton ID="lbllabeldel" runat="server" CssClass="fa fa-trash" CommandName="labeldel" OnClientClick="return confirm('Are you sure you want to delete this Lable?');" CommandArgument='<%#Eval("MCategoryId") %>'></asp:LinkButton>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>

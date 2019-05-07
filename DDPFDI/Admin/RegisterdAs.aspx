@@ -34,6 +34,15 @@
                                             </asp:RadioButtonList>
                                         </div>
                                     </div>
+                                    <div class="col-md-4" runat="server" id="divActive" visible="False">
+                                        <div class="form-group">
+                                            <label></label>
+                                            <asp:RadioButtonList ID="rbactive" runat="server" RepeatLayout="Flow" RepeatDirection="Horizontal" RepeatColumns="2">
+                                                <asp:ListItem Value="Y" Selected="True">Active</asp:ListItem>
+                                                <asp:ListItem Value="N">Deactive</asp:ListItem>
+                                            </asp:RadioButtonList>
+                                        </div>
+                                    </div>
                                     <div class="col-md-4" runat="server" id="divcategory1dropdown" visible="False">
                                         <div class="form-group">
                                             <label>Level</label>

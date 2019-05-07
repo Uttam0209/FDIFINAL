@@ -74,10 +74,9 @@
 
     <script src="assets/js/jquery-1.12.4.js"></script>
     <script src="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.9.2/jquery-ui.min.js" type="text/javascript"></script>
-    <script type="text/javascript" src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>
     <script src="assets/js/bootstrap.min.js"></script>
     <script src="assets/js/custom.js"></script>
-    <script type="text/javascript">
+   <%-- <script type="text/javascript">
         window.onload = function () {
 
             //pie chart
@@ -136,7 +135,12 @@
             };
             $("#chartLine").CanvasJSChart(options1);
         }
+<<<<<<< HEAD
     </script>
+=======
+    </script>--%>
+
+>>>>>>> 5f95e81b9561d406a6e35fbcc8a7dba3df4dc981
     <script type="text/javascript">
         $(function () {
             SetAutoComplete();

@@ -16,13 +16,13 @@ namespace BusinessLayer
             return ds;
         }
         #region Login"
-        public string VerifyEmployee(HybridDictionary hyLogin, out string _msg , out string Defaultpage)
+        public string VerifyEmployee(HybridDictionary hyLogin, out string _msg, out string Defaultpage)
         {
             return SqlHelper.Instance.VerifyEmployee(hyLogin, out _msg, out Defaultpage);
         }
         #endregion
         #region Email and Company Name"
-        public string VerifyEmailandCompany(string strEmail,string strCompany, out string _msg)
+        public string VerifyEmailandCompany(string strEmail, string strCompany, out string _msg)
         {
             return SqlHelper.Instance.VerifyEmailandCompany(strEmail, strCompany, out _msg);
         }
@@ -58,11 +58,11 @@ namespace BusinessLayer
         }
         #endregion
         #region UpdateCode
-        public string UpdateLoginPassword(string NewPass, string OldPass, string User,string type)
+        public string UpdateLoginPassword(string NewPass, string OldPass, string User, string type)
         {
-            return SqlHelper.Instance.UpdateLoginPassword(NewPass, OldPass, User,type);
+            return SqlHelper.Instance.UpdateLoginPassword(NewPass, OldPass, User, type);
         }
- 
+
         #endregion
         #region retriveCode
         public DataTable RetriveGridView(string ID)
@@ -79,28 +79,28 @@ namespace BusinessLayer
         }
 
 
-        public DataTable RetriveGridViewCompany(string ID,string FactoryRefNo,string UnitRefNo,string Purpose)
+        public DataTable RetriveGridViewCompany(string ID, string FactoryRefNo, string UnitRefNo, string Purpose)
         {
-            return SqlHelper.Instance.RetriveGridViewCompany(ID, FactoryRefNo, UnitRefNo,Purpose);
+            return SqlHelper.Instance.RetriveGridViewCompany(ID, FactoryRefNo, UnitRefNo, Purpose);
         }
 
-        public DataTable RetriveMasterData(Int64 Companyid, string strRefNo, string strRole, int MenuId,string strMenuUrl, string strInterestedAreaFlag, string strCriteria)
+        public DataTable RetriveMasterData(Int64 Companyid, string strRefNo, string strRole, int MenuId, string strMenuUrl, string strInterestedAreaFlag, string strCriteria)
         {
-            return SqlHelper.Instance.RetriveMasterData(Companyid, strRefNo, strRole, MenuId, strMenuUrl,strInterestedAreaFlag, strCriteria);
+            return SqlHelper.Instance.RetriveMasterData(Companyid, strRefNo, strRole, MenuId, strMenuUrl, strInterestedAreaFlag, strCriteria);
         }
-        public DataTable RetriveMasterCategoryDate(Int64 CatID, string CatName, string SCatValue,string Flag, string Criteria)
+        public DataTable RetriveMasterCategoryDate(Int64 CatID, string CatName, string SCatValue, string Flag, string Active, string Criteria)
         {
-            return SqlHelper.Instance.RetriveMasterCategoryDate(CatID, CatName, SCatValue,Flag, Criteria);
+            return SqlHelper.Instance.RetriveMasterCategoryDate(CatID, CatName, SCatValue, Flag, Active, Criteria);
         }
         public DataTable RetriveMasterSubCategoryDate(Int64 SCatID, string SCatName, string PId, string Criteria, string CompRefNo)
         {
-            return SqlHelper.Instance.RetriveMasterSubCategoryDate(SCatID, SCatName, PId, Criteria,CompRefNo);
+            return SqlHelper.Instance.RetriveMasterSubCategoryDate(SCatID, SCatName, PId, Criteria, CompRefNo);
         }
         #endregion
         #region DeleteCode
-        public string DeleteRecord(string CompRefNo,string Criteria)
+        public string DeleteRecord(string CompRefNo, string Criteria)
         {
-            return SqlHelper.Instance.DeleteRecord(CompRefNo,Criteria);
+            return SqlHelper.Instance.DeleteRecord(CompRefNo, Criteria);
         }
         #endregion
         #region SearchCode

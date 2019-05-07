@@ -43,6 +43,7 @@ public partial class Admin_RegisterdAs : System.Web.UI.Page
         {
             divcategory1textbox.Visible = true;
             divflag.Visible = true;
+            divActive.Visible = true;
             btnsave.Text = "Save Label";
         }
         else if (DisplayPanel.ToString() == "Panel2")
@@ -50,6 +51,7 @@ public partial class Admin_RegisterdAs : System.Web.UI.Page
             divcategory1dropdown.Visible = true;
             divcategory2textbox.Visible = true;
             divcategory1textbox.Visible = false;
+            divActive.Visible = false;
             divflag.Visible = false;
             btnsave.Text = "Save Level 1 Values";
             BindMasterCategory();
@@ -58,6 +60,7 @@ public partial class Admin_RegisterdAs : System.Web.UI.Page
         else if (DisplayPanel.ToString() == "Panel3")
         {
             divcategory1dropdown.Visible = true;
+            divActive.Visible = false;
             divcategory2ddl.Visible = true;
             divcategory3textbox.Visible = true;
             divflag.Visible = false;
@@ -78,7 +81,7 @@ public partial class Admin_RegisterdAs : System.Web.UI.Page
     }
     protected void SaveCode()
     {
-        DataTable StrCat = Lo.RetriveMasterCategoryDate(0, Co.RSQandSQLInjection(txtmastercategory.Text, "soft"), "",rbflag.SelectedItem.Value, "Insert");
+        DataTable StrCat = Lo.RetriveMasterCategoryDate(0, Co.RSQandSQLInjection(txtmastercategory.Text, "soft"), "", rbflag.SelectedItem.Value, rbactive.SelectedItem.Value, "Insert");
         if (StrCat != null)
         {
             cleartext();
@@ -159,11 +162,11 @@ public partial class Admin_RegisterdAs : System.Web.UI.Page
         DataTable DtMasterCategroy = new DataTable();
         if (DisplayPanel.ToString() == "Panel2")
         {
-            DtMasterCategroy = Lo.RetriveMasterCategoryDate(0, "", "","", "Select");
+            DtMasterCategroy = Lo.RetriveMasterCategoryDate(0, "", "", "","", "Select");
         }
         else if (DisplayPanel.ToString() == "Panel3")
         {
-            DtMasterCategroy = Lo.RetriveMasterCategoryDate(0, "2", "","", "SelectFlag");
+            DtMasterCategroy = Lo.RetriveMasterCategoryDate(0, "2", "", "","", "SelectFlag");
         }
         if (DtMasterCategroy.Rows.Count > 0)
         {

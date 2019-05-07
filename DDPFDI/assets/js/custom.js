@@ -40,20 +40,20 @@ $(document).ready(function(){
 
 //Hide Show Chart
 
-    $(".GraphType").on('change', function () {
-        var $Chartvalue = $(this).val();
-        console.log($Chartvalue);
-        if ($Chartvalue == 'Pie Chart') {
-            $("#divPieChart").show();
-            $("#divLineChart").hide();
-        }
+    //$(".GraphType").on('change', function () {
+    //    var $Chartvalue = $(this).val();
+    //    console.log($Chartvalue);
+    //    if ($Chartvalue == 'Pie Chart') {
+    //        $("#divPieChart").show();
+    //        $("#divLineChart").hide();
+    //    }
 
-        else if ($Chartvalue == 'Line Chart') {
-            $("#divLineChart").show();
-            $("#divPieChart").hide();
-        }
+    //    else if ($Chartvalue == 'Line Chart') {
+    //        $("#divLineChart").show();
+    //        $("#divPieChart").hide();
+    //    }
 
-    });
+    //});
 
 
     //Table Accordian
@@ -75,11 +75,11 @@ $(document).ready(function(){
     $(".live-status-box input[type='radio']").on('change', function(){
         var $inputChecked = $('.live-status-box .yes').is(":checked");
        if($inputChecked == true) {
-           $(".live-status-box .inputbox").show();
+           $(".Turl_Tdate").show();
 
        }
        else {
-           $(".live-status-box .inputbox").hide();
+           $(".Turl_Tdate").hide();
        }
     });
 
@@ -90,19 +90,41 @@ $(document).ready(function(){
 
     });
 
-//Show Hide Contact Details
-$(".showMore a").on('click',function(){
-    console.log('clicked');
-    $(this).parents('.section-pannel').find('.contactFormRow').slideToggle();
-    var $ToggleText = $(this).text();
 
-    if($ToggleText === "Show Details") {
-        $($(this)).text('Hide Details');
-    }
-    else {
-     $($(this)).text('Show Details');   
-    }
-    
+
+
 });
 
+
+//Show Hide Contact Details
+//Sys.Application.add_load(BindFunction);
+$(document).ready(function () {
+    $('body').on('click', '.showMoreLink', function () {
+
+        $(this).parents('.section-pannel').find('.contactFormRow').slideToggle();
+        var $ToggleText = $(this).text();
+
+        if ($ToggleText === "Show Details") {
+            $($(this)).text('Hide Details');
+        }
+        else {
+            $($(this)).text('Show Details');
+        }
+    });
+
+    ////On change Show Contact form : TODO
+
+    //$('body').on('change', '.contactD1Select select', function () {
+    //    console.log('testing');
+
+    //    $(this).parents('.section-pannel').find('.contactFormRow').slideDown();
+    //    var $ToggleText = $(this).parents('.section-pannel').find('.showMoreLink').text();;
+
+    //    if ($ToggleText === "Show Details") {
+    //        $($(this)).text('Hide Details');
+    //    }
+    //    else {
+    //        $($(this)).text('Show Details');
+    //    }
+    //});
 });
