@@ -13,11 +13,14 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     Logic Lo = new Logic();
     private string DisplayPanel = "";
     private string SessionID = "";
+    string _msg = string.Empty;
+    string _sysMsg = string.Empty;
     DataTable DtCompanyDDL = new DataTable();
     HybridDictionary HyPanel1 = new HybridDictionary();
     HybridDictionary HyPanel2 = new HybridDictionary();
     HybridDictionary HyPanel3 = new HybridDictionary();
     HybridDictionary HyPanel4 = new HybridDictionary();
+    HybridDictionary HyPanel5 = new HybridDictionary();
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
@@ -114,11 +117,12 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     protected void BindMasterCategory()
     {
         ddlmastercategory.Items.Insert(0, "Product Category");
-        ddlsubcategory.Items.Insert(0, "Select SubCategory");
+        ddlsubcategory.Items.Insert(0, "Lavel 1 Values");
         DataTable DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, ddlmastercategory.SelectedItem.Value, "", "SelectProductCat", SessionID.ToString());
         if (DtMasterCategroy.Rows.Count > 0)
         {
-            Co.FillDropdownlist(ddlmastercategory, DtMasterCategroy, "SCategoryName", "SCategoryID"); ddlmastercategory.Items.Insert(0, "Product Category");
+            Co.FillDropdownlist(ddlmastercategory, DtMasterCategroy, "SCategoryName", "SCategoryID");
+            ddlmastercategory.Items.Insert(0, "Lavel 1 Values");
         }
     }
     protected void BindMasterSubCategory()
@@ -127,12 +131,12 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         if (DtMasterCategroy.Rows.Count > 0)
         {
             Co.FillDropdownlist(ddlsubcategory, DtMasterCategroy, "SCategoryName", "SCategoryId");
-            ddlsubcategory.Items.Insert(0, "Select SubCategory");
+            ddlsubcategory.Items.Insert(0, "Lavel 2 Values");
         }
         else
         {
             ddlsubcategory.Items.Clear();
-            ddlsubcategory.Items.Insert(0, "Select SubCategory");
+            ddlsubcategory.Items.Insert(0, "Lavel 2 Values");
         }
     }
     #endregion
@@ -226,67 +230,93 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     {
         BindMasterSubCategoryPlat();
     }
-    #region Panel1SaveCode Prod Descrip
-    #endregion
-    #region Panel2SaveCode DPSU
-    #endregion
-    #region Panel3SaveCode Quantity Required
-    #endregion
-    #region Panel4SaveCode Contact Detail
-    protected void SavePanel4()
+    #region PanelSaveCode
+    protected void SaveProductDescription()
     {
-        HyPanel4["ProductID"] = "";
-        HyPanel4["ProductRefNo"] = "";
-        HyPanel4["CompanyRefNo"] = "";
-        HyPanel4["NodelDetail"] = "";
-        //string str = Lo.SaveMasterCompany(HyPanel4, out _sysMsg, out _msg);
-        //if (str != "")
-        //{
-        //    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record updated.')", true);
-        //}
-        //else
-        //{
-        //    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not updated.')", true);
-        //}
+        HyPanel1["ProductID"] = "";
+        HyPanel1["CompanyRefNo"] = "";
+        HyPanel1["OEMPartNumber"] = "";
+        HyPanel1["DPSUPartNumber"] = "";
+        HyPanel1["EndUserPartNumber"] = "";
+        HyPanel1["HSNCode"] = "";
+        HyPanel1["NatoCode"] = "";
+        HyPanel1["ERPRefNo"] = "";
+        HyPanel1["NomenclatureOfMainSystem"] = "";
+        HyPanel1["ProductLevel1"] = "";
+        HyPanel1["ProductLevel2"] = "";
+        HyPanel1["ProductDescription"] = "";
+        HyPanel1["TechnologyLevel1"] = "";
+        HyPanel1["TechnologyLevel2"] = "";
+        HyPanel1["EndUser"] = "";
+        HyPanel1["Platform"] = "";
+        HyPanel1["PurposeofProcurement"] = "";
+        HyPanel1["ProductRequirment"] = "";
+        HyPanel1["IsIndeginized"] = "";
+        HyPanel1["ManufactureName"] = "";
+        HyPanel1["SearchKeyword"] = "";
+        string StrProductDescription = Lo.SaveMasterCompany(HyPanel1, out _sysMsg, out _msg);
+        if (StrProductDescription != "")
+        {
+        }
+        else
+        {
+        }
     }
-    protected void SavePanel3()
+    protected void SaveProductImage()
     {
-        HyPanel3[""] = "";
-        HyPanel3[""] = "";
-        HyPanel3[""] = "";
-        HyPanel3[""] = "";
-        HyPanel3[""] = "";
-        HyPanel3[""] = "";
-        HyPanel3[""] = "";
-        HyPanel3[""] = "";
-        HyPanel3[""] = "";
-        HyPanel3[""] = "";
+        HyPanel2["ImageID"] = "";
+        HyPanel2["ImageName"] = "";
+        HyPanel2["ImageType"] = "";
+        HyPanel2["ImageActualSize"] = "";
+        HyPanel2["ImageLesserSize"] = "";
+        HyPanel2["ProductRefNo"] = "";
+        string StrImage = Lo.SaveMasterCompany(HyPanel2, out _sysMsg, out _msg);
+        if (StrImage != "")
+        {
+        }
+        else
+        {           
+        }
     }
-    protected void SavePanel2()
+    protected void SaveSPDPSU()
     {
-        HyPanel2[""] = "";
-        HyPanel2[""] = "";
-        HyPanel2[""] = "";
-        HyPanel2[""] = "";
-        HyPanel2[""] = "";
-        HyPanel2[""] = "";
-        HyPanel2[""] = "";
-        HyPanel2[""] = "";
-        HyPanel2[""] = "";
-        HyPanel2[""] = "";
+        HyPanel3["DPSUServices"] = "";
+        HyPanel3["Remarks"] = "";
+        string StrSPDPSU = Lo.SaveMasterCompany(HyPanel3, out _sysMsg, out _msg);
+        if (StrSPDPSU != "")
+        {
+        }
+        else
+        {
+        }
     }
-    protected void SavePanel1()
+    protected void SaveQuantityRequired()
     {
-        HyPanel1[""] = "";
-        HyPanel1[""] = "";
-        HyPanel1[""] = "";
-        HyPanel1[""] = "";
-        HyPanel1[""] = "";
-        HyPanel1[""] = "";
-        HyPanel1[""] = "";
-        HyPanel1[""] = "";
-        HyPanel1[""] = "";
-        HyPanel1[""] = "";
+        HyPanel4["Estimatequantity"] = "";
+        HyPanel4["EstimatePriceLLP"] = "";
+        HyPanel4["TenderStatus"] = "";
+        HyPanel4["TenderStatus"] = "";
+        HyPanel4["TenderFillDate"] = "";
+        HyPanel4["TenderUrl"] = "";
+        string StrQuantity = Lo.SaveMasterCompany(HyPanel3, out _sysMsg, out _msg);
+        if (StrQuantity != "")
+        {
+        }
+        else
+        {
+        }
+    }
+    protected void SaveNodalDetail()
+    {
+        HyPanel5[""] = "";
+        HyPanel5[""] = "";
+        string StrNodal = Lo.SaveMasterCompany(HyPanel3, out _sysMsg, out _msg);
+        if (StrNodal != "")
+        {
+        }
+        else
+        {
+        }
     }
     #endregion
 }

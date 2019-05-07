@@ -29,21 +29,20 @@
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label>OEM Part Number</label>
-                                                    <input type="text" class="form-control">
+                                                    <asp:TextBox runat="server" ID="txtoempartnumber" class="form-control"></asp:TextBox>
                                                 </div>
                                             </div>
-
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label>DPSU Part Number</label>
-                                                    <input type="text" class="form-control">
+                                                    <asp:TextBox runat="server" ID="txtdpsupartnumber" class="form-control"></asp:TextBox>
                                                 </div>
 
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label>End User Part Number</label>
-                                                    <input type="text" class="form-control">
+                                                    <asp:TextBox runat="server" ID="txtenduserpartnumber" class="form-control"></asp:TextBox>
                                                 </div>
                                             </div>
                                         </div>
@@ -51,21 +50,21 @@
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label>HSN Code</label>
-                                                    <input type="text" class="form-control">
+                                                    <asp:TextBox runat="server" ID="txthsncode" class="form-control"></asp:TextBox>
                                                 </div>
                                             </div>
 
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label>NATO Code</label>
-                                                    <input type="text" class="form-control">
+                                                    <asp:TextBox runat="server" ID="txtnatocode" class="form-control"></asp:TextBox>
                                                 </div>
 
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label>ERP Reference No</label>
-                                                    <input type="text" class="form-control">
+                                                    <asp:TextBox runat="server" ID="txterprefno" class="form-control"></asp:TextBox>
                                                 </div>
                                             </div>
                                         </div>
@@ -99,7 +98,7 @@
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <label>Product Description </label>
-                                                    <textarea class="form-control"></textarea>
+                                                    <asp:TextBox runat="server" ID="txtproductdescription" TextMode="MultiLine" class="form-control"></asp:TextBox>
                                                 </div>
                                             </div>
 
@@ -124,9 +123,9 @@
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label>End User</label>
-                                                    <select class="form-control">
-                                                        <option>Select</option>
-                                                    </select>
+                                                    <asp:DropDownList runat="server" ID="ddlenduser" class="form-control">
+                                                      
+                                                    </asp:DropDownList>
                                                 </div>
                                             </div>
                                         </div>
@@ -138,20 +137,17 @@
                                                 <div class="form-group">
                                                     <label>Platform :</label>
                                                     <asp:DropDownList runat="server" ID="ddlplatform" class="form-control" AutoPostBack="True" OnSelectedIndexChanged="ddlplatform_SelectedIndexChanged"></asp:DropDownList>
-
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label>Purpose of Procurement :</label>
-
                                                     <asp:DropDownList runat="server" ID="ddlplatformsubcat" class="form-control"></asp:DropDownList>
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label>Product Requirement :</label>
-
                                                     <asp:DropDownList runat="server" ID="ddlprodreqir" class="form-control"></asp:DropDownList>
                                                 </div>
                                             </div>
@@ -164,7 +160,7 @@
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label>Search Keywords :</label>
-                                                    <input type="search" class="form-control">
+                                                    <asp:TextBox runat="server" ID="txtsearchkeyword" class="form-control"></asp:TextBox>
                                                 </div>
 
                                             </div>
@@ -175,17 +171,13 @@
                                                         Product Already Indeginized :
                                                                 <input type="radio" name="manufacture" class="yes">Yes
                                                                 <input type="radio" name="manufacture">No
-
                                                         <span>(<strong>NOTE:</strong> If Yes, please give manufacturer name)</span>
                                                     </label>
-                                                    <input type="text" class="form-control Turl_Tdate" style="display: none">
+                                                    <asp:TextBox runat="server" ID="txtmanufacturename" Visible="False" class="form-control Turl_Tdate"></asp:TextBox>
                                                 </div>
-
                                             </div>
-
                                         </div>
                                     </div>
-
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group">
@@ -205,7 +197,7 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label>Product Image</label>
-                                        <input type="file" class="form-control" />
+                                        <asp:FileUpload runat="server" ID="fuprodimage" class="form-control" />
                                     </div>
                                 </div>
                             </div>
@@ -313,6 +305,30 @@
                                         </td>
                                     </tr>
                                 </table>
+                                <asp:GridView runat="server" ID="gvservices" AutoGenerateColumns="False" class=" table responsive no-wrap table-hover manage-user Grid">
+                                    <Columns>
+                                        <asp:TemplateField>
+                                            <ItemTemplate>
+                                                <%#Container.DataItemIndex+1 %>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="Services">
+                                            <ItemTemplate>
+                                                <asp:Label runat="server" ID="lblservices" Text='<%#Eval("Services") %>'></asp:Label>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="CheckBox">
+                                            <ItemTemplate>
+                                                <asp:CheckBox runat="server" ID="chk" />
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="Remarks">
+                                            <ItemTemplate>
+                                                <asp:TextBox runat="server" ID="txtRemarks" class="form-control"></asp:TextBox>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                    </Columns>
+                                </asp:GridView>
                             </div>
                         </div>
                         <div class="row">
@@ -428,7 +444,7 @@
                                             <div class="col-md-3">
                                                 <div class="form-group">
                                                     <label>Employee Code</label>
-                                                   <input type="text" class="form-control" />
+                                                    <input type="text" class="form-control" />
 
                                                 </div>
                                             </div>
@@ -505,7 +521,7 @@
                                             <div class="col-md-3">
                                                 <div class="form-group">
                                                     <label>Employee Code</label>
-                                                   <input type="text" class="form-control" />
+                                                    <input type="text" class="form-control" />
 
                                                 </div>
                                             </div>
@@ -528,7 +544,7 @@
                                             <div class="col-md-3">
                                                 <div class="form-group">
                                                     <label>Mobile Number</label>
-                                                   <input type="text" class="form-control" />
+                                                    <input type="text" class="form-control" />
 
                                                 </div>
                                             </div>
