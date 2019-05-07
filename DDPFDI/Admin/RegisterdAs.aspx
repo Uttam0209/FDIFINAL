@@ -28,7 +28,7 @@
                                     </div>
                                     <div class="col-md-4" runat="server" id="divflag" visible="False">
                                         <div class="form-group">
-                                            <label style="display:block"></label>
+                                            <label style="display:block">&nbsp;</label>
                                             <asp:RadioButtonList ID="rbflag" runat="server" RepeatLayout="Flow" RepeatDirection="Horizontal" RepeatColumns="2">
                                                 <asp:ListItem Value="1" Selected="True">Level 1 </asp:ListItem>
                                                 <asp:ListItem Value="2">Level 2 </asp:ListItem>
@@ -37,7 +37,7 @@
                                     </div>
                                     <div class="col-md-4" runat="server" id="divActive" visible="False">
                                         <div class="form-group">
-                                            <label></label>
+                                            <label style="display:block">&nbsp;</label>
                                             <asp:RadioButtonList ID="rbactive" runat="server" RepeatLayout="Flow" RepeatDirection="Horizontal" RepeatColumns="2">
                                                 <asp:ListItem Value="Y" Selected="True">Visible</asp:ListItem>
                                                 <asp:ListItem Value="N">Hidden</asp:ListItem>

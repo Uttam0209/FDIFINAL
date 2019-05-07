@@ -157,23 +157,22 @@
                                     </div>
                                     <div class="section-pannel">
                                         <div class="row">
-                                            <div class="col-md-4">
+                                            <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>Search Keywords :</label>
                                                     <asp:TextBox runat="server" ID="txtsearchkeyword" class="form-control"></asp:TextBox>
                                                 </div>
 
                                             </div>
-                                            <div class="col-md-8">
+                                            <div class="col-md-6">
 
                                                 <div class="form-group">
                                                     <label class="live-status-box">
                                                         Product Already Indeginized :
                                                                 <input type="radio" name="manufacture" class="yes">Yes
                                                                 <input type="radio" name="manufacture">No
-                                                        <span>(<strong>NOTE:</strong> If Yes, please give manufacturer name)</span>
                                                     </label>
-                                                    <asp:TextBox runat="server" ID="txtmanufacturename" Visible="False" class="form-control Turl_Tdate"></asp:TextBox>
+                                                    <asp:TextBox runat="server" ID="txtmanufacturename"  class="form-control Turl_Tdate" style="display:none"></asp:TextBox>
                                                 </div>
                                             </div>
                                         </div>
@@ -251,7 +250,7 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>1</td>
+                                        <td>4</td>
                                         <td>Drawing</td>
                                         <td>
                                             <input type="checkbox"></td>
@@ -260,7 +259,7 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>4</td>
+                                        <td>5</td>
                                         <td>Sample</td>
                                         <td>
                                             <input type="checkbox"></td>
@@ -269,7 +268,7 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>5</td>
+                                        <td>6</td>
                                         <td>Funding Support for Development</td>
                                         <td>
                                             <input type="checkbox"></td>
@@ -278,7 +277,7 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>6</td>
+                                        <td>7</td>
                                         <td>Funding Support for Testing</td>
                                         <td>
                                             <input type="checkbox"></td>
@@ -287,7 +286,7 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>7</td>
+                                        <td>8</td>
                                         <td>Financial Support</td>
                                         <td>
                                             <input type="checkbox"></td>
@@ -296,7 +295,7 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>8</td>
+                                        <td>9</td>
                                         <td>Assurance of Procurement</td>
                                         <td>
                                             <input type="checkbox"></td>
@@ -458,7 +457,7 @@
                                             <div class="col-md-3">
                                                 <div class="form-group">
                                                     <label>Department</label>
-                                                    <asp:TextBox runat="server" ID="txtDepartment" name="" class="form-control form-cascade-control" placeholder=""></asp:TextBox>
+                                                    <label>Company >> Division >>Unit</label>
 
                                                 </div>
                                             </div>
@@ -535,7 +534,8 @@
                                             <div class="col-md-3">
                                                 <div class="form-group">
                                                     <label>Department</label>
-                                                    <asp:TextBox runat="server" ID="TextBox8" name="" class="form-control form-cascade-control" placeholder=""></asp:TextBox>
+                                                    <label>Company >> Division >>Unit</label>
+                                                  
 
                                                 </div>
                                             </div>
