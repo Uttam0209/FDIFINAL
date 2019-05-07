@@ -35,54 +35,59 @@
                 <div class="add-profile">
                     <div class="section-pannel">
                         <div class="row">
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <div class="form-group">
                                     <label>Name</label>
                                     <asp:textbox class="form-control" runat="server" id="txtname"></asp:textbox>
                                 </div>
                             </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Employee Code</label>
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
 
-                            <%--<div class="col-md-4">
+                            <div class="col-md-3">
                                 <div class="form-group">
                                     <label>Department</label>
-                                    <asp:dropdownlist runat="server" id="ddldepartment" class="form-control" />
+                                    <input type="text" class="form-control" disabled>
                                 </div>
-                            </div>--%>
-                            <div class="col-md-4">
+                            </div>
+                            <div class="col-md-3">
                                 <div class="form-group">
                                     <label>Designation</label>
                                     <asp:dropdownlist runat="server" id="ddldesignation" class="form-control" />
                                 </div>
                             </div>
-                             <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>Email ID</label>
-                                    <asp:textbox class="form-control" runat="server" id="txtemailid"></asp:textbox>
-                                </div>
-                            </div>
+                             
                         </div>
                         <div class="row">
                            
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <div class="form-group">
-                                    <label>Mobile</label>
+                                    <label>Mobile Number</label>
                                     <asp:textbox class="form-control" runat="server" id="txtmobile"></asp:textbox>
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Phone Number </label>
+                                    <asp:textbox class="form-control" runat="server" id="txttelephone"></asp:textbox>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
                                 <div class="form-group">
                                     <label>Fax </label>
                                     <asp:textbox class="form-control" runat="server" id="txtfax"></asp:textbox>
                                 </div>
                             </div>
-
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <div class="form-group">
-                                    <label>Telephone </label>
-                                    <asp:textbox class="form-control" runat="server" id="txttelephone"></asp:textbox>
+                                    <label>E-Mail ID</label>
+                                    <asp:textbox class="form-control" runat="server" id="txtemailid"></asp:textbox>
                                 </div>
                             </div>
-
                         </div>
                        
                         <div class="row">
