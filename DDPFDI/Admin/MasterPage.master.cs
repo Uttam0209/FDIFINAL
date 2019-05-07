@@ -113,7 +113,6 @@ public partial class Admin_MasterPage : System.Web.UI.MasterPage
                                 strMasterMenu.Append("<li><a href='" + row1["MenuUrl"].ToString() + "?mu=" + ObjEnc.EncryptData(row1["Spanclass"].ToString()) + "&id=" + ObjEnc.EncryptData(row["InterestArea"].ToString() + " >> " + row2["MenuName"].ToString() + " >> " + row1["MenuName"].ToString()) + "'><i class='far fa-building'></i><span class='hidden-minibar'>" + row1["MenuName"].ToString() + "</span><span class='menuNo' style='position:absolute; right:20px;top:13px;'>L" + row1["MenuId"].ToString() + "</span></a></li> ");
                             }
                             strMasterMenu.Append("</ul>");
-
                         }
                         strMasterMenu.Append("</li>");
                     }
@@ -121,9 +120,9 @@ public partial class Admin_MasterPage : System.Web.UI.MasterPage
                 strMasterMenu.Append("</ul>");
                 strMasterMenu.Append("</li>");
             }
-           // strMasterMenu.Append("</ul>");
-            MasterMenu.InnerHtml = strMasterMenu.ToString();
         }
+        MasterMenu.InnerHtml = strMasterMenu.ToString();
+        strMasterMenu.Append("</ul>");
     }
     #region Menu Wise Login
     protected void MenuLogin()

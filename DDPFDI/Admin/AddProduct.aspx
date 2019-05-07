@@ -390,7 +390,6 @@
                         </div>
                     </div>
                     <div id="cd" class="tab-pane fade">
-
                         <div class="section-pannel">
                             <asp:UpdatePanel runat="server" ID="UpdatePanel2">
                                 <ContentTemplate>
@@ -452,18 +451,15 @@
                                             </div>
                                         </div>
                                     </div>
-
                                 </ContentTemplate>
                             </asp:UpdatePanel>
                             <div class="showMore">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                             </div>
                         </div>
-
-
-                        <div class="section-pannel">
-                            <asp:UpdatePanel runat="server" ID="UpdatePanel1">
-                                <ContentTemplate>
+                        <asp:UpdatePanel runat="server" ID="UpdatePanel1">
+                            <ContentTemplate>
+                                <div class="section-pannel">
                                     <div class="row">
                                         <div class="col-md-12">
                                             <h4 class="page-header secondary">Contact Detail 2</h4>
@@ -521,25 +517,25 @@
                                             </div>
                                         </div>
                                     </div>
-
-                                </ContentTemplate>
-                            </asp:UpdatePanel>
-                            <div class="showMore">
-                                <i class="fa fa-plus" aria-hidden="true"></i>
-                            </div>
+                            </ContentTemplate>
+                        </asp:UpdatePanel>
+                        <div class="showMore">
+                            <i class="fa fa-plus" aria-hidden="true"></i>
                         </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <asp:Button runat="server" ID="btnsavepanel5" class="btn btn-primary pull-right" Text="Save" />
-                                    <asp:Button runat="server" ID="btnbackpanel5" class="btn btn-default pull-right" Text="Back" Style="margin-right: 10px;" />
-                                </div>
-                            </div>
+                    </div>
+                    <div class="showMore">
+                        <a href="javascript:void(0)">More</a>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <asp:Button runat="server" ID="btnsavepanel5" class="btn btn-primary pull-right" Text="Save" />
+                            <asp:Button runat="server" ID="btnbackpanel5" class="btn btn-default pull-right" Text="Back" Style="margin-right: 10px;" />
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
 </asp:Content>
