@@ -546,7 +546,6 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
                 gvfactory.DataSource = DtGrid;
                 gvfactory.DataBind();
             }
-
             DataTable dtCompany = Lo.RetriveMasterData(0, "", "", 0, currentPage, "", "btn");
             if (dtCompany.Rows.Count > 0)
             {

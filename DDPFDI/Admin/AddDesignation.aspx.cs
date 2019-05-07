@@ -145,7 +145,7 @@ public partial class Admin_AddDesignation : System.Web.UI.Page
                 if (dtIsDesignation.Rows.Count > 0)
                 {
 
-                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('this designation already exist !')", true);
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Designation already exists !')", true);
                 }
                 else
                 {

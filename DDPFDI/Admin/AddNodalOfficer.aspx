@@ -69,21 +69,22 @@
                                     <asp:textbox class="form-control" runat="server" id="txtmobile"></asp:textbox>
                                 </div>
                             </div>
+                             <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Telephone </label>
+                                    <asp:textbox class="form-control" runat="server" id="txttelephone"></asp:textbox>
+                                </div>
+                            </div>
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label>Fax </label>
                                     <asp:textbox class="form-control" runat="server" id="txtfax"></asp:textbox>
                                 </div>
                             </div>
+
+                           
+
                         </div>
-                         <div class="row">
-                         <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>Telephone </label>
-                                    <asp:textbox class="form-control" runat="server" id="txttelephone"></asp:textbox>
-                                </div>
-                            </div>
-                             </div>
                        
                         <div class="row">
                             <div class="col-md-12">

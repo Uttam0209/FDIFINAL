@@ -213,13 +213,19 @@
                     <asp:UpdatePanel ID="UpdatePanel3" runat="server" ChildrenAsTriggers="True">
                         <ContentTemplate>
                             <div class="row">
-                                <div class="col-md-4">
+                                <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="tpersonname" class="control-label">Select Nodal Officer </label>
                                         <asp:DropDownList runat="server" ID="ddlNodalOfficerEmail" class="form-control" AutoPostBack="True" OnSelectedIndexChanged="ddlNodalOfficerEmail_SelectedIndexChanged"></asp:DropDownList>
 
                                     </div>
                                 </div>
+                               
+
+                            </div>
+                            <div class="section-pannel">
+                                  <div class="contactFormRow" style="display: none">
+                                 <div class="row">
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="tpersonname" class="control-label">Name </label>
@@ -236,9 +242,6 @@
 
 
                                 </div>
-
-                            </div>
-                            <div class="row">
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="tpersonname" class="control-label">Department </label>
@@ -247,7 +250,10 @@
 
 
                                 </div>
-                                <div class="col-md-4">
+                            </div>
+                            <div class="row">
+                                
+                                <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="temailid" class=" control-label">Email ID <span class="mandatory">*</span></label>
                                         <asp:TextBox runat="server" ID="txtNEmailId" name="" AutoCompleteType="Email" required="" class="form-control form-cascade-control"
@@ -255,7 +261,7 @@
                                         <p class="note">*Note: will be used as username </p>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="tcontactno" class="control-label">Mobile</label>
                                         <asp:TextBox runat="server" ID="txtNMobile" name="" MaxLength="16" onkeypress="return isNumber(event)" class="form-control form-cascade-control"
@@ -263,26 +269,32 @@
 
                                     </div>
                                 </div>
-
-                            </div>
-                            <div class="row">
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="tcontactno" class="control-label">Telephone</label>
                                         <asp:TextBox runat="server" ID="txtNTelephone" name="" MaxLength="16" onkeypress="return isNumber(event)" class="form-control form-cascade-control"
-                                            placeholder=""></asp:TextBox>
+                                                     placeholder=""></asp:TextBox>
 
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="tcontactno" class="control-label">Fax No</label>
                                         <asp:TextBox runat="server" ID="txtNFaxNo" name="tcontactno" MaxLength="16" onkeypress="return isNumber(event)" class="form-control form-cascade-control"
-                                            placeholder=""></asp:TextBox>
+                                                     placeholder=""></asp:TextBox>
 
                                     </div>
                                 </div>
+
                             </div>
+                            </div>
+                            <div class="showMore">
+                                <i class="fa fa-plus" aria-hidden="true"></i>
+                            </div>
+                            </div>
+                          
+                           
+                           
                         </ContentTemplate>
                     </asp:UpdatePanel>
                 </div>
