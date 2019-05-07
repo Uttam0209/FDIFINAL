@@ -222,6 +222,7 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
             lblselectdivison.Visible = false;
             lblselectunit.Visible = false;
         }
+        BindMasterDesignation();
     }
     protected void ddldivision_OnSelectedIndexChanged(object sender, EventArgs e)
     {
@@ -255,12 +256,14 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
                 lblselectdivison.Visible = false;
             }
         }
+        BindMasterDesignation();
     }
 
     protected void ddlunit_OnSelectedIndexChanged(object sender, EventArgs e)
     {
         hidCompanyRefNo.Value = ddlunit.SelectedItem.Value;
         hidType.Value = "Unit";
+        BindMasterDesignation();
     }
 
     #endregion
@@ -268,10 +271,10 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
     protected void BindMasterDesignation()
     {
         ddldesignation.Items.Insert(0, "Designation");
-        DataTable DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, ddldesignation.SelectedItem.Value, "", "SelectProductCat", mRefNo.ToString());
+        DataTable DtMasterCategroy = Lo.RetriveMasterData(0,ddlcompany.SelectedItem.Value,"",0, "", "", "ViewDesignation");
         if (DtMasterCategroy.Rows.Count > 0)
         {
-            Co.FillDropdownlist(ddldesignation, DtMasterCategroy, "SCategoryName", "SCategoryID");
+            Co.FillDropdownlist(ddldesignation, DtMasterCategroy, "Designation", "DesignationId");
             ddldesignation.Items.Insert(0, "Select");
         }
     }
@@ -299,6 +302,7 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
         }
 
         hySaveNodal["NodalOfficerRefNo"] = "";
+        hySaveNodal["NodalEmpCode"] = Co.RSQandSQLInjection(txtEmpCode.Text, "soft");
         hySaveNodal["NodalOficerName"] = Co.RSQandSQLInjection(txtname.Text, "soft");
         hySaveNodal["NodalOfficerDepartment"] = 0;
         hySaveNodal["NodalOfficerDesignation"] = Co.RSQandSQLInjection(ddldesignation.SelectedItem.Value, "soft");
