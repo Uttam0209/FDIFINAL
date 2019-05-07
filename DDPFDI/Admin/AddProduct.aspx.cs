@@ -86,7 +86,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     {
         if (ddlNodalOfficerEmail2.SelectedItem.Text != "Select Nodel Officer")
         {
-            DataTable DtGetNodel = Lo.RetriveMasterData(Convert.ToInt16(ddlNodalOfficerEmail.SelectedItem.Value), "", "", 0, "", "", "CompleteNodelDetail");
+            DataTable DtGetNodel = Lo.RetriveMasterData(Convert.ToInt16(ddlNodalOfficerEmail2.SelectedItem.Value), "", "", 0, "", "", "CompleteNodelDetail");
             if (DtGetNodel.Rows.Count > 0)
             {
                 txtNName2.Text = DtGetNodel.Rows[0]["NodalOficerName"].ToString();
