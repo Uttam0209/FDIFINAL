@@ -261,14 +261,12 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
         }
         BindMasterDesignation("");
     }
-
     protected void ddlunit_OnSelectedIndexChanged(object sender, EventArgs e)
     {
         hidCompanyRefNo.Value = ddlunit.SelectedItem.Value;
         hidType.Value = "Unit";
         BindMasterDesignation("");
     }
-
     #endregion
     #region For Department or Designation
     protected void BindMasterDesignation(string mCompanyRefNo)
