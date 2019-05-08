@@ -3,13 +3,10 @@ using Encryption;
 using System;
 using System.Collections.Specialized;
 using System.Data;
-using System.ServiceModel.Description;
 using System.Text;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Drawing;
-using System.Drawing.Design;
-using System.Drawing.Drawing2D;
 using System.Web;
 using System.IO;
 

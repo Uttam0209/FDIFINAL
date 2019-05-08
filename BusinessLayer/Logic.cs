@@ -91,7 +91,10 @@ namespace BusinessLayer
         {
             return SqlHelper.Instance.RetriveGridViewCompany(ID, FactoryRefNo, UnitRefNo, Purpose);
         }
-
+        public DataTable RetriveProductCode(string CompanyRefNo, string ProductRefNo, string Purpose)
+        {
+            return SqlHelper.Instance.RetriveProductCode(CompanyRefNo, ProductRefNo, Purpose);
+        }
         public DataTable RetriveMasterData(Int64 Companyid, string strRefNo, string strRole, int MenuId, string strMenuUrl, string strInterestedAreaFlag, string strCriteria)
         {
             return SqlHelper.Instance.RetriveMasterData(Companyid, strRefNo, strRole, MenuId, strMenuUrl, strInterestedAreaFlag, strCriteria);

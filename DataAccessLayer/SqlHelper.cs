@@ -693,6 +693,29 @@ namespace DataAccessLayer
                 }
             }
         }
+        public DataTable RetriveProductCode(string CompanyRefNo, string ProdRefNo, string Purpose)
+        {
+            using (DbConnection dbCon = db.CreateConnection())
+            {
+                dbCon.Open();
+                try
+                {
+                    DbCommand cmd = db.GetStoredProcCommand("sp_RetriveProduct");
+                   db.AddInParameter(cmd, "@CompanyRefNo", DbType.String, CompanyRefNo);
+                    db.AddInParameter(cmd, "@ProductRefNo", DbType.String, ProdRefNo);
+                    db.AddInParameter(cmd, "@Purpose", DbType.String, Purpose);
+                    IDataReader dr = db.ExecuteReader(cmd);
+                    DataTable dt = new DataTable();
+                    if (dr != null)
+                        dt.Load(dr);
+                    return dt;
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+        }
         public DataTable RetriveCountry(string text)
         {
             using (DbConnection dbCon = db.CreateConnection())
