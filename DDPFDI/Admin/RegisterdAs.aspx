@@ -18,52 +18,53 @@
                         </div>
                         <div class="UserInnerpage">
                             <div class="resitered">
+                                <div class="section-pannel">
                                 <div class="row">
                                     <div class="col-md-4" runat="server" id="divcategory1textbox" visible="False">
                                         <div class="form-group">
-                                            <label>Add Label</label>
+                                            <label>Add Dropdown Label</label>
                                             <asp:TextBox class="form-control" runat="server" ID="txtmastercategory"></asp:TextBox>
                                         </div>
                                     </div>
                                     <div class="col-md-4" runat="server" id="divflag" visible="False">
                                         <div class="form-group">
-                                            <label></label>
+                                            <label style="display:block">&nbsp;</label>
                                             <asp:RadioButtonList ID="rbflag" runat="server" RepeatLayout="Flow" RepeatDirection="Horizontal" RepeatColumns="2">
-                                                <asp:ListItem Value="1" Selected="True">Level 1 Values</asp:ListItem>
-                                                <asp:ListItem Value="2">Level 2 Values</asp:ListItem>
+                                                <asp:ListItem Value="1" Selected="True">Level 1 </asp:ListItem>
+                                                <asp:ListItem Value="2">Level 2 </asp:ListItem>
                                             </asp:RadioButtonList>
                                         </div>
                                     </div>
                                     <div class="col-md-4" runat="server" id="divActive" visible="False">
                                         <div class="form-group">
-                                            <label></label>
+                                            <label style="display:block">&nbsp;</label>
                                             <asp:RadioButtonList ID="rbactive" runat="server" RepeatLayout="Flow" RepeatDirection="Horizontal" RepeatColumns="2">
-                                                <asp:ListItem Value="Y" Selected="True">Active</asp:ListItem>
-                                                <asp:ListItem Value="N">Deactive</asp:ListItem>
+                                                <asp:ListItem Value="Y" Selected="True">Visible</asp:ListItem>
+                                                <asp:ListItem Value="N">Hidden</asp:ListItem>
                                             </asp:RadioButtonList>
                                         </div>
                                     </div>
                                     <div class="col-md-4" runat="server" id="divcategory1dropdown" visible="False">
                                         <div class="form-group">
-                                            <label>Level</label>
+                                            <label>Dropdown Label</label>
                                             <asp:DropDownList runat="server" ID="ddlmastercategory" class="form-control" AutoPostBack="True" OnSelectedIndexChanged="ddlmastercategory_SelectedIndexChanged"></asp:DropDownList>
                                         </div>
                                     </div>
                                     <div class="col-md-4" runat="server" id="divcategory2textbox" visible="False">
                                         <div class="form-group">
-                                            <label>Level 1 Values</label>
+                                            <label>Level 1 </label>
                                             <asp:TextBox class="form-control" runat="server" ID="txtsubcategory"></asp:TextBox>
                                         </div>
                                     </div>
                                     <div class="col-md-4" runat="server" id="divcategory2ddl" visible="False">
                                         <div class="form-group">
-                                            <label>Level 1 Values</label>
+                                            <label>Level 1 </label>
                                             <asp:DropDownList runat="server" ID="ddlcategroy2" class="form-control"></asp:DropDownList>
                                         </div>
                                     </div>
                                     <div class="col-md-4" runat="server" id="divcategory3textbox" visible="False">
                                         <div class="form-group">
-                                            <label>Level 2 Values</label>
+                                            <label>Level 2 </label>
                                             <asp:TextBox class="form-control" runat="server" ID="txtcategory3"></asp:TextBox>
                                         </div>
                                     </div>
@@ -74,6 +75,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                  </div>
                             </div>
                         </div>
 

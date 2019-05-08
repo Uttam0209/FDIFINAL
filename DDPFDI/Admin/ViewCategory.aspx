@@ -24,7 +24,7 @@
                                 </div>
                                 <div class="table-wrapper">
                                     <div class="table-wraper">
-                                        <asp:GridView ID="gvCategory" runat="server" Width="100%" Class="commonAjaxTbl master-company-table table display responsive no-wrap table-hover manage-user Grid" AutoGenerateColumns="false" AllowPaging="true"
+                                        <asp:GridView ID="gvCategory" runat="server" Width="100%" Class="commonAjaxTbl viewCatDropDown master-company-table table display responsive no-wrap table-hover manage-user Grid" AutoGenerateColumns="false" AllowPaging="true"
                                             OnPageIndexChanging="OnPageIndexChanging" PageSize="25" AllowSorting="true" OnSorting="OnSorting" OnRowDataBound="OnRowDataBound" OnRowCommand="gvCategory_RowCommand">
                                             <PagerStyle HorizontalAlign="Center" CssClass="GridPager" />
                                             <Columns>
@@ -45,8 +45,9 @@
                                                                                         <asp:GridView ID="gvsubcatlevel2" runat="server" AutoGenerateColumns="false" Class="table table-hover ChildGrid" OnRowCommand="gvsublevel2_RowCommand">
                                                                                             <PagerStyle HorizontalAlign="Center" CssClass="GridPager" />
                                                                                             <Columns>
-                                                                                                <asp:TemplateField>
+<asp:TemplateField>
                                                                                                     <ItemTemplate>
+                                                                                                       
                                                                                                     </ItemTemplate>
                                                                                                 </asp:TemplateField>
                                                                                                 <asp:TemplateField>
@@ -54,7 +55,7 @@
                                                                                                         <%#Container.DataItemIndex+1 %>
                                                                                                     </ItemTemplate>
                                                                                                 </asp:TemplateField>
-                                                                                                <asp:TemplateField HeaderText="Level 2 Values">
+                                                                                                <asp:TemplateField HeaderText="Level 2">
                                                                                                     <ItemTemplate>
                                                                                                         <asp:Label ID="lblsubcatlevelinner2" runat="server" Text='<%#Eval("SCategoryName") %>' NullDisplayText="#" SortExpression="SCategoryName"></asp:Label>
                                                                                                         <asp:HiddenField runat="server" ID="hfcatlevel2" Value='<%#Eval("SCategoryId") %>' />
@@ -72,16 +73,13 @@
                                                                                 </div>
                                                                             </ItemTemplate>
                                                                         </asp:TemplateField>
-                                                                        <asp:TemplateField>
-                                                                            <ItemTemplate>
-                                                                            </ItemTemplate>
-                                                                        </asp:TemplateField>
+                                                                       
                                                                         <asp:TemplateField>
                                                                             <ItemTemplate>
                                                                                 <%#Container.DataItemIndex+1 %>
                                                                             </ItemTemplate>
                                                                         </asp:TemplateField>
-                                                                        <asp:TemplateField HeaderText="Level 1 Values">
+                                                                        <asp:TemplateField HeaderText="Level 1">
                                                                             <ItemTemplate>
                                                                                 <asp:Label runat="server" ID="lblfactoryrefno" Text='<%#Eval("SCategoryName") %>'></asp:Label>
                                                                                 <asp:HiddenField runat="server" ID="hfcatlevel1id" Value='<%#Eval("SCategoryID") %>' />
@@ -104,7 +102,7 @@
                                                         <%#Container.DataItemIndex+1 %>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
-                                                <asp:TemplateField HeaderText="Level">
+                                                <asp:TemplateField HeaderText="Dropdown Label">
                                                     <ItemTemplate>
                                                         <asp:Label ID="lblrefno" runat="server" Text='<%#Eval("MCategoryName") %>' NullDisplayText="#" SortExpression="CompanyRefNo"></asp:Label>
                                                         <asp:HiddenField ID="hfcat" runat="server" Value='<%#Eval("MCategoryId") %>' />

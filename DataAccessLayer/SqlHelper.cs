@@ -427,6 +427,7 @@ namespace DataAccessLayer
                     DbCommand cmd = db.GetStoredProcCommand("sp_NodelPerson");
                     db.AddInParameter(cmd, "@NodalOfficerID", DbType.Int64, hySaveNodal["NodalOfficerID"]);
                     db.AddInParameter(cmd, "@NodalOfficerRefNo", DbType.String, hySaveNodal["NodalOfficerRefNo"]);
+                    db.AddInParameter(cmd, "@NodalEmpCode", DbType.String, hySaveNodal["NodalEmpCode"]);
                     db.AddInParameter(cmd, "@NodalOficerName", DbType.String, hySaveNodal["NodalOficerName"]);
                     db.AddInParameter(cmd, "@NodalOfficerDesignation", DbType.Int16, hySaveNodal["NodalOfficerDesignation"].ToString().Trim());
                     db.AddInParameter(cmd, "@NodalOfficerEmail", DbType.String, hySaveNodal["NodalOfficerEmail"]);
@@ -503,8 +504,43 @@ namespace DataAccessLayer
                     dbTran.Commit();
                     _msg = "Save";
                     _sysMsg = "Save";
-                    return _msg;
+                    return mCurrentID;
                 }
+                catch (Exception ex)
+                {
+                    dbTran.Rollback();
+                    _msg = ex.Message;
+                    _sysMsg = ex.Message;
+                    return "-1";
+                }
+                finally
+                {
+                    dbCon.Close();
+                }
+            }
+        }
+        public string SaveCompDesignation(HybridDictionary hysavecomp, out string _sysMsg, out string _msg)
+        {
+            using (DbConnection dbCon = db.CreateConnection())
+            {
+                string mCurrentID = "";
+                dbCon.Open();
+                DbTransaction dbTran = dbCon.BeginTransaction();
+                try
+                {
+                    DbCommand cmd = db.GetStoredProcCommand("sp_InsertDesignation");
+                    db.AddInParameter(cmd, "@DesignationID", DbType.Int64, hysavecomp["DesignationId"]);
+                    db.AddInParameter(cmd, "@CompanyRefNo", DbType.String, hysavecomp["CompanyRefNo"]);
+                    db.AddInParameter(cmd, "@Designation", DbType.String, hysavecomp["Designation"].ToString().Trim());
+                    db.AddOutParameter(cmd, "@ReturnID", DbType.String, 20);
+                    db.ExecuteNonQuery(cmd, dbTran);
+                    mCurrentID = db.GetParameterValue(cmd, "@ReturnID").ToString();
+                    dbTran.Commit();
+                    _msg = "Save";
+                    _sysMsg = "Save";
+                    return mCurrentID;
+                }
+
                 catch (Exception ex)
                 {
                     dbTran.Rollback();

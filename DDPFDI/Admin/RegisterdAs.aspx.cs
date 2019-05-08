@@ -53,7 +53,7 @@ public partial class Admin_RegisterdAs : System.Web.UI.Page
             divcategory1textbox.Visible = false;
             divActive.Visible = false;
             divflag.Visible = false;
-            btnsave.Text = "Save Level 1 Values";
+            btnsave.Text = "Save Level 1";
             BindMasterCategory();
             ddlmastercategory.AutoPostBack = false;
         }
@@ -64,7 +64,7 @@ public partial class Admin_RegisterdAs : System.Web.UI.Page
             divcategory2ddl.Visible = true;
             divcategory3textbox.Visible = true;
             divflag.Visible = false;
-            btnsave.Text = "Save Level 2 Values";
+            btnsave.Text = "Save Level 2";
             BindMasterCategory();
             ddlmastercategory.AutoPostBack = true;
         }
@@ -132,7 +132,7 @@ public partial class Admin_RegisterdAs : System.Web.UI.Page
                 ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('All field fill mandatory')", true);
             }
         }
-        else if (btnsave.Text == "Save Level 1 Values")
+        else if (btnsave.Text == "Save Level 1")
         {
             if (ddlmastercategory.SelectedIndex != 0 && txtsubcategory.Text != "")
             {
@@ -144,7 +144,7 @@ public partial class Admin_RegisterdAs : System.Web.UI.Page
                 ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('All field fill mandatory')", true);
             }
         }
-        else if (btnsave.Text == "Save Level 2 Values")
+        else if (btnsave.Text == "Save Level 2")
         {
             if (ddlmastercategory.SelectedIndex != 0 && ddlcategroy2.SelectedIndex != 0 && txtcategory3.Text != "")
             {
@@ -171,11 +171,11 @@ public partial class Admin_RegisterdAs : System.Web.UI.Page
         if (DtMasterCategroy.Rows.Count > 0)
         {
             Co.FillDropdownlist(ddlmastercategory, DtMasterCategroy, "MCategoryName", "MCategoryID");
-            ddlmastercategory.Items.Insert(0, "Select Category");
+            ddlmastercategory.Items.Insert(0, "Select");
         }
         else
         {
-            ddlmastercategory.Items.Insert(0, "Select Category");
+            ddlmastercategory.Items.Insert(0, "Select");
         }
     }
     protected void BindMasterInnerSubCategory()
