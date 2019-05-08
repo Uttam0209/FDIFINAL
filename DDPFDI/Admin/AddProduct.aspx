@@ -413,8 +413,7 @@
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="form-group">
-                                                    <label>Department</label>
-                                                    <input type="text" readonly="readonly" value="Company >> Division >>Unit" class="form-control">
+                                                   
                                                     <label>E-Mail ID</label>
                                                     <asp:TextBox runat="server" ID="txtNEmailId" name="" class="form-control form-cascade-control" placeholder=""></asp:TextBox>
 
@@ -445,6 +444,14 @@
                                             </div>
 
                                         </div>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                     <label>Department</label>
+                                                    <input type="text" readonly="readonly" value="Company >> Division >>Unit" class="form-control">
+                                                </div>
+                                            </div>
+                                        </div>
 
                                         <div class="row">
                                             <div class="col-md-12">
@@ -453,10 +460,11 @@
                                                 <asp:Label runat="server" ID="lblunitnodal" Text=""></asp:Label>
                                             </div>
                                         </div>
-                                        <div class="showMore">
+                                       
+                                    </div>
+                                     <div class="showMore">
                                             <a href="javascript:void(0)" class="showMoreLink">Show Details</a>
                                         </div>
-                                    </div>
                                 </div>
                                 <div class="section-pannel" runat="server" id="divnodal2">
                                     <div class="row">
@@ -523,19 +531,14 @@
                                                 <asp:Label runat="server" ID="lblunitnodal2" Text=""></asp:Label>
                                             </div>
                                         </div>
+                                        
+                                    </div>
                                         <div class="showMore">
                                             <a href="javascript:void(0)" class="showMoreLink">Show Details</a>
                                         </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="form-group">
-                                                <asp:Button runat="server" ID="btnsavepanel5" class="btn btn-primary pull-right" Text="Save" />
-                                                <asp:Button runat="server" ID="btnbackpanel5" class="btn btn-default pull-right" Text="Back" Style="margin-right: 10px;" />
-                                            </div>
-                                        </div>
-                                    </div>
+                                    
                                 </div>
+                                
                             </ContentTemplate>
                         </asp:UpdatePanel>
                     </div>
