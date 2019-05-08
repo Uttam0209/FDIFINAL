@@ -327,3 +327,4 @@ form label { color: #494ca2;}
 .showMore a { text-decoration: underline !important;}
 #ContentPlaceHolder1_divflag span label,#ContentPlaceHolder1_divActive span label { margin-right: 10px;}
 #ContentPlaceHolder1_divflag span input[type='radio'],#ContentPlaceHolder1_divActive span input[type="radio"] { margin-right: 5px; margin-top:0;}
+.viewCatDropDown tr th:last-child { width: 60px !important;}

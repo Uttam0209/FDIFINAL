@@ -24,7 +24,7 @@
                                 </div>
                                 <div class="table-wrapper">
                                     <div class="table-wraper">
-                                        <asp:GridView ID="gvCategory" runat="server" Width="100%" Class="commonAjaxTbl master-company-table table display responsive no-wrap table-hover manage-user Grid" AutoGenerateColumns="false" AllowPaging="true"
+                                        <asp:GridView ID="gvCategory" runat="server" Width="100%" Class="commonAjaxTbl viewCatDropDown master-company-table table display responsive no-wrap table-hover manage-user Grid" AutoGenerateColumns="false" AllowPaging="true"
                                             OnPageIndexChanging="OnPageIndexChanging" PageSize="25" AllowSorting="true" OnSorting="OnSorting" OnRowDataBound="OnRowDataBound" OnRowCommand="gvCategory_RowCommand">
                                             <PagerStyle HorizontalAlign="Center" CssClass="GridPager" />
                                             <Columns>
@@ -45,8 +45,9 @@
                                                                                         <asp:GridView ID="gvsubcatlevel2" runat="server" AutoGenerateColumns="false" Class="table table-hover ChildGrid" OnRowCommand="gvsublevel2_RowCommand">
                                                                                             <PagerStyle HorizontalAlign="Center" CssClass="GridPager" />
                                                                                             <Columns>
-                                                                                                <asp:TemplateField>
+<asp:TemplateField>
                                                                                                     <ItemTemplate>
+                                                                                                       
                                                                                                     </ItemTemplate>
                                                                                                 </asp:TemplateField>
                                                                                                 <asp:TemplateField>
@@ -72,10 +73,7 @@
                                                                                 </div>
                                                                             </ItemTemplate>
                                                                         </asp:TemplateField>
-                                                                        <asp:TemplateField>
-                                                                            <ItemTemplate>
-                                                                            </ItemTemplate>
-                                                                        </asp:TemplateField>
+                                                                       
                                                                         <asp:TemplateField>
                                                                             <ItemTemplate>
                                                                                 <%#Container.DataItemIndex+1 %>
