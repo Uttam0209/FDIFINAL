@@ -220,81 +220,81 @@
 
                                     </div>
                                 </div>
-                               
+
 
                             </div>
                             <div class="section-pannel">
-                                  <div class="contactFormRow" style="display: none">
-                                 <div class="row">
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label for="tpersonname" class="control-label">Name </label>
-                                        <asp:TextBox runat="server" ID="txtNName" name="" class="form-control form-cascade-control" placeholder=""></asp:TextBox>
+                                <div class="contactFormRow" style="display: none">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="tpersonname" class="control-label">Name</label>
+                                                <asp:TextBox runat="server" ID="txtNName" name="" class="form-control form-cascade-control" placeholder=""></asp:TextBox>
+                                            </div>
+
+
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="tpersonname" class="control-label">Designation </label>
+                                                <asp:TextBox runat="server" ID="txtDesignation" name="" class="form-control form-cascade-control" placeholder=""></asp:TextBox>
+                                            </div>
+
+
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="tpersonname" class="control-label">Department </label>
+                                                <asp:TextBox runat="server" ID="txtDepartment" name="" class="form-control form-cascade-control" placeholder=""></asp:TextBox>
+                                            </div>
+
+
+                                        </div>
                                     </div>
+                                    <div class="row">
 
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="temailid" class=" control-label">Email ID <span class="mandatory">*</span></label>
+                                                <asp:TextBox runat="server" ID="txtNEmailId" name="" AutoCompleteType="Email" required="" class="form-control form-cascade-control"
+                                                    placeholder=""></asp:TextBox>
+                                                <p class="note">*Note: will be used as username </p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="tcontactno" class="control-label">Mobile</label>
+                                                <asp:TextBox runat="server" ID="txtNMobile" name="" MaxLength="16" onkeypress="return isNumber(event)" class="form-control form-cascade-control"
+                                                    placeholder=""></asp:TextBox>
 
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="tcontactno" class="control-label">Telephone</label>
+                                                <asp:TextBox runat="server" ID="txtNTelephone" name="" MaxLength="16" onkeypress="return isNumber(event)" class="form-control form-cascade-control"
+                                                    placeholder=""></asp:TextBox>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="tcontactno" class="control-label">Fax No</label>
+                                                <asp:TextBox runat="server" ID="txtNFaxNo" name="tcontactno" MaxLength="16" onkeypress="return isNumber(event)" class="form-control form-cascade-control"
+                                                    placeholder=""></asp:TextBox>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
                                 </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label for="tpersonname" class="control-label">Designation </label>
-                                        <asp:TextBox runat="server" ID="txtDesignation" name="" class="form-control form-cascade-control" placeholder=""></asp:TextBox>
-                                    </div>
-
-
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label for="tpersonname" class="control-label">Department </label>
-                                        <asp:TextBox runat="server" ID="txtDepartment" name="" class="form-control form-cascade-control" placeholder=""></asp:TextBox>
-                                    </div>
-
-
+                                <div class="showMore">
+                                    <i class="fa fa-plus" aria-hidden="true"></i>
                                 </div>
                             </div>
-                            <div class="row">
-                                
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label for="temailid" class=" control-label">Email ID <span class="mandatory">*</span></label>
-                                        <asp:TextBox runat="server" ID="txtNEmailId" name="" AutoCompleteType="Email" required="" class="form-control form-cascade-control"
-                                            placeholder=""></asp:TextBox>
-                                        <p class="note">*Note: will be used as username </p>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label for="tcontactno" class="control-label">Mobile</label>
-                                        <asp:TextBox runat="server" ID="txtNMobile" name="" MaxLength="16" onkeypress="return isNumber(event)" class="form-control form-cascade-control"
-                                            placeholder=""></asp:TextBox>
 
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label for="tcontactno" class="control-label">Telephone</label>
-                                        <asp:TextBox runat="server" ID="txtNTelephone" name="" MaxLength="16" onkeypress="return isNumber(event)" class="form-control form-cascade-control"
-                                                     placeholder=""></asp:TextBox>
 
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label for="tcontactno" class="control-label">Fax No</label>
-                                        <asp:TextBox runat="server" ID="txtNFaxNo" name="tcontactno" MaxLength="16" onkeypress="return isNumber(event)" class="form-control form-cascade-control"
-                                                     placeholder=""></asp:TextBox>
 
-                                    </div>
-                                </div>
-
-                            </div>
-                            </div>
-                            <div class="showMore">
-                                <i class="fa fa-plus" aria-hidden="true"></i>
-                            </div>
-                            </div>
-                          
-                           
-                           
                         </ContentTemplate>
                     </asp:UpdatePanel>
                 </div>
@@ -390,13 +390,13 @@
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>VAM</label>
-                                                    <input type="text" class="form-control">
+                                                    <asp:TextBox runat="server" ID="txtVAM" name="" class="form-control form-cascade-control" placeholder=""></asp:TextBox>  
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>Aadhar /Mobile</label>
-                                                    <input type="text" class="form-control">
+                                                    <asp:TextBox runat="server" ID="txtAad_Mob" name="" class="form-control form-cascade-control" placeholder=""></asp:TextBox>
                                                 </div>
                                             </div>
                                         </div>
@@ -508,8 +508,7 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="form-group">
-                            <asp:LinkButton ID="btndemofirst" runat="server" CssClass="btn btn-primary pull-right" Style="margin-left: 10px;" Text="Save" OnClick="btndemofirst_Click"
-                                Visible="false" />
+                            <asp:LinkButton ID="btndemofirst" runat="server" CssClass="btn btn-primary pull-right" Style="margin-left: 10px;" Text="Save" OnClick="btndemofirst_Click" />
                             <asp:LinkButton ID="btnDelete" runat="server" CssClass="btn btn-primary pull-right" Text="Delete" Visible="false" />
                         </div>
                     </div>

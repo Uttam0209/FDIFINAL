@@ -270,22 +270,35 @@
                                                     <asp:Label ID="lblceoemail" runat="server"></asp:Label>
                                                 </td>
                                             </tr>
+                                           
                                             <tr>
-                                                <td class="pass">Name</td>
+                                                <td class="pass">Telephone No</td>
                                                 <td>
-                                                    <asp:Label ID="lblcontactpersonname" runat="server"></asp:Label>
+                                                    <asp:Label ID="lblTelephoneNo" runat="server"></asp:Label>
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td class="pass">Official Contact No</td>
+                                                <td class="pass">Fax No</td>
                                                 <td>
-                                                    <asp:Label ID="lblcontactpersonmobno" runat="server"></asp:Label>
+                                                    <asp:Label ID="lblFaxNo" runat="server"></asp:Label>
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td class="pass">Official Email ID</td>
+                                                <td class="pass">EmailID</td>
                                                 <td>
-                                                    <asp:Label ID="lblcontactperemailid" runat="server"></asp:Label>
+                                                    <asp:Label ID="lblEmailID" runat="server"></asp:Label>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="pass">Website</td>
+                                                <td>
+                                                    <asp:Label ID="lblWebsite" runat="server"></asp:Label>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="pass">GSTNo</td>
+                                                <td>
+                                                    <asp:Label ID="lblGSTNo" runat="server"></asp:Label>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -298,6 +311,24 @@
                                                 <td class="pass">PAN No</td>
                                                 <td>
                                                     <asp:Label ID="lblpanno" runat="server"></asp:Label>
+                                                </td>
+                                            </tr>
+                                             <tr>
+                                                <td class="pass">Nodal Officer Name</td>
+                                                <td>
+                                                    <asp:Label ID="lblNodalOfficerName" runat="server"></asp:Label>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="pass">Nodal Officer Email</td>
+                                                <td>
+                                                    <asp:Label ID="lblNodalEmail" runat="server"></asp:Label>
+                                                </td>
+                                            </tr>
+                                             <tr>
+                                                <td class="pass">Role</td>
+                                                <td>
+                                                    <asp:Label ID="lblRole" runat="server"></asp:Label>
                                                 </td>
                                             </tr>
                                             </caption>
