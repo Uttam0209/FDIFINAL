@@ -132,8 +132,25 @@ public partial class Admin_ViewNodalOfficer : System.Web.UI.Page
             GridViewRow gvr = (GridViewRow)((Control)e.CommandSource).NamingContainer;
             int rowIndex = gvr.RowIndex;
             string stridNew = Request.QueryString["id"].ToString().Replace(" ", "+");
-            string mstrid = objEnc.EncryptData((objEnc.DecryptData(stridNew) + " >> Edit Designation"));
+            string mstrid = objEnc.EncryptData((objEnc.DecryptData(stridNew) + " >> Edit Nodal Office"));
             Response.Redirect("Add-Nodal?mrcreaterole=" + objEnc.EncryptData(e.CommandArgument.ToString()) + "&mcurrentcompRefNo=" + (objEnc.EncryptData(e.CommandArgument.ToString())) + "&id=" + mstrid);
+        }
+        else if (e.CommandName == "ViewComp")
+        {
+            DataTable DtView = Lo.RetriveMasterData(0, e.CommandArgument.ToString(), "", 0, "", "", "SearchNodalOfficer");
+            if (DtView.Rows.Count > 0)
+            {
+                lblcompanyname.Text = DtView.Rows[0]["CompanyName"].ToString();
+                lblNodalOfficerRefNo.Text = DtView.Rows[0]["NodalOfficerRefNo"].ToString();
+                lblNodalOficerName.Text = DtView.Rows[0]["NodalOficerName"].ToString();
+                lblDesignation.Text = DtView.Rows[0]["Designation"].ToString();
+                lblNodalEmpCode.Text = DtView.Rows[0]["NodalEmpCode"].ToString();
+                lblEmail.Text = DtView.Rows[0]["NodalOfficerEmail"].ToString();
+                lblMobile.Text = DtView.Rows[0]["NodalOfficerMobile"].ToString();
+                lblTelephone.Text = DtView.Rows[0]["NodalOfficerTelephone"].ToString();
+                lblFax.Text = DtView.Rows[0]["NodalOfficerFax"].ToString();
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "ViewNodalDetail", "showPopup();", true);
+            }
         }
 
         else if (e.CommandName == "DeleteComp")
