@@ -250,7 +250,17 @@
                                             </div>
                                         </div>
                                     </div>
-                                  
+                                    <%--<div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <asp:Button runat="server" ID="btnsubmitpanel1" class="btn btn-primary pull-right" Text="Save" OnClick="btnsubmitpanel1_Click" />
+                                                <asp:Button runat="server" ID="btncancelpanel1" class="btn btn-default pull-right" Style="margin-right: 10px;" Text="Back" OnClick="btncancelpanel1_Click" />
+                                            </div>
+                                                               </asp:RadioButtonList>
+                                                            </label>
+                                                            <asp:TextBox runat="server" ID="txtmanufacturename" Visible="False" placeholder="Please enter manufacture name" class="form-control Turl_Tdate"></asp:TextBox>
+                                                        </div>
+                                                    </div>--%>
                                                 </ContentTemplate>
                                             </asp:UpdatePanel>
                                         </div>
