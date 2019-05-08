@@ -334,6 +334,42 @@
                                                     <asp:Label ID="lblRole" runat="server"></asp:Label>
                                                 </td>
                                             </tr>
+                                              <tr>
+                                                <td class="pass">Latitude</td>
+                                                <td>
+                                                    <asp:Label ID="lblAad_Mobile" runat="server"></asp:Label>
+                                                </td>
+                                            </tr>
+                                              <tr>
+                                                <td class="pass">Longitude</td>
+                                                <td>
+                                                    <asp:Label ID="lblLongitude" runat="server"></asp:Label>
+                                                </td>
+                                            </tr>
+                                              <tr>
+                                                <td class="pass">Facebook</td>
+                                                <td>
+                                                    <asp:Label ID="lblFacebook" runat="server"></asp:Label>
+                                                </td>
+                                            </tr>
+                                             <tr>
+                                                <td class="pass">Twitter</td>
+                                                <td>
+                                                    <asp:Label ID="lblTwitter" runat="server"></asp:Label>
+                                                </td>
+                                            </tr>
+                                             <tr>
+                                                <td class="pass">Linkedin</td>
+                                                <td>
+                                                    <asp:Label ID="lblLinkedin" runat="server"></asp:Label>
+                                                </td>
+                                            </tr>
+                                             <tr>
+                                                <td class="pass">Instagram</td>
+                                                <td>
+                                                    <asp:Label ID="lblInstagram" runat="server"></asp:Label>
+                                                </td>
+                                            </tr>
                                             </caption>
                                             </caption>
                                         </tbody>

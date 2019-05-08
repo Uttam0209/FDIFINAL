@@ -245,22 +245,12 @@
                                                              
                                                                    
                                                     </label>
-                                                    <asp:TextBox runat="server" ID="txtmanufacturename" Visible="False" class="form-control Turl_Tdate"></asp:TextBox>
+                                                    <asp:TextBox runat="server" ID="txtmanufacturename" placeholder="Enter Manufacturer name" Visible="False" class="form-control Turl_Tdate"></asp:TextBox>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="form-group">
-                                                <asp:Button runat="server" ID="btnsubmitpanel1" class="btn btn-primary pull-right" Text="Save" OnClick="btnsubmitpanel1_Click" />
-                                                <asp:Button runat="server" ID="btncancelpanel1" class="btn btn-default pull-right" Style="margin-right: 10px;" Text="Back" OnClick="btncancelpanel1_Click" />
-                                            </div>
-                                                               </asp:RadioButtonList>
-                                                            </label>
-                                                            <asp:TextBox runat="server" ID="txtmanufacturename" Visible="False" placeholder="Please enter manufacture name" class="form-control Turl_Tdate"></asp:TextBox>
-                                                        </div>
-                                                    </div>
+                                  
                                                 </ContentTemplate>
                                             </asp:UpdatePanel>
                                         </div>
@@ -308,7 +298,8 @@
                                                 <asp:HiddenField runat="server" ID="hfservicesid" Value='<%#Eval("SCategoryId") %>' />
                                             </ItemTemplate>
                                         </asp:TemplateField>
-                                        <asp:TemplateField HeaderText="Check">
+                                        <asp:TemplateField HeaderText="Select">
+
                                             <ItemTemplate>
                                                 <asp:CheckBox runat="server" ID="chk" />
                                             </ItemTemplate>
@@ -424,6 +415,7 @@
                                                     </div>
                                                 </div>
                                             </div>
+
                                             <div class="row">
                                                 <div class="col-md-4">
                                                     <div class="form-group">
