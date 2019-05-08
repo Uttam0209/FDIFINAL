@@ -84,6 +84,7 @@
                                                 <ItemTemplate>
                                                     <div class="acordian-table">
                                                        
+                                                        
                                                         <i class="toggle-table-minus fa fa-minus" aria-hidden="true" style="display: none"></i>
                                                         <i class="toggle-table-plus fa fa-plus" aria-hidden="true"></i>
                                                         
@@ -93,8 +94,10 @@
                                                                     <asp:TemplateField>
                                                                         <ItemTemplate>
                                                                             <div class="acordian-table">
+                                                                                
                                                                                 <i class="toggle-table-minus fa fa-minus" aria-hidden="true" style="display: none"></i>
                                                                                 <i class="toggle-table-plus fa fa-plus" aria-hidden="true"></i>
+                                                                                 
                                                                                 <asp:Panel ID="pnlunit" runat="server" Style="display: none">
                                                                                     <asp:GridView ID="gvunit" runat="server" AutoGenerateColumns="false" Class="table table-hover ChildGrid" OnRowCommand="gvunit_RowCommand">
                                                                                         <PagerStyle HorizontalAlign="Center" CssClass="GridPager" />
@@ -374,7 +377,7 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-warning" data-dismiss="modal">Cancel</button>
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
                             </div>
                         </form>
                     </div>
