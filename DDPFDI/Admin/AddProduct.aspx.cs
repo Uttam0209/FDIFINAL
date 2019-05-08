@@ -232,10 +232,12 @@ public partial class Admin_AddProduct : System.Web.UI.Page
             DataTable DtGetNodel = Lo.RetriveMasterData(Convert.ToInt16(ddlNodalOfficerEmail.SelectedItem.Value), "", "", 0, "", "", "SearchNodalOfficerID");
             if (DtGetNodel.Rows.Count > 0)
             {
+                contactpanel1.Visible = true;
                 // txtNName.Text = DtGetNodel.Rows[0]["NodalOficerName"].ToString();
                 txtNEmailId.Text = DtGetNodel.Rows[0]["NodalOfficerEmail"].ToString();
                 txtNTelephone.Text = DtGetNodel.Rows[0]["NodalOfficerTelephone"].ToString();
                 txtNFaxNo.Text = DtGetNodel.Rows[0]["NodalOfficerFax"].ToString();
+                txtDesignation.Text = DtGetNodel.Rows[0]["Designation"].ToString();
                 txtempcode.Text = DtGetNodel.Rows[0]["NodalEmpCode"].ToString();
                 txtmobnodal.Text = DtGetNodel.Rows[0]["NodalOfficerMobile"].ToString();
                 if (DtGetNodel.Rows[0]["Type"].ToString() == "Company")
@@ -275,10 +277,12 @@ public partial class Admin_AddProduct : System.Web.UI.Page
             DataTable DtGetNodel = Lo.RetriveMasterData(Convert.ToInt16(ddlNodalOfficerEmail2.SelectedItem.Value), "", "", 0, "", "", "SearchNodalOfficerID");
             if (DtGetNodel.Rows.Count > 0)
             {
+                contactpanel2.Visible = true;
                 // txtNName2.Text = DtGetNodel.Rows[0]["NodalOficerName"].ToString();
                 txtNEmailId2.Text = DtGetNodel.Rows[0]["NodalOfficerEmail"].ToString();
                 txtNTelephone2.Text = DtGetNodel.Rows[0]["NodalOfficerTelephone"].ToString();
                 txtNFaxNo2.Text = DtGetNodel.Rows[0]["NodalOfficerFax"].ToString();
+                txtdesignationnodal2.Text = DtGetNodel.Rows[0]["Designation"].ToString();
                 txtempcode2.Text = DtGetNodel.Rows[0]["NodalEmpCode"].ToString();
                 txtmobnodal2.Text = DtGetNodel.Rows[0]["NodalOfficerMobile"].ToString();
                 lblcompanynodal2.Text = DtGetNodel.Rows[0]["Type"].ToString();
@@ -400,7 +404,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     #region BindServices
     protected void BindServcies()
     {
-        DataTable Dtservices = Lo.RetriveMasterSubCategoryDate(20, "Services", "", "SelectInnerMaster", hfcomprefno.Value);
+        DataTable Dtservices = Lo.RetriveMasterSubCategoryDate(0, "Support Provided by DPSU", "", "SelectInnerMaster1", hfcomprefno.Value);
         if (Dtservices.Rows.Count > 0)
         {
             gvservices.DataSource = Dtservices;
@@ -492,8 +496,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     #region For ProductRequirment
     protected void BindMasterProductReqCategory()
     {
-        ddlprodreqir.Items.Insert(0, "Product Requirement");
-        DataTable DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, ddlprodreqir.SelectedItem.Value, "", "SelectProductCat", hfcomprefno.Value);
+        DataTable DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, lblprodrequir.Text, "", "SelectInnerMaster1", hfcomprefno.Value);
         if (DtMasterCategroy.Rows.Count > 0)
         {
             Co.FillDropdownlist(ddlprodreqir, DtMasterCategroy, "SCategoryName", "SCategoryID");
@@ -504,7 +507,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     #region For NomenClature
     protected void BindMasterProductNoenCletureCategory()
     {
-        DataTable DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(7, "Nomenclature of main system", "", "SelectInnerMaster", hfcomprefno.Value);
+        DataTable DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, lblNomenclature.Text, "", "SelectInnerMaster1", hfcomprefno.Value);
         if (DtMasterCategroy.Rows.Count > 0)
         {
             Co.FillDropdownlist(ddlnomnclature, DtMasterCategroy, "SCategoryName", "SCategoryID");
@@ -520,7 +523,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     #region For EndUser
     protected void BindEndUser()
     {
-        DataTable DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(21, "End User", "", "SelectInnerMaster", hfcomprefno.Value);
+        DataTable DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, lblenduser.Text, "", "SelectInnerMaster1", hfcomprefno.Value);
         if (DtMasterCategroy.Rows.Count > 0)
         {
             Co.FillDropdownlist(ddlenduser, DtMasterCategroy, "SCategoryName", "SCategoryID");
@@ -530,7 +533,6 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         {
             ddlenduser.Items.Insert(0, "Select");
         }
-
     }
     #endregion
     protected void ddlmastercategory_SelectedIndexChanged(object sender, EventArgs e)
@@ -554,6 +556,29 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         else if (rbisindinised.SelectedItem.Value == "N")
         {
             txtmanufacturename.Visible = false;
+        }
+    }
+    protected void rbtendordateyesno_CheckedChanged(object sender, EventArgs e)
+    {
+        if (rbtendordateyesno.SelectedItem.Value == "Y")
+        {
+            divtdate.Visible = true;
+        }
+        else if (rbtendordateyesno.SelectedItem.Value == "N")
+        {
+            divtdate.Visible = false;
+        }
+    }
+    protected void ddltendorstatus_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        if (ddltendorstatus.SelectedItem.Value == "Live")
+        {
+            divtendordate.Visible = true;
+        }
+        else
+        {
+            divtendordate.Visible = false;
+            divtdate.Visible = false;
         }
     }
     #region PanelSaveCode
@@ -587,73 +612,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         HyPanel1["IsIndeginized"] = Co.RSQandSQLInjection(rbisindinised.SelectedItem.Value, "soft");
         HyPanel1["ManufactureName"] = Co.RSQandSQLInjection(txtmanufacturename.Text, "soft");
         HyPanel1["SearchKeyword"] = Co.RSQandSQLInjection(txtsearchkeyword.Text, "soft");
-        HyPanel1["DPSUServices"] = "";
-        HyPanel1["Remarks"] = "";
-        HyPanel1["Estimatequantity"] = "";
-        HyPanel1["EstimatePriceLLP"] = "";
-        HyPanel1["TenderStatus"] = "";
-        HyPanel1["TenderFillDate"] = null;
-        HyPanel1["TenderUrl"] = "";
-        HyPanel1["NodelDetail"] = "";
-        string StrProductDescription = Lo.SaveCodeProduct(HyPanel1, out _sysMsg, out _msg, "Product");
-        if (StrProductDescription != "")
-        {
-            Cleartext();
-            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record Saved.')", true);
-        }
-        else
-        {
-            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not saved.')", true);
-        }
-    }
-    protected void SaveProductImage()
-    {
-        HyPanel2["ImageID"] = "";
-        HyPanel2["ImageName"] = "";
-        HyPanel2["ImageType"] = "";
-        HyPanel2["ImageActualSize"] = "";
-        HyPanel2["ImageLesserSize"] = "";
-        HyPanel2["ProductRefNo"] = "";
-        string StrImage = Lo.SaveCodeProduct(HyPanel2, out _sysMsg, out _msg, "Images");
-        if (StrImage != "")
-        {
-            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record updated.')", true);
-        }
-        else
-        {
-            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not updated.')", true);
-        }
-    }
-    protected void SaveSPDPSU()
-    {
-        if (hfprodid.Value != "")
-        {
-            HyPanel1["ProductID"] = Convert.ToInt16(hfprodid.Value);
-        }
-        else
-        {
-            HyPanel1["ProductID"] = 0;
-        }
-        HyPanel1["CompanyRefNo"] = Co.RSQandSQLInjection(hfcomprefno.Value, "soft");
-        HyPanel1["OEMPartNumber"] = "";
-        HyPanel1["DPSUPartNumber"] = "";
-        HyPanel1["EndUserPartNumber"] = "";
-        HyPanel1["HSNCode"] = "";
-        HyPanel1["NatoCode"] = "";
-        HyPanel1["ERPRefNo"] = "";
-        HyPanel1["NomenclatureOfMainSystem"] = "";
-        HyPanel1["ProductLevel1"] = "";
-        HyPanel1["ProductLevel2"] = "";
-        HyPanel1["ProductDescription"] = "";
-        HyPanel1["TechnologyLevel1"] = "";
-        HyPanel1["TechnologyLevel2"] = "";
-        HyPanel1["EndUser"] = "";
-        HyPanel1["Platform"] = "";
-        HyPanel1["PurposeofProcurement"] = "";
-        HyPanel1["ProductRequirment"] = "";
-        HyPanel1["IsIndeginized"] = "";
-        HyPanel1["ManufactureName"] = "";
-        HyPanel1["SearchKeyword"] = "";
+        DataTable dtImage = imagedb();
         foreach (GridViewRow rw in gvservices.Rows)
         {
             CheckBox chkBx = (CheckBox)rw.FindControl("chk");
@@ -665,59 +624,16 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                 Remarks = Remarks + "," + txtRemarks.Text;
             }
         }
-        HyPanel1["DPSUServices"] = Co.RSQandSQLInjection(Services.Substring(1).ToString(), "soft");
-        HyPanel1["Remarks"] = Co.RSQandSQLInjection(Remarks.Substring(1).ToString(), "soft");
-        HyPanel1["Estimatequantity"] = "";
-        HyPanel1["EstimatePriceLLP"] = "";
-        HyPanel1["TenderStatus"] = "";
-        HyPanel1["TenderFillDate"] = null;
-        HyPanel1["TenderUrl"] = "";
-        HyPanel1["NodelDetail"] = "";
-        string StrSPDPSU = Lo.SaveCodeProduct(HyPanel1, out _sysMsg, out _msg, "DPSU");
-        if (StrSPDPSU != "")
+        if (Services != "")
         {
-            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record Saved.')", true);
+            HyPanel1["DPSUServices"] = Co.RSQandSQLInjection(Services.Substring(1).ToString(), "soft");
+            HyPanel1["Remarks"] = Co.RSQandSQLInjection(Remarks.Substring(1).ToString(), "soft");
         }
         else
         {
-            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not saved.')", true);
+            HyPanel1["DPSUServices"] = "";
+            HyPanel1["Remarks"] = "";
         }
-    }
-    protected void SaveQuantityRequired()
-    {
-
-        if (hfprodid.Value != "")
-        {
-            HyPanel1["ProductID"] = Convert.ToInt16(hfprodid.Value);
-        }
-        else
-        {
-            HyPanel1["ProductID"] = 0;
-        }
-
-        HyPanel1["CompanyRefNo"] = Co.RSQandSQLInjection(hfcomprefno.Value, "soft");
-        HyPanel1["OEMPartNumber"] = "";
-        HyPanel1["DPSUPartNumber"] = "";
-        HyPanel1["EndUserPartNumber"] = "";
-        HyPanel1["HSNCode"] = "";
-        HyPanel1["NatoCode"] = "";
-        HyPanel1["ERPRefNo"] = "";
-        HyPanel1["NomenclatureOfMainSystem"] = "";
-        HyPanel1["ProductLevel1"] = "";
-        HyPanel1["ProductLevel2"] = "";
-        HyPanel1["ProductDescription"] = "";
-        HyPanel1["TechnologyLevel1"] = "";
-        HyPanel1["TechnologyLevel2"] = "";
-        HyPanel1["EndUser"] = "";
-        HyPanel1["Platform"] = "";
-        HyPanel1["PurposeofProcurement"] = "";
-        HyPanel1["ProductRequirment"] = "";
-        HyPanel1["IsIndeginized"] = "";
-        HyPanel1["ManufactureName"] = "";
-        HyPanel1["SearchKeyword"] = "";
-
-        HyPanel1["DPSUServices"] = "";
-        HyPanel1["Remarks"] = "";
         HyPanel1["Estimatequantity"] = Co.RSQandSQLInjection(txtestimatequantity.Text, "soft");
         HyPanel1["EstimatePriceLLP"] = Co.RSQandSQLInjection(txtestimateprice.Text, "soft");
         HyPanel1["TenderStatus"] = Co.RSQandSQLInjection(ddltendorstatus.SelectedItem.Value, "soft");
@@ -733,67 +649,24 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         }
 
         HyPanel1["TenderUrl"] = Co.RSQandSQLInjection(txttendorurl.Text, "soft");
-        HyPanel1["NodelDetail"] = "";
-        string StrQuantity = Lo.SaveCodeProduct(HyPanel1, out _sysMsg, out _msg, "QuantityReq");
-        if (StrQuantity != "")
+        if (ddlNodalOfficerEmail.Text != "")
         {
-            Cleartext3();
+            HyPanel1["NodelDetail"] = Co.RSQandSQLInjection(ddlNodalOfficerEmail.SelectedItem.Value, "soft") + "," +
+                                      Co.RSQandSQLInjection(ddlNodalOfficerEmail2.SelectedItem.Value, "soft");
+        }
+        else
+        {
+            HyPanel1["NodelDetail"] = null;
+        }
+        string StrProductDescription = Lo.SaveCodeProduct(HyPanel1, dtImage, out _sysMsg, out _msg, "Product");
+        if (StrProductDescription != "")
+        {
+            Cleartext();
             ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record Saved.')", true);
         }
         else
         {
-            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record Saved.')", true);
-        }
-    }
-    protected void SaveNodalDetail()
-    {
-
-        if (hfprodid.Value != "")
-        {
-            HyPanel1["ProductID"] = Convert.ToInt16(hfprodid.Value);
-        }
-        else
-        {
-            HyPanel1["ProductID"] = 0;
-        }
-
-        HyPanel1["CompanyRefNo"] = Co.RSQandSQLInjection(hfcomprefno.Value, "soft");
-        HyPanel1["OEMPartNumber"] = "";
-        HyPanel1["DPSUPartNumber"] = "";
-        HyPanel1["EndUserPartNumber"] = "";
-        HyPanel1["HSNCode"] = "";
-        HyPanel1["NatoCode"] = "";
-        HyPanel1["ERPRefNo"] = "";
-        HyPanel1["NomenclatureOfMainSystem"] = "";
-        HyPanel1["ProductLevel1"] = "";
-        HyPanel1["ProductLevel2"] = "";
-        HyPanel1["ProductDescription"] = "";
-        HyPanel1["TechnologyLevel1"] = "";
-        HyPanel1["TechnologyLevel2"] = "";
-        HyPanel1["EndUser"] = "";
-        HyPanel1["Platform"] = "";
-        HyPanel1["PurposeofProcurement"] = "";
-        HyPanel1["ProductRequirment"] = "";
-        HyPanel1["IsIndeginized"] = "";
-        HyPanel1["ManufactureName"] = "";
-        HyPanel1["SearchKeyword"] = "";
-
-        HyPanel1["DPSUServices"] = "";
-        HyPanel1["Remarks"] = "";
-        HyPanel1["Estimatequantity"] = "";
-        HyPanel1["EstimatePriceLLP"] = "";
-        HyPanel1["TenderStatus"] = "";
-        HyPanel1["TenderUrl"] = "";
-        HyPanel1["NodelDetail"] = Co.RSQandSQLInjection(ddlNodalOfficerEmail.SelectedItem.Value, "soft") + "," + Co.RSQandSQLInjection(ddlNodalOfficerEmail2.SelectedItem.Value, "soft");
-        string StrNodal = Lo.SaveCodeProduct(HyPanel3, out _sysMsg, out _msg, "Nodal");
-        if (StrNodal != "")
-        {
-            Cleartext4();
-            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record Saved.')", true);
-        }
-        else
-        {
-            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not Saved.')", true);
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not saved.')", true);
         }
     }
     #endregion
@@ -812,43 +685,6 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     protected void btncancelpanel1_Click(object sender, EventArgs e)
     {
         Cleartext();
-    }
-    protected void btnprodimagesave_Click(object sender, EventArgs e)
-    {
-        if (files.HasFile != null)
-        {
-            submitad();
-        }
-        else
-        {
-            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Please fill OEM Part Number')", true);
-        }
-    }
-    protected void btnprodback_Click(object sender, EventArgs e)
-    {
-        Cleartext();
-    }
-    protected void btnsavepanel3_Click(object sender, EventArgs e)
-    {
-        if (txtestimatequantity.Text != "")
-        {
-            SaveSPDPSU();
-        }
-    }
-    protected void btnbackpanel3_Click(object sender, EventArgs e)
-    {
-        Cleartext();
-    }
-    protected void btnsavepanel4_Click(object sender, EventArgs e)
-    {
-        if (ddlNodalOfficerEmail.SelectedItem.Value != "Select Nodal Officer" || ddlNodalOfficerEmail2.SelectedItem.Value != "Select Nodal Officer")
-        {
-            SaveQuantityRequired();
-        }
-    }
-    protected void btnbackpanel4_Click(object sender, EventArgs e)
-    {
-        Cleartext3();
     }
     #endregion
     #region Claertext
@@ -874,44 +710,16 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         rbisindinised.SelectedIndex = 0;
         txtmanufacturename.Text = "";
         txtsearchkeyword.Text = "";
-    }
-    protected void Cleartext3()
-    {
         txtestimatequantity.Text = "";
         txtestimateprice.Text = "";
         ddltendorstatus.SelectedIndex = 0;
         txttendordate.Text = "";
         txttendorurl.Text = "";
-    }
-    protected void Cleartext4()
-    {
         ddlNodalOfficerEmail.SelectedIndex = 0;
         ddlNodalOfficerEmail2.SelectedIndex = 0;
     }
     #endregion
     #region Image Code
-    protected void submitad()
-    {
-        try
-        {
-            if (files.HasFile != null)
-            {
-                DataTable dtImage = imagedb();
-                string str = Lo.SaveImages(dtImage, out _sysMsg, out _msg, "ImageSave");
-                if (str == "Save")
-                {
-                }
-            }
-            else
-            {
-                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Please fill form correctly. fill all column')", true);
-            }
-        }
-        catch (Exception ex)
-        {
-            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('" + ex.Message.ToString() + "')", true);
-        }
-    }
     protected DataTable imagedb()
     {
         HttpFileCollection uploadedFiles = Request.Files;
@@ -920,7 +728,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         dt.Columns.Add(new DataColumn("ImageName", typeof(string)));
         dt.Columns.Add(new DataColumn("ImageType", typeof(string)));
         dt.Columns.Add(new DataColumn("ImageActualSize", typeof(Int64)));
-        dt.Columns.Add(new DataColumn("ProductRefNo", typeof(string)));
+        dt.Columns.Add(new DataColumn("CompanyRefNo", typeof(string)));
         dt.Columns.Add(new DataColumn("Priority", typeof(int)));
         DataRow dr;
         {
@@ -953,7 +761,6 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                     dr["ImageName"] = "Upload/" + uploadedFiles[i].FileName;
                     dr["ImageType"] = files.PostedFile.ContentType;
                     dr["ImageActualSize"] = files.PostedFile.ContentLength;
-                    dr["ProductRefNo"] = "";
                     dr["CompanyRefNo"] = hfcomprefno.Value;
                     dr["Priority"] = i + 1;
                     dt.Rows.Add(dr);

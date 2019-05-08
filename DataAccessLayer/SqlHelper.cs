@@ -473,7 +473,7 @@ namespace DataAccessLayer
                 }
             }
         }
-        public string SaveCodeProduct(HybridDictionary hyProduct, out string _sysMsg, out string _msg, string Criteria)
+        public string SaveCodeProduct(HybridDictionary hyProduct, DataTable dt, out string _sysMsg, out string _msg, string Criteria)
         {
             using (DbConnection dbCon = db.CreateConnection())
             {
@@ -517,6 +517,18 @@ namespace DataAccessLayer
                     db.AddOutParameter(cmd, "@ReturnID", DbType.String, 20);
                     db.ExecuteNonQuery(cmd, dbTran);
                     mCurrentID = db.GetParameterValue(cmd, "@ReturnID").ToString();
+                    for (int i = 0; i < dt.Rows.Count; i++)
+                    {
+                        DbCommand dbcom1 = db.GetStoredProcCommand("sp_trn_Image");
+                        db.AddInParameter(dbcom1, "@ImageID", DbType.Int64, dt.Rows[i]["ImageID"]);
+                        db.AddInParameter(dbcom1, "@ProductRefNo", DbType.String, mCurrentID);
+                        db.AddInParameter(dbcom1, "@ImageName", DbType.String, dt.Rows[i]["ImageName"]);
+                        db.AddInParameter(dbcom1, "@ImageType", DbType.String, dt.Rows[i]["ImageType"]);
+                        db.AddInParameter(dbcom1, "@ImageActualSize", DbType.Int64, dt.Rows[i]["ImageActualSize"]);
+                        db.AddInParameter(dbcom1, "@Priority", DbType.String, dt.Rows[i]["Priority"]);
+                        db.AddInParameter(dbcom1, "@CompanyRefNo", DbType.String, dt.Rows[i]["CompanyRefNo"]);
+                        db.ExecuteNonQuery(dbcom1, dbTran);
+                    }
                     dbTran.Commit();
                     _msg = "Save";
                     _sysMsg = "Save";
