@@ -84,7 +84,7 @@
                                                     <asp:Label ID="lblrefno" runat="server" Text='<%#Eval("CompanyName") %>' NullDisplayText="#" SortExpression="CompanyRefNo"></asp:Label>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
-                                            <asp:BoundField DataField="DesignationRefNo" HeaderText="Designation Refernce No" NullDisplayText="#" SortExpression="DesignationRefNo" />
+                                            <asp:BoundField DataField="DesignationRefNo" HeaderText="Refernce No" NullDisplayText="#" SortExpression="DesignationRefNo" />
                                             <asp:BoundField DataField="Designation" HeaderText="Designation" NullDisplayText="#" SortExpression="Designation" />
 
                                             <asp:TemplateField HeaderText="Action">

@@ -200,7 +200,7 @@
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="form-group">
-                                                    <label>Product Requirement :</label>
+                                                    <label>Product Time Frame :</label>
                                                     <asp:DropDownList runat="server" ID="ddlprodreqir" class="form-control"></asp:DropDownList>
                                                 </div>
                                             </div>
@@ -227,7 +227,7 @@
                                                                    <asp:ListItem Value="N" Selected="True">No</asp:ListItem>
                                                                </asp:RadioButtonList>
                                                     </label>
-                                                    <asp:TextBox runat="server" ID="txtmanufacturename" Visible="False" class="form-control Turl_Tdate"></asp:TextBox>
+                                                    <asp:TextBox runat="server" ID="txtmanufacturename" placeholder="Enter Manufacturer name" Visible="False" class="form-control Turl_Tdate"></asp:TextBox>
                                                 </div>
                                             </div>
                                         </div>
@@ -296,13 +296,13 @@
                                                 <%#Container.DataItemIndex+1 %>
                                             </ItemTemplate>
                                         </asp:TemplateField>
-                                        <asp:TemplateField HeaderText="Services">
+                                        <asp:TemplateField HeaderText="Support Provided by DPSU">
                                             <ItemTemplate>
                                                 <asp:Label runat="server" ID="lblservices" Text='<%#Eval("SCategoryName") %>'></asp:Label>
                                                 <asp:HiddenField runat="server" ID="hfservicesid" Value='<%#Eval("SCategoryId") %>' />
                                             </ItemTemplate>
                                         </asp:TemplateField>
-                                        <asp:TemplateField HeaderText="CheckBox">
+                                        <asp:TemplateField HeaderText="Select">
                                             <ItemTemplate>
                                                 <asp:CheckBox runat="server" ID="chk" />
                                             </ItemTemplate>
@@ -493,7 +493,7 @@
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label>Designation</label>
-                                                    <asp:TextBox runat="server" ID="TextBox7" name="" class="form-control form-cascade-control" placeholder=""></asp:TextBox>
+                                                    <asp:TextBox runat="server" ID="txtdesignationnodL2" name="" class="form-control form-cascade-control" placeholder=""></asp:TextBox>
                                                 </div>
                                             </div>
                                             <div class="col-md-4">

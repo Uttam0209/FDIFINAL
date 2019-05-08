@@ -236,6 +236,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                 txtNEmailId.Text = DtGetNodel.Rows[0]["NodalOfficerEmail"].ToString();
                 txtNTelephone.Text = DtGetNodel.Rows[0]["NodalOfficerTelephone"].ToString();
                 txtNFaxNo.Text = DtGetNodel.Rows[0]["NodalOfficerFax"].ToString();
+                txtDesignation.Text = DtGetNodel.Rows[0]["Designation"].ToString();
                 txtempcode.Text = DtGetNodel.Rows[0]["NodalEmpCode"].ToString();
                 txtmobnodal.Text = DtGetNodel.Rows[0]["NodalOfficerMobile"].ToString();
                 if (DtGetNodel.Rows[0]["Type"].ToString() == "Company")
@@ -279,6 +280,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                 txtNEmailId2.Text = DtGetNodel.Rows[0]["NodalOfficerEmail"].ToString();
                 txtNTelephone2.Text = DtGetNodel.Rows[0]["NodalOfficerTelephone"].ToString();
                 txtNFaxNo2.Text = DtGetNodel.Rows[0]["NodalOfficerFax"].ToString();
+                txtdesignationnodL2.Text = DtGetNodel.Rows[0]["Designation"].ToString();
                 txtempcode2.Text = DtGetNodel.Rows[0]["NodalEmpCode"].ToString();
                 txtmobnodal2.Text = DtGetNodel.Rows[0]["NodalOfficerMobile"].ToString();
                 lblcompanynodal2.Text = DtGetNodel.Rows[0]["Type"].ToString();
@@ -492,7 +494,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     #region For ProductRequirment
     protected void BindMasterProductReqCategory()
     {
-        ddlprodreqir.Items.Insert(0, "Product Requirement");
+        ddlprodreqir.Items.Insert(0, "Select");
         DataTable DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, ddlprodreqir.SelectedItem.Value, "", "SelectProductCat", hfcomprefno.Value);
         if (DtMasterCategroy.Rows.Count > 0)
         {
