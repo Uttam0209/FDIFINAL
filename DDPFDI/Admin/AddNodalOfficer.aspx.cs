@@ -45,12 +45,15 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
                 }
                 divHeadPage.InnerHtml = strheadPage.ToString();
                 strheadPage.Append("</ul");
-                // currentPage = System.IO.Path.GetFileName(Request.Url.AbsolutePath);
                 mType = objEnc.DecryptData(Session["Type"].ToString());
                 mRefNo = Session["CompanyRefNo"].ToString();
                 BindCompany();
-                BindMasterDesignation();
-                //BindMasterDepartment();
+                BindMasterDesignation("");
+            }
+
+            if (Request.QueryString["mcurrentcompRefNo"] != null)
+            {
+                EditCode();
             }
         }
     }
@@ -222,7 +225,7 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
             lblselectdivison.Visible = false;
             lblselectunit.Visible = false;
         }
-        BindMasterDesignation();
+        BindMasterDesignation("");
     }
     protected void ddldivision_OnSelectedIndexChanged(object sender, EventArgs e)
     {
@@ -256,22 +259,31 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
                 lblselectdivison.Visible = false;
             }
         }
-        BindMasterDesignation();
+        BindMasterDesignation("");
     }
 
     protected void ddlunit_OnSelectedIndexChanged(object sender, EventArgs e)
     {
         hidCompanyRefNo.Value = ddlunit.SelectedItem.Value;
         hidType.Value = "Unit";
-        BindMasterDesignation();
+        BindMasterDesignation("");
     }
 
     #endregion
     #region For Department or Designation
-    protected void BindMasterDesignation()
+    protected void BindMasterDesignation(string mCompanyRefNo)
     {
-        ddldesignation.Items.Insert(0, "Designation");
-        DataTable DtMasterCategroy = Lo.RetriveMasterData(0,ddlcompany.SelectedItem.Value,"",0, "", "", "ViewDesignation");
+        ddldesignation.Items.Insert(0, "Select");
+        DataTable DtMasterCategroy;
+        if (mCompanyRefNo != "")
+        {
+
+            DtMasterCategroy = Lo.RetriveMasterData(0, mCompanyRefNo, "", 0, "", "", "ViewDesignation");
+        }
+        else
+        {
+            DtMasterCategroy = Lo.RetriveMasterData(0, ddlcompany.SelectedItem.Value, "", 0, "", "", "ViewDesignation");
+        }
         if (DtMasterCategroy.Rows.Count > 0)
         {
             Co.FillDropdownlist(ddldesignation, DtMasterCategroy, "Designation", "DesignationId");
@@ -292,9 +304,10 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
     #region Save code
     protected void SaveNodal()
     {
-        if (Mid == 0)
+        if (Request.QueryString["mcurrentcompRefNo"] != null)
         {
-            hySaveNodal["NodalOfficerID"] = Mid;
+            hySaveNodal["NodalOfficerID"] = objEnc.DecryptData(Request.QueryString["mcurrentcompRefNo"].ToString());
+           
         }
         else
         {
@@ -310,7 +323,7 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
         hySaveNodal["NodalOfficerMobile"] = Co.RSQandSQLInjection(txtmobile.Text, "soft");
         hySaveNodal["NodalOfficerTelephone"] = Co.RSQandSQLInjection(txttelephone.Text, "soft");
         hySaveNodal["NodalOfficerFax"] = Co.RSQandSQLInjection(txtfax.Text, "soft");
-        hySaveNodal["CompanyRefNo"] = hidCompanyRefNo.Value;
+        hySaveNodal["CompanyRefNo"] = ddlcompany.SelectedItem.Value;
         hySaveNodal["Type"] = hidType.Value;
         string Str = Lo.SaveMasterNodal(hySaveNodal, out _sysMsg, out _msg);
         if (Str == "Save")
@@ -332,10 +345,17 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
         }
         else
         {
-            DataTable dtNodalOfficerEmail = Lo.RetriveMasterData(0, txtemailid.Text, "", 0, "", "", "ValidEmail");
-            if (dtNodalOfficerEmail.Rows.Count > 0)
+            if (btnsub.Text != "Edit")
             {
-                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Email id already exist !')", true);
+                DataTable dtNodalOfficerEmail = Lo.RetriveMasterData(0, txtemailid.Text, "", 0, "", "", "ValidEmail");
+                if (dtNodalOfficerEmail.Rows.Count > 0)
+                {
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Email id already exist !')", true);
+                }
+                else
+                {
+                    SaveNodal();
+                }
             }
             else
             {
@@ -352,5 +372,30 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
         txtname.Text = "";
         txttelephone.Text = "";
         ddldesignation.SelectedIndex = 0;
+        btnsub.Text = "Save";
+        txtEmpCode.Text = "";
+    }
+
+    protected void EditCode()
+    {
+        if (Session["CompanyRefNo"] != null)
+        {
+            DataTable DtView = Lo.RetriveMasterData(0, objEnc.DecryptData(Request.QueryString["mcurrentcompRefNo"].ToString()), "", 0, "", "", "SearchNodalOfficer");
+            if (DtView.Rows.Count > 0)
+            {
+
+                ddlcompany.SelectedValue = DtView.Rows[0]["CompanyRefNo"].ToString();
+                txtname.Text = DtView.Rows[0]["NodalOficerName"].ToString();
+                BindMasterDesignation(DtView.Rows[0]["CompanyRefNo"].ToString());
+                ddldesignation.SelectedValue = DtView.Rows[0]["NodalOfficerDesignation"].ToString();
+
+                txtEmpCode.Text = DtView.Rows[0]["NodalEmpCode"].ToString();
+                txtemailid.Text = DtView.Rows[0]["NodalOfficerEmail"].ToString();
+                txtmobile.Text = DtView.Rows[0]["NodalOfficerMobile"].ToString();
+                txttelephone.Text = DtView.Rows[0]["NodalOfficerTelephone"].ToString();
+                txtfax.Text = DtView.Rows[0]["NodalOfficerFax"].ToString();
+                btnsub.Text = "Edit";
+            }
+        }
     }
 }
