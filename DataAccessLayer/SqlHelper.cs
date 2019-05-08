@@ -457,12 +457,73 @@ namespace DataAccessLayer
                 }
             }
         }
-
-        public string SaveCompDesignation(HybridDictionary hysavecomp, out string _sysMsg, out string _msg)
+        public string SaveCodeProduct(HybridDictionary hyProduct, out string _sysMsg, out string _msg, string Criteria)
         {
-            string mCurrentID = "";
             using (DbConnection dbCon = db.CreateConnection())
             {
+                string mCurrentID = "";
+                dbCon.Open();
+                DbTransaction dbTran = dbCon.BeginTransaction();
+                try
+                {
+                    DbCommand cmd = db.GetStoredProcCommand("sp_mst_mainProduct");
+                    db.AddInParameter(cmd, "@ProductID", DbType.Int64, hyProduct["ProductID"]);
+                    db.AddInParameter(cmd, "@ProductRefNo", DbType.String, hyProduct["ProductRefNo"]);
+                    db.AddInParameter(cmd, "@CompanyRefNo", DbType.String, hyProduct["CompanyRefNo"]);
+                    db.AddInParameter(cmd, "@OEMPartNumber", DbType.String, hyProduct["OEMPartNumber"].ToString().Trim());
+                    db.AddInParameter(cmd, "@DPSUPartNumber", DbType.String, hyProduct["DPSUPartNumber"]);
+                    db.AddInParameter(cmd, "@EndUserPartNumber", DbType.String, hyProduct["EndUserPartNumber"]);
+                    db.AddInParameter(cmd, "@HSNCode", DbType.String, hyProduct["HSNCode"]);
+                    db.AddInParameter(cmd, "@NatoCode", DbType.String, hyProduct["NatoCode"].ToString().Trim());
+                    db.AddInParameter(cmd, "@ERPRefNo", DbType.String, hyProduct["ERPRefNo"].ToString().Trim());
+                    db.AddInParameter(cmd, "@NomenclatureOfMainSystem", DbType.Int64, hyProduct["NomenclatureOfMainSystem"].ToString().Trim());
+                    db.AddInParameter(cmd, "@ProductLevel1", DbType.Int64, hyProduct["ProductLevel1"]);
+                    db.AddInParameter(cmd, "@ProductLevel2", DbType.Int16, hyProduct["ProductLevel2"].ToString().Trim());
+                    db.AddInParameter(cmd, "@ProductDescription", DbType.String, hyProduct["ProductDescription"]);
+                    db.AddInParameter(cmd, "@TechnologyLevel1", DbType.Int64, hyProduct["TechnologyLevel1"]);
+                    db.AddInParameter(cmd, "@TechnologyLevel2", DbType.Int64, hyProduct["TechnologyLevel2"]);
+                    db.AddInParameter(cmd, "@EndUser", DbType.String, hyProduct["EndUser"].ToString().Trim());
+                    db.AddInParameter(cmd, "@IsIndeginized", DbType.String, hyProduct["IsIndeginized"].ToString().Trim());
+                    db.AddInParameter(cmd, "@ManufactureName", DbType.String, hyProduct["ManufactureName"]);
+                    db.AddInParameter(cmd, "@Platform", DbType.Int64, hyProduct["Platform"].ToString().Trim());
+                    db.AddInParameter(cmd, "@PurposeofProcurement", DbType.Int64, hyProduct["PurposeofProcurement"]);
+                    db.AddInParameter(cmd, "@ProductRequirment", DbType.Int64, hyProduct["ProductRequirment"]);
+                    db.AddInParameter(cmd, "@SearchKeyword", DbType.String, hyProduct["SearchKeyword"]);
+                    db.AddInParameter(cmd, "@DPSUServices", DbType.String, hyProduct["DPSUServices"].ToString().Trim());
+                    db.AddInParameter(cmd, "@Remarks", DbType.String, hyProduct["Remarks"].ToString().Trim());
+                    db.AddInParameter(cmd, "@Estimatequantity", DbType.String, hyProduct["Estimatequantity"].ToString().Trim());
+                    db.AddInParameter(cmd, "@EstimatePriceLLP", DbType.String, hyProduct["EstimatePriceLLP"]);
+                    db.AddInParameter(cmd, "@TenderStatus", DbType.String, hyProduct["TenderStatus"].ToString().Trim());
+                    db.AddInParameter(cmd, "@TenderFillDate", DbType.Date, hyProduct["TenderFillDate"]);
+                    db.AddInParameter(cmd, "@TenderUrl", DbType.String, hyProduct["TenderUrl"]);
+                    db.AddInParameter(cmd, "@NodelDetail", DbType.String, hyProduct["NodelDetail"]);
+                    db.AddInParameter(cmd, "@Criteria", DbType.String, Criteria);
+                    db.AddOutParameter(cmd, "@ReturnID", DbType.String, 20);
+                    db.ExecuteNonQuery(cmd, dbTran);
+                    mCurrentID = db.GetParameterValue(cmd, "@ReturnID").ToString();
+                    dbTran.Commit();
+                    _msg = "Save";
+                    _sysMsg = "Save";
+                    return mCurrentID;
+                }
+                catch (Exception ex)
+                {
+                    dbTran.Rollback();
+                    _msg = ex.Message;
+                    _sysMsg = ex.Message;
+                    return "-1";
+                }
+                finally
+                {
+                    dbCon.Close();
+                }
+            }
+        }
+        public string SaveCompDesignation(HybridDictionary hysavecomp, out string _sysMsg, out string _msg)
+        {
+            using (DbConnection dbCon = db.CreateConnection())
+            {
+                string mCurrentID = "";
                 dbCon.Open();
                 DbTransaction dbTran = dbCon.BeginTransaction();
                 try
@@ -476,9 +537,10 @@ namespace DataAccessLayer
                     mCurrentID = db.GetParameterValue(cmd, "@ReturnID").ToString();
                     dbTran.Commit();
                     _msg = "Save";
-                    _sysMsg = mCurrentID;
+                    _sysMsg = "Save";
                     return mCurrentID;
                 }
+
                 catch (Exception ex)
                 {
                     dbTran.Rollback();
@@ -488,9 +550,45 @@ namespace DataAccessLayer
                 }
                 finally
                 {
+                    dbCon.Close();
+                }
+            }
+        }
+        public string SaveImages(DataTable dt, out string _sysMsg, out string _msg, string Criteria)
+        {
+            using (DbConnection dbcon = db.CreateConnection())
+            {
+                dbcon.Open();
+                DbTransaction dbTran = dbcon.BeginTransaction();
+                try
+                {
+                    for (int i = 0; i < dt.Rows.Count; i++)
+                    {
+                        DbCommand dbcom1 = db.GetStoredProcCommand("sp_trn_Image");
+                        db.AddInParameter(dbcom1, "@ImageID", DbType.Int64, dt.Rows[i]["ImageID"]);
+                        db.AddInParameter(dbcom1, "@ImageName", DbType.String, dt.Rows[i]["ImageName"]);
+                        db.AddInParameter(dbcom1, "@ImageType", DbType.String, dt.Rows[i]["ImageType"]);
+                        db.AddInParameter(dbcom1, "@ImageActualSize", DbType.Int64, dt.Rows[i]["ImageActualSize"]);
+                        db.AddInParameter(dbcom1, "@Priority", DbType.String, dt.Rows[i]["Priority"]);
+                        db.AddInParameter(dbcom1, "@ProductRefNo", DbType.String, dt.Rows[i]["ProductRefNo"]);
+                        db.AddInParameter(dbcom1, "@CompanyRefNo", DbType.String, dt.Rows[i]["CompanyRefNo"]);
+                        db.ExecuteNonQuery(dbcom1, dbTran);
+                    }
+                    dbTran.Commit();
                     _msg = "Save";
                     _sysMsg = "Save";
-                    dbCon.Close();
+                    return "Save";
+                }
+                catch (SqlException ex)
+                {
+                    dbTran.Rollback();
+                    _msg = ex.Message;
+                    _sysMsg = ex.Message;
+                    return "-1";
+                }
+                finally
+                {
+                    dbcon.Close();
                 }
             }
         }
@@ -640,7 +738,7 @@ namespace DataAccessLayer
                 }
             }
         }
-        public DataTable RetriveMasterCategoryDate(Int64 CatID, string CatName, string SCatValue,string Flag,string LavelActive, string Criteria)
+        public DataTable RetriveMasterCategoryDate(Int64 CatID, string CatName, string SCatValue, string Flag, string LavelActive, string Criteria)
         {
             using (DbConnection dbCon = db.CreateConnection())
             {

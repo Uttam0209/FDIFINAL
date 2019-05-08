@@ -124,7 +124,6 @@ public partial class Admin_AddDesignation : System.Web.UI.Page
         HySave["CompanyRefNo"] = ddlmaster.SelectedItem.Value;
         HySave["Designation"] = Co.RSQandSQLInjection(txtDesignation.Text.Trim(), "soft");
         StrSaveComp = Lo.SaveCompDesignation(HySave, out _sysMsg, out _msg);
-
         if (StrSaveComp != "")
         {
 
