@@ -12,7 +12,6 @@
             margin: 0.2em -0.7em 0 0;
             border: 1px solid #ccc;
         }
-
         .remove_img_preview {
             position: relative;
             top: -42px;
@@ -25,7 +24,6 @@
             text-align: center;
             cursor: pointer;
         }
-
             .remove_img_preview:before {
                 content: "×";
             }
@@ -241,13 +239,18 @@
                                                             <label class="live-status-box">
                                                                 Product Already Indeginized :
                                                                <asp:RadioButtonList runat="server" ID="rbisindinised" RepeatColumns="2" RepeatLayout="Flow" RepeatDirection="Horizontal" AutoPostBack="True" OnSelectedIndexChanged="rbisindinised_CheckedChanged ">
-                                                                   <asp:ListItem Value="Y" class="yes">Yes</asp:ListItem>
                                                                    <asp:ListItem Value="N" Selected="True">No</asp:ListItem>
-                                                               </asp:RadioButtonList>
-                                                            </label>
-                                                            <asp:TextBox runat="server" ID="txtmanufacturename" Visible="False" placeholder="Please enter manufacture name" class="form-control Turl_Tdate"></asp:TextBox>
-                                                        </div>
-                                                    </div>
+                                                                   <asp:ListItem Value="Y" class="yes">Yes</asp:ListItem>
+                                                                    </asp:RadioButtonList>
+                                                             
+                                                                   
+                                                    </label>
+                                                    <asp:TextBox runat="server" ID="txtmanufacturename" placeholder="Enter Manufacturer name" Visible="False" class="form-control Turl_Tdate"></asp:TextBox>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                  
                                                 </ContentTemplate>
                                             </asp:UpdatePanel>
                                         </div>
@@ -295,7 +298,8 @@
                                                 <asp:HiddenField runat="server" ID="hfservicesid" Value='<%#Eval("SCategoryId") %>' />
                                             </ItemTemplate>
                                         </asp:TemplateField>
-                                        <asp:TemplateField HeaderText="Check">
+                                        <asp:TemplateField HeaderText="Select">
+
                                             <ItemTemplate>
                                                 <asp:CheckBox runat="server" ID="chk" />
                                             </ItemTemplate>
@@ -411,6 +415,7 @@
                                                     </div>
                                                 </div>
                                             </div>
+
                                             <div class="row">
                                                 <div class="col-md-4">
                                                     <div class="form-group">
@@ -516,6 +521,9 @@
                 </div>
             </div>
         </div>
+
+    </div>
+   
         <script type="text/javascript" language="javascript">
             var count = 0;
             function handleFileSelect(evt) {
@@ -555,5 +563,5 @@
                 //           parseInt($fileUpload.get(0).files.length - 1;
             });
         </script>
-</asp:Content>
 
+</asp:Content>

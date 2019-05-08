@@ -279,7 +279,9 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                 txtNEmailId2.Text = DtGetNodel.Rows[0]["NodalOfficerEmail"].ToString();
                 txtNTelephone2.Text = DtGetNodel.Rows[0]["NodalOfficerTelephone"].ToString();
                 txtNFaxNo2.Text = DtGetNodel.Rows[0]["NodalOfficerFax"].ToString();
+
                 txtdesignationnodal2.Text = DtGetNodel.Rows[0]["Designation"].ToString();
+
                 txtempcode2.Text = DtGetNodel.Rows[0]["NodalEmpCode"].ToString();
                 txtmobnodal2.Text = DtGetNodel.Rows[0]["NodalOfficerMobile"].ToString();
                 lblcompanynodal2.Text = DtGetNodel.Rows[0]["Type"].ToString();

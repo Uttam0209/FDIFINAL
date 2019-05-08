@@ -289,9 +289,9 @@ form label { color: #494ca2;}
 .master-company-table tr th:nth-child(4) { width: 240px;}
 .master-company-table tr th:nth-child(5) { width: 110px;}
 .master-company-table tr th:nth-child(6) { width: 298px;}
-.sideBg .table tr td th { background: #606dab !important;}
-.sideBg .table tr td td th {background: #536bde  !important;}
-.sideBg .table tr td td i.fa-plus,.sideBg .table tr td td i.fa-plus { color:#606dab}
+.sideBg .table tr td th,.sideBg .table tr td td { background: #cce5ff !important; color: #004085 !important}
+.sideBg .table tr td td th,.sideBg .table tr td td td {background: #d4edda  !important; color: #155724 !important}
+.sideBg .table tr td td i.fa-plus,.sideBg .table tr td td i.fa-minus { color:#de2f13}
 .checkbox-inline { padding-left: 0;}
 .sidebar-holder .nav li a {box-shadow: 0 0 4px rgba(0,0,0,0.06); border: 0;  font-weight: 600 !important; font-size: 14px;}
 .sidebar-holder .nav li a i { color: #2b3d51 !important }
@@ -319,12 +319,15 @@ form label { color: #494ca2;}
 .company-flex-row .form-group { margin-right: 30px;}
 .company-flex-row .form-group:last-child { margin-right: 0 !important;}
 #Location { margin-bottom: 20px;}
-.fa-trash { color: #df0054;}
-.fa-edit { color: #494ca2}
 .showMore { text-align: right;}
 .showMore i { cursor: pointer; width: 30px; height: 20px;}
 .form-group label input[type='checkbox'],.form-group label input[type='radio'] { margin-right: 5px;}
 .showMore a { text-decoration: underline !important;}
 #ContentPlaceHolder1_divflag span label,#ContentPlaceHolder1_divActive span label { margin-right: 10px;}
 #ContentPlaceHolder1_divflag span input[type='radio'],#ContentPlaceHolder1_divActive span input[type="radio"] { margin-right: 5px; margin-top:0;}
-.viewCatDropDown tr th:last-child { width: 60px !important;}
+.viewCatDropDown tr th:last-child { width: 109px !important;}
+.viewCatDropDown tr td:first-child,.viewCatDropDown tr th:first-child { width: 80px;}
+.viewCatDropDown tr th:nth-child(3) { width: auto !important}
+.contactFormRow .form-group input[readonly="readonly"] { background: #fff !important;}
+.productalreadylabel{ margin-bottom: -4px; }
+.form .form-group label span.yes { margin-left: 10px !important;}

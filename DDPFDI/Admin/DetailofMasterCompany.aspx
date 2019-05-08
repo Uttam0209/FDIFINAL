@@ -84,6 +84,7 @@
                                                 <ItemTemplate>
                                                     <div class="acordian-table">
                                                        
+                                                        
                                                         <i class="toggle-table-minus fa fa-minus" aria-hidden="true" style="display: none"></i>
                                                         <i class="toggle-table-plus fa fa-plus" aria-hidden="true"></i>
                                                         
@@ -93,8 +94,10 @@
                                                                     <asp:TemplateField>
                                                                         <ItemTemplate>
                                                                             <div class="acordian-table">
+                                                                                
                                                                                 <i class="toggle-table-minus fa fa-minus" aria-hidden="true" style="display: none"></i>
                                                                                 <i class="toggle-table-plus fa fa-plus" aria-hidden="true"></i>
+                                                                                 
                                                                                 <asp:Panel ID="pnlunit" runat="server" Style="display: none">
                                                                                     <asp:GridView ID="gvunit" runat="server" AutoGenerateColumns="false" Class="table table-hover ChildGrid" OnRowCommand="gvunit_RowCommand">
                                                                                         <PagerStyle HorizontalAlign="Center" CssClass="GridPager" />
@@ -331,6 +334,42 @@
                                                     <asp:Label ID="lblRole" runat="server"></asp:Label>
                                                 </td>
                                             </tr>
+                                              <tr>
+                                                <td class="pass">Latitude</td>
+                                                <td>
+                                                    <asp:Label ID="lblAad_Mobile" runat="server"></asp:Label>
+                                                </td>
+                                            </tr>
+                                              <tr>
+                                                <td class="pass">Longitude</td>
+                                                <td>
+                                                    <asp:Label ID="lblLongitude" runat="server"></asp:Label>
+                                                </td>
+                                            </tr>
+                                              <tr>
+                                                <td class="pass">Facebook</td>
+                                                <td>
+                                                    <asp:Label ID="lblFacebook" runat="server"></asp:Label>
+                                                </td>
+                                            </tr>
+                                             <tr>
+                                                <td class="pass">Twitter</td>
+                                                <td>
+                                                    <asp:Label ID="lblTwitter" runat="server"></asp:Label>
+                                                </td>
+                                            </tr>
+                                             <tr>
+                                                <td class="pass">Linkedin</td>
+                                                <td>
+                                                    <asp:Label ID="lblLinkedin" runat="server"></asp:Label>
+                                                </td>
+                                            </tr>
+                                             <tr>
+                                                <td class="pass">Instagram</td>
+                                                <td>
+                                                    <asp:Label ID="lblInstagram" runat="server"></asp:Label>
+                                                </td>
+                                            </tr>
                                             </caption>
                                             </caption>
                                         </tbody>
@@ -338,7 +377,7 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-warning" data-dismiss="modal">Cancel</button>
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
                             </div>
                         </form>
                     </div>

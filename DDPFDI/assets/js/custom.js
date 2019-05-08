@@ -83,16 +83,6 @@ $(document).ready(function(){
        }
     });
 
-    //Show Map
-
-    $('.showMap').click(function(){
-        $('.map-box').show();
-
-    });
-
-
-
-
 });
 
 
@@ -112,19 +102,10 @@ $(document).ready(function () {
         }
     });
 
-    ////On change Show Contact form : TODO
+     //Show Map
 
-    //$('body').on('change', '.contactD1Select select', function () {
-    //    console.log('testing');
-
-    //    $(this).parents('.section-pannel').find('.contactFormRow').slideDown();
-    //    var $ToggleText = $(this).parents('.section-pannel').find('.showMoreLink').text();;
-
-    //    if ($ToggleText === "Show Details") {
-    //        $($(this)).text('Hide Details');
-    //    }
-    //    else {
-    //        $($(this)).text('Show Details');
-    //    }
-    //});
+    $('body').on('click','.showMap',function(){
+        $('.map-box').show();
+    
+    });
 });

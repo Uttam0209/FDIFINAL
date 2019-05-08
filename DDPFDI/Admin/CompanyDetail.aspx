@@ -212,19 +212,20 @@
                 <div id="officer" class="tab-pane fade">
                     <asp:UpdatePanel ID="UpdatePanel3" runat="server" ChildrenAsTriggers="True">
                         <ContentTemplate>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label for="tpersonname" class="control-label">Select Nodal Officer </label>
-                                        <asp:DropDownList runat="server" ID="ddlNodalOfficerEmail" class="form-control" AutoPostBack="True" OnSelectedIndexChanged="ddlNodalOfficerEmail_SelectedIndexChanged"></asp:DropDownList>
+                            <div class="section-pannel">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="tpersonname" class="control-label">Select Nodal Officer </label>
+                                            <asp:DropDownList runat="server" ID="ddlNodalOfficerEmail" class="form-control" AutoPostBack="True" OnSelectedIndexChanged="ddlNodalOfficerEmail_SelectedIndexChanged"></asp:DropDownList>
 
+                                        </div>
                                     </div>
+
+
                                 </div>
 
-
-                            </div>
-                            <div class="section-pannel">
-                                <div class="contactFormRow" style="display: none">
+                                <div class="contactFormRow" id="divNodalOfficer" runat="server" visible="false">
                                     <div class="row">
                                         <div class="col-md-4">
                                             <div class="form-group">
@@ -237,23 +238,12 @@
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="tpersonname" class="control-label">Designation </label>
-                                                <asp:TextBox runat="server" ID="txtDesignation" name="" class="form-control form-cascade-control" placeholder=""></asp:TextBox>
+                                                <asp:TextBox runat="server" ID="txtDesignation" Text="CEO" name="" class="form-control form-cascade-control" placeholder=""></asp:TextBox>
                                             </div>
 
 
                                         </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label for="tpersonname" class="control-label">Department </label>
-                                                <asp:TextBox runat="server" ID="txtDepartment" name="" class="form-control form-cascade-control" placeholder=""></asp:TextBox>
-                                            </div>
-
-
-                                        </div>
-                                    </div>
-                                    <div class="row">
-
-                                        <div class="col-md-3">
+                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="temailid" class=" control-label">Email ID <span class="mandatory">*</span></label>
                                                 <asp:TextBox runat="server" ID="txtNEmailId" name="" AutoCompleteType="Email" required="" class="form-control form-cascade-control"
@@ -261,7 +251,12 @@
                                                 <p class="note">*Note: will be used as username </p>
                                             </div>
                                         </div>
-                                        <div class="col-md-3">
+                                        
+                                    </div>
+                                    <div class="row">
+
+                                       
+                                        <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="tcontactno" class="control-label">Mobile</label>
                                                 <asp:TextBox runat="server" ID="txtNMobile" name="" MaxLength="16" onkeypress="return isNumber(event)" class="form-control form-cascade-control"
@@ -269,7 +264,7 @@
 
                                             </div>
                                         </div>
-                                        <div class="col-md-3">
+                                        <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="tcontactno" class="control-label">Telephone</label>
                                                 <asp:TextBox runat="server" ID="txtNTelephone" name="" MaxLength="16" onkeypress="return isNumber(event)" class="form-control form-cascade-control"
@@ -277,7 +272,7 @@
 
                                             </div>
                                         </div>
-                                        <div class="col-md-3">
+                                        <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="tcontactno" class="control-label">Fax No</label>
                                                 <asp:TextBox runat="server" ID="txtNFaxNo" name="tcontactno" MaxLength="16" onkeypress="return isNumber(event)" class="form-control form-cascade-control"
@@ -288,9 +283,7 @@
 
                                     </div>
                                 </div>
-                                <div class="showMore">
-                                    <i class="fa fa-plus" aria-hidden="true"></i>
-                                </div>
+                               
                             </div>
 
 
@@ -390,7 +383,7 @@
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>VAM</label>
-                                                    <asp:TextBox runat="server" ID="txtVAM" name="" class="form-control form-cascade-control" placeholder=""></asp:TextBox>  
+                                                    <asp:TextBox runat="server" ID="txtVAM" name="" class="form-control form-cascade-control" placeholder=""></asp:TextBox>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
@@ -485,18 +478,13 @@
 
                                     </div>
                                 </div>
-                                <div class="col-md-4">
-                                    <div class="form-group text-right">
-                                        <label for="activityname" class="control-label" style="display: block">&nbsp;</label>
-                                        <asp:LinkButton ID="btnShowMap" runat="server" CssClass="btn btn-primary showMap" Text="Show Map"></asp:LinkButton>
-                                    </div>
-                                </div>
+                                
                             </div>
 
                             <div class="row">
 
                                 <div class="col-md-12">
-                                    <div class="map-box" style="display: none">
+                                    <div class="map-box">
                                         <iframe src="Admin/Map.aspx" width="100%" height="250" frameborder="0" style="border: 0" allowfullscreen></iframe>
                                     </div>
                                 </div>
