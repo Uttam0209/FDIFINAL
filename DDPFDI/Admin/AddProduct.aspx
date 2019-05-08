@@ -34,11 +34,33 @@
 </asp:Content>
 <asp:Content ID="inner" runat="server" ContentPlaceHolderID="ContentPlaceHolder1">
     <asp:ScriptManager runat="server" ID="sc"></asp:ScriptManager>
+    <asp:HiddenField ID="hidCompanyRefNo" runat="server" />
+    <asp:HiddenField ID="hidType" runat="server" />
     <div class="content oem-content">
         <div class="sideBg">
             <div class="row">
                 <div class="col-md-12 padding_0">
                     <div id="divHeadPage" runat="server"></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Select Company</label>
+                        <asp:DropDownList runat="server" ID="ddlcompany" class="form-control" AutoPostBack="True" OnSelectedIndexChanged="ddlcompany_OnSelectedIndexChanged"></asp:DropDownList>
+                    </div>
+                </div>
+                <div class="col-md-4" runat="server" id="lblselectdivison">
+                    <div class="form-group">
+                        <label>Select Division/Palnt</label>
+                        <asp:DropDownList runat="server" ID="ddldivision" class="form-control" AutoPostBack="True" OnSelectedIndexChanged="ddldivision_OnSelectedIndexChanged"></asp:DropDownList>
+                    </div>
+                </div>
+                <div class="col-md-4" runat="server" id="lblselectunit">
+                    <div class="form-group">
+                        <label>Select Unit</label>
+                        <asp:DropDownList runat="server" ID="ddlunit" class="form-control" AutoPostBack="True" OnSelectedIndexChanged="ddlunit_OnSelectedIndexChanged"></asp:DropDownList>
+                    </div>
                 </div>
             </div>
             <div class="tabing-section">
@@ -156,9 +178,6 @@
                                                 <div class="form-group">
                                                     <label>End User</label>
                                                     <asp:DropDownList runat="server" ID="ddlenduser" class="form-control">
-                                                        <asp:ListItem Text="static item 1" Value="1" />
-                                                        <asp:ListItem Text="static item 2" Value="2" />
-                                                        <asp:ListItem Text="static item 3" Value="3" />
                                                     </asp:DropDownList>
                                                 </div>
                                             </div>
@@ -205,12 +224,10 @@
                                                         Product Already Indeginized :
                                                                <asp:RadioButtonList runat="server" ID="rbisindinised" RepeatColumns="2" RepeatLayout="Flow" RepeatDirection="Horizontal" AutoPostBack="True" OnSelectedIndexChanged="rbisindinised_CheckedChanged ">
                                                                    <asp:ListItem Value="Y" class="yes">Yes</asp:ListItem>
-                                                                   <asp:ListItem Value="N">No</asp:ListItem>
+                                                                   <asp:ListItem Value="N" Selected="True">No</asp:ListItem>
                                                                </asp:RadioButtonList>
-                                                        <span>(<strong>NOTE:</strong> If Yes, please give manufacturer name)</span>
-
                                                     </label>
-                                                    <asp:TextBox runat="server" ID="txtmanufacturename" class="form-control Turl_Tdate" Style="display: none"></asp:TextBox>
+                                                    <asp:TextBox runat="server" ID="txtmanufacturename" Visible="False" class="form-control Turl_Tdate"></asp:TextBox>
                                                 </div>
                                             </div>
                                         </div>
@@ -423,7 +440,7 @@
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label>Mobile Number</label>
-                                                    <input type="text" class="form-control" />
+                                                   <asp:TextBox runat="server" id="txtmobnodal" class="form-control"></asp:TextBox>
 
                                                 </div>
                                             </div>
@@ -446,14 +463,13 @@
 
                                         <div class="row">
                                             <div class="col-md-12">
+                                                <span>Department:- 
                                                 <asp:Label runat="server" ID="lblcomapnyNodal" Text=""></asp:Label>
-                                                <asp:Label runat="server" ID="lblfactortnodal" Text=""></asp:Label>
-                                                <asp:Label runat="server" ID="lblunitnodal" Text=""></asp:Label>
                                             </div>
                                         </div>
-                                        <div class="showMore">
-                                            <a href="javascript:void(0)" class="showMoreLink">Show Details</a>
-                                        </div>
+                                    </div>
+                                    <div class="showMore">
+                                        <a href="javascript:void(0)" class="showMoreLink">Show Details</a>
                                     </div>
                                 </div>
                                 <div class="section-pannel" runat="server" id="divnodal2">
@@ -492,8 +508,7 @@
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label>Mobile Number</label>
-                                                    <input type="text" class="form-control" />
-
+                                                    <asp:TextBox runat="server" ID="txtmobnodal2" name="" class="form-control form-cascade-control" placeholder=""></asp:TextBox>
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
@@ -514,21 +529,22 @@
                                         </div>
                                         <div class="row">
                                             <div class="col-md-12">
+                                                <span>Department:- 
                                                 <asp:Label runat="server" ID="lblcompanynodal2" Text=""></asp:Label>
-                                                <asp:Label runat="server" ID="lblfactorynodal2" Text=""></asp:Label>
-                                                <asp:Label runat="server" ID="lblunitnodal2" Text=""></asp:Label>
+                                                </span>
                                             </div>
-                                        </div>
-                                        <div class="showMore">
-                                            <a href="javascript:void(0)" class="showMoreLink">Show Details</a>
                                         </div>
                                     </div>
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="form-group">
-                                                <asp:Button runat="server" ID="btnsavepanel5" class="btn btn-primary pull-right" Text="Save" />
-                                                <asp:Button runat="server" ID="btnbackpanel5" class="btn btn-default pull-right" Text="Back" Style="margin-right: 10px;" />
-                                            </div>
+                                    <div class="showMore">
+                                        <a href="javascript:void(0)" class="showMoreLink">Show Details</a>
+                                    </div>
+
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <asp:Button runat="server" ID="btnsavepanel5" class="btn btn-primary pull-right" Text="Save" />
+                                            <asp:Button runat="server" ID="btnbackpanel5" class="btn btn-default pull-right" Text="Back" Style="margin-right: 10px;" />
                                         </div>
                                     </div>
                                 </div>
