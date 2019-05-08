@@ -69,6 +69,7 @@
                     <li><a data-toggle="tab" href="#qpt">Quantity Required</a></li>
                     <li><a data-toggle="tab" href="#cd">Contact Details</a></li>
                 </ul>
+                
                 <div class="tab-content">
                     <asp:HiddenField runat="server" ID="hfprodid" />
                     <asp:HiddenField runat="server" ID="hfcomprefno" />
@@ -236,20 +237,21 @@
                                                 <ContentTemplate>
                                                     <div class="col-md-6">
                                                         <div class="form-group">
-                                                            <label class="live-status-box">
+                                                            <label class="live-status-box productalreadylabel ">
                                                                 Product Already Indeginized :
                                                                <asp:RadioButtonList runat="server" ID="rbisindinised" RepeatColumns="2" RepeatLayout="Flow" RepeatDirection="Horizontal" AutoPostBack="True" OnSelectedIndexChanged="rbisindinised_CheckedChanged ">
-                                                                   <asp:ListItem Value="N" Selected="True">No</asp:ListItem>
                                                                    <asp:ListItem Value="Y" class="yes">Yes</asp:ListItem>
-                                                                    </asp:RadioButtonList>
+                                                                    
+                                                                   <asp:ListItem Value="N" Selected="True">No</asp:ListItem>
+                                                                   </asp:RadioButtonList>
+                                                                   
                                                              
                                                                    
                                                     </label>
                                                     <asp:TextBox runat="server" ID="txtmanufacturename" placeholder="Enter Manufacturer name" Visible="False" class="form-control Turl_Tdate"></asp:TextBox>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </div>
+                                    
                                   
                                                 </ContentTemplate>
                                             </asp:UpdatePanel>
@@ -377,10 +379,11 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        </div>
+                                        
                                     </ContentTemplate>
                                 </asp:UpdatePanel>
                             </div>
+                        </div>
                         </div>
                         <div id="cd" class="tab-pane fade">
                             <asp:UpdatePanel runat="server" ID="UpdatePanel2">
@@ -517,7 +520,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    
                 </div>
             </div>
         </div>
