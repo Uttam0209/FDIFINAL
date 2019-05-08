@@ -353,17 +353,24 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
             if (DtView.Rows.Count > 0)
             {
                 lblrefno.Text = DtView.Rows[0]["CompanyRefNo"].ToString();
-                lbladdress.Text = DtView.Rows[0]["Address"].ToString();
-                lblcinno.Text = DtView.Rows[0]["CINNo"].ToString();
-                lblceoname.Text = DtView.Rows[0]["CEOName"].ToString();
                 lblcompanyname.Text = DtView.Rows[0]["CompanyName"].ToString();
-                lblcontactperemailid.Text = DtView.Rows[0]["ContactPersonEmailID"].ToString();
-                lblcontactpersonmobno.Text = DtView.Rows[0]["ContactPersonContactNo"].ToString();
-                lblcontactpersonname.Text = DtView.Rows[0]["ContactPersonName"].ToString();
-                lblceoemail.Text = DtView.Rows[0]["CEOEmail"].ToString();
+                lbladdress.Text = DtView.Rows[0]["Address"].ToString();
+                lblstate.Text = DtView.Rows[0]["StateName"].ToString();
                 lblpanno.Text = DtView.Rows[0]["PANNo"].ToString();
                 lblpincode.Text = DtView.Rows[0]["Pincode"].ToString();
-                lblstate.Text = DtView.Rows[0]["StateName"].ToString();
+                lblcinno.Text = DtView.Rows[0]["CINNo"].ToString();
+                lblceoname.Text = DtView.Rows[0]["CEOName"].ToString();
+                lblceoemail.Text = DtView.Rows[0]["CEOEmail"].ToString();
+                lblTelephoneNo.Text = DtView.Rows[0]["TelephoneNo"].ToString();
+                lblFaxNo.Text = DtView.Rows[0]["FaxNo"].ToString();
+                lblEmailID.Text = DtView.Rows[0]["EmailID"].ToString();
+                lblWebsite.Text = DtView.Rows[0]["Website"].ToString();
+                lblGSTNo.Text = DtView.Rows[0]["GSTNo"].ToString();
+                lblNodalEmail.Text = DtView.Rows[0]["ContactPersonEmailID"].ToString();
+                lblNodalOfficerName.Text = DtView.Rows[0]["NodalOficerName"].ToString();
+
+               
+                
                 ScriptManager.RegisterStartupScript(this, this.GetType(), "changePass", "showPopup();", true);
             }
         }
@@ -545,6 +552,11 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
             {
                 gvfactory.DataSource = DtGrid;
                 gvfactory.DataBind();
+             
+            }
+            else
+            {
+
             }
             DataTable dtCompany = Lo.RetriveMasterData(0, "", "", 0, currentPage, "", "btn");
             if (dtCompany.Rows.Count > 0)

@@ -135,12 +135,8 @@
             };
             $("#chartLine").CanvasJSChart(options1);
         }
-<<<<<<< HEAD
-    </script>
-=======
     </script>--%>
 
->>>>>>> 5f95e81b9561d406a6e35fbcc8a7dba3df4dc981
     <script type="text/javascript">
         $(function () {
             SetAutoComplete();

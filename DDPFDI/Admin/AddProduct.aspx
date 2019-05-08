@@ -1,7 +1,7 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="AddProduct.aspx.cs" Inherits="Admin_AddProduct" MasterPageFile="~/Admin/MasterPage.master" %>
 
 <asp:Content ID="head" runat="server" ContentPlaceHolderID="head">
-
+    <!----------------------------------jquery Show image on load------------------------------------------------>
     <script src="../assets/js/jquery-1.7.1.min.js"></script>
     <script src="../assets/js/jquery-ui-1.8.17.custom.min.js"></script>
     <link href="../assets/js/jquery-ui-1.8.17.custom.css" rel="stylesheet" />
@@ -12,7 +12,6 @@
             margin: 0.2em -0.7em 0 0;
             border: 1px solid #ccc;
         }
-
         .remove_img_preview {
             position: relative;
             top: -42px;
@@ -25,20 +24,41 @@
             text-align: center;
             cursor: pointer;
         }
-
             .remove_img_preview:before {
                 content: "×";
             }
     </style>
-
+    <!-------------------------------------------image show end------------------------------->
 </asp:Content>
 <asp:Content ID="inner" runat="server" ContentPlaceHolderID="ContentPlaceHolder1">
     <asp:ScriptManager runat="server" ID="sc"></asp:ScriptManager>
+    <asp:HiddenField ID="hidCompanyRefNo" runat="server" />
+    <asp:HiddenField ID="hidType" runat="server" />
     <div class="content oem-content">
         <div class="sideBg">
             <div class="row">
                 <div class="col-md-12 padding_0">
                     <div id="divHeadPage" runat="server"></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Select Company</label>
+                        <asp:DropDownList runat="server" ID="ddlcompany" class="form-control" AutoPostBack="True" OnSelectedIndexChanged="ddlcompany_OnSelectedIndexChanged"></asp:DropDownList>
+                    </div>
+                </div>
+                <div class="col-md-4" runat="server" id="lblselectdivison">
+                    <div class="form-group">
+                        <label>Select Division/Palnt</label>
+                        <asp:DropDownList runat="server" ID="ddldivision" class="form-control" AutoPostBack="True" OnSelectedIndexChanged="ddldivision_OnSelectedIndexChanged"></asp:DropDownList>
+                    </div>
+                </div>
+                <div class="col-md-4" runat="server" id="lblselectunit">
+                    <div class="form-group">
+                        <label>Select Unit</label>
+                        <asp:DropDownList runat="server" ID="ddlunit" class="form-control" AutoPostBack="True" OnSelectedIndexChanged="ddlunit_OnSelectedIndexChanged"></asp:DropDownList>
+                    </div>
                 </div>
             </div>
             <div class="tabing-section">
@@ -156,9 +176,6 @@
                                                 <div class="form-group">
                                                     <label>End User</label>
                                                     <asp:DropDownList runat="server" ID="ddlenduser" class="form-control">
-                                                        <asp:ListItem Text="static item 1" Value="1" />
-                                                        <asp:ListItem Text="static item 2" Value="2" />
-                                                        <asp:ListItem Text="static item 3" Value="3" />
                                                     </asp:DropDownList>
                                                 </div>
                                             </div>
@@ -201,16 +218,19 @@
                                             <div class="col-md-6">
 
                                                 <div class="form-group">
-                                                    <label class="live-status-box">
-                                                        Product Already Indeginized :
+                                                    <label class="live-status-box productalreadylabel">
+                                                        Product already Indeginized :
+                                                        
                                                                <asp:RadioButtonList runat="server" ID="rbisindinised" RepeatColumns="2" RepeatLayout="Flow" RepeatDirection="Horizontal" AutoPostBack="True" OnSelectedIndexChanged="rbisindinised_CheckedChanged ">
+                                                                   <asp:ListItem Value="N" Selected="True">No</asp:ListItem>
+                                                            
+                                                            
                                                                    <asp:ListItem Value="Y" class="yes">Yes</asp:ListItem>
-                                                                   <asp:ListItem Value="N">No</asp:ListItem>
-                                                               </asp:RadioButtonList>
-                                                        <span>(<strong>NOTE:</strong> If Yes, please give manufacturer name)</span>
-
+                                                                    </asp:RadioButtonList>
+                                                             
+                                                                   
                                                     </label>
-                                                    <asp:TextBox runat="server" ID="txtmanufacturename" class="form-control Turl_Tdate" Style="display: none"></asp:TextBox>
+                                                    <asp:TextBox runat="server" ID="txtmanufacturename" Visible="False" class="form-control Turl_Tdate"></asp:TextBox>
                                                 </div>
                                             </div>
                                         </div>
@@ -241,7 +261,7 @@
                                     </div>
                                 </div>
                             </div>
-                            
+                            <!-------uplode photo----------->
 
                             <div class="fr nameinput">
                                 <asp:Panel ID="panphoto" runat="server">
@@ -413,7 +433,6 @@
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="form-group">
-                                                   
                                                     <label>E-Mail ID</label>
                                                     <asp:TextBox runat="server" ID="txtNEmailId" name="" class="form-control form-cascade-control" placeholder=""></asp:TextBox>
 
@@ -424,7 +443,7 @@
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label>Mobile Number</label>
-                                                    <input type="text" class="form-control" />
+                                                   <asp:TextBox runat="server" id="txtmobnodal" class="form-control"></asp:TextBox>
 
                                                 </div>
                                             </div>
@@ -444,27 +463,17 @@
                                             </div>
 
                                         </div>
-                                        <div class="row">
-                                            <div class="col-md-4">
-                                                <div class="form-group">
-                                                     <label>Department</label>
-                                                    <input type="text" readonly="readonly" value="Company >> Division >>Unit" class="form-control">
-                                                </div>
-                                            </div>
-                                        </div>
 
                                         <div class="row">
                                             <div class="col-md-12">
+                                                <span>Department:- 
                                                 <asp:Label runat="server" ID="lblcomapnyNodal" Text=""></asp:Label>
-                                                <asp:Label runat="server" ID="lblfactortnodal" Text=""></asp:Label>
-                                                <asp:Label runat="server" ID="lblunitnodal" Text=""></asp:Label>
                                             </div>
                                         </div>
-                                       
                                     </div>
-                                     <div class="showMore">
-                                            <a href="javascript:void(0)" class="showMoreLink">Show Details</a>
-                                        </div>
+                                    <div class="showMore">
+                                        <a href="javascript:void(0)" class="showMoreLink">Show Details</a>
+                                    </div>
                                 </div>
                                 <div class="section-pannel" runat="server" id="divnodal2">
                                     <div class="row">
@@ -492,8 +501,6 @@
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="form-group">
-                                                    <label>Department</label>
-                                                    <input type="text" readonly="readonly" value="Company >> Division >>Unit" class="form-control">
                                                     <label>E-Mail ID</label>
                                                     <asp:TextBox runat="server" ID="txtNEmailId2" name="" class="form-control form-cascade-control" placeholder=""></asp:TextBox>
 
@@ -504,8 +511,7 @@
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label>Mobile Number</label>
-                                                    <input type="text" class="form-control" />
-
+                                                    <asp:TextBox runat="server" ID="txtmobnodal2" name="" class="form-control form-cascade-control" placeholder=""></asp:TextBox>
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
@@ -526,19 +532,25 @@
                                         </div>
                                         <div class="row">
                                             <div class="col-md-12">
+                                                <span>Department:- 
                                                 <asp:Label runat="server" ID="lblcompanynodal2" Text=""></asp:Label>
-                                                <asp:Label runat="server" ID="lblfactorynodal2" Text=""></asp:Label>
-                                                <asp:Label runat="server" ID="lblunitnodal2" Text=""></asp:Label>
+                                                </span>
                                             </div>
                                         </div>
-                                        
                                     </div>
-                                        <div class="showMore">
-                                            <a href="javascript:void(0)" class="showMoreLink">Show Details</a>
-                                        </div>
-                                    
+                                    <div class="showMore">
+                                        <a href="javascript:void(0)" class="showMoreLink">Show Details</a>
+                                    </div>
+
                                 </div>
-                                
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <asp:Button runat="server" ID="btnsavepanel5" class="btn btn-primary pull-right" Text="Save" />
+                                            <asp:Button runat="server" ID="btnbackpanel5" class="btn btn-default pull-right" Text="Back" Style="margin-right: 10px;" />
+                                        </div>
+                                    </div>
+                                </div>
                             </ContentTemplate>
                         </asp:UpdatePanel>
                     </div>
@@ -551,7 +563,6 @@
         function handleFileSelect(evt) {
             var $fileUpload = $("input#files[type='file']");
             count = count + parseInt($fileUpload.get(0).files.length);
-
             if (parseInt($fileUpload.get(0).files.length) > 8 || count > 9) {
                 alert("You can only upload a maximum of 4 files");
                 count = count - parseInt($fileUpload.get(0).files.length);
@@ -572,18 +583,15 @@
                         document.getElementById('list').insertBefore(span, null);
                     };
                 })(f);
-
                 reader.readAsDataURL(f);
             }
         }
         $('#files').change(function (evt) {
             handleFileSelect(evt);
         });
-
         $('#list').on('click', '.remove_img_preview', function () {
             $(this).parent('span').remove();
             //           parseInt($fileUpload.get(0).files.length - 1;
         });
     </script>
 </asp:Content>
-

@@ -2,6 +2,12 @@
 
 <asp:Content ID="headViewDesignation" runat="server" ContentPlaceHolderID="head">
    
+     <script type="text/javascript">
+         function showPopup() {
+             $('#ViewNodalDetail').modal('show');
+         }
+    </script>
+    
     <script>
         function isNumber(evt) {
             evt = (evt) ? evt : window.event;
@@ -49,7 +55,7 @@
                                 </div>
                                 <div class="clearfix"></div>
                                 <div id="Div2" class="text-center" style="font-size: 16px; margin-top: 10px;" runat="server" visible="False">
-                                    Total number of  Designation :<strong>
+                                    Total number of  Nodal Officer :<strong>
                                         <asp:Label ID="lbltotal" runat="server" Text=""></asp:Label></strong>
                                 </div>
 
@@ -65,9 +71,9 @@
                                                     <%#Container.DataItemIndex+1 %>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
-                                            <asp:TemplateField HeaderText="Reference No">
+                                            <asp:TemplateField HeaderText="Company">
                                                 <ItemTemplate>
-                                                    <asp:Label ID="lblrefno" runat="server" Text='<%#Eval("CompanyRefNo") %>' NullDisplayText="#" SortExpression="CompanyRefNo"></asp:Label>
+                                                    <asp:Label ID="lblrefno" runat="server" Text='<%#Eval("CompanyName") %>' NullDisplayText="#" SortExpression="Company"></asp:Label>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                              <asp:BoundField DataField="NodalOficerName" HeaderText="Name" NullDisplayText="#" SortExpression="Name" />
@@ -80,9 +86,11 @@
                                             <asp:BoundField DataField="NodalOfficerMobile" HeaderText="Mobile" NullDisplayText="#" SortExpression="Mobile" />
                                             <asp:TemplateField HeaderText="Action">
                                                 <ItemTemplate>
+                                                   <asp:LinkButton ID="lblview" runat="server" CssClass="fa fa-eye" CommandName="ViewComp" CommandArgument='<%#Eval("NodalOfficerID") %>'></asp:LinkButton>
                                                     <asp:LinkButton ID="lbledit" runat="server" CssClass="fa fa-edit" CommandName="EditComp" CommandArgument='<%#Eval("NodalOfficerID") %>'></asp:LinkButton>
-                                                    <asp:LinkButton ID="lbldel" runat="server" Visible="false" CssClass="fa fa-trash" CommandName="DeleteComp" OnClientClick="return confirm('Are you sure you want to delete this Company?');" CommandArgument='<%#Eval("NodalOfficerID") %>'></asp:LinkButton>
-                                                </ItemTemplate>
+                                                    <asp:LinkButton ID="lbldel" runat="server" CssClass="fa fa-trash" CommandName="DeleteComp" OnClientClick="return confirm('Are you sure you want to delete this Company?');" CommandArgument='<%#Eval("NodalOfficerID") %>'></asp:LinkButton>
+                                                    <asp:LinkButton ID="lbllogindetail" runat="server" Visible="False" CssClass=" fa fa-paper-plane" CommandName="SendLogin" CommandArgument='<%#Eval("NodalOfficerID") %>'></asp:LinkButton>
+                                              </ItemTemplate>
                                             </asp:TemplateField>
                                         </Columns>
                                     </asp:GridView>
@@ -95,7 +103,89 @@
                 </div>
                 <div class="footer">© 2019 <a href="#">Department of Defence Production</a> </div>
             </div>
-           
+           <div class="modal fade" id="ViewNodalDetail" role="dialog">
+                <div class="modal-dialog">
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header modal-header1">
+                            <button type="button" class="close close1" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Nodal Officer Details</h4>
+                        </div>
+                        <form class="form-horizontal changepassword" role="form">
+                            <div class="modal-body">
+                                <div class="tab-pane fade active in" id="add-form">
+                                    <table class="table table-bordered">
+                                        <tbody>
+                                           
+                                            <tr>
+                                                <td class="pass">Company Name</td>
+                                                <td>
+                                                    <asp:Label ID="lblcompanyname" runat="server"></asp:Label>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="pass">Nodal Refernce No</td>
+                                                <td>
+                                                    <asp:Label ID="lblNodalOfficerRefNo" runat="server"></asp:Label>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="pass">Nodal Oficer Name</td>
+                                                <td>
+                                                    <asp:Label ID="lblNodalOficerName" runat="server"></asp:Label>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="pass">Designation</td>
+                                                <td>
+                                                    <asp:Label ID="lblDesignation" runat="server"></asp:Label>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="pass">Employee Code</td>
+                                                <td>
+                                                    <asp:Label ID="lblNodalEmpCode" runat="server"></asp:Label>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="pass">Email</td>
+                                                <td>
+                                                    <asp:Label ID="lblEmail" runat="server"></asp:Label>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="pass">Mobile Number</td>
+                                                <td>
+                                                    <asp:Label ID="lblMobile" runat="server"></asp:Label>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="pass">Telephone</td>
+                                                <td>
+                                                    <asp:Label ID="lblTelephone" runat="server"></asp:Label>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="pass">Fax</td>
+                                                <td>
+                                                    <asp:Label ID="lblFax" runat="server"></asp:Label>
+                                                </td>
+                                            </tr>
+                                            
+                                            
+                                            </caption>
+                                            </caption>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-warning" data-dismiss="modal">Cancel</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </ContentTemplate>
     </asp:UpdatePanel>
 </asp:Content>

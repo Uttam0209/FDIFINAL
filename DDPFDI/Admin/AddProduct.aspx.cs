@@ -21,10 +21,19 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     private string DisplayPanel = "";
     string _msg = string.Empty;
     string _sysMsg = string.Empty;
-
     public string Services = "";
     public string Remarks = "";
     public string NodalDDL = "";
+
+    string UserName;
+    string RefNo;
+    string UserEmail;
+    string currentPage = "";
+    private string mType = "";
+    private string mRefNo = "";
+    private Int16 Mid = 0;
+
+
     DataTable DtCompanyDDL = new DataTable();
     HybridDictionary HyPanel1 = new HybridDictionary();
     HybridDictionary HyPanel2 = new HybridDictionary();
@@ -53,19 +62,150 @@ public partial class Admin_AddProduct : System.Web.UI.Page
 
                     divHeadPage.InnerHtml = strheadPage.ToString();
                     strheadPage.Append("</ul");
+                    mType = objEnc.DecryptData(Session["Type"].ToString());
+                    mRefNo = Session["CompanyRefNo"].ToString();
                     hfcomprefno.Value = Session["CompanyRefNo"].ToString();
+                    BindCompany();
                     BindMasterCategory();
                     BindMasterTechnologyCategory();
                     BindMasterPlatCategory();
                     BindMasterProductReqCategory();
                     BindMasterProductNoenCletureCategory();
-                    BindNodelEmail();
+                    //BindNodelEmail();
                     BindServcies();
+                    BindEndUser();
                 }
             }
             catch (Exception ex)
             {
                 Response.RedirectToRoute("Login");
+            }
+        }
+    }
+    protected void BindCompany()
+    {
+        if (mType == "SuperAdmin")
+        {
+            DtCompanyDDL = Lo.RetriveMasterData(0, "", "", 0, "", "", "Select");
+            if (DtCompanyDDL.Rows.Count > 0)
+            {
+                Co.FillDropdownlist(ddlcompany, DtCompanyDDL, "CompanyName", "CompanyRefNo");
+                ddlcompany.Items.Insert(0, "All");
+                ddlcompany.Enabled = true;
+            }
+            else
+            {
+                ddlcompany.Enabled = false;
+            }
+
+            lblselectdivison.Visible = false;
+            lblselectunit.Visible = false;
+        }
+        else if (mType == "Admin")
+        {
+        }
+        else if (mType == "Company")
+        {
+            DtCompanyDDL = Lo.RetriveMasterData(0, mRefNo, "Company", 0, "", "", "CompanyName");
+            if (DtCompanyDDL.Rows.Count > 0)
+            {
+                Co.FillDropdownlist(ddlcompany, DtCompanyDDL, "CompanyName", "CompanyRefNo");
+                ddlcompany.Enabled = false;
+            }
+            else
+            {
+                ddlcompany.Enabled = false;
+            }
+            DtCompanyDDL = Lo.RetriveMasterData(0, ddlcompany.SelectedItem.Value, "Factory1", 0, "", "", "CompanyName");
+            if (DtCompanyDDL.Rows.Count > 0)
+            {
+                Co.FillDropdownlist(ddldivision, DtCompanyDDL, "FactoryName", "FactoryRefNo");
+                ddldivision.Items.Insert(0, "All");
+                if (mType == "Company")
+                {
+                    lblselectdivison.Visible = true;
+                    ddldivision.Enabled = true;
+                    ddlunit.Visible = false;
+                }
+                else
+                {
+                    ddldivision.Enabled = false;
+                }
+            }
+            else
+            {
+                ddldivision.Enabled = false;
+            }
+        }
+        else if (mType == "Factory")
+        {
+            DtCompanyDDL = Lo.RetriveMasterData(0, mRefNo, "Company1", 0, "", "", "CompanyName");
+            if (DtCompanyDDL.Rows.Count > 0)
+            {
+                Co.FillDropdownlist(ddlcompany, DtCompanyDDL, "CompanyName", "CompanyRefNo");
+                ddlcompany.Enabled = false;
+            }
+            else
+            {
+                ddlcompany.Enabled = false;
+            }
+            DtCompanyDDL = Lo.RetriveMasterData(0, ddlcompany.SelectedItem.Value, "Factory1", 0, "", "", "CompanyName");
+            if (DtCompanyDDL.Rows.Count > 0)
+            {
+                Co.FillDropdownlist(ddldivision, DtCompanyDDL, "FactoryName", "FactoryRefNo");
+                lblselectdivison.Visible = true;
+                ddldivision.Enabled = false;
+            }
+            else
+            {
+                ddldivision.Enabled = false;
+            }
+            DtCompanyDDL = Lo.RetriveMasterData(0, ddldivision.SelectedItem.Value, "Unit1", 0, "", "", "CompanyName");
+            if (DtCompanyDDL.Rows.Count > 0)
+            {
+                Co.FillDropdownlist(ddlunit, DtCompanyDDL, "UnitName", "UnitRefNo");
+                ddlunit.Items.Insert(0, "All");
+                ddlunit.Enabled = true;
+                lblselectunit.Visible = true;
+            }
+            else
+            {
+                ddlunit.Visible = false;
+            }
+        }
+        else if (mType == "Unit")
+        {
+            DtCompanyDDL = Lo.RetriveMasterData(0, mRefNo, "Company2", 0, "", "", "CompanyName");
+            if (DtCompanyDDL.Rows.Count > 0)
+            {
+                Co.FillDropdownlist(ddlcompany, DtCompanyDDL, "CompanyName", "CompanyRefNo");
+                ddlcompany.Enabled = false;
+            }
+            else
+            {
+                ddlcompany.Enabled = false;
+            }
+            DtCompanyDDL = Lo.RetriveMasterData(0, ddlcompany.SelectedItem.Value, "Factory1", 0, "", "", "CompanyName");
+            if (DtCompanyDDL.Rows.Count > 0)
+            {
+                Co.FillDropdownlist(ddldivision, DtCompanyDDL, "FactoryName", "FactoryRefNo");
+                lblselectdivison.Visible = true;
+                ddldivision.Enabled = false;
+            }
+            else
+            {
+                ddldivision.Enabled = false;
+            }
+            DtCompanyDDL = Lo.RetriveMasterData(0, ddldivision.SelectedItem.Value, "Unit1", 0, "", "", "CompanyName");
+            if (DtCompanyDDL.Rows.Count > 0)
+            {
+                Co.FillDropdownlist(ddlunit, DtCompanyDDL, "UnitName", "UnitRefNo");
+                ddlunit.Enabled = false;
+                lblselectunit.Visible = true;
+            }
+            else
+            {
+                ddlunit.Enabled = false;
             }
         }
     }
@@ -75,29 +215,48 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         if (DtCompanyDDL.Rows.Count > 0)
         {
             Co.FillDropdownlist(ddlNodalOfficerEmail, DtCompanyDDL, "NodalOficerName", "NodalOfficerID");
-            ddlNodalOfficerEmail.Items.Insert(0, "Select Nodel Officer");
+            ddlNodalOfficerEmail.Items.Insert(0, "Select Nodal Officer");
             Co.FillDropdownlist(ddlNodalOfficerEmail2, DtCompanyDDL, "NodalOficerName", "NodalOfficerID");
-            ddlNodalOfficerEmail2.Items.Insert(0, "Select Nodel Officer");
+            ddlNodalOfficerEmail2.Items.Insert(0, "Select Nodal Officer");
+        }
+        else
+        {
+            ddlNodalOfficerEmail.Items.Insert(0, "Select Nodal Officer");
+            ddlNodalOfficerEmail2.Items.Insert(0, "Select Nodal Officer");
         }
     }
     protected void ddlNodalOfficerEmail_SelectedIndexChanged(object sender, EventArgs e)
     {
-        if (ddlNodalOfficerEmail.SelectedItem.Text != "Select Nodel Officer")
+        if (ddlNodalOfficerEmail.SelectedItem.Text != "Select Nodal Officer")
         {
-            DataTable DtGetNodel = Lo.RetriveMasterData(Convert.ToInt16(ddlNodalOfficerEmail.SelectedItem.Value), "", "", 0, "", "", "CompleteNodelDetail");
+            DataTable DtGetNodel = Lo.RetriveMasterData(Convert.ToInt16(ddlNodalOfficerEmail.SelectedItem.Value), "", "", 0, "", "", "SearchNodalOfficerID");
             if (DtGetNodel.Rows.Count > 0)
             {
                 // txtNName.Text = DtGetNodel.Rows[0]["NodalOficerName"].ToString();
                 txtNEmailId.Text = DtGetNodel.Rows[0]["NodalOfficerEmail"].ToString();
                 txtNTelephone.Text = DtGetNodel.Rows[0]["NodalOfficerTelephone"].ToString();
                 txtNFaxNo.Text = DtGetNodel.Rows[0]["NodalOfficerFax"].ToString();
-                //  lblcomapnyNodal.Text = DtGetNodel.Rows[0]["Type"].ToString();
+                txtempcode.Text = DtGetNodel.Rows[0]["NodalEmpCode"].ToString();
+                txtmobnodal.Text = DtGetNodel.Rows[0]["NodalOfficerMobile"].ToString();
+                if (DtGetNodel.Rows[0]["Type"].ToString() == "Company")
+                {
+                    lblcomapnyNodal.Text = DtGetNodel.Rows[0]["Type"].ToString();
+                }
+                else if (DtGetNodel.Rows[0]["Type"].ToString() == "Factory")
+                {
+                    lblcomapnyNodal.Text = "Company" + " >> " + DtGetNodel.Rows[0]["Type"].ToString();
+                }
+                else if (DtGetNodel.Rows[0]["Type"].ToString() == "Unit")
+                {
+                    lblcomapnyNodal.Text = "Company" + " >> " + "Division/Plant" + " >> " + DtGetNodel.Rows[0]["Type"].ToString();
+                }
+
                 //===Bind Nodel officer expect Nodel one
                 DtCompanyDDL = Lo.RetriveMasterData(Convert.ToInt16(ddlNodalOfficerEmail.SelectedItem.Value), hfcomprefno.Value, "", 0, "", "", "AllNodelNotSelect");
                 if (DtCompanyDDL.Rows.Count > 0)
                 {
                     Co.FillDropdownlist(ddlNodalOfficerEmail2, DtCompanyDDL, "NodalOficerName", "NodalOfficerID");
-                    //  ddlNodalOfficerEmail2.Items.Insert(0, "Select Nodel Officer");
+                    ddlNodalOfficerEmail2.Items.Insert(0, "Select Nodel Officer");
                 }
                 else
                 {
@@ -111,22 +270,36 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     }
     protected void ddlNodalOfficerEmail2_SelectedIndexChanged(object sender, EventArgs e)
     {
-        if (ddlNodalOfficerEmail2.SelectedItem.Text != "Select Nodel Officer")
+        if (ddlNodalOfficerEmail2.SelectedItem.Text != "Select Nodal Officer")
         {
-            DataTable DtGetNodel = Lo.RetriveMasterData(Convert.ToInt16(ddlNodalOfficerEmail2.SelectedItem.Value), "", "", 0, "", "", "CompleteNodelDetail");
+            DataTable DtGetNodel = Lo.RetriveMasterData(Convert.ToInt16(ddlNodalOfficerEmail2.SelectedItem.Value), "", "", 0, "", "", "SearchNodalOfficerID");
             if (DtGetNodel.Rows.Count > 0)
             {
                 // txtNName2.Text = DtGetNodel.Rows[0]["NodalOficerName"].ToString();
                 txtNEmailId2.Text = DtGetNodel.Rows[0]["NodalOfficerEmail"].ToString();
                 txtNTelephone2.Text = DtGetNodel.Rows[0]["NodalOfficerTelephone"].ToString();
                 txtNFaxNo2.Text = DtGetNodel.Rows[0]["NodalOfficerFax"].ToString();
+                txtempcode2.Text = DtGetNodel.Rows[0]["NodalEmpCode"].ToString();
+                txtmobnodal2.Text = DtGetNodel.Rows[0]["NodalOfficerMobile"].ToString();
                 lblcompanynodal2.Text = DtGetNodel.Rows[0]["Type"].ToString();
+                if (lblcompanynodal2.Text == "Company")
+                {
+                    lblcompanynodal2.Text = DtGetNodel.Rows[0]["Type"].ToString();
+                }
+                else if (lblcompanynodal2.Text == "Factory")
+                {
+                    lblcompanynodal2.Text = "Company" + " >> " + DtGetNodel.Rows[0]["Type"].ToString();
+                }
+                else if (lblcompanynodal2.Text == "Unit")
+                {
+                    lblcompanynodal2.Text = "Company" + " >> " + "Division/Plant" + " >> " + DtGetNodel.Rows[0]["Type"].ToString();
+                }
                 //===Bind Nodel officer expect Nodel Two
                 DtCompanyDDL = Lo.RetriveMasterData(Convert.ToInt16(ddlNodalOfficerEmail2.SelectedItem.Value), hfcomprefno.Value, "", 0, "", "", "AllNodelNotSelect");
                 if (DtCompanyDDL.Rows.Count > 0)
                 {
                     Co.FillDropdownlist(ddlNodalOfficerEmail, DtCompanyDDL, "NodalOficerName", "NodalOfficerID");
-                    //  ddlNodalOfficerEmail2.Items.Insert(0, "Select Nodel Officer");
+                    ddlNodalOfficerEmail2.Items.Insert(0, "Select Nodel Officer");
                 }
                 else
                 {
@@ -144,6 +317,86 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     protected void btnsave_Click(object sender, EventArgs e)
     {
     }
+    #region DropDownList Code
+    protected void ddlcompany_OnSelectedIndexChanged(object sender, EventArgs e)
+    {
+        if (ddlcompany.SelectedItem.Text != "All")
+        {
+            DtCompanyDDL = Lo.RetriveMasterData(0, ddlcompany.SelectedItem.Value, "", 0, "", "", "FactoryCompanyID");
+            if (DtCompanyDDL.Rows.Count > 0)
+            {
+                Co.FillDropdownlist(ddldivision, DtCompanyDDL, "FactoryName", "FactoryRefNo");
+                ddldivision.Items.Insert(0, "All");
+                lblselectdivison.Visible = true;
+                ddldivision.Visible = true;
+                hidCompanyRefNo.Value = ddlcompany.SelectedItem.Value;
+                hidType.Value = "Company";
+            }
+            else
+            {
+                ddldivision.Visible = false;
+                lblselectdivison.Visible = false;
+            }
+        }
+        else if (ddlcompany.SelectedItem.Text == "All")
+        {
+            lblselectdivison.Visible = false;
+            lblselectunit.Visible = false;
+        }
+
+        hfcomprefno.Value = "";
+        hfcomprefno.Value = ddlcompany.SelectedItem.Value;
+        BindNodelEmail();
+    }
+    protected void ddldivision_OnSelectedIndexChanged(object sender, EventArgs e)
+    {
+        if (ddldivision.SelectedItem.Text != "All")
+        {
+            DtCompanyDDL = Lo.RetriveMasterData(0, ddldivision.SelectedItem.Value, "", 0, "", "", "UnitSelectID");
+            if (DtCompanyDDL.Rows.Count > 0)
+            {
+                Co.FillDropdownlist(ddlunit, DtCompanyDDL, "UnitName", "UnitRefNo");
+                ddlunit.Items.Insert(0, "All");
+                ddlunit.Visible = true;
+                lblselectunit.Visible = true;
+                hidCompanyRefNo.Value = ddldivision.SelectedItem.Value;
+                hidType.Value = "Divison/Plant";
+            }
+            else
+            {
+                lblselectunit.Visible = false;
+                ddlunit.Visible = false;
+            }
+            hfcomprefno.Value = "";
+            hfcomprefno.Value = ddldivision.SelectedItem.Value;
+            BindNodelEmail();
+        }
+        else if (ddldivision.SelectedItem.Text == "All")
+        {
+            DtCompanyDDL = Lo.RetriveMasterData(0, ddlcompany.SelectedItem.Value, "", 0, "", "", "FactoryCompanyID");
+            if (DtCompanyDDL.Rows.Count > 0)
+            {
+                Co.FillDropdownlist(ddldivision, DtCompanyDDL, "FactoryName", "FactoryRefNo");
+                ddldivision.Items.Insert(0, "All");
+                lblselectdivison.Visible = true;
+                ddldivision.Visible = true;
+                lblselectdivison.Visible = false;
+            }
+            hfcomprefno.Value = "";
+            hfcomprefno.Value = ddlcompany.SelectedItem.Value;
+            BindNodelEmail();
+        }
+
+    }
+    protected void ddlunit_OnSelectedIndexChanged(object sender, EventArgs e)
+    {
+        hidCompanyRefNo.Value = ddlunit.SelectedItem.Value;
+        hidType.Value = "Unit";
+        hfcomprefno.Value = "";
+        hfcomprefno.Value = ddlunit.SelectedItem.Value;
+        BindNodelEmail();
+    }
+    #endregion
     #region BindServices
     protected void BindServcies()
     {
@@ -159,12 +412,12 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     protected void BindMasterCategory()
     {
         ddlmastercategory.Items.Insert(0, "Product Category");
-        ddlsubcategory.Items.Insert(0, "Lavel 2");
+        ddlsubcategory.Items.Insert(0, "Select");
         DataTable DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, ddlmastercategory.SelectedItem.Value, "", "SelectProductCat", hfcomprefno.Value);
         if (DtMasterCategroy.Rows.Count > 0)
         {
             Co.FillDropdownlist(ddlmastercategory, DtMasterCategroy, "SCategoryName", "SCategoryID");
-            ddlmastercategory.Items.Insert(0, "Lavel 1");
+            ddlmastercategory.Items.Insert(0, "Select");
         }
     }
     protected void BindMasterSubCategory()
@@ -173,12 +426,12 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         if (DtMasterCategroy.Rows.Count > 0)
         {
             Co.FillDropdownlist(ddlsubcategory, DtMasterCategroy, "SCategoryName", "SCategoryId");
-            ddlsubcategory.Items.Insert(0, "Lavel 2");
+            ddlsubcategory.Items.Insert(0, "Select");
         }
         else
         {
             ddlsubcategory.Items.Clear();
-            ddlsubcategory.Items.Insert(0, "Lavel 2");
+            ddlsubcategory.Items.Insert(0, "Select");
         }
     }
     #endregion
@@ -251,13 +504,33 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     #region For NomenClature
     protected void BindMasterProductNoenCletureCategory()
     {
-        DataTable DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, "Nomenclature", "", "SelectProductCat", hfcomprefno.Value);
+        DataTable DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(7, "Nomenclature of main system", "", "SelectInnerMaster", hfcomprefno.Value);
         if (DtMasterCategroy.Rows.Count > 0)
         {
             Co.FillDropdownlist(ddlnomnclature, DtMasterCategroy, "SCategoryName", "SCategoryID");
             ddlnomnclature.Items.Insert(0, "Select");
         }
-        ddlnomnclature.Items.Insert(0, "Select");
+        else
+        {
+            ddlnomnclature.Items.Insert(0, "Select");
+        }
+
+    }
+    #endregion
+    #region For EndUser
+    protected void BindEndUser()
+    {
+        DataTable DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(21, "End User", "", "SelectInnerMaster", hfcomprefno.Value);
+        if (DtMasterCategroy.Rows.Count > 0)
+        {
+            Co.FillDropdownlist(ddlenduser, DtMasterCategroy, "SCategoryName", "SCategoryID");
+            ddlenduser.Items.Insert(0, "Select");
+        }
+        else
+        {
+            ddlenduser.Items.Insert(0, "Select");
+        }
+
     }
     #endregion
     protected void ddlmastercategory_SelectedIndexChanged(object sender, EventArgs e)
@@ -653,39 +926,39 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         {
             try
             {
-               for (int i = 0; i < uploadedFiles.Count; i++)
+                for (int i = 0; i < uploadedFiles.Count; i++)
+                {
+                    uploadedFiles[i].SaveAs(Server.MapPath("~/Temp/" + Path.GetFileName(uploadedFiles[i].FileName)));
+                    Bitmap bitmap = new Bitmap(Server.MapPath("~/Temp/" + Path.GetFileName(uploadedFiles[i].FileName)));
+                    int iwidth = bitmap.Width;
+                    int iheight = bitmap.Height;
+                    iwidth = iwidth / 3;
+                    iheight = iheight / 3;
+                    bitmap.Dispose();
+                    System.Drawing.Image objOptImage = new System.Drawing.Bitmap(iwidth, iheight, System.Drawing.Imaging.PixelFormat.Format16bppRgb555);
+                    using (System.Drawing.Image objImg = System.Drawing.Image.FromFile(Server.MapPath("Temp/" + uploadedFiles[i].FileName)))
                     {
-                        uploadedFiles[i].SaveAs(Server.MapPath("~/Temp/" + Path.GetFileName(uploadedFiles[i].FileName)));
-                        Bitmap bitmap = new Bitmap(Server.MapPath("~/Temp/" + Path.GetFileName(uploadedFiles[i].FileName)));
-                        int iwidth = bitmap.Width;
-                        int iheight = bitmap.Height;
-                        iwidth = iwidth / 3; 
-                        iheight = iheight / 3;
-                        bitmap.Dispose();
-                        System.Drawing.Image objOptImage = new System.Drawing.Bitmap(iwidth, iheight, System.Drawing.Imaging.PixelFormat.Format16bppRgb555);
-                        using (System.Drawing.Image objImg = System.Drawing.Image.FromFile(Server.MapPath("Temp/" + uploadedFiles[i].FileName)))
+                        using (System.Drawing.Graphics oGraphic = System.Drawing.Graphics.FromImage(objOptImage))
                         {
-                            using (System.Drawing.Graphics oGraphic = System.Drawing.Graphics.FromImage(objOptImage))
-                            {
-                                var _1 = oGraphic;
-                                System.Drawing.Rectangle oRectangle = new System.Drawing.Rectangle(0, 0, iwidth, iheight);
-                                _1.DrawImage(objImg, oRectangle);
-                            }
-                            objOptImage.Save(Server.MapPath("Upload/" + uploadedFiles[i].FileName), System.Drawing.Imaging.ImageFormat.Png);
-                            objImg.Dispose();
+                            var _1 = oGraphic;
+                            System.Drawing.Rectangle oRectangle = new System.Drawing.Rectangle(0, 0, iwidth, iheight);
+                            _1.DrawImage(objImg, oRectangle);
                         }
-                        objOptImage.Dispose();
-                        dr = dt.NewRow();
-                        dr["ImageID"] = "-1";
-                        dr["ImageName"] = "Upload/" + uploadedFiles[i].FileName;
-                        dr["ImageType"] = files.PostedFile.ContentType;
-                        dr["ImageActualSize"] = files.PostedFile.ContentLength;
-                        dr["ProductRefNo"] = "";
-                        dr["CompanyRefNo"] = hfcomprefno.Value;
-                        dr["Priority"] = i + 1;
-                        dt.Rows.Add(dr);
+                        objOptImage.Save(Server.MapPath("Upload/" + uploadedFiles[i].FileName), System.Drawing.Imaging.ImageFormat.Png);
+                        objImg.Dispose();
                     }
-                
+                    objOptImage.Dispose();
+                    dr = dt.NewRow();
+                    dr["ImageID"] = "-1";
+                    dr["ImageName"] = "Upload/" + uploadedFiles[i].FileName;
+                    dr["ImageType"] = files.PostedFile.ContentType;
+                    dr["ImageActualSize"] = files.PostedFile.ContentLength;
+                    dr["ProductRefNo"] = "";
+                    dr["CompanyRefNo"] = hfcomprefno.Value;
+                    dr["Priority"] = i + 1;
+                    dt.Rows.Add(dr);
+                }
+
             }
             catch (Exception ex)
             {

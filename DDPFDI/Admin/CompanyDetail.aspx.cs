@@ -57,6 +57,7 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
                 EditCOde(dtViewDefault);
                 BindMasterCategory();
                 BindNodelEmail();
+
             }
             catch (Exception ex)
             {
@@ -64,6 +65,9 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
             }
         }
     }
+
+
+
     protected void BindMasterCategory()
     {
         DataTable DtMasterCategroy = Lo.RetriveMasterCategoryDate(0, "", "", "","","Select");
@@ -528,14 +532,44 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
         HySave["Pincode"] = Co.RSQandSQLInjection(tpincode.Text.Trim(), "soft");
         HySave["NodalOfficeRefNo"] = ddlNodalOfficerEmail.SelectedItem.Value;
         HySave["ContactPersonEmailID"] = Co.RSQandSQLInjection(txtNEmailId.Text.Trim(), "soft");
-
         HySave["GSTNo"] = Co.RSQandSQLInjection(tgstno.Text.Trim(), "soft");
         HySave["CINNo"] = Co.RSQandSQLInjection(tcinno.Text.Trim(), "soft");
         HySave["PANNo"] = Co.RSQandSQLInjection(tpanno.Text.Trim(), "soft");
         HySave["IECode"] = Co.RSQandSQLInjection(txtIECode.Text.Trim(), "soft");
-        HySave["IsDefenceActivity"] = Co.RSQandSQLInjection(companyengaged.SelectedItem.Value, "soft");
-        HySave["CEOName"] = Co.RSQandSQLInjection(txtceoname.Text, "soft");
-        HySave["CEOEmail"] = Co.RSQandSQLInjection(txtCEOEmailId.Text, "soft");
+        HySave["CEOName"]=Co.RSQandSQLInjection(txtceoname.Text.Trim(),"soft");
+        HySave["CEOEmail"] = Co.RSQandSQLInjection(txtCEOEmailId.Text.Trim(),"soft");
+        HySave["TelephoneNo"] = Co.RSQandSQLInjection(txtTelephone.Text.Trim(),"soft");
+        HySave["FaxNo"] = Co.RSQandSQLInjection(txtNFaxNo.Text.Trim(), "soft");
+        HySave["EmailID"] = Co.RSQandSQLInjection(txtEmailID.Text.Trim(), "soft");
+        HySave["Website"] = Co.RSQandSQLInjection(txtWebsite.Text.Trim(), "soft");
+        if (rdoYes.Checked == true)
+        {
+            HySave["Startup"] = Co.RSQandSQLInjection(rdoYes.Text.Trim(), "soft");
+        }
+        else
+        {
+            HySave["Startup"] = Co.RSQandSQLInjection(rdoNo.Text.Trim(), "soft");
+        }
+        HySave["DIPPNumber"] = Co.RSQandSQLInjection(txtDIPP.Text.Trim(),"soft");
+        HySave["DIPPMobile"] = Co.RSQandSQLInjection(txtDIPPMobile.Text.Trim(),"soft");
+        if (rdoMYes.Checked == true)
+        {
+            HySave["MSME"] = Co.RSQandSQLInjection(rdoMYes.Text.Trim(), "soft");
+        }
+        else
+        {
+            HySave["MSME"] = Co.RSQandSQLInjection(rdoMNo.Text.Trim(), "soft");
+        }
+        HySave["VAM"] = Co.RSQandSQLInjection(txtVAM.Text.Trim(),"soft");
+        HySave["Aadhar_Mobile"] = Co.RSQandSQLInjection(txtAad_Mob.Text.Trim(),"soft");
+        HySave["Facebook"] = Co.RSQandSQLInjection(txtFacebook.Text.Trim(),"soft");
+        HySave["Twitter"] = Co.RSQandSQLInjection(txtTwitter.Text.Trim(), "soft");
+        HySave["Linkedin"] = Co.RSQandSQLInjection(txtLinkedin.Text.Trim(), "soft");
+        HySave["Instagram"] = Co.RSQandSQLInjection(txtInstagram.Text.Trim(), "soft");
+        HySave["latitude"] = Co.RSQandSQLInjection(txtlatitude.Text.Trim(), "soft");
+        HySave["longitude"] = Co.RSQandSQLInjection(txtTelephone.Text.Trim(), "soft");
+        HySave["TelephoneNo"] = Co.RSQandSQLInjection(companyengaged.SelectedItem.Value, "soft");
+        HySave["Facebook"] = Co.RSQandSQLInjection(txtFacebook.Text.Trim(), "soft");
         HySave["InterestedArea"] = "";
         HySave["MasterAllowed"] = "";
         HySave["Role"] = "";
@@ -621,40 +655,41 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
     }
     protected void btndemofirst_Click(object sender, EventArgs e)
     {
-        if (tcompanyname.Text != "" && txtNEmailId.Text != "")
+        if (tcompanyname.Text != "")
         {
-            string msg = this.ValidatePreview();
-            if (msg != "")
+            //string msg = this.ValidatePreview();
+            //if (msg != "")
+            //{
+            //    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('" + msg + "');", true);
+            //}
+            //else
+            //{
+            SaveFDI();
+            string StrSaveFDIComp = Lo.SaveMasterCompany(HySave, out _msg, out _sysMsg);
+            if (StrSaveFDIComp != "0" && StrSaveFDIComp != "-1")
             {
-                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('" + msg + "');", true);
-            }
-            else
-            {
-                SaveFDI();
-                string StrSaveFDIComp = Lo.SaveMasterCompany(HySave, out _msg, out _sysMsg);
-                if (StrSaveFDIComp != "0" && StrSaveFDIComp != "-1")
+                //SaveCompanyMenu();
+                if (hfid.Value != "")
                 {
-                    SaveCompanyMenu();
-                    if (hfid.Value != "")
-                    {
-                        cleartext();
-                        ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "alert('Record updated successfully');window.location='Add-Company';", true);
-                    }
-                    else
-                    {
-                        cleartext();
-                        ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "alert('Record save successfully');window.location='Add-Company';", true);
-                    }
+                    cleartext();
+                    ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "alert('Record updated successfully');window.location='Add-Company';", true);
                 }
                 else
                 {
-                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not save successfully.')", true);
+                    cleartext();
+                    ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "alert('Record save successfully');window.location='Add-Company';", true);
                 }
             }
-        }
-        else
-        {
-            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Please fill all mandatory field.');", true);
+            else
+            {
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not save successfully.')", true);
+            }
+            //    }
+            //}
+            //else
+            //{
+            //    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Please fill all mandatory field.');", true);
+            //}
         }
     }
     protected void BindCompany()
@@ -817,11 +852,12 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
     }
     protected void BindNodelEmail()
     {
-        DtCompanyDDL = Lo.RetriveMasterData(0, txtNEmailId.Text, "", 0, "", "", "NodelEmailByEmail");
+        DtCompanyDDL = Lo.RetriveMasterData(0, Session["CompanyRefNo"].ToString(), "", 0, "", "", "AllNodel");
         if (DtCompanyDDL.Rows.Count > 0)
         {
             Co.FillDropdownlist(ddlNodalOfficerEmail, DtCompanyDDL, "NodalOficerName", "NodalOfficerID");
             ddlNodalOfficerEmail.Items.Insert(0, "Select Nodel Officer");
+            
         }
     }
     protected void ddlNodalOfficerEmail_SelectedIndexChanged(object sender, EventArgs e)
