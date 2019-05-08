@@ -291,7 +291,7 @@ form label { color: #494ca2;}
 .master-company-table tr th:nth-child(6) { width: 298px;}
 .sideBg .table tr td th { background: #606dab !important;}
 .sideBg .table tr td td th {background: #536bde  !important;}
-.sideBg .table tr td td i.fa-plus,.sideBg .table tr td td i.fa-plus { color:#606dab}
+.sideBg .table tr td td i.fa-plus,.sideBg .table tr td td i.fa-minus { color:#de2f13}
 .checkbox-inline { padding-left: 0;}
 .sidebar-holder .nav li a {box-shadow: 0 0 4px rgba(0,0,0,0.06); border: 0;  font-weight: 600 !important; font-size: 14px;}
 .sidebar-holder .nav li a i { color: #2b3d51 !important }
@@ -328,3 +328,4 @@ form label { color: #494ca2;}
 #ContentPlaceHolder1_divflag span label,#ContentPlaceHolder1_divActive span label { margin-right: 10px;}
 #ContentPlaceHolder1_divflag span input[type='radio'],#ContentPlaceHolder1_divActive span input[type="radio"] { margin-right: 5px; margin-top:0;}
 .viewCatDropDown tr th:last-child { width: 60px !important;}
+.contactFormRow .form-group input[readonly="readonly"] { background: #fff !important;}

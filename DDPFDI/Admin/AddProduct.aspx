@@ -457,7 +457,7 @@
                                             <div class="col-md-3">
                                                 <div class="form-group">
                                                     <label>Department</label>
-                                                    <label>Company >> Division >>Unit</label>
+                                                    <input type="text" readonly="readonly" value="Company >> Division >>Unit" class="form-control">
 
                                                 </div>
                                             </div>
@@ -534,7 +534,7 @@
                                             <div class="col-md-3">
                                                 <div class="form-group">
                                                     <label>Department</label>
-                                                    <label>Company >> Division >>Unit</label>
+                                                    <input type="text" readonly="readonly" value="Company >> Division >>Unit" class="form-control">
                                                   
 
                                                 </div>
