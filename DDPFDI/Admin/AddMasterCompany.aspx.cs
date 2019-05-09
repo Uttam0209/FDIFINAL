@@ -146,6 +146,7 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
         if (Dtchkintrestedarea.Rows.Count > 0 && Dtchkintrestedarea != null)
         {
             Co.FillDropdownlist(mddlControl, Dtchkintrestedarea, sName, sID);
+            mddlControl.Items.Insert(0, "Select");
         }
 
     }

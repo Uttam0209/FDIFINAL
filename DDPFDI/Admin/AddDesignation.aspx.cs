@@ -96,10 +96,12 @@ public partial class Admin_AddDesignation : System.Web.UI.Page
         sName = "CompanyName";
         sID = "CompanyRefNo";
         ddlmaster.Enabled = true;
+        lblMastcompany.Text = "Select Company ";
         DataTable Dtchkintrestedarea = Lo.RetriveMasterData(id, mSID, sRole, 0, "", "", sType);
         if (Dtchkintrestedarea.Rows.Count > 0 && Dtchkintrestedarea != null)
         {
             Co.FillDropdownlist(ddlmaster, Dtchkintrestedarea, sName, sID);
+            ddlmaster.Items.Insert(0, "Select");
         }
 
     }
@@ -176,6 +178,7 @@ public partial class Admin_AddDesignation : System.Web.UI.Page
                     Co.FillDropdownlist(ddlmaster, DtCompanyDDL, "CompanyName", "CompanyRefNo");
                     ddlmaster.Enabled = false;
                 }
+                lblMastcompany.Text = "Select Company ";
                 
                 txtDesignation.Text = DtView.Rows[0]["Designation"].ToString();
                 btnsubmit.Text = "Edit";
