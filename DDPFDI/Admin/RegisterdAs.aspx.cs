@@ -13,6 +13,8 @@ public partial class Admin_RegisterdAs : System.Web.UI.Page
     Logic Lo = new Logic();
     private string DisplayPanel = "";
     HybridDictionary hySave = new HybridDictionary();
+    private string mType = "";
+    private string mRefNo = "";
     protected void Page_Load(object sender, EventArgs e)
     {
         if (Request.QueryString["id"] != null && Request.QueryString["id"].ToString() != null)
@@ -32,9 +34,61 @@ public partial class Admin_RegisterdAs : System.Web.UI.Page
                 }
                 divHeadPage.InnerHtml = strheadPage.ToString();
                 strheadPage.Append("</ul");
+                mType = objEnc.DecryptData(Session["Type"].ToString());
+                mRefNo = Session["CompanyRefNo"].ToString();
                 DisplayPanel = objEnc.DecryptData(Request.QueryString["mu"].ToString().Replace(" ", "+"));
                 ShowHidePanel();
+                BindGridView();
             }
+        }
+    }
+    protected void BindGridView(string sortExpression = null)
+    {
+        try
+        {
+            if (mType == "SuperAdmin")
+            {
+                DataTable DtGrid = Lo.RetriveMasterCategoryDate(0, "", "", "", "", "Select");
+                if (DtGrid.Rows.Count > 0)
+                {
+
+                    gvCategory.DataSource = DtGrid;
+                    gvCategory.DataBind();
+                }
+            }
+            else if (mType == "Company" && mRefNo != "")
+            {
+                DataTable DtGrid = Lo.RetriveMasterSubCategoryDate(0, "", "", "SubCompCat", mRefNo);
+                if (DtGrid.Rows.Count > 0)
+                {
+
+                    gvCategory.DataSource = DtGrid;
+                    gvCategory.DataBind();
+                }
+            }
+            else if (mType == "Factroy" && mRefNo != "")
+            {
+                DataTable DtGrid = Lo.RetriveMasterSubCategoryDate(0, "", "", "SubCompCat", mRefNo);
+                if (DtGrid.Rows.Count > 0)
+                {
+
+                    gvCategory.DataSource = DtGrid;
+                    gvCategory.DataBind();
+                }
+            }
+            else if (mType == "Unit" && mRefNo != "")
+            {
+                DataTable DtGrid = Lo.RetriveMasterSubCategoryDate(0, "", "", "SubCompCat", mRefNo);
+                if (DtGrid.Rows.Count > 0)
+                {
+
+                    gvCategory.DataSource = DtGrid;
+                    gvCategory.DataBind();
+                }
+            }
+        }
+        catch (Exception ex)
+        {
         }
     }
     protected void ShowHidePanel()

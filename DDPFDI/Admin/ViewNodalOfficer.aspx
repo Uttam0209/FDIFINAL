@@ -58,7 +58,11 @@
                                     Total number of  Nodal Officer :<strong>
                                         <asp:Label ID="lbltotal" runat="server" Text=""></asp:Label></strong>
                                 </div>
+                                <div class="clearfix"></div>
+                                <div id="Div3"  >
+                                <asp:Button ID="btnAddNodalOfficer" runat="server" Text="Add Employee" CssClass="btn btn-primary pull-right" OnClick="btnAddNodalOfficer_Click"  />
 
+                                </div>
                                 <div class="clearfix"></div>
                                 <div class="table-wraper">
                                     <asp:GridView ID="gvViewNodalOfficer" runat="server" Width="100%" Class="commonAjaxTbl master-company-table table display responsive no-wrap table-hover manage-user Grid" AutoGenerateColumns="false" AllowPaging="true"

@@ -171,6 +171,15 @@ public partial class Admin_ViewDesignation : System.Web.UI.Page
    
     #endregion
 
+    protected void btnAddDesignation_Click(object sender, EventArgs e)
+    {
+        string Role = "Company";
+        string stridNew = Request.QueryString["id"].ToString().Replace(" ", "+");
+        string mstrid = objEnc.EncryptData((objEnc.DecryptData(stridNew)));
+        Response.Redirect("Add-Designation?mrcreaterole=" + objEnc.EncryptData(Role) + "&id=" + mstrid);
+      
+    }
+
     #region DropDownList Code
     protected void ddlcompany_OnSelectedIndexChanged(object sender, EventArgs e)
     {

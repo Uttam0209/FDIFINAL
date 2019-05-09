@@ -49,6 +49,14 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
             }
         }
     }
+
+    protected void btnAddProduct_Click(object sender, EventArgs e)
+    {
+        string stridNew = Request.QueryString["id"].ToString().Replace(" ", "+");
+        string mstrid = objEnc.EncryptData((objEnc.DecryptData(stridNew)));
+        Response.Redirect("AddProduct?mu=" + objEnc.EncryptData("Panel") + "&id=" + mstrid);
+
+    }
     #region Load
     protected void BindGridView(string sortExpression = null)
     {

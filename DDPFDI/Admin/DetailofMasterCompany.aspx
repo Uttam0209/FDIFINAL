@@ -73,7 +73,16 @@
                                     Total number of  active companies :<strong>
                                         <asp:Label ID="lbltotal" runat="server" Text=""></asp:Label></strong>
                                 </div>
+                                <div class="clearfix"></div>
+                                <div id="Div3"   style="margin:10px;">
+                                    <asp:Button ID="btnAddUnit" Visible="false" runat="server" Text="Add Unit" CssClass="btn btn-primary pull-right" OnClick="btnAddUnit_Click"  />
 
+                                    <asp:Button ID="btnAddDivision" Visible="false" runat="server" Text="Add Division/Plant" CssClass="btn btn-primary pull-right" OnClick="btnAddDivision_Click"  />
+                                
+                                <asp:Button ID="btnAddCompany" Visible="false" runat="server" Text="Add Company" CssClass="btn btn-primary pull-right" OnClick="btnAddCompany_Click"  />
+                                
+                                </div>
+                               
                                 <div class="clearfix"></div>
                                 <div class="table-wraper">
                                     <asp:GridView ID="gvcompanydetail" runat="server" Width="100%" Class="commonAjaxTbl master-company-table table display responsive no-wrap table-hover manage-user Grid" AutoGenerateColumns="false" AllowPaging="true"
@@ -150,11 +159,8 @@
                                                                         </ItemTemplate>
                                                                     </asp:TemplateField>
                                                                     <asp:BoundField ItemStyle-Width="150px" DataField="FactoryName" HeaderText="Division" />
-                                                                    <asp:TemplateField >
-                                                                        <ItemTemplate>
-                                                                            <asp:Label runat="server" ID="lblfactoryrole" Text='<%#Eval("Role") %>'></asp:Label>
-                                                                        </ItemTemplate>
-                                                                    </asp:TemplateField>
+                                                                    <asp:BoundField ItemStyle-Width="150px" DataField="Role" HeaderText="" />
+                                                                   
                                                                     <asp:TemplateField >
                                                                         <ItemTemplate>
                                                                             <asp:Label ID="lblfactorynodelname" runat="server" Text='<%#Eval("FactoryEmailId") %>' NullDisplayText="#" SortExpression="ContactPersonEmailID"></asp:Label>

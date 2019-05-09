@@ -41,6 +41,10 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
                 for (int x = 0; x < MCateg.Length; x++)
                 {
                     MmCval = MCateg[x];
+                    if (MmCval == " View ")
+                    {
+                        MmCval = "Add";
+                    }
                     strheadPage.Append("<li class=''><span>" + MmCval + "</span></li>");
                 }
                 divHeadPage.InnerHtml = strheadPage.ToString();

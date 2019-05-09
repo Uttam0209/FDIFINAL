@@ -53,11 +53,29 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
                 mType = objCrypto.DecryptData(Session["Type"].ToString());
                 mRefNo = Session["CompanyRefNo"].ToString();
                 BindState();
+                ddldivision.Visible = false;
+                ddlunit.Visible = false;
                 BindCompany();
-               
+
                 BindMasterCategory();
                 BindNodelEmail();
-                EditCOde(dtViewDefault);
+                if (objCrypto.DecryptData(Request.QueryString["mrcreaterole"].ToString()) == "Company")
+                {
+                    EditCOde(dtViewDefault);
+                }
+                else if (objCrypto.DecryptData(Request.QueryString["mrcreaterole"].ToString()) == "Factory")
+                {
+                    EditDivison(dtViewDefault);
+                    licc.Visible = false;
+                    lisr.Visible = false;
+
+                }
+                else if (objCrypto.DecryptData(Request.QueryString["mrcreaterole"].ToString()) == "Unit")
+                {
+                    EditUnit(dtViewDefault);
+                    licc.Visible = false;
+                    lisr.Visible = false;
+                }
 
             }
             catch (Exception ex)
@@ -66,12 +84,9 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
             }
         }
     }
-
-
-
     protected void BindMasterCategory()
     {
-        DataTable DtMasterCategroy = Lo.RetriveMasterCategoryDate(0, "", "", "","","Select");
+        DataTable DtMasterCategroy = Lo.RetriveMasterCategoryDate(0, "", "", "", "", "Select");
         if (DtMasterCategroy.Rows.Count > 0)
         {
             Co.FillDropdownlist(ddlmastercategory, DtMasterCategroy, "MCategoryName", "MCategoryID");
@@ -160,7 +175,7 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
                 }
                 else
                 {
-                    DataTable DtGetNodel = Lo.RetriveMasterData(Convert.ToInt16(ddlNodalOfficerEmail.SelectedItem.Value), "", "", 0, "", "", "CompleteNodelDetail");
+                    DataTable DtGetNodel = Lo.RetriveMasterData(0, ddlNodalOfficerEmail.SelectedItem.Value, "", 0, "", "", "CompleteNodelDetail");
                     if (DtGetNodel.Rows.Count > 0)
                     {
                         txtNName.Text = DtGetNodel.Rows[0]["NodalOficerName"].ToString();
@@ -284,6 +299,7 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
 
                 }
             }
+            btndemofirst.Text = "Save";
         }
     }
     protected void btnShowMap_Click(object sender, EventArgs e)
@@ -302,7 +318,14 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
             }
             else
             {
-                DtView = Lo.RetriveGridViewCompany(Session["CompanyRefNo"].ToString(), "", "", "CompanyMainGridView");
+                if (Request.QueryString["mcurrentcompRefNo"] != null)
+                {
+                    DtView = Lo.RetriveGridViewCompany("", objCrypto.DecryptData(Request.QueryString["mcurrentcompRefNo"].ToString()), "", "DisplayFactory");
+                }
+                else
+                {
+                    DtView = Lo.RetriveGridViewCompany(Session["CompanyRefNo"].ToString(), "", "", "CompanyMainGridView");
+                }
             }
 
             if (DtView.Rows.Count > 0)
@@ -312,6 +335,8 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
                 tcompanyname.Text = DtView.Rows[0]["FactoryName"].ToString();
                 divmcName.Visible = false;
                 divmName.Visible = true;
+                lblMName.Text = "Company";
+                txtMName.Text = DtView.Rows[0]["CompanyName"].ToString();
                 lblMCName.Text = "Divison/Plant Name";
                 txtMCName.Text = DtView.Rows[0]["FactoryName"].ToString();
                 lblCName.Text = "Divison/Plant Name";
@@ -403,6 +428,7 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
 
                 }
             }
+            btndemofirst.Text = "Save Division";
         }
     }
     protected void EditUnit(DataTable DtView)
@@ -416,7 +442,14 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
             }
             else
             {
-                DtView = Lo.RetriveGridViewCompany(Session["CompanyRefNo"].ToString(), "", "", "CompanyMainGridView");
+                if (Request.QueryString["mcurrentcompRefNo"] != null)
+                {
+                    DtView = Lo.RetriveGridViewCompany("", objCrypto.DecryptData(Request.QueryString["mcurrentcompRefNo"].ToString()), "", "DisplayUnit");
+                }
+                else
+                {
+                    DtView = Lo.RetriveGridViewCompany(Session["CompanyRefNo"].ToString(), "", "", "CompanyMainGridView");
+                }
             }
 
             if (DtView.Rows.Count > 0)
@@ -425,6 +458,10 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
                 seljvventure.Visible = false;
                 divmName.Visible = true;
                 divmcName.Visible = true;
+                lblMName.Text = "Company";
+                lblMCName.Text = "Division";
+                txtMCName.Text = DtView.Rows[0]["FactoryName"].ToString();
+                txtMName.Text = DtView.Rows[0]["CompanyName"].ToString();
                 tcompanyname.Text = DtView.Rows[0]["UnitName"].ToString();
                 lblCName.Text = "Unit Name";
                 tcompanyname.ReadOnly = true;
@@ -513,6 +550,7 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
 
                 }
             }
+            btndemofirst.Text = "Save Unit";
         }
     }
     protected void BindState()
@@ -564,8 +602,8 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
         HySave["CINNo"] = Co.RSQandSQLInjection(tcinno.Text.Trim(), "soft");
         HySave["PANNo"] = Co.RSQandSQLInjection(tpanno.Text.Trim(), "soft");
         HySave["IECode"] = Co.RSQandSQLInjection(txtIECode.Text.Trim(), "soft");
-        HySave["CEOName"]=Co.RSQandSQLInjection(txtceoname.Text.Trim(),"soft");
-        HySave["CEOEmail"] = Co.RSQandSQLInjection(txtCEOEmailId.Text.Trim(),"soft");
+        HySave["CEOName"] = Co.RSQandSQLInjection(txtceoname.Text.Trim(), "soft");
+        HySave["CEOEmail"] = Co.RSQandSQLInjection(txtCEOEmailId.Text.Trim(), "soft");
         HySave["TelephoneNo"] = Co.RSQandSQLInjection(txtTelephone.Text.Trim(), "soft");
         HySave["FaxNo"] = Co.RSQandSQLInjection(txtFaxNo.Text.Trim(), "soft");
         HySave["EmailID"] = Co.RSQandSQLInjection(txtEmailID.Text.Trim(), "soft");
@@ -578,8 +616,8 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
         {
             HySave["Startup"] = "N";
         }
-        HySave["DIPPNumber"] = Co.RSQandSQLInjection(txtDIPP.Text.Trim(),"soft");
-        HySave["DIPPMobile"] = Co.RSQandSQLInjection(txtDIPPMobile.Text.Trim(),"soft");
+        HySave["DIPPNumber"] = Co.RSQandSQLInjection(txtDIPP.Text.Trim(), "soft");
+        HySave["DIPPMobile"] = Co.RSQandSQLInjection(txtDIPPMobile.Text.Trim(), "soft");
         if (rdoMYes.Checked == true)
         {
             HySave["MSME"] = "Y";
@@ -588,9 +626,69 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
         {
             HySave["MSME"] = "N";
         }
-        HySave["VAM"] = Co.RSQandSQLInjection(txtVAM.Text.Trim(),"soft");
-        HySave["Aadhar_Mobile"] = Co.RSQandSQLInjection(txtAad_Mob.Text.Trim(),"soft");
-        HySave["Facebook"] = Co.RSQandSQLInjection(txtFacebook.Text.Trim(),"soft");
+        HySave["VAM"] = Co.RSQandSQLInjection(txtVAM.Text.Trim(), "soft");
+        HySave["Aadhar_Mobile"] = Co.RSQandSQLInjection(txtAad_Mob.Text.Trim(), "soft");
+        HySave["Facebook"] = Co.RSQandSQLInjection(txtFacebook.Text.Trim(), "soft");
+        HySave["Twitter"] = Co.RSQandSQLInjection(txtTwitter.Text.Trim(), "soft");
+        HySave["Linkedin"] = Co.RSQandSQLInjection(txtLinkedin.Text.Trim(), "soft");
+        HySave["Instagram"] = Co.RSQandSQLInjection(txtInstagram.Text.Trim(), "soft");
+        HySave["latitude"] = Co.RSQandSQLInjection(txtlatitude.Text.Trim(), "soft");
+        HySave["longitude"] = Co.RSQandSQLInjection(txtlongitude.Text.Trim(), "soft");
+        HySave["InterestedArea"] = "";
+        HySave["MasterAllowed"] = "";
+        HySave["Role"] = "";
+    }
+
+    protected void SaveFactoryComp()
+    {
+        //TodoListL:--
+        if (hfid.Value != "")
+        {
+            HySave["CompanyID"] = hfid.Value;
+        }
+        else
+        {
+            HySave["CompanyID"] = Mid;
+        }
+        HySave["Address"] = Co.RSQandSQLInjection(taddress.Text.Trim(), "soft");
+        if (selstate.SelectedItem.Text == "Select State")
+        {
+            HySave["State"] = null;
+        }
+        else
+        {
+            HySave["State"] = Co.RSQandSQLInjection(selstate.SelectedItem.Value, "soft");
+        }
+        HySave["Pincode"] = Co.RSQandSQLInjection(tpincode.Text.Trim(), "soft");
+        HySave["CEOName"] = Co.RSQandSQLInjection(txtceoname.Text.Trim(), "soft");
+        HySave["CEOEmail"] = Co.RSQandSQLInjection(txtCEOEmailId.Text.Trim(), "soft");
+        HySave["TelephoneNo"] = Co.RSQandSQLInjection(txtTelephone.Text.Trim(), "soft");
+        HySave["FaxNo"] = Co.RSQandSQLInjection(txtFaxNo.Text.Trim(), "soft");
+        HySave["EmailID"] = Co.RSQandSQLInjection(txtEmailID.Text.Trim(), "soft");
+        HySave["Website"] = Co.RSQandSQLInjection(txtWebsite.Text.Trim(), "soft");
+        if (ddlNodalOfficerEmail.SelectedItem.Value == "0")
+        {
+            HySave["NodalOfficeRefNo"] = "0";
+        }
+        else
+        {
+            HySave["NodalOfficeRefNo"] = ddlNodalOfficerEmail.SelectedItem.Value;
+        }
+        HySave["ContactPersonEmailID"] = Co.RSQandSQLInjection(txtNEmailId.Text.Trim(), "soft");
+        HySave["Facebook"] = Co.RSQandSQLInjection(txtFacebook.Text.Trim(), "soft");
+        HySave["Twitter"] = Co.RSQandSQLInjection(txtTwitter.Text.Trim(), "soft");
+        HySave["Linkedin"] = Co.RSQandSQLInjection(txtLinkedin.Text.Trim(), "soft");
+        HySave["Instagram"] = Co.RSQandSQLInjection(txtInstagram.Text.Trim(), "soft");
+        HySave["latitude"] = Co.RSQandSQLInjection(txtlatitude.Text.Trim(), "soft");
+        HySave["longitude"] = Co.RSQandSQLInjection(txtlongitude.Text.Trim(), "soft");
+        HySave["InterestedArea"] = "";
+        HySave["MasterAllowed"] = "";
+        HySave["Role"] = "";
+    }
+    protected void SaveUnitComp()
+    {
+        //Todolist:---
+        HySave["Facebook"] = Co.RSQandSQLInjection(txtFacebook.Text.Trim(), "soft");
         HySave["Twitter"] = Co.RSQandSQLInjection(txtTwitter.Text.Trim(), "soft");
         HySave["Linkedin"] = Co.RSQandSQLInjection(txtLinkedin.Text.Trim(), "soft");
         HySave["Instagram"] = Co.RSQandSQLInjection(txtInstagram.Text.Trim(), "soft");
@@ -690,7 +788,21 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
             //}
             //else
             //{
-            SaveFDI();
+            if (btndemofirst.Text=="Save")
+            {
+                SaveFDI();
+            }
+            else if (btndemofirst.Text == "Save Division")
+            {
+                SaveFactoryComp();
+            }
+            else if (btndemofirst.Text=="Save Unit")
+            {
+                SaveUnitComp();
+                
+            }
+           
+            
             string StrSaveFDIComp = Lo.SaveMasterCompany(HySave, out _msg, out _sysMsg);
             if (StrSaveFDIComp != "0" && StrSaveFDIComp != "-1")
             {
@@ -726,7 +838,61 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
             {
                 lblSelectCompany.Text = "Company/Organization Name";
                 ddlcompany.Enabled = false;
-                DtCompanyDDL = Lo.RetriveMasterData(0, objCrypto.DecryptData(Request.QueryString["mcurrentcompRefNo"].ToString()), "Company", 0, "", "", "CompanyName");
+                if (objCrypto.DecryptData(Request.QueryString["mrcreaterole"].ToString()) == "Company")
+                {
+                    DtCompanyDDL = Lo.RetriveMasterData(0, objCrypto.DecryptData(Request.QueryString["mcurrentcompRefNo"].ToString()), "Company", 0, "", "", "CompanyName");
+
+                }
+                else if (objCrypto.DecryptData(Request.QueryString["mrcreaterole"].ToString()) == "Factory")
+                {
+                    DtCompanyDDL = Lo.RetriveMasterData(0, objCrypto.DecryptData(Request.QueryString["mcurrentcompRefNo"].ToString()), "Factory", 0, "", "", "CompanyName");
+                    DataTable DtDivisionDDL = Lo.RetriveMasterData(0, DtCompanyDDL.Rows[0]["CompanyRefNo"].ToString(), "Factory1", 0, "", "", "CompanyName");
+                    if (DtDivisionDDL.Rows.Count > 0)
+                    {
+                        Co.FillDropdownlist(ddldivision, DtDivisionDDL, "FactoryName", "FactoryRefNo");
+                        lblselectdivison.Visible = true;
+                        ddldivision.Enabled = false;
+                        ddlcompany.Enabled = false;
+                        ddldivision.Visible = true;
+                    }
+                    else
+                    {
+                        ddldivision.Enabled = false;
+                    }
+
+                }
+                else if (objCrypto.DecryptData(Request.QueryString["mrcreaterole"].ToString()) == "Unit")
+                {
+                    DtCompanyDDL = Lo.RetriveMasterData(0, objCrypto.DecryptData(Request.QueryString["mcurrentcompRefNo"].ToString()), "Unit", 0, "", "", "CompanyName");
+                    DataTable DtDivisionDDL = Lo.RetriveMasterData(0, DtCompanyDDL.Rows[0]["CompanyRefNo"].ToString(), "Factory1", 0, "", "", "CompanyName");
+                    if (DtDivisionDDL.Rows.Count > 0)
+                    {
+                        Co.FillDropdownlist(ddldivision, DtDivisionDDL, "FactoryName", "FactoryRefNo");
+                        lblselectdivison.Visible = true;
+                        ddldivision.Enabled = false;
+                        ddlcompany.Enabled = false;
+                        ddldivision.Visible = true;
+                        DataTable DtUnitDDL = Lo.RetriveMasterData(0, DtDivisionDDL.Rows[0]["FactoryRefNo"].ToString(), "Unit1", 0, "", "", "CompanyName");
+                        if (DtUnitDDL.Rows.Count > 0)
+                        {
+                            Co.FillDropdownlist(ddlunit, DtUnitDDL, "UnitName", "UnitRefNo");
+                            ddlunit.Enabled = true;
+                            lblselectunit.Visible = true;
+                            ddlunit.Visible = true;
+                            ddlunit.Enabled = false;
+                        }
+                        else
+                        {
+                            ddlunit.Enabled = false;
+                        }
+                    }
+                    else
+                    {
+                        ddldivision.Enabled = false;
+                    }
+
+                }
+
             }
             else
             {
@@ -744,8 +910,7 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
                 ddlcompany.Enabled = false;
             }
 
-            ddldivision.Visible = false;
-            ddlunit.Visible = false;
+
         }
         else if (mType == "Admin")
         {
@@ -881,9 +1046,9 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
         DtCompanyDDL = Lo.RetriveMasterData(0, Session["CompanyRefNo"].ToString(), "", 0, "", "", "AllNodel");
         if (DtCompanyDDL.Rows.Count > 0)
         {
-            Co.FillDropdownlist(ddlNodalOfficerEmail, DtCompanyDDL, "NodalOficerName", "NodalOfficerID");
+            Co.FillDropdownlist(ddlNodalOfficerEmail, DtCompanyDDL, "NodalOficerName", "NodalOfficerRefNo");
             ddlNodalOfficerEmail.Items.Insert(0, "Select");
-            
+
         }
     }
     protected void ddlNodalOfficerEmail_SelectedIndexChanged(object sender, EventArgs e)

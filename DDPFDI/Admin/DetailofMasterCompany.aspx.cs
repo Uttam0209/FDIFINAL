@@ -45,9 +45,40 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
                 mRefNo = Session["CompanyRefNo"].ToString();
                 BindCompany();
                 BindGridView();
+                if (mType == "SuperAdmin")
+                {
+                    btnAddCompany.Visible = true;
+                    btnAddDivision.Visible = true;
+                    btnAddUnit.Visible = true;
+                }
+                
             }
         }
     }
+
+    protected void btnAddCompany_Click(object sender, EventArgs e)
+    {
+        string stridNew = Request.QueryString["id"].ToString().Replace(" ", "+");
+        string mstrid = objEnc.EncryptData((objEnc.DecryptData(stridNew)));
+        Response.Redirect("AddMasterCompany?mu=" + objEnc.EncryptData("Panel") + "&id=" + mstrid);
+
+    }
+    protected void btnAddDivision_Click(object sender, EventArgs e)
+    {
+        string stridNew = Request.QueryString["id"].ToString().Replace(" ", "+");
+        string mstrid = objEnc.EncryptData((objEnc.DecryptData(stridNew)));
+        Response.Redirect("AddMasterCompany?mu=" + objEnc.EncryptData("Panel2") + "&id=" + mstrid);
+
+    }
+    protected void btnAddUnit_Click(object sender, EventArgs e)
+    {
+
+        string stridNew = Request.QueryString["id"].ToString().Replace(" ", "+");
+        string mstrid = objEnc.EncryptData((objEnc.DecryptData(stridNew)));
+        Response.Redirect("AddMasterCompany?mu=" + objEnc.EncryptData("Panel3") + "&id=" + mstrid);
+
+    }
+
     #region Load
     protected void BindGridView(string sortExpression = null)
     {
@@ -421,9 +452,18 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
         {
             GridViewRow gvr = (GridViewRow)((Control)e.CommandSource).NamingContainer;
             int rowIndex = gvr.RowIndex;
-           // string Role = (gvcompanydetail.Rows[rowIndex].FindControl("lblfactoryrole") as Label).Text;
-            string Role = "ff";
-            Response.Redirect("Add-Company?mrcreaterole=" + objEnc.EncryptData(Role) + "&mcurrentFactroyRefNo=" + (objEnc.EncryptData(e.CommandArgument.ToString()))+"&id="+Request.QueryString["id"].ToString());
+            //string Role = (gvcompanydetail.Rows[rowIndex].FindControl("lblfactoryrole") as Label).Text;
+           string Role = "Factory";
+           string stridNew = Request.QueryString["id"].ToString().Replace(" ", "+");
+           string mstrid = objEnc.EncryptData((objEnc.DecryptData(stridNew) + " >> Edit Division"));
+            try
+            {
+                Response.Redirect("Add-Company?mrcreaterole=" + objEnc.EncryptData(Role) + "&mcurrentcompRefNo=" + (objEnc.EncryptData(e.CommandArgument.ToString())) + "&id=" + mstrid,false);
+            }
+            catch (Exception ex)
+            {
+                ex.ToString();
+            }
         }
         else if (e.CommandName == "ViewfactoryComp")
         {
@@ -484,9 +524,12 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
         {
             GridViewRow gvr = (GridViewRow)((Control)e.CommandSource).NamingContainer;
             int rowIndex = gvr.RowIndex;
-            string Role = (gvcompanydetail.Rows[rowIndex].FindControl("lblunitrole") as Label).Text;
-            Response.Redirect("Add-Company?mrcreaterole=" + objEnc.EncryptData(Role) + "&mcurrentUnitRefNo=" + (objEnc.EncryptData(e.CommandArgument.ToString())) + "&id=" + Request.QueryString["id"].ToString());
-        }
+            //string Role = (gvcompanydetail.Rows[rowIndex].FindControl("lblunitrole") as Label).Text;
+            string Role = "Unit";
+            string stridNew = Request.QueryString["id"].ToString().Replace(" ", "+");
+            string mstrid = objEnc.EncryptData((objEnc.DecryptData(stridNew) + " >> Edit Unit"));
+            Response.Redirect("Add-Company?mrcreaterole=" + objEnc.EncryptData(Role) + "&mcurrentcompRefNo=" + (objEnc.EncryptData(e.CommandArgument.ToString())) + "&id=" + mstrid, false);
+         }
         else if (e.CommandName == "unitViewComp")
         {
             DataTable DtView = Lo.RetriveGridViewCompany("", "", e.CommandArgument.ToString(), "GVUnitID");
@@ -552,113 +595,13 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
             {
                 gvfactory.DataSource = DtGrid;
                 gvfactory.DataBind();
-             
+
             }
             else
             {
 
             }
-            DataTable dtCompany = Lo.RetriveMasterData(0, "", "", 0, currentPage, "", "btn");
-            if (dtCompany.Rows.Count > 0)
-            {
-                if (dtCompany.Rows[0]["Company"].ToString() == "1")
-                {
-                    LinkButton lbledit = e.Row.FindControl("lbledit") as LinkButton;
-                    LinkButton lblview = (LinkButton)e.Row.FindControl("lblview") as LinkButton;
-                    LinkButton lbldel = (LinkButton)e.Row.FindControl("lbldel") as LinkButton;
-                    lbledit.Visible = true;
-                    lblview.Visible = true;
-                    lbldel.Visible = true;
-                    //LinkButton lbleditfactory = (LinkButton)e.Row.FindControl("lbleditfactory");
-                    //LinkButton lblviewfactory = (LinkButton)e.Row.FindControl("lblviewfactory");
-                    //LinkButton lbldelfactory = (LinkButton)e.Row.FindControl("lbldelfactory");
-                    //if (lbleditfactory != null)
-                    //{
-                    //lbleditfactory.Visible = false;
-                    //lblviewfactory.Visible = true;
-                    //lbldelfactory.Visible = false;
-                    // }
 
-
-
-
-                }
-                else if (dtCompany.Rows[0]["Company"].ToString() == "2")
-                {
-                    LinkButton lbledit = (LinkButton)e.Row.FindControl("lbledit") as LinkButton;
-                    LinkButton lblview = (LinkButton)e.Row.FindControl("lblview") as LinkButton;
-                    LinkButton lbldel = (LinkButton)e.Row.FindControl("lbldel") as LinkButton;
-                    lbledit.Visible = true;
-                    lblview.Visible = true;
-                    lbldel.Visible = true;
-                    LinkButton lbleditfactory = (LinkButton)e.Row.FindControl("lbleditfactory") as LinkButton;
-                    LinkButton lblviewfactory = (LinkButton)e.Row.FindControl("lblviewfactory") as LinkButton;
-                    LinkButton lbldelfactory = (LinkButton)e.Row.FindControl("lbldelfactory") as LinkButton;
-                    // if (lbleditfactory != null)
-                    // {
-                    //lbleditfactory.Visible = true;
-                    //lblviewfactory.Visible = true;
-                    //lbldelfactory.Visible = false;
-                    // }
-                }
-                else if (dtCompany.Rows[0]["Company"].ToString() == "3")
-                {
-                    LinkButton lbledit = (LinkButton)e.Row.FindControl("lbledit") as LinkButton;
-                    LinkButton lblview = (LinkButton)e.Row.FindControl("lblview") as LinkButton;
-                    LinkButton lbldel = (LinkButton)e.Row.FindControl("lbldel") as LinkButton;
-                    lbledit.Visible = true;
-                    lblview.Visible = true;
-                    lbldel.Visible = true;
-                    //LinkButton lbleditfactory = (LinkButton)e.Row.FindControl("lbleditfactory");
-                    //LinkButton lblviewfactory = (LinkButton)e.Row.FindControl("lblviewfactory");
-                    //LinkButton lbldelfactory = (LinkButton)e.Row.FindControl("lbldelfactory");
-                    //  if (lbleditfactory != null)
-                    //  {
-                    //lbleditfactory.Visible = true;
-                    //lblviewfactory.Visible = true;
-                    //lbldelfactory.Visible = true;
-                    // }
-
-                }
-                else if (dtCompany.Rows[0]["Factory"].ToString() == "2")
-                {
-                    // btndemofirst.Visible = true;
-                    //  btnDelete.Visible = false;
-                }
-                else if (dtCompany.Rows[0]["Factory"].ToString() == "3")
-                {
-                    //   btndemofirst.Visible = true;
-                    //   btnDelete.Visible = true;
-                }
-                else if (dtCompany.Rows[0]["Unit"].ToString() == "2")
-                {
-                    //     btndemofirst.Visible = true;
-                    //     btnDelete.Visible = false;
-                }
-                else if (dtCompany.Rows[0]["Unit"].ToString() == "3")
-                {
-                    //     btndemofirst.Visible = true;
-                    //    btnDelete.Visible = true;
-                }
-                else if (dtCompany.Rows[0]["SuperAdmin"].ToString() == "1")
-                {
-                    LinkButton lbledit = (LinkButton)e.Row.FindControl("lbledit") as LinkButton;
-                    LinkButton lblview = (LinkButton)e.Row.FindControl("lblview") as LinkButton;
-                    LinkButton lbldel = (LinkButton)e.Row.FindControl("lbldel") as LinkButton;
-                    lbledit.Visible = true;
-                    lblview.Visible = true;
-                    lbldel.Visible = true;
-                    //  LinkButton lbleditfactory = (LinkButton)e.Row.FindControl("lbleditfactory");
-                    //  LinkButton lblviewfactory = (LinkButton)e.Row.FindControl("lblviewfactory");
-                    //  LinkButton lbldelfactory = (LinkButton)e.Row.FindControl("lbldelfactory");
-                    ////  if (lbleditfactory != null)
-                    ////  {
-                    //      lbleditfactory.Visible = true;
-                    //      lblviewfactory.Visible = true;
-                    //      lbldelfactory.Visible = true;
-                    ////  }
-                }
-            }
             GridView gvFactoryRow = e.Row.FindControl("gvfactory") as GridView;
             gvFactoryRow.RowCommand += new GridViewCommandEventHandler(gvfactory_RowCommand);
         }
@@ -669,6 +612,11 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
         {
             Label lblfactroyrefno = e.Row.FindControl("lblfactoryrefno") as Label;
             GridView gvunit = e.Row.FindControl("gvunit") as GridView;
+
+            if (e.Row.Cells[4].Text == "Factory")
+            {
+                e.Row.Cells[4].Text = "Division/Plant";
+            }
 
             DataTable DtGrid = Lo.RetriveGridViewCompany("", lblfactroyrefno.Text, "", "InnerGridViewUnit");
             if (DtGrid.Rows.Count > 0)
@@ -737,6 +685,9 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
                     ddldivision.Items.Insert(0, "Select");
                     lblselectdivison.Visible = true;
                     ddldivision.Visible = true;
+                    btnAddCompany.Visible = false;
+                    btnAddDivision.Visible = true;
+                    btnAddUnit.Visible = true;
                 }
                 else
                 {
@@ -794,6 +745,9 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
                 ddlunit.Items.Insert(0, "Select");
                 ddlunit.Visible = true;
                 lblselectunit.Visible = true;
+                btnAddCompany.Visible = false;
+                btnAddDivision.Visible = false;
+                btnAddUnit.Visible = true;
             }
             else
             {

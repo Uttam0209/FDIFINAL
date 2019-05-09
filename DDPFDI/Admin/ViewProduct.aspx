@@ -28,6 +28,12 @@
                             <div id="divHeadPage" runat="server"></div>
                         </div>
                     </div>
+                    <div class="clearfix"></div>
+                    <div id="Div3">
+                        <asp:Button ID="btnAddProduct" runat="server" Text="Add Product" CssClass="btn btn-primary pull-right" OnClick="btnAddProduct_Click" />
+
+                    </div>
+                    <div class="clearfix"></div>
                     <form method="post" class="addfdi">
                         <div class="row">
                             <div class="col-md-12">
