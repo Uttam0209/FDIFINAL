@@ -31,6 +31,8 @@ public partial class _Default : System.Web.UI.Page
     #endregion
     protected void Page_Load(object sender, EventArgs e)
     {
+       // String pass = objEnc.DecryptData("aL88ocdv5/Kq/MF8J1Qtk+6AnMaH6dJtcBkuT7qx2N9CyzbHTAaAEp6078Hi2j8TmGjn3bh+woMdrb2GExeKDrrki9nUYldJpvvVzu39U3RiQkgmYruFZQ==");
+        //string enc = objEnc.EncryptData("Data Source=103.73.189.114;Initial Catalog=ddp_fdi;User ID=ddp;Password=%>#%7ZeL3");
     }
     #region "Login Code"
     public static bool IsValidEmailId(string InputEmail)
@@ -60,7 +62,7 @@ public partial class _Default : System.Web.UI.Page
                 {
                     hyLogin["UserName"] = Co.RSQandSQLInjection(txtUserName.Text.Trim() + "'", "hard" + "'");
                     hyLogin["Password"] = objEnc.EncryptData(txtPwd.Text.Trim());
-                    string _EmpId = LO.VerifyEmployee(hyLogin, out _msg,out Defaultpage);
+                    string _EmpId = LO.VerifyEmployee(hyLogin, out _msg, out Defaultpage);
                     if (_EmpId != "0" && _EmpId != "1" && _msg != "")
                     {
                         Session["Type"] = objEnc.EncryptData(_msg);

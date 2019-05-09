@@ -648,7 +648,11 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         }
 
         HyPanel1["TenderUrl"] = Co.RSQandSQLInjection(txttendorurl.Text, "soft");
-        if (ddlNodalOfficerEmail.Text != "")
+        if (ddlNodalOfficerEmail.SelectedItem.Text != "Select" && ddlNodalOfficerEmail2.SelectedItem.Text == "Select")
+        {
+            HyPanel1["NodelDetail"] = Co.RSQandSQLInjection(ddlNodalOfficerEmail.SelectedItem.Value, "soft");
+        }
+        else if (ddlNodalOfficerEmail.SelectedItem.Text != "Select" && ddlNodalOfficerEmail2.SelectedItem.Text != "Select")
         {
             HyPanel1["NodelDetail"] = Co.RSQandSQLInjection(ddlNodalOfficerEmail.SelectedItem.Value, "soft") + "," +
                                       Co.RSQandSQLInjection(ddlNodalOfficerEmail2.SelectedItem.Value, "soft");
