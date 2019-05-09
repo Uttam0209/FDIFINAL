@@ -240,9 +240,10 @@
                                                             <label class="live-status-box productalreadylabel ">
                                                                 Product Already Indeginized :
                                                                <asp:RadioButtonList runat="server" ID="rbisindinised" RepeatColumns="2" RepeatLayout="Flow" RepeatDirection="Horizontal" AutoPostBack="True" OnSelectedIndexChanged="rbisindinised_CheckedChanged ">
+                                                                   <asp:ListItem Value="N" Selected="True">No</asp:ListItem>
                                                                    <asp:ListItem Value="Y" class="yes">Yes</asp:ListItem>
                                                                     
-                                                                   <asp:ListItem Value="N" Selected="True">No</asp:ListItem>
+                                                                 
                                                                    </asp:RadioButtonList>
                                                                    
                                                              
@@ -356,10 +357,11 @@
                                             <div class="form-group live-status-box">
                                                 <label>
                                                     <strong>Note:</strong> If live, please fill last date of tender submission. 
-                                            <span class="checkbox-box">
+                                            <span class="checkbox-box productalreadylabel">
                                                 <asp:RadioButtonList runat="server" ID="rbtendordateyesno" RepeatDirection="Horizontal" AutoPostBack="True" RepeatColumns="2" RepeatLayout="Flow" OnSelectedIndexChanged="rbtendordateyesno_CheckedChanged">
-                                                    <asp:ListItem Value="Y">Yes</asp:ListItem>
                                                     <asp:ListItem Value="N" Selected="True">No</asp:ListItem>
+                                                    <asp:ListItem Value="Y" class="yes">Yes</asp:ListItem>
+                                                    
                                                 </asp:RadioButtonList>
                                             </span>
                                                 </label>

@@ -23,7 +23,7 @@
             </div>
             <label for="activityname" class="control-label pull-right">(<span class="mandatory">*</span>) are manadatory field</label>
             <div class="clearfix"></div>
-
+           
             <div class="row">
                 <div class="col-sm-4">
                     <asp:Label runat="server" ID="lblSelectCompany" CssClass="form-label"></asp:Label>
@@ -37,6 +37,7 @@
                     <asp:Label runat="server" ID="lblselectunit" Visible="False" CssClass="form-label">Select Unit</asp:Label>
                     <asp:DropDownList runat="server" ID="ddlunit" CssClass="form-control" AutoPostBack="True" OnSelectedIndexChanged="ddlunit_OnSelectedIndexChanged"></asp:DropDownList>
                 </div>
+            
             </div>
             <div class="clearfix"></div>
             <div class="tabing-section" style="margin-top: 20px;">
@@ -55,7 +56,7 @@
                     <asp:HiddenField ID="hfid" runat="server" />
                     <div id="demo" runat="server">
                         <div class="addfdi">
-                            <div class="col-md-12 col-mod-12">
+                            <div class="col-md-12 padding_0">
                                 <div class="row">
 
                                     <div class="col-md-12">
@@ -72,6 +73,7 @@
 
                                                 </div>
                                             </div>
+                                             <div class="section-pannel">
                                             <div class="row">
 
                                                 <div class="col-md-6">
@@ -92,7 +94,8 @@
                                                     </div>
                                                 </div>
 
-                                            </div>
+                                            
+                                             </div>
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group">
@@ -117,6 +120,8 @@
                                                 </div>
 
                                             </div>
+                                            </div>
+                                            <div class="section-pannel">
                                             <div class="row">
                                                 <div class="col-md-6">
 
@@ -163,6 +168,7 @@
                                                         <asp:TextBox runat="server" ID="txtWebsite" name="" class="form-control form-cascade-control " placeholder=""></asp:TextBox>
                                                     </div>
                                                 </div>
+                                            </div>
                                             </div>
                                             <div class="indiacompanydetails">
 
@@ -292,7 +298,7 @@
                     </asp:UpdatePanel>
                 </div>
                 <div id="sr" class="tab-pane fade">
-
+                    <div class="section-pannel">
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group" id="DivGST" runat="server">
@@ -307,6 +313,7 @@
                             </div>
                         </div>
                     </div>
+                    
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group" id="DivPAN" runat="server">
@@ -321,7 +328,8 @@
                             </div>
                         </div>
                     </div>
-
+                </div>
+                <div class="section-pannel">
                     <div class="row">
                         <asp:UpdatePanel runat="server" ID="UpdatePanel1">
                             <ContentTemplate>
@@ -330,12 +338,12 @@
                                     <div class="resitered">
                                         <form>
                                             <div class="col-md-12">
-                                                <div class="form-group">
-                                                    <label>
+                                                <div class="form-group productalreadylabel">
+                                                    <label style="margin-right: 10px;">
                                                         Are You resitered with Start up India ?</label>
-                                                    <asp:RadioButton ID="rdoYes" Text="Yes" AutoPostBack="true" OnCheckedChanged="rdoYes_CheckedChanged" GroupName="S" runat="server" />
+                                                    
                                                     <asp:RadioButton ID="rdoNo" Checked="true" AutoPostBack="true" OnCheckedChanged="rdoNo_CheckedChanged" Text="No" GroupName="S" runat="server" />
-
+                                                    <asp:RadioButton ID="rdoYes" Text="Yes" class="yes" AutoPostBack="true" OnCheckedChanged="rdoYes_CheckedChanged" GroupName="S" runat="server" />
                                                 </div>
                                             </div>
 
@@ -363,6 +371,8 @@
                             </ContentTemplate>
                         </asp:UpdatePanel>
                     </div>
+                </div>
+                <div class="section-pannel">
                     <div class="row">
                         <asp:UpdatePanel runat="server" ID="UpdatePanel2">
                             <ContentTemplate>
@@ -370,11 +380,12 @@
                                     <div class="resitered">
                                         <form>
                                             <div class="col-md-12">
-                                                <div class="form-group">
+                                                <div class="form-group productalreadylabel">
                                                     <label>
                                                         Are you registerd with MSME as a micro or small Enterprise</label>
-                                                    <asp:RadioButton ID="rdoMYes" Text="Yes" AutoPostBack="true" OnCheckedChanged="rdoMYes_CheckedChanged" GroupName="M" runat="server" />
                                                     <asp:RadioButton ID="rdoMNo" Text="No" AutoPostBack="true" Checked="true" OnCheckedChanged="rdoMNo_CheckedChanged" GroupName="M" runat="server" />
+                                                    <asp:RadioButton ID="rdoMYes" Text="Yes" class="yes" AutoPostBack="true" OnCheckedChanged="rdoMYes_CheckedChanged" GroupName="M" runat="server" />
+                                                    
                                                 </div>
                                             </div>
 
@@ -398,11 +409,12 @@
                             </ContentTemplate>
                         </asp:UpdatePanel>
                     </div>
-
+                </div>
 
                 </div>
 
                 <div id="sm" class="tab-pane fade">
+                    <div class="section-pannel">
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
@@ -431,6 +443,7 @@
                             </div>
                         </div>
                     </div>
+                    </div>
                 </div>
 
 
@@ -438,6 +451,7 @@
                 <div id="cc" class="tab-pane fade">
                     <asp:UpdatePanel runat="server" ID="up">
                         <ContentTemplate>
+                            <div class="section-pannel">
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
@@ -455,6 +469,7 @@
                                     </div>
                                 </div>
                             </div>
+                            </div>
                         </ContentTemplate>
                     </asp:UpdatePanel>
                 </div>
@@ -462,10 +477,11 @@
                 <div id="Location" class="tab-pane fade">
                     <asp:UpdatePanel ID="loc" runat="server" UpdateMode="Always">
                         <ContentTemplate>
+                            <div class="section-pannel">
                             <div class="row">
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="activityname" class="control-label">latitude </label>
+                                        <label for="activityname" class="control-label">Latitude </label>
                                         <asp:TextBox runat="server" ID="txtlatitude" name="txtlatitude" class="form-control form-cascade-control " placeholder=""></asp:TextBox>
                                     </div>
 
@@ -473,14 +489,14 @@
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="activityname" class="control-label">longitude</label>
+                                        <label for="activityname" class="control-label">Longitude</label>
                                         <asp:TextBox runat="server" ID="txtlongitude" name="txtlongitude" class="form-control form-cascade-control " placeholder=""></asp:TextBox>
 
                                     </div>
                                 </div>
                                 
                             </div>
-
+                            </div>
                             <div class="row">
 
                                 <div class="col-md-12">
