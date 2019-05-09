@@ -13,10 +13,11 @@
                     <div id="divHeadPage" runat="server"></div>
                 </div>
             </div>
-            <div class="col-sm-12">
-                <div class="addfdi">
-                    <div class="col-md-12">
-                        <div class="row">
+           
+                <div class="addfdi"> 
+                        <div class="section-pannel">       
+                           <div class="row">
+                               <div class="col-md-12">
                            <%-- <asp:UpdatePanel ID="upfdival" runat="server">
                                 <ContentTemplate>--%>
                                     <div class="form-group" runat="server" id="mastercompany">
@@ -25,6 +26,9 @@
                                         <asp:DropDownList runat="server" ID="ddlmaster" AutoPostBack="True" CssClass="form-control form-cascade-control">
                                         </asp:DropDownList>
                                     </div>
+                             </div>
+                               </div>
+                           
                                     
                                     <div class="row">
                                         <div class="col-md-12">
@@ -43,12 +47,13 @@
                                             </div>
                                         </div>
                                     </div>
+                             </div>
                                     
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="fdi-add-content">
                                                 <div class="form-group">
-                                                    <asp:Button ID="btncancel" runat="server" Text="Cancel" CssClass="btn btn-danger pull-right" OnClick="btncancel_Click" />
+                                                    <asp:Button ID="btncancel" runat="server" Text="Cancel" CssClass="btn btn-default pull-right" OnClick="btncancel_Click" />
                                                     <asp:Button ID="btnsubmit" runat="server" Text="Save" CssClass="btn btn-primary pull-right" OnClick="btnsubmit_Click" OnClientClick="return Validate()" />
                                                 </div>
                                             </div>
@@ -58,11 +63,9 @@
                                     </div>
                                 <%--</ContentTemplate>
                             </asp:UpdatePanel>--%>
-                        </div>
-                    </div>
+                       
                 </div>
                 <div class="clearfix"></div>
-            </div>
             <div class="footer"><i class="far fa-copyright"></i>2019 <a href="#">Department of Defence Production</a> </div>
         </div>
     </div>

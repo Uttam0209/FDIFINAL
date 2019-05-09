@@ -330,4 +330,5 @@ form label { color: #494ca2;}
 .viewCatDropDown tr th:nth-child(3) { width: auto !important}
 .contactFormRow .form-group input[readonly="readonly"] { background: #fff !important;}
 .productalreadylabel{ margin-bottom: -4px; }
-.form .form-group label span.yes { margin-left: 10px !important;}
+.productalreadylabel .yes { margin-left: 10px !important;}
+.ViewProductTable tr th,.ViewProductTable tr td { width: auto !important; white-space: nowrap !important}
