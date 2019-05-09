@@ -15,13 +15,13 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     Cryptography objEnc = new Cryptography();
     DataUtility Co = new DataUtility();
     Logic Lo = new Logic();
+    DataTable dtImage = new DataTable();
     private string DisplayPanel = "";
     string _msg = string.Empty;
     string _sysMsg = string.Empty;
     public string Services = "";
     public string Remarks = "";
     public string NodalDDL = "";
-
     string UserName;
     string RefNo;
     string UserEmail;
@@ -29,8 +29,6 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     private string mType = "";
     private string mRefNo = "";
     private Int16 Mid = 0;
-
-
     DataTable DtCompanyDDL = new DataTable();
     HybridDictionary HyPanel1 = new HybridDictionary();
     protected void Page_Load(object sender, EventArgs e)
@@ -63,7 +61,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                     BindMasterPlatCategory();
                     BindMasterProductReqCategory();
                     BindMasterProductNoenCletureCategory();
-                    //BindNodelEmail();
+                    // BindNodelEmail();
                     BindServcies();
                     BindEndUser();
                 }
@@ -299,7 +297,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     }
     protected void ddlNodalOfficerEmail_SelectedIndexChanged(object sender, EventArgs e)
     {
-        BindNodelEmail();
+        BindNodelEmail1();
     }
     protected void BindNodelEmail1()
     {
@@ -583,6 +581,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         if (hfprodid.Value != "")
         {
             HyPanel1["ProductID"] = Convert.ToInt16(hfprodid.Value);
+            HyPanel1["ProductRefNo"] = Co.RSQandSQLInjection(hfprodrefno.Value, "soft");
         }
         else
         {
@@ -671,7 +670,10 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         HyPanel1["IsIndeginized"] = Co.RSQandSQLInjection(rbisindinised.SelectedItem.Value, "soft");
         HyPanel1["ManufactureName"] = Co.RSQandSQLInjection(txtmanufacturename.Text, "soft");
         HyPanel1["SearchKeyword"] = Co.RSQandSQLInjection(txtsearchkeyword.Text, "soft");
-        DataTable dtImage = imagedb();
+        if (files.HasFiles != false)
+        {
+            dtImage = imagedb();
+        }
         foreach (GridViewRow rw in gvservices.Rows)
         {
             CheckBox chkBx = (CheckBox)rw.FindControl("chk");
@@ -679,8 +681,8 @@ public partial class Admin_AddProduct : System.Web.UI.Page
             TextBox txtRemarks = (TextBox)rw.FindControl("txtRemarks");
             if (chkBx != null && chkBx.Checked)
             {
-                Services = Services + "," + hfservicesid.Value;
-                Remarks = Remarks + "," + txtRemarks.Text;
+                Services = Services + "," + hfservicesid.Value + ",";
+                Remarks = Remarks + "," + txtRemarks.Text + ",";
             }
         }
         if (Services != "")
@@ -696,6 +698,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         HyPanel1["Estimatequantity"] = Co.RSQandSQLInjection(txtestimatequantity.Text, "soft");
         HyPanel1["EstimatePriceLLP"] = Co.RSQandSQLInjection(txtestimateprice.Text, "soft");
         HyPanel1["TenderStatus"] = Co.RSQandSQLInjection(ddltendorstatus.SelectedItem.Value, "soft");
+        HyPanel1["TenderSubmition"] = Co.RSQandSQLInjection(rbtendordateyesno.SelectedItem.Value, "soft");
         if (txttendordate.Text != "")
         {
             DateTime Datetendor = Convert.ToDateTime(txttendordate.Text);
@@ -706,7 +709,6 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         {
             HyPanel1["TenderFillDate"] = null;
         }
-
         HyPanel1["TenderUrl"] = Co.RSQandSQLInjection(txttendorurl.Text, "soft");
         if (ddlNodalOfficerEmail.Text == "" && ddlNodalOfficerEmail2.Text == "")
         {
@@ -723,13 +725,22 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         else if (ddlNodalOfficerEmail.SelectedItem.Text != "Select" && ddlNodalOfficerEmail2.SelectedItem.Text != "Select")
         {
             HyPanel1["NodelDetail"] = Co.RSQandSQLInjection(ddlNodalOfficerEmail.SelectedItem.Value, "soft") + "," +
-                                      Co.RSQandSQLInjection(ddlNodalOfficerEmail2.SelectedItem.Value, "soft");
+                                      Co.RSQandSQLInjection(ddlNodalOfficerEmail2.SelectedItem.Value, "soft") + ",";
         }
         string StrProductDescription = Lo.SaveCodeProduct(HyPanel1, dtImage, out _sysMsg, out _msg, "Product");
         if (StrProductDescription != "-1")
         {
-            Cleartext();
-            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record Saved.')", true);
+            if (btnsubmitpanel1.Text != "Update")
+            {
+                Cleartext();
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record Saved.')", true);
+            }
+            else
+            {
+                Cleartext();
+                btnsubmitpanel1.Text = "Save";
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record updated successfully.')", true);
+            }
         }
         else
         {
@@ -758,6 +769,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     protected void Cleartext()
     {
         hfprodid.Value = "";
+        hfprodrefno.Value = "";
         txtoempartnumber.Text = "";
         txtdpsupartnumber.Text = "";
         txtenduserpartnumber.Text = "";
@@ -833,10 +845,12 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     {
         if (Request.QueryString["mcurrentcompRefNo"] != null)
         {
-            hfprodid.Value = objEnc.DecryptData(Request.QueryString["mcurrentcompRefNo"].ToString());
-            DataTable DtView = Lo.RetriveProductCode("", hfprodid.Value, "ProductMasterID");
+            hfprodrefno.Value = objEnc.DecryptData(Request.QueryString["mcurrentcompRefNo"].ToString());
+            DataTable DtView = Lo.RetriveProductCode("", hfprodrefno.Value, "ProductMasterID");
             if (DtView.Rows.Count > 0)
             {
+                btnsubmitpanel1.Text = "Update";
+                hfprodid.Value = DtView.Rows[0]["ProductID"].ToString();
                 hfcomprefno.Value = DtView.Rows[0]["CompanyRefNo"].ToString();
                 txtoempartnumber.Text = DtView.Rows[0]["OEMPartNumber"].ToString();
                 txtdpsupartnumber.Text = DtView.Rows[0]["DPSUPartNumber"].ToString();
@@ -864,7 +878,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                     txtmanufacturename.Text = DtView.Rows[0]["ManufactureName"].ToString();
                 }
                 txtsearchkeyword.Text = DtView.Rows[0]["SearchKeyword"].ToString();
-                DataTable dtImageBind = Lo.RetriveProductCode("", hfprodid.Value, "ProductImage");
+                DataTable dtImageBind = Lo.RetriveProductCode("", hfprodrefno.Value, "ProductImage");
                 if (dtImageBind.Rows.Count > 0)
                 {
                     dlimage.DataSource = dtImageBind;
@@ -875,7 +889,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                 {
                     divimgdel.Visible = false;
                 }
-                DataTable dtpsdq = Lo.RetriveProductCode("", hfprodid.Value, "ProductPSDQ");
+                DataTable dtpsdq = Lo.RetriveProductCode("", hfprodrefno.Value, "ProductPSDQ");
                 if (dtpsdq.Rows.Count > 0)
                 {
                     for (int i = 0; dtpsdq.Rows.Count > i; i++)
@@ -894,10 +908,20 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                 }
                 txtestimatequantity.Text = DtView.Rows[0]["Estimatequantity"].ToString();
                 txtestimateprice.Text = DtView.Rows[0]["EstimatePriceLLP"].ToString();
-                ddltendorstatus.SelectedItem.Value = "";
-                txttendordate.Text = DtView.Rows[0]["TenderFillDate"].ToString();
-                txttendorurl.Text = DtView.Rows[0]["TenderUrl"].ToString();
-                DataTable dtNodal = Lo.RetriveProductCode("", hfprodid.Value, "ProductNodal");
+                ddltendorstatus.SelectedValue = DtView.Rows[0]["TenderStatus"].ToString();
+                rbtendordateyesno.SelectedValue = DtView.Rows[0]["TenderSubmition"].ToString();
+                if (ddltendorstatus.SelectedValue == "Live" && rbtendordateyesno.SelectedValue == "Y")
+                {
+                    divtdate.Visible = true;
+                    txttendordate.Text = DtView.Rows[0]["TenderFillDate"].ToString();
+                    txttendorurl.Text = DtView.Rows[0]["TenderUrl"].ToString();
+                }
+                else
+                {
+                    divtdate.Visible = false;
+                }
+                BindNodelEmail();
+                DataTable dtNodal = Lo.RetriveProductCode("", hfprodrefno.Value, "ProductNodal");
                 if (dtNodal.Rows.Count > 0)
                 {
                     ddlNodalOfficerEmail.SelectedValue = dtNodal.Rows[0]["NodalOfficerID"].ToString();
@@ -907,7 +931,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                     }
                     if (dtNodal.Rows.Count == 2)
                     {
-                        ddlNodalOfficerEmail2.SelectedValue = dtNodal.Rows[0]["NodalOfficerID"].ToString();
+                        ddlNodalOfficerEmail2.SelectedValue = dtNodal.Rows[1]["NodalOfficerID"].ToString();
                         if (ddlNodalOfficerEmail2.SelectedValue != "")
                         {
                             BindNodal2();
@@ -918,4 +942,36 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         }
     }
     #endregion
+    protected void dlimage_ItemCommand(object source, DataListCommandEventArgs e)
+    {
+        if (e.CommandName == "removeimg")
+        {
+            try
+            {
+                string DeleteRec = Lo.DeleteRecord(e.CommandArgument.ToString(), "InActiveImage");
+                if (DeleteRec == "true")
+                {
+                    DataTable dtImageBind = Lo.RetriveProductCode("", hfprodrefno.Value, "ProductImage");
+                    if (dtImageBind.Rows.Count > 0)
+                    {
+                        dlimage.DataSource = dtImageBind;
+                        dlimage.DataBind();
+                        divimgdel.Visible = true;
+                    }
+                    else
+                    {
+                        divimgdel.Visible = false;
+                    }
+                }
+                else
+                {
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not deleted.')", true);
+                }
+            }
+            catch (Exception ex)
+            {
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not deleted.')", true);
+            }
+        }
+    }
 }

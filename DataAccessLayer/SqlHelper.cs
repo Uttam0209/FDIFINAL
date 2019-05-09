@@ -510,6 +510,7 @@ namespace DataAccessLayer
                     db.AddInParameter(cmd, "@Estimatequantity", DbType.String, hyProduct["Estimatequantity"].ToString().Trim());
                     db.AddInParameter(cmd, "@EstimatePriceLLP", DbType.String, hyProduct["EstimatePriceLLP"]);
                     db.AddInParameter(cmd, "@TenderStatus", DbType.String, hyProduct["TenderStatus"].ToString().Trim());
+                    db.AddInParameter(cmd, "@TenderSubmition", DbType.String, hyProduct["TenderSubmition"].ToString().Trim());
                     db.AddInParameter(cmd, "@TenderFillDate", DbType.Date, hyProduct["TenderFillDate"]);
                     db.AddInParameter(cmd, "@TenderUrl", DbType.String, hyProduct["TenderUrl"]);
                     db.AddInParameter(cmd, "@NodelDetail", DbType.String, hyProduct["NodelDetail"]);

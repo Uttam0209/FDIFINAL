@@ -78,6 +78,7 @@
 
                 <div class="tab-content">
                     <asp:HiddenField runat="server" ID="hfprodid" />
+                    <asp:HiddenField runat="server" ID="hfprodrefno" />
                     <asp:HiddenField runat="server" ID="hfcomprefno" />
                     <div id="pd" class="tab-pane fade in active">
                         <div class="row">
@@ -287,15 +288,15 @@
                                 <asp:Label ID="lbmes" runat="server" Text=""></asp:Label>
                             </asp:Panel>
                             <div class="clearfix p10"></div>
-                            <div runat="server" id="divimgdel" Visible="False">
+                            <div runat="server" id="divimgdel" visible="False">
                                 <div class="row">
                                     <div class="col-sm-12">
-                                        <asp:DataList runat="server" ID="dlimage" RepeatColumns="4" RepeatDirection="Horizontal" RepeatLayout="Flow">
+                                        <asp:DataList runat="server" ID="dlimage" RepeatColumns="4" RepeatDirection="Horizontal" RepeatLayout="Flow" OnItemCommand="dlimage_ItemCommand">
                                             <ItemTemplate>
                                                 <div class="col-sm-3">
                                                     <asp:Image runat="server" ID="imgprodimage" class="image img-responsive img-rounded" Height="120px" Width="120" src='<%#Eval("ImageName") %>' />
                                                     <div class="clearfix"></div>
-                                                    <asp:LinkButton runat="server" ID="lblremoveimg" Text="Remove" class="control-label" CommandName="removeimg" CommandArgument='<%#Eval("ImageId") %>'></asp:LinkButton>
+                                                    <asp:LinkButton runat="server" ID="lblremoveimg" class="fa fa-trash text-center" CommandName="removeimg" CommandArgument='<%#Eval("ImageId") %>'></asp:LinkButton>
                                                 </div>
                                             </ItemTemplate>
                                         </asp:DataList>
