@@ -56,10 +56,11 @@
                     <div id="divHeadPage" runat="server"></div>
                 </div>
             </div>
-            <div class="col-sm-12">
+            
+           
+                <div class="col-md-12">
+                   
                 <div class="addfdi">
-                    <div class="col-md-12">
-                        <div class="row">
                             <asp:UpdatePanel ID="upfdival" runat="server">
                                 <ContentTemplate>
                                     <div class="form-group" runat="server" id="mastercompany" visible="False">
@@ -72,11 +73,13 @@
                                         <asp:DropDownList runat="server" ID="ddlfacotry" AutoPostBack="True" CssClass="form-control form-cascade-control">
                                         </asp:DropDownList>
                                     </div>
-                                    <div class="row">
+                                    
+                                        <div class="row">
                                         <div class="col-md-12">
                                             <div class="fdi-add-content">
                                                 <div runat="server">
-                                                    <div class="row">
+                                                    
+                                                        <div class="row">
                                                         <div class="col-md-6">
                                                             <div class="form-group">
                                                                 <asp:Label ID="lblName" runat="server" Text="" CssClass="form-label"></asp:Label>
@@ -92,10 +95,12 @@
                                                             </div>
                                                         </div>
                                                     </div>
+                                                       
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+                                      
                                     <div class="row is-flex">
                                         <div class="col-md-5" id="Intrested" visible="False" runat="server">
                                             <div class="fdi-add-content">
@@ -138,7 +143,7 @@
                                         <div class="col-md-12">
                                             <div class="fdi-add-content">
                                                 <div class="form-group">
-                                                    <asp:Button ID="btncancel" runat="server" Text="Cancel" CssClass="btn btn-danger pull-right" OnClick="btncancel_Click" />
+                                                    <asp:Button ID="btncancel" runat="server" Text="Cancel" CssClass="btn btn-default pull-right" OnClick="btncancel_Click" />
                                                     <asp:Button ID="btnsubmit" runat="server" Text="Save" CssClass="btn btn-primary pull-right" OnClick="btnsubmit_Click" OnClientClick="return Validate()" />
                                                 </div>
                                             </div>
@@ -149,11 +154,11 @@
                                 </ContentTemplate>
                             </asp:UpdatePanel>
                         </div>
-                    </div>
-                </div>
-                <div class="clearfix"></div>
-            </div>
+                        </div>
+                  
+
+            <div class="clearfix"></div>
             <div class="footer"><i class="far fa-copyright"></i>2019 <a href="#">Department of Defence Production</a> </div>
-        </div>
+</div>
     </div>
 </asp:Content>

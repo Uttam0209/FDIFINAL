@@ -115,7 +115,7 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
             int rowIndex = gvr.RowIndex;
             string Role = (gvproduct.Rows[rowIndex].FindControl("lblcompanyrole") as Label).Text;
             string stridNew = Request.QueryString["id"].ToString().Replace(" ", "+");
-            string mstrid = objEnc.EncryptData((objEnc.DecryptData(stridNew) + " >> Edit Company"));
+            string mstrid = objEnc.EncryptData((objEnc.DecryptData(stridNew) + " >> Add Product"));
             Response.Redirect("AddProduct?mrcreaterole=" + objEnc.EncryptData(Role) + "&mcurrentcompRefNo=" + (objEnc.EncryptData(e.CommandArgument.ToString())) + "&id=" + mstrid);
         }
         else if (e.CommandName == "ViewComp")
@@ -177,7 +177,7 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
                 lblestimatedquantity.Text = DtView.Rows[0]["Estimatequantity"].ToString();
                 lblestimatedprice.Text = DtView.Rows[0]["EstimatePriceLLP"].ToString();
                 lbltenderstatus.Text = DtView.Rows[0]["TenderStatus"].ToString();
-                lbltendersubmission.Text = DtView.Rows[0]["TenderStatus"].ToString();
+              //  lbltendersubmission.Text = DtView.Rows[0]["TenderStatus"].ToString();
                 lbltenderdate.Text = DtView.Rows[0]["TenderFillDate"].ToString();
                 lbltenderurl.Text = DtView.Rows[0]["TenderUrl"].ToString();
                 DataTable dtNodal = Lo.RetriveProductCode("", e.CommandArgument.ToString(), "ProductNodal");
@@ -215,8 +215,7 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
                 string DeleteRec = Lo.DeleteRecord(e.CommandArgument.ToString(), "InActiveProd");
                 if (DeleteRec == "true")
                 {
-                    BindGridView();
-                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record delete succssfully.')", true);
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "alert", "alert('User details saved sucessfully');window.location ='View-Product';",true);
                 }
                 else
                 {

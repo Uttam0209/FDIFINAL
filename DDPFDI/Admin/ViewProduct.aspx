@@ -32,7 +32,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="table-wraper">
-                                    <asp:GridView ID="gvproduct" runat="server" Width="100%" Class="commonAjaxTbl master-company-table table display responsive no-wrap table-hover manage-user Grid" AutoGenerateColumns="false" AllowPaging="true"
+                                    <asp:GridView ID="gvproduct" runat="server" Width="100%" Class="commonAjaxTbl master-company-table ViewProductTable table display responsive no-wrap table-hover manage-user Grid" AutoGenerateColumns="false" AllowPaging="true"
                                         OnPageIndexChanging="OnPageIndexChanging" PageSize="25" AllowSorting="true" OnSorting="OnSorting" OnRowCommand="gvproduct_RowCommand">
                                         <PagerStyle HorizontalAlign="Center" CssClass="GridPager" />
                                         <Columns>
@@ -62,7 +62,7 @@
                                                 <ItemTemplate>
                                                     <asp:LinkButton ID="lblview" runat="server" CssClass="fa fa-eye" CommandName="ViewComp" CommandArgument='<%#Eval("ProductRefNo") %>'></asp:LinkButton>
                                                     <asp:LinkButton ID="lbledit" runat="server" CssClass="fa fa-edit" CommandName="EditComp" CommandArgument='<%#Eval("ProductRefNo") %>'></asp:LinkButton>
-                                                    <asp:LinkButton ID="lbldel" runat="server" CssClass="fa fa-trash" CommandName="DeleteComp" OnClientClick="return confirm('Are you sure you want to delete this Company?');" CommandArgument='<%#Eval("ProductRefNo") %>'></asp:LinkButton>
+                                                    <asp:LinkButton ID="lbldel" runat="server" CssClass="fa fa-trash" CommandName="DeleteComp" OnClientClick="return confirm('Are you sure you want to delete this product?');" CommandArgument='<%#Eval("ProductRefNo") %>'></asp:LinkButton>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                         </Columns>
@@ -278,12 +278,12 @@
                                                                 <asp:Label ID="lbltenderstatus" runat="server"></asp:Label>
                                                             </td>
                                                         </tr>
-                                                        <tr>
+                                                       <%-- <tr>
                                                             <td class="pass" width="30%">Tender Submission</td>
                                                             <td>
                                                                 <asp:Label ID="lbltendersubmission" runat="server"></asp:Label>
                                                             </td>
-                                                        </tr>
+                                                        </tr>--%>
                                                         <tr>
                                                             <td class="pass" width="30%">Tender Date</td>
                                                             <td>
