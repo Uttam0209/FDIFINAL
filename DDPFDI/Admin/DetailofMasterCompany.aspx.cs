@@ -421,9 +421,18 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
         {
             GridViewRow gvr = (GridViewRow)((Control)e.CommandSource).NamingContainer;
             int rowIndex = gvr.RowIndex;
-           // string Role = (gvcompanydetail.Rows[rowIndex].FindControl("lblfactoryrole") as Label).Text;
-            string Role = "ff";
-            Response.Redirect("Add-Company?mrcreaterole=" + objEnc.EncryptData(Role) + "&mcurrentFactroyRefNo=" + (objEnc.EncryptData(e.CommandArgument.ToString()))+"&id="+Request.QueryString["id"].ToString());
+            //string Role = (gvcompanydetail.Rows[rowIndex].FindControl("lblfactoryrole") as Label).Text;
+           string Role = "Factory";
+           string stridNew = Request.QueryString["id"].ToString().Replace(" ", "+");
+           string mstrid = objEnc.EncryptData((objEnc.DecryptData(stridNew) + " >> Edit Division"));
+            try
+            {
+                Response.Redirect("Add-Company?mrcreaterole=" + objEnc.EncryptData(Role) + "&mcurrentcompRefNo=" + (objEnc.EncryptData(e.CommandArgument.ToString())) + "&id=" + mstrid,false);
+            }
+            catch (Exception ex)
+            {
+                ex.ToString();
+            }
         }
         else if (e.CommandName == "ViewfactoryComp")
         {
@@ -484,9 +493,12 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
         {
             GridViewRow gvr = (GridViewRow)((Control)e.CommandSource).NamingContainer;
             int rowIndex = gvr.RowIndex;
-            string Role = (gvcompanydetail.Rows[rowIndex].FindControl("lblunitrole") as Label).Text;
-            Response.Redirect("Add-Company?mrcreaterole=" + objEnc.EncryptData(Role) + "&mcurrentUnitRefNo=" + (objEnc.EncryptData(e.CommandArgument.ToString())) + "&id=" + Request.QueryString["id"].ToString());
-        }
+            //string Role = (gvcompanydetail.Rows[rowIndex].FindControl("lblunitrole") as Label).Text;
+            string Role = "Unit";
+            string stridNew = Request.QueryString["id"].ToString().Replace(" ", "+");
+            string mstrid = objEnc.EncryptData((objEnc.DecryptData(stridNew) + " >> Edit Unit"));
+            Response.Redirect("Add-Company?mrcreaterole=" + objEnc.EncryptData(Role) + "&mcurrentcompRefNo=" + (objEnc.EncryptData(e.CommandArgument.ToString())) + "&id=" + mstrid, false);
+         }
         else if (e.CommandName == "unitViewComp")
         {
             DataTable DtView = Lo.RetriveGridViewCompany("", "", e.CommandArgument.ToString(), "GVUnitID");
