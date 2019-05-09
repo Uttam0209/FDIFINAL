@@ -47,6 +47,6 @@ C:\Users\ibm\Desktop\Varun\FDIFINAL\BusinessLayer\bin\Debug\Microsoft.Practices.
 C:\Users\ibm\Desktop\Varun\FDIFINAL\BusinessLayer\bin\Debug\Microsoft.Practices.Unity.Interception.dll
 C:\Users\ibm\Desktop\Varun\FDIFINAL\BusinessLayer\bin\Debug\DataAccessLayer.pdb
 C:\Users\ibm\Desktop\Varun\FDIFINAL\BusinessLayer\bin\Debug\Encryption.pdb
-C:\Users\ibm\Desktop\Varun\FDIFINAL\BusinessLayer\obj\Debug\BusinessLayer.csprojResolveAssemblyReference.cache
 C:\Users\ibm\Desktop\Varun\FDIFINAL\BusinessLayer\obj\Debug\BusinessLayer.dll
 C:\Users\ibm\Desktop\Varun\FDIFINAL\BusinessLayer\obj\Debug\BusinessLayer.pdb
+C:\Users\ibm\Desktop\Varun\FDIFINAL\BusinessLayer\obj\Debug\BusinessLayer.csprojResolveAssemblyReference.cache

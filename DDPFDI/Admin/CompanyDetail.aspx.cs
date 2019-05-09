@@ -53,11 +53,29 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
                 mType = objCrypto.DecryptData(Session["Type"].ToString());
                 mRefNo = Session["CompanyRefNo"].ToString();
                 BindState();
+                ddldivision.Visible = false;
+                ddlunit.Visible = false;
                 BindCompany();
                
                 BindMasterCategory();
                 BindNodelEmail();
-                EditCOde(dtViewDefault);
+                if (objCrypto.DecryptData(Request.QueryString["mrcreaterole"].ToString()) == "Company")
+                {
+                    EditCOde(dtViewDefault);
+                }
+                else if (objCrypto.DecryptData(Request.QueryString["mrcreaterole"].ToString()) == "Factory")
+                {
+                    EditDivison(dtViewDefault);
+                    licc.Visible = false;
+                    lisr.Visible = false;
+
+                }
+                else if (objCrypto.DecryptData(Request.QueryString["mrcreaterole"].ToString()) == "Unit")
+                {
+                    EditUnit(dtViewDefault);
+                    licc.Visible = false;
+                    lisr.Visible = false;
+                }
 
             }
             catch (Exception ex)
@@ -302,7 +320,14 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
             }
             else
             {
-                DtView = Lo.RetriveGridViewCompany(Session["CompanyRefNo"].ToString(), "", "", "CompanyMainGridView");
+                if (Request.QueryString["mcurrentcompRefNo"] != null)
+                {
+                    DtView = Lo.RetriveGridViewCompany("", objCrypto.DecryptData(Request.QueryString["mcurrentcompRefNo"].ToString()), "", "DisplayFactory");
+                }
+                else
+                {
+                    DtView = Lo.RetriveGridViewCompany(Session["CompanyRefNo"].ToString(), "", "", "CompanyMainGridView");
+                }
             }
 
             if (DtView.Rows.Count > 0)
@@ -416,7 +441,14 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
             }
             else
             {
-                DtView = Lo.RetriveGridViewCompany(Session["CompanyRefNo"].ToString(), "", "", "CompanyMainGridView");
+                if (Request.QueryString["mcurrentcompRefNo"] != null)
+                {
+                    DtView = Lo.RetriveGridViewCompany("", objCrypto.DecryptData(Request.QueryString["mcurrentcompRefNo"].ToString()), "", "DisplayUnit");
+                }
+                else
+                {
+                    DtView = Lo.RetriveGridViewCompany(Session["CompanyRefNo"].ToString(), "", "", "CompanyMainGridView");
+                }
             }
 
             if (DtView.Rows.Count > 0)
@@ -726,7 +758,61 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
             {
                 lblSelectCompany.Text = "Company/Organization Name";
                 ddlcompany.Enabled = false;
-                DtCompanyDDL = Lo.RetriveMasterData(0, objCrypto.DecryptData(Request.QueryString["mcurrentcompRefNo"].ToString()), "Company", 0, "", "", "CompanyName");
+                if (objCrypto.DecryptData(Request.QueryString["mrcreaterole"].ToString()) == "Company")
+                {
+                    DtCompanyDDL = Lo.RetriveMasterData(0, objCrypto.DecryptData(Request.QueryString["mcurrentcompRefNo"].ToString()), "Company", 0, "", "", "CompanyName");
+
+                }
+                else if (objCrypto.DecryptData(Request.QueryString["mrcreaterole"].ToString()) == "Factory")
+                {
+                    DtCompanyDDL = Lo.RetriveMasterData(0, objCrypto.DecryptData(Request.QueryString["mcurrentcompRefNo"].ToString()), "Factory", 0, "", "", "CompanyName");
+                    DataTable DtDivisionDDL = Lo.RetriveMasterData(0, DtCompanyDDL.Rows[0]["CompanyRefNo"].ToString(), "Factory1", 0, "", "", "CompanyName");
+                    if (DtDivisionDDL.Rows.Count > 0)
+                    {
+                        Co.FillDropdownlist(ddldivision, DtDivisionDDL, "FactoryName", "FactoryRefNo");
+                        lblselectdivison.Visible = true;
+                        ddldivision.Enabled = false;
+                        ddlcompany.Enabled = false;
+                        ddldivision.Visible = true;
+                    }
+                    else
+                    {
+                        ddldivision.Enabled = false;
+                    }
+
+                }
+                else if (objCrypto.DecryptData(Request.QueryString["mrcreaterole"].ToString()) == "Unit")
+                {
+                    DtCompanyDDL = Lo.RetriveMasterData(0, objCrypto.DecryptData(Request.QueryString["mcurrentcompRefNo"].ToString()), "Unit", 0, "", "", "CompanyName");
+                    DataTable DtDivisionDDL = Lo.RetriveMasterData(0, DtCompanyDDL.Rows[0]["CompanyRefNo"].ToString(), "Factory1", 0, "", "", "CompanyName");
+                    if (DtDivisionDDL.Rows.Count > 0)
+                    {
+                        Co.FillDropdownlist(ddldivision, DtDivisionDDL, "FactoryName", "FactoryRefNo");
+                        lblselectdivison.Visible = true;
+                        ddldivision.Enabled = false;
+                        ddlcompany.Enabled = false;
+                        ddldivision.Visible = true;
+                        DataTable DtUnitDDL = Lo.RetriveMasterData(0, DtDivisionDDL.Rows[0]["FactoryRefNo"].ToString(), "Unit1", 0, "", "", "CompanyName");
+                       if (DtUnitDDL.Rows.Count > 0)
+                        {
+                            Co.FillDropdownlist(ddlunit, DtUnitDDL, "UnitName", "UnitRefNo");
+                            ddlunit.Enabled = true;
+                            lblselectunit.Visible = true;
+                            ddlunit.Visible = true;
+                            ddlunit.Enabled = false;
+                        }
+                        else
+                        {
+                            ddlunit.Enabled = false;
+                        }
+                    }
+                    else
+                    {
+                        ddldivision.Enabled = false;
+                    }
+                
+                }
+                
             }
             else
             {
@@ -744,8 +830,7 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
                 ddlcompany.Enabled = false;
             }
 
-            ddldivision.Visible = false;
-            ddlunit.Visible = false;
+            
         }
         else if (mType == "Admin")
         {

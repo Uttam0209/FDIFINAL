@@ -43,10 +43,10 @@
                 <ul class="nav nav-tabs">
                     <li class="active"><a data-toggle="tab" href="#comp">Company</a></li>
                     <li><a data-toggle="tab" href="#officer">Nodal Officer</a></li>
-                    <li><a data-toggle="tab" href="#sr">Statutory Registration</a></li>
+                    <li runat="server" id="lisr"><a data-toggle="tab" href="#sr">Statutory Registration</a></li>
                     <li><a data-toggle="tab" href="#sm">Social Media</a></li>
 
-                    <li><a data-toggle="tab" href="#cc">Customise Category</a></li>
+                    <li runat="server" id="licc"><a data-toggle="tab" href="#cc">Customise Category</a></li>
                     <li><a data-toggle="tab" href="#Location">Location</a></li>
                 </ul>
             </div>
