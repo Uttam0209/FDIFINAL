@@ -2,7 +2,23 @@
 
 
 <asp:Content ID="head123" runat="server" ContentPlaceHolderID="head">
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript">
+    function radioMe(e) {
+        if (!e) e = window.event;
+        var sender = e.target || e.srcElement;
 
+        if (sender.nodeName != 'INPUT') return;
+        var checker = sender;
+        var chkBox = document.getElementById('<%= chkrole.ClientID %>');
+  var chks = chkBox.getElementsByTagName('INPUT');
+  for (i = 0; i < chks.length; i++) {
+      if (chks[i] != checker)
+          chks[i].checked = false;
+  }
+}
+
+</script>
     <script type="text/javascript">
         var atLeast = 1
         function Validate() {
@@ -125,8 +141,8 @@
 
                                                     <h3 class="secondary-heading">Role</h3>
 
-                                                    <asp:CheckBoxList ID="chkrole" runat="server" RepeatColumns="5" CssClass="checkbox-inline" RepeatDirection="Horizontal" RepeatLayout="Flow">
-                                                        <asp:ListItem Value="Admin">Admin</asp:ListItem>
+                                                    <asp:CheckBoxList ID="chkrole" runat="server" onclick="MutExChkList(this);" RepeatColumns="5" CssClass="checkbox-inline" RepeatDirection="Horizontal" RepeatLayout="Flow">
+                                                        <asp:ListItem Value="Admin" >Admin</asp:ListItem>
                                                         <asp:ListItem Value="Company">Company</asp:ListItem>
                                                     </asp:CheckBoxList>
 

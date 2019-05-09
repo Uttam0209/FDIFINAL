@@ -94,6 +94,8 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
                 }
                 lblMastcompany.Text = "Select Company ";
                 lblfactoryName.Text = "Select Divison/Plant ";
+
+                chkrole.Attributes.Add("onclick", "radioMe(event);");
             }
         }
     }

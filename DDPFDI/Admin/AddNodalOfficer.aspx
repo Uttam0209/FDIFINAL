@@ -21,7 +21,7 @@
                     </div>
                     <div class="col-md-4" runat="server" id="lblselectdivison">
                         <div class="form-group">
-                            <label>Select Division/Palnt</label>
+                            <label>Select Division/Plant</label>
                             <asp:dropdownlist runat="server" id="ddldivision" class="form-control" autopostback="True" onselectedindexchanged="ddldivision_OnSelectedIndexChanged"></asp:dropdownlist>
                         </div>
                     </div>
