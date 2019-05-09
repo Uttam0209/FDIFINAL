@@ -2,7 +2,7 @@
 
 <asp:Content ID="AddNodal" runat="server" ContentPlaceHolderID="ContentPlaceHolder1">
     <div class="content oem-content">
-        <asp:scriptmanager id="sc" runat="server"></asp:scriptmanager>
+        <asp:ScriptManager ID="sc" runat="server"></asp:ScriptManager>
         <asp:HiddenField ID="hidCompanyRefNo" runat="server" />
         <asp:HiddenField ID="hidType" runat="server" />
         <div class="sideBg">
@@ -16,86 +16,128 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label>Select Company</label>
-                            <asp:dropdownlist runat="server" id="ddlcompany" class="form-control" autopostback="True" onselectedindexchanged="ddlcompany_OnSelectedIndexChanged"></asp:dropdownlist>
+                            <asp:DropDownList runat="server" ID="ddlcompany" class="form-control" AutoPostBack="True" OnSelectedIndexChanged="ddlcompany_OnSelectedIndexChanged"></asp:DropDownList>
                         </div>
                     </div>
                     <div class="col-md-4" runat="server" id="lblselectdivison">
                         <div class="form-group">
                             <label>Select Division/Plant</label>
-                            <asp:dropdownlist runat="server" id="ddldivision" class="form-control" autopostback="True" onselectedindexchanged="ddldivision_OnSelectedIndexChanged"></asp:dropdownlist>
+                            <asp:DropDownList runat="server" ID="ddldivision" class="form-control" AutoPostBack="True" OnSelectedIndexChanged="ddldivision_OnSelectedIndexChanged"></asp:DropDownList>
                         </div>
                     </div>
                     <div class="col-md-4" runat="server" id="lblselectunit">
                         <div class="form-group">
                             <label>Select Unit</label>
-                            <asp:dropdownlist runat="server" id="ddlunit" class="form-control" autopostback="True" onselectedindexchanged="ddlunit_OnSelectedIndexChanged"></asp:dropdownlist>
+                            <asp:DropDownList runat="server" ID="ddlunit" class="form-control" AutoPostBack="True" OnSelectedIndexChanged="ddlunit_OnSelectedIndexChanged"></asp:DropDownList>
                         </div>
                     </div>
                 </div>
                 <div class="add-profile">
                     <div class="section-pannel">
                         <div class="row">
-                             <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>Emp Code</label>
-                                    <asp:textbox class="form-control" runat="server" id="txtEmpCode"></asp:textbox>
-                                </div>
-                            </div>
+
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label>Name</label>
-                                    <asp:textbox class="form-control" runat="server" id="txtname"></asp:textbox>
+                                    <asp:TextBox class="form-control" runat="server" ID="txtname"></asp:TextBox>
                                 </div>
                             </div>
 
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label>Designation</label>
-                                    <asp:dropdownlist runat="server" id="ddldesignation" class="form-control" />
+                                    <asp:DropDownList runat="server" ID="ddldesignation" class="form-control" />
                                 </div>
                             </div>
-                            
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Emp Code</label>
+                                    <asp:TextBox class="form-control" runat="server" ID="txtEmpCode"></asp:TextBox>
+                                </div>
+                            </div>
+
                         </div>
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label>Email ID</label>
-                                    <asp:textbox class="form-control" runat="server" id="txtemailid"></asp:textbox>
+                                    <asp:TextBox class="form-control" runat="server" ID="txtemailid"></asp:TextBox>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label>Mobile</label>
-                                    <asp:textbox class="form-control" runat="server" id="txtmobile"></asp:textbox>
-                                </div>
-                            </div>
-                             <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>Telephone </label>
-                                    <asp:textbox class="form-control" runat="server" id="txttelephone"></asp:textbox>
+                                    <asp:TextBox class="form-control" runat="server" ID="txtmobile"></asp:TextBox>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label>Fax </label>
-                                    <asp:textbox class="form-control" runat="server" id="txtfax"></asp:textbox>
+                                    <label>Telephone </label>
+                                    <asp:TextBox class="form-control" runat="server" ID="txttelephone"></asp:TextBox>
                                 </div>
                             </div>
-
-                           
-
-                        </div>
-                       
-                        <div class="row">
-                            <div class="col-md-12">
+                            </div>
+                         <div class="row">
+                            <div class="col-md-4">
                                 <div class="form-group">
-                                    <asp:linkbutton id="btnsub" runat="server" text="Save" class="btn btn-primary pull-right" onclick="btnsub_Click"></asp:linkbutton>
+                                    <label>Fax </label>
+                                    <asp:TextBox class="form-control" runat="server" ID="txtfax"></asp:TextBox>
                                 </div>
                             </div>
-                        </div>
+
+                            <div class="col-md-8">
+                                <div class="fdi-add-content" id="DivNodalRole" runat="server">
+                                  <div class="form-group">
+                                            <h4 class="secondary-heading">Role</h4>
+                                            <asp:CheckBox ID="chkrole" Text="Is Nodal Officer" runat="server"  CssClass="checkbox-inline" >
+                                            </asp:CheckBox>
+                                        
+                                    </div>
+                                </div>
+                                
+
+                            </div>
+                             </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <asp:LinkButton ID="btnsub" runat="server" Text="Save" class="btn btn-primary pull-right" OnClick="btnsub_Click"></asp:LinkButton>
+                                    </div>
+                                </div>
+                            </div>
                     </div>
+                            <div class="table-wraper">
+                                <asp:GridView ID="gvViewNodalOfficer" runat="server" Width="100%" Class="commonAjaxTbl master-company-table table display responsive no-wrap table-hover manage-user Grid" AutoGenerateColumns="false" AllowPaging="true"
+                                    PageSize="25" AllowSorting="true">
+                                    <PagerStyle HorizontalAlign="Center" CssClass="GridPager" />
+                                    <Columns>
+
+                                        <asp:TemplateField HeaderText="S.No">
+                                            <ItemTemplate>
+                                                <%#Container.DataItemIndex+1 %>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="Company">
+                                            <ItemTemplate>
+                                                <asp:Label ID="lblrefno" runat="server" Text='<%#Eval("CompanyName") %>' NullDisplayText="#" SortExpression="Company"></asp:Label>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                        <asp:BoundField DataField="NodalOficerName" HeaderText="Name" NullDisplayText="#" SortExpression="Name" />
+                                        <asp:BoundField DataField="Designation" HeaderText="Designation" NullDisplayText="#" SortExpression="Designation" />
+                                        <asp:BoundField DataField="NodalEmpCode" HeaderText="Emp Code" NullDisplayText="#" SortExpression="NodalEmpCode" />
+                                        <asp:BoundField DataField="NodalOfficerEmail" HeaderText="Email" NullDisplayText="#" SortExpression="Email" />
+                                        <asp:BoundField DataField="NodalOfficerMobile" HeaderText="Mobile" NullDisplayText="#" SortExpression="Mobile" />
+                                        <asp:BoundField DataField="IsNodalOfficer" HeaderText="IsNodal" NullDisplayText="#" SortExpression="IsNodal" />
+                                        
+
+                                    </Columns>
+                                </asp:GridView>
+                            </div>
+    </div>
+    </div>
                 </div>
             </div>
         </div>
-    </div>
 </asp:Content>

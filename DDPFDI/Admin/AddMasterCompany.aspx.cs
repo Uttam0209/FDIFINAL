@@ -39,8 +39,8 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
                 string MmCval = "";
                 for (int x = 0; x < MCateg.Length; x++)
                 {
-                        MmCval = MCateg[x];
-                        strheadPage.Append("<li class=''><span>" + MmCval + "</span></li>");
+                    MmCval = MCateg[x];
+                    strheadPage.Append("<li class=''><span>" + MmCval + "</span></li>");
                 }
                 divHeadPage.InnerHtml = strheadPage.ToString();
                 strheadPage.Append("</ul");
@@ -97,8 +97,77 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
 
                 chkrole.Attributes.Add("onclick", "radioMe(event);");
             }
+
+            GridCompanyBind();
         }
     }
+
+
+    public void GridCompanyBind()
+    {
+        DataTable DtGrid = new DataTable();
+        if (Enc.DecryptData(Request.QueryString["mu"].ToString()) == "Panel2")
+        {
+            DtGrid = null;
+            DtGrid = Lo.RetriveAllCompany(ddlmaster.SelectedValue, "Division");
+        }
+        else if (Enc.DecryptData(Request.QueryString["mu"].ToString()) == "Panel3")
+        {
+            DtGrid = null;
+            DtGrid = Lo.RetriveAllCompany(ddlmaster.SelectedValue, "Unit");
+        }
+        else
+        {
+            DtGrid = Lo.RetriveAllCompany("", "Company");
+        }
+        if (DtGrid.Rows.Count > 0)
+        {
+            gvcompanydetail.DataSource = DtGrid;
+            gvcompanydetail.DataBind();
+            CompGrid();
+        }
+        else
+        {
+            //DtGrid = null;
+        }
+    }
+
+
+
+    protected void CompGrid()
+    {
+
+        if (Enc.DecryptData(Request.QueryString["mu"].ToString()) == "Panel2")
+        {
+            this.gvcompanydetail.Columns[1].Visible = true;
+            this.gvcompanydetail.Columns[2].Visible = true;
+            this.gvcompanydetail.Columns[3].Visible = true;
+            this.gvcompanydetail.Columns[4].Visible = true;
+            this.gvcompanydetail.Columns[5].Visible = false;
+            this.gvcompanydetail.Columns[6].Visible = false;
+        }
+        else if (Enc.DecryptData(Request.QueryString["mu"].ToString()) == "Panel3")
+        {
+            this.gvcompanydetail.Columns[1].Visible = true;
+            this.gvcompanydetail.Columns[2].Visible = true;
+            this.gvcompanydetail.Columns[3].Visible = true;
+            this.gvcompanydetail.Columns[4].Visible = true;
+            this.gvcompanydetail.Columns[5].Visible = true;
+            this.gvcompanydetail.Columns[6].Visible = true;
+        }
+        else
+        {
+            this.gvcompanydetail.Columns[3].Visible = false;
+            this.gvcompanydetail.Columns[4].Visible = false;
+            this.gvcompanydetail.Columns[5].Visible = false;
+            this.gvcompanydetail.Columns[6].Visible = false;
+        }
+
+
+
+
+    }
+
     protected void BindMasterCompany()
     {
         string sType = "", sName = "", sID = "", mSID = "";
@@ -273,11 +342,11 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
         if (DtBindSubFactory.Rows.Count > 0)
         {
             Co.FillDropdownlist(ddlfacotry, DtBindSubFactory, "FactoryName", "FactoryRefNo");
-
+            GridCompanyBind();
         }
         else
         {
-            //ddlfacotry.Items.Insert(0, "Select Factory");
+
         }
 
     }

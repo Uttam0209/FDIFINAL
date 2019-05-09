@@ -78,12 +78,10 @@
                                             </asp:TemplateField>
                                              <asp:BoundField DataField="NodalOficerName" HeaderText="Name" NullDisplayText="#" SortExpression="Name" />
                                             <asp:BoundField DataField="Designation" HeaderText="Designation" NullDisplayText="#" SortExpression="Designation" />
-                                            
-                                            <asp:BoundField DataField="NodalEmpCode" HeaderText="Emp Code" NullDisplayText="#" SortExpression="NodalEmpCode" />
-                                            
-                                            
+                                           
                                             <asp:BoundField DataField="NodalOfficerEmail" HeaderText="Email" NullDisplayText="#" SortExpression="Email" />
                                             <asp:BoundField DataField="NodalOfficerMobile" HeaderText="Mobile" NullDisplayText="#" SortExpression="Mobile" />
+                                            <asp:BoundField DataField="IsNodalOfficer" HeaderText="IsNodal" NullDisplayText="#" SortExpression="IsNodal" />
                                             <asp:TemplateField HeaderText="Action">
                                                 <ItemTemplate>
                                                    <asp:LinkButton ID="lblview" runat="server" CssClass="fa fa-eye" CommandName="ViewComp" CommandArgument='<%#Eval("NodalOfficerID") %>'></asp:LinkButton>

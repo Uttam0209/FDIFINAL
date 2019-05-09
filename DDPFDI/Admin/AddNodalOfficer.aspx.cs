@@ -49,6 +49,7 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
                 mRefNo = Session["CompanyRefNo"].ToString();
                 BindCompany();
                 BindMasterDesignation("");
+                BindGridView();
             }
 
             if (Request.QueryString["mcurrentcompRefNo"] != null)
@@ -58,6 +59,58 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
         }
     }
     #region Load
+
+    protected void BindGridView(string sortExpression = null)
+    {
+        try
+        {
+            if (mType == "SuperAdmin")
+            {
+                DataTable DtGrid = Lo.RetriveMasterData(0, "0", "", 0, "", "", "ViewNodal");
+                if (DtGrid.Rows.Count > 0)
+                {
+
+                    gvViewNodalOfficer.DataSource = DtGrid;
+                    gvViewNodalOfficer.DataBind();
+
+                }
+            }
+            else if (mType == "Company" && mRefNo != "")
+            {
+                DataTable DtGrid = Lo.RetriveMasterData(0, ddlcompany.SelectedItem.Value, "", 0, "", "", "ViewNodal");
+                if (DtGrid.Rows.Count > 0)
+                {
+                    gvViewNodalOfficer.DataSource = DtGrid;
+                    gvViewNodalOfficer.DataBind();
+                }
+            }
+
+        }
+        catch (Exception ex)
+        {
+        }
+    }
+
+    public void GridViewNodalOfficerBind(string mRefNo)
+    {
+        DataTable DtGrid = Lo.RetriveMasterData(0, mRefNo, "", 0, "", "", "ViewNodal");
+        if (DtGrid.Rows.Count > 0)
+        {
+            gvViewNodalOfficer.DataSource = DtGrid;
+            gvViewNodalOfficer.DataBind();
+        }
+
+        DataRow[] foundRows = DtGrid.Select("IsNodalOfficer='Y'");
+        if (foundRows.Length!=0)
+        {
+            DivNodalRole.Visible = false;
+        }
+        else
+        {
+            DivNodalRole.Visible = true;
+        }
+    }
+    
     protected void BindCompany()
     {
         if (mType == "SuperAdmin")
@@ -213,6 +266,7 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
                 ddldivision.Visible = true;
                 hidCompanyRefNo.Value = ddlcompany.SelectedItem.Value;
                 hidType.Value = "Company";
+                GridViewNodalOfficerBind(ddlcompany.SelectedItem.Value);
             }
             else
             {
@@ -240,6 +294,7 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
                 lblselectunit.Visible = true;
                 hidCompanyRefNo.Value = ddldivision.SelectedItem.Value;
                 hidType.Value = "Divison/Plant";
+                GridViewNodalOfficerBind(ddldivision.SelectedItem.Value);
             }
             else
             {
@@ -257,6 +312,7 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
                 lblselectdivison.Visible = true;
                 ddldivision.Visible = true;
                 lblselectdivison.Visible = false;
+                GridViewNodalOfficerBind(ddlcompany.SelectedItem.Value);
             }
         }
         BindMasterDesignation("");
@@ -266,6 +322,7 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
         hidCompanyRefNo.Value = ddlunit.SelectedItem.Value;
         hidType.Value = "Unit";
         BindMasterDesignation("");
+        GridViewNodalOfficerBind(ddlunit.SelectedItem.Value);
     }
     #endregion
     #region For Department or Designation
@@ -321,12 +378,22 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
         hySaveNodal["NodalOfficerMobile"] = Co.RSQandSQLInjection(txtmobile.Text, "soft");
         hySaveNodal["NodalOfficerTelephone"] = Co.RSQandSQLInjection(txttelephone.Text, "soft");
         hySaveNodal["NodalOfficerFax"] = Co.RSQandSQLInjection(txtfax.Text, "soft");
-        hySaveNodal["CompanyRefNo"] = ddlcompany.SelectedItem.Value;
+        hySaveNodal["CompanyRefNo"] = hidCompanyRefNo.Value;
         hySaveNodal["Type"] = hidType.Value;
+        if (chkrole.Checked)
+        {
+            hySaveNodal["IsNodalOfficer"] = "Y";
+        }
+        else
+        {
+            hySaveNodal["IsNodalOfficer"] = "N";
+        }
+        
         string Str = Lo.SaveMasterNodal(hySaveNodal, out _sysMsg, out _msg);
         if (Str == "Save")
         {
             Cleartext();
+            GridViewNodalOfficerBind(hidCompanyRefNo.Value);
             ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record saved successsfully')", true);
         }
         else
@@ -349,6 +416,7 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
                 if (dtNodalOfficerEmail.Rows.Count > 0)
                 {
                     ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Email id already exist !')", true);
+                    
                 }
                 else
                 {

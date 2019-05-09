@@ -67,6 +67,12 @@ public partial class Admin_ViewDesignation : System.Web.UI.Page
                     }
                     gvViewDesignation.DataBind();
                     lbltotal.Text = DtGrid.Rows.Count.ToString();
+                    gvViewDesignation.Visible = true;
+                }
+                else
+                {
+                    gvViewDesignation.Visible = false;
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not found !')", true);
                 }
             }
             else if (mType == "Company" && mRefNo != "")
@@ -76,6 +82,12 @@ public partial class Admin_ViewDesignation : System.Web.UI.Page
                 {
                     gvViewDesignation.DataSource = DtGrid;
                     gvViewDesignation.DataBind();
+                    gvViewDesignation.Visible = true;
+                }
+                else
+                {
+                    gvViewDesignation.Visible = false;
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not found !')", true);
                 }
             }
 
@@ -162,14 +174,19 @@ public partial class Admin_ViewDesignation : System.Web.UI.Page
     #region DropDownList Code
     protected void ddlcompany_OnSelectedIndexChanged(object sender, EventArgs e)
     {
-        if (ddlcompany.SelectedItem.Text != "All")
+        if (ddlcompany.SelectedItem.Text != "Select")
         {
             DataTable DtGrid = Lo.RetriveMasterData(0, ddlcompany.SelectedItem.Value, "", 0, "", "", "ViewDesignation");
             if (DtGrid.Rows.Count > 0)
             {
                 gvViewDesignation.DataSource = DtGrid;
                 gvViewDesignation.DataBind();
-                
+                gvViewDesignation.Visible = true;
+            }
+            else
+            {
+                gvViewDesignation.Visible = false;
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not found !')", true);
             }
         }
         
