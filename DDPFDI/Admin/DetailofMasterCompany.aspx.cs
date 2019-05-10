@@ -471,13 +471,23 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
             if (DtView.Rows.Count > 0)
             {
                 lblfacrefno.Text = DtView.Rows[0]["FactoryRefNo"].ToString();
-                lblfacaddress.Text = DtView.Rows[0]["FactoryAddress"].ToString();
-                lblfaccin.Text = DtView.Rows[0]["FactoryCINNo"].ToString();
-                lblfacname.Text = DtView.Rows[0]["FactoryName"].ToString();
-                lblfacemail.Text = DtView.Rows[0]["FactoryEmailId"].ToString();
-                lblfacpan.Text = DtView.Rows[0]["FactoryPANNo"].ToString();
-                lblfacpincode.Text = DtView.Rows[0]["FactoryPincode"].ToString();
-                lblfacstate.Text = DtView.Rows[0]["StateName"].ToString();
+                lblDivAddress.Text = DtView.Rows[0]["FactoryAddress"].ToString();
+                lblDivName.Text = DtView.Rows[0]["FactoryName"].ToString();
+                lblDivEmail.Text = DtView.Rows[0]["FactoryEmailID"].ToString();
+                lblDivWebsite.Text = DtView.Rows[0]["FactoryWebsite"].ToString();
+                lblDivPincode.Text = DtView.Rows[0]["FactoryPincode"].ToString();
+                lblDivCeoName.Text = DtView.Rows[0]["FactoryCEOName"].ToString();
+                lblDivCeoEmail.Text = DtView.Rows[0]["FactoryCEOEmail"].ToString();
+                lblDivFax.Text = DtView.Rows[0]["FactoryFaxNo"].ToString();
+                lblDivState.Text = DtView.Rows[0]["StateName"].ToString();
+                lblDivConNo.Text = DtView.Rows[0]["FactoryTelephoneNo"].ToString();
+                //lblDivNodalEmail.Text = DtView.Rows[0]["FactoryNodalOfficerEmailId"].ToString();
+                lblDivFacebook.Text = DtView.Rows[0]["FactoryFacebook"].ToString();
+                lblDivTwitter.Text = DtView.Rows[0]["FactoryTwitter"].ToString();
+                lblDivInstagram.Text = DtView.Rows[0]["FactoryInstagram"].ToString();
+                lblDivLinkedin.Text = DtView.Rows[0]["FactoryLinkedin"].ToString();
+                lblDivlatitude.Text = DtView.Rows[0]["Factorylatitude"].ToString();
+                lblDivLongitude.Text = DtView.Rows[0]["Factorylongitude"].ToString();
                 ScriptManager.RegisterStartupScript(this, this.GetType(), "divfactoryshow", "showPopup1();", true);
             }
         }
@@ -536,11 +546,20 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
             if (DtView.Rows.Count > 0)
             {
                 lblurefno.Text = DtView.Rows[0]["UnitRefNo"].ToString();
-                lbluaddress.Text = DtView.Rows[0]["UnitAddress"].ToString();
-                lbluname.Text = DtView.Rows[0]["UnitName"].ToString();
-                lbluemail.Text = DtView.Rows[0]["UnitEmailId"].ToString();
-                lblupin.Text = DtView.Rows[0]["UnitPincode"].ToString();
-                lblustate.Text = DtView.Rows[0]["StateName"].ToString();
+                lblUnitAddress.Text = DtView.Rows[0]["UnitAddress"].ToString();
+                lblUnitName.Text = DtView.Rows[0]["UnitName"].ToString();
+                lblUnitEmail.Text = DtView.Rows[0]["UnitEmailId"].ToString();
+                lblUnitPin.Text = DtView.Rows[0]["UnitPincode"].ToString();
+                lblUnitWebsite.Text = DtView.Rows[0]["UnitWebsite"].ToString();
+                lblUnitState.Text = DtView.Rows[0]["StateName"].ToString();
+                lblUnitCeoName.Text=DtView.Rows[0]["UnitCEOName"].ToString();
+                lblUnitCeoEmail.Text = DtView.Rows[0]["UnitCEOEmail"].ToString();
+                lblUnitFacebook.Text = DtView.Rows[0]["UnitFacebook"].ToString();
+                lblUnitInsta.Text = DtView.Rows[0]["UnitInstagram"].ToString();
+                lblUnitLink.Text=DtView.Rows[0]["UnitLinkedin"].ToString();
+                lblUnitTwitter.Text = DtView.Rows[0]["UnitTwitter"].ToString();
+                lblUnitLatitude.Text=DtView.Rows[0]["Unitlatitude"].ToString();
+                lblUnitLongitude.Text = DtView.Rows[0]["Unitlongitude"].ToString();
                 ScriptManager.RegisterStartupScript(this, this.GetType(), "divunitshow", "showPopup2();", true);
             }
         }
