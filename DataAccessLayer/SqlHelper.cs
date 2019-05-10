@@ -515,6 +515,7 @@ namespace DataAccessLayer
                     db.AddInParameter(cmd, "@TenderUrl", DbType.String, hyProduct["TenderUrl"]);
                     db.AddInParameter(cmd, "@NodelDetail", DbType.String, hyProduct["NodelDetail"]);
                     db.AddInParameter(cmd, "@Criteria", DbType.String, Criteria);
+                    db.AddInParameter(cmd, "@Role", DbType.String, hyProduct["Role"]);
                     db.AddOutParameter(cmd, "@ReturnID", DbType.String, 20);
                     db.ExecuteNonQuery(cmd, dbTran);
                     mCurrentID = db.GetParameterValue(cmd, "@ReturnID").ToString();
@@ -702,7 +703,7 @@ namespace DataAccessLayer
                 try
                 {
                     DbCommand cmd = db.GetStoredProcCommand("sp_RetriveProduct");
-                   db.AddInParameter(cmd, "@CompanyRefNo", DbType.String, CompanyRefNo);
+                    db.AddInParameter(cmd, "@CompanyRefNo", DbType.String, CompanyRefNo);
                     db.AddInParameter(cmd, "@ProductRefNo", DbType.String, ProdRefNo);
                     db.AddInParameter(cmd, "@Purpose", DbType.String, Purpose);
                     IDataReader dr = db.ExecuteReader(cmd);

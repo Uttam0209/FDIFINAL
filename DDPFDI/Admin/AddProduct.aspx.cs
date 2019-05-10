@@ -727,6 +727,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
             HyPanel1["NodelDetail"] = Co.RSQandSQLInjection(ddlNodalOfficerEmail.SelectedItem.Value, "soft") + "," +
                                       Co.RSQandSQLInjection(ddlNodalOfficerEmail2.SelectedItem.Value, "soft") + ",";
         }
+        HyPanel1["Role"] = mType.ToString();
         string StrProductDescription = Lo.SaveCodeProduct(HyPanel1, dtImage, out _sysMsg, out _msg, "Product");
         if (StrProductDescription != "-1")
         {
