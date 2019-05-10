@@ -2,33 +2,13 @@
 
 <asp:Content ID="head" runat="server" ContentPlaceHolderID="head">
     <!----------------------------------jquery Show image on load------------------------------------------------>
-    <script src="../assets/js/jquery-1.7.1.min.js"></script>
-    <script src="../assets/js/jquery-ui-1.8.17.custom.min.js"></script>
-    <link href="../assets/js/jquery-ui-1.8.17.custom.css" rel="stylesheet" />
+
     <style>
-        .thumb {
+        .gallery img {
             width: 100px;
-            height: 100px;
-            margin: 0.2em -0.7em 0 0;
-            border: 1px solid #ccc;
+            margin-right: 10px;
+            border: 2px solid #333;
         }
-
-        .remove_img_preview {
-            position: relative;
-            top: -42px;
-            right: 0px;
-            background: black;
-            color: white;
-            border-radius: 50px;
-            font-size: 0.9em;
-            padding: 0 0.3em 0;
-            text-align: center;
-            cursor: pointer;
-        }
-
-            .remove_img_preview:before {
-                content: "×";
-            }
     </style>
     <!-------------------------------------------image show end------------------------------->
 </asp:Content>
@@ -73,6 +53,7 @@
                     <li><a data-toggle="tab" href="#pimg">Product Image</a></li>
                     <li><a data-toggle="tab" href="#spd">Support Provided by DPSU</a></li>
                     <li><a data-toggle="tab" href="#qpt">Quantity Required</a></li>
+                    <li><a data-toggle="tab" href="#tnd">Tender Status</a></li>
                     <li><a data-toggle="tab" href="#cd">Contact Details</a></li>
                 </ul>
 
@@ -271,23 +252,19 @@
                                         <div class="fr">
                                             <asp:FileUpload ID="files" runat="server" CssClass="uploadimage form-control" type="file" name="image_file_arr[]" Multiple="Multiple" />
                                         </div>
-                                        <div class="clearfix"></div>
-                                        <span>You can upload max 4 files at a time.</span>
-                                        <div class="clearfix"></div>
-                                        <span>Max 1 Mb files could be upload</span>
+
                                     </div>
                                 </div>
                             </div>
                             <!-------uplode photo----------->
-                            <asp:Panel ID="panuploadphoto" runat="server">
-                                <asp:Panel ID="panphoto" runat="server" Style="margin-left: 442px;">
-                                    <div runat="server" id="list">
-                                    </div>
-                                </asp:Panel>
-                                <div class="clearfix"></div>
-                                <asp:Label ID="lbmes" runat="server" Text=""></asp:Label>
-                            </asp:Panel>
-                            <div class="clearfix p10"></div>
+                            <div class="gallery"></div>
+                            <div class="clearfix" style="margin-top: 8px;"></div>
+                            <span>You can upload max 4 files.</span>
+                            <div class="clearfix"></div>
+                            <span>Max 1 Mb file could be upload.</span>
+                            <div class="clearfix"></div>
+                            <span>Only .jpeg,.Png,.Jpg,.tif files are allowd to upload</span>
+                            <br />
                             <div runat="server" id="divimgdel" visible="False">
                                 <div class="row">
                                     <div class="col-sm-12">
@@ -355,7 +332,17 @@
                                                 <asp:TextBox runat="server" ID="txtestimateprice" class="form-control"></asp:TextBox>
                                             </div>
                                         </div>
-                                        <div class="col-md-4">
+                                    </div>
+                                </ContentTemplate>
+                            </asp:UpdatePanel>
+                        </div>
+                    </div>
+                    <div id="tnd" class="tab-pane fade">
+                        <div class="section-pannel">
+                            <asp:UpdatePanel runat="server" ID="UpdatePanel3">
+                                <ContentTemplate>
+                                    <div class="row">
+                                        <div class="col-md-12">
                                             <div class="form-group ">
                                                 <label>
                                                     Tender Status</label>
@@ -367,7 +354,6 @@
                                                 </asp:DropDownList>
                                             </div>
                                         </div>
-
                                     </div>
                                     <div class="row">
                                         <div class="col-md-12" runat="server" id="divtendordate">
@@ -378,7 +364,6 @@
                                                 <asp:RadioButtonList runat="server" ID="rbtendordateyesno" RepeatDirection="Horizontal" AutoPostBack="True" RepeatColumns="2" RepeatLayout="Flow" OnSelectedIndexChanged="rbtendordateyesno_CheckedChanged">
                                                     <asp:ListItem Value="N" Selected="True">No</asp:ListItem>
                                                     <asp:ListItem Value="Y" class="yes">Yes</asp:ListItem>
-
                                                 </asp:RadioButtonList>
                                             </span>
                                                 </label>

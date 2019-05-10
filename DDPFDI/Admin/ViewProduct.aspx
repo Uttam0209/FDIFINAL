@@ -21,6 +21,9 @@
     <asp:ScriptManager ID="sc" runat="server"></asp:ScriptManager>
     <asp:UpdatePanel ID="up" runat="server">
         <ContentTemplate>
+            <asp:HiddenField ID="hfcomprefno" runat="server" />
+            <asp:HiddenField ID="hidCompanyRefNo" runat="server" />
+        <asp:HiddenField ID="hidType" runat="server" />
             <div class="content oem-content">
                 <div class="sideBg">
                     <div class="row">
@@ -28,6 +31,37 @@
                             <div id="divHeadPage" runat="server"></div>
                         </div>
                     </div>
+                    <div class="clearfix"></div>
+                    <div id="Div3">
+                        <asp:Button ID="btnAddProduct" runat="server" Text="Add Product" CssClass="btn btn-primary pull-right" OnClick="btnAddProduct_Click" />
+
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="row">
+                        <asp:UpdatePanel runat="server" ID="updrop">
+                            <ContentTemplate>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Select Company</label>
+                                        <asp:DropDownList runat="server" ID="ddlcompany" class="form-control" AutoPostBack="True" OnSelectedIndexChanged="ddlcompany_OnSelectedIndexChanged"></asp:DropDownList>
+                                    </div>
+                                </div>
+                                <div class="col-md-4" runat="server" id="lblselectdivison">
+                                    <div class="form-group">
+                                        <label>Select Division/Palnt</label>
+                                        <asp:DropDownList runat="server" ID="ddldivision" class="form-control" AutoPostBack="True" OnSelectedIndexChanged="ddldivision_OnSelectedIndexChanged"></asp:DropDownList>
+                                    </div>
+                                </div>
+                                <div class="col-md-4" runat="server" id="lblselectunit">
+                                    <div class="form-group">
+                                        <label>Select Unit</label>
+                                        <asp:DropDownList runat="server" ID="ddlunit" class="form-control" AutoPostBack="True" OnSelectedIndexChanged="ddlunit_OnSelectedIndexChanged"></asp:DropDownList>
+                                    </div>
+                                </div>
+                            </ContentTemplate>
+                        </asp:UpdatePanel>
+                    </div>
+                    <div class="clearfix"></div>
                     <form method="post" class="addfdi">
                         <div class="row">
                             <div class="col-md-12">
@@ -75,7 +109,7 @@
                 <div class="footer">© 2019 <a href="#">Department of Defence Production</a> </div>
             </div>
             <div class="modal fade" id="changePass" role="dialog">
-                <div class="modal-dialog" style="width: 1300px; z-index:9999999999;">
+                <div class="modal-dialog" style="width: 1300px; z-index: 9999999999;">
                     <!-- Modal content-->
                     <div class="modal-content">
                         <div class="modal-header modal-header1">
@@ -278,7 +312,7 @@
                                                                 <asp:Label ID="lbltenderstatus" runat="server"></asp:Label>
                                                             </td>
                                                         </tr>
-                                                       <%-- <tr>
+                                                        <%-- <tr>
                                                             <td class="pass" width="30%">Tender Submission</td>
                                                             <td>
                                                                 <asp:Label ID="lbltendersubmission" runat="server"></asp:Label>

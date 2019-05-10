@@ -68,6 +68,12 @@
                                 </div>
 
                                 <div class="clearfix"></div>
+                                <div id="Div3"  >
+                                <asp:Button ID="btnAddDesignation" runat="server" Text="Add Designation" CssClass="btn btn-primary pull-right" OnClick="btnAddDesignation_Click"  />
+
+                                </div>
+
+                                <div class="clearfix"></div>
                                 <div class="table-wraper">
                                     <asp:GridView ID="gvViewDesignation" runat="server" Width="100%" Class="commonAjaxTbl master-company-table table display responsive no-wrap table-hover manage-user Grid" AutoGenerateColumns="false" AllowPaging="true"
                                          PageSize="25" AllowSorting="true" OnRowCommand="gvViewDesignation_RowCommand">

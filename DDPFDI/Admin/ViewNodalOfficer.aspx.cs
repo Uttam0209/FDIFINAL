@@ -46,6 +46,15 @@ public partial class Admin_ViewNodalOfficer : System.Web.UI.Page
         }
     }
 
+    protected void btnAddNodalOfficer_Click(object sender, EventArgs e)
+    {
+        string Role = "Company";
+        string stridNew = Request.QueryString["id"].ToString().Replace(" ", "+");
+        string mstrid = objEnc.EncryptData((objEnc.DecryptData(stridNew)));
+        Response.Redirect("Add-Nodal?mrcreaterole=" + objEnc.EncryptData(Role) + "&id=" + mstrid);
+
+    }
+
     protected void BindGridView(string sortExpression = null)
     {
         try

@@ -175,7 +175,7 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
                 }
                 else
                 {
-                    DataTable DtGetNodel = Lo.RetriveMasterData(Convert.ToInt16(ddlNodalOfficerEmail.SelectedItem.Value), "", "", 0, "", "", "CompleteNodelDetail");
+                    DataTable DtGetNodel = Lo.RetriveMasterData(0, ddlNodalOfficerEmail.SelectedItem.Value, "", 0, "", "", "CompleteNodelDetail");
                     if (DtGetNodel.Rows.Count > 0)
                     {
                         txtNName.Text = DtGetNodel.Rows[0]["NodalOficerName"].ToString();
@@ -1046,7 +1046,7 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
         DtCompanyDDL = Lo.RetriveMasterData(0, Session["CompanyRefNo"].ToString(), "", 0, "", "", "AllNodel");
         if (DtCompanyDDL.Rows.Count > 0)
         {
-            Co.FillDropdownlist(ddlNodalOfficerEmail, DtCompanyDDL, "NodalOficerName", "NodalOfficerID");
+            Co.FillDropdownlist(ddlNodalOfficerEmail, DtCompanyDDL, "NodalOficerName", "NodalOfficerRefNo");
             ddlNodalOfficerEmail.Items.Insert(0, "Select");
 
         }

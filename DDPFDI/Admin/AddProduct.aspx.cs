@@ -48,6 +48,10 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                     for (int x = 0; x < MCateg.Length; x++)
                     {
                         MmCval = MCateg[x];
+                        if (MmCval == " View ")
+                        {
+                            MmCval = "Add";
+                        }
                         strheadPage.Append("<li class=''><span>" + MmCval + "</span></li>");
                     }
                     divHeadPage.InnerHtml = strheadPage.ToString();
@@ -672,7 +676,34 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         HyPanel1["SearchKeyword"] = Co.RSQandSQLInjection(txtsearchkeyword.Text, "soft");
         if (files.HasFiles != false)
         {
-            dtImage = imagedb();
+            if (Convert.ToInt16(hfprodid.Value) != 0)
+            {
+                DataTable dtImageBind = Lo.RetriveProductCode("", hfprodrefno.Value, "RetriveImage");
+                if (dtImageBind.Rows.Count > 0)
+                {
+                    Int16 CountImageTotal = Convert.ToInt16(files.PostedFiles.Count);
+                    Int16 AlreadyUploadImage = Convert.ToInt16(dtImageBind.Rows.Count);
+                    ImageMaxCount = (CountImageTotal + AlreadyUploadImage);
+                    if (ImageMaxCount <= 4)
+                    {
+                        dtImage = imagedb();
+                    }
+                }
+                else
+                {
+                    if (files.HasFiles != false)
+                    {
+                        ImageMaxCount = 4;
+                        dtImage = imagedb();
+                    }
+                }
+
+            }
+            else
+            {
+                ImageMaxCount = 4;
+                dtImage = imagedb();
+            }
         }
         foreach (GridViewRow rw in gvservices.Rows)
         {
@@ -803,6 +834,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     }
     #endregion
     #region Image Code
+    private int ImageMaxCount;
     protected DataTable imagedb()
     {
         HttpFileCollection uploadedFiles = Request.Files;
@@ -817,21 +849,27 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         {
             try
             {
-                for (int i = 0; i < 4; i++)
+                for (int i = 0; i < ImageMaxCount; i++)
                 {
                     HttpPostedFile hpf = uploadedFiles[i];
                     string FileType = hpf.ContentType;
                     int FileSize = hpf.ContentLength;
-                    string FilePathName = hfcomprefno.Value + "_" + DateTime.Now.ToString("hh_mm_ss") + hpf.FileName;
-                    hpf.SaveAs(HttpContext.Current.Server.MapPath("/Upload") + "\\" + FilePathName);
-                    dr = dt.NewRow();
-                    dr["ImageID"] = "-1";
-                    dr["ImageName"] = "Upload/" + FilePathName;
-                    dr["ImageType"] = FileType.ToString();
-                    dr["ImageActualSize"] = FileSize.ToString();
-                    dr["CompanyRefNo"] = hfcomprefno.Value;
-                    dr["Priority"] = i + 1;
-                    dt.Rows.Add(dr);
+                    if (FileSize < 1024)
+                    {
+                        if (Co.GetImageFilter(hpf.FileName) == true)
+                        {
+                            string FilePathName = hfcomprefno.Value + "_" + DateTime.Now.ToString("hh_mm_ss") + hpf.FileName;
+                            hpf.SaveAs(HttpContext.Current.Server.MapPath("/Upload") + "\\" + FilePathName);
+                            dr = dt.NewRow();
+                            dr["ImageID"] = "-1";
+                            dr["ImageName"] = "Upload/" + FilePathName;
+                            dr["ImageType"] = FileType.ToString();
+                            dr["ImageActualSize"] = FileSize.ToString();
+                            dr["CompanyRefNo"] = hfcomprefno.Value;
+                            dr["Priority"] = i + 1;
+                            dt.Rows.Add(dr);
+                        }
+                    }
                 }
             }
             catch (Exception ex)
@@ -942,7 +980,6 @@ public partial class Admin_AddProduct : System.Web.UI.Page
             }
         }
     }
-    #endregion
     protected void dlimage_ItemCommand(object source, DataListCommandEventArgs e)
     {
         if (e.CommandName == "removeimg")
@@ -975,4 +1012,5 @@ public partial class Admin_AddProduct : System.Web.UI.Page
             }
         }
     }
+    #endregion  
 }
