@@ -178,11 +178,11 @@
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                         <asp:BoundField ItemStyle-Width="150px" DataField="CompanyName" HeaderText="Company" />
-                                        <asp:BoundField ItemStyle-Width="150px" DataField="CompanyRefNo" HeaderText="Company Refernce No" />
+                                        <asp:BoundField ItemStyle-Width="150px" DataField="CompanyRefNo" HeaderText="Refernce No" />
                                         <asp:BoundField ItemStyle-Width="150px" DataField="FactoryName" HeaderText="Division" />
-                                        <asp:BoundField ItemStyle-Width="150px" DataField="FactoryRefNo" HeaderText="Factory Refernce No" />
+                                        <asp:BoundField ItemStyle-Width="150px" DataField="FactoryRefNo" HeaderText="Refernce No" />
                                         <asp:BoundField ItemStyle-Width="150px" DataField="UnitName" HeaderText="Unit" />
-                                        <asp:BoundField ItemStyle-Width="150px" DataField="UnitRefNo" HeaderText="Unit Refernce No" />
+                                        <asp:BoundField ItemStyle-Width="150px" DataField="UnitRefNo" HeaderText="Refernce No" />
                                     </Columns>
                                 </asp:GridView>
                             </div>

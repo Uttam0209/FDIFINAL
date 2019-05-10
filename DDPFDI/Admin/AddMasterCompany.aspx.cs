@@ -53,24 +53,26 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
                 {
                     mastercompany.Visible = true;
                     masterfacotry.Visible = false;
-                    lblName.Text = "Company Name";
+                    lblName.Text = "Company";
                     btnsubmit.Text = "Save Company";
                     BindMasterCompany();
                     BindMasterData();
                     Intrested.Visible = true;
                     MenuAlot.Visible = true;
                     divRole.Visible = true;
+                    gvcompanydetail.Visible = false;
                 }
                 else if (Enc.DecryptData(Request.QueryString["mu"].ToString()) == "Panel2")
                 {
                     mastercompany.Visible = true;
                     masterfacotry.Visible = false;
                     BindMasterCompany();
-                    lblName.Text = "Divison/Plant Name";
+                    lblName.Text = "Divison/Plant";
                     btnsubmit.Text = "Save Divison";
                     Intrested.Visible = false;
                     MenuAlot.Visible = false;
                     divRole.Visible = false;
+                    gvcompanydetail.Visible = false;
 
                 }
                 else if (Enc.DecryptData(Request.QueryString["mu"].ToString()) == "Panel3")
@@ -79,22 +81,25 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
                     masterfacotry.Visible = true;
                     BindMasterCompany();
                     this.ddlmaster_SelectedIndexChanged(sender, e);
-                    lblName.Text = "Unit Name";
+                    lblName.Text = "Unit";
                     btnsubmit.Text = "Save Unit";
                     Intrested.Visible = false;
                     MenuAlot.Visible = false;
                     divRole.Visible = false;
+                    gvcompanydetail.Visible = false;
                 }
                 else
                 {
                     mastercompany.Visible = false;
                     masterfacotry.Visible = false;
-                    lblName.Text = "Company/Organization Name";
+                    lblName.Text = "Company/Organization";
                     BindMasterData();
                     BindMasterCompany();
                     Intrested.Visible = true;
                     MenuAlot.Visible = true;
                     divRole.Visible = true;
+                    gvcompanydetail.Visible = true;
+                    GridCompanyBind();
                 }
                 lblMastcompany.Text = "Select Company ";
                 lblfactoryName.Text = "Select Divison/Plant ";
@@ -102,11 +107,9 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
                 chkrole.Attributes.Add("onclick", "radioMe(event);");
             }
 
-            GridCompanyBind();
+            
         }
     }
-
-
     public void GridCompanyBind()
     {
         DataTable DtGrid = new DataTable();
@@ -135,16 +138,13 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
             //DtGrid = null;
         }
     }
-
-
-
     protected void CompGrid()
     {
 
         if (Enc.DecryptData(Request.QueryString["mu"].ToString()) == "Panel2")
         {
             this.gvcompanydetail.Columns[1].Visible = true;
-            this.gvcompanydetail.Columns[2].Visible = true;
+            this.gvcompanydetail.Columns[2].Visible = false;
             this.gvcompanydetail.Columns[3].Visible = true;
             this.gvcompanydetail.Columns[4].Visible = true;
             this.gvcompanydetail.Columns[5].Visible = false;
@@ -153,9 +153,9 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
         else if (Enc.DecryptData(Request.QueryString["mu"].ToString()) == "Panel3")
         {
             this.gvcompanydetail.Columns[1].Visible = true;
-            this.gvcompanydetail.Columns[2].Visible = true;
+            this.gvcompanydetail.Columns[2].Visible = false;
             this.gvcompanydetail.Columns[3].Visible = true;
-            this.gvcompanydetail.Columns[4].Visible = true;
+            this.gvcompanydetail.Columns[4].Visible = false;
             this.gvcompanydetail.Columns[5].Visible = true;
             this.gvcompanydetail.Columns[6].Visible = true;
         }
@@ -171,7 +171,6 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
 
 
     }
-
     protected void BindMasterCompany()
     {
         string sType = "", sName = "", sID = "", mSID = "";
@@ -288,7 +287,6 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
                     role = role + "," + chkro.Value;
                 }
             }
-            lblName.Text = "Company Name";
             HySave["Role"] = Co.RSQandSQLInjection(role.Substring(1).ToString(), "soft");
 
             StrSaveComp = Lo.SaveMasterComp(HySave, out _sysMsg, out _msg);
@@ -296,7 +294,8 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
         if (StrSaveComp != "")
         {
             Cleartext();
-            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('" + btnsubmit.Text + " Save successfully !')", true);
+            GridCompanyBind();
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Save successfully !')", true);
         }
         else
         {
@@ -346,10 +345,12 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
         if (DtBindSubFactory.Rows.Count > 0)
         {
             Co.FillDropdownlist(ddlfacotry, DtBindSubFactory, "FactoryName", "FactoryRefNo");
+            gvcompanydetail.Visible = true;
             GridCompanyBind();
         }
         else
         {
+            gvcompanydetail.Visible = false;
 
         }
 
