@@ -58,7 +58,11 @@
                                     Total number of  Nodal Officer :<strong>
                                         <asp:Label ID="lbltotal" runat="server" Text=""></asp:Label></strong>
                                 </div>
+                                <div class="clearfix"></div>
+                                <div id="Div3"  >
+                                <asp:Button ID="btnAddNodalOfficer" runat="server" Text="Add Employee" CssClass="btn btn-primary pull-right" OnClick="btnAddNodalOfficer_Click"  />
 
+                                </div>
                                 <div class="clearfix"></div>
                                 <div class="table-wraper">
                                     <asp:GridView ID="gvViewNodalOfficer" runat="server" Width="100%" Class="commonAjaxTbl master-company-table table display responsive no-wrap table-hover manage-user Grid" AutoGenerateColumns="false" AllowPaging="true"
@@ -78,12 +82,10 @@
                                             </asp:TemplateField>
                                              <asp:BoundField DataField="NodalOficerName" HeaderText="Name" NullDisplayText="#" SortExpression="Name" />
                                             <asp:BoundField DataField="Designation" HeaderText="Designation" NullDisplayText="#" SortExpression="Designation" />
-                                            
-                                            <asp:BoundField DataField="NodalEmpCode" HeaderText="Emp Code" NullDisplayText="#" SortExpression="NodalEmpCode" />
-                                            
-                                            
+                                           
                                             <asp:BoundField DataField="NodalOfficerEmail" HeaderText="Email" NullDisplayText="#" SortExpression="Email" />
                                             <asp:BoundField DataField="NodalOfficerMobile" HeaderText="Mobile" NullDisplayText="#" SortExpression="Mobile" />
+                                            <asp:BoundField DataField="IsNodalOfficer" HeaderText="IsNodal" NullDisplayText="#" SortExpression="IsNodal" />
                                             <asp:TemplateField HeaderText="Action">
                                                 <ItemTemplate>
                                                    <asp:LinkButton ID="lblview" runat="server" CssClass="fa fa-eye" CommandName="ViewComp" CommandArgument='<%#Eval("NodalOfficerID") %>'></asp:LinkButton>

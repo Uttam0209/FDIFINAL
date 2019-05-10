@@ -65,6 +65,9 @@
   .is-flex { flex-direction: column;}
   #ContentPlaceHolder1_Intrested, #ContentPlaceHolder1_MenuAlot, #ContentPlaceHolder1_divRole { margin-right: 0;}
 
+  ul.breadcrumb { display: none;}
+  .tabing-section .nav { display: flex; flex-direction: column; text-align: center;}
+
 
 }
 
