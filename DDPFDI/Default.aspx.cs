@@ -31,6 +31,7 @@ public partial class _Default : System.Web.UI.Page
     #endregion
     protected void Page_Load(object sender, EventArgs e)
     {
+
     }
     #region "Login Code"
     public static bool IsValidEmailId(string InputEmail)
@@ -60,7 +61,7 @@ public partial class _Default : System.Web.UI.Page
                 {
                     hyLogin["UserName"] = Co.RSQandSQLInjection(txtUserName.Text.Trim() + "'", "hard" + "'");
                     hyLogin["Password"] = objEnc.EncryptData(txtPwd.Text.Trim());
-                    string _EmpId = LO.VerifyEmployee(hyLogin, out _msg,out Defaultpage);
+                    string _EmpId = LO.VerifyEmployee(hyLogin, out _msg, out Defaultpage);
                     if (_EmpId != "0" && _EmpId != "1" && _msg != "")
                     {
                         Session["Type"] = objEnc.EncryptData(_msg);

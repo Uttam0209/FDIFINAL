@@ -452,6 +452,7 @@ namespace DataAccessLayer
                     db.AddInParameter(cmd, "@NodalOfficerFax", DbType.String, hySaveNodal["NodalOfficerFax"].ToString().Trim());
                     db.AddInParameter(cmd, "@CompanyRefNo", DbType.String, hySaveNodal["CompanyRefNo"].ToString().Trim());
                     db.AddInParameter(cmd, "@Type", DbType.String, hySaveNodal["Type"].ToString().Trim());
+                    db.AddInParameter(cmd, "@IsNodalOfficer", DbType.String, hySaveNodal["IsNodalOfficer"].ToString().Trim());
                     db.AddOutParameter(cmd, "@ReturnID", DbType.String, 20);
                     db.ExecuteNonQuery(cmd, dbTran);
                     mCurrentID = db.GetParameterValue(cmd, "@ReturnID").ToString();
@@ -510,6 +511,7 @@ namespace DataAccessLayer
                     db.AddInParameter(cmd, "@Estimatequantity", DbType.String, hyProduct["Estimatequantity"].ToString().Trim());
                     db.AddInParameter(cmd, "@EstimatePriceLLP", DbType.String, hyProduct["EstimatePriceLLP"]);
                     db.AddInParameter(cmd, "@TenderStatus", DbType.String, hyProduct["TenderStatus"].ToString().Trim());
+                    db.AddInParameter(cmd, "@TenderSubmition", DbType.String, hyProduct["TenderSubmition"].ToString().Trim());
                     db.AddInParameter(cmd, "@TenderFillDate", DbType.Date, hyProduct["TenderFillDate"]);
                     db.AddInParameter(cmd, "@TenderUrl", DbType.String, hyProduct["TenderUrl"]);
                     db.AddInParameter(cmd, "@NodelDetail", DbType.String, hyProduct["NodelDetail"]);
@@ -559,6 +561,7 @@ namespace DataAccessLayer
                     DbCommand cmd = db.GetStoredProcCommand("sp_InsertDesignation");
                     db.AddInParameter(cmd, "@DesignationID", DbType.Int64, hysavecomp["DesignationId"]);
                     db.AddInParameter(cmd, "@CompanyRefNo", DbType.String, hysavecomp["CompanyRefNo"]);
+                    db.AddInParameter(cmd, "@DesignationRefNo", DbType.String, hysavecomp["DesignationRefNo"]);
                     db.AddInParameter(cmd, "@Designation", DbType.String, hysavecomp["Designation"].ToString().Trim());
                     db.AddOutParameter(cmd, "@ReturnID", DbType.String, 20);
                     db.ExecuteNonQuery(cmd, dbTran);
@@ -566,15 +569,15 @@ namespace DataAccessLayer
                     dbTran.Commit();
                     _msg = "Save";
                     _sysMsg = "Save";
-                    return mCurrentID;
+                    return _sysMsg;
                 }
 
                 catch (Exception ex)
                 {
                     dbTran.Rollback();
                     _msg = ex.Message;
-                    _sysMsg = ex.Message;
-                    return "-1";
+                    _sysMsg = "";
+                    return _sysMsg;
                 }
                 finally
                 {
@@ -657,6 +660,30 @@ namespace DataAccessLayer
                 {
                     DbCommand cmd = db.GetStoredProcCommand("sp_SearchFDIGrid");
                     db.AddInParameter(cmd, "@CompanyRefNo", DbType.String, ID);
+                    IDataReader dr = db.ExecuteReader(cmd);
+                    DataTable dt = new DataTable();
+                    if (dr != null)
+                        dt.Load(dr);
+                    return dt;
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+        }
+
+
+        public DataTable RetriveAllCompany(string RefNo, string Role)
+        {
+            using (DbConnection dbCon = db.CreateConnection())
+            {
+                dbCon.Open();
+                try
+                {
+                    DbCommand cmd = db.GetStoredProcCommand("sp_GetCompDivUnit");
+                    db.AddInParameter(cmd, "@RefNo", DbType.String, RefNo);
+                    db.AddInParameter(cmd, "@Role", DbType.String, Role);
                     IDataReader dr = db.ExecuteReader(cmd);
                     DataTable dt = new DataTable();
                     if (dr != null)

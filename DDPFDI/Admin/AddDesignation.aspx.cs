@@ -19,6 +19,8 @@ public partial class Admin_AddDesignation : System.Web.UI.Page
     private Int64 id = 0;
     private string _sysMsg = string.Empty;
     private string _msg = string.Empty;
+    private string mType = "";
+    private string mRefNo = "";
     HybridDictionary HySave = new HybridDictionary();
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -35,6 +37,10 @@ public partial class Admin_AddDesignation : System.Web.UI.Page
                 for (int x = 0; x < MCateg.Length; x++)
                 {
                     MmCval = MCateg[x];
+                    if (MmCval == " View ")
+                    {
+                        MmCval = "Add";
+                    }
                     strheadPage.Append("<li class=''><span>" + MmCval + "</span></li>");
                 }
                 divHeadPage.InnerHtml = strheadPage.ToString();
@@ -43,6 +49,9 @@ public partial class Admin_AddDesignation : System.Web.UI.Page
                 BindMasterCompany();
                 
             }
+            mType = Enc.DecryptData(Session["Type"].ToString());
+            mRefNo = Session["CompanyRefNo"].ToString();
+            BindGridView();
             if (Request.QueryString["mcurrentcompRefNo"] != null)
             {
                 EditCode();
@@ -50,7 +59,64 @@ public partial class Admin_AddDesignation : System.Web.UI.Page
         }
 
     }
+    protected void BindGridView(string sortExpression = null)
+    {
+        try
+        {
+            if (mType == "SuperAdmin")
+            {
+                DataTable DtGrid = Lo.RetriveMasterData(0, "0", "", 0, "", "", "ViewDesignation");
 
+                gvViewDesignation.DataSource = DtGrid;
+                gvViewDesignation.DataBind();
+
+            }
+            else if (mType == "Company" && mRefNo != "")
+            {
+                DataTable DtGrid = Lo.RetriveMasterData(0, ddlmaster.SelectedItem.Value, "", 0, "", "", "ViewDesignation");
+                if (DtGrid.Rows.Count > 0)
+                {
+                    gvViewDesignation.DataSource = DtGrid;
+                    gvViewDesignation.DataBind();
+                    gvViewDesignation.Visible = true;
+                }
+                else
+                {
+                    gvViewDesignation.Visible = false;
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not found !')", true);
+                }
+
+            }
+
+        }
+        catch (Exception ex)
+        {
+        }
+    }
+    protected void ddlmaster_OnSelectedIndexChanged(object sender, EventArgs e)
+    {
+        GridViewBindSelectedIndexchange();
+
+    }
+
+    public void GridViewBindSelectedIndexchange()
+    {
+        if (ddlmaster.SelectedItem.Text != "Select")
+        {
+            DataTable DtGrid = Lo.RetriveMasterData(0, ddlmaster.SelectedItem.Value, "", 0, "", "", "ViewDesignation");
+            if (DtGrid.Rows.Count > 0)
+            {
+                gvViewDesignation.DataSource = DtGrid;
+                gvViewDesignation.DataBind();
+                gvViewDesignation.Visible = true;
+            }
+            else
+            {
+                gvViewDesignation.Visible = false;
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not found !')", true);
+            }
+        }
+    }
     protected void BindMasterCompany()
     {
         string sType = "", sName = "", sID = "", mSID = "";
@@ -124,12 +190,14 @@ public partial class Admin_AddDesignation : System.Web.UI.Page
             HySave["DesignationId"] = 0;
         }
         HySave["CompanyRefNo"] = ddlmaster.SelectedItem.Value;
+        HySave["DesignationRefNo"] = "";
         HySave["Designation"] = Co.RSQandSQLInjection(txtDesignation.Text.Trim(), "soft");
         StrSaveComp = Lo.SaveCompDesignation(HySave, out _sysMsg, out _msg);
-        if (StrSaveComp != "")
+        if (_sysMsg != "")
         {
-
-            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('" + btnsubmit.Text + " Save successfully !')", true);
+            GridViewBindSelectedIndexchange();
+            txtDesignation.Text = "";
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Save successfully !')", true);
         }
         else
         {
