@@ -155,10 +155,12 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
                 if (lblprodalredyindeginized.Text == "Y")
                 {
                     tablemanufacturename.Visible = true;
+                    tablemanufacturename1.Visible = true;
                     lblmanufacturename.Text = DtView.Rows[0]["ManufactureName"].ToString();
                 }
                 else
                 {
+                    tablemanufacturename1.Visible = false;
                     tablemanufacturename.Visible = false;
                 }
                 DataTable dtImageBind = Lo.RetriveProductCode("", e.CommandArgument.ToString(), "ProductImage");
