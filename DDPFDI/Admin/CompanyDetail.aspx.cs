@@ -342,9 +342,7 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
                 lblCName.Text = "Divison/Plant Name";
                 tcompanyname.ReadOnly = true;
                 taddress.Text = DtView.Rows[0]["FactoryAddress"].ToString();
-
                 selstate.SelectedItem.Value = DtView.Rows[0]["FactoryStateID"].ToString();
-
                 DivCEOName.Visible = true;
                 tpincode.Text = DtView.Rows[0]["FactoryPincode"].ToString();
                 txtNEmailId.Text = DtView.Rows[0]["FactoryEmailId"].ToString();
@@ -650,22 +648,24 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
         {
             HySave["CompanyID"] = Mid;
         }
-        HySave["Address"] = Co.RSQandSQLInjection(taddress.Text.Trim(), "soft");
+        HySave["CompanyRefNo"] = Co.RSQandSQLInjection(Session["CompanyRefNo"].ToString(), "soft");
+        HySave["FactoryAddress"] = Co.RSQandSQLInjection(taddress.Text.Trim(), "soft");
         if (selstate.SelectedItem.Text == "Select State")
         {
-            HySave["State"] = null;
+            HySave["FactoryStateID"] = null;
         }
         else
         {
-            HySave["State"] = Co.RSQandSQLInjection(selstate.SelectedItem.Value, "soft");
+            HySave["FactoryStateID"] = Co.RSQandSQLInjection(selstate.SelectedItem.Value, "soft");
         }
-        HySave["Pincode"] = Co.RSQandSQLInjection(tpincode.Text.Trim(), "soft");
-        HySave["CEOName"] = Co.RSQandSQLInjection(txtceoname.Text.Trim(), "soft");
-        HySave["CEOEmail"] = Co.RSQandSQLInjection(txtCEOEmailId.Text.Trim(), "soft");
-        HySave["TelephoneNo"] = Co.RSQandSQLInjection(txtTelephone.Text.Trim(), "soft");
-        HySave["FaxNo"] = Co.RSQandSQLInjection(txtFaxNo.Text.Trim(), "soft");
-        HySave["EmailID"] = Co.RSQandSQLInjection(txtEmailID.Text.Trim(), "soft");
-        HySave["Website"] = Co.RSQandSQLInjection(txtWebsite.Text.Trim(), "soft");
+
+        HySave["FactoryPincode"] = Co.RSQandSQLInjection(tpincode.Text.Trim(), "soft");
+        HySave["FactoryCEOName"] = Co.RSQandSQLInjection(txtceoname.Text.Trim(), "soft");
+        HySave["FactoryCEOEmail"] = Co.RSQandSQLInjection(txtCEOEmailId.Text.Trim(), "soft");
+        HySave["FactoryTelephoneNo"] = Co.RSQandSQLInjection(txtTelephone.Text.Trim(), "soft");
+        HySave["FactoryFaxNo"] = Co.RSQandSQLInjection(txtFaxNo.Text.Trim(), "soft");
+        HySave["ContactPersonEmailID"] = Co.RSQandSQLInjection(txtEmailID.Text.Trim(), "soft");
+        HySave["FactoryWebsite"] = Co.RSQandSQLInjection(txtWebsite.Text.Trim(), "soft");
         if (ddlNodalOfficerEmail.SelectedItem.Value == "0")
         {
             HySave["NodalOfficeRefNo"] = "0";
@@ -788,39 +788,56 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
             //}
             //else
             //{
-            if (btndemofirst.Text=="Save")
+            if (btndemofirst.Text == "Save")
             {
                 SaveFDI();
+                string StrSaveFDIComp = Lo.SaveMasterCompany(HySave, out _msg, out _sysMsg);
+                if (StrSaveFDIComp != "0" && StrSaveFDIComp != "-1")
+                {
+                    //SaveCompanyMenu();
+                    if (hfid.Value != "")
+                    {
+                        //cleartext();
+                        ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "alert('Record updated successfully')", true);
+                    }
+                    else
+                    {
+                        //cleartext();
+                        ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "alert('Record save successfully')", true);
+                    }
+                }
+                else
+                {
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not save successfully.')", true);
+                }
             }
             else if (btndemofirst.Text == "Save Division")
             {
                 SaveFactoryComp();
-            }
-            else if (btndemofirst.Text=="Save Unit")
-            {
-                SaveUnitComp();
-                
-            }
-           
-            
-            string StrSaveFDIComp = Lo.SaveMasterCompany(HySave, out _msg, out _sysMsg);
-            if (StrSaveFDIComp != "0" && StrSaveFDIComp != "-1")
-            {
-                //SaveCompanyMenu();
-                if (hfid.Value != "")
+                string StrSaveFact = Lo.SaveFactoryComp(HySave, out _msg, out _sysMsg);
+                if (StrSaveFact != "0" && StrSaveFact != "-1")
                 {
-                    //cleartext();
-                    ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "alert('Record updated successfully')", true);
+                    //SaveFactoryMenu();
+                    if (hfid.Value != "")
+                    {
+                        //cleartext();
+                        ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "alert('Record updated successfully')", true);
+                    }
+                    else
+                    {
+                        //cleartext();
+                        ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "alert('Record save successfully')", true);
+                    }
                 }
                 else
                 {
-                    //cleartext();
-                    ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "alert('Record save successfully')", true);
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not save successfully.')", true);
                 }
             }
-            else
+            else if (btndemofirst.Text == "Save Unit")
             {
-                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not save successfully.')", true);
+                SaveUnitComp();
+
             }
             //    }
             //}

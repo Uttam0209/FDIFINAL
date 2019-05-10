@@ -147,13 +147,13 @@
                                                                             </div>
                                                                         </ItemTemplate>
                                                                     </asp:TemplateField>
-                                                                    <asp:TemplateField >
+                                                                    <asp:TemplateField HeaderText="S.No.">
                                                                         <ItemTemplate>
                                                                             <%#Container.DataItemIndex+1 %>
                                                                         </ItemTemplate>
                                                                     </asp:TemplateField>
 
-                                                                    <asp:TemplateField >
+                                                                    <asp:TemplateField>
                                                                         <ItemTemplate>
                                                                             <asp:Label runat="server" ID="lblfactoryrefno" Text='<%#Eval("FactoryRefNo") %>'></asp:Label>
                                                                         </ItemTemplate>
