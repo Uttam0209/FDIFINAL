@@ -41,7 +41,7 @@ public partial class Admin_ViewNodalOfficer : System.Web.UI.Page
                 mType = objEnc.DecryptData(Session["Type"].ToString());
                 mRefNo = Session["CompanyRefNo"].ToString();
                 BindCompany();
-                BindGridView();
+                
             }
         }
     }
@@ -55,82 +55,152 @@ public partial class Admin_ViewNodalOfficer : System.Web.UI.Page
 
     }
 
-    protected void BindGridView(string sortExpression = null)
+    public void GridViewNodalOfficerBind(string mRefNo, string mRole)
     {
-        try
+        DataTable DtGrid = Lo.RetriveAllNodalOfficer(mRefNo, mRole);
+        if (DtGrid.Rows.Count > 0)
         {
-            if (mType == "SuperAdmin")
-            {
-                DataTable DtGrid = Lo.RetriveMasterData(0, "0", "", 0, "", "", "ViewNodal");
-                if (DtGrid.Rows.Count > 0)
-                {
-                    if (sortExpression != null)
-                    {
-                        DataView dv = DtGrid.AsDataView();
-                        this.SortDirection = this.SortDirection == "ASC" ? "DESC" : "ASC";
-
-                        dv.Sort = sortExpression + " " + this.SortDirection;
-                        gvViewNodalOfficer.DataSource = dv;
-                    }
-                    else
-                    {
-                        gvViewNodalOfficer.DataSource = DtGrid;
-                    }
-                    gvViewNodalOfficer.DataBind();
-                    lbltotal.Text = DtGrid.Rows.Count.ToString();
-                }
-            }
-            else if (mType == "Company" && mRefNo != "")
-            {
-                DataTable DtGrid = Lo.RetriveMasterData(0, ddlcompany.SelectedItem.Value, "", 0, "", "", "ViewNodal");
-                if (DtGrid.Rows.Count > 0)
-                {
-                    gvViewNodalOfficer.DataSource = DtGrid;
-                    gvViewNodalOfficer.DataBind();
-                }
-            }
-
+            gvViewNodalOfficer.DataSource = DtGrid;
+            gvViewNodalOfficer.DataBind();
+            gvViewNodalOfficer.Visible = true;
         }
-        catch (Exception ex)
+        else
         {
+            gvViewNodalOfficer.Visible = false;
         }
-    }
-    private string SortDirection
-    {
-        get { return ViewState["SortDirection"] != null ? ViewState["SortDirection"].ToString() : "ASC"; }
-        set { ViewState["SortDirection"] = value; }
     }
     protected void BindCompany()
     {
-        if (mType == "SuperAdmin")
+        if (mType == "SuperAdmin" || mType == "Admin")
         {
             DtCompanyDDL = Lo.RetriveMasterData(0, "", "", 0, "", "", "Select");
             if (DtCompanyDDL.Rows.Count > 0)
             {
                 Co.FillDropdownlist(ddlcompany, DtCompanyDDL, "CompanyName", "CompanyRefNo");
-                ddlcompany.Items.Insert(0, "All");
+                ddlcompany.Items.Insert(0, "Select");
                 ddlcompany.Enabled = true;
-            }
-
-        }
-        else if (mType == "Admin")
-        {
-        }
-        else if (mType == "Company")
-        {
-            DtCompanyDDL = Lo.RetriveMasterData(0, mRefNo, "Company", 0, "", "", "CompanyName");
-            if (DtCompanyDDL.Rows.Count > 0)
-            {
-                Co.FillDropdownlist(ddlcompany, DtCompanyDDL, "CompanyName", "CompanyRefNo");
-                ddlcompany.Enabled = false;
             }
             else
             {
                 ddlcompany.Enabled = false;
             }
 
+            lblselectdivison.Visible = false;
+            lblselectunit.Visible = false;
         }
 
+        else if (mType == "Company")
+        {
+            DtCompanyDDL = Lo.RetriveMasterData(0, mRefNo, "Company", 0, "", "", "CompanyName");
+            if (DtCompanyDDL.Rows.Count > 0)
+            {
+                Co.FillDropdownlist(ddlcompany, DtCompanyDDL, "CompanyName", "CompanyRefNo");
+
+                GridViewNodalOfficerBind(mRefNo, "Company");
+                ddlcompany.Enabled = false;
+            }
+            else
+            {
+                ddlcompany.Enabled = false;
+            }
+            DtCompanyDDL = Lo.RetriveMasterData(0, ddlcompany.SelectedItem.Value, "Factory1", 0, "", "", "CompanyName");
+            if (DtCompanyDDL.Rows.Count > 0)
+            {
+                Co.FillDropdownlist(ddldivision, DtCompanyDDL, "FactoryName", "FactoryRefNo");
+                ddldivision.Items.Insert(0, "Select");
+                if (mType == "Company")
+                {
+                    lblselectdivison.Visible = true;
+                    ddldivision.Enabled = true;
+                    ddlunit.Visible = false;
+                    lblselectunit.Visible = false;
+
+                }
+                else
+                {
+                    ddldivision.Enabled = false;
+                }
+            }
+            else
+            {
+                ddldivision.Enabled = false;
+            }
+        }
+        else if (mType == "Factory")
+        {
+            DtCompanyDDL = Lo.RetriveMasterData(0, mRefNo, "Company1", 0, "", "", "CompanyName");
+            if (DtCompanyDDL.Rows.Count > 0)
+            {
+                Co.FillDropdownlist(ddlcompany, DtCompanyDDL, "CompanyName", "CompanyRefNo");
+                ddlcompany.Enabled = false;
+
+            }
+            else
+            {
+                ddlcompany.Enabled = false;
+            }
+            DtCompanyDDL = Lo.RetriveMasterData(0, ddlcompany.SelectedItem.Value, "Factory1", 0, "", "", "CompanyName");
+            if (DtCompanyDDL.Rows.Count > 0)
+            {
+                Co.FillDropdownlist(ddldivision, DtCompanyDDL, "FactoryName", "FactoryRefNo");
+                lblselectdivison.Visible = true;
+                ddldivision.Enabled = false;
+                GridViewNodalOfficerBind(ddldivision.SelectedItem.Value, "Division");
+            }
+            else
+            {
+                ddldivision.Enabled = false;
+            }
+            DtCompanyDDL = Lo.RetriveMasterData(0, ddldivision.SelectedItem.Value, "Unit1", 0, "", "", "CompanyName");
+            if (DtCompanyDDL.Rows.Count > 0)
+            {
+                Co.FillDropdownlist(ddlunit, DtCompanyDDL, "UnitName", "UnitRefNo");
+                ddlunit.Items.Insert(0, "Select");
+                ddlunit.Enabled = true;
+                lblselectunit.Visible = true;
+            }
+            else
+            {
+                ddlunit.Visible = false;
+            }
+        }
+        else if (mType == "Unit")
+        {
+            DtCompanyDDL = Lo.RetriveMasterData(0, mRefNo, "Company2", 0, "", "", "CompanyName");
+            if (DtCompanyDDL.Rows.Count > 0)
+            {
+                Co.FillDropdownlist(ddlcompany, DtCompanyDDL, "CompanyName", "CompanyRefNo");
+                ddlcompany.Enabled = false;
+
+            }
+            else
+            {
+                ddlcompany.Enabled = false;
+            }
+            DtCompanyDDL = Lo.RetriveMasterData(0, ddlcompany.SelectedItem.Value, "Factory1", 0, "", "", "CompanyName");
+            if (DtCompanyDDL.Rows.Count > 0)
+            {
+                Co.FillDropdownlist(ddldivision, DtCompanyDDL, "FactoryName", "FactoryRefNo");
+                lblselectdivison.Visible = true;
+                ddldivision.Enabled = false;
+            }
+            else
+            {
+                ddldivision.Enabled = false;
+            }
+            DtCompanyDDL = Lo.RetriveMasterData(0, ddldivision.SelectedItem.Value, "Unit1", 0, "", "", "CompanyName");
+            if (DtCompanyDDL.Rows.Count > 0)
+            {
+                Co.FillDropdownlist(ddlunit, DtCompanyDDL, "UnitName", "UnitRefNo");
+                lblselectunit.Visible = true;
+                ddlunit.Enabled = false;
+                GridViewNodalOfficerBind(ddlunit.SelectedItem.Value, "Unit");
+            }
+            else
+            {
+                ddlunit.Enabled = false;
+            }
+        }
     }
 
     #region RowCommand
@@ -146,13 +216,29 @@ public partial class Admin_ViewNodalOfficer : System.Web.UI.Page
         }
         else if (e.CommandName == "ViewComp")
         {
-            DataTable DtView = Lo.RetriveMasterData(0, e.CommandArgument.ToString(), "", 0, "", "", "SearchNodalOfficer");
+            DataTable DtView = new DataTable();
+            if (ddldivision.SelectedValue != "Select")
+            {
+                DtView = Lo.RetriveAllNodalOfficer(e.CommandArgument.ToString(), "DivisionID");
+
+                if (ddlunit.SelectedValue != "Select")
+                {
+                    DtView = Lo.RetriveAllNodalOfficer(e.CommandArgument.ToString(), "UnitID");
+                }
+                
+            }
+            else
+            {
+                DtView = Lo.RetriveAllNodalOfficer(e.CommandArgument.ToString(), "CompanyID");
+            }
             if (DtView.Rows.Count > 0)
             {
                 lblcompanyname.Text = DtView.Rows[0]["CompanyName"].ToString();
+                lblDivision.Text = DtView.Rows[0]["FactoryName"].ToString();
+                lblUnit.Text = DtView.Rows[0]["UnitName"].ToString();
                 lblNodalOfficerRefNo.Text = DtView.Rows[0]["NodalOfficerRefNo"].ToString();
                 lblNodalOficerName.Text = DtView.Rows[0]["NodalOficerName"].ToString();
-                lblDesignation.Text = DtView.Rows[0]["Designation"].ToString();
+                //lblDesignation.Text = DtView.Rows[0]["Designation"].ToString();
                 lblNodalEmpCode.Text = DtView.Rows[0]["NodalEmpCode"].ToString();
                 lblEmail.Text = DtView.Rows[0]["NodalOfficerEmail"].ToString();
                 lblMobile.Text = DtView.Rows[0]["NodalOfficerMobile"].ToString();
@@ -169,7 +255,6 @@ public partial class Admin_ViewNodalOfficer : System.Web.UI.Page
                 string DeleteRec = Lo.DeleteRecord(e.CommandArgument.ToString(), "InActiveCompany");
                 if (DeleteRec == "true")
                 {
-                    BindGridView();
                     ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record delete succssfully.')", true);
                 }
                 else
@@ -190,19 +275,75 @@ public partial class Admin_ViewNodalOfficer : System.Web.UI.Page
     #region DropDownList Code
     protected void ddlcompany_OnSelectedIndexChanged(object sender, EventArgs e)
     {
-        if (ddlcompany.SelectedItem.Text != "All")
+        if (ddlcompany.SelectedItem.Text != "Select")
         {
-            DataTable DtGrid = Lo.RetriveMasterData(0, ddlcompany.SelectedItem.Value, "", 0, "", "", "ViewNodal");
-            if (DtGrid.Rows.Count > 0)
+            DtCompanyDDL = Lo.RetriveMasterData(0, ddlcompany.SelectedItem.Value, "", 0, "", "", "FactoryCompanyID");
+            if (DtCompanyDDL.Rows.Count > 0)
             {
-                gvViewNodalOfficer.DataSource = DtGrid;
-                gvViewNodalOfficer.DataBind();
-
+                Co.FillDropdownlist(ddldivision, DtCompanyDDL, "FactoryName", "FactoryRefNo");
+                ddldivision.Items.Insert(0, "Select");
+                lblselectdivison.Visible = true;
+                ddldivision.Visible = true;
+                GridViewNodalOfficerBind(ddlcompany.SelectedItem.Value, "Company");
+            }
+            else
+            {
+                ddldivision.Visible = false;
+                lblselectdivison.Visible = false;
             }
         }
-
+        else if (ddlcompany.SelectedItem.Text == "Select")
+        {
+            lblselectdivison.Visible = false;
+            lblselectunit.Visible = false;
+        }
     }
+    protected void ddldivision_OnSelectedIndexChanged(object sender, EventArgs e)
+    {
+        if (ddldivision.SelectedItem.Text != "Select")
+        {
+            DtCompanyDDL = Lo.RetriveMasterData(0, ddldivision.SelectedItem.Value, "", 0, "", "", "UnitSelectID");
+            if (DtCompanyDDL.Rows.Count > 0)
+            {
+                Co.FillDropdownlist(ddlunit, DtCompanyDDL, "UnitName", "UnitRefNo");
+                ddlunit.Items.Insert(0, "Select");
+                ddlunit.Visible = true;
+                lblselectunit.Visible = true;
+                GridViewNodalOfficerBind(ddldivision.SelectedItem.Value, "Division");
+            }
+            else
+            {
+                lblselectunit.Visible = false;
+                ddlunit.Visible = false;
+            }
+        }
+        else if (ddldivision.SelectedItem.Text == "Select")
+        {
+            DtCompanyDDL = Lo.RetriveMasterData(0, ddlcompany.SelectedItem.Value, "", 0, "", "", "FactoryCompanyID");
+            if (DtCompanyDDL.Rows.Count > 0)
+            {
+                Co.FillDropdownlist(ddldivision, DtCompanyDDL, "FactoryName", "FactoryRefNo");
+                ddldivision.Items.Insert(0, "Select");
+                lblselectdivison.Visible = true;
+                ddldivision.Visible = true;
+                lblselectdivison.Visible = false;
+                GridViewNodalOfficerBind(ddlcompany.SelectedItem.Value, "Division");
+            }
+        }
+    }
+    protected void ddlunit_OnSelectedIndexChanged(object sender, EventArgs e)
+    {
+        if (ddldivision.SelectedItem.Text == "Select")
+        {
+            ddldivision_OnSelectedIndexChanged(sender, e);
+        }
+        else
+        {
 
+            GridViewNodalOfficerBind(ddlunit.SelectedItem.Value, "Unit");
+        }
+    }
+    #endregion
 
     protected void Search_Click(object sender, EventArgs e)
     {
@@ -218,8 +359,8 @@ public partial class Admin_ViewNodalOfficer : System.Web.UI.Page
         }
         else
         {
-            BindGridView();
+           
         }
     }
-    #endregion
+    
 }

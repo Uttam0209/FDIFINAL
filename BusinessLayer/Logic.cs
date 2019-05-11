@@ -36,6 +36,14 @@ namespace BusinessLayer
         {
             return SqlHelper.Instance.SaveMasterCompany(HyCompSave, out _sysMsg, out _msg);
         }
+        public string SaveMasterDivision(HybridDictionary hysaveDivision, out string _sysMsg, out string _msg)
+        {
+            return SqlHelper.Instance.SaveMasterDivision(hysaveDivision, out _sysMsg, out _msg);
+        }
+        public string SaveMasterUnit(HybridDictionary hysaveUnit, out string _sysMsg, out string _msg)
+        {
+            return SqlHelper.Instance.SaveMasterUnit(hysaveUnit, out _sysMsg, out _msg);
+        }
         public string SaveMasterComp(HybridDictionary hysavecomp, out string _sysMsg, out string _msg)
         {
             return SqlHelper.Instance.SaveMasterComp(hysavecomp, out _sysMsg, out _msg);
@@ -90,7 +98,10 @@ namespace BusinessLayer
         {
             return SqlHelper.Instance.RetriveAllCompany(UnitRefNo, Role);
         }
-
+        public DataTable RetriveAllNodalOfficer(string UnitRefNo, string Role)
+        {
+            return SqlHelper.Instance.RetriveAllNodalOfficer(UnitRefNo, Role);
+        }
         public DataTable RetriveGridViewCompany(string ID, string FactoryRefNo, string UnitRefNo, string Purpose)
         {
             return SqlHelper.Instance.RetriveGridViewCompany(ID, FactoryRefNo, UnitRefNo, Purpose);

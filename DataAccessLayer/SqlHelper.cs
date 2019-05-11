@@ -230,7 +230,7 @@ namespace DataAccessLayer
                 DbTransaction dbTran = dbCon.BeginTransaction();
                 try
                 {
-                    DbCommand cmd = db.GetStoredProcCommand("sp_mst_company");
+                    DbCommand cmd = db.GetStoredProcCommand("sp_UpdateCompany");
                     db.AddInParameter(cmd, "@CompanyID", DbType.Int64, HyCompSave["CompanyID"]);
                     db.AddInParameter(cmd, "@IsJointVenture", DbType.String, HyCompSave["IsJointVenture"]);
                     db.AddInParameter(cmd, "@CompanyName", DbType.String, HyCompSave["CompanyName"].ToString().Trim());
@@ -288,6 +288,7 @@ namespace DataAccessLayer
                 }
             }
         }
+        #region "Save Master"
         public string SaveMasterComp(HybridDictionary hysavecomp, out string _sysMsg, out string _msg)
         {
             string mCurrentID = "";
@@ -297,7 +298,7 @@ namespace DataAccessLayer
                 DbTransaction dbTran = dbCon.BeginTransaction();
                 try
                 {
-                    DbCommand cmd = db.GetStoredProcCommand("sp_CompanySuperAdminEntered");
+                    DbCommand cmd = db.GetStoredProcCommand("sp_InsertCompany");
                     db.AddInParameter(cmd, "@CompanyID", DbType.Int64, hysavecomp["CompanyID"]);
                     db.AddInParameter(cmd, "@CompanyName", DbType.String, hysavecomp["CompanyName"]);
                     db.AddInParameter(cmd, "@ContactPersonEmailID", DbType.String, hysavecomp["ContactPersonEmailID"]);
@@ -325,6 +326,80 @@ namespace DataAccessLayer
                 }
             }
         }
+        public string SaveMasterDivision(HybridDictionary hysaveDivision, out string _sysMsg, out string _msg)
+        {
+            string mCurrentID = "";
+            using (DbConnection dbCon = db.CreateConnection())
+            {
+                dbCon.Open();
+                DbTransaction dbTran = dbCon.BeginTransaction();
+                try
+                {
+                    DbCommand cmd = db.GetStoredProcCommand("sp_InsertDivision");
+                    db.AddInParameter(cmd, "@FactoryID", DbType.Int64, hysaveDivision["CompanyID"]);
+                    db.AddInParameter(cmd, "@FactoryName", DbType.String, hysaveDivision["CompanyName"]);
+                    db.AddInParameter(cmd, "@FactoryEmailId", DbType.String, hysaveDivision["ContactPersonEmailID"]);
+                    db.AddInParameter(cmd, "@CompanyRefNo", DbType.String, hysaveDivision["CompanyRefNo"].ToString().Trim());
+                    db.AddInParameter(cmd, "@Role", DbType.String, hysaveDivision["Role"]);
+                    db.AddOutParameter(cmd, "@ReturnID", DbType.String, 20);
+                    db.ExecuteNonQuery(cmd, dbTran);
+                    mCurrentID = db.GetParameterValue(cmd, "@ReturnID").ToString();
+                    dbTran.Commit();
+                    _msg = "Save";
+                    _sysMsg = "Save";
+                    return mCurrentID;
+                }
+                catch (Exception ex)
+                {
+                    dbTran.Rollback();
+                    _msg = ex.Message;
+                    _sysMsg = ex.Message;
+                    return "-1";
+                }
+                finally
+                {
+                    dbCon.Close();
+                }
+            }
+        }
+        public string SaveMasterUnit(HybridDictionary hysaveUnit, out string _sysMsg, out string _msg)
+        {
+            string mCurrentID = "";
+            using (DbConnection dbCon = db.CreateConnection())
+            {
+                dbCon.Open();
+                DbTransaction dbTran = dbCon.BeginTransaction();
+                try
+                {
+                    DbCommand cmd = db.GetStoredProcCommand("sp_InsertUnit");
+                    db.AddInParameter(cmd, "@UnitID", DbType.Int64, hysaveUnit["CompanyID"]);
+                    db.AddInParameter(cmd, "@UnitName", DbType.String, hysaveUnit["CompanyName"]);
+                    db.AddInParameter(cmd, "@UnitEmailId", DbType.String, hysaveUnit["ContactPersonEmailID"]);
+                    db.AddInParameter(cmd, "@FactoryRefNo", DbType.String, hysaveUnit["CompanyRefNo"].ToString().Trim());
+                    db.AddInParameter(cmd, "@Role", DbType.String, hysaveUnit["Role"]);
+                    db.AddOutParameter(cmd, "@ReturnID", DbType.String, 20);
+                    db.ExecuteNonQuery(cmd, dbTran);
+                    mCurrentID = db.GetParameterValue(cmd, "@ReturnID").ToString();
+                    dbTran.Commit();
+                    _msg = "Save";
+                    _sysMsg = "Save";
+                    return mCurrentID;
+                }
+                catch (Exception ex)
+                {
+                    dbTran.Rollback();
+                    _msg = ex.Message;
+                    _sysMsg = ex.Message;
+                    return "-1";
+                }
+                finally
+                {
+                    dbCon.Close();
+                }
+            }
+        }
+        #endregion
+
         public string SaveFactoryComp(HybridDictionary hysavecomp, out string _sysMsg, out string _msg)
         {
             string mCurrentID = "";
@@ -334,11 +409,31 @@ namespace DataAccessLayer
                 DbTransaction dbTran = dbCon.BeginTransaction();
                 try
                 {
-                    DbCommand cmd = db.GetStoredProcCommand("sp_CompanyEntered");
+                    DbCommand cmd = db.GetStoredProcCommand("sp_UpdateDivision");
                     db.AddInParameter(cmd, "@FactoryID", DbType.Int64, hysavecomp["CompanyID"]);
                     db.AddInParameter(cmd, "@FactoryName", DbType.String, hysavecomp["CompanyName"]);
-                    db.AddInParameter(cmd, "@FactoryEmailId", DbType.String, hysavecomp["ContactPersonEmailID"]);
                     db.AddInParameter(cmd, "@CompanyRefNo", DbType.String, hysavecomp["CompanyRefNo"].ToString().Trim());
+                    db.AddInParameter(cmd, "@FactoryAddress", DbType.String, hysavecomp["FactoryAddress"].ToString().Trim());
+                    db.AddInParameter(cmd, "@FactoryStateID", DbType.Int64, hysavecomp["FactoryStateID"]);
+                    db.AddInParameter(cmd, "@FactoryPincode", DbType.String, hysavecomp["FactoryPincode"]);
+                    db.AddInParameter(cmd, "@FactoryCEOName", DbType.String, hysavecomp["FactoryCEOName"]);
+                    db.AddInParameter(cmd, "@FactoryCEOEmail", DbType.String, hysavecomp["FactoryCEOEmail"]);
+                    db.AddInParameter(cmd, "@FactoryTelephoneNo", DbType.String, hysavecomp["FactoryTelephoneNo"]);
+                    db.AddInParameter(cmd, "@FactoryFaxNo", DbType.String, hysavecomp["FactoryFaxNo"]);
+                    db.AddInParameter(cmd, "@FactoryEmailID", DbType.String, hysavecomp["FactoryEmailID"]);
+                    db.AddInParameter(cmd, "@FactoryWebsite", DbType.String, hysavecomp["FactoryWebsite"]);
+                    db.AddInParameter(cmd, "@NodalOfficeRefNo", DbType.String, hysavecomp["NodalOfficeRefNo"]);
+                    db.AddInParameter(cmd, "@FactoryNodalOfficerEmailId", DbType.String, hysavecomp["FactoryNodalOfficerEmailId"]);
+                    db.AddInParameter(cmd, "@FactoryGSTNo", DbType.String, hysavecomp["FactoryGSTNo"]);
+                    db.AddInParameter(cmd, "@FactoryCINNo", DbType.String, hysavecomp["FactoryCINNo"]);
+                    db.AddInParameter(cmd, "@FactoryPANNo", DbType.String, hysavecomp["FactoryPANNo"]);
+                    db.AddInParameter(cmd, "@FactoryIECode", DbType.String, hysavecomp["FactoryIECode"]);
+                    db.AddInParameter(cmd, "@FactoryFacebook", DbType.String, hysavecomp["FactoryFacebook"]);
+                    db.AddInParameter(cmd, "@FactoryTwitter", DbType.String, hysavecomp["FactoryTwitter"]);
+                    db.AddInParameter(cmd, "@FactoryLinkedin", DbType.String, hysavecomp["FactoryLinkedin"]);
+                    db.AddInParameter(cmd, "@FactoryInstagram", DbType.String, hysavecomp["FactoryInstagram"]);
+                    db.AddInParameter(cmd, "@Factorylatitude", DbType.String, hysavecomp["Factorylatitude"]);
+                    db.AddInParameter(cmd, "@Factorylongitude", DbType.String, hysavecomp["Factorylongitude"]);
                     db.AddInParameter(cmd, "@Role", DbType.String, hysavecomp["Role"]);
                     db.AddOutParameter(cmd, "@ReturnID", DbType.String, 20);
                     db.ExecuteNonQuery(cmd, dbTran);
@@ -674,6 +769,28 @@ namespace DataAccessLayer
         }
 
 
+        public DataTable RetriveAllNodalOfficer(string RefNo, string Role)
+        {
+            using (DbConnection dbCon = db.CreateConnection())
+            {
+                dbCon.Open();
+                try
+                {
+                    DbCommand cmd = db.GetStoredProcCommand("sp_GetNodalCompDivUnit");
+                    db.AddInParameter(cmd, "@RefNo", DbType.String, RefNo);
+                    db.AddInParameter(cmd, "@Role", DbType.String, Role);
+                    IDataReader dr = db.ExecuteReader(cmd);
+                    DataTable dt = new DataTable();
+                    if (dr != null)
+                        dt.Load(dr);
+                    return dt;
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+        }
         public DataTable RetriveAllCompany(string RefNo, string Role)
         {
             using (DbConnection dbCon = db.CreateConnection())

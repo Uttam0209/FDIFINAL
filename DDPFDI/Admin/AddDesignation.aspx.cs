@@ -51,47 +51,13 @@ public partial class Admin_AddDesignation : System.Web.UI.Page
             }
             mType = Enc.DecryptData(Session["Type"].ToString());
             mRefNo = Session["CompanyRefNo"].ToString();
-            BindGridView();
+            
             if (Request.QueryString["mcurrentcompRefNo"] != null)
             {
                 EditCode();
             }
         }
 
-    }
-    protected void BindGridView(string sortExpression = null)
-    {
-        try
-        {
-            if (mType == "SuperAdmin")
-            {
-                DataTable DtGrid = Lo.RetriveMasterData(0, "0", "", 0, "", "", "ViewDesignation");
-
-                gvViewDesignation.DataSource = DtGrid;
-                gvViewDesignation.DataBind();
-
-            }
-            else if (mType == "Company" && mRefNo != "")
-            {
-                DataTable DtGrid = Lo.RetriveMasterData(0, ddlmaster.SelectedItem.Value, "", 0, "", "", "ViewDesignation");
-                if (DtGrid.Rows.Count > 0)
-                {
-                    gvViewDesignation.DataSource = DtGrid;
-                    gvViewDesignation.DataBind();
-                    gvViewDesignation.Visible = true;
-                }
-                else
-                {
-                    gvViewDesignation.Visible = false;
-                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not found !')", true);
-                }
-
-            }
-
-        }
-        catch (Exception ex)
-        {
-        }
     }
     protected void ddlmaster_OnSelectedIndexChanged(object sender, EventArgs e)
     {
@@ -103,7 +69,17 @@ public partial class Admin_AddDesignation : System.Web.UI.Page
     {
         if (ddlmaster.SelectedItem.Text != "Select")
         {
-            DataTable DtGrid = Lo.RetriveMasterData(0, ddlmaster.SelectedItem.Value, "", 0, "", "", "ViewDesignation");
+            DataTable DtGrid = new DataTable();
+            if (Enc.DecryptData(Session["Type"].ToString()) == "SuperAdmin" || Enc.DecryptData(Session["Type"].ToString()) == "Admin")
+            {
+                DtGrid = Lo.RetriveMasterData(0, ddlmaster.SelectedItem.Value, "", 0, "", "", "ViewDesignation");
+                ddlmaster.Enabled = true;
+            }
+            else
+            {
+                DtGrid = Lo.RetriveMasterData(0, Session["CompanyRefNo"].ToString(), "", 0, "", "", "ViewDesignation");
+                ddlmaster.Enabled = false;
+            }
             if (DtGrid.Rows.Count > 0)
             {
                 gvViewDesignation.DataSource = DtGrid;
@@ -122,7 +98,7 @@ public partial class Admin_AddDesignation : System.Web.UI.Page
         string sType = "", sName = "", sID = "", mSID = "";
         Int16 id = 0;
         string sRole = "";
-        if (Enc.DecryptData(Session["Type"].ToString()) == "SuperAdmin")
+        if (Enc.DecryptData(Session["Type"].ToString()) == "SuperAdmin" || Enc.DecryptData(Session["Type"].ToString()) == "Admin")
         {
             sType = "Select";
             mSID = "";
@@ -167,7 +143,16 @@ public partial class Admin_AddDesignation : System.Web.UI.Page
         if (Dtchkintrestedarea.Rows.Count > 0 && Dtchkintrestedarea != null)
         {
             Co.FillDropdownlist(ddlmaster, Dtchkintrestedarea, sName, sID);
-            ddlmaster.Items.Insert(0, "Select");
+            if (Enc.DecryptData(Session["Type"].ToString()) == "SuperAdmin" || Enc.DecryptData(Session["Type"].ToString()) == "Admin")
+            {
+                ddlmaster.Items.Insert(0, "Select");
+                ddlmaster.Enabled = true;
+            }
+            else
+            {
+                ddlmaster.Enabled = false;
+                GridViewBindSelectedIndexchange();
+            }
         }
 
     }

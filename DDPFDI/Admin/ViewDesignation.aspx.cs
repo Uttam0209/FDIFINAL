@@ -19,64 +19,56 @@ public partial class Admin_ViewDesignation : System.Web.UI.Page
     private string mRefNo = "";
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (!IsPostBack)
+        if (Session["Type"] != null)
         {
-            if (Request.QueryString["id"] != null)
+            if (!IsPostBack)
             {
-                string strid = Request.QueryString["id"].ToString().Replace(" ", "+");
-                string strPageName = objEnc.DecryptData(strid);
-                StringBuilder strheadPage = new StringBuilder();
-                strheadPage.Append("<ul class='breadcrumb'>");
-                string[] MCateg = strPageName.Split(new string[] { ">>" }, StringSplitOptions.RemoveEmptyEntries);
-                string MmCval = "";
-                for (int x = 0; x < MCateg.Length; x++)
+
+                if (Request.QueryString["id"] != null)
                 {
-                    MmCval = MCateg[x];
-                    strheadPage.Append("<li class=''><span>" + MmCval + "</span></li>");
+                    string strid = Request.QueryString["id"].ToString().Replace(" ", "+");
+                    string strPageName = objEnc.DecryptData(strid);
+                    StringBuilder strheadPage = new StringBuilder();
+                    strheadPage.Append("<ul class='breadcrumb'>");
+                    string[] MCateg = strPageName.Split(new string[] { ">>" }, StringSplitOptions.RemoveEmptyEntries);
+                    string MmCval = "";
+                    for (int x = 0; x < MCateg.Length; x++)
+                    {
+                        MmCval = MCateg[x];
+                        strheadPage.Append("<li class=''><span>" + MmCval + "</span></li>");
+                    }
+                    divHeadPage.InnerHtml = strheadPage.ToString();
+                    strheadPage.Append("</ul");
+                    mType = objEnc.DecryptData(Session["Type"].ToString());
+                    mRefNo = Session["CompanyRefNo"].ToString();
+                    BindCompany();
+                    
                 }
-                divHeadPage.InnerHtml = strheadPage.ToString();
-                strheadPage.Append("</ul");
-                mType = objEnc.DecryptData(Session["Type"].ToString());
-                mRefNo = Session["CompanyRefNo"].ToString();
-                BindCompany();
-                BindGridView();
             }
         }
     }
 
-    protected void BindGridView(string sortExpression = null)
+    protected void BindCompany()
     {
-        try
+        if (mType == "SuperAdmin" || mType=="Admin")
         {
-            if (mType == "SuperAdmin")
+            DtCompanyDDL = Lo.RetriveMasterData(0, "", "", 0, "", "", "Select");
+            if (DtCompanyDDL.Rows.Count > 0)
             {
-                DataTable DtGrid = Lo.RetriveMasterData(0, "0", "", 0, "", "", "ViewDesignation");
-                if (DtGrid.Rows.Count > 0)
-                {
-                    if (sortExpression != null)
-                    {
-                        DataView dv = DtGrid.AsDataView();
-                        this.SortDirection = this.SortDirection == "ASC" ? "DESC" : "ASC";
-
-                        dv.Sort = sortExpression + " " + this.SortDirection;
-                        gvViewDesignation.DataSource = dv;
-                    }
-                    else
-                    {
-                        gvViewDesignation.DataSource = DtGrid;
-                    }
-                    gvViewDesignation.DataBind();
-                    lbltotal.Text = DtGrid.Rows.Count.ToString();
-                    gvViewDesignation.Visible = true;
-                }
-                else
-                {
-                    gvViewDesignation.Visible = false;
-                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not found !')", true);
-                }
+                Co.FillDropdownlist(ddlcompany, DtCompanyDDL, "CompanyName", "CompanyRefNo");
+                ddlcompany.Items.Insert(0, "Select");
+                ddlcompany.Enabled = true;
             }
-            else if (mType == "Company" && mRefNo != "")
+
+        }
+        
+        else if (mType == "Company")
+        {
+            DtCompanyDDL = Lo.RetriveMasterData(0, mRefNo, "Company", 0, "", "", "CompanyName");
+            if (DtCompanyDDL.Rows.Count > 0)
             {
+                Co.FillDropdownlist(ddlcompany, DtCompanyDDL, "CompanyName", "CompanyRefNo");
+                ddlcompany.Enabled = false;
                 DataTable DtGrid = Lo.RetriveMasterData(0, ddlcompany.SelectedItem.Value, "", 0, "", "", "ViewDesignation");
                 if (DtGrid.Rows.Count > 0)
                 {
@@ -87,43 +79,9 @@ public partial class Admin_ViewDesignation : System.Web.UI.Page
                 else
                 {
                     gvViewDesignation.Visible = false;
-                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not found !')", true);
+                   
                 }
-            }
-
-        }
-        catch (Exception ex)
-        {
-        }
-    }
-    private string SortDirection
-    {
-        get { return ViewState["SortDirection"] != null ? ViewState["SortDirection"].ToString() : "ASC"; }
-        set { ViewState["SortDirection"] = value; }
-    }
-    protected void BindCompany()
-    {
-        if (mType == "SuperAdmin")
-        {
-            DtCompanyDDL = Lo.RetriveMasterData(0, "", "", 0, "", "", "Select");
-            if (DtCompanyDDL.Rows.Count > 0)
-            {
-                Co.FillDropdownlist(ddlcompany, DtCompanyDDL, "CompanyName", "CompanyRefNo");
-                ddlcompany.Items.Insert(0, "All");
-                ddlcompany.Enabled = true;
-            }
-
-        }
-        else if (mType == "Admin")
-        {
-        }
-        else if (mType == "Company")
-        {
-            DtCompanyDDL = Lo.RetriveMasterData(0, mRefNo, "Company", 0, "", "", "CompanyName");
-            if (DtCompanyDDL.Rows.Count > 0)
-            {
-                Co.FillDropdownlist(ddlcompany, DtCompanyDDL, "CompanyName", "CompanyRefNo");
-                ddlcompany.Enabled = false;
+                
             }
             else
             {
@@ -153,7 +111,7 @@ public partial class Admin_ViewDesignation : System.Web.UI.Page
                 string DeleteRec = Lo.DeleteRecord(e.CommandArgument.ToString(), "InActiveCompany");
                 if (DeleteRec == "true")
                 {
-                    BindGridView();
+                   
                     ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record delete succssfully.')", true);
                 }
                 else
@@ -216,7 +174,7 @@ public partial class Admin_ViewDesignation : System.Web.UI.Page
         }
         else
         {
-            BindGridView();
+           
         }
     }
     #endregion

@@ -86,7 +86,7 @@
                             </div>
                             <div class="form-group" runat="server" id="masterfacotry" visible="False">
                                 <asp:Label ID="lblfactoryName" runat="server" Text="" CssClass="form-label"></asp:Label>
-                                <asp:DropDownList runat="server" ID="ddlfacotry" AutoPostBack="True" CssClass="form-control form-cascade-control">
+                                <asp:DropDownList runat="server" ID="ddlfacotry" AutoPostBack="True" OnSelectedIndexChanged="ddlfacotry_SelectedIndexChanged" CssClass="form-control form-cascade-control">
                                 </asp:DropDownList>
                             </div>
 

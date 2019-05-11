@@ -16,19 +16,19 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label>Select Company</label>
-                            <asp:DropDownList runat="server" ID="ddlcompany" class="form-control" AutoPostBack="True" OnSelectedIndexChanged="ddlcompany_OnSelectedIndexChanged"></asp:DropDownList>
+                            <asp:DropDownList runat="server" ID="ddlcompany" CssClass="form-control form-cascade-control" AutoPostBack="True" OnSelectedIndexChanged="ddlcompany_OnSelectedIndexChanged"></asp:DropDownList>
                         </div>
                     </div>
                     <div class="col-md-4" runat="server" id="lblselectdivison">
                         <div class="form-group">
                             <label>Select Division/Plant</label>
-                            <asp:DropDownList runat="server" ID="ddldivision" class="form-control" AutoPostBack="True" OnSelectedIndexChanged="ddldivision_OnSelectedIndexChanged"></asp:DropDownList>
+                            <asp:DropDownList runat="server" ID="ddldivision" CssClass="form-control form-cascade-control" AutoPostBack="True" OnSelectedIndexChanged="ddldivision_OnSelectedIndexChanged"></asp:DropDownList>
                         </div>
                     </div>
                     <div class="col-md-4" runat="server" id="lblselectunit">
                         <div class="form-group">
                             <label>Select Unit</label>
-                            <asp:DropDownList runat="server" ID="ddlunit" class="form-control" AutoPostBack="True" OnSelectedIndexChanged="ddlunit_OnSelectedIndexChanged"></asp:DropDownList>
+                            <asp:DropDownList runat="server" ID="ddlunit" CssClass="form-control form-cascade-control" AutoPostBack="True" OnSelectedIndexChanged="ddlunit_OnSelectedIndexChanged"></asp:DropDownList>
                         </div>
                     </div>
                 </div>
@@ -90,7 +90,7 @@
                                 <div class="fdi-add-content" id="DivNodalRole" runat="server">
                                   <div class="form-group">
                                             <h4 class="secondary-heading">Role</h4>
-                                            <asp:CheckBox ID="chkrole" Text="Is Nodal Officer" runat="server"  CssClass="checkbox-inline" >
+                                            <asp:CheckBox ID="chkrole" Text="Nodal Officer" runat="server"  CssClass="checkbox-inline" >
                                             </asp:CheckBox>
                                         
                                     </div>
@@ -124,12 +124,11 @@
                                                 <asp:Label ID="lblrefno" runat="server" Text='<%#Eval("CompanyName") %>' NullDisplayText="#" SortExpression="Company"></asp:Label>
                                             </ItemTemplate>
                                         </asp:TemplateField>
+                                        <asp:BoundField DataField="FactoryName" HeaderText="Division" NullDisplayText="-" SortExpression="Name" />
+                                         <asp:BoundField DataField="UnitName" HeaderText="Unit" NullDisplayText="-" SortExpression="Name" />
                                         <asp:BoundField DataField="NodalOficerName" HeaderText="Name" NullDisplayText="#" SortExpression="Name" />
-                                        <asp:BoundField DataField="Designation" HeaderText="Designation" NullDisplayText="#" SortExpression="Designation" />
-                                        <asp:BoundField DataField="NodalEmpCode" HeaderText="Emp Code" NullDisplayText="#" SortExpression="NodalEmpCode" />
                                         <asp:BoundField DataField="NodalOfficerEmail" HeaderText="Email" NullDisplayText="#" SortExpression="Email" />
-                                        <asp:BoundField DataField="NodalOfficerMobile" HeaderText="Mobile" NullDisplayText="#" SortExpression="Mobile" />
-                                        <asp:BoundField DataField="IsNodalOfficer" HeaderText="IsNodal" NullDisplayText="#" SortExpression="IsNodal" />
+                                        <asp:BoundField DataField="IsNodalOfficer" HeaderText="Nodal Officer" NullDisplayText="#" SortExpression="Nodal Officer" />
                                         
 
                                     </Columns>
