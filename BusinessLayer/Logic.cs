@@ -52,9 +52,9 @@ namespace BusinessLayer
         {
             return SqlHelper.Instance.SaveFactoryComp(hysavecomp, out _sysMsg, out _msg);
         }
-        public string SaveUnitComp(HybridDictionary hysavecomp, out string _sysMsg, out string _msg)
+        public string SaveUnitComp(HybridDictionary hysaveunit, out string _sysMsg, out string _msg)
         {
-            return SqlHelper.Instance.SaveUnitComp(hysavecomp, out _sysMsg, out _msg);
+            return SqlHelper.Instance.SaveUnitComp(hysaveunit, out _sysMsg, out _msg);
         }
         public string SaveMasterCategroyMenu(HybridDictionary hyMasterCategory, out string _sysMsg, out string _msg)
         {
