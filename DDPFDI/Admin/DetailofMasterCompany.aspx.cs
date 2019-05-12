@@ -603,10 +603,20 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
     #region RowDatabound
     protected void OnRowDataBound(object sender, GridViewRowEventArgs e)
     {
+        
         if (e.Row.RowType == DataControlRowType.DataRow)
         {
             Label lblrefno = e.Row.FindControl("lblrefno") as Label;
             GridView gvfactory = e.Row.FindControl("gvfactory") as GridView;
+
+            if (mType == "Factory" || mType=="Unit")
+            {
+                LinkButton lnkCompView = e.Row.FindControl("lblview") as LinkButton;
+                LinkButton lnkCompEdit = e.Row.FindControl("lbledit") as LinkButton;
+                lnkCompView.Visible = false;
+                lnkCompEdit.Visible = false;
+            }
+
             DataTable DtGrid = Lo.RetriveGridViewCompany(lblrefno.Text, "", "", "InnerGridViewFactory");
 
             if (DtGrid.Rows.Count > 0)
@@ -634,6 +644,13 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
             if (e.Row.Cells[4].Text == "Factory")
             {
                 e.Row.Cells[4].Text = "Division/Plant";
+            }
+            if (mType == "Unit")
+            {
+                LinkButton lnkCompView = e.Row.FindControl("lblviewfactory") as LinkButton;
+                LinkButton lnkCompEdit = e.Row.FindControl("lbleditfactory") as LinkButton;
+                lnkCompView.Visible = false;
+                lnkCompEdit.Visible = false;
             }
 
             DataTable DtGrid = Lo.RetriveGridViewCompany("", lblfactroyrefno.Text, "", "InnerGridViewUnit");

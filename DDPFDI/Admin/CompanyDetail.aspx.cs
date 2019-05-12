@@ -27,6 +27,7 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
     private string Categoryintrestedare = "";
     DataTable DtCompanyDDL = new DataTable();
     DataTable dtViewDefault = new DataTable();
+    string strCRole, strDRole, strURole;
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
@@ -62,6 +63,9 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
                 if (objCrypto.DecryptData(Request.QueryString["mrcreaterole"].ToString()) == "Company")
                 {
                     EditCOde(dtViewDefault);
+                    ddlcompany.Enabled = false;
+                    lblselectdivison.Visible = false;
+
                 }
                 else if (objCrypto.DecryptData(Request.QueryString["mrcreaterole"].ToString()) == "Factory")
                 {
@@ -350,7 +354,7 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
                 txtWebsite.Text = DtView.Rows[0]["FactoryWebsite"].ToString();
                 txtceoname.Text = DtView.Rows[0]["FactoryCEOName"].ToString();
                 txtCEOEmailId.Text = DtView.Rows[0]["FactoryCEOEmail"].ToString();
-               txtFaxNo.Text = DtView.Rows[0]["FactoryFaxNo"].ToString();
+                txtFaxNo.Text = DtView.Rows[0]["FactoryFaxNo"].ToString();
                 txtTelephone.Text = DtView.Rows[0]["FactoryTelephoneNo"].ToString();
                 txtFacebook.Text = DtView.Rows[0]["FactoryFacebook"].ToString();
                 txtTwitter.Text = DtView.Rows[0]["FactoryTwitter"].ToString();
@@ -924,7 +928,7 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
     }
     protected void BindCompany()
     {
-        if (mType == "SuperAdmin" || mType=="Admin")
+        if (mType == "SuperAdmin" || mType == "Admin")
         {
             if (Request.QueryString["mcurrentcompRefNo"] != null)
             {
@@ -934,9 +938,21 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
                 {
                     DtCompanyDDL = Lo.RetriveMasterData(0, objCrypto.DecryptData(Request.QueryString["mcurrentcompRefNo"].ToString()), "Company", 0, "", "", "CompanyName");
                     ddlcompany.Enabled = false;
+                    if (DtCompanyDDL.Rows.Count > 0)
+                    {
+                        Co.FillDropdownlist(ddlcompany, DtCompanyDDL, "CompanyName", "CompanyRefNo");
+                        lblSelectCompany.Text = "Company";
+                    }
                 }
                 else if (objCrypto.DecryptData(Request.QueryString["mrcreaterole"].ToString()) == "Factory")
                 {
+                    DtCompanyDDL = Lo.RetriveMasterData(0, objCrypto.DecryptData(Request.QueryString["mcurrentcompRefNo"].ToString()), "Company1", 0, "", "", "CompanyName");
+                    ddlcompany.Enabled = false;
+                    if (DtCompanyDDL.Rows.Count > 0)
+                    {
+                        Co.FillDropdownlist(ddlcompany, DtCompanyDDL, "CompanyName", "CompanyRefNo");
+                        lblSelectCompany.Text = "Company";
+                    }
                     DtCompanyDDL = Lo.RetriveMasterData(0, objCrypto.DecryptData(Request.QueryString["mcurrentcompRefNo"].ToString()), "Factory", 0, "", "", "CompanyName");
                     DataTable DtDivisionDDL = Lo.RetriveMasterData(0, DtCompanyDDL.Rows[0]["CompanyRefNo"].ToString(), "Factory1", 0, "", "", "CompanyName");
                     if (DtDivisionDDL.Rows.Count > 0)
@@ -946,6 +962,7 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
                         ddldivision.Enabled = false;
                         ddlcompany.Enabled = false;
                         ddldivision.Visible = true;
+
                     }
                     else
                     {
@@ -955,6 +972,13 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
                 }
                 else if (objCrypto.DecryptData(Request.QueryString["mrcreaterole"].ToString()) == "Unit")
                 {
+                    DtCompanyDDL = Lo.RetriveMasterData(0, objCrypto.DecryptData(Request.QueryString["mcurrentcompRefNo"].ToString()), "Company2", 0, "", "", "CompanyName");
+                    ddlcompany.Enabled = false;
+                    if (DtCompanyDDL.Rows.Count > 0)
+                    {
+                        Co.FillDropdownlist(ddlcompany, DtCompanyDDL, "CompanyName", "CompanyRefNo");
+                        lblSelectCompany.Text = "Company";
+                    }
                     DtCompanyDDL = Lo.RetriveMasterData(0, objCrypto.DecryptData(Request.QueryString["mcurrentcompRefNo"].ToString()), "Unit", 0, "", "", "CompanyName");
                     DataTable DtDivisionDDL = Lo.RetriveMasterData(0, DtCompanyDDL.Rows[0]["CompanyRefNo"].ToString(), "Factory1", 0, "", "", "CompanyName");
                     if (DtDivisionDDL.Rows.Count > 0)
@@ -989,33 +1013,59 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
             else
             {
                 DtCompanyDDL = Lo.RetriveMasterData(0, "", mType, 0, "", "", "Select");
+                if (DtCompanyDDL.Rows.Count > 0)
+                {
+                    Co.FillDropdownlist(ddlcompany, DtCompanyDDL, "CompanyName", "CompanyRefNo");
+                    ddlcompany.Enabled = true;
+                    lblSelectCompany.Text = "Company/Organization";
+                }
+                else
+                {
+                    lblSelectCompany.Text = "Company/Organization";
+                    ddlcompany.Enabled = false;
+                }
             }
-            if (DtCompanyDDL.Rows.Count > 0)
-            {
-                Co.FillDropdownlist(ddlcompany, DtCompanyDDL, "CompanyName", "CompanyRefNo");
-                ddlcompany.Enabled = true;
-                lblSelectCompany.Text = "Company/Organization Name";
-            }
-            else
-            {
-                lblSelectCompany.Text = "Company/Organization Name";
-                ddlcompany.Enabled = false;
-            }
+
+
 
 
         }
-        
+
         else if (mType == "Company")
         {
+
+            if (Request.QueryString["mrcreaterole"] != null)
+            {
+
+                if (objCrypto.DecryptData(Request.QueryString["mrcreaterole"].ToString()) == "Company")
+                {
+                    strCRole = "Company";
+                }
+                else if (objCrypto.DecryptData(Request.QueryString["mrcreaterole"].ToString()) == "Factory")
+                {
+                    strCRole = "Company1";
+                    strDRole = "Factory2";
+                }
+                else if (objCrypto.DecryptData(Request.QueryString["mrcreaterole"].ToString()) == "Unit")
+                {
+                    strCRole = "Company2";
+                    strDRole = "Factory3";
+                    strURole = "Unit2";
+                }
+            }
+            else
+            {
+
+            }
             if (Request.QueryString["mcurrentcompRefNo"] != null)
             {
                 lblSelectCompany.Text = "Company";
                 ddlcompany.Enabled = false;
-                DtCompanyDDL = Lo.RetriveMasterData(0, objCrypto.DecryptData(Request.QueryString["mcurrentcompRefNo"].ToString()), "Company", 0, "", "", "CompanyName");
+                DtCompanyDDL = Lo.RetriveMasterData(0, objCrypto.DecryptData(Request.QueryString["mcurrentcompRefNo"].ToString()), strCRole, 0, "", "", "CompanyName");
             }
             else
             {
-                DtCompanyDDL = Lo.RetriveMasterData(0, mRefNo, "Company", 0, "", "", "CompanyName");
+                DtCompanyDDL = Lo.RetriveMasterData(0, mRefNo, "Company1", 0, "", "", "CompanyName");
             }
             if (DtCompanyDDL.Rows.Count > 0)
             {
@@ -1028,16 +1078,16 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
                 lblSelectCompany.Text = "Company";
                 ddlcompany.Enabled = false;
             }
-            DtCompanyDDL = Lo.RetriveMasterData(0, ddlcompany.SelectedItem.Value, "Factory1", 0, "", "", "CompanyName");
+            DtCompanyDDL = Lo.RetriveMasterData(0, objCrypto.DecryptData(Request.QueryString["mcurrentcompRefNo"].ToString()), strDRole, 0, "", "", "CompanyName");
             if (DtCompanyDDL.Rows.Count > 0)
             {
                 Co.FillDropdownlist(ddldivision, DtCompanyDDL, "FactoryName", "FactoryRefNo");
-                ddldivision.Items.Insert(0, "Select");
                 if (mType == "Company")
                 {
                     lblselectdivison.Visible = true;
-                    ddldivision.Enabled = true;
+                    ddldivision.Enabled = false;
                     ddlunit.Visible = false;
+                    ddldivision.Visible = true;
                 }
                 else
                 {
@@ -1048,86 +1098,175 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
             {
                 ddldivision.Enabled = false;
             }
+
+            DataTable DtUnitDDL = Lo.RetriveMasterData(0, objCrypto.DecryptData(Request.QueryString["mcurrentcompRefNo"].ToString()), strURole, 0, "", "", "CompanyName");
+            if (DtUnitDDL.Rows.Count > 0)
+            {
+                Co.FillDropdownlist(ddlunit, DtUnitDDL, "UnitName", "UnitRefNo");
+                ddlunit.Enabled = true;
+                lblselectunit.Visible = true;
+                ddlunit.Visible = true;
+                ddlunit.Enabled = false;
+            }
+            else
+            {
+                ddlunit.Enabled = false;
+            }
+
         }
         else if (mType == "Factory")
         {
-            DtCompanyDDL = Lo.RetriveMasterData(0, mRefNo, "Company1", 0, "", "", "CompanyName");
-            if (DtCompanyDDL.Rows.Count > 0)
+
+            if (Request.QueryString["mrcreaterole"] != null)
             {
-                Co.FillDropdownlist(ddlcompany, DtCompanyDDL, "CompanyName", "CompanyRefNo");
-                ddlcompany.Enabled = false;
-                lblSelectCompany.Text = "Company";
-            }
-            else
-            {
-                ddlcompany.Enabled = false;
-                lblSelectCompany.Text = "Company";
-            }
-            DtCompanyDDL = Lo.RetriveMasterData(0, ddlcompany.SelectedItem.Value, "Factory1", 0, "", "", "CompanyName");
-            if (DtCompanyDDL.Rows.Count > 0)
-            {
-                Co.FillDropdownlist(ddldivision, DtCompanyDDL, "FactoryName", "FactoryRefNo");
-                lblselectdivison.Visible = true;
-                ddldivision.Enabled = false;
-            }
-            else
-            {
-                ddldivision.Enabled = false;
-            }
-            DtCompanyDDL = Lo.RetriveMasterData(0, ddldivision.SelectedItem.Value, "Unit1", 0, "", "", "CompanyName");
-            if (DtCompanyDDL.Rows.Count > 0)
-            {
-                Co.FillDropdownlist(ddlunit, DtCompanyDDL, "UnitName", "UnitRefNo");
-                ddlunit.Items.Insert(0, "Select");
-                ddlunit.Enabled = true;
-                lblselectunit.Visible = true;
-            }
-            else
-            {
-                ddlunit.Enabled = false;
-            }
-        }
-        else if (mType == "Unit")
-        {
-            DtCompanyDDL = Lo.RetriveMasterData(0, mRefNo, "Company2", 0, "", "", "CompanyName");
-            if (DtCompanyDDL.Rows.Count > 0)
-            {
-                Co.FillDropdownlist(ddlcompany, DtCompanyDDL, "CompanyName", "CompanyRefNo");
-                ddlcompany.Enabled = false;
-                lblSelectCompany.Text = "Company";
-            }
-            else
-            {
-                ddlcompany.Enabled = false;
-                lblSelectCompany.Text = "Company";
-            }
-            DtCompanyDDL = Lo.RetriveMasterData(0, ddlcompany.SelectedItem.Value, "Factory1", 0, "", "", "CompanyName");
-            if (DtCompanyDDL.Rows.Count > 0)
-            {
-                Co.FillDropdownlist(ddldivision, DtCompanyDDL, "FactoryName", "FactoryRefNo");
-                lblselectdivison.Visible = true;
-                ddldivision.Enabled = false;
-            }
-            else
-            {
-                ddldivision.Enabled = false;
-            }
-            DtCompanyDDL = Lo.RetriveMasterData(0, ddldivision.SelectedItem.Value, "Unit1", 0, "", "", "CompanyName");
-            if (DtCompanyDDL.Rows.Count > 0)
-            {
-                Co.FillDropdownlist(ddlunit, DtCompanyDDL, "UnitName", "UnitRefNo");
-                ddlunit.Enabled = false;
-                lblselectunit.Visible = true;
-                DataTable DtGrid = Lo.RetriveGridViewCompany("", ddldivision.SelectedItem.Value, ddlunit.SelectedItem.Value, "InnerGVUnitID");
-                if (DtGrid.Rows.Count > 0)
+
+                if (objCrypto.DecryptData(Request.QueryString["mrcreaterole"].ToString()) == "Company")
                 {
-                    EditUnit(DtGrid);
+                    strCRole = "Company";
+                }
+                else if (objCrypto.DecryptData(Request.QueryString["mrcreaterole"].ToString()) == "Factory")
+                {
+                    strCRole = "Company1";
+                    strDRole = "Factory2";
+                }
+                else if (objCrypto.DecryptData(Request.QueryString["mrcreaterole"].ToString()) == "Unit")
+                {
+                    strCRole = "Company2";
+                    strDRole = "Factory3";
+                    strURole = "Unit2";
                 }
             }
             else
             {
+
+            }
+            if (Request.QueryString["mcurrentcompRefNo"] != null)
+            {
+                lblSelectCompany.Text = "Company";
+                ddlcompany.Enabled = false;
+                DtCompanyDDL = Lo.RetriveMasterData(0, objCrypto.DecryptData(Request.QueryString["mcurrentcompRefNo"].ToString()), strCRole, 0, "", "", "CompanyName");
+            }
+            else
+            {
+                DtCompanyDDL = Lo.RetriveMasterData(0, mRefNo, "Company1", 0, "", "", "CompanyName");
+            }
+            if (DtCompanyDDL.Rows.Count > 0)
+            {
+                Co.FillDropdownlist(ddlcompany, DtCompanyDDL, "CompanyName", "CompanyRefNo");
+                lblSelectCompany.Text = "Company";
+                ddlcompany.Enabled = false;
+            }
+            else
+            {
+                lblSelectCompany.Text = "Company";
+                ddlcompany.Enabled = false;
+            }
+            DtCompanyDDL = Lo.RetriveMasterData(0, objCrypto.DecryptData(Request.QueryString["mcurrentcompRefNo"].ToString()), strDRole, 0, "", "", "CompanyName");
+            if (DtCompanyDDL.Rows.Count > 0)
+            {
+                Co.FillDropdownlist(ddldivision, DtCompanyDDL, "FactoryName", "FactoryRefNo");
+                lblselectdivison.Visible = true;
+                ddldivision.Enabled = false;
+                ddlunit.Visible = false;
+                ddldivision.Visible = true;
+
+            }
+            else
+            {
+                ddldivision.Enabled = false;
+            }
+
+            DataTable DtUnitDDL = Lo.RetriveMasterData(0, objCrypto.DecryptData(Request.QueryString["mcurrentcompRefNo"].ToString()), strURole, 0, "", "", "CompanyName");
+            if (DtUnitDDL.Rows.Count > 0)
+            {
+                Co.FillDropdownlist(ddlunit, DtUnitDDL, "UnitName", "UnitRefNo");
+                ddlunit.Enabled = true;
+                lblselectunit.Visible = true;
+                ddlunit.Visible = true;
                 ddlunit.Enabled = false;
             }
+            else
+            {
+                ddlunit.Enabled = false;
+            }
+
+        }
+        else if (mType == "Unit")
+        {
+
+            if (Request.QueryString["mrcreaterole"] != null)
+            {
+
+                if (objCrypto.DecryptData(Request.QueryString["mrcreaterole"].ToString()) == "Company")
+                {
+                    strCRole = "Company";
+                }
+                else if (objCrypto.DecryptData(Request.QueryString["mrcreaterole"].ToString()) == "Factory")
+                {
+                    strCRole = "Company1";
+                    strDRole = "Factory2";
+                }
+                else if (objCrypto.DecryptData(Request.QueryString["mrcreaterole"].ToString()) == "Unit")
+                {
+                    strCRole = "Company2";
+                    strDRole = "Factory3";
+                    strURole = "Unit2";
+                }
+            }
+            else
+            {
+
+            }
+            if (Request.QueryString["mcurrentcompRefNo"] != null)
+            {
+                lblSelectCompany.Text = "Company";
+                ddlcompany.Enabled = false;
+                DtCompanyDDL = Lo.RetriveMasterData(0, objCrypto.DecryptData(Request.QueryString["mcurrentcompRefNo"].ToString()), strCRole, 0, "", "", "CompanyName");
+            }
+            else
+            {
+                DtCompanyDDL = Lo.RetriveMasterData(0, mRefNo, "Company1", 0, "", "", "CompanyName");
+            }
+            if (DtCompanyDDL.Rows.Count > 0)
+            {
+                Co.FillDropdownlist(ddlcompany, DtCompanyDDL, "CompanyName", "CompanyRefNo");
+                lblSelectCompany.Text = "Company";
+                ddlcompany.Enabled = false;
+            }
+            else
+            {
+                lblSelectCompany.Text = "Company";
+                ddlcompany.Enabled = false;
+            }
+            DtCompanyDDL = Lo.RetriveMasterData(0, objCrypto.DecryptData(Request.QueryString["mcurrentcompRefNo"].ToString()), strDRole, 0, "", "", "CompanyName");
+            if (DtCompanyDDL.Rows.Count > 0)
+            {
+                Co.FillDropdownlist(ddldivision, DtCompanyDDL, "FactoryName", "FactoryRefNo");
+                lblselectdivison.Visible = true;
+                ddldivision.Enabled = false;
+                ddlunit.Visible = false;
+                ddldivision.Visible = true;
+
+            }
+            else
+            {
+                ddldivision.Enabled = false;
+            }
+
+            DataTable DtUnitDDL = Lo.RetriveMasterData(0, objCrypto.DecryptData(Request.QueryString["mcurrentcompRefNo"].ToString()), strURole, 0, "", "", "CompanyName");
+            if (DtUnitDDL.Rows.Count > 0)
+            {
+                Co.FillDropdownlist(ddlunit, DtUnitDDL, "UnitName", "UnitRefNo");
+                ddlunit.Enabled = true;
+                lblselectunit.Visible = true;
+                ddlunit.Visible = true;
+                ddlunit.Enabled = false;
+            }
+            else
+            {
+                ddlunit.Enabled = false;
+            }
+
         }
     }
     protected void BindNodelEmail()
