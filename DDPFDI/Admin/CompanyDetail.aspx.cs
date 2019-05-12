@@ -65,6 +65,7 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
                     EditCOde(dtViewDefault);
                     ddlcompany.Enabled = false;
                     lblselectdivison.Visible = false;
+                    licc.Visible = false;
 
                 }
                 else if (objCrypto.DecryptData(Request.QueryString["mrcreaterole"].ToString()) == "Factory")
@@ -72,6 +73,7 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
                     EditDivison(dtViewDefault);
                     licc.Visible = false;
                     lisr.Visible = false;
+                    lisc.Visible = false;
 
                 }
                 else if (objCrypto.DecryptData(Request.QueryString["mrcreaterole"].ToString()) == "Unit")
@@ -79,6 +81,7 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
                     EditUnit(dtViewDefault);
                     licc.Visible = false;
                     lisr.Visible = false;
+                    licc.Visible = false;
                 }
 
             }
