@@ -344,10 +344,22 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
         }
         if (StrSaveComp != "")
         {
-            Cleartext();
+            
             gvcompanydetail.Visible = true;
             GridCompanyBind();
-            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Save successfully !')", true);
+            if (btnsubmit.Text == "Save Division")
+            {
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Division added successfully !')", true);
+            }
+            else if (btnsubmit.Text == "Save Unit")
+            {
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Unit added successfully !')", true);
+            }
+            else
+            {
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Company added successfully !')", true);
+            }
+            Cleartext();
         }
         else
         {
@@ -369,15 +381,26 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
             }
             else
             {
-                if (btnsubmit.Text == "Save Division" || btnsubmit.Text == "Save Unit")
+                if (btnsubmit.Text == "Save Division")
                 {
-                    if (ddlmaster.SelectedItem.Value != "0")
+                    if (ddlmaster.SelectedItem.Value != "Select")
                     {
                         SaveComp();
                     }
                     else
                     {
                         ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Select Company !')", true);
+                    }
+                }
+                else if (btnsubmit.Text == "Save Unit")
+                {
+                    if (ddlmaster.SelectedItem.Value != "Select" && ddlfacotry.SelectedItem.Value!="Select")
+                    {
+                        SaveComp();
+                    }
+                    else
+                    {
+                        ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Select company and division !')", true);
                     }
                 } 
                 
@@ -424,13 +447,16 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
 
         if (DtBindSubFactory.Rows.Count > 0)
         {
-            
-            Co.FillDropdownlist(ddlfacotry, DtBindSubFactory, "FactoryName", "FactoryRefNo");
-            gvcompanydetail.Visible = true;
-            GridCompanyBind();
-            if (Enc.DecryptData(Session["Type"].ToString()) == "Company")
+            if (DtBindSubFactory.Rows[0]["FactoryName"].ToString() != "")
             {
+                Co.FillDropdownlist(ddlfacotry, DtBindSubFactory, "FactoryName", "FactoryRefNo");
+                gvcompanydetail.Visible = true;
+                GridCompanyBind();
                 ddlfacotry.Items.Insert(0, "Select");
+            }
+            else
+            {
+                gvcompanydetail.Visible = false;
             }
         }
         else

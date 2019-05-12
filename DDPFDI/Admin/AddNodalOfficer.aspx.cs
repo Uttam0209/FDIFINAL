@@ -6,6 +6,7 @@ using System.Configuration;
 using System.Data;
 using System.Text;
 using System.Web.UI;
+using System.IO;
 
 public partial class Admin_AddNodalOfficer : System.Web.UI.Page
 {
@@ -503,15 +504,18 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
                 if (ddlunit.SelectedValue != "Select")
                 {
                     hySaveNodal["CompanyRefNo"] = ddlunit.SelectedItem.Value;
+                    RefNo = ddlunit.SelectedItem.Value;
                 }
                 else
                 {
                     hySaveNodal["CompanyRefNo"] = ddldivision.SelectedItem.Value;
+                    RefNo = ddldivision.SelectedItem.Value;
                 }
             }
             else
             {
                 hySaveNodal["CompanyRefNo"] = ddlcompany.SelectedItem.Value;
+                RefNo = ddlcompany.SelectedItem.Value;
             }
         }
 
@@ -530,6 +534,7 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
         if (Str == "Save")
         {
             Cleartext();
+            
             if (ddldivision.SelectedValue != "Select")
             {
                 if (ddlunit.SelectedValue != "Select")
@@ -545,13 +550,42 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
             {
                 GridViewNodalOfficerBind(hidCompanyRefNo.Value,"Company");
             }
-            
+
+            SendEmailCode();
+
             ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record saved successsfully')", true);
         }
         else
         {
             ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not saved successsfully')", true);
         }
+    }
+    #endregion
+
+    #region Send Mail
+    public void SendEmailCode()
+    {
+        try
+        {
+            string body;
+            using (StreamReader reader = new StreamReader(Server.MapPath("~/emailPage/GeneratePassword.html")))
+            {
+                body = reader.ReadToEnd();
+            }
+            body = body.Replace("{UserName}", txtemailid.Text);
+            body = body.Replace("{refno}", objEnc.EncryptData(RefNo));
+            body = body.Replace("{mcurid}", Resturl(56));
+            SendMail s;
+            s = new SendMail();
+            s.CreateMail("aeroindia-ddp@gov.in", UserEmail, "Create Password", body);
+            s.sendMail();
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Create password email send successfully.')", true);
+        }
+        catch (Exception ex)
+        {
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('" + ex.Message + "')", true);
+        }
+
     }
     #endregion
     protected void btnsub_Click(object sender, EventArgs e)
@@ -562,13 +596,28 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
         }
         else
         {
-            if (btnsub.Text != "Edit")
+            if (ddlcompany.SelectedItem.Value != "Select")
             {
-                DataTable dtNodalOfficerEmail = Lo.RetriveMasterData(0, txtemailid.Text, "", 0, "", "", "ValidEmail");
-                if (dtNodalOfficerEmail.Rows.Count > 0)
+                
+                if (btnsub.Text != "Edit")
                 {
-                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Email id already exist !')", true);
-                    
+                    if (ddldesignation.SelectedItem.Value != "Select")
+                    {
+                        DataTable dtNodalOfficerEmail = Lo.RetriveMasterData(0, txtemailid.Text, "", 0, "", "", "ValidEmail");
+                        if (dtNodalOfficerEmail.Rows.Count > 0)
+                        {
+                            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Email id already exist !')", true);
+
+                        }
+                        else
+                        {
+                            SaveNodal();
+                        }
+                    }
+                    else
+                    {
+                        ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Select designation !')", true);
+                    }
                 }
                 else
                 {
@@ -577,7 +626,7 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
             }
             else
             {
-                SaveNodal();
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Select company !')", true);
             }
         }
 

@@ -193,13 +193,20 @@ public partial class Admin_AddDesignation : System.Web.UI.Page
     {
         if (txtDesignation.Text.Trim() != "")
         {
-            if (ddlmaster.Enabled == true)
+            if (ddlmaster.SelectedItem.Value != "Select")
             {
-                DataTable dtIsDesignation = Lo.RetriveMasterData(0, ddlmaster.SelectedItem.Value, txtDesignation.Text, 0, "", "", "ValidDesignation");
-                if (dtIsDesignation.Rows.Count > 0)
+                if (ddlmaster.Enabled == true)
                 {
+                    DataTable dtIsDesignation = Lo.RetriveMasterData(0, ddlmaster.SelectedItem.Value, txtDesignation.Text, 0, "", "", "ValidDesignation");
+                    if (dtIsDesignation.Rows.Count > 0)
+                    {
 
-                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Designation already exists !')", true);
+                        ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Designation already exists !')", true);
+                    }
+                    else
+                    {
+                        SaveComp();
+                    }
                 }
                 else
                 {
@@ -208,7 +215,7 @@ public partial class Admin_AddDesignation : System.Web.UI.Page
             }
             else
             {
-                SaveComp();
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Select company !')", true);
             }
         }
         else
