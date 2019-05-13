@@ -132,8 +132,18 @@
                                                 </asp:TemplateField>
                                                 <asp:TemplateField HeaderText="Dropdown Label">
                                                     <ItemTemplate>
-                                                        <asp:Label ID="lblrefno" runat="server" Text='<%#Eval("MCategoryName") %>' NullDisplayText="#" SortExpression="CompanyRefNo"></asp:Label>
+                                                        <asp:Label ID="lblrefno" runat="server" Text='<%#Eval("MCategoryName") %>' NullDisplayText="#" ></asp:Label>
                                                         <asp:HiddenField ID="hfcat" runat="server" Value='<%#Eval("MCategoryId") %>' />
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                 <asp:TemplateField HeaderText="Hierarchy Label">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="lblHierarchy" runat="server" Text='<%#Eval("Flag") %>' NullDisplayText="#"></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                 <asp:TemplateField HeaderText="Status">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="lblStatus" runat="server" Text='<%#Eval("IsActive") %>' NullDisplayText="#"></asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                                 <asp:TemplateField HeaderText="Action">

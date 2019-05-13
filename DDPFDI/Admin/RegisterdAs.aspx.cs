@@ -48,7 +48,7 @@ public partial class Admin_RegisterdAs : System.Web.UI.Page
         {
             if (mType == "SuperAdmin")
             {
-                DataTable DtGrid = Lo.RetriveMasterCategoryDate(0, "", "", "", "", "Select");
+                DataTable DtGrid = Lo.RetriveMasterCategoryDate(0, "", "", "", "", "SelectAll");
                 if (DtGrid.Rows.Count > 0)
                 {
 

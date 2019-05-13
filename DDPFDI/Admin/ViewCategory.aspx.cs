@@ -25,29 +25,36 @@ public partial class Admin_ViewCategory : System.Web.UI.Page
     {
         if (!IsPostBack)
         {
-            if (Request.QueryString["id"] != null)
+            if (Session["Type"] != null)
             {
-                string strid = Request.QueryString["id"].ToString().Replace(" ", "+");
-                string strPageName = objEnc.DecryptData(strid);
-                StringBuilder strheadPage = new StringBuilder();
-                strheadPage.Append("<ul class='breadcrumb'>");
-                string[] MCateg = strPageName.Split(new string[] { ">>" }, StringSplitOptions.RemoveEmptyEntries);
-                string MmCval = "";
-                for (int x = 0; x < MCateg.Length; x++)
+                if (Request.QueryString["id"] != null)
                 {
-                    MmCval = MCateg[x];
-                    strheadPage.Append("<li class=''><span>" + MmCval + "</span></li>");
+                    string strid = Request.QueryString["id"].ToString().Replace(" ", "+");
+                    string strPageName = objEnc.DecryptData(strid);
+                    StringBuilder strheadPage = new StringBuilder();
+                    strheadPage.Append("<ul class='breadcrumb'>");
+                    string[] MCateg = strPageName.Split(new string[] { ">>" }, StringSplitOptions.RemoveEmptyEntries);
+                    string MmCval = "";
+                    for (int x = 0; x < MCateg.Length; x++)
+                    {
+                        MmCval = MCateg[x];
+                        strheadPage.Append("<li class=''><span>" + MmCval + "</span></li>");
+                    }
+                    divHeadPage.InnerHtml = strheadPage.ToString();
+                    strheadPage.Append("</ul");
                 }
-                divHeadPage.InnerHtml = strheadPage.ToString();
-                strheadPage.Append("</ul");
+                currentPage = System.IO.Path.GetFileName(Request.Url.AbsolutePath);
+                currentPage = System.IO.Path.GetFileName(Request.Url.AbsolutePath);
+                mType = objEnc.DecryptData(Session["Type"].ToString());
+                mRefNo = Session["CompanyRefNo"].ToString();
+                //  BindCompany();
+                BindGridView();
+                BindMasterCategory();
             }
-            currentPage = System.IO.Path.GetFileName(Request.Url.AbsolutePath);
-            currentPage = System.IO.Path.GetFileName(Request.Url.AbsolutePath);
-            mType = objEnc.DecryptData(Session["Type"].ToString());
-            mRefNo = Session["CompanyRefNo"].ToString();
-            //  BindCompany();
-            BindGridView();
-            BindMasterCategory();
+        }
+        else
+        {
+
         }
     }
     #region Load
@@ -55,9 +62,9 @@ public partial class Admin_ViewCategory : System.Web.UI.Page
     {
         try
         {
-            if (mType == "SuperAdmin")
+            if (mType == "SuperAdmin" || mType=="Admin")
             {
-                DataTable DtGrid = Lo.RetriveMasterCategoryDate(0, "", "", "", "", "Select");
+                DataTable DtGrid = Lo.RetriveMasterCategoryDate(0, "", "", "", "", "SelectAll");
                 if (DtGrid.Rows.Count > 0)
                 {
                     if (sortExpression != null)

@@ -30,6 +30,8 @@ public class SendMail
         {
             mailClient.DeliveryMethod = System.Net.Mail.SmtpDeliveryMethod.Network;
             mailClient.Send(Email);
+            mailClient.EnableSsl = true;
+            mailClient.UseDefaultCredentials = true;
             return true;
         }
         catch (SmtpFailedRecipientException e)
