@@ -369,7 +369,7 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
                 }
 
                 taddress.Text = DtView.Rows[0]["FactoryAddress"].ToString();
-                selstate.SelectedItem.Value = DtView.Rows[0]["FactoryStateID"].ToString();
+                selstate.SelectedValue = DtView.Rows[0]["FactoryStateID"].ToString();
                 DivCEOName.Visible = true;
                 tpincode.Text = DtView.Rows[0]["FactoryPincode"].ToString();
                 txtEmailID.Text = DtView.Rows[0]["FactoryEmailID"].ToString();
@@ -498,7 +498,7 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
                 tcompanyname.ReadOnly = true;
                 taddress.Text = DtView.Rows[0]["UnitAddress"].ToString();
 
-                selstate.SelectedItem.Value = DtView.Rows[0]["UnitStateID"].ToString();
+                selstate.SelectedValue = DtView.Rows[0]["UnitStateID"].ToString();
                 ddlNodalOfficerEmail.SelectedValue = DtView.Rows[0]["NodalOfficeRefNo"].ToString();
                 if (ddlNodalOfficerEmail.SelectedItem.Value == "0")
                 {

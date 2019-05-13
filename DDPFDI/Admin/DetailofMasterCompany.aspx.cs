@@ -396,7 +396,6 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
                 lblEmailID.Text = DtView.Rows[0]["EmailID"].ToString();
                 lblWebsite.Text = DtView.Rows[0]["Website"].ToString();
                 lblGSTNo.Text = DtView.Rows[0]["GSTNo"].ToString();
-                lblRole.Text = DtView.Rows[0]["Role"].ToString();
                 lblNodalEmail.Text = DtView.Rows[0]["ContactPersonEmailID"].ToString();
                 lblNodalOfficerName.Text = DtView.Rows[0]["NodalOficerName"].ToString();
                 lblAad_Mobile.Text = DtView.Rows[0]["latitude"].ToString();
@@ -481,13 +480,12 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
                 lblDivFax.Text = DtView.Rows[0]["FactoryFaxNo"].ToString();
                 lblDivState.Text = DtView.Rows[0]["StateName"].ToString();
                 lblDivConNo.Text = DtView.Rows[0]["FactoryTelephoneNo"].ToString();
-                lblDivRole.Text = "Division";
                 //lblDivNodalEmail.Text = DtView.Rows[0]["FactoryNodalOfficerEmailId"].ToString();
                 //lblDivFacebook.Text = DtView.Rows[0]["FactoryFacebook"].ToString();
                 //lblDivTwitter.Text = DtView.Rows[0]["FactoryTwitter"].ToString();
                 //lblDivInstagram.Text = DtView.Rows[0]["FactoryInstagram"].ToString();
                 //lblDivLinkedin.Text = DtView.Rows[0]["FactoryLinkedin"].ToString();
-                //lblDivlatitude.Text = DtView.Rows[0]["Factorylatitude"].ToString();
+                lblDivlatitude.Text = DtView.Rows[0]["Factorylatitude"].ToString();
                 lblDivLongitude.Text = DtView.Rows[0]["Factorylongitude"].ToString();
                 ScriptManager.RegisterStartupScript(this, this.GetType(), "divfactoryshow", "showPopup1();", true);
             }
@@ -562,7 +560,6 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
                 lblUnitNodalEmail.Text = DtView.Rows[0]["UnitNodalOfficerEmailId"].ToString();
                 lblUnitLatitude.Text = DtView.Rows[0]["Unitlatitude"].ToString();
                 lblUnitLongitude.Text = DtView.Rows[0]["Unitlongitude"].ToString();
-                lblUnitRole.Text = "Unit";
                 ScriptManager.RegisterStartupScript(this, this.GetType(), "divunitshow", "showPopup2();", true);
             }
         }
