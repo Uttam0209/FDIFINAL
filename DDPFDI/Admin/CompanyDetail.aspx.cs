@@ -679,7 +679,6 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
         HySave["MasterAllowed"] = "";
         HySave["Role"] = "";
     }
-
     protected void SaveFactoryComp()
     {
         if (hfid.Value != "")
