@@ -103,7 +103,7 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <asp:Button ID="btncancel" runat="server" Text="Cancel" CssClass="btn btn-default pull-right" OnClick="btncancel_Click" />
+                                        <asp:Button ID="btncancel" runat="server" Text="Cancel" CssClass="btn btn-default pull-right" style="margin-right:0 !important" OnClick="btncancel_Click" />
                                         <asp:LinkButton ID="btnsub" runat="server" Text="Save" class="btn btn-primary pull-right" OnClick="btnsub_Click"></asp:LinkButton>
                                     </div>
                                 </div>
