@@ -71,14 +71,14 @@
                                                     <%#Container.DataItemIndex+1 %>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
-                                            <asp:TemplateField HeaderText="Company Name">
+                                            <asp:TemplateField HeaderText="Company">
                                                 <ItemTemplate>
                                                     <asp:Label ID="lblrefno" runat="server" Text='<%#Eval("CompanyName") %>' NullDisplayText="#" SortExpression="CompanyRefNo"></asp:Label>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
-                                            <asp:BoundField DataField="DesignationRefNo" HeaderText="Refernce No" NullDisplayText="#" SortExpression="DesignationRefNo" />
-                                            <asp:BoundField DataField="Designation" HeaderText="Designation" NullDisplayText="#" SortExpression="Designation" />
-
+                                             <asp:BoundField DataField="Designation" HeaderText="Designation" NullDisplayText="#" SortExpression="Designation" />
+                                             <asp:BoundField DataField="DesignationRefNo" HeaderText="Refernce No." NullDisplayText="#" SortExpression="DesignationRefNo" />
+                                          
                                             
                                         </Columns>
                                     </asp:GridView>

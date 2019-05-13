@@ -29,19 +29,19 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>Select Company</label>
-                                <asp:DropDownList runat="server" ID="ddlcompany" class="form-control" AutoPostBack="True" OnSelectedIndexChanged="ddlcompany_OnSelectedIndexChanged"></asp:DropDownList>
+                                <asp:DropDownList runat="server" ID="ddlcompany" CssClass="form-cascade-control form-control" AutoPostBack="True" OnSelectedIndexChanged="ddlcompany_OnSelectedIndexChanged"></asp:DropDownList>
                             </div>
                         </div>
                         <div class="col-md-4" runat="server" id="lblselectdivison">
                             <div class="form-group">
                                 <label>Select Division/Palnt</label>
-                                <asp:DropDownList runat="server" ID="ddldivision" class="form-control" AutoPostBack="True" OnSelectedIndexChanged="ddldivision_OnSelectedIndexChanged"></asp:DropDownList>
+                                <asp:DropDownList runat="server" ID="ddldivision" CssClass="form-cascade-control form-control" AutoPostBack="True" OnSelectedIndexChanged="ddldivision_OnSelectedIndexChanged"></asp:DropDownList>
                             </div>
                         </div>
                         <div class="col-md-4" runat="server" id="lblselectunit">
                             <div class="form-group">
                                 <label>Select Unit</label>
-                                <asp:DropDownList runat="server" ID="ddlunit" class="form-control" AutoPostBack="True" OnSelectedIndexChanged="ddlunit_OnSelectedIndexChanged"></asp:DropDownList>
+                                <asp:DropDownList runat="server" ID="ddlunit" CssClass="form-cascade-control form-control" AutoPostBack="True" OnSelectedIndexChanged="ddlunit_OnSelectedIndexChanged"></asp:DropDownList>
                             </div>
                         </div>
                     </ContentTemplate>
@@ -131,7 +131,14 @@
                                                     <div class="col-md-4">
                                                         <div class="form-group">
                                                             <label>Product Level 2</label>
-                                                            <asp:DropDownList runat="server" ID="ddlsubcategory" class="form-control"></asp:DropDownList>
+                                                            <asp:DropDownList runat="server" ID="ddlsubcategory" AutoPostBack="True" class="form-control" OnSelectedIndexChanged="ddlsubcategory_SelectedIndexChanged"></asp:DropDownList>
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            <label>Product Level 3</label>
+                                                            <asp:DropDownList runat="server" ID="ddllevel3product" class="form-control"></asp:DropDownList>
 
                                                         </div>
                                                     </div>
@@ -164,7 +171,13 @@
                                                     <div class="col-md-4">
                                                         <div class="form-group">
                                                             <label>Technology Level 2</label>
-                                                            <asp:DropDownList runat="server" ID="ddlsubtech" class="form-control"></asp:DropDownList>
+                                                            <asp:DropDownList runat="server" ID="ddlsubtech" class="form-control" AutoPostBack="True" OnSelectedIndexChanged="ddlsubtech_SelectedIndexChanged"></asp:DropDownList>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            <label>Technology Level 3</label>
+                                                            <asp:DropDownList runat="server" ID="ddltechlevel3" class="form-control"></asp:DropDownList>
                                                         </div>
                                                     </div>
                                                 </ContentTemplate>

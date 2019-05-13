@@ -86,7 +86,7 @@
                             </div>
                             <div class="form-group" runat="server" id="masterfacotry" visible="False">
                                 <asp:Label ID="lblfactoryName" runat="server" Text="" CssClass="form-label"></asp:Label>
-                                <asp:DropDownList runat="server" ID="ddlfacotry" AutoPostBack="True" CssClass="form-control form-cascade-control">
+                                <asp:DropDownList runat="server" ID="ddlfacotry" AutoPostBack="True" OnSelectedIndexChanged="ddlfacotry_SelectedIndexChanged" CssClass="form-control form-cascade-control">
                                 </asp:DropDownList>
                             </div>
 
@@ -178,11 +178,11 @@
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                         <asp:BoundField ItemStyle-Width="150px" DataField="CompanyName" HeaderText="Company" />
-                                        <asp:BoundField ItemStyle-Width="150px" DataField="CompanyRefNo" HeaderText="Company Refernce No" />
+                                        <asp:BoundField ItemStyle-Width="150px" DataField="CompanyRefNo" HeaderText="Refernce No." />
                                         <asp:BoundField ItemStyle-Width="150px" DataField="FactoryName" HeaderText="Division" />
-                                        <asp:BoundField ItemStyle-Width="150px" DataField="FactoryRefNo" HeaderText="Factory Refernce No" />
+                                        <asp:BoundField ItemStyle-Width="150px" DataField="FactoryRefNo" HeaderText="Refernce No." />
                                         <asp:BoundField ItemStyle-Width="150px" DataField="UnitName" HeaderText="Unit" />
-                                        <asp:BoundField ItemStyle-Width="150px" DataField="UnitRefNo" HeaderText="Unit Refernce No" />
+                                        <asp:BoundField ItemStyle-Width="150px" DataField="UnitRefNo" HeaderText="Refernce No." />
                                     </Columns>
                                 </asp:GridView>
                             </div>

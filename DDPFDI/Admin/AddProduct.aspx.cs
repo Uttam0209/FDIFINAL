@@ -405,9 +405,17 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     {
         BindMasterSubCategory();
     }
+    protected void ddlsubcategory_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        BindMaster3levelSubCategory();
+    }
     protected void ddltechnologycat_SelectedIndexChanged(object sender, EventArgs e)
     {
         BindMasterSubCategoryTech();
+    }
+    protected void ddlsubtech_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        BindMasterSubCategoryTechLevel3();
     }
     protected void ddlplatform_SelectedIndexChanged(object sender, EventArgs e)
     {
@@ -485,6 +493,20 @@ public partial class Admin_AddProduct : System.Web.UI.Page
             ddlsubcategory.Items.Insert(0, "Select");
         }
     }
+    protected void BindMaster3levelSubCategory()
+    {
+        DataTable DtMasterCategroyLevel3 = Lo.RetriveMasterSubCategoryDate(Convert.ToInt16(ddlsubcategory.SelectedItem.Value), "", "", "SubSelectID", "");
+        if (DtMasterCategroyLevel3.Rows.Count > 0)
+        {
+            Co.FillDropdownlist(ddllevel3product, DtMasterCategroyLevel3, "SCategoryName", "SCategoryId");
+            ddllevel3product.Items.Insert(0, "Select");
+        }
+        else
+        {
+            ddllevel3product.Items.Clear();
+            ddllevel3product.Items.Insert(0, "Select");
+        }
+    }
     #endregion
     #region For Technology
     protected void BindMasterTechnologyCategory()
@@ -510,6 +532,20 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         {
             ddlsubtech.Items.Clear();
             ddlsubtech.Items.Insert(0, "Select");
+        }
+    }
+    protected void BindMasterSubCategoryTechLevel3()
+    {
+        DataTable DtMasterCategroyLevel3 = Lo.RetriveMasterSubCategoryDate(Convert.ToInt16(ddlsubtech.SelectedItem.Value), "", "", "SubSelectID", "");
+        if (DtMasterCategroyLevel3.Rows.Count > 0)
+        {
+            Co.FillDropdownlist(ddltechlevel3, DtMasterCategroyLevel3, "SCategoryName", "SCategoryId");
+            ddltechlevel3.Items.Insert(0, "Select");
+        }
+        else
+        {
+            ddltechlevel3.Items.Clear();
+            ddltechlevel3.Items.Insert(0, "Select");
         }
     }
     #endregion
@@ -630,7 +666,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         {
             HyPanel1["NomenclatureOfMainSystem"] = 0;
         }
-        if (ddlnomnclature.SelectedItem.Value != "Select")
+        if (ddlmastercategory.SelectedItem.Value != "Select")
         {
             HyPanel1["ProductLevel1"] = Co.RSQandSQLInjection(ddlmastercategory.SelectedItem.Value, "soft");
         }
@@ -638,7 +674,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         {
             HyPanel1["ProductLevel1"] = 0;
         }
-        if (ddlnomnclature.SelectedItem.Value != "Select")
+        if (ddlsubcategory.SelectedItem.Value != "Select")
         {
             HyPanel1["ProductLevel2"] = Co.RSQandSQLInjection(ddlsubcategory.SelectedItem.Value, "soft");
         }
@@ -646,8 +682,16 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         {
             HyPanel1["ProductLevel2"] = 0;
         }
+        if (ddllevel3product.SelectedItem.Value != "Select")
+        {
+            HyPanel1["ProductLevel3"] = Co.RSQandSQLInjection(ddllevel3product.SelectedItem.Value, "soft");
+        }
+        else
+        {
+            HyPanel1["ProductLevel3"] = 0;
+        }
         HyPanel1["ProductDescription"] = Co.RSQandSQLInjection(txtproductdescription.Text, "soft");
-        if (ddlnomnclature.SelectedItem.Value != "Select")
+        if (ddltechnologycat.SelectedItem.Value != "Select")
         {
             HyPanel1["TechnologyLevel1"] = Co.RSQandSQLInjection(ddltechnologycat.SelectedItem.Value, "soft");
         }
@@ -655,7 +699,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         {
             HyPanel1["TechnologyLevel1"] = 0;
         }
-        if (ddlnomnclature.SelectedItem.Value != "Select")
+        if (ddlsubtech.SelectedItem.Value != "Select")
         {
             HyPanel1["TechnologyLevel2"] = Co.RSQandSQLInjection(ddlsubtech.SelectedItem.Value, "soft");
         }
@@ -663,7 +707,15 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         {
             HyPanel1["TechnologyLevel2"] = 0;
         }
-        if (ddlnomnclature.SelectedItem.Value != "Select")
+        if (ddltechlevel3.SelectedItem.Value != "Select")
+        {
+            HyPanel1["TechnologyLevel3"] = Co.RSQandSQLInjection(ddltechlevel3.SelectedItem.Value, "soft");
+        }
+        else
+        {
+            HyPanel1["TechnologyLevel3"] = 0;
+        }
+        if (ddlenduser.SelectedItem.Value != "Select")
         {
             HyPanel1["EndUser"] = Co.RSQandSQLInjection(ddlenduser.SelectedItem.Value, "soft");
         }
@@ -671,7 +723,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         {
             HyPanel1["EndUser"] = 0;
         }
-        if (ddlnomnclature.SelectedItem.Value != "Select")
+        if (ddlplatform.SelectedItem.Value != "Select")
         {
             HyPanel1["Platform"] = Co.RSQandSQLInjection(ddlplatform.SelectedItem.Value, "soft");
         }
@@ -679,7 +731,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         {
             HyPanel1["Platform"] = 0;
         }
-        if (ddlnomnclature.SelectedItem.Value != "Select")
+        if (ddlplatformsubcat.SelectedItem.Value != "Select")
         {
             HyPanel1["PurposeofProcurement"] = Co.RSQandSQLInjection(ddlplatformsubcat.SelectedItem.Value, "soft");
         }
@@ -937,10 +989,14 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                 ddlmastercategory.SelectedValue = DtView.Rows[0]["ProductLevel1"].ToString();
                 BindMasterSubCategory();
                 ddlsubcategory.SelectedValue = DtView.Rows[0]["ProductLevel2"].ToString();
+                BindMasterSubCategoryTechLevel3();
+                ddllevel3product.SelectedValue = DtView.Rows[0]["ProductLevel3"].ToString();
                 txtproductdescription.Text = DtView.Rows[0]["ProductDescription"].ToString();
                 ddltechnologycat.SelectedValue = DtView.Rows[0]["TechnologyLevel1"].ToString();
                 BindMasterSubCategoryTech();
                 ddlsubtech.SelectedValue = DtView.Rows[0]["TechnologyLevel2"].ToString();
+                BindMasterSubCategoryTechLevel3();
+                ddltechlevel3.SelectedValue = DtView.Rows[0]["TechnologyLevel3"].ToString();
                 ddlenduser.SelectedValue = DtView.Rows[0]["EndUser"].ToString();
                 ddlplatform.SelectedValue = DtView.Rows[0]["Platform"].ToString();
                 BindMasterSubCategoryPlat();
