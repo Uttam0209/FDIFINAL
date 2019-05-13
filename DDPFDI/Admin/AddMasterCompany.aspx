@@ -172,17 +172,17 @@
                                     <PagerStyle HorizontalAlign="Center" CssClass="GridPager" />
                                     <Columns>
 
-                                        <asp:TemplateField HeaderText="S.No">
+                                        <asp:TemplateField HeaderText="S.No.">
                                             <ItemTemplate>
                                                 <%#Container.DataItemIndex+1 %>
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                         <asp:BoundField ItemStyle-Width="150px" DataField="CompanyName" HeaderText="Company" />
-                                        <asp:BoundField ItemStyle-Width="150px" DataField="CompanyRefNo" HeaderText="Refernce No." />
+                                        <asp:BoundField ItemStyle-Width="150px" DataField="CompanyRefNo" HeaderText="Reference No." />
                                         <asp:BoundField ItemStyle-Width="150px" DataField="FactoryName" HeaderText="Division" />
-                                        <asp:BoundField ItemStyle-Width="150px" DataField="FactoryRefNo" HeaderText="Refernce No." />
+                                        <asp:BoundField ItemStyle-Width="150px" DataField="FactoryRefNo" HeaderText="Reference No." />
                                         <asp:BoundField ItemStyle-Width="150px" DataField="UnitName" HeaderText="Unit" />
-                                        <asp:BoundField ItemStyle-Width="150px" DataField="UnitRefNo" HeaderText="Refernce No." />
+                                        <asp:BoundField ItemStyle-Width="150px" DataField="UnitRefNo" HeaderText="Reference No." />
                                     </Columns>
                                 </asp:GridView>
                             </div>

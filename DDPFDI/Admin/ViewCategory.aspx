@@ -42,12 +42,41 @@
                                                                                     <i class="toggle-table-minus fa fa-minus" aria-hidden="true" style="display: none"></i>
                                                                                     <i class="toggle-table-plus fa fa-plus" aria-hidden="true"></i>
                                                                                     <asp:Panel ID="pnlunit" runat="server" Style="display: none">
-                                                                                        <asp:GridView ID="gvsubcatlevel2" runat="server" AutoGenerateColumns="false" Class="table table-hover ChildGrid" OnRowCommand="gvsublevel2_RowCommand">
+                                                                                        <asp:GridView ID="gvsubcatlevel2" runat="server" AutoGenerateColumns="false" Class="table table-hover ChildGrid" OnRowDataBound="gvsubcatlevel2_OnRowCommand" OnRowCommand="gvsublevel2_RowCommand">
                                                                                             <PagerStyle HorizontalAlign="Center" CssClass="GridPager" />
                                                                                             <Columns>
-<asp:TemplateField>
+                                                                                                <asp:TemplateField>
                                                                                                     <ItemTemplate>
-                                                                                                       
+                                                                                                        <div class="acordian-table">
+                                                                                                            <i class="toggle-table-minus fa fa-minus" aria-hidden="true" style="display: none"></i>
+                                                                                                            <i class="toggle-table-plus fa fa-plus" aria-hidden="true"></i>
+                                                                                                            <asp:Panel ID="pnlmy3level" runat="server" Style="display: none">
+                                                                                                                <asp:GridView ID="gvlevel3" runat="server" AutoGenerateColumns="false" Class="table table-hover ChildGrid" OnRowCommand="gvlevel3_RowCommand">
+                                                                                                                    <Columns>
+                                                                                                                        <asp:TemplateField>
+                                                                                                                            <ItemTemplate>
+                                                                                                                            </ItemTemplate>
+                                                                                                                        </asp:TemplateField>
+                                                                                                                        <asp:TemplateField>
+                                                                                                                            <ItemTemplate>
+                                                                                                                                <%#Container.DataItemIndex+1 %>
+                                                                                                                            </ItemTemplate>
+                                                                                                                        </asp:TemplateField>
+                                                                                                                        <asp:TemplateField HeaderText="Level 3">
+                                                                                                                            <ItemTemplate>
+                                                                                                                                <asp:Label ID="lbllevel3subcatname" runat="server" Text='<%#Eval("SCategoryName") %>' NullDisplayText="#" SortExpression="SCategoryName"></asp:Label>
+                                                                                                                                <asp:HiddenField runat="server" ID="hflevel3" Value='<%#Eval("SCategoryId") %>' />
+                                                                                                                            </ItemTemplate>
+                                                                                                                        </asp:TemplateField>
+                                                                                                                        <asp:TemplateField>
+                                                                                                                            <ItemTemplate>
+                                                                                                                                <%--<asp:LinkButton ID="lbleditlevel2values" runat="server" CssClass="fa fa-edit" CommandName="level2edit" CommandArgument='<%#Eval("SCategoryId") %>'></asp:LinkButton>--%>
+                                                                                                                                <asp:LinkButton ID="lbldellevel3values" runat="server" CssClass="fa fa-trash" CommandName="level3delete" OnClientClick="return confirm('Are you sure you want to delete this level 3 values?');" CommandArgument='<%#Eval("SCategoryId") %>'></asp:LinkButton>
+                                                                                                                            </ItemTemplate>
+                                                                                                                        </asp:TemplateField>
+                                                                                                                    </Columns>
+                                                                                                                </asp:GridView>
+                                                                                                            </asp:Panel>
                                                                                                     </ItemTemplate>
                                                                                                 </asp:TemplateField>
                                                                                                 <asp:TemplateField>
@@ -73,7 +102,6 @@
                                                                                 </div>
                                                                             </ItemTemplate>
                                                                         </asp:TemplateField>
-                                                                       
                                                                         <asp:TemplateField>
                                                                             <ItemTemplate>
                                                                                 <%#Container.DataItemIndex+1 %>
