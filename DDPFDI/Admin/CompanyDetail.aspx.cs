@@ -348,7 +348,26 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
                 lblMCName.Text = "Division";
                 txtMCName.Text = DtView.Rows[0]["FactoryName"].ToString();
                 lblCName.Text = "Division";
-                tcompanyname.ReadOnly = true;
+                tcompanyname.ReadOnly = true; 
+                ddlNodalOfficerEmail.SelectedValue = DtView.Rows[0]["NodalOfficeRefNo"].ToString();
+                if (ddlNodalOfficerEmail.SelectedItem.Value == "0")
+                {
+                    divNodalOfficer.Visible = false;
+                }
+                else
+                {
+                    DataTable DtGetNodel = Lo.RetriveMasterData(0, ddlNodalOfficerEmail.SelectedItem.Value, "", 0, "", "", "CompleteNodelDetail");
+                    if (DtGetNodel.Rows.Count > 0)
+                    {
+                        txtNName.Text = DtGetNodel.Rows[0]["NodalOficerName"].ToString();
+                        txtNEmailId.Text = DtGetNodel.Rows[0]["NodalOfficerEmail"].ToString();
+                        txtNMobile.Text = DtGetNodel.Rows[0]["NodalOfficerMobile"].ToString();
+                        txtNTelephone.Text = DtGetNodel.Rows[0]["NodalOfficerTelephone"].ToString();
+                        txtNFaxNo.Text = DtGetNodel.Rows[0]["NodalOfficerFax"].ToString();
+                        divNodalOfficer.Visible = true;
+                    }
+                }
+
                 taddress.Text = DtView.Rows[0]["FactoryAddress"].ToString();
                 selstate.SelectedItem.Value = DtView.Rows[0]["FactoryStateID"].ToString();
                 DivCEOName.Visible = true;
@@ -696,6 +715,7 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
         {
             HySave["NodalOfficeRefNo"] = ddlNodalOfficerEmail.SelectedItem.Value;
         }
+        HySave["FactoryNodalOfficerEmailId"] = Co.RSQandSQLInjection(txtNEmailId.Text.Trim(),"soft");
         if (selstate.SelectedItem.Text == "Select State")
         {
             HySave["FactoryStateID"] = null;
@@ -743,6 +763,7 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
         {
             HySave["NodalOfficeRefNo"] = ddlNodalOfficerEmail.SelectedItem.Value;
         }
+        HySave["UnitNodalOfficerEmailId"] = Co.RSQandSQLInjection(txtNEmailId.Text.Trim(),"soft");
         HySave["UnitPincode"] = Co.RSQandSQLInjection(tpincode.Text.Trim(), "soft");
         HySave["UnitCEOName"] = Co.RSQandSQLInjection(txtceoname.Text.Trim(), "soft");
         HySave["UnitCEOEmail"] = Co.RSQandSQLInjection(txtCEOEmailId.Text.Trim(), "soft");
@@ -1273,7 +1294,7 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
     }
     protected void BindNodelEmail()
     {
-        DtCompanyDDL = Lo.RetriveMasterData(0, Session["CompanyRefNo"].ToString(), "", 0, "", "", "AllNodel");
+        DtCompanyDDL = Lo.RetriveMasterData(0, ddlcompany.SelectedItem.Value,"", 0, "", "", "CompanyNodelDetail");
         if (DtCompanyDDL.Rows.Count > 0)
         {
             Co.FillDropdownlist(ddlNodalOfficerEmail, DtCompanyDDL, "NodalOficerName", "NodalOfficerRefNo");
@@ -1285,7 +1306,7 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
     {
         if (ddlNodalOfficerEmail.SelectedItem.Text != "Select Nodel Officer")
         {
-            DataTable DtGetNodel = Lo.RetriveMasterData(Convert.ToInt16(ddlNodalOfficerEmail.SelectedItem.Value), "", "", 0, "", "", "CompleteNodelDetail");
+            DataTable DtGetNodel = Lo.RetriveMasterData(0,ddlNodalOfficerEmail.SelectedItem.Value, "", 0, "", "", "CompleteNodelDetail");
             if (DtGetNodel.Rows.Count > 0)
             {
                 txtNName.Text = DtGetNodel.Rows[0]["NodalOficerName"].ToString();

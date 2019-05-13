@@ -66,7 +66,7 @@
                                         <PagerStyle HorizontalAlign="Center" CssClass="GridPager" />
                                         <Columns>
                                             
-                                            <asp:TemplateField HeaderText="S.No">
+                                            <asp:TemplateField HeaderText="S.No.">
                                                 <ItemTemplate>
                                                     <%#Container.DataItemIndex+1 %>
                                                 </ItemTemplate>
@@ -76,8 +76,8 @@
                                                     <asp:Label ID="lblrefno" runat="server" Text='<%#Eval("CompanyName") %>' NullDisplayText="#" SortExpression="CompanyRefNo"></asp:Label>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
-                                             <asp:BoundField DataField="Designation" HeaderText="Designation" NullDisplayText="#" SortExpression="Designation" />
-                                             <asp:BoundField DataField="DesignationRefNo" HeaderText="Refernce No." NullDisplayText="#" SortExpression="DesignationRefNo" />
+                                             <asp:BoundField DataField="Designation" HeaderText="Designation" NullDisplayText="#"  />
+                                             <asp:BoundField DataField="DesignationRefNo" HeaderText="Reference No." NullDisplayText="#"  />
                                           
                                             
                                         </Columns>
