@@ -117,7 +117,7 @@
                                 </div>
                             </div>
 
-                            <div class="row is-flex">
+                            <div class="is-flex">
                                 <div class="col-md-5" id="Intrested" visible="False" runat="server">
                                     <div class="fdi-add-content">
                                         <div class="form-group">

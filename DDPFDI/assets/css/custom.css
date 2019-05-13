@@ -336,3 +336,7 @@ form label { color: #494ca2;}
 .comDivUnitBox { display: flex}
 .comDivUnitBox .form-group { margin-right: 30px;}
 .comDivUnitBox .form-group:last-child { margin-right: 0 !important}
+.NodalRole { margin-top: 0 !important}
+.NodalRole h4 { margin-bottom: 6px !important}
+.NodalRole input[type='checkbox'] { margin-top:7px }
+

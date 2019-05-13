@@ -87,9 +87,10 @@
                             </div>
 
                             <div class="col-md-8">
-                                <div class="fdi-add-content" id="DivNodalRole" runat="server">
+                                <div class="fdi-add-content NodalRole" id="DivNodalRole" runat="server">
                                   <div class="form-group">
-                                            <h4 class="secondary-heading">Role</h4>
+                                           <h4 class="secondary-heading">Role </h4>
+                                           
                                             <asp:CheckBox ID="chkrole" Text="Nodal Officer" runat="server"  CssClass="checkbox-inline" >
                                             </asp:CheckBox>
                                         
