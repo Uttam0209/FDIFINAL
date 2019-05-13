@@ -19,33 +19,29 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="row">
-                                    <asp:UpdatePanel runat="server" ID="updrop">
-                                        <ContentTemplate>
-                                            <div class="col-md-4">
-                                                <div class="form-group">
-                                                    <label>Select Company</label>
-                                                    <asp:DropDownList runat="server" ID="ddlcompany" class="form-control form-cascade-control" AutoPostBack="True" OnSelectedIndexChanged="ddlcompany_OnSelectedIndexChanged"></asp:DropDownList>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4" runat="server" id="lblselectdivison">
-                                                <div class="form-group">
-                                                    <label>Select Division/Palnt</label>
-                                                    <asp:DropDownList runat="server" ID="ddldivision" class="form-control form-cascade-control" AutoPostBack="True" OnSelectedIndexChanged="ddldivision_OnSelectedIndexChanged"></asp:DropDownList>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4" runat="server" id="lblselectunit">
-                                                <div class="form-group">
-                                                    <label>Select Unit</label>
-                                                    <asp:DropDownList runat="server" ID="ddlunit" class="form-control form-cascade-control" AutoPostBack="True" OnSelectedIndexChanged="ddlunit_OnSelectedIndexChanged"></asp:DropDownList>
-                                                </div>
-                                            </div>
-                                        </ContentTemplate>
-                                    </asp:UpdatePanel>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Select Company</label>
+                                            <asp:DropDownList runat="server" ID="ddlcompany" class="form-cascade-control form-control"></asp:DropDownList>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4" runat="server" id="lblselectdivison" visible="False">
+                                        <div class="form-group">
+                                            <label>Select Division/Palnt</label>
+                                            <asp:DropDownList runat="server" ID="ddldivision" class="form-cascade-control form-control"></asp:DropDownList>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4" runat="server" id="lblselectunit" visible="False">
+                                        <div class="form-group">
+                                            <label>Select Unit</label>
+                                            <asp:DropDownList runat="server" ID="ddlunit" class="form-cascade-control form-control"></asp:DropDownList>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="table-wrapper">
                                     <div class="table-wraper">
                                         <asp:GridView ID="gvCategory" runat="server" Width="100%" Class="commonAjaxTbl viewCatDropDown master-company-table table display responsive no-wrap table-hover manage-user Grid" AutoGenerateColumns="false" AllowPaging="true"
-                                            OnPageIndexChanging="OnPageIndexChanging" PageSize="25" AllowSorting="true" OnSorting="OnSorting" OnRowDataBound="OnRowDataBound" OnRowCommand="gvCategory_RowCommand">
+                                            PageSize="25" OnRowDataBound="OnRowDataBound" OnRowCommand="gvCategory_RowCommand">
                                             <PagerStyle HorizontalAlign="Center" CssClass="GridPager" />
                                             <Columns>
                                                 <asp:TemplateField>

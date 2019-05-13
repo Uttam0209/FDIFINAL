@@ -55,7 +55,7 @@ public partial class Admin_ViewCompanyCategory : System.Web.UI.Page
         }
     }
     #region Load
-    protected void BindGridView(string sortExpression = null)
+    protected void BindGridView()
     {
         try
         {
@@ -64,17 +64,8 @@ public partial class Admin_ViewCompanyCategory : System.Web.UI.Page
                 DataTable DtGrid = Lo.RetriveMasterCategoryDate(0, "", "", "", "", "Select");
                 if (DtGrid.Rows.Count > 0)
                 {
-                    if (sortExpression != null)
-                    {
-                        DataView dv = DtGrid.AsDataView();
-                        this.SortDirection = this.SortDirection == "ASC" ? "DESC" : "ASC";
-                        dv.Sort = sortExpression + " " + this.SortDirection;
-                        gvCategory.DataSource = dv;
-                    }
-                    else
-                    {
-                        gvCategory.DataSource = DtGrid;
-                    }
+
+                    gvCategory.DataSource = DtGrid;
                     gvCategory.DataBind();
                 }
             }
@@ -83,36 +74,16 @@ public partial class Admin_ViewCompanyCategory : System.Web.UI.Page
                 DataTable DtGrid = Lo.RetriveMasterSubCategoryDate(0, "", "", "SubCompCat", hfcomprefno.Value);
                 if (DtGrid.Rows.Count > 0)
                 {
-                    if (sortExpression != null)
-                    {
-                        DataView dv = DtGrid.AsDataView();
-                        this.SortDirection = this.SortDirection == "ASC" ? "DESC" : "ASC";
-                        dv.Sort = sortExpression + " " + this.SortDirection;
-                        gvCategory.DataSource = dv;
-                    }
-                    else
-                    {
-                        gvCategory.DataSource = DtGrid;
-                    }
+                    gvCategory.DataSource = DtGrid;
                     gvCategory.DataBind();
                 }
             }
-            else if (hidType.Value == "Factroy" && hfcomprefno.Value != "")
+            else if (hidType.Value == "Factory" && hfcomprefno.Value != "")
             {
                 DataTable DtGrid = Lo.RetriveMasterSubCategoryDate(0, "", "", "SubCompCat", hfcomprefno.Value);
                 if (DtGrid.Rows.Count > 0)
                 {
-                    if (sortExpression != null)
-                    {
-                        DataView dv = DtGrid.AsDataView();
-                        this.SortDirection = this.SortDirection == "ASC" ? "DESC" : "ASC";
-                        dv.Sort = sortExpression + " " + this.SortDirection;
-                        gvCategory.DataSource = dv;
-                    }
-                    else
-                    {
-                        gvCategory.DataSource = DtGrid;
-                    }
+                    gvCategory.DataSource = DtGrid;
                     gvCategory.DataBind();
                 }
             }
@@ -121,17 +92,7 @@ public partial class Admin_ViewCompanyCategory : System.Web.UI.Page
                 DataTable DtGrid = Lo.RetriveMasterSubCategoryDate(0, "", "", "SubCompCat", hfcomprefno.Value);
                 if (DtGrid.Rows.Count > 0)
                 {
-                    if (sortExpression != null)
-                    {
-                        DataView dv = DtGrid.AsDataView();
-                        this.SortDirection = this.SortDirection == "ASC" ? "DESC" : "ASC";
-                        dv.Sort = sortExpression + " " + this.SortDirection;
-                        gvCategory.DataSource = dv;
-                    }
-                    else
-                    {
-                        gvCategory.DataSource = DtGrid;
-                    }
+                    gvCategory.DataSource = DtGrid;
                     gvCategory.DataBind();
                 }
             }
@@ -139,22 +100,6 @@ public partial class Admin_ViewCompanyCategory : System.Web.UI.Page
         catch (Exception ex)
         {
         }
-    }
-    private string SortDirection
-    {
-        get { return ViewState["SortDirection"] != null ? ViewState["SortDirection"].ToString() : "ASC"; }
-        set { ViewState["SortDirection"] = value; }
-    }
-    #endregion
-    #region PageIndex or Sorting
-    protected void OnPageIndexChanging(object sender, GridViewPageEventArgs e)
-    {
-        gvCategory.PageIndex = e.NewPageIndex;
-        this.BindGridView();
-    }
-    protected void OnSorting(object sender, GridViewSortEventArgs e)
-    {
-        this.BindGridView(e.SortExpression);
     }
     #endregion
     #region RowDatabound
@@ -413,26 +358,6 @@ public partial class Admin_ViewCompanyCategory : System.Web.UI.Page
             {
                 ddlcompany.Enabled = false;
             }
-            DtCompanyDDL = Lo.RetriveMasterData(0, ddlcompany.SelectedItem.Value, "Factory1", 0, "", "", "CompanyName");
-            if (DtCompanyDDL.Rows.Count > 0)
-            {
-                Co.FillDropdownlist(ddldivision, DtCompanyDDL, "FactoryName", "FactoryRefNo");
-                ddldivision.Items.Insert(0, "Select");
-                if (hidType.Value == "Company")
-                {
-                    lblselectdivison.Visible = true;
-                    ddldivision.Enabled = true;
-                    lblselectunit.Visible = false;
-                }
-                else
-                {
-                    ddldivision.Enabled = false;
-                }
-            }
-            else
-            {
-                ddldivision.Enabled = false;
-            }
         }
         else if (hidType.Value == "Factory")
         {
@@ -456,18 +381,6 @@ public partial class Admin_ViewCompanyCategory : System.Web.UI.Page
             else
             {
                 ddldivision.Enabled = false;
-            }
-            DtCompanyDDL = Lo.RetriveMasterData(0, ddldivision.SelectedItem.Value, "Unit1", 0, "", "", "CompanyName");
-            if (DtCompanyDDL.Rows.Count > 0)
-            {
-                Co.FillDropdownlist(ddlunit, DtCompanyDDL, "UnitName", "UnitRefNo");
-                ddlunit.Items.Insert(0, "Select");
-                ddlunit.Enabled = true;
-                lblselectunit.Visible = true;
-            }
-            else
-            {
-                lblselectunit.Visible = false;
             }
         }
         else if (hidType.Value == "Unit")
@@ -505,83 +418,6 @@ public partial class Admin_ViewCompanyCategory : System.Web.UI.Page
                 lblselectunit.Visible = false;
             }
         }
-    }
-    protected void ddlcompany_OnSelectedIndexChanged(object sender, EventArgs e)
-    {
-        if (ddlcompany.SelectedItem.Text != "Select")
-        {
-            DtCompanyDDL = Lo.RetriveMasterData(0, ddlcompany.SelectedItem.Value, "", 0, "", "", "FactoryCompanyID");
-            if (DtCompanyDDL.Rows.Count > 0)
-            {
-                Co.FillDropdownlist(ddldivision, DtCompanyDDL, "FactoryName", "FactoryRefNo");
-                ddldivision.Items.Insert(0, "Select");
-                lblselectdivison.Visible = true;
-                ddldivision.Visible = true;
-                hfcomprefno.Value = ddlcompany.SelectedItem.Value;
-                hidType.Value = "Company";
-                BindGridView();
-            }
-            else
-            {
-                ddldivision.Visible = false;
-                lblselectdivison.Visible = false;
-            }
-        }
-        else if (ddlcompany.SelectedItem.Text == "Select")
-        {
-            lblselectdivison.Visible = false;
-            lblselectunit.Visible = false;
-        }
-        hfcomprefno.Value = "";
-        hfcomprefno.Value = ddlcompany.SelectedItem.Value;
-
-    }
-    protected void ddldivision_OnSelectedIndexChanged(object sender, EventArgs e)
-    {
-        if (ddldivision.SelectedItem.Text != "Select")
-        {
-            DtCompanyDDL = Lo.RetriveMasterData(0, ddldivision.SelectedItem.Value, "", 0, "", "", "UnitSelectID");
-            if (DtCompanyDDL.Rows.Count > 0)
-            {
-                Co.FillDropdownlist(ddlunit, DtCompanyDDL, "UnitName", "UnitRefNo");
-                ddlunit.Items.Insert(0, "Select");
-                ddlunit.Visible = true;
-                lblselectunit.Visible = true;
-                hfcomprefno.Value = ddldivision.SelectedItem.Value;
-                hidType.Value = "Factory";
-                BindGridView();
-            }
-            else
-            {
-                lblselectunit.Visible = false;
-                ddlunit.Visible = false;
-            }
-            hfcomprefno.Value = "";
-            hfcomprefno.Value = ddldivision.SelectedItem.Value;
-        }
-        else if (ddldivision.SelectedItem.Text == "Select")
-        {
-            DtCompanyDDL = Lo.RetriveMasterData(0, ddlcompany.SelectedItem.Value, "", 0, "", "", "FactoryCompanyID");
-            if (DtCompanyDDL.Rows.Count > 0)
-            {
-                Co.FillDropdownlist(ddldivision, DtCompanyDDL, "FactoryName", "FactoryRefNo");
-                ddldivision.Items.Insert(0, "Select");
-                lblselectdivison.Visible = true;
-                ddldivision.Visible = true;
-                lblselectdivison.Visible = false;
-                BindGridView();
-
-            }
-            hfcomprefno.Value = "";
-            hfcomprefno.Value = ddlcompany.SelectedItem.Value;
-        }
-
-    }
-    protected void ddlunit_OnSelectedIndexChanged(object sender, EventArgs e)
-    {
-        hfcomprefno.Value = ddlunit.SelectedItem.Value;
-        hidType.Value = "Unit";
-        BindGridView();
     }
     #endregion
 }
