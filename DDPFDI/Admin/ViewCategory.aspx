@@ -1,29 +1,6 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="ViewCategory.aspx.cs" Inherits="Admin_ViewCategory" MasterPageFile="~/Admin/MasterPage.master" %>
 
 <asp:Content ID="head" runat="server" ContentPlaceHolderID="head">
-    <!---------------------------------------------------------Update panel progress---------------------->
-    <script type="text/javascript">
-        function showProgress() {
-            var updateProgress = $get("<%= UpdateProgress.ClientID %>");
-            updateProgress.style.display = "block";
-        }
-    </script>
-    <style type="text/css">
-        .overlay {
-            position: fixed;
-            z-index: 999999;
-            height: 100%;
-            width: 100%;
-            top: 0;
-            background-color: Black;
-            filter: alpha(opacity=90);
-            opacity: 0.2;
-            -moz-opacity: 0.2;
-            margin-left: -280px;
-            margin-top: 0px;
-        }
-    </style>
-    <!----------------------------End----------------------------------->
 </asp:Content>
 <asp:Content ID="inner" runat="server" ContentPlaceHolderID="ContentPlaceHolder1">
     <asp:ScriptManager ID="sc" runat="server"></asp:ScriptManager>
@@ -176,17 +153,6 @@
             </div>
         </ContentTemplate>
     </asp:UpdatePanel>
-    <asp:UpdateProgress ID="UpdateProgress" runat="server" AssociatedUpdatePanelID="up">
-        <ProgressTemplate>
-            <div class="overlay">
-                <div style="z-index: 999; margin-left: 650px; margin-top: 300px; opacity: 0.3; -moz-opacity: 0.3;">
-                    <div class="overlay-progress">
-                        <%--<img src="/assets/images/loader.gif" alt="" />--%>
-                    </div>
-                </div>
-            </div>
-        </ProgressTemplate>
-    </asp:UpdateProgress>
 </asp:Content>
 
 
