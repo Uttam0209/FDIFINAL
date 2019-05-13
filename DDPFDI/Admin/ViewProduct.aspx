@@ -34,7 +34,6 @@
                     <div class="clearfix"></div>
                     <div id="Div3">
                         <asp:Button ID="btnAddProduct" runat="server" Text="Add Product" CssClass="btn btn-primary pull-right" OnClick="btnAddProduct_Click" />
-
                     </div>
                     <div class="clearfix"></div>
                     <div class="row">

@@ -54,7 +54,6 @@
         routes.MapPageRoute("Add-Designation", "Add-Designation", "~/Admin/AddDesignation.aspx", true);
         routes.MapPageRoute("View-Designation", "View-Designation", "~/Admin/ViewDesignation.aspx", true);
         routes.MapPageRoute("View-NodalOfficer", "View-NodalOfficer", "~/Admin/ViewNodalOfficer.aspx", true);
-        routes.MapPageRoute("View-Product", "View-Product", "~/Admin/ViewProduct.aspx", true);
-        
+        routes.MapPageRoute("Company-Category", "Company-Category", "~/Admin/AddCompanyCategory.aspx", true);
     }    
 </script>
