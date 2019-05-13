@@ -121,7 +121,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                 {
                     lblselectdivison.Visible = true;
                     ddldivision.Enabled = true;
-                    ddlunit.Visible = false;
+                    lblselectunit.Visible = false;
                 }
                 else
                 {
@@ -167,7 +167,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
             }
             else
             {
-                ddlunit.Visible = false;
+                lblselectunit.Visible = false;
             }
         }
         else if (mType == "Unit")
