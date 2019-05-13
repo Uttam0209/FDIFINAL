@@ -122,12 +122,36 @@ public partial class Admin_RegisterdAs : System.Web.UI.Page
             BindMasterCategory();
             ddlmastercategory.AutoPostBack = true;
         }
+        else if (DisplayPanel.ToString() == "Panel4")
+        {
+            divcategory1dropdown.Visible = true;
+            divActive.Visible = false;
+            divcategory2ddl.Visible = true;
+            divcategory3textbox.Visible = false;
+            divflag.Visible = false;
+            divlabel2drop.Visible = true;
+            divlevel3.Visible = true;
+            btnsave.Text = "Save Level 3";
+            BindMasterCategory();
+            ddlmastercategory.AutoPostBack = true;
+            ddlcategroy2.AutoPostBack = true;
+        }
     }
     protected void cleartext()
     {
         txtcategory3.Text = "";
         txtmastercategory.Text = "";
         txtsubcategory.Text = "";
+        txtlevel3.Text = "";
+        ddlmastercategory.SelectedValue = "Select";
+        if (ddlcategroy2.Visible = true)
+        {
+            ddlcategroy2.SelectedValue = "Select";
+        }
+        if (ddllabel2.Visible = true)
+        {
+            ddllabel2.SelectedValue = "Select";
+        }
     }
     protected void btncancle_Click(object sender, EventArgs e)
     {
@@ -162,6 +186,19 @@ public partial class Admin_RegisterdAs : System.Web.UI.Page
     protected void SaveCodeInnerSub()
     {
         DataTable StrCat = Lo.RetriveMasterSubCategoryDate(Convert.ToInt16(ddlcategroy2.SelectedItem.Value), Co.RSQandSQLInjection(txtcategory3.Text, "soft"), "0", "InsertInnerSubID", "");
+        if (StrCat != null)
+        {
+            cleartext();
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record saved')", true);
+        }
+        else
+        {
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not saved')", true);
+        }
+    }
+    protected void SaveCodeInnerSubSub()
+    {
+        DataTable StrCat = Lo.RetriveMasterSubCategoryDate(Convert.ToInt16(ddllabel2.SelectedItem.Value), Co.RSQandSQLInjection(txtlevel3.Text, "soft"), "0", "InsertInnerSubID", "");
         if (StrCat != null)
         {
             cleartext();
@@ -210,17 +247,33 @@ public partial class Admin_RegisterdAs : System.Web.UI.Page
                 ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('All field fill mandatory')", true);
             }
         }
+        else if (btnsave.Text == "Save Level 3")
+        {
+            if (ddlmastercategory.SelectedIndex != 0 && ddlcategroy2.SelectedIndex != 0 && ddllabel2.SelectedIndex != 0 && txtlevel3.Text != "")
+            {
+                SaveCodeInnerSubSub();
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record saved successfully')", true);
+            }
+            else
+            {
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('All field fill mandatory')", true);
+            }
+        }
     }
     protected void BindMasterCategory()
     {
         DataTable DtMasterCategroy = new DataTable();
         if (DisplayPanel.ToString() == "Panel2")
         {
-            DtMasterCategroy = Lo.RetriveMasterCategoryDate(0, "", "", "","", "Select");
+            DtMasterCategroy = Lo.RetriveMasterCategoryDate(0, "", "", "", "", "Select");
         }
         else if (DisplayPanel.ToString() == "Panel3")
         {
-            DtMasterCategroy = Lo.RetriveMasterCategoryDate(0, "2", "", "","", "SelectFlag");
+            DtMasterCategroy = Lo.RetriveMasterCategoryDate(0, "2", "", "", "", "SelectFlag");
+        }
+        else if (DisplayPanel.ToString() == "Panel4")
+        {
+            DtMasterCategroy = Lo.RetriveMasterCategoryDate(0, "3", "", "", "", "SelectFlag3");
         }
         if (DtMasterCategroy.Rows.Count > 0)
         {
@@ -238,15 +291,32 @@ public partial class Admin_RegisterdAs : System.Web.UI.Page
         if (DtMasterCategroy.Rows.Count > 0)
         {
             Co.FillDropdownlist(ddlcategroy2, DtMasterCategroy, "SCategoryName", "SCategoryId");
-            ddlcategroy2.Items.Insert(0, "Select Level 1");
+            ddlcategroy2.Items.Insert(0, "Select");
         }
         else
         {
-            ddlcategroy2.Items.Insert(0, "Select Level 1");
+            ddlcategroy2.Items.Insert(0, "Select");
+        }
+    }
+    protected void BindMasterInnerSubCategorySub()
+    {
+        DataTable DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(Convert.ToInt16(ddlcategroy2.SelectedItem.Value), "", "", "SubSelectID", "");
+        if (DtMasterCategroy.Rows.Count > 0)
+        {
+            Co.FillDropdownlist(ddllabel2, DtMasterCategroy, "SCategoryName", "SCategoryId");
+            ddllabel2.Items.Insert(0, "Select");
+        }
+        else
+        {
+            ddllabel2.Items.Insert(0, "Select");
         }
     }
     protected void ddlmastercategory_SelectedIndexChanged(object sender, EventArgs e)
     {
         BindMasterInnerSubCategory();
+    }
+    protected void ddlcategroy2_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        BindMasterInnerSubCategorySub();
     }
 }

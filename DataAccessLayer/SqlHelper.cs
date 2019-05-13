@@ -606,10 +606,12 @@ namespace DataAccessLayer
                     db.AddInParameter(cmd, "@ERPRefNo", DbType.String, hyProduct["ERPRefNo"].ToString().Trim());
                     db.AddInParameter(cmd, "@NomenclatureOfMainSystem", DbType.Int64, hyProduct["NomenclatureOfMainSystem"].ToString().Trim());
                     db.AddInParameter(cmd, "@ProductLevel1", DbType.Int64, hyProduct["ProductLevel1"]);
-                    db.AddInParameter(cmd, "@ProductLevel2", DbType.Int16, hyProduct["ProductLevel2"].ToString().Trim());
+                    db.AddInParameter(cmd, "@ProductLevel2", DbType.Int16, hyProduct["ProductLevel2"]);
+                    db.AddInParameter(cmd, "@ProductLevel3", DbType.Int16, hyProduct["ProductLevel3"]);
                     db.AddInParameter(cmd, "@ProductDescription", DbType.String, hyProduct["ProductDescription"]);
                     db.AddInParameter(cmd, "@TechnologyLevel1", DbType.Int64, hyProduct["TechnologyLevel1"]);
                     db.AddInParameter(cmd, "@TechnologyLevel2", DbType.Int64, hyProduct["TechnologyLevel2"]);
+                    db.AddInParameter(cmd, "@TechnologyLevel3", DbType.Int64, hyProduct["TechnologyLevel3"]);
                     db.AddInParameter(cmd, "@EndUser", DbType.String, hyProduct["EndUser"].ToString().Trim());
                     db.AddInParameter(cmd, "@IsIndeginized", DbType.String, hyProduct["IsIndeginized"].ToString().Trim());
                     db.AddInParameter(cmd, "@ManufactureName", DbType.String, hyProduct["ManufactureName"]);
@@ -627,6 +629,7 @@ namespace DataAccessLayer
                     db.AddInParameter(cmd, "@TenderUrl", DbType.String, hyProduct["TenderUrl"]);
                     db.AddInParameter(cmd, "@NodelDetail", DbType.String, hyProduct["NodelDetail"]);
                     db.AddInParameter(cmd, "@Criteria", DbType.String, Criteria);
+                    db.AddInParameter(cmd, "@Role", DbType.String, hyProduct["Role"]);
                     db.AddOutParameter(cmd, "@ReturnID", DbType.String, 20);
                     db.ExecuteNonQuery(cmd, dbTran);
                     mCurrentID = db.GetParameterValue(cmd, "@ReturnID").ToString();
@@ -861,7 +864,7 @@ namespace DataAccessLayer
                 try
                 {
                     DbCommand cmd = db.GetStoredProcCommand("sp_RetriveProduct");
-                   db.AddInParameter(cmd, "@CompanyRefNo", DbType.String, CompanyRefNo);
+                    db.AddInParameter(cmd, "@CompanyRefNo", DbType.String, CompanyRefNo);
                     db.AddInParameter(cmd, "@ProductRefNo", DbType.String, ProdRefNo);
                     db.AddInParameter(cmd, "@Purpose", DbType.String, Purpose);
                     IDataReader dr = db.ExecuteReader(cmd);

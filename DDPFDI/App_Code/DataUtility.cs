@@ -130,7 +130,7 @@ public class DataUtility
         if (fileName == "")
             return false;
         string fileType = fileName.Substring(fileName.LastIndexOf("."), fileName.Length - fileName.LastIndexOf("."));
-        if (fileType.ToUpper() == ".JPEG" || fileType.ToUpper() == ".JPG" || fileType.ToUpper() == ".PNG" || fileType.ToUpper() == ".GIF")
+        if (fileType.ToUpper() == ".JPEG" || fileType.ToUpper() == ".JPG" || fileType.ToUpper() == ".PNG" || fileType.ToUpper() == ".GIF" || fileType.ToUpper() == ".tif")
             return true;
         else
             return false;
