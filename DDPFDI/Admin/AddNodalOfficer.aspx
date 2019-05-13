@@ -89,7 +89,7 @@
                             <div class="col-md-8">
                                 <div class="fdi-add-content" id="DivNodalRole" runat="server">
                                   <div class="form-group">
-                                            <h4 class="secondary-heading">Role</h4>
+                                            <%--<h4 class="secondary-heading">Nodal</h4>--%>
                                             <asp:CheckBox ID="chkrole" Text="Nodal Officer" runat="server"  CssClass="checkbox-inline" >
                                             </asp:CheckBox>
                                         
@@ -103,6 +103,7 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
+                                         <asp:Button ID="btncancel" runat="server" Text="Cancel" CssClass="btn btn-default pull-right" OnClick="btncancel_Click" />
                                         <asp:LinkButton ID="btnsub" runat="server" Text="Save" class="btn btn-primary pull-right" OnClick="btnsub_Click"></asp:LinkButton>
                                     </div>
                                 </div>
@@ -114,7 +115,7 @@
                                     <PagerStyle HorizontalAlign="Center" CssClass="GridPager" />
                                     <Columns>
 
-                                        <asp:TemplateField HeaderText="S.No">
+                                        <asp:TemplateField HeaderText="S.No.">
                                             <ItemTemplate>
                                                 <%#Container.DataItemIndex+1 %>
                                             </ItemTemplate>
@@ -124,11 +125,11 @@
                                                 <asp:Label ID="lblrefno" runat="server" Text='<%#Eval("CompanyName") %>' NullDisplayText="#" SortExpression="Company"></asp:Label>
                                             </ItemTemplate>
                                         </asp:TemplateField>
-                                        <asp:BoundField DataField="FactoryName" HeaderText="Division" NullDisplayText="-" SortExpression="Name" />
-                                         <asp:BoundField DataField="UnitName" HeaderText="Unit" NullDisplayText="-" SortExpression="Name" />
-                                        <asp:BoundField DataField="NodalOficerName" HeaderText="Name" NullDisplayText="#" SortExpression="Name" />
-                                        <asp:BoundField DataField="NodalOfficerEmail" HeaderText="Email" NullDisplayText="#" SortExpression="Email" />
-                                        <asp:BoundField DataField="IsNodalOfficer" HeaderText="Nodal Officer" NullDisplayText="#" SortExpression="Nodal Officer" />
+                                        <asp:BoundField DataField="FactoryName" HeaderText="Division" NullDisplayText="-"  />
+                                         <asp:BoundField DataField="UnitName" HeaderText="Unit" NullDisplayText="-"  />
+                                        <asp:BoundField DataField="NodalOficerName" HeaderText="Name" NullDisplayText="#"  />
+                                        <asp:BoundField DataField="NodalOfficerEmail" HeaderText="Email" NullDisplayText="#"  />
+                                        <asp:BoundField DataField="IsNodalOfficer" HeaderText="Nodal Officer" NullDisplayText="#"  />
                                         
 
                                     </Columns>

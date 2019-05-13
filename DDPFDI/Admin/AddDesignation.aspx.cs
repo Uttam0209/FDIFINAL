@@ -89,7 +89,7 @@ public partial class Admin_AddDesignation : System.Web.UI.Page
             else
             {
                 gvViewDesignation.Visible = false;
-                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not found !')", true);
+                //ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not found !')", true);
             }
         }
     }
@@ -220,7 +220,7 @@ public partial class Admin_AddDesignation : System.Web.UI.Page
         }
         else
         {
-            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Field can not be empty !')", true);
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Designation can not be empty !')", true);
         }
     }
 
