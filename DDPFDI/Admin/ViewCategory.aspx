@@ -2,7 +2,7 @@
 
 <asp:Content ID="head" runat="server" ContentPlaceHolderID="head">
     <!---------------------------------------------------------Update panel progress---------------------->
-    <script type="text/javascript">
+   <%-- <script type="text/javascript">
         function showProgress() {
             var updateProgress = $get("<%= UpdateProgress.ClientID %>");
             updateProgress.style.display = "block";
@@ -22,7 +22,7 @@
             margin-left: -280px;
             margin-top: 0px;
         }
-    </style>
+    </style>--%>
     <!----------------------------End----------------------------------->
 </asp:Content>
 <asp:Content ID="inner" runat="server" ContentPlaceHolderID="ContentPlaceHolder1">
@@ -155,8 +155,18 @@
                                                 </asp:TemplateField>
                                                 <asp:TemplateField HeaderText="Dropdown Label">
                                                     <ItemTemplate>
-                                                        <asp:Label ID="lblrefno" runat="server" Text='<%#Eval("MCategoryName") %>' NullDisplayText="#" SortExpression="CompanyRefNo"></asp:Label>
+                                                        <asp:Label ID="lblrefno" runat="server" Text='<%#Eval("MCategoryName") %>' NullDisplayText="#" ></asp:Label>
                                                         <asp:HiddenField ID="hfcat" runat="server" Value='<%#Eval("MCategoryId") %>' />
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                 <asp:TemplateField HeaderText="Hierarchy Label">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="lblHierarchy" runat="server" Text='<%#Eval("Flag") %>' NullDisplayText="#"></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                 <asp:TemplateField HeaderText="Status">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="lblStatus" runat="server" Text='<%#Eval("IsActive") %>' NullDisplayText="#"></asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                                 <asp:TemplateField HeaderText="Action">
@@ -176,17 +186,25 @@
             </div>
         </ContentTemplate>
     </asp:UpdatePanel>
-    <asp:UpdateProgress ID="UpdateProgress" runat="server" AssociatedUpdatePanelID="up">
+  <%--  <asp:UpdateProgress ID="UpdateProgress" runat="server" AssociatedUpdatePanelID="up">
         <ProgressTemplate>
+<<<<<<< HEAD
             <div class="overlay">
                 <div style="z-index: 999; margin-left: 650px; margin-top: 300px; opacity: 0.3; -moz-opacity: 0.3;">
                     <div class="overlay-progress">
-                        <%--<img src="/assets/images/loader.gif" alt="" />--%>
+                        <%--<img src="/assets/images/loader.gif" alt="" />
+=======
+               <!---Progress Bar ---->
+                <div class="overlay-progress">
+                    <div class="custom-progress-bar blue stripes">
+                        <span></span>
+                        <p>Processing</p>
+>>>>>>> 2eadf1240c82c955207bef6975214d3525cb28ed
                     </div>
                 </div>
-            </div>
+    <!---Progress Bar ---->
         </ProgressTemplate>
-    </asp:UpdateProgress>
+    </asp:UpdateProgress>--%>
 </asp:Content>
 
 

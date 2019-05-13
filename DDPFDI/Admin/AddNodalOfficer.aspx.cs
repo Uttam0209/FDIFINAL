@@ -31,40 +31,43 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
     {
         if (!IsPostBack)
         {
-            if (Request.QueryString["id"] != null)
+            if (Session["Type"] != null)
             {
-                string strid = Request.QueryString["id"].ToString().Replace(" ", "+");
-                string strPageName = objEnc.DecryptData(strid);
-                StringBuilder strheadPage = new StringBuilder();
-                strheadPage.Append("<ul class='breadcrumb'>");
-                string[] MCateg = strPageName.Split(new string[] { ">>" }, StringSplitOptions.RemoveEmptyEntries);
-                string MmCval = "";
-                for (int x = 0; x < MCateg.Length; x++)
+                if (Request.QueryString["id"] != null)
                 {
-                    MmCval = MCateg[x];
-                    if (MmCval == " View ")
+                    string strid = Request.QueryString["id"].ToString().Replace(" ", "+");
+                    string strPageName = objEnc.DecryptData(strid);
+                    StringBuilder strheadPage = new StringBuilder();
+                    strheadPage.Append("<ul class='breadcrumb'>");
+                    string[] MCateg = strPageName.Split(new string[] { ">>" }, StringSplitOptions.RemoveEmptyEntries);
+                    string MmCval = "";
+                    for (int x = 0; x < MCateg.Length; x++)
                     {
-                        MmCval = "Add";
+                        MmCval = MCateg[x];
+                        if (MmCval == " View ")
+                        {
+                            MmCval = "Add";
+                        }
+                        strheadPage.Append("<li class=''><span>" + MmCval + "</span></li>");
                     }
-                    strheadPage.Append("<li class=''><span>" + MmCval + "</span></li>");
+                    divHeadPage.InnerHtml = strheadPage.ToString();
+                    strheadPage.Append("</ul");
+                    mType = objEnc.DecryptData(Session["Type"].ToString());
+                    mRefNo = Session["CompanyRefNo"].ToString();
+
+
                 }
-                divHeadPage.InnerHtml = strheadPage.ToString();
-                strheadPage.Append("</ul");
-                mType = objEnc.DecryptData(Session["Type"].ToString());
-                mRefNo = Session["CompanyRefNo"].ToString();
-                
-                
-            }
 
-            if (Request.QueryString["mcurrentcompRefNo"] != null)
-            {
-                EditCode();
+                if (Request.QueryString["mcurrentcompRefNo"] != null)
+                {
+                    EditCode();
 
-            }
-            else
-            {
-                BindCompany();
-                BindMasterDesignation("");
+                }
+                else
+                {
+                    BindCompany();
+                    BindMasterDesignation("");
+                }
             }
         }
     }
@@ -555,7 +558,7 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
             if (chkrole.Checked)
             {
                 
-                SendEmailCode();
+                //SendEmailCode();
             }
             else
             {
@@ -587,7 +590,7 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
             body = body.Replace("{mcurid}", Resturl(56));
             SendMail s;
             s = new SendMail();
-            s.CreateMail("aeroindia-ddp@gov.in", UserEmail, "Create Password", body);
+            s.CreateMail("aeroindia-ddp@gov.in", txtemailid.Text, "Create Password", body);
             s.sendMail();
             ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Create password email send successfully.')", true);
         }
