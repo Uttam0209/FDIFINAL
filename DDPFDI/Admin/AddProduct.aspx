@@ -52,11 +52,19 @@
                     <li class="active"><a data-toggle="tab" href="#pd">Description</a></li>
                     <li><a data-toggle="tab" href="#pimg">Image</a></li>
                     <li><a data-toggle="tab" href="#spd">Support by DPSU</a></li>
+<<<<<<< HEAD
                     <li><a data-toggle="tab" href="#qpt">Quantity Required</a></li>
                     <li><a data-toggle="tab" href="#tnd">Tender</a></li>
                     <li><a data-toggle="tab" href="#cd">Contact</a></li>
                     <li><a data-toggle="tab" href="#test">Testing</a></li>
                     <li><a data-toggle="tab" href="#cer">Certification</a></li>
+=======
+                    <li><a data-toggle="tab" href="#qpt">Quantity</a></li>
+                    <li><a data-toggle="tab" href="#tnd">Tender </a></li>
+                    <li><a data-toggle="tab" href="#cd">Contact </a></li>
+                    <li><a data-toggle="tab" href="#">Testing </a></li>
+                    <li><a data-toggle="tab" href="#">Certification</a></li>
+>>>>>>> 6bab247aa21608297dea601e5349d9d93c941ed6
                 </ul>
                 <div class="tab-content">
                     <asp:HiddenField runat="server" ID="hfprodid" />

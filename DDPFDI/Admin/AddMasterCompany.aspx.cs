@@ -466,7 +466,6 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
         }
 
     }
-
     protected void ddlfacotry_SelectedIndexChanged(object sender, EventArgs e)
     {
         gvcompanydetail.Visible = true;

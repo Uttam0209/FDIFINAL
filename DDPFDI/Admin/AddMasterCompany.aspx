@@ -72,10 +72,7 @@
                     <div id="divHeadPage" runat="server"></div>
                 </div>
             </div>
-
-
             <div class="col-md-12">
-
                 <div class="addfdi">
                     <asp:UpdatePanel ID="upfdival" runat="server">
                         <ContentTemplate>
@@ -89,7 +86,6 @@
                                 <asp:DropDownList runat="server" ID="ddlfacotry" AutoPostBack="True" OnSelectedIndexChanged="ddlfacotry_SelectedIndexChanged" CssClass="form-control form-cascade-control">
                                 </asp:DropDownList>
                             </div>
-
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="fdi-add-content">
@@ -116,7 +112,6 @@
                                     </div>
                                 </div>
                             </div>
-
                             <div class="is-flex">
                                 <div class="col-md-5" id="Intrested" visible="False" runat="server">
                                     <div class="fdi-add-content">
@@ -183,16 +178,27 @@
                                         <asp:BoundField ItemStyle-Width="150px" DataField="FactoryRefNo" HeaderText="Reference No." />
                                         <asp:BoundField ItemStyle-Width="150px" DataField="UnitName" HeaderText="Unit" />
                                         <asp:BoundField ItemStyle-Width="150px" DataField="UnitRefNo" HeaderText="Reference No." />
+                                        <asp:BoundField ItemStyle-Width="150px" DataField="ContactPersonEmailID" HeaderText="Nodal Officer" />
+                                        <asp:BoundField ItemStyle-Width="150px" DataField="Role" HeaderText="Role" />
                                     </Columns>
                                 </asp:GridView>
                             </div>
                         </ContentTemplate>
                     </asp:UpdatePanel>
+                    <asp:UpdateProgress ID="UpdateProgress" runat="server" AssociatedUpdatePanelID="upfdival">
+                        <ProgressTemplate>
+                            <!---Progress Bar ---->
+                            <div class="overlay-progress">
+                                <div class="custom-progress-bar blue stripes">
+                                    <span></span>
+                                    <p>Processing</p>
+                                </div>
+                            </div>
+                            <!---Progress Bar ---->
+                        </ProgressTemplate>
+                    </asp:UpdateProgress>
                 </div>
-
             </div>
-
-
             <div class="clearfix"></div>
             <div class="footer"><i class="far fa-copyright"></i>2019 <a href="#">Department of Defence Production</a> </div>
         </div>
