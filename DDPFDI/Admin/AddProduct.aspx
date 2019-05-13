@@ -49,17 +49,15 @@
             </div>
             <div class="tabing-section">
                 <ul class="nav nav-tabs">
-                    <li class="active"><a data-toggle="tab" href="#pd">Product Description</a></li>
-                    <li><a data-toggle="tab" href="#pimg">Product Image</a></li>
-                    <li><a data-toggle="tab" href="#spd">Support Provided by DPSU</a></li>
+                    <li class="active"><a data-toggle="tab" href="#pd">Description</a></li>
+                    <li><a data-toggle="tab" href="#pimg">Image</a></li>
+                    <li><a data-toggle="tab" href="#spd">Support by DPSU</a></li>
                     <li><a data-toggle="tab" href="#qpt">Quantity Required</a></li>
-                    <li><a data-toggle="tab" href="#tnd">Tender Status</a></li>
-                    <li><a data-toggle="tab" href="#cd">Contact Details</a></li>
-                    <li><a data-toggle="tab" href="#">Testing Requirement</a></li>
-                    <li><a data-toggle="tab" href="#">Testing Facility</a></li>
-                    <li><a data-toggle="tab" href="#">Testing Certification Requirement</a></li>
+                    <li><a data-toggle="tab" href="#tnd">Tender</a></li>
+                    <li><a data-toggle="tab" href="#cd">Contact</a></li>
+                    <li><a data-toggle="tab" href="#test">Testing</a></li>
+                    <li><a data-toggle="tab" href="#cer">Certification</a></li>
                 </ul>
-
                 <div class="tab-content">
                     <asp:HiddenField runat="server" ID="hfprodid" />
                     <asp:HiddenField runat="server" ID="hfprodrefno" />
@@ -531,6 +529,105 @@
                             </ContentTemplate>
                         </asp:UpdatePanel>
                     </div>
+                    <div id="test" class="tab-pane fade in active">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="add-profile">
+                                    <div class="section-pannel">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label>User Testing</label>
+                                                    <asp:DropDownList runat="server" ID="ddlusertesting" class="form-control">
+                                                        <asp:ListItem runat="server" Value="Select">Select</asp:ListItem>
+                                                    </asp:DropDownList>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label>Field Testing</label>
+                                                    <asp:DropDownList runat="server" ID="ddlfieldtesting" class="form-control">
+                                                        <asp:ListItem runat="server" Value="Select">Select</asp:ListItem>
+                                                    </asp:DropDownList>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label>Trail Testing</label>
+                                                    <asp:DropDownList runat="server" ID="ddltrail" class="form-control">
+                                                        <asp:ListItem runat="server" Value="Select">Select</asp:ListItem>
+                                                    </asp:DropDownList>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label>Machnical Testing</label>
+                                                    <asp:DropDownList runat="server" ID="ddlmechnicaltesting" class="form-control">
+                                                        <asp:ListItem runat="server" Value="Select">Select</asp:ListItem>
+                                                    </asp:DropDownList>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label>MET</label>
+                                                    <asp:DropDownList runat="server" ID="ddlmettesting" class="form-control">
+                                                        <asp:ListItem runat="server" Value="Select">Select</asp:ListItem>
+                                                    </asp:DropDownList>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label>EMIC</label>
+                                                    <asp:DropDownList runat="server" ID="ddlemictesting" class="form-control">
+                                                        <asp:ListItem runat="server" Value="Select">Select</asp:ListItem>
+                                                    </asp:DropDownList>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="cer" class="tab-pane fade in active">
+                        <div class="section-pannel">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Certification Image</label>
+                                        <div class="fr">
+                                            <asp:FileUpload ID="fucertifiimage" runat="server" CssClass="uploadimage form-control" type="file" name="image_file_arr[]" Multiple="Multiple" />
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <!-------uplode photo----------->
+                            <div class="gallery"></div>
+                            <div class="clearfix" style="margin-top: 8px;"></div>
+                            <span>Max 1 Mb file could be upload.</span>
+                            <div class="clearfix"></div>
+                            <span>Only .doc,.pdf files are allowd to upload</span>
+                            <br />
+                            <div runat="server" id="div1" visible="False">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <asp:DataList runat="server" ID="DataList1" RepeatColumns="4" RepeatDirection="Horizontal" RepeatLayout="Flow" OnItemCommand="dlimage_ItemCommand">
+                                            <ItemTemplate>
+                                                <div class="col-sm-3">
+                                                    <asp:Image runat="server" ID="imgprodimage" class="image img-responsive img-rounded" Height="120px" Width="120" src='<%#Eval("ImageName") %>' />
+                                                    <div class="clearfix"></div>
+                                                    <asp:LinkButton runat="server" ID="lblremoveimg" class="fa fa-trash text-center" CommandName="removeimg" CommandArgument='<%#Eval("ImageId") %>'></asp:LinkButton>
+                                                </div>
+                                            </ItemTemplate>
+                                        </asp:DataList>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
@@ -539,13 +636,10 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
-
     </div>
-
     <script type="text/javascript" language="javascript">
         var count = 0;
         function handleFileSelect(evt) {
@@ -579,11 +673,9 @@
         $('#files').change(function (evt) {
             handleFileSelect(evt);
         });
-
         $('#list').on('click', '.remove_img_preview', function () {
             $(this).parent('span').remove();
             //           parseInt($fileUpload.get(0).files.length - 1;
         });
     </script>
-
 </asp:Content>

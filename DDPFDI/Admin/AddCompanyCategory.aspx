@@ -43,14 +43,14 @@
                         <ContentTemplate>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Product Category </label>
+                                    <label>Dropdown Label</label>
                                     <asp:DropDownList runat="server" ID="ddlmastercategory" class="form-control" AutoPostBack="True" OnSelectedIndexChanged="ddlmastercategory_SelectedIndexChanged"></asp:DropDownList>
 
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-6" id="level1" runat="server" Visible="False">
                                 <div class="form-group">
-                                    <h3 class="secondary-heading">Sub Category</h3>
+                                    <h3 class="secondary-heading">Level 1</h3>
                                     <asp:CheckBoxList ID="chkSubCategory" runat="server" CssClass="checkbox-inline" RepeatColumns="25" RepeatDirection="Vertical"
                                         RepeatLayout="Flow">
                                     </asp:CheckBoxList>

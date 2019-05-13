@@ -223,11 +223,13 @@ public partial class Admin_AddCompanyCategory : System.Web.UI.Page
                 ddldivision.Items.Insert(0, "Select");
                 lblselectdivison.Visible = true;
                 ddldivision.Visible = true;
+                level1.Visible = true;
                 hfcomprefno.Value = ddlcompany.SelectedItem.Value;
                 hidType.Value = "Company";
             }
             else
             {
+                level1.Visible = false;
                 ddldivision.Visible = false;
                 lblselectdivison.Visible = false;
             }

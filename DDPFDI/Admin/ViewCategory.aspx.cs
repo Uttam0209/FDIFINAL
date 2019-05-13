@@ -371,7 +371,6 @@ public partial class Admin_ViewCategory : System.Web.UI.Page
     }
     protected void ddlsearch_OnSelectedIndexChanged(object sender, EventArgs e)
     {
-        Thread.Sleep(5000);
         DataTable DtGrid = Lo.RetriveMasterCategoryDate(Convert.ToInt16(ddlsearch.SelectedItem.Value), "", "", "", "", "SelectByLavel");
         if (DtGrid.Rows.Count > 0)
         {

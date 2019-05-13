@@ -26,26 +26,33 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
     {
         if (!IsPostBack)
         {
-            if (Request.QueryString["id"] != null)
+            if (Session["Type"].ToString() != null)
             {
-                string strid = Request.QueryString["id"].ToString().Replace(" ", "+");
-                string strPageName = objEnc.DecryptData(strid);
-                StringBuilder strheadPage = new StringBuilder();
-                strheadPage.Append("<ul class='breadcrumb'>");
-                string[] MCateg = strPageName.Split(new string[] { ">>" }, StringSplitOptions.RemoveEmptyEntries);
-                string MmCval = "";
-                for (int x = 0; x < MCateg.Length; x++)
+                if (Request.QueryString["id"] != null)
                 {
-                    MmCval = MCateg[x];
-                    strheadPage.Append("<li class=''><span>" + MmCval + "</span></li>");
+                    string strid = Request.QueryString["id"].ToString().Replace(" ", "+");
+                    string strPageName = objEnc.DecryptData(strid);
+                    StringBuilder strheadPage = new StringBuilder();
+                    strheadPage.Append("<ul class='breadcrumb'>");
+                    string[] MCateg = strPageName.Split(new string[] { ">>" }, StringSplitOptions.RemoveEmptyEntries);
+                    string MmCval = "";
+                    for (int x = 0; x < MCateg.Length; x++)
+                    {
+                        MmCval = MCateg[x];
+                        strheadPage.Append("<li class=''><span>" + MmCval + "</span></li>");
+                    }
+                    divHeadPage.InnerHtml = strheadPage.ToString();
+                    strheadPage.Append("</ul");
+                    currentPage = System.IO.Path.GetFileName(Request.Url.AbsolutePath);
+                    hidType.Value = objEnc.DecryptData(Session["Type"].ToString());
+                    mRefNo = Session["CompanyRefNo"].ToString();
+                    BindCompany();
+                    BindGridView();
                 }
-                divHeadPage.InnerHtml = strheadPage.ToString();
-                strheadPage.Append("</ul");
-                currentPage = System.IO.Path.GetFileName(Request.Url.AbsolutePath);
-                hidType.Value = objEnc.DecryptData(Session["Type"].ToString());
-                mRefNo = Session["CompanyRefNo"].ToString();
-                BindCompany();
-                BindGridView();
+            }
+            else
+            {
+                Response.RedirectToRoute("login");
             }
         }
     }
