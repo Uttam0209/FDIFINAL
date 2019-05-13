@@ -333,3 +333,6 @@ form label { color: #494ca2;}
 .productalreadylabel .yes { margin-left: 10px !important;}
 .ViewProductTable tr th,.ViewProductTable tr td { width: auto !important; white-space: nowrap !important}
 #Div3 input {margin-right: 10px;}
+.comDivUnitBox { display: flex}
+.comDivUnitBox .form-group { margin-right: 30px;}
+.comDivUnitBox .form-group:last-child { margin-right: 0 !important}
