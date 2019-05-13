@@ -255,13 +255,13 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
         {
             HySave["CompanyRefNo"] = ddlmaster.SelectedItem.Value;
             HySave["Role"] = "Factory";
-            StrSaveComp = Lo.SaveFactoryComp(HySave, out _sysMsg, out _msg);
+            StrSaveComp = Lo.SaveMasterDivision(HySave, out _sysMsg, out _msg);
         }
         else if (btnsubmit.Text == "Save Unit")
         {
             HySave["CompanyRefNo"] = ddlfacotry.SelectedItem.Value;
             HySave["Role"] = "Unit";
-            StrSaveComp = Lo.SaveUnitComp(HySave, out _sysMsg, out _msg);
+            StrSaveComp = Lo.SaveMasterUnit(HySave, out _sysMsg, out _msg);
         }
         else
         {

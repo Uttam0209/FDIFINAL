@@ -520,4 +520,5 @@
             </div>
             <div class="footer"><i class="fa fa-copyright" aria-hidden="true"></i>2019 <a href="#">Department of Defence Production</a> </div>
         </div>
+        </div>
 </asp:Content>

@@ -21,7 +21,6 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
     string RefNo;
     string UserEmail;
     string currentPage = "";
-    private string mType = "";
     private string mRefNo = "";
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -43,7 +42,7 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
                 divHeadPage.InnerHtml = strheadPage.ToString();
                 strheadPage.Append("</ul");
                 currentPage = System.IO.Path.GetFileName(Request.Url.AbsolutePath);
-                mType = objEnc.DecryptData(Session["Type"].ToString());
+                hidType.Value = objEnc.DecryptData(Session["Type"].ToString());
                 mRefNo = Session["CompanyRefNo"].ToString();
                 BindCompany();
                 BindGridView();
@@ -62,7 +61,7 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
     {
         try
         {
-            if (mType == "SuperAdmin")
+            if (hidType.Value == "SuperAdmin")
             {
                 DataTable DtGrid = Lo.RetriveProductCode("", "", "ProductMaster");
                 if (DtGrid.Rows.Count > 0)
@@ -82,9 +81,37 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
 
                 }
             }
-            else if (mType == "Company" && mRefNo != "")
+            else if (hidType.Value == "Company")
             {
-                DataTable DtGrid = Lo.RetriveProductCode("", mRefNo, "ProductMasterID");
+                if (ddlcompany.SelectedItem.Text != "Select" && ddldivision.SelectedItem.Text == "Select")
+                {
+                    DtGrid = Lo.RetriveProductCode(ddlcompany.SelectedItem.Value, "", "CompanyProduct");
+                }
+                if (DtGrid.Rows.Count > 0)
+                {
+                    gvproduct.DataSource = DtGrid;
+                    gvproduct.DataBind();
+                }
+            }
+            else if (hidType.Value == "Factory")
+            {
+                if (ddlcompany.SelectedItem.Text != "Select" && ddldivision.SelectedItem.Value != "Select")
+                {
+                    DtGrid = Lo.RetriveProductCode(ddldivision.SelectedItem.Value, "", "CompanyProduct");
+                }
+                if (DtGrid.Rows.Count > 0)
+                {
+                    gvproduct.DataSource = DtGrid;
+                    gvproduct.DataBind();
+                    ddlcompany.Enabled = false;
+                }
+            }
+            else if (hidType.Value == "Unit")
+            {
+                if (ddlcompany.SelectedItem.Text != "Select" && ddldivision.SelectedItem.Value != "Select" && ddlunit.SelectedItem.Text != "Select")
+                {
+                    DtGrid = Lo.RetriveProductCode(ddlunit.SelectedItem.Value, "", "CompanyProduct");
+                }
                 if (DtGrid.Rows.Count > 0)
                 {
                     gvproduct.DataSource = DtGrid;
@@ -154,11 +181,15 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
                 lblprodalredyindeginized.Text = DtView.Rows[0]["IsIndeginized"].ToString();
                 if (lblprodalredyindeginized.Text == "Y")
                 {
+                    lblprodalredyindeginized.Text = "Yes";
                     tablemanufacturename.Visible = true;
+                    tablemanufacturename1.Visible = true;
                     lblmanufacturename.Text = DtView.Rows[0]["ManufactureName"].ToString();
                 }
                 else
                 {
+                    lblprodalredyindeginized.Text = "No";
+                    tablemanufacturename1.Visible = false;
                     tablemanufacturename.Visible = false;
                 }
                 DataTable dtImageBind = Lo.RetriveProductCode("", e.CommandArgument.ToString(), "ProductImage");
@@ -185,7 +216,15 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
                 lblestimatedquantity.Text = DtView.Rows[0]["Estimatequantity"].ToString();
                 lblestimatedprice.Text = DtView.Rows[0]["EstimatePriceLLP"].ToString();
                 lbltenderstatus.Text = DtView.Rows[0]["TenderStatus"].ToString();
-                //  lbltendersubmission.Text = DtView.Rows[0]["TenderStatus"].ToString();
+                string tensub = DtView.Rows[0]["TenderSubmition"].ToString();
+                if (tensub.ToString() == "Y")
+                {
+                    lbltendersubmission.Text = "Yes";
+                }
+                else
+                {
+                    lbltendersubmission.Text = "No";
+                }
                 lbltenderdate.Text = DtView.Rows[0]["TenderFillDate"].ToString();
                 lbltenderurl.Text = DtView.Rows[0]["TenderUrl"].ToString();
                 DataTable dtNodal = Lo.RetriveProductCode("", e.CommandArgument.ToString(), "ProductNodal");
@@ -253,7 +292,7 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
     #region DropDownList
     protected void BindCompany()
     {
-        if (mType == "SuperAdmin")
+        if (hidType.Value == "SuperAdmin")
         {
             DtCompanyDDL = Lo.RetriveMasterData(0, "", "", 0, "", "", "Select");
             if (DtCompanyDDL.Rows.Count > 0)
@@ -270,10 +309,10 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
             lblselectdivison.Visible = false;
             lblselectunit.Visible = false;
         }
-        else if (mType == "Admin")
+        else if (hidType.Value == "Admin")
         {
         }
-        else if (mType == "Company")
+        else if (hidType.Value == "Company")
         {
             DtCompanyDDL = Lo.RetriveMasterData(0, mRefNo, "Company", 0, "", "", "CompanyName");
             if (DtCompanyDDL.Rows.Count > 0)
@@ -290,7 +329,7 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
             {
                 Co.FillDropdownlist(ddldivision, DtCompanyDDL, "FactoryName", "FactoryRefNo");
                 ddldivision.Items.Insert(0, "Select");
-                if (mType == "Company")
+                if (hidType.Value == "Company")
                 {
                     lblselectdivison.Visible = true;
                     ddldivision.Enabled = true;
@@ -306,7 +345,7 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
                 ddldivision.Enabled = false;
             }
         }
-        else if (mType == "Factory")
+        else if (hidType.Value == "Factory")
         {
             DtCompanyDDL = Lo.RetriveMasterData(0, mRefNo, "Company1", 0, "", "", "CompanyName");
             if (DtCompanyDDL.Rows.Count > 0)
@@ -342,7 +381,7 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
                 ddlunit.Visible = false;
             }
         }
-        else if (mType == "Unit")
+        else if (hidType.Value == "Unit")
         {
             DtCompanyDDL = Lo.RetriveMasterData(0, mRefNo, "Company2", 0, "", "", "CompanyName");
             if (DtCompanyDDL.Rows.Count > 0)
@@ -391,6 +430,7 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
                 ddldivision.Visible = true;
                 hidCompanyRefNo.Value = ddlcompany.SelectedItem.Value;
                 hidType.Value = "Company";
+                BindGridView();
             }
             else
             {
@@ -403,7 +443,6 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
             lblselectdivison.Visible = false;
             lblselectunit.Visible = false;
         }
-
         hfcomprefno.Value = "";
         hfcomprefno.Value = ddlcompany.SelectedItem.Value;
 
@@ -420,7 +459,8 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
                 ddlunit.Visible = true;
                 lblselectunit.Visible = true;
                 hidCompanyRefNo.Value = ddldivision.SelectedItem.Value;
-                hidType.Value = "Divison/Plant";
+                hidType.Value = "Factory";
+                BindGridView();
             }
             else
             {
@@ -440,6 +480,7 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
                 lblselectdivison.Visible = true;
                 ddldivision.Visible = true;
                 lblselectdivison.Visible = false;
+                BindGridView();
             }
             hfcomprefno.Value = "";
             hfcomprefno.Value = ddlcompany.SelectedItem.Value;
@@ -453,6 +494,7 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
         hidType.Value = "Unit";
         hfcomprefno.Value = "";
         hfcomprefno.Value = ddlunit.SelectedItem.Value;
-        }
+        BindGridView();
+    }
     #endregion
 }

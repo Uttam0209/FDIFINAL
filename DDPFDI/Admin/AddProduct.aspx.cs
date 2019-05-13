@@ -106,6 +106,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
             {
                 Co.FillDropdownlist(ddlcompany, DtCompanyDDL, "CompanyName", "CompanyRefNo");
                 ddlcompany.Enabled = false;
+                BindNodelEmail();
             }
             else
             {
@@ -148,6 +149,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
             if (DtCompanyDDL.Rows.Count > 0)
             {
                 Co.FillDropdownlist(ddldivision, DtCompanyDDL, "FactoryName", "FactoryRefNo");
+                BindNodelEmail();
                 lblselectdivison.Visible = true;
                 ddldivision.Enabled = false;
             }
@@ -195,6 +197,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
             if (DtCompanyDDL.Rows.Count > 0)
             {
                 Co.FillDropdownlist(ddlunit, DtCompanyDDL, "UnitName", "UnitRefNo");
+                BindNodelEmail();
                 ddlunit.Enabled = false;
                 lblselectunit.Visible = true;
             }
@@ -591,7 +594,28 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         {
             HyPanel1["ProductID"] = 0;
         }
-        HyPanel1["CompanyRefNo"] = Co.RSQandSQLInjection(hfcomprefno.Value, "soft");
+        if (ddlcompany.SelectedItem.Text != "Select" && ddldivision.SelectedItem.Text == "Select")
+        {
+            HyPanel1["CompanyRefNo"] = Co.RSQandSQLInjection(ddlcompany.SelectedItem.Value, "soft");
+            mType = "Company";
+            HyPanel1["Role"] = mType.ToString();
+        }
+        else if (ddlcompany.SelectedItem.Text != "Select" && ddldivision.SelectedItem.Text != "Select" && ddlunit.SelectedItem.Text == "Select")
+        {
+            HyPanel1["CompanyRefNo"] = Co.RSQandSQLInjection(ddldivision.SelectedItem.Value, "soft");
+            mType = "Factory";
+            HyPanel1["Role"] = mType.ToString();
+        }
+        else if (ddlcompany.SelectedItem.Text != "Select" && ddldivision.SelectedItem.Text != "Select" && ddlunit.SelectedItem.Text != "Select")
+        {
+            HyPanel1["CompanyRefNo"] = Co.RSQandSQLInjection(ddlunit.SelectedItem.Value, "soft");
+            mType = "Unit";
+            HyPanel1["Role"] = mType.ToString();
+        }
+        else
+        {
+            HyPanel1["CompanyRefNo"] = Co.RSQandSQLInjection(hfcomprefno.Value, "soft");
+        }
         HyPanel1["OEMPartNumber"] = Co.RSQandSQLInjection(txtoempartnumber.Text, "soft");
         HyPanel1["DPSUPartNumber"] = Co.RSQandSQLInjection(txtdpsupartnumber.Text, "soft");
         HyPanel1["EndUserPartNumber"] = Co.RSQandSQLInjection(txtenduserpartnumber.Text, "soft");
@@ -676,7 +700,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         HyPanel1["SearchKeyword"] = Co.RSQandSQLInjection(txtsearchkeyword.Text, "soft");
         if (files.HasFiles != false)
         {
-            if (Convert.ToInt16(hfprodid.Value) != 0)
+            if (hfprodid.Value != "")
             {
                 DataTable dtImageBind = Lo.RetriveProductCode("", hfprodrefno.Value, "RetriveImage");
                 if (dtImageBind.Rows.Count > 0)
@@ -758,7 +782,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
             HyPanel1["NodelDetail"] = Co.RSQandSQLInjection(ddlNodalOfficerEmail.SelectedItem.Value, "soft") + "," +
                                       Co.RSQandSQLInjection(ddlNodalOfficerEmail2.SelectedItem.Value, "soft") + ",";
         }
-        HyPanel1["Role"] = mType.ToString();
+
         string StrProductDescription = Lo.SaveCodeProduct(HyPanel1, dtImage, out _sysMsg, out _msg, "Product");
         if (StrProductDescription != "-1")
         {
@@ -830,6 +854,18 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         {
             ddlNodalOfficerEmail.SelectedIndex = 0;
             ddlNodalOfficerEmail2.SelectedIndex = 0;
+        }
+        foreach (GridViewRow rw in gvservices.Rows)
+        {
+            CheckBox chkBx = (CheckBox)rw.FindControl("chk");
+            HiddenField hfservicesid = (HiddenField)rw.FindControl("hfservicesid");
+            TextBox txtRemarks = (TextBox)rw.FindControl("txtRemarks");
+            if (chkBx != null && chkBx.Checked)
+            {
+                chkBx.Checked = false;
+                txtRemarks.Text = "";
+                hfservicesid.Value = "";
+            }
         }
     }
     #endregion
@@ -1012,5 +1048,5 @@ public partial class Admin_AddProduct : System.Web.UI.Page
             }
         }
     }
-    #endregion  
+    #endregion
 }
