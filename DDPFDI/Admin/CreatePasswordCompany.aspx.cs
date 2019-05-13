@@ -31,7 +31,7 @@ public partial class Admin_CreatePasswordCompany : System.Web.UI.Page
             if (txtpassword.Text == txttnewpass.Text)
             {
                 string sType = "";
-                if (((ViewState["Refno"].ToString()).Substring(0, 1)) == "F")
+                if (((ViewState["Refno"].ToString()).Substring(0, 1)) == "D")
                 {
                     sType = "LoginNewFactory";
                 }
@@ -46,16 +46,16 @@ public partial class Admin_CreatePasswordCompany : System.Web.UI.Page
                 string Updatepass = Lo.UpdateLoginPassword(Enc.EncryptData(txtpassword.Text), "", ViewState["Refno"].ToString(), sType);
                 if (Updatepass == "true")
                 {
-                    ScriptManager.RegisterStartupScript(this, this.GetType(), "alert", "alert('Password create successfully.Please login with new password.');window.location ='Login';", true);
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "alert", "alert('Password created successfully.Please login with new password.');window.location ='Login';", true);
                 }
                 else
                 {
-                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Password not create some error occure.')", true);
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Password not created. Some error occured.')", true);
                 }
             }
             else
             {
-                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Password not match')", true);
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Password mismatch')", true);
             }
         }
         else

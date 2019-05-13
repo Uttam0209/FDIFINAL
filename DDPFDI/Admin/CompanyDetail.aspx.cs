@@ -34,56 +34,60 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
         {
             try
             {
-                if (Request.QueryString["id"] != null)
+                if (Session["Type"] != null)
                 {
-                    string strid = Request.QueryString["id"].ToString().Replace(" ", "+");
-                    string strPageName = objCrypto.DecryptData(strid);
-                    StringBuilder strheadPage = new StringBuilder();
-                    strheadPage.Append("<ul class='breadcrumb'>");
-                    string[] MCateg = strPageName.Split(new string[] { ">>" }, StringSplitOptions.RemoveEmptyEntries);
-                    string MmCval = "";
-                    for (int x = 0; x < MCateg.Length; x++)
+                    if (Request.QueryString["id"] != null)
                     {
-                        MmCval = MCateg[x];
-                        strheadPage.Append("<li class=''><span>" + MmCval + "</span></li>");
+                        string strid = Request.QueryString["id"].ToString().Replace(" ", "+");
+                        string strPageName = objCrypto.DecryptData(strid);
+                        StringBuilder strheadPage = new StringBuilder();
+                        strheadPage.Append("<ul class='breadcrumb'>");
+                        string[] MCateg = strPageName.Split(new string[] { ">>" }, StringSplitOptions.RemoveEmptyEntries);
+                        string MmCval = "";
+                        for (int x = 0; x < MCateg.Length; x++)
+                        {
+                            MmCval = MCateg[x];
+                            strheadPage.Append("<li class=''><span>" + MmCval + "</span></li>");
+                        }
+                        divHeadPage.InnerHtml = strheadPage.ToString();
+                        strheadPage.Append("</ul");
                     }
-                    divHeadPage.InnerHtml = strheadPage.ToString();
-                    strheadPage.Append("</ul");
-                }
-                currentPage = System.IO.Path.GetFileName(Request.Url.AbsolutePath);
-                mType = objCrypto.DecryptData(Session["Type"].ToString());
-                mRefNo = Session["CompanyRefNo"].ToString();
-                BindState();
-                ddldivision.Visible = false;
-                ddlunit.Visible = false;
-                BindCompany();
+                    currentPage = System.IO.Path.GetFileName(Request.Url.AbsolutePath);
+                    mType = objCrypto.DecryptData(Session["Type"].ToString());
+                    mRefNo = Session["CompanyRefNo"].ToString();
+                    BindState();
+                    ddldivision.Visible = false;
+                    ddlunit.Visible = false;
+                    BindCompany();
 
-                BindMasterCategory();
-                BindNodelEmail();
-                if (objCrypto.DecryptData(Request.QueryString["mrcreaterole"].ToString()) == "Company")
-                {
-                    EditCOde(dtViewDefault);
-                    ddlcompany.Enabled = false;
-                    lblselectdivison.Visible = false;
-                    licc.Visible = false;
+                    BindMasterCategory();
+                    BindNodelEmail();
+                    if (objCrypto.DecryptData(Request.QueryString["mrcreaterole"].ToString()) == "Company")
+                    {
+                        EditCOde(dtViewDefault);
+                        ddlcompany.Enabled = false;
+                        lblselectdivison.Visible = false;
+                        licc.Visible = false;
 
-                }
-                else if (objCrypto.DecryptData(Request.QueryString["mrcreaterole"].ToString()) == "Factory")
-                {
-                    EditDivison(dtViewDefault);
-                    licc.Visible = false;
-                    lisr.Visible = false;
-                    lisc.Visible = false;
+                    }
+                    else if (objCrypto.DecryptData(Request.QueryString["mrcreaterole"].ToString()) == "Factory")
+                    {
+                        EditDivison(dtViewDefault);
+                        licc.Visible = false;
+                        lisr.Visible = false;
+                        lisc.Visible = false;
 
+                    }
+                    else if (objCrypto.DecryptData(Request.QueryString["mrcreaterole"].ToString()) == "Unit")
+                    {
+                        EditUnit(dtViewDefault);
+                        licc.Visible = false;
+                        lisr.Visible = false;
+                        licc.Visible = false;
+                    }
                 }
-                else if (objCrypto.DecryptData(Request.QueryString["mrcreaterole"].ToString()) == "Unit")
-                {
-                    EditUnit(dtViewDefault);
-                    licc.Visible = false;
-                    lisr.Visible = false;
-                    licc.Visible = false;
-                }
-
+                else
+                { Response.RedirectToRoute("Login"); }
             }
             catch (Exception ex)
             {
@@ -348,7 +352,7 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
                 lblMCName.Text = "Division";
                 txtMCName.Text = DtView.Rows[0]["FactoryName"].ToString();
                 lblCName.Text = "Division";
-                tcompanyname.ReadOnly = true; 
+                tcompanyname.ReadOnly = true;
                 ddlNodalOfficerEmail.SelectedValue = DtView.Rows[0]["NodalOfficeRefNo"].ToString();
                 if (ddlNodalOfficerEmail.SelectedItem.Value == "0")
                 {
@@ -369,7 +373,7 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
                 }
 
                 taddress.Text = DtView.Rows[0]["FactoryAddress"].ToString();
-                selstate.SelectedItem.Value = DtView.Rows[0]["FactoryStateID"].ToString();
+                selstate.SelectedValue = DtView.Rows[0]["FactoryStateID"].ToString();
                 DivCEOName.Visible = true;
                 tpincode.Text = DtView.Rows[0]["FactoryPincode"].ToString();
                 txtEmailID.Text = DtView.Rows[0]["FactoryEmailID"].ToString();
@@ -385,6 +389,8 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
                 txtlatitude.Text = DtView.Rows[0]["Factorylatitude"].ToString();
                 txtlongitude.Text = DtView.Rows[0]["Factorylongitude"].ToString();
                 DivCEOEmail.Visible = true;
+                divwebsite.Visible = false;
+                DivPAN.Visible = false;
                 if (lbltypelogin == "SuperAdmin" || lbltypelogin == "Admin")
                 {
                     DivJointVenture.Visible = false;
@@ -399,7 +405,7 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
                     DivJointVenture.Visible = false;
                     DivGST.Visible = true;
                     DivHSNO.Visible = true;
-                    DivPAN.Visible = true;
+                  //  DivPAN.Visible = true;
                     DivCIN.Visible = true;
                     DivActivities.Visible = false;
                 }
@@ -497,8 +503,9 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
                 lblCName.Text = "Unit";
                 tcompanyname.ReadOnly = true;
                 taddress.Text = DtView.Rows[0]["UnitAddress"].ToString();
-
-                selstate.SelectedItem.Value = DtView.Rows[0]["UnitStateID"].ToString();
+                DivPAN.Visible = false;
+                divwebsite.Visible = false;
+                selstate.SelectedValue = DtView.Rows[0]["UnitStateID"].ToString();
                 ddlNodalOfficerEmail.SelectedValue = DtView.Rows[0]["NodalOfficeRefNo"].ToString();
                 if (ddlNodalOfficerEmail.SelectedItem.Value == "0")
                 {
@@ -531,7 +538,7 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
                 txtInstagram.Text = DtView.Rows[0]["UnitInstagram"].ToString();
                 txtlatitude.Text = DtView.Rows[0]["Unitlatitude"].ToString();
                 txtlongitude.Text = DtView.Rows[0]["Unitlongitude"].ToString();
-                txtNEmailId.ReadOnly = true;
+                txtNEmailId.Enabled = false;
                 DivCEOEmail.Visible = true;
                 if (lbltypelogin == "SuperAdmin" || lbltypelogin == "Admin")
                 {
@@ -732,7 +739,7 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
         {
             HySave["NodalOfficeRefNo"] = ddlNodalOfficerEmail.SelectedItem.Value;
         }
-        HySave["FactoryNodalOfficerEmailId"] = Co.RSQandSQLInjection(txtNEmailId.Text.Trim(),"soft");
+        HySave["FactoryNodalOfficerEmailId"] = Co.RSQandSQLInjection(txtNEmailId.Text.Trim(), "soft");
         if (selstate.SelectedItem.Text == "Select State")
         {
             HySave["FactoryStateID"] = null;
@@ -780,7 +787,7 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
         {
             HySave["NodalOfficeRefNo"] = ddlNodalOfficerEmail.SelectedItem.Value;
         }
-        HySave["UnitNodalOfficerEmailId"] = Co.RSQandSQLInjection(txtNEmailId.Text.Trim(),"soft");
+        HySave["UnitNodalOfficerEmailId"] = Co.RSQandSQLInjection(txtNEmailId.Text.Trim(), "soft");
         HySave["UnitPincode"] = Co.RSQandSQLInjection(tpincode.Text.Trim(), "soft");
         HySave["UnitCEOName"] = Co.RSQandSQLInjection(txtceoname.Text.Trim(), "soft");
         HySave["UnitCEOEmail"] = Co.RSQandSQLInjection(txtCEOEmailId.Text.Trim(), "soft");
@@ -1311,7 +1318,7 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
     }
     protected void BindNodelEmail()
     {
-        DtCompanyDDL = Lo.RetriveMasterData(0, ddlcompany.SelectedItem.Value,"", 0, "", "", "CompanyNodelDetail");
+        DtCompanyDDL = Lo.RetriveMasterData(0, ddlcompany.SelectedItem.Value, "", 0, "", "", "CompanyNodelDetail");
         if (DtCompanyDDL.Rows.Count > 0)
         {
             Co.FillDropdownlist(ddlNodalOfficerEmail, DtCompanyDDL, "NodalOficerName", "NodalOfficerRefNo");
@@ -1323,7 +1330,7 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
     {
         if (ddlNodalOfficerEmail.SelectedItem.Text != "Select Nodel Officer")
         {
-            DataTable DtGetNodel = Lo.RetriveMasterData(0,ddlNodalOfficerEmail.SelectedItem.Value, "", 0, "", "", "CompleteNodelDetail");
+            DataTable DtGetNodel = Lo.RetriveMasterData(0, ddlNodalOfficerEmail.SelectedItem.Value, "", 0, "", "", "CompleteNodelDetail");
             if (DtGetNodel.Rows.Count > 0)
             {
                 txtNName.Text = DtGetNodel.Rows[0]["NodalOficerName"].ToString();

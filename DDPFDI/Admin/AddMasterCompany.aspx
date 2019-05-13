@@ -179,6 +179,8 @@
                                         <asp:BoundField ItemStyle-Width="150px" DataField="UnitName" HeaderText="Unit" />
                                         <asp:BoundField ItemStyle-Width="150px" DataField="UnitRefNo" HeaderText="Reference No." />
                                         <asp:BoundField ItemStyle-Width="150px" DataField="ContactPersonEmailID" HeaderText="Nodal Officer" />
+                                        <asp:BoundField ItemStyle-Width="150px" DataField="FactoryNodalOfficerEmailId" HeaderText="Nodal Officer" />
+                                        <asp:BoundField ItemStyle-Width="150px" DataField="UnitNodalOfficerEmailId" HeaderText="Nodal Officer" />
                                         <asp:BoundField ItemStyle-Width="150px" DataField="Role" HeaderText="Role" />
                                     </Columns>
                                 </asp:GridView>
