@@ -250,15 +250,7 @@
             return true;
         };
     </script>
-    <!---Progress Bar ---->
-    <div class="overlay-progress" style="display: none">
-        <div class="custom-progress-bar blue stripes">
-            <span></span>
-            <p>Processing</p>
-        </div>
-    </div>
 
-    <!---Progress Bar ---->
     <!--------------------------Gallery----------------------->
 <script>
     $(function () {
@@ -288,6 +280,26 @@
 </script>
 
 
+<!-----Alert Box ------>
+<div class="alert-overlay" style="display:none">
+    <div class="alert-box">
+    <div class="box">
+        <div class="success-checkmark">
+            <div class="check-icon">
+            <span class="icon-line line-tip"></span>
+            <span class="icon-line line-long"></span>
+            <div class="icon-circle"></div>
+            <div class="icon-fix"></div>
+            </div>
+        </div>
+        <div class="alert">
+            Successfully Saved !
+        </div>
+        <button class="btn btn-success">OK</button>
+    </div>
+    </div>
+</div>
+<!-----Alert Box ------>
 
 </body>
 </html>

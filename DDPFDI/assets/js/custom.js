@@ -83,6 +83,13 @@ $(document).ready(function(){
        }
     });
 
+//Alert pop up box
+
+$("").on('click', function(){
+    $("body").css('overflow','hidden');
+    $('.alert-overlay').show();
+});
+
 });
 
 

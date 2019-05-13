@@ -188,13 +188,21 @@
     </asp:UpdatePanel>
   <%--  <asp:UpdateProgress ID="UpdateProgress" runat="server" AssociatedUpdatePanelID="up">
         <ProgressTemplate>
+<<<<<<< HEAD
             <div class="overlay">
                 <div style="z-index: 999; margin-left: 650px; margin-top: 300px; opacity: 0.3; -moz-opacity: 0.3;">
                     <div class="overlay-progress">
                         <%--<img src="/assets/images/loader.gif" alt="" />
+=======
+               <!---Progress Bar ---->
+                <div class="overlay-progress">
+                    <div class="custom-progress-bar blue stripes">
+                        <span></span>
+                        <p>Processing</p>
+>>>>>>> 2eadf1240c82c955207bef6975214d3525cb28ed
                     </div>
                 </div>
-            </div>
+    <!---Progress Bar ---->
         </ProgressTemplate>
     </asp:UpdateProgress>--%>
 </asp:Content>
