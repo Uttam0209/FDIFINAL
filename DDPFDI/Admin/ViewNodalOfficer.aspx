@@ -83,7 +83,7 @@
                                         <PagerStyle HorizontalAlign="Center" CssClass="GridPager" />
                                         <Columns>
 
-                                            <asp:TemplateField HeaderText="S.No">
+                                            <asp:TemplateField HeaderText="S.No.">
                                                 <ItemTemplate>
                                                     <%#Container.DataItemIndex+1 %>
                                                 </ItemTemplate>
@@ -207,7 +207,7 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
                             </div>
                         </form>
                     </div>

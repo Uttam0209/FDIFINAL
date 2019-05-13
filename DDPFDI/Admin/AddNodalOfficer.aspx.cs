@@ -524,6 +524,7 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
         if (chkrole.Checked)
         {
             hySaveNodal["IsNodalOfficer"] = "Y";
+            SendEmailCode();
         }
         else
         {
@@ -533,7 +534,7 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
         string Str = Lo.SaveMasterNodal(hySaveNodal, out _sysMsg, out _msg);
         if (Str == "Save")
         {
-            Cleartext();
+            
             
             if (ddldivision.SelectedValue != "Select")
             {
@@ -551,7 +552,16 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
                 GridViewNodalOfficerBind(hidCompanyRefNo.Value,"Company");
             }
 
-            SendEmailCode();
+            if (chkrole.Checked)
+            {
+                
+                SendEmailCode();
+            }
+            else
+            {
+                
+            }
+            Cleartext();
 
             ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record saved successsfully')", true);
         }
@@ -641,6 +651,11 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
         ddldesignation.SelectedIndex = 0;
         btnsub.Text = "Save";
         txtEmpCode.Text = "";
+    }
+
+    protected void btncancel_Click(object sender, EventArgs e)
+    {
+        Cleartext();
     }
 
     protected void EditCode()

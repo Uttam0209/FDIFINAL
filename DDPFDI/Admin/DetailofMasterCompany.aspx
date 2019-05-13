@@ -129,7 +129,7 @@
                                                                                             </asp:TemplateField>
                                                                                             <asp:TemplateField>
                                                                                                 <ItemTemplate>
-                                                                                                    <asp:Label ID="lblunitnodelname" runat="server" Text='<%#Eval("UnitEmailId") %>' NullDisplayText="#" SortExpression="ContactPersonEmailID"></asp:Label>
+                                                                                                    <asp:Label ID="lblunitnodelname" runat="server" Text='<%#Eval("UnitEmailId") %>' NullDisplayText="#" ></asp:Label>
                                                                                                     <asp:HiddenField runat="server" ID="hfunitemail" Value='<%#Eval("UnitEmailId") %>' />
                                                                                                 </ItemTemplate>
                                                                                             </asp:TemplateField>
@@ -163,7 +163,7 @@
 
                                                                     <asp:TemplateField>
                                                                         <ItemTemplate>
-                                                                            <asp:Label ID="lblfactorynodelname" runat="server" Text='<%#Eval("FactoryEmailId") %>' NullDisplayText="#" SortExpression="ContactPersonEmailID"></asp:Label>
+                                                                            <asp:Label ID="lblfactorynodelname" runat="server" Text='<%#Eval("FactoryEmailId") %>' NullDisplayText="#" ></asp:Label>
                                                                             <asp:HiddenField runat="server" ID="hffactoryemail" Value='<%#Eval("FactoryEmailId") %>' />
                                                                         </ItemTemplate>
                                                                     </asp:TemplateField>
@@ -182,17 +182,17 @@
                                                     </div>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
-                                            <asp:TemplateField HeaderText="S.No">
+                                            <asp:TemplateField HeaderText="S.No.">
                                                 <ItemTemplate>
                                                     <%#Container.DataItemIndex+1 %>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
-                                            <asp:TemplateField HeaderText="Reference No">
+                                            <asp:TemplateField HeaderText="Reference No.">
                                                 <ItemTemplate>
-                                                    <asp:Label ID="lblrefno" runat="server" Text='<%#Eval("CompanyRefNo") %>' NullDisplayText="#" SortExpression="CompanyRefNo"></asp:Label>
+                                                    <asp:Label ID="lblrefno" runat="server" Text='<%#Eval("CompanyRefNo") %>' NullDisplayText="#" ></asp:Label>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
-                                            <asp:BoundField DataField="CompanyName" HeaderText="Company" NullDisplayText="#" SortExpression="Company" />
+                                            <asp:BoundField DataField="CompanyName" HeaderText="Company" NullDisplayText="#"  />
                                             <asp:TemplateField HeaderText="Role">
                                                 <ItemTemplate>
                                                     <asp:Label runat="server" ID="lblcompanyrole" Text='<%#Eval("Role") %>'></asp:Label>
@@ -200,7 +200,7 @@
                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="Nodal Official Email">
                                                 <ItemTemplate>
-                                                    <asp:Label ID="lblnodelname" runat="server" Text='<%#Eval("ContactPersonEmailID") %>' NullDisplayText="#" SortExpression="ContactPersonEmailID"></asp:Label>
+                                                    <asp:Label ID="lblnodelname" runat="server" Text='<%#Eval("ContactPersonEmailID") %>' NullDisplayText="#"></asp:Label>
                                                     <asp:HiddenField runat="server" ID="hfemail" Value='<%#Eval("ContactPersonEmailID") %>' />
                                                 </ItemTemplate>
                                             </asp:TemplateField>
@@ -238,13 +238,13 @@
                                     <table class="table table-bordered">
                                         <tbody>
                                             <tr>
-                                                <td class="pass" width="30%">Reference No </td>
+                                                <td class="pass" width="30%">Reference No. </td>
                                                 <td>
                                                     <asp:Label ID="lblrefno" runat="server"></asp:Label>
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td class="pass">Company Name</td>
+                                                <td class="pass">Company</td>
                                                 <td>
                                                     <asp:Label ID="lblcompanyname" runat="server"></asp:Label>
                                                 </td>
@@ -383,7 +383,7 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
                             </div>
                         </form>
                     </div>
@@ -403,13 +403,13 @@
                                     <table class="table table-bordered">
                                         <tbody>
                                             <tr>
-                                                <td class="pass" width="30%">Reference No </td>
+                                                <td class="pass" width="30%">Reference No. </td>
                                                 <td>
                                                     <asp:Label ID="lblfacrefno" runat="server"></asp:Label>
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td class="pass">Division Name</td>
+                                                <td class="pass">Division</td>
                                                 <td>
                                                     <asp:Label ID="lblDivName" runat="server"></asp:Label>
                                                 </td>
@@ -514,7 +514,7 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
                             </div>
                         </form>
                     </div>
@@ -534,13 +534,13 @@
                                     <table class="table table-bordered">
                                         <tbody>
                                             <tr>
-                                                <td class="pass" width="30%">Reference No </td>
+                                                <td class="pass" width="30%">Reference No. </td>
                                                 <td>
                                                     <asp:Label ID="lblurefno" runat="server"></asp:Label>
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td class="pass">Unit Name</td>
+                                                <td class="pass">Unit</td>
                                                 <td>
                                                     <asp:Label ID="lblUnitName" runat="server"></asp:Label>
                                                 </td>
@@ -642,7 +642,7 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
                             </div>
                         </form>
                     </div>
