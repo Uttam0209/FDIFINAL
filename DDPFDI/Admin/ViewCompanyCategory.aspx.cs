@@ -1,141 +1,98 @@
 ﻿using System;
-using System.Web.UI;
-using System.Web.UI.WebControls;
+using System.Data;
 using BusinessLayer;
 using Encryption;
-using System.Data;
+using System.Collections.Specialized;
+using System.Web.UI;
 using System.Text.RegularExpressions;
 using System.Text;
 using System.IO;
-using System.Threading;
+using System.Net;
+using System.Web.UI.WebControls;
 
-public partial class Admin_ViewCategory : System.Web.UI.Page
+public partial class Admin_ViewCompanyCategory : System.Web.UI.Page
 {
     Logic Lo = new Logic();
-    DataUtility Co = new DataUtility();
+    HybridDictionary HySave = new HybridDictionary();
     Cryptography objEnc = new Cryptography();
-    DataTable DtGrid = new DataTable();
-    DataTable DtCompanyDDL = new DataTable();
-    string UserName;
-    string RefNo;
-    string UserEmail;
+    Int64 Mid = 0;
+    DataUtility Co = new DataUtility();
+    string _msg = string.Empty;
+    string _sysMsg = string.Empty;
+    DataTable DtView = new DataTable();
     string currentPage = "";
-    private string mType = "";
-    private string mRefNo = "";
+    string lbltypelogin = "";
+    private string Categoryintrestedare = "";
+    DataTable DtCompanyDDL = new DataTable();
+    DataTable dtViewDefault = new DataTable();
+    string strCRole, strDRole, strURole;
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
         {
-            if (Session["Type"] != null)
+            if (Request.QueryString["id"] != null)
             {
-                if (Request.QueryString["id"] != null)
+                string strid = Request.QueryString["id"].ToString().Replace(" ", "+");
+                string strPageName = objEnc.DecryptData(strid);
+                StringBuilder strheadPage = new StringBuilder();
+                strheadPage.Append("<ul class='breadcrumb'>");
+                string[] MCateg = strPageName.Split(new string[] { ">>" }, StringSplitOptions.RemoveEmptyEntries);
+                string MmCval = "";
+                for (int x = 0; x < MCateg.Length; x++)
                 {
-                    string strid = Request.QueryString["id"].ToString().Replace(" ", "+");
-                    string strPageName = objEnc.DecryptData(strid);
-                    StringBuilder strheadPage = new StringBuilder();
-                    strheadPage.Append("<ul class='breadcrumb'>");
-                    string[] MCateg = strPageName.Split(new string[] { ">>" }, StringSplitOptions.RemoveEmptyEntries);
-                    string MmCval = "";
-                    for (int x = 0; x < MCateg.Length; x++)
-                    {
-                        MmCval = MCateg[x];
-                        strheadPage.Append("<li class=''><span>" + MmCval + "</span></li>");
-                    }
-                    divHeadPage.InnerHtml = strheadPage.ToString();
-                    strheadPage.Append("</ul");
+                    MmCval = MCateg[x];
+                    strheadPage.Append("<li class=''><span>" + MmCval + "</span></li>");
                 }
-                currentPage = System.IO.Path.GetFileName(Request.Url.AbsolutePath);
-                currentPage = System.IO.Path.GetFileName(Request.Url.AbsolutePath);
-                mType = objEnc.DecryptData(Session["Type"].ToString());
-                mRefNo = Session["CompanyRefNo"].ToString();
-                //  BindCompany();
-                BindGridView();
-                BindMasterCategory();
+                divHeadPage.InnerHtml = strheadPage.ToString();
+                strheadPage.Append("</ul");
             }
-        }
-        else
-        {
-
+            currentPage = System.IO.Path.GetFileName(Request.Url.AbsolutePath);
+            currentPage = System.IO.Path.GetFileName(Request.Url.AbsolutePath);
+            hidType.Value = objEnc.DecryptData(Session["Type"].ToString());
+            hfcomprefno.Value = Session["CompanyRefNo"].ToString();
+            BindCompany();
+            BindGridView();
         }
     }
     #region Load
-    protected void BindGridView(string sortExpression = null)
+    protected void BindGridView()
     {
         try
         {
-            if (mType == "SuperAdmin" || mType=="Admin")
+            if (hidType.Value == "SuperAdmin")
             {
-                DataTable DtGrid = Lo.RetriveMasterCategoryDate(0, "", "", "", "", "SelectAll");
+                DataTable DtGrid = Lo.RetriveMasterCategoryDate(0, "", "", "", "", "Select");
                 if (DtGrid.Rows.Count > 0)
                 {
-                    if (sortExpression != null)
-                    {
-                        DataView dv = DtGrid.AsDataView();
-                        this.SortDirection = this.SortDirection == "ASC" ? "DESC" : "ASC";
-                        dv.Sort = sortExpression + " " + this.SortDirection;
-                        gvCategory.DataSource = dv;
-                    }
-                    else
-                    {
-                        gvCategory.DataSource = DtGrid;
-                    }
+
+                    gvCategory.DataSource = DtGrid;
                     gvCategory.DataBind();
                 }
             }
-            else if (mType == "Company" && mRefNo != "")
+            else if (hidType.Value == "Company" && hfcomprefno.Value != "")
             {
-                DataTable DtGrid = Lo.RetriveMasterSubCategoryDate(0, "", "", "SubCompCat", mRefNo);
+                DataTable DtGrid = Lo.RetriveMasterSubCategoryDate(0, "", "", "SubCompCat", hfcomprefno.Value);
                 if (DtGrid.Rows.Count > 0)
                 {
-                    if (sortExpression != null)
-                    {
-                        DataView dv = DtGrid.AsDataView();
-                        this.SortDirection = this.SortDirection == "ASC" ? "DESC" : "ASC";
-                        dv.Sort = sortExpression + " " + this.SortDirection;
-                        gvCategory.DataSource = dv;
-                    }
-                    else
-                    {
-                        gvCategory.DataSource = DtGrid;
-                    }
+                    gvCategory.DataSource = DtGrid;
                     gvCategory.DataBind();
                 }
             }
-            else if (mType == "Factroy" && mRefNo != "")
+            else if (hidType.Value == "Factory" && hfcomprefno.Value != "")
             {
-                DataTable DtGrid = Lo.RetriveMasterSubCategoryDate(0, "", "", "SubCompCat", mRefNo);
+                DataTable DtGrid = Lo.RetriveMasterSubCategoryDate(0, "", "", "SubCompCat", hfcomprefno.Value);
                 if (DtGrid.Rows.Count > 0)
                 {
-                    if (sortExpression != null)
-                    {
-                        DataView dv = DtGrid.AsDataView();
-                        this.SortDirection = this.SortDirection == "ASC" ? "DESC" : "ASC";
-                        dv.Sort = sortExpression + " " + this.SortDirection;
-                        gvCategory.DataSource = dv;
-                    }
-                    else
-                    {
-                        gvCategory.DataSource = DtGrid;
-                    }
+                    gvCategory.DataSource = DtGrid;
                     gvCategory.DataBind();
                 }
             }
-            else if (mType == "Unit" && mRefNo != "")
+            else if (hidType.Value == "Unit" && hfcomprefno.Value != "")
             {
-                DataTable DtGrid = Lo.RetriveMasterSubCategoryDate(0, "", "", "SubCompCat", mRefNo);
+                DataTable DtGrid = Lo.RetriveMasterSubCategoryDate(0, "", "", "SubCompCat", hfcomprefno.Value);
                 if (DtGrid.Rows.Count > 0)
                 {
-                    if (sortExpression != null)
-                    {
-                        DataView dv = DtGrid.AsDataView();
-                        this.SortDirection = this.SortDirection == "ASC" ? "DESC" : "ASC";
-                        dv.Sort = sortExpression + " " + this.SortDirection;
-                        gvCategory.DataSource = dv;
-                    }
-                    else
-                    {
-                        gvCategory.DataSource = DtGrid;
-                    }
+                    gvCategory.DataSource = DtGrid;
                     gvCategory.DataBind();
                 }
             }
@@ -144,29 +101,13 @@ public partial class Admin_ViewCategory : System.Web.UI.Page
         {
         }
     }
-    private string SortDirection
-    {
-        get { return ViewState["SortDirection"] != null ? ViewState["SortDirection"].ToString() : "ASC"; }
-        set { ViewState["SortDirection"] = value; }
-    }
-    #endregion
-    #region PageIndex or Sorting
-    protected void OnPageIndexChanging(object sender, GridViewPageEventArgs e)
-    {
-        gvCategory.PageIndex = e.NewPageIndex;
-        this.BindGridView();
-    }
-    protected void OnSorting(object sender, GridViewSortEventArgs e)
-    {
-        this.BindGridView(e.SortExpression);
-    }
     #endregion
     #region RowDatabound
     protected void OnRowDataBound(object sender, GridViewRowEventArgs e)
     {
         if (e.Row.RowType == DataControlRowType.DataRow)
         {
-            if (mType == "SuperAdmin")
+            if (hidType.Value == "SuperAdmin")
             {
                 HiddenField lblCatId = e.Row.FindControl("hfcat") as HiddenField;
                 GridView gvSubcat = e.Row.FindControl("gvsubcatlevel1") as GridView;
@@ -177,11 +118,33 @@ public partial class Admin_ViewCategory : System.Web.UI.Page
                     gvSubcat.DataBind();
                 }
             }
-            else if (mType != "SuperAdmin")
+            else if (hidType.Value != "Company")
             {
                 HiddenField lblCatId = e.Row.FindControl("hfcat") as HiddenField;
                 GridView gvSubcat = e.Row.FindControl("gvsubcatlevel1") as GridView;
-                DataTable DtGrid = Lo.RetriveMasterSubCategoryDate(Convert.ToInt16(lblCatId.Value), "", "", "MasterCatComp1", "");
+                DataTable DtGrid = Lo.RetriveMasterSubCategoryDate(Convert.ToInt16(lblCatId.Value), "", "", "MasterCatComp2", hfcomprefno.Value);
+                if (DtGrid.Rows.Count > 0)
+                {
+                    gvSubcat.DataSource = DtGrid;
+                    gvSubcat.DataBind();
+                }
+            }
+            else if (hidType.Value != "Factory")
+            {
+                HiddenField lblCatId = e.Row.FindControl("hfcat") as HiddenField;
+                GridView gvSubcat = e.Row.FindControl("gvsubcatlevel1") as GridView;
+                DataTable DtGrid = Lo.RetriveMasterSubCategoryDate(Convert.ToInt16(lblCatId.Value), "", "", "MasterCatComp2", hfcomprefno.Value);
+                if (DtGrid.Rows.Count > 0)
+                {
+                    gvSubcat.DataSource = DtGrid;
+                    gvSubcat.DataBind();
+                }
+            }
+            else if (hidType.Value != "Unit")
+            {
+                HiddenField lblCatId = e.Row.FindControl("hfcat") as HiddenField;
+                GridView gvSubcat = e.Row.FindControl("gvsubcatlevel1") as GridView;
+                DataTable DtGrid = Lo.RetriveMasterSubCategoryDate(Convert.ToInt16(lblCatId.Value), "", "", "MasterCatComp2", hfcomprefno.Value);
                 if (DtGrid.Rows.Count > 0)
                 {
                     gvSubcat.DataSource = DtGrid;
@@ -361,29 +324,99 @@ public partial class Admin_ViewCategory : System.Web.UI.Page
         }
     }
     #endregion
-    #region SeachCode
-    protected void BindMasterCategory()
+    #region DropDownList
+    protected void BindCompany()
     {
-        DataTable DtMasterCategroy = new DataTable();
-        DtMasterCategroy = Lo.RetriveMasterCategoryDate(0, "", "", "", "", "Select");
-        if (DtMasterCategroy.Rows.Count > 0)
+        if (hidType.Value == "SuperAdmin")
         {
-            Co.FillDropdownlist(ddlsearch, DtMasterCategroy, "MCategoryName", "MCategoryID");
-            ddlsearch.Items.Insert(0, "All");
+            DtCompanyDDL = Lo.RetriveMasterData(0, "", "", 0, "", "", "Select");
+            if (DtCompanyDDL.Rows.Count > 0)
+            {
+                Co.FillDropdownlist(ddlcompany, DtCompanyDDL, "CompanyName", "CompanyRefNo");
+                ddlcompany.Items.Insert(0, "Select");
+                ddlcompany.Enabled = true;
+            }
+            else
+            {
+                ddlcompany.Enabled = false;
+            }
+            lblselectdivison.Visible = false;
+            lblselectunit.Visible = false;
         }
-        else
+        else if (hidType.Value == "Admin")
         {
-            ddlsearch.Items.Insert(0, "All");
         }
-    }
-    protected void ddlsearch_OnSelectedIndexChanged(object sender, EventArgs e)
-    {
-        Thread.Sleep(5000);
-        DataTable DtGrid = Lo.RetriveMasterCategoryDate(Convert.ToInt16(ddlsearch.SelectedItem.Value), "", "", "", "", "SelectByLavel");
-        if (DtGrid.Rows.Count > 0)
+        else if (hidType.Value == "Company")
         {
-            gvCategory.DataSource = DtGrid;
-            gvCategory.DataBind();
+            DtCompanyDDL = Lo.RetriveMasterData(0, hfcomprefno.Value, "Company", 0, "", "", "CompanyName");
+            if (DtCompanyDDL.Rows.Count > 0)
+            {
+                Co.FillDropdownlist(ddlcompany, DtCompanyDDL, "CompanyName", "CompanyRefNo");
+                ddlcompany.Enabled = false;
+            }
+            else
+            {
+                ddlcompany.Enabled = false;
+            }
+        }
+        else if (hidType.Value == "Factory")
+        {
+            DtCompanyDDL = Lo.RetriveMasterData(0, hfcomprefno.Value, "Company1", 0, "", "", "CompanyName");
+            if (DtCompanyDDL.Rows.Count > 0)
+            {
+                Co.FillDropdownlist(ddlcompany, DtCompanyDDL, "CompanyName", "CompanyRefNo");
+                ddlcompany.Enabled = false;
+            }
+            else
+            {
+                ddlcompany.Enabled = false;
+            }
+            DtCompanyDDL = Lo.RetriveMasterData(0, ddlcompany.SelectedItem.Value, "Factory1", 0, "", "", "CompanyName");
+            if (DtCompanyDDL.Rows.Count > 0)
+            {
+                Co.FillDropdownlist(ddldivision, DtCompanyDDL, "FactoryName", "FactoryRefNo");
+                lblselectdivison.Visible = true;
+                ddldivision.Enabled = false;
+            }
+            else
+            {
+                ddldivision.Enabled = false;
+            }
+        }
+        else if (hidType.Value == "Unit")
+        {
+            DtCompanyDDL = Lo.RetriveMasterData(0, hfcomprefno.Value, "Company2", 0, "", "", "CompanyName");
+            if (DtCompanyDDL.Rows.Count > 0)
+            {
+                Co.FillDropdownlist(ddlcompany, DtCompanyDDL, "CompanyName", "CompanyRefNo");
+                ddlcompany.Enabled = false;
+            }
+            else
+            {
+                ddlcompany.Enabled = false;
+            }
+            DtCompanyDDL = Lo.RetriveMasterData(0, ddlcompany.SelectedItem.Value, "Factory1", 0, "", "", "CompanyName");
+            if (DtCompanyDDL.Rows.Count > 0)
+            {
+                Co.FillDropdownlist(ddldivision, DtCompanyDDL, "FactoryName", "FactoryRefNo");
+                lblselectdivison.Visible = true;
+                ddldivision.Enabled = false;
+            }
+            else
+            {
+                ddldivision.Enabled = false;
+            }
+            DtCompanyDDL = Lo.RetriveMasterData(0, ddldivision.SelectedItem.Value, "Unit1", 0, "", "", "CompanyName");
+            if (DtCompanyDDL.Rows.Count > 0)
+            {
+                Co.FillDropdownlist(ddlunit, DtCompanyDDL, "UnitName", "UnitRefNo");
+                ddlunit.Enabled = false;
+                lblselectunit.Visible = true;
+            }
+            else
+            {
+                lblselectunit.Visible = false;
+            }
         }
     }
     #endregion

@@ -49,12 +49,14 @@
             </div>
             <div class="tabing-section">
                 <ul class="nav nav-tabs">
-                    <li class="active"><a data-toggle="tab" href="#pd">Product Description</a></li>
-                    <li><a data-toggle="tab" href="#pimg">Product Image</a></li>
-                    <li><a data-toggle="tab" href="#spd">Support Provided by DPSU</a></li>
-                    <li><a data-toggle="tab" href="#qpt">Quantity Required</a></li>
-                    <li><a data-toggle="tab" href="#tnd">Tender Status</a></li>
-                    <li><a data-toggle="tab" href="#cd">Contact Details</a></li>
+                    <li class="active"><a data-toggle="tab" href="#pd">Description</a></li>
+                    <li><a data-toggle="tab" href="#pimg">Image</a></li>
+                    <li><a data-toggle="tab" href="#spd">Support by DPSU</a></li>
+                    <li><a data-toggle="tab" href="#qpt">Quantity</a></li>
+                    <li><a data-toggle="tab" href="#tnd">Tender </a></li>
+                    <li><a data-toggle="tab" href="#cd">Contact </a></li>
+                    <li><a data-toggle="tab" href="#">Testing </a></li>
+                    <li><a data-toggle="tab" href="#">Certification</a></li>
                 </ul>
 
                 <div class="tab-content">

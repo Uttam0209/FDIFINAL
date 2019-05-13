@@ -1,32 +1,11 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="ViewCategory.aspx.cs" Inherits="Admin_ViewCategory" MasterPageFile="~/Admin/MasterPage.master" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="ViewCompanyCategory.aspx.cs" Inherits="Admin_ViewCompanyCategory" MasterPageFile="~/Admin/MasterPage.master" %>
 
 <asp:Content ID="head" runat="server" ContentPlaceHolderID="head">
-    <!---------------------------------------------------------Update panel progress---------------------->
-   <%-- <script type="text/javascript">
-        function showProgress() {
-            var updateProgress = $get("<%= UpdateProgress.ClientID %>");
-            updateProgress.style.display = "block";
-        }
-    </script>
-    <style type="text/css">
-        .overlay {
-            position: fixed;
-            z-index: 999999;
-            height: 100%;
-            width: 100%;
-            top: 0;
-            background-color: Black;
-            filter: alpha(opacity=90);
-            opacity: 0.2;
-            -moz-opacity: 0.2;
-            margin-left: -280px;
-            margin-top: 0px;
-        }
-    </style>--%>
-    <!----------------------------End----------------------------------->
 </asp:Content>
 <asp:Content ID="inner" runat="server" ContentPlaceHolderID="ContentPlaceHolder1">
     <asp:ScriptManager ID="sc" runat="server"></asp:ScriptManager>
+    <asp:HiddenField runat="server" ID="hidType" />
+    <asp:HiddenField runat="server" ID="hfcomprefno" />
     <asp:UpdatePanel ID="up" runat="server">
         <ContentTemplate>
             <div class="content oem-content">
@@ -40,15 +19,29 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="row">
-                                    <div class="col-sm-4">
-                                        <label>Search</label>
-                                        <asp:DropDownList runat="server" ID="ddlsearch" CssClass="form-control" AutoPostBack="True" OnSelectedIndexChanged="ddlsearch_OnSelectedIndexChanged"></asp:DropDownList>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Select Company</label>
+                                            <asp:DropDownList runat="server" ID="ddlcompany" class="form-cascade-control form-control"></asp:DropDownList>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4" runat="server" id="lblselectdivison" visible="False">
+                                        <div class="form-group">
+                                            <label>Select Division/Palnt</label>
+                                            <asp:DropDownList runat="server" ID="ddldivision" class="form-cascade-control form-control"></asp:DropDownList>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4" runat="server" id="lblselectunit" visible="False">
+                                        <div class="form-group">
+                                            <label>Select Unit</label>
+                                            <asp:DropDownList runat="server" ID="ddlunit" class="form-cascade-control form-control"></asp:DropDownList>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="table-wrapper">
                                     <div class="table-wraper">
                                         <asp:GridView ID="gvCategory" runat="server" Width="100%" Class="commonAjaxTbl viewCatDropDown master-company-table table display responsive no-wrap table-hover manage-user Grid" AutoGenerateColumns="false" AllowPaging="true"
-                                            OnPageIndexChanging="OnPageIndexChanging" PageSize="25" AllowSorting="true" OnSorting="OnSorting" OnRowDataBound="OnRowDataBound" OnRowCommand="gvCategory_RowCommand">
+                                            PageSize="25" OnRowDataBound="OnRowDataBound" OnRowCommand="gvCategory_RowCommand">
                                             <PagerStyle HorizontalAlign="Center" CssClass="GridPager" />
                                             <Columns>
                                                 <asp:TemplateField>
@@ -94,7 +87,7 @@
                                                                                                                         <asp:TemplateField>
                                                                                                                             <ItemTemplate>
                                                                                                                                 <%--<asp:LinkButton ID="lbleditlevel2values" runat="server" CssClass="fa fa-edit" CommandName="level2edit" CommandArgument='<%#Eval("SCategoryId") %>'></asp:LinkButton>--%>
-                                                                                                                                <asp:LinkButton ID="lbldellevel3values" runat="server" CssClass="fa fa-trash" CommandName="level3delete" OnClientClick="return confirm('Are you sure you want to delete this level 3 values?');" CommandArgument='<%#Eval("SCategoryId") %>'></asp:LinkButton>
+                                                                                                                                <%--<asp:LinkButton ID="lbldellevel3values" runat="server" CssClass="fa fa-trash" CommandName="level3delete" OnClientClick="return confirm('Are you sure you want to delete this level 3 values?');" CommandArgument='<%#Eval("SCategoryId") %>'></asp:LinkButton>--%>
                                                                                                                             </ItemTemplate>
                                                                                                                         </asp:TemplateField>
                                                                                                                     </Columns>
@@ -116,7 +109,7 @@
                                                                                                 <asp:TemplateField>
                                                                                                     <ItemTemplate>
                                                                                                         <%--<asp:LinkButton ID="lbleditlevel2values" runat="server" CssClass="fa fa-edit" CommandName="level2edit" CommandArgument='<%#Eval("SCategoryId") %>'></asp:LinkButton>--%>
-                                                                                                        <asp:LinkButton ID="lbldellevel2values" runat="server" CssClass="fa fa-trash" CommandName="level2delete" OnClientClick="return confirm('Are you sure you want to delete this level 2 values?');" CommandArgument='<%#Eval("SCategoryId") %>'></asp:LinkButton>
+                                                                                                        <%--<asp:LinkButton ID="lbldellevel2values" runat="server" CssClass="fa fa-trash" CommandName="level2delete" OnClientClick="return confirm('Are you sure you want to delete this level 2 values?');" CommandArgument='<%#Eval("SCategoryId") %>'></asp:LinkButton>--%>
                                                                                                     </ItemTemplate>
                                                                                                 </asp:TemplateField>
                                                                                             </Columns>
@@ -155,24 +148,14 @@
                                                 </asp:TemplateField>
                                                 <asp:TemplateField HeaderText="Dropdown Label">
                                                     <ItemTemplate>
-                                                        <asp:Label ID="lblrefno" runat="server" Text='<%#Eval("MCategoryName") %>' NullDisplayText="#" ></asp:Label>
+                                                        <asp:Label ID="lblrefno" runat="server" Text='<%#Eval("MCategoryName") %>' NullDisplayText="#" SortExpression="CompanyRefNo"></asp:Label>
                                                         <asp:HiddenField ID="hfcat" runat="server" Value='<%#Eval("MCategoryId") %>' />
-                                                    </ItemTemplate>
-                                                </asp:TemplateField>
-                                                 <asp:TemplateField HeaderText="Hierarchy Label">
-                                                    <ItemTemplate>
-                                                        <asp:Label ID="lblHierarchy" runat="server" Text='<%#Eval("Flag") %>' NullDisplayText="#"></asp:Label>
-                                                    </ItemTemplate>
-                                                </asp:TemplateField>
-                                                 <asp:TemplateField HeaderText="Status">
-                                                    <ItemTemplate>
-                                                        <asp:Label ID="lblStatus" runat="server" Text='<%#Eval("IsActive") %>' NullDisplayText="#"></asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                                 <asp:TemplateField HeaderText="Action">
                                                     <ItemTemplate>
                                                         <%--<asp:LinkButton ID="lblactive" runat="server" CssClass="fa fa-check" CommandName="labelactive" OnClientClick="return confirm('Are you sure you want to active this Lable?');" CommandArgument='<%#Eval("MCategoryId") %>'></asp:LinkButton>--%>
-                                                        <asp:LinkButton ID="lbllabeldel" runat="server" CssClass="fa fa-trash" CommandName="labeldel" OnClientClick="return confirm('Are you sure you want to delete this Lable?');" CommandArgument='<%#Eval("MCategoryId") %>'></asp:LinkButton>
+                                                        <%--<asp:LinkButton ID="lbllabeldel" runat="server" CssClass="fa fa-trash" CommandName="labeldel" OnClientClick="return confirm('Are you sure you want to delete this Lable?');" CommandArgument='<%#Eval("MCategoryId") %>'></asp:LinkButton>--%>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                             </Columns>
@@ -186,17 +169,6 @@
             </div>
         </ContentTemplate>
     </asp:UpdatePanel>
-  <%--  <asp:UpdateProgress ID="UpdateProgress" runat="server" AssociatedUpdatePanelID="up">
-        <ProgressTemplate>
-            <div class="overlay">
-                <div style="z-index: 999; margin-left: 650px; margin-top: 300px; opacity: 0.3; -moz-opacity: 0.3;">
-                    <div class="overlay-progress">
-                        <%--<img src="/assets/images/loader.gif" alt="" />
-                    </div>
-                </div>
-            </div>
-        </ProgressTemplate>
-    </asp:UpdateProgress>--%>
 </asp:Content>
 
 

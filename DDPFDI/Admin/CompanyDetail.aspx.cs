@@ -225,8 +225,8 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
                     rdoMNo.Checked = true;
                     divMSMe.Visible = false;
                 }
-                txtDIPP.Text = DtView.Rows[0]["VAM"].ToString();
-                txtDIPPMobile.Text = DtView.Rows[0]["Aadhar_Mobile"].ToString();
+                txtVAM.Text = DtView.Rows[0]["VAM"].ToString();
+                txtAad_Mob.Text = DtView.Rows[0]["Aadhar_Mobile"].ToString();
 
 
 
@@ -499,7 +499,24 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
                 taddress.Text = DtView.Rows[0]["UnitAddress"].ToString();
 
                 selstate.SelectedItem.Value = DtView.Rows[0]["UnitStateID"].ToString();
-
+                ddlNodalOfficerEmail.SelectedValue = DtView.Rows[0]["NodalOfficeRefNo"].ToString();
+                if (ddlNodalOfficerEmail.SelectedItem.Value == "0")
+                {
+                    divNodalOfficer.Visible = false;
+                }
+                else
+                {
+                    DataTable DtGetNodel = Lo.RetriveMasterData(0, ddlNodalOfficerEmail.SelectedItem.Value, "", 0, "", "", "CompleteNodelDetail");
+                    if (DtGetNodel.Rows.Count > 0)
+                    {
+                        txtNName.Text = DtGetNodel.Rows[0]["NodalOficerName"].ToString();
+                        txtNEmailId.Text = DtGetNodel.Rows[0]["NodalOfficerEmail"].ToString();
+                        txtNMobile.Text = DtGetNodel.Rows[0]["NodalOfficerMobile"].ToString();
+                        txtNTelephone.Text = DtGetNodel.Rows[0]["NodalOfficerTelephone"].ToString();
+                        txtNFaxNo.Text = DtGetNodel.Rows[0]["NodalOfficerFax"].ToString();
+                        divNodalOfficer.Visible = true;
+                    }
+                }
                 DivCEOName.Visible = true;
                 tpincode.Text = DtView.Rows[0]["UnitPincode"].ToString();
                 txtEmailID.Text = DtView.Rows[0]["UnitEmailId"].ToString();
@@ -679,7 +696,6 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
         HySave["MasterAllowed"] = "";
         HySave["Role"] = "";
     }
-
     protected void SaveFactoryComp()
     {
         if (hfid.Value != "")

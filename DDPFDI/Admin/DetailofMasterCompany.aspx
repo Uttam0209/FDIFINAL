@@ -92,11 +92,8 @@
                                             <asp:TemplateField>
                                                 <ItemTemplate>
                                                     <div class="acordian-table">
-
-
                                                         <i class="toggle-table-minus fa fa-minus" aria-hidden="true" style="display: none"></i>
                                                         <i class="toggle-table-plus fa fa-plus" aria-hidden="true"></i>
-
                                                         <asp:Panel ID="pnlOrders" runat="server" Style="display: none">
                                                             <asp:GridView ID="gvfactory" runat="server" AutoGenerateColumns="false" Class="table table-hover ChildGrid" OnRowDataBound="gvfactory_OnRowDataBound" OnRowCommand="gvfactory_RowCommand">
                                                                 <Columns>
@@ -204,7 +201,6 @@
                                                     <asp:HiddenField runat="server" ID="hfemail" Value='<%#Eval("ContactPersonEmailID") %>' />
                                                 </ItemTemplate>
                                             </asp:TemplateField>
-
                                             <asp:TemplateField HeaderText="Action">
                                                 <ItemTemplate>
                                                     <asp:LinkButton ID="lblview" runat="server" CssClass="fa fa-eye" CommandName="ViewComp" CommandArgument='<%#Eval("CompanyRefNo") %>'></asp:LinkButton>
@@ -457,6 +453,12 @@
                                                     <asp:Label ID="lblDivEmail" runat="server"></asp:Label>
                                                 </td>
                                             </tr>
+                                            <tr>
+                                                <td class="pass">Role</td>
+                                                <td>
+                                                    <asp:Label ID="lblDivRole" runat="server"></asp:Label>
+                                                </td>
+                                            </tr>
 
                                             <tr>
                                                 <td class="pass">Division FAX No</td>
@@ -471,7 +473,7 @@
                                                 </td>
                                             </tr>
 
-                                            <tr>
+<%--                                            <tr>
                                                 <td class="pass">Division Facebook</td>
                                                 <td>
                                                     <asp:Label ID="lblDivFacebook" runat="server"></asp:Label>
@@ -494,7 +496,7 @@
                                                 <td>
                                                     <asp:Label ID="lblDivInstagram" runat="server"></asp:Label>
                                                 </td>
-                                            </tr>
+                                            </tr>--%>
                                             <tr>
                                                 <td class="pass">Division Latitude</td>
                                                 <td>
@@ -564,17 +566,18 @@
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td class="pass">Nodal Name</td>
+                                                <td class="pass">Nodal Email</td>
                                                 <td>
-                                                    <asp:Label ID="lblUnitNodal" runat="server"></asp:Label>
+                                                    <asp:Label ID="lblUnitNodalEmail" runat="server"></asp:Label>
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td class="pass">Nodal Contact No</td>
+                                                <td class="pass">Role</td>
                                                 <td>
-                                                    <asp:Label ID="lblNofficialContact" runat="server"></asp:Label>
+                                                    <asp:Label ID="lblUnitRole" runat="server"></asp:Label>
                                                 </td>
                                             </tr>
+                                            
                                             <tr>
                                                 <td class="pass">Official Email ID</td>
                                                 <td>
