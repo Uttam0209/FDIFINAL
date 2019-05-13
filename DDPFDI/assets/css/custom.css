@@ -7,7 +7,7 @@ ul {list-style: none;}
 .is-flex { display: flex;}
 
 /*---Progress Bar Animation ---*/
-.custom-progress-bar { width: 500px; max-width: 100%; height: 10px; border-radius: 5px; position: absolute; top: 15px; left: 0; right: 0; margin: 0 auto; 
+.custom-progress-bar { width: 500px; max-width: 100%; height: 10px; border-radius: 5px; position: absolute; top: 34%; left: 0; right: 0; margin: 0 auto; 
     z-index: 99999;  
     padding: 2px;
     background: #fff;          
@@ -17,7 +17,7 @@ ul {list-style: none;}
     position: relative;
     z-index: 9999;
     top: -7px;  
-    animation: animate-stripes 3s linear infinite;
+    animation: animate-stripes 5s linear infinite;
 } 
 /*
 .stripes span { background-size: 30px 30px; background-image: linear-gradient(135deg, rgba(255, 255, 255, .15) 25%, transparent 25%,
@@ -489,3 +489,5 @@ form label { color: #494ca2;}
 .alert-box {  max-width: 400px; width: 100%; position: absolute; left: 0; right: 0;  margin: 0 auto;  top: 20%;}
 .alert-box .box { width: 100%; padding: 5%; background: #fff; border-radius: 10px; text-align: center;}
 .alert-box .box .alert { text-align: center; font-size: 18px}
+.overlay-progress { position: fixed; left: 0; right: 0;  bottom: 0; top: 0;  background: rgba(0,0,0,0.5); z-index: 9999;}
+.custom-progress-bar p { text-align: center; color: #fff;  font-size: 16px;}

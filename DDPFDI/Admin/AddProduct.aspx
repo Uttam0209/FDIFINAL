@@ -55,6 +55,9 @@
                     <li><a data-toggle="tab" href="#qpt">Quantity Required</a></li>
                     <li><a data-toggle="tab" href="#tnd">Tender Status</a></li>
                     <li><a data-toggle="tab" href="#cd">Contact Details</a></li>
+                    <li><a data-toggle="tab" href="#">Testing Requirement</a></li>
+                    <li><a data-toggle="tab" href="#">Testing Facility</a></li>
+                    <li><a data-toggle="tab" href="#">Testing Certification Requirement</a></li>
                 </ul>
 
                 <div class="tab-content">
