@@ -92,11 +92,8 @@
                                             <asp:TemplateField>
                                                 <ItemTemplate>
                                                     <div class="acordian-table">
-
-
                                                         <i class="toggle-table-minus fa fa-minus" aria-hidden="true" style="display: none"></i>
                                                         <i class="toggle-table-plus fa fa-plus" aria-hidden="true"></i>
-
                                                         <asp:Panel ID="pnlOrders" runat="server" Style="display: none">
                                                             <asp:GridView ID="gvfactory" runat="server" AutoGenerateColumns="false" Class="table table-hover ChildGrid" OnRowDataBound="gvfactory_OnRowDataBound" OnRowCommand="gvfactory_RowCommand">
                                                                 <Columns>
@@ -204,7 +201,6 @@
                                                     <asp:HiddenField runat="server" ID="hfemail" Value='<%#Eval("ContactPersonEmailID") %>' />
                                                 </ItemTemplate>
                                             </asp:TemplateField>
-
                                             <asp:TemplateField HeaderText="Action">
                                                 <ItemTemplate>
                                                     <asp:LinkButton ID="lblview" runat="server" CssClass="fa fa-eye" CommandName="ViewComp" CommandArgument='<%#Eval("CompanyRefNo") %>'></asp:LinkButton>

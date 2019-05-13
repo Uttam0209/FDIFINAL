@@ -22,8 +22,6 @@ public partial class Admin_AddCompanyCategory : System.Web.UI.Page
     DataTable DtView = new DataTable();
     string currentPage = "";
     string lbltypelogin = "";
-    private string mType = "";
-    private string mRefNo = "";
     private string Categoryintrestedare = "";
     DataTable DtCompanyDDL = new DataTable();
     DataTable dtViewDefault = new DataTable();
@@ -68,11 +66,11 @@ public partial class Admin_AddCompanyCategory : System.Web.UI.Page
         if (DtMasterCategroy.Rows.Count > 0)
         {
             Co.FillDropdownlist(ddlmastercategory, DtMasterCategroy, "MCategoryName", "MCategoryID");
-            ddlmastercategory.Items.Insert(0, "Select Category");
+            ddlmastercategory.Items.Insert(0, "Select");
         }
         else
         {
-            ddlmastercategory.Items.Insert(0, "Select Category");
+            ddlmastercategory.Items.Insert(0, "Select");
         }
     }
     protected void ddlmastercategory_SelectedIndexChanged(object sender, EventArgs e)
@@ -103,7 +101,6 @@ public partial class Admin_AddCompanyCategory : System.Web.UI.Page
             {
                 ddlcompany.Enabled = false;
             }
-
             lblselectdivison.Visible = false;
             lblselectunit.Visible = false;
         }
@@ -112,7 +109,7 @@ public partial class Admin_AddCompanyCategory : System.Web.UI.Page
         }
         else if (hidType.Value == "Company")
         {
-            DtCompanyDDL = Lo.RetriveMasterData(0, mRefNo, "Company", 0, "", "", "CompanyName");
+            DtCompanyDDL = Lo.RetriveMasterData(0, hfcomprefno.Value, "Company", 0, "", "", "CompanyName");
             if (DtCompanyDDL.Rows.Count > 0)
             {
                 Co.FillDropdownlist(ddlcompany, DtCompanyDDL, "CompanyName", "CompanyRefNo");
@@ -131,7 +128,7 @@ public partial class Admin_AddCompanyCategory : System.Web.UI.Page
                 {
                     lblselectdivison.Visible = true;
                     ddldivision.Enabled = true;
-                    ddlunit.Visible = false;
+                    lblselectunit.Visible = false;
                 }
                 else
                 {
@@ -145,7 +142,7 @@ public partial class Admin_AddCompanyCategory : System.Web.UI.Page
         }
         else if (hidType.Value == "Factory")
         {
-            DtCompanyDDL = Lo.RetriveMasterData(0, mRefNo, "Company1", 0, "", "", "CompanyName");
+            DtCompanyDDL = Lo.RetriveMasterData(0, hfcomprefno.Value, "Company1", 0, "", "", "CompanyName");
             if (DtCompanyDDL.Rows.Count > 0)
             {
                 Co.FillDropdownlist(ddlcompany, DtCompanyDDL, "CompanyName", "CompanyRefNo");
@@ -176,12 +173,12 @@ public partial class Admin_AddCompanyCategory : System.Web.UI.Page
             }
             else
             {
-                ddlunit.Visible = false;
+                lblselectunit.Visible = false;
             }
         }
         else if (hidType.Value == "Unit")
         {
-            DtCompanyDDL = Lo.RetriveMasterData(0, mRefNo, "Company2", 0, "", "", "CompanyName");
+            DtCompanyDDL = Lo.RetriveMasterData(0, hfcomprefno.Value, "Company2", 0, "", "", "CompanyName");
             if (DtCompanyDDL.Rows.Count > 0)
             {
                 Co.FillDropdownlist(ddlcompany, DtCompanyDDL, "CompanyName", "CompanyRefNo");
@@ -211,7 +208,7 @@ public partial class Admin_AddCompanyCategory : System.Web.UI.Page
             }
             else
             {
-                ddlunit.Enabled = false;
+                lblselectunit.Visible = false;
             }
         }
     }
@@ -289,4 +286,70 @@ public partial class Admin_AddCompanyCategory : System.Web.UI.Page
         hidType.Value = "Unit";
     }
     #endregion
+    protected void SaveCompanyMenu()
+    {
+        HybridDictionary hyMasterCategory = new HybridDictionary();
+        hyMasterCategory["CompCatRelationId"] = 0;
+        if (ddlcompany.SelectedItem.Text != "Select" && ddldivision.SelectedItem.Text == "Select")
+        {
+            hyMasterCategory["CompanyRefNo"] = Co.RSQandSQLInjection(ddlcompany.SelectedItem.Value, "soft");
+        }
+        else if (ddlcompany.SelectedItem.Text != "Select" && ddldivision.SelectedItem.Text != "Select" && ddlunit.SelectedItem.Text == "Select")
+        {
+            hyMasterCategory["CompanyRefNo"] = Co.RSQandSQLInjection(ddldivision.SelectedItem.Value, "soft");
+        }
+        else if (ddlcompany.SelectedItem.Text != "Select" && ddldivision.SelectedItem.Text != "Select" && ddlunit.SelectedItem.Text != "Select")
+        {
+            hyMasterCategory["CompanyRefNo"] = Co.RSQandSQLInjection(ddlunit.SelectedItem.Value, "soft");
+        }
+        hyMasterCategory["MCategoryId"] = Co.RSQandSQLInjection(ddlmastercategory.SelectedItem.Value, "soft");
+        foreach (ListItem li in chkSubCategory.Items)
+        {
+            if (li.Selected == true)
+            {
+                Categoryintrestedare = Categoryintrestedare + "," + li.Value;
+            }
+        }
+        hyMasterCategory["SCategoryId"] = Co.RSQandSQLInjection(Categoryintrestedare.Substring(1).ToString(), "soft");
+        string mStrCategory = Lo.SaveMasterCategroyMenu(hyMasterCategory, out _sysMsg, out _msg);
+        if (mStrCategory == "Save")
+        {
+            cleartext();
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Master Category saved successfully.')", true);
+        }
+        else
+        {
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not saved')", true);
+        }
+    }
+    protected void btndemofirst_Click(object sender, EventArgs e)
+    {
+        if (ddlcompany.SelectedItem.Text != "Select")
+        {
+            if (btndemofirst.Text == "Save")
+            {
+                SaveCompanyMenu();
+                string StrSaveFDIComp = Lo.SaveMasterCompany(HySave, out _msg, out _sysMsg);
+                if (StrSaveFDIComp != "0" && StrSaveFDIComp != "-1")
+                {
+                    ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "alert('Record save successfully')", true);
+                }
+                else
+                {
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not save successfully.')", true);
+                }
+            }
+        }
+    }
+    protected void cleartext()
+    {
+        BindMasterCategory();
+        foreach (ListItem li in chkSubCategory.Items)
+        {
+            if (li.Selected == true)
+            {
+                li.Selected = false;
+            }
+        }
+    }
 }
