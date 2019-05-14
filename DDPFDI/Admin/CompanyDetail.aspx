@@ -154,14 +154,14 @@
                                                     <div class="col-md-6">
 
                                                         <div class="form-group" id="DivCEOName" runat="server">
-                                                            <label for="CeoName" class="control-label">CEO Name </label>
+                                                            <label for="CeoName" runat="server" id="lblceo" class="control-label">CEO Name </label>
                                                             <asp:TextBox runat="server" ID="txtceoname" name="CEO Name" class="form-control form-cascade-control" placeholder=""></asp:TextBox>
                                                         </div>
 
                                                     </div>
                                                     <div class="col-md-6">
                                                         <div class="form-group" id="DivCEOEmail" runat="server">
-                                                            <label for="tceoname" class="control-label">CEO Email ID </label>
+                                                            <label for="tceoname" runat="server" id="lblceoemail" class="control-label">CEO Email ID </label>
                                                             <asp:TextBox runat="server" ID="txtCEOEmailId" name="tceoemailid" class="form-control form-cascade-control" placeholder=""></asp:TextBox>
                                                         </div>
                                                     </div>

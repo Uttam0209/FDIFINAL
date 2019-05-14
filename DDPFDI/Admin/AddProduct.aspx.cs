@@ -68,6 +68,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                     // BindNodelEmail();
                     BindServcies();
                     BindEndUser();
+                    tendorstatus();
                 }
                 EditCode();
             }
@@ -79,7 +80,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     }
     protected void BindCompany()
     {
-        if (mType == "SuperAdmin")
+        if (mType == "SuperAdmin" || mType == "Admin")
         {
             DtCompanyDDL = Lo.RetriveMasterData(0, "", "", 0, "", "", "Select");
             if (DtCompanyDDL.Rows.Count > 0)
@@ -95,9 +96,6 @@ public partial class Admin_AddProduct : System.Web.UI.Page
 
             lblselectdivison.Visible = false;
             lblselectunit.Visible = false;
-        }
-        else if (mType == "Admin")
-        {
         }
         else if (mType == "Company")
         {
@@ -209,7 +207,18 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     }
     protected void BindNodelEmail()
     {
-        DtCompanyDDL = Lo.RetriveMasterData(0, hfcomprefno.Value, "", 0, "", "", "AllNodel");
+        if (ddlcompany.SelectedItem.Text != "Select" && ddldivision.SelectedItem.Text == "Select")
+        {
+            DtCompanyDDL = Lo.RetriveMasterData(0, ddlcompany.SelectedItem.Value, "", 0, "", "", "CompanyNodelDetail");
+        }
+        else if (ddlcompany.SelectedItem.Text != "Select" && ddldivision.SelectedItem.Text != "Select" && ddlunit.SelectedItem.Text == "Select")
+        {
+            DtCompanyDDL = Lo.RetriveMasterData(0, ddldivision.SelectedItem.Value, "", 0, "", "", "CompanyNodelDetail");
+        }
+        else if (ddlcompany.SelectedItem.Text != "Select" && ddldivision.SelectedItem.Text != "Select" && ddlunit.SelectedItem.Text != "Select")
+        {
+            DtCompanyDDL = Lo.RetriveMasterData(0, ddlunit.SelectedItem.Value, "", 0, "", "", "CompanyNodelDetail");
+        }
         if (DtCompanyDDL.Rows.Count > 0)
         {
             Co.FillDropdownlist(ddlNodalOfficerEmail, DtCompanyDDL, "NodalOficerName", "NodalOfficerID");
@@ -321,20 +330,8 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                 txtDesignation.Text = DtGetNodel.Rows[0]["Designation"].ToString();
                 txtempcode.Text = DtGetNodel.Rows[0]["NodalEmpCode"].ToString();
                 txtmobnodal.Text = DtGetNodel.Rows[0]["NodalOfficerMobile"].ToString();
-                if (DtGetNodel.Rows[0]["Type"].ToString() == "Company")
-                {
-                    lblcomapnyNodal.Text = DtGetNodel.Rows[0]["Type"].ToString();
-                }
-                else if (DtGetNodel.Rows[0]["Type"].ToString() == "Factory")
-                {
-                    lblcomapnyNodal.Text = "Company" + " >> " + DtGetNodel.Rows[0]["Type"].ToString();
-                }
-                else if (DtGetNodel.Rows[0]["Type"].ToString() == "Unit")
-                {
-                    lblcomapnyNodal.Text = "Company" + " >> " + "Division/Plant" + " >> " + DtGetNodel.Rows[0]["Type"].ToString();
-                }
                 //===Bind Nodel officer except Nodel one
-                DtCompanyDDL = Lo.RetriveMasterData(Convert.ToInt16(ddlNodalOfficerEmail.SelectedItem.Value), hfcomprefno.Value, "", 0, "", "", "AllNodelNotSelect");
+                DtCompanyDDL = Lo.RetriveMasterData(0, hfcomprefno.Value, ddlNodalOfficerEmail.SelectedItem.Value, 0, "", "", "AllNodelNotSelect");
                 if (DtCompanyDDL.Rows.Count > 0)
                 {
                     Co.FillDropdownlist(ddlNodalOfficerEmail2, DtCompanyDDL, "NodalOficerName", "NodalOfficerID");
@@ -342,7 +339,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                 }
                 else
                 {
-                    divnodal2.Visible = false;
+                    divnodal2.Visible = true;
                 }
             }
         }
@@ -366,26 +363,11 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                 txtNEmailId2.Text = DtGetNodel.Rows[0]["NodalOfficerEmail"].ToString();
                 txtNTelephone2.Text = DtGetNodel.Rows[0]["NodalOfficerTelephone"].ToString();
                 txtNFaxNo2.Text = DtGetNodel.Rows[0]["NodalOfficerFax"].ToString();
-
                 txtdesignationnodal2.Text = DtGetNodel.Rows[0]["Designation"].ToString();
-
                 txtempcode2.Text = DtGetNodel.Rows[0]["NodalEmpCode"].ToString();
                 txtmobnodal2.Text = DtGetNodel.Rows[0]["NodalOfficerMobile"].ToString();
-                lblcompanynodal2.Text = DtGetNodel.Rows[0]["Type"].ToString();
-                if (lblcompanynodal2.Text == "Company")
-                {
-                    lblcompanynodal2.Text = DtGetNodel.Rows[0]["Type"].ToString();
-                }
-                else if (lblcompanynodal2.Text == "Factory")
-                {
-                    lblcompanynodal2.Text = "Company" + " >> " + DtGetNodel.Rows[0]["Type"].ToString();
-                }
-                else if (lblcompanynodal2.Text == "Unit")
-                {
-                    lblcompanynodal2.Text = "Company" + " >> " + "Division/Plant" + " >> " + DtGetNodel.Rows[0]["Type"].ToString();
-                }
                 //===Bind Nodel officer expect Nodel Two
-                DtCompanyDDL = Lo.RetriveMasterData(Convert.ToInt16(ddlNodalOfficerEmail2.SelectedItem.Value), hfcomprefno.Value, "", 0, "", "", "AllNodelNotSelect");
+                DtCompanyDDL = Lo.RetriveMasterData(0, hfcomprefno.Value, ddlNodalOfficerEmail.SelectedItem.Value, 0, "", "", "AllNodelNotSelect");
                 if (DtCompanyDDL.Rows.Count > 0)
                 {
                     Co.FillDropdownlist(ddlNodalOfficerEmail, DtCompanyDDL, "NodalOficerName", "NodalOfficerID");
@@ -393,7 +375,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                 }
                 else
                 {
-                    divnodal.Visible = false;
+                    divnodal.Visible = true;
                 }
             }
         }
@@ -445,9 +427,14 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     }
     protected void ddltendorstatus_SelectedIndexChanged(object sender, EventArgs e)
     {
-        if (ddltendorstatus.SelectedItem.Value == "Live")
+        tendorstatus();
+    }
+    protected void tendorstatus()
+    {
+        if (ddltendorstatus.SelectedItem.Value == "Live" && rbtendordateyesno.SelectedItem.Value == "Y")
         {
             divtendordate.Visible = true;
+            divtdate.Visible = true;
         }
         else
         {
