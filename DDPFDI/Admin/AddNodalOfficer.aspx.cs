@@ -151,7 +151,10 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
             }
             else
             {
-                ddldivision.Enabled = false;
+                lblselectdivison.Visible = false;
+                lblselectunit.Visible = false;
+                ddldivision.Items.Insert(0,"Select");
+                ddlunit.Items.Insert(0, "Select");
             }
         }
         else if (mType == "Factory")
@@ -395,6 +398,9 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
             {
                 ddldivision.Visible = false;
                 lblselectdivison.Visible = false;
+                ddldivision.Items.Insert(0, "Select");
+                ddlunit.Items.Insert(0, "Select");
+
             }
         }
         else if (ddlcompany.SelectedItem.Text == "Select")
