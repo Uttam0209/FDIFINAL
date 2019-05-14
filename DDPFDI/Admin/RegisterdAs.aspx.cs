@@ -51,7 +51,6 @@ public partial class Admin_RegisterdAs : System.Web.UI.Page
                 DataTable DtGrid = Lo.RetriveMasterCategoryDate(0, "", "", "", "", "SelectAll");
                 if (DtGrid.Rows.Count > 0)
                 {
-
                     gvCategory.DataSource = DtGrid;
                     gvCategory.DataBind();
                 }
@@ -265,7 +264,14 @@ public partial class Admin_RegisterdAs : System.Web.UI.Page
         DataTable DtMasterCategroy = new DataTable();
         if (DisplayPanel.ToString() == "Panel2")
         {
-            DtMasterCategroy = Lo.RetriveMasterCategoryDate(0, "", "", "", "", "Select");
+            if (mType == "SuperAdmin" || mType == "Admin")
+            {
+                DtMasterCategroy = Lo.RetriveMasterCategoryDate(0, "", "", "", "", mType);
+            }
+            else
+            {
+                DtMasterCategroy = Lo.RetriveMasterCategoryDate(0, "", "", "", "", "Select");
+            }
         }
         else if (DisplayPanel.ToString() == "Panel3")
         {

@@ -151,7 +151,10 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
             }
             else
             {
-                ddldivision.Enabled = false;
+                lblselectdivison.Visible = false;
+                lblselectunit.Visible = false;
+                ddldivision.Items.Insert(0,"Select");
+                ddlunit.Items.Insert(0, "Select");
             }
         }
         else if (mType == "Factory")
@@ -395,6 +398,9 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
             {
                 ddldivision.Visible = false;
                 lblselectdivison.Visible = false;
+                ddldivision.Items.Insert(0, "Select");
+                ddlunit.Items.Insert(0, "Select");
+
             }
         }
         else if (ddlcompany.SelectedItem.Text == "Select")
@@ -442,9 +448,10 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
     }
     protected void ddlunit_OnSelectedIndexChanged(object sender, EventArgs e)
     {
-        if (ddldivision.SelectedItem.Text == "Select")
+        if (ddlunit.SelectedItem.Text == "Select")
         {
-            ddldivision_OnSelectedIndexChanged(sender, e);
+            //ddldivision_OnSelectedIndexChanged(sender, e);
+            gvViewNodalOfficer.Visible = false;
         }
         else
         {
@@ -633,6 +640,7 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
         ddldesignation.SelectedIndex = 0;
         btnsub.Text = "Save";
         txtEmpCode.Text = "";
+        chkrole.Checked = false;
     }
     protected void btncancel_Click(object sender, EventArgs e)
     {

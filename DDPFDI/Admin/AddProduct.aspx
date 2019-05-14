@@ -113,12 +113,7 @@
                                     </div>
                                     <div class="section-pannel">
                                         <div class="row">
-                                            <div class="col-md-4">
-                                                <div class="form-group">
-                                                    <asp:Label runat="server" ID="lblNomenclature" Text="Nomenclature of main system"></asp:Label>
-                                                    <asp:DropDownList runat="server" ID="ddlnomnclature" class="form-control" />
-                                                </div>
-                                            </div>
+
                                             <asp:UpdatePanel runat="server" ID="upproduct">
                                                 <ContentTemplate>
                                                     <div class="col-md-4">
@@ -185,6 +180,13 @@
                                                 <Triggers>
                                                 </Triggers>
                                             </asp:UpdatePanel>
+
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <asp:Label runat="server" ID="lblNomenclature" Text="Nomenclature of main system"></asp:Label>
+                                                    <asp:DropDownList runat="server" ID="ddlnomnclature" class="form-control" />
+                                                </div>
+                                            </div>
                                             <div class="col-md-4">
                                                 <div class="form-group">
 
@@ -193,6 +195,7 @@
                                                     </asp:DropDownList>
                                                 </div>
                                             </div>
+
                                         </div>
                                     </div>
                                     <div class="section-pannel">
@@ -272,12 +275,8 @@
                             </div>
                             <!-------uplode photo----------->
                             <div class="gallery"></div>
-                            <div class="clearfix" style="margin-top: 8px;"></div>
-                            <span>You can upload max 4 files.</span>
-                            <div class="clearfix"></div>
-                            <span>Max 1 Mb file could be upload.</span>
-                            <div class="clearfix"></div>
-                            <span>Only .jpeg,.Png,.Jpg,.tif files are allowd to upload</span>
+                            <div class="clearfix" style="margin-top: 5px;"></div>
+                            <span>Only .jpeg, .png, .jpg files of  maximum 1 Mb can be uploaded.(Maximum 4 files)</span>
                             <br />
                             <div runat="server" id="divimgdel" visible="False">
                                 <div class="row">
@@ -306,18 +305,18 @@
                                                 <%#Container.DataItemIndex+1 %>
                                             </ItemTemplate>
                                         </asp:TemplateField>
-                                        <asp:TemplateField HeaderText="Support Provided by DPSU">
+                                        <asp:TemplateField HeaderText="Confirm if support provided by DPSU">
+                                            <ItemTemplate>
+                                                <asp:CheckBox runat="server" ID="chk" />
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="">
                                             <ItemTemplate>
                                                 <asp:Label runat="server" ID="lblservices" Text='<%#Eval("SCategoryName") %>'></asp:Label>
                                                 <asp:HiddenField runat="server" ID="hfservicesid" Value='<%#Eval("SCategoryId") %>' />
                                             </ItemTemplate>
                                         </asp:TemplateField>
-                                        <asp:TemplateField HeaderText="Select">
 
-                                            <ItemTemplate>
-                                                <asp:CheckBox runat="server" ID="chk" />
-                                            </ItemTemplate>
-                                        </asp:TemplateField>
                                         <asp:TemplateField HeaderText="Remarks">
                                             <ItemTemplate>
                                                 <asp:TextBox runat="server" ID="txtRemarks" class="form-control"></asp:TextBox>
@@ -376,8 +375,8 @@
                                                     <strong>Note:</strong> If live, please fill last date of tender submission. 
                                             <span class="checkbox-box productalreadylabel">
                                                 <asp:RadioButtonList runat="server" ID="rbtendordateyesno" RepeatDirection="Horizontal" AutoPostBack="True" RepeatColumns="2" RepeatLayout="Flow" OnSelectedIndexChanged="rbtendordateyesno_CheckedChanged">
-                                                    <asp:ListItem Value="N" Selected="True">No</asp:ListItem>
-                                                    <asp:ListItem Value="Y" class="yes">Yes</asp:ListItem>
+                                                    <asp:ListItem Value="N">No</asp:ListItem>
+                                                    <asp:ListItem Value="Y" class="yes" Selected="True">Yes</asp:ListItem>
                                                 </asp:RadioButtonList>
                                             </span>
                                                 </label>
@@ -456,12 +455,6 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <span>Department:- 
-                                                <asp:Label runat="server" ID="lblcomapnyNodal" Text=""></asp:Label>
-                                            </div>
-                                        </div>
                                     </div>
                                     <div class="section-pannel" runat="server" id="divnodal2">
                                         <div class="row">
@@ -514,14 +507,6 @@
 
                                                     </div>
                                                 </div>
-
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <span>Department:- 
-                                                <asp:Label runat="server" ID="lblcompanynodal2" Text=""></asp:Label>
-                                                    </span>
-                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -529,7 +514,7 @@
                             </ContentTemplate>
                         </asp:UpdatePanel>
                     </div>
-                    <div id="test" class="tab-pane fade in active">
+                    <div id="test" class="tab-pane fade">
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="add-profile">
@@ -591,7 +576,7 @@
                             </div>
                         </div>
                     </div>
-                    <div id="cer" class="tab-pane fade in active">
+                    <div id="cer" class="tab-pane fade">
                         <div class="section-pannel">
                             <div class="row">
                                 <div class="col-md-4">
@@ -607,9 +592,7 @@
                             <!-------uplode photo----------->
                             <div class="gallery"></div>
                             <div class="clearfix" style="margin-top: 8px;"></div>
-                            <span>Max 1 Mb file could be upload.</span>
-                            <div class="clearfix"></div>
-                            <span>Only .doc,.pdf files are allowd to upload</span>
+                            <span>Only .pdf file of size 1 Mb can be uploaded</span>
                             <br />
                             <div runat="server" id="div1" visible="False">
                                 <div class="row">

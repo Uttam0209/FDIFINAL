@@ -63,7 +63,7 @@ public partial class Admin_ViewCategory : System.Web.UI.Page
     {
         try
         {
-            if (mType == "SuperAdmin" || mType=="Admin")
+            if (mType == "SuperAdmin" || mType == "Admin")
             {
                 DataTable DtGrid = Lo.RetriveMasterCategoryDate(0, "", "", "", "", "SelectAll");
                 if (DtGrid.Rows.Count > 0)
@@ -362,10 +362,18 @@ public partial class Admin_ViewCategory : System.Web.UI.Page
     }
     #endregion
     #region SeachCode
+    DataTable DtMasterCategroy = new DataTable();
     protected void BindMasterCategory()
     {
-        DataTable DtMasterCategroy = new DataTable();
-        DtMasterCategroy = Lo.RetriveMasterCategoryDate(0, "", "", "", "", "Select");
+
+        if (mType == "SuperAdmin" || mType == "Admin")
+        {
+            DtMasterCategroy = Lo.RetriveMasterCategoryDate(0, "", "", "", "", mType);
+        }
+        else
+        {
+            DtMasterCategroy = Lo.RetriveMasterCategoryDate(0, "", "", "", "", "Select");
+        }
         if (DtMasterCategroy.Rows.Count > 0)
         {
             Co.FillDropdownlist(ddlsearch, DtMasterCategroy, "MCategoryName", "MCategoryID");
@@ -378,11 +386,27 @@ public partial class Admin_ViewCategory : System.Web.UI.Page
     }
     protected void ddlsearch_OnSelectedIndexChanged(object sender, EventArgs e)
     {
-        DataTable DtGrid = Lo.RetriveMasterCategoryDate(Convert.ToInt16(ddlsearch.SelectedItem.Value), "", "", "", "", "SelectByLavel");
-        if (DtGrid.Rows.Count > 0)
+        try
         {
-            gvCategory.DataSource = DtGrid;
-            gvCategory.DataBind();
+            if (objEnc.DecryptData(Session["Type"].ToString()) == "SuperAdmin" || objEnc.DecryptData(Session["Type"].ToString()) == "Admin")
+            {
+                DtGrid = Lo.RetriveMasterCategoryDate(Convert.ToInt16(ddlsearch.SelectedItem.Value), "", "", "",
+                   "", "S" + objEnc.DecryptData(Session["Type"].ToString()));
+            }
+            else
+            {
+                DtGrid = Lo.RetriveMasterCategoryDate(Convert.ToInt16(ddlsearch.SelectedItem.Value), "", "", "",
+                   "", "SelectByLavel");
+            }
+
+            if (DtGrid.Rows.Count > 0)
+            {
+                gvCategory.DataSource = DtGrid;
+                gvCategory.DataBind();
+            }
+        }
+        catch (Exception exception)
+        {
         }
     }
     #endregion

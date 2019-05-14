@@ -352,6 +352,8 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
                 lblMCName.Text = "Division";
                 txtMCName.Text = DtView.Rows[0]["FactoryName"].ToString();
                 lblCName.Text = "Division";
+                lblceo.InnerText = "Division Head Name";
+                lblceoemail.InnerText = "Division Head Email ID";
                 tcompanyname.ReadOnly = true;
                 ddlNodalOfficerEmail.SelectedValue = DtView.Rows[0]["NodalOfficeRefNo"].ToString();
                 if (ddlNodalOfficerEmail.SelectedItem.Value == "0")
@@ -405,7 +407,7 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
                     DivJointVenture.Visible = false;
                     DivGST.Visible = true;
                     DivHSNO.Visible = true;
-                  //  DivPAN.Visible = true;
+                    //  DivPAN.Visible = true;
                     DivCIN.Visible = true;
                     DivActivities.Visible = false;
                 }
@@ -505,6 +507,8 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
                 taddress.Text = DtView.Rows[0]["UnitAddress"].ToString();
                 DivPAN.Visible = false;
                 divwebsite.Visible = false;
+                lblceo.InnerText = "Unit Head Name";
+                lblceoemail.InnerText = "Unit Head Email ID";
                 selstate.SelectedValue = DtView.Rows[0]["UnitStateID"].ToString();
                 ddlNodalOfficerEmail.SelectedValue = DtView.Rows[0]["NodalOfficeRefNo"].ToString();
                 if (ddlNodalOfficerEmail.SelectedItem.Value == "0")
@@ -1318,12 +1322,22 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
     }
     protected void BindNodelEmail()
     {
-        DtCompanyDDL = Lo.RetriveMasterData(0, ddlcompany.SelectedItem.Value, "", 0, "", "", "CompanyNodelDetail");
+        if (ddlcompany.SelectedItem.Text != "Select" && ddldivision.Visible == false)
+        {
+            DtCompanyDDL = Lo.RetriveMasterData(0, ddlcompany.SelectedItem.Value, "", 0, "", "", "CompanyNodelDetail");
+        }
+        else if (ddlcompany.SelectedItem.Text != "Select" && ddldivision.SelectedItem.Text != "Select" && ddlunit.Visible == false)
+        {
+            DtCompanyDDL = Lo.RetriveMasterData(0, ddldivision.SelectedItem.Value, "", 0, "", "", "CompanyNodelDetail");
+        }
+        else if (ddlcompany.SelectedItem.Text != "Select" && ddldivision.SelectedItem.Text != "Select" && ddlunit.SelectedItem.Text != "Select")
+        {
+            DtCompanyDDL = Lo.RetriveMasterData(0, ddlunit.SelectedItem.Value, "", 0, "", "", "CompanyNodelDetail");
+        }
         if (DtCompanyDDL.Rows.Count > 0)
         {
             Co.FillDropdownlist(ddlNodalOfficerEmail, DtCompanyDDL, "NodalOficerName", "NodalOfficerRefNo");
             ddlNodalOfficerEmail.Items.Insert(0, "Select");
-
         }
     }
     protected void ddlNodalOfficerEmail_SelectedIndexChanged(object sender, EventArgs e)

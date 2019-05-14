@@ -19,19 +19,7 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>Select Company</label>
-                                <asp:DropDownList runat="server" ID="ddlcompany" class="form-control form-cascade-control" AutoPostBack="True" OnSelectedIndexChanged="ddlcompany_OnSelectedIndexChanged"></asp:DropDownList>
-                            </div>
-                        </div>
-                        <div class="col-md-4" runat="server" id="lblselectdivison">
-                            <div class="form-group">
-                                <label>Select Division/Palnt</label>
-                                <asp:DropDownList runat="server" ID="ddldivision" class="form-control form-cascade-control" AutoPostBack="True" OnSelectedIndexChanged="ddldivision_OnSelectedIndexChanged"></asp:DropDownList>
-                            </div>
-                        </div>
-                        <div class="col-md-4" runat="server" id="lblselectunit">
-                            <div class="form-group">
-                                <label>Select Unit</label>
-                                <asp:DropDownList runat="server" ID="ddlunit" class="form-control form-cascade-control" AutoPostBack="True" OnSelectedIndexChanged="ddlunit_OnSelectedIndexChanged"></asp:DropDownList>
+                                <asp:DropDownList runat="server" ID="ddlcompany" class="form-control form-cascade-control"></asp:DropDownList>
                             </div>
                         </div>
                     </ContentTemplate>
@@ -48,7 +36,7 @@
 
                                 </div>
                             </div>
-                            <div class="col-md-6" id="level1" runat="server" Visible="False">
+                            <div class="col-md-6" id="level1" runat="server" visible="False">
                                 <div class="form-group">
                                     <h3 class="secondary-heading">Level 1</h3>
                                     <asp:CheckBoxList ID="chkSubCategory" runat="server" CssClass="checkbox-inline" RepeatColumns="25" RepeatDirection="Vertical"
@@ -66,9 +54,20 @@
                             </div>
                         </ContentTemplate>
                     </asp:UpdatePanel>
+                    <asp:UpdateProgress ID="UpdateProgress1" runat="server" AssociatedUpdatePanelID="up">
+                        <ProgressTemplate>
+                            <!---Progress Bar ---->
+                            <div class="overlay-progress">
+                                <div class="custom-progress-bar blue stripes">
+                                    <span></span>
+                                    <p>Processing</p>
+                                </div>
+                            </div>
+                            <!---Progress Bar ---->
+                        </ProgressTemplate>
+                    </asp:UpdateProgress>
                 </div>
             </div>
-
             <div class="clearfix"></div>
             <div class="footer"><i class="far fa-copyright"></i>2019 <a href="#">Department of Defence Production</a> </div>
         </div>
