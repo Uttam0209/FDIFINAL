@@ -104,7 +104,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
             {
                 Co.FillDropdownlist(ddlcompany, DtCompanyDDL, "CompanyName", "CompanyRefNo");
                 ddlcompany.Enabled = false;
-                ddldivision.Items.Insert(0,"Select");
+                ddldivision.Items.Insert(0, "Select");
                 lblselectdivison.Visible = false;
                 lblselectunit.Visible = false;
                 BindNodelEmail();
@@ -151,7 +151,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
             {
                 Co.FillDropdownlist(ddldivision, DtCompanyDDL, "FactoryName", "FactoryRefNo");
                 BindNodelEmail();
-                ddlunit.Items.Insert(0,"Select");
+                ddlunit.Items.Insert(0, "Select");
                 lblselectunit.Visible = false;
                 lblselectdivison.Visible = true;
                 ddldivision.Enabled = false;
@@ -336,7 +336,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                 txtempcode.Text = DtGetNodel.Rows[0]["NodalEmpCode"].ToString();
                 txtmobnodal.Text = DtGetNodel.Rows[0]["NodalOfficerMobile"].ToString();
                 //===Bind Nodel officer except Nodel one
-                DtCompanyDDL = Lo.RetriveMasterData(0, hfcomprefno.Value, ddlNodalOfficerEmail.SelectedItem.Value, 0, "", "", "AllNodelNotSelect");
+                DtCompanyDDL = Lo.RetriveMasterData(Convert.ToInt16(ddlNodalOfficerEmail.SelectedItem.Value), hfcomprefno.Value,"", 0, "", "", "AllNodelNotSelect");
                 if (DtCompanyDDL.Rows.Count > 0)
                 {
                     Co.FillDropdownlist(ddlNodalOfficerEmail2, DtCompanyDDL, "NodalOficerName", "NodalOfficerID");
@@ -344,7 +344,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                 }
                 else
                 {
-                    divnodal2.Visible = true;
+                    divnodal2.Visible = false;
                 }
             }
         }
@@ -372,15 +372,15 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                 txtempcode2.Text = DtGetNodel.Rows[0]["NodalEmpCode"].ToString();
                 txtmobnodal2.Text = DtGetNodel.Rows[0]["NodalOfficerMobile"].ToString();
                 //===Bind Nodel officer expect Nodel Two
-                DtCompanyDDL = Lo.RetriveMasterData(0, hfcomprefno.Value, ddlNodalOfficerEmail.SelectedItem.Value, 0, "", "", "AllNodelNotSelect");
+                DtCompanyDDL = Lo.RetriveMasterData(Convert.ToInt16(ddlNodalOfficerEmail2.SelectedItem.Value), hfcomprefno.Value, "", 0, "", "", "AllNodelNotSelect");
                 if (DtCompanyDDL.Rows.Count > 0)
                 {
                     Co.FillDropdownlist(ddlNodalOfficerEmail, DtCompanyDDL, "NodalOficerName", "NodalOfficerID");
-                    ddlNodalOfficerEmail2.Items.Insert(0, "Select");
+                    ddlNodalOfficerEmail.Items.Insert(0, "Select");
                 }
                 else
                 {
-                    divnodal.Visible = true;
+                    divnodal.Visible = false;
                 }
             }
         }
@@ -567,7 +567,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
             ddlplatformsubcat.Items.Insert(0, "Select");
         }
     }
-    #endregion  
+    #endregion
     #region For ProductRequirment
     protected void BindMasterProductReqCategory()
     {

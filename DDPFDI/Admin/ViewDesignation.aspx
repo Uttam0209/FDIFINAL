@@ -50,7 +50,7 @@
                                             <asp:TextBox ID="txtserch" runat="server" CssClass="form-cascade-control form-control" Placeholder="Type keyword to search"></asp:TextBox>
                                         </div>
                                         <div class="col-sm-2 row">
-                                            <asp:LinkButton runat="server" ID="btnsearch" class="text-black btn btn-warning pull-left btn-md" OnClick="Search_Click" Text="Search"></asp:LinkButton>
+                                            <asp:LinkButton runat="server" ID="btnsearch" Cssclass="text-black btn btn-warning pull-left btn-md" OnClick="Search_Click" Text="Search"></asp:LinkButton>
                                         </div>
                                     </div>
                                     <div class="row">

@@ -19,7 +19,7 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>Select Company</label>
-                                <asp:DropDownList runat="server" ID="ddlcompany" class="form-control form-cascade-control"></asp:DropDownList>
+                                <asp:DropDownList runat="server" ID="ddlcompany" Cssclass="form-control form-cascade-control"></asp:DropDownList>
                             </div>
                         </div>
                     </ContentTemplate>
