@@ -104,6 +104,9 @@ public partial class Admin_AddProduct : System.Web.UI.Page
             {
                 Co.FillDropdownlist(ddlcompany, DtCompanyDDL, "CompanyName", "CompanyRefNo");
                 ddlcompany.Enabled = false;
+                ddldivision.Items.Insert(0,"Select");
+                lblselectdivison.Visible = false;
+                lblselectunit.Visible = false;
                 BindNodelEmail();
             }
             else
@@ -148,6 +151,8 @@ public partial class Admin_AddProduct : System.Web.UI.Page
             {
                 Co.FillDropdownlist(ddldivision, DtCompanyDDL, "FactoryName", "FactoryRefNo");
                 BindNodelEmail();
+                ddlunit.Items.Insert(0,"Select");
+                lblselectunit.Visible = false;
                 lblselectdivison.Visible = true;
                 ddldivision.Enabled = false;
             }
