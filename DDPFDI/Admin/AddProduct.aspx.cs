@@ -854,13 +854,27 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     #region PanelSaveButtonCode
     protected void btnsubmitpanel1_Click(object sender, EventArgs e)
     {
-        if (txtoempartnumber.Text != "")
+        if (ddlmastercategory.SelectedItem.Text != "Select" && ddlsubcategory.SelectedItem.Text != "Select"  && ddltechnologycat.SelectedItem.Text != "Select")
         {
-            SaveProductDescription();
+            if (ddlsubtech.SelectedItem.Text != "Select" && ddlnomnclature.SelectedItem.Text != "Select" && ddlenduser.SelectedItem.Text != "Select" && ddlplatform.SelectedItem.Text != "Select")
+            {
+                if (ddlplatformsubcat.SelectedItem.Text != "Select")
+                {
+                    SaveProductDescription();
+                }
+                else
+                {
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Please fill mandatory fields.')", true);
+                }
+            }
+            else
+            {
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Please fill mandatory fields.')", true);
+            }
         }
         else
         {
-            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Please fill OEM Part Number')", true);
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Please fill mandatory fields.')", true);
         }
     }
     protected void btncancelpanel1_Click(object sender, EventArgs e)

@@ -23,7 +23,7 @@
                                         <div class="col-md-4" runat="server" id="divcategory1textbox" visible="False">
                                             <div class="form-group">
                                                 <label>Add Dropdown Label</label>
-                                                <asp:TextBox class="form-control" runat="server" ID="txtmastercategory"></asp:TextBox>
+                                                <asp:TextBox class="form-control" required="" runat="server" ID="txtmastercategory"></asp:TextBox>
                                             </div>
                                         </div>
                                         <div class="col-md-4" runat="server" id="divflag" visible="False">
@@ -54,7 +54,7 @@
                                         <div class="col-md-4" runat="server" id="divcategory2textbox" visible="False">
                                             <div class="form-group">
                                                 <label>Level 1 </label>
-                                                <asp:TextBox class="form-control" runat="server" ID="txtsubcategory"></asp:TextBox>
+                                                <asp:TextBox class="form-control" required="" runat="server" ID="txtsubcategory"></asp:TextBox>
                                             </div>
                                         </div>
                                         <div class="col-md-4" runat="server" id="divcategory2ddl" visible="False">
@@ -78,7 +78,7 @@
                                         <div class="col-md-4" runat="server" id="divlevel3" visible="False">
                                             <div class="form-group">
                                                 <label>Level 3 </label>
-                                                <asp:TextBox class="form-control" runat="server" ID="txtlevel3"></asp:TextBox>
+                                                <asp:TextBox class="form-control" required="" runat="server" ID="txtlevel3"></asp:TextBox>
                                             </div>
                                         </div>
                                         <div class="col-md-12">

@@ -40,7 +40,7 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>Name</label>
-                                            <asp:TextBox class="form-control" runat="server" ID="txtname"></asp:TextBox>
+                                            <asp:TextBox class="form-control" required="" runat="server" ID="txtname"></asp:TextBox>
                                         </div>
                                     </div>
 
@@ -62,7 +62,7 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>Email ID</label>
-                                            <asp:TextBox class="form-control" runat="server" ID="txtemailid"></asp:TextBox>
+                                            <asp:TextBox class="form-control" required="" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" runat="server" ID="txtemailid"></asp:TextBox>
                                         </div>
                                     </div>
                                     <div class="col-md-4">
@@ -85,13 +85,10 @@
                                             <asp:TextBox class="form-control" runat="server" ID="txtfax"></asp:TextBox>
                                         </div>
                                     </div>
-
-                                    <div class="col-md-8">
+                                    <div class="col-md-4">
                                         <div class="fdi-add-content NodalRole" id="DivNodalRole" runat="server">
                                             <div class="form-group">
-                                                <%--<h4 class="secondary-heading">Nodal</h4>--%>
                                                 <asp:CheckBox ID="chkrole" Text="Nodal Officer" runat="server" CssClass="checkbox-inline"></asp:CheckBox>
-
                                             </div>
                                         </div>
                                     </div>
@@ -107,7 +104,7 @@
                             </div>
                             <div class="table-wraper">
                                 <asp:GridView ID="gvViewNodalOfficer" runat="server" Width="100%" Class="commonAjaxTbl master-company-table table display responsive no-wrap table-hover manage-user Grid"
-                                    AutoGenerateColumns="false" AllowPaging="true" PageSize="25" AllowSorting="true">
+                                    AutoGenerateColumns="false" AllowPaging="true" PageSize="25" AllowSorting="true" OnRowDataBound="gvViewNodalOfficer_RowDataBound">
                                     <PagerStyle HorizontalAlign="Center" CssClass="GridPager" />
                                     <Columns>
                                         <asp:TemplateField HeaderText="S.No.">

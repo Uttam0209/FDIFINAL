@@ -95,7 +95,7 @@
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <asp:Label ID="lblName" runat="server" Text="" CssClass="form-label"></asp:Label>
-                                                        <asp:TextBox ID="txtcomp" runat="server" class="form-control form-cascade-control"></asp:TextBox>
+                                                        <asp:TextBox ID="txtcomp" runat="server" required="" class="form-control form-cascade-control"></asp:TextBox>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6" id="divOfficerEmail" runat="server">
