@@ -295,7 +295,7 @@
         <div class="alert">
             Successfully Saved !
         </div>
-        <button class="btn btn-success">OK</button>
+        <button class="btn btn-success close_alert">OK</button>
     </div>
     </div>
 </div>

@@ -84,13 +84,13 @@ form .form-group .btn { min-width: 100px; border-radius: 4px;}
 
 /*-----Successful Icon -----*/
 .success-checkmark {
-  width: 80px;
-  height: 90px;
+  width: 69px;
+  height: 69px;
   margin: 0 auto;
 }
 .success-checkmark .check-icon {
-  width: 80px;
-  height: 80px;
+  width: 69px;
+  height: 69px;
   position: relative;
   border-radius: 50%;
   box-sizing: content-box;
@@ -127,16 +127,16 @@ form .form-group .btn { min-width: 100px; border-radius: 4px;}
   z-index: 10;
 }
 .success-checkmark .check-icon .icon-line.line-tip {
-  top: 46px;
-  left: 14px;
-  width: 25px;
+  top: 34px;
+  left: 13px;
+  width: 18px;
   transform: rotate(45deg);
   animation: icon-line-tip 0.75s;
 }
 .success-checkmark .check-icon .icon-line.line-long {
-  top: 38px;
-  right: 8px;
-  width: 47px;
+  top: 27px;
+  right: 14px;
+  width: 33px;
   transform: rotate(-45deg);
   animation: icon-line-long 0.75s;
 }
@@ -144,8 +144,8 @@ form .form-group .btn { min-width: 100px; border-radius: 4px;}
   top: -4px;
   left: -4px;
   z-index: 10;
-  width: 80px;
-  height: 80px;
+  width: 60px;
+  height: 60px;
   border-radius: 50%;
   position: absolute;
   box-sizing: content-box;
@@ -488,6 +488,6 @@ form label { color: #494ca2;}
 .alert-overlay { position: fixed; left: 0; right: 0; top: 0; bottom: 0; z-index: 9999; background: rgba(0,0,0,0.5);}
 .alert-box {  max-width: 400px; width: 100%; position: absolute; left: 0; right: 0;  margin: 0 auto;  top: 20%;}
 .alert-box .box { width: 100%; padding: 5%; background: #fff; border-radius: 10px; text-align: center;}
-.alert-box .box .alert { text-align: center; font-size: 18px}
+.alert-box .box .alert { text-align: center; font-size: 18px; position: relative; margin-bottom: 0;}
 .overlay-progress { position: fixed; left: 0; right: 0;  bottom: 0; top: 0;  background: rgba(0,0,0,0.5); z-index: 9999;}
 .custom-progress-bar p { text-align: center; color: #fff;  font-size: 16px;}

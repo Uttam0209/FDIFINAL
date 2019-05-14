@@ -84,12 +84,17 @@ $(document).ready(function(){
     });
 
 //Alert pop up box
-
-$("").on('click', function(){
+ function ShowMessage(){
     $("body").css('overflow','hidden');
     $('.alert-overlay').show();
+ }
+
+
 });
 
+$(".close_alert").on('click', function(){
+    $("body").css('overflow','visible');
+    $('.alert-overlay').show();
 });
 
 
