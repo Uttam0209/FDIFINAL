@@ -26,7 +26,6 @@
     });
 
 
-$(document).ready(function(){
     // Add Current Page in Sidebar
     //var CURRENT_URL= window.location.href;
     var CURRENT_URL= window.location.href.split('/').slice(3).join('/');
@@ -35,8 +34,6 @@ $(document).ready(function(){
     $Sidebar.find('a[href="'+CURRENT_URL+'"]').parents(".parent-nav-child").addClass('active').siblings(".parent-nav-child").removeClass("active");
     $Sidebar.find('a[href="'+CURRENT_URL+'"]').addClass('active');
     console.log(CURRENT_URL);
-
-});
 
 //Hide Show Chart
 
@@ -87,20 +84,10 @@ $(document).ready(function(){
  function ShowMessage(){
     $("body").css('overflow','hidden');
     $('.alert-overlay').show();
- }
-
-
-});
-
-$(".close_alert").on('click', function(){
-    $("body").css('overflow','visible');
-    $('.alert-overlay').show();
-});
-
-
+}
 //Show Hide Contact Details
 //Sys.Application.add_load(BindFunction);
-$(document).ready(function () {
+
     $('body').on('click', '.showMoreLink', function () {
 
         $(this).parents('.section-pannel').find('.contactFormRow').slideToggle();
@@ -117,8 +104,20 @@ $(document).ready(function () {
      //Show Map
 
     $('body').on('click','.showMap',function(){
-        $('.map-box').show();
-    
+        $('.map-box').show();    
     });
+
+//Password Show on Click
+
+$(".toggle-password").on('click',function() {
+ 
+  $(this).toggleClass("fa-eye fa-eye-slash");
+  var input = $(".passField");
+  if (input.attr("type") == "password") {
+    input.attr("type", "text");
+  } else {
+    input.attr("type", "password");
+  }
+});
 
 });

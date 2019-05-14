@@ -12,8 +12,7 @@
     <link href="~/assets/css/style.css" rel="stylesheet" type="text/css">
     <link href="~/assets/css/custom.css" rel="stylesheet" type="text/css">
     <link href="~/assets/css/responsive.css" rel="stylesheet" type="text/css">
-
-    <script type="text/javascript" src="assets/js/loader.js"></script>
+  <!-- <script type="text/javascript" src="assets/js/loader.js"></script> -->
     <style>
         .swal2-container.swal2-center.swal2-shown {
             z-index: 22222;
@@ -48,11 +47,6 @@
       display: none;
     }*/
     </style>
-
-
-
-    
-
 </head>
 <body>
     <form id="form1" runat="server">
@@ -81,7 +75,10 @@
                     <label for="psw" class=" tetLable">
                         Password
                     </label>
-                    <asp:TextBox runat="server" ID="txtPwd" TabIndex="1" name="txtPwd" class="form-control" autocomplete="off" placeholder="Password" type="password" required=""></asp:TextBox>
+                    <span class="passbox">
+                    <asp:TextBox runat="server" ID="txtPwd" TabIndex="1" name="txtPwd" class="form-control passField" autocomplete="off" placeholder="Password" type="password" required=""></asp:TextBox>
+                      <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
+                    </span>
                     <p style="margin-top: 15px;">
                         Password is case sensitive
                     </p>
@@ -123,5 +120,8 @@
             </div>
         </div>
     </form>
+
+  <script src="assets/js/jquery-1.12.4.js"></script>
+  <script src="assets/js/custom.js"></script>
 </body>
 </html>
