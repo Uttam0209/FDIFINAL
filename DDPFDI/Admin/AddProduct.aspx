@@ -52,19 +52,11 @@
                     <li class="active"><a data-toggle="tab" href="#pd">Description</a></li>
                     <li><a data-toggle="tab" href="#pimg">Image</a></li>
                     <li><a data-toggle="tab" href="#spd">Support by DPSU</a></li>
-<<<<<<< HEAD
                     <li><a data-toggle="tab" href="#qpt">Quantity Required</a></li>
                     <li><a data-toggle="tab" href="#tnd">Tender</a></li>
                     <li><a data-toggle="tab" href="#cd">Contact</a></li>
                     <li><a data-toggle="tab" href="#test">Testing</a></li>
                     <li><a data-toggle="tab" href="#cer">Certification</a></li>
-=======
-                    <li><a data-toggle="tab" href="#qpt">Quantity</a></li>
-                    <li><a data-toggle="tab" href="#tnd">Tender </a></li>
-                    <li><a data-toggle="tab" href="#cd">Contact </a></li>
-                    <li><a data-toggle="tab" href="#">Testing </a></li>
-                    <li><a data-toggle="tab" href="#">Certification</a></li>
->>>>>>> 6bab247aa21608297dea601e5349d9d93c941ed6
                 </ul>
                 <div class="tab-content">
                     <asp:HiddenField runat="server" ID="hfprodid" />
@@ -649,41 +641,6 @@
         </div>
     </div>
     <script type="text/javascript" language="javascript">
-        var count = 0;
-        function handleFileSelect(evt) {
-            var $fileUpload = $("input#files[type='file']");
-            count = count + parseInt($fileUpload.get(0).files.length);
-
-            if (parseInt($fileUpload.get(0).files.length) > 8 || count > 9) {
-                alert("You can only upload a maximum of 8 files");
-                count = count - parseInt($fileUpload.get(0).files.length);
-                evt.preventDefault();
-                evt.stopPropagation();
-                return false;
-            }
-            var files = evt.target.files;
-            for (var i = 0, f; f = files[i]; i++) {
-                if (!f.type.match('image.*')) {
-                    continue;
-                }
-                var reader = new FileReader();
-                reader.onload = (function (theFile) {
-                    return function (e) {
-                        var span = document.createElement('span');
-                        span.innerHTML = ['<img class="thumb" src="', e.target.result, '" title="', escape(theFile.name), '"/><span class="remove_img_preview"></span>'].join('');
-                        document.getElementById('list').insertBefore(span, null);
-                    };
-                })(f);
-
-                reader.readAsDataURL(f);
-            }
-        }
-        $('#files').change(function (evt) {
-            handleFileSelect(evt);
-        });
-        $('#list').on('click', '.remove_img_preview', function () {
-            $(this).parent('span').remove();
-            //           parseInt($fileUpload.get(0).files.length - 1;
-        });
+        
     </script>
 </asp:Content>
