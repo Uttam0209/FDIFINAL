@@ -16,21 +16,19 @@
 </head>
 <body>
     <form id="form1" runat="server">
-         <div class="loginBg clearfix">
-                    <h3>Create New Password</h3>
-                   
-                    <label for="pass" class="tetLable">
-                        Password
-                    </label>
-                <asp:TextBox runat="server" ID="txtpassword" CssClass="form-control"></asp:TextBox>
-                <label for="pass" class="tetLable">
-                        Repeat Password
-                    </label>
-                <asp:TextBox runat="server" ID="txttnewpass" CssClass="form-control"></asp:TextBox>
-                
-                <asp:Button runat="server" ID="btnchangepass" Text="Submit" CssClass="btn btn-primary createLoginPass" OnClick="btnchangepass_Click" />
-            </div>
-    
+        <div class="loginBg clearfix">
+            <h3>Create New Password</h3>
+            <label for="pass" class="tetLable">
+                Password
+            </label>
+            <asp:TextBox runat="server" ID="txtpassword" TextMode="Password" CssClass="form-control"></asp:TextBox>
+            <label for="pass" class="tetLable">
+                Repeat Password
+            </label>
+            <asp:TextBox runat="server" ID="txttnewpass" TextMode="Password" CssClass="form-control"></asp:TextBox>
+            <asp:Button runat="server" ID="btnchangepass" Text="Submit" CssClass="btn btn-primary createLoginPass" OnClick="btnchangepass_Click" />
+        </div>
+
     </form>
 </body>
 </html>

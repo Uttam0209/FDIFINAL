@@ -177,6 +177,9 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
             this.gvcompanydetail.Columns[4].Visible = true;
             this.gvcompanydetail.Columns[5].Visible = false;
             this.gvcompanydetail.Columns[6].Visible = false;
+            this.gvcompanydetail.Columns[7].Visible = true;
+            this.gvcompanydetail.Columns[8].Visible = false;
+            this.gvcompanydetail.Columns[9].Visible = false;
         }
         else if (Enc.DecryptData(Request.QueryString["mu"].ToString()) == "Panel3")
         {
@@ -186,6 +189,9 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
             this.gvcompanydetail.Columns[4].Visible = false;
             this.gvcompanydetail.Columns[5].Visible = true;
             this.gvcompanydetail.Columns[6].Visible = true;
+            this.gvcompanydetail.Columns[7].Visible = false;
+            this.gvcompanydetail.Columns[8].Visible = true;
+            this.gvcompanydetail.Columns[9].Visible = false;
         }
         else
         {
@@ -193,6 +199,9 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
             this.gvcompanydetail.Columns[4].Visible = false;
             this.gvcompanydetail.Columns[5].Visible = false;
             this.gvcompanydetail.Columns[6].Visible = false;
+            this.gvcompanydetail.Columns[7].Visible = false;
+            this.gvcompanydetail.Columns[8].Visible = false;
+            this.gvcompanydetail.Columns[9].Visible = false;
         }
 
 
@@ -466,7 +475,6 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
         }
 
     }
-
     protected void ddlfacotry_SelectedIndexChanged(object sender, EventArgs e)
     {
         gvcompanydetail.Visible = true;

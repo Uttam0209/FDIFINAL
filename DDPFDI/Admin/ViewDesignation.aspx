@@ -35,16 +35,16 @@
             <div class="content oem-content">
                 <div class="sideBg">
                     <div class="row">
-                    <div class="col-md-12 padding_0">
-                         <div id="divHeadPage" runat="server"></div>
-                    </div>
+                        <div class="col-md-12 padding_0">
+                            <div id="divHeadPage" runat="server"></div>
+                        </div>
                     </div>
                     <form method="post" class="addfdi">
                         <div class="row">
                             <div class="col-md-12">
                                 <asp:HiddenField runat="server" ID="hfrole" />
                                 <div class="table-wrapper">
-                                    
+
                                     <div id="Div1" runat="server" visible="False">
                                         <div class="col-sm-4 row">
                                             <asp:TextBox ID="txtserch" runat="server" CssClass="form-cascade-control form-control" Placeholder="Type keyword to search"></asp:TextBox>
@@ -58,7 +58,7 @@
                                             <label>Select Company</label>
                                             <asp:DropDownList runat="server" ID="ddlcompany" CssClass="form-control" AutoPostBack="True" OnSelectedIndexChanged="ddlcompany_OnSelectedIndexChanged"></asp:DropDownList>
                                         </div>
-                                        
+
                                     </div>
                                 </div>
                                 <div class="clearfix"></div>
@@ -68,18 +68,18 @@
                                 </div>
 
                                 <div class="clearfix"></div>
-                                <div id="Div3"  >
-                                <asp:Button ID="btnAddDesignation" runat="server" Text="Add Designation" CssClass="btn btn-primary pull-right" OnClick="btnAddDesignation_Click"  />
+                                <div id="Div3">
+                                    <asp:Button ID="btnAddDesignation" runat="server" Text="Add Designation" CssClass="btn btn-primary pull-right" OnClick="btnAddDesignation_Click" />
 
                                 </div>
 
                                 <div class="clearfix"></div>
                                 <div class="table-wraper">
                                     <asp:GridView ID="gvViewDesignation" runat="server" Width="100%" Class="commonAjaxTbl master-company-table table display responsive no-wrap table-hover manage-user Grid" AutoGenerateColumns="false" AllowPaging="true"
-                                         PageSize="25" AllowSorting="true" OnRowCommand="gvViewDesignation_RowCommand">
+                                        PageSize="25" AllowSorting="true" OnRowCommand="gvViewDesignation_RowCommand">
                                         <PagerStyle HorizontalAlign="Center" CssClass="GridPager" />
                                         <Columns>
-                                            
+
                                             <asp:TemplateField HeaderText="S.No.">
                                                 <ItemTemplate>
                                                     <%#Container.DataItemIndex+1 %>
@@ -90,8 +90,8 @@
                                                     <asp:Label ID="lblrefno" runat="server" Text='<%#Eval("CompanyName") %>' NullDisplayText="#" SortExpression="CompanyRefNo"></asp:Label>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
-                                            <asp:BoundField DataField="DesignationRefNo" HeaderText="Reference No." NullDisplayText="#" SortExpression="DesignationRefNo" />
-                                            <asp:BoundField DataField="Designation" HeaderText="Designation" NullDisplayText="#" SortExpression="Designation" />
+                                            <asp:BoundField DataField="Designation" HeaderText="Designation" NullDisplayText="#" />
+                                            <asp:BoundField DataField="DesignationRefNo" HeaderText="Reference No." NullDisplayText="#" />
 
                                             <asp:TemplateField HeaderText="Action">
                                                 <ItemTemplate>
@@ -110,7 +110,7 @@
                 </div>
                 <div class="footer">© 2019 <a href="#">Department of Defence Production</a> </div>
             </div>
-           
+
         </ContentTemplate>
     </asp:UpdatePanel>
 </asp:Content>

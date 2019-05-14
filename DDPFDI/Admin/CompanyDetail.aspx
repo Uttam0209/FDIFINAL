@@ -190,7 +190,7 @@
 
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-6">
+                                                    <div class="col-md-6" runat="server" id="divwebsite">
                                                         <div class="form-group">
                                                             <label for="activityname" class="control-label">Website</label>
                                                             <asp:TextBox runat="server" ID="txtWebsite" name="" class="form-control form-cascade-control " placeholder=""></asp:TextBox>
@@ -199,11 +199,6 @@
                                                 </div>
                                             </div>
                                             <div class="indiacompanydetails">
-
-
-
-
-
                                                 <div id="Div1" class="form-group" runat="server" visible="false">
                                                     <label for="seldistrict" class="control-label">District </label>
                                                     <asp:TextBox runat="server" ID="seldistrict" name="tdistrict" class="form-control form-cascade-control" placeholder=""></asp:TextBox>
@@ -246,7 +241,7 @@
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="tpersonname" class="control-label">Name</label>
-                                                <asp:TextBox runat="server" ID="txtNName" name="" class="form-control form-cascade-control" placeholder=""></asp:TextBox>
+                                                <asp:TextBox runat="server" ID="txtNName" name="" ReadOnly="True" class="form-control form-cascade-control" placeholder=""></asp:TextBox>
                                             </div>
 
 
@@ -254,7 +249,7 @@
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="tpersonname" class="control-label">Designation </label>
-                                                <asp:TextBox runat="server" ID="txtDesignation" Text="CEO" name="" class="form-control form-cascade-control" placeholder=""></asp:TextBox>
+                                                <asp:TextBox runat="server" ID="txtDesignation" Text="CEO" name="" ReadOnly="True" class="form-control form-cascade-control" placeholder=""></asp:TextBox>
                                             </div>
 
 
@@ -275,7 +270,7 @@
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="tcontactno" class="control-label">Mobile</label>
-                                                <asp:TextBox runat="server" ID="txtNMobile" name="" MaxLength="16" onkeypress="return isNumber(event)" class="form-control form-cascade-control"
+                                                <asp:TextBox runat="server" ID="txtNMobile" name="" ReadOnly="True" MaxLength="16" onkeypress="return isNumber(event)" class="form-control form-cascade-control"
                                                     placeholder=""></asp:TextBox>
 
                                             </div>
@@ -283,7 +278,7 @@
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="tcontactno" class="control-label">Telephone</label>
-                                                <asp:TextBox runat="server" ID="txtNTelephone" name="" MaxLength="16" onkeypress="return isNumber(event)" class="form-control form-cascade-control"
+                                                <asp:TextBox runat="server" ID="txtNTelephone" name="" ReadOnly="True" MaxLength="16" onkeypress="return isNumber(event)" class="form-control form-cascade-control"
                                                     placeholder=""></asp:TextBox>
 
                                             </div>
@@ -291,20 +286,13 @@
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="tcontactno" class="control-label">Fax No</label>
-                                                <asp:TextBox runat="server" ID="txtNFaxNo" name="tcontactno" MaxLength="16" onkeypress="return isNumber(event)" class="form-control form-cascade-control"
+                                                <asp:TextBox runat="server" ID="txtNFaxNo" name="tcontactno" ReadOnly="True" MaxLength="16" onkeypress="return isNumber(event)" class="form-control form-cascade-control"
                                                     placeholder=""></asp:TextBox>
-
                                             </div>
                                         </div>
-
-
                                     </div>
                                 </div>
-
-
                             </div>
-
-
                         </ContentTemplate>
                     </asp:UpdatePanel>
                 </div>

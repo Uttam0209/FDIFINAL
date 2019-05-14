@@ -93,11 +93,12 @@
                                                     <asp:Label ID="lblrefno" runat="server" Text='<%#Eval("CompanyName") %>' NullDisplayText="#" SortExpression="Company"></asp:Label>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
-                                            <asp:BoundField DataField="FactoryName" HeaderText="Division" NullDisplayText="-" SortExpression="Name" />
-                                            <asp:BoundField DataField="UnitName" HeaderText="Unit" NullDisplayText="-" SortExpression="Name" />
-                                            <asp:BoundField DataField="NodalOficerName" HeaderText="Name" NullDisplayText="#" SortExpression="Name" />
-                                            <asp:BoundField DataField="NodalOfficerEmail" HeaderText="Email" NullDisplayText="#" SortExpression="Email" />
-                                            <asp:BoundField DataField="IsNodalOfficer" HeaderText="Nodal Officer" NullDisplayText="#" SortExpression="Nodal Officer" />
+                                            <asp:BoundField DataField="FactoryName" HeaderText="Division" NullDisplayText="-" />
+                                            <asp:BoundField DataField="UnitName" HeaderText="Unit" NullDisplayText="-" />
+                                            <asp:BoundField DataField="NodalOficerName" HeaderText="Name" NullDisplayText="#" />
+                                            <asp:BoundField DataField="NodalOfficerRefNo" HeaderText="Reference No." NullDisplayText="#" />
+                                            <asp:BoundField DataField="NodalOfficerEmail" HeaderText="Email" NullDisplayText="#" />
+                                            <asp:BoundField DataField="IsNodalOfficer" HeaderText="Nodal Officer" NullDisplayText="#" />
 
                                             <asp:TemplateField HeaderText="Action">
                                                 <ItemTemplate>
@@ -138,7 +139,7 @@
                                                     <asp:Label ID="lblcompanyname" runat="server"></asp:Label>
                                                 </td>
                                             </tr>
-                                             <tr>
+                                            <tr>
                                                 <td class="pass">Division</td>
                                                 <td>
                                                     <asp:Label ID="lblDivision" runat="server"></asp:Label>
