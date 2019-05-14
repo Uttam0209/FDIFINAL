@@ -562,7 +562,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
             ddlplatformsubcat.Items.Insert(0, "Select");
         }
     }
-    #endregion
+    #endregion  
     #region For ProductRequirment
     protected void BindMasterProductReqCategory()
     {
