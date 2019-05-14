@@ -442,9 +442,10 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
     }
     protected void ddlunit_OnSelectedIndexChanged(object sender, EventArgs e)
     {
-        if (ddldivision.SelectedItem.Text == "Select")
+        if (ddlunit.SelectedItem.Text == "Select")
         {
-            ddldivision_OnSelectedIndexChanged(sender, e);
+            //ddldivision_OnSelectedIndexChanged(sender, e);
+            gvViewNodalOfficer.Visible = false;
         }
         else
         {
@@ -633,6 +634,7 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
         ddldesignation.SelectedIndex = 0;
         btnsub.Text = "Save";
         txtEmpCode.Text = "";
+        chkrole.Checked = false;
     }
     protected void btncancel_Click(object sender, EventArgs e)
     {

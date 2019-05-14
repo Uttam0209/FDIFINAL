@@ -102,7 +102,7 @@
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                             <asp:BoundField ItemStyle-Width="150px" DataField="MCategoryName" HeaderText="Dropdown Label" />
-                                            <asp:TemplateField HeaderText="Hierarchy Label">
+                                            <asp:TemplateField HeaderText="Hierarchy">
                                                     <ItemTemplate>
                                                         <asp:Label ID="Label1" runat="server" Text='<%#Eval("Flag") %>' NullDisplayText="#"></asp:Label>
                                                     </ItemTemplate>
@@ -126,6 +126,17 @@
                 <div class="footer">� 2019 <a href="#">Department of Defence Production</a> </div>
             </div>
         </ContentTemplate>
-        <Triggers></Triggers>
     </asp:UpdatePanel>
+    <asp:UpdateProgress ID="UpdateProgress" runat="server" AssociatedUpdatePanelID="up">
+        <ProgressTemplate>
+            <!---Progress Bar ---->
+            <div class="overlay-progress">
+                <div class="custom-progress-bar blue stripes">
+                    <span></span>
+                    <p>Processing</p>
+                </div>
+            </div>
+            <!---Progress Bar ---->
+        </ProgressTemplate>
+    </asp:UpdateProgress>
 </asp:Content>

@@ -68,12 +68,12 @@
                                                                                                                                 <asp:HiddenField runat="server" ID="hflevel3" Value='<%#Eval("SCategoryId") %>' />
                                                                                                                             </ItemTemplate>
                                                                                                                         </asp:TemplateField>
-                                                                                                                        <asp:TemplateField>
+                                                                                                                        <%--<asp:TemplateField>
                                                                                                                             <ItemTemplate>
                                                                                                                                 <%--<asp:LinkButton ID="lbleditlevel2values" runat="server" CssClass="fa fa-edit" CommandName="level2edit" CommandArgument='<%#Eval("SCategoryId") %>'></asp:LinkButton>--%>
-                                                                                                                                <asp:LinkButton ID="lbldellevel3values" runat="server" CssClass="fa fa-trash" CommandName="level3delete" OnClientClick="return confirm('Are you sure you want to delete this level 3 values?');" CommandArgument='<%#Eval("SCategoryId") %>'></asp:LinkButton>
+                                                                                                                        <%--<asp:LinkButton ID="lbldellevel3values" runat="server" CssClass="fa fa-trash" CommandName="level3delete" OnClientClick="return confirm('Are you sure you want to delete this level 3 values?');" CommandArgument='<%#Eval("SCategoryId") %>'></asp:LinkButton>
                                                                                                                             </ItemTemplate>
-                                                                                                                        </asp:TemplateField>
+                                                                                                                        </asp:TemplateField>--%>
                                                                                                                     </Columns>
                                                                                                                 </asp:GridView>
                                                                                                             </asp:Panel>
@@ -90,12 +90,12 @@
                                                                                                         <asp:HiddenField runat="server" ID="hfcatlevel2" Value='<%#Eval("SCategoryId") %>' />
                                                                                                     </ItemTemplate>
                                                                                                 </asp:TemplateField>
-                                                                                                <asp:TemplateField>
+                                                                                                <%--<asp:TemplateField>
                                                                                                     <ItemTemplate>
-                                                                                                        <%--<asp:LinkButton ID="lbleditlevel2values" runat="server" CssClass="fa fa-edit" CommandName="level2edit" CommandArgument='<%#Eval("SCategoryId") %>'></asp:LinkButton>--%>
+                                                                                                        <asp:LinkButton ID="lbleditlevel2values" runat="server" CssClass="fa fa-edit" CommandName="level2edit" CommandArgument='<%#Eval("SCategoryId") %>'></asp:LinkButton>
                                                                                                         <asp:LinkButton ID="lbldellevel2values" runat="server" CssClass="fa fa-trash" CommandName="level2delete" OnClientClick="return confirm('Are you sure you want to delete this level 2 values?');" CommandArgument='<%#Eval("SCategoryId") %>'></asp:LinkButton>
                                                                                                     </ItemTemplate>
-                                                                                                </asp:TemplateField>
+                                                                                                </asp:TemplateField>--%>
                                                                                             </Columns>
                                                                                         </asp:GridView>
                                                                                     </asp:Panel>
@@ -113,12 +113,12 @@
                                                                                 <asp:HiddenField runat="server" ID="hfcatlevel1id" Value='<%#Eval("SCategoryID") %>' />
                                                                             </ItemTemplate>
                                                                         </asp:TemplateField>
-                                                                        <asp:TemplateField>
+                                                                        <%--<asp:TemplateField>
                                                                             <ItemTemplate>
-                                                                                <%--<asp:LinkButton ID="lbllevel1edit" runat="server" CssClass="fa fa-edit" CommandName="level1edit" CommandArgument='<%#Eval("SCategoryId") %>'></asp:LinkButton>--%>
+                                                                                <asp:LinkButton ID="lbllevel1edit" runat="server" CssClass="fa fa-edit" CommandName="level1edit" CommandArgument='<%#Eval("SCategoryId") %>'></asp:LinkButton>
                                                                                 <asp:LinkButton ID="lbllevel1del" runat="server" CssClass="fa fa-trash" CommandName="level2del" OnClientClick="return confirm('Are you sure you want to delete this level 1 values?');" CommandArgument='<%#Eval("SCategoryId") %>'></asp:LinkButton>
                                                                             </ItemTemplate>
-                                                                        </asp:TemplateField>
+                                                                        </asp:TemplateField>--%>
                                                                     </Columns>
                                                                 </asp:GridView>
                                                             </asp:Panel>
@@ -136,7 +136,7 @@
                                                         <asp:HiddenField ID="hfcat" runat="server" Value='<%#Eval("MCategoryId") %>' />
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
-                                                <asp:TemplateField HeaderText="Hierarchy Label">
+                                                <asp:TemplateField HeaderText="Hierarchy">
                                                     <ItemTemplate>
                                                         <asp:Label ID="lblHierarchy" runat="server" Text='<%#Eval("Flag") %>' NullDisplayText="#"></asp:Label>
                                                     </ItemTemplate>
@@ -146,12 +146,12 @@
                                                         <asp:Label ID="lblStatus" runat="server" Text='<%#Eval("IsActive") %>' NullDisplayText="#"></asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
-                                                <asp:TemplateField HeaderText="Action">
+                                                <%--<asp:TemplateField HeaderText="Action">
                                                     <ItemTemplate>
-                                                        <%--<asp:LinkButton ID="lblactive" runat="server" CssClass="fa fa-check" CommandName="labelactive" OnClientClick="return confirm('Are you sure you want to active this Lable?');" CommandArgument='<%#Eval("MCategoryId") %>'></asp:LinkButton>--%>
+                                                        <asp:LinkButton ID="lblactive" runat="server" CssClass="fa fa-check" CommandName="labelactive" OnClientClick="return confirm('Are you sure you want to active this Lable?');" CommandArgument='<%#Eval("MCategoryId") %>'></asp:LinkButton>
                                                         <asp:LinkButton ID="lbllabeldel" runat="server" CssClass="fa fa-trash" CommandName="labeldel" OnClientClick="return confirm('Are you sure you want to delete this Lable?');" CommandArgument='<%#Eval("MCategoryId") %>'></asp:LinkButton>
                                                     </ItemTemplate>
-                                                </asp:TemplateField>
+                                                </asp:TemplateField>--%>
                                             </Columns>
                                         </asp:GridView>
                                     </div>
