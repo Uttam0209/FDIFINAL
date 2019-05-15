@@ -70,7 +70,7 @@
                                         <div class="row">
                                             <div class="col-md-4">
                                                 <div class="form-group">
-                                                    <label>OEM Part Number</label>
+                                                    <label>OEM Part Number <span class="red">*</span></label>
                                                     <asp:TextBox runat="server" ID="txtoempartnumber" class="form-control"></asp:TextBox>
                                                 </div>
                                             </div>
@@ -105,7 +105,7 @@
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="form-group">
-                                                    <label>ERP Reference No</label>
+                                                    <label>DPSU Reference No</label>
                                                     <asp:TextBox runat="server" ID="txterprefno" class="form-control"></asp:TextBox>
                                                 </div>
                                             </div>
@@ -189,7 +189,6 @@
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="form-group">
-
                                                     <asp:Label runat="server" ID="lblenduser" Text="End User"></asp:Label>
                                                     <asp:DropDownList runat="server" ID="ddlenduser" class="form-control">
                                                     </asp:DropDownList>
@@ -204,13 +203,13 @@
                                                 <ContentTemplate>
                                                     <div class="col-md-4">
                                                         <div class="form-group">
-                                                            <label>Platform :</label>
+                                                            <label>Platform</label>
                                                             <asp:DropDownList runat="server" ID="ddlplatform" class="form-control" AutoPostBack="True" OnSelectedIndexChanged="ddlplatform_SelectedIndexChanged"></asp:DropDownList>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-4">
                                                         <div class="form-group">
-                                                            <label>Purpose of Procurement :</label>
+                                                            <label>Purpose of Procurement</label>
                                                             <asp:DropDownList runat="server" ID="ddlplatformsubcat" class="form-control"></asp:DropDownList>
                                                         </div>
                                                     </div>
@@ -220,8 +219,7 @@
                                             </asp:UpdatePanel>
                                             <div class="col-md-4">
                                                 <div class="form-group">
-
-                                                    <asp:Label runat="server" ID="lblprodrequir" Text="Product Time Frame"></asp:Label>
+                                                    <asp:Label runat="server" ID="lblprodrequir" CssClass="form-label" Text="Procurement Time Frame"></asp:Label>
                                                     <asp:DropDownList runat="server" ID="ddlprodreqir" class="form-control"></asp:DropDownList>
                                                 </div>
                                             </div>
@@ -233,7 +231,7 @@
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <label>Search Keywords :</label>
+                                                    <label>Search Keywords</label>
                                                     <asp:TextBox runat="server" ID="txtsearchkeyword" class="form-control"></asp:TextBox>
                                                 </div>
 
@@ -369,13 +367,13 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-md-12" runat="server" id="divtendordate">
+                                        <div class="col-md-12" runat="server" cssclass="hidden" id="divtendordate" visible="False">
                                             <div class="form-group live-status-box">
                                                 <label>
                                                     <strong>Note:</strong> If live, please fill last date of tender submission. 
                                             <span class="checkbox-box productalreadylabel">
                                                 <asp:RadioButtonList runat="server" ID="rbtendordateyesno" RepeatDirection="Horizontal" AutoPostBack="True" RepeatColumns="2" RepeatLayout="Flow" OnSelectedIndexChanged="rbtendordateyesno_CheckedChanged">
-                                                    <asp:ListItem Value="N">No</asp:ListItem>
+                                                    <asp:ListItem Value="N" runat="server">No</asp:ListItem>
                                                     <asp:ListItem Value="Y" class="yes" Selected="True">Yes</asp:ListItem>
                                                 </asp:RadioButtonList>
                                             </span>
@@ -385,7 +383,7 @@
                                         <div class="Turl_Tdate" runat="server" visible="False" id="divtdate">
                                             <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <label>Tender Date</label>
+                                                    <label>Last date of tender submission</label>
                                                     <asp:TextBox runat="server" ID="txttendordate" type="date" class="form-control inputbox"></asp:TextBox>
                                                 </div>
                                             </div>
@@ -418,19 +416,19 @@
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label>Employee Code</label>
-                                                    <asp:TextBox runat="server" ID="txtempcode" name="" class="form-control form-cascade-control" placeholder=""></asp:TextBox>
+                                                    <asp:TextBox runat="server" ID="txtempcode" name="" Enabled="false" CssClass="form-control form-cascade-control" placeholder=""></asp:TextBox>
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label>Designation</label>
-                                                    <asp:TextBox runat="server" ID="txtDesignation" name="" class="form-control form-cascade-control" placeholder=""></asp:TextBox>
+                                                    <asp:TextBox runat="server" ID="txtDesignation" name="" Enabled="false" CssClass="form-control form-cascade-control" placeholder=""></asp:TextBox>
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label>E-Mail ID</label>
-                                                    <asp:TextBox runat="server" ID="txtNEmailId" name="" class="form-control form-cascade-control" placeholder=""></asp:TextBox>
+                                                    <asp:TextBox runat="server" ID="txtNEmailId" name="" Enabled="false" CssClass="form-control form-cascade-control" placeholder=""></asp:TextBox>
                                                 </div>
                                             </div>
                                         </div>
@@ -439,19 +437,19 @@
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label>Mobile Number</label>
-                                                    <asp:TextBox runat="server" ID="txtmobnodal" class="form-control"></asp:TextBox>
+                                                    <asp:TextBox runat="server" ID="txtmobnodal" Enabled="false" CssClass="form-control"></asp:TextBox>
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label>Phone Number</label>
-                                                    <asp:TextBox runat="server" ID="txtNTelephone" name="" class="form-control form-cascade-control" placeholder=""></asp:TextBox>
+                                                    <asp:TextBox runat="server" ID="txtNTelephone" name="" Enabled="false" CssClass="form-control form-cascade-control" placeholder=""></asp:TextBox>
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label>Fax</label>
-                                                    <asp:TextBox runat="server" ID="txtNFaxNo" name="" class="form-control form-cascade-control" placeholder=""></asp:TextBox>
+                                                    <asp:TextBox runat="server" ID="txtNFaxNo" name="" Enabled="false" CssClass="form-control form-cascade-control" placeholder=""></asp:TextBox>
                                                 </div>
                                             </div>
                                         </div>
@@ -468,20 +466,20 @@
                                                 <div class="col-md-4">
                                                     <div class="form-group">
                                                         <label>Employee Code</label>
-                                                        <asp:TextBox runat="server" ID="txtempcode2" name="" class="form-control form-cascade-control" placeholder=""></asp:TextBox>
+                                                        <asp:TextBox runat="server" ID="txtempcode2" name="" Enabled="false" CssClass="form-control form-cascade-control" placeholder=""></asp:TextBox>
                                                     </div>
 
                                                 </div>
                                                 <div class="col-md-4">
                                                     <div class="form-group">
                                                         <label>Designation</label>
-                                                        <asp:TextBox runat="server" ID="txtdesignationnodal2" name="" class="form-control form-cascade-control" placeholder=""></asp:TextBox>
+                                                        <asp:TextBox runat="server" ID="txtdesignationnodal2" name="" Enabled="false" CssClass="form-control form-cascade-control" placeholder=""></asp:TextBox>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-4">
                                                     <div class="form-group">
                                                         <label>E-Mail ID</label>
-                                                        <asp:TextBox runat="server" ID="txtNEmailId2" name="" class="form-control form-cascade-control" placeholder=""></asp:TextBox>
+                                                        <asp:TextBox runat="server" ID="txtNEmailId2" name="" Enabled="false" CssClass="form-control form-cascade-control" placeholder=""></asp:TextBox>
 
                                                     </div>
                                                 </div>
@@ -490,20 +488,20 @@
                                                 <div class="col-md-4">
                                                     <div class="form-group">
                                                         <label>Mobile Number</label>
-                                                        <asp:TextBox runat="server" ID="txtmobnodal2" name="" class="form-control form-cascade-control" placeholder=""></asp:TextBox>
+                                                        <asp:TextBox runat="server" ID="txtmobnodal2" name="" Enabled="false" CssClass="form-control form-cascade-control" placeholder=""></asp:TextBox>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-4">
                                                     <div class="form-group">
                                                         <label>Phone Number</label>
-                                                        <asp:TextBox runat="server" ID="txtNTelephone2" name="" class="form-control form-cascade-control" placeholder=""></asp:TextBox>
+                                                        <asp:TextBox runat="server" ID="txtNTelephone2" name="" Enabled="false" CssClass="form-control form-cascade-control" placeholder=""></asp:TextBox>
 
                                                     </div>
                                                 </div>
                                                 <div class="col-md-4">
                                                     <div class="form-group">
                                                         <label>Fax</label>
-                                                        <asp:TextBox runat="server" ID="txtNFaxNo2" name="" class="form-control form-cascade-control" placeholder=""></asp:TextBox>
+                                                        <asp:TextBox runat="server" ID="txtNFaxNo2" name="" Enabled="false" CssClass="form-control form-cascade-control" placeholder=""></asp:TextBox>
 
                                                     </div>
                                                 </div>

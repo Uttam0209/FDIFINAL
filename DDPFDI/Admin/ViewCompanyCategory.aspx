@@ -22,19 +22,19 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>Select Company</label>
-                                            <asp:DropDownList runat="server" ID="ddlcompany" class="form-cascade-control form-control"></asp:DropDownList>
+                                            <asp:DropDownList runat="server" ID="ddlcompany" Cssclass="form-cascade-control form-control"></asp:DropDownList>
                                         </div>
                                     </div>
                                     <div class="col-md-4" runat="server" id="lblselectdivison" visible="False">
                                         <div class="form-group">
                                             <label>Select Division/Palnt</label>
-                                            <asp:DropDownList runat="server" ID="ddldivision" class="form-cascade-control form-control"></asp:DropDownList>
+                                            <asp:DropDownList runat="server" ID="ddldivision" Cssclass="form-cascade-control form-control"></asp:DropDownList>
                                         </div>
                                     </div>
                                     <div class="col-md-4" runat="server" id="lblselectunit" visible="False">
                                         <div class="form-group">
                                             <label>Select Unit</label>
-                                            <asp:DropDownList runat="server" ID="ddlunit" class="form-cascade-control form-control"></asp:DropDownList>
+                                            <asp:DropDownList runat="server" ID="ddlunit" Cssclass="form-cascade-control form-control"></asp:DropDownList>
                                         </div>
                                     </div>
                                 </div>
