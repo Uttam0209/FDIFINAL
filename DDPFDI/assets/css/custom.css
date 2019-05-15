@@ -493,3 +493,4 @@ form label { color: #494ca2;}
 .custom-progress-bar p { text-align: center; color: #fff;  font-size: 16px;}
 .loginBg span.passbox { position: relative; display: block;}
 .loginBg span.toggle-password { color: #000; position: absolute; right: 10px; top:10px; cursor: pointer;}
+.multiinput { display: flex}
