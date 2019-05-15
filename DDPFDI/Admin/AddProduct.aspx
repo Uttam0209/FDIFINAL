@@ -219,7 +219,7 @@
                                             </asp:UpdatePanel>
                                             <div class="col-md-4">
                                                 <div class="form-group">
-                                                    <asp:Label runat="server" ID="lblprodrequir" CssClass="form-label" Text="Procurement Time Frame"></asp:Label>
+                                                    <asp:Label runat="server" ID="lblprodrequir" CssClass="form-label " Text="Procurement Time Frame"></asp:Label>
                                                     <asp:DropDownList runat="server" ID="ddlprodreqir" class="form-control"></asp:DropDownList>
                                                 </div>
                                             </div>
