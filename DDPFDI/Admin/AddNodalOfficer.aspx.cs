@@ -7,6 +7,7 @@ using System.Data;
 using System.Text;
 using System.Web.UI;
 using System.IO;
+using System.Web.UI.WebControls;
 
 public partial class Admin_AddNodalOfficer : System.Web.UI.Page
 {
@@ -153,7 +154,7 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
             {
                 lblselectdivison.Visible = false;
                 lblselectunit.Visible = false;
-                ddldivision.Items.Insert(0,"Select");
+                ddldivision.Items.Insert(0, "Select");
                 ddlunit.Items.Insert(0, "Select");
             }
         }
@@ -675,6 +676,19 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
                     BindCompany("Unit");
                 }
                 btnsub.Text = "Edit";
+            }
+        }
+    }
+
+    protected void gvViewNodalOfficer_RowDataBound(object sender, GridViewRowEventArgs e)
+    {
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            if (e.Row.Cells[7].Text == "Y")
+            {
+            //    e.Row.Attributes.CssStyle.Value = "background-color: Red; color: White";
+                e.Row.Attributes.Add("Class", "bg-purple");
+               // e.Row.BackColor = System.Drawing.Color.Red;
             }
         }
     }

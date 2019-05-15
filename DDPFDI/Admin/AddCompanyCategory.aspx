@@ -1,6 +1,40 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="AddCompanyCategory.aspx.cs" Inherits="Admin_AddCompanyCategory" MasterPageFile="MasterPage.master" %>
 
 <asp:Content ID="headDesignation" runat="server" ContentPlaceHolderID="head">
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script type="text/javascript">
+        function radioMe(e) {
+            if (!e) e = window.event;
+            var sender = e.target || e.srcElement;
+
+            if (sender.nodeName != 'INPUT') return;
+            var checker = sender;
+            var chkBox = document.getElementById('<%= chkSubCategory.ClientID %>');
+            var chks = chkBox.getElementsByTagName('INPUT');
+            for (i = 0; i < chks.length; i++) {
+                if (chks[i] != checker)
+                    chks[i].checked = false;
+            }
+        }
+    </script>
+    <script type="text/javascript">
+        var atLeast = 1
+        function Validate() {
+            var CHK = document.getElementById("<%=chkSubCategory.ClientID%>");
+            var checkbox = CHK.getElementsByTagName("input");
+            var counter = 0;
+            for (var i = 0; i < checkbox.length; i++) {
+                if (checkbox[i].checked) {
+                    counter++;
+                }
+            }
+            if (atLeast > counter) {
+                alert("Please select atleast " + atLeast + " Level in item(s)");
+                return false;
+            }
+            return true;
+        }
+    </script>
 </asp:Content>
 <asp:Content ID="InnerDesignation" runat="server" ContentPlaceHolderID="ContentPlaceHolder1">
     <div class="content oem-content">
@@ -19,7 +53,7 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>Select Company</label>
-                                <asp:DropDownList runat="server" ID="ddlcompany" class="form-control form-cascade-control"></asp:DropDownList>
+                                <asp:DropDownList runat="server" ID="ddlcompany" CssClass="form-control form-cascade-control"></asp:DropDownList>
                             </div>
                         </div>
                     </ContentTemplate>
@@ -49,7 +83,7 @@
                             <div class="col-sm-12">
                                 <div class="form-group">
                                     <asp:LinkButton ID="btndemofirst" runat="server" CssClass="btn btn-primary pull-right" Style="margin-left: 10px;" Text="Save"
-                                        OnClick="btndemofirst_Click" />
+                                        OnClick="btndemofirst_Click" OnClientClick="return Validate()" />
                                 </div>
                             </div>
                         </ContentTemplate>

@@ -39,7 +39,7 @@
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label class=" control-label">Designation </label>
-                                                        <asp:TextBox ID="txtDesignation" runat="server" class="form-control form-cascade-control"></asp:TextBox>
+                                                        <asp:TextBox ID="txtDesignation" runat="server" required="" class="form-control form-cascade-control"></asp:TextBox>
                                                     </div>
                                                 </div>
 
