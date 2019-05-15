@@ -341,6 +341,7 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
                     lblselectdivison.Visible = true;
                     ddldivision.Enabled = true;
                     ddlunit.Visible = false;
+                    lblselectunit.Visible = false;
                 }
                 else
                 {
