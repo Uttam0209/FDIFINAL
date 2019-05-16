@@ -356,7 +356,9 @@
                                                         <option>2017-2018</option>
                                                     </select>
                                                 </td>
-                                                <td></td>
+                                                <td>
+                                                    <input type="text" class="form-control"/>
+                                                </td>
                                                 
                                             </tr>
                                             <tr>
@@ -370,7 +372,7 @@
                                                         <option>2017-2018</option>
                                                     </select>
                                                 </td>
-                                                <td></td>
+                                                <td><input type="text" class="form-control"/></td>
                                                 
                                             </tr>
                                             <tr>
@@ -384,7 +386,7 @@
                                                         <option>2017-2018</option>
                                                     </select>
                                                 </td>
-                                                <td></td>
+                                                <td><input type="text" class="form-control"/></td>
                                                 
                                             </tr>
                                         </table>
