@@ -6,3 +6,4 @@ C:\Users\Aarav\Desktop\Backup Drive (D)\CurrentProject2019\FDFinalProject\FDIFIN
 C:\Users\Aarav\Desktop\Backup Drive (D)\CurrentProject2019\FDFinalProject\FDIFINAL\Encryption\bin\Debug\Encryption.pdb
 C:\Users\Aarav\Desktop\Backup Drive (D)\CurrentProject2019\FDFinalProject\FDIFINAL\Encryption\obj\Debug\Encryption.dll
 C:\Users\Aarav\Desktop\Backup Drive (D)\CurrentProject2019\FDFinalProject\FDIFINAL\Encryption\obj\Debug\Encryption.pdb
+C:\Users\Aarav\Desktop\Backup Drive (D)\CurrentProject2019\FDFinalProject\FDIFINAL\Encryption\obj\Debug\Encryption.csprojResolveAssemblyReference.cache
