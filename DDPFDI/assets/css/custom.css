@@ -14,6 +14,7 @@ ul {
     display: flex;
 }
 
+.red { color:#f00}
 /*---Progress Bar Animation ---*/
 .custom-progress-bar {
     width: 500px;
@@ -166,9 +167,86 @@ form .form-group {
 
 /*-----Successful Icon -----*/
 .success-checkmark {
-    width: 80px;
-    height: 90px;
-    margin: 0 auto;
+  width: 69px;
+  height: 69px;
+  margin: 0 auto;
+}
+.success-checkmark .check-icon {
+  width: 69px;
+  height: 69px;
+  position: relative;
+  border-radius: 50%;
+  box-sizing: content-box;
+  border: 4px solid #4caf50;
+  zoom: 0.7;
+}
+.success-checkmark .check-icon::before {
+  top: 3px;
+  left: -2px;
+  width: 30px;
+  transform-origin: 100% 50%;
+  border-radius: 100px 0 0 100px;
+}
+.success-checkmark .check-icon::after {
+  top: 0;
+  left: 30px;
+  width: 60px;
+  transform-origin: 0 50%;
+  border-radius: 0 100px 100px 0;
+  animation: rotate-circle 4.25s ease-in;
+}
+.success-checkmark .check-icon::before, .success-checkmark .check-icon::after {
+  content: "";
+  height: 100px;
+  position: absolute;
+  background: #ffffff;
+  transform: rotate(-45deg);
+}
+.success-checkmark .check-icon .icon-line {
+  height: 5px;
+  background-color: #4caf50;
+  display: block;
+  border-radius: 2px;
+  position: absolute;
+  z-index: 10;
+}
+.success-checkmark .check-icon .icon-line.line-tip {
+  top: 34px;
+  left: 13px;
+  width: 18px;
+  transform: rotate(45deg);
+  animation: icon-line-tip 0.75s;
+}
+.success-checkmark .check-icon .icon-line.line-long {
+  top: 27px;
+  right: 14px;
+  width: 33px;
+  transform: rotate(-45deg);
+  animation: icon-line-long 0.75s;
+}
+.success-checkmark .check-icon .icon-circle {
+  top: -4px;
+  left: -4px;
+  z-index: 10;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  position: absolute;
+  box-sizing: content-box;
+  border: 4px solid rgba(76, 175, 80, 0.5);
+}
+.success-checkmark .check-icon .icon-fix {
+  top: 8px;
+  width: 5px;
+  left: 26px;
+  z-index: 1;
+  height: 85px;
+  position: absolute;
+  transform: rotate(-45deg);
+  background-color: #ffffff;
+  width: 80px;
+  height: 90px;
+  margin: 0 auto;
 }
 
     .success-checkmark .check-icon {
@@ -979,6 +1057,115 @@ form label {
     font-size: 24px !important;
 }
 
+/*---Admin Dashboard----*/
+.admin-dashboard .white-box { padding: 4%; box-shadow: 0 0 6px rgba(0,0,0,.2); border-radius: 4px;}
+.admin-dashboard .white-box h3 { margin: 0 0 10px 0; font-size: 16px; text-transform: uppercase;}
+.admin-dashboard .white-box ul li { width: 100%;}
+.admin-dashboard .white-box ul li .counter { font-size: 18px;}
+.admin-dashboard .white-box .fa-file-export { position: absolute; right: 25px; top: 10px;}
+
+.btn-nav-toggle-responsive { display: none; }
+.table-wraper { overflow-x: auto;}
+.sidebar-holder .nav li a i.fa-angle-down { position: absolute; right: 10px; transform: rotate(-90deg);}
+.sidebar-holder .nav li a .rotate-icon { transform:rotate(360deg) !important;}
+.sidebar-holder .nav > li > a:focus { background:#5db9f9 !important;}
+.sidebar-holder .nav .parent-nav > a { position: relative;}
+.parent-nav-child li a { padding-left: 30px !important;}
+.sidebar-holder .nav > li > a:hover, .sidebar-holder .nav > li > a:focus { background: #fff !important; }
+.parent-nav-child .parent-nav li a { padding-left: 57px !important;  position:relative;}
+.sidebar-holder .nav > li ul > li > a {padding: 15px 5px;}
+.sidebar-holder .nav li a { padding-top: 15px; padding-bottom: 15px;}
+
+.admin-dashboard .white-box { float: left; width:100% }
+.admin-dashboard .white-box a { display: inline-block; font-size: 21px; margin-top: 10px;}
+.rotate-toggle-btn {transform: rotate(180deg);}
+.admin-dashboard .white-box.total-comp { background: #df00c4 !important; color: #fff !important;}
+.admin-dashboard .white-box a {color: #fff; text-decoration: none;}
+.admin-dashboard .white-box.total-fdi { background: #ff8b6a !important; color: #fff !important;}
+.admin-dashboard .white-box.last-fdi { background: #480032 !important; color: #fff !important;}
+.parent-nav-child li.active a {background:#5db9f9 !important;}
+
+.sidebar-holder .user-box { float: left; display: flex; font-size: 15px; font-weight: bold;}
+.sidebar-holder .user-box i { margin-right: 10px; color: #fff !important;  font-size: 30px !important}
+.sidebar-holder .user-box #lbltypelogin { font-size: 18px;}
+.sidebar-holder .btn-nav-toggle .fa-angle-double-left{ font-size: 26px !important;}
+#ContentPlaceHolder1_chkintrestedarea label,#ContentPlaceHolder1_chkmastermenuallot label, #ContentPlaceHolder1_chkrole label {    margin: -4px 10px 5px 20px !important;     white-space: nowrap;}
+#ContentPlaceHolder1_chkintrestedarea input[type="checkbox"],#ContentPlaceHolder1_chkmastermenuallot input[type="checkbox"], #ContentPlaceHolder1_chkrole input[type="checkbox"] {margin: 0 !important;}
+.secondary-heading { font-size: 16px; color: #494ca2; text-transform: uppercase; margin: 0 0 10px 0;}
+.createLoginPass {margin-top: 10px;}
+form .form-group input[type="submit"] { margin-right: 10px;}
+form label { color: #494ca2;}
+.fa-minus:before {content: "\f068" !important;}
+.toggle-table-plus,.toggle-table-minus { cursor: pointer}
+.sidebar-holder .nav .parent-nav-child .parent-nav a + i { display: none}
+.sidebar-holder .nav .parent-nav a.active { color: #494ca2 !important; background: #ddd;}
+.master-company-table tr th { white-space: normal !important;}
+.master-company-table tr th:first-child { width: 30px;}
+.master-company-table tr th:nth-child(2) { width: 60px;}
+.master-company-table tr th:nth-child(3){ width: 150px;}
+.master-company-table tr th:nth-child(4) { width: 240px;}
+.master-company-table tr th:nth-child(5) { width: 110px;}
+.master-company-table tr th:nth-child(6) { width: 298px;}
+.sideBg .table tr td th,.sideBg .table tr td td { background: #cce5ff !important; color: #004085 !important}
+.sideBg .table tr td td th,.sideBg .table tr td td td {background: #d4edda  !important; color: #155724 !important}
+.sideBg .table tr td td i.fa-plus,.sideBg .table tr td td i.fa-minus { color:#de2f13}
+.checkbox-inline { padding-left: 0;}
+.sidebar-holder .nav li a {box-shadow: 0 0 4px rgba(0,0,0,0.06); border: 0;  font-weight: 600 !important; font-size: 14px;}
+.sidebar-holder .nav li a i { color: #2b3d51 !important }
+.sidebar-holder .nav li a:hover { background: none;}
+.navbar .user-menu > li ul.dropdown-menu > li > a { color: #2b3d51; font-family: 'Roboto', sans-serif;}
+.content .page-header { font-weight: 600; text-transform: uppercase; color: #2b3d51; font-family: 'Roboto', sans-serif; padding-left: 0;}
+.tabing-section .nav { margin-bottom: 30px;}
+.content .page-header i { display: none}
+.tabing-section .nav-tabs > li > a { background: #ddd; color: #2b3d51;}
+.tabing-section .nav-tabs > li.active > a { background: #2b3d51 !important; color: #fff !important}
+.sidebar-collapse #lbltypelogin { display: none}
+.section-pannel { background:#eee; padding: 10px; border-radius: 4px; margin-bottom: 10px; }
+.page-header.secondary { margin-bottom: 10px; font-size: 15px;}
+.sidebar-holder .btn-nav-toggle {padding: 17px 10px;  background: #d95459 !important; color: #fff !important;}
+
+.sidebar-holder .nav li a:before { content: ""; border-bottom: 2px solid #d95459 ; height: 2px;  position: absolute;
+    left: 0; bottom: 0; width:0%; transition: all  ease-in-out 1s}
+.sidebar-holder .nav li a:hover::before,.sidebar-holder .nav li a.active::before { width: 100% !important;}
+.sidebar-collapse .menuNo,.sidebar-collapse .fa-angle-down { display: none;}
+.sidebar-collapse .parent-nav-child li a { padding-left: 0 !important; text-align: center;}
+.sidebar-collapse .sidebar-holder .user-box i { margin-right: 2px; font-size: 24px !important;}
+.sideBg { padding-top: 0;}
+#ContentPlaceHolder1_Intrested,#ContentPlaceHolder1_MenuAlot,#ContentPlaceHolder1_divRole { padding: 10px; box-shadow: 0 0 4px rgba(0,0,0,0.2); margin-right: 8px; border-radius: 4px;}
+.form-label { margin-bottom: 4px; display: inline-block;}
+.company-flex-row .form-group { margin-right: 30px;}
+.company-flex-row .form-group:last-child { margin-right: 0 !important;}
+#Location { margin-bottom: 20px;}
+.showMore { text-align: right;}
+.showMore i { cursor: pointer; width: 30px; height: 20px;}
+.form-group label input[type='checkbox'],.form-group label input[type='radio'] { margin-right: 5px;}
+.showMore a { text-decoration: underline !important;}
+#ContentPlaceHolder1_divflag span label,#ContentPlaceHolder1_divActive span label { margin-right: 10px;}
+#ContentPlaceHolder1_divflag span input[type='radio'],#ContentPlaceHolder1_divActive span input[type="radio"] { margin-right: 5px; margin-top:0;}
+.viewCatDropDown tr th:last-child { width: 109px !important;}
+.viewCatDropDown tr td:first-child,.viewCatDropDown tr th:first-child { width: 80px;}
+.viewCatDropDown tr th:nth-child(3) { width: auto !important}
+.contactFormRow .form-group input[readonly="readonly"] { background: #fff !important;}
+.productalreadylabel{ margin-bottom: -4px; }
+.productalreadylabel .yes { margin-left: 10px !important;}
+.ViewProductTable tr th,.ViewProductTable tr td { width: auto !important; white-space: nowrap !important}
+#Div3 input {margin-right: 10px;}
+.comDivUnitBox { display: flex}
+.comDivUnitBox .form-group { margin-right: 30px;}
+.comDivUnitBox .form-group:last-child { margin-right: 0 !important}
+.NodalRole { margin-top: 24px !important}
+.NodalRole h4 { margin-bottom: 6px !important}
+.NodalRole input[type='checkbox'] { margin-top:7px }
+#ContentPlaceHolder1_btnsub { margin-right: 10px !important;}
+.alert-overlay { position: fixed; left: 0; right: 0; top: 0; bottom: 0; z-index: 9999; background: rgba(0,0,0,0.5);}
+.alert-box {  max-width: 400px; width: 100%; position: absolute; left: 0; right: 0;  margin: 0 auto;  top: 20%;}
+.alert-box .box { width: 100%; padding: 5%; background: #fff; border-radius: 10px; text-align: center;}
+.alert-box .box .alert { text-align: center; font-size: 18px; position: relative; margin-bottom: 0;}
+.overlay-progress { position: fixed; left: 0; right: 0;  bottom: 0; top: 0;  background: rgba(0,0,0,0.5); z-index: 9999;}
+.custom-progress-bar p { text-align: center; color: #fff;  font-size: 16px;}
+.loginBg span.passbox { position: relative; display: block;}
+.loginBg span.toggle-password { color: #000; position: absolute; right: 10px; top:10px; cursor: pointer;}
+.multiinput { display: flex}
 .sideBg {
     padding-top: 0;
 }
@@ -1148,3 +1335,4 @@ form label {
     background-color: #4caf50 !important;
     color: white;
 }
+

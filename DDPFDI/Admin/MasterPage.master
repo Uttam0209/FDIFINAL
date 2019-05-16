@@ -292,12 +292,11 @@
                         <div class="icon-fix"></div>
                     </div>
                 </div>
-                <div class="alert">
-                    Successfully Saved !
-                </div>
-                <button class="btn btn-success">OK</button>
-            </div>
+               
+        <div class="alert">
+            Successfully Saved !
         </div>
+        <button class="btn btn-success close_alert">OK</button>
     </div>
     <!-----Alert Box ------>
 

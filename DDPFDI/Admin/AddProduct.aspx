@@ -607,41 +607,6 @@
         </div>
     </div>
     <script type="text/javascript" language="javascript">
-        var count = 0;
-        function handleFileSelect(evt) {
-            var $fileUpload = $("input#files[type='file']");
-            count = count + parseInt($fileUpload.get(0).files.length);
-
-            if (parseInt($fileUpload.get(0).files.length) > 8 || count > 9) {
-                alert("You can only upload a maximum of 8 files");
-                count = count - parseInt($fileUpload.get(0).files.length);
-                evt.preventDefault();
-                evt.stopPropagation();
-                return false;
-            }
-            var files = evt.target.files;
-            for (var i = 0, f; f = files[i]; i++) {
-                if (!f.type.match('image.*')) {
-                    continue;
-                }
-                var reader = new FileReader();
-                reader.onload = (function (theFile) {
-                    return function (e) {
-                        var span = document.createElement('span');
-                        span.innerHTML = ['<img class="thumb" src="', e.target.result, '" title="', escape(theFile.name), '"/><span class="remove_img_preview"></span>'].join('');
-                        document.getElementById('list').insertBefore(span, null);
-                    };
-                })(f);
-
-                reader.readAsDataURL(f);
-            }
-        }
-        $('#files').change(function (evt) {
-            handleFileSelect(evt);
-        });
-        $('#list').on('click', '.remove_img_preview', function () {
-            $(this).parent('span').remove();
-            //           parseInt($fileUpload.get(0).files.length - 1;
-        });
+        
     </script>
 </asp:Content>

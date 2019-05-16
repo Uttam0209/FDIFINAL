@@ -26,7 +26,6 @@
     });
 
 
-$(document).ready(function(){
     // Add Current Page in Sidebar
     //var CURRENT_URL= window.location.href;
     var CURRENT_URL= window.location.href.split('/').slice(3).join('/');
@@ -35,8 +34,6 @@ $(document).ready(function(){
     $Sidebar.find('a[href="'+CURRENT_URL+'"]').parents(".parent-nav-child").addClass('active').siblings(".parent-nav-child").removeClass("active");
     $Sidebar.find('a[href="'+CURRENT_URL+'"]').addClass('active');
     console.log(CURRENT_URL);
-
-});
 
 //Hide Show Chart
 
@@ -84,18 +81,21 @@ $(document).ready(function(){
     });
 
 //Alert pop up box
-
-$("").on('click', function(){
+ function ShowMessage(){
+    console.log('testing');
     $("body").css('overflow','hidden');
     $('.alert-overlay').show();
-});
+}
 
+//Hide Alert Pop up
+$('.close_alert').on('click', function(){
+    $("body").css('overflow','visible');
+    $('.alert-overlay').hide();
 });
-
 
 //Show Hide Contact Details
 //Sys.Application.add_load(BindFunction);
-$(document).ready(function () {
+
     $('body').on('click', '.showMoreLink', function () {
 
         $(this).parents('.section-pannel').find('.contactFormRow').slideToggle();
@@ -112,8 +112,59 @@ $(document).ready(function () {
      //Show Map
 
     $('body').on('click','.showMap',function(){
-        $('.map-box').show();
-    
+        $('.map-box').show();    
     });
+
+//Password Show on Click
+
+$(".toggle-password").on('click',function() {
+ 
+  $(this).toggleClass("fa-eye fa-eye-slash");
+  var input = $(".passField");
+  if (input.attr("type") == "password") {
+    input.attr("type", "text");
+  } else {
+    input.attr("type", "password");
+  }
+});
+
+
+//image Uplodad Functionality
+var count = 0;
+        function handleFileSelect(evt) {
+            var $fileUpload = $("input#files[type='file']");
+            count = count + parseInt($fileUpload.get(0).files.length);
+
+            if (parseInt($fileUpload.get(0).files.length) > 8 || count > 9) {
+                alert("You can only upload a maximum of 8 files");
+                count = count - parseInt($fileUpload.get(0).files.length);
+                evt.preventDefault();
+                evt.stopPropagation();
+                return false;
+            }
+            var files = evt.target.files;
+            for (var i = 0, f; f = files[i]; i++) {
+                if (!f.type.match('image.*')) {
+                    continue;
+                }
+                var reader = new FileReader();
+                reader.onload = (function (theFile) {
+                    return function (e) {
+                        var span = document.createElement('span');
+                        span.innerHTML = ['<img class="thumb" src="', e.target.result, '" title="', escape(theFile.name), '"/><span class="remove_img_preview"></span>'].join('');
+                        document.getElementById('list').insertBefore(span, null);
+                    };
+                })(f);
+
+                reader.readAsDataURL(f);
+            }
+        }
+        $('#files').change(function (evt) {
+            handleFileSelect(evt);
+        });
+        $('#list').on('click', '.remove_img_preview', function () {
+            $(this).parent('span').remove();
+            //           parseInt($fileUpload.get(0).files.length - 1;
+        });
 
 });
