@@ -173,6 +173,7 @@ public partial class Admin_AddCompanyCategory : System.Web.UI.Page
     protected void SaveCompanyMenu()
     {
         HybridDictionary hyMasterCategory = new HybridDictionary();
+        
         hyMasterCategory["CompCatRelationId"] = 0;
         if (ddlcompany.SelectedItem.Text != "Select")
         {
@@ -215,6 +216,10 @@ public partial class Admin_AddCompanyCategory : System.Web.UI.Page
                     ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not save successfully.')", true);
                 }
             }
+        }
+        else
+        {
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Please select any dropdown to save record.')", true); 
         }
     }
     protected void cleartext()

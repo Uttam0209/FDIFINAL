@@ -59,16 +59,26 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                     mType = objEnc.DecryptData(Session["Type"].ToString());
                     mRefNo = Session["CompanyRefNo"].ToString();
                     hfcomprefno.Value = Session["CompanyRefNo"].ToString();
-                    BindCompany();
-                    BindMasterCategory();
-                    BindMasterTechnologyCategory();
-                    BindMasterPlatCategory();
-                    BindMasterProductReqCategory();
-                    BindMasterProductNoenCletureCategory();
-                    // BindNodelEmail();
-                    BindServcies();
-                    BindEndUser();
-                    tendorstatus();
+                    if (mType.ToString() != "SuperAdmin" || mType.ToString() != "Admin")
+                    {
+                        BindCompany();
+                        tendorstatus();
+                        BindServcies();
+                        BindMasterCategory();
+                        BindMasterTechnologyCategory();
+                        BindMasterPlatCategory();
+                        BindMasterProductReqCategory();
+                        BindMasterProductNoenCletureCategory();
+                        // BindNodelEmail();
+                        BindEndUser();
+
+                    }
+                    else
+                    {
+                        BindCompany();
+                        tendorstatus();
+                        BindServcies();
+                    }
                 }
                 EditCode();
             }
@@ -251,6 +261,12 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                 ddldivision.Visible = true;
                 hidCompanyRefNo.Value = ddlcompany.SelectedItem.Value;
                 hidType.Value = "Company";
+                BindMasterCategory();
+                BindMasterTechnologyCategory();
+                BindMasterPlatCategory();
+                BindMasterProductReqCategory();
+                BindMasterProductNoenCletureCategory();
+                BindEndUser();
             }
             else
             {
@@ -465,9 +481,19 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     #region For ProductCode
     protected void BindMasterCategory()
     {
+        string strcompref = "";
+        DataTable DtMasterCategroy = new DataTable();
+        if (ddlcompany.SelectedItem.Text != "Select")
+        {
+            strcompref = ddlcompany.SelectedItem.Value;
+        }
+        else
+        {
+            strcompref = hfcomprefno.Value;
+        }
         ddlmastercategory.Items.Insert(0, "Product Category");
-        ddlsubcategory.Items.Insert(0, "Select");
-        DataTable DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, ddlmastercategory.SelectedItem.Value, "", "SelectProductCat", hfcomprefno.Value);
+        DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, ddlmastercategory.SelectedItem.Value, "",
+           "SelectProductCat", strcompref.ToString());
         if (DtMasterCategroy.Rows.Count > 0)
         {
             Co.FillDropdownlist(ddlmastercategory, DtMasterCategroy, "SCategoryName", "SCategoryID");
@@ -506,9 +532,18 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     #region For Technology
     protected void BindMasterTechnologyCategory()
     {
+        string strcompref = "";
+        if (ddlcompany.SelectedItem.Text != "Select")
+        {
+            strcompref = ddlcompany.SelectedItem.Value;
+        }
+        else
+        {
+            strcompref = hfcomprefno.Value;
+        }
         ddltechnologycat.Items.Insert(0, "Technology Category");
         ddlsubtech.Items.Insert(0, "Select");
-        DataTable DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, ddltechnologycat.SelectedItem.Value, "", "SelectProductCat", hfcomprefno.Value);
+        DataTable DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, ddltechnologycat.SelectedItem.Value, "", "SelectProductCat", strcompref.ToString());
         if (DtMasterCategroy.Rows.Count > 0)
         {
             Co.FillDropdownlist(ddltechnologycat, DtMasterCategroy, "SCategoryName", "SCategoryID");
@@ -547,9 +582,18 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     #region For PlatForm
     protected void BindMasterPlatCategory()
     {
+        string strcompref = "";
+        if (ddlcompany.SelectedItem.Text != "Select")
+        {
+            strcompref = ddlcompany.SelectedItem.Value;
+        }
+        else
+        {
+            strcompref = hfcomprefno.Value;
+        }
         ddlplatform.Items.Insert(0, "Platform Category");
         ddlplatformsubcat.Items.Insert(0, "Select");
-        DataTable DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, ddlplatform.SelectedItem.Value, "", "SelectProductCat", hfcomprefno.Value);
+        DataTable DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, ddlplatform.SelectedItem.Value, "", "SelectProductCat", strcompref.ToString());
         if (DtMasterCategroy.Rows.Count > 0)
         {
             Co.FillDropdownlist(ddlplatform, DtMasterCategroy, "SCategoryName", "SCategoryID");
@@ -574,7 +618,16 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     #region For ProductRequirment
     protected void BindMasterProductReqCategory()
     {
-        DataTable DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, lblprodrequir.Text, "", "SelectInnerMaster1", hfcomprefno.Value);
+        string strcompref = "";
+        if (ddlcompany.SelectedItem.Text != "Select")
+        {
+            strcompref = ddlcompany.SelectedItem.Value;
+        }
+        else
+        {
+            strcompref = hfcomprefno.Value;
+        }
+        DataTable DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, lblprodrequir.Text, "", "SelectInnerMaster1", strcompref.ToString());
         if (DtMasterCategroy.Rows.Count > 0)
         {
             Co.FillDropdownlist(ddlprodreqir, DtMasterCategroy, "SCategoryName", "SCategoryID");
@@ -585,7 +638,16 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     #region For NomenClature
     protected void BindMasterProductNoenCletureCategory()
     {
-        DataTable DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, lblNomenclature.Text, "", "SelectInnerMaster1", hfcomprefno.Value);
+        string strcompref = "";
+        if (ddlcompany.SelectedItem.Text != "Select")
+        {
+            strcompref = ddlcompany.SelectedItem.Value;
+        }
+        else
+        {
+            strcompref = hfcomprefno.Value;
+        }
+        DataTable DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, lblNomenclature.Text, "", "SelectInnerMaster1", strcompref.ToString());
         if (DtMasterCategroy.Rows.Count > 0)
         {
             Co.FillDropdownlist(ddlnomnclature, DtMasterCategroy, "SCategoryName", "SCategoryID");
@@ -601,7 +663,16 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     #region For EndUser
     protected void BindEndUser()
     {
-        DataTable DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, lblenduser.Text, "", "SelectInnerMaster1", hfcomprefno.Value);
+        string strcompref = "";
+        if (ddlcompany.SelectedItem.Text != "Select")
+        {
+            strcompref = ddlcompany.SelectedItem.Value;
+        }
+        else
+        {
+            strcompref = hfcomprefno.Value;
+        }
+        DataTable DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, lblenduser.Text, "", "SelectInnerMaster1", strcompref.ToString());
         if (DtMasterCategroy.Rows.Count > 0)
         {
             Co.FillDropdownlist(ddlenduser, DtMasterCategroy, "SCategoryName", "SCategoryID");
@@ -854,7 +925,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     #region PanelSaveButtonCode
     protected void btnsubmitpanel1_Click(object sender, EventArgs e)
     {
-        if (ddlmastercategory.SelectedItem.Text != "Select" && ddlsubcategory.SelectedItem.Text != "Select"  && ddltechnologycat.SelectedItem.Text != "Select")
+        if (ddlmastercategory.SelectedItem.Text != "Select" && ddlsubcategory.SelectedItem.Text != "Select" && ddltechnologycat.SelectedItem.Text != "Select")
         {
             if (ddlsubtech.SelectedItem.Text != "Select" && ddlnomnclature.SelectedItem.Text != "Select" && ddlenduser.SelectedItem.Text != "Select" && ddlplatform.SelectedItem.Text != "Select")
             {
