@@ -34,7 +34,7 @@
                         </div>
                         <div class="col-md-4" runat="server" id="lblselectdivison">
                             <div class="form-group">
-                                <label>Select Division/Palnt</label>
+                                <label>Select Division/Plant</label>
                                 <asp:DropDownList runat="server" ID="ddldivision" CssClass="form-cascade-control form-control" AutoPostBack="True" OnSelectedIndexChanged="ddldivision_OnSelectedIndexChanged"></asp:DropDownList>
                             </div>
                         </div>
@@ -231,7 +231,7 @@
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <label>Search Keywords</label>
+                                                    <label>Search Keywords (Add more then one search criteria please use ,)</label>
                                                     <asp:TextBox runat="server" ID="txtsearchkeyword" class="form-control"></asp:TextBox>
                                                 </div>
 
@@ -339,7 +339,7 @@
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label>Estimated Price / LLP</label>
+                                                <label>Estimated Price / LPP</label>
                                                 <asp:TextBox runat="server" ID="txtestimateprice" class="form-control"></asp:TextBox>
                                             </div>
                                         </div>
@@ -536,7 +536,7 @@
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="form-group">
-                                                    <label>Trail Testing</label>
+                                                    <label>Trial Testing</label>
                                                     <asp:DropDownList runat="server" ID="ddltrail" class="form-control">
                                                         <asp:ListItem runat="server" Value="Select">Select</asp:ListItem>
                                                     </asp:DropDownList>
@@ -546,7 +546,7 @@
                                         <div class="row">
                                             <div class="col-md-4">
                                                 <div class="form-group">
-                                                    <label>Machnical Testing</label>
+                                                    <label>Mechanical Testing</label>
                                                     <asp:DropDownList runat="server" ID="ddlmechnicaltesting" class="form-control">
                                                         <asp:ListItem runat="server" Value="Select">Select</asp:ListItem>
                                                     </asp:DropDownList>
@@ -562,7 +562,7 @@
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="form-group">
-                                                    <label>EMIC</label>
+                                                    <label>EMC</label>
                                                     <asp:DropDownList runat="server" ID="ddlemictesting" class="form-control">
                                                         <asp:ListItem runat="server" Value="Select">Select</asp:ListItem>
                                                     </asp:DropDownList>
@@ -579,7 +579,7 @@
                             <div class="row">
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label>Certification Image</label>
+                                        <label>Certification File</label>
                                         <div class="fr">
                                             <asp:FileUpload ID="fucertifiimage" runat="server" CssClass="uploadimage form-control" type="file" name="image_file_arr[]" Multiple="Multiple" />
                                         </div>
@@ -588,25 +588,10 @@
                                 </div>
                             </div>
                             <!-------uplode photo----------->
-                            <div class="gallery"></div>
                             <div class="clearfix" style="margin-top: 8px;"></div>
                             <span>Only .pdf file of size 1 Mb can be uploaded</span>
                             <br />
-                            <div runat="server" id="div1" visible="False">
-                                <div class="row">
-                                    <div class="col-sm-12">
-                                        <asp:DataList runat="server" ID="DataList1" RepeatColumns="4" RepeatDirection="Horizontal" RepeatLayout="Flow" OnItemCommand="dlimage_ItemCommand">
-                                            <ItemTemplate>
-                                                <div class="col-sm-3">
-                                                    <asp:Image runat="server" ID="imgprodimage" class="image img-responsive img-rounded" Height="120px" Width="120" src='<%#Eval("ImageName") %>' />
-                                                    <div class="clearfix"></div>
-                                                    <asp:LinkButton runat="server" ID="lblremoveimg" class="fa fa-trash text-center" CommandName="removeimg" CommandArgument='<%#Eval("ImageId") %>'></asp:LinkButton>
-                                                </div>
-                                            </ItemTemplate>
-                                        </asp:DataList>
-                                    </div>
-                                </div>
-                            </div>
+                            
                         </div>
                     </div>
                     <div class="row">
