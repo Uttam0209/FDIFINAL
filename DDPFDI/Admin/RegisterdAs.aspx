@@ -95,7 +95,6 @@
                                         PageSize="25" AllowSorting="true">
                                         <PagerStyle HorizontalAlign="Center" CssClass="GridPager" />
                                         <Columns>
-
                                             <asp:TemplateField HeaderText="S.No">
                                                 <ItemTemplate>
                                                     <%#Container.DataItemIndex+1 %>
@@ -103,15 +102,15 @@
                                             </asp:TemplateField>
                                             <asp:BoundField ItemStyle-Width="150px" DataField="MCategoryName" HeaderText="Dropdown Label" />
                                             <asp:TemplateField HeaderText="Hierarchy">
-                                                    <ItemTemplate>
-                                                        <asp:Label ID="Label1" runat="server" Text='<%#Eval("Flag") %>' NullDisplayText="#"></asp:Label>
-                                                    </ItemTemplate>
-                                                </asp:TemplateField>
-                                                 <asp:TemplateField HeaderText="Status">
-                                                    <ItemTemplate>
-                                                        <asp:Label ID="Label1" runat="server" Text='<%#Eval("IsActive") %>' NullDisplayText="#"></asp:Label>
-                                                    </ItemTemplate>
-                                                </asp:TemplateField>
+                                                <ItemTemplate>
+                                                    <asp:Label ID="Label1" runat="server" Text='<%#Eval("Flag") %>' NullDisplayText="#"></asp:Label>
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField HeaderText="Status">
+                                                <ItemTemplate>
+                                                    <asp:Label ID="Label1" runat="server" Text='<%#Eval("IsActive") %>' NullDisplayText="#"></asp:Label>
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
                                             <%-- <asp:BoundField ItemStyle-Width="150px" DataField="SCategoryName" HeaderText="Level 1" />
                                                     <asp:BoundField ItemStyle-Width="150px" DataField="SCategoryName" HeaderText="FLevel 2" />--%>
                                         </Columns>
