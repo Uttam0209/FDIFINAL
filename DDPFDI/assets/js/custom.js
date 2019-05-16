@@ -82,9 +82,17 @@
 
 //Alert pop up box
  function ShowMessage(){
+    console.log('testing');
     $("body").css('overflow','hidden');
     $('.alert-overlay').show();
 }
+
+//Hide Alert Pop up
+$('.close_alert').on('click', function(){
+    $("body").css('overflow','visible');
+    $('.alert-overlay').hide();
+});
+
 //Show Hide Contact Details
 //Sys.Application.add_load(BindFunction);
 
@@ -158,4 +166,5 @@ var count = 0;
             $(this).parent('span').remove();
             //           parseInt($fileUpload.get(0).files.length - 1;
         });
+
 });
