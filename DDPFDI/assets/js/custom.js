@@ -84,13 +84,13 @@
  function ShowMessage(){
     console.log('testing');
     $("body").css('overflow','hidden');
-    $('.alert-overlay').show();
+    $('.alert-overlay-success').show();
 }
 
 //Hide Alert Pop up
 $('.close_alert').on('click', function(){
     $("body").css('overflow','visible');
-    $('.alert-overlay').hide();
+    $('.alert-overlay-success').hide();
 });
 
 //Show Hide Contact Details
