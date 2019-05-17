@@ -577,21 +577,18 @@
                     <div id="cer" class="tab-pane fade">
                         <div class="section-pannel">
                             <div class="row">
-                                <div class="col-md-4">
+                                <div class="col-md-12">
                                     <div class="form-group">
                                         <label>Certification File</label>
                                         <div class="fr">
-                                            <asp:FileUpload ID="fucertifiimage" runat="server" CssClass="uploadimage form-control" type="file" name="image_file_arr[]" Multiple="Multiple" />
+                                            <asp:TextBox ID="txtremarksfiles" runat="server" TextMode="MultiLine" placeholder="Enter detail of document needed for certification" Height="150px" CssClass="form-cascade-control form-control"></asp:TextBox>
                                         </div>
 
                                     </div>
                                 </div>
                             </div>
                             <!-------uplode photo----------->
-                            <div class="clearfix" style="margin-top: 8px;"></div>
-                            <span>Only .pdf file of size 1 Mb can be uploaded</span>
-                            <br />
-                            
+
                         </div>
                     </div>
                     <div class="row">
@@ -607,6 +604,6 @@
         </div>
     </div>
     <script type="text/javascript" language="javascript">
-        
-    </script>
+
+</script>
 </asp:Content>
