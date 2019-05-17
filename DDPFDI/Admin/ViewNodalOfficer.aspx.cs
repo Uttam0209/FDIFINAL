@@ -41,7 +41,7 @@ public partial class Admin_ViewNodalOfficer : System.Web.UI.Page
                 mType = objEnc.DecryptData(Session["Type"].ToString());
                 mRefNo = Session["CompanyRefNo"].ToString();
                 BindCompany();
-                
+
             }
         }
     }
@@ -217,15 +217,15 @@ public partial class Admin_ViewNodalOfficer : System.Web.UI.Page
         else if (e.CommandName == "ViewComp")
         {
             DataTable DtView = new DataTable();
-            if (ddldivision.SelectedValue != "Select")
+            if (ddldivision.SelectedValue != "Select" &&  ddldivision.SelectedValue!="")
             {
                 DtView = Lo.RetriveAllNodalOfficer(e.CommandArgument.ToString(), "DivisionID");
 
-                if (ddlunit.SelectedValue != "Select")
+                if (ddlunit.SelectedValue != "Select" && ddlunit.SelectedValue!="")
                 {
                     DtView = Lo.RetriveAllNodalOfficer(e.CommandArgument.ToString(), "UnitID");
                 }
-                
+
             }
             else
             {
@@ -265,6 +265,33 @@ public partial class Admin_ViewNodalOfficer : System.Web.UI.Page
             catch (Exception ex)
             {
                 ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not deleted.')", true);
+            }
+        }
+        else if (e.CommandName == "SendLogin")
+        {
+            try
+            {
+                GridViewRow gvrow = (GridViewRow)((Control)e.CommandSource).NamingContainer;
+                Label lblnodelrefno = (Label)gvrow.FindControl("lblnodelrefno");
+                Label nodelemail = (Label)gvrow.FindControl("nodelemail");
+                Label lblnodelname = (Label)gvrow.FindControl("lblnodelname");
+                string body;
+                using (StreamReader reader = new StreamReader(Server.MapPath("~/emailPage/GeneratePassword.html")))
+                {
+                    body = reader.ReadToEnd();
+                }
+                body = body.Replace("{UserName}", lblnodelname.Text);
+                body = body.Replace("{refno}", objEnc.EncryptData(lblnodelrefno.Text));
+                body = body.Replace("{curid}", Resturl(56));
+                SendMail s;
+                s = new SendMail();
+                s.CreateMail("aeroindia-ddp@gov.in", lblnodelname.Text, "Create Password", body);
+                s.sendMail();
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Create password email send successfully.')", true);
+            }
+            catch (Exception ex)
+            {
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Login detail not send. Some error occured.')", true);
             }
         }
 
@@ -344,7 +371,6 @@ public partial class Admin_ViewNodalOfficer : System.Web.UI.Page
         }
     }
     #endregion
-
     protected void Search_Click(object sender, EventArgs e)
     {
         if (txtserch.Text != "")
@@ -359,8 +385,20 @@ public partial class Admin_ViewNodalOfficer : System.Web.UI.Page
         }
         else
         {
-           
+
         }
     }
-    
+    #region ReturnUrl Long"
+    public string Resturl(int length)
+    {
+        const string valid = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+        StringBuilder res = new StringBuilder();
+        Random rnd = new Random();
+        while (0 < length--)
+        {
+            res.Append(valid[rnd.Next(valid.Length)]);
+        }
+        return res.ToString();
+    }
+    #endregion
 }

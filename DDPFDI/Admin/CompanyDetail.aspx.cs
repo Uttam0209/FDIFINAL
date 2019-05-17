@@ -705,7 +705,7 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
         HySave["longitude"] = Co.RSQandSQLInjection(txtlongitude.Text.Trim(), "soft");
         HySave["InterestedArea"] = "";
         HySave["MasterAllowed"] = "";
-        HySave["Role"] = "";
+        HySave["Role"] = "Company";
     }
     protected void SaveFactoryComp()
     {
@@ -761,7 +761,7 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
         HySave["Factorylongitude"] = Co.RSQandSQLInjection(txtlongitude.Text.Trim(), "soft");
         HySave["InterestedArea"] = "";
         HySave["MasterAllowed"] = "";
-        HySave["Role"] = "";
+        HySave["Role"] = "Division";
     }
     protected void SaveUnitComp()
     {
@@ -807,7 +807,7 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
         HySave["Unitlongitude"] = Co.RSQandSQLInjection(txtlongitude.Text.Trim(), "soft");
         HySave["InterestedArea"] = "";
         HySave["MasterAllowed"] = "";
-        HySave["Role"] = "";
+        HySave["Role"] = "Unit";
     }
     protected void SaveCompanyMenu()
     {

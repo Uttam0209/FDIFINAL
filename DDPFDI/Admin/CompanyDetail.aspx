@@ -57,7 +57,6 @@
                         <div class="addfdi">
                             <div class="col-md-12 padding_0">
                                 <div class="row">
-
                                     <div class="col-md-12">
                                         <div class="fdi-add-content">
                                             <div class="row">
@@ -207,11 +206,7 @@
                                                     <label for="seldistrict" class="control-label">Location </label>
                                                     <asp:TextBox runat="server" ID="TextBox3" name="tdistrict" class="form-control form-cascade-control" placeholder=""></asp:TextBox>
                                                 </div>
-
-
-
                                             </div>
-
                                         </div>
                                     </div>
                                 </div>

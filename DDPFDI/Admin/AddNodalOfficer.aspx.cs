@@ -679,7 +679,6 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
             }
         }
     }
-
     protected void gvViewNodalOfficer_RowDataBound(object sender, GridViewRowEventArgs e)
     {
         if (e.Row.RowType == DataControlRowType.DataRow)

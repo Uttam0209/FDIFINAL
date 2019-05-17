@@ -42,7 +42,7 @@
                                             <asp:TextBox ID="txtserch" runat="server" CssClass="form-cascade-control form-control" Placeholder="Type keyword to search"></asp:TextBox>
                                         </div>
                                         <div class="col-sm-2 row">
-                                            <asp:LinkButton runat="server" ID="btnsearch" Cssclass="text-black btn btn-warning pull-left btn-md" OnClick="Search_Click" Text="Search"></asp:LinkButton>
+                                            <asp:LinkButton runat="server" ID="btnsearch" CssClass="text-black btn btn-warning pull-left btn-md" OnClick="Search_Click" Text="Search"></asp:LinkButton>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -95,17 +95,28 @@
                                             </asp:TemplateField>
                                             <asp:BoundField DataField="FactoryName" HeaderText="Division" NullDisplayText="-" />
                                             <asp:BoundField DataField="UnitName" HeaderText="Unit" NullDisplayText="-" />
-                                            <asp:BoundField DataField="NodalOficerName" HeaderText="Name" NullDisplayText="#" />
-                                            <asp:BoundField DataField="NodalOfficerRefNo" HeaderText="Reference No." NullDisplayText="#" />
-                                            <asp:BoundField DataField="NodalOfficerEmail" HeaderText="Email" NullDisplayText="#" />
+                                            <asp:TemplateField HeaderText="Name">
+                                                <ItemTemplate>
+                                                    <asp:Label ID="lblnodelname" runat="server" Text='<%#Eval("NodalOficerName") %>' NullDisplayText="#" SortExpression="NodalOficerName"></asp:Label>
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField HeaderText="CompanyReference No.">
+                                                <ItemTemplate>
+                                                    <asp:Label ID="lblnodelrefno" runat="server" Text='<%#Eval("NodalOfficerRefNo") %>' NullDisplayText="#" SortExpression="NodalOfficerRefNo"></asp:Label>
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField HeaderText="Email">
+                                                <ItemTemplate>
+                                                    <asp:Label ID="nodelemail" runat="server" Text='<%#Eval("NodalOfficerEmail") %>' NullDisplayText="#" SortExpression="NodalOfficerEmail"></asp:Label>
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
                                             <asp:BoundField DataField="IsNodalOfficer" HeaderText="Nodal Officer" NullDisplayText="#" />
-
                                             <asp:TemplateField HeaderText="Action">
                                                 <ItemTemplate>
                                                     <asp:LinkButton ID="lblview" runat="server" CssClass="fa fa-eye" CommandName="ViewComp" CommandArgument='<%#Eval("NodalOfficerID") %>'></asp:LinkButton>
                                                     <asp:LinkButton ID="lbledit" runat="server" CssClass="fa fa-edit" CommandName="EditComp" CommandArgument='<%#Eval("NodalOfficerID") %>'></asp:LinkButton>
                                                     <asp:LinkButton ID="lbldel" runat="server" Visible="False" CssClass="fa fa-trash" CommandName="DeleteComp" OnClientClick="return confirm('Are you sure you want to delete this Company?');" CommandArgument='<%#Eval("NodalOfficerID") %>'></asp:LinkButton>
-                                                    <asp:LinkButton ID="lbllogindetail" runat="server" Visible="False" CssClass=" fa fa-paper-plane" CommandName="SendLogin" CommandArgument='<%#Eval("NodalOfficerID") %>'></asp:LinkButton>
+                                                    <asp:LinkButton ID="lbllogindetail" runat="server" CssClass=" fa fa-paper-plane" CommandName="SendLogin" OnClientClick="return confirm('Are you sure you want to send login detail?');" CommandArgument='<%#Eval("NodalOfficerID") %>'></asp:LinkButton>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                         </Columns>
