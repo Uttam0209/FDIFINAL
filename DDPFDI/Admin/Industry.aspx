@@ -273,11 +273,18 @@
                                             <th>Product Manufactured Location</th>
                                         </tr>
                                         <tr>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
+                                            <td>1</td>
+                                            <td>24565</td>
+                                            <td>16/05/19</td>
+                                            <td>Bolt</td>
+                                            <td>Noida</td>
+                                        </tr>
+                                        <tr>
+                                            <td>2</td>
+                                            <td>24565</td>
+                                            <td>16/05/19</td>
+                                            <td>Bolt</td>
+                                            <td>Noida</td>
                                         </tr>
                                     </table>
                                 </div>
@@ -306,7 +313,9 @@
                                                         <option>2017-2018</option>
                                                     </select>
                                                 </td>
-                                                <td></td>
+                                                <td>
+                                                    <input type="text" class="form-control">
+                                                </td>
 
                                             </tr>
                                             <tr>
@@ -319,7 +328,7 @@
                                                         <option>2017-2018</option>
                                                     </select>
                                                 </td>
-                                                <td></td>
+                                                <td><input type="text" class="form-control"></td>
 
                                             </tr>
                                             <tr>
@@ -332,7 +341,7 @@
                                                         <option>2017-2018</option>
                                                     </select>
                                                 </td>
-                                                <td></td>
+                                                <td><input type="text" class="form-control"></td>
 
                                             </tr>
                                         </table>
@@ -424,7 +433,7 @@
                                                         <option>2017-2018</option>
                                                     </select>
                                                 </td>
-                                                <td></td>
+                                                <td><input type="text" class="form-control"></td>
 
                                             </tr>
                                             <tr>
@@ -437,7 +446,7 @@
                                                         <option>2017-2018</option>
                                                     </select>
                                                 </td>
-                                                <td></td>
+                                                <td><input type="text" class="form-control"></td>
 
                                             </tr>
                                             <tr>
@@ -450,7 +459,7 @@
                                                         <option>2017-2018</option>
                                                     </select>
                                                 </td>
-                                                <td></td>
+                                                <td><input type="text" class="form-control"></td>
 
                                             </tr>
                                         </table>

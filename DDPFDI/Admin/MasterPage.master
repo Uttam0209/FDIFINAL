@@ -278,28 +278,7 @@
             });
         });
     </script>
-
-
-    <!-----Alert Box ------>
-    <div class="alert-overlay alert-overlay-success" style="display: none">
-        <div class="alert-box">
-            <div class="box">
-                <div class="success-checkmark">
-                    <div class="check-icon">
-                        <span class="icon-line line-tip"></span>
-                        <span class="icon-line line-long"></span>
-                        <div class="icon-circle"></div>
-                        <div class="icon-fix"></div>
-                    </div>
-                </div>
-               
-        <div class="alert">
-            Successfully Saved !
-        </div>
-        <button class="btn btn-success close_alert">OK</button>
-    </div>
-    </div>
-    <!-----Alert Box ------>
+    
      <!-----Alert Box ------>
     <div class="alert-overlay alert-overlay-error" style="display: none">
         <div class="alert-box">
