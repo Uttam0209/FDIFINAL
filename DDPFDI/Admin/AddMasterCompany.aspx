@@ -61,6 +61,11 @@
             return true;
         }
     </script>
+    <script type="text/javascript">
+        function showPopup() {
+            $('#changePass').modal('show');
+        }
+    </script>
 </asp:Content>
 
 <asp:Content ID="inner2" runat="server" ContentPlaceHolderID="ContentPlaceHolder1">
@@ -162,8 +167,10 @@
                                 </div>
                             </div>
                             <div class="table-wraper">
-                                <asp:GridView ID="gvcompanydetail" runat="server" Width="100%" Class="commonAjaxTbl master-company-table table display responsive no-wrap table-hover manage-user Grid" AutoGenerateColumns="false" AllowPaging="true"
-                                    PageSize="25" AllowSorting="true">
+                                <asp:GridView ID="gvcompanydetail" runat="server" Width="100%" Class="commonAjaxTbl master-company-table table display 
+                                    responsive no-wrap table-hover manage-user Grid"
+                                    AutoGenerateColumns="false" AllowPaging="true"
+                                    PageSize="25" AllowSorting="true" RowCommand="gvcompanydetail_RowCommand" OnRowCommand="gvcompanydetail_RowCommand" OnRowDataBound="gvcompanydetail_RowDataBound">
                                     <PagerStyle HorizontalAlign="Center" CssClass="GridPager" />
                                     <Columns>
 
@@ -173,17 +180,51 @@
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                         <asp:BoundField ItemStyle-Width="150px" DataField="CompanyName" HeaderText="Company" />
-                                        <asp:BoundField ItemStyle-Width="150px" DataField="CompanyRefNo" HeaderText="Reference No." />
+                                        <asp:BoundField ItemStyle-Width="150px" DataField="CompanyRefNo" Visible="False" HeaderText="Reference No." />
                                         <asp:BoundField ItemStyle-Width="150px" DataField="FactoryName" HeaderText="Division" />
-                                        <asp:BoundField ItemStyle-Width="150px" DataField="FactoryRefNo" HeaderText="Reference No." />
+                                        <asp:BoundField ItemStyle-Width="150px" DataField="FactoryRefNo" Visible="False" HeaderText="Reference No." />
                                         <asp:BoundField ItemStyle-Width="150px" DataField="UnitName" HeaderText="Unit" />
-                                        <asp:BoundField ItemStyle-Width="150px" DataField="UnitRefNo" HeaderText="Reference No." />
-                                        <asp:BoundField ItemStyle-Width="150px" DataField="ContactPersonEmailID" HeaderText="Nodal Officer" />
-                                        <asp:BoundField ItemStyle-Width="150px" DataField="FactoryNodalOfficerEmailId" HeaderText="Nodal Officer" />
-                                        <asp:BoundField ItemStyle-Width="150px" DataField="UnitNodalOfficerEmailId" HeaderText="Nodal Officer" />
+                                        <asp:BoundField ItemStyle-Width="150px" DataField="UnitRefNo" Visible="False" HeaderText="Reference No." />
+                                        <asp:BoundField ItemStyle-Width="150px" DataField="ContactPersonEmailID" HeaderText="Company Nodal Officer" />
+                                        <asp:BoundField ItemStyle-Width="150px" DataField="FactoryNodalOfficerEmailId" HeaderText="Division Nodal Officer" />
+                                        <asp:BoundField ItemStyle-Width="150px" DataField="UnitNodalOfficerEmailId" HeaderText="Unit Nodal Officer" />
                                         <asp:BoundField ItemStyle-Width="150px" DataField="Role" HeaderText="Role" />
+                                        <asp:BoundField ItemStyle-Width="150px" DataField="CreatedBy" HeaderText="Created By" />
+                                        <asp:TemplateField HeaderText="Action" Visible="true">
+                                            <ItemTemplate>
+                                                <asp:LinkButton runat="server" ID="lblview" CommandArgument='<%#Eval("CompanyRefNo") %>' CommandName="viewComp" CssClass="fa fa-eye"></asp:LinkButton>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
                                     </Columns>
                                 </asp:GridView>
+                            </div>
+                            <div class="modal fade" id="changePass" role="dialog">
+                                <div class="modal-dialog" style="width: 700px; z-index: 9999999999;">
+                                    <!-- Modal content-->
+                                    <div class="modal-content">
+                                        <div class="modal-header modal-header1">
+                                            <button type="button" class="close close1" data-dismiss="modal">&times;</button>
+                                            <h4 class="modal-title">Detail</h4>
+                                        </div>
+                                        <table class="table table-bordered">
+                                            <tr>
+                                                <td>Intrested
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <asp:Label ID="lblintrestedin" runat="server"></asp:Label></td>
+                                            </tr>
+                                            <td>
+                                                <asp:Label ID="lblmenuallot" runat="server"></asp:Label></td>
+
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
                             </div>
                         </ContentTemplate>
                     </asp:UpdatePanel>

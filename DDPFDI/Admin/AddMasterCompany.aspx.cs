@@ -46,11 +46,14 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
                         {
                             MmCval = "Add";
                         }
+
                         strheadPage.Append("<li class=''><span>" + MmCval + "</span></li>");
                     }
+
                     divHeadPage.InnerHtml = strheadPage.ToString();
                     strheadPage.Append("</ul");
                     divOfficerEmail.Visible = false;
+                    ViewState["UserLoginEmail"] = Session["User"].ToString();
                     if (Enc.DecryptData(Request.QueryString["mu"].ToString()) == "Panel1")
                     {
                         mastercompany.Visible = true;
@@ -82,7 +85,7 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
                         this.ddlmaster_SelectedIndexChanged(sender, e);
                         lblName.Text = "Unit";
                         btnsubmit.Text = "Save Unit";
-                        
+
                         GridcompanyVisible();
                     }
                     else
@@ -102,25 +105,25 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
                         {
                             divRole.Visible = true;
                         }
+
                         gvcompanydetail.Visible = true;
                         GridCompanyBind();
                     }
+
                     lblMastcompany.Text = "Select Company ";
                     lblfactoryName.Text = "Select Divison/Plant ";
 
                     chkrole.Attributes.Add("onclick", "radioMe(event);");
                 }
 
-
             }
         }
     }
-
     public void GridcompanyVisible()
     {
         if (Enc.DecryptData(Session["Type"].ToString()) == "Admin" || Enc.DecryptData(Session["Type"].ToString()) == "SuperAdmin")
         {
-            
+
         }
         else
         {
@@ -136,20 +139,11 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
         DataTable DtGrid = new DataTable();
         if (Enc.DecryptData(Request.QueryString["mu"].ToString()) == "Panel2")
         {
-            DtGrid = null;
             DtGrid = Lo.RetriveAllCompany(ddlmaster.SelectedValue, "Division");
         }
         else if (Enc.DecryptData(Request.QueryString["mu"].ToString()) == "Panel3")
         {
-            DtGrid = null;
-            if (Enc.DecryptData(Session["Type"].ToString()) == "Factory" || Enc.DecryptData(Session["Type"].ToString()) == "Company")
-            {
-                DtGrid = Lo.RetriveAllCompany(ddlfacotry.SelectedValue, "UnitFactory");
-            }
-            else
-            {
-                DtGrid = Lo.RetriveAllCompany(ddlmaster.SelectedValue, "Unit");
-            }
+            DtGrid = Lo.RetriveAllCompany(ddlfacotry.SelectedValue, "Unit");
         }
         else
         {
@@ -163,7 +157,7 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
         }
         else
         {
-            //DtGrid = null;
+            gvcompanydetail.Visible = false;
         }
     }
     protected void CompGrid()
@@ -174,11 +168,11 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
             this.gvcompanydetail.Columns[1].Visible = true;
             this.gvcompanydetail.Columns[2].Visible = false;
             this.gvcompanydetail.Columns[3].Visible = true;
-            this.gvcompanydetail.Columns[4].Visible = true;
+            //this.gvcompanydetail.Columns[4].Visible = true;
             this.gvcompanydetail.Columns[5].Visible = false;
-            this.gvcompanydetail.Columns[6].Visible = false;
-            this.gvcompanydetail.Columns[7].Visible = true;
-            this.gvcompanydetail.Columns[8].Visible = false;
+            // this.gvcompanydetail.Columns[6].Visible = false;
+            this.gvcompanydetail.Columns[7].Visible = false;
+            this.gvcompanydetail.Columns[8].Visible = true;
             this.gvcompanydetail.Columns[9].Visible = false;
         }
         else if (Enc.DecryptData(Request.QueryString["mu"].ToString()) == "Panel3")
@@ -188,10 +182,10 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
             this.gvcompanydetail.Columns[3].Visible = true;
             this.gvcompanydetail.Columns[4].Visible = false;
             this.gvcompanydetail.Columns[5].Visible = true;
-            this.gvcompanydetail.Columns[6].Visible = true;
+            //this.gvcompanydetail.Columns[6].Visible = true;
             this.gvcompanydetail.Columns[7].Visible = false;
-            this.gvcompanydetail.Columns[8].Visible = true;
-            this.gvcompanydetail.Columns[9].Visible = false;
+            this.gvcompanydetail.Columns[8].Visible = false;
+            this.gvcompanydetail.Columns[9].Visible = true;
         }
         else
         {
@@ -199,7 +193,7 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
             this.gvcompanydetail.Columns[4].Visible = false;
             this.gvcompanydetail.Columns[5].Visible = false;
             this.gvcompanydetail.Columns[6].Visible = false;
-            this.gvcompanydetail.Columns[7].Visible = false;
+            this.gvcompanydetail.Columns[7].Visible = true;
             this.gvcompanydetail.Columns[8].Visible = false;
             this.gvcompanydetail.Columns[9].Visible = false;
         }
@@ -223,7 +217,7 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
                 sRole = "SuperAdmin";
 
             }
-            
+
             else if (Enc.DecryptData(Session["Type"].ToString()) == "Company")
             {
 
@@ -302,6 +296,7 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
         string StrSaveComp = "";
         HySave["CompanyID"] = id;
         HySave["CompanyName"] = Co.RSQandSQLInjection(txtcomp.Text.Trim(), "soft");
+        HySave["CreatedBy"] = Enc.DecryptData(ViewState["UserLoginEmail"].ToString());
         HySave["ContactPersonEmailID"] = Co.RSQandSQLInjection(txtemail.Text.Trim(), "soft");
         if (btnsubmit.Text == "Save Division")
         {
@@ -353,7 +348,7 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
         }
         if (StrSaveComp != "")
         {
-            
+
             gvcompanydetail.Visible = true;
             GridCompanyBind();
             if (btnsubmit.Text == "Save Division")
@@ -403,7 +398,7 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
                 }
                 else if (btnsubmit.Text == "Save Unit")
                 {
-                    if (ddlmaster.SelectedItem.Value != "Select" && ddlfacotry.SelectedItem.Value!="Select")
+                    if (ddlmaster.SelectedItem.Value != "Select" && ddlfacotry.SelectedItem.Value != "Select")
                     {
                         SaveComp();
                     }
@@ -411,8 +406,8 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
                     {
                         ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Select company and division !')", true);
                     }
-                } 
-                
+                }
+
                 else
                 {
                     SaveComp();
@@ -423,6 +418,86 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
         else
         {
             ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('" + lblName.Text + " can not be empty !')", true);
+        }
+    }
+    protected void ddlmaster_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        DataTable DtDDL = Lo.RetriveMasterData(0, ddlmaster.SelectedItem.Value, "Factory1", 0, "", "M", "CompanyName");
+        if (DtDDL.Rows.Count > 0)
+        {
+            Co.FillDropdownlist(ddlfacotry, DtDDL, "FactoryName", "FactoryRefNo");
+        }
+
+        DataTable DtBindSubFactory = new DataTable();
+        if (Enc.DecryptData(Session["Type"].ToString()) == "Factory")
+        {
+            ddlfacotry.Enabled = false;
+            DtBindSubFactory = Lo.RetriveMasterData(0, Session["CompanyRefNo"].ToString(), "", 0, "", "", "FactoryJoin");
+        }
+        else
+        {
+            ddlfacotry.Enabled = true;
+            DtBindSubFactory = Lo.RetriveMasterData(0, ddlmaster.SelectedItem.Value, "", 0, "", "M", "FactoryJoin1");
+        }
+        if (DtBindSubFactory.Rows.Count > 0)
+        {
+            if (DtBindSubFactory.Rows[0]["FactoryName"].ToString() != "")
+            {
+                //  Co.FillDropdownlist(ddlfacotry, DtBindSubFactory, "FactoryName", "FactoryRefNo");
+                if (Enc.DecryptData(Request.QueryString["mu"].ToString()) == "Panel3")
+                {
+                    gvcompanydetail.Visible = false;
+                    if (ddlfacotry.Enabled == true)
+                    {
+                        ddlfacotry.Items.Insert(0, "Select");
+                    }
+                    else
+                    {
+                        gvcompanydetail.Visible = true;
+                        GridCompanyBind();
+                    }
+                }
+                else
+                {
+                    gvcompanydetail.Visible = true;
+                    GridCompanyBind();
+                    ddlfacotry.Items.Insert(0, "Select");
+                }
+
+            }
+            else
+            {
+                gvcompanydetail.Visible = false;
+            }
+        }
+        else
+        {
+            gvcompanydetail.Visible = false;
+
+        }
+    }
+    protected void ddlfacotry_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        gvcompanydetail.Visible = true;
+        GridCompanyBind();
+    }
+    protected void gvcompanydetail_RowCommand(object sender, GridViewCommandEventArgs e)
+    {
+        if (e.CommandName == "viewComp")
+        {
+            DataTable DtIntrested = Lo.RetriveIntresteData(e.CommandArgument.ToString());
+            if (DtIntrested.Rows.Count > 0)
+            {
+                //string Int = "";
+                //for (int i = 0; DtIntrested.Rows.Count > i; i++)
+                //{
+                //    Int = Int + "," + DtIntrested.Rows[i]["InterestArea"].ToString();
+                //}
+
+                lblintrestedin.Text = DtIntrested.Rows[0][0].ToString();
+                lblmenuallot.Text = DtIntrested.Rows[0][1].ToString();
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "changePass", "showPopup();", true);
+            }
         }
     }
     #region ReturnUrl Long"
@@ -438,46 +513,14 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
         return res.ToString();
     }
     #endregion
-    protected void ddlmaster_SelectedIndexChanged(object sender, EventArgs e)
+    protected void gvcompanydetail_RowDataBound(object sender, GridViewRowEventArgs e)
     {
-        DataTable DtBindSubFactory = new DataTable();
-
-        if (Enc.DecryptData(Session["Type"].ToString()) == "Factory")
+        if (e.Row.RowType == DataControlRowType.DataRow)
         {
-            ddlfacotry.Enabled = false;
-            DtBindSubFactory = Lo.RetriveMasterData(0, Session["CompanyRefNo"].ToString(), "", 0, "", "", "FactoryJoin");
-        }
-        else
-        {
-            ddlfacotry.Enabled = true;
-            DtBindSubFactory = Lo.RetriveMasterData(0, ddlmaster.SelectedItem.Value, "", 0, "", "M", "FactoryJoin1");
-
-        }
-
-        if (DtBindSubFactory.Rows.Count > 0)
-        {
-            if (DtBindSubFactory.Rows[0]["FactoryName"].ToString() != "")
+            if (e.Row.Cells[10].Text == "Factory")
             {
-                Co.FillDropdownlist(ddlfacotry, DtBindSubFactory, "FactoryName", "FactoryRefNo");
-                gvcompanydetail.Visible = true;
-                GridCompanyBind();
-                ddlfacotry.Items.Insert(0, "Select");
-            }
-            else
-            {
-                gvcompanydetail.Visible = false;
+                e.Row.Cells[10].Text = "Division";
             }
         }
-        else
-        {
-            gvcompanydetail.Visible = false;
-
-        }
-
-    }
-    protected void ddlfacotry_SelectedIndexChanged(object sender, EventArgs e)
-    {
-        gvcompanydetail.Visible = true;
-        GridCompanyBind();
     }
 }

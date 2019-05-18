@@ -47,11 +47,12 @@ public partial class Admin_AddDesignation : System.Web.UI.Page
                 strheadPage.Append("</ul");
 
                 BindMasterCompany();
-                
+
             }
+            ViewState["UserLoginEmail"] = Session["User"].ToString();
             mType = Enc.DecryptData(Session["Type"].ToString());
             mRefNo = Session["CompanyRefNo"].ToString();
-            
+
             if (Request.QueryString["mcurrentcompRefNo"] != null)
             {
                 EditCode();
@@ -64,7 +65,6 @@ public partial class Admin_AddDesignation : System.Web.UI.Page
         GridViewBindSelectedIndexchange();
 
     }
-
     public void GridViewBindSelectedIndexchange()
     {
         if (ddlmaster.SelectedItem.Text != "Select")
@@ -156,7 +156,6 @@ public partial class Admin_AddDesignation : System.Web.UI.Page
         }
 
     }
-
     protected void btncancel_Click(object sender, EventArgs e)
     {
         txtDesignation.Text = "";
@@ -164,11 +163,10 @@ public partial class Admin_AddDesignation : System.Web.UI.Page
     protected void SaveComp()
     {
         string StrSaveComp = "";
-        if (Request.QueryString["mrcreaterole"] != null)
+        if (hdid.Value != null)
         {
-            string str = Enc.DecryptData(Request.QueryString["mrcreaterole"].ToString());
-            HySave["DesignationId"] = Convert.ToInt16(str);
-            
+            HySave["DesignationId"] = Convert.ToInt16(hdid.Value);
+
         }
         else
         {
@@ -177,12 +175,28 @@ public partial class Admin_AddDesignation : System.Web.UI.Page
         HySave["CompanyRefNo"] = ddlmaster.SelectedItem.Value;
         HySave["DesignationRefNo"] = "";
         HySave["Designation"] = Co.RSQandSQLInjection(txtDesignation.Text.Trim(), "soft");
+        HySave["CreatedBy"] = Enc.DecryptData(ViewState["UserLoginEmail"].ToString());
         StrSaveComp = Lo.SaveCompDesignation(HySave, out _sysMsg, out _msg);
         if (_sysMsg != "")
         {
-            GridViewBindSelectedIndexchange();
-            txtDesignation.Text = "";
-            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Save successfully !')", true);
+            if (btnsubmit.Text == "Save")
+            {
+                GridViewBindSelectedIndexchange();
+                txtDesignation.Text = "";
+                hdid.Value = "";
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Save successfully !')",
+                    true);
+            }
+            else
+            {
+                GridViewBindSelectedIndexchange();
+                txtDesignation.Text = "";
+                hdid.Value = "";
+                btnsubmit.Text = "Save";
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Designation updated successfully !')",
+                    true);
+
+            }
         }
         else
         {
@@ -223,7 +237,6 @@ public partial class Admin_AddDesignation : System.Web.UI.Page
             ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Designation can not be empty !')", true);
         }
     }
-
     protected void EditCode()
     {
         if (Session["CompanyRefNo"] != null)
@@ -231,7 +244,7 @@ public partial class Admin_AddDesignation : System.Web.UI.Page
             DataTable DtView = Lo.RetriveMasterData(0, Enc.DecryptData(Request.QueryString["mrcreaterole"].ToString()), "", 0, "", "", "AllDesignation");
             if (DtView.Rows.Count > 0)
             {
-                id = Convert.ToInt16(DtView.Rows[0]["DesignationId"].ToString());
+                hdid.Value = DtView.Rows[0]["DesignationId"].ToString();
                 DataTable DtCompanyDDL = Lo.RetriveMasterData(0, DtView.Rows[0]["CompanyRefNo"].ToString(), "Company", 0, "", "", "CompanyName");
                 if (DtCompanyDDL.Rows.Count > 0)
                 {
@@ -239,7 +252,6 @@ public partial class Admin_AddDesignation : System.Web.UI.Page
                     ddlmaster.Enabled = false;
                 }
                 lblMastcompany.Text = "Select Company ";
-                
                 txtDesignation.Text = DtView.Rows[0]["Designation"].ToString();
                 btnsubmit.Text = "Edit";
             }

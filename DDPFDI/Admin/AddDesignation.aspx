@@ -55,7 +55,7 @@
                                 <div class="fdi-add-content">
                                     <div class="form-group">
                                         <asp:Button ID="btncancel" runat="server" Text="Cancel" CssClass="btn btn-default pull-right" OnClick="btncancel_Click" />
-                                        <asp:Button ID="btnsubmit" runat="server" Text="Save" CssClass="btn btn-primary pull-right" OnClick="btnsubmit_Click" OnClientClick="return Validate()" />
+                                        <asp:Button ID="btnsubmit" runat="server" Text="Save" CssClass="btn btn-primary pull-right" OnClick="btnsubmit_Click" OnClientClick="return confirm('Are you sure you want to save this designation?');" />
                                     </div>
                                 </div>
                                 <div>
@@ -79,7 +79,9 @@
                                         </ItemTemplate>
                                     </asp:TemplateField>
                                     <asp:BoundField DataField="Designation" HeaderText="Designation" NullDisplayText="#" />
-                                    <asp:BoundField DataField="DesignationRefNo" HeaderText="Reference No." NullDisplayText="#" />
+                                    <asp:BoundField DataField="DesignationRefNo" HeaderText="Reference No." Visible="False" NullDisplayText="#" />
+                                    <asp:BoundField DataField="CreatedBy" HeaderText="Created By" NullDisplayText="#" />
+
 
 
                                 </Columns>

@@ -497,7 +497,7 @@
                     <div class="col-sm-12">
                         <div class="form-group">
                             <asp:LinkButton ID="btndemofirst" runat="server" CssClass="btn btn-primary pull-right" Style="margin-left: 10px;" Text="Save"
-                                OnClick="btndemofirst_Click" />
+                                OnClick="btndemofirst_Click" OnClientClick="return confirm('Are you sure you want to save this company detail?');" />
                             <asp:LinkButton ID="btnDelete" runat="server" CssClass="btn btn-primary pull-right" Text="Delete" Visible="false" />
                         </div>
                     </div>

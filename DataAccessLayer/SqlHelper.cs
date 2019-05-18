@@ -305,6 +305,7 @@ namespace DataAccessLayer
                     db.AddInParameter(cmd, "@InterestedArea", DbType.String, hysavecomp["InterestedArea"].ToString().Trim());
                     db.AddInParameter(cmd, "@MasterAllowed", DbType.String, hysavecomp["MasterAllowed"].ToString().Trim());
                     db.AddInParameter(cmd, "@Role", DbType.String, hysavecomp["Role"]);
+                    db.AddInParameter(cmd, "@CreatedBy", DbType.String, hysavecomp["CreatedBy"]);
                     db.AddOutParameter(cmd, "@ReturnID", DbType.String, 20);
                     db.ExecuteNonQuery(cmd, dbTran);
                     mCurrentID = db.GetParameterValue(cmd, "@ReturnID").ToString();
@@ -341,6 +342,7 @@ namespace DataAccessLayer
                     db.AddInParameter(cmd, "@FactoryEmailId", DbType.String, hysaveDivision["ContactPersonEmailID"]);
                     db.AddInParameter(cmd, "@CompanyRefNo", DbType.String, hysaveDivision["CompanyRefNo"].ToString().Trim());
                     db.AddInParameter(cmd, "@Role", DbType.String, hysaveDivision["Role"]);
+                    db.AddInParameter(cmd, "@CreatedBy", DbType.String, hysaveDivision["CreatedBy"]);
                     db.AddOutParameter(cmd, "@ReturnID", DbType.String, 20);
                     db.ExecuteNonQuery(cmd, dbTran);
                     mCurrentID = db.GetParameterValue(cmd, "@ReturnID").ToString();
@@ -377,6 +379,7 @@ namespace DataAccessLayer
                     db.AddInParameter(cmd, "@UnitEmailId", DbType.String, hysaveUnit["ContactPersonEmailID"]);
                     db.AddInParameter(cmd, "@FactoryRefNo", DbType.String, hysaveUnit["CompanyRefNo"].ToString().Trim());
                     db.AddInParameter(cmd, "@Role", DbType.String, hysaveUnit["Role"]);
+                    db.AddInParameter(cmd, "@CreatedBy", DbType.String, hysaveUnit["CreatedBy"]);
                     db.AddOutParameter(cmd, "@ReturnID", DbType.String, 20);
                     db.ExecuteNonQuery(cmd, dbTran);
                     mCurrentID = db.GetParameterValue(cmd, "@ReturnID").ToString();
@@ -521,6 +524,7 @@ namespace DataAccessLayer
                     db.AddInParameter(cmd, "@CompanyRefNo", DbType.String, HyCompSave["CompanyRefNo"]);
                     db.AddInParameter(cmd, "@MCategoryId", DbType.Int16, HyCompSave["MCategoryId"].ToString().Trim());
                     db.AddInParameter(cmd, "@SCategoryId", DbType.String, HyCompSave["SCategoryId"].ToString().Trim());
+                    db.AddInParameter(cmd, "@CreatedBy", DbType.String, HyCompSave["CreatedBy"].ToString().Trim());
                     db.ExecuteNonQuery(cmd, dbTran);
                     dbTran.Commit();
                     _msg = "Save";
@@ -564,6 +568,7 @@ namespace DataAccessLayer
                     db.AddInParameter(cmd, "@CompanyRefNo", DbType.String, hySaveNodal["CompanyRefNo"].ToString().Trim());
                     db.AddInParameter(cmd, "@Type", DbType.String, hySaveNodal["Type"].ToString().Trim());
                     db.AddInParameter(cmd, "@IsNodalOfficer", DbType.String, hySaveNodal["IsNodalOfficer"].ToString().Trim());
+                    db.AddInParameter(cmd, "@IsLoginActive", DbType.String, hySaveNodal["IsLoginActive"].ToString().Trim());
                     db.AddOutParameter(cmd, "@ReturnID", DbType.String, 20);
                     db.ExecuteNonQuery(cmd, dbTran);
                     mCurrentID = db.GetParameterValue(cmd, "@ReturnID").ToString();
@@ -677,6 +682,7 @@ namespace DataAccessLayer
                     db.AddInParameter(cmd, "@CompanyRefNo", DbType.String, hysavecomp["CompanyRefNo"]);
                     db.AddInParameter(cmd, "@DesignationRefNo", DbType.String, hysavecomp["DesignationRefNo"]);
                     db.AddInParameter(cmd, "@Designation", DbType.String, hysavecomp["Designation"].ToString().Trim());
+                    db.AddInParameter(cmd, "@CreatedBy", DbType.String, hysavecomp["CreatedBy"].ToString().Trim());
                     db.AddOutParameter(cmd, "@ReturnID", DbType.String, 20);
                     db.ExecuteNonQuery(cmd, dbTran);
                     mCurrentID = db.GetParameterValue(cmd, "@ReturnID").ToString();
@@ -952,7 +958,7 @@ namespace DataAccessLayer
                 }
             }
         }
-        public DataTable RetriveMasterCategoryDate(Int64 CatID, string CatName, string SCatValue, string Flag, string LavelActive, string Criteria)
+        public DataTable RetriveMasterCategoryDate(Int64 CatID, string CatName, string SCatValue, string Flag, string LavelActive, string Criteria, string CreatedBy)
         {
             using (DbConnection dbCon = db.CreateConnection())
             {
@@ -966,6 +972,7 @@ namespace DataAccessLayer
                     db.AddInParameter(cmd, "@Flag", DbType.String, Flag);
                     db.AddInParameter(cmd, "@Active", DbType.String, LavelActive);
                     db.AddInParameter(cmd, "@Criteria", DbType.String, Criteria);
+                    db.AddInParameter(cmd, "@CreatedBy", DbType.String, CreatedBy);
                     IDataReader dr = db.ExecuteReader(cmd);
                     DataTable dt = new DataTable();
                     if (dr != null)
@@ -978,7 +985,7 @@ namespace DataAccessLayer
                 }
             }
         }
-        public DataTable RetriveMasterSubCategoryDate(Int64 SCatID, string SCatName, string PId, string Criteria, string CompRefNo)
+        public DataTable RetriveMasterSubCategoryDate(Int64 SCatID, string SCatName, string PId, string Criteria, string CompRefNo, string CreatedBy)
         {
             using (DbConnection dbCon = db.CreateConnection())
             {
@@ -990,6 +997,28 @@ namespace DataAccessLayer
                     db.AddInParameter(cmd, "@SCatName", DbType.String, SCatName);
                     db.AddInParameter(cmd, "@PId", DbType.String, PId);
                     db.AddInParameter(cmd, "@Criteria", DbType.String, Criteria);
+                    db.AddInParameter(cmd, "@CompRefNo", DbType.String, CompRefNo);
+                    db.AddInParameter(cmd, "@CreatedBy", DbType.String, CreatedBy);
+                    IDataReader dr = db.ExecuteReader(cmd);
+                    DataTable dt = new DataTable();
+                    if (dr != null)
+                        dt.Load(dr);
+                    return dt;
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+        }
+        public DataTable RetriveIntresteData(string CompRefNo)
+        {
+            using (DbConnection dbCon = db.CreateConnection())
+            {
+                dbCon.Open();
+                try
+                {
+                    DbCommand cmd = db.GetStoredProcCommand("fn_GetInterestedInValue");
                     db.AddInParameter(cmd, "@CompRefNo", DbType.String, CompRefNo);
                     IDataReader dr = db.ExecuteReader(cmd);
                     DataTable dt = new DataTable();

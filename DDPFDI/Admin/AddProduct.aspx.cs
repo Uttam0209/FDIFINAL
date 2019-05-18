@@ -470,7 +470,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     #region BindServices
     protected void BindServcies()
     {
-        DataTable Dtservices = Lo.RetriveMasterSubCategoryDate(0, "Support Provided by DPSU", "", "SelectInnerMaster1", hfcomprefno.Value);
+        DataTable Dtservices = Lo.RetriveMasterSubCategoryDate(0, "Support Provided by DPSU", "", "SelectInnerMaster1", hfcomprefno.Value,"");
         if (Dtservices.Rows.Count > 0)
         {
             gvservices.DataSource = Dtservices;
@@ -493,7 +493,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         }
         ddlmastercategory.Items.Insert(0, "Product Category");
         DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, ddlmastercategory.SelectedItem.Value, "",
-           "SelectProductCat", strcompref.ToString());
+           "SelectProductCat", strcompref.ToString(),"");
         if (DtMasterCategroy.Rows.Count > 0)
         {
             Co.FillDropdownlist(ddlmastercategory, DtMasterCategroy, "SCategoryName", "SCategoryID");
@@ -502,7 +502,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     }
     protected void BindMasterSubCategory()
     {
-        DataTable DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(Convert.ToInt16(ddlmastercategory.SelectedItem.Value), "", "", "SubSelectID", "");
+        DataTable DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(Convert.ToInt16(ddlmastercategory.SelectedItem.Value), "", "", "SubSelectID", "","");
         if (DtMasterCategroy.Rows.Count > 0)
         {
             Co.FillDropdownlist(ddlsubcategory, DtMasterCategroy, "SCategoryName", "SCategoryId");
@@ -516,7 +516,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     }
     protected void BindMaster3levelSubCategory()
     {
-        DataTable DtMasterCategroyLevel3 = Lo.RetriveMasterSubCategoryDate(Convert.ToInt16(ddlsubcategory.SelectedItem.Value), "", "", "SubSelectID", "");
+        DataTable DtMasterCategroyLevel3 = Lo.RetriveMasterSubCategoryDate(Convert.ToInt16(ddlsubcategory.SelectedItem.Value), "", "", "SubSelectID", "","");
         if (DtMasterCategroyLevel3.Rows.Count > 0)
         {
             Co.FillDropdownlist(ddllevel3product, DtMasterCategroyLevel3, "SCategoryName", "SCategoryId");
@@ -543,7 +543,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         }
         ddltechnologycat.Items.Insert(0, "Technology Category");
         ddlsubtech.Items.Insert(0, "Select");
-        DataTable DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, ddltechnologycat.SelectedItem.Value, "", "SelectProductCat", strcompref.ToString());
+        DataTable DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, ddltechnologycat.SelectedItem.Value, "", "SelectProductCat", strcompref.ToString(),"");
         if (DtMasterCategroy.Rows.Count > 0)
         {
             Co.FillDropdownlist(ddltechnologycat, DtMasterCategroy, "SCategoryName", "SCategoryID");
@@ -552,7 +552,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     }
     protected void BindMasterSubCategoryTech()
     {
-        DataTable DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(Convert.ToInt16(ddltechnologycat.SelectedItem.Value), "", "", "SubSelectID", "");
+        DataTable DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(Convert.ToInt16(ddltechnologycat.SelectedItem.Value), "", "", "SubSelectID", "","");
         if (DtMasterCategroy.Rows.Count > 0)
         {
             Co.FillDropdownlist(ddlsubtech, DtMasterCategroy, "SCategoryName", "SCategoryId");
@@ -566,7 +566,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     }
     protected void BindMasterSubCategoryTechLevel3()
     {
-        DataTable DtMasterCategroyLevel3 = Lo.RetriveMasterSubCategoryDate(Convert.ToInt16(ddlsubtech.SelectedItem.Value), "", "", "SubSelectID", "");
+        DataTable DtMasterCategroyLevel3 = Lo.RetriveMasterSubCategoryDate(Convert.ToInt16(ddlsubtech.SelectedItem.Value), "", "", "SubSelectID", "","");
         if (DtMasterCategroyLevel3.Rows.Count > 0)
         {
             Co.FillDropdownlist(ddltechlevel3, DtMasterCategroyLevel3, "SCategoryName", "SCategoryId");
@@ -593,7 +593,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         }
         ddlplatform.Items.Insert(0, "Platform Category");
         ddlplatformsubcat.Items.Insert(0, "Select");
-        DataTable DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, ddlplatform.SelectedItem.Value, "", "SelectProductCat", strcompref.ToString());
+        DataTable DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, ddlplatform.SelectedItem.Value, "", "SelectProductCat", strcompref.ToString(),"");
         if (DtMasterCategroy.Rows.Count > 0)
         {
             Co.FillDropdownlist(ddlplatform, DtMasterCategroy, "SCategoryName", "SCategoryID");
@@ -602,7 +602,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     }
     protected void BindMasterSubCategoryPlat()
     {
-        DataTable DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(Convert.ToInt16(ddlplatform.SelectedItem.Value), "", "", "SubSelectID", "");
+        DataTable DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(Convert.ToInt16(ddlplatform.SelectedItem.Value), "", "", "SubSelectID", "","");
         if (DtMasterCategroy.Rows.Count > 0)
         {
             Co.FillDropdownlist(ddlplatformsubcat, DtMasterCategroy, "SCategoryName", "SCategoryId");
@@ -627,7 +627,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         {
             strcompref = hfcomprefno.Value;
         }
-        DataTable DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, lblprodrequir.Text, "", "SelectInnerMaster1", strcompref.ToString());
+        DataTable DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, lblprodrequir.Text, "", "SelectInnerMaster1", strcompref.ToString(),"");
         if (DtMasterCategroy.Rows.Count > 0)
         {
             Co.FillDropdownlist(ddlprodreqir, DtMasterCategroy, "SCategoryName", "SCategoryID");
@@ -647,7 +647,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         {
             strcompref = hfcomprefno.Value;
         }
-        DataTable DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, lblNomenclature.Text, "", "SelectInnerMaster1", strcompref.ToString());
+        DataTable DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, lblNomenclature.Text, "", "SelectInnerMaster1", strcompref.ToString(),"");
         if (DtMasterCategroy.Rows.Count > 0)
         {
             Co.FillDropdownlist(ddlnomnclature, DtMasterCategroy, "SCategoryName", "SCategoryID");
@@ -672,7 +672,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         {
             strcompref = hfcomprefno.Value;
         }
-        DataTable DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, lblenduser.Text, "", "SelectInnerMaster1", strcompref.ToString());
+        DataTable DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, lblenduser.Text, "", "SelectInnerMaster1", strcompref.ToString(),"");
         if (DtMasterCategroy.Rows.Count > 0)
         {
             Co.FillDropdownlist(ddlenduser, DtMasterCategroy, "SCategoryName", "SCategoryID");
