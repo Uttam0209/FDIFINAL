@@ -21,6 +21,10 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     string _sysMsg = string.Empty;
     public string Services = "";
     public string Remarks = "";
+    public string ServicesTesting = "";
+    public string RemarksTesting = "";
+    public string ServicesCertification = "";
+    public string RemarksCertification = "";
     public string NodalDDL = "";
     string UserName;
     string RefNo;
@@ -58,12 +62,15 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                     strheadPage.Append("</ul");
                     mType = objEnc.DecryptData(Session["Type"].ToString());
                     mRefNo = Session["CompanyRefNo"].ToString();
+                    ViewState["UserLoginEmail"] = objEnc.DecryptData(Session["User"].ToString());
                     hfcomprefno.Value = Session["CompanyRefNo"].ToString();
                     if (mType.ToString() != "SuperAdmin" || mType.ToString() != "Admin")
                     {
                         BindCompany();
                         tendorstatus();
                         BindServcies();
+                        BindTesting();
+                        BindCertification();
                         BindMasterCategory();
                         BindMasterTechnologyCategory();
                         BindMasterPlatCategory();
@@ -78,6 +85,8 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                         BindCompany();
                         tendorstatus();
                         BindServcies();
+                        BindTesting();
+                        BindCertification();
                     }
                 }
                 EditCode();
@@ -467,42 +476,62 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         }
     }
     #endregion
-    #region BindServices
+    #region BindServices Testing Certification
     protected void BindServcies()
     {
-        DataTable Dtservices = Lo.RetriveMasterSubCategoryDate(0, "Support Provided by DPSU", "", "SelectInnerMaster1", hfcomprefno.Value,"");
+        DataTable Dtservices = Lo.RetriveMasterSubCategoryDate(0, "Support Provided by DPSU", "", "SelectInnerMaster1", hfcomprefno.Value, "");
         if (Dtservices.Rows.Count > 0)
         {
             gvservices.DataSource = Dtservices;
             gvservices.DataBind();
         }
     }
+    protected void BindTesting()
+    {
+        DataTable DtTesting = Lo.RetriveMasterSubCategoryDate(0, "Testing", "", "SelectInnerMaster1", hfcomprefno.Value, "");
+        if (DtTesting.Rows.Count > 0)
+        {
+            gvtesting.DataSource = DtTesting;
+            gvtesting.DataBind();
+        }
+    }
+    protected void BindCertification()
+    {
+        DataTable DtCertification = Lo.RetriveMasterSubCategoryDate(0, "Certification", "", "SelectInnerMaster1", hfcomprefno.Value, "");
+        if (DtCertification.Rows.Count > 0)
+        {
+            gvCertification.DataSource = DtCertification;
+            gvCertification.DataBind();
+        }
+    }
     #endregion
     #region For ProductCode
     protected void BindMasterCategory()
     {
-        string strcompref = "";
         DataTable DtMasterCategroy = new DataTable();
         if (ddlcompany.SelectedItem.Text != "Select")
         {
-            strcompref = ddlcompany.SelectedItem.Value;
+            DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, "Product Category", "", "SelectProductCat", ddlcompany.SelectedItem.Value, "");
         }
         else
         {
-            strcompref = hfcomprefno.Value;
+            DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, "Product Category", "", "SelectProductCat", "", "");
         }
-        ddlmastercategory.Items.Insert(0, "Product Category");
-        DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, ddlmastercategory.SelectedItem.Value, "",
-           "SelectProductCat", strcompref.ToString(),"");
         if (DtMasterCategroy.Rows.Count > 0)
         {
+            Co.FillDropdownlist(ddlmastercategory, DtMasterCategroy, "SCategoryName", "SCategoryID");
+            ddlmastercategory.Items.Insert(0, "Select");
+        }
+        else
+        {
+            DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, "Product Category", "", "SelectProductCat", "", "");
             Co.FillDropdownlist(ddlmastercategory, DtMasterCategroy, "SCategoryName", "SCategoryID");
             ddlmastercategory.Items.Insert(0, "Select");
         }
     }
     protected void BindMasterSubCategory()
     {
-        DataTable DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(Convert.ToInt16(ddlmastercategory.SelectedItem.Value), "", "", "SubSelectID", "","");
+        DataTable DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(Convert.ToInt16(ddlmastercategory.SelectedItem.Value), "", "", "SubSelectID", "", "");
         if (DtMasterCategroy.Rows.Count > 0)
         {
             Co.FillDropdownlist(ddlsubcategory, DtMasterCategroy, "SCategoryName", "SCategoryId");
@@ -516,7 +545,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     }
     protected void BindMaster3levelSubCategory()
     {
-        DataTable DtMasterCategroyLevel3 = Lo.RetriveMasterSubCategoryDate(Convert.ToInt16(ddlsubcategory.SelectedItem.Value), "", "", "SubSelectID", "","");
+        DataTable DtMasterCategroyLevel3 = Lo.RetriveMasterSubCategoryDate(Convert.ToInt16(ddlsubcategory.SelectedItem.Value), "", "", "SubSelectID", "", "");
         if (DtMasterCategroyLevel3.Rows.Count > 0)
         {
             Co.FillDropdownlist(ddllevel3product, DtMasterCategroyLevel3, "SCategoryName", "SCategoryId");
@@ -532,27 +561,30 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     #region For Technology
     protected void BindMasterTechnologyCategory()
     {
-        string strcompref = "";
+        DataTable DtMasterCategroy = new DataTable();
         if (ddlcompany.SelectedItem.Text != "Select")
         {
-            strcompref = ddlcompany.SelectedItem.Value;
+            DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, "Technology Category", "", "SelectProductCat", ddlcompany.SelectedItem.Value, "");
         }
         else
         {
-            strcompref = hfcomprefno.Value;
+            DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, "Technology Category", "", "SelectProductCat", "", "");
         }
-        ddltechnologycat.Items.Insert(0, "Technology Category");
-        ddlsubtech.Items.Insert(0, "Select");
-        DataTable DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, ddltechnologycat.SelectedItem.Value, "", "SelectProductCat", strcompref.ToString(),"");
         if (DtMasterCategroy.Rows.Count > 0)
         {
+            Co.FillDropdownlist(ddltechnologycat, DtMasterCategroy, "SCategoryName", "SCategoryID");
+            ddltechnologycat.Items.Insert(0, "Select");
+        }
+        else
+        {
+            DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, "Technology Category", "", "SelectProductCat", "", "");
             Co.FillDropdownlist(ddltechnologycat, DtMasterCategroy, "SCategoryName", "SCategoryID");
             ddltechnologycat.Items.Insert(0, "Select");
         }
     }
     protected void BindMasterSubCategoryTech()
     {
-        DataTable DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(Convert.ToInt16(ddltechnologycat.SelectedItem.Value), "", "", "SubSelectID", "","");
+        DataTable DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(Convert.ToInt16(ddltechnologycat.SelectedItem.Value), "", "", "SubSelectID", "", "");
         if (DtMasterCategroy.Rows.Count > 0)
         {
             Co.FillDropdownlist(ddlsubtech, DtMasterCategroy, "SCategoryName", "SCategoryId");
@@ -566,7 +598,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     }
     protected void BindMasterSubCategoryTechLevel3()
     {
-        DataTable DtMasterCategroyLevel3 = Lo.RetriveMasterSubCategoryDate(Convert.ToInt16(ddlsubtech.SelectedItem.Value), "", "", "SubSelectID", "","");
+        DataTable DtMasterCategroyLevel3 = Lo.RetriveMasterSubCategoryDate(Convert.ToInt16(ddlsubtech.SelectedItem.Value), "", "", "SubSelectID", "", "");
         if (DtMasterCategroyLevel3.Rows.Count > 0)
         {
             Co.FillDropdownlist(ddltechlevel3, DtMasterCategroyLevel3, "SCategoryName", "SCategoryId");
@@ -582,27 +614,30 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     #region For PlatForm
     protected void BindMasterPlatCategory()
     {
-        string strcompref = "";
+        DataTable DtMasterCategroy = new DataTable();
         if (ddlcompany.SelectedItem.Text != "Select")
         {
-            strcompref = ddlcompany.SelectedItem.Value;
+            DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, "Platform Category", "", "SelectProductCat", ddlcompany.SelectedItem.Value, "");
         }
         else
         {
-            strcompref = hfcomprefno.Value;
+            DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, "Platform Category", "", "SelectProductCat", "", "");
         }
-        ddlplatform.Items.Insert(0, "Platform Category");
-        ddlplatformsubcat.Items.Insert(0, "Select");
-        DataTable DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, ddlplatform.SelectedItem.Value, "", "SelectProductCat", strcompref.ToString(),"");
         if (DtMasterCategroy.Rows.Count > 0)
         {
+            Co.FillDropdownlist(ddlplatform, DtMasterCategroy, "SCategoryName", "SCategoryID");
+            ddlplatform.Items.Insert(0, "Select");
+        }
+        else
+        {
+            DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, "Platform Category", "", "SelectProductCat", "", "");
             Co.FillDropdownlist(ddlplatform, DtMasterCategroy, "SCategoryName", "SCategoryID");
             ddlplatform.Items.Insert(0, "Select");
         }
     }
     protected void BindMasterSubCategoryPlat()
     {
-        DataTable DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(Convert.ToInt16(ddlplatform.SelectedItem.Value), "", "", "SubSelectID", "","");
+        DataTable DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(Convert.ToInt16(ddlplatform.SelectedItem.Value), "", "", "SubSelectID", "", "");
         if (DtMasterCategroy.Rows.Count > 0)
         {
             Co.FillDropdownlist(ddlplatformsubcat, DtMasterCategroy, "SCategoryName", "SCategoryId");
@@ -618,18 +653,23 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     #region For ProductRequirment
     protected void BindMasterProductReqCategory()
     {
-        string strcompref = "";
+        DataTable DtMasterCategroy = new DataTable();
         if (ddlcompany.SelectedItem.Text != "Select")
         {
-            strcompref = ddlcompany.SelectedItem.Value;
+            DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, lblprodrequir.Text, "", "SelectInnerMaster1", ddlcompany.SelectedItem.Value, "");
         }
         else
         {
-            strcompref = hfcomprefno.Value;
+            DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, lblprodrequir.Text, "", "SelectInnerMaster1", "", "");
         }
-        DataTable DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, lblprodrequir.Text, "", "SelectInnerMaster1", strcompref.ToString(),"");
         if (DtMasterCategroy.Rows.Count > 0)
         {
+            Co.FillDropdownlist(ddlprodreqir, DtMasterCategroy, "SCategoryName", "SCategoryID");
+            ddlprodreqir.Items.Insert(0, "Select");
+        }
+        else
+        {
+            DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, lblprodrequir.Text, "", "SelectInnerMaster1", "", "");
             Co.FillDropdownlist(ddlprodreqir, DtMasterCategroy, "SCategoryName", "SCategoryID");
             ddlprodreqir.Items.Insert(0, "Select");
         }
@@ -638,16 +678,15 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     #region For NomenClature
     protected void BindMasterProductNoenCletureCategory()
     {
-        string strcompref = "";
+        DataTable DtMasterCategroy = new DataTable();
         if (ddlcompany.SelectedItem.Text != "Select")
         {
-            strcompref = ddlcompany.SelectedItem.Value;
+            DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, lblNomenclature.Text, "", "SelectInnerMaster1", ddlcompany.SelectedItem.Value, "");
         }
         else
         {
-            strcompref = hfcomprefno.Value;
+            DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, lblNomenclature.Text, "", "SelectInnerMaster1", "", "");
         }
-        DataTable DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, lblNomenclature.Text, "", "SelectInnerMaster1", strcompref.ToString(),"");
         if (DtMasterCategroy.Rows.Count > 0)
         {
             Co.FillDropdownlist(ddlnomnclature, DtMasterCategroy, "SCategoryName", "SCategoryID");
@@ -655,24 +694,24 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         }
         else
         {
+            DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, lblNomenclature.Text, "", "SelectInnerMaster1", "", "");
+            Co.FillDropdownlist(ddlnomnclature, DtMasterCategroy, "SCategoryName", "SCategoryID");
             ddlnomnclature.Items.Insert(0, "Select");
         }
-
     }
     #endregion
     #region For EndUser
     protected void BindEndUser()
     {
-        string strcompref = "";
+        DataTable DtMasterCategroy = new DataTable();
         if (ddlcompany.SelectedItem.Text != "Select")
         {
-            strcompref = ddlcompany.SelectedItem.Value;
+            DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, lblenduser.Text, "", "SelectInnerMaster1", ddlcompany.SelectedItem.Value, "");
         }
         else
         {
-            strcompref = hfcomprefno.Value;
+            DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, lblenduser.Text, "", "SelectInnerMaster1", "", "");
         }
-        DataTable DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, lblenduser.Text, "", "SelectInnerMaster1", strcompref.ToString(),"");
         if (DtMasterCategroy.Rows.Count > 0)
         {
             Co.FillDropdownlist(ddlenduser, DtMasterCategroy, "SCategoryName", "SCategoryID");
@@ -680,6 +719,8 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         }
         else
         {
+            DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, lblenduser.Text, "", "SelectInnerMaster1", "", "");
+            Co.FillDropdownlist(ddlenduser, DtMasterCategroy, "SCategoryName", "SCategoryID");
             ddlenduser.Items.Insert(0, "Select");
         }
     }
@@ -730,7 +771,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         }
         else
         {
-            HyPanel1["NomenclatureOfMainSystem"] = 0;
+            HyPanel1["NomenclatureOfMainSystem"] = null;
         }
         if (ddlmastercategory.SelectedItem.Value != "Select")
         {
@@ -738,7 +779,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         }
         else
         {
-            HyPanel1["ProductLevel1"] = 0;
+            HyPanel1["ProductLevel1"] = null;
         }
         if (ddlsubcategory.SelectedItem.Value != "Select")
         {
@@ -746,7 +787,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         }
         else
         {
-            HyPanel1["ProductLevel2"] = 0;
+            HyPanel1["ProductLevel2"] = null;
         }
         if (ddllevel3product.SelectedItem.Value != "Select")
         {
@@ -754,7 +795,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         }
         else
         {
-            HyPanel1["ProductLevel3"] = 0;
+            HyPanel1["ProductLevel3"] = null;
         }
         HyPanel1["ProductDescription"] = Co.RSQandSQLInjection(txtproductdescription.Text, "soft");
         if (ddltechnologycat.SelectedItem.Value != "Select")
@@ -763,7 +804,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         }
         else
         {
-            HyPanel1["TechnologyLevel1"] = 0;
+            HyPanel1["TechnologyLevel1"] = null;
         }
         if (ddlsubtech.SelectedItem.Value != "Select")
         {
@@ -771,7 +812,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         }
         else
         {
-            HyPanel1["TechnologyLevel2"] = 0;
+            HyPanel1["TechnologyLevel2"] = null;
         }
         if (ddltechlevel3.SelectedItem.Value != "Select")
         {
@@ -779,7 +820,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         }
         else
         {
-            HyPanel1["TechnologyLevel3"] = 0;
+            HyPanel1["TechnologyLevel3"] = null;
         }
         if (ddlenduser.SelectedItem.Value != "Select")
         {
@@ -787,7 +828,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         }
         else
         {
-            HyPanel1["EndUser"] = 0;
+            HyPanel1["EndUser"] = null;
         }
         if (ddlplatform.SelectedItem.Value != "Select")
         {
@@ -795,7 +836,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         }
         else
         {
-            HyPanel1["Platform"] = 0;
+            HyPanel1["Platform"] = null;
         }
         if (ddlplatformsubcat.SelectedItem.Value != "Select")
         {
@@ -803,7 +844,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         }
         else
         {
-            HyPanel1["PurposeofProcurement"] = 0;
+            HyPanel1["PurposeofProcurement"] = null;
         }
         if (ddlnomnclature.SelectedItem.Value != "Select")
         {
@@ -811,7 +852,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         }
         else
         {
-            HyPanel1["ProductRequirment"] = 0;
+            HyPanel1["ProductRequirment"] = null;
         }
         HyPanel1["IsIndeginized"] = Co.RSQandSQLInjection(rbisindinised.SelectedItem.Value, "soft");
         HyPanel1["ManufactureName"] = Co.RSQandSQLInjection(txtmanufacturename.Text, "soft");
@@ -854,14 +895,14 @@ public partial class Admin_AddProduct : System.Web.UI.Page
             TextBox txtRemarks = (TextBox)rw.FindControl("txtRemarks");
             if (chkBx != null && chkBx.Checked)
             {
-                Services = Services + "," + hfservicesid.Value + ",";
-                Remarks = Remarks + "," + txtRemarks.Text + ",";
+                Services = Services + "," + hfservicesid.Value;
+                Remarks = Remarks + "," + txtRemarks.Text;
             }
         }
         if (Services != "")
         {
-            HyPanel1["DPSUServices"] = Co.RSQandSQLInjection(Services.Substring(1).ToString(), "soft");
-            HyPanel1["Remarks"] = Co.RSQandSQLInjection(Remarks.Substring(1).ToString(), "soft");
+            HyPanel1["DPSUServices"] = Co.RSQandSQLInjection(Services.Substring(1).ToString() + ",", "soft");
+            HyPanel1["Remarks"] = Co.RSQandSQLInjection(Remarks.Substring(1).ToString() + ",", "soft");
         }
         else
         {
@@ -900,7 +941,49 @@ public partial class Admin_AddProduct : System.Web.UI.Page
             HyPanel1["NodelDetail"] = Co.RSQandSQLInjection(ddlNodalOfficerEmail.SelectedItem.Value, "soft") + "," +
                                       Co.RSQandSQLInjection(ddlNodalOfficerEmail2.SelectedItem.Value, "soft") + ",";
         }
-
+        foreach (GridViewRow rw in gvtesting.Rows)
+        {
+            CheckBox chktest = (CheckBox)rw.FindControl("chktesting");
+            HiddenField hftestingid = (HiddenField)rw.FindControl("hftestingid");
+            TextBox txtRemarksTest = (TextBox)rw.FindControl("txttestingRemarks");
+            if (chktest != null && chktest.Checked)
+            {
+                ServicesTesting = ServicesTesting + "," + hftestingid.Value;
+                RemarksTesting = RemarksTesting + "," + txtRemarksTest.Text;
+            }
+        }
+        if (ServicesTesting != "")
+        {
+            HyPanel1["Testing"] = Co.RSQandSQLInjection(ServicesTesting.Substring(1).ToString() + ",", "soft");
+            HyPanel1["TestingRemarks"] = Co.RSQandSQLInjection(RemarksTesting.Substring(1).ToString() + ",", "soft");
+        }
+        else
+        {
+            HyPanel1["Testing"] = "";
+            HyPanel1["TestingRemarks"] = "";
+        }
+        foreach (GridViewRow rw in gvCertification.Rows)
+        {
+            CheckBox chkcerti = (CheckBox)rw.FindControl("chkcertification");
+            HiddenField hfcertiid = (HiddenField)rw.FindControl("hfcertification");
+            TextBox txtremarkscerti = (TextBox)rw.FindControl("txtCertificationRemarks");
+            if (chkcerti != null && chkcerti.Checked)
+            {
+                ServicesCertification = ServicesCertification + "," + hfcertiid.Value;
+                RemarksCertification = RemarksCertification + "," + txtremarkscerti.Text;
+            }
+        }
+        if (ServicesCertification != "")
+        {
+            HyPanel1["Certification"] = Co.RSQandSQLInjection(ServicesCertification.Substring(1).ToString() + ",", "soft");
+            HyPanel1["CertificationRemark"] = Co.RSQandSQLInjection(RemarksCertification.Substring(1).ToString() + ",", "soft");
+        }
+        else
+        {
+            HyPanel1["Certification"] = "";
+            HyPanel1["CertificationRemark"] = "";
+        }
+        HyPanel1["CreatedBy"] = ViewState["UserLoginEmail"].ToString();
         string StrProductDescription = Lo.SaveCodeProduct(HyPanel1, dtImage, out _sysMsg, out _msg, "Product");
         if (StrProductDescription != "-1")
         {
@@ -1109,10 +1192,41 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                         {
                             CheckBox chkBx = (CheckBox)rw.FindControl("chk");
                             HiddenField hfservicesid = (HiddenField)rw.FindControl("hfservicesid");
-                            //TextBox txtRemarks = (TextBox)rw.FindControl("txtRemarks");
                             if (hfservicesid.Value == dtpsdq.Rows[i]["SCategoryId"].ToString())
                             {
                                 chkBx.Checked = true;
+                            }
+                        }
+                    }
+                }
+                DataTable dttesting = Lo.RetriveProductCode("", hfprodrefno.Value, "ProductTesting");
+                if (dttesting.Rows.Count > 0)
+                {
+                    for (int i = 0; dttesting.Rows.Count > i; i++)
+                    {
+                        foreach (GridViewRow rw in gvtesting.Rows)
+                        {
+                            CheckBox chkBxtesting = (CheckBox)rw.FindControl("chktesting");
+                            HiddenField hfservcetesting = (HiddenField)rw.FindControl("hftestingid");
+                            if (hfservcetesting.Value == dttesting.Rows[i]["SCategoryId"].ToString())
+                            {
+                                chkBxtesting.Checked = true;
+                            }
+                        }
+                    }
+                }
+                DataTable dtcertifica = Lo.RetriveProductCode("", hfprodrefno.Value, "ProductCertification");
+                if (dtcertifica.Rows.Count > 0)
+                {
+                    for (int i = 0; dtcertifica.Rows.Count > i; i++)
+                    {
+                        foreach (GridViewRow rw in gvCertification.Rows)
+                        {
+                            CheckBox chkBxCer = (CheckBox)rw.FindControl("chkcertification");
+                            HiddenField hfcer = (HiddenField)rw.FindControl("hfcertification");
+                            if (hfcer.Value == dtcertifica.Rows[i]["SCategoryId"].ToString())
+                            {
+                                chkBxCer.Checked = true;
                             }
                         }
                     }

@@ -485,7 +485,6 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
             ddldesignation.Items.Insert(0, "Select");
         }
     }
-
     #endregion
     #region Save code
     protected void SaveNodal()

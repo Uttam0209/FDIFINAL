@@ -109,7 +109,13 @@ public partial class Admin_AddCompanyCategory : System.Web.UI.Page
         {
             for (int i = 0; DtMasterCategroy1.Rows.Count > i; i++)
             {
-                chkSubCategory.Items[i].Enabled = false;
+                foreach (ListItem chk in chkSubCategory.Items)
+                {
+                    if (DtMasterCategroy1.Rows[i]["SCategoryId"].ToString() == chk.Value)
+                    {
+                        chk.Enabled = false;
+                    }
+                }
             }
         }
     }
@@ -197,13 +203,13 @@ public partial class Admin_AddCompanyCategory : System.Web.UI.Page
         hyMasterCategory["MCategoryId"] = Co.RSQandSQLInjection(ddlmastercategory.SelectedItem.Value, "soft");
         foreach (ListItem li in chkSubCategory.Items)
         {
-            if (li.Selected == true)
+            if (li.Selected == true && li.Enabled == true)
             {
                 Categoryintrestedare = Categoryintrestedare + "," + li.Value;
             }
         }
-        hyMasterCategory["SCategoryId"] = Co.RSQandSQLInjection(Categoryintrestedare.Substring(1).ToString(), "soft");
-        hyMasterCategory["CreatedBy"] = Co.RSQandSQLInjection(ViewState["UserLoginEmail"].ToString(), "soft");
+        hyMasterCategory["SCategoryId"] = Co.RSQandSQLInjection(Categoryintrestedare.Substring(1).ToString() + ",", "soft");
+        hyMasterCategory["CreatedBy"] = objCrypto.DecryptData(ViewState["UserLoginEmail"].ToString());
         string mStrCategory = Lo.SaveMasterCategroyMenu(hyMasterCategory, out _sysMsg, out _msg);
         if (mStrCategory == "Save")
         {

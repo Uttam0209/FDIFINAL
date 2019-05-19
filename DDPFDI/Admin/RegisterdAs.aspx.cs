@@ -195,7 +195,7 @@ public partial class Admin_RegisterdAs : System.Web.UI.Page
         txtmastercategory.Text = "";
         txtsubcategory.Text = "";
         txtlevel3.Text = "";
-        ViewState["UserLoginEmail"] = null;
+    
         ddlmastercategory.SelectedValue = "Select";
         if (ddlcategroy2.Visible = true)
         {
@@ -226,17 +226,27 @@ public partial class Admin_RegisterdAs : System.Web.UI.Page
     }
     protected void SaveCodeSub()
     {
-        DataTable StrCat = Lo.RetriveMasterSubCategoryDate(Convert.ToInt16(ddlmastercategory.SelectedItem.Value), Co.RSQandSQLInjection(txtsubcategory.Text, "soft"), "0", "InsertInnerID", "", objEnc.DecryptData(ViewState["UserLoginEmail"].ToString()));
-        if (StrCat != null)
+        try
         {
-            BindMasterInnerSubCategory();
-            cleartext();// ddlcategroy2.SelectedIndex = 0;
-            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record saved')", true);
+            DataTable StrCat = Lo.RetriveMasterSubCategoryDate(Convert.ToInt16(ddlmastercategory.SelectedItem.Value),
+                Co.RSQandSQLInjection(txtsubcategory.Text, "soft"), "0", "InsertInnerID", "",
+                objEnc.DecryptData(ViewState["UserLoginEmail"].ToString()));
+            if (StrCat != null)
+            {
+                BindMasterInnerSubCategory();
+                cleartext(); // ddlcategroy2.SelectedIndex = 0;
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record saved')", true);
+            }
+            else
+            {
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not saved')", true);
+            }
         }
-        else
+        catch (Exception ex)
         {
-            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not saved')", true);
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Technical Error:- " + ex.Message + " User Error:- Record not saved.')", true);
         }
+
     }
     protected void SaveCodeInnerSub()
     {
@@ -450,5 +460,5 @@ public partial class Admin_RegisterdAs : System.Web.UI.Page
                 }
             }
         }
-    } 
+    }
 }

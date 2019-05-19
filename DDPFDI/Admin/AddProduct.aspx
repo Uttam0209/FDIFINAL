@@ -70,7 +70,7 @@
                                         <div class="row">
                                             <div class="col-md-4">
                                                 <div class="form-group">
-                                                    <label>OEM Part Number <span class="red">*</span></label>
+                                                    <label>OEM Part Number <%--<span class="red">*</span>--%></label>
                                                     <asp:TextBox runat="server" ID="txtoempartnumber" class="form-control"></asp:TextBox>
                                                 </div>
                                             </div>
@@ -513,97 +513,84 @@
                         </asp:UpdatePanel>
                     </div>
                     <div id="test" class="tab-pane fade">
+
                         <div class="row">
                             <div class="col-md-12">
-                                <div class="add-profile">
-                                    <div class="section-pannel">
-                                        <div class="row">
-                                            <div class="col-md-4">
-                                                <div class="form-group">
-                                                    <label>User Testing</label>
-                                                    <asp:DropDownList runat="server" ID="ddlusertesting" class="form-control">
-                                                        <asp:ListItem runat="server" Value="Select">Select</asp:ListItem>
-                                                    </asp:DropDownList>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <div class="form-group">
-                                                    <label>Field Testing</label>
-                                                    <asp:DropDownList runat="server" ID="ddlfieldtesting" class="form-control">
-                                                        <asp:ListItem runat="server" Value="Select">Select</asp:ListItem>
-                                                    </asp:DropDownList>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <div class="form-group">
-                                                    <label>Trial Testing</label>
-                                                    <asp:DropDownList runat="server" ID="ddltrail" class="form-control">
-                                                        <asp:ListItem runat="server" Value="Select">Select</asp:ListItem>
-                                                    </asp:DropDownList>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-4">
-                                                <div class="form-group">
-                                                    <label>Mechanical Testing</label>
-                                                    <asp:DropDownList runat="server" ID="ddlmechnicaltesting" class="form-control">
-                                                        <asp:ListItem runat="server" Value="Select">Select</asp:ListItem>
-                                                    </asp:DropDownList>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <div class="form-group">
-                                                    <label>MET</label>
-                                                    <asp:DropDownList runat="server" ID="ddlmettesting" class="form-control">
-                                                        <asp:ListItem runat="server" Value="Select">Select</asp:ListItem>
-                                                    </asp:DropDownList>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <div class="form-group">
-                                                    <label>EMC</label>
-                                                    <asp:DropDownList runat="server" ID="ddlemictesting" class="form-control">
-                                                        <asp:ListItem runat="server" Value="Select">Select</asp:ListItem>
-                                                    </asp:DropDownList>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                <asp:GridView runat="server" ID="gvtesting" AutoGenerateColumns="False" class=" table responsive no-wrap table-hover manage-user Grid">
+                                    <Columns>
+                                        <asp:TemplateField>
+                                            <ItemTemplate>
+                                                <%#Container.DataItemIndex+1 %>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="Confirm if testing needed">
+                                            <ItemTemplate>
+                                                <asp:CheckBox runat="server" ID="chktesting" />
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="">
+                                            <ItemTemplate>
+                                                <asp:Label runat="server" ID="lbltesting" Text='<%#Eval("SCategoryName") %>'></asp:Label>
+                                                <asp:HiddenField runat="server" ID="hftestingid" Value='<%#Eval("SCategoryId") %>' />
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="Remarks">
+                                            <ItemTemplate>
+                                                <asp:TextBox runat="server" ID="txttestingRemarks" class="form-control"></asp:TextBox>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                    </Columns>
+                                </asp:GridView>
                             </div>
                         </div>
+
                     </div>
                     <div id="cer" class="tab-pane fade">
-                        <div class="section-pannel">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label>Certification File</label>
-                                        <div class="fr">
-                                            <asp:TextBox ID="txtremarksfiles" runat="server" TextMode="MultiLine" placeholder="Enter detail of document needed for certification" Height="150px" CssClass="form-cascade-control form-control"></asp:TextBox>
-                                        </div>
 
-                                    </div>
-                                </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <asp:GridView runat="server" ID="gvCertification" AutoGenerateColumns="False" class=" table responsive no-wrap table-hover manage-user Grid">
+                                    <Columns>
+                                        <asp:TemplateField>
+                                            <ItemTemplate>
+                                                <%#Container.DataItemIndex+1 %>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="Confirm if certification needed">
+                                            <ItemTemplate>
+                                                <asp:CheckBox runat="server" ID="chkcertification" />
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="">
+                                            <ItemTemplate>
+                                                <asp:Label runat="server" ID="lblcertification" Text='<%#Eval("SCategoryName") %>'></asp:Label>
+                                                <asp:HiddenField runat="server" ID="hfcertification" Value='<%#Eval("SCategoryId") %>' />
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+
+                                        <asp:TemplateField HeaderText="Remarks">
+                                            <ItemTemplate>
+                                                <asp:TextBox runat="server" ID="txtCertificationRemarks" class="form-control"></asp:TextBox>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                    </Columns>
+                                </asp:GridView>
                             </div>
-                            <!-------uplode photo----------->
-
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <asp:Button runat="server" ID="btnsubmitpanel1" class="btn btn-primary pull-right" Text="Save" OnClick="btnsubmitpanel1_Click" OnClientClick="return confirm('Are you sure you want to save this product?');" />
-                                <asp:Button runat="server" ID="btncancelpanel1" class="btn btn-default pull-right" Style="margin-right: 10px;" Text="Back" OnClick="btncancelpanel1_Click" />
-                            </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <asp:Button runat="server" ID="btnsubmitpanel1" class="btn btn-primary pull-right" Text="Save" OnClick="btnsubmitpanel1_Click" OnClientClick="return confirm('Are you sure you want to save this product?');" />
+                            <asp:Button runat="server" ID="btncancelpanel1" class="btn btn-default pull-right" Style="margin-right: 10px;" Text="Back" OnClick="btncancelpanel1_Click" />
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    </div>
     <script type="text/javascript" language="javascript">
 
-</script>
+    </script>
 </asp:Content>
