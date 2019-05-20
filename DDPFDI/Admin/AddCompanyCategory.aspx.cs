@@ -51,6 +51,7 @@ public partial class Admin_AddCompanyCategory : System.Web.UI.Page
                 currentPage = System.IO.Path.GetFileName(Request.Url.AbsolutePath);
                 hidType.Value = objCrypto.DecryptData(Session["Type"].ToString());
                 hfcomprefno.Value = Session["CompanyRefNo"].ToString();
+                ViewState["UserLoginEmail"] = Session["User"].ToString();
                 BindCompany();
                 BindMasterCategory();
             }
@@ -62,7 +63,7 @@ public partial class Admin_AddCompanyCategory : System.Web.UI.Page
     }
     protected void BindMasterCategory()
     {
-        DataTable DtMasterCategroy = Lo.RetriveMasterCategoryDate(0, "", "", "", "", "Select");
+        DataTable DtMasterCategroy = Lo.RetriveMasterCategoryDate(0, "", "", "", "", "Select", "");
         if (DtMasterCategroy.Rows.Count > 0)
         {
             Co.FillDropdownlist(ddlmastercategory, DtMasterCategroy, "MCategoryName", "MCategoryID");
@@ -79,6 +80,7 @@ public partial class Admin_AddCompanyCategory : System.Web.UI.Page
         {
             BindMasterInnerSubCategory();
             level1.Visible = true;
+            CheckAlreadySelectedMenu();
         }
         else
         {
@@ -87,15 +89,34 @@ public partial class Admin_AddCompanyCategory : System.Web.UI.Page
     }
     protected void BindMasterInnerSubCategory()
     {
-        DataTable DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(Convert.ToInt16(ddlmastercategory.SelectedItem.Value), "", "", "SelectInnerMaster", "");
+        DataTable DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(Convert.ToInt16(ddlmastercategory.SelectedItem.Value), "", "", "SelectInnerMaster", "", "");
         if (DtMasterCategroy.Rows.Count > 0)
         {
             Co.FillCheckBox(chkSubCategory, DtMasterCategroy, "SCategoryName", "SCategoryId");
             level1.Visible = true;
+            chkSubCategory.Visible = true;
         }
         else
         {
+            chkSubCategory.Visible = false;
             level1.Visible = false;
+        }
+    }
+    protected void CheckAlreadySelectedMenu()
+    {
+        DataTable DtMasterCategroy1 = Lo.RetriveMasterSubCategoryDate(Convert.ToInt16(ddlmastercategory.SelectedItem.Value), "", "", "CompanyCatID", ddlcompany.SelectedItem.Value, "");
+        if (DtMasterCategroy1.Rows.Count > 0)
+        {
+            for (int i = 0; DtMasterCategroy1.Rows.Count > i; i++)
+            {
+                foreach (ListItem chk in chkSubCategory.Items)
+                {
+                    if (DtMasterCategroy1.Rows[i]["SCategoryId"].ToString() == chk.Value)
+                    {
+                        chk.Enabled = false;
+                    }
+                }
+            }
         }
     }
     #region DropDownList
@@ -173,7 +194,7 @@ public partial class Admin_AddCompanyCategory : System.Web.UI.Page
     protected void SaveCompanyMenu()
     {
         HybridDictionary hyMasterCategory = new HybridDictionary();
-        
+
         hyMasterCategory["CompCatRelationId"] = 0;
         if (ddlcompany.SelectedItem.Text != "Select")
         {
@@ -182,12 +203,13 @@ public partial class Admin_AddCompanyCategory : System.Web.UI.Page
         hyMasterCategory["MCategoryId"] = Co.RSQandSQLInjection(ddlmastercategory.SelectedItem.Value, "soft");
         foreach (ListItem li in chkSubCategory.Items)
         {
-            if (li.Selected == true)
+            if (li.Selected == true && li.Enabled == true)
             {
                 Categoryintrestedare = Categoryintrestedare + "," + li.Value;
             }
         }
-        hyMasterCategory["SCategoryId"] = Co.RSQandSQLInjection(Categoryintrestedare.Substring(1).ToString(), "soft");
+        hyMasterCategory["SCategoryId"] = Co.RSQandSQLInjection(Categoryintrestedare.Substring(1).ToString() + ",", "soft");
+        hyMasterCategory["CreatedBy"] = objCrypto.DecryptData(ViewState["UserLoginEmail"].ToString());
         string mStrCategory = Lo.SaveMasterCategroyMenu(hyMasterCategory, out _sysMsg, out _msg);
         if (mStrCategory == "Save")
         {
@@ -219,7 +241,7 @@ public partial class Admin_AddCompanyCategory : System.Web.UI.Page
         }
         else
         {
-            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Please select any dropdown to save record.')", true); 
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Please select any dropdown to save record.')", true);
         }
     }
     protected void cleartext()
@@ -231,6 +253,7 @@ public partial class Admin_AddCompanyCategory : System.Web.UI.Page
                 li.Selected = false;
             }
         }
+        chkSubCategory.Visible = false;
         BindMasterCategory();
     }
 }

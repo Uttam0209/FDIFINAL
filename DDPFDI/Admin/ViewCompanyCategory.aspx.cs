@@ -61,7 +61,7 @@ public partial class Admin_ViewCompanyCategory : System.Web.UI.Page
         {
             if (hidType.Value == "SuperAdmin")
             {
-                DataTable DtGrid = Lo.RetriveMasterCategoryDate(0, "", "", "", "", "Select");
+                DataTable DtGrid = Lo.RetriveMasterCategoryDate(0, "", "", "", "", "Select","");
                 if (DtGrid.Rows.Count > 0)
                 {
 
@@ -71,7 +71,7 @@ public partial class Admin_ViewCompanyCategory : System.Web.UI.Page
             }
             else if (hidType.Value == "Company" && hfcomprefno.Value != "")
             {
-                DataTable DtGrid = Lo.RetriveMasterSubCategoryDate(0, "", "", "SubCompCat", hfcomprefno.Value);
+                DataTable DtGrid = Lo.RetriveMasterSubCategoryDate(0, "", "", "SubCompCat", hfcomprefno.Value,"");
                 if (DtGrid.Rows.Count > 0)
                 {
                     gvCategory.DataSource = DtGrid;
@@ -80,7 +80,7 @@ public partial class Admin_ViewCompanyCategory : System.Web.UI.Page
             }
             else if (hidType.Value == "Factory" && hfcomprefno.Value != "")
             {
-                DataTable DtGrid = Lo.RetriveMasterSubCategoryDate(0, "", "", "SubCompCat", hfcomprefno.Value);
+                DataTable DtGrid = Lo.RetriveMasterSubCategoryDate(0, "", "", "SubCompCat", hfcomprefno.Value,"");
                 if (DtGrid.Rows.Count > 0)
                 {
                     gvCategory.DataSource = DtGrid;
@@ -89,7 +89,7 @@ public partial class Admin_ViewCompanyCategory : System.Web.UI.Page
             }
             else if (hidType.Value == "Unit" && hfcomprefno.Value != "")
             {
-                DataTable DtGrid = Lo.RetriveMasterSubCategoryDate(0, "", "", "SubCompCat", hfcomprefno.Value);
+                DataTable DtGrid = Lo.RetriveMasterSubCategoryDate(0, "", "", "SubCompCat", hfcomprefno.Value,"");
                 if (DtGrid.Rows.Count > 0)
                 {
                     gvCategory.DataSource = DtGrid;
@@ -111,7 +111,7 @@ public partial class Admin_ViewCompanyCategory : System.Web.UI.Page
             {
                 HiddenField lblCatId = e.Row.FindControl("hfcat") as HiddenField;
                 GridView gvSubcat = e.Row.FindControl("gvsubcatlevel1") as GridView;
-                DataTable DtGrid = Lo.RetriveMasterSubCategoryDate(Convert.ToInt16(lblCatId.Value), "", "", "SelectInnerMaster", "");
+                DataTable DtGrid = Lo.RetriveMasterSubCategoryDate(Convert.ToInt16(lblCatId.Value), "", "", "SelectInnerMaster", "","");
                 if (DtGrid.Rows.Count > 0)
                 {
                     gvSubcat.DataSource = DtGrid;
@@ -122,7 +122,7 @@ public partial class Admin_ViewCompanyCategory : System.Web.UI.Page
             {
                 HiddenField lblCatId = e.Row.FindControl("hfcat") as HiddenField;
                 GridView gvSubcat = e.Row.FindControl("gvsubcatlevel1") as GridView;
-                DataTable DtGrid = Lo.RetriveMasterSubCategoryDate(Convert.ToInt16(lblCatId.Value), "", "", "MasterCatComp2", hfcomprefno.Value);
+                DataTable DtGrid = Lo.RetriveMasterSubCategoryDate(Convert.ToInt16(lblCatId.Value), "", "", "MasterCatComp2", hfcomprefno.Value,"");
                 if (DtGrid.Rows.Count > 0)
                 {
                     gvSubcat.DataSource = DtGrid;
@@ -133,7 +133,7 @@ public partial class Admin_ViewCompanyCategory : System.Web.UI.Page
             {
                 HiddenField lblCatId = e.Row.FindControl("hfcat") as HiddenField;
                 GridView gvSubcat = e.Row.FindControl("gvsubcatlevel1") as GridView;
-                DataTable DtGrid = Lo.RetriveMasterSubCategoryDate(Convert.ToInt16(lblCatId.Value), "", "", "MasterCatComp2", hfcomprefno.Value);
+                DataTable DtGrid = Lo.RetriveMasterSubCategoryDate(Convert.ToInt16(lblCatId.Value), "", "", "MasterCatComp2", hfcomprefno.Value,"");
                 if (DtGrid.Rows.Count > 0)
                 {
                     gvSubcat.DataSource = DtGrid;
@@ -144,7 +144,7 @@ public partial class Admin_ViewCompanyCategory : System.Web.UI.Page
             {
                 HiddenField lblCatId = e.Row.FindControl("hfcat") as HiddenField;
                 GridView gvSubcat = e.Row.FindControl("gvsubcatlevel1") as GridView;
-                DataTable DtGrid = Lo.RetriveMasterSubCategoryDate(Convert.ToInt16(lblCatId.Value), "", "", "MasterCatComp2", hfcomprefno.Value);
+                DataTable DtGrid = Lo.RetriveMasterSubCategoryDate(Convert.ToInt16(lblCatId.Value), "", "", "MasterCatComp2", hfcomprefno.Value,"");
                 if (DtGrid.Rows.Count > 0)
                 {
                     gvSubcat.DataSource = DtGrid;
@@ -161,7 +161,7 @@ public partial class Admin_ViewCompanyCategory : System.Web.UI.Page
         {
             HiddenField lblfactroyrefno = e.Row.FindControl("hfcatlevel1id") as HiddenField;
             GridView gvsubcatlevel2 = e.Row.FindControl("gvsubcatlevel2") as GridView;
-            DataTable DtGrid = Lo.RetriveMasterSubCategoryDate(Convert.ToInt16(lblfactroyrefno.Value), "", "", "SubSelectID", "");
+            DataTable DtGrid = Lo.RetriveMasterSubCategoryDate(Convert.ToInt16(lblfactroyrefno.Value), "", "", "SubSelectID", "","");
             if (DtGrid.Rows.Count > 0)
             {
                 gvsubcatlevel2.DataSource = DtGrid;
@@ -177,7 +177,7 @@ public partial class Admin_ViewCompanyCategory : System.Web.UI.Page
         {
             HiddenField lbllevel3 = e.Row.FindControl("hfcatlevel2") as HiddenField;
             GridView grdlevel3 = e.Row.FindControl("gvlevel3") as GridView;
-            DataTable DtGrid = Lo.RetriveMasterSubCategoryDate(Convert.ToInt16(lbllevel3.Value), "", "", "SubSelectID", "");
+            DataTable DtGrid = Lo.RetriveMasterSubCategoryDate(Convert.ToInt16(lbllevel3.Value), "", "", "SubSelectID", "","");
             if (DtGrid.Rows.Count > 0)
             {
                 grdlevel3.DataSource = DtGrid;

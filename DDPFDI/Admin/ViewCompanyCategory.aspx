@@ -132,7 +132,7 @@
                                                                         <asp:TemplateField>
                                                                             <ItemTemplate>
                                                                                 <%--<asp:LinkButton ID="lbllevel1edit" runat="server" CssClass="fa fa-edit" CommandName="level1edit" CommandArgument='<%#Eval("SCategoryId") %>'></asp:LinkButton>--%>
-                                                                                <asp:LinkButton ID="lbllevel1del" runat="server" CssClass="fa fa-trash" CommandName="level2del" OnClientClick="return confirm('Are you sure you want to delete this level 1 values?');" CommandArgument='<%#Eval("SCategoryId") %>'></asp:LinkButton>
+                                                                                <asp:LinkButton ID="lbllevel1del" runat="server" CssClass="fa fa-trash" Visible="False" CommandName="level2del" OnClientClick="return confirm('Are you sure you want to delete this level 1 values?');" CommandArgument='<%#Eval("SCategoryId") %>'></asp:LinkButton>
                                                                             </ItemTemplate>
                                                                         </asp:TemplateField>
                                                                     </Columns>

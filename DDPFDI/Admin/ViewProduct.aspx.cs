@@ -218,7 +218,10 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
                         stpsdq = stpsdq + "," + dtpsdq.Rows[i]["SCategoryName"].ToString();
                     }
                 }
-                lblsupportprovidedbydpsu.Text = stpsdq.Substring(1).ToString();
+                if (stpsdq != null)
+                {
+                    lblsupportprovidedbydpsu.Text = stpsdq.Substring(1).ToString();
+                }
                 lblremarks.Text = DtView.Rows[0]["Remarks"].ToString();
                 lblestimatedquantity.Text = DtView.Rows[0]["Estimatequantity"].ToString();
                 lblestimatedprice.Text = DtView.Rows[0]["EstimatePriceLLP"].ToString();

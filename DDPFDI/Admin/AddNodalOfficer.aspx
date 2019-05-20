@@ -88,7 +88,8 @@
                                     <div class="col-md-4">
                                         <div class="fdi-add-content NodalRole" id="DivNodalRole" runat="server">
                                             <div class="form-group">
-                                                <asp:CheckBox ID="chkrole" Text="Nodal Officer" runat="server" CssClass="checkbox-inline"></asp:CheckBox>
+                                                <asp:CheckBox ID="chkrole" Text="Nodal Officer" runat="server" style="margin-left: 20px;" CssClass="checkbox-inline"></asp:CheckBox>
+                                                <asp:CheckBox ID="chkUser" Text="User" runat="server" style="margin-left: 20px;" CssClass="checkbox-inline"></asp:CheckBox>
                                             </div>
                                         </div>
                                     </div>
@@ -97,7 +98,7 @@
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <asp:Button ID="btncancel" runat="server" Text="Cancel" CssClass="btn btn-default pull-right" Style="margin-right: 0 !important" OnClick="btncancel_Click" />
-                                            <asp:LinkButton ID="btnsub" runat="server" Text="Save" class="btn btn-primary pull-right" OnClick="btnsub_Click"></asp:LinkButton>
+                                            <asp:LinkButton ID="btnsub" runat="server" Text="Save" class="btn btn-primary pull-right" OnClick="btnsub_Click" OnClientClick="return confirm('Are you sure you want to save this nodal officer?');"></asp:LinkButton>
                                         </div>
                                     </div>
                                 </div>
@@ -112,6 +113,11 @@
                                                 <%#Container.DataItemIndex+1 %>
                                             </ItemTemplate>
                                         </asp:TemplateField>
+                                        <asp:BoundField DataField="NodalOficerName" HeaderText="Name" NullDisplayText="#" />
+                                        <asp:BoundField DataField="NodalOfficerRefNo" HeaderText="Reference No." Visible="False" NullDisplayText="#" />
+                                        <asp:BoundField DataField="NodalOfficerEmail" HeaderText="Email" NullDisplayText="#" />
+                                        <asp:BoundField DataField="IsNodalOfficer" HeaderText="Nodal Officer" NullDisplayText="#" />
+                                        <asp:BoundField DataField="IsLoginActive" HeaderText="User" NullDisplayText="#" />
                                         <asp:TemplateField HeaderText="Company">
                                             <ItemTemplate>
                                                 <asp:Label ID="lblrefno" runat="server" Text='<%#Eval("CompanyName") %>' NullDisplayText="#" SortExpression="Company"></asp:Label>
@@ -120,10 +126,6 @@
 
                                         <asp:BoundField DataField="FactoryName" HeaderText="Division" NullDisplayText="-" />
                                         <asp:BoundField DataField="UnitName" HeaderText="Unit" NullDisplayText="-" />
-                                        <asp:BoundField DataField="NodalOficerName" HeaderText="Name" NullDisplayText="#" />
-                                        <asp:BoundField DataField="NodalOfficerRefNo" HeaderText="Reference No." NullDisplayText="#" />
-                                        <asp:BoundField DataField="NodalOfficerEmail" HeaderText="Email" NullDisplayText="#" />
-                                        <asp:BoundField DataField="IsNodalOfficer" HeaderText="Nodal Officer" NullDisplayText="#" />
 
                                     </Columns>
                                 </asp:GridView>

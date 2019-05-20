@@ -90,11 +90,12 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
         DataRow[] foundRows = DtGrid.Select("IsNodalOfficer='Y'");
         if (foundRows.Length != 0)
         {
-            DivNodalRole.Visible = false;
+            chkrole.Checked = false;
+            chkrole.Enabled = false;
         }
         else
         {
-            DivNodalRole.Visible = true;
+            chkrole.Enabled = true;
         }
     }
 
@@ -430,6 +431,7 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
             {
                 lblselectunit.Visible = false;
                 ddlunit.Visible = false;
+                GridViewNodalOfficerBind(ddldivision.SelectedItem.Value, "Division");
             }
         }
         else if (ddldivision.SelectedItem.Text == "Select")
@@ -483,7 +485,6 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
             ddldesignation.Items.Insert(0, "Select");
         }
     }
-
     #endregion
     #region Save code
     protected void SaveNodal()
@@ -531,7 +532,14 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
         {
             hySaveNodal["IsNodalOfficer"] = "N";
         }
-
+        if (chkUser.Checked)
+        {
+            hySaveNodal["IsLoginActive"] = "Y";
+        }
+        else
+        {
+            hySaveNodal["IsLoginActive"] = "N";
+        }
         string Str = Lo.SaveMasterNodal(hySaveNodal, out _sysMsg, out _msg);
         if (Str == "Save")
         {
@@ -683,11 +691,22 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
     {
         if (e.Row.RowType == DataControlRowType.DataRow)
         {
-            if (e.Row.Cells[7].Text == "Y")
+            if (e.Row.Cells[4].Text == "Y")
             {
-            //    e.Row.Attributes.CssStyle.Value = "background-color: Red; color: White";
                 e.Row.Attributes.Add("Class", "bg-purple");
-               // e.Row.BackColor = System.Drawing.Color.Red;
+                e.Row.Cells[4].Text = "Yes";
+            }
+            if (e.Row.Cells[4].Text == "N")
+            {
+                e.Row.Cells[4].Text = "No";
+            }
+            if (e.Row.Cells[5].Text == "Y")
+            {
+                e.Row.Cells[5].Text = "Yes";
+            }
+            if (e.Row.Cells[5].Text == "N")
+            {
+                e.Row.Cells[5].Text = "No";
             }
         }
     }

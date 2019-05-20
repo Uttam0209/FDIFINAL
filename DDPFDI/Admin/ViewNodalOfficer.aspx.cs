@@ -45,7 +45,6 @@ public partial class Admin_ViewNodalOfficer : System.Web.UI.Page
             }
         }
     }
-
     protected void btnAddNodalOfficer_Click(object sender, EventArgs e)
     {
         string Role = "Company";
@@ -54,7 +53,6 @@ public partial class Admin_ViewNodalOfficer : System.Web.UI.Page
         Response.Redirect("Add-Nodal?mrcreaterole=" + objEnc.EncryptData(Role) + "&id=" + mstrid);
 
     }
-
     public void GridViewNodalOfficerBind(string mRefNo, string mRole)
     {
         DataTable DtGrid = Lo.RetriveAllNodalOfficer(mRefNo, mRole);
@@ -202,7 +200,6 @@ public partial class Admin_ViewNodalOfficer : System.Web.UI.Page
             }
         }
     }
-
     #region RowCommand
     protected void gvViewDesignation_RowCommand(object sender, GridViewCommandEventArgs e)
     {
@@ -285,7 +282,7 @@ public partial class Admin_ViewNodalOfficer : System.Web.UI.Page
                 body = body.Replace("{curid}", Resturl(56));
                 SendMail s;
                 s = new SendMail();
-                s.CreateMail("aeroindia-ddp@gov.in", lblnodelname.Text, "Create Password", body);
+                s.CreateMail("aeroindia-ddp@gov.in", nodelemail.Text, "Create Password", body);
                 s.sendMail();
                 ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Create password email send successfully.')", true);
             }
@@ -296,9 +293,38 @@ public partial class Admin_ViewNodalOfficer : System.Web.UI.Page
         }
 
     }
-
+    protected void gvViewNodalOfficer_RowDataBound(object sender, GridViewRowEventArgs e)
+    {
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            if (e.Row.Cells[4].Text == "Y")
+            {
+                e.Row.Attributes.Add("Class", "bg-purple");
+                e.Row.Cells[4].Text = "Yes";
+                LinkButton lbl = (LinkButton)e.Row.FindControl("lbllogindetail");
+                lbl.Visible = false;
+            }
+            if (e.Row.Cells[4].Text == "N")
+            {
+                e.Row.Cells[4].Text = "No";
+                LinkButton lbl = (LinkButton)e.Row.FindControl("lbllogindetail");
+                lbl.Visible = true;
+            }
+            if (e.Row.Cells[5].Text == "Y")
+            {
+                e.Row.Cells[5].Text = "Yes";
+                LinkButton lbl = (LinkButton)e.Row.FindControl("lbllogindetail");
+                lbl.Visible = false;
+            }
+            if (e.Row.Cells[5].Text == "N")
+            {
+                e.Row.Cells[5].Text = "No";
+                LinkButton lbl = (LinkButton)e.Row.FindControl("lbllogindetail");
+                lbl.Visible = true;
+            }
+        }
+    }
     #endregion
-
     #region DropDownList Code
     protected void ddlcompany_OnSelectedIndexChanged(object sender, EventArgs e)
     {
@@ -342,6 +368,7 @@ public partial class Admin_ViewNodalOfficer : System.Web.UI.Page
             {
                 lblselectunit.Visible = false;
                 ddlunit.Visible = false;
+                GridViewNodalOfficerBind(ddldivision.SelectedItem.Value, "Division");
             }
         }
         else if (ddldivision.SelectedItem.Text == "Select")
@@ -401,4 +428,5 @@ public partial class Admin_ViewNodalOfficer : System.Web.UI.Page
         return res.ToString();
     }
     #endregion
+  
 }

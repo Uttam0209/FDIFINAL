@@ -132,10 +132,10 @@
                                                                                             </asp:TemplateField>
                                                                                             <asp:TemplateField>
                                                                                                 <ItemTemplate>
-                                                                                                    <asp:LinkButton ID="lblviewunit" runat="server" CssClass="fa fa-eye" CommandName="unitViewComp" CommandArgument='<%#Eval("UnitRefNo") %>'></asp:LinkButton>
-                                                                                                    <asp:LinkButton ID="lbleditunit" runat="server" CssClass="fa fa-edit" CommandName="unitEditComp" CommandArgument='<%#Eval("UnitRefNo") %>'></asp:LinkButton>
-                                                                                                    <asp:LinkButton ID="lbldelunit" runat="server" Visible="False" CssClass="fa fa-trash" CommandName="unitdel" OnClientClick="return confirm('Are you sure you want to delete this unit?');" CommandArgument='<%#Eval("UnitRefNo") %>'></asp:LinkButton>
-                                                                                                    <asp:LinkButton ID="lbllogindetailunit" Visible="False" runat="server" CssClass=" fa fa-paper-plane" CommandName="unitSendLogin" CommandArgument='<%#Eval("UnitRefNo") %>'></asp:LinkButton>
+                                                                                                    <asp:LinkButton ID="lblviewunit" runat="server" CssClass="fa fa-eye" ToolTip="View detail of unit" CommandName="unitViewComp" CommandArgument='<%#Eval("UnitRefNo") %>'></asp:LinkButton>
+                                                                                                    <asp:LinkButton ID="lbleditunit" runat="server" CssClass="fa fa-edit" ToolTip="Edit or update detail of unit" CommandName="unitEditComp" CommandArgument='<%#Eval("UnitRefNo") %>'></asp:LinkButton>
+                                                                                                    <asp:LinkButton ID="lbldelunit" runat="server" Visible="False" CssClass="fa fa-trash" ToolTip="" CommandName="unitdel" OnClientClick="return confirm('Are you sure you want to delete this unit?');" CommandArgument='<%#Eval("UnitRefNo") %>'></asp:LinkButton>
+                                                                                                    <asp:LinkButton ID="lbllogindetailunit" Visible="False" runat="server" CssClass=" fa fa-paper-plane" ToolTip="send login detail of unit" CommandName="unitSendLogin" CommandArgument='<%#Eval("UnitRefNo") %>'></asp:LinkButton>
                                                                                                 </ItemTemplate>
                                                                                             </asp:TemplateField>
                                                                                         </Columns>
@@ -166,10 +166,10 @@
                                                                     </asp:TemplateField>
                                                                     <asp:TemplateField>
                                                                         <ItemTemplate>
-                                                                            <asp:LinkButton ID="lblviewfactory" runat="server" CssClass="fa fa-eye" CommandName="ViewfactoryComp" CommandArgument='<%#Eval("FactoryRefNo") %>'></asp:LinkButton>
-                                                                            <asp:LinkButton ID="lbleditfactory" runat="server" CssClass="fa fa-edit" CommandName="EditfactoryComp" CommandArgument='<%#Eval("FactoryRefNo") %>'></asp:LinkButton>
+                                                                            <asp:LinkButton ID="lblviewfactory" runat="server" CssClass="fa fa-eye" ToolTip="View detail of division" CommandName="ViewfactoryComp" CommandArgument='<%#Eval("FactoryRefNo") %>'></asp:LinkButton>
+                                                                            <asp:LinkButton ID="lbleditfactory" runat="server" CssClass="fa fa-edit" ToolTip="Edit or Update detail of division" CommandName="EditfactoryComp" CommandArgument='<%#Eval("FactoryRefNo") %>'></asp:LinkButton>
                                                                             <asp:LinkButton ID="lbldelfactory" runat="server" Visible="False" CssClass="fa fa-trash" CommandName="DeletefactoryComp" OnClientClick="return confirm('Are you sure you want to delete this division/plant?');" CommandArgument='<%#Eval("FactoryRefNo") %>'></asp:LinkButton>
-                                                                            <asp:LinkButton ID="lbllogindetailfactory" runat="server" Visible="False" CssClass=" fa fa-paper-plane" CommandName="factorySendLogin" CommandArgument='<%#Eval("FactoryRefNo") %>'></asp:LinkButton>
+                                                                            <asp:LinkButton ID="lbllogindetailfactory" runat="server" Visible="False" ToolTip="Send login detail of division" CssClass=" fa fa-paper-plane" CommandName="factorySendLogin" CommandArgument='<%#Eval("FactoryRefNo") %>'></asp:LinkButton>
                                                                         </ItemTemplate>
                                                                     </asp:TemplateField>
 
@@ -203,10 +203,10 @@
                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="Action">
                                                 <ItemTemplate>
-                                                    <asp:LinkButton ID="lblview" runat="server" CssClass="fa fa-eye" CommandName="ViewComp" CommandArgument='<%#Eval("CompanyRefNo") %>'></asp:LinkButton>
-                                                    <asp:LinkButton ID="lbledit" runat="server" CssClass="fa fa-edit" CommandName="EditComp" CommandArgument='<%#Eval("CompanyRefNo") %>'></asp:LinkButton>
-                                                    <asp:LinkButton ID="lbldel" runat="server" CssClass="fa fa-trash" Visible="False" CommandName="DeleteComp" OnClientClick="return confirm('Are you sure you want to delete this Company?');" CommandArgument='<%#Eval("CompanyRefNo") %>'></asp:LinkButton>
-                                                    <asp:LinkButton ID="lbllogindetail" runat="server" Visible="False" CssClass=" fa fa-paper-plane" CommandName="SendLogin" CommandArgument='<%#Eval("CompanyRefNo") %>'></asp:LinkButton>
+                                                    <asp:LinkButton ID="lblview" runat="server" CssClass="fa fa-eye" CommandName="ViewComp" ToolTip="View detail of company" CommandArgument='<%#Eval("CompanyRefNo") %>'></asp:LinkButton>
+                                                    <asp:LinkButton ID="lbledit" runat="server" CssClass="fa fa-edit" CommandName="EditComp" ToolTip="Edit or update detail of company" CommandArgument='<%#Eval("CompanyRefNo") %>'></asp:LinkButton>
+                                                    <asp:LinkButton ID="lbldel" runat="server" CssClass="fa fa-trash" Visible="False" ToolTip="" CommandName="DeleteComp" OnClientClick="return confirm('Are you sure you want to delete this Company?');" CommandArgument='<%#Eval("CompanyRefNo") %>'></asp:LinkButton>
+                                                    <asp:LinkButton ID="lbllogindetail" runat="server" Visible="False" ToolTip="Send login detail of login" CssClass=" fa fa-paper-plane" CommandName="SendLogin" CommandArgument='<%#Eval("CompanyRefNo") %>'></asp:LinkButton>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                         </Columns>
