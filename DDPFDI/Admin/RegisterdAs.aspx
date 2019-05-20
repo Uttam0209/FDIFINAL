@@ -11,6 +11,7 @@
                     <div class="col-mod-12">
                         <asp:HiddenField runat="server" ID="hfCatID" />
                         <asp:HiddenField runat="server" ID="hfSubCatID" />
+
                         <div class="row">
                             <div class="col-md-12 padding_0">
                                 <div id="divHeadPage" runat="server"></div>
@@ -53,44 +54,44 @@
                                         </div>
                                         <div class="col-md-4" runat="server" id="divcategory2textbox" visible="False">
                                             <div class="form-group">
-                                                <label>Level 1 </label>
+                                                <label>Add Level 1 </label>
                                                 <asp:TextBox class="form-control" required="" runat="server" ID="txtsubcategory"></asp:TextBox>
                                             </div>
                                         </div>
                                         <div class="col-md-4" runat="server" id="divcategory2ddl" visible="False">
                                             <div class="form-group">
-                                                <label>Level 1 </label>
+                                                <label>Select Level 1 </label>
                                                 <asp:DropDownList runat="server" ID="ddlcategroy2" AutoPostBack="False" class="form-control" OnSelectedIndexChanged="ddlcategroy2_SelectedIndexChanged"></asp:DropDownList>
                                             </div>
                                         </div>
                                         <div class="col-md-4" runat="server" id="divcategory3textbox" visible="False">
                                             <div class="form-group">
-                                                <label>Level 2 </label>
+                                                <label>Add Level 2 </label>
                                                 <asp:TextBox class="form-control" runat="server" ID="txtcategory3"></asp:TextBox>
                                             </div>
                                         </div>
                                         <div class="col-md-4" runat="server" id="divlabel2drop" visible="False">
                                             <div class="form-group">
-                                                <label>Label 2</label>
-                                                <asp:DropDownList runat="server" ID="ddllabel2" class="form-control"></asp:DropDownList>
+                                                <label>Select Label 2</label>
+                                                <asp:DropDownList runat="server" ID="ddllabel2" class="form-control" AutoPostBack="True" OnSelectedIndexChanged="ddllabel2_SelectedIndexChanged"></asp:DropDownList>
                                             </div>
                                         </div>
                                         <div class="col-md-4" runat="server" id="divlevel3" visible="False">
                                             <div class="form-group">
-                                                <label>Level 3 </label>
+                                                <label>Add Level 3 </label>
                                                 <asp:TextBox class="form-control" required="" runat="server" ID="txtlevel3"></asp:TextBox>
                                             </div>
                                         </div>
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <asp:LinkButton ID="btncancle" runat="server" class="btn btn-danger pull-right" Text="Cancel" Style="margin-right: 0 !important;" OnClick="btncancle_Click"></asp:LinkButton>
-                                                <asp:LinkButton ID="btnsave" runat="server" Text="Save Label" class="btn btn-primary pull-right" OnClick="btnsave_Click"></asp:LinkButton>
+                                                <asp:LinkButton ID="btnsave" runat="server" Text="Save Label" class="btn btn-primary pull-right" OnClick="btnsave_Click" OnClientClick="return confirm('Are you sure you want to save this dropdown?');"></asp:LinkButton>
                                             </div>
                                         </div>
 
                                     </div>
                                 </div>
-                                <div class="table-wraper">
+                                <div class="table-wraper" runat="server" id="divmastercategory">
                                     <asp:GridView ID="gvCategory" runat="server" Width="100%" Class="commonAjaxTbl master-company-table table display responsive no-wrap table-hover manage-user Grid" AutoGenerateColumns="false" AllowPaging="true"
                                         PageSize="25" AllowSorting="true">
                                         <PagerStyle HorizontalAlign="Center" CssClass="GridPager" />
@@ -111,8 +112,23 @@
                                                     <asp:Label ID="Label1" runat="server" Text='<%#Eval("IsActive") %>' NullDisplayText="#"></asp:Label>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
-                                            <%-- <asp:BoundField ItemStyle-Width="150px" DataField="SCategoryName" HeaderText="Level 1" />
-                                                    <asp:BoundField ItemStyle-Width="150px" DataField="SCategoryName" HeaderText="FLevel 2" />--%>
+                                            <asp:BoundField ItemStyle-Width="150px" DataField="CreatedBy" HeaderText="Create By" NullDisplayText="#" />
+                                            <%--     <asp:BoundField ItemStyle-Width="150px" DataField="SCategoryName" HeaderText="FLevel 2" />--%>
+                                        </Columns>
+                                    </asp:GridView>
+                                </div>
+                                <div class="table-wrapper" id="divinnercat" runat="server">
+                                    <asp:GridView ID="gvlevel3" runat="server" AutoGenerateColumns="false" Class="commonAjaxTbl master-company-table table display responsive no-wrap table-hover manage-user Grid" OnRowDataBound="gvlevel3_RowDataBound">
+                                        <Columns>
+                                            <asp:TemplateField>
+                                                <ItemTemplate>
+                                                    <%#Container.DataItemIndex+1 %>
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:BoundField runat="server" DataField="SCategoryName" NullDisplayText="#" HeaderText="Level 1" />
+                                            <asp:BoundField runat="server" DataField="SCategoryName" NullDisplayText="#" HeaderText="Level 2" />
+                                            <asp:BoundField runat="server" DataField="SCategoryName" NullDisplayText="#" HeaderText="Level 3" />
+                                            <asp:BoundField runat="server" DataField="CreatedBy" HeaderText="Created By" />
                                         </Columns>
                                     </asp:GridView>
                                 </div>

@@ -50,7 +50,7 @@
                                             <asp:TextBox ID="txtserch" runat="server" CssClass="form-cascade-control form-control" Placeholder="Type keyword to search"></asp:TextBox>
                                         </div>
                                         <div class="col-sm-2 row">
-                                            <asp:LinkButton runat="server" ID="btnsearch" Cssclass="text-black btn btn-warning pull-left btn-md" OnClick="Search_Click" Text="Search"></asp:LinkButton>
+                                            <asp:LinkButton runat="server" ID="btnsearch" CssClass="text-black btn btn-warning pull-left btn-md" OnClick="Search_Click" Text="Search"></asp:LinkButton>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -91,11 +91,11 @@
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                             <asp:BoundField DataField="Designation" HeaderText="Designation" NullDisplayText="#" />
-                                            <asp:BoundField DataField="DesignationRefNo" HeaderText="Reference No." NullDisplayText="#" />
-
+                                            <%--<asp:BoundField DataField="DesignationRefNo" HeaderText="Reference No." NullDisplayText="#" />--%>
+                                            <asp:BoundField DataField="CreatedBy" HeaderText="Created By" NullDisplayText="#" />
                                             <asp:TemplateField HeaderText="Action">
                                                 <ItemTemplate>
-                                                    <asp:LinkButton ID="lbledit" runat="server" CssClass="fa fa-edit" CommandName="EditComp" CommandArgument='<%#Eval("DesignationId") %>'></asp:LinkButton>
+                                                    <asp:LinkButton ID="lbledit" runat="server" CssClass="fa fa-edit" ToolTip="Edit or Update Designation" CommandName="EditComp" CommandArgument='<%#Eval("DesignationId") %>'></asp:LinkButton>
                                                     <asp:LinkButton ID="lbldel" runat="server" CssClass="fa fa-trash" Visible="false" CommandName="DeleteComp" OnClientClick="return confirm('Are you sure you want to delete this Company?');" CommandArgument='<%#Eval("DesignationId") %>'></asp:LinkButton>
                                                 </ItemTemplate>
                                             </asp:TemplateField>

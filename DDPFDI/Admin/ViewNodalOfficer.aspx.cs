@@ -41,11 +41,10 @@ public partial class Admin_ViewNodalOfficer : System.Web.UI.Page
                 mType = objEnc.DecryptData(Session["Type"].ToString());
                 mRefNo = Session["CompanyRefNo"].ToString();
                 BindCompany();
-                
+
             }
         }
     }
-
     protected void btnAddNodalOfficer_Click(object sender, EventArgs e)
     {
         string Role = "Company";
@@ -54,7 +53,6 @@ public partial class Admin_ViewNodalOfficer : System.Web.UI.Page
         Response.Redirect("Add-Nodal?mrcreaterole=" + objEnc.EncryptData(Role) + "&id=" + mstrid);
 
     }
-
     public void GridViewNodalOfficerBind(string mRefNo, string mRole)
     {
         DataTable DtGrid = Lo.RetriveAllNodalOfficer(mRefNo, mRole);
@@ -202,7 +200,6 @@ public partial class Admin_ViewNodalOfficer : System.Web.UI.Page
             }
         }
     }
-
     #region RowCommand
     protected void gvViewDesignation_RowCommand(object sender, GridViewCommandEventArgs e)
     {
@@ -217,15 +214,15 @@ public partial class Admin_ViewNodalOfficer : System.Web.UI.Page
         else if (e.CommandName == "ViewComp")
         {
             DataTable DtView = new DataTable();
-            if (ddldivision.SelectedValue != "Select")
+            if (ddldivision.SelectedValue != "Select" &&  ddldivision.SelectedValue!="")
             {
                 DtView = Lo.RetriveAllNodalOfficer(e.CommandArgument.ToString(), "DivisionID");
 
-                if (ddlunit.SelectedValue != "Select")
+                if (ddlunit.SelectedValue != "Select" && ddlunit.SelectedValue!="")
                 {
                     DtView = Lo.RetriveAllNodalOfficer(e.CommandArgument.ToString(), "UnitID");
                 }
-                
+
             }
             else
             {
@@ -267,11 +264,67 @@ public partial class Admin_ViewNodalOfficer : System.Web.UI.Page
                 ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not deleted.')", true);
             }
         }
+        else if (e.CommandName == "SendLogin")
+        {
+            try
+            {
+                GridViewRow gvrow = (GridViewRow)((Control)e.CommandSource).NamingContainer;
+                Label lblnodelrefno = (Label)gvrow.FindControl("lblnodelrefno");
+                Label nodelemail = (Label)gvrow.FindControl("nodelemail");
+                Label lblnodelname = (Label)gvrow.FindControl("lblnodelname");
+                string body;
+                using (StreamReader reader = new StreamReader(Server.MapPath("~/emailPage/GeneratePassword.html")))
+                {
+                    body = reader.ReadToEnd();
+                }
+                body = body.Replace("{UserName}", lblnodelname.Text);
+                body = body.Replace("{refno}", objEnc.EncryptData(lblnodelrefno.Text));
+                body = body.Replace("{curid}", Resturl(56));
+                SendMail s;
+                s = new SendMail();
+                s.CreateMail("aeroindia-ddp@gov.in", nodelemail.Text, "Create Password", body);
+                s.sendMail();
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Create password email send successfully.')", true);
+            }
+            catch (Exception ex)
+            {
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Login detail not send. Some error occured.')", true);
+            }
+        }
 
     }
-
+    protected void gvViewNodalOfficer_RowDataBound(object sender, GridViewRowEventArgs e)
+    {
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            if (e.Row.Cells[4].Text == "Y")
+            {
+                e.Row.Attributes.Add("Class", "bg-purple");
+                e.Row.Cells[4].Text = "Yes";
+                LinkButton lbl = (LinkButton)e.Row.FindControl("lbllogindetail");
+                lbl.Visible = false;
+            }
+            if (e.Row.Cells[4].Text == "N")
+            {
+                e.Row.Cells[4].Text = "No";
+                LinkButton lbl = (LinkButton)e.Row.FindControl("lbllogindetail");
+                lbl.Visible = true;
+            }
+            if (e.Row.Cells[5].Text == "Y")
+            {
+                e.Row.Cells[5].Text = "Yes";
+                LinkButton lbl = (LinkButton)e.Row.FindControl("lbllogindetail");
+                lbl.Visible = false;
+            }
+            if (e.Row.Cells[5].Text == "N")
+            {
+                e.Row.Cells[5].Text = "No";
+                LinkButton lbl = (LinkButton)e.Row.FindControl("lbllogindetail");
+                lbl.Visible = true;
+            }
+        }
+    }
     #endregion
-
     #region DropDownList Code
     protected void ddlcompany_OnSelectedIndexChanged(object sender, EventArgs e)
     {
@@ -315,6 +368,7 @@ public partial class Admin_ViewNodalOfficer : System.Web.UI.Page
             {
                 lblselectunit.Visible = false;
                 ddlunit.Visible = false;
+                GridViewNodalOfficerBind(ddldivision.SelectedItem.Value, "Division");
             }
         }
         else if (ddldivision.SelectedItem.Text == "Select")
@@ -344,7 +398,6 @@ public partial class Admin_ViewNodalOfficer : System.Web.UI.Page
         }
     }
     #endregion
-
     protected void Search_Click(object sender, EventArgs e)
     {
         if (txtserch.Text != "")
@@ -359,8 +412,21 @@ public partial class Admin_ViewNodalOfficer : System.Web.UI.Page
         }
         else
         {
-           
+
         }
     }
-    
+    #region ReturnUrl Long"
+    public string Resturl(int length)
+    {
+        const string valid = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+        StringBuilder res = new StringBuilder();
+        Random rnd = new Random();
+        while (0 < length--)
+        {
+            res.Append(valid[rnd.Next(valid.Length)]);
+        }
+        return res.ToString();
+    }
+    #endregion
+  
 }
