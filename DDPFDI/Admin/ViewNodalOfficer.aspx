@@ -104,8 +104,12 @@
                                                     <asp:Label ID="nodelemail" runat="server" Text='<%#Eval("NodalOfficerEmail") %>' NullDisplayText="#" SortExpression="NodalOfficerEmail"></asp:Label>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
-                                            <asp:BoundField DataField="IsNodalOfficer" HeaderText="Nodal Officer" NullDisplayText="#" />
-                                            <asp:BoundField DataField="IsLoginActive" HeaderText="User" NullDisplayText="#" />
+                                            <asp:TemplateField HeaderText="Role">
+                                                <ItemTemplate>
+                                                    <asp:Label ID="lblnodalofficer" runat="server" Text='<%#Eval("IsNodalOfficer") %>' NullDisplayText="#" Visible="False" SortExpression="NodalOfficerEmail"></asp:Label>
+                                                    <asp:Label ID="lblnodallogactive" runat="server" Text='<%#Eval("IsLoginActive") %>' NullDisplayText="#" Visible="False" SortExpression="NodalOfficerEmail"></asp:Label>
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
                                             <asp:TemplateField HeaderText="Company">
                                                 <ItemTemplate>
                                                     <asp:Label ID="lblrefno" runat="server" Text='<%#Eval("CompanyName") %>' NullDisplayText="#" SortExpression="Company"></asp:Label>
@@ -113,19 +117,18 @@
                                             </asp:TemplateField>
                                             <asp:BoundField DataField="FactoryName" HeaderText="Division" NullDisplayText="-" />
                                             <asp:BoundField DataField="UnitName" HeaderText="Unit" NullDisplayText="-" />
+                                            <asp:BoundField DataField="CreatedBy" HeaderText="Create By" NullDisplayText="-" />
                                             <asp:TemplateField HeaderText="Action">
                                                 <ItemTemplate>
                                                     <asp:LinkButton ID="lblview" runat="server" ToolTip="View Detail of Nodal Officer/Employee" CssClass="fa fa-eye" CommandName="ViewComp" CommandArgument='<%#Eval("NodalOfficerID") %>'></asp:LinkButton>
                                                     <asp:LinkButton ID="lbledit" runat="server" ToolTip="Edit or Update Nodal officer/Employee" CssClass="fa fa-edit" CommandName="EditComp" CommandArgument='<%#Eval("NodalOfficerID") %>'></asp:LinkButton>
                                                     <asp:LinkButton ID="lbldel" runat="server" Visible="False" CssClass="fa fa-trash" CommandName="DeleteComp" OnClientClick="return confirm('Are you sure you want to delete this Company?');" CommandArgument='<%#Eval("NodalOfficerID") %>'></asp:LinkButton>
-                                                    <asp:LinkButton ID="lbllogindetail" runat="server" ToolTip="Send mail to create login" CssClass=" fa fa-paper-plane" CommandName="SendLogin" OnClientClick="return confirm('Are you sure you want to send login detail?');" CommandArgument='<%#Eval("NodalOfficerID") %>'></asp:LinkButton>
+                                                    <asp:LinkButton ID="lbllogindetail" runat="server" ToolTip="Send mail to create password" CssClass=" fa fa-paper-plane" CommandName="SendLogin" OnClientClick="return confirm('Are you sure you want to send login detail?');" CommandArgument='<%#Eval("NodalOfficerID") %>'></asp:LinkButton>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                         </Columns>
                                     </asp:GridView>
                                 </div>
-
-
                             </div>
                         </div>
                     </form>

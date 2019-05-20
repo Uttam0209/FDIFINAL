@@ -11,6 +11,7 @@
                     <div class="col-mod-12">
                         <asp:HiddenField runat="server" ID="hfCatID" />
                         <asp:HiddenField runat="server" ID="hfSubCatID" />
+                        <asp:HiddenField runat="server" ID="hftype" />
 
                         <div class="row">
                             <div class="col-md-12 padding_0">
@@ -120,15 +121,15 @@
                                 <div class="table-wrapper" id="divinnercat" runat="server">
                                     <asp:GridView ID="gvlevel3" runat="server" AutoGenerateColumns="false" Class="commonAjaxTbl master-company-table table display responsive no-wrap table-hover manage-user Grid" OnRowDataBound="gvlevel3_RowDataBound">
                                         <Columns>
-                                            <asp:TemplateField>
+                                            <asp:TemplateField HeaderText="S.No">
                                                 <ItemTemplate>
                                                     <%#Container.DataItemIndex+1 %>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                             <asp:BoundField runat="server" DataField="SCategoryName" NullDisplayText="#" HeaderText="Level 1" />
-                                            <asp:BoundField runat="server" DataField="SCategoryName" NullDisplayText="#" HeaderText="Level 2" />
-                                            <asp:BoundField runat="server" DataField="SCategoryName" NullDisplayText="#" HeaderText="Level 3" />
-                                            <asp:BoundField runat="server" DataField="CreatedBy" HeaderText="Created By" />
+                                            <%--   <asp:BoundField runat="server" DataField="SCategoryName" NullDisplayText="#" HeaderText="Level 2" />
+                                            <asp:BoundField runat="server" DataField="SCategoryName" NullDisplayText="#" HeaderText="Level 3" />--%>
+                                            <asp:BoundField runat="server" DataField="CreatedBy" HeaderText="Created By" NullDisplayText="#" />
                                         </Columns>
                                     </asp:GridView>
                                 </div>

@@ -15,7 +15,7 @@ public partial class Admin_RegisterdAs : System.Web.UI.Page
     Logic Lo = new Logic();
     private string DisplayPanel;
     HybridDictionary hySave = new HybridDictionary();
-    private string mType = "";
+
     private string mRefNo = "";
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -38,7 +38,7 @@ public partial class Admin_RegisterdAs : System.Web.UI.Page
                     }
                     divHeadPage.InnerHtml = strheadPage.ToString();
                     strheadPage.Append("</ul");
-                    mType = objEnc.DecryptData(Session["Type"].ToString());
+                    hftype.Value = objEnc.DecryptData(Session["Type"].ToString());
                     mRefNo = Session["CompanyRefNo"].ToString();
                     ViewState["UserLoginEmail"] = Session["User"].ToString();
                     ViewState["DisplayPanel"] = objEnc.DecryptData(Request.QueryString["mu"].ToString().Replace(" ", "+"));
@@ -56,7 +56,7 @@ public partial class Admin_RegisterdAs : System.Web.UI.Page
     {
         try
         {
-            if (mType == "SuperAdmin")
+            if (hftype.Value == "SuperAdmin")
             {
                 if (ddlmastercategory.Visible == false)
                 {
@@ -86,50 +86,6 @@ public partial class Admin_RegisterdAs : System.Web.UI.Page
                         divmastercategory.Visible = false;
                     }
                 }
-            }
-            else if (mType == "Company" && mRefNo != "")
-            {
-                //DataTable DtGrid = Lo.RetriveMasterSubCategoryDate(0, "", "", "SubCompCat", mRefNo, "");
-                //if (DtGrid.Rows.Count > 0)
-                //{
-                //    gvCategory.DataSource = DtGrid;
-                //    gvCategory.DataBind();
-                //    divmastercategory.Visible = true;
-                //}
-                //else
-                //{
-                //    divmastercategory.Visible = false;
-                //}
-            }
-            else if (mType == "Factroy" && mRefNo != "")
-            {
-                //DataTable DtGrid = Lo.RetriveMasterSubCategoryDate(0, "", "", "SubCompCat", mRefNo, "");
-                //if (DtGrid.Rows.Count > 0)
-                //{
-
-                //    gvCategory.DataSource = DtGrid;
-                //    gvCategory.DataBind();
-                //    divmastercategory.Visible = true;
-                //}
-                //else
-                //{
-                //    divmastercategory.Visible = false;
-                //}
-            }
-            else if (mType == "Unit" && mRefNo != "")
-            {
-                //DataTable DtGrid = Lo.RetriveMasterSubCategoryDate(0, "", "", "SubCompCat", mRefNo, "");
-                //if (DtGrid.Rows.Count > 0)
-                //{
-
-                //    gvCategory.DataSource = DtGrid;
-                //    gvCategory.DataBind();
-                //    divmastercategory.Visible = true;
-                //}
-                //else
-                //{
-                //    divmastercategory.Visible = false;
-                //}
             }
         }
         catch (Exception ex)
@@ -195,7 +151,7 @@ public partial class Admin_RegisterdAs : System.Web.UI.Page
         txtmastercategory.Text = "";
         txtsubcategory.Text = "";
         txtlevel3.Text = "";
-    
+
         ddlmastercategory.SelectedValue = "Select";
         if (ddlcategroy2.Visible = true)
         {
@@ -216,6 +172,7 @@ public partial class Admin_RegisterdAs : System.Web.UI.Page
         DataTable StrCat = Lo.RetriveMasterCategoryDate(0, Co.RSQandSQLInjection(txtmastercategory.Text, "soft"), "", rbflag.SelectedItem.Value, rbactive.SelectedItem.Value, "Insert", objEnc.DecryptData(ViewState["UserLoginEmail"].ToString()));
         if (StrCat != null)
         {
+            BindGridView();
             cleartext();
             ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record saved')", true);
         }
@@ -234,7 +191,7 @@ public partial class Admin_RegisterdAs : System.Web.UI.Page
             if (StrCat != null)
             {
                 BindMasterInnerSubCategory();
-                cleartext(); // ddlcategroy2.SelectedIndex = 0;
+                cleartext();
                 ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record saved')", true);
             }
             else
@@ -331,9 +288,9 @@ public partial class Admin_RegisterdAs : System.Web.UI.Page
         DataTable DtMasterCategroy = new DataTable();
         if (ViewState["DisplayPanel"].ToString() == "Panel2")
         {
-            if (mType == "SuperAdmin" || mType == "Admin")
+            if (hftype.Value == "SuperAdmin" || hftype.Value == "Admin")
             {
-                DtMasterCategroy = Lo.RetriveMasterCategoryDate(0, "", "", "", "", mType, "");
+                DtMasterCategroy = Lo.RetriveMasterCategoryDate(0, "", "", "", "", hftype.Value, "");
             }
             else
             {
@@ -419,44 +376,50 @@ public partial class Admin_RegisterdAs : System.Web.UI.Page
         {
             if (ViewState["DisplayPanel"].ToString() == "Panel2")
             {
-                gvlevel3.Columns[1].Visible = true;
-                gvlevel3.Columns[2].Visible = false;
-                gvlevel3.Columns[3].Visible = false;
+                // gvlevel3.Columns[1].Visible = true;
+                gvlevel3.Columns[1].HeaderText = "Level 1";
+                // gvlevel3.Columns[2].Visible = false;
+                //  gvlevel3.Columns[3].Visible = false;
             }
             else if (ViewState["DisplayPanel"].ToString() == "Panel3")
             {
                 if (ddlmastercategory.SelectedItem.Text != "Select" && ddlcategroy2.SelectedItem.Text == "Select")
                 {
-                    gvlevel3.Columns[1].Visible = true;
-                    gvlevel3.Columns[2].Visible = false;
-                    gvlevel3.Columns[3].Visible = false;
+                    //   gvlevel3.Columns[1].Visible = true;
+                    //  gvlevel3.Columns[2].Visible = false;
+                    // gvlevel3.Columns[3].Visible = false;
+                    gvlevel3.Columns[1].HeaderText = "Level 1";
                 }
                 else if (ddlmastercategory.SelectedItem.Text != "Select" && ddlcategroy2.SelectedItem.Text != "Select")
                 {
-                    gvlevel3.Columns[2].Visible = true;
-                    gvlevel3.Columns[3].Visible = false;
-                    gvlevel3.Columns[1].Visible = false;
+                    gvlevel3.Columns[1].HeaderText = "Level 2";
+                    // gvlevel3.Columns[2].Visible = true;
+                    //  gvlevel3.Columns[3].Visible = false;
+                    //   gvlevel3.Columns[1].Visible = false;
                 }
             }
             else if (ViewState["DisplayPanel"].ToString() == "Panel4")
             {
                 if (ddlmastercategory.SelectedItem.Text != "Select" && ddlcategroy2.SelectedItem.Text == "Select")
                 {
-                    gvlevel3.Columns[1].Visible = true;
-                    gvlevel3.Columns[2].Visible = false;
-                    gvlevel3.Columns[3].Visible = false;
+                    gvlevel3.Columns[1].HeaderText = "Level 1";
+                    //  gvlevel3.Columns[1].Visible = true;
+                    //   gvlevel3.Columns[2].Visible = false;
+                    //   gvlevel3.Columns[3].Visible = false;
                 }
                 else if (ddlmastercategory.SelectedItem.Text != "Select" && ddlcategroy2.SelectedItem.Text != "Select" && ddllabel2.SelectedItem.Text == "Select")
                 {
-                    gvlevel3.Columns[2].Visible = true;
-                    gvlevel3.Columns[3].Visible = false;
-                    gvlevel3.Columns[1].Visible = false;
+                    gvlevel3.Columns[1].HeaderText = "Level 2";
+                    //  gvlevel3.Columns[2].Visible = true;
+                    //  gvlevel3.Columns[3].Visible = false;
+                    //   gvlevel3.Columns[1].Visible = false;
                 }
                 else if (ddlmastercategory.SelectedItem.Text != "Select" && ddlcategroy2.SelectedItem.Text != "Select" && ddllabel2.SelectedItem.Text != "Select")
                 {
-                    gvlevel3.Columns[3].Visible = true;
-                    gvlevel3.Columns[2].Visible = false;
-                    gvlevel3.Columns[1].Visible = false;
+                    gvlevel3.Columns[1].HeaderText = "Level 3";
+                    //  gvlevel3.Columns[3].Visible = true;
+                    //  gvlevel3.Columns[2].Visible = false;
+                    //  gvlevel3.Columns[1].Visible = false;
                 }
             }
         }

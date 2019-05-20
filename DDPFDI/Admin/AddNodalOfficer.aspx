@@ -88,8 +88,8 @@
                                     <div class="col-md-4">
                                         <div class="fdi-add-content NodalRole" id="DivNodalRole" runat="server">
                                             <div class="form-group">
-                                                <asp:CheckBox ID="chkrole" Text="Nodal Officer" runat="server" style="margin-left: 20px;" CssClass="checkbox-inline"></asp:CheckBox>
-                                                <asp:CheckBox ID="chkUser" Text="User" runat="server" style="margin-left: 20px;" CssClass="checkbox-inline"></asp:CheckBox>
+                                                <asp:CheckBox ID="chkrole" Text="Nodal Officer" runat="server" Style="margin-left: 20px;" CssClass="checkbox-inline"></asp:CheckBox>
+                                                <asp:CheckBox ID="chkUser" Text="User" runat="server" Style="margin-left: 20px;" CssClass="checkbox-inline"></asp:CheckBox>
                                             </div>
                                         </div>
                                     </div>
@@ -116,8 +116,13 @@
                                         <asp:BoundField DataField="NodalOficerName" HeaderText="Name" NullDisplayText="#" />
                                         <asp:BoundField DataField="NodalOfficerRefNo" HeaderText="Reference No." Visible="False" NullDisplayText="#" />
                                         <asp:BoundField DataField="NodalOfficerEmail" HeaderText="Email" NullDisplayText="#" />
-                                        <asp:BoundField DataField="IsNodalOfficer" HeaderText="Nodal Officer" NullDisplayText="#" />
-                                        <asp:BoundField DataField="IsLoginActive" HeaderText="User" NullDisplayText="#" />
+                                        <asp:TemplateField HeaderText="Role">
+                                            <ItemTemplate>
+                                                <asp:Label ID="lblnodalofficer" runat="server" Text='<%#Eval("IsNodalOfficer") %>' NullDisplayText="#" Visible="False" SortExpression="NodalOfficerEmail"></asp:Label>
+                                                <asp:Label ID="lblnodallogactive" runat="server" Text='<%#Eval("IsLoginActive") %>' NullDisplayText="#" Visible="False" SortExpression="NodalOfficerEmail"></asp:Label>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                        <asp:BoundField DataField="CreatedBy" HeaderText="Create By" NullDisplayText="#" />
                                         <asp:TemplateField HeaderText="Company">
                                             <ItemTemplate>
                                                 <asp:Label ID="lblrefno" runat="server" Text='<%#Eval("CompanyName") %>' NullDisplayText="#" SortExpression="Company"></asp:Label>

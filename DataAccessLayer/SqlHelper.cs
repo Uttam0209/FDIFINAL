@@ -569,6 +569,7 @@ namespace DataAccessLayer
                     db.AddInParameter(cmd, "@Type", DbType.String, hySaveNodal["Type"].ToString().Trim());
                     db.AddInParameter(cmd, "@IsNodalOfficer", DbType.String, hySaveNodal["IsNodalOfficer"].ToString().Trim());
                     db.AddInParameter(cmd, "@IsLoginActive", DbType.String, hySaveNodal["IsLoginActive"].ToString().Trim());
+                    db.AddInParameter(cmd, "@CreatedBy", DbType.String, hySaveNodal["CreatedBy"].ToString().Trim());
                     db.AddOutParameter(cmd, "@ReturnID", DbType.String, 20);
                     db.ExecuteNonQuery(cmd, dbTran);
                     mCurrentID = db.GetParameterValue(cmd, "@ReturnID").ToString();
@@ -759,9 +760,9 @@ namespace DataAccessLayer
                 try
                 {
                     DbCommand cmd = db.GetStoredProcCommand("sp_UpdateLoginPassword");
-                    db.AddInParameter(cmd, "@CompanyRefNo", DbType.String, User);
                     db.AddInParameter(cmd, "@Password", DbType.String, NewPass);
                     db.AddInParameter(cmd, "@OldPass", DbType.String, OldPass);
+                    db.AddInParameter(cmd, "@CompanyRefNo", DbType.String, User);
                     db.AddInParameter(cmd, "@Type", DbType.String, type);
                     db.ExecuteNonQuery(cmd, dbTran);
                     dbTran.Commit();

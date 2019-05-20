@@ -25,7 +25,6 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
     string RefNo;
     string UserEmail;
     string currentPage = "";
-    private string mType = "";
     private string mRefNo = "";
     private Int16 Mid = 0;
     protected void Page_Load(object sender, EventArgs e)
@@ -53,10 +52,9 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
                     }
                     divHeadPage.InnerHtml = strheadPage.ToString();
                     strheadPage.Append("</ul");
-                    mType = objEnc.DecryptData(Session["Type"].ToString());
+                    hidType.Value = objEnc.DecryptData(Session["Type"].ToString());
                     mRefNo = Session["CompanyRefNo"].ToString();
-
-
+                    ViewState["UserLoginEmail"] = objEnc.DecryptData(Session["User"].ToString());
                 }
 
                 if (Request.QueryString["mcurrentcompRefNo"] != null)
@@ -101,7 +99,7 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
 
     protected void BindCompany()
     {
-        if (mType == "SuperAdmin" || mType == "Admin")
+        if (hidType.Value == "SuperAdmin" || hidType.Value == "Admin")
         {
             DtCompanyDDL = Lo.RetriveMasterData(0, "", "", 0, "", "", "Select");
             if (DtCompanyDDL.Rows.Count > 0)
@@ -119,7 +117,7 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
             lblselectunit.Visible = false;
         }
 
-        else if (mType == "Company")
+        else if (hidType.Value == "Company")
         {
             DtCompanyDDL = Lo.RetriveMasterData(0, mRefNo, "Company", 0, "", "", "CompanyName");
             if (DtCompanyDDL.Rows.Count > 0)
@@ -138,7 +136,7 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
             {
                 Co.FillDropdownlist(ddldivision, DtCompanyDDL, "FactoryName", "FactoryRefNo");
                 ddldivision.Items.Insert(0, "Select");
-                if (mType == "Company")
+                if (hidType.Value == "Company")
                 {
                     lblselectdivison.Visible = true;
                     ddldivision.Enabled = true;
@@ -159,7 +157,7 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
                 ddlunit.Items.Insert(0, "Select");
             }
         }
-        else if (mType == "Factory")
+        else if (hidType.Value == "Factory")
         {
             DtCompanyDDL = Lo.RetriveMasterData(0, mRefNo, "Company1", 0, "", "", "CompanyName");
             if (DtCompanyDDL.Rows.Count > 0)
@@ -197,7 +195,7 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
                 ddlunit.Visible = false;
             }
         }
-        else if (mType == "Unit")
+        else if (hidType.Value == "Unit")
         {
             DtCompanyDDL = Lo.RetriveMasterData(0, mRefNo, "Company2", 0, "", "", "CompanyName");
             if (DtCompanyDDL.Rows.Count > 0)
@@ -540,6 +538,7 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
         {
             hySaveNodal["IsLoginActive"] = "N";
         }
+        hySaveNodal["CreatedBy"] = ViewState["UserLoginEmail"].ToString();
         string Str = Lo.SaveMasterNodal(hySaveNodal, out _sysMsg, out _msg);
         if (Str == "Save")
         {
@@ -561,6 +560,12 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
             }
             else
             {
+                if (chkUser.Checked)
+                {
+                    SendEmailCode();
+                }
+                else
+                { }
             }
             Cleartext();
             ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record saved successsfully')", true);
@@ -650,6 +655,7 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
         btnsub.Text = "Save";
         txtEmpCode.Text = "";
         chkrole.Checked = false;
+        chkUser.Checked = false;
     }
     protected void btncancel_Click(object sender, EventArgs e)
     {
@@ -691,22 +697,27 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
     {
         if (e.Row.RowType == DataControlRowType.DataRow)
         {
-            if (e.Row.Cells[4].Text == "Y")
+            Label s_lblnodalofficer = (Label)e.Row.FindControl("lblnodalofficer");
+            Label s_lblnodallogactive = (Label)e.Row.FindControl("lblnodallogactive");
+            LinkButton s_lbllogindetail = (LinkButton)e.Row.FindControl("lbllogindetail");
+            if (s_lblnodalofficer.Text == "Y")
             {
                 e.Row.Attributes.Add("Class", "bg-purple");
-                e.Row.Cells[4].Text = "Yes";
+                s_lblnodalofficer.Text = "Nodal Officer";
+                s_lblnodalofficer.Visible = true;
+                // s_lbllogindetail.Visible = false;
             }
-            if (e.Row.Cells[4].Text == "N")
+            else if (s_lblnodallogactive.Text == "Y")
             {
-                e.Row.Cells[4].Text = "No";
+                s_lblnodallogactive.Text = "User";
+                s_lblnodallogactive.Visible = true;
+                //  s_lbllogindetail.Visible = false;
             }
-            if (e.Row.Cells[5].Text == "Y")
+            else if (s_lblnodallogactive.Text == "N" && s_lblnodalofficer.Text == "N")
             {
-                e.Row.Cells[5].Text = "Yes";
-            }
-            if (e.Row.Cells[5].Text == "N")
-            {
-                e.Row.Cells[5].Text = "No";
+                s_lblnodalofficer.Text = "Employee";
+                s_lblnodalofficer.Visible = true;
+                //  s_lbllogindetail.Visible = true;
             }
         }
     }
