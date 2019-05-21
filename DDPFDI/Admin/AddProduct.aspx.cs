@@ -74,6 +74,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                         BindMasterCategory();
                         BindMasterTechnologyCategory();
                         BindMasterPlatCategory();
+                        BindPurposeProcuremnt();
                         BindMasterProductReqCategory();
                         BindMasterProductNoenCletureCategory();
                         // BindNodelEmail();
@@ -231,29 +232,36 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     }
     protected void BindNodelEmail()
     {
-        if (ddlcompany.SelectedItem.Text != "Select" && ddldivision.SelectedItem.Text == "Select")
+        if (ddlcompany.SelectedItem.Text != "Select")
         {
-            DtCompanyDDL = Lo.RetriveMasterData(0, ddlcompany.SelectedItem.Value, "", 0, "", "", "CompanyNodelDetail");
-        }
-        else if (ddlcompany.SelectedItem.Text != "Select" && ddldivision.SelectedItem.Text != "Select" && ddlunit.SelectedItem.Text == "Select")
-        {
-            DtCompanyDDL = Lo.RetriveMasterData(0, ddldivision.SelectedItem.Value, "", 0, "", "", "CompanyNodelDetail");
-        }
-        else if (ddlcompany.SelectedItem.Text != "Select" && ddldivision.SelectedItem.Text != "Select" && ddlunit.SelectedItem.Text != "Select")
-        {
-            DtCompanyDDL = Lo.RetriveMasterData(0, ddlunit.SelectedItem.Value, "", 0, "", "", "CompanyNodelDetail");
-        }
-        if (DtCompanyDDL.Rows.Count > 0)
-        {
-            Co.FillDropdownlist(ddlNodalOfficerEmail, DtCompanyDDL, "NodalOficerName", "NodalOfficerID");
-            ddlNodalOfficerEmail.Items.Insert(0, "Select");
-            Co.FillDropdownlist(ddlNodalOfficerEmail2, DtCompanyDDL, "NodalOficerName", "NodalOfficerID");
-            ddlNodalOfficerEmail2.Items.Insert(0, "Select");
+            if (ddlcompany.SelectedItem.Text != "Select" && ddldivision.SelectedItem.Text == "Select")
+            {
+                DtCompanyDDL = Lo.RetriveMasterData(0, ddlcompany.SelectedItem.Value, "", 0, "", "", "CompanyNodelDetail");
+            }
+            else if (ddlcompany.SelectedItem.Text != "Select" && ddldivision.SelectedItem.Text != "Select" && ddlunit.SelectedItem.Text == "Select")
+            {
+                DtCompanyDDL = Lo.RetriveMasterData(0, ddldivision.SelectedItem.Value, "", 0, "", "", "CompanyNodelDetail");
+            }
+            else if (ddlcompany.SelectedItem.Text != "Select" && ddldivision.SelectedItem.Text != "Select" && ddlunit.SelectedItem.Text != "Select")
+            {
+                DtCompanyDDL = Lo.RetriveMasterData(0, ddlunit.SelectedItem.Value, "", 0, "", "", "CompanyNodelDetail");
+            }
+            if (DtCompanyDDL.Rows.Count > 0)
+            {
+                Co.FillDropdownlist(ddlNodalOfficerEmail, DtCompanyDDL, "NodalOficerName", "NodalOfficerID");
+                ddlNodalOfficerEmail.Items.Insert(0, "Select");
+                Co.FillDropdownlist(ddlNodalOfficerEmail2, DtCompanyDDL, "NodalOficerName", "NodalOfficerID");
+                ddlNodalOfficerEmail2.Items.Insert(0, "Select");
+            }
+            else
+            {
+                ddlNodalOfficerEmail.Items.Insert(0, "Select");
+                ddlNodalOfficerEmail2.Items.Insert(0, "Select");
+            }
         }
         else
         {
-            ddlNodalOfficerEmail.Items.Insert(0, "Select");
-            ddlNodalOfficerEmail2.Items.Insert(0, "Select");
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Company not select nodal offcier will not be displayed')", true);
         }
     }
     #region DropDownList Code
@@ -272,7 +280,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                 hidType.Value = "Company";
                 BindMasterCategory();
                 BindMasterTechnologyCategory();
-                BindMasterPlatCategory();
+                //  BindMasterPlatCategory();
                 BindMasterProductReqCategory();
                 BindMasterProductNoenCletureCategory();
                 BindEndUser();
@@ -432,10 +440,6 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     {
         BindMasterSubCategoryTechLevel3();
     }
-    protected void ddlplatform_SelectedIndexChanged(object sender, EventArgs e)
-    {
-        BindMasterSubCategoryPlat();
-    }
     protected void rbisindinised_CheckedChanged(object sender, EventArgs e)
     {
         if (rbisindinised.SelectedItem.Value == "Y")
@@ -545,16 +549,21 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     }
     protected void BindMaster3levelSubCategory()
     {
-        DataTable DtMasterCategroyLevel3 = Lo.RetriveMasterSubCategoryDate(Convert.ToInt16(ddlsubcategory.SelectedItem.Value), "", "", "SubSelectID", "", "");
-        if (DtMasterCategroyLevel3.Rows.Count > 0)
+        if (ddlsubcategory.SelectedItem.Value != null || ddlsubcategory.SelectedItem.Text != "Select")
         {
-            Co.FillDropdownlist(ddllevel3product, DtMasterCategroyLevel3, "SCategoryName", "SCategoryId");
-            ddllevel3product.Items.Insert(0, "Select");
-        }
-        else
-        {
-            ddllevel3product.Items.Clear();
-            ddllevel3product.Items.Insert(0, "Select");
+            DataTable DtMasterCategroyLevel3 =
+                Lo.RetriveMasterSubCategoryDate(Convert.ToInt16(ddlsubcategory.SelectedItem.Value), "", "",
+                    "SubSelectID", "", "");
+            if (DtMasterCategroyLevel3.Rows.Count > 0)
+            {
+                Co.FillDropdownlist(ddllevel3product, DtMasterCategroyLevel3, "SCategoryName", "SCategoryId");
+                ddllevel3product.Items.Insert(0, "Select");
+            }
+            else
+            {
+                ddllevel3product.Items.Clear();
+                ddllevel3product.Items.Insert(0, "Select");
+            }
         }
     }
     #endregion
@@ -598,16 +607,19 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     }
     protected void BindMasterSubCategoryTechLevel3()
     {
-        DataTable DtMasterCategroyLevel3 = Lo.RetriveMasterSubCategoryDate(Convert.ToInt16(ddlsubtech.SelectedItem.Value), "", "", "SubSelectID", "", "");
-        if (DtMasterCategroyLevel3.Rows.Count > 0)
+        if (ddlsubtech.SelectedItem.Value != null || ddlsubtech.SelectedItem.Text != "Select")
         {
-            Co.FillDropdownlist(ddltechlevel3, DtMasterCategroyLevel3, "SCategoryName", "SCategoryId");
-            ddltechlevel3.Items.Insert(0, "Select");
-        }
-        else
-        {
-            ddltechlevel3.Items.Clear();
-            ddltechlevel3.Items.Insert(0, "Select");
+            DataTable DtMasterCategroyLevel3 = Lo.RetriveMasterSubCategoryDate(Convert.ToInt16(ddlsubtech.SelectedItem.Value), "", "", "SubSelectID", "", "");
+            if (DtMasterCategroyLevel3.Rows.Count > 0)
+            {
+                Co.FillDropdownlist(ddltechlevel3, DtMasterCategroyLevel3, "SCategoryName", "SCategoryId");
+                ddltechlevel3.Items.Insert(0, "Select");
+            }
+            else
+            {
+                ddltechlevel3.Items.Clear();
+                ddltechlevel3.Items.Insert(0, "Select");
+            }
         }
     }
     #endregion
@@ -635,17 +647,28 @@ public partial class Admin_AddProduct : System.Web.UI.Page
             ddlplatform.Items.Insert(0, "Select");
         }
     }
-    protected void BindMasterSubCategoryPlat()
+    #endregion
+    #region For PlatFormPurposeProcuremnt
+    protected void BindPurposeProcuremnt()
     {
-        DataTable DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(Convert.ToInt16(ddlplatform.SelectedItem.Value), "", "", "SubSelectID", "", "");
-        if (DtMasterCategroy.Rows.Count > 0)
+        DataTable DtPurposeProcuremnt = new DataTable();
+        if (ddlcompany.SelectedItem.Text != "Select")
         {
-            Co.FillDropdownlist(ddlplatformsubcat, DtMasterCategroy, "SCategoryName", "SCategoryId");
+            DtPurposeProcuremnt = Lo.RetriveMasterSubCategoryDate(0, "Purpose of Procurement", "", "SelectProductCat", ddlcompany.SelectedItem.Value, "");
+        }
+        else
+        {
+            DtPurposeProcuremnt = Lo.RetriveMasterSubCategoryDate(0, "Purpose of Procurement", "", "SelectProductCat", "", "");
+        }
+        if (DtPurposeProcuremnt.Rows.Count > 0)
+        {
+            Co.FillDropdownlist(ddlplatformsubcat, DtPurposeProcuremnt, "SCategoryName", "SCategoryID");
             ddlplatformsubcat.Items.Insert(0, "Select");
         }
         else
         {
-            ddlplatformsubcat.Items.Clear();
+            DtPurposeProcuremnt = Lo.RetriveMasterSubCategoryDate(0, "Purpose of Procurement", "", "SelectProductCat", "", "");
+            Co.FillDropdownlist(ddlplatformsubcat, DtPurposeProcuremnt, "SCategoryName", "SCategoryID");
             ddlplatformsubcat.Items.Insert(0, "Select");
         }
     }
@@ -1065,6 +1088,10 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         ddltendorstatus.SelectedIndex = 0;
         txttendordate.Text = "";
         txttendorurl.Text = "";
+        ddlsubcategory.Items.Clear();
+        ddllevel3product.Items.Clear();
+        ddlsubtech.Items.Clear();
+        ddltechlevel3.Items.Clear();
         if (ddlNodalOfficerEmail.Text != "")
         {
             ddlNodalOfficerEmail.SelectedIndex = 0;
@@ -1080,6 +1107,30 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                 chkBx.Checked = false;
                 txtRemarks.Text = "";
                 hfservicesid.Value = "";
+            }
+        }
+        foreach (GridViewRow rw in gvtesting.Rows)
+        {
+            CheckBox chktesting = (CheckBox)rw.FindControl("chktesting");
+            HiddenField hftestid = (HiddenField)rw.FindControl("hftestingid");
+            TextBox txttestRemarks = (TextBox)rw.FindControl("txttestingRemarks");
+            if (chktesting != null && chktesting.Checked)
+            {
+                chktesting.Checked = false;
+                txttestRemarks.Text = "";
+                hftestid.Value = "";
+            }
+        }
+        foreach (GridViewRow rw in gvCertification.Rows)
+        {
+            CheckBox chkcertification = (CheckBox)rw.FindControl("chkcertification");
+            HiddenField hfcertification = (HiddenField)rw.FindControl("hfcertification");
+            TextBox txtCertificationRemarks = (TextBox)rw.FindControl("txtCertificationRemarks");
+            if (chkcertification != null && chkcertification.Checked)
+            {
+                chkcertification.Checked = false;
+                txtCertificationRemarks.Text = "";
+                hfcertification.Value = "";
             }
         }
     }
@@ -1105,7 +1156,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                     HttpPostedFile hpf = uploadedFiles[i];
                     string FileType = hpf.ContentType;
                     int FileSize = hpf.ContentLength;
-                    if (FileSize < 1024)
+                    if (FileSize < 102400)
                     {
                         if (Co.GetImageFilter(hpf.FileName) == true)
                         {
@@ -1152,17 +1203,22 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                 ddlmastercategory.SelectedValue = DtView.Rows[0]["ProductLevel1"].ToString();
                 BindMasterSubCategory();
                 ddlsubcategory.SelectedValue = DtView.Rows[0]["ProductLevel2"].ToString();
-                BindMasterSubCategoryTechLevel3();
-                ddllevel3product.SelectedValue = DtView.Rows[0]["ProductLevel3"].ToString();
+                BindMaster3levelSubCategory();
+                if (ddllevel3product.SelectedValue != "Select")
+                {
+                    ddllevel3product.SelectedValue = DtView.Rows[0]["ProductLevel3"].ToString();
+                }
                 txtproductdescription.Text = DtView.Rows[0]["ProductDescription"].ToString();
                 ddltechnologycat.SelectedValue = DtView.Rows[0]["TechnologyLevel1"].ToString();
                 BindMasterSubCategoryTech();
                 ddlsubtech.SelectedValue = DtView.Rows[0]["TechnologyLevel2"].ToString();
                 BindMasterSubCategoryTechLevel3();
-                ddltechlevel3.SelectedValue = DtView.Rows[0]["TechnologyLevel3"].ToString();
+                if (ddltechlevel3.SelectedValue != "Select")
+                {
+                    ddltechlevel3.SelectedValue = DtView.Rows[0]["TechnologyLevel3"].ToString();
+                }
                 ddlenduser.SelectedValue = DtView.Rows[0]["EndUser"].ToString();
                 ddlplatform.SelectedValue = DtView.Rows[0]["Platform"].ToString();
-                BindMasterSubCategoryPlat();
                 ddlplatformsubcat.SelectedValue = DtView.Rows[0]["PurposeofProcurement"].ToString();
                 ddlprodreqir.SelectedValue = DtView.Rows[0]["ProductRequirment"].ToString();
                 rbisindinised.SelectedValue = DtView.Rows[0]["IsIndeginized"].ToString();
@@ -1238,7 +1294,9 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                 if (ddltendorstatus.SelectedValue == "Live" && rbtendordateyesno.SelectedValue == "Y")
                 {
                     divtdate.Visible = true;
-                    txttendordate.Text = DtView.Rows[0]["TenderFillDate"].ToString();
+                    DateTime Date = Convert.ToDateTime(DtView.Rows[0]["TenderFillDate"].ToString());
+                    string nDate = Date.ToString("yy-MMM-dd");
+                    txttendordate.Text = nDate.ToString();
                     txttendorurl.Text = DtView.Rows[0]["TenderUrl"].ToString();
                 }
                 else
