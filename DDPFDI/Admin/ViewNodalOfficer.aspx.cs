@@ -25,22 +25,29 @@ public partial class Admin_ViewNodalOfficer : System.Web.UI.Page
         {
             if (Request.QueryString["id"] != null)
             {
-                string strid = Request.QueryString["id"].ToString().Replace(" ", "+");
-                string strPageName = objEnc.DecryptData(strid);
-                StringBuilder strheadPage = new StringBuilder();
-                strheadPage.Append("<ul class='breadcrumb'>");
-                string[] MCateg = strPageName.Split(new string[] { ">>" }, StringSplitOptions.RemoveEmptyEntries);
-                string MmCval = "";
-                for (int x = 0; x < MCateg.Length; x++)
+                try
                 {
-                    MmCval = MCateg[x];
-                    strheadPage.Append("<li class=''><span>" + MmCval + "</span></li>");
+                    string strid = Request.QueryString["id"].ToString().Replace(" ", "+");
+                    string strPageName = objEnc.DecryptData(strid);
+                    StringBuilder strheadPage = new StringBuilder();
+                    strheadPage.Append("<ul class='breadcrumb'>");
+                    string[] MCateg = strPageName.Split(new string[] { ">>" }, StringSplitOptions.RemoveEmptyEntries);
+                    string MmCval = "";
+                    for (int x = 0; x < MCateg.Length; x++)
+                    {
+                        MmCval = MCateg[x];
+                        strheadPage.Append("<li class=''><span>" + MmCval + "</span></li>");
+                    }
+                    divHeadPage.InnerHtml = strheadPage.ToString();
+                    strheadPage.Append("</ul");
+                    mType = objEnc.DecryptData(Session["Type"].ToString());
+                    mRefNo = Session["CompanyRefNo"].ToString();
+                    BindCompany();
                 }
-                divHeadPage.InnerHtml = strheadPage.ToString();
-                strheadPage.Append("</ul");
-                mType = objEnc.DecryptData(Session["Type"].ToString());
-                mRefNo = Session["CompanyRefNo"].ToString();
-                BindCompany();
+                catch (Exception ex)
+                {
+                    Response.RedirectToRoute("login");
+                }
 
             }
         }
@@ -209,16 +216,16 @@ public partial class Admin_ViewNodalOfficer : System.Web.UI.Page
             int rowIndex = gvr.RowIndex;
             string stridNew = Request.QueryString["id"].ToString().Replace(" ", "+");
             string mstrid = objEnc.EncryptData((objEnc.DecryptData(stridNew) + " >> Edit Nodal Office"));
-            Response.Redirect("Add-Nodal?mrcreaterole=" + objEnc.EncryptData(e.CommandArgument.ToString()) + "&mcurrentcompRefNo=" + (objEnc.EncryptData(e.CommandArgument.ToString())) + "&id=" + mstrid);
+            Response.Redirect("Add-Nodal?mrcreaterole=" + objEnc.EncryptData(e.CommandArgument.ToString()) + "&id=" + mstrid);
         }
         else if (e.CommandName == "ViewComp")
         {
             DataTable DtView = new DataTable();
-            if (ddldivision.SelectedValue != "Select" &&  ddldivision.SelectedValue!="")
+            if (ddldivision.SelectedValue != "Select" && ddldivision.SelectedValue != "")
             {
                 DtView = Lo.RetriveAllNodalOfficer(e.CommandArgument.ToString(), "DivisionID");
 
-                if (ddlunit.SelectedValue != "Select" && ddlunit.SelectedValue!="")
+                if (ddlunit.SelectedValue != "Select" && ddlunit.SelectedValue != "")
                 {
                     DtView = Lo.RetriveAllNodalOfficer(e.CommandArgument.ToString(), "UnitID");
                 }
@@ -297,30 +304,27 @@ public partial class Admin_ViewNodalOfficer : System.Web.UI.Page
     {
         if (e.Row.RowType == DataControlRowType.DataRow)
         {
-            if (e.Row.Cells[4].Text == "Y")
+            Label s_lblnodalofficer = (Label)e.Row.FindControl("lblnodalofficer");
+            Label s_lblnodallogactive = (Label)e.Row.FindControl("lblnodallogactive");
+            LinkButton s_lbllogindetail = (LinkButton)e.Row.FindControl("lbllogindetail");
+            if (s_lblnodalofficer.Text == "Y")
             {
                 e.Row.Attributes.Add("Class", "bg-purple");
-                e.Row.Cells[4].Text = "Yes";
-                LinkButton lbl = (LinkButton)e.Row.FindControl("lbllogindetail");
-                lbl.Visible = false;
+                s_lblnodalofficer.Text = "Nodal Officer";
+                s_lblnodalofficer.Visible = true;
+                // s_lbllogindetail.Visible = false;
             }
-            if (e.Row.Cells[4].Text == "N")
+            else if (s_lblnodallogactive.Text == "Y")
             {
-                e.Row.Cells[4].Text = "No";
-                LinkButton lbl = (LinkButton)e.Row.FindControl("lbllogindetail");
-                lbl.Visible = true;
+                s_lblnodallogactive.Text = "User";
+                s_lblnodallogactive.Visible = true;
+                //  s_lbllogindetail.Visible = false;
             }
-            if (e.Row.Cells[5].Text == "Y")
+            else if (s_lblnodallogactive.Text == "N" && s_lblnodalofficer.Text == "N")
             {
-                e.Row.Cells[5].Text = "Yes";
-                LinkButton lbl = (LinkButton)e.Row.FindControl("lbllogindetail");
-                lbl.Visible = false;
-            }
-            if (e.Row.Cells[5].Text == "N")
-            {
-                e.Row.Cells[5].Text = "No";
-                LinkButton lbl = (LinkButton)e.Row.FindControl("lbllogindetail");
-                lbl.Visible = true;
+                s_lblnodalofficer.Text = "Employee";
+                s_lblnodalofficer.Visible = true;
+                //  s_lbllogindetail.Visible = true;
             }
         }
     }
@@ -343,6 +347,7 @@ public partial class Admin_ViewNodalOfficer : System.Web.UI.Page
             {
                 ddldivision.Visible = false;
                 lblselectdivison.Visible = false;
+                gvViewNodalOfficer.Visible = false;
             }
         }
         else if (ddlcompany.SelectedItem.Text == "Select")
@@ -428,5 +433,5 @@ public partial class Admin_ViewNodalOfficer : System.Web.UI.Page
         return res.ToString();
     }
     #endregion
-  
+
 }
