@@ -45,7 +45,6 @@ public partial class Admin_AddDesignation : System.Web.UI.Page
                 }
                 divHeadPage.InnerHtml = strheadPage.ToString();
                 strheadPage.Append("</ul");
-
                 BindMasterCompany();
 
             }
@@ -163,7 +162,7 @@ public partial class Admin_AddDesignation : System.Web.UI.Page
     protected void SaveComp()
     {
         string StrSaveComp = "";
-        if (hdid.Value != null)
+        if (hdid.Value != null && hdid.Value != "")
         {
             HySave["DesignationId"] = Convert.ToInt16(hdid.Value);
 
