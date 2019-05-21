@@ -98,7 +98,7 @@
 
                                             <div class="col-md-4">
                                                 <div class="form-group">
-                                                    <label>NATO Code</label>
+                                                    <label>NATO Stock Number</label>
                                                     <asp:TextBox runat="server" ID="txtnatocode" class="form-control"></asp:TextBox>
                                                 </div>
 
@@ -578,17 +578,17 @@
                             </div>
                         </div>
                     </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="form-group">
-                            <asp:Button runat="server" ID="btnsubmitpanel1" class="btn btn-primary pull-right" Text="Save" OnClick="btnsubmitpanel1_Click" OnClientClick="return confirm('Are you sure you want to save this product?');" />
-                            <asp:Button runat="server" ID="btncancelpanel1" class="btn btn-default pull-right" Style="margin-right: 10px;" Text="Back" OnClick="btncancelpanel1_Click" />
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <asp:Button runat="server" ID="btnsubmitpanel1" class="btn btn-primary pull-right" Text="Save" OnClick="btnsubmitpanel1_Click" OnClientClick="return confirm('Are you sure you want to save this product?');" />
+                                <asp:Button runat="server" ID="btncancelpanel1" class="btn btn-default pull-right" Style="margin-right: 10px;" Text="Back" OnClick="btncancelpanel1_Click" />
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
     </div>
     <script type="text/javascript" language="javascript">
 

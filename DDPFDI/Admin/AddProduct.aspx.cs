@@ -1156,22 +1156,22 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                     HttpPostedFile hpf = uploadedFiles[i];
                     string FileType = hpf.ContentType;
                     int FileSize = hpf.ContentLength;
-                    if (FileSize < 102400)
+                    // if (FileSize < 102400)
+                    //{
+                    if (Co.GetImageFilter(hpf.FileName) == true)
                     {
-                        if (Co.GetImageFilter(hpf.FileName) == true)
-                        {
-                            string FilePathName = hfcomprefno.Value + "_" + DateTime.Now.ToString("hh_mm_ss") + hpf.FileName;
-                            hpf.SaveAs(HttpContext.Current.Server.MapPath("/Upload") + "\\" + FilePathName);
-                            dr = dt.NewRow();
-                            dr["ImageID"] = "-1";
-                            dr["ImageName"] = "Upload/" + FilePathName;
-                            dr["ImageType"] = FileType.ToString();
-                            dr["ImageActualSize"] = FileSize.ToString();
-                            dr["CompanyRefNo"] = hfcomprefno.Value;
-                            dr["Priority"] = i + 1;
-                            dt.Rows.Add(dr);
-                        }
+                        string FilePathName = hfcomprefno.Value + "_" + DateTime.Now.ToString("hh_mm_ss") + hpf.FileName;
+                        hpf.SaveAs(HttpContext.Current.Server.MapPath("/Upload") + "\\" + FilePathName);
+                        dr = dt.NewRow();
+                        dr["ImageID"] = "-1";
+                        dr["ImageName"] = "Upload/" + FilePathName;
+                        dr["ImageType"] = FileType.ToString();
+                        dr["ImageActualSize"] = FileSize.ToString();
+                        dr["CompanyRefNo"] = hfcomprefno.Value;
+                        dr["Priority"] = i + 1;
+                        dt.Rows.Add(dr);
                     }
+                    // }
                 }
             }
             catch (Exception ex)

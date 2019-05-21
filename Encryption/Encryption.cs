@@ -16,10 +16,10 @@ namespace Encryption
 
             try
             {
-                key = Encoding.UTF8.GetBytes(strKey);
+                key = Encoding.UTF8.GetBytes(strKey.Trim());
                 // DESCryptoServiceProvider is a cryptography class defind in c#.  
                 DESCryptoServiceProvider ObjDES = new DESCryptoServiceProvider();
-                inputByteArray = Encoding.UTF8.GetBytes(strData);
+                inputByteArray = Encoding.UTF8.GetBytes(strData.Trim());
                 MemoryStream Objmst = new MemoryStream();
                 CryptoStream Objcs = new CryptoStream(Objmst, ObjDES.CreateEncryptor(key, IV), CryptoStreamMode.Write);
                 Objcs.Write(inputByteArray, 0, inputByteArray.Length);
@@ -31,7 +31,6 @@ namespace Encryption
                 throw ex;
             }
         }
-
         public string DecryptData(string strData)
         {
             byte[] key = { };// Key   
@@ -40,9 +39,9 @@ namespace Encryption
 
             try
             {
-                key = Encoding.UTF8.GetBytes(strKey);
+                key = Encoding.UTF8.GetBytes(strKey.Trim());
                 DESCryptoServiceProvider ObjDES = new DESCryptoServiceProvider();
-                inputByteArray = Convert.FromBase64String(strData);
+                inputByteArray = Convert.FromBase64String(strData.Trim());
 
                 MemoryStream Objmst = new MemoryStream();
                 CryptoStream Objcs = new CryptoStream(Objmst, ObjDES.CreateDecryptor(key, IV), CryptoStreamMode.Write);

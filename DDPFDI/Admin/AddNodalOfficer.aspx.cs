@@ -591,7 +591,7 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
             body = body.Replace("{mcurid}", Resturl(56));
             SendMail s;
             s = new SendMail();
-            s.CreateMail("aeroindia-ddp@gov.in", txtemailid.Text, "Create Password", body);
+            s.CreateMail("aeroindia-ddp@gov.in", txtemailid.Text, "Password Reset Email", body);
             s.sendMail();
             // ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Create password email send successfully.')", true);
         }
@@ -665,7 +665,7 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
     {
         if (Session["CompanyRefNo"] != null)
         {
-            DataTable DtView = Lo.RetriveMasterData(Convert.ToInt16(objEnc.DecryptData(Request.QueryString["mcurrentcompRefNo"].ToString())), "", "", 0, "", "", "SearchNodalOfficerID");
+            DataTable DtView = Lo.RetriveMasterData(Convert.ToInt16(objEnc.DecryptData(Request.QueryString["mcurrentcompRefNo"].ToString().Trim())), "", "", 0, "", "", "SearchNodalOfficerID");
             if (DtView.Rows.Count > 0)
             {
                 mRefNo = DtView.Rows[0]["CompanyRefNo"].ToString();
