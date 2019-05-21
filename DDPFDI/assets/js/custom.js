@@ -167,4 +167,8 @@ var count = 0;
             //           parseInt($fileUpload.get(0).files.length - 1;
         });
 
+        //Tooltip
+
+        $('[data-toggle="tooltip"]').tooltip();
 });
+

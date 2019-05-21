@@ -46,8 +46,8 @@
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label class=" control-label">Designation <span class="red">*</span> </label>
-                                                        <asp:TextBox ID="txtDesignation" runat="server" required="" class="form-control form-cascade-control"></asp:TextBox>
+                                                        <label class=" control-label">Designation </label>
+                                                        <asp:TextBox ID="txtDesignation" runat="server" required="" class="form-control form-cascade-control"></asp:TextBox><span data-toggle="tooltip" class="fa fa-question" title="Please enter master designation of company designation also display in division/unit section.Before add designation please check company dropdown are selected with company name" style="position: absolute; right: -25px; top: 28px;"></span>
                                                     </div>
                                                 </div>
 
