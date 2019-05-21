@@ -463,7 +463,7 @@ form .form-group {
     }
 
         .breadcrumb li:not(:first-child) {
-            margin-left: -2px;
+            margin-left: -4px;
         }
 
         .breadcrumb li + li:before {
