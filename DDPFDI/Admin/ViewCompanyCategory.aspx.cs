@@ -61,7 +61,7 @@ public partial class Admin_ViewCompanyCategory : System.Web.UI.Page
         {
             if (hidType.Value == "SuperAdmin")
             {
-                DataTable DtGrid = Lo.RetriveMasterCategoryDate(0, "", "", "", "", "Select","","");
+                DataTable DtGrid = Lo.RetriveMasterCategoryDate(0, "", "", "", "", "Select","");
                 if (DtGrid.Rows.Count > 0)
                 {
 
@@ -71,7 +71,7 @@ public partial class Admin_ViewCompanyCategory : System.Web.UI.Page
             }
             else if (hidType.Value == "Company" && hfcomprefno.Value != "")
             {
-                DataTable DtGrid = Lo.RetriveMasterSubCategoryDate(0, "", "", "SubCompCat", hfcomprefno.Value,"","");
+                DataTable DtGrid = Lo.RetriveMasterSubCategoryDate(0, "", "", "SubCompCat", hfcomprefno.Value,"");
                 if (DtGrid.Rows.Count > 0)
                 {
                     gvCategory.DataSource = DtGrid;
