@@ -34,7 +34,7 @@ public partial class Admin_CreatePasswordCompany : System.Web.UI.Page
                 string Updatepass = Lo.UpdateLoginPassword(Enc.EncryptData(txtpassword.Text), "", ViewState["Refno"].ToString(), sType);
                 if (Updatepass == "true")
                 {
-                    ScriptManager.RegisterStartupScript(this, this.GetType(), "alert", "alert('Password created successfully.Please login with new password.');window.location ='Login';", true);
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "alert", "alert('Password created successfully.Please login with new password.We will redirected to you login page');window.location ='Login';", true);
                 }
                 else
                 {

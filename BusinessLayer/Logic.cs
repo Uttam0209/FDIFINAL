@@ -128,6 +128,10 @@ namespace BusinessLayer
             return SqlHelper.Instance.GetDataset(query).Tables[0];
             //return SqlHelper.Instance.RetriveIntresteData(CompRefNo);
         }
+        public DataTable RetriveForgotPasswordEmail(string Email, string Type)
+        {
+            return SqlHelper.Instance.RetriveForgotPasswordEmail(Email, Type);
+        }
         #endregion
         #region DeleteCode
         public string DeleteRecord(string CompRefNo, string Criteria)

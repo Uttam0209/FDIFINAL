@@ -6,7 +6,9 @@
     <div class="content oem-content">
         <div class="sideBg">
             <div class="col-mod-12">
-                <h3 class="page-header"><i class="fas fa-folder-plus"></i><asp:Label ID="lblPageName" runat="server" Text=""></asp:Label> </h3>
+                <h3 class="page-header"><i class="fas fa-folder-plus"></i>
+                    <asp:Label ID="lblPageName" runat="server" Text=""></asp:Label>
+                </h3>
                 <div class="col-md-12 col-mod-12">
                     <div class="row">
 
@@ -14,7 +16,7 @@
                             <div class="indiacompanydetails">
                                 <div class="form-group">
                                     <label for="activityname" class="control-label">Old Password <span class="mandatory">*</span></label>
-                                    <asp:TextBox runat="server" ID="txtoldpass" type="password" MaxLength="15" TabIndex="1" class="form-control form-cascade-control input-small" placeholder="Enter old password">
+                                    <asp:TextBox runat="server" ID="txtoldpass" type="password" MaxLength="15" TabIndex="1" focus="true" class="form-control form-cascade-control input-small" placeholder="Enter old password">
                                     </asp:TextBox>
                                 </div>
                                 <div class="form-group">
