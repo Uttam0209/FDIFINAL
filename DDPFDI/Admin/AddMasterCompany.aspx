@@ -95,17 +95,15 @@
                                 <div class="col-md-12">
                                     <div class="fdi-add-content">
                                         <div runat="server">
-
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <asp:Label ID="lblName" runat="server" Text="" CssClass="form-label"></asp:Label>
-                                                        <asp:TextBox ID="txtcomp" runat="server" required="" class="form-control form-cascade-control"></asp:TextBox>
+                                                        <asp:TextBox ID="txtcomp" runat="server" required="" class="form-control form-cascade-control"></asp:TextBox><span data-toggle="tooltip" class="fa fa-question" title="Please enter company/division/unit name" style="position: absolute; right: -25px; top: 28px;"></span>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6" id="divOfficerEmail" runat="server">
                                                     <div class="form-group">
-
                                                         <label class=" control-label">Officer email id </label>
                                                         <asp:TextBox ID="txtemail" runat="server" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" class="form-control form-cascade-control"></asp:TextBox>
                                                         <p class="note">*Note: will be used as username </p>
