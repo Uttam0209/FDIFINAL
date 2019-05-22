@@ -1,6 +1,14 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Admin/MasterPage.master" CodeFile="AddDesignation.aspx.cs" Inherits="Admin_AddDesignation" %>
 
 <asp:Content ID="headDesignation" runat="server" ContentPlaceHolderID="head">
+    <script>
+        //Alert pop up box
+        function ShowMessage() {
+            console.log('testing');
+            $("body").css('overflow', 'hidden');
+            $('.alert-overlay-success').show();
+        }
+    </script>
 </asp:Content>
 
 <asp:Content ID="InnerDesignation" runat="server" ContentPlaceHolderID="ContentPlaceHolder1">
@@ -29,8 +37,6 @@
                                     </div>
                                 </div>
                             </div>
-
-
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="fdi-add-content">
@@ -38,8 +44,8 @@
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label class=" control-label">Designation </label>
-                                                        <asp:TextBox ID="txtDesignation" runat="server" required="" class="form-control form-cascade-control"></asp:TextBox><span data-toggle="tooltip" class="fa fa-question" title="Please enter master designation of company designation also display in division/unit section.Before add designation please check company dropdown are selected with company name" style="position: absolute; right: -25px; top: 28px;"></span>
+                                                        <label class=" control-label">Designation </label><span data-toggle="tooltip" class="fa fa-question" title="Please enter master designation of company designation also display in division/unit section.Before add designation please check company dropdown are selected with company name"></span>
+                                                        <asp:TextBox ID="txtDesignation" runat="server" required="" class="form-control form-cascade-control"></asp:TextBox>
                                                     </div>
                                                 </div>
 
@@ -107,5 +113,28 @@
                 <!---Progress Bar ---->
             </ProgressTemplate>
         </asp:UpdateProgress>
+
+<%--         <!-----Alert Box ------>
+    <div runat="server" id="AlertSuccess" visible="false" class="alert-overlay alert-overlay-success">
+        <div class="alert-box">
+            <div class="box">
+                <div class="success-checkmark">
+                    <div class="check-icon">
+                        <span class="icon-line line-tip"></span>
+                        <span class="icon-line line-long"></span>
+                        <div class="icon-circle"></div>
+                        <div class="icon-fix"></div>
+                    </div>
+                </div>
+               
+        <div class="alert">
+            Successfully Saved !
+        </div>
+        <button class="btn btn-success close_alert">OK</button>
+    </div>
+    </div>
+   
+</div>
+   <!-----Alert Box ------>--%>
     </div>
 </asp:Content>

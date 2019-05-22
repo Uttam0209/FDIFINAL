@@ -868,7 +868,7 @@ namespace DataAccessLayer
                 }
             }
         }
-        public DataTable RetriveProductCode(string CompanyRefNo, string ProdRefNo, string Purpose)
+        public DataTable RetriveProductCode(string CompanyRefNo, string ProdRefNo, string Purpose,string Type)
         {
             using (DbConnection dbCon = db.CreateConnection())
             {
@@ -879,6 +879,7 @@ namespace DataAccessLayer
                     db.AddInParameter(cmd, "@CompanyRefNo", DbType.String, CompanyRefNo);
                     db.AddInParameter(cmd, "@ProductRefNo", DbType.String, ProdRefNo);
                     db.AddInParameter(cmd, "@Purpose", DbType.String, Purpose);
+                    db.AddInParameter(cmd, "@Type", DbType.String, Type);
                     IDataReader dr = db.ExecuteReader(cmd);
                     DataTable dt = new DataTable();
                     if (dr != null)

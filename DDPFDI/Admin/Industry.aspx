@@ -27,49 +27,22 @@
                     <li><a data-toggle="tab" href="#spez">Specialization</a></li>
                     <li><a data-toggle="tab" href="#pd">Project Details</a></li>
                     <li><a data-toggle="tab" href="#mp">Manufacturing Plant</a></li>
+                   
                 </ul>
 
                 <div class="tab-content">
                     <div id="gi" class="tab-pane fade in active">
                         <div class="section-pannel">
                             <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group live-status-box">
-                                        <label>
-                                            MSME
-                                      <span class="checkbox-box productalreadylabel">
-                                          <input type="radio" name="msme" />No
-                                          <input type="radio" class="yes" name="msme" />Yes
-                                      </span>
-                                        </label>
-                                        <input type="text" class="form-control" placeholder="MSME Registration No" />
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group live-status-box">
-                                        <label>
-                                            Start Up
-                                      <span class="checkbox-box productalreadylabel">
-                                          <input type="radio" name="startup" />No
-                                          <input type="radio" class="yes" name="startup" />Yes
-                                      </span>
-                                        </label>
-                                        <input type="text" class="form-control" placeholder="Start Up Registration No" />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="section-pannel">
-                            <div class="row">
-                                <div class="col-md-3">
+                                <div class="col-md-4">
                                     <div class="form-group">
-                                        <label>Company Name</label>
+                                        <label>Company</label>
                                         <input type="text" class="form-control" />
                                     </div>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-4">
                                     <div class="form-group">
-                                        <label>Type of Company</label>
+                                        <label>Type</label>
                                         <select class="form-control">
                                             <option>Select</option>
                                             <option>Private Ltd Company</option>
@@ -81,17 +54,12 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-md-3">
+                                
+                                <div class="col-md-4">
                                     <div class="form-group">
-                                        <label>Company Website</label>
-                                        <input type="text" class="form-control" />
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label>Company Regsitration Number</label>
+                                        <label>Regsitration Number</label>
                                         <div class="multiinput">
-                                            <input type="text" class="form-control" />
+                                            <input type="text" style="margin-right:32px;" class="form-control" />
                                             <select class="form-control">
                                                 <option>Year</option>
                                             </select>
@@ -101,10 +69,8 @@
 
                                 </div>
                             </div>
-                        </div>
-                        <div class="section-pannel">
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <div class="form-group">
                                         <label>
                                             Quality System Certification:
@@ -116,25 +82,76 @@
                                         </label>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-8">
                                     <div class="form-group">
                                         <label>Number of Permanant Employees</label>
                                         <div class="multiinput">
-                                            <input type="text" class="form-control" placeholder="No. of Technical " />
+                                            <input type="text" class="form-control" style="margin-right: 20px;" placeholder="No. of Technical " />
                                             <input type="text" class="form-control" placeholder="No. of Administrative" />
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group productalreadylabel">
+                                         <label>
+                                            MSME
+                                          <span class="checkbox-box productalreadylabel" style="margin-left:10px;">
+                                              <input type="radio" name="msme">No
+                                              <input type="radio" name="msme">Yes
+                                          </span>
+
+                                        </label>
+                                        <span class="yes">
+                                            <input type="text" class="form-control" placeholder="VAN No">
+                                        </span>
+                                        
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>
+                                            Start Up
+                                          <span class="checkbox-box productalreadylabel" style="margin-left:10px;">
+                                              <input type="radio" name="msme">No
+                                              <input type="radio" name="msme">Yes
+                                          </span>
+
+                                        </label>
+                                        <span class="yes">
+                                            <input type="text" class="form-control" placeholder="Start Up Registration No">
+                                        </span>
+                                        
+                                    </div>
+                                </div>
+                            </div>
                         </div>
+                        
                         <div class="section-pannel">
                             <div class="row">
-                                <div class="col-md-3">
+                                <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Address</label>
-                                        <textarea class="form-control" style="height: 30px;"></textarea>
+                                        <textarea class="form-control" style="height: 34px; overflow:hidden"></textarea>
                                     </div>
 
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label>State</label>
+                                        <select class="form-control">
+                                            <option>Select</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                 <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label>District</label>
+                                        <select class="form-control">
+                                            <option>Select</option>
+                                        </select>
+                                    </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
@@ -148,33 +165,32 @@
                                         <input type="text" class="form-control" />
                                     </div>
                                 </div>
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label>State</label>
-                                        <select class="form-control">
-                                            <option>Select</option>
-                                        </select>
-                                    </div>
-                                </div>
+                                
                             </div>
                         </div>
                         <div class="section-pannel">
                             <div class="row">
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <div class="form-group">
                                         <label>Phone No</label>
                                         <input type="text" class="form-control" />
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <div class="form-group">
                                         <label>Fax</label>
                                         <input type="text" class="form-control" />
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <div class="form-group">
                                         <label>Email</label>
+                                        <input type="text" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label>Website</label>
                                         <input type="text" class="form-control" />
                                     </div>
                                 </div>
@@ -182,15 +198,21 @@
                         </div>
                         <div class="section-pannel">
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <div class="form-group">
                                         <label>PAN</label>
                                         <input type="text" class="form-control" />
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <div class="form-group">
-                                        <label>GST NUmber</label>
+                                        <label>CIN No</label>
+                                        <input type="text" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>GSTIN No</label>
                                         <input type="text" class="form-control" />
                                     </div>
                                 </div>
@@ -222,7 +244,7 @@
                                 <div class="col-md-12">
                                     <div class="form-group live-status-box">
                                         <label>
-                                            Wehther holds Defense Industry License
+                                            Whether holds Defense Industry License
                                       <span class="checkbox-box productalreadylabel">
                                           <input type="radio" name="license" />No
                                           <input type="radio" class="yes" name="license" />Yes
@@ -259,7 +281,7 @@
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <button class="btn btn-primary">Add</button>
+                                        <button class="btn btn-primary pull-right">Add</button>
                                     </div>
                                 </div>
 
@@ -273,11 +295,18 @@
                                             <th>Product Manufactured Location</th>
                                         </tr>
                                         <tr>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
+                                            <td>1</td>
+                                            <td>24565</td>
+                                            <td>16/05/19</td>
+                                            <td>Bolt</td>
+                                            <td>Noida</td>
+                                        </tr>
+                                        <tr>
+                                            <td>2</td>
+                                            <td>24565</td>
+                                            <td>16/05/19</td>
+                                            <td>Bolt</td>
+                                            <td>Noida</td>
                                         </tr>
                                     </table>
                                 </div>
@@ -306,7 +335,9 @@
                                                         <option>2017-2018</option>
                                                     </select>
                                                 </td>
-                                                <td></td>
+                                                <td>
+                                                    <input type="text" class="form-control">
+                                                </td>
 
                                             </tr>
                                             <tr>
@@ -319,7 +350,7 @@
                                                         <option>2017-2018</option>
                                                     </select>
                                                 </td>
-                                                <td></td>
+                                                <td><input type="text" class="form-control"></td>
 
                                             </tr>
                                             <tr>
@@ -332,7 +363,7 @@
                                                         <option>2017-2018</option>
                                                     </select>
                                                 </td>
-                                                <td></td>
+                                                <td><input type="text" class="form-control"></td>
 
                                             </tr>
                                         </table>
@@ -424,7 +455,7 @@
                                                         <option>2017-2018</option>
                                                     </select>
                                                 </td>
-                                                <td></td>
+                                                <td><input type="text" class="form-control"></td>
 
                                             </tr>
                                             <tr>
@@ -437,7 +468,7 @@
                                                         <option>2017-2018</option>
                                                     </select>
                                                 </td>
-                                                <td></td>
+                                                <td><input type="text" class="form-control"></td>
 
                                             </tr>
                                             <tr>
@@ -450,7 +481,7 @@
                                                         <option>2017-2018</option>
                                                     </select>
                                                 </td>
-                                                <td></td>
+                                                <td><input type="text" class="form-control"></td>
 
                                             </tr>
                                         </table>
@@ -687,18 +718,6 @@
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label>City</label>
-                                        <input type="text" class="form-control" />
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label>Pincode</label>
-                                        <input type="text" class="form-control" />
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
                                         <label>State</label>
                                         <select class="form-control">
                                             <option>Select</option>
@@ -713,6 +732,20 @@
                                         </select>
                                     </div>
                                 </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>City</label>
+                                        <input type="text" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Pincode</label>
+                                        <input type="text" class="form-control" />
+                                    </div>
+                                </div>
+                                
+                                
                             </div>
                         </div>
                         <div class="section-pannel">
@@ -781,10 +814,12 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <iframe src="https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d2965.0824050173574!2d-93.63905729999999!3d41.998507000000004!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1sWebFilings%2C+University+Boulevard%2C+Ames%2C+IA!5e0!3m2!1sen!2sus!4v1390839289319" width="100%" height="200" frameborder="0" style="border: 0"></iframe>
+                                   
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    
                     </div>
                 </div>
 

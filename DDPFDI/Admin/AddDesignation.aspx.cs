@@ -198,6 +198,9 @@ public partial class Admin_AddDesignation : System.Web.UI.Page
         else
         {
             ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not saved.')", true);
+          
+            
+
         }
     }
     protected void btnsubmit_Click(object sender, EventArgs e)
@@ -226,7 +229,9 @@ public partial class Admin_AddDesignation : System.Web.UI.Page
             }
             else
             {
+               
                 ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Select company !')", true);
+                //AlertSuccess.Visible = true;
             }
         }
         else
