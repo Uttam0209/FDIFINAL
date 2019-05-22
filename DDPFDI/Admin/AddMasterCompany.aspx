@@ -219,23 +219,25 @@
                                             <button type="button" class="close close1" data-dismiss="modal">&times;</button>
                                             <h4 class="modal-title">Detail</h4>
                                         </div>
-                                        <table class="table table-bordered">
-                                            <tr>
-                                                <td>Intrested
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <asp:Label ID="lblintrestedin" runat="server"></asp:Label></td>
-                                            </tr>
-                                            <td>
-                                                <asp:Label ID="lblmenuallot" runat="server"></asp:Label></td>
 
-                                        </table>
-                                    </div>
-                                    <div class="modal-footer">
+                                        <div class="selectedInterest is-flex">
+                                            <div class="box">
+                                                <h4 class="secondary-heading">Interested</h4>
+                                                <asp:Label ID="lblintrestedin" runat="server"></asp:Label>
+
+                                            </div>
+                                            <div class="box">
+                                                <h4 class="secondary-heading">MenuAloted</h4>
+                                                 <asp:Label ID="lblmenuallot" runat="server"></asp:Label>
+                                            </div>
+                                           
+                                        </div>
+                                        
+                                         <div class="modal-footer">
                                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                                 </div>
+                                    </div>
+                                   
                                 </div>
                                 
                             </div>
