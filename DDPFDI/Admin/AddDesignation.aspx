@@ -37,8 +37,6 @@
                                     </div>
                                 </div>
                             </div>
-
-
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="fdi-add-content">
@@ -46,8 +44,8 @@
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label class=" control-label">Designation </label>
-                                                        <asp:TextBox ID="txtDesignation" runat="server" required="" class="form-control form-cascade-control"></asp:TextBox><span data-toggle="tooltip" class="fa fa-question" title="Please enter master designation of company designation also display in division/unit section.Before add designation please check company dropdown are selected with company name" style="position: absolute; right: -25px; top: 28px;"></span>
+                                                        <label class=" control-label">Designation </label><span data-toggle="tooltip" class="fa fa-question" title="Please enter master designation of company designation also display in division/unit section.Before add designation please check company dropdown are selected with company name"></span>
+                                                        <asp:TextBox ID="txtDesignation" runat="server" required="" class="form-control form-cascade-control"></asp:TextBox>
                                                     </div>
                                                 </div>
 

@@ -55,7 +55,7 @@
                                     </div>
                                     <div class="row">
                                         <div class="col-sm-4">
-                                            <label>Select Company</label>
+                                            <label>Select Company</label><span data-toggle="tooltip" class="fa fa-question" title="Please select Company"></span>
                                             <asp:DropDownList runat="server" ID="ddlcompany" CssClass="form-control form-cascade-control" AutoPostBack="True" OnSelectedIndexChanged="ddlcompany_OnSelectedIndexChanged"></asp:DropDownList>
                                         </div>
                                         <div class="col-sm-4">
@@ -144,6 +144,7 @@
                                                                             </div>
                                                                         </ItemTemplate>
                                                                     </asp:TemplateField>
+                                                                    
                                                                     <asp:TemplateField HeaderText="S.No.">
                                                                         <ItemTemplate>
                                                                             <%#Container.DataItemIndex+1 %>
