@@ -204,7 +204,7 @@
                                                     <div class="col-md-4">
                                                         <div class="form-group">
                                                             <label>Platform</label>
-                                                            <asp:DropDownList runat="server" ID="ddlplatform" class="form-control" AutoPostBack="True" OnSelectedIndexChanged="ddlplatform_SelectedIndexChanged"></asp:DropDownList>
+                                                            <asp:DropDownList runat="server" ID="ddlplatform" class="form-control"></asp:DropDownList>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-4">

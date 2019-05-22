@@ -677,6 +677,14 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
                 txtmobile.Text = DtView.Rows[0]["NodalOfficerMobile"].ToString();
                 txttelephone.Text = DtView.Rows[0]["NodalOfficerTelephone"].ToString();
                 txtfax.Text = DtView.Rows[0]["NodalOfficerFax"].ToString();
+                if (DtView.Rows[0]["IsLoginActive"].ToString() == "Y")
+                {
+                    chkUser.Checked = true;
+                }
+                else if (DtView.Rows[0]["IsNodalOfficer"].ToString() == "Y")
+                {
+                    chkrole.Checked = true;
+                }
                 if (DtView.Rows[0]["Type"].ToString() == "Company")
                 {
                     BindCompany("Company");
