@@ -49,7 +49,6 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
 
                         strheadPage.Append("<li class=''><span>" + MmCval + "</span></li>");
                     }
-
                     divHeadPage.InnerHtml = strheadPage.ToString();
                     strheadPage.Append("</ul");
                     divOfficerEmail.Visible = false;
@@ -109,10 +108,8 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
                         gvcompanydetail.Visible = true;
                         GridCompanyBind();
                     }
-
                     lblMastcompany.Text = "Select Company ";
                     lblfactoryName.Text = "Select Divison/Plant ";
-
                     chkrole.Attributes.Add("onclick", "radioMe(event);");
                 }
 
@@ -226,7 +223,7 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
                 id = 2;
                 sRole = "Company";
             }
-            else if (Enc.DecryptData(Session["Type"].ToString()) == "Factory")
+            else if (Enc.DecryptData(Session["Type"].ToString()) == "Factory" || Enc.DecryptData(Session["Type"].ToString()) == "Division")
             {
 
                 sType = "CompanyName";

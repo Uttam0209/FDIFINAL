@@ -154,7 +154,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                 ddldivision.Enabled = false;
             }
         }
-        else if (mType == "Factory")
+        else if (mType == "Factory" || mType=="Division")
         {
             DtCompanyDDL = Lo.RetriveMasterData(0, mRefNo, "Company1", 0, "", "", "CompanyName");
             if (DtCompanyDDL.Rows.Count > 0)

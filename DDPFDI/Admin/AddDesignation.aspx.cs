@@ -46,12 +46,10 @@ public partial class Admin_AddDesignation : System.Web.UI.Page
                 divHeadPage.InnerHtml = strheadPage.ToString();
                 strheadPage.Append("</ul");
                 BindMasterCompany();
-
             }
             ViewState["UserLoginEmail"] = Session["User"].ToString();
             mType = Enc.DecryptData(Session["Type"].ToString());
             mRefNo = Session["CompanyRefNo"].ToString();
-
             if (Request.QueryString["mcurrentcompRefNo"] != null)
             {
                 EditCode();
@@ -113,7 +111,7 @@ public partial class Admin_AddDesignation : System.Web.UI.Page
             id = 2;
             sRole = "Company";
         }
-        else if (Enc.DecryptData(Session["Type"].ToString()) == "Factory")
+        else if (Enc.DecryptData(Session["Type"].ToString()) == "Factory" || Enc.DecryptData(Session["Type"].ToString()) == "Division")
         {
 
             sType = "CompanyName";

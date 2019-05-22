@@ -356,7 +356,7 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
                 ddldivision.Enabled = false;
             }
         }
-        else if (hidType.Value == "Factory")
+        else if (hidType.Value == "Factory" || hidType.Value == "Division")
         {
             DtCompanyDDL = Lo.RetriveMasterData(0, mRefNo, "Company1", 0, "", "", "CompanyName");
             if (DtCompanyDDL.Rows.Count > 0)
