@@ -56,7 +56,6 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
                     mRefNo = Session["CompanyRefNo"].ToString();
                     ViewState["UserLoginEmail"] = objEnc.DecryptData(Session["User"].ToString());
                 }
-
                 if (Request.QueryString["mcurrentcompRefNo"] != null)
                 {
                     EditCode();
@@ -71,7 +70,6 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
         }
     }
     #region Load
-
     public void GridViewNodalOfficerBind(string mRefNo, string mRole)
     {
         DataTable DtGrid = Lo.RetriveAllNodalOfficer(mRefNo, mRole);
@@ -85,7 +83,7 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
         {
             gvViewNodalOfficer.Visible = false;
         }
-        DataRow[] foundRows = DtGrid.Select("IsNodalOfficer='Y'");
+        DataRow[] foundRows = DtGrid.Select("IsNodalOfficer='Nodal Officer'");
         if (foundRows.Length != 0)
         {
             chkrole.Checked = false;
@@ -96,7 +94,6 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
             chkrole.Enabled = true;
         }
     }
-
     protected void BindCompany()
     {
         if (hidType.Value == "SuperAdmin" || hidType.Value == "Admin")
@@ -233,7 +230,6 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
             }
         }
     }
-
     protected void BindCompany(string mType)
     {
         if (mType == "SuperAdmin" || mType == "Admin")
@@ -511,7 +507,7 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
             hySaveNodal["CompanyRefNo"] = ddlcompany.SelectedItem.Value;
             RefNo = ddlcompany.SelectedItem.Value;
         }
-        else if (ddlcompany.SelectedValue != "Select" && ddldivision.SelectedValue != "Select" && ddlunit.SelectedValue == "Select")
+        else if (ddlcompany.SelectedValue != "Select" && ddldivision.SelectedValue != "Select" && ddlunit.SelectedValue == "" || ddlunit.SelectedItem.Value == "Select")
         {
             hySaveNodal["CompanyRefNo"] = ddldivision.SelectedItem.Value;
             RefNo = ddldivision.SelectedItem.Value;
@@ -540,7 +536,7 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
         }
         hySaveNodal["CreatedBy"] = ViewState["UserLoginEmail"].ToString();
         string Str = Lo.SaveMasterNodal(hySaveNodal, out _sysMsg, out _msg);
-        if (Str == "Save")
+        if (Str != "" && Str != null)
         {
             if (ddlcompany.SelectedValue != "Select" && ddldivision.SelectedValue == "Select")
             {
@@ -556,13 +552,13 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
             }
             if (chkrole.Checked)
             {
-                SendEmailCode();
+                SendEmailCode(Str);
             }
             else
             {
                 if (chkUser.Checked)
                 {
-                    SendEmailCode();
+                    SendEmailCode(Str);
                 }
                 else
                 { }
@@ -577,7 +573,7 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
     }
     #endregion
     #region Send Mail
-    public void SendEmailCode()
+    public void SendEmailCode(string empid)
     {
         try
         {
@@ -587,11 +583,11 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
                 body = reader.ReadToEnd();
             }
             body = body.Replace("{UserName}", txtemailid.Text);
-            body = body.Replace("{refno}", objEnc.EncryptData(RefNo));
+            body = body.Replace("{refno}", objEnc.EncryptData(empid));
             body = body.Replace("{mcurid}", Resturl(56));
             SendMail s;
             s = new SendMail();
-            s.CreateMail("aeroindia-ddp@gov.in", txtemailid.Text, "Password Reset Email", body);
+            s.CreateMail("aeroindia-ddp@gov.in", txtemailid.Text, "Create Password Email", body);
             s.sendMail();
             // ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Create password email send successfully.')", true);
         }

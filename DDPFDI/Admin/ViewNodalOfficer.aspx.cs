@@ -289,7 +289,7 @@ public partial class Admin_ViewNodalOfficer : System.Web.UI.Page
                 body = body.Replace("{curid}", Resturl(56));
                 SendMail s;
                 s = new SendMail();
-                s.CreateMail("aeroindia-ddp@gov.in", nodelemail.Text, "Password Reset Email", body);
+                s.CreateMail("aeroindia-ddp@gov.in", nodelemail.Text, "Create Password Email", body);
                 s.sendMail();
                 ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Create password email send successfully.')", true);
             }
