@@ -39,7 +39,7 @@
                                         </div>
                                         <div class="col-lg-4 col-sm-6 col-xs-12">
                                             <div class="white-box analytics-info total-fdi">
-                                                <h3 class="box-title">Total FDI</h3>
+                                                <h3 class="box-title">Total Division</h3>
                                                 <ul class="list-inline two-part">
 
                                                     <li><i class="ti-arrow-up text-purple"></i>
@@ -53,7 +53,7 @@
                                         </div>
                                         <div class="col-lg-4 col-sm-6 col-xs-12">
                                             <div class="white-box analytics-info last-fdi">
-                                                <h3 class="box-title">Last Year FDI</h3>
+                                                <h3 class="box-title">Total Unit</h3>
                                                 <ul class="list-inline two-part">
 
                                                     <li>
