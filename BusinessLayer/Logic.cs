@@ -16,13 +16,13 @@ namespace BusinessLayer
             return ds;
         }
         #region Login"
-        public string VerifyEmployee(HybridDictionary hyLogin, out string _msg , out string Defaultpage)
+        public string VerifyEmployee(HybridDictionary hyLogin, out string _msg, out string Defaultpage)
         {
             return SqlHelper.Instance.VerifyEmployee(hyLogin, out _msg, out Defaultpage);
         }
         #endregion
         #region Email and Company Name"
-        public string VerifyEmailandCompany(string strEmail,string strCompany, out string _msg)
+        public string VerifyEmailandCompany(string strEmail, string strCompany, out string _msg)
         {
             return SqlHelper.Instance.VerifyEmailandCompany(strEmail, strCompany, out _msg);
         }
@@ -36,6 +36,14 @@ namespace BusinessLayer
         {
             return SqlHelper.Instance.SaveMasterCompany(HyCompSave, out _sysMsg, out _msg);
         }
+        public string SaveMasterDivision(HybridDictionary hysaveDivision, out string _sysMsg, out string _msg)
+        {
+            return SqlHelper.Instance.SaveMasterDivision(hysaveDivision, out _sysMsg, out _msg);
+        }
+        public string SaveMasterUnit(HybridDictionary hysaveUnit, out string _sysMsg, out string _msg)
+        {
+            return SqlHelper.Instance.SaveMasterUnit(hysaveUnit, out _sysMsg, out _msg);
+        }
         public string SaveMasterComp(HybridDictionary hysavecomp, out string _sysMsg, out string _msg)
         {
             return SqlHelper.Instance.SaveMasterComp(hysavecomp, out _sysMsg, out _msg);
@@ -44,9 +52,9 @@ namespace BusinessLayer
         {
             return SqlHelper.Instance.SaveFactoryComp(hysavecomp, out _sysMsg, out _msg);
         }
-        public string SaveUnitComp(HybridDictionary hysavecomp, out string _sysMsg, out string _msg)
+        public string SaveUnitComp(HybridDictionary hysaveunit, out string _sysMsg, out string _msg)
         {
-            return SqlHelper.Instance.SaveUnitComp(hysavecomp, out _sysMsg, out _msg);
+            return SqlHelper.Instance.SaveUnitComp(hysaveunit, out _sysMsg, out _msg);
         }
         public string SaveMasterCategroyMenu(HybridDictionary hyMasterCategory, out string _sysMsg, out string _msg)
         {
@@ -56,13 +64,21 @@ namespace BusinessLayer
         {
             return SqlHelper.Instance.SaveMasterNodal(hySaveNodal, out _sysMsg, out _msg);
         }
+        public string SaveCodeProduct(HybridDictionary hyProduct, DataTable DtImage, out string _sysMsg, out string _msg, string Criteria)
+        {
+            return SqlHelper.Instance.SaveCodeProduct(hyProduct, DtImage, out _sysMsg, out _msg, Criteria);
+        }
+        public string SaveCompDesignation(HybridDictionary hysavecomp, out string _sysMsg, out string _msg)
+        {
+            return SqlHelper.Instance.SaveCompDesignation(hysavecomp, out _sysMsg, out _msg);
+        }
         #endregion
         #region UpdateCode
-        public string UpdateLoginPassword(string NewPass, string OldPass, string User,string type)
+        public string UpdateLoginPassword(string NewPass, string OldPass, string User, string type)
         {
-            return SqlHelper.Instance.UpdateLoginPassword(NewPass, OldPass, User,type);
+            return SqlHelper.Instance.UpdateLoginPassword(NewPass, OldPass, User, type);
         }
- 
+
         #endregion
         #region retriveCode
         public DataTable RetriveGridView(string ID)
@@ -78,29 +94,49 @@ namespace BusinessLayer
             return SqlHelper.Instance.RetriveState(text);
         }
 
-
-        public DataTable RetriveGridViewCompany(string ID,string FactoryRefNo,string UnitRefNo,string Purpose)
+        public DataTable RetriveAllCompany(string UnitRefNo, string Role)
         {
-            return SqlHelper.Instance.RetriveGridViewCompany(ID, FactoryRefNo, UnitRefNo,Purpose);
+            return SqlHelper.Instance.RetriveAllCompany(UnitRefNo, Role);
         }
-
-        public DataTable RetriveMasterData(Int64 Companyid, string strRefNo, string strRole, int MenuId,string strMenuUrl, string strInterestedAreaFlag, string strCriteria)
+        public DataTable RetriveAllNodalOfficer(string UnitRefNo, string Role)
         {
-            return SqlHelper.Instance.RetriveMasterData(Companyid, strRefNo, strRole, MenuId, strMenuUrl,strInterestedAreaFlag, strCriteria);
+            return SqlHelper.Instance.RetriveAllNodalOfficer(UnitRefNo, Role);
         }
-        public DataTable RetriveMasterCategoryDate(Int64 CatID, string CatName, string SCatValue, string Criteria)
+        public DataTable RetriveGridViewCompany(string ID, string FactoryRefNo, string UnitRefNo, string Purpose)
         {
-            return SqlHelper.Instance.RetriveMasterCategoryDate(CatID, CatName, SCatValue, Criteria);
+            return SqlHelper.Instance.RetriveGridViewCompany(ID, FactoryRefNo, UnitRefNo, Purpose);
         }
-        public DataTable RetriveMasterSubCategoryDate(Int64 SCatID, string SCatName, string PId, string Criteria, string CompRefNo)
+        public DataTable RetriveProductCode(string CompanyRefNo, string ProductRefNo, string Purpose, string Type)
         {
-            return SqlHelper.Instance.RetriveMasterSubCategoryDate(SCatID, SCatName, PId, Criteria,CompRefNo);
+            return SqlHelper.Instance.RetriveProductCode(CompanyRefNo, ProductRefNo, Purpose, Type);
+        }
+        public DataTable RetriveMasterData(Int64 Companyid, string strRefNo, string strRole, int MenuId, string strMenuUrl, string strInterestedAreaFlag, string strCriteria)
+        {
+            return SqlHelper.Instance.RetriveMasterData(Companyid, strRefNo, strRole, MenuId, strMenuUrl, strInterestedAreaFlag, strCriteria);
+        }
+        public DataTable RetriveMasterCategoryDate(Int64 CatID, string CatName, string SCatValue, string Flag, string Active, string Criteria, string CreatedBy)
+        {
+            return SqlHelper.Instance.RetriveMasterCategoryDate(CatID, CatName, SCatValue, Flag, Active, Criteria, CreatedBy);
+        }
+        public DataTable RetriveMasterSubCategoryDate(Int64 SCatID, string SCatName, string PId, string Criteria, string CompRefNo, string CreatedBy)
+        {
+            return SqlHelper.Instance.RetriveMasterSubCategoryDate(SCatID, SCatName, PId, Criteria, CompRefNo, CreatedBy);
+        }
+        public DataTable RetriveIntresteData(string CompRefNo)
+        {
+            string query = "select * from fn_GetInterestedInValue('" + CompRefNo + "')";
+            return SqlHelper.Instance.GetDataset(query).Tables[0];
+            //return SqlHelper.Instance.RetriveIntresteData(CompRefNo);
+        }
+        public DataTable RetriveForgotPasswordEmail(string Email, string Type)
+        {
+            return SqlHelper.Instance.RetriveForgotPasswordEmail(Email, Type);
         }
         #endregion
         #region DeleteCode
-        public string DeleteRecord(string CompRefNo,string Criteria)
+        public string DeleteRecord(string CompRefNo, string Criteria)
         {
-            return SqlHelper.Instance.DeleteRecord(CompRefNo,Criteria);
+            return SqlHelper.Instance.DeleteRecord(CompRefNo, Criteria);
         }
         #endregion
         #region SearchCode
@@ -114,9 +150,9 @@ namespace BusinessLayer
         }
         #endregion
         #region "DashBoard"
-        public DataTable RetriveAggregateValue(string function, string entity)
+        public DataTable RetriveAggregateValue(string action, string entity)
         {
-            return SqlHelper.Instance.RetriveAggregateValue(function, entity);
+            return SqlHelper.Instance.GetDataTable("select * from fn_GetAggregateValue('" + action + "','" + entity + "')");
         }
         public DataTable RetriveAggregateValueWithParam(string function, string entity, string clmn, string val)
         {

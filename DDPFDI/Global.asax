@@ -50,6 +50,13 @@
         routes.MapPageRoute("Startup", "Startup", "~/Admin/Startup.aspx", true);
         routes.MapPageRoute("Specilization", "Specilization", "~/Admin/Specilization.aspx", true);
         routes.MapPageRoute("View-Category", "View-Category", "~/Admin/ViewCategory.aspx", true);
+        routes.MapPageRoute("View-Product", "View-Product", "~/Admin/ViewProduct.aspx", true);
         routes.MapPageRoute("Add-Nodal", "Add-Nodal", "~/Admin/AddNodalOfficer.aspx", true);
+        routes.MapPageRoute("Add-Designation", "Add-Designation", "~/Admin/AddDesignation.aspx", true);
+        routes.MapPageRoute("View-Designation", "View-Designation", "~/Admin/ViewDesignation.aspx", true);
+        routes.MapPageRoute("View-NodalOfficer", "View-NodalOfficer", "~/Admin/ViewNodalOfficer.aspx", true);
+        routes.MapPageRoute("Company-Category", "Company-Category", "~/Admin/AddCompanyCategory.aspx", true);
+        routes.MapPageRoute("ViewCompany-Category", "ViewCompany-Category", "~/Admin/ViewCompanyCategory.aspx", true);
+        routes.MapPageRoute("Industry", "Industry", "~/Admin/Industry.aspx", true);
     }    
 </script>

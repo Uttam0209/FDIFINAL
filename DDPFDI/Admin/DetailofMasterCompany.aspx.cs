@@ -44,10 +44,41 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
                 mType = objEnc.DecryptData(Session["Type"].ToString());
                 mRefNo = Session["CompanyRefNo"].ToString();
                 BindCompany();
-                BindGridView();
+
+                if (mType == "SuperAdmin" || mType == "Admin")
+                {
+                    btnAddCompany.Visible = true;
+                    btnAddDivision.Visible = true;
+                    btnAddUnit.Visible = true;
+                }
+
             }
         }
     }
+
+    protected void btnAddCompany_Click(object sender, EventArgs e)
+    {
+        string stridNew = Request.QueryString["id"].ToString().Replace(" ", "+");
+        string mstrid = objEnc.EncryptData((objEnc.DecryptData(stridNew)));
+        Response.Redirect("AddMasterCompany?mu=" + objEnc.EncryptData("Panel") + "&id=" + mstrid);
+
+    }
+    protected void btnAddDivision_Click(object sender, EventArgs e)
+    {
+        string stridNew = Request.QueryString["id"].ToString().Replace(" ", "+");
+        string mstrid = objEnc.EncryptData((objEnc.DecryptData(stridNew)));
+        Response.Redirect("AddMasterCompany?mu=" + objEnc.EncryptData("Panel2") + "&id=" + mstrid);
+
+    }
+    protected void btnAddUnit_Click(object sender, EventArgs e)
+    {
+
+        string stridNew = Request.QueryString["id"].ToString().Replace(" ", "+");
+        string mstrid = objEnc.EncryptData((objEnc.DecryptData(stridNew)));
+        Response.Redirect("AddMasterCompany?mu=" + objEnc.EncryptData("Panel3") + "&id=" + mstrid);
+
+    }
+
     #region Load
     protected void BindGridView(string sortExpression = null)
     {
@@ -138,13 +169,13 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
     }
     protected void BindCompany()
     {
-        if (mType == "SuperAdmin")
+        if (mType == "SuperAdmin" || mType == "Admin")
         {
             DtCompanyDDL = Lo.RetriveMasterData(0, "", "", 0, "", "", "Select");
             if (DtCompanyDDL.Rows.Count > 0)
             {
                 Co.FillDropdownlist(ddlcompany, DtCompanyDDL, "CompanyName", "CompanyRefNo");
-                ddlcompany.Items.Insert(0, "All");
+                ddlcompany.Items.Insert(0, "Select");
                 ddlcompany.Enabled = true;
             }
             else
@@ -155,9 +186,7 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
             ddldivision.Visible = false;
             ddlunit.Visible = false;
         }
-        else if (mType == "Admin")
-        {
-        }
+
         else if (mType == "Company")
         {
             DtCompanyDDL = Lo.RetriveMasterData(0, mRefNo, "Company", 0, "", "", "CompanyName");
@@ -165,6 +194,7 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
             {
                 Co.FillDropdownlist(ddlcompany, DtCompanyDDL, "CompanyName", "CompanyRefNo");
                 ddlcompany.Enabled = false;
+                BindGridView();
             }
             else
             {
@@ -174,7 +204,7 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
             if (DtCompanyDDL.Rows.Count > 0)
             {
                 Co.FillDropdownlist(ddldivision, DtCompanyDDL, "FactoryName", "FactoryRefNo");
-                ddldivision.Items.Insert(0, "All");
+                ddldivision.Items.Insert(0, "Select");
                 if (mType == "Company")
                 {
                     lblselectdivison.Visible = true;
@@ -191,7 +221,7 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
                 ddldivision.Enabled = false;
             }
         }
-        else if (mType == "Factory")
+        else if (mType == "Factory" || mType == "Division")
         {
             DtCompanyDDL = Lo.RetriveMasterData(0, mRefNo, "Company1", 0, "", "", "CompanyName");
             if (DtCompanyDDL.Rows.Count > 0)
@@ -234,7 +264,7 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
             if (DtCompanyDDL.Rows.Count > 0)
             {
                 Co.FillDropdownlist(ddlunit, DtCompanyDDL, "UnitName", "UnitRefNo");
-                ddlunit.Items.Insert(0, "All");
+                ddlunit.Items.Insert(0, "Select");
                 ddlunit.Enabled = true;
                 lblselectunit.Visible = true;
                 DataTable DtGrid = Lo.RetriveGridViewCompany("", ddldivision.SelectedItem.Value, ddlunit.SelectedItem.Value, "InnerGVUnitID");
@@ -353,17 +383,28 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
             if (DtView.Rows.Count > 0)
             {
                 lblrefno.Text = DtView.Rows[0]["CompanyRefNo"].ToString();
-                lbladdress.Text = DtView.Rows[0]["Address"].ToString();
-                lblcinno.Text = DtView.Rows[0]["CINNo"].ToString();
-                lblceoname.Text = DtView.Rows[0]["CEOName"].ToString();
                 lblcompanyname.Text = DtView.Rows[0]["CompanyName"].ToString();
-                lblcontactperemailid.Text = DtView.Rows[0]["ContactPersonEmailID"].ToString();
-                lblcontactpersonmobno.Text = DtView.Rows[0]["ContactPersonContactNo"].ToString();
-                lblcontactpersonname.Text = DtView.Rows[0]["ContactPersonName"].ToString();
-                lblceoemail.Text = DtView.Rows[0]["CEOEmail"].ToString();
+                lbladdress.Text = DtView.Rows[0]["Address"].ToString();
+                lblstate.Text = DtView.Rows[0]["StateName"].ToString();
                 lblpanno.Text = DtView.Rows[0]["PANNo"].ToString();
                 lblpincode.Text = DtView.Rows[0]["Pincode"].ToString();
-                lblstate.Text = DtView.Rows[0]["StateName"].ToString();
+                lblcinno.Text = DtView.Rows[0]["CINNo"].ToString();
+                lblceoname.Text = DtView.Rows[0]["CEOName"].ToString();
+                lblceoemail.Text = DtView.Rows[0]["CEOEmail"].ToString();
+                lblTelephoneNo.Text = DtView.Rows[0]["TelephoneNo"].ToString();
+                lblFaxNo.Text = DtView.Rows[0]["FaxNo"].ToString();
+                lblEmailID.Text = DtView.Rows[0]["EmailID"].ToString();
+                lblWebsite.Text = DtView.Rows[0]["Website"].ToString();
+                lblGSTNo.Text = DtView.Rows[0]["GSTNo"].ToString();
+                lblNodalEmail.Text = DtView.Rows[0]["ContactPersonEmailID"].ToString();
+                lblNodalOfficerName.Text = DtView.Rows[0]["NodalOficerName"].ToString();
+                lblAad_Mobile.Text = DtView.Rows[0]["latitude"].ToString();
+                lblLongitude.Text = DtView.Rows[0]["longitude"].ToString();
+                lblFacebook.Text = DtView.Rows[0]["Facebook"].ToString();
+                lblInstagram.Text = DtView.Rows[0]["Instagram"].ToString();
+                lblTwitter.Text = DtView.Rows[0]["Twitter"].ToString();
+                lblLinkedin.Text = DtView.Rows[0]["Linkedin"].ToString();
+
                 ScriptManager.RegisterStartupScript(this, this.GetType(), "changePass", "showPopup();", true);
             }
         }
@@ -410,9 +451,18 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
         {
             GridViewRow gvr = (GridViewRow)((Control)e.CommandSource).NamingContainer;
             int rowIndex = gvr.RowIndex;
-           // string Role = (gvcompanydetail.Rows[rowIndex].FindControl("lblfactoryrole") as Label).Text;
-            string Role = "ff";
-            Response.Redirect("Add-Company?mrcreaterole=" + objEnc.EncryptData(Role) + "&mcurrentFactroyRefNo=" + (objEnc.EncryptData(e.CommandArgument.ToString()))+"&id="+Request.QueryString["id"].ToString());
+            //string Role = (gvcompanydetail.Rows[rowIndex].FindControl("lblfactoryrole") as Label).Text;
+            string Role = "Factory";
+            string stridNew = Request.QueryString["id"].ToString().Replace(" ", "+");
+            string mstrid = objEnc.EncryptData((objEnc.DecryptData(stridNew) + " >> Edit Division"));
+            try
+            {
+                Response.Redirect("Add-Company?mrcreaterole=" + objEnc.EncryptData(Role) + "&mcurrentcompRefNo=" + (objEnc.EncryptData(e.CommandArgument.ToString())) + "&id=" + mstrid, false);
+            }
+            catch (Exception ex)
+            {
+                ex.ToString();
+            }
         }
         else if (e.CommandName == "ViewfactoryComp")
         {
@@ -420,15 +470,23 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
             if (DtView.Rows.Count > 0)
             {
                 lblfacrefno.Text = DtView.Rows[0]["FactoryRefNo"].ToString();
-                lblfacaddress.Text = DtView.Rows[0]["FactoryAddress"].ToString();
-                lblfaccin.Text = DtView.Rows[0]["FactoryCINNo"].ToString();
-                lblfacname.Text = DtView.Rows[0]["FactoryName"].ToString();
-                lblfacemail.Text = DtView.Rows[0]["FactoryEmailId"].ToString();
-                lblfacmobno.Text = DtView.Rows[0]["FactoryContactNo"].ToString();
-                lblfacnodalname.Text = DtView.Rows[0]["FactoryNodalPerson"].ToString();
-                lblfacpan.Text = DtView.Rows[0]["FactoryPANNo"].ToString();
-                lblfacpincode.Text = DtView.Rows[0]["FactoryPincode"].ToString();
-                lblfacstate.Text = DtView.Rows[0]["StateName"].ToString();
+                lblDivAddress.Text = DtView.Rows[0]["FactoryAddress"].ToString();
+                lblDivName.Text = DtView.Rows[0]["FactoryName"].ToString();
+                lblDivEmail.Text = DtView.Rows[0]["FactoryEmailID"].ToString();
+                lblDivWebsite.Text = DtView.Rows[0]["FactoryWebsite"].ToString();
+                lblDivPincode.Text = DtView.Rows[0]["FactoryPincode"].ToString();
+                lblDivCeoName.Text = DtView.Rows[0]["FactoryCEOName"].ToString();
+                lblDivCeoEmail.Text = DtView.Rows[0]["FactoryCEOEmail"].ToString();
+                lblDivFax.Text = DtView.Rows[0]["FactoryFaxNo"].ToString();
+                lblDivState.Text = DtView.Rows[0]["StateName"].ToString();
+                lblDivConNo.Text = DtView.Rows[0]["FactoryTelephoneNo"].ToString();
+                //lblDivNodalEmail.Text = DtView.Rows[0]["FactoryNodalOfficerEmailId"].ToString();
+                //lblDivFacebook.Text = DtView.Rows[0]["FactoryFacebook"].ToString();
+                //lblDivTwitter.Text = DtView.Rows[0]["FactoryTwitter"].ToString();
+                //lblDivInstagram.Text = DtView.Rows[0]["FactoryInstagram"].ToString();
+                //lblDivLinkedin.Text = DtView.Rows[0]["FactoryLinkedin"].ToString();
+                lblDivlatitude.Text = DtView.Rows[0]["Factorylatitude"].ToString();
+                lblDivLongitude.Text = DtView.Rows[0]["Factorylongitude"].ToString();
                 ScriptManager.RegisterStartupScript(this, this.GetType(), "divfactoryshow", "showPopup1();", true);
             }
         }
@@ -475,8 +533,11 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
         {
             GridViewRow gvr = (GridViewRow)((Control)e.CommandSource).NamingContainer;
             int rowIndex = gvr.RowIndex;
-            string Role = (gvcompanydetail.Rows[rowIndex].FindControl("lblunitrole") as Label).Text;
-            Response.Redirect("Add-Company?mrcreaterole=" + objEnc.EncryptData(Role) + "&mcurrentUnitRefNo=" + (objEnc.EncryptData(e.CommandArgument.ToString())) + "&id=" + Request.QueryString["id"].ToString());
+            //string Role = (gvcompanydetail.Rows[rowIndex].FindControl("lblunitrole") as Label).Text;
+            string Role = "Unit";
+            string stridNew = Request.QueryString["id"].ToString().Replace(" ", "+");
+            string mstrid = objEnc.EncryptData((objEnc.DecryptData(stridNew) + " >> Edit Unit"));
+            Response.Redirect("Add-Company?mrcreaterole=" + objEnc.EncryptData(Role) + "&mcurrentcompRefNo=" + (objEnc.EncryptData(e.CommandArgument.ToString())) + "&id=" + mstrid, false);
         }
         else if (e.CommandName == "unitViewComp")
         {
@@ -484,13 +545,21 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
             if (DtView.Rows.Count > 0)
             {
                 lblurefno.Text = DtView.Rows[0]["UnitRefNo"].ToString();
-                lbluaddress.Text = DtView.Rows[0]["UnitAddress"].ToString();
-                lbluname.Text = DtView.Rows[0]["UnitName"].ToString();
-                lbluemail.Text = DtView.Rows[0]["UnitEmailId"].ToString();
-                lblnofficialcontact.Text = DtView.Rows[0]["UnitContactNo"].ToString();
-                lblnodalname.Text = DtView.Rows[0]["UnitNodalPerson"].ToString();
-                lblupin.Text = DtView.Rows[0]["UnitPincode"].ToString();
-                lblustate.Text = DtView.Rows[0]["StateName"].ToString();
+                lblUnitAddress.Text = DtView.Rows[0]["UnitAddress"].ToString();
+                lblUnitName.Text = DtView.Rows[0]["UnitName"].ToString();
+                lblUnitEmail.Text = DtView.Rows[0]["UnitEmailId"].ToString();
+                lblUnitPin.Text = DtView.Rows[0]["UnitPincode"].ToString();
+                lblUnitWebsite.Text = DtView.Rows[0]["UnitWebsite"].ToString();
+                lblUnitState.Text = DtView.Rows[0]["StateName"].ToString();
+                lblUnitCeoName.Text = DtView.Rows[0]["UnitCEOName"].ToString();
+                lblUnitCeoEmail.Text = DtView.Rows[0]["UnitCEOEmail"].ToString();
+                lblUnitFacebook.Text = DtView.Rows[0]["UnitFacebook"].ToString();
+                lblUnitInsta.Text = DtView.Rows[0]["UnitInstagram"].ToString();
+                lblUnitLink.Text = DtView.Rows[0]["UnitLinkedin"].ToString();
+                lblUnitTwitter.Text = DtView.Rows[0]["UnitTwitter"].ToString();
+                lblUnitNodalEmail.Text = DtView.Rows[0]["UnitNodalOfficerEmailId"].ToString();
+                lblUnitLatitude.Text = DtView.Rows[0]["Unitlatitude"].ToString();
+                lblUnitLongitude.Text = DtView.Rows[0]["Unitlongitude"].ToString();
                 ScriptManager.RegisterStartupScript(this, this.GetType(), "divunitshow", "showPopup2();", true);
             }
         }
@@ -535,119 +604,33 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
     #region RowDatabound
     protected void OnRowDataBound(object sender, GridViewRowEventArgs e)
     {
+
         if (e.Row.RowType == DataControlRowType.DataRow)
         {
             Label lblrefno = e.Row.FindControl("lblrefno") as Label;
             GridView gvfactory = e.Row.FindControl("gvfactory") as GridView;
+
+            if (mType == "Factory" || mType == "Unit")
+            {
+                LinkButton lnkCompView = e.Row.FindControl("lblview") as LinkButton;
+                LinkButton lnkCompEdit = e.Row.FindControl("lbledit") as LinkButton;
+                lnkCompView.Visible = false;
+                lnkCompEdit.Visible = false;
+            }
+
             DataTable DtGrid = Lo.RetriveGridViewCompany(lblrefno.Text, "", "", "InnerGridViewFactory");
 
             if (DtGrid.Rows.Count > 0)
             {
                 gvfactory.DataSource = DtGrid;
                 gvfactory.DataBind();
-            }
 
-            DataTable dtCompany = Lo.RetriveMasterData(0, "", "", 0, currentPage, "", "btn");
-            if (dtCompany.Rows.Count > 0)
+            }
+            else
             {
-                if (dtCompany.Rows[0]["Company"].ToString() == "1")
-                {
-                    LinkButton lbledit = e.Row.FindControl("lbledit") as LinkButton;
-                    LinkButton lblview = (LinkButton)e.Row.FindControl("lblview") as LinkButton;
-                    LinkButton lbldel = (LinkButton)e.Row.FindControl("lbldel") as LinkButton;
-                    lbledit.Visible = false;
-                    lblview.Visible = true;
-                    lbldel.Visible = false;
-                    //LinkButton lbleditfactory = (LinkButton)e.Row.FindControl("lbleditfactory");
-                    //LinkButton lblviewfactory = (LinkButton)e.Row.FindControl("lblviewfactory");
-                    //LinkButton lbldelfactory = (LinkButton)e.Row.FindControl("lbldelfactory");
-                    //if (lbleditfactory != null)
-                    //{
-                    //lbleditfactory.Visible = false;
-                    //lblviewfactory.Visible = true;
-                    //lbldelfactory.Visible = false;
-                    // }
 
-
-
-
-                }
-                else if (dtCompany.Rows[0]["Company"].ToString() == "2")
-                {
-                    LinkButton lbledit = (LinkButton)e.Row.FindControl("lbledit") as LinkButton;
-                    LinkButton lblview = (LinkButton)e.Row.FindControl("lblview") as LinkButton;
-                    LinkButton lbldel = (LinkButton)e.Row.FindControl("lbldel") as LinkButton;
-                    lbledit.Visible = true;
-                    lblview.Visible = true;
-                    lbldel.Visible = false;
-                    LinkButton lbleditfactory = (LinkButton)e.Row.FindControl("lbleditfactory") as LinkButton;
-                    LinkButton lblviewfactory = (LinkButton)e.Row.FindControl("lblviewfactory") as LinkButton;
-                    LinkButton lbldelfactory = (LinkButton)e.Row.FindControl("lbldelfactory") as LinkButton;
-                    // if (lbleditfactory != null)
-                    // {
-                    //lbleditfactory.Visible = true;
-                    //lblviewfactory.Visible = true;
-                    //lbldelfactory.Visible = false;
-                    // }
-                }
-                else if (dtCompany.Rows[0]["Company"].ToString() == "3")
-                {
-                    LinkButton lbledit = (LinkButton)e.Row.FindControl("lbledit") as LinkButton;
-                    LinkButton lblview = (LinkButton)e.Row.FindControl("lblview") as LinkButton;
-                    LinkButton lbldel = (LinkButton)e.Row.FindControl("lbldel") as LinkButton;
-                    lbledit.Visible = true;
-                    lblview.Visible = true;
-                    lbldel.Visible = true;
-                    //LinkButton lbleditfactory = (LinkButton)e.Row.FindControl("lbleditfactory");
-                    //LinkButton lblviewfactory = (LinkButton)e.Row.FindControl("lblviewfactory");
-                    //LinkButton lbldelfactory = (LinkButton)e.Row.FindControl("lbldelfactory");
-                    //  if (lbleditfactory != null)
-                    //  {
-                    //lbleditfactory.Visible = true;
-                    //lblviewfactory.Visible = true;
-                    //lbldelfactory.Visible = true;
-                    // }
-
-                }
-                else if (dtCompany.Rows[0]["Factory"].ToString() == "2")
-                {
-                    // btndemofirst.Visible = true;
-                    //  btnDelete.Visible = false;
-                }
-                else if (dtCompany.Rows[0]["Factory"].ToString() == "3")
-                {
-                    //   btndemofirst.Visible = true;
-                    //   btnDelete.Visible = true;
-                }
-                else if (dtCompany.Rows[0]["Unit"].ToString() == "2")
-                {
-                    //     btndemofirst.Visible = true;
-                    //     btnDelete.Visible = false;
-                }
-                else if (dtCompany.Rows[0]["Unit"].ToString() == "3")
-                {
-                    //     btndemofirst.Visible = true;
-                    //    btnDelete.Visible = true;
-                }
-                else if (dtCompany.Rows[0]["SuperAdmin"].ToString() == "1")
-                {
-                    LinkButton lbledit = (LinkButton)e.Row.FindControl("lbledit") as LinkButton;
-                    LinkButton lblview = (LinkButton)e.Row.FindControl("lblview") as LinkButton;
-                    LinkButton lbldel = (LinkButton)e.Row.FindControl("lbldel") as LinkButton;
-                    lbledit.Visible = true;
-                    lblview.Visible = true;
-                    lbldel.Visible = true;
-                    //  LinkButton lbleditfactory = (LinkButton)e.Row.FindControl("lbleditfactory");
-                    //  LinkButton lblviewfactory = (LinkButton)e.Row.FindControl("lblviewfactory");
-                    //  LinkButton lbldelfactory = (LinkButton)e.Row.FindControl("lbldelfactory");
-                    ////  if (lbleditfactory != null)
-                    ////  {
-                    //      lbleditfactory.Visible = true;
-                    //      lblviewfactory.Visible = true;
-                    //      lbldelfactory.Visible = true;
-                    ////  }
-                }
             }
+
             GridView gvFactoryRow = e.Row.FindControl("gvfactory") as GridView;
             gvFactoryRow.RowCommand += new GridViewCommandEventHandler(gvfactory_RowCommand);
         }
@@ -658,6 +641,18 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
         {
             Label lblfactroyrefno = e.Row.FindControl("lblfactoryrefno") as Label;
             GridView gvunit = e.Row.FindControl("gvunit") as GridView;
+
+            if (e.Row.Cells[4].Text == "Factory")
+            {
+                e.Row.Cells[4].Text = "Division/Plant";
+            }
+            if (mType == "Unit")
+            {
+                LinkButton lnkCompView = e.Row.FindControl("lblviewfactory") as LinkButton;
+                LinkButton lnkCompEdit = e.Row.FindControl("lbleditfactory") as LinkButton;
+                lnkCompView.Visible = false;
+                lnkCompEdit.Visible = false;
+            }
 
             DataTable DtGrid = Lo.RetriveGridViewCompany("", lblfactroyrefno.Text, "", "InnerGridViewUnit");
             if (DtGrid.Rows.Count > 0)
@@ -712,7 +707,7 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
     #region DropDownList Code
     protected void ddlcompany_OnSelectedIndexChanged(object sender, EventArgs e)
     {
-        if (ddlcompany.SelectedItem.Text != "All")
+        if (ddlcompany.SelectedItem.Text != "Select")
         {
             DataTable DtGrid = Lo.RetriveGridViewCompany(ddlcompany.SelectedItem.Value, "", "", "CompanyMainGridView");
             if (DtGrid.Rows.Count > 0)
@@ -723,9 +718,12 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
                 if (DtCompanyDDL.Rows.Count > 0)
                 {
                     Co.FillDropdownlist(ddldivision, DtCompanyDDL, "FactoryName", "FactoryRefNo");
-                    ddldivision.Items.Insert(0, "All");
+                    ddldivision.Items.Insert(0, "Select");
                     lblselectdivison.Visible = true;
                     ddldivision.Visible = true;
+                    btnAddCompany.Visible = false;
+                    btnAddDivision.Visible = true;
+                    btnAddUnit.Visible = true;
                 }
                 else
                 {
@@ -734,7 +732,7 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
                 }
             }
         }
-        else if (ddlcompany.SelectedItem.Value == "All")
+        else if (ddlcompany.SelectedItem.Value == "Select")
         {
             DataTable DtGrid = Lo.RetriveGridViewCompany("0", "", "", "CompanyMainGridView");
             if (DtGrid.Rows.Count > 0)
@@ -764,7 +762,7 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
     GridView gvinnerfactory;
     protected void ddldivision_OnSelectedIndexChanged(object sender, EventArgs e)
     {
-        if (ddldivision.SelectedItem.Text != "All")
+        if (ddldivision.SelectedItem.Text != "Select")
         {
             DataTable DtGrid = Lo.RetriveGridViewCompany(ddlcompany.SelectedItem.Value, ddldivision.SelectedItem.Value, "", "InnerGVFactoryID");
             if (DtGrid.Rows.Count > 0)
@@ -780,9 +778,12 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
             if (DtCompanyDDL.Rows.Count > 0)
             {
                 Co.FillDropdownlist(ddlunit, DtCompanyDDL, "UnitName", "UnitRefNo");
-                ddlunit.Items.Insert(0, "All");
+                ddlunit.Items.Insert(0, "Select");
                 ddlunit.Visible = true;
                 lblselectunit.Visible = true;
+                btnAddCompany.Visible = false;
+                btnAddDivision.Visible = false;
+                btnAddUnit.Visible = true;
             }
             else
             {
@@ -790,7 +791,7 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
                 ddlunit.Visible = false;
             }
         }
-        else if (ddldivision.SelectedItem.Text == "All")
+        else if (ddldivision.SelectedItem.Text == "Select")
         {
             DataTable DtGrid = Lo.RetriveGridViewCompany(ddlcompany.SelectedItem.Value, "", "", "InnerGridViewFactory");
             if (DtGrid.Rows.Count > 0)
@@ -810,7 +811,7 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
     private GridView gvinnerfactroyforunit;
     protected void ddlunit_OnSelectedIndexChanged(object sender, EventArgs e)
     {
-        if (ddlunit.SelectedItem.Text != "All")
+        if (ddlunit.SelectedItem.Text != "Select")
         {
             DataTable DtGrid = Lo.RetriveGridViewCompany("", ddldivision.SelectedItem.Value, ddlunit.SelectedItem.Value, "InnerGVUnitID");
             if (DtGrid.Rows.Count > 0)
@@ -827,7 +828,7 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
                 gvinunit.DataBind();
             }
         }
-        else if (ddlunit.SelectedItem.Text == "All")
+        else if (ddlunit.SelectedItem.Text == "Select")
         {
             DataTable DtGrid = Lo.RetriveGridViewCompany("", ddldivision.SelectedItem.Value, "", "InnerGridViewUnit");
             if (DtGrid.Rows.Count > 0)
