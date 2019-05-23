@@ -32,7 +32,7 @@
                                                         </div>
                                                         <div class="compName">
                                                             <h3 class="box-title">Total Companies</h3>
-                                                            <div class="Number">44</div>
+                                                            <div class="Number"><asp:LinkButton ID="lnkbtnTotComp" runat="server" Text="0"></asp:LinkButton></li></div>
                                                         </div>
                                                         
                                                     </li>
@@ -54,7 +54,7 @@
                                                         </div>
                                                         <div class="compName">
                                                             <h3 class="box-title">Total Divsion</h3>
-                                                            <div class="Number">44</div>
+                                                            <div class="Number"><asp:LinkButton ID="lnkbtnFDI" runat="server" Text="0"></asp:LinkButton></div>
                                                         </div>
                                                         
                                                     </li>
@@ -74,7 +74,7 @@
                                                         </div>
                                                         <div class="compName">
                                                             <h3 class="box-title">Total Unit</h3>
-                                                            <div class="Number">44</div>
+                                                            <div class="Number"><asp:LinkButton ID="lnkbtnLYFDI" runat="server" Text="0"></asp:LinkButton></div>
                                                         </div>
                                                     </li>
                                                 </ul>
