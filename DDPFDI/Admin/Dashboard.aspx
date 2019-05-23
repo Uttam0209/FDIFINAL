@@ -25,49 +25,74 @@
                                     <div class="row">
                                         <div class="col-lg-4 col-sm-6 col-xs-12">
                                             <div class="white-box analytics-info total-comp">
-                                                <h3 class="box-title">Total Companies</h3>
+                        
                                                 <ul class="list-inline two-part">
 
-                                                    <li><i class="ti-arrow-up"></i>
-                                                        <asp:LinkButton ID="lnkbtnTotComp" runat="server" Text="0"></asp:LinkButton></li>
+                                                    <li>
+                                                        <div class="icon-box">
+                                                            <i class="far fa-building"></i>
+                                                        </div>
+                                                        <div class="compName">
+                                                            <h3 class="box-title">Total Companies</h3>
+                                                            <div class="Number">44</div>
+                                                        </div>
+                                                        
+                                                    </li>
 
                                                 </ul>
-                                                <div class="file-export">
-                                                    <button class="btn btn-primary pull-right">Export</button>
+                                                 <div class="file-export">
+                                                    <i class="fa fa-file-export"></i>
                                                 </div>
+                                               
                                             </div>
                                         </div>
                                         <div class="col-lg-4 col-sm-6 col-xs-12">
                                             <div class="white-box analytics-info total-fdi">
-                                                <h3 class="box-title">Total FDI</h3>
+                                               
                                                 <ul class="list-inline two-part">
 
-                                                    <li><i class="ti-arrow-up text-purple"></i>
-                                                        <asp:LinkButton ID="lnkbtnFDI" runat="server" Text="0"></asp:LinkButton></li>
+                                                    <li>
+                                                        <div class="icon-box">
+                                                            <i class="far fa-building"></i>
+                                                        </div>
+                                                        <div class="compName">
+                                                            <h3 class="box-title">Total Divsion</h3>
+                                                            <div class="Number">44</div>
+                                                        </div>
+                                                        
+                                                    </li>
 
                                                 </ul>
-                                                <div class="file-export">
-                                                    <button class="btn btn-primary pull-right">Export</button>
+                                         <div class="file-export">
+                                                    <i class="fa fa-file-export"></i>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-lg-4 col-sm-6 col-xs-12">
                                             <div class="white-box analytics-info last-fdi">
-                                                <h3 class="box-title">Last Year FDI</h3>
+                                              
                                                 <ul class="list-inline two-part">
 
-                                                    <li>
+                                                     <li>
+                                                        <div class="icon-box">
+                                                            <i class="fa fa-users" aria-hidden="true"></i>
+                                                        </div>
+                                                        <div class="compName">
+                                                            <h3 class="box-title">Total Employee</h3>
+                                                            <div class="Number">44</div>
+                                                        </div>
+                                                        
+                                                    </li>
 
-
-                                                        <asp:LinkButton ID="lnkbtnLYFDI" runat="server" Text="0"></asp:LinkButton></li>
 
                                                 </ul>
                                                 <div class="file-export">
-                                                    <button class="btn btn-primary pull-right">Export</button>
+                                                    <i class="fa fa-file-export"></i>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+                                    <!---
                                     <div class="row" style="margin-top: 10px;">
                                         <div class="col-md-6">
                                             <asp:DropDownList ID="ddlGraphType" runat="server" CssClass="form-control GraphType">
@@ -100,6 +125,7 @@
                                             </asp:DropDownList>
                                         </div>
                                     </div>
+                                    --->
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div id="divPieChart">
