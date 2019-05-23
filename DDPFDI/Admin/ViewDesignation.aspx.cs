@@ -59,9 +59,7 @@ public partial class Admin_ViewDesignation : System.Web.UI.Page
                 ddlcompany.Items.Insert(0, "Select");
                 ddlcompany.Enabled = true;
             }
-
         }
-        
         else if (mType == "Company")
         {
             DtCompanyDDL = Lo.RetriveMasterData(0, mRefNo, "Company", 0, "", "", "CompanyName");
@@ -81,15 +79,12 @@ public partial class Admin_ViewDesignation : System.Web.UI.Page
                     gvViewDesignation.Visible = false;
                    
                 }
-                
             }
             else
             {
                 ddlcompany.Enabled = false;
             }
-
         }
-
     }
 
     #region RowCommand

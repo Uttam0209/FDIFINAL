@@ -30,7 +30,6 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     string RefNo;
     string UserEmail;
     string currentPage = "";
-    private string mType = "";
     private string mRefNo = "";
     private Int16 Mid = 0;
     DataTable DtCompanyDDL = new DataTable();
@@ -60,11 +59,11 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                     }
                     divHeadPage.InnerHtml = strheadPage.ToString();
                     strheadPage.Append("</ul");
-                    mType = objEnc.DecryptData(Session["Type"].ToString());
+                    hidType.Value = objEnc.DecryptData(Session["Type"].ToString());
                     mRefNo = Session["CompanyRefNo"].ToString();
                     ViewState["UserLoginEmail"] = objEnc.DecryptData(Session["User"].ToString());
                     hfcomprefno.Value = Session["CompanyRefNo"].ToString();
-                    if (mType.ToString() != "SuperAdmin" || mType.ToString() != "Admin")
+                    if (hidType.Value.ToString() != "SuperAdmin" || hidType.Value.ToString() != "Admin")
                     {
                         BindCompany();
                         tendorstatus();
@@ -100,7 +99,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     }
     protected void BindCompany()
     {
-        if (mType == "SuperAdmin" || mType == "Admin")
+        if (hidType.Value == "SuperAdmin" || hidType.Value == "Admin")
         {
             DtCompanyDDL = Lo.RetriveMasterData(0, "", "", 0, "", "", "Select");
             if (DtCompanyDDL.Rows.Count > 0)
@@ -117,7 +116,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
             lblselectdivison.Visible = false;
             lblselectunit.Visible = false;
         }
-        else if (mType == "Company")
+        else if (hidType.Value == "Company")
         {
             DtCompanyDDL = Lo.RetriveMasterData(0, mRefNo, "Company", 0, "", "", "CompanyName");
             if (DtCompanyDDL.Rows.Count > 0)
@@ -138,7 +137,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
             {
                 Co.FillDropdownlist(ddldivision, DtCompanyDDL, "FactoryName", "FactoryRefNo");
                 ddldivision.Items.Insert(0, "Select");
-                if (mType == "Company")
+                if (hidType.Value == "Company")
                 {
                     lblselectdivison.Visible = true;
                     ddldivision.Enabled = true;
@@ -154,7 +153,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                 ddldivision.Enabled = false;
             }
         }
-        else if (mType == "Factory")
+        else if (hidType.Value == "Factory" || hidType.Value == "Division")
         {
             DtCompanyDDL = Lo.RetriveMasterData(0, mRefNo, "Company1", 0, "", "", "CompanyName");
             if (DtCompanyDDL.Rows.Count > 0)
@@ -193,7 +192,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
             //    lblselectunit.Visible = false;
             //}
         }
-        else if (mType == "Unit")
+        else if (hidType.Value == "Unit")
         {
             DtCompanyDDL = Lo.RetriveMasterData(0, mRefNo, "Company2", 0, "", "", "CompanyName");
             if (DtCompanyDDL.Rows.Count > 0)
@@ -763,20 +762,20 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         if (ddlcompany.SelectedItem.Text != "Select" && ddldivision.SelectedItem.Text == "Select")
         {
             HyPanel1["CompanyRefNo"] = Co.RSQandSQLInjection(ddlcompany.SelectedItem.Value, "soft");
-            mType = "Company";
-            HyPanel1["Role"] = mType.ToString();
+            hidType.Value = "Company";
+            HyPanel1["Role"] = hidType.Value.ToString();
         }
         else if (ddlcompany.SelectedItem.Text != "Select" && ddldivision.SelectedItem.Text != "Select" && ddlunit.SelectedItem.Text == "Select")
         {
             HyPanel1["CompanyRefNo"] = Co.RSQandSQLInjection(ddldivision.SelectedItem.Value, "soft");
-            mType = "Factory";
-            HyPanel1["Role"] = mType.ToString();
+            hidType.Value = "Factory";
+            HyPanel1["Role"] = hidType.Value.ToString();
         }
         else if (ddlcompany.SelectedItem.Text != "Select" && ddldivision.SelectedItem.Text != "Select" && ddlunit.SelectedItem.Text != "Select")
         {
             HyPanel1["CompanyRefNo"] = Co.RSQandSQLInjection(ddlunit.SelectedItem.Value, "soft");
-            mType = "Unit";
-            HyPanel1["Role"] = mType.ToString();
+            hidType.Value = "Unit";
+            HyPanel1["Role"] = hidType.Value.ToString();
         }
         else
         {
@@ -884,7 +883,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         {
             if (hfprodid.Value != "")
             {
-                DataTable dtImageBind = Lo.RetriveProductCode("", hfprodrefno.Value, "RetriveImage");
+                DataTable dtImageBind = Lo.RetriveProductCode("", hfprodrefno.Value, "RetriveImage", hidType.Value);
                 if (dtImageBind.Rows.Count > 0)
                 {
                     Int16 CountImageTotal = Convert.ToInt16(files.PostedFiles.Count);
@@ -1187,7 +1186,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         if (Request.QueryString["mcurrentcompRefNo"] != null)
         {
             hfprodrefno.Value = objEnc.DecryptData(Request.QueryString["mcurrentcompRefNo"].ToString());
-            DataTable DtView = Lo.RetriveProductCode("", hfprodrefno.Value, "ProductMasterID");
+            DataTable DtView = Lo.RetriveProductCode("", hfprodrefno.Value, "ProductMasterID", hidType.Value);
             if (DtView.Rows.Count > 0)
             {
                 btnsubmitpanel1.Text = "Update";
@@ -1228,7 +1227,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                     txtmanufacturename.Text = DtView.Rows[0]["ManufactureName"].ToString();
                 }
                 txtsearchkeyword.Text = DtView.Rows[0]["SearchKeyword"].ToString();
-                DataTable dtImageBind = Lo.RetriveProductCode("", hfprodrefno.Value, "ProductImage");
+                DataTable dtImageBind = Lo.RetriveProductCode("", hfprodrefno.Value, "ProductImage", hidType.Value);
                 if (dtImageBind.Rows.Count > 0)
                 {
                     dlimage.DataSource = dtImageBind;
@@ -1239,7 +1238,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                 {
                     divimgdel.Visible = false;
                 }
-                DataTable dtpsdq = Lo.RetriveProductCode("", hfprodrefno.Value, "ProductPSDQ");
+                DataTable dtpsdq = Lo.RetriveProductCode("", hfprodrefno.Value, "ProductPSDQ", hidType.Value);
                 if (dtpsdq.Rows.Count > 0)
                 {
                     for (int i = 0; dtpsdq.Rows.Count > i; i++)
@@ -1255,7 +1254,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                         }
                     }
                 }
-                DataTable dttesting = Lo.RetriveProductCode("", hfprodrefno.Value, "ProductTesting");
+                DataTable dttesting = Lo.RetriveProductCode("", hfprodrefno.Value, "ProductTesting", hidType.Value);
                 if (dttesting.Rows.Count > 0)
                 {
                     for (int i = 0; dttesting.Rows.Count > i; i++)
@@ -1271,7 +1270,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                         }
                     }
                 }
-                DataTable dtcertifica = Lo.RetriveProductCode("", hfprodrefno.Value, "ProductCertification");
+                DataTable dtcertifica = Lo.RetriveProductCode("", hfprodrefno.Value, "ProductCertification", hidType.Value);
                 if (dtcertifica.Rows.Count > 0)
                 {
                     for (int i = 0; dtcertifica.Rows.Count > i; i++)
@@ -1294,9 +1293,12 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                 if (ddltendorstatus.SelectedValue == "Live" && rbtendordateyesno.SelectedValue == "Y")
                 {
                     divtdate.Visible = true;
-                    DateTime Date = Convert.ToDateTime(DtView.Rows[0]["TenderFillDate"].ToString());
-                    string nDate = Date.ToString("yy-MMM-dd");
-                    txttendordate.Text = nDate.ToString();
+                    if (DtView.Rows[0]["TenderFillDate"].ToString() != "")
+                    {
+                        DateTime Date = Convert.ToDateTime(DtView.Rows[0]["TenderFillDate"].ToString());
+                        string nDate = Date.ToString("yy-MMM-dd");
+                        txttendordate.Text = nDate.ToString();
+                    }
                     txttendorurl.Text = DtView.Rows[0]["TenderUrl"].ToString();
                 }
                 else
@@ -1304,7 +1306,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                     divtdate.Visible = false;
                 }
                 BindNodelEmail();
-                DataTable dtNodal = Lo.RetriveProductCode("", hfprodrefno.Value, "ProductNodal");
+                DataTable dtNodal = Lo.RetriveProductCode("", hfprodrefno.Value, "ProductNodal", hidType.Value);
                 if (dtNodal.Rows.Count > 0)
                 {
                     ddlNodalOfficerEmail.SelectedValue = dtNodal.Rows[0]["NodalOfficerID"].ToString();
@@ -1333,7 +1335,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                 string DeleteRec = Lo.DeleteRecord(e.CommandArgument.ToString(), "InActiveImage");
                 if (DeleteRec == "true")
                 {
-                    DataTable dtImageBind = Lo.RetriveProductCode("", hfprodrefno.Value, "ProductImage");
+                    DataTable dtImageBind = Lo.RetriveProductCode("", hfprodrefno.Value, "ProductImage", hidType.Value);
                     if (dtImageBind.Rows.Count > 0)
                     {
                         dlimage.DataSource = dtImageBind;

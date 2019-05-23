@@ -83,48 +83,48 @@
                         <ContentTemplate>
                             <div class="section-pannel">
                                 <div class="row">
-                                    <div class="col-md-12">                              
-                                        <div class="form-group" style="padding:0 10px;" runat="server" id="mastercompany" visible="False">
+                                    <div class="col-md-12">
+                                        <div class="form-group" style="padding: 0 10px;" runat="server" id="mastercompany" visible="False">
                                             <asp:Label ID="lblMastcompany" runat="server" Text="" CssClass="form-label"></asp:Label><span data-toggle="tooltip" class="fa fa-question" title="Please Select Company Name"></span>
                                             <asp:DropDownList runat="server" ID="ddlmaster" AutoPostBack="True" CssClass="form-control form-cascade-control" OnSelectedIndexChanged="ddlmaster_SelectedIndexChanged">
                                             </asp:DropDownList>
                                         </div>
-                                        <div class="form-group" style="padding:0 10px;" runat="server" id="masterfacotry" visible="False">
-                                            
+                                        <div class="form-group" style="padding: 0 10px;" runat="server" id="masterfacotry" visible="False">
+
                                             <asp:Label ID="lblfactoryName" runat="server" Text="" CssClass="form-label"></asp:Label><span data-toggle="tooltip" class="fa fa-question" title="Please Select Division/Plant Name"></span>
                                             <asp:DropDownList runat="server" ID="ddlfacotry" AutoPostBack="True" OnSelectedIndexChanged="ddlfacotry_SelectedIndexChanged" CssClass="form-control form-cascade-control">
                                             </asp:DropDownList>
                                         </div>
-                                        </div>
-                                       
-                                            <div class="col-md-12">
-                                                <div class="fdi-add-content">
-                                                    <div runat="server">
-                                                        <div class="section-pannel">
-                                                        <div class="row">
-                                                            <div class="col-md-6">
-                                                                <div class="form-group">
-                                                                    <asp:Label ID="lblName" runat="server" Text="" CssClass="form-label"></asp:Label><span data-toggle="tooltip" class="fa fa-question" title="Please Select Company/Organization name"></span>
-                                                                    <asp:TextBox ID="txtcomp" runat="server" required="" class="form-control form-cascade-control"></asp:TextBox>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        </div>
-                                                        <div class="row">
-                                                            <div class="col-md-6" id="divOfficerEmail" runat="server">
-                                                                <div class="form-group">
-                                                                    <label class=" control-label">Officer email id </label>
-                                                                    <asp:TextBox ID="txtemail" runat="server" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" class="form-control form-cascade-control"></asp:TextBox>
-                                                                    <p class="note">*Note: will be used as username </p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
+                                    </div>
 
+                                    <div class="col-md-12">
+                                        <div class="fdi-add-content">
+                                            <div runat="server">
+                                                <div class="section-pannel">
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <asp:Label ID="lblName" runat="server" Text="" CssClass="form-label"></asp:Label><span data-toggle="tooltip" class="fa fa-question" title="Please enter organization name"></span>
+                                                                <asp:TextBox ID="txtcomp" runat="server" required="" class="form-control form-cascade-control"></asp:TextBox>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
+                                                <div class="row">
+                                                    <div class="col-md-6" id="divOfficerEmail" runat="server">
+                                                        <div class="form-group">
+                                                            <label class=" control-label">Officer email id </label>
+                                                            <asp:TextBox ID="txtemail" runat="server" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" class="form-control form-cascade-control"></asp:TextBox>
+                                                            <p class="note">*Note: will be used as username </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
                                             </div>
-                                    
-                                    
+                                        </div>
+                                    </div>
+
+
                                 </div>
                             </div>
                             <div class="is-flex">
@@ -176,8 +176,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="parentRow" style="display:none">
-                                    Company : <span>Demo</span>
+                            <div class="parentRow" style="display: none">
+                                Company : <span>Demo</span>
                             </div>
                             <div class="table-wraper">
                                 <asp:GridView ID="gvcompanydetail" runat="server" Width="100%" Class="commonAjaxTbl master-company-table table display 
@@ -228,18 +228,18 @@
                                             </div>
                                             <div class="box">
                                                 <h4 class="secondary-heading">MenuAloted</h4>
-                                                 <asp:Label ID="lblmenuallot" runat="server"></asp:Label>
+                                                <asp:Label ID="lblmenuallot" runat="server"></asp:Label>
                                             </div>
-                                           
+
                                         </div>
-                                        
-                                         <div class="modal-footer">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                </div>
+
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                        </div>
                                     </div>
-                                   
+
                                 </div>
-                                
+
                             </div>
                             </div>
                         </ContentTemplate>

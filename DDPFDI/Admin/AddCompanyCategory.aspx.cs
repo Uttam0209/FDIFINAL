@@ -163,7 +163,7 @@ public partial class Admin_AddCompanyCategory : System.Web.UI.Page
                 ddlcompany.Enabled = false;
             }
         }
-        else if (hidType.Value == "Factory")
+        else if (hidType.Value == "Factory" || hidType.Value == "Division")
         {
             DtCompanyDDL = Lo.RetriveMasterData(0, hfcomprefno.Value, "Company1", 0, "", "", "CompanyName");
             if (DtCompanyDDL.Rows.Count > 0)

@@ -20,8 +20,6 @@
                         <div class="admin-dashboard">
                             <div class="row">
                                 <div class="col-md-12">
-
-
                                     <div class="row">
                                         <div class="col-lg-4 col-sm-6 col-xs-12">
                                             <div class="white-box analytics-info total-comp">
@@ -48,7 +46,6 @@
                                         </div>
                                         <div class="col-lg-4 col-sm-6 col-xs-12">
                                             <div class="white-box analytics-info total-fdi">
-                                               
                                                 <ul class="list-inline two-part">
 
                                                     <li>
@@ -70,21 +67,16 @@
                                         </div>
                                         <div class="col-lg-4 col-sm-6 col-xs-12">
                                             <div class="white-box analytics-info last-fdi">
-                                              
                                                 <ul class="list-inline two-part">
-
                                                      <li>
                                                         <div class="icon-box">
                                                             <i class="fa fa-users" aria-hidden="true"></i>
                                                         </div>
                                                         <div class="compName">
-                                                            <h3 class="box-title">Total Employee</h3>
+                                                            <h3 class="box-title">Total Unit</h3>
                                                             <div class="Number">44</div>
                                                         </div>
-                                                        
                                                     </li>
-
-
                                                 </ul>
                                                 <div class="file-export">
                                                     <i class="fa fa-file-export"></i>

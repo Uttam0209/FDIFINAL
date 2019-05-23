@@ -154,7 +154,7 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
                 ddlunit.Items.Insert(0, "Select");
             }
         }
-        else if (hidType.Value == "Factory")
+        else if (hidType.Value == "Factory" || hidType.Value == "Division")
         {
             DtCompanyDDL = Lo.RetriveMasterData(0, mRefNo, "Company1", 0, "", "", "CompanyName");
             if (DtCompanyDDL.Rows.Count > 0)

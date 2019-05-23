@@ -78,7 +78,7 @@ public partial class Admin_ViewCompanyCategory : System.Web.UI.Page
                     gvCategory.DataBind();
                 }
             }
-            else if (hidType.Value == "Factory" && hfcomprefno.Value != "")
+            else if (hidType.Value == "Factory" && hfcomprefno.Value != "" || hidType.Value == "Division" && hfcomprefno.Value != "")
             {
                 DataTable DtGrid = Lo.RetriveMasterSubCategoryDate(0, "", "", "SubCompCat", hfcomprefno.Value,"");
                 if (DtGrid.Rows.Count > 0)

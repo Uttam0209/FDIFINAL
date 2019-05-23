@@ -131,7 +131,7 @@ public partial class Admin_ViewNodalOfficer : System.Web.UI.Page
                 ddldivision.Enabled = false;
             }
         }
-        else if (mType == "Factory")
+        else if (mType == "Factory" || mType == "Division")
         {
             DtCompanyDDL = Lo.RetriveMasterData(0, mRefNo, "Company1", 0, "", "", "CompanyName");
             if (DtCompanyDDL.Rows.Count > 0)

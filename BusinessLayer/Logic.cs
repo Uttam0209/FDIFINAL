@@ -106,9 +106,9 @@ namespace BusinessLayer
         {
             return SqlHelper.Instance.RetriveGridViewCompany(ID, FactoryRefNo, UnitRefNo, Purpose);
         }
-        public DataTable RetriveProductCode(string CompanyRefNo, string ProductRefNo, string Purpose)
+        public DataTable RetriveProductCode(string CompanyRefNo, string ProductRefNo, string Purpose, string Type)
         {
-            return SqlHelper.Instance.RetriveProductCode(CompanyRefNo, ProductRefNo, Purpose);
+            return SqlHelper.Instance.RetriveProductCode(CompanyRefNo, ProductRefNo, Purpose, Type);
         }
         public DataTable RetriveMasterData(Int64 Companyid, string strRefNo, string strRole, int MenuId, string strMenuUrl, string strInterestedAreaFlag, string strCriteria)
         {
@@ -150,9 +150,9 @@ namespace BusinessLayer
         }
         #endregion
         #region "DashBoard"
-        public DataTable RetriveAggregateValue(string function, string entity)
+        public DataTable RetriveAggregateValue(string action, string entity)
         {
-            return SqlHelper.Instance.RetriveAggregateValue(function, entity);
+            return SqlHelper.Instance.GetDataTable("select * from fn_GetAggregateValue('" + action + "','" + entity + "')");
         }
         public DataTable RetriveAggregateValueWithParam(string function, string entity, string clmn, string val)
         {
