@@ -86,12 +86,11 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
         DataRow[] foundRows = DtGrid.Select("IsNodalOfficer='Nodal Officer'");
         if (foundRows.Length != 0)
         {
-            chkrole.Checked = false;
-            chkrole.Enabled = false;
+            chkrole.Items[0].Enabled = false;
         }
         else
         {
-            chkrole.Enabled = true;
+            chkrole.Items[0].Enabled = true;
         }
     }
     protected void BindCompany()
@@ -506,19 +505,21 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
         {
             hySaveNodal["CompanyRefNo"] = ddlcompany.SelectedItem.Value;
             RefNo = ddlcompany.SelectedItem.Value;
+            hySaveNodal["Type"] = "Company";
         }
         else if (ddlcompany.SelectedValue != "Select" && ddldivision.SelectedValue != "Select" && ddlunit.SelectedValue == "" || ddlunit.SelectedItem.Value == "Select")
         {
             hySaveNodal["CompanyRefNo"] = ddldivision.SelectedItem.Value;
             RefNo = ddldivision.SelectedItem.Value;
+            hySaveNodal["Type"] = "Division";
         }
         else if (ddlcompany.SelectedValue != "Select" && ddldivision.SelectedValue != "Select" && ddlunit.SelectedValue != "Select")
         {
             hySaveNodal["CompanyRefNo"] = ddlunit.SelectedItem.Value;
             RefNo = ddlunit.SelectedItem.Value;
+            hySaveNodal["Type"] = "Unit";
         }
-        hySaveNodal["Type"] = hidType.Value;
-        if (chkrole.Checked)
+        if (chkrole.Items[0].Selected == true)
         {
             hySaveNodal["IsNodalOfficer"] = "Y";
         }
@@ -526,7 +527,7 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
         {
             hySaveNodal["IsNodalOfficer"] = "N";
         }
-        if (chkUser.Checked)
+        if (chkrole.Items[1].Selected == true)
         {
             hySaveNodal["IsLoginActive"] = "Y";
         }
@@ -550,13 +551,13 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
             {
                 GridViewNodalOfficerBind(hidCompanyRefNo.Value, "Unit");
             }
-            if (chkrole.Checked)
+            if (chkrole.Items[0].Selected == true)
             {
                 SendEmailCode(Str);
             }
             else
             {
-                if (chkUser.Checked)
+                if (chkrole.Items[1].Selected == true)
                 {
                     SendEmailCode(Str);
                 }
@@ -608,29 +609,35 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
         {
             if (ddlcompany.SelectedItem.Value != "Select")
             {
-
-                if (btnsub.Text != "Edit")
+                if (chkrole.Items[0].Selected == true && chkrole.Items[1].Selected == true)
                 {
-                    if (ddldesignation.SelectedItem.Value != "Select")
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('check only nodel or user any one.')", true);
+                }
+                else
+                {
+                    if (btnsub.Text != "Edit")
                     {
-                        DataTable dtNodalOfficerEmail = Lo.RetriveMasterData(0, txtemailid.Text, "", 0, "", "", "ValidEmail");
-                        if (dtNodalOfficerEmail.Rows.Count > 0)
+                        if (ddldesignation.SelectedItem.Value != "Select")
                         {
-                            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Email id already exists !')", true);
+                            DataTable dtNodalOfficerEmail = Lo.RetriveMasterData(0, txtemailid.Text, "", 0, "", "", "ValidEmail");
+                            if (dtNodalOfficerEmail.Rows.Count > 0)
+                            {
+                                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Email id already exists !')", true);
+                            }
+                            else
+                            {
+                                SaveNodal();
+                            }
                         }
                         else
                         {
-                            SaveNodal();
+                            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Select designation !')", true);
                         }
                     }
                     else
                     {
-                        ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Select designation !')", true);
+                        SaveNodal();
                     }
-                }
-                else
-                {
-                    SaveNodal();
                 }
             }
             else
@@ -650,8 +657,7 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
         ddldesignation.SelectedIndex = 0;
         btnsub.Text = "Save";
         txtEmpCode.Text = "";
-        chkrole.Checked = false;
-        chkUser.Checked = false;
+        chkrole.Items.Clear();
     }
     protected void btncancel_Click(object sender, EventArgs e)
     {
@@ -675,11 +681,16 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
                 txtfax.Text = DtView.Rows[0]["NodalOfficerFax"].ToString();
                 if (DtView.Rows[0]["IsLoginActive"].ToString() == "Y")
                 {
-                    chkUser.Checked = true;
+                    DataTable DtCheckNodelorUnActive = Lo.RetriveMasterData(0, mRefNo, "", 0, "", "", "CheckNodalStatus");
+                    if (DtCheckNodelorUnActive.Rows.Count > 0)
+                    {
+                        chkrole.Items[0].Enabled = false;
+                    }
+                    chkrole.Items[1].Selected = true;
                 }
                 else if (DtView.Rows[0]["IsNodalOfficer"].ToString() == "Y")
                 {
-                    chkrole.Checked = true;
+                    chkrole.Items[0].Selected = true;
                 }
                 if (DtView.Rows[0]["Type"].ToString() == "Company")
                 {

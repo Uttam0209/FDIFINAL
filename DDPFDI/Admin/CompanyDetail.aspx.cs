@@ -66,7 +66,7 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
                         ddlcompany.Enabled = false;
                         lblselectdivison.Visible = false;
                         licc.Visible = false;
-
+                        acomp.InnerText = "Company";
                     }
                     else if (objCrypto.DecryptData(Request.QueryString["mrcreaterole"].ToString()) == "Factory")
                     {
@@ -74,7 +74,7 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
                         licc.Visible = false;
                         lisr.Visible = false;
                         lisc.Visible = false;
-
+                        acomp.InnerText = "Division";
                     }
                     else if (objCrypto.DecryptData(Request.QueryString["mrcreaterole"].ToString()) == "Unit")
                     {
@@ -82,6 +82,7 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
                         licc.Visible = false;
                         lisr.Visible = false;
                         licc.Visible = false;
+                        acomp.InnerText = "Unit";
                     }
                 }
                 else
