@@ -119,7 +119,6 @@ public partial class Admin_ViewNodalOfficer : System.Web.UI.Page
                     ddldivision.Enabled = true;
                     ddlunit.Visible = false;
                     lblselectunit.Visible = false;
-
                 }
                 else
                 {
@@ -138,7 +137,6 @@ public partial class Admin_ViewNodalOfficer : System.Web.UI.Page
             {
                 Co.FillDropdownlist(ddlcompany, DtCompanyDDL, "CompanyName", "CompanyRefNo");
                 ddlcompany.Enabled = false;
-
             }
             else
             {

@@ -5,3 +5,10 @@ D:\Shiv\FDIFINAL\DataAccessLayer\bin\Debug\Encryption.pdb
 D:\Shiv\FDIFINAL\DataAccessLayer\obj\Debug\DataAccessLayer.csprojResolveAssemblyReference.cache
 D:\Shiv\FDIFINAL\DataAccessLayer\obj\Debug\DataAccessLayer.dll
 D:\Shiv\FDIFINAL\DataAccessLayer\obj\Debug\DataAccessLayer.pdb
+D:\FDIFINAL\DataAccessLayer\bin\Debug\DataAccessLayer.dll
+D:\FDIFINAL\DataAccessLayer\bin\Debug\DataAccessLayer.pdb
+D:\FDIFINAL\DataAccessLayer\bin\Debug\Encryption.dll
+D:\FDIFINAL\DataAccessLayer\bin\Debug\Encryption.pdb
+D:\FDIFINAL\DataAccessLayer\obj\Debug\DataAccessLayer.csprojResolveAssemblyReference.cache
+D:\FDIFINAL\DataAccessLayer\obj\Debug\DataAccessLayer.dll
+D:\FDIFINAL\DataAccessLayer\obj\Debug\DataAccessLayer.pdb

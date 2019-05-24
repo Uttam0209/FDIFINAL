@@ -150,9 +150,9 @@ namespace BusinessLayer
         }
         #endregion
         #region "DashBoard"
-        public DataTable RetriveAggregateValue(string action, string entity)
+        public DataTable RetriveAggregateValue(string action, string role, string refno)
         {
-            return SqlHelper.Instance.GetDataTable("select * from fn_GetAggregateValue('" + action + "','" + entity + "')");
+            return SqlHelper.Instance.GetDataTable("select * from fn_GetAggregateValue('" + action + "','" + role + "','" + refno + "')");
         }
         public DataTable RetriveAggregateValueWithParam(string function, string entity, string clmn, string val)
         {

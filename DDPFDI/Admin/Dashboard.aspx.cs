@@ -22,18 +22,42 @@ public partial class Admin_Dashboard : System.Web.UI.Page
         {
             if (!IsPostBack)
             {
-                if (Request.QueryString["id"] != null)
-                {
-                    string id = Request.QueryString["id"].ToString().Replace(" ", "+");
-                    lblPageName.Text = objCrypto.DecryptData(id);
-                }
-                DataTable dt = Lo.RetriveAggregateValue("Count", "Company");
-                lnkbtnTotComp.Text = dt.Rows[0][0].ToString();
-                lnkbtnFDI.Text = dt.Rows[0][1].ToString();               
-                lnkbtnLYFDI.Text = dt.Rows[0][2].ToString();
+                //if (Request.QueryString["id"] != null)
+                //{
+                //    string id = Request.QueryString["id"].ToString().Replace(" ", "+");
+                //    lblPageName.Text = objCrypto.DecryptData(id);
+                //}
+                DataTable dt = Lo.RetriveAggregateValue("Count", objCrypto.DecryptData(Session["Type"].ToString()), Session["CompanyRefNo"].ToString());
+                lnkbtnTotComp.Text = dt.Rows[0]["TotComp"].ToString();
+                lnkbtnTotDiv.Text = dt.Rows[0]["TotDiv"].ToString();
+                lnkbtnTotUnit.Text = dt.Rows[0]["TotUnit"].ToString();
+                lnkbtnTotEmp.Text = dt.Rows[0]["TotEmployee"].ToString();
+                lnkbtnProduct.Text = dt.Rows[0]["TotProduct"].ToString();
             }
         }
         else
             Response.RedirectToRoute("Login");
+    }
+    protected void lnkbtnTotComp_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("Detail-Company?mu=" + Session["Type"].ToString() + "&id=" + objCrypto.EncryptData("View Company"));
+
+    }
+    protected void lnkbtnTotDiv_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("Detail-Company?mu=" + Session["Type"].ToString() + "&id=" + objCrypto.EncryptData("View Division"));
+    }
+    protected void lnkbtnTotUnit_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("Detail-Company?mu=" + Session["Type"].ToString() + "&id=" + objCrypto.EncryptData("View Unit"));
+    }
+
+    protected void lnkbtnTotEmp_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("View-NodalOfficer?mu=" + Session["Type"].ToString() + "&id=" + objCrypto.EncryptData("View Unit"));
+    }
+    protected void lnkbtnProduct_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("View-Product?mu=" + Session["Type"].ToString() + "&id=" + objCrypto.EncryptData("View Unit"));
     }
 }
