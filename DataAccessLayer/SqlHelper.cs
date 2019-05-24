@@ -576,7 +576,7 @@ namespace DataAccessLayer
                     dbTran.Commit();
                     _msg = "Save";
                     _sysMsg = "Save";
-                    return _msg;
+                    return mCurrentID;
                 }
                 catch (Exception ex)
                 {
@@ -868,7 +868,7 @@ namespace DataAccessLayer
                 }
             }
         }
-        public DataTable RetriveProductCode(string CompanyRefNo, string ProdRefNo, string Purpose)
+        public DataTable RetriveProductCode(string CompanyRefNo, string ProdRefNo, string Purpose,string Type)
         {
             using (DbConnection dbCon = db.CreateConnection())
             {
@@ -879,6 +879,7 @@ namespace DataAccessLayer
                     db.AddInParameter(cmd, "@CompanyRefNo", DbType.String, CompanyRefNo);
                     db.AddInParameter(cmd, "@ProductRefNo", DbType.String, ProdRefNo);
                     db.AddInParameter(cmd, "@Purpose", DbType.String, Purpose);
+                    db.AddInParameter(cmd, "@Type", DbType.String, Type);
                     IDataReader dr = db.ExecuteReader(cmd);
                     DataTable dt = new DataTable();
                     if (dr != null)
@@ -1144,6 +1145,30 @@ namespace DataAccessLayer
                     db.AddInParameter(cmd, "@Colmn", DbType.String, clmn);
                     db.AddInParameter(cmd, "@Value", DbType.String, val);
 
+                    IDataReader dr = db.ExecuteReader(cmd);
+                    DataTable dt = new DataTable();
+                    if (dr != null)
+                        dt.Load(dr);
+                    return dt;
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+        }
+        #endregion
+        #region Forgot password
+        public DataTable RetriveForgotPasswordEmail(string email, string type)
+        {
+            using (DbConnection dbCon = db.CreateConnection())
+            {
+                dbCon.Open();
+                try
+                {
+                    DbCommand cmd = db.GetStoredProcCommand("sp_forgotpassword");
+                    db.AddInParameter(cmd, "@NodalEmail", DbType.String, email);
+                    db.AddInParameter(cmd, "@Type", DbType.String, type);
                     IDataReader dr = db.ExecuteReader(cmd);
                     DataTable dt = new DataTable();
                     if (dr != null)

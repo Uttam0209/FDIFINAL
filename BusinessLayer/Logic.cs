@@ -106,9 +106,9 @@ namespace BusinessLayer
         {
             return SqlHelper.Instance.RetriveGridViewCompany(ID, FactoryRefNo, UnitRefNo, Purpose);
         }
-        public DataTable RetriveProductCode(string CompanyRefNo, string ProductRefNo, string Purpose)
+        public DataTable RetriveProductCode(string CompanyRefNo, string ProductRefNo, string Purpose, string Type)
         {
-            return SqlHelper.Instance.RetriveProductCode(CompanyRefNo, ProductRefNo, Purpose);
+            return SqlHelper.Instance.RetriveProductCode(CompanyRefNo, ProductRefNo, Purpose, Type);
         }
         public DataTable RetriveMasterData(Int64 Companyid, string strRefNo, string strRole, int MenuId, string strMenuUrl, string strInterestedAreaFlag, string strCriteria)
         {
@@ -127,6 +127,10 @@ namespace BusinessLayer
             string query = "select * from fn_GetInterestedInValue('" + CompRefNo + "')";
             return SqlHelper.Instance.GetDataset(query).Tables[0];
             //return SqlHelper.Instance.RetriveIntresteData(CompRefNo);
+        }
+        public DataTable RetriveForgotPasswordEmail(string Email, string Type)
+        {
+            return SqlHelper.Instance.RetriveForgotPasswordEmail(Email, Type);
         }
         #endregion
         #region DeleteCode

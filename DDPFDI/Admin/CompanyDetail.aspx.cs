@@ -1165,7 +1165,7 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
             }
 
         }
-        else if (mType == "Factory")
+        else if (mType == "Factory" || mType == "Division")
         {
 
             if (Request.QueryString["mrcreaterole"] != null)
