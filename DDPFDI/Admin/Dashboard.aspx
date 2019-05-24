@@ -18,8 +18,8 @@
                     </div>
                     <form method="post" class="addfdi">
                         <div class="admin-dashboard">
-                            <div class="row">
-                                <div class="col-md-12">
+                            
+                               
                                     <div class="row">
                                         <div class="col-lg-4 col-sm-6 col-xs-12">
                                             <div class="white-box analytics-info total-comp">
@@ -32,7 +32,7 @@
                                                         </div>
                                                         <div class="compName">
                                                             <h3 class="box-title">Total Companies</h3>
-                                                            <div class="Number"><asp:LinkButton ID="lnkbtnTotComp" runat="server" Text="0"></asp:LinkButton></li></div>
+                                                            <div class="Number"><asp:LinkButton ID="lnkbtnTotComp" runat="server" Text="0"></asp:LinkButton></div>
                                                         </div>
                                                         
                                                     </li>
@@ -83,9 +83,8 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <!---
-                                    <div class="row" style="margin-top: 10px;">
+                                    </div>                       
+                                    <div class="row" style="margin-top: 10px; display:none">
                                         <div class="col-md-6">
                                             <asp:DropDownList ID="ddlGraphType" runat="server" CssClass="form-control GraphType">
                                                 <asp:ListItem Value="Pie Chart">Pie Chart</asp:ListItem>
@@ -117,8 +116,8 @@
                                             </asp:DropDownList>
                                         </div>
                                     </div>
-                                    --->
-                                    <div class="row">
+                                  
+                                    <div class="row" >
                                         <div class="col-md-12">
                                             <div id="divPieChart">
                                                 <div id="chartPie" style="height: 370px; width: 100%; margin-top: 20px"></div>
@@ -131,8 +130,6 @@
                                         </div>
 
                                     </div>
-                                </div>
-                            </div>
                         </div>
 
                     </form>
