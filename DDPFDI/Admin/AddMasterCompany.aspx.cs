@@ -1,30 +1,25 @@
-﻿using System;
-using System.Activities.Statements;
-using System.Collections.Generic;
+﻿using BusinessLayer;
+using Encryption;
+using System;
 using System.Collections.Specialized;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 using System.Data;
 using System.Text;
-using BusinessLayer;
-using Encryption;
-using System.IO;
+using System.Web.UI;
+using System.Web.UI.WebControls;
 
 public partial class Admin_AddMasterCompany : System.Web.UI.Page
 {
-    Logic Lo = new Logic();
-    Cryptography Enc = new Cryptography();
-    DataUtility Co = new DataUtility();
-    private Int64 id = 0;
+    private Logic Lo = new Logic();
+    private Cryptography Enc = new Cryptography();
+    private DataUtility Co = new DataUtility();
+    private long id = 0;
     private string _sysMsg = string.Empty;
     private string _msg = string.Empty;
     private string intrestedare = "";
     private string Masterallowed = "";
     private string role = "";
     private DropDownList mddlControl;
-    HybridDictionary HySave = new HybridDictionary();
+    private HybridDictionary HySave = new HybridDictionary();
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
@@ -81,7 +76,7 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
                         mastercompany.Visible = true;
                         masterfacotry.Visible = true;
                         BindMasterCompany();
-                        this.ddlmaster_SelectedIndexChanged(sender, e);
+                        ddlmaster_SelectedIndexChanged(sender, e);
                         lblName.Text = "Unit";
                         btnsubmit.Text = "Save Unit";
 
@@ -162,37 +157,37 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
 
         if (Enc.DecryptData(Request.QueryString["mu"].ToString()) == "Panel2")
         {
-            this.gvcompanydetail.Columns[1].Visible = true;
-            this.gvcompanydetail.Columns[2].Visible = false;
-            this.gvcompanydetail.Columns[3].Visible = true;
+            gvcompanydetail.Columns[1].Visible = true;
+            gvcompanydetail.Columns[2].Visible = false;
+            gvcompanydetail.Columns[3].Visible = true;
             //this.gvcompanydetail.Columns[4].Visible = true;
-            this.gvcompanydetail.Columns[5].Visible = false;
+            gvcompanydetail.Columns[5].Visible = false;
             // this.gvcompanydetail.Columns[6].Visible = false;
-            this.gvcompanydetail.Columns[7].Visible = false;
-            this.gvcompanydetail.Columns[8].Visible = true;
-            this.gvcompanydetail.Columns[9].Visible = false;
+            gvcompanydetail.Columns[7].Visible = false;
+            gvcompanydetail.Columns[8].Visible = true;
+            gvcompanydetail.Columns[9].Visible = false;
         }
         else if (Enc.DecryptData(Request.QueryString["mu"].ToString()) == "Panel3")
         {
-            this.gvcompanydetail.Columns[1].Visible = true;
-            this.gvcompanydetail.Columns[2].Visible = false;
-            this.gvcompanydetail.Columns[3].Visible = true;
-            this.gvcompanydetail.Columns[4].Visible = false;
-            this.gvcompanydetail.Columns[5].Visible = true;
+            gvcompanydetail.Columns[1].Visible = true;
+            gvcompanydetail.Columns[2].Visible = false;
+            gvcompanydetail.Columns[3].Visible = true;
+            gvcompanydetail.Columns[4].Visible = false;
+            gvcompanydetail.Columns[5].Visible = true;
             //this.gvcompanydetail.Columns[6].Visible = true;
-            this.gvcompanydetail.Columns[7].Visible = false;
-            this.gvcompanydetail.Columns[8].Visible = false;
-            this.gvcompanydetail.Columns[9].Visible = true;
+            gvcompanydetail.Columns[7].Visible = false;
+            gvcompanydetail.Columns[8].Visible = false;
+            gvcompanydetail.Columns[9].Visible = true;
         }
         else
         {
-            this.gvcompanydetail.Columns[3].Visible = false;
-            this.gvcompanydetail.Columns[4].Visible = false;
-            this.gvcompanydetail.Columns[5].Visible = false;
-            this.gvcompanydetail.Columns[6].Visible = false;
-            this.gvcompanydetail.Columns[7].Visible = true;
-            this.gvcompanydetail.Columns[8].Visible = false;
-            this.gvcompanydetail.Columns[9].Visible = false;
+            gvcompanydetail.Columns[3].Visible = false;
+            gvcompanydetail.Columns[4].Visible = false;
+            gvcompanydetail.Columns[5].Visible = false;
+            gvcompanydetail.Columns[6].Visible = false;
+            gvcompanydetail.Columns[7].Visible = true;
+            gvcompanydetail.Columns[8].Visible = false;
+            gvcompanydetail.Columns[9].Visible = false;
         }
 
 
@@ -202,7 +197,7 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
     protected void BindMasterCompany()
     {
         string sType = "", sName = "", sID = "", mSID = "";
-        Int16 id = 0;
+        short id = 0;
         string sRole = "";
         if (Session["Type"] != null)
         {
@@ -350,15 +345,15 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
             GridCompanyBind();
             if (btnsubmit.Text == "Save Division")
             {
-                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Division added successfully !')", true);
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Division added successfully , to fill all details of company,please click on view >> company >> division >> edit and fill other company details')", true);
             }
             else if (btnsubmit.Text == "Save Unit")
             {
-                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Unit added successfully !')", true);
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Unit added successfully, to fill all details of company,please click on view >> company >> unit >> edit and fill other unit details')", true);
             }
             else
             {
-                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Company added successfully !')", true);
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Company added successfully, to fill all details of company,please click on view >> company >> edit and fill other division details')", true);
             }
             Cleartext();
         }
@@ -493,7 +488,7 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
 
                 lblintrestedin.Text = DtIntrested.Rows[0][0].ToString();
                 lblmenuallot.Text = DtIntrested.Rows[0][1].ToString();
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "changePass", "showPopup();", true);
+                ScriptManager.RegisterStartupScript(this, GetType(), "changePass", "showPopup();", true);
             }
         }
     }
@@ -517,6 +512,14 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
             if (e.Row.Cells[10].Text == "Factory")
             {
                 e.Row.Cells[10].Text = "Division";
+            }
+            if (ddlmaster.Visible == true)
+            {
+                gvcompanydetail.Columns[12].Visible = false;
+            }
+            if (ddlfacotry.Visible == true && ddlmaster.Visible == true)
+            {
+                gvcompanydetail.Columns[12].Visible = false;
             }
         }
     }

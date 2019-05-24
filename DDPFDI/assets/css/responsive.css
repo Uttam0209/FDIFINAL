@@ -67,6 +67,7 @@
 
   ul.breadcrumb { display: none;}
   .tabing-section .nav { display: flex; flex-direction: column; text-align: center;}
+  .sideBg { padding-top: 30px;}
 
 
 }

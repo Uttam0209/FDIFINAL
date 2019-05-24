@@ -1,26 +1,22 @@
 ﻿using BusinessLayer;
 using Encryption;
 using System;
-using System.Collections.Specialized;
 using System.Data;
 using System.Text;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using System.Drawing;
-using System.Web;
-using System.IO;
 
 public partial class Admin_ViewProduct : System.Web.UI.Page
 {
-    Logic Lo = new Logic();
-    DataUtility Co = new DataUtility();
-    Cryptography objEnc = new Cryptography();
-    DataTable DtGrid = new DataTable();
-    DataTable DtCompanyDDL = new DataTable();
-    string UserName;
-    string RefNo;
-    string UserEmail;
-    string currentPage = "";
+    private Logic Lo = new Logic();
+    private DataUtility Co = new DataUtility();
+    private Cryptography objEnc = new Cryptography();
+    private DataTable DtGrid = new DataTable();
+    private DataTable DtCompanyDDL = new DataTable();
+    private string UserName;
+    private string RefNo;
+    private string UserEmail;
+    private string currentPage = "";
     private string mRefNo = "";
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -76,8 +72,8 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
                     if (sortExpression != null)
                     {
                         DataView dv = DtGrid.AsDataView();
-                        this.SortDirection = this.SortDirection == "ASC" ? "DESC" : "ASC";
-                        dv.Sort = sortExpression + " " + this.SortDirection;
+                        SortDirection = SortDirection == "ASC" ? "DESC" : "ASC";
+                        dv.Sort = sortExpression + " " + SortDirection;
                         gvproduct.DataSource = dv;
                     }
                     else
@@ -143,7 +139,7 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
                 }
             }
         }
-        catch (Exception ex)
+        catch (Exception)
         {
         }
     }
@@ -157,25 +153,28 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
     protected void OnPageIndexChanging(object sender, GridViewPageEventArgs e)
     {
         gvproduct.PageIndex = e.NewPageIndex;
-        this.BindGridView();
+        BindGridView();
     }
     protected void OnSorting(object sender, GridViewSortEventArgs e)
     {
-        this.BindGridView(e.SortExpression);
+        BindGridView(e.SortExpression);
     }
     #endregion
     #region RowCommand
-    string stpsdq;
+    private string stpsdq;
+    private string Testing;
+    private string Certification;
     protected void gvproduct_RowCommand(object sender, GridViewCommandEventArgs e)
     {
         if (e.CommandName == "EditComp")
         {
             GridViewRow gvr = (GridViewRow)((Control)e.CommandSource).NamingContainer;
             int rowIndex = gvr.RowIndex;
-            string Role = (gvproduct.Rows[rowIndex].FindControl("lblcompanyrole") as Label).Text;
+            string Role = (gvproduct.Rows[rowIndex].FindControl("hfrole") as HiddenField).Value;
+            string CRefNo = (gvproduct.Rows[rowIndex].FindControl("hfcomprefno") as HiddenField).Value;
             string stridNew = Request.QueryString["id"].ToString().Replace(" ", "+");
-            string mstrid = objEnc.EncryptData((objEnc.DecryptData(stridNew) + " >> Add Product"));
-            Response.Redirect("AddProduct?mrcreaterole=" + objEnc.EncryptData(Role) + "&mcurrentcompRefNo=" + (objEnc.EncryptData(e.CommandArgument.ToString())) + "&id=" + mstrid);
+            string mstrid = objEnc.EncryptData((objEnc.DecryptData(stridNew) + " >> Edit Product"));
+            Response.Redirect("AddProduct?mrcreaterole=" + objEnc.EncryptData(Role) + "&mcurrentcompRefNo= " + objEnc.EncryptData(CRefNo) + "&MProductRefNo=" + (objEnc.EncryptData(e.CommandArgument.ToString())) + "&id=" + mstrid);
         }
         else if (e.CommandName == "ViewComp")
         {
@@ -284,7 +283,33 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
                         tablenodal2.Visible = false;
                     }
                 }
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "changePass", "showPopup();", true);
+                DataTable dttesting = Lo.RetriveProductCode("", e.CommandArgument.ToString(), "ProductTesting", hidType.Value);
+                if (dttesting.Rows.Count > 0)
+                {
+                    for (int i = 0; dttesting.Rows.Count > i; i++)
+                    {
+                        Testing = Testing + "," + dttesting.Rows[i]["SCategoryName"].ToString();
+                    }
+                }
+                if (Testing != null)
+                {
+                    lbltesting.Text = Testing.Substring(1).ToString();
+                }
+                lbltestingremarks.Text = DtView.Rows[0]["Remarks"].ToString();
+                DataTable dtcertification = Lo.RetriveProductCode("", e.CommandArgument.ToString(), "ProductCertification", hidType.Value);
+                if (dtcertification.Rows.Count > 0)
+                {
+                    for (int i = 0; dtcertification.Rows.Count > i; i++)
+                    {
+                        Certification = Certification + "," + dtcertification.Rows[i]["SCategoryName"].ToString();
+                    }
+                }
+                if (Certification != null)
+                {
+                    lblcertification.Text = Certification.Substring(1).ToString();
+                }
+                lblcertificationremarks.Text = DtView.Rows[0]["Remarks"].ToString();
+                ScriptManager.RegisterStartupScript(this, GetType(), "changePass", "showPopup();", true);
             }
         }
         else if (e.CommandName == "DeleteComp")
@@ -294,14 +319,14 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
                 string DeleteRec = Lo.DeleteRecord(e.CommandArgument.ToString(), "InActiveProd");
                 if (DeleteRec == "true")
                 {
-                    ScriptManager.RegisterStartupScript(this, this.GetType(), "alert", "alert('User details saved sucessfully');window.location ='View-Product';", true);
+                    ScriptManager.RegisterStartupScript(this, GetType(), "alert", "alert('User details saved sucessfully');window.location ='View-Product';", true);
                 }
                 else
                 {
                     ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not deleted.')", true);
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not deleted.')", true);
             }

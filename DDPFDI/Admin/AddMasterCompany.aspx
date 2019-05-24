@@ -81,101 +81,100 @@
                 <div class="addfdi">
                     <asp:UpdatePanel ID="upfdival" runat="server">
                         <ContentTemplate>
-                            <div class="section-pannel">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group" style="padding: 0 10px;" runat="server" id="mastercompany" visible="False">
-                                            <asp:Label ID="lblMastcompany" runat="server" Text="" CssClass="form-label"></asp:Label><span data-toggle="tooltip" class="fa fa-question" title="Please Select Company Name"></span>
-                                            <asp:DropDownList runat="server" ID="ddlmaster" AutoPostBack="True" CssClass="form-control form-cascade-control" OnSelectedIndexChanged="ddlmaster_SelectedIndexChanged">
-                                            </asp:DropDownList>
-                                        </div>
-                                        <div class="form-group" style="padding: 0 10px;" runat="server" id="masterfacotry" visible="False">
+                            <asp:Panel ID="Panel1" runat="server" DefaultButton="btnsubmit">
+                                <div class="section-pannel">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group" style="padding: 0 10px;" runat="server" id="mastercompany" visible="False">
+                                                <asp:Label ID="lblMastcompany" runat="server" Text="" CssClass="form-label"></asp:Label><span data-toggle="tooltip" class="fa fa-question" title="Please Select Company Name"></span>
+                                                <asp:DropDownList runat="server" ID="ddlmaster" AutoPostBack="True" TabIndex="1" CssClass="form-control form-cascade-control" OnSelectedIndexChanged="ddlmaster_SelectedIndexChanged">
+                                                </asp:DropDownList>
+                                            </div>
+                                            <div class="form-group" style="padding: 0 10px;" runat="server" id="masterfacotry" visible="False">
 
-                                            <asp:Label ID="lblfactoryName" runat="server" Text="" CssClass="form-label"></asp:Label><span data-toggle="tooltip" class="fa fa-question" title="Please Select Division/Plant Name"></span>
-                                            <asp:DropDownList runat="server" ID="ddlfacotry" AutoPostBack="True" OnSelectedIndexChanged="ddlfacotry_SelectedIndexChanged" CssClass="form-control form-cascade-control">
-                                            </asp:DropDownList>
+                                                <asp:Label ID="lblfactoryName" runat="server" Text="" CssClass="form-label"></asp:Label><span data-toggle="tooltip" class="fa fa-question" title="Please Select Division/Plant Name"></span>
+                                                <asp:DropDownList runat="server" ID="ddlfacotry" AutoPostBack="True" TabIndex="2" OnSelectedIndexChanged="ddlfacotry_SelectedIndexChanged" CssClass="form-control form-cascade-control">
+                                                </asp:DropDownList>
+                                            </div>
                                         </div>
-                                    </div>
-
-                                    <div class="col-md-12">
-                                        <div class="fdi-add-content">
-                                            <div runat="server">
-                                                <div class="section-pannel">
-                                                    <div class="row">
-                                                        <div class="col-md-6">
-                                                            <div class="form-group">
-                                                                <asp:Label ID="lblName" runat="server" Text="" CssClass="form-label"></asp:Label><span data-toggle="tooltip" class="fa fa-question" title="Please enter organization name"></span>
-                                                                <asp:TextBox ID="txtcomp" runat="server" required="" class="form-control form-cascade-control"></asp:TextBox>
+                                        <div class="col-md-12">
+                                            <div class="fdi-add-content">
+                                                <div runat="server">
+                                                    <div class="section-pannel">
+                                                        <div class="row">
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <asp:Label ID="lblName" runat="server" Text="" CssClass="form-label"></asp:Label><span data-toggle="tooltip" class="fa fa-question" title="Please enter organization name"></span>
+                                                                    <asp:TextBox ID="txtcomp" runat="server" required="" TabIndex="3" class="form-control form-cascade-control"></asp:TextBox>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-md-6" id="divOfficerEmail" runat="server">
-                                                        <div class="form-group">
-                                                            <label class=" control-label">Officer email id </label>
-                                                            <asp:TextBox ID="txtemail" runat="server" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" class="form-control form-cascade-control"></asp:TextBox>
-                                                            <p class="note">*Note: will be used as username </p>
+                                                    <div class="row">
+                                                        <div class="col-md-6" id="divOfficerEmail" runat="server">
+                                                            <div class="form-group">
+                                                                <label class=" control-label">Officer email id </label>
+                                                                <asp:TextBox ID="txtemail" runat="server" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" TabIndex="4" class="form-control form-cascade-control"></asp:TextBox>
+                                                                <p class="note">*Note: will be used as username </p>
+                                                            </div>
                                                         </div>
                                                     </div>
+
                                                 </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="is-flex">
+                                    <div class="col-md-5" id="Intrested" visible="False" runat="server">
+                                        <div class="fdi-add-content">
+                                            <div class="form-group">
+
+                                                <h3 class="secondary-heading">Intrested In</h3>
+                                                <asp:CheckBoxList ID="chkintrestedarea" runat="server" CssClass="checkbox-inline" TabIndex="6" RepeatColumns="5" RepeatDirection="Vertical" RepeatLayout="Flow">
+                                                </asp:CheckBoxList>
 
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="col-md-4" id="MenuAlot" visible="False" runat="server">
+                                        <div class="fdi-add-content">
+                                            <div class="form-group">
 
+                                                <h3 class="secondary-heading">Menu Alotted</h3>
+                                                <asp:CheckBoxList ID="chkmastermenuallot" runat="server" CssClass="checkbox-inline" TabIndex="7" RepeatColumns="4" RepeatDirection="Horizontal" RepeatLayout="Flow">
+                                                </asp:CheckBoxList>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3" id="divRole" visible="False" runat="server">
+                                        <div class="fdi-add-content">
+                                            <div class="form-group">
 
-                                </div>
-                            </div>
-                            <div class="is-flex">
-                                <div class="col-md-5" id="Intrested" visible="False" runat="server">
-                                    <div class="fdi-add-content">
-                                        <div class="form-group">
+                                                <h3 class="secondary-heading">Role</h3>
 
-                                            <h3 class="secondary-heading">Intrested In</h3>
-                                            <asp:CheckBoxList ID="chkintrestedarea" runat="server" CssClass="checkbox-inline" RepeatColumns="5" RepeatDirection="Vertical" RepeatLayout="Flow">
-                                            </asp:CheckBoxList>
+                                                <asp:CheckBoxList ID="chkrole" runat="server" onclick="MutExChkList(this);" RepeatColumns="5" TabIndex="8" CssClass="checkbox-inline" RepeatDirection="Horizontal" RepeatLayout="Flow">
+                                                    <asp:ListItem Value="Admin">Admin</asp:ListItem>
+                                                    <asp:ListItem Value="Company">Company</asp:ListItem>
+                                                </asp:CheckBoxList>
 
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-4" id="MenuAlot" visible="False" runat="server">
-                                    <div class="fdi-add-content">
-                                        <div class="form-group">
-
-                                            <h3 class="secondary-heading">Menu Alotted</h3>
-                                            <asp:CheckBoxList ID="chkmastermenuallot" runat="server" CssClass="checkbox-inline" RepeatColumns="4" RepeatDirection="Horizontal" RepeatLayout="Flow">
-                                            </asp:CheckBoxList>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="fdi-add-content">
+                                            <div class="form-group">
+                                                <asp:Button ID="btncancel" runat="server" Text="Cancel" TabIndex="10" CssClass="btn btn-default pull-right" OnClick="btncancel_Click" />
+                                                <asp:Button ID="btnsubmit" runat="server" Text="Save" TabIndex="9" CssClass="btn btn-primary pull-right" OnClick="btnsubmit_Click" OnClientClick="return Validate()" />
+                                            </div>
+                                        </div>
+                                        <div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-3" id="divRole" visible="False" runat="server">
-                                    <div class="fdi-add-content">
-                                        <div class="form-group">
-
-                                            <h3 class="secondary-heading">Role</h3>
-
-                                            <asp:CheckBoxList ID="chkrole" runat="server" onclick="MutExChkList(this);" RepeatColumns="5" CssClass="checkbox-inline" RepeatDirection="Horizontal" RepeatLayout="Flow">
-                                                <asp:ListItem Value="Admin">Admin</asp:ListItem>
-                                                <asp:ListItem Value="Company">Company</asp:ListItem>
-                                            </asp:CheckBoxList>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="fdi-add-content">
-                                        <div class="form-group">
-                                            <asp:Button ID="btncancel" runat="server" Text="Cancel" CssClass="btn btn-default pull-right" OnClick="btncancel_Click" />
-                                            <asp:Button ID="btnsubmit" runat="server" Text="Save" CssClass="btn btn-primary pull-right" OnClick="btnsubmit_Click" OnClientClick="return Validate()" />
-                                        </div>
-                                    </div>
-                                    <div>
-                                    </div>
-                                </div>
-                            </div>
+                            </asp:Panel>
                             <div class="parentRow" style="display: none">
                                 Company : <span>Demo</span>
                             </div>
