@@ -17,30 +17,30 @@ public partial class Admin_Dashboard : System.Web.UI.Page
     Logic Lo = new Logic();
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (Session["User"] != null)
-        {
-            if (!IsPostBack)
-            {
-                if (Request.QueryString["id"] != null)
-                {
-                    string id = Request.QueryString["id"].ToString().Replace(" ", "+");
-                    lblPageName.Text = objCrypto.DecryptData(id);
-                }
-                DataTable dt = Lo.RetriveAggregateValue("Count", "Company");
-                lnkbtnTotComp.Text = dt.Rows[0][0].ToString();
+        //if (Session["User"] != null)
+        //{
+        //    if (!IsPostBack)
+        //    {
+        //        if (Request.QueryString["id"] != null)
+        //        {
+        //            string id = Request.QueryString["id"].ToString().Replace(" ", "+");
+        //            lblPageName.Text = objCrypto.DecryptData(id);
+        //        }
+        //        DataTable dt = Lo.RetriveAggregateValue("Count", "Company");
+        //        lnkbtnTotComp.Text = dt.Rows[0][0].ToString();
 
-                dt = Lo.RetriveAggregateValue("", "FDI");
+        //        dt = Lo.RetriveAggregateValue("", "FDI");
 
-                dt.Columns.Add(new DataColumn("Total", typeof(int)));
-                Double total = Convert.ToDouble(dt.Compute("Sum(ExchangeTotalAmount)", "").ToString());
+        //        dt.Columns.Add(new DataColumn("Total", typeof(int)));
+        //        Double total = Convert.ToDouble(dt.Compute("Sum(ExchangeTotalAmount)", "").ToString());
 
-                lnkbtnFDI.Text = Math.Round((total / 10000000), 2).ToString() + " Crore";
+        //        lnkbtnFDI.Text = Math.Round((total / 10000000), 2).ToString() + " Crore";
 
-                total = Convert.ToDouble(dt.Compute("Sum(ExchangeTotalAmount)", "FYID=17").ToString());
-                lnkbtnLYFDI.Text = Math.Round((total / 10000000), 2).ToString() + " Crore";
-            }
-        }
-        else
-            Response.RedirectToRoute("Login");
+        //        total = Convert.ToDouble(dt.Compute("Sum(ExchangeTotalAmount)", "FYID=17").ToString());
+        //        lnkbtnLYFDI.Text = Math.Round((total / 10000000), 2).ToString() + " Crore";
+        //    }
+        //}
+        //else
+        //    Response.RedirectToRoute("Login");
     }
 }

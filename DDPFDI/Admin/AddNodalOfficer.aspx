@@ -36,72 +36,73 @@
                         </div>
                         <div class="add-profile">
                             <div class="section-pannel">
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>Name</label>
-                                            <asp:TextBox class="form-control" required="" runat="server" ID="txtname"></asp:TextBox>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>Designation</label>
-                                            <asp:DropDownList runat="server" ID="ddldesignation" class="form-control" />
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>Emp Code</label>
-                                            <asp:TextBox class="form-control" runat="server" ID="txtEmpCode"></asp:TextBox>
-                                        </div>
-                                    </div>
-
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>Email ID</label>
-                                            <asp:TextBox class="form-control" required="" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" runat="server" ID="txtemailid"></asp:TextBox>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>Mobile</label>
-                                            <asp:TextBox class="form-control" runat="server" ID="txtmobile"></asp:TextBox>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>Telephone </label>
-                                            <asp:TextBox class="form-control" runat="server" ID="txttelephone"></asp:TextBox>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>Fax </label>
-                                            <asp:TextBox class="form-control" runat="server" ID="txtfax"></asp:TextBox>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="fdi-add-content NodalRole" id="DivNodalRole" runat="server">
+                                <asp:Panel ID="Panel1" runat="server" DefaultButton="btnsub">
+                                    <div class="row">
+                                        <div class="col-md-4">
                                             <div class="form-group">
-                                                <asp:CheckBox ID="chkrole" Text="Nodal Officer" runat="server" Style="margin-left: 20px;" CssClass="checkbox-inline"></asp:CheckBox>
-                                                <asp:CheckBox ID="chkUser" Text="User" runat="server" Style="margin-left: 20px;" CssClass="checkbox-inline"></asp:CheckBox>
+                                                <label>Name</label>
+                                                <asp:TextBox class="form-control" required="" TabIndex="1" runat="server" ID="txtname"></asp:TextBox>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>Designation</label><span data-toggle="tooltip" tabindex="2" class="fa fa-question" title="Please select designation (if you are not see any designation please add master designation in designation section."></span>
+                                                <asp:DropDownList runat="server" ID="ddldesignation" class="form-control" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>Emp Code</label>
+                                                <asp:TextBox class="form-control" runat="server" TabIndex="3" ID="txtEmpCode"></asp:TextBox>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <asp:Button ID="btncancel" runat="server" Text="Cancel" CssClass="btn btn-default pull-right" Style="margin-right: 0 !important" OnClick="btncancel_Click" />
-                                            <asp:LinkButton ID="btnsub" runat="server" Text="Save" class="btn btn-primary pull-right" OnClick="btnsub_Click" OnClientClick="return confirm('Are you sure you want to save this nodal officer?');"></asp:LinkButton>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>Email ID</label>
+                                                <asp:TextBox class="form-control" required="" TabIndex="4" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" runat="server" ID="txtemailid"></asp:TextBox>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>Mobile</label>
+                                                <asp:TextBox class="form-control" runat="server" TabIndex="5" ID="txtmobile"></asp:TextBox>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>Telephone </label>
+                                                <asp:TextBox class="form-control" runat="server" TabIndex="6" ID="txttelephone"></asp:TextBox>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>Fax </label>
+                                                <asp:TextBox class="form-control" runat="server" TabIndex="7" ID="txtfax"></asp:TextBox>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="fdi-add-content NodalRole" id="DivNodalRole" runat="server">
+                                                <div class="form-group">
+                                                    <asp:CheckBox ID="chkrole" Text="Nodal Officer" runat="server" TabIndex="8" Style="margin-left: 20px;" CssClass="checkbox-inline"></asp:CheckBox>
+                                                    <asp:CheckBox ID="chkUser" Text="User" runat="server" TabIndex="9" Style="margin-left: 20px;" CssClass="checkbox-inline"></asp:CheckBox>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <asp:Button ID="btncancel" runat="server" Text="Cancel" TabIndex="10" CssClass="btn btn-default pull-right" Style="margin-right: 0 !important" OnClick="btncancel_Click" />
+                                                <asp:LinkButton ID="btnsub" runat="server" Text="Save" TabIndex="9" class="btn btn-primary pull-right" OnClick="btnsub_Click" OnClientClick="return confirm('Are you sure you want to save this nodal officer?');"></asp:LinkButton>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </asp:Panel>
                             </div>
                             <div class="table-wraper">
                                 <asp:GridView ID="gvViewNodalOfficer" runat="server" Width="100%" Class="commonAjaxTbl master-company-table table display responsive no-wrap table-hover manage-user Grid"
