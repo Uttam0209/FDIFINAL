@@ -87,7 +87,27 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                         BindCertification();
                     }
                 }
-                EditCode();
+                if (hidType.Value == "Company")
+                {
+                    ddlcompany.Visible = true;
+                    divlblselectdivison.Visible = false;
+                    divlblselectunit.Visible = false; EditCode();
+                }
+                else if (hidType.Value == "Division" || hidType.Value == "Factory")
+                {
+                    ddlcompany.Visible = true;
+                    divlblselectdivison.Visible = true;
+                    divlblselectunit.Visible = false; EditCode();
+                }
+                else if (hidType.Value == "Unit")
+                {
+                    ddlcompany.Visible = true;
+                    divlblselectdivison.Visible = true;
+                    divlblselectunit.Visible = true;
+                    EditCode();
+                }
+                else if (hidType.Value == "Admin" || hidType.Value == "SuperAdmin")
+                { EditCode(); }
             }
             catch (Exception)
             {
@@ -374,7 +394,6 @@ public partial class Admin_AddProduct : System.Web.UI.Page
             divlblselectdivison.Visible = false;
             divlblselectunit.Visible = false;
         }
-
         hfcomprefno.Value = "";
         hfcomprefno.Value = ddlcompany.SelectedItem.Value;
         BindNodelEmail();
@@ -390,8 +409,14 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                 ddlunit.Items.Insert(0, "Select");
                 ddlunit.Visible = true;
                 divlblselectunit.Visible = true;
+                if (ddlunit.SelectedItem.Text == "Select")
+                {
+                    ddldivision.Enabled = true;
+                }
+                else
+                { ddldivision.Enabled = false; }
                 hidCompanyRefNo.Value = ddldivision.SelectedItem.Value;
-                hidType.Value = "Divison/Plant";
+                hidType.Value = "Divison";
             }
             else
             {
@@ -405,21 +430,12 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         }
         else if (ddldivision.SelectedItem.Text == "Select")
         {
-            //DtCompanyDDL = Lo.RetriveMasterData(0, ddlcompany.SelectedItem.Value, "", 0, "", "", "FactoryCompanyID");
-            //if (DtCompanyDDL.Rows.Count > 0)
-            //{
-            //    Co.FillDropdownlist(ddldivision, DtCompanyDDL, "FactoryName", "FactoryRefNo");
-            //    ddldivision.Items.Insert(0, "Select");
-            //    divlblselectdivison.Visible = true;
-            //    ddldivision.Visible = true;
-            //    divlblselectdivison.Visible = false;
-            //}
+            ddlcompany.Enabled = false;
             divlblselectunit.Visible = false;
-            hfcomprefno.Value = "";
             hfcomprefno.Value = ddlcompany.SelectedItem.Value;
+            hidType.Value = "Company";
             BindNodelEmail();
         }
-
     }
     protected void ddlunit_OnSelectedIndexChanged(object sender, EventArgs e)
     {
@@ -434,9 +450,9 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         }
         else
         {
-            ddldivision.Enabled = true;
             hidCompanyRefNo.Value = ddldivision.SelectedItem.Value;
             hidType.Value = "Division";
+            ddldivision.Enabled = false;
             hfcomprefno.Value = "";
             hfcomprefno.Value = ddldivision.SelectedItem.Value;
             BindNodelEmail();
@@ -865,7 +881,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         else if (ddlcompany.SelectedItem.Text != "Select" && ddldivision.SelectedItem.Text != "Select" && ddlunit.SelectedItem.Text == "Select")
         {
             HyPanel1["CompanyRefNo"] = Co.RSQandSQLInjection(ddldivision.SelectedItem.Value, "soft");
-            hidType.Value = "Factory";
+            hidType.Value = "Division";
             HyPanel1["Role"] = hidType.Value.ToString();
         }
         else if (ddlcompany.SelectedItem.Text != "Select" && ddldivision.SelectedItem.Text != "Select" && ddlunit.SelectedItem.Text != "Select")
