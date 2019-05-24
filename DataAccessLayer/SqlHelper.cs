@@ -1116,7 +1116,7 @@ namespace DataAccessLayer
                 dbCon.Open();
                 try
                 {
-                    DbCommand cmd = db.GetStoredProcCommand("sp_AggregateValue");
+                    DbCommand cmd = db.GetStoredProcCommand("s_AggregateValue");
                     db.AddInParameter(cmd, "@Function", DbType.String, function);
                     db.AddInParameter(cmd, "@Table", DbType.String, entity);
 
