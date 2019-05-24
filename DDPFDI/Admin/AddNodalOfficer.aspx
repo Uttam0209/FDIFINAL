@@ -88,8 +88,10 @@
                                         <div class="col-md-4">
                                             <div class="fdi-add-content NodalRole" id="DivNodalRole" runat="server">
                                                 <div class="form-group">
-                                                    <asp:CheckBox ID="chkrole" Text="Nodal Officer" runat="server" TabIndex="8" Style="margin-left: 20px;" CssClass="checkbox-inline"></asp:CheckBox>
-                                                    <asp:CheckBox ID="chkUser" Text="User" runat="server" TabIndex="9" Style="margin-left: 20px;" CssClass="checkbox-inline"></asp:CheckBox>
+                                                    <asp:CheckBoxList runat="server" Style="margin-left: 20px;" CssClass="checkbox-inline" ID="chkrole" TabIndex="8" ToolTip="If you want to give login access please select nodel or user/if check is not selected it will be default employee.">
+                                                        <asp:ListItem Text="Nodal Officer"></asp:ListItem>
+                                                        <asp:ListItem Text="User"></asp:ListItem>
+                                                    </asp:CheckBoxList>
                                                 </div>
                                             </div>
                                         </div>
