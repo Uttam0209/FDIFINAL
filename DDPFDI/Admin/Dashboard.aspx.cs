@@ -17,7 +17,6 @@ public partial class Admin_Dashboard : System.Web.UI.Page
     Logic Lo = new Logic();
     protected void Page_Load(object sender, EventArgs e)
     {
-
         if (Session["User"] != null)
         {
             if (!IsPostBack)
@@ -33,6 +32,8 @@ public partial class Admin_Dashboard : System.Web.UI.Page
                 lnkbtnTotUnit.Text = dt.Rows[0]["TotUnit"].ToString();
                 lnkbtnTotEmp.Text = dt.Rows[0]["TotEmployee"].ToString();
                 lnkbtnProduct.Text = dt.Rows[0]["TotProduct"].ToString();
+
+
             }
         }
         else

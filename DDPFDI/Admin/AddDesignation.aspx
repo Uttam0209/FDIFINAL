@@ -22,52 +22,52 @@
                             <div id="divHeadPage" runat="server"></div>
                         </div>
                     </div>
-
                     <div class="addfdi">
-                        <div class="section-pannel">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <%-- <asp:UpdatePanel ID="upfdival" runat="server">
+                        <asp:Panel ID="Panel1" runat="server" DefaultButton="btnsubmit">
+                            <div class="section-pannel">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <%-- <asp:UpdatePanel ID="upfdival" runat="server">
                                 <ContentTemplate>--%>
-                                    <div class="form-group" runat="server" id="mastercompany">
-                                        <asp:HiddenField ID="hdid" runat="server" />
-                                        <asp:Label ID="lblMastcompany" runat="server" Text="" CssClass="form-label"></asp:Label>
-                                        <asp:DropDownList runat="server" ID="ddlmaster" AutoPostBack="True" OnSelectedIndexChanged="ddlmaster_OnSelectedIndexChanged" CssClass="form-control form-cascade-control">
-                                        </asp:DropDownList>
+                                        <div class="form-group" runat="server" id="mastercompany">
+                                            <asp:HiddenField ID="hdid" runat="server" />
+                                            <asp:Label ID="lblMastcompany" runat="server" Text="" CssClass="form-label"></asp:Label>
+                                            <asp:DropDownList runat="server" ID="ddlmaster" AutoPostBack="True" TabIndex="1" OnSelectedIndexChanged="ddlmaster_OnSelectedIndexChanged" CssClass="form-control form-cascade-control">
+                                            </asp:DropDownList>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="fdi-add-content">
+                                            <div id="Div1" runat="server">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label class=" control-label">Designation </label>
+                                                            <span data-toggle="tooltip" class="fa fa-question" title="Please enter master designation of company designation also display in division/unit section.Before add designation please check company dropdown are selected with company name"></span>
+                                                            <asp:TextBox ID="txtDesignation" runat="server" TabIndex="2" required="" class="form-control form-cascade-control"></asp:TextBox>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="fdi-add-content">
-                                        <div id="Div1" runat="server">
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label class=" control-label">Designation </label><span data-toggle="tooltip" class="fa fa-question" title="Please enter master designation of company designation also display in division/unit section.Before add designation please check company dropdown are selected with company name"></span>
-                                                        <asp:TextBox ID="txtDesignation" runat="server" required="" class="form-control form-cascade-control"></asp:TextBox>
-                                                    </div>
-                                                </div>
-
-                                            </div>
+                                        <div class="form-group">
+                                            <asp:Button ID="btncancel" runat="server" Text="Cancel" TabIndex="4" CssClass="btn btn-default pull-right" OnClick="btncancel_Click" />
+                                            <asp:Button ID="btnsubmit" runat="server" Text="Save" TabIndex="3" CssClass="btn btn-primary pull-right" OnClick="btnsubmit_Click" OnClientClick="return confirm('Are you sure you want to save this designation?');" />
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="fdi-add-content">
-                                    <div class="form-group">
-                                        <asp:Button ID="btncancel" runat="server" Text="Cancel" CssClass="btn btn-default pull-right" OnClick="btncancel_Click" />
-                                        <asp:Button ID="btnsubmit" runat="server" Text="Save" CssClass="btn btn-primary pull-right" OnClick="btnsubmit_Click" OnClientClick="return confirm('Are you sure you want to save this designation?');" />
+                                    <div>
                                     </div>
                                 </div>
-                                <div>
-                                </div>
                             </div>
-                        </div>
+                        </asp:Panel>
                         <div class="table-wraper">
                             <asp:GridView ID="gvViewDesignation" runat="server" Width="100%" Class="commonAjaxTbl master-company-table table display responsive no-wrap table-hover manage-user Grid" AutoGenerateColumns="false" AllowPaging="true"
                                 PageSize="25" AllowSorting="true">
@@ -93,6 +93,7 @@
                                 </Columns>
                             </asp:GridView>
                         </div>
+
                         <%--</ContentTemplate>
                             </asp:UpdatePanel>--%>
                     </div>
@@ -114,7 +115,7 @@
             </ProgressTemplate>
         </asp:UpdateProgress>
 
-<%--         <!-----Alert Box ------>
+        <%--         <!-----Alert Box ------>
     <div runat="server" id="AlertSuccess" visible="false" class="alert-overlay alert-overlay-success">
         <div class="alert-box">
             <div class="box">

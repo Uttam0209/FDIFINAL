@@ -213,8 +213,9 @@ public partial class Admin_ViewNodalOfficer : System.Web.UI.Page
             GridViewRow gvr = (GridViewRow)((Control)e.CommandSource).NamingContainer;
             int rowIndex = gvr.RowIndex;
             string stridNew = Request.QueryString["id"].ToString().Replace(" ", "+");
-            string mstrid = objEnc.EncryptData((objEnc.DecryptData(stridNew) + " >> Edit Nodal Office"));
-            Response.Redirect("Add-Nodal?mrcreaterole=" + objEnc.EncryptData(e.CommandArgument.ToString()) + "&mcurrentcompRefNo=" + (objEnc.EncryptData(e.CommandArgument.ToString())) + "&id=" + mstrid);
+            string mstrid = objEnc.EncryptData((objEnc.DecryptData(stridNew)));
+            string UrlEdit = "Add-Nodal?mrcreaterole=" + objEnc.EncryptData(e.CommandArgument.ToString()) + "&mcurrentcompRefNo=" + (objEnc.EncryptData(e.CommandArgument.ToString())) + "&id=" + mstrid;
+            Response.Redirect(UrlEdit);
         }
         else if (e.CommandName == "ViewComp")
         {
@@ -345,7 +346,7 @@ public partial class Admin_ViewNodalOfficer : System.Web.UI.Page
             {
                 ddldivision.Visible = false;
                 lblselectdivison.Visible = false;
-                gvViewNodalOfficer.Visible = false;
+                GridViewNodalOfficerBind(ddlcompany.SelectedItem.Value, "Company");
             }
         }
         else if (ddlcompany.SelectedItem.Text == "Select")

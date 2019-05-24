@@ -1,33 +1,31 @@
-﻿using System;
-using System.Data;
-using BusinessLayer;
+﻿using BusinessLayer;
 using Encryption;
+using System;
 using System.Collections.Specialized;
-using System.Web.UI;
-using System.Text.RegularExpressions;
+using System.Data;
 using System.Text;
-using System.IO;
-using System.Net;
+using System.Text.RegularExpressions;
+using System.Web.UI;
 using System.Web.UI.WebControls;
 
 public partial class Admin_CompanyDetail : System.Web.UI.Page
 {
-    Logic Lo = new Logic();
-    HybridDictionary HySave = new HybridDictionary();
-    Cryptography objCrypto = new Cryptography();
-    Int64 Mid = 0;
-    DataUtility Co = new DataUtility();
-    string _msg = string.Empty;
-    string _sysMsg = string.Empty;
-    DataTable DtView = new DataTable();
-    string currentPage = "";
-    string lbltypelogin = "";
+    private Logic Lo = new Logic();
+    private HybridDictionary HySave = new HybridDictionary();
+    private Cryptography objCrypto = new Cryptography();
+    private long Mid = 0;
+    private DataUtility Co = new DataUtility();
+    private string _msg = string.Empty;
+    private string _sysMsg = string.Empty;
+    private DataTable DtView = new DataTable();
+    private string currentPage = "";
+    private string lbltypelogin = "";
     private string mType = "";
     private string mRefNo = "";
     private string Categoryintrestedare = "";
-    DataTable DtCompanyDDL = new DataTable();
-    DataTable dtViewDefault = new DataTable();
-    string strCRole, strDRole, strURole;
+    private DataTable DtCompanyDDL = new DataTable();
+    private DataTable dtViewDefault = new DataTable();
+    private string strCRole, strDRole, strURole;
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
@@ -68,7 +66,7 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
                         ddlcompany.Enabled = false;
                         lblselectdivison.Visible = false;
                         licc.Visible = false;
-
+                        acomp.InnerText = "Company";
                     }
                     else if (objCrypto.DecryptData(Request.QueryString["mrcreaterole"].ToString()) == "Factory")
                     {
@@ -76,7 +74,7 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
                         licc.Visible = false;
                         lisr.Visible = false;
                         lisc.Visible = false;
-
+                        acomp.InnerText = "Division";
                     }
                     else if (objCrypto.DecryptData(Request.QueryString["mrcreaterole"].ToString()) == "Unit")
                     {
@@ -84,12 +82,13 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
                         licc.Visible = false;
                         lisr.Visible = false;
                         licc.Visible = false;
+                        acomp.InnerText = "Unit";
                     }
                 }
                 else
                 { Response.RedirectToRoute("Login"); }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 Response.RedirectToRoute("Login");
             }
@@ -97,7 +96,7 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
     }
     protected void BindMasterCategory()
     {
-        DataTable DtMasterCategroy = Lo.RetriveMasterCategoryDate(0, "", "", "", "", "Select","");
+        DataTable DtMasterCategroy = Lo.RetriveMasterCategoryDate(0, "", "", "", "", "Select", "");
         if (DtMasterCategroy.Rows.Count > 0)
         {
             Co.FillDropdownlist(ddlmastercategory, DtMasterCategroy, "MCategoryName", "MCategoryID");
@@ -114,7 +113,7 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
     }
     protected void BindMasterInnerSubCategory()
     {
-        DataTable DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(Convert.ToInt16(ddlmastercategory.SelectedItem.Value), "", "", "SelectInnerMaster", "","");
+        DataTable DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(Convert.ToInt16(ddlmastercategory.SelectedItem.Value), "", "", "SelectInnerMaster", "", "");
         if (DtMasterCategroy.Rows.Count > 0)
         {
             Co.FillCheckBox(chkSubCategory, DtMasterCategroy, "SCategoryName", "SCategoryId");
@@ -181,7 +180,7 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
                 txtLinkedin.Text = DtView.Rows[0]["Linkedin"].ToString();
                 txtInstagram.Text = DtView.Rows[0]["Instagram"].ToString();
                 ddlNodalOfficerEmail.SelectedValue = DtView.Rows[0]["NodalOfficeRefNo"].ToString();
-                if (ddlNodalOfficerEmail.SelectedItem.Value == "0")
+                if (ddlNodalOfficerEmail.SelectedValue == "")
                 {
                     divNodalOfficer.Visible = false;
                 }
@@ -356,7 +355,7 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
                 lblceoemail.InnerText = "Division Head Email ID";
                 tcompanyname.ReadOnly = true;
                 ddlNodalOfficerEmail.SelectedValue = DtView.Rows[0]["NodalOfficeRefNo"].ToString();
-                if (ddlNodalOfficerEmail.SelectedItem.Value == "0")
+                if (ddlNodalOfficerEmail.SelectedValue == "")
                 {
                     divNodalOfficer.Visible = false;
                 }
@@ -511,7 +510,7 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
                 lblceoemail.InnerText = "Unit Head Email ID";
                 selstate.SelectedValue = DtView.Rows[0]["UnitStateID"].ToString();
                 ddlNodalOfficerEmail.SelectedValue = DtView.Rows[0]["NodalOfficeRefNo"].ToString();
-                if (ddlNodalOfficerEmail.SelectedItem.Value == "0")
+                if (ddlNodalOfficerEmail.SelectedValue == "")
                 {
                     divNodalOfficer.Visible = false;
                 }
@@ -884,9 +883,13 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
         string pattern = @"^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,6}$";
         Match match = Regex.Match(InputEmail.Trim(), pattern, RegexOptions.IgnoreCase);
         if (match.Success)
+        {
             return true;
+        }
         else
+        {
             return false;
+        }
     }
     protected void btndemofirst_Click(object sender, EventArgs e)
     {
