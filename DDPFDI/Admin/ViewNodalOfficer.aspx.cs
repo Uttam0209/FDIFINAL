@@ -78,27 +78,27 @@ public partial class Admin_ViewNodalOfficer : System.Web.UI.Page
         {
         if (mType == "SuperAdmin" || mType == "Admin")
         {
+            DtCompanyDDL = Lo.RetriveMasterData(0, "", "", 0, "", "", "Select");
+            if (DtCompanyDDL.Rows.Count > 0)
+            {
+                Co.FillDropdownlist(ddlcompany, DtCompanyDDL, "CompanyName", "CompanyRefNo");
+                ddlcompany.Items.Insert(0, "Select");
+                ddlcompany.Enabled = true;
+            }
+            else
+            {
+                ddlcompany.Enabled = false;
+            }
+
             if (Request.QueryString["mu"] != null)
             {
                 if (objEnc.DecryptData(Request.QueryString["mu"].ToString()) == "View")
                 {
-                    DtCompanyDDL = Lo.RetriveMasterData(0, "", "", 0, "", "", "Select");
-                    if (DtCompanyDDL.Rows.Count > 0)
-                    {
-                        Co.FillDropdownlist(ddlcompany, DtCompanyDDL, "CompanyName", "CompanyRefNo");
-                        ddlcompany.Items.Insert(0, "Select");
-                        ddlcompany.Enabled = true;
-                    }
-                    else
-                    {
-                        ddlcompany.Enabled = false;
-                    }
+
+                    GridViewNodalOfficerBind("", "AllNodal");
 
                 }
-                else
-                {
-                    ddlcompany.Enabled = false;
-                }
+                
             }
             
             lblselectdivison.Visible = false;

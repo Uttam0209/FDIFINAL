@@ -117,7 +117,7 @@
                                                     <div class="col-md-4">
                                                         <div class="form-group">
                                                             <label>
-                                                                Product Level 1 <span class="mandatory">*</span>
+                                                                NSN GROUP <span class="mandatory">*</span>
                                                                 <span data-toggle="tooltip" class="fa fa-question" title="If you not display your category in this section, please add in Category Master >> Category Dropdown"></span>
                                                             </label>
                                                             <asp:DropDownList runat="server" ID="ddlmastercategory" class="form-control" TabIndex="7" AutoPostBack="True" OnSelectedIndexChanged="ddlmastercategory_SelectedIndexChanged"></asp:DropDownList>
@@ -125,14 +125,15 @@
                                                     </div>
                                                     <div class="col-md-4">
                                                         <div class="form-group">
-                                                            <label>Product Level 2 <span class="mandatory">*</span></label>
+                                                            <label>NSN GROUP CLASS<span class="mandatory">*</span></label>
                                                             <span data-toggle="tooltip" class="fa fa-question" title="It is a subcategory of Product Level 1, if you not see product level 2 please add in Category master >> level 2 "></span>
                                                             <asp:DropDownList runat="server" ID="ddlsubcategory" AutoPostBack="True" TabIndex="8" class="form-control" OnSelectedIndexChanged="ddlsubcategory_SelectedIndexChanged"></asp:DropDownList>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-4">
                                                         <div class="form-group">
-                                                            <label>Product Level 3</label>
+                                                            <label>
+                                                                CLASS ITEM</label>
                                                             <span data-toggle="tooltip" class="fa fa-question" title="It is a subcategory of Product Level 2, if you not see product level 3 please add in Category master >> level 3 "></span>
                                                             <asp:DropDownList runat="server" ID="ddllevel3product" TabIndex="9" class="form-control"></asp:DropDownList>
                                                         </div>
@@ -584,5 +585,5 @@
         </div>
     </div>
     <script type="text/javascript" language="javascript">
-</script>
+    </script>
 </asp:Content>

@@ -64,7 +64,23 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
     {
         try
         {
-            if (hidType.Value == "Company")
+            if (hidType.Value == "SuperAdmin" || hidType.Value == "Admin")
+            {
+                if (Request.QueryString["mu"] != null)
+                {
+                    if (objEnc.DecryptData(Request.QueryString["mu"].ToString()) == "View")
+                    {
+                        DtGrid = Lo.RetriveProductCode("", "", "ProductMaster", "Company");
+                        if (DtGrid.Rows.Count > 0)
+                        {
+                            gvproduct.DataSource = DtGrid;
+                            gvproduct.DataBind();
+                            gvproduct.Visible = true;
+                        }
+                    }
+                }
+            }
+            else if (hidType.Value == "Company")
             {
                 if (ddlcompany.SelectedItem.Text != "Select" && ddldivision.SelectedItem.Text == "Select")
                 {

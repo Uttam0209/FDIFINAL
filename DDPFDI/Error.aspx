@@ -25,7 +25,10 @@
                 font-size: 80px;
                 line-height: 80px;
             }
-            .error-box h3 { font-size: 28px;}
+
+            .error-box h3 {
+                font-size: 28px;
+            }
 
             .error-box p {
                 font-size: 18px;
@@ -33,7 +36,10 @@
                 font-family: sans-serif;
             }
 
-            .error-box a { color: #494ca2; text-decoration: underline;}
+            .error-box a {
+                color: #494ca2;
+                text-decoration: underline;
+            }
     </style>
 </head>
 <body class="error-page">
@@ -42,12 +48,35 @@
             <div class="error-box">
                 <h2 class="main-logo">404</h2>
                 <h3>Error Rendering Page.</h3>
-               
+
                 <p>We encountered an error when rendering this page.</p>
-               <p> This is a generic and non-specific error message. Sorry we do not have more information.</p>
+                <p>This is a generic and non-specific error message. Sorry we do not have more information.</p>
                 <p>You may wish to Check the error logs or  <a href="https://rgera@gov.in" rel="nofollow">Contact Support</a></p>
 
             </div>
+            <div class="clearfix">
+            </div>
+            <asp:Panel runat="server" ID="panerror">
+                <h4>Error Info:- PageName:-
+                    <asp:Label runat="server" ID="lblpagename" Text=""></asp:Label></h4>
+                <div class="bg-info">
+                    <div class="header">
+                        <p>User Error:-</p>
+                        <div class="clearfix">
+                        </div>
+                        <div runat="server" id="divusererror" class="bg-warning black">
+                        </div>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="bg-info">
+                    <div class="header">
+                        <p>Technical Error:-</p>
+                        <div runat="server" id="divtechnicalerror" class="bg-red white">
+                        </div>
+                    </div>
+                </div>
+            </asp:Panel>
         </div>
     </form>
 </body>
