@@ -61,7 +61,7 @@ public partial class Admin_AddDesignation : System.Web.UI.Page
             {
                 string error = ex.ToString();
                 string Page = Request.Url.AbsolutePath.ToString();
-                Response.Redirect("Error?techerror=" + HttpUtility.UrlEncode(objCrypto.EncryptData(error)) + "&page=" + HttpUtility.UrlEncode(objCrypto.EncryptData(Page)));
+                Response.Redirect("Error?techerror=" + HttpUtility.UrlEncode(Enc.EncryptData(error)) + "&page=" + HttpUtility.UrlEncode(Enc.EncryptData(Page)));
             }
         }
     }
@@ -102,7 +102,7 @@ public partial class Admin_AddDesignation : System.Web.UI.Page
         {
             string error = ex.ToString();
             string Page = Request.Url.AbsolutePath.ToString();
-            Response.Redirect("Error?techerror=" + HttpUtility.UrlEncode(objCrypto.EncryptData(error)) + "&page=" + HttpUtility.UrlEncode(objCrypto.EncryptData(Page)));
+            Response.Redirect("Error?techerror=" + HttpUtility.UrlEncode(Enc.EncryptData(error)) + "&page=" + HttpUtility.UrlEncode(Enc.EncryptData(Page)));
         }
     }
     protected void BindMasterCompany()
@@ -217,7 +217,7 @@ public partial class Admin_AddDesignation : System.Web.UI.Page
         {
             string error = ex.ToString();
             string Page = Request.Url.AbsolutePath.ToString();
-            Response.Redirect("Error?techerror=" + HttpUtility.UrlEncode(objCrypto.EncryptData(error)) + "&page=" + HttpUtility.UrlEncode(objCrypto.EncryptData(Page)));
+            Response.Redirect("Error?techerror=" + HttpUtility.UrlEncode(Enc.EncryptData(error)) + "&page=" + HttpUtility.UrlEncode(Enc.EncryptData(Page)));
         }
     }
     protected void btnsubmit_Click(object sender, EventArgs e)

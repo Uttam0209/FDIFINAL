@@ -5,6 +5,7 @@ using System.Activities.Statements;
 using System.Collections.Specialized;
 using System.Data;
 using System.Text;
+using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -114,7 +115,7 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
             {
                 string error = ex.ToString();
                 string Page = Request.Url.AbsolutePath.ToString();
-                Response.Redirect("Error?techerror=" + HttpUtility.UrlEncode(objCrypto.EncryptData(error)) + "&page=" + HttpUtility.UrlEncode(objCrypto.EncryptData(Page)));
+                Response.Redirect("Error?techerror=" + HttpUtility.UrlEncode(Enc.EncryptData(error)) + "&page=" + HttpUtility.UrlEncode(Enc.EncryptData(Page)));
             }
         }
 
@@ -428,7 +429,7 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
         {
             string error = ex.ToString();
             string Page = Request.Url.AbsolutePath.ToString();
-            Response.Redirect("Error?techerror=" + HttpUtility.UrlEncode(objCrypto.EncryptData(error)) + "&page=" + HttpUtility.UrlEncode(objCrypto.EncryptData(Page)));
+            Response.Redirect("Error?techerror=" + HttpUtility.UrlEncode(Enc.EncryptData(error)) + "&page=" + HttpUtility.UrlEncode(Enc.EncryptData(Page)));
         }
     }
     protected void ddlmaster_SelectedIndexChanged(object sender, EventArgs e)

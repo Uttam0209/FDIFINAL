@@ -41,24 +41,24 @@ public partial class Admin_Dashboard : System.Web.UI.Page
     }
     protected void lnkbtnTotComp_Click(object sender, EventArgs e)
     {
-        Response.Redirect("Detail-Company?mu=" + Session["Type"].ToString() + "&id=" + objCrypto.EncryptData("View Company"));
+        Response.Redirect("Detail-Company?mu=" + objCrypto.EncryptData("View") + "&id=" + objCrypto.EncryptData("View Company"));
 
     }
     protected void lnkbtnTotDiv_Click(object sender, EventArgs e)
     {
-        Response.Redirect("Detail-Company?mu=" + Session["Type"].ToString() + "&id=" + objCrypto.EncryptData("View Division"));
+        Response.Redirect("Detail-Company?mu=" + objCrypto.EncryptData("View") + "&id=" + objCrypto.EncryptData("View Division"));
     }
     protected void lnkbtnTotUnit_Click(object sender, EventArgs e)
     {
-        Response.Redirect("Detail-Company?mu=" + Session["Type"].ToString() + "&id=" + objCrypto.EncryptData("View Unit"));
+        Response.Redirect("Detail-Company?mu=" + objCrypto.EncryptData("View") + "&id=" + objCrypto.EncryptData("View Unit"));
     }
 
     protected void lnkbtnTotEmp_Click(object sender, EventArgs e)
     {
-        Response.Redirect("View-NodalOfficer?mu=" + Session["Type"].ToString() + "&id=" + objCrypto.EncryptData("View Unit"));
+        Response.Redirect("View-NodalOfficer?mu=" + objCrypto.EncryptData("View") + "&id=" + objCrypto.EncryptData("View Nodal Officer"));
     }
     protected void lnkbtnProduct_Click(object sender, EventArgs e)
     {
-        Response.Redirect("View-Product?mu=" + Session["Type"].ToString() + "&id=" + objCrypto.EncryptData("View Unit"));
+        Response.Redirect("View-Product?mu=" + objCrypto.EncryptData("View") + "&id=" + objCrypto.EncryptData("View Product"));
     }
 }
