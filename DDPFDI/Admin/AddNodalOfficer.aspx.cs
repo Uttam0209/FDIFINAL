@@ -54,6 +54,7 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
                     strheadPage.Append("</ul");
                     hidType.Value = objEnc.DecryptData(Session["Type"].ToString());
                     mRefNo = Session["CompanyRefNo"].ToString();
+                    hidCompanyRefNo.Value = mRefNo.ToString();
                     ViewState["UserLoginEmail"] = objEnc.DecryptData(Session["User"].ToString());
                 }
                 if (Request.QueryString["mcurrentcompRefNo"] != null)
@@ -83,7 +84,7 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
         {
             gvViewNodalOfficer.Visible = false;
         }
-        DataRow[] foundRows = DtGrid.Select("IsNodalOfficer='Nodal Officer'");
+        DataRow[] foundRows = DtGrid.Select("IsNodalOfficer='Y'");
         if (foundRows.Length != 0)
         {
             chkrole.Items[0].Enabled = false;
@@ -564,6 +565,7 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
                 else
                 { }
             }
+            //GridViewNodalOfficerBind(mRefNo, hidType.Value);
             Cleartext();
             ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record saved successsfully')", true);
         }
@@ -645,7 +647,6 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
                 ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Select company !')", true);
             }
         }
-
     }
     protected void Cleartext()
     {
@@ -657,7 +658,23 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
         ddldesignation.SelectedIndex = 0;
         btnsub.Text = "Save";
         txtEmpCode.Text = "";
-        chkrole.Items.Clear();
+        if (chkrole.Items[0].Enabled == true)
+        {
+            chkrole.Items[0].Selected = false;
+        }
+        else if (chkrole.Items[0].Enabled == false)
+        {
+            chkrole.Items[0].Selected = false;
+            chkrole.Items[0].Enabled = false;
+        }
+        else if (chkrole.Items[1].Selected == true)
+        {
+            chkrole.Items[1].Selected = false;
+        }
+        else if (chkrole.Items[0].Selected == true)
+        {
+            chkrole.Items[0].Selected = false;
+        }
     }
     protected void btncancel_Click(object sender, EventArgs e)
     {

@@ -31,8 +31,12 @@ public partial class _Default : System.Web.UI.Page
     #endregion
     protected void Page_Load(object sender, EventArgs e)
     {
+<<<<<<< HEAD
 
         //string c = objEnc.DecryptData("uPqeFLmuX/Y=");
+=======
+        //string c = objEnc.DecryptData("+BnfUTYkusE=");
+>>>>>>> 9055999bd57b10e2d072b5a4f57512f4586bf44c
         // string s = objEnc.EncryptData(@"Data Source=DE73P-DBAERO-00\SQLEXPRESS;Initial Catalog=Gip_AeroIndia2018_new;User ID=sa;Password=Adm@2^3SqlServ");
         //  string d = objEnc.DecryptData("aL88ocdv5/LvxKi0O2Gs6kF35uJ5Iz4xWbJBsJ8R+marLTVA2W7Pt0PDHgFG4Wx3HJgCG5QjEr1C1Q7WGTiNwa2AB1N5OvU+45sa48G+2HZnZapUUB4NgatRxGyMc5ZecSf34VN2rLqINQzCMknoOQ==");
     }

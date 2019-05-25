@@ -489,8 +489,48 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
     }
     protected void ddldivision_OnSelectedIndexChanged(object sender, EventArgs e)
     {
-        if (hidType.Value == "SuperAdmin" || hidType.Value == "Admin")
-        {
+        //if (hidType.Value == "SuperAdmin" || hidType.Value == "Admin")
+        //{
+        //    if (ddldivision.SelectedItem.Text != "Select")
+        //    {
+        //        DtCompanyDDL = Lo.RetriveMasterData(0, ddldivision.SelectedItem.Value, "", 0, "", "", "UnitSelectID");
+        //        if (DtCompanyDDL.Rows.Count > 0)
+        //        {
+        //            Co.FillDropdownlist(ddlunit, DtCompanyDDL, "UnitName", "UnitRefNo");
+        //            ddlunit.Items.Insert(0, "Select");
+        //            ddlunit.Visible = true;
+        //            lblselectunit.Visible = true;
+        //            if (ddlunit.SelectedItem.Text == "Select")
+        //            {
+        //                ddldivision.Enabled = true;
+        //            }
+        //            else
+        //            { ddldivision.Enabled = false; }
+        //            hidCompanyRefNo.Value = ddldivision.SelectedItem.Value;
+        //            hidType.Value = "Factory";
+        //            BindGridView();
+        //        }
+        //        else
+        //        {
+        //            lblselectunit.Visible = false;
+        //            ddlunit.Visible = false;
+        //        }
+        //        hfcomprefno.Value = "";
+        //        hfcomprefno.Value = ddldivision.SelectedItem.Value;
+        //    }
+        //    else if (ddldivision.SelectedItem.Text == "Select")
+        //    {
+        //        ddlcompany.Enabled = true;
+        //        lblselectunit.Visible = false;
+        //        hidCompanyRefNo.Value = ddlcompany.SelectedItem.Value;
+        //        hidType.Value = "Company";
+        //        hfcomprefno.Value = "";
+        //        hfcomprefno.Value = ddlcompany.SelectedItem.Value;
+        //        BindGridView();
+        //    }
+        //}
+        //else
+        //{
             if (ddldivision.SelectedItem.Text != "Select")
             {
                 DtCompanyDDL = Lo.RetriveMasterData(0, ddldivision.SelectedItem.Value, "", 0, "", "", "UnitSelectID");
@@ -507,47 +547,7 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
                     else
                     { ddldivision.Enabled = false; }
                     hidCompanyRefNo.Value = ddldivision.SelectedItem.Value;
-                    hidType.Value = "Factory";
-                    BindGridView();
-                }
-                else
-                {
-                    lblselectunit.Visible = false;
-                    ddlunit.Visible = false;
-                }
-                hfcomprefno.Value = "";
-                hfcomprefno.Value = ddldivision.SelectedItem.Value;
-            }
-            else if (ddldivision.SelectedItem.Text == "Select")
-            {
-                ddlcompany.Enabled = true;
-                lblselectunit.Visible = false;
-                hidCompanyRefNo.Value = ddlcompany.SelectedItem.Value;
-                hidType.Value = "Company";
-                hfcomprefno.Value = "";
-                hfcomprefno.Value = ddlcompany.SelectedItem.Value;
-                BindGridView();
-            }
-        }
-        else
-        {
-            if (ddldivision.SelectedItem.Text != "Select")
-            {
-                DtCompanyDDL = Lo.RetriveMasterData(0, ddldivision.SelectedItem.Value, "", 0, "", "", "UnitSelectID");
-                if (DtCompanyDDL.Rows.Count > 0)
-                {
-                    Co.FillDropdownlist(ddlunit, DtCompanyDDL, "UnitName", "UnitRefNo");
-                    ddlunit.Items.Insert(0, "Select");
-                    ddlunit.Visible = true;
-                    lblselectunit.Visible = true;
-                    if (ddlunit.SelectedItem.Text == "Select")
-                    {
-                        ddldivision.Enabled = true;
-                    }
-                    else
-                    { ddldivision.Enabled = false; }
-                    hidCompanyRefNo.Value = ddldivision.SelectedItem.Value;
-                    hidType.Value = "Factory";
+                    hidType.Value = "Division";
                     BindGridView();
                 }
                 else
@@ -568,8 +568,7 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
                 hfcomprefno.Value = ddlcompany.SelectedItem.Value;
                 BindGridView();
             }
-        }
-    }
+        }   
     protected void ddlunit_OnSelectedIndexChanged(object sender, EventArgs e)
     {
         if (ddlunit.SelectedItem.Text != "Select")
