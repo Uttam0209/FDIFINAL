@@ -226,7 +226,7 @@
 
                                             </div>
                                             <div class="box">
-                                                <h4 class="secondary-heading">MenuAloted</h4>
+                                                <h4 class="secondary-heading">Menu Alloted</h4>
                                                 <asp:Label ID="lblmenuallot" runat="server"></asp:Label>
                                             </div>
 

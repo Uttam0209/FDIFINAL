@@ -88,9 +88,11 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
                 else
                 { Response.RedirectToRoute("Login"); }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                Response.RedirectToRoute("Login");
+                string error = ex.ToString();
+                string Page = Request.Url.AbsolutePath.ToString();
+                Response.Redirect("Error?techerror=" + objCrypto.EncryptData(error) + "&page=" + objCrypto.EncryptData(Page));
             }
         }
     }

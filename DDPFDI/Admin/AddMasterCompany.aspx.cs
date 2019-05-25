@@ -1,6 +1,7 @@
 ﻿using BusinessLayer;
 using Encryption;
 using System;
+using System.Activities.Statements;
 using System.Collections.Specialized;
 using System.Data;
 using System.Text;
@@ -24,98 +25,104 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
     {
         if (!IsPostBack)
         {
-            if (Session["Type"] != null)
+            try
             {
-                if (Request.QueryString["mu"] != null)
+                if (Session["Type"] != null)
                 {
-                    string strid = Request.QueryString["id"].ToString().Replace(" ", "+");
-                    string strPageName = Enc.DecryptData(strid);
-                    StringBuilder strheadPage = new StringBuilder();
-                    strheadPage.Append("<ul class='breadcrumb'>");
-                    string[] MCateg = strPageName.Split(new string[] { ">>" }, StringSplitOptions.RemoveEmptyEntries);
-                    string MmCval = "";
-                    for (int x = 0; x < MCateg.Length; x++)
+                    if (Request.QueryString["mu"] != null)
                     {
-                        MmCval = MCateg[x];
-                        if (MmCval == " View ")
+                        string strid = Request.QueryString["id"].ToString().Replace(" ", "+");
+                        string strPageName = Enc.DecryptData(strid);
+                        StringBuilder strheadPage = new StringBuilder();
+                        strheadPage.Append("<ul class='breadcrumb'>");
+                        string[] MCateg = strPageName.Split(new string[] { ">>" }, StringSplitOptions.RemoveEmptyEntries);
+                        string MmCval = "";
+                        for (int x = 0; x < MCateg.Length; x++)
                         {
-                            MmCval = "Add";
+                            MmCval = MCateg[x];
+                            if (MmCval == " View ")
+                            {
+                                MmCval = "Add";
+                            }
+
+                            strheadPage.Append("<li class=''><span>" + MmCval + "</span></li>");
                         }
-
-                        strheadPage.Append("<li class=''><span>" + MmCval + "</span></li>");
-                    }
-                    divHeadPage.InnerHtml = strheadPage.ToString();
-                    strheadPage.Append("</ul");
-                    divOfficerEmail.Visible = false;
-                    ViewState["UserLoginEmail"] = Session["User"].ToString();
-                    if (Enc.DecryptData(Request.QueryString["mu"].ToString()) == "Panel1")
-                    {
-                        mastercompany.Visible = true;
-                        masterfacotry.Visible = false;
-                        lblName.Text = "Company";
-                        btnsubmit.Text = "Save Company";
-                        BindMasterCompany();
-                        BindMasterData();
-                        Intrested.Visible = true;
-                        MenuAlot.Visible = true;
-                        divRole.Visible = true;
-                        gvcompanydetail.Visible = false;
-                    }
-                    else if (Enc.DecryptData(Request.QueryString["mu"].ToString()) == "Panel2")
-                    {
-                        mastercompany.Visible = true;
-                        masterfacotry.Visible = false;
-                        BindMasterCompany();
-                        lblName.Text = "Division/Plant";
-                        btnsubmit.Text = "Save Division";
-                        GridcompanyVisible();
-
-                    }
-                    else if (Enc.DecryptData(Request.QueryString["mu"].ToString()) == "Panel3")
-                    {
-                        mastercompany.Visible = true;
-                        masterfacotry.Visible = true;
-                        BindMasterCompany();
-                        ddlmaster_SelectedIndexChanged(sender, e);
-                        lblName.Text = "Unit";
-                        btnsubmit.Text = "Save Unit";
-
-                        GridcompanyVisible();
-                    }
-                    else
-                    {
-                        mastercompany.Visible = false;
-                        masterfacotry.Visible = false;
-                        lblName.Text = "Company/Organization";
-                        BindMasterData();
-                        BindMasterCompany();
-                        Intrested.Visible = true;
-                        MenuAlot.Visible = true;
-                        if (Enc.DecryptData(Session["Type"].ToString()) == "Admin")
+                        divHeadPage.InnerHtml = strheadPage.ToString();
+                        strheadPage.Append("</ul");
+                        divOfficerEmail.Visible = false;
+                        ViewState["UserLoginEmail"] = Session["User"].ToString();
+                        if (Enc.DecryptData(Request.QueryString["mu"].ToString()) == "Panel1")
                         {
-                            divRole.Visible = false;
+                            mastercompany.Visible = true;
+                            masterfacotry.Visible = false;
+                            lblName.Text = "Company";
+                            btnsubmit.Text = "Save Company";
+                            BindMasterCompany();
+                            BindMasterData();
+                            Intrested.Visible = true;
+                            MenuAlot.Visible = true;
+                            divRole.Visible = true;
+                            gvcompanydetail.Visible = false;
+                        }
+                        else if (Enc.DecryptData(Request.QueryString["mu"].ToString()) == "Panel2")
+                        {
+                            mastercompany.Visible = true;
+                            masterfacotry.Visible = false;
+                            BindMasterCompany();
+                            lblName.Text = "Division/Plant";
+                            btnsubmit.Text = "Save Division";
+                            GridcompanyVisible();
+                        }
+                        else if (Enc.DecryptData(Request.QueryString["mu"].ToString()) == "Panel3")
+                        {
+                            mastercompany.Visible = true;
+                            masterfacotry.Visible = true;
+                            BindMasterCompany();
+                            ddlmaster_SelectedIndexChanged(sender, e);
+                            lblName.Text = "Unit";
+                            btnsubmit.Text = "Save Unit";
+                            GridcompanyVisible();
                         }
                         else
                         {
-                            divRole.Visible = true;
+                            mastercompany.Visible = false;
+                            masterfacotry.Visible = false;
+                            lblName.Text = "Company/Organization";
+                            BindMasterData();
+                            BindMasterCompany();
+                            Intrested.Visible = true;
+                            MenuAlot.Visible = true;
+                            if (Enc.DecryptData(Session["Type"].ToString()) == "Admin")
+                            {
+                                divRole.Visible = false;
+                            }
+                            else
+                            {
+                                divRole.Visible = true;
+                            }
+
+                            gvcompanydetail.Visible = true;
+                            GridCompanyBind();
                         }
-
-                        gvcompanydetail.Visible = true;
-                        GridCompanyBind();
+                        lblMastcompany.Text = "Select Company ";
+                        lblfactoryName.Text = "Select Divison/Plant ";
+                        chkrole.Attributes.Add("onclick", "radioMe(event);");
                     }
-                    lblMastcompany.Text = "Select Company ";
-                    lblfactoryName.Text = "Select Divison/Plant ";
-                    chkrole.Attributes.Add("onclick", "radioMe(event);");
                 }
-
+            }
+            catch (Exception ex)
+            {
+                string error = ex.ToString();
+                string Page = Request.Url.AbsolutePath.ToString();
+                Response.Redirect("Error?techerror=" + HttpUtility.UrlEncode(objCrypto.EncryptData(error)) + "&page=" + HttpUtility.UrlEncode(objCrypto.EncryptData(Page)));
             }
         }
+
     }
     public void GridcompanyVisible()
     {
         if (Enc.DecryptData(Session["Type"].ToString()) == "Admin" || Enc.DecryptData(Session["Type"].ToString()) == "SuperAdmin")
         {
-
         }
         else
         {
@@ -154,7 +161,6 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
     }
     protected void CompGrid()
     {
-
         if (Enc.DecryptData(Request.QueryString["mu"].ToString()) == "Panel2")
         {
             gvcompanydetail.Columns[1].Visible = true;
@@ -368,48 +374,61 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
     }
     protected void btnsubmit_Click(object sender, EventArgs e)
     {
-        if (txtcomp.Text.Trim() != "")
+        try
         {
-            string strIsEmail = Lo.VerifyEmailandCompany(txtemail.Text, txtcomp.Text, out _msg);
-            if (_msg != "0" && _msg != "")
+            if (txtcomp.Text.Trim() != "")
             {
-                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('" + txtcomp.Text + " name already exist !')", true);
+                string strIsEmail = Lo.VerifyEmailandCompany(txtemail.Text, txtcomp.Text, out _msg);
+                if (_msg != "0" && _msg != "")
+                {
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert",
+                        "alert('" + txtcomp.Text + " name already exist !')", true);
+                }
+                else
+                {
+                    if (btnsubmit.Text == "Save Division")
+                    {
+                        if (ddlmaster.SelectedItem.Value != "Select")
+                        {
+                            SaveComp();
+                        }
+                        else
+                        {
+                            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert",
+                                "alert('Select Company !')", true);
+                        }
+                    }
+                    else if (btnsubmit.Text == "Save Unit")
+                    {
+                        if (ddlmaster.SelectedItem.Value != "Select" && ddlfacotry.SelectedItem.Value != "Select")
+                        {
+                            SaveComp();
+                        }
+                        else
+                        {
+                            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert",
+                                "alert('Select company and division !')", true);
+                        }
+                    }
+
+                    else
+                    {
+                        SaveComp();
+                    }
+                }
+
             }
             else
             {
-                if (btnsubmit.Text == "Save Division")
-                {
-                    if (ddlmaster.SelectedItem.Value != "Select")
-                    {
-                        SaveComp();
-                    }
-                    else
-                    {
-                        ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Select Company !')", true);
-                    }
-                }
-                else if (btnsubmit.Text == "Save Unit")
-                {
-                    if (ddlmaster.SelectedItem.Value != "Select" && ddlfacotry.SelectedItem.Value != "Select")
-                    {
-                        SaveComp();
-                    }
-                    else
-                    {
-                        ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Select company and division !')", true);
-                    }
-                }
-
-                else
-                {
-                    SaveComp();
-                }
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert",
+                    "alert('" + lblName.Text + " can not be empty !')", true);
             }
-
         }
-        else
+        catch (Exception ex)
         {
-            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('" + lblName.Text + " can not be empty !')", true);
+            string error = ex.ToString();
+            string Page = Request.Url.AbsolutePath.ToString();
+            Response.Redirect("Error?techerror=" + HttpUtility.UrlEncode(objCrypto.EncryptData(error)) + "&page=" + HttpUtility.UrlEncode(objCrypto.EncryptData(Page)));
         }
     }
     protected void ddlmaster_SelectedIndexChanged(object sender, EventArgs e)
@@ -480,12 +499,6 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
             DataTable DtIntrested = Lo.RetriveIntresteData(e.CommandArgument.ToString());
             if (DtIntrested.Rows.Count > 0)
             {
-                //string Int = "";
-                //for (int i = 0; DtIntrested.Rows.Count > i; i++)
-                //{
-                //    Int = Int + "," + DtIntrested.Rows[i]["InterestArea"].ToString();
-                //}
-
                 lblintrestedin.Text = DtIntrested.Rows[0][0].ToString();
                 lblmenuallot.Text = DtIntrested.Rows[0][1].ToString();
                 ScriptManager.RegisterStartupScript(this, GetType(), "changePass", "showPopup();", true);

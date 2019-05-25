@@ -77,7 +77,7 @@ public partial class Admin_DetailFDIRegistration : System.Web.UI.Page
     {
         if (e.CommandName == "Edit")
         {
-            Response.Redirect("FDIRegistration?mpath" + objEnc.EncryptData("NoOneCanTraceIT") + "&mcurrentID=" + (objEnc.EncryptData(e.CommandArgument.ToString())));
+            Response.Redirect("FDIRegistration?mpath" + System.Web.HttpUtility.UrlEncode(objEnc.EncryptData("NoOneCanTraceIT")) + "&mcurrentID=" + HttpUtility.UrlEncode(objEnc.EncryptData(e.CommandArgument.ToString())));
         }
         else if (e.CommandName == "View")
         {

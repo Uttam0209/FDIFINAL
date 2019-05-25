@@ -66,13 +66,13 @@
                             <asp:Panel ID="Panel1" runat="server" DefaultButton="btndemofirst">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>Dropdown Label</label>
+                                        <label>Dropdown Label <span class="mandatory">*</span></label>
                                         <asp:DropDownList runat="server" ID="ddlmastercategory" TabIndex="1" class="form-control" AutoPostBack="True" OnSelectedIndexChanged="ddlmastercategory_SelectedIndexChanged"></asp:DropDownList>
                                     </div>
                                 </div>
                                 <div class="col-md-6" id="level1" runat="server" visible="False">
                                     <div class="form-group">
-                                        <h3 class="secondary-heading">Level 1</h3>
+                                        <h3 class="secondary-heading">Level 1 <span class="mandatory">*</span></h3>
                                         <asp:CheckBoxList ID="chkSubCategory" runat="server" TabIndex="2" CssClass="checkbox-inline" RepeatColumns="25" RepeatDirection="Vertical"
                                             RepeatLayout="Flow">
                                         </asp:CheckBoxList>

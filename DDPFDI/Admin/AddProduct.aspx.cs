@@ -40,27 +40,27 @@ public partial class Admin_AddProduct : System.Web.UI.Page
             {
                 if (Request.QueryString["id"] != null)
                 {
-                    string strid = Request.QueryString["id"].ToString().Replace(" ", "+");
-                    string strPageName = objEnc.DecryptData(strid);
-                    StringBuilder strheadPage = new StringBuilder();
-                    strheadPage.Append("<ul class='breadcrumb'>");
-                    string[] MCateg = strPageName.Split(new string[] { ">>" }, StringSplitOptions.RemoveEmptyEntries);
-                    string MmCval = "";
-                    for (int x = 0; x < MCateg.Length; x++)
-                    {
-                        MmCval = MCateg[x];
-                        if (MmCval == " View ")
-                        {
-                            MmCval = "Add";
-                        }
-                        strheadPage.Append("<li class=''><span>" + MmCval + "</span></li>");
-                    }
-                    divHeadPage.InnerHtml = strheadPage.ToString();
-                    strheadPage.Append("</ul");
-                    hidType.Value = objEnc.DecryptData(Session["Type"].ToString());
-                    mRefNo = Session["CompanyRefNo"].ToString();
-                    ViewState["UserLoginEmail"] = objEnc.DecryptData(Session["User"].ToString());
-                    hfcomprefno.Value = Session["CompanyRefNo"].ToString();
+                    string strid = Request.QueryString["id"].ToString().Trim();
+                    //  string strPageName = objEnc.DecryptData(strid);
+                    //StringBuilder strheadPage = new StringBuilder();
+                    //strheadPage.Append("<ul class='breadcrumb'>");
+                    //string[] MCateg = strPageName.Split(new string[] { ">>" }, StringSplitOptions.RemoveEmptyEntries);
+                    //string MmCval = "";
+                    //for (int x = 0; x < MCateg.Length; x++)
+                    //{
+                    //    MmCval = MCateg[x];
+                    //    if (MmCval == " View ")
+                    //    {
+                    //        MmCval = "Add";
+                    //    }
+                    //    strheadPage.Append("<li class=''><span>" + MmCval + "</span></li>");
+                    //}
+                    //divHeadPage.InnerHtml = strheadPage.ToString().Trim();
+                    //strheadPage.Append("</ul");
+                    hidType.Value = objEnc.DecryptData(Session["Type"].ToString().Trim());
+                    mRefNo = Session["CompanyRefNo"].ToString().Trim();
+                    ViewState["UserLoginEmail"] = objEnc.DecryptData(Session["User"].ToString()).Trim();
+                    hfcomprefno.Value = Session["CompanyRefNo"].ToString().Trim();
                     if (hidType.Value.ToString() != "SuperAdmin" || hidType.Value.ToString() != "Admin")
                     {
                         BindCompany();
@@ -109,14 +109,17 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                 else if (hidType.Value == "Admin" || hidType.Value == "SuperAdmin")
                 { EditCode(); }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                Response.RedirectToRoute("Login");
+                string error = ex.ToString();
+                string Page = Request.Url.AbsolutePath.ToString();
+                Response.Redirect("Error?techerror=" + objEnc.EncryptData(error) + "&page=" + objEnc.EncryptData(Page));
             }
         }
     }
     protected void BindCompany()
     {
+
         if (hidType.Value == "SuperAdmin" || hidType.Value == "Admin")
         {
             if (Request.QueryString["mcurrentcompRefNo"] != null)
@@ -125,6 +128,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                 if (objEnc.DecryptData(Request.QueryString["mrcreaterole"].ToString()) == "Company")
                 {
                     DtCompanyDDL = Lo.RetriveMasterData(0, objEnc.DecryptData(Request.QueryString["mcurrentcompRefNo"].ToString()), "Company", 0, "", "", "CompanyName");
+                   // DtCompanyDDL = Lo.RetriveMasterData(0, objEnc.DecryptData(Request.QueryString["mcurrentcompRefNo"].ToString()), "Company", 0, "", "", "CompanyName");
                     ddlcompany.Enabled = false;
                     if (DtCompanyDDL.Rows.Count > 0)
                     {

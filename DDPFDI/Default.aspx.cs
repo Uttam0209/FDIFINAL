@@ -31,8 +31,8 @@ public partial class _Default : System.Web.UI.Page
     #endregion
     protected void Page_Load(object sender, EventArgs e)
     {
-        //string c = objEnc.DecryptData("+BnfUTYkusE=");
-        // string s = objEnc.EncryptData(@"Data Source=DE73P-DBAERO-00\SQLEXPRESS;Initial Catalog=Gip_AeroIndia2018_new;User ID=sa;Password=Adm@2^3SqlServ");
+        //string c = objEnc.DecryptDatazzz("uPxd1dZ2sW7HFIloBz3EfQ==");
+       // string s = objEnc.EncryptData("Indig@rgera");
         //  string d = objEnc.DecryptData("aL88ocdv5/LvxKi0O2Gs6kF35uJ5Iz4xWbJBsJ8R+marLTVA2W7Pt0PDHgFG4Wx3HJgCG5QjEr1C1Q7WGTiNwa2AB1N5OvU+45sa48G+2HZnZapUUB4NgatRxGyMc5ZecSf34VN2rLqINQzCMknoOQ==");
     }
     #region "Login Code"
@@ -40,7 +40,6 @@ public partial class _Default : System.Web.UI.Page
     {
         string pattern = @"^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,6}$";
         Match match = Regex.Match(InputEmail.Trim(), pattern, RegexOptions.IgnoreCase);
-
         if (match.Success)
             return true;
         else
@@ -147,7 +146,6 @@ public partial class _Default : System.Web.UI.Page
 
     }
     #endregion
-
     #region ReturnUrl Long"
     public string Resturl(int length)
     {
