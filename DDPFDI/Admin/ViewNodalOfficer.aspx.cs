@@ -75,7 +75,7 @@ public partial class Admin_ViewNodalOfficer : System.Web.UI.Page
         }
     }
     protected void BindCompany()
-    {
+        {
         if (mType == "SuperAdmin" || mType == "Admin")
         {
             DtCompanyDDL = Lo.RetriveMasterData(0, "", "", 0, "", "", "Select");
@@ -90,6 +90,17 @@ public partial class Admin_ViewNodalOfficer : System.Web.UI.Page
                 ddlcompany.Enabled = false;
             }
 
+            if (Request.QueryString["mu"] != null)
+            {
+                if (objEnc.DecryptData(Request.QueryString["mu"].ToString()) == "View")
+                {
+
+                    GridViewNodalOfficerBind("", "AllNodal");
+
+                }
+                
+            }
+            
             lblselectdivison.Visible = false;
             lblselectunit.Visible = false;
         }
