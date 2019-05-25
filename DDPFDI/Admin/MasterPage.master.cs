@@ -57,7 +57,7 @@ public partial class Admin_MasterPage : System.Web.UI.MasterPage
                     DataTable dtMenu = Lo.RetriveMasterData(0, "", ObjEnc.DecryptData(Session["Type"].ToString()), Convert.ToInt16(mCval1), "", "", "MenuMain");
                     foreach (DataRow row2 in dtMenu.Rows)
                     {
-                        strMenu.Append("<li class='parent-nav'><a href='" + row2["MenuUrl"].ToString() + "?mu=" + ObjEnc.EncryptData(row2["Spanclass"].ToString()) + "&id=" + ObjEnc.EncryptData(row["InterestArea"].ToString() + " >> " + row2["MenuName"].ToString()) + "' title='" + row2["Tooltip"].ToString() + "'><i class='fas fa-tachometer-alt'></i><span class='hidden-minibar'>" + row2["MenuName"].ToString() + "</span><span class='menuNo' style='position:absolute; right:40px;top:13px;'>C" + row2["MenuId"].ToString() + "</span>");
+                        strMenu.Append("<li class='parent-nav'><a href='" + row2["MenuUrl"].ToString() + "?mu=" + HttpUtility.UrlEncode(ObjEnc.EncryptData(row2["Spanclass"].ToString())) + "&id=" + HttpUtility.UrlEncode(ObjEnc.EncryptData(row["InterestArea"].ToString() + " >> " + row2["MenuName"].ToString())) + "' title='" + row2["Tooltip"].ToString() + "'><i class='fas fa-tachometer-alt'></i><span class='hidden-minibar'>" + row2["MenuName"].ToString() + "</span><span class='menuNo' style='position:absolute; right:40px;top:13px;'>C" + row2["MenuId"].ToString() + "</span>");
                         strMenu.Append("<i class='fas fa-angle-down'></i></a>");
                         DataTable Submenu = Lo.RetriveMasterData(0, "", ObjEnc.DecryptData(Session["Type"].ToString()), Convert.ToInt16(row2["MenuID"].ToString()), "", "", "SubMenu");
                         if (Submenu.Rows.Count > 0)
@@ -65,7 +65,7 @@ public partial class Admin_MasterPage : System.Web.UI.MasterPage
                             strMenu.Append("<ul class='parent-nav-child'>");
                             foreach (DataRow row1 in Submenu.Rows)
                             {
-                                strMenu.Append("<li><a href='" + row1["MenuUrl"].ToString() + "?mu=" + ObjEnc.EncryptData(row1["Spanclass"].ToString()) + "&id=" + ObjEnc.EncryptData(row["InterestArea"].ToString() + " >> " + row2["MenuName"].ToString() + " >> " + row1["MenuName"].ToString()) + "' title='" + row1["Tooltip"].ToString() + "'><i class='far fa-building'></i><span class='hidden-minibar'>" + row1["MenuName"].ToString() + "</span><span class='menuNo' style='position:absolute; right:20px;top:13px;'>L" + row1["MenuId"].ToString() + "</span></a></li> ");
+                                strMenu.Append("<li><a href='" + row1["MenuUrl"].ToString() + "?mu=" + HttpUtility.UrlEncode(ObjEnc.EncryptData(row1["Spanclass"].ToString())) + "&id=" + HttpUtility.UrlEncode(ObjEnc.EncryptData(row["InterestArea"].ToString() + " >> " + row2["MenuName"].ToString() + " >> " + row1["MenuName"].ToString())) + "' title='" + row1["Tooltip"].ToString() + "'><i class='far fa-building'></i><span class='hidden-minibar'>" + row1["MenuName"].ToString() + "</span><span class='menuNo' style='position:absolute; right:20px;top:13px;'>L" + row1["MenuId"].ToString() + "</span></a></li> ");
                             }
                             strMenu.Append("</ul>");
 

@@ -14,9 +14,6 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
     private Cryptography objEnc = new Cryptography();
     private DataTable DtGrid = new DataTable();
     private DataTable DtCompanyDDL = new DataTable();
-    private string UserName;
-    private string RefNo;
-    private string UserEmail;
     private string currentPage = "";
     private string mRefNo = "";
     protected void Page_Load(object sender, EventArgs e)
@@ -71,43 +68,48 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
     {
         try
         {
-            if (Request.QueryString["mu"] != null)
+
+            if (hidType.Value == "SuperAdmin" || hidType.Value == "Admin")
             {
-                if (objEnc.DecryptData(Request.QueryString["mu"].ToString()) == "View")
+                if (Request.QueryString["mu"] != null)
                 {
-                    DtGrid = Lo.RetriveProductCode("", "", "ProductMaster", "Company");
-                    if (DtGrid.Rows.Count > 0)
+                    if (objEnc.DecryptData(Request.QueryString["mu"].ToString()) == "View")
                     {
-                        gvproduct.DataSource = DtGrid;
-                        gvproduct.DataBind();
-                        gvproduct.Visible = true;
+                        DtGrid = Lo.RetriveProductCode("", "", "ProductMaster", "");
+                        if (DtGrid.Rows.Count > 0)
+                        {
+                            gvproduct.DataSource = DtGrid;
+                            gvproduct.DataBind();
+                            gvproduct.Visible = true;
+                        }
+                    }
+                    else
+                    {
+                        if (ddlcompany.SelectedItem.Text != "Select" && ddldivision.Visible == false)
+                        {
+                            DtGrid = Lo.RetriveProductCode(ddlcompany.SelectedItem.Value, "", "CompanyProduct", "Company");
+                        }
+                        else if (ddlcompany.SelectedItem.Text != "Select" && ddldivision.SelectedItem.Text != "Select")
+                        {
+                            DtGrid = Lo.RetriveProductCode(ddldivision.SelectedItem.Value, "", "CompanyProduct", "Division");
+                        }
+                        else if (ddlcompany.SelectedItem.Text != "Select" && ddldivision.SelectedItem.Text != "Select" && ddlunit.SelectedItem.Text != "Select")
+                        {
+                            DtGrid = Lo.RetriveProductCode(ddlunit.SelectedItem.Value, "", "CompanyProduct", "Unit");
+                        }
+                        if (DtGrid.Rows.Count > 0)
+                        {
+                            gvproduct.DataSource = DtGrid;
+                            gvproduct.DataBind();
+                            gvproduct.Visible = true;
+                        }
+                        else
+                        {
+                            gvproduct.Visible = false;
+                        }
                     }
                 }
-            }
-            else if (hidType.Value == "SuperAdmin" || hidType.Value == "Admin")
-            {
-                if (ddlcompany.SelectedItem.Text != "Select" && ddldivision.Visible == false)
-                {
-                    DtGrid = Lo.RetriveProductCode(ddlcompany.SelectedItem.Value, "", "CompanyProduct", "Company");
-                }
-                else if (ddlcompany.SelectedItem.Text != "Select" && ddldivision.SelectedItem.Text != "Select")
-                {
-                    DtGrid = Lo.RetriveProductCode(ddldivision.SelectedItem.Value, "", "CompanyProduct", "Division");
-                }
-                else if (ddlcompany.SelectedItem.Text != "Select" && ddldivision.SelectedItem.Text != "Select" && ddlunit.SelectedItem.Text != "Select")
-                {
-                    DtGrid = Lo.RetriveProductCode(ddlunit.SelectedItem.Value, "", "CompanyProduct", "Unit");
-                }
-                if (DtGrid.Rows.Count > 0)
-                {
-                    gvproduct.DataSource = DtGrid;
-                    gvproduct.DataBind();
-                    gvproduct.Visible = true;
-                }
-                else
-                {
-                    gvproduct.Visible = false;
-                }
+
             }
             else if (hidType.Value == "Company")
             {

@@ -96,7 +96,7 @@ public partial class Admin_ViewNodalOfficer : System.Web.UI.Page
                 if (objEnc.DecryptData(Request.QueryString["mu"].ToString()) == "View")
                 {
 
-                    GridViewNodalOfficerBind("", "AllNodal");
+                    GridViewNodalOfficerBind("", "AllNodalDashboard");
 
                 }
                 

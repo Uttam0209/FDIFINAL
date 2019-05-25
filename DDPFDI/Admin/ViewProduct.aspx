@@ -80,7 +80,7 @@
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                             <%--  <asp:BoundField DataField="CompanyName" HeaderText="Company" NullDisplayText="#" SortExpression="Company" />--%>
-                                            <asp:BoundField DataField="CompanyRefNo" HeaderText="Company Reference No" NullDisplayText="#" SortExpression="CompanyRefNo" />
+                                            <asp:BoundField DataField="CompanyRefNo" HeaderText="Company Reference No" Visible="false" NullDisplayText="#" SortExpression="CompanyRefNo" />
                                             <asp:TemplateField HeaderText="OEM PartNumber">
                                                 <ItemTemplate>
                                                     <asp:Label runat="server" ID="lblcompanyrole" Text='<%#Eval("OEMPartNumber") %>'></asp:Label>
@@ -88,7 +88,7 @@
                                                     <asp:HiddenField ID="hfcomprefno" runat="server" Value='<%#Eval("CompanyRefNo") %>' />
                                                 </ItemTemplate>
                                             </asp:TemplateField>
-                                            <asp:TemplateField HeaderText="DPSUPartNumber">
+                                            <asp:TemplateField HeaderText="DPSUPartNumber" Visible="false">
                                                 <ItemTemplate>
                                                     <asp:Label ID="lblnodelname" runat="server" Text='<%#Eval("DPSUPartNumber") %>' NullDisplayText="#" SortExpression="DPSUPartNumber"></asp:Label>
                                                 </ItemTemplate>

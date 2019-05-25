@@ -40,23 +40,23 @@ public partial class Admin_AddProduct : System.Web.UI.Page
             {
                 if (Request.QueryString["id"] != null)
                 {
-                    string strid = Request.QueryString["id"].ToString().Trim();
-                    //  string strPageName = objEnc.DecryptData(strid);
-                    //StringBuilder strheadPage = new StringBuilder();
-                    //strheadPage.Append("<ul class='breadcrumb'>");
-                    //string[] MCateg = strPageName.Split(new string[] { ">>" }, StringSplitOptions.RemoveEmptyEntries);
-                    //string MmCval = "";
-                    //for (int x = 0; x < MCateg.Length; x++)
-                    //{
-                    //    MmCval = MCateg[x];
-                    //    if (MmCval == " View ")
-                    //    {
-                    //        MmCval = "Add";
-                    //    }
-                    //    strheadPage.Append("<li class=''><span>" + MmCval + "</span></li>");
-                    //}
-                    //divHeadPage.InnerHtml = strheadPage.ToString().Trim();
-                    //strheadPage.Append("</ul");
+                    string strid = Request.QueryString["id"].ToString().Replace(" ", "+");
+                    string strPageName = objEnc.DecryptData(strid);
+                    StringBuilder strheadPage = new StringBuilder();
+                    strheadPage.Append("<ul class='breadcrumb'>");
+                    string[] MCateg = strPageName.Split(new string[] { ">>" }, StringSplitOptions.RemoveEmptyEntries);
+                    string MmCval = "";
+                    for (int x = 0; x < MCateg.Length; x++)
+                    {
+                        MmCval = MCateg[x];
+                        if (MmCval == " View ")
+                        {
+                            MmCval = "Add";
+                        }
+                        strheadPage.Append("<li class=''><span>" + MmCval + "</span></li>");
+                    }
+                    divHeadPage.InnerHtml = strheadPage.ToString().Trim();
+                    strheadPage.Append("</ul");
                     hidType.Value = objEnc.DecryptData(Session["Type"].ToString().Trim());
                     mRefNo = Session["CompanyRefNo"].ToString().Trim();
                     ViewState["UserLoginEmail"] = objEnc.DecryptData(Session["User"].ToString()).Trim();
@@ -68,14 +68,22 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                         BindServcies();
                         BindTesting();
                         BindCertification();
-                        BindMasterCategory();
-                        BindMasterTechnologyCategory();
-                        BindMasterPlatCategory();
-                        BindPurposeProcuremnt();
-                        BindMasterProductReqCategory();
-                        BindMasterProductNoenCletureCategory();
-                        // BindNodelEmail();
-                        BindEndUser();
+                        if (Request.QueryString["mcurrentcompRefNo"] != null)
+                        {
+
+                        }
+                        else
+                        {
+                            BindMasterCategory();
+                            BindMasterTechnologyCategory();
+                            BindMasterPlatCategory();
+                            BindPurposeProcuremnt();
+                            BindMasterProductReqCategory();
+                            BindMasterProductNoenCletureCategory();
+                            // BindNodelEmail();
+                            BindEndUser();
+                        }
+
 
                     }
                     else
@@ -1318,21 +1326,21 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                 txterprefno.Text = DtView.Rows[0]["ERPRefNo"].ToString();
                 ddlnomnclature.SelectedValue = DtView.Rows[0]["NomenclatureOfMainSystem"].ToString();
                 ddlmastercategory.SelectedValue = DtView.Rows[0]["ProductLevel1"].ToString();
-                BindMasterSubCategory();
+                //BindMasterSubCategory();
                 ddlsubcategory.SelectedValue = DtView.Rows[0]["ProductLevel2"].ToString();
-                BindMaster3levelSubCategory();
+                //BindMaster3levelSubCategory();
                 if (ddllevel3product.SelectedValue != "Select")
                 {
-                    ddllevel3product.SelectedValue = DtView.Rows[0]["ProductLevel3"].ToString();
+                   // ddllevel3product.SelectedValue = DtView.Rows[0]["ProductLevel3"].ToString();
                 }
                 txtproductdescription.Text = DtView.Rows[0]["ProductDescription"].ToString();
                 ddltechnologycat.SelectedValue = DtView.Rows[0]["TechnologyLevel1"].ToString();
-                BindMasterSubCategoryTech();
+                //BindMasterSubCategoryTech();
                 ddlsubtech.SelectedValue = DtView.Rows[0]["TechnologyLevel2"].ToString();
-                BindMasterSubCategoryTechLevel3();
+                //BindMasterSubCategoryTechLevel3();
                 if (ddltechlevel3.SelectedValue != "Select")
                 {
-                    ddltechlevel3.SelectedValue = DtView.Rows[0]["TechnologyLevel3"].ToString();
+                    //ddltechlevel3.SelectedValue = DtView.Rows[0]["TechnologyLevel3"].ToString();
                 }
                 ddlenduser.SelectedValue = DtView.Rows[0]["EndUser"].ToString();
                 ddlplatform.SelectedValue = DtView.Rows[0]["Platform"].ToString();
@@ -1391,7 +1399,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                 {
                     divtdate.Visible = false;
                 }
-                BindNodelEmail();
+                //BindNodelEmail();
                 DataTable dtNodal = Lo.RetriveProductCode("", hfprodrefno.Value, "ProductNodal", hidType.Value);
                 if (dtNodal.Rows.Count > 0)
                 {
