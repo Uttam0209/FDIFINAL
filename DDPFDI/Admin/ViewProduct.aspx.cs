@@ -128,6 +128,7 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
         set { ViewState["SortDirection"] = value; }
     }
     #endregion
+
     #region PageIndex or Sorting
     protected void OnPageIndexChanging(object sender, GridViewPageEventArgs e)
     {
@@ -139,6 +140,7 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
         BindGridView(e.SortExpression);
     }
     #endregion
+
     #region RowCommand
     private string stpsdq;
     private string Testing;
@@ -312,6 +314,7 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
         }
     }
     #endregion
+
     #region ReturnUrl Long"
     public string Resturl(int length)
     {
@@ -325,6 +328,7 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
         return res.ToString();
     }
     #endregion
+
     #region DropDownList
     protected void BindCompany()
     {
