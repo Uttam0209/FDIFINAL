@@ -15,7 +15,6 @@ public partial class Admin_RegisterdAs : System.Web.UI.Page
     Logic Lo = new Logic();
     private string DisplayPanel;
     HybridDictionary hySave = new HybridDictionary();
-
     private string mRefNo = "";
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -47,7 +46,9 @@ public partial class Admin_RegisterdAs : System.Web.UI.Page
                 }
                 catch (Exception exception)
                 {
-                    Response.RedirectToRoute("login");
+                    string error = exception.ToString();
+                    string Page = Request.Url.AbsolutePath.ToString();
+                    Response.Redirect("Error?techerror=" + objEnc.EncryptData(error) + "&page=" + objEnc.EncryptData(Page));
                 }
             }
         }
@@ -90,76 +91,95 @@ public partial class Admin_RegisterdAs : System.Web.UI.Page
         }
         catch (Exception ex)
         {
+            string error = ex.ToString();
+            string Page = Request.Url.AbsolutePath.ToString();
+            Response.Redirect("Error?techerror=" + objEnc.EncryptData(error) + "&page=" + objEnc.EncryptData(Page));
         }
     }
     protected void ShowHidePanel()
     {
-        if (ViewState["DisplayPanel"].ToString() == "Panel1")
+        try
         {
-            divcategory1textbox.Visible = true;
-            divflag.Visible = true;
-            divActive.Visible = true;
-            divmastercategory.Visible = true;
-            divinnercat.Visible = false;
-            btnsave.Text = "Save Label";
+            if (ViewState["DisplayPanel"].ToString() == "Panel1")
+            {
+                divcategory1textbox.Visible = true;
+                divflag.Visible = true;
+                divActive.Visible = true;
+                divmastercategory.Visible = true;
+                divinnercat.Visible = false;
+                btnsave.Text = "Save Label";
+            }
+            else if (ViewState["DisplayPanel"].ToString() == "Panel2")
+            {
+                divcategory1dropdown.Visible = true;
+                divcategory2textbox.Visible = true;
+                divcategory1textbox.Visible = false;
+                divActive.Visible = false;
+                divflag.Visible = false;
+                btnsave.Text = "Save Level 1";
+                BindMasterCategory();
+                divmastercategory.Visible = false;
+                divinnercat.Visible = true;
+                ddlmastercategory.AutoPostBack = true;
+            }
+            else if (ViewState["DisplayPanel"].ToString() == "Panel3")
+            {
+                divcategory1dropdown.Visible = true;
+                divActive.Visible = false;
+                divcategory2ddl.Visible = true;
+                divcategory3textbox.Visible = true;
+                divflag.Visible = false;
+                btnsave.Text = "Save Level 2";
+                BindMasterCategory();
+                ddlmastercategory.AutoPostBack = true;
+                divmastercategory.Visible = false;
+                ddlcategroy2.AutoPostBack = true;
+            }
+            else if (ViewState["DisplayPanel"].ToString() == "Panel4")
+            {
+                divcategory1dropdown.Visible = true;
+                divActive.Visible = false;
+                divcategory2ddl.Visible = true;
+                divcategory3textbox.Visible = false;
+                divflag.Visible = false;
+                divlabel2drop.Visible = true;
+                divlevel3.Visible = true;
+                btnsave.Text = "Save Level 3";
+                BindMasterCategory();
+                ddlmastercategory.AutoPostBack = true;
+                ddlcategroy2.AutoPostBack = true;
+                divmastercategory.Visible = false;
+            }
         }
-        else if (ViewState["DisplayPanel"].ToString() == "Panel2")
+        catch (Exception ex)
         {
-            divcategory1dropdown.Visible = true;
-            divcategory2textbox.Visible = true;
-            divcategory1textbox.Visible = false;
-            divActive.Visible = false;
-            divflag.Visible = false;
-            btnsave.Text = "Save Level 1";
-            BindMasterCategory();
-            divmastercategory.Visible = false;
-            divinnercat.Visible = true;
-            ddlmastercategory.AutoPostBack = true;
-        }
-        else if (ViewState["DisplayPanel"].ToString() == "Panel3")
-        {
-            divcategory1dropdown.Visible = true;
-            divActive.Visible = false;
-            divcategory2ddl.Visible = true;
-            divcategory3textbox.Visible = true;
-            divflag.Visible = false;
-            btnsave.Text = "Save Level 2";
-            BindMasterCategory();
-            ddlmastercategory.AutoPostBack = true;
-            divmastercategory.Visible = false;
-            ddlcategroy2.AutoPostBack = true;
-        }
-        else if (ViewState["DisplayPanel"].ToString() == "Panel4")
-        {
-            divcategory1dropdown.Visible = true;
-            divActive.Visible = false;
-            divcategory2ddl.Visible = true;
-            divcategory3textbox.Visible = false;
-            divflag.Visible = false;
-            divlabel2drop.Visible = true;
-            divlevel3.Visible = true;
-            btnsave.Text = "Save Level 3";
-            BindMasterCategory();
-            ddlmastercategory.AutoPostBack = true;
-            ddlcategroy2.AutoPostBack = true;
-            divmastercategory.Visible = false;
+            string error = ex.ToString();
+            string Page = Request.Url.AbsolutePath.ToString();
+            Response.Redirect("Error?techerror=" + objEnc.EncryptData(error) + "&page=" + objEnc.EncryptData(Page));
         }
     }
     protected void cleartext()
     {
-        txtcategory3.Text = "";
-        txtmastercategory.Text = "";
-        txtsubcategory.Text = "";
-        txtlevel3.Text = "";
-
-        ddlmastercategory.SelectedValue = "Select";
-        if (ddlcategroy2.Visible = true)
+        try
         {
-            ddlcategroy2.SelectedValue = "Select";
+            txtcategory3.Text = "";
+            txtmastercategory.Text = "";
+            txtsubcategory.Text = "";
+            txtlevel3.Text = "";
+            //ddlmastercategory.SelectedValue = "Select";
+            //if (ddlcategroy2.Visible = true)
+            //{
+            //    ddlcategroy2.SelectedValue = "Select";
+            //}
+            //if (ddllabel2.Visible = true)
+            //{
+            //    ddllabel2.SelectedValue = "Select";
+            //}
         }
-        if (ddllabel2.Visible = true)
+        catch (Exception e)
         {
-            ddllabel2.SelectedValue = "Select";
+            Console.WriteLine(e);
+            throw;
         }
 
     }
@@ -169,193 +189,310 @@ public partial class Admin_RegisterdAs : System.Web.UI.Page
     }
     protected void SaveCode()
     {
-        DataTable StrCat = Lo.RetriveMasterCategoryDate(0, Co.RSQandSQLInjection(txtmastercategory.Text, "soft"), "", rbflag.SelectedItem.Value, rbactive.SelectedItem.Value, "Insert", objEnc.DecryptData(ViewState["UserLoginEmail"].ToString()));
-        if (StrCat != null)
+        try
         {
-            BindGridView();
-            cleartext();
-            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record saved')", true);
+            DataTable DtGetAddDropdown = Lo.RetriveMasterSubCategoryDate(0, txtmastercategory.Text.Trim(), "", "DupMasterCat", "", "");
+            if (DtGetAddDropdown.Rows.Count > 0)
+            { ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('duplicate record found, record already inserted.')", true); }
+            else
+            {
+                DataTable StrCat = Lo.RetriveMasterCategoryDate(0, Co.RSQandSQLInjection(txtmastercategory.Text, "soft"), "", rbflag.SelectedItem.Value, rbactive.SelectedItem.Value, "Insert", objEnc.DecryptData(ViewState["UserLoginEmail"].ToString()));
+                if (StrCat != null)
+                {
+                    BindGridView();
+                    cleartext();
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record saved')", true);
+                }
+                else
+                {
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not saved')", true);
+                }
+            }
         }
-        else
+        catch (Exception ex)
         {
-            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not saved')", true);
+            string error = ex.ToString();
+            string Page = Request.Url.AbsolutePath.ToString();
+            Response.Redirect("Error?techerror=" + objEnc.EncryptData(error) + "&page=" + objEnc.EncryptData(Page));
         }
     }
     protected void SaveCodeSub()
     {
         try
         {
-            DataTable StrCat = Lo.RetriveMasterSubCategoryDate(Convert.ToInt16(ddlmastercategory.SelectedItem.Value),
-                Co.RSQandSQLInjection(txtsubcategory.Text, "soft"), "0", "InsertInnerID", "",
-                objEnc.DecryptData(ViewState["UserLoginEmail"].ToString()));
-            if (StrCat != null)
-            {
-                BindMasterInnerSubCategory();
-                cleartext();
-                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record saved')", true);
-            }
+            DataTable DtGetAddDropdown = Lo.RetriveMasterSubCategoryDate(0, txtsubcategory.Text.Trim(), "", "DupSubCat", "", "");
+            if (DtGetAddDropdown.Rows.Count > 0)
+            { ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('duplicate record found, record already inserted.')", true); }
             else
             {
-                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not saved')", true);
+                DataTable StrCat = Lo.RetriveMasterSubCategoryDate(
+                    Convert.ToInt16(ddlmastercategory.SelectedItem.Value),
+                    Co.RSQandSQLInjection(txtsubcategory.Text, "soft"), "0", "InsertInnerID", "",
+                    objEnc.DecryptData(ViewState["UserLoginEmail"].ToString()));
+                if (StrCat != null)
+                {
+                    BindMasterInnerSubCategory();
+                    cleartext();
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record saved')", true);
+                }
+                else
+                {
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not saved')",
+                        true);
+                }
             }
         }
         catch (Exception ex)
         {
-            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Technical Error:- " + ex.Message + " User Error:- Record not saved.')", true);
+            string error = ex.ToString();
+            string Page = Request.Url.AbsolutePath.ToString();
+            Response.Redirect("Error?techerror=" + objEnc.EncryptData(error) + "&page=" + objEnc.EncryptData(Page));
         }
-
     }
     protected void SaveCodeInnerSub()
     {
-        DataTable StrCat = Lo.RetriveMasterSubCategoryDate(Convert.ToInt16(ddlcategroy2.SelectedItem.Value), Co.RSQandSQLInjection(txtcategory3.Text, "soft"), "0", "InsertInnerSubID", "", objEnc.DecryptData(ViewState["UserLoginEmail"].ToString()));
-        if (StrCat != null)
+        try
         {
-            BindMasterInnerSubCategorySub();
-            cleartext();
-            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record saved')", true);
+            DataTable DtGetAddDropdown = Lo.RetriveMasterSubCategoryDate(0, txtcategory3.Text.Trim(), "", "DupSubCat", "", "");
+            if (DtGetAddDropdown.Rows.Count > 0)
+            { ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('duplicate record found, record already inserted.')", true); }
+            else
+            {
+                DataTable StrCat = Lo.RetriveMasterSubCategoryDate(Convert.ToInt16(ddlcategroy2.SelectedItem.Value),
+                    Co.RSQandSQLInjection(txtcategory3.Text, "soft"), "0", "InsertInnerSubID", "",
+                    objEnc.DecryptData(ViewState["UserLoginEmail"].ToString()));
+                if (StrCat != null)
+                {
+                    BindMasterInnerSubCategorySub();
+                    cleartext();
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record saved')", true);
+                }
+                else
+                {
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not saved')",
+                        true);
+                }
+            }
         }
-        else
+        catch (Exception ex)
         {
-            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not saved')", true);
+            string error = ex.ToString();
+            string Page = Request.Url.AbsolutePath.ToString();
+            Response.Redirect("Error?techerror=" + objEnc.EncryptData(error) + "&page=" + objEnc.EncryptData(Page));
         }
     }
     protected void SaveCodeInnerSubSub()
     {
-        DataTable StrCat = Lo.RetriveMasterSubCategoryDate(Convert.ToInt16(ddllabel2.SelectedItem.Value), Co.RSQandSQLInjection(txtlevel3.Text, "soft"), "0", "InsertInnerSubID", "", objEnc.DecryptData(ViewState["UserLoginEmail"].ToString()));
-        if (StrCat != null)
+        try
         {
-            cleartext();
-            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record saved')", true);
+            DataTable DtGetAddDropdown = Lo.RetriveMasterSubCategoryDate(0, txtlevel3.Text.Trim(), "", "DupSubCat", "", "");
+            if (DtGetAddDropdown.Rows.Count > 0)
+            { ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('duplicate record found, record already inserted.')", true); }
+            else
+            {
+                DataTable StrCat = Lo.RetriveMasterSubCategoryDate(Convert.ToInt16(ddllabel2.SelectedItem.Value),
+                    Co.RSQandSQLInjection(txtlevel3.Text, "soft"), "0", "InsertInnerSubID", "",
+                    objEnc.DecryptData(ViewState["UserLoginEmail"].ToString()));
+                if (StrCat != null)
+                {
+                    BindMasterInnerIneerSubCat();
+                    cleartext();
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record saved')", true);
+                }
+                else
+                {
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not saved')",
+                        true);
+                }
+            }
         }
-        else
+        catch (Exception ex)
         {
-            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not saved')", true);
+            string error = ex.ToString();
+            string Page = Request.Url.AbsolutePath.ToString();
+            Response.Redirect("Error?techerror=" + objEnc.EncryptData(error) + "&page=" + objEnc.EncryptData(Page));
         }
     }
     protected void btnsave_Click(object sender, EventArgs e)
     {
-        if (btnsave.Text == "Save Label")
+        try
         {
-            if (txtmastercategory.Text != "")
+            if (btnsave.Text == "Save Label")
             {
-                SaveCode();
-                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record saved successfully')", true);
+                if (txtmastercategory.Text != "")
+                {
+                    SaveCode();
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record saved successfully')", true);
+                }
+                else
+                {
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('All field fill mandatory')", true);
+                }
             }
-            else
+            else if (btnsave.Text == "Save Level 1")
             {
-                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('All field fill mandatory')", true);
+                if (ddlmastercategory.SelectedIndex != 0 && txtsubcategory.Text != "")
+                {
+                    SaveCodeSub();
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record saved successfully')", true);
+                }
+                else
+                {
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('All field fill mandatory')", true);
+                }
+            }
+            else if (btnsave.Text == "Save Level 2")
+            {
+                if (ddlmastercategory.SelectedIndex != 0 && ddlcategroy2.SelectedIndex != 0 && txtcategory3.Text != "")
+                {
+                    SaveCodeInnerSub();
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record saved successfully')", true);
+                }
+                else
+                {
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('All field fill mandatory')", true);
+                }
+            }
+            else if (btnsave.Text == "Save Level 3")
+            {
+                if (ddlmastercategory.SelectedIndex != 0 && ddlcategroy2.SelectedIndex != 0 && ddllabel2.SelectedIndex != 0 && txtlevel3.Text != "")
+                {
+                    SaveCodeInnerSubSub();
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record saved successfully')", true);
+                }
+                else
+                {
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('All field fill mandatory')", true);
+                }
             }
         }
-        else if (btnsave.Text == "Save Level 1")
+        catch (Exception ex)
         {
-            if (ddlmastercategory.SelectedIndex != 0 && txtsubcategory.Text != "")
-            {
-                SaveCodeSub();
-                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record saved successfully')", true);
-            }
-            else
-            {
-                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('All field fill mandatory')", true);
-            }
-        }
-        else if (btnsave.Text == "Save Level 2")
-        {
-            if (ddlmastercategory.SelectedIndex != 0 && ddlcategroy2.SelectedIndex != 0 && txtcategory3.Text != "")
-            {
-                SaveCodeInnerSub();
-                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record saved successfully')", true);
-            }
-            else
-            {
-                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('All field fill mandatory')", true);
-            }
-        }
-        else if (btnsave.Text == "Save Level 3")
-        {
-            if (ddlmastercategory.SelectedIndex != 0 && ddlcategroy2.SelectedIndex != 0 && ddllabel2.SelectedIndex != 0 && txtlevel3.Text != "")
-            {
-                SaveCodeInnerSubSub();
-                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record saved successfully')", true);
-            }
-            else
-            {
-                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('All field fill mandatory')", true);
-            }
+            string error = ex.ToString();
+            string Page = Request.Url.AbsolutePath.ToString();
+            Response.Redirect("Error?techerror=" + objEnc.EncryptData(error) + "&page=" + objEnc.EncryptData(Page));
         }
     }
     protected void BindMasterCategory()
     {
-        DataTable DtMasterCategroy = new DataTable();
-        if (ViewState["DisplayPanel"].ToString() == "Panel2")
+        try
         {
-            if (hftype.Value == "SuperAdmin" || hftype.Value == "Admin")
+            DataTable DtMasterCategroy = new DataTable();
+            if (ViewState["DisplayPanel"].ToString() == "Panel2")
             {
-                DtMasterCategroy = Lo.RetriveMasterCategoryDate(0, "", "", "", "", hftype.Value, "");
+                if (hftype.Value == "SuperAdmin" || hftype.Value == "Admin")
+                {
+                    DtMasterCategroy = Lo.RetriveMasterCategoryDate(0, "", "", "", "", hftype.Value, "");
+                }
+                else
+                {
+                    DtMasterCategroy = Lo.RetriveMasterCategoryDate(0, "", "", "", "", "Select", "");
+                }
+            }
+            else if (ViewState["DisplayPanel"].ToString() == "Panel3")
+            {
+                DtMasterCategroy = Lo.RetriveMasterCategoryDate(0, "2", "", "", "", "SelectFlag", "");
+            }
+            else if (ViewState["DisplayPanel"].ToString() == "Panel4")
+            {
+                DtMasterCategroy = Lo.RetriveMasterCategoryDate(0, "3", "", "", "", "SelectFlag3", "");
+            }
+            if (DtMasterCategroy.Rows.Count > 0)
+            {
+                Co.FillDropdownlist(ddlmastercategory, DtMasterCategroy, "MCategoryName", "MCategoryID");
+                ddlmastercategory.Items.Insert(0, "Select");
             }
             else
             {
-                DtMasterCategroy = Lo.RetriveMasterCategoryDate(0, "", "", "", "", "Select", "");
+                ddlmastercategory.Items.Insert(0, "Select");
             }
         }
-        else if (ViewState["DisplayPanel"].ToString() == "Panel3")
+        catch (Exception ex)
         {
-            DtMasterCategroy = Lo.RetriveMasterCategoryDate(0, "2", "", "", "", "SelectFlag", "");
-        }
-        else if (ViewState["DisplayPanel"].ToString() == "Panel4")
-        {
-            DtMasterCategroy = Lo.RetriveMasterCategoryDate(0, "3", "", "", "", "SelectFlag3", "");
-        }
-        if (DtMasterCategroy.Rows.Count > 0)
-        {
-            Co.FillDropdownlist(ddlmastercategory, DtMasterCategroy, "MCategoryName", "MCategoryID");
-            ddlmastercategory.Items.Insert(0, "Select");
-        }
-        else
-        {
-            ddlmastercategory.Items.Insert(0, "Select");
+            string error = ex.ToString();
+            string Page = Request.Url.AbsolutePath.ToString();
+            Response.Redirect("Error?techerror=" + objEnc.EncryptData(error) + "&page=" + objEnc.EncryptData(Page));
         }
     }
     protected void BindMasterInnerSubCategory()
     {
-        DataTable DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(Convert.ToInt16(ddlmastercategory.SelectedItem.Value), "", "", "SelectInnerMaster", "", "");
-        if (DtMasterCategroy.Rows.Count > 0)
+        try
         {
-            Co.FillDropdownlist(ddlcategroy2, DtMasterCategroy, "SCategoryName", "SCategoryId");
-            ddlcategroy2.Items.Insert(0, "Select");
-            gvlevel3.DataSource = DtMasterCategroy;
-            gvlevel3.DataBind();
+            DataTable DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(Convert.ToInt16(ddlmastercategory.SelectedItem.Value), "", "", "SelectInnerMaster", "", "");
+            if (DtMasterCategroy.Rows.Count > 0)
+            {
+                Co.FillDropdownlist(ddlcategroy2, DtMasterCategroy, "SCategoryName", "SCategoryId");
+                ddlcategroy2.Items.Insert(0, "Select");
+                gvlevel3.DataSource = DtMasterCategroy;
+                gvlevel3.DataBind();
+                gvlevel3.Visible = true;
+                ddllabel2.Items.Clear();
+            }
+            else
+            {
+                gvlevel3.Visible = false;
+                ddllabel2.Items.Clear();
+                ddlcategroy2.Items.Insert(0, "Select");
+            }
         }
-        else
+        catch (Exception ex)
         {
-            ddlcategroy2.Items.Insert(0, "Select");
+            string error = ex.ToString();
+            string Page = Request.Url.AbsolutePath.ToString();
+            Response.Redirect("Error?techerror=" + objEnc.EncryptData(error) + "&page=" + objEnc.EncryptData(Page));
         }
     }
     protected void BindMasterInnerSubCategorySub()
     {
-        DataTable DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(Convert.ToInt16(ddlcategroy2.SelectedItem.Value), "", "", "SubSelectID", "", "");
-        if (DtMasterCategroy.Rows.Count > 0)
+        try
         {
-            Co.FillDropdownlist(ddllabel2, DtMasterCategroy, "SCategoryName", "SCategoryId");
-            ddllabel2.Items.Insert(0, "Select");
-            gvlevel3.DataSource = DtMasterCategroy;
-            gvlevel3.DataBind();
+            DataTable DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(Convert.ToInt16(ddlcategroy2.SelectedItem.Value), "", "", "SubSelectID", "", "");
+            if (DtMasterCategroy.Rows.Count > 0)
+            {
+                Co.FillDropdownlist(ddllabel2, DtMasterCategroy, "SCategoryName", "SCategoryId");
+                ddllabel2.Items.Insert(0, "Select");
+                gvlevel3.DataSource = DtMasterCategroy;
+                gvlevel3.DataBind();
+                gvlevel3.Visible = true;
+            }
+            else
+            {
+                gvlevel3.Visible = false;
+                if (ddllabel2.Visible == true)
+                {
+                    ddllabel2.Items.Clear();
+                    ddllabel2.Items.Insert(0, "Select");
+                }
+            }
         }
-        else
+        catch (Exception ex)
         {
-            ddllabel2.Items.Insert(0, "Select");
+            string error = ex.ToString();
+            string Page = Request.Url.AbsolutePath.ToString();
+            Response.Redirect("Error?techerror=" + objEnc.EncryptData(error) + "&page=" + objEnc.EncryptData(Page));
         }
     }
     protected void BindMasterInnerIneerSubCat()
     {
-        DataTable DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(Convert.ToInt16(ddllabel2.SelectedItem.Value), "", "", "SubSelectID", "", "");
-        if (DtMasterCategroy.Rows.Count > 0)
+        try
         {
-            gvlevel3.DataSource = DtMasterCategroy;
-            gvlevel3.DataBind();
+            DataTable DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(Convert.ToInt16(ddllabel2.SelectedItem.Value), "", "", "SubSelectID", "", "");
+            if (DtMasterCategroy.Rows.Count > 0)
+            {
+                gvlevel3.DataSource = DtMasterCategroy;
+                gvlevel3.DataBind();
+                gvlevel3.Visible = true;
+            }
+            else
+            {
+                gvlevel3.Visible = false;
+            }
         }
-        else
+        catch (Exception ex)
         {
-            gvlevel3.Visible = false;
+            string error = ex.ToString();
+            string Page = Request.Url.AbsolutePath.ToString();
+            Response.Redirect("Error?techerror=" + objEnc.EncryptData(error) + "&page=" + objEnc.EncryptData(Page));
         }
     }
     protected void ddlmastercategory_SelectedIndexChanged(object sender, EventArgs e)
@@ -372,56 +509,47 @@ public partial class Admin_RegisterdAs : System.Web.UI.Page
     }
     protected void gvlevel3_RowDataBound(object sender, GridViewRowEventArgs e)
     {
-        if (e.Row.RowType == DataControlRowType.DataRow)
+        try
         {
-            if (ViewState["DisplayPanel"].ToString() == "Panel2")
+            if (e.Row.RowType == DataControlRowType.DataRow)
             {
-                // gvlevel3.Columns[1].Visible = true;
-                gvlevel3.Columns[1].HeaderText = "Level 1";
-                // gvlevel3.Columns[2].Visible = false;
-                //  gvlevel3.Columns[3].Visible = false;
-            }
-            else if (ViewState["DisplayPanel"].ToString() == "Panel3")
-            {
-                if (ddlmastercategory.SelectedItem.Text != "Select" && ddlcategroy2.SelectedItem.Text == "Select")
+                if (ViewState["DisplayPanel"].ToString() == "Panel2")
                 {
-                    //   gvlevel3.Columns[1].Visible = true;
-                    //  gvlevel3.Columns[2].Visible = false;
-                    // gvlevel3.Columns[3].Visible = false;
                     gvlevel3.Columns[1].HeaderText = "Level 1";
                 }
-                else if (ddlmastercategory.SelectedItem.Text != "Select" && ddlcategroy2.SelectedItem.Text != "Select")
+                else if (ViewState["DisplayPanel"].ToString() == "Panel3")
                 {
-                    gvlevel3.Columns[1].HeaderText = "Level 2";
-                    // gvlevel3.Columns[2].Visible = true;
-                    //  gvlevel3.Columns[3].Visible = false;
-                    //   gvlevel3.Columns[1].Visible = false;
+                    if (ddlmastercategory.SelectedItem.Text != "Select" && ddlcategroy2.SelectedItem.Text == "Select")
+                    {
+                        gvlevel3.Columns[1].HeaderText = "Level 1";
+                    }
+                    else if (ddlmastercategory.SelectedItem.Text != "Select" && ddlcategroy2.SelectedItem.Text != "Select")
+                    {
+                        gvlevel3.Columns[1].HeaderText = "Level 2";
+                    }
+                }
+                else if (ViewState["DisplayPanel"].ToString() == "Panel4")
+                {
+                    if (ddlmastercategory.SelectedItem.Text != "Select" && ddlcategroy2.SelectedItem.Text == "Select")
+                    {
+                        gvlevel3.Columns[1].HeaderText = "Level 1";
+                    }
+                    else if (ddlmastercategory.SelectedItem.Text != "Select" && ddlcategroy2.SelectedItem.Text != "Select" && ddllabel2.SelectedItem.Text == "Select")
+                    {
+                        gvlevel3.Columns[1].HeaderText = "Level 2";
+                    }
+                    else if (ddlmastercategory.SelectedItem.Text != "Select" && ddlcategroy2.SelectedItem.Text != "Select" && ddllabel2.SelectedItem.Text != "Select")
+                    {
+                        gvlevel3.Columns[1].HeaderText = "Level 3";
+                    }
                 }
             }
-            else if (ViewState["DisplayPanel"].ToString() == "Panel4")
-            {
-                if (ddlmastercategory.SelectedItem.Text != "Select" && ddlcategroy2.SelectedItem.Text == "Select")
-                {
-                    gvlevel3.Columns[1].HeaderText = "Level 1";
-                    //  gvlevel3.Columns[1].Visible = true;
-                    //   gvlevel3.Columns[2].Visible = false;
-                    //   gvlevel3.Columns[3].Visible = false;
-                }
-                else if (ddlmastercategory.SelectedItem.Text != "Select" && ddlcategroy2.SelectedItem.Text != "Select" && ddllabel2.SelectedItem.Text == "Select")
-                {
-                    gvlevel3.Columns[1].HeaderText = "Level 2";
-                    //  gvlevel3.Columns[2].Visible = true;
-                    //  gvlevel3.Columns[3].Visible = false;
-                    //   gvlevel3.Columns[1].Visible = false;
-                }
-                else if (ddlmastercategory.SelectedItem.Text != "Select" && ddlcategroy2.SelectedItem.Text != "Select" && ddllabel2.SelectedItem.Text != "Select")
-                {
-                    gvlevel3.Columns[1].HeaderText = "Level 3";
-                    //  gvlevel3.Columns[3].Visible = true;
-                    //  gvlevel3.Columns[2].Visible = false;
-                    //  gvlevel3.Columns[1].Visible = false;
-                }
-            }
+        }
+        catch (Exception ex)
+        {
+            string error = ex.ToString();
+            string Page = Request.Url.AbsolutePath.ToString();
+            Response.Redirect("Error?techerror=" + objEnc.EncryptData(error) + "&page=" + objEnc.EncryptData(Page));
         }
     }
 }

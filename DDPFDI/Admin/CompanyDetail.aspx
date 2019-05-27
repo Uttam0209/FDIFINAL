@@ -42,7 +42,8 @@
             <div class="clearfix"></div>
             <div class="tabing-section" style="margin-top: 20px;">
                 <ul class="nav nav-tabs">
-                    <li class="active"><a data-toggle="tab" href="#comp">Company</a></li>
+                    <li class="active"><a data-toggle="tab" href="#comp" runat="server" id="acomp" title="Company">
+                        <asp:Label ID="lblMCompany" runat="server" Text=""></asp:Label></a> </li>
                     <li><a data-toggle="tab" href="#officer">Nodal Officer</a></li>
                     <li runat="server" id="lisr"><a data-toggle="tab" href="#sr">Statutory Registration</a></li>
                     <li><a data-toggle="tab" runat="server" id="lisc" href="#sm">Social Media</a></li>
@@ -160,7 +161,7 @@
                                                     </div>
                                                     <div class="col-md-6">
                                                         <div class="form-group" id="DivCEOEmail" runat="server">
-                                                            <label for="tceoname" runat="server" id="lblceoemail" class="control-label">CEO Email ID </label>
+                                                            <label for="tceoname" runat="server" id="lblceoemail" class="control-label">Company Head Email ID </label>
                                                             <asp:TextBox runat="server" ID="txtCEOEmailId" name="tceoemailid" class="form-control form-cascade-control" placeholder=""></asp:TextBox>
                                                         </div>
                                                     </div>
@@ -219,7 +220,7 @@
                     <asp:UpdatePanel ID="UpdatePanel3" runat="server" ChildrenAsTriggers="True">
                         <ContentTemplate>
                             <div class="section-pannel">
-                                <div class="row">
+                                <div class="row hidden">
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label for="tpersonname" class="control-label">Select Nodal Officer </label>

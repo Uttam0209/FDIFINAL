@@ -7,6 +7,7 @@ using System.Data;
 using System.Text.RegularExpressions;
 using System.Text;
 using System.IO;
+using System.Web;
 
 
 
@@ -75,7 +76,7 @@ public partial class Admin_ViewNodalOfficer : System.Web.UI.Page
         }
     }
     protected void BindCompany()
-    {
+        {
         if (mType == "SuperAdmin" || mType == "Admin")
         {
             DtCompanyDDL = Lo.RetriveMasterData(0, "", "", 0, "", "", "Select");
@@ -90,6 +91,17 @@ public partial class Admin_ViewNodalOfficer : System.Web.UI.Page
                 ddlcompany.Enabled = false;
             }
 
+            if (Request.QueryString["mu"] != null)
+            {
+                if (objEnc.DecryptData(Request.QueryString["mu"].ToString()) == "View")
+                {
+
+                    GridViewNodalOfficerBind("", "AllNodalDashboard");
+
+                }
+                
+            }
+            
             lblselectdivison.Visible = false;
             lblselectunit.Visible = false;
         }
@@ -119,7 +131,6 @@ public partial class Admin_ViewNodalOfficer : System.Web.UI.Page
                     ddldivision.Enabled = true;
                     ddlunit.Visible = false;
                     lblselectunit.Visible = false;
-
                 }
                 else
                 {
@@ -138,7 +149,6 @@ public partial class Admin_ViewNodalOfficer : System.Web.UI.Page
             {
                 Co.FillDropdownlist(ddlcompany, DtCompanyDDL, "CompanyName", "CompanyRefNo");
                 ddlcompany.Enabled = false;
-
             }
             else
             {
@@ -215,8 +225,9 @@ public partial class Admin_ViewNodalOfficer : System.Web.UI.Page
             GridViewRow gvr = (GridViewRow)((Control)e.CommandSource).NamingContainer;
             int rowIndex = gvr.RowIndex;
             string stridNew = Request.QueryString["id"].ToString().Replace(" ", "+");
-            string mstrid = objEnc.EncryptData((objEnc.DecryptData(stridNew) + " >> Edit Nodal Office"));
-            Response.Redirect("Add-Nodal?mrcreaterole=" + objEnc.EncryptData(e.CommandArgument.ToString()) + "&mcurrentcompRefNo=" + (objEnc.EncryptData(e.CommandArgument.ToString())) + "&id=" + mstrid);
+            string mstrid = objEnc.EncryptData((objEnc.DecryptData(stridNew)));
+            string UrlEdit = "Add-Nodal?mrcreaterole=" + HttpUtility.UrlEncode(objEnc.EncryptData(e.CommandArgument.ToString())) + "&mcurrentcompRefNo=" + HttpUtility.UrlEncode(objEnc.EncryptData(e.CommandArgument.ToString())) + "&id=" + mstrid;
+            Response.Redirect(UrlEdit);
         }
         else if (e.CommandName == "ViewComp")
         {
@@ -347,7 +358,7 @@ public partial class Admin_ViewNodalOfficer : System.Web.UI.Page
             {
                 ddldivision.Visible = false;
                 lblselectdivison.Visible = false;
-                gvViewNodalOfficer.Visible = false;
+                GridViewNodalOfficerBind(ddlcompany.SelectedItem.Value, "Company");
             }
         }
         else if (ddlcompany.SelectedItem.Text == "Select")

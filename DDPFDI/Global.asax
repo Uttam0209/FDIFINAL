@@ -30,6 +30,7 @@
     }
     static void RegisterRoutes(RouteCollection routes)
     {
+        //routes.MapPageRoute("Faq", "Faq", "~/Admin/website manual.pdf", true);
         routes.MapPageRoute("Login", "Login", "~/Default.aspx", true);
         routes.MapPageRoute("Error", "Error", "~/Error.aspx", true);
         routes.MapPageRoute("FDIRegistration", "FDIRegistration", "~/Admin/frmAddFDI.aspx", true);

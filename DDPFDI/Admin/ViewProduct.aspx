@@ -80,13 +80,15 @@
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                             <%--  <asp:BoundField DataField="CompanyName" HeaderText="Company" NullDisplayText="#" SortExpression="Company" />--%>
-                                            <asp:BoundField DataField="CompanyRefNo" HeaderText="Company Reference No" NullDisplayText="#" SortExpression="CompanyRefNo" />
+                                            <asp:BoundField DataField="CompanyRefNo" HeaderText="Company Reference No" Visible="false" NullDisplayText="#" SortExpression="CompanyRefNo" />
                                             <asp:TemplateField HeaderText="OEM PartNumber">
                                                 <ItemTemplate>
                                                     <asp:Label runat="server" ID="lblcompanyrole" Text='<%#Eval("OEMPartNumber") %>'></asp:Label>
+                                                    <asp:HiddenField ID="hfrole" runat="server" Value='<%#Eval("Role") %>' />
+                                                    <asp:HiddenField ID="hfcomprefno" runat="server" Value='<%#Eval("CompanyRefNo") %>' />
                                                 </ItemTemplate>
                                             </asp:TemplateField>
-                                            <asp:TemplateField HeaderText="DPSUPartNumber">
+                                            <asp:TemplateField HeaderText="DPSUPartNumber" Visible="false">
                                                 <ItemTemplate>
                                                     <asp:Label ID="lblnodelname" runat="server" Text='<%#Eval("DPSUPartNumber") %>' NullDisplayText="#" SortExpression="DPSUPartNumber"></asp:Label>
                                                 </ItemTemplate>
@@ -119,12 +121,14 @@
                             <div class="modal-body sideBg">
                                 <div class="tabing-section">
                                     <ul class="nav nav-tabs" style="margin-top: 10px;">
-                                        <li class="active"><a data-toggle="tab" href="#pd">Product Description</a></li>
-                                        <li><a data-toggle="tab" href="#pimg">Product Image</a></li>
-                                        <li><a data-toggle="tab" href="#spd">Support Provided by DPSU</a></li>
+                                        <li class="active"><a data-toggle="tab" href="#pd">Description</a></li>
+                                        <li><a data-toggle="tab" href="#pimg">Image</a></li>
+                                        <li><a data-toggle="tab" href="#spd">Support by DPSU</a></li>
                                         <li><a data-toggle="tab" href="#qpt">Quantity Required</a></li>
-                                        <li><a data-toggle="tab" href="#tdr">Tender Status</a></li>
-                                        <li><a data-toggle="tab" href="#cd">Contact Details</a></li>
+                                        <li><a data-toggle="tab" href="#tdr">Tender</a></li>
+                                        <li><a data-toggle="tab" href="#cd">Contact</a></li>
+                                        <li><a data-toggle="tab" href="#test">Testing</a></li>
+                                        <li><a data-toggle="tab" href="#cer">Certification</a></li>
                                     </ul>
                                     <div class="tab-content">
                                         <div id="pd" class="tab-pane fade in active">
@@ -364,7 +368,6 @@
                                                                     <asp:Label ID="lblfax" runat="server"></asp:Label>
                                                                 </td>
                                                             </tr>
-
                                                         </tbody>
                                                     </table>
                                                 </div>
@@ -406,6 +409,55 @@
                                                 </div>
                                             </div>
                                         </div>
+
+                                        <div id="test" class="tab-pane fade in">
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <table class="table table-bordered">
+                                                        <tbody>
+                                                            <tr>
+                                                                <th class="pass" width="30%">Testing</th>
+                                                                <th class="pass" width="30%">Remarks</th>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>
+                                                                    <asp:Label ID="lbltesting" runat="server"></asp:Label>
+                                                                </td>
+
+                                                                <td>
+                                                                    <asp:Label ID="lbltestingremarks" runat="server"></asp:Label>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="cer" class="tab-pane fade in">
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <table class="table table-bordered">
+                                                        <tbody>
+                                                            <tr>
+                                                                <th class="pass" width="30%">Certification</th>
+                                                                <th class="pass" width="30%">Remarks</th>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>
+                                                                    <asp:Label ID="lblcertification" runat="server"></asp:Label>
+                                                                </td>
+
+                                                                <td>
+                                                                    <asp:Label ID="lblcertificationremarks" runat="server"></asp:Label>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
                                     </div>
                                 </div>
                             </div>

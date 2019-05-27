@@ -26,68 +26,83 @@ public partial class Admin_AddDesignation : System.Web.UI.Page
     {
         if (!IsPostBack)
         {
-            if (Request.QueryString["id"] != null)
+            try
             {
-                string strid = Request.QueryString["id"].ToString().Replace(" ", "+");
-                string strPageName = Enc.DecryptData(strid);
-                StringBuilder strheadPage = new StringBuilder();
-                strheadPage.Append("<ul class='breadcrumb'>");
-                string[] MCateg = strPageName.Split(new string[] { ">>" }, StringSplitOptions.RemoveEmptyEntries);
-                string MmCval = "";
-                for (int x = 0; x < MCateg.Length; x++)
+                if (Request.QueryString["id"] != null)
                 {
-                    MmCval = MCateg[x];
-                    if (MmCval == " View ")
+                    string strid = Request.QueryString["id"].ToString().Replace(" ", "+");
+                    string strPageName = Enc.DecryptData(strid);
+                    StringBuilder strheadPage = new StringBuilder();
+                    strheadPage.Append("<ul class='breadcrumb'>");
+                    string[] MCateg = strPageName.Split(new string[] { ">>" }, StringSplitOptions.RemoveEmptyEntries);
+                    string MmCval = "";
+                    for (int x = 0; x < MCateg.Length; x++)
                     {
-                        MmCval = "Add";
+                        MmCval = MCateg[x];
+                        if (MmCval == " View ")
+                        {
+                            MmCval = "Add";
+                        }
+                        strheadPage.Append("<li class=''><span>" + MmCval + "</span></li>");
                     }
-                    strheadPage.Append("<li class=''><span>" + MmCval + "</span></li>");
+                    divHeadPage.InnerHtml = strheadPage.ToString();
+                    strheadPage.Append("</ul");
+                    BindMasterCompany();
                 }
-                divHeadPage.InnerHtml = strheadPage.ToString();
-                strheadPage.Append("</ul");
-                BindMasterCompany();
+                ViewState["UserLoginEmail"] = Session["User"].ToString();
+                mType = Enc.DecryptData(Session["Type"].ToString());
+                mRefNo = Session["CompanyRefNo"].ToString();
+                if (Request.QueryString["mcurrentcompRefNo"] != null)
+                {
+                    EditCode();
+                }
             }
-            ViewState["UserLoginEmail"] = Session["User"].ToString();
-            mType = Enc.DecryptData(Session["Type"].ToString());
-            mRefNo = Session["CompanyRefNo"].ToString();
-            if (Request.QueryString["mcurrentcompRefNo"] != null)
+            catch (Exception ex)
             {
-                EditCode();
+                string error = ex.ToString();
+                string Page = Request.Url.AbsolutePath.ToString();
+                Response.Redirect("Error?techerror=" + HttpUtility.UrlEncode(Enc.EncryptData(error)) + "&page=" + HttpUtility.UrlEncode(Enc.EncryptData(Page)));
             }
         }
-
     }
     protected void ddlmaster_OnSelectedIndexChanged(object sender, EventArgs e)
     {
         GridViewBindSelectedIndexchange();
-
     }
     public void GridViewBindSelectedIndexchange()
     {
-        if (ddlmaster.SelectedItem.Text != "Select")
+        try
         {
-            DataTable DtGrid = new DataTable();
-            if (Enc.DecryptData(Session["Type"].ToString()) == "SuperAdmin" || Enc.DecryptData(Session["Type"].ToString()) == "Admin")
+            if (ddlmaster.SelectedItem.Text != "Select")
             {
-                DtGrid = Lo.RetriveMasterData(0, ddlmaster.SelectedItem.Value, "", 0, "", "", "ViewDesignation");
-                ddlmaster.Enabled = true;
+                DataTable DtGrid = new DataTable();
+                if (Enc.DecryptData(Session["Type"].ToString()) == "SuperAdmin" || Enc.DecryptData(Session["Type"].ToString()) == "Admin")
+                {
+                    DtGrid = Lo.RetriveMasterData(0, ddlmaster.SelectedItem.Value, "", 0, "", "", "ViewDesignation");
+                    ddlmaster.Enabled = true;
+                }
+                else
+                {
+                    DtGrid = Lo.RetriveMasterData(0, Session["CompanyRefNo"].ToString(), "", 0, "", "", "ViewDesignation");
+                    ddlmaster.Enabled = false;
+                }
+                if (DtGrid.Rows.Count > 0)
+                {
+                    gvViewDesignation.DataSource = DtGrid;
+                    gvViewDesignation.DataBind();
+                    gvViewDesignation.Visible = true;
+                }
+                else
+                {
+                    gvViewDesignation.Visible = false;
+                }
             }
-            else
-            {
-                DtGrid = Lo.RetriveMasterData(0, Session["CompanyRefNo"].ToString(), "", 0, "", "", "ViewDesignation");
-                ddlmaster.Enabled = false;
-            }
-            if (DtGrid.Rows.Count > 0)
-            {
-                gvViewDesignation.DataSource = DtGrid;
-                gvViewDesignation.DataBind();
-                gvViewDesignation.Visible = true;
-            }
-            else
-            {
-                gvViewDesignation.Visible = false;
-                //ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not found !')", true);
-            }
+        }
+        catch (Exception ex)
+        {
+            string error = ex.ToString();
+            string Page = Request.Url.AbsolutePath.ToString();
+            Response.Redirect("Error?techerror=" + HttpUtility.UrlEncode(Enc.EncryptData(error)) + "&page=" + HttpUtility.UrlEncode(Enc.EncryptData(Page)));
         }
     }
     protected void BindMasterCompany()
@@ -151,7 +166,6 @@ public partial class Admin_AddDesignation : System.Web.UI.Page
                 GridViewBindSelectedIndexchange();
             }
         }
-
     }
     protected void btncancel_Click(object sender, EventArgs e)
     {
@@ -159,48 +173,51 @@ public partial class Admin_AddDesignation : System.Web.UI.Page
     }
     protected void SaveComp()
     {
-        string StrSaveComp = "";
-        if (hdid.Value != null && hdid.Value != "")
+        try
         {
-            HySave["DesignationId"] = Convert.ToInt16(hdid.Value);
-
-        }
-        else
-        {
-            HySave["DesignationId"] = 0;
-        }
-        HySave["CompanyRefNo"] = ddlmaster.SelectedItem.Value;
-        HySave["DesignationRefNo"] = "";
-        HySave["Designation"] = Co.RSQandSQLInjection(txtDesignation.Text.Trim(), "soft");
-        HySave["CreatedBy"] = Enc.DecryptData(ViewState["UserLoginEmail"].ToString());
-        StrSaveComp = Lo.SaveCompDesignation(HySave, out _sysMsg, out _msg);
-        if (_sysMsg != "")
-        {
-            if (btnsubmit.Text == "Save")
+            string StrSaveComp = "";
+            if (hdid.Value != null && hdid.Value != "")
             {
-                GridViewBindSelectedIndexchange();
-                txtDesignation.Text = "";
-                hdid.Value = "";
-                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Save successfully !')",
-                    true);
+                HySave["DesignationId"] = Convert.ToInt16(hdid.Value);
             }
             else
             {
-                GridViewBindSelectedIndexchange();
-                txtDesignation.Text = "";
-                hdid.Value = "";
-                btnsubmit.Text = "Save";
-                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Designation updated successfully !')",
-                    true);
-
+                HySave["DesignationId"] = 0;
+            }
+            HySave["CompanyRefNo"] = ddlmaster.SelectedItem.Value;
+            HySave["DesignationRefNo"] = "";
+            HySave["Designation"] = Co.RSQandSQLInjection(txtDesignation.Text.Trim(), "soft");
+            HySave["CreatedBy"] = Enc.DecryptData(ViewState["UserLoginEmail"].ToString());
+            StrSaveComp = Lo.SaveCompDesignation(HySave, out _sysMsg, out _msg);
+            if (_sysMsg != "")
+            {
+                if (btnsubmit.Text == "Save")
+                {
+                    GridViewBindSelectedIndexchange();
+                    txtDesignation.Text = "";
+                    hdid.Value = "";
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Save successfully !')",
+                        true);
+                }
+                else
+                {
+                    GridViewBindSelectedIndexchange();
+                    txtDesignation.Text = "";
+                    hdid.Value = "";
+                    btnsubmit.Text = "Save";
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Designation updated successfully !')", true);
+                }
+            }
+            else
+            {
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not saved.')", true);
             }
         }
-        else
+        catch (Exception ex)
         {
-            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not saved.')", true);
-          
-            
-
+            string error = ex.ToString();
+            string Page = Request.Url.AbsolutePath.ToString();
+            Response.Redirect("Error?techerror=" + HttpUtility.UrlEncode(Enc.EncryptData(error)) + "&page=" + HttpUtility.UrlEncode(Enc.EncryptData(Page)));
         }
     }
     protected void btnsubmit_Click(object sender, EventArgs e)
@@ -229,9 +246,7 @@ public partial class Admin_AddDesignation : System.Web.UI.Page
             }
             else
             {
-               
                 ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Select company !')", true);
-                //AlertSuccess.Visible = true;
             }
         }
         else

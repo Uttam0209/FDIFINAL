@@ -1050,7 +1050,9 @@ form label {
 .admin-dashboard .white-box a { display: inline-block; font-size: 21px; margin-top: 10px;}
 .rotate-toggle-btn {transform: rotate(180deg);}
 .admin-dashboard .white-box.total-comp { background: #fff !important; color: #333 !important; box-shadow: 0 0 4px rgba(0,0,0,0.1);}
-.admin-dashboard .white-box a {color: #333; text-decoration: none;}
+.admin-dashboard .white-box a {color: #333; text-decoration: none;
+    height: 16px;
+}
 .parent-nav-child li.active a {background:#5db9f9 !important;}
 
 .sidebar-holder .user-box { float: left; display: flex; font-size: 15px; font-weight: bold;}

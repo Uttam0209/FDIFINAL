@@ -7,6 +7,7 @@ using System.Data;
 using System.Text.RegularExpressions;
 using System.Text;
 using System.IO;
+using System.Web;
 
 public partial class Admin_ViewDesignation : System.Web.UI.Page
 {
@@ -96,7 +97,7 @@ public partial class Admin_ViewDesignation : System.Web.UI.Page
             int rowIndex = gvr.RowIndex;
             string stridNew = Request.QueryString["id"].ToString().Replace(" ", "+");
             string mstrid = objEnc.EncryptData((objEnc.DecryptData(stridNew) + " >> Edit Designation"));
-            Response.Redirect("Add-Designation?mrcreaterole=" + objEnc.EncryptData(e.CommandArgument.ToString()) + "&mcurrentcompRefNo=" + (objEnc.EncryptData(e.CommandArgument.ToString())) + "&id=" + mstrid);
+            Response.Redirect("Add-Designation?mrcreaterole=" + HttpUtility.UrlEncode(objEnc.EncryptData(e.CommandArgument.ToString())) + "&mcurrentcompRefNo=" + HttpUtility.UrlEncode(objEnc.EncryptData(e.CommandArgument.ToString())) + "&id=" + mstrid);
         }
         
         else if (e.CommandName == "DeleteComp")

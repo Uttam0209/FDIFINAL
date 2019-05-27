@@ -2,4 +2,3 @@ D:\Shiv\FDIFINAL\Encryption\bin\Debug\Encryption.dll
 D:\Shiv\FDIFINAL\Encryption\bin\Debug\Encryption.pdb
 D:\Shiv\FDIFINAL\Encryption\obj\Debug\Encryption.dll
 D:\Shiv\FDIFINAL\Encryption\obj\Debug\Encryption.pdb
-D:\Shiv\FDIFINAL\Encryption\obj\Debug\Encryption.csprojResolveAssemblyReference.cache

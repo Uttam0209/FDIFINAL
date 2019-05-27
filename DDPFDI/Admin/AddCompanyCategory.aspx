@@ -63,29 +63,29 @@
                 <div class="row">
                     <asp:UpdatePanel runat="server" ID="up">
                         <ContentTemplate>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Dropdown Label</label>
-                                    <asp:DropDownList runat="server" ID="ddlmastercategory" class="form-control" AutoPostBack="True" OnSelectedIndexChanged="ddlmastercategory_SelectedIndexChanged"></asp:DropDownList>
-
+                            <asp:Panel ID="Panel1" runat="server" DefaultButton="btndemofirst">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Dropdown Label <span class="mandatory">*</span></label>
+                                        <asp:DropDownList runat="server" ID="ddlmastercategory" TabIndex="1" class="form-control" AutoPostBack="True" OnSelectedIndexChanged="ddlmastercategory_SelectedIndexChanged"></asp:DropDownList>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-6" id="level1" runat="server" visible="False">
-                                <div class="form-group">
-                                    <h3 class="secondary-heading">Level 1</h3>
-                                    <asp:CheckBoxList ID="chkSubCategory" runat="server" CssClass="checkbox-inline" RepeatColumns="25" RepeatDirection="Vertical"
-                                        RepeatLayout="Flow">
-                                    </asp:CheckBoxList>
-
+                                <div class="col-md-6" id="level1" runat="server" visible="False">
+                                    <div class="form-group">
+                                        <h3 class="secondary-heading">Level 1 <span class="mandatory">*</span></h3>
+                                        <asp:CheckBoxList ID="chkSubCategory" runat="server" TabIndex="2" CssClass="checkbox-inline" RepeatColumns="25" RepeatDirection="Vertical"
+                                            RepeatLayout="Flow">
+                                        </asp:CheckBoxList>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="clearfix"></div>
-                            <div class="col-sm-12">
-                                <div class="form-group">
-                                    <asp:LinkButton ID="btndemofirst" runat="server" CssClass="btn btn-primary pull-right" Style="margin-left: 10px;" Text="Save"
-                                        OnClick="btndemofirst_Click" OnClientClick="return Validate()" />
+                                <div class="clearfix"></div>
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <asp:LinkButton ID="btndemofirst" runat="server" CssClass="btn btn-primary pull-right" TabIndex="3" Style="margin-left: 10px;" Text="Save"
+                                            OnClick="btndemofirst_Click" OnClientClick="return Validate()" />
+                                    </div>
                                 </div>
-                            </div>
+                            </asp:Panel>
                         </ContentTemplate>
                     </asp:UpdatePanel>
                     <asp:UpdateProgress ID="UpdateProgress1" runat="server" AssociatedUpdatePanelID="up">
