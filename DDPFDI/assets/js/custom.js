@@ -81,16 +81,16 @@
     });
 
 //Alert pop up box
- function ShowMessage(){
+ function SuccessfullPop() {
     console.log('testing');
     $("body").css('overflow','hidden');
-    $('.alert-overlay-success').show();
+    $('.alert-overlay').show();
 }
 
 //Hide Alert Pop up
 $('.close_alert').on('click', function(){
     $("body").css('overflow','visible');
-    $('.alert-overlay-success').hide();
+    $('.alert-overlay-error').hide();
 });
 
 //Show Hide Contact Details

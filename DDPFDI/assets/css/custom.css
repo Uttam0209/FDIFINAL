@@ -31,30 +31,25 @@ ul {
     background: #fff;
 }
 
-    .custom-progress-bar span {
-        display: inline-block;
-        height: 100%;
-        border-radius: 3px;
-        box-shadow: 0 1px 0 rgba(255, 255, 255, .5) inset;
-        transition: width .4s ease-in-out;
-        position: relative;
-        z-index: 9999;
-        top: -7px;
-        animation: animate-stripes 5s linear infinite;
-    }
-/*
-.stripes span { background-size: 30px 30px; background-image: linear-gradient(135deg, rgba(255, 255, 255, .15) 25%, transparent 25%,
-                        transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent);             
-                        animation: animate-stripes 3s linear infinite;             
-}   
-*/
+.custom-progress-bar span {
+    display: inline-block;
+    height: 100%;
+    border-radius: 3px;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, .5) inset;
+    transition: width .4s ease-in-out;
+    position: relative;
+    z-index: 9999;
+    top: -7px;
+    animation: animate-stripes 5s linear infinite;
+}
+
 .blue span {
     background-color: #34c2e3;
     width: 100%;
 }
 
 @keyframes animate-stripes {
-    /* 0% {background-position: 0 0;} 100% {background-position: 60px 0;} */
+    
     0% {
         width: 0;
     }
@@ -82,7 +77,6 @@ ul {
 
 
 /*---Progress Bar Animation ---*/
-
 .btn-primary {
     background: #494ca2 !important;
     color: #fff !important;
@@ -97,7 +91,6 @@ ul {
     border-radius: 4px;
     margin: 0 10px;
 }
-
 
 /*------Custom Checkbox------*/
 input[type=checkbox] + label {
@@ -842,12 +835,16 @@ form .form-group {
     font-size: 26px !important;
 }
 
-#ContentPlaceHolder1_chkintrestedarea label, #ContentPlaceHolder1_chkmastermenuallot label, #ContentPlaceHolder1_chkrole label {
+#ContentPlaceHolder1_chkintrestedarea label, 
+#ContentPlaceHolder1_chkmastermenuallot label, 
+#ContentPlaceHolder1_chkrole label {
     margin: -4px 10px 5px 20px !important;
     white-space: nowrap;
 }
 
-#ContentPlaceHolder1_chkintrestedarea input[type="checkbox"], #ContentPlaceHolder1_chkmastermenuallot input[type="checkbox"], #ContentPlaceHolder1_chkrole input[type="checkbox"] {
+#ContentPlaceHolder1_chkintrestedarea input[type="checkbox"], 
+#ContentPlaceHolder1_chkmastermenuallot input[type="checkbox"], 
+#ContentPlaceHolder1_chkrole input[type="checkbox"] {
     margin: 0 !important;
 }
 
@@ -1128,10 +1125,10 @@ form label { color: #494ca2;}
 .NodalRole h4 { margin-bottom: 6px !important}
 .NodalRole input[type='checkbox'] { margin-top:7px }
 #ContentPlaceHolder1_btnsub { margin-right: 10px !important;}
-.alert-overlay { position: fixed; left: 0; right: 0; top: 0; bottom: 0; z-index: 9999; background: rgba(0,0,0,0.5);}
+.alert-overlay { position: fixed; left: 0; right: 0; top: 0; bottom: 0; z-index: 999999; background: rgba(0,0,0,0.5);}
 .alert-box {  max-width: 400px; width: 100%; position: absolute; left: 0; right: 0;  margin: 0 auto;  top: 20%;}
 .alert-box .box { width: 100%; padding: 5%; background: #fff; border-radius: 10px; text-align: center;}
-.alert-box .box .alert { text-align: center; font-size: 18px; position: relative; margin-bottom: 0;}
+.alert-box .box .alert { text-align: center; font-size: 16px; position: relative; margin-bottom: 0;}
 .overlay-progress { position: fixed; left: 0; right: 0;  bottom: 0; top: 0;  background: rgba(0,0,0,0.5); z-index: 9999;}
 .custom-progress-bar p { text-align: center; color: #fff;  font-size: 16px;}
 .loginBg span.passbox { position: relative; display: block;}
@@ -1281,11 +1278,6 @@ form label { color: #494ca2;}
         text-align: center;
     }
 
-        .alert-box .box .alert {
-            text-align: center;
-            font-size: 18px;
-        }
-
 .overlay-progress {
     position: fixed;
     left: 0;
@@ -1320,3 +1312,14 @@ form label { color: #494ca2;}
 .admin-dashboard .white-box ul li .icon-box i { color: #fff;}
 .admin-dashboard .white-box ul li .compName { margin-left: 13px; margin-top: 10px}
 .admin-dashboard .white-box ul li .Number { font-size: 26px;}
+.fa-exclamation-triangle { color: red; font-size: 46px;}
+.ShowError { display: block !important;}
+.VisibleBody { visibility: visible}
+.VisibleBody .alert-overlay-error { display: none !important}
+.alert-overlay-error .close_alert { border-color: red;}
+.table tr td a { color: #000;}
+form label { font-size: 15px !important; font-family: 'Roboto', sans-serif !important; color: #2b3d51 !important;}
+#ContentPlaceHolder1_gvcompanydetail tr th { white-space: nowrap !important;}
+.comp_fact_unit { display: flex !important;}
+.comp_fact_unit #DivCompanyName > span { display: flex !important}
+.comp_fact_unit #DivCompanyName span {  padding: 0 10px;}

@@ -39,7 +39,7 @@
 
                                                 </ul>
                                                  <div class="file-export">
-                                                    <i class="fa fa-file-export"></i>
+                                                    <i class="fa fa-file-export" data-toggle="tooltip" title="Export to Excel"></i>
                                                 </div>
                                                
                                             </div>
@@ -61,7 +61,7 @@
 
                                                 </ul>
                                          <div class="file-export">
-                                                    <i class="fa fa-file-export"></i>
+                                                    <i class="fa fa-file-export" data-toggle="tooltip" title="Export to Excel"></i>
                                                 </div>
                                             </div>
                                         </div>
@@ -79,7 +79,7 @@
                                                     </li>
                                                 </ul>
                                                 <div class="file-export">
-                                                    <i class="fa fa-file-export"></i>
+                                                    <i class="fa fa-file-export" data-toggle="tooltip" title="Export to Excel"></i>
                                                 </div>
                                             </div>
                                         </div>

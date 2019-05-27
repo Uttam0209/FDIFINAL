@@ -13,6 +13,7 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700" rel="stylesheet">
     <link href="~/assets/css/bootstrap.css" rel="stylesheet">
     <link href="~/assets/css/style.css" rel="stylesheet" type="text/css">
+    <link href="~/assets/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="~/assets/css/custom.css" rel="stylesheet" type="text/css">
     <link href="~/assets/css/responsive.css" rel="stylesheet" type="text/css">
     <link href="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.9.2/themes/blitzer/jquery-ui.css" rel="Stylesheet" type="text/css" />
@@ -34,7 +35,7 @@
                         <li class="nav-toggle"></li>
                     </ul>
                     <ul class="nav navbar-nav user-menu navbar-right ">
-                        <li><a href="javascript:void(0)" class="user dropdown-toggle" data-toggle="dropdown">
+                        <li><a href="javascript:void(0)" class="user dropdown-toggle comp_fact_unit" data-toggle="dropdown">
                             <div id="DivCompanyName" runat="server">
                                 <span style='display: inline-block; margin-right: 30px;'>
                                     <asp:Label ID="lblmastercompany" runat="server"></asp:Label>
@@ -283,17 +284,41 @@
     <div class="alert-overlay alert-overlay-error" style="display: none">
         <div class="alert-box">
             <div class="box">
-                <div class="success-checkmark">
+                <div class="error-checkmark">
                     <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
                 </div>
                
-        <div class="alert">
-            Error message !
+            <div class="alert alertMsg">
+            
+            </div>
+             <button class="btn btn-success close_alert">OK</button>
+             </div>
         </div>
-        <button class="btn btn-success close_alert">OK</button>
-    </div>
     </div>
     <!-----Alert Box ------>
+
+     <!-----Alert Box ------>
+    <div class="alert-overlay alert-overlay-successful" style="display: none">
+        <div class="alert-box">
+            <div class="box">
+                <div class="success-checkmark">
+                    <div class="check-icon">
+                        <span class="icon-line line-tip"></span>
+                        <span class="icon-line line-long"></span>
+                        <div class="icon-circle"></div>
+                        <div class="icon-fix"></div>
+                    </div>
+                </div>
+               
+            <div class="alert alertMsg">
+                Sucessfull Saved !
+            </div>
+             <button class="btn btn-success close_alert">OK</button>
+             </div>
+        </div>
+    </div>
+    <!-----Alert Box ------>
+
 
  
 </body>
