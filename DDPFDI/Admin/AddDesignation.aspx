@@ -10,7 +10,6 @@
         }
     </script>
 </asp:Content>
-
 <asp:Content ID="InnerDesignation" runat="server" ContentPlaceHolderID="ContentPlaceHolder1">
     <div class="content oem-content">
         <asp:ScriptManager ID="sn" runat="server"></asp:ScriptManager>
@@ -27,8 +26,6 @@
                             <div class="section-pannel">
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <%-- <asp:UpdatePanel ID="upfdival" runat="server">
-                                <ContentTemplate>--%>
                                         <div class="form-group" runat="server" id="mastercompany">
                                             <asp:HiddenField ID="hdid" runat="server" />
                                             <asp:Label ID="lblMastcompany" runat="server" Text="" CssClass="form-label"></asp:Label>
@@ -87,15 +84,9 @@
                                     <asp:BoundField DataField="Designation" HeaderText="Designation" NullDisplayText="#" />
                                     <asp:BoundField DataField="DesignationRefNo" HeaderText="Reference No." Visible="False" NullDisplayText="#" />
                                     <asp:BoundField DataField="CreatedBy" HeaderText="Created By" NullDisplayText="#" />
-
-
-
                                 </Columns>
                             </asp:GridView>
                         </div>
-
-                        <%--</ContentTemplate>
-                            </asp:UpdatePanel>--%>
                     </div>
                     <div class="clearfix"></div>
                     <div class="footer"><i class="far fa-copyright"></i>2019 <a href="#">Department of Defence Production</a> </div>
@@ -114,28 +105,5 @@
                 <!---Progress Bar ---->
             </ProgressTemplate>
         </asp:UpdateProgress>
-
-        <%--         <!-----Alert Box ------>
-    <div runat="server" id="AlertSuccess" visible="false" class="alert-overlay alert-overlay-success">
-        <div class="alert-box">
-            <div class="box">
-                <div class="success-checkmark">
-                    <div class="check-icon">
-                        <span class="icon-line line-tip"></span>
-                        <span class="icon-line line-long"></span>
-                        <div class="icon-circle"></div>
-                        <div class="icon-fix"></div>
-                    </div>
-                </div>
-               
-        <div class="alert">
-            Successfully Saved !
-        </div>
-        <button class="btn btn-success close_alert">OK</button>
-    </div>
-    </div>
-   
-</div>
-   <!-----Alert Box ------>--%>
     </div>
 </asp:Content>
