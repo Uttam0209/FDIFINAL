@@ -170,5 +170,7 @@ var count = 0;
         //Tooltip
 
         $('[data-toggle="tooltip"]').tooltip();
+
+        
 });
 

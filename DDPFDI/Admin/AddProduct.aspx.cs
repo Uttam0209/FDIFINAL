@@ -1,8 +1,11 @@
 ﻿using BusinessLayer;
 using Encryption;
 using System;
+using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.Configuration;
 using System.Data;
+using System.Data.SqlClient;
 using System.Text;
 using System.Web;
 using System.Web.UI;
@@ -30,6 +33,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     private string currentPage = "";
     private string mRefNo = "";
     private short Mid = 0;
+    public static Int64 CountryID = 0;
     private DataTable DtCompanyDDL = new DataTable();
     private HybridDictionary HyPanel1 = new HybridDictionary();
     protected void Page_Load(object sender, EventArgs e)
@@ -40,23 +44,23 @@ public partial class Admin_AddProduct : System.Web.UI.Page
             {
                 if (Request.QueryString["id"] != null)
                 {
-                    string strid = Request.QueryString["id"].ToString().Trim();
-                    //  string strPageName = objEnc.DecryptData(strid);
-                    //StringBuilder strheadPage = new StringBuilder();
-                    //strheadPage.Append("<ul class='breadcrumb'>");
-                    //string[] MCateg = strPageName.Split(new string[] { ">>" }, StringSplitOptions.RemoveEmptyEntries);
-                    //string MmCval = "";
-                    //for (int x = 0; x < MCateg.Length; x++)
-                    //{
-                    //    MmCval = MCateg[x];
-                    //    if (MmCval == " View ")
-                    //    {
-                    //        MmCval = "Add";
-                    //    }
-                    //    strheadPage.Append("<li class=''><span>" + MmCval + "</span></li>");
-                    //}
-                    //divHeadPage.InnerHtml = strheadPage.ToString().Trim();
-                    //strheadPage.Append("</ul");
+                    string strid = Request.QueryString["id"].ToString().Replace(" ", "+");
+                    string strPageName = objEnc.DecryptData(strid);
+                    StringBuilder strheadPage = new StringBuilder();
+                    strheadPage.Append("<ul class='breadcrumb'>");
+                    string[] MCateg = strPageName.Split(new string[] { ">>" }, StringSplitOptions.RemoveEmptyEntries);
+                    string MmCval = "";
+                    for (int x = 0; x < MCateg.Length; x++)
+                    {
+                        MmCval = MCateg[x];
+                        if (MmCval == " View ")
+                        {
+                            MmCval = "Add";
+                        }
+                        strheadPage.Append("<li class=''><span>" + MmCval + "</span></li>");
+                    }
+                    divHeadPage.InnerHtml = strheadPage.ToString().Trim();
+                    strheadPage.Append("</ul");
                     hidType.Value = objEnc.DecryptData(Session["Type"].ToString().Trim());
                     mRefNo = Session["CompanyRefNo"].ToString().Trim();
                     ViewState["UserLoginEmail"] = objEnc.DecryptData(Session["User"].ToString()).Trim();
@@ -64,25 +68,38 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                     if (hidType.Value.ToString() != "SuperAdmin" || hidType.Value.ToString() != "Admin")
                     {
                         BindCompany();
+                        BindFinancialYear();
+                      //  BindMasterCountry();
                         tendorstatus();
                         BindServcies();
+                        BindFinancialSupport();
                         BindTesting();
                         BindCertification();
-                        BindMasterCategory();
-                        BindMasterTechnologyCategory();
-                        BindMasterPlatCategory();
-                        BindPurposeProcuremnt();
-                        BindMasterProductReqCategory();
-                        BindMasterProductNoenCletureCategory();
-                        // BindNodelEmail();
-                        BindEndUser();
+                        if (Request.QueryString["mcurrentcompRefNo"] != null)
+                        {
+                        }
+                        else
+                        {
+                            BindMasterCategory();
+                            BindMasterTechnologyCategory();
+                            BindMasterPlatCategory();
+                            BindPurposeProcuremnt();
+                            BindMasterProductReqCategory();
+                            BindMasterProductNoenCletureCategory();
+                            // BindNodelEmail();
+                            BindEndUser();
+                        }
+
 
                     }
                     else
                     {
                         BindCompany();
+                        BindFinancialYear();
+                       // BindMasterCountry();
                         tendorstatus();
                         BindServcies();
+                        BindFinancialSupport();
                         BindTesting();
                         BindCertification();
                     }
@@ -91,13 +108,15 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                 {
                     ddlcompany.Visible = true;
                     divlblselectdivison.Visible = false;
-                    divlblselectunit.Visible = false; EditCode();
+                    divlblselectunit.Visible = false;
+                    EditCode();
                 }
                 else if (hidType.Value == "Division" || hidType.Value == "Factory")
                 {
                     ddlcompany.Visible = true;
                     divlblselectdivison.Visible = true;
-                    divlblselectunit.Visible = false; EditCode();
+                    divlblselectunit.Visible = false;
+                    EditCode();
                 }
                 else if (hidType.Value == "Unit")
                 {
@@ -107,7 +126,9 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                     EditCode();
                 }
                 else if (hidType.Value == "Admin" || hidType.Value == "SuperAdmin")
-                { EditCode(); }
+                {
+                    EditCode();
+                }
             }
             catch (Exception ex)
             {
@@ -128,7 +149,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                 if (objEnc.DecryptData(Request.QueryString["mrcreaterole"].ToString()) == "Company")
                 {
                     DtCompanyDDL = Lo.RetriveMasterData(0, objEnc.DecryptData(Request.QueryString["mcurrentcompRefNo"].ToString()), "Company", 0, "", "", "CompanyName");
-                   // DtCompanyDDL = Lo.RetriveMasterData(0, objEnc.DecryptData(Request.QueryString["mcurrentcompRefNo"].ToString()), "Company", 0, "", "", "CompanyName");
+                    // DtCompanyDDL = Lo.RetriveMasterData(0, objEnc.DecryptData(Request.QueryString["mcurrentcompRefNo"].ToString()), "Company", 0, "", "", "CompanyName");
                     ddlcompany.Enabled = false;
                     if (DtCompanyDDL.Rows.Count > 0)
                     {
@@ -560,11 +581,11 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     {
         if (rbisindinised.SelectedItem.Value == "Y")
         {
-            txtmanufacturename.Visible = true;
+            divisIndigenized.Visible = true;
         }
         else if (rbisindinised.SelectedItem.Value == "N")
         {
-            txtmanufacturename.Visible = false;
+            divisIndigenized.Visible = false;
         }
     }
     protected void rbtendordateyesno_CheckedChanged(object sender, EventArgs e)
@@ -604,6 +625,15 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         {
             gvservices.DataSource = Dtservices;
             gvservices.DataBind();
+        }
+    }
+    protected void BindFinancialSupport()
+    {
+        DataTable DtFinanicialSupp = Lo.RetriveMasterSubCategoryDate(0, "Financial Support", "", "SelectInnerMaster1", hfcomprefno.Value, "");
+        if (DtFinanicialSupp.Rows.Count > 0)
+        {
+            gvfinancialsupp.DataSource = DtFinanicialSupp;
+            gvfinancialsupp.DataBind();
         }
     }
     protected void BindTesting()
@@ -820,11 +850,11 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         DataTable DtMasterCategroy = new DataTable();
         if (ddlcompany.SelectedItem.Text != "Select")
         {
-            DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, lblNomenclature.Text, "", "SelectInnerMaster1", ddlcompany.SelectedItem.Value, "");
+            DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, "Nomenclature of main system", "", "SelectInnerMaster1", ddlcompany.SelectedItem.Value, "");
         }
         else
         {
-            DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, lblNomenclature.Text, "", "SelectInnerMaster1", "", "");
+            DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, "Nomenclature of main system", "", "SelectInnerMaster1", "", "");
         }
         if (DtMasterCategroy.Rows.Count > 0)
         {
@@ -833,7 +863,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         }
         else
         {
-            DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, lblNomenclature.Text, "", "SelectInnerMaster1", "", "");
+            DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, "Nomenclature of main system", "", "SelectInnerMaster1", "", "");
             Co.FillDropdownlist(ddlnomnclature, DtMasterCategroy, "SCategoryName", "SCategoryID");
             ddlnomnclature.Items.Insert(0, "Select");
         }
@@ -861,6 +891,17 @@ public partial class Admin_AddProduct : System.Web.UI.Page
             DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, lblenduser.Text, "", "SelectInnerMaster1", "", "");
             Co.FillDropdownlist(ddlenduser, DtMasterCategroy, "SCategoryName", "SCategoryID");
             ddlenduser.Items.Insert(0, "Select");
+        }
+    }
+    #endregion
+    #region For FinancialYear
+    protected void BindFinancialYear()
+    {
+        DataTable MasterFinancialYear = Lo.RetriveMasterSubCategoryDate(0, "", "", "AllFinancialYear", "", "");
+        if (MasterFinancialYear.Rows.Count > 0)
+        {
+            Co.FillDropdownlist(ddlyearofindiginization, MasterFinancialYear, "FYID", "FY");
+            ddlyearofindiginization.Items.Insert(0, "Select");
         }
     }
     #endregion
@@ -1318,21 +1359,21 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                 txterprefno.Text = DtView.Rows[0]["ERPRefNo"].ToString();
                 ddlnomnclature.SelectedValue = DtView.Rows[0]["NomenclatureOfMainSystem"].ToString();
                 ddlmastercategory.SelectedValue = DtView.Rows[0]["ProductLevel1"].ToString();
-                BindMasterSubCategory();
+                //BindMasterSubCategory();
                 ddlsubcategory.SelectedValue = DtView.Rows[0]["ProductLevel2"].ToString();
-                BindMaster3levelSubCategory();
+                //BindMaster3levelSubCategory();
                 if (ddllevel3product.SelectedValue != "Select")
                 {
-                    ddllevel3product.SelectedValue = DtView.Rows[0]["ProductLevel3"].ToString();
+                    // ddllevel3product.SelectedValue = DtView.Rows[0]["ProductLevel3"].ToString();
                 }
                 txtproductdescription.Text = DtView.Rows[0]["ProductDescription"].ToString();
                 ddltechnologycat.SelectedValue = DtView.Rows[0]["TechnologyLevel1"].ToString();
-                BindMasterSubCategoryTech();
+                //BindMasterSubCategoryTech();
                 ddlsubtech.SelectedValue = DtView.Rows[0]["TechnologyLevel2"].ToString();
-                BindMasterSubCategoryTechLevel3();
+                //BindMasterSubCategoryTechLevel3();
                 if (ddltechlevel3.SelectedValue != "Select")
                 {
-                    ddltechlevel3.SelectedValue = DtView.Rows[0]["TechnologyLevel3"].ToString();
+                    //ddltechlevel3.SelectedValue = DtView.Rows[0]["TechnologyLevel3"].ToString();
                 }
                 ddlenduser.SelectedValue = DtView.Rows[0]["EndUser"].ToString();
                 ddlplatform.SelectedValue = DtView.Rows[0]["Platform"].ToString();
@@ -1391,7 +1432,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                 {
                     divtdate.Visible = false;
                 }
-                BindNodelEmail();
+                //BindNodelEmail();
                 DataTable dtNodal = Lo.RetriveProductCode("", hfprodrefno.Value, "ProductNodal", hidType.Value);
                 if (dtNodal.Rows.Count > 0)
                 {
@@ -1475,6 +1516,70 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                 ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not deleted.')", true);
             }
         }
+    }
+    #endregion
+    #region AutoComplete OEM Name
+    [System.Web.Services.WebMethod]
+    [System.Web.Script.Services.ScriptMethod()]
+    public static string[] GetOEMName(string prefix)
+    {
+        Cryptography objCrypto1 = new Cryptography();
+        List<string> customers = new List<string>();
+       // Int64 FinalNicCode = 0;
+        using (SqlConnection conn = new SqlConnection())
+        {
+            conn.ConnectionString = objCrypto1.DecryptData(ConfigurationManager.ConnectionStrings["connectiondb"].ConnectionString);
+            using (SqlCommand cmd = new SqlCommand())
+            {
+                cmd.CommandText = "select OEMName,ProductID from tbl_mst_MainProduct where OEMName like @SearchText + '%' and IsActive='Y'";
+                cmd.Parameters.AddWithValue("@SearchText", prefix);
+                cmd.Connection = conn;
+                conn.Open();
+                using (SqlDataReader sdr = cmd.ExecuteReader())
+                {
+                    while (sdr.Read())
+                    {
+                        customers.Add(string.Format("{0}-{1}", sdr["OEMName"], sdr["ProductID"]));
+                       // FinalNicCode = Convert.ToInt64(sdr["ProductID"].ToString());
+                    }
+                }
+                conn.Close();
+            }
+        }
+       // NicCode = FinalNicCode;
+        return customers.ToArray();
+    }
+    #endregion
+    #region AutoComplete Country
+    [System.Web.Services.WebMethod]
+    [System.Web.Script.Services.ScriptMethod()]
+    public static string[] GetCountry(string prefix)
+    {
+        Cryptography objCrypto2 = new Cryptography();
+        List<string> Country = new List<string>();
+        Int64 FCountry = 0;
+        using (SqlConnection conn = new SqlConnection())
+        {
+            conn.ConnectionString = objCrypto2.DecryptData(ConfigurationManager.ConnectionStrings["connectiondb"].ConnectionString);
+            using (SqlCommand cmd = new SqlCommand())
+            {
+                cmd.CommandText = "select CountryName, CountryID from tbl_mst_Country where CountryName like @SearchText + '%' and IsActive='Y'";
+                cmd.Parameters.AddWithValue("@SearchText", prefix);
+                cmd.Connection = conn;
+                conn.Open();
+                using (SqlDataReader sdr = cmd.ExecuteReader())
+                {
+                    while (sdr.Read())
+                    {
+                        Country.Add(string.Format("{0}-{1}", sdr["CountryName"], sdr["CountryID"]));
+                        FCountry = Convert.ToInt64(sdr["CountryID"]);
+                    }
+                }
+                conn.Close();
+            }
+        }
+        CountryID = FCountry;
+        return Country.ToArray();
     }
     #endregion
 }

@@ -94,7 +94,7 @@
                                 </div>
                                 <div class="table-wraper" runat="server" id="divmastercategory">
                                     <asp:GridView ID="gvCategory" runat="server" Width="100%" Class="commonAjaxTbl master-company-table table display responsive no-wrap table-hover manage-user Grid" AutoGenerateColumns="false" AllowPaging="true"
-                                        PageSize="25" AllowSorting="true">
+                                        PageSize="25" AllowSorting="true" OnRowDataBound="gvCategory_RowDataBound">
                                         <PagerStyle HorizontalAlign="Center" CssClass="GridPager" />
                                         <Columns>
                                             <asp:TemplateField HeaderText="S.No">
@@ -105,12 +105,12 @@
                                             <asp:BoundField ItemStyle-Width="150px" DataField="MCategoryName" HeaderText="Dropdown Label" />
                                             <asp:TemplateField HeaderText="Hierarchy">
                                                 <ItemTemplate>
-                                                    <asp:Label ID="Label1" runat="server" Text='<%#Eval("Flag") %>' NullDisplayText="#"></asp:Label>
+                                                    <asp:Label ID="lblhiraricy" runat="server" Text='<%#Eval("Flag") %>' NullDisplayText="#"></asp:Label>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="Status">
                                                 <ItemTemplate>
-                                                    <asp:Label ID="Label1" runat="server" Text='<%#Eval("IsActive") %>' NullDisplayText="#"></asp:Label>
+                                                    <asp:Label ID="lblstatus" runat="server" Text='<%#Eval("IsActive") %>' NullDisplayText="#"></asp:Label>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                             <asp:BoundField ItemStyle-Width="150px" DataField="CreatedBy" HeaderText="Create By" NullDisplayText="#" />
