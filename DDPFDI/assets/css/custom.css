@@ -691,7 +691,7 @@ form .form-group {
             }
 
         .sideBg .table tr td {
-            white-space: nowrap;
+            /*white-space: nowrap;*/
             border: 0 !important;
         }
 
