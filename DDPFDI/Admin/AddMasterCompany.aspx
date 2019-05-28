@@ -4,6 +4,15 @@
 <asp:Content ID="head123" runat="server" ContentPlaceHolderID="head">
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
     <script type="text/javascript">
+     
+        //Alert pop up box
+        function ShowMessage() {
+            $("body").css('overflow', 'hidden');
+            $('.alert-overlay-error').show();
+            
+            $('.alertMsg').text("Please select atleast " + atLeast + " intrested in item(s)");
+        }
+
         function radioMe(e) {
             if (!e) e = window.event;
             var sender = e.target || e.srcElement;
@@ -33,7 +42,8 @@
                 }
             }
             if (atLeast > counter) {
-                alert("Please select atleast " + atLeast + " intrested in item(s)");
+                ShowMessage();
+                //alert("Please select atleast " + atLeast + " intrested in item(s)");
                 return false;
             }
             var checkbox1 = CHK1.getElementsByTagName("input");
@@ -44,7 +54,8 @@
                 }
             }
             if (atLeast > counter) {
-                alert("Please select atleast " + atLeast + " menu alloted item(s)");
+                ShowMessage();
+                //alert("Please select atleast " + atLeast + " menu alloted item(s)");
                 return false;
             }
             var checkbox2 = CHK2.getElementsByTagName("input");

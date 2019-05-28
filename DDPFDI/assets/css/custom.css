@@ -33,30 +33,25 @@ ul {
     background: #fff;
 }
 
-    .custom-progress-bar span {
-        display: inline-block;
-        height: 100%;
-        border-radius: 3px;
-        box-shadow: 0 1px 0 rgba(255, 255, 255, .5) inset;
-        transition: width .4s ease-in-out;
-        position: relative;
-        z-index: 9999;
-        top: -7px;
-        animation: animate-stripes 5s linear infinite;
-    }
-/*
-.stripes span { background-size: 30px 30px; background-image: linear-gradient(135deg, rgba(255, 255, 255, .15) 25%, transparent 25%,
-                        transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent);             
-                        animation: animate-stripes 3s linear infinite;             
-}   
-*/
+.custom-progress-bar span {
+    display: inline-block;
+    height: 100%;
+    border-radius: 3px;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, .5) inset;
+    transition: width .4s ease-in-out;
+    position: relative;
+    z-index: 9999;
+    top: -7px;
+    animation: animate-stripes 5s linear infinite;
+}
+
 .blue span {
     background-color: #34c2e3;
     width: 100%;
 }
 
 @keyframes animate-stripes {
-    /* 0% {background-position: 0 0;} 100% {background-position: 60px 0;} */
+    
     0% {
         width: 0;
     }
@@ -84,7 +79,6 @@ ul {
 
 
 /*---Progress Bar Animation ---*/
-
 .btn-primary {
     background: #494ca2 !important;
     color: #fff !important;
@@ -99,7 +93,6 @@ ul {
     border-radius: 4px;
     margin: 0 10px;
 }
-
 
 /*------Custom Checkbox------*/
 input[type=checkbox] + label {
@@ -854,12 +847,16 @@ form .form-group {
     font-size: 26px !important;
 }
 
-#ContentPlaceHolder1_chkintrestedarea label, #ContentPlaceHolder1_chkmastermenuallot label, #ContentPlaceHolder1_chkrole label {
+#ContentPlaceHolder1_chkintrestedarea label, 
+#ContentPlaceHolder1_chkmastermenuallot label, 
+#ContentPlaceHolder1_chkrole label {
     margin: -4px 10px 5px 20px !important;
     white-space: nowrap;
 }
 
-#ContentPlaceHolder1_chkintrestedarea input[type="checkbox"], #ContentPlaceHolder1_chkmastermenuallot input[type="checkbox"], #ContentPlaceHolder1_chkrole input[type="checkbox"] {
+#ContentPlaceHolder1_chkintrestedarea input[type="checkbox"], 
+#ContentPlaceHolder1_chkmastermenuallot input[type="checkbox"], 
+#ContentPlaceHolder1_chkrole input[type="checkbox"] {
     margin: 0 !important;
 }
 
@@ -1043,9 +1040,122 @@ form label {
 }
 
 /*---Admin Dashboard----*/
-.admin-dashboard .white-box {
-    padding: 4%;
-    box-shadow: 0 0 6px rgba(0,0,0,.1);
+.admin-dashboard .white-box { padding: 4%; box-shadow: 0 0 6px rgba(0,0,0,.1); border-radius: 4px;}
+.admin-dashboard .white-box h3 { margin: 0 0 10px 0; font-size: 16px; text-transform: uppercase;}
+.admin-dashboard .white-box ul li { width: 100%;}
+.admin-dashboard .white-box ul li .counter { font-size: 18px;}
+.admin-dashboard .white-box .fa-file-export { position: absolute; right: 25px; bottom: 10px; font-size: 18px; cursor: pointer; color: #d95459 }
+
+.btn-nav-toggle-responsive { display: none; }
+.table-wraper { overflow-x: auto;}
+.sidebar-holder .nav li a i.fa-angle-down { position: absolute; right: 10px; transform: rotate(-90deg);}
+.sidebar-holder .nav li a .rotate-icon { transform:rotate(360deg) !important;}
+.sidebar-holder .nav > li > a:focus { background:#5db9f9 !important;}
+.sidebar-holder .nav .parent-nav > a { position: relative;}
+.parent-nav-child li a { padding-left: 30px !important;}
+.sidebar-holder .nav > li > a:hover, .sidebar-holder .nav > li > a:focus { background: #fff !important; }
+.parent-nav-child .parent-nav li a { padding-left: 57px !important;  position:relative;}
+.sidebar-holder .nav > li ul > li > a {padding: 15px 5px;}
+.sidebar-holder .nav li a { padding-top: 15px; padding-bottom: 15px;}
+
+.admin-dashboard .white-box { float: left; width:100% }
+.admin-dashboard .white-box a { display: inline-block; font-size: 21px; margin-top: 10px;}
+.rotate-toggle-btn {transform: rotate(180deg);}
+.admin-dashboard .white-box.total-comp { background: #fff !important; color: #333 !important; box-shadow: 0 0 4px rgba(0,0,0,0.1);}
+.admin-dashboard .white-box a {color: #333; text-decoration: none;
+    height: 16px;
+}
+.parent-nav-child li.active a {background:#5db9f9 !important;}
+
+.sidebar-holder .user-box { float: left; display: flex; font-size: 15px; font-weight: bold;}
+.sidebar-holder .user-box i { margin-right: 10px; color: #fff !important;  font-size: 30px !important}
+.sidebar-holder .user-box #lbltypelogin { font-size: 18px;}
+.sidebar-holder .btn-nav-toggle .fa-angle-double-left{ font-size: 26px !important;}
+#ContentPlaceHolder1_chkintrestedarea label,#ContentPlaceHolder1_chkmastermenuallot label, #ContentPlaceHolder1_chkrole label {    margin: -4px 10px 5px 20px !important;     white-space: nowrap;}
+#ContentPlaceHolder1_chkintrestedarea input[type="checkbox"],#ContentPlaceHolder1_chkmastermenuallot input[type="checkbox"], #ContentPlaceHolder1_chkrole input[type="checkbox"] {margin: 0 !important;}
+.secondary-heading { font-size: 16px; color: #494ca2; text-transform: uppercase; margin: 0 0 10px 0;}
+.createLoginPass {margin-top: 10px;}
+form .form-group input[type="submit"] { margin-right: 10px;}
+form label { color: #494ca2;}
+.fa-minus:before {content: "\f068" !important;}
+.toggle-table-plus,.toggle-table-minus { cursor: pointer}
+.sidebar-holder .nav .parent-nav-child .parent-nav a + i { display: none}
+.sidebar-holder .nav .parent-nav a.active { color: #494ca2 !important; background: #ddd;}
+.master-company-table tr th { white-space: normal !important;}
+.master-company-table tr th:first-child { width: 30px;}
+.master-company-table tr th:nth-child(2) { width: 60px;}
+.master-company-table tr th:nth-child(3){ width: 150px;}
+.master-company-table tr th:nth-child(4) { width: 240px;}
+.master-company-table tr th:nth-child(5) { width: 110px;}
+.master-company-table tr th:nth-child(6) { width: 298px;}
+.sideBg .table tr td th,.sideBg .table tr td td { background: #cce5ff !important; color: #004085 !important}
+.sideBg .table tr td td th,.sideBg .table tr td td td {background: #d4edda  !important; color: #155724 !important}
+.sideBg .table tr td td i.fa-plus,.sideBg .table tr td td i.fa-minus { color:#de2f13}
+.checkbox-inline { padding-left: 0;}
+.sidebar-holder .nav li a {box-shadow: 0 0 4px rgba(0,0,0,0.06); border: 0;  font-weight: 600 !important; font-size: 14px;}
+.sidebar-holder .nav li a i { color: #2b3d51 !important }
+.sidebar-holder .nav li a:hover { background: none;}
+.navbar .user-menu > li ul.dropdown-menu > li > a { color: #2b3d51; font-family: 'Roboto', sans-serif;}
+.content .page-header { font-weight: 600; text-transform: uppercase; color: #2b3d51; font-family: 'Roboto', sans-serif; padding-left: 0;}
+.tabing-section .nav { margin-bottom: 30px;}
+.content .page-header i { display: none}
+.tabing-section .nav-tabs > li > a { background: #ddd; color: #2b3d51;}
+.tabing-section .nav-tabs > li.active > a { background: #2b3d51 !important; color: #fff !important}
+.sidebar-collapse #lbltypelogin { display: none}
+.section-pannel { background:#eee; padding: 10px; border-radius: 4px; margin-bottom: 10px; }
+.page-header.secondary { margin-bottom: 10px; font-size: 15px;}
+.sidebar-holder .btn-nav-toggle {padding: 17px 10px;  background: #d95459 !important; color: #fff !important;}
+
+.sidebar-holder .nav li a:before { content: ""; border-bottom: 2px solid #d95459 ; height: 2px;  position: absolute;
+    left: 0; bottom: 0; width:0%; transition: all  ease-in-out 1s}
+.sidebar-holder .nav li a:hover::before,.sidebar-holder .nav li a.active::before { width: 100% !important;}
+.sidebar-collapse .menuNo,.sidebar-collapse .fa-angle-down { display: none;}
+.sidebar-collapse .parent-nav-child li a { padding-left: 0 !important; text-align: center;}
+.sidebar-collapse .sidebar-holder .user-box i { margin-right: 2px; font-size: 24px !important;}
+.sideBg { padding-top: 0;}
+#ContentPlaceHolder1_Intrested,#ContentPlaceHolder1_MenuAlot,#ContentPlaceHolder1_divRole { padding: 10px; box-shadow: 0 0 4px rgba(0,0,0,0.2); margin-right: 8px; border-radius: 4px;}
+.form-label { margin-bottom: 4px; display: inline-block;}
+.company-flex-row .form-group { margin-right: 30px;}
+.company-flex-row .form-group:last-child { margin-right: 0 !important;}
+#Location { margin-bottom: 20px;}
+.showMore { text-align: right;}
+.showMore i { cursor: pointer; width: 30px; height: 20px;}
+.form-group label input[type='checkbox'],.form-group label input[type='radio'] { margin-right: 5px;}
+.showMore a { text-decoration: underline !important;}
+#ContentPlaceHolder1_divflag span label,#ContentPlaceHolder1_divActive span label { margin-right: 10px;}
+#ContentPlaceHolder1_divflag span input[type='radio'],#ContentPlaceHolder1_divActive span input[type="radio"] { margin-right: 5px; margin-top:0;}
+.viewCatDropDown tr th:last-child { width: 109px !important;}
+.viewCatDropDown tr td:first-child,.viewCatDropDown tr th:first-child { width: 80px;}
+.viewCatDropDown tr th:nth-child(3) { width: auto !important}
+.contactFormRow .form-group input[readonly="readonly"] { background: #fff !important;}
+.productalreadylabel{ margin-bottom: -4px; }
+.productalreadylabel .yes { margin-left: 10px !important;}
+.ViewProductTable tr th,.ViewProductTable tr td { width: auto !important; white-space: nowrap !important}
+#Div3 input {margin-right: 10px;}
+.comDivUnitBox { display: flex}
+.comDivUnitBox .form-group { margin-right: 30px;}
+.comDivUnitBox .form-group:last-child { margin-right: 0 !important}
+.NodalRole { margin-top: 24px !important}
+.NodalRole h4 { margin-bottom: 6px !important}
+.NodalRole input[type='checkbox'] { margin-top:7px }
+#ContentPlaceHolder1_btnsub { margin-right: 10px !important;}
+.alert-overlay { position: fixed; left: 0; right: 0; top: 0; bottom: 0; z-index: 999999; background: rgba(0,0,0,0.5);}
+.alert-box {  max-width: 400px; width: 100%; position: absolute; left: 0; right: 0;  margin: 0 auto;  top: 20%;}
+.alert-box .box { width: 100%; padding: 5%; background: #fff; border-radius: 10px; text-align: center;}
+.alert-box .box .alert { text-align: center; font-size: 16px; position: relative; margin-bottom: 0;}
+.overlay-progress { position: fixed; left: 0; right: 0;  bottom: 0; top: 0;  background: rgba(0,0,0,0.5); z-index: 9999;}
+.custom-progress-bar p { text-align: center; color: #fff;  font-size: 16px;}
+.loginBg span.passbox { position: relative; display: block;}
+.loginBg span.toggle-password { color: #000; position: absolute; right: 10px; top:10px; cursor: pointer;}
+.multiinput { display: flex}
+.sideBg {
+    padding-top: 0;
+}
+
+#ContentPlaceHolder1_Intrested, #ContentPlaceHolder1_MenuAlot, #ContentPlaceHolder1_divRole {
+    padding: 10px;
+    box-shadow: 0 0 4px rgba(0,0,0,0.2);
+    margin-right: 8px;
     border-radius: 4px;
 }
 
@@ -1714,6 +1824,34 @@ form label {
     color: white;
 }
 
+.tooltip-inner {border: 1px solid #F2AF1D; background: #FDF1D5; color: #000}
+.tooltip.top .tooltip-arrow { border-top-color: #F2AF1D}
+.fa-question { margin-left: 10px; font-size: 10px; width: 15px; height: 15px; line-height: 15px; text-align: center; background: #F2AF1D; border-radius: 100%; color:#333;}
+.parentRow { background: #3bafda; padding: 10px; color: #fff; font-size: 16px; font-weight: bold;}
+.forgot-pass-btn {margin: 20px 0 0 0 !important;}
+.selectedInterest .box { width: 50%; padding: 2%; box-shadow: 0 0 4px rgba(0,0,0,0.2); margin: 10px;}
+.clone-row .table tr td:last-child { width: 111px !important}
+#Div3 input { border-radius: 4px;}
+.admin-dashboard .white-box ul li { display: flex}
+.admin-dashboard .white-box ul li .icon-box { width: 50px; height: 50px; background: #3276b1; text-align: center; line-height: 50px; border-radius: 100%;}
+.admin-dashboard .white-box ul li .icon-box i { color: #fff;}
+.admin-dashboard .white-box ul li .compName { margin-left: 13px; margin-top: 10px}
+.admin-dashboard .white-box ul li .Number { font-size: 26px;}
+.fa-exclamation-triangle { color: red; font-size: 46px;}
+.ShowError { display: block !important;}
+.VisibleBody { visibility: visible}
+.VisibleBody .alert-overlay-error { display: none !important}
+.alert-overlay-error .close_alert { border-color: red;}
+.table tr td a { color: #000;}
+form label { font-size: 15px !important; font-family: 'Roboto', sans-serif !important; color: #2b3d51 !important;}
+#ContentPlaceHolder1_gvcompanydetail tr th { white-space: nowrap !important;}
+.comp_fact_unit { display: flex !important;}
+.comp_fact_unit #DivCompanyName > span { display: flex !important}
+.comp_fact_unit #DivCompanyName span {  padding: 0 10px;}
+.faq-secion .accordion .card-header h2 { background: #e2e3e5; border: 1px solid  #d6d8db; font-size: 20px; padding: 10px;  cursor: pointer; margin: 0;}
+.faq-secion .accordion .card-body { padding: 10px; background: #cce5ff; color: #004085; font-size: 16px; line-height: 21px;}
+.faq-secion .accordion .card-body p {font-size: 16px; line-height: 21px; }
+.faq-secion .accordion .card-body ul li { font-size: 15px; line-height: 19px;}
 .tooltip-inner {
     border: 1px solid #F2AF1D;
     background: #FDF1D5;
@@ -1798,3 +1936,4 @@ form label {
     background-color: #3276b1 !important;
     color:white !important;
 }
+
