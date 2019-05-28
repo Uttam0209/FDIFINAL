@@ -27,6 +27,17 @@ namespace BusinessLayer
             return SqlHelper.Instance.VerifyEmailandCompany(strEmail, strCompany, out _msg);
         }
         #endregion
+
+        public DataTable CreateExcelConnection(string FilePath, string SheetName, out string text)
+        {
+            DataTable dt = SqlHelper.Instance.CreateExcelConnection(FilePath, SheetName, out text);
+            return dt;
+        }
+        public string SaveUploadExcelCompany(DataTable DtExcel)
+        {
+            return SqlHelper.Instance.SaveUploadExcelCompany(DtExcel);
+        }
+
         #region SaveCode
         public string SaveFDI(HybridDictionary HySave, out string _sysMsg, out string _msg)
         {
