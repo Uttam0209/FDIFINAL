@@ -9,6 +9,7 @@ using System.Text;
 using System.IO;
 using System.Net;
 using System.Web.UI.WebControls;
+using System.Web;
 
 public partial class Admin_ViewCompanyCategory : System.Web.UI.Page
 {
@@ -239,7 +240,7 @@ public partial class Admin_ViewCompanyCategory : System.Web.UI.Page
             GridViewRow gvr = (GridViewRow)((Control)e.CommandSource).NamingContainer;
             int rowIndex = gvr.RowIndex;
             string Role = "ff";
-            Response.Redirect("Master-Category?mrcreaterole=" + objEnc.EncryptData(Role) + "&mcurrentFactroyRefNo=" + (objEnc.EncryptData(e.CommandArgument.ToString())) + "&id=" + Request.QueryString["id"].ToString());
+            Response.Redirect("Master-Category?mrcreaterole=" + HttpUtility.UrlEncode(objEnc.EncryptData(Role)) + "&mcurrentFactroyRefNo=" + HttpUtility.UrlEncode(objEnc.EncryptData(e.CommandArgument.ToString())) + "&id=" + Request.QueryString["id"].ToString());
         }
         else if (e.CommandName == "level2del")
         {
@@ -269,7 +270,7 @@ public partial class Admin_ViewCompanyCategory : System.Web.UI.Page
             GridViewRow gvr = (GridViewRow)((Control)e.CommandSource).NamingContainer;
             int rowIndex = gvr.RowIndex;
             string Role = (gvCategory.Rows[rowIndex].FindControl("lblunitrole") as Label).Text;
-            Response.Redirect("Master-Category?mrcreaterole=" + objEnc.EncryptData(Role) + "&mcurrentUnitRefNo=" + (objEnc.EncryptData(e.CommandArgument.ToString())) + "&id=" + Request.QueryString["id"].ToString());
+            Response.Redirect("Master-Category?mrcreaterole=" + HttpUtility.UrlEncode(objEnc.EncryptData(Role)) + "&mcurrentUnitRefNo=" + HttpUtility.UrlEncode(objEnc.EncryptData(e.CommandArgument.ToString())) + "&id=" + Request.QueryString["id"].ToString());
         }
         else if (e.CommandName == "level2delete")
         {

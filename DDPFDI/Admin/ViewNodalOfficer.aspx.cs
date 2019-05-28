@@ -7,6 +7,7 @@ using System.Data;
 using System.Text.RegularExpressions;
 using System.Text;
 using System.IO;
+using System.Web;
 
 
 
@@ -95,7 +96,7 @@ public partial class Admin_ViewNodalOfficer : System.Web.UI.Page
                 if (objEnc.DecryptData(Request.QueryString["mu"].ToString()) == "View")
                 {
 
-                    GridViewNodalOfficerBind("", "AllNodal");
+                    GridViewNodalOfficerBind("", "AllNodalDashboard");
 
                 }
                 
@@ -225,7 +226,7 @@ public partial class Admin_ViewNodalOfficer : System.Web.UI.Page
             int rowIndex = gvr.RowIndex;
             string stridNew = Request.QueryString["id"].ToString().Replace(" ", "+");
             string mstrid = objEnc.EncryptData((objEnc.DecryptData(stridNew)));
-            string UrlEdit = "Add-Nodal?mrcreaterole=" + objEnc.EncryptData(e.CommandArgument.ToString()) + "&mcurrentcompRefNo=" + (objEnc.EncryptData(e.CommandArgument.ToString())) + "&id=" + mstrid;
+            string UrlEdit = "Add-Nodal?mrcreaterole=" + HttpUtility.UrlEncode(objEnc.EncryptData(e.CommandArgument.ToString())) + "&mcurrentcompRefNo=" + HttpUtility.UrlEncode(objEnc.EncryptData(e.CommandArgument.ToString())) + "&id=" + mstrid;
             Response.Redirect(UrlEdit);
         }
         else if (e.CommandName == "ViewComp")

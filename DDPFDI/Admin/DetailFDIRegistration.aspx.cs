@@ -4,6 +4,7 @@ using System.Web.UI.WebControls;
 using BusinessLayer;
 using Encryption;
 using System.Data;
+using System.Web;
 
 public partial class Admin_DetailFDIRegistration : System.Web.UI.Page
 {
@@ -77,7 +78,7 @@ public partial class Admin_DetailFDIRegistration : System.Web.UI.Page
     {
         if (e.CommandName == "Edit")
         {
-            Response.Redirect("FDIRegistration?mpath" + objEnc.EncryptData("NoOneCanTraceIT") + "&mcurrentID=" + (objEnc.EncryptData(e.CommandArgument.ToString())));
+            Response.Redirect("FDIRegistration?mpath" + HttpUtility.UrlEncode(objEnc.EncryptData("NoOneCanTraceIT")) + "&mcurrentID=" + HttpUtility.UrlEncode(objEnc.EncryptData(e.CommandArgument.ToString())));
         }
         else if (e.CommandName == "View")
         {

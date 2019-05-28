@@ -7,6 +7,7 @@ using System.Data;
 using System.Text.RegularExpressions;
 using System.Text;
 using System.IO;
+using System.Web;
 
 public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
 {
@@ -84,14 +85,14 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
     {
         string stridNew = Request.QueryString["id"].ToString().Replace(" ", "+");
         string mstrid = objEnc.EncryptData((objEnc.DecryptData(stridNew)));
-        Response.Redirect("AddMasterCompany?mu=" + objEnc.EncryptData("Panel") + "&id=" + mstrid);
+        Response.Redirect("AddMasterCompany?mu=" + HttpUtility.UrlEncode(objEnc.EncryptData("Panel")) + "&id=" + mstrid);
 
     }
     protected void btnAddDivision_Click(object sender, EventArgs e)
     {
         string stridNew = Request.QueryString["id"].ToString().Replace(" ", "+");
         string mstrid = objEnc.EncryptData((objEnc.DecryptData(stridNew)));
-        Response.Redirect("AddMasterCompany?mu=" + objEnc.EncryptData("Panel2") + "&id=" + mstrid);
+        Response.Redirect("AddMasterCompany?mu=" + HttpUtility.UrlEncode(objEnc.EncryptData("Panel2")) + "&id=" + mstrid);
 
     }
     protected void btnAddUnit_Click(object sender, EventArgs e)
@@ -99,7 +100,7 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
 
         string stridNew = Request.QueryString["id"].ToString().Replace(" ", "+");
         string mstrid = objEnc.EncryptData((objEnc.DecryptData(stridNew)));
-        Response.Redirect("AddMasterCompany?mu=" + objEnc.EncryptData("Panel3") + "&id=" + mstrid);
+        Response.Redirect("AddMasterCompany?mu=" + HttpUtility.UrlEncode(objEnc.EncryptData("Panel3")) + "&id=" + mstrid);
 
     }
 
@@ -399,7 +400,7 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
             string Role = (gvcompanydetail.Rows[rowIndex].FindControl("lblcompanyrole") as Label).Text;
             string stridNew = Request.QueryString["id"].ToString().Replace(" ", "+");
             string mstrid = objEnc.EncryptData((objEnc.DecryptData(stridNew) + " >> Edit Company"));
-            Response.Redirect("Add-Company?mrcreaterole=" + objEnc.EncryptData(Role) + "&mcurrentcompRefNo=" + (objEnc.EncryptData(e.CommandArgument.ToString())) + "&id=" + mstrid);
+            Response.Redirect("Add-Company?mrcreaterole=" + HttpUtility.UrlEncode(objEnc.EncryptData(Role)) + "&mcurrentcompRefNo=" + HttpUtility.UrlEncode(objEnc.EncryptData(e.CommandArgument.ToString())) + "&id=" + mstrid);
         }
         else if (e.CommandName == "ViewComp")
         {
@@ -481,7 +482,7 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
             string mstrid = objEnc.EncryptData((objEnc.DecryptData(stridNew) + " >> Edit Division"));
             try
             {
-                Response.Redirect("Add-Company?mrcreaterole=" + objEnc.EncryptData(Role) + "&mcurrentcompRefNo=" + (objEnc.EncryptData(e.CommandArgument.ToString())) + "&id=" + mstrid, false);
+                Response.Redirect("Add-Company?mrcreaterole=" + HttpUtility.UrlEncode(objEnc.EncryptData(Role)) + "&mcurrentcompRefNo=" + HttpUtility.UrlEncode(objEnc.EncryptData(e.CommandArgument.ToString())) + "&id=" + mstrid, false);
             }
             catch (Exception ex)
             {
@@ -561,7 +562,7 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
             string Role = "Unit";
             string stridNew = Request.QueryString["id"].ToString().Replace(" ", "+");
             string mstrid = objEnc.EncryptData((objEnc.DecryptData(stridNew) + " >> Edit Unit"));
-            Response.Redirect("Add-Company?mrcreaterole=" + objEnc.EncryptData(Role) + "&mcurrentcompRefNo=" + (objEnc.EncryptData(e.CommandArgument.ToString())) + "&id=" + mstrid, false);
+            Response.Redirect("Add-Company?mrcreaterole=" + HttpUtility.UrlEncode(objEnc.EncryptData(Role)) + "&mcurrentcompRefNo=" + HttpUtility.UrlEncode(objEnc.EncryptData(e.CommandArgument.ToString())) + "&id=" + mstrid, false);
         }
         else if (e.CommandName == "unitViewComp")
         {

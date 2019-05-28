@@ -57,22 +57,16 @@
             <div class="clearfix">
             </div>
             <asp:Panel runat="server" ID="panerror">
-                <h4>Error Info:- PageName:-
+                <%-- <h4 class="text-center">Error Info:- PageName:-
                     <asp:Label runat="server" ID="lblpagename" Text=""></asp:Label></h4>
+                <div class="clearfix"></div>--%>
                 <div class="bg-info">
-                    <div class="header">
-                        <p>User Error:-</p>
-                        <div class="clearfix">
-                        </div>
-                        <div runat="server" id="divusererror" class="bg-warning black">
-                        </div>
+                    <div class="header text-center">
+                        <p class="text-center">Technical Error</p>
                     </div>
-                </div>
-                <div class="clearfix"></div>
-                <div class="bg-info">
-                    <div class="header">
-                        <p>Technical Error:-</p>
-                        <div runat="server" id="divtechnicalerror" class="bg-red white">
+                    <div class="clearfix"></div>
+                    <div class="text-center">
+                        <div runat="server" id="divtechnicalerror" class="text-center">
                         </div>
                     </div>
                 </div>

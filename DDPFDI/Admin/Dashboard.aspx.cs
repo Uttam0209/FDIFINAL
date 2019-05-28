@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Specialized;
 using System.Text.RegularExpressions;
 using System.Data;
@@ -10,6 +11,7 @@ using System.Web.UI.WebControls;
 using System.Web.UI.DataVisualization.Charting;
 using System.Data.SqlClient;
 using Encryption;
+using System.Web;
 
 public partial class Admin_Dashboard : System.Web.UI.Page
 {
@@ -41,24 +43,24 @@ public partial class Admin_Dashboard : System.Web.UI.Page
     }
     protected void lnkbtnTotComp_Click(object sender, EventArgs e)
     {
-        Response.Redirect("Detail-Company?mu=" +  objCrypto.EncryptData("View") + "&id=" + objCrypto.EncryptData("View Company"));
+        Response.Redirect("Detail-Company?mu=" + HttpUtility.UrlEncode(objCrypto.EncryptData("View")) + "&id=" + HttpUtility.UrlEncode(objCrypto.EncryptData("View Company")));
 
     }
     protected void lnkbtnTotDiv_Click(object sender, EventArgs e)
     {
-        Response.Redirect("Detail-Company?mu=" + objCrypto.EncryptData("View") + "&id=" + objCrypto.EncryptData("View Division"));
+        Response.Redirect("Detail-Company?mu=" + HttpUtility.UrlEncode(objCrypto.EncryptData("View")) + "&id=" + HttpUtility.UrlEncode(objCrypto.EncryptData("View Division")));
     }
     protected void lnkbtnTotUnit_Click(object sender, EventArgs e)
     {
-        Response.Redirect("Detail-Company?mu=" + objCrypto.EncryptData("View") + "&id=" + objCrypto.EncryptData("View Unit"));
+        Response.Redirect("Detail-Company?mu=" + HttpUtility.UrlEncode(objCrypto.EncryptData("View")) + "&id=" + HttpUtility.UrlEncode(objCrypto.EncryptData("View Unit")));
     }
 
     protected void lnkbtnTotEmp_Click(object sender, EventArgs e)
     {
-        Response.Redirect("View-NodalOfficer?mu=" + objCrypto.EncryptData("View") + "&id=" + objCrypto.EncryptData("View Nodal Officer"));
+        Response.Redirect("View-NodalOfficer?mu=" + HttpUtility.UrlEncode(objCrypto.EncryptData("View")) + "&id=" + HttpUtility.UrlEncode(objCrypto.EncryptData("View Nodal Officer")));
     }
     protected void lnkbtnProduct_Click(object sender, EventArgs e)
     {
-        Response.Redirect("View-Product?mu=" + objCrypto.EncryptData("View") + "&id=" + objCrypto.EncryptData("View Product"));
+        Response.Redirect("View-Product?mu=" + HttpUtility.UrlEncode(objCrypto.EncryptData("View")) + "&id=" + HttpUtility.UrlEncode(objCrypto.EncryptData("View Product")));
     }
 }

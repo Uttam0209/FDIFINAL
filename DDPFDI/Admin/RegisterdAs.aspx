@@ -12,7 +12,6 @@
                         <asp:HiddenField runat="server" ID="hfCatID" />
                         <asp:HiddenField runat="server" ID="hfSubCatID" />
                         <asp:HiddenField runat="server" ID="hftype" />
-
                         <div class="row">
                             <div class="col-md-12 padding_0">
                                 <div id="divHeadPage" runat="server"></div>
@@ -25,7 +24,7 @@
                                         <asp:Panel ID="Panel1" runat="server" DefaultButton="btnsave">
                                             <div class="col-md-4" runat="server" id="divcategory1textbox" visible="False">
                                                 <div class="form-group">
-                                                    <label>Add Dropdown Label</label>
+                                                    <label>Add Dropdown Label <span class="mandatory">*</span></label>
                                                     <asp:TextBox class="form-control" required="" TabIndex="1" runat="server" ID="txtmastercategory"></asp:TextBox>
                                                 </div>
                                             </div>
@@ -50,37 +49,37 @@
                                             </div>
                                             <div class="col-md-4" runat="server" id="divcategory1dropdown" visible="False">
                                                 <div class="form-group">
-                                                    <label>Dropdown Label</label>
+                                                    <label>Dropdown Label <span class="mandatory">*</span></label>
                                                     <asp:DropDownList runat="server" ID="ddlmastercategory" TabIndex="4" class="form-control" AutoPostBack="True" OnSelectedIndexChanged="ddlmastercategory_SelectedIndexChanged"></asp:DropDownList>
                                                 </div>
                                             </div>
                                             <div class="col-md-4" runat="server" id="divcategory2textbox" visible="False">
                                                 <div class="form-group">
-                                                    <label>Add Level 1 </label>
+                                                    <label>Add Level 1 <span class="mandatory">*</span></label>
                                                     <asp:TextBox class="form-control" required="" TabIndex="5" runat="server" ID="txtsubcategory"></asp:TextBox>
                                                 </div>
                                             </div>
                                             <div class="col-md-4" runat="server" id="divcategory2ddl" visible="False">
                                                 <div class="form-group">
-                                                    <label>Select Level 1 </label>
+                                                    <label>Select Level 1 <span class="mandatory">*</span></label>
                                                     <asp:DropDownList runat="server" ID="ddlcategroy2" TabIndex="6" AutoPostBack="False" class="form-control" OnSelectedIndexChanged="ddlcategroy2_SelectedIndexChanged"></asp:DropDownList>
                                                 </div>
                                             </div>
                                             <div class="col-md-4" runat="server" id="divcategory3textbox" visible="False">
                                                 <div class="form-group">
-                                                    <label>Add Level 2 </label>
+                                                    <label>Add Level 2 <span class="mandatory">*</span></label>
                                                     <asp:TextBox class="form-control" runat="server" TabIndex="7" ID="txtcategory3"></asp:TextBox>
                                                 </div>
                                             </div>
                                             <div class="col-md-4" runat="server" id="divlabel2drop" visible="False">
                                                 <div class="form-group">
-                                                    <label>Select Label 2</label>
+                                                    <label>Select Label 2 <span class="mandatory">*</span></label>
                                                     <asp:DropDownList runat="server" ID="ddllabel2" class="form-control" TabIndex="8" AutoPostBack="True" OnSelectedIndexChanged="ddllabel2_SelectedIndexChanged"></asp:DropDownList>
                                                 </div>
                                             </div>
                                             <div class="col-md-4" runat="server" id="divlevel3" visible="False">
                                                 <div class="form-group">
-                                                    <label>Add Level 3 </label>
+                                                    <label>Add Level 3 <span class="mandatory">*</span></label>
                                                     <asp:TextBox class="form-control" required="" TabIndex="9" runat="server" ID="txtlevel3"></asp:TextBox>
                                                 </div>
                                             </div>
@@ -95,7 +94,7 @@
                                 </div>
                                 <div class="table-wraper" runat="server" id="divmastercategory">
                                     <asp:GridView ID="gvCategory" runat="server" Width="100%" Class="commonAjaxTbl master-company-table table display responsive no-wrap table-hover manage-user Grid" AutoGenerateColumns="false" AllowPaging="true"
-                                        PageSize="25" AllowSorting="true">
+                                        PageSize="25" AllowSorting="true" OnRowDataBound="gvCategory_RowDataBound">
                                         <PagerStyle HorizontalAlign="Center" CssClass="GridPager" />
                                         <Columns>
                                             <asp:TemplateField HeaderText="S.No">
@@ -106,12 +105,12 @@
                                             <asp:BoundField ItemStyle-Width="150px" DataField="MCategoryName" HeaderText="Dropdown Label" />
                                             <asp:TemplateField HeaderText="Hierarchy">
                                                 <ItemTemplate>
-                                                    <asp:Label ID="Label1" runat="server" Text='<%#Eval("Flag") %>' NullDisplayText="#"></asp:Label>
+                                                    <asp:Label ID="lblhiraricy" runat="server" Text='<%#Eval("Flag") %>' NullDisplayText="#"></asp:Label>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="Status">
                                                 <ItemTemplate>
-                                                    <asp:Label ID="Label1" runat="server" Text='<%#Eval("IsActive") %>' NullDisplayText="#"></asp:Label>
+                                                    <asp:Label ID="lblstatus" runat="server" Text='<%#Eval("IsActive") %>' NullDisplayText="#"></asp:Label>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                             <asp:BoundField ItemStyle-Width="150px" DataField="CreatedBy" HeaderText="Create By" NullDisplayText="#" />
