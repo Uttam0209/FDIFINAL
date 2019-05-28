@@ -41,7 +41,7 @@ public partial class Admin_Dashboard : System.Web.UI.Page
     }
     protected void lnkbtnTotComp_Click(object sender, EventArgs e)
     {
-        Response.Redirect("Detail-Company?mu=" + objCrypto.EncryptData("View") + "&id=" + objCrypto.EncryptData("View Company"));
+        Response.Redirect("Detail-Company?mu=" +  objCrypto.EncryptData("View") + "&id=" + objCrypto.EncryptData("View Company"));
 
     }
     protected void lnkbtnTotDiv_Click(object sender, EventArgs e)

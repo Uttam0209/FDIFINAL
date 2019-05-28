@@ -964,7 +964,8 @@ namespace DataAccessLayer
                     throw ex;
                 }
             }
-        }
+        }       
+
         public DataTable RetriveMasterCategoryDate(Int64 CatID, string CatName, string SCatValue, string Flag, string LavelActive, string Criteria, string CreatedBy)
         {
             using (DbConnection dbCon = db.CreateConnection())
@@ -1155,6 +1156,68 @@ namespace DataAccessLayer
                 {
                     throw ex;
                 }
+            }
+        }
+        public string SaveUploadExcelCompany(DataTable dtExcel)
+        {
+            using (DbConnection Connection = db.CreateConnection())
+            {
+                Connection.Open();
+                DbTransaction Transaction = Connection.BeginTransaction();
+                Int32 errorRow = -1;
+                try
+                {
+                    string mEntryID = "";
+                    for (int a = 0; a < dtExcel.Rows.Count; a++)
+                    {
+                        errorRow = a;
+                        DbCommand cmd = db.GetStoredProcCommand("sp_mst_trnRawData");
+
+                        db.AddInParameter(cmd, "@UniqueID", DbType.Int64, "-1");
+                        db.AddInParameter(cmd, "@Allocated_Date", DbType.Date, DateTime.Parse(dtExcel.Rows[a]["Allocated Date"].ToString()));
+                        db.AddInParameter(cmd, "@Account_Caf_No", DbType.String, dtExcel.Rows[a]["Account Caf No"].ToString());
+                        db.AddInParameter(cmd, "@Account_Manager", DbType.String, dtExcel.Rows[a]["Account Manager"].ToString());
+                        db.AddInParameter(cmd, "@Account_Number", DbType.String, dtExcel.Rows[a]["Account Number"].ToString());
+                        db.AddOutParameter(cmd, "@ReturnID", DbType.String, 50);
+                        db.ExecuteNonQuery(cmd, Transaction);
+                        mEntryID = db.GetParameterValue(cmd, "@ReturnID").ToString();
+                    }
+                    Transaction.Commit();
+                    return mEntryID = "Save";
+                }
+                catch (Exception ex)
+                {
+                    Transaction.Rollback();
+                    return ex.Message + "Error Found in Excel" + errorRow;
+                }
+                finally
+                {
+                    Connection.Close();
+                }
+            }
+        }
+
+        public DataTable CreateExcelConnection(string FilePath, string SheetName, out string text)
+        {
+            try
+            {
+                //Connection = new OleDbConnection("provider=Microsoft.Jet.OLEDB.4.0;data source=" + FilePath + ";Extended Properties=Excel 8.0;")
+                System.Data.OleDb.OleDbConnection Connection = new System.Data.OleDb.OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + FilePath + ";Extended Properties=\"Excel 12.0;HDR=Yes;IMEX=1\";");
+                string mQuery = "select * from [" + SheetName + "$]";
+                System.Data.OleDb.OleDbCommand cmd = new System.Data.OleDb.OleDbCommand(mQuery, Connection);
+                System.Data.OleDb.OleDbDataAdapter da = new System.Data.OleDb.OleDbDataAdapter(cmd);
+                DataSet ds = new DataSet();
+                Connection.Open();
+                da.Fill(ds, "ex");
+                Connection.Close();
+                text = "success";
+                return ds.Tables[0];
+            }
+            catch (Exception ex)
+            {
+                DataSet ds = new DataSet();
+                text = ex.Message;
+                return ds.Tables[0];
             }
         }
         #endregion
