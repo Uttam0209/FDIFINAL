@@ -59,5 +59,6 @@
         routes.MapPageRoute("Company-Category", "Company-Category", "~/Admin/AddCompanyCategory.aspx", true);
         routes.MapPageRoute("ViewCompany-Category", "ViewCompany-Category", "~/Admin/ViewCompanyCategory.aspx", true);
         routes.MapPageRoute("Industry", "Industry", "~/Admin/Industry.aspx", true);
+        routes.MapPageRoute("FAQ", "FAQ", "~/Admin/faq.aspx", true);
     }    
 </script>
