@@ -18,12 +18,14 @@
     <asp:HiddenField ID="hidType" runat="server" />
     <div class="content oem-content">
         <div class="sideBg">
+
             <div class="row">
                 <div class="col-md-12 padding_0">
                     <div id="divHeadPage" runat="server"></div>
                 </div>
             </div>
             <div class="row">
+                <p style="position:absolute; right:35px;">Mark with <span class="mandatory">*</span> is manadatory field.</p>
                 <asp:UpdatePanel runat="server" ID="updrop">
                     <ContentTemplate>
                         <div class="col-md-4">
@@ -63,14 +65,16 @@
                     <asp:HiddenField runat="server" ID="hfprodid" />
                     <asp:HiddenField runat="server" ID="hfprodrefno" />
                     <asp:HiddenField runat="server" ID="hfcomprefno" />
+                    
                     <div id="pd" class="tab-pane fade in active">
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="add-profile">
                                     <div class="section-pannel">
-                                        <div class="row">
+                                        
                                             <asp:UpdatePanel runat="server" ID="upproduct">
                                                 <ContentTemplate>
+                                                    <div class="row">
                                                     <div class="col-md-4">
                                                         <div class="form-group">
                                                             <label>
@@ -95,17 +99,18 @@
                                                             <asp:DropDownList runat="server" ID="ddllevel3product" TabIndex="3" class="form-control"></asp:DropDownList>
                                                         </div>
                                                     </div>
+                                                        </div>
                                                     <div class="row">
                                                         <div class="col-md-8">
                                                             <div class="form-group">
-                                                                <div class="col-sm-4">
-                                                                    <label>
+                                                                <div class="col-sm-3 padding_0">
+                                                                    <label style="font-size:14px !important;">
                                                                         NSC Code (4 digit)
                                                                         <span data-toggle="tooltip" class="fa fa-question" title="NSC Code = NSN Code (2 digit) + NSN Group Class (2 digit)"></span>
                                                                     </label>
                                                                     <asp:TextBox runat="server" ID="txtnsccode" ReadOnly="True" MaxLength="4" TabIndex="4" CssClass="form-cascade-control form-control"></asp:TextBox>
                                                                 </div>
-                                                                <div class="col-sm-8">
+                                                                <div class="col-sm-9 padding_0">
                                                                     <label>
                                                                         NIIN Code (9-digit)
                                                                     <span data-toggle="tooltip" class="fa fa-question" title="Please enter if NIIN code is available"></span>
@@ -137,7 +142,7 @@
                                                 </ProgressTemplate>
                                             </asp:UpdateProgress>
                                         </div>
-                                    </div>
+                                  
                                     <div class="section-pannel">
                                         <div class="row">
                                             <div class="col-md-4">
@@ -582,10 +587,12 @@
                                 </div>
                                 <div class="section-pannel" runat="server" id="divnodal2">
                                     <div class="row">
-                                        <h4 class="page-header secondary">Contact Detail 2</h4>
-                                        <div class="form-group select-box">
-                                            <asp:DropDownList runat="server" ID="ddlNodalOfficerEmail2" class="form-control" TabIndex="46" AutoPostBack="True" OnSelectedIndexChanged="ddlNodalOfficerEmail2_SelectedIndexChanged"></asp:DropDownList>
-                                        </div>
+                                        <div class="col-md-12">
+                                            <h4 class="page-header secondary">Contact Detail 2</h4>
+                                            <div class="form-group select-box">
+                                                <asp:DropDownList runat="server" ID="ddlNodalOfficerEmail2" class="form-control" TabIndex="46" AutoPostBack="True" OnSelectedIndexChanged="ddlNodalOfficerEmail2_SelectedIndexChanged"></asp:DropDownList>
+                                            </div>
+                                         </div>
                                     </div>
                                     <div class="contactFormRow" runat="server" id="contactpanel2" visible="False">
                                         <div class="row">
@@ -737,7 +744,7 @@
                                         </ProgressTemplate>
                                     </asp:UpdateProgress>
                                 </div>
-                                <p>Mark with <span class="mandatory">*</span> is manadatory field.</p>
+                                
                             </div>
                         </div>
                     </asp:Panel>

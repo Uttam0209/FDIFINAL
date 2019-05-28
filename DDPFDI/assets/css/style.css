@@ -1,60 +1,4 @@
-@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700);
-@import url(http://fonts.googleapis.com/css?family=Oswald:400,300,700);
-@import url(http://fonts.googleapis.com/css?family=Droid+Sans:400,700);
-@import url('jRating.jquery.css');
-@import url('animate.css');
-@import url('nvd3.css');
-@import url('morris-0.4.3.min.css');
-@import url('bootstrap-progressbars.css');
-@import url('fullcalendar.css');
-@import url('jquery-ui-1.10.3.custom.css');
-@import url('timeline.css');
-@import url('prettify.min.css');
-@import url('file-upload.css');
-@import url('blueimp.min.css');
-@import url('bootstrap-colorpicker.min.css');
-@import url('bootstrap-markdown.min.css');
-@import url('jquery.gritter.css');
-@import url('smart_wizard.css');
-@import url('bic_calendar.css');
-@import url('bootstrap-timepicker.min.css');
-@import url('lightbox.css');
-@import url('failsafe.css');
-@import url('nestable.css');
-@import url('bootstrap-tour.css');
-@import url('bootstrap-colorpalette.css');
-@import url('clockface.css');
-@import url('component.css');
-@import url('chosen.css');
-@import url('elfinder.min.css');
-@import url('elfinder.theme.css');
-@import url('bootstrap-modals.css');
-@import url('icheck/skins/futurico/futurico.css');
-@import url('icheck/skins/flat/all.css');
-@import url('icheck/skins/polaris/polaris.css');
-@import url('icheck/skins/square/all.css');
-@import url('icheck/skins/minimal/all.css');
-@import url('icheck/skins/line/all.css');
-@import url('bootstrap-wysihtml5.css');
-@import url('all.min.css');
-/*
-*	 Author: Vijay Kumar
-*	 Template: Cascade - Flat & Responsive Bootstrap Admin Template
-*	 Version: 1.0
-*	 Bootstrap version: 3.0.0
-*	 Copyright 2013 bootstrapguru
-*	 www: http://bootstrapguru.com
-*	 mail: support@bootstrapguru.com
-*	 You can find our other themes on: https://bootstrapguru.com/themes/
----------------------------------------------------------------------------------------------- */
-/* Predefined themes
----------------------------------------------------------------------------------------------- */
-/*	 External Less Files
----------------------------------------------------------------------------------------------- 
-@import "variables";
-@import "mixins";
-@import "pagination";
-*/
+
 /*	 Import Fonts
 ---------------------------------------------------------------------------------------------- */
 /******************* Aaryan  CSS Code *********************/
@@ -1829,7 +1773,7 @@ table.todo-table i.finish-task:hover {
 #upload ul li span {
   width: 15px;
   height: 12px;
-  background: url('../images/icons.png') no-repeat;
+  background: url('../images/icons.html') no-repeat;
   position: absolute;
   top: 34px;
   right: 33px;
@@ -2670,7 +2614,7 @@ float:right; */
   border: 1px solid #FFD700;
   font: bold 13px Verdana, Arial, Helvetica, sans-serif;
   color: #5A5655;
-  background: #ffffff url(../images/loader.gif) no-repeat 5px;
+  background: #ffffff url(../images/loader.html) no-repeat 5px;
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
   z-index: 998;
