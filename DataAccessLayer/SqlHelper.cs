@@ -402,7 +402,6 @@ namespace DataAccessLayer
             }
         }
         #endregion
-
         public string SaveFactoryComp(HybridDictionary hysavecomp, out string _sysMsg, out string _msg)
         {
             string mCurrentID = "";
@@ -604,29 +603,38 @@ namespace DataAccessLayer
                     db.AddInParameter(cmd, "@ProductID", DbType.Int64, hyProduct["ProductID"]);
                     db.AddInParameter(cmd, "@ProductRefNo", DbType.String, hyProduct["ProductRefNo"]);
                     db.AddInParameter(cmd, "@CompanyRefNo", DbType.String, hyProduct["CompanyRefNo"]);
+                    db.AddInParameter(cmd, "@ProductLevel1", DbType.Int64, hyProduct["ProductLevel1"]);
+                    db.AddInParameter(cmd, "@ProductLevel2", DbType.Int16, hyProduct["ProductLevel2"]);
+                    db.AddInParameter(cmd, "@ProductLevel3", DbType.Int16, hyProduct["ProductLevel3"]);
+                    db.AddInParameter(cmd, "@ProductDescription", DbType.String, hyProduct["ProductDescription"]);
+                    db.AddInParameter(cmd, "@NSCCode", DbType.String, hyProduct["NSCCode"]);
+                    db.AddInParameter(cmd, "@NIINCode", DbType.String, hyProduct["NIINCode"]);
                     db.AddInParameter(cmd, "@OEMPartNumber", DbType.String, hyProduct["OEMPartNumber"].ToString().Trim());
+                    db.AddInParameter(cmd, "@OEMName", DbType.String, hyProduct["OEMName"].ToString().Trim());
+                    db.AddInParameter(cmd, "@OEMCountry", DbType.Int64, hyProduct["OEMCountry"].ToString().Trim());
                     db.AddInParameter(cmd, "@DPSUPartNumber", DbType.String, hyProduct["DPSUPartNumber"]);
                     db.AddInParameter(cmd, "@EndUserPartNumber", DbType.String, hyProduct["EndUserPartNumber"]);
                     db.AddInParameter(cmd, "@HSNCode", DbType.String, hyProduct["HSNCode"]);
                     db.AddInParameter(cmd, "@NatoCode", DbType.String, hyProduct["NatoCode"].ToString().Trim());
                     db.AddInParameter(cmd, "@ERPRefNo", DbType.String, hyProduct["ERPRefNo"].ToString().Trim());
-                    db.AddInParameter(cmd, "@NomenclatureOfMainSystem", DbType.Int64, hyProduct["NomenclatureOfMainSystem"].ToString().Trim());
-                    db.AddInParameter(cmd, "@ProductLevel1", DbType.Int64, hyProduct["ProductLevel1"]);
-                    db.AddInParameter(cmd, "@ProductLevel2", DbType.Int16, hyProduct["ProductLevel2"]);
-                    db.AddInParameter(cmd, "@ProductLevel3", DbType.Int16, hyProduct["ProductLevel3"]);
-                    db.AddInParameter(cmd, "@ProductDescription", DbType.String, hyProduct["ProductDescription"]);
                     db.AddInParameter(cmd, "@TechnologyLevel1", DbType.Int64, hyProduct["TechnologyLevel1"]);
                     db.AddInParameter(cmd, "@TechnologyLevel2", DbType.Int64, hyProduct["TechnologyLevel2"]);
                     db.AddInParameter(cmd, "@TechnologyLevel3", DbType.Int64, hyProduct["TechnologyLevel3"]);
+                    db.AddInParameter(cmd, "@Platform", DbType.Int64, hyProduct["Platform"].ToString().Trim());
+                    db.AddInParameter(cmd, "@NomenclatureOfMainSystem", DbType.Int64, hyProduct["NomenclatureOfMainSystem"].ToString().Trim());
                     db.AddInParameter(cmd, "@EndUser", DbType.String, hyProduct["EndUser"].ToString().Trim());
+                    db.AddInParameter(cmd, "@PurposeofProcurement", DbType.Int64, hyProduct["PurposeofProcurement"]);
+                    db.AddInParameter(cmd, "@ProcurmentCategoryRemark", DbType.String, hyProduct["ProcurmentCategoryRemark"]);
+                    db.AddInParameter(cmd, "@ProductRequirment", DbType.Int64, hyProduct["ProductRequirment"]);
                     db.AddInParameter(cmd, "@IsIndeginized", DbType.String, hyProduct["IsIndeginized"].ToString().Trim());
                     db.AddInParameter(cmd, "@ManufactureName", DbType.String, hyProduct["ManufactureName"]);
-                    db.AddInParameter(cmd, "@Platform", DbType.Int64, hyProduct["Platform"].ToString().Trim());
-                    db.AddInParameter(cmd, "@PurposeofProcurement", DbType.Int64, hyProduct["PurposeofProcurement"]);
-                    db.AddInParameter(cmd, "@ProductRequirment", DbType.Int64, hyProduct["ProductRequirment"]);
+                    db.AddInParameter(cmd, "@ManufactureAddress", DbType.String, hyProduct["ManufactureAddress"]);
+                    db.AddInParameter(cmd, "@YearofIndiginization", DbType.Int64, hyProduct["YearofIndiginization"]);
                     db.AddInParameter(cmd, "@SearchKeyword", DbType.String, hyProduct["SearchKeyword"]);
                     db.AddInParameter(cmd, "@DPSUServices", DbType.String, hyProduct["DPSUServices"].ToString().Trim());
                     db.AddInParameter(cmd, "@Remarks", DbType.String, hyProduct["Remarks"].ToString().Trim());
+                    db.AddInParameter(cmd, "@FinancialSupport", DbType.String, hyProduct["FinancialSupport"].ToString().Trim());
+                    db.AddInParameter(cmd, "@FinancialRemark", DbType.String, hyProduct["FinancialRemark"].ToString().Trim());
                     db.AddInParameter(cmd, "@Estimatequantity", DbType.String, hyProduct["Estimatequantity"].ToString().Trim());
                     db.AddInParameter(cmd, "@EstimatePriceLLP", DbType.String, hyProduct["EstimatePriceLLP"]);
                     db.AddInParameter(cmd, "@TenderStatus", DbType.String, hyProduct["TenderStatus"].ToString().Trim());
@@ -638,9 +646,9 @@ namespace DataAccessLayer
                     db.AddInParameter(cmd, "@TestingRemarks", DbType.String, hyProduct["TestingRemarks"].ToString().Trim());
                     db.AddInParameter(cmd, "@Certification", DbType.String, hyProduct["Certification"].ToString().Trim());
                     db.AddInParameter(cmd, "@CertificationRemark", DbType.String, hyProduct["CertificationRemark"].ToString().Trim());
-                    db.AddInParameter(cmd, "@Criteria", DbType.String, Criteria);
                     db.AddInParameter(cmd, "@Role", DbType.String, hyProduct["Role"]);
                     db.AddInParameter(cmd, "@CreatedBy", DbType.String, hyProduct["CreatedBy"]);
+                    db.AddInParameter(cmd, "@Criteria", DbType.String, Criteria);
                     db.AddOutParameter(cmd, "@ReturnID", DbType.String, 20);
                     db.ExecuteNonQuery(cmd, dbTran);
                     mCurrentID = db.GetParameterValue(cmd, "@ReturnID").ToString();
@@ -798,8 +806,6 @@ namespace DataAccessLayer
                 }
             }
         }
-
-
         public DataTable RetriveAllNodalOfficer(string RefNo, string Role)
         {
             using (DbConnection dbCon = db.CreateConnection())

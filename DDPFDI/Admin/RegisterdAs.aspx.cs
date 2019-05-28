@@ -552,4 +552,20 @@ public partial class Admin_RegisterdAs : System.Web.UI.Page
             Response.Redirect("Error?techerror=" + objEnc.EncryptData(error) + "&page=" + objEnc.EncryptData(Page));
         }
     }
+
+    protected void gvCategory_RowDataBound(object sender, GridViewRowEventArgs e)
+    {
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            Label lblHierarchy = (Label)e.Row.FindControl("lblhiraricy");
+            if (lblHierarchy.Text == "Level 2")
+            {
+                e.Row.Attributes.Add("Class", "bg-skyrow");
+            }
+            if (lblHierarchy.Text == "Level 3")
+            {
+                e.Row.Attributes.Add("Class", "bg-bluerow");
+            }
+        }
+    }
 }

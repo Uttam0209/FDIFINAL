@@ -68,7 +68,6 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
     {
         try
         {
-
             if (hidType.Value == "SuperAdmin" || hidType.Value == "Admin")
             {
                 if (Request.QueryString["mu"] != null)
@@ -109,7 +108,6 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
                         }
                     }
                 }
-
             }
             else if (hidType.Value == "Company")
             {
@@ -191,6 +189,7 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
     #endregion
     #region RowCommand
     private string stpsdq;
+    private string Financial;
     private string Testing;
     private string Certification;
     protected void gvproduct_RowCommand(object sender, GridViewCommandEventArgs e)
@@ -207,28 +206,40 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
         }
         else if (e.CommandName == "ViewComp")
         {
+            if (ddlcompany.SelectedItem.Text != "Select" && ddldivision.Visible == false)
+            {hidType.Value = "Company";}
+            else if (ddlcompany.SelectedItem.Text != "Select" && ddldivision.SelectedItem.Text != "Select")
+            { hidType.Value = "Division"; }
+            else if (ddlcompany.SelectedItem.Text != "Select" && ddldivision.SelectedItem.Text != "Select" && ddlunit.SelectedItem.Text != "Select")
+            { hidType.Value = "Unit"; }
             DataTable DtView = Lo.RetriveProductCode("", e.CommandArgument.ToString(), "ProductMasterID", hidType.Value);
             if (DtView.Rows.Count > 0)
             {
                 lblcomprefno.Text = DtView.Rows[0]["CompanyRefNo"].ToString();
                 lblcompname.Text = DtView.Rows[0]["CompanyName"].ToString();
                 lblprodrefno.Text = DtView.Rows[0]["ProductRefNo"].ToString();
+                lblprodlevel1.Text = DtView.Rows[0]["ProdLevel1Name"].ToString();
+                productlevel2.Text = DtView.Rows[0]["ProdLevel2Name"].ToString();
+                lblprodlevel3.Text = DtView.Rows[0]["ProdLevel3Name"].ToString();
+                lblnsccode.Text = DtView.Rows[0]["NSCCode"].ToString();
+                lblniincode.Text = DtView.Rows[0]["NIINCode"].ToString();
+                lblproductdescription.Text = DtView.Rows[0]["ProductDescription"].ToString();
                 lbloempartnumber.Text = DtView.Rows[0]["OEMPartNumber"].ToString();
+                lbloemname.Text = DtView.Rows[0]["OEMName"].ToString();
+                lbloemcountry.Text = DtView.Rows[0]["CountryName"].ToString();
                 lbldpsupartno.Text = DtView.Rows[0]["DPSUPartNumber"].ToString();
                 lblenduserpartno.Text = DtView.Rows[0]["EndUserPartNumber"].ToString();
                 lblhsncode.Text = DtView.Rows[0]["HSNCode"].ToString();
-                lblnatocode.Text = DtView.Rows[0]["NatoCode"].ToString();
-                lblerprefno.Text = DtView.Rows[0]["ERPRefNo"].ToString();
-                lblnomenclatureofmainsystem.Text = DtView.Rows[0]["Nomenclature"].ToString();
-                lblprodlevel1.Text = DtView.Rows[0]["ProdLevel1Name"].ToString();
-                productlevel2.Text = DtView.Rows[0]["ProdLevel2Name"].ToString();
-                lblproductdescription.Text = DtView.Rows[0]["ProductDescription"].ToString();
+                //  lblnatocode.Text = DtView.Rows[0]["NatoCode"].ToString();
+                // lblerprefno.Text = DtView.Rows[0]["ERPRefNo"].ToString();
                 lbltechlevel1.Text = DtView.Rows[0]["TechLevel1Name"].ToString();
                 lbltechlevel2.Text = DtView.Rows[0]["Techlevel2Name"].ToString();
-                lblenduser.Text = DtView.Rows[0]["EUserName"].ToString();
+                lbltechlevel3.Text = DtView.Rows[0]["Techlevel3Name"].ToString();
                 lblplatform.Text = DtView.Rows[0]["PlatName"].ToString();
+                lblnomenclatureofmainsystem.Text = DtView.Rows[0]["Nomenclature"].ToString();
+                lblenduser.Text = DtView.Rows[0]["EUserName"].ToString();
                 lblpurposeofprocurement.Text = DtView.Rows[0]["PRrocurement"].ToString();
-                lblprodtimeframe.Text = DtView.Rows[0]["PRequirement"].ToString();
+                // lblprodtimeframe.Text = DtView.Rows[0]["PRequirement"].ToString();
                 lblsearchkeyword.Text = DtView.Rows[0]["SearchKeyword"].ToString();
                 lblprodalredyindeginized.Text = DtView.Rows[0]["IsIndeginized"].ToString();
                 if (lblprodalredyindeginized.Text == "Y")
@@ -236,13 +247,25 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
                     lblprodalredyindeginized.Text = "Yes";
                     tablemanufacturename.Visible = true;
                     tablemanufacturename1.Visible = true;
+                    tablemanufactureAddress.Visible = true;
+                    tablemanufactureYear.Visible = true;
+                    tablemanufacturename1.Visible = true;
+                    tablemanufacturename2.Visible = true;
+                    tablemanufacturename3.Visible = true;
                     lblmanufacturename.Text = DtView.Rows[0]["ManufactureName"].ToString();
+                    lblmanaddress.Text = DtView.Rows[0]["ManufactureAddress"].ToString();
+                    lblyearofindiginization.Text = DtView.Rows[0]["YearofIndiginization"].ToString();
                 }
                 else
                 {
                     lblprodalredyindeginized.Text = "No";
                     tablemanufacturename1.Visible = false;
                     tablemanufacturename.Visible = false;
+                    tablemanufactureAddress.Visible = false;
+                    tablemanufactureYear.Visible = false;
+                    tablemanufacturename1.Visible = false;
+                    tablemanufacturename2.Visible = false;
+                    tablemanufacturename3.Visible = false;
                 }
                 DataTable dtImageBind = Lo.RetriveProductCode("", e.CommandArgument.ToString(), "ProductImage", hidType.Value);
                 if (dtImageBind.Rows.Count > 0)
@@ -268,6 +291,19 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
                     lblsupportprovidedbydpsu.Text = stpsdq.Substring(1).ToString();
                 }
                 lblremarks.Text = DtView.Rows[0]["Remarks"].ToString();
+                DataTable dtFinn = Lo.RetriveProductCode("", e.CommandArgument.ToString(), "ProductFinancial", hidType.Value);
+                if (dtFinn.Rows.Count > 0)
+                {
+                    for (int i = 0; dtFinn.Rows.Count > i; i++)
+                    {
+                        Financial = Financial + "," + dtFinn.Rows[i]["SCategoryName"].ToString();
+                    }
+                }
+                if (Financial != null)
+                {
+                    lblfinancial.Text = Financial.Substring(1).ToString();
+                }
+                lblfinancialRemark.Text = DtView.Rows[0]["FinancialRemark"].ToString();
                 lblestimatedquantity.Text = DtView.Rows[0]["Estimatequantity"].ToString();
                 lblestimatedprice.Text = DtView.Rows[0]["EstimatePriceLLP"].ToString();
                 lbltenderstatus.Text = DtView.Rows[0]["TenderStatus"].ToString();
