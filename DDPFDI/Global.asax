@@ -40,6 +40,7 @@
         routes.MapPageRoute("Add-Company", "Add-Company", "~/Admin/CompanyDetail.aspx", true);
         routes.MapPageRoute("Detail-Company", "Detail-Company", "~/Admin/DetailofMasterCompany.aspx", true);
         routes.MapPageRoute("Dashboard", "Dashboard", "~/Admin/Dashboard.aspx", true);
+        routes.MapPageRoute("Dashboard-View", "Dashboard-View", "~/Admin/ViewDashboard.aspx", true);
         routes.MapPageRoute("AdminLogin", "AdminLogin", "~/Admin/AdminLogin.aspx", true);
         routes.MapPageRoute("AddMasterCompany", "AddMasterCompany", "~/Admin/AddMasterCompany.aspx", true);
         routes.MapPageRoute("FDI-Inflow", "FDI-Inflow", "~/Admin/FDIInflow.aspx", true);

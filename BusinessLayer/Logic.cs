@@ -117,6 +117,10 @@ namespace BusinessLayer
         {
             return SqlHelper.Instance.RetriveGridViewCompany(ID, FactoryRefNo, UnitRefNo, Purpose);
         }
+        public DataTable GetDashboardData(string Purpose)
+        {
+            return SqlHelper.Instance.GetDashboardData(Purpose);
+        }
         public DataTable RetriveProductCode(string CompanyRefNo, string ProductRefNo, string Purpose, string Type)
         {
             return SqlHelper.Instance.RetriveProductCode(CompanyRefNo, ProductRefNo, Purpose, Type);

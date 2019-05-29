@@ -1116,6 +1116,7 @@ namespace DataAccessLayer
         }
         #endregion
         #region "Dashboard"
+
         public DataTable RetriveAggregateValue(string function, string entity)
         {
             using (DbConnection dbCon = db.CreateConnection())
@@ -1218,7 +1219,6 @@ namespace DataAccessLayer
                 }
             }
         }
-
         public DataTable CreateExcelConnection(string FilePath, string SheetName, out string text)
         {
             try
@@ -1242,6 +1242,28 @@ namespace DataAccessLayer
                 return ds.Tables[0];
             }
         }
+        public DataTable GetDashboardData(string Purpose)
+        {
+            using (DbConnection dbCon = db.CreateConnection())
+            {
+                dbCon.Open();
+                try
+                {
+                    DbCommand cmd = db.GetStoredProcCommand("sp_GetDashboardData");                 
+                    db.AddInParameter(cmd, "@Purpose", DbType.String, Purpose);
+                    IDataReader dr = db.ExecuteReader(cmd);
+                    DataTable dt = new DataTable();
+                    if (dr != null)
+                        dt.Load(dr);
+                    return dt;
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+        }
+
         #endregion
         #region Forgot password
         public DataTable RetriveForgotPasswordEmail(string email, string type)

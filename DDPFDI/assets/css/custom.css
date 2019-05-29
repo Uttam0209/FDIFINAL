@@ -1044,7 +1044,7 @@ form label {
 .admin-dashboard .white-box h3 { margin: 0 0 10px 0; font-size: 16px; text-transform: uppercase;}
 .admin-dashboard .white-box ul li { width: 100%;}
 .admin-dashboard .white-box ul li .counter { font-size: 18px;}
-.admin-dashboard .white-box .fa-file-export { position: absolute; right: 25px; bottom: 10px; font-size: 18px; cursor: pointer; color: #d95459 }
+.admin-dashboard .white-box .file-export a { position: absolute; right: 25px; bottom: 10px; font-size: 18px; cursor: pointer; color: #d95459 }
 
 .btn-nav-toggle-responsive { display: none; }
 .table-wraper { overflow-x: auto;}
@@ -1173,14 +1173,6 @@ form label { color: #494ca2;}
             font-size: 18px;
         }
 
-    .admin-dashboard .white-box .fa-file-export {
-        position: absolute;
-        right: 25px;
-        bottom: 10px;
-        font-size: 18px;
-        cursor: pointer;
-        color: #d95459;
-    }
 
 .btn-nav-toggle-responsive {
     display: none;
@@ -1939,3 +1931,6 @@ form label { font-size: 15px !important; font-family: 'Roboto', sans-serif !impo
 .faq-img img { width: 100%;}
 
 .ShowDivisionFromDashboard table >.clone-row { display: block !important}
+
+.admin-dashboard .white-box ul li .compName { position:relative;}
+.admin-dashboard .white-box a.comp_number {position: absolute; top: -11px; bottom: 0; right: 0; left: 0; height: 57px;  vertical-align: bottom; padding-top: 31px; z-index: 99999;}

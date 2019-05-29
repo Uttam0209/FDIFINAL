@@ -48,33 +48,33 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
 
                 if (mType == "SuperAdmin" || mType == "Admin")
                 {
-                    if (Request.QueryString["mu"] != null)
-                    {
-                        if (objEnc.DecryptData(Request.QueryString["mu"].ToString())=="View")
-                        {                            
-                            DataTable DtGrid = Lo.RetriveGridViewCompany("0", "", "", "CompanyMainGridView");
-                            if (DtGrid.Rows.Count > 0)
-                            {
-                                gvcompanydetail.DataSource = DtGrid;
-                                gvcompanydetail.DataBind();
-                                //ddlcompany.Visible = false;
-                            }
-                        }
-                        else
-                        {
-                            ddlcompany.Visible = true;
-                            btnAddCompany.Visible = true;
-                            btnAddDivision.Visible = true;
-                            // btnAddUnit.Visible = true;
-                        }
-                    }
-                    else
-                    {
-                        ddlcompany.Visible = true;
-                        btnAddCompany.Visible = true;
-                        btnAddDivision.Visible = true;
-                        // btnAddUnit.Visible = true;
-                    }
+                    //if (Request.QueryString["mu"] != null)
+                    //{
+                    //    if (objEnc.DecryptData(Request.QueryString["mu"].ToString())=="View")
+                    //    {                            
+                    //        DataTable DtGrid = Lo.RetriveGridViewCompany("0", "", "", "CompanyMainGridView");
+                    //        if (DtGrid.Rows.Count > 0)
+                    //        {
+                    //            gvcompanydetail.DataSource = DtGrid;
+                    //            gvcompanydetail.DataBind();
+                    //            //ddlcompany.Visible = false;
+                    //        }
+                    //    }
+                    //    else
+                    //    {
+                    //        ddlcompany.Visible = true;
+                    //        btnAddCompany.Visible = true;
+                    //        btnAddDivision.Visible = true;
+                    //        // btnAddUnit.Visible = true;
+                    //    }
+                    //}
+                    //else
+                    //{
+                    ddlcompany.Visible = true;
+                    btnAddCompany.Visible = true;
+                    btnAddDivision.Visible = true;
+                    // btnAddUnit.Visible = true;
+                    // }
                 }
 
             }
@@ -640,12 +640,12 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
             LinkButton lnkCompEdit = e.Row.FindControl("lbledit") as LinkButton;
 
             //code by gk to stop visibility of edit button if user coming from dashboard
-            if(objEnc.DecryptData(Request.QueryString["mu"].ToString())=="View")
+            if (objEnc.DecryptData(Request.QueryString["mu"].ToString()) == "View")
                 lnkCompEdit.Visible = false;
             //end of code
 
             if (mType == "Factory" || mType == "Unit")
-            {               
+            {
                 lnkCompView.Visible = false;
                 lnkCompEdit.Visible = false;
             }

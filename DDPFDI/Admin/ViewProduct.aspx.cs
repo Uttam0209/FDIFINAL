@@ -70,44 +70,44 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
         {
             if (hidType.Value == "SuperAdmin" || hidType.Value == "Admin")
             {
-                if (Request.QueryString["mu"] != null)
+                //if (Request.QueryString["mu"] != null)
+                //{
+                //    if (objEnc.DecryptData(Request.QueryString["mu"].ToString().Replace(" ", "+")) == "View")
+                //    {
+                //        DtGrid = Lo.RetriveProductCode("", "", "ProductMaster", "All");
+                //        if (DtGrid.Rows.Count > 0)
+                //        {
+                //            gvproduct.DataSource = DtGrid;
+                //            gvproduct.DataBind();
+                //            gvproduct.Visible = true;
+                //        }
+                //    }
+                //    else
+                //    {
+                if (ddlcompany.SelectedItem.Text != "Select" && ddldivision.Visible == false)
                 {
-                    if (objEnc.DecryptData(Request.QueryString["mu"].ToString().Replace(" ", "+")) == "View")
-                    {
-                        DtGrid = Lo.RetriveProductCode("", "", "ProductMaster", "All");
-                        if (DtGrid.Rows.Count > 0)
-                        {
-                            gvproduct.DataSource = DtGrid;
-                            gvproduct.DataBind();
-                            gvproduct.Visible = true;
-                        }
-                    }
-                    else
-                    {
-                        if (ddlcompany.SelectedItem.Text != "Select" && ddldivision.Visible == false)
-                        {
-                            DtGrid = Lo.RetriveProductCode(ddlcompany.SelectedItem.Value, "", "CompanyProduct", "Company");
-                        }
-                        else if (ddlcompany.SelectedItem.Text != "Select" && ddldivision.SelectedItem.Text != "Select")
-                        {
-                            DtGrid = Lo.RetriveProductCode(ddldivision.SelectedItem.Value, "", "CompanyProduct", "Division");
-                        }
-                        else if (ddlcompany.SelectedItem.Text != "Select" && ddldivision.SelectedItem.Text != "Select" && ddlunit.SelectedItem.Text != "Select")
-                        {
-                            DtGrid = Lo.RetriveProductCode(ddlunit.SelectedItem.Value, "", "CompanyProduct", "Unit");
-                        }
-                        if (DtGrid.Rows.Count > 0)
-                        {
-                            gvproduct.DataSource = DtGrid;
-                            gvproduct.DataBind();
-                            gvproduct.Visible = true;
-                        }
-                        else
-                        {
-                            gvproduct.Visible = false;
-                        }
-                    }
+                    DtGrid = Lo.RetriveProductCode(ddlcompany.SelectedItem.Value, "", "CompanyProduct", "Company");
                 }
+                else if (ddlcompany.SelectedItem.Text != "Select" && ddldivision.SelectedItem.Text != "Select")
+                {
+                    DtGrid = Lo.RetriveProductCode(ddldivision.SelectedItem.Value, "", "CompanyProduct", "Division");
+                }
+                else if (ddlcompany.SelectedItem.Text != "Select" && ddldivision.SelectedItem.Text != "Select" && ddlunit.SelectedItem.Text != "Select")
+                {
+                    DtGrid = Lo.RetriveProductCode(ddlunit.SelectedItem.Value, "", "CompanyProduct", "Unit");
+                }
+                if (DtGrid.Rows.Count > 0)
+                {
+                    gvproduct.DataSource = DtGrid;
+                    gvproduct.DataBind();
+                    gvproduct.Visible = true;
+                }
+                else
+                {
+                    gvproduct.Visible = false;
+                }
+                //}
+                //}
             }
             else if (hidType.Value == "Company")
             {

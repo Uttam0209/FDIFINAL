@@ -91,16 +91,14 @@ public partial class Admin_ViewNodalOfficer : System.Web.UI.Page
                 ddlcompany.Enabled = false;
             }
 
-            if (Request.QueryString["mu"] != null)
-            {
-                if (objEnc.DecryptData(Request.QueryString["mu"].ToString()) == "View")
-                {
-
-                    GridViewNodalOfficerBind("", "AllNodalDashboard");
-
-                }
+            //if (Request.QueryString["mu"] != null)
+            //{
+            //    if (objEnc.DecryptData(Request.QueryString["mu"].ToString()) == "View")
+            //    {
+            //        GridViewNodalOfficerBind("", "AllNodalDashboard");
+            //    }
                 
-            }
+            //}
             
             lblselectdivison.Visible = false;
             lblselectunit.Visible = false;

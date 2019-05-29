@@ -1,12 +1,5 @@
-<<<<<<< HEAD
 D:\FDIFINAL\Encryption\bin\Debug\Encryption.dll
 D:\FDIFINAL\Encryption\bin\Debug\Encryption.pdb
 D:\FDIFINAL\Encryption\obj\Debug\Encryption.dll
 D:\FDIFINAL\Encryption\obj\Debug\Encryption.pdb
 D:\FDIFINAL\Encryption\obj\Debug\Encryption.csprojResolveAssemblyReference.cache
-=======
-F:\FDIFINAL\Encryption\bin\Debug\Encryption.dll
-F:\FDIFINAL\Encryption\bin\Debug\Encryption.pdb
-F:\FDIFINAL\Encryption\obj\Debug\Encryption.dll
-F:\FDIFINAL\Encryption\obj\Debug\Encryption.pdb
->>>>>>> 74b617f5edab8730e7c233656d136ad123a7e8a8
