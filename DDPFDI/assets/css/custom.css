@@ -1849,8 +1849,8 @@ form label { font-size: 15px !important; font-family: 'Roboto', sans-serif !impo
 .comp_fact_unit #DivCompanyName > span { display: flex !important}
 .comp_fact_unit #DivCompanyName span {  padding: 0 10px;}
 .faq-secion .accordion .card-header h2 { background: #e2e3e5; border: 1px solid  #d6d8db; font-size: 18px; padding: 10px;  cursor: pointer; margin: 0;}
-.faq-secion .accordion .card-body { padding: 10px; background: #cce5ff; color: #004085; font-size: 16px; line-height: 21px;}
-.faq-secion .accordion .card-body p {font-size: 16px; line-height: 21px; }
+.faq-secion .accordion .card-body { padding: 10px; border:2px solid #ddd; background: #fff; color: #333; font-size: 16px; line-height: 21px;}
+.faq-secion .accordion .card-body p {font-size: 16px; line-height: 24px; }
 .faq-secion .accordion .card-body ul li { font-size: 15px; line-height: 19px;}
 .tooltip-inner {
     border: 1px solid #F2AF1D;
@@ -1937,4 +1937,6 @@ form label { font-size: 15px !important; font-family: 'Roboto', sans-serif !impo
     color:white !important;
 }
 .faq-img img { width: 100%;}
+ .faq-secion .accordion .card-header h2.collapsed i:before {content: "\f067" !important}
+ .faq-secion .accordion .card-header h2 i:before {content: "\f068" !important}
 

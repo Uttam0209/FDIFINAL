@@ -170,8 +170,13 @@ var count = 0;
         //Tooltip
 
         $('[data-toggle="tooltip"]').tooltip();
-        //Enable Accordian
-        $('.collapse').collapse();
+        
+        // bootstrap Accordion closing parent
+
+        $(".faq-secion .accordion .card-header h2").click(function(){
+            console.log('testing');
+          $(this).parents('.card').siblings().find('.collapse').removeClass('in');
+        });
 
 });
 
