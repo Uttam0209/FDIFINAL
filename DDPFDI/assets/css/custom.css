@@ -684,7 +684,7 @@ form .form-group {
             }
 
         .sideBg .table tr td {
-            white-space: nowrap;
+           
             border: 0 !important;
         }
 
@@ -1848,7 +1848,7 @@ form label { font-size: 15px !important; font-family: 'Roboto', sans-serif !impo
 .comp_fact_unit { display: flex !important;}
 .comp_fact_unit #DivCompanyName > span { display: flex !important}
 .comp_fact_unit #DivCompanyName span {  padding: 0 10px;}
-.faq-secion .accordion .card-header h2 { background: #e2e3e5; border: 1px solid  #d6d8db; font-size: 20px; padding: 10px;  cursor: pointer; margin: 0;}
+.faq-secion .accordion .card-header h2 { background: #e2e3e5; border: 1px solid  #d6d8db; font-size: 18px; padding: 10px;  cursor: pointer; margin: 0;}
 .faq-secion .accordion .card-body { padding: 10px; background: #cce5ff; color: #004085; font-size: 16px; line-height: 21px;}
 .faq-secion .accordion .card-body p {font-size: 16px; line-height: 21px; }
 .faq-secion .accordion .card-body ul li { font-size: 15px; line-height: 19px;}
@@ -1936,4 +1936,5 @@ form label { font-size: 15px !important; font-family: 'Roboto', sans-serif !impo
     background-color: #3276b1 !important;
     color:white !important;
 }
+.faq-img img { width: 100%;}
 

@@ -68,12 +68,99 @@
 
                                             </li>
                                             <li>Category Master </li>
-                                            <li>Category Master </li>
+                                            <li> Indigenisation</li>
 
                                         </ol>
                                     </div>
                                 </div>
                             </div>
+                             <div class="card">
+                                <div class="card-header">
+                                        <h2  data-toggle="collapse" data-target="#faq3" aria-expanded="true" aria-controls="faq3">
+                                           1.Company Master
+                                        </h2>
+                                  </div>
+
+                                <div id="faq3" class="collapse">
+                                    <div class="card-body">
+                                        <p>
+                                            The Indenisation portal will have the functionality where a company Nodal Officer is able to add division and units along with designation  and employee.
+                                            The steps for adding division and units along with designation  and employee are given below :- 
+                                        </p>
+                                        <div class="faq-img">
+                                            <img src="../assets/images/faq-images/Company-master.jpg" alt="" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-header">
+                                        <h2  data-toggle="collapse" data-target="#faq4" aria-expanded="true" aria-controls="faq4">
+                                           1.Company Master
+                                        </h2>
+                                  </div>
+
+                                <div id="faq4" class="collapse">
+                                    <div class="card-body">
+                                        <p>
+                                           Steps to Add Division /Plant Name:-  </p>
+                                            <ol>
+                                                <li>Click on Company Master Tab at the left hand corner of the portal after login.</li>
+                                                <li>Select Add tab</li>
+                                                <li>Select Division /Plant tab </li>
+                                                <li>Enter name of Division /Plant  on Space given below Division/ Plant </li>
+                                                <li>Press save for the Division /Plant Name to add in the portal. 
+                                                    <div class="faq-img">
+                                                        <img src="../assets/images/faq-images/Add-plant.jpg" alt="" />
+                                                    </div>
+
+                                                </li>
+                                                <li>
+                                                    The Name will be Displayed in the Matrix after save button is clicked. 
+                                                    <div class="faq-img">
+                                                        <img src="../assets/images/faq-images/display-metrix.jpg" alt="" />
+                                                    </div>
+                                                </li>
+
+                                            </ol>
+                                       
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-header">
+                                        <h2  data-toggle="collapse" data-target="#faq5" aria-expanded="true" aria-controls="faq5">
+                                           1.2 Add Unit
+                                        </h2>
+                                  </div>
+
+                                <div id="faq5" class="collapse">
+                                    <div class="card-body">
+                                        <p>
+                                            Steps to Add Unit Name:- 
+                                        </p>
+                                        <ol>
+                                            <li>
+                                                Click on Company Master Tab at the left hand corner of the portal after login. 
+                                            </li>
+                                            <li>Select Add tab </li>
+                                            <li>Select Unit  tab</li>
+                                            <li>Enter name of Division /Plant  on Scroll Down bar given below Division/ Plant </li>
+                                            <li>Enter name of Unit on Space given below Unit, </li>
+                                            <li>Press save for the Division /Plant Name to add in the portal. 
+                                                <div class="faq-img">
+                                                     <img src="../assets/images/faq-images/add-unit.jpg" alt="" />
+                                                </div>
+
+                                            </li>
+                                           
+                                        </ol>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
 
