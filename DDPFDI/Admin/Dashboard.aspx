@@ -28,7 +28,6 @@
                                             <div class="white-box analytics-info total-comp">
 
                                                 <ul class="list-inline two-part">
-
                                                     <li>
                                                         <div class="icon-box">
                                                             <i class="far fa-building"></i>
@@ -36,14 +35,16 @@
                                                         <div class="compName">
                                                             <h3 class="box-title">Companies</h3>
                                                             <div class="Number">
-                                                                <asp:LinkButton ID="lnkbtnTotComp" runat="server" Text="0" OnClick="lnkbtnTotComp_Click"></asp:LinkButton></div>
+                                                                <asp:LinkButton ID="lnkbtnTotComp" CssClass="comp_number" runat="server" Text="0" OnClick="lnkbtnTotComp_Click"></asp:LinkButton>
+                                                            </div>
                                                         </div>
 
                                                     </li>
 
                                                 </ul>
                                                 <div class="file-export">
-                                                    <i class="fa fa-file-export" data-toggle="tooltip" title="Export to Excel"></i>
+                                                    <asp:LinkButton ID="lblComp" runat="server" class="fa fa-file-export" data-toggle="tooltip" ToolTip="Export to Excel" OnClick="lblComp_Click"></asp:LinkButton>
+
                                                 </div>
 
                                             </div>
@@ -60,14 +61,16 @@
                                                         <div class="compName">
                                                             <h3 class="box-title">Divsions</h3>
                                                             <div class="Number">
-                                                                <asp:LinkButton ID="lnkbtnTotDiv" runat="server" Text="0" OnClick="lnkbtnTotDiv_Click"></asp:LinkButton></div>
+                                                                <asp:LinkButton ID="lnkbtnTotDiv" runat="server" CssClass="comp_number" Text="0" OnClick="lnkbtnTotDiv_Click"></asp:LinkButton>
+                                                            </div>
                                                         </div>
 
                                                     </li>
 
                                                 </ul>
                                                 <div class="file-export">
-                                                    <i class="fa fa-file-export" data-toggle="tooltip" title="Export to Excel"></i>
+                                                    <asp:LinkButton ID="lnkDiv" runat="server" class="fa fa-file-export"  data-toggle="tooltip" ToolTip="Export to Excel" OnClick="lnkDiv_Click"></asp:LinkButton>
+
                                                 </div>
                                             </div>
                                         </div>
@@ -81,12 +84,14 @@
                                                         <div class="compName">
                                                             <h3 class="box-title">Units</h3>
                                                             <div class="Number">
-                                                                <asp:LinkButton ID="lnkbtnTotUnit" runat="server" Text="0" OnClick="lnkbtnTotUnit_Click"></asp:LinkButton></div>
+                                                                <asp:LinkButton ID="lnkbtnTotUnit" runat="server"  CssClass="comp_number" Text="0" OnClick="lnkbtnTotUnit_Click"></asp:LinkButton>
+                                                            </div>
                                                         </div>
                                                     </li>
                                                 </ul>
                                                 <div class="file-export">
-                                                    <i class="fa fa-file-export" data-toggle="tooltip" title="Export to Excel"></i>
+                                                    <asp:LinkButton ID="lnkUnit" runat="server" class="fa fa-file-export" data-toggle="tooltip" ToolTip="Export to Excel" OnClick="lnkUnit_Click"></asp:LinkButton>
+
                                                 </div>
                                             </div>
                                         </div>
@@ -103,12 +108,14 @@
                                                         <div class="compName">
                                                             <h3 class="box-title">Employees</h3>
                                                             <div class="Number">
-                                                                <asp:LinkButton ID="lnkbtnTotEmp" runat="server" Text="0" OnClick="lnkbtnTotEmp_Click"></asp:LinkButton></div>
+                                                                <asp:LinkButton ID="lnkbtnTotEmp" runat="server"  CssClass="comp_number" Text="0" OnClick="lnkbtnTotEmp_Click"></asp:LinkButton>
+                                                            </div>
                                                         </div>
                                                     </li>
                                                 </ul>
                                                 <div class="file-export">
-                                                    <i class="fa fa-file-export" data-toggle="tooltip" title="Export to Excel"></i>
+                                                    <asp:LinkButton ID="lnkEmp" runat="server" class="fa fa-file-export" data-toggle="tooltip" ToolTip="Export to Excel" OnClick="lnkEmp_Click"></asp:LinkButton>
+
                                                 </div>
                                             </div>
                                         </div>
@@ -122,12 +129,13 @@
                                                         <div class="compName">
                                                             <h3 class="box-title">Products</h3>
                                                             <div class="Number">
-                                                                <asp:LinkButton ID="lnkbtnProduct" runat="server" Text="0" OnClick="lnkbtnProduct_Click"></asp:LinkButton></div>
+                                                                <asp:LinkButton ID="lnkbtnProduct" runat="server"   CssClass="comp_number" Text="0" OnClick="lnkbtnProduct_Click"></asp:LinkButton>
+                                                            </div>
                                                         </div>
                                                     </li>
                                                 </ul>
                                                 <div class="file-export">
-                                                    <i class="fa fa-file-export" data-toggle="tooltip" title="Export to Excel"></i>
+                                                    <asp:LinkButton ID="lnkProduct" runat="server" class="fa fa-file-export" data-toggle="tooltip" ToolTip="Export to Excel" OnClick="lnkProduct_Click"></asp:LinkButton>
                                                 </div>
                                             </div>
                                         </div>
@@ -141,7 +149,8 @@
                                                         <div class="compName">
                                                             <h3 class="box-title">Total ??</h3>
                                                             <div class="Number">
-                                                                <asp:LinkButton ID="lnkbtnNA" runat="server" Text="0"></asp:LinkButton></div>
+                                                                <asp:LinkButton ID="lnkbtnNA" runat="server" Text="0"></asp:LinkButton>
+                                                            </div>
                                                         </div>
                                                     </li>
                                                 </ul>
@@ -208,5 +217,8 @@
             </div>
 
         </ContentTemplate>
+        <Triggers>
+            <asp:PostBackTrigger ControlID="lblComp" />
+        </Triggers>
     </asp:UpdatePanel>
 </asp:Content>

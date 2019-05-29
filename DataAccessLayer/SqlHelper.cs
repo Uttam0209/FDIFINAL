@@ -970,7 +970,8 @@ namespace DataAccessLayer
                     throw ex;
                 }
             }
-        }
+        }       
+
         public DataTable RetriveMasterCategoryDate(Int64 CatID, string CatName, string SCatValue, string Flag, string LavelActive, string Criteria, string CreatedBy)
         {
             using (DbConnection dbCon = db.CreateConnection())
@@ -1115,6 +1116,7 @@ namespace DataAccessLayer
         }
         #endregion
         #region "Dashboard"
+
         public DataTable RetriveAggregateValue(string function, string entity)
         {
             using (DbConnection dbCon = db.CreateConnection())
@@ -1163,6 +1165,105 @@ namespace DataAccessLayer
                 }
             }
         }
+        public string SaveUploadExcelCompany(DataTable dtMaster,DataTable dtExcel)
+        {
+            using (DbConnection Connection = db.CreateConnection())
+            {
+                Connection.Open();
+                DbTransaction Transaction = Connection.BeginTransaction();
+                Int32 errorRow = -1;
+                try
+                {
+                    Int32 mEntryID;
+                    for (int k = 0; k < dtMaster.Rows.Count; k++)
+                    {
+                        mEntryID = 0;
+                        DbCommand cmd = db.GetStoredProcCommand("sp_InsertCategoryFromExcel");
+
+                        db.AddInParameter(cmd, "@Pid", DbType.Int64, mEntryID);
+                        db.AddInParameter(cmd, "@CatName", DbType.String, dtMaster.Rows[k]["FSG Title"].ToString() + "(" + dtMaster.Rows[k]["Group"].ToString() + ")");
+                        db.AddInParameter(cmd, "@L1Code", DbType.String, dtMaster.Rows[k]["Group"].ToString());
+                        db.AddInParameter(cmd, "@L2Code", DbType.String, String.Empty);
+                        db.AddOutParameter(cmd, "@NewId", DbType.Int32, 50);
+                        db.ExecuteNonQuery(cmd, Transaction);
+                        mEntryID = Convert.ToInt32(db.GetParameterValue(cmd, "@NewId"));
+                        for (int a = 0; a < dtExcel.Rows.Count; a++)
+                        {
+                            errorRow = a;
+                            if (dtMaster.Rows[k]["Group"].ToString() == dtExcel.Rows[a]["GROUP"].ToString())
+                            {
+                                DbCommand cmdInner = db.GetStoredProcCommand("sp_InsertCategoryFromExcel");
+
+                                db.AddInParameter(cmdInner, "@Pid", DbType.Int64, mEntryID);
+                                db.AddInParameter(cmdInner, "@CatName", DbType.String, dtExcel.Rows[a]["FSC Title"].ToString() + "(" + dtExcel.Rows[a]["GCLS"].ToString() + ")");
+                                db.AddInParameter(cmdInner, "@L1Code", DbType.String, dtExcel.Rows[a]["GROUP"].ToString());
+                                db.AddInParameter(cmdInner, "@L2Code", DbType.String, dtExcel.Rows[a]["GCLS"].ToString());
+                                db.AddOutParameter(cmdInner, "@NewId", DbType.Int32, 50);
+                                db.ExecuteNonQuery(cmdInner, Transaction);
+                                //mEntryID = Convert.ToInt32(db.GetParameterValue(cmdInner, "@NewId"));
+                            }
+
+                        }
+                    }
+                    Transaction.Commit();
+                    return "Save";
+                }
+                catch (Exception ex)
+                {
+                    Transaction.Rollback();
+                    return ex.Message + "Error Found in Excel" + errorRow;
+                }
+                finally
+                {
+                    Connection.Close();
+                }
+            }
+        }
+        public DataTable CreateExcelConnection(string FilePath, string SheetName, out string text)
+        {
+            try
+            {
+                //Connection = new OleDbConnection("provider=Microsoft.Jet.OLEDB.4.0;data source=" + FilePath + ";Extended Properties=Excel 8.0;")
+                System.Data.OleDb.OleDbConnection Connection = new System.Data.OleDb.OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + FilePath + ";Extended Properties=\"Excel 12.0;HDR=Yes;IMEX=1\";");
+                string mQuery = "select * from [" + SheetName + "$]";
+                System.Data.OleDb.OleDbCommand cmd = new System.Data.OleDb.OleDbCommand(mQuery, Connection);
+                System.Data.OleDb.OleDbDataAdapter da = new System.Data.OleDb.OleDbDataAdapter(cmd);
+                DataSet ds = new DataSet();
+                Connection.Open();
+                da.Fill(ds, "ex");
+                Connection.Close();
+                text = "success";
+                return ds.Tables[0];
+            }
+            catch (Exception ex)
+            {
+                DataSet ds = new DataSet();
+                text = ex.Message;
+                return ds.Tables[0];
+            }
+        }
+        public DataTable GetDashboardData(string Purpose)
+        {
+            using (DbConnection dbCon = db.CreateConnection())
+            {
+                dbCon.Open();
+                try
+                {
+                    DbCommand cmd = db.GetStoredProcCommand("sp_GetDashboardData");                 
+                    db.AddInParameter(cmd, "@Purpose", DbType.String, Purpose);
+                    IDataReader dr = db.ExecuteReader(cmd);
+                    DataTable dt = new DataTable();
+                    if (dr != null)
+                        dt.Load(dr);
+                    return dt;
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+        }
+
         #endregion
         #region Forgot password
         public DataTable RetriveForgotPasswordEmail(string email, string type)

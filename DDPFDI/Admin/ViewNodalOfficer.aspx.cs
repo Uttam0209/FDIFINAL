@@ -91,16 +91,14 @@ public partial class Admin_ViewNodalOfficer : System.Web.UI.Page
                 ddlcompany.Enabled = false;
             }
 
-            if (Request.QueryString["mu"] != null)
-            {
-                if (objEnc.DecryptData(Request.QueryString["mu"].ToString()) == "View")
-                {
-
-                    GridViewNodalOfficerBind("", "AllNodalDashboard");
-
-                }
+            //if (Request.QueryString["mu"] != null)
+            //{
+            //    if (objEnc.DecryptData(Request.QueryString["mu"].ToString()) == "View")
+            //    {
+            //        GridViewNodalOfficerBind("", "AllNodalDashboard");
+            //    }
                 
-            }
+            //}
             
             lblselectdivison.Visible = false;
             lblselectunit.Visible = false;
@@ -240,7 +238,6 @@ public partial class Admin_ViewNodalOfficer : System.Web.UI.Page
                 {
                     DtView = Lo.RetriveAllNodalOfficer(e.CommandArgument.ToString(), "UnitID");
                 }
-
             }
             else
             {
@@ -296,7 +293,7 @@ public partial class Admin_ViewNodalOfficer : System.Web.UI.Page
                     body = reader.ReadToEnd();
                 }
                 body = body.Replace("{UserName}", lblnodelname.Text);
-                body = body.Replace("{refno}", objEnc.EncryptData(lblnodelrefno.Text));
+                body = body.Replace("{refno}", HttpUtility.UrlEncode(objEnc.EncryptData(lblnodelrefno.Text)));
                 body = body.Replace("{curid}", Resturl(56));
                 SendMail s;
                 s = new SendMail();

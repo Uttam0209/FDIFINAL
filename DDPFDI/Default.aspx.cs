@@ -15,6 +15,7 @@ using System.Configuration;
 using System.Data.SqlClient;
 using System.Collections.Generic;
 using System.Security.AccessControl;
+using System.Web;
 
 
 public partial class _Default : System.Web.UI.Page
@@ -31,7 +32,9 @@ public partial class _Default : System.Web.UI.Page
     #endregion
     protected void Page_Load(object sender, EventArgs e)
     {
-        //string c = objEnc.DecryptDatazzz("uPxd1dZ2sW7HFIloBz3EfQ==");
+        // string s = objEnc.EncryptData("PRO0006");
+        //string d = objEnc.DecryptData(s);
+        // string c = objEnc.DecryptData("zLKoGmaRQOs=");
         // string s = objEnc.EncryptData("Indig@rgera");
         // string s = objEnc.EncryptData(@"Data Source=DE73P-DBAERO-00\SQLEXPRESS;Initial Catalog=Gip_AeroIndia2018_new;User ID=sa;Password=Adm@2^3SqlServ");
         //  string d = objEnc.DecryptData("aL88ocdv5/LvxKi0O2Gs6kF35uJ5Iz4xWbJBsJ8R+marLTVA2W7Pt0PDHgFG4Wx3HJgCG5QjEr1C1Q7WGTiNwa2AB1N5OvU+45sa48G+2HZnZapUUB4NgatRxGyMc5ZecSf34VN2rLqINQzCMknoOQ==");
@@ -133,7 +136,7 @@ public partial class _Default : System.Web.UI.Page
                 body = reader.ReadToEnd();
             }
             body = body.Replace("{UserName}", txtforgotemailid.Text);
-            body = body.Replace("{refno}", objEnc.EncryptData(empid));
+            body = body.Replace("{refno}", HttpUtility.UrlEncode(objEnc.EncryptData(empid)));
             body = body.Replace("{mcurid}", Resturl(56));
             SendMail s;
             s = new SendMail();

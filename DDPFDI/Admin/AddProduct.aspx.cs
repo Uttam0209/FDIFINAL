@@ -161,7 +161,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                 ddlcompany.Enabled = false;
                 if (objEnc.DecryptData(Request.QueryString["mrcreaterole"].ToString()) == "Company")
                 {
-                    DtCompanyDDL = Lo.RetriveMasterData(0, objEnc.DecryptData(Request.QueryString["mcurrentcompRefNo"].ToString()), "Company", 0, "", "", "CompanyName");
+                    DtCompanyDDL = Lo.RetriveMasterData(0, HttpUtility.UrlEncode(objEnc.DecryptData(Request.QueryString["mcurrentcompRefNo"].ToString())), "Company", 0, "", "", "CompanyName");
                     // DtCompanyDDL = Lo.RetriveMasterData(0, objEnc.DecryptData(Request.QueryString["mcurrentcompRefNo"].ToString()), "Company", 0, "", "", "CompanyName");
                     ddlcompany.Enabled = false;
                     if (DtCompanyDDL.Rows.Count > 0)
@@ -344,6 +344,11 @@ public partial class Admin_AddProduct : System.Web.UI.Page
             if (DtCompanyDDL.Rows.Count > 0)
             {
                 Co.FillDropdownlist(ddldivision, DtCompanyDDL, "FactoryName", "FactoryRefNo");
+                // code by gk to select indivisual division for the particular unit
+                DataTable dt = Lo.RetriveMasterData(0, hfcomprefno.Value, "Factory3", 0, "", "", "CompanyName");
+                if (dt.Rows.Count > 0)
+                    ddldivision.SelectedValue = dt.Rows[0]["FactoryRefNo"].ToString();
+                //end code
                 divlblselectdivison.Visible = true;
                 ddldivision.Enabled = false;
             }
@@ -355,6 +360,9 @@ public partial class Admin_AddProduct : System.Web.UI.Page
             if (DtCompanyDDL.Rows.Count > 0)
             {
                 Co.FillDropdownlist(ddlunit, DtCompanyDDL, "UnitName", "UnitRefNo");
+                // code by gk to select indivisual unit for the particular unit               
+                    ddldivision.SelectedValue = hfcomprefno.Value;
+                //end code
                 BindNodelEmail();
                 ddlunit.Enabled = false;
                 divlblselectunit.Visible = true;
@@ -579,7 +587,6 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     protected void ddlmastercategory_SelectedIndexChanged(object sender, EventArgs e)
     {
         BindMasterSubCategory();
-        NSCCode(ddlmastercategory.SelectedItem.Text, ddlsubcategory.SelectedItem.Text);
     }
     protected void ddlsubcategory_SelectedIndexChanged(object sender, EventArgs e)
     {
@@ -945,27 +952,55 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         {
             HyPanel1["ProductID"] = 0;
         }
-        if (ddlcompany.SelectedItem.Text != "Select" && ddldivision.SelectedItem.Text == "Select")
+        if (hfprodid.Value != "")
         {
-            HyPanel1["CompanyRefNo"] = Co.RSQandSQLInjection(ddlcompany.SelectedItem.Value, "soft");
-            hidType.Value = "Company";
-            HyPanel1["Role"] = hidType.Value.ToString();
-        }
-        else if (ddlcompany.SelectedItem.Text != "Select" && ddldivision.SelectedItem.Text != "Select" && ddlunit.SelectedItem.Text == "Select")
-        {
-            HyPanel1["CompanyRefNo"] = Co.RSQandSQLInjection(ddldivision.SelectedItem.Value, "soft");
-            hidType.Value = "Division";
-            HyPanel1["Role"] = hidType.Value.ToString();
-        }
-        else if (ddlcompany.SelectedItem.Text != "Select" && ddldivision.SelectedItem.Text != "Select" && ddlunit.SelectedItem.Text != "Select")
-        {
-            HyPanel1["CompanyRefNo"] = Co.RSQandSQLInjection(ddlunit.SelectedItem.Value, "soft");
-            hidType.Value = "Unit";
-            HyPanel1["Role"] = hidType.Value.ToString();
+            if (ddlcompany.SelectedItem.Text != "Select" && ddldivision.Visible == false)
+            {
+                HyPanel1["CompanyRefNo"] = Co.RSQandSQLInjection(ddlcompany.SelectedItem.Value, "soft");
+                hidType.Value = "Company";
+                HyPanel1["Role"] = hidType.Value.ToString();
+            }
+            else if (ddlcompany.SelectedItem.Text != "Select" && ddldivision.SelectedItem.Text != "Select" && ddlunit.Visible == false)
+            {
+                HyPanel1["CompanyRefNo"] = Co.RSQandSQLInjection(ddldivision.SelectedItem.Value, "soft");
+                hidType.Value = "Division";
+                HyPanel1["Role"] = hidType.Value.ToString();
+            }
+            else if (ddlcompany.SelectedItem.Text != "Select" && ddldivision.SelectedItem.Text != "Select" && ddlunit.SelectedItem.Text != "Select")
+            {
+                HyPanel1["CompanyRefNo"] = Co.RSQandSQLInjection(ddlunit.SelectedItem.Value, "soft");
+                hidType.Value = "Unit";
+                HyPanel1["Role"] = hidType.Value.ToString();
+            }
+            else
+            {
+                HyPanel1["CompanyRefNo"] = Co.RSQandSQLInjection(hfcomprefno.Value, "soft");
+            }
         }
         else
         {
-            HyPanel1["CompanyRefNo"] = Co.RSQandSQLInjection(hfcomprefno.Value, "soft");
+            if (ddlcompany.SelectedItem.Text != "Select" && ddldivision.SelectedItem.Text == "Select" || ddldivision.Visible == false)
+            {
+                HyPanel1["CompanyRefNo"] = Co.RSQandSQLInjection(ddlcompany.SelectedItem.Value, "soft");
+                hidType.Value = "Company";
+                HyPanel1["Role"] = hidType.Value.ToString();
+            }
+            else if (ddlcompany.SelectedItem.Text != "Select" && ddldivision.SelectedItem.Text != "Select" && ddlunit.SelectedItem.Text == "Select" || ddlunit.SelectedItem.Text == "Select")
+            {
+                HyPanel1["CompanyRefNo"] = Co.RSQandSQLInjection(ddldivision.SelectedItem.Value, "soft");
+                hidType.Value = "Division";
+                HyPanel1["Role"] = hidType.Value.ToString();
+            }
+            else if (ddlcompany.SelectedItem.Text != "Select" && ddldivision.SelectedItem.Text != "Select" && ddlunit.SelectedItem.Text != "Select")
+            {
+                HyPanel1["CompanyRefNo"] = Co.RSQandSQLInjection(ddlunit.SelectedItem.Value, "soft");
+                hidType.Value = "Unit";
+                HyPanel1["Role"] = hidType.Value.ToString();
+            }
+            else
+            {
+                HyPanel1["CompanyRefNo"] = Co.RSQandSQLInjection(hfcomprefno.Value, "soft");
+            }
         }
         if (ddlmastercategory.SelectedItem.Value != "Select")
         {
@@ -1149,7 +1184,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                 FinancialRemarks = FinancialRemarks + "," + txtFinancialRemarks.Text;
             }
         }
-        if (Services != "")
+        if (FinancialServices != "")
         {
             HyPanel1["FinancialSupport"] = Co.RSQandSQLInjection(FinancialServices.Substring(1).ToString() + ",", "soft");
             HyPanel1["FinancialRemark"] = Co.RSQandSQLInjection(FinancialRemarks.Substring(1).ToString() + ",", "soft");
@@ -1509,10 +1544,15 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                 rbisindinised.SelectedValue = DtView.Rows[0]["IsIndeginized"].ToString();
                 if (rbisindinised.SelectedItem.Value == "Y")
                 {
-                    txtmanufacturename.Visible = true;
+
                     txtmanufacturename.Text = DtView.Rows[0]["ManufactureName"].ToString();
                     txtmanifacaddress.Text = DtView.Rows[0]["ManufactureAddress"].ToString();
                     ddlyearofindiginization.SelectedValue = DtView.Rows[0]["YearofIndiginization"].ToString();
+                    divisIndigenized.Visible = true;
+                }
+                else
+                {
+                    divisIndigenized.Visible = false;
                 }
                 txtsearchkeyword.Text = DtView.Rows[0]["SearchKeyword"].ToString();
                 DataTable dtImageBind = Lo.RetriveProductCode("", hfprodrefno.Value, "ProductImage", hidType.Value);
@@ -1667,11 +1707,13 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     {
         try
         {
-            string a = NSNGroupddl.Substring((NSNGroupddl.IndexOf("(")));
-            string b = NSNClassddl.Substring((NSNClassddl.IndexOf("(")));
+            string a = NSNGroupddl.Substring((NSNGroupddl.IndexOf("(") + 1), NSNGroupddl.IndexOf(")") - (NSNGroupddl.IndexOf("(")+1));
+            string b = NSNClassddl.Substring((NSNClassddl.IndexOf("(") + 1), NSNClassddl.IndexOf(")") - (NSNClassddl.IndexOf("(")+1));
             txtnsccode.Text = a + b;
         }
-        catch (Exception)
-        { }
+        catch (Exception ex)
+        {
+            txtnsccode.Text = "";
+        }
     }
 }

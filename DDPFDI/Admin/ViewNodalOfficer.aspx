@@ -36,7 +36,6 @@
                             <div class="col-md-12">
                                 <asp:HiddenField runat="server" ID="hfrole" />
                                 <div class="table-wrapper">
-
                                     <div id="Div1" runat="server" visible="False">
                                         <div class="col-sm-4 row">
                                             <asp:TextBox ID="txtserch" runat="server" CssClass="form-cascade-control form-control" Placeholder="Type keyword to search"></asp:TextBox>
@@ -82,13 +81,11 @@
                                         PageSize="60" AllowSorting="true" OnRowCommand="gvViewDesignation_RowCommand" OnRowDataBound="gvViewNodalOfficer_RowDataBound">
                                         <PagerStyle HorizontalAlign="Center" CssClass="GridPager" />
                                         <Columns>
-
                                             <asp:TemplateField HeaderText="S.No.">
                                                 <ItemTemplate>
                                                     <%#Container.DataItemIndex+1 %>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
-
                                             <asp:TemplateField HeaderText="Name">
                                                 <ItemTemplate>
                                                     <asp:Label ID="lblnodelname" runat="server" Text='<%#Eval("NodalOficerName") %>' NullDisplayText="#" SortExpression="NodalOficerName"></asp:Label>

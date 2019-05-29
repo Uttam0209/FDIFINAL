@@ -100,7 +100,7 @@
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <asp:Button ID="btncancel" runat="server" Text="Cancel" TabIndex="10" CssClass="btn btn-default pull-right" Style="margin-right: 0 !important" OnClick="btncancel_Click" />
-                                                <asp:LinkButton ID="btnsub" runat="server" Text="Save" TabIndex="9" class="btn btn-primary pull-right" OnClick="btnsub_Click" OnClientClick="return confirm('Are you sure you want to save this nodal officer?');"></asp:LinkButton>
+                                                <asp:LinkButton ID="btnsub" runat="server" Text="Save" TabIndex="9" class="btn btn-primary pull-right" OnClick="btnsub_Click" OnClientClick="return confirm('Are you sure you want to save this record?');"></asp:LinkButton>
                                             </div>
                                         </div>
                                     </div>
