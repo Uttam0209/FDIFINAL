@@ -1675,11 +1675,13 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     {
         try
         {
-            string a = NSNGroupddl.Substring((NSNGroupddl.IndexOf("(")));
-            string b = NSNClassddl.Substring((NSNClassddl.IndexOf("(")));
+            string a = NSNGroupddl.Substring((NSNGroupddl.IndexOf("(") + 1), NSNGroupddl.IndexOf(")") - (NSNGroupddl.IndexOf("(")+1));
+            string b = NSNClassddl.Substring((NSNClassddl.IndexOf("(") + 1), NSNClassddl.IndexOf(")") - (NSNClassddl.IndexOf("(")+1));
             txtnsccode.Text = a + b;
         }
-        catch (Exception)
-        { }
+        catch (Exception ex)
+        {
+            txtnsccode.Text = "";
+        }
     }
 }

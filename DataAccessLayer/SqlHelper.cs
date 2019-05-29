@@ -1164,7 +1164,7 @@ namespace DataAccessLayer
                 }
             }
         }
-        public string SaveUploadExcelCompany(DataTable dtExcel)
+        public string SaveUploadExcelCompany(DataTable dtMaster,DataTable dtExcel)
         {
             using (DbConnection Connection = db.CreateConnection())
             {
@@ -1173,23 +1173,39 @@ namespace DataAccessLayer
                 Int32 errorRow = -1;
                 try
                 {
-                    string mEntryID = "";
-                    for (int a = 0; a < dtExcel.Rows.Count; a++)
+                    Int32 mEntryID;
+                    for (int k = 0; k < dtMaster.Rows.Count; k++)
                     {
-                        errorRow = a;
-                        DbCommand cmd = db.GetStoredProcCommand("sp_mst_trnRawData");
+                        mEntryID = 0;
+                        DbCommand cmd = db.GetStoredProcCommand("sp_InsertCategoryFromExcel");
 
-                        db.AddInParameter(cmd, "@UniqueID", DbType.Int64, "-1");
-                        db.AddInParameter(cmd, "@Allocated_Date", DbType.Date, DateTime.Parse(dtExcel.Rows[a]["Allocated Date"].ToString()));
-                        db.AddInParameter(cmd, "@Account_Caf_No", DbType.String, dtExcel.Rows[a]["Account Caf No"].ToString());
-                        db.AddInParameter(cmd, "@Account_Manager", DbType.String, dtExcel.Rows[a]["Account Manager"].ToString());
-                        db.AddInParameter(cmd, "@Account_Number", DbType.String, dtExcel.Rows[a]["Account Number"].ToString());
-                        db.AddOutParameter(cmd, "@ReturnID", DbType.String, 50);
+                        db.AddInParameter(cmd, "@Pid", DbType.Int64, mEntryID);
+                        db.AddInParameter(cmd, "@CatName", DbType.String, dtMaster.Rows[k]["FSG Title"].ToString() + "(" + dtMaster.Rows[k]["Group"].ToString() + ")");
+                        db.AddInParameter(cmd, "@L1Code", DbType.String, dtMaster.Rows[k]["Group"].ToString());
+                        db.AddInParameter(cmd, "@L2Code", DbType.String, String.Empty);
+                        db.AddOutParameter(cmd, "@NewId", DbType.Int32, 50);
                         db.ExecuteNonQuery(cmd, Transaction);
-                        mEntryID = db.GetParameterValue(cmd, "@ReturnID").ToString();
+                        mEntryID = Convert.ToInt32(db.GetParameterValue(cmd, "@NewId"));
+                        for (int a = 0; a < dtExcel.Rows.Count; a++)
+                        {
+                            errorRow = a;
+                            if (dtMaster.Rows[k]["Group"].ToString() == dtExcel.Rows[a]["GROUP"].ToString())
+                            {
+                                DbCommand cmdInner = db.GetStoredProcCommand("sp_InsertCategoryFromExcel");
+
+                                db.AddInParameter(cmdInner, "@Pid", DbType.Int64, mEntryID);
+                                db.AddInParameter(cmdInner, "@CatName", DbType.String, dtExcel.Rows[a]["FSC Title"].ToString() + "(" + dtExcel.Rows[a]["GCLS"].ToString() + ")");
+                                db.AddInParameter(cmdInner, "@L1Code", DbType.String, dtExcel.Rows[a]["GROUP"].ToString());
+                                db.AddInParameter(cmdInner, "@L2Code", DbType.String, dtExcel.Rows[a]["GCLS"].ToString());
+                                db.AddOutParameter(cmdInner, "@NewId", DbType.Int32, 50);
+                                db.ExecuteNonQuery(cmdInner, Transaction);
+                                //mEntryID = Convert.ToInt32(db.GetParameterValue(cmdInner, "@NewId"));
+                            }
+
+                        }
                     }
                     Transaction.Commit();
-                    return mEntryID = "Save";
+                    return "Save";
                 }
                 catch (Exception ex)
                 {

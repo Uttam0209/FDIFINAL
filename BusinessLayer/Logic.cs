@@ -33,9 +33,9 @@ namespace BusinessLayer
             DataTable dt = SqlHelper.Instance.CreateExcelConnection(FilePath, SheetName, out text);
             return dt;
         }
-        public string SaveUploadExcelCompany(DataTable DtExcel)
+        public string SaveUploadExcelCompany(DataTable dtMaster,DataTable dtExcel)
         {
-            return SqlHelper.Instance.SaveUploadExcelCompany(DtExcel);
+            return SqlHelper.Instance.SaveUploadExcelCompany(dtMaster, dtExcel);
         }
 
         #region SaveCode

@@ -1937,3 +1937,4 @@ form label { font-size: 15px !important; font-family: 'Roboto', sans-serif !impo
     color:white !important;
 }
 
+.ShowDivisionFromDashboard table >.clone-row { display: block !important}

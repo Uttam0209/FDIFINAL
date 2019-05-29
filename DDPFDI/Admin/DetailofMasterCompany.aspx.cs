@@ -51,7 +51,7 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
                     if (Request.QueryString["mu"] != null)
                     {
                         if (objEnc.DecryptData(Request.QueryString["mu"].ToString())=="View")
-                        {
+                        {                            
                             DataTable DtGrid = Lo.RetriveGridViewCompany("0", "", "", "CompanyMainGridView");
                             if (DtGrid.Rows.Count > 0)
                             {
@@ -635,10 +635,17 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
             Label lblrefno = e.Row.FindControl("lblrefno") as Label;
             GridView gvfactory = e.Row.FindControl("gvfactory") as GridView;
 
+
+            LinkButton lnkCompView = e.Row.FindControl("lblview") as LinkButton;
+            LinkButton lnkCompEdit = e.Row.FindControl("lbledit") as LinkButton;
+
+            //code by gk to stop visibility of edit button if user coming from dashboard
+            if(objEnc.DecryptData(Request.QueryString["mu"].ToString())=="View")
+                lnkCompEdit.Visible = false;
+            //end of code
+
             if (mType == "Factory" || mType == "Unit")
-            {
-                LinkButton lnkCompView = e.Row.FindControl("lblview") as LinkButton;
-                LinkButton lnkCompEdit = e.Row.FindControl("lbledit") as LinkButton;
+            {               
                 lnkCompView.Visible = false;
                 lnkCompEdit.Visible = false;
             }
