@@ -120,7 +120,7 @@
                                 </div>
                                 <div class="table-wrapper" id="divinnercat" runat="server">
                                     <div>
-                                        <asp:Label runat="server" class="label label-info" ID="lblevel" Text=""></asp:Label>
+                                        <asp:Label runat="server" class="label label-primary" ID="lblevel" Text=""></asp:Label>
                                     </div>
                                     <asp:GridView ID="gvlevel3" runat="server" AutoGenerateColumns="false" Class=" master-company-table table display
                                          responsive no-wrap table-hover manage-user Grid">

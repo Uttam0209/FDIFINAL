@@ -42,6 +42,10 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="clearfix"></div>
+                                <div style="margin-top:5px;">
+                                    <a class="fa fa-arrow-circle-left pull-right" href='<%=ResolveUrl("~/Dashboard") %>'>&nbsp; &nbsp;Back</a>
+                                </div>
+                                <div class="clearfix"></div>
                                 <div id="divTotalNumber" class="text-center" style="font-size: 16px; margin-top: 10px;" runat="server">
                                     <asp:Label ID="lbltotal" runat="server" Text=""></asp:Label>
                                 </div>
@@ -68,9 +72,9 @@
                                                     <asp:Label runat="server" ID="lblcompanyrole" Text='<%#Eval("Role") %>'></asp:Label>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
-                                            <asp:TemplateField HeaderText="Nodal Official Email">
+                                            <asp:TemplateField HeaderText="Nodal Officer Email">
                                                 <ItemTemplate>
-                                                    <asp:Label ID="lblnodelname" runat="server" Text='<%#Eval("ContactPersonEmailID") %>' NullDisplayText="#"></asp:Label>
+                                                    <asp:Label ID="lblnodelname" runat="server" Text='<%#Eval("NodalOfficerEmail") %>' NullDisplayText="#"></asp:Label>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="Action">
@@ -90,16 +94,17 @@
                                                     <%#Container.DataItemIndex+1 %>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
-                                            <asp:TemplateField>
+                                            <asp:BoundField DataField="CompanyName" HeaderText="Company" NullDisplayText="#" />
+                                            <asp:BoundField ItemStyle-Width="150px" DataField="FactoryName" HeaderText="Division" />
+                                            <asp:TemplateField HeaderText="Reference No.">
                                                 <ItemTemplate>
                                                     <asp:Label runat="server" ID="lblfactoryrefno" Text='<%#Eval("FactoryRefNo") %>'></asp:Label>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
-                                            <asp:BoundField ItemStyle-Width="150px" DataField="FactoryName" HeaderText="Division" />
-                                            <asp:BoundField ItemStyle-Width="150px" DataField="Role" HeaderText="" />
-                                            <asp:TemplateField>
+                                            <asp:BoundField ItemStyle-Width="150px" DataField="Role" HeaderText="Role" />
+                                            <asp:TemplateField HeaderText="Nodal Officer Email">
                                                 <ItemTemplate>
-                                                    <asp:Label ID="lblfactorynodelname" runat="server" Text='<%#Eval("FactoryEmailId") %>' NullDisplayText="#"></asp:Label>
+                                                    <asp:Label ID="lblfactorynodelname" runat="server" Text='<%#Eval("NodalOfficerEmail") %>' NullDisplayText="#"></asp:Label>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="Action">
@@ -115,22 +120,25 @@
                                     <asp:GridView ID="gvunit" runat="server" AutoGenerateColumns="false" Class="table table-hover ChildGrid" OnRowCommand="gvunit_RowCommand">
                                         <PagerStyle HorizontalAlign="Center" CssClass="GridPager" />
                                         <Columns>
-                                            <asp:TemplateField>
+                                            <asp:TemplateField HeaderText="S.No.">
                                                 <ItemTemplate>
                                                     <%#Container.DataItemIndex+1 %>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
-                                            <asp:BoundField ItemStyle-Width="150px" DataField="UnitRefNo" />
-                                            <asp:BoundField ItemStyle-Width="150px" DataField="UnitName" HeaderText="Unit" />
-                                            <asp:TemplateField>
+                                            <asp:BoundField DataField="CompanyName" HeaderText="Company" NullDisplayText="#" />
+                                            <asp:BoundField DataField="FactoryName" HeaderText="Division" />
+                                            <asp:BoundField DataField="UnitName" HeaderText="Unit" />
+                                            <asp:BoundField DataField="UnitRefNo" HeaderText="Reference No." />
+
+                                            <asp:TemplateField HeaderText="Role">
                                                 <ItemTemplate>
                                                     <asp:Label runat="server" ID="lblunitrole" Text='<%#Eval("Role") %>'></asp:Label>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
-                                            <asp:TemplateField>
+                                            <asp:TemplateField HeaderText="Nodal Officer Email">
                                                 <ItemTemplate>
-                                                    <asp:Label ID="lblunitnodelname" runat="server" Text='<%#Eval("UnitEmailId") %>' NullDisplayText="#"></asp:Label>
-                                                    <asp:HiddenField runat="server" ID="hfunitemail" Value='<%#Eval("UnitEmailId") %>' />
+                                                    <asp:Label ID="lblunitnodelname" runat="server" Text='<%#Eval("NodalOfficerEmail") %>' NullDisplayText="#"></asp:Label>
+                                                    <asp:HiddenField runat="server" ID="hfunitemail" Value='<%#Eval("NodalOfficerEmail") %>' />
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="Action">
@@ -153,25 +161,28 @@
                                                     <%#Container.DataItemIndex+1 %>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
-                                            <asp:TemplateField HeaderText="Name">
+                                            <asp:BoundField DataField="CompanyName" HeaderText="Company" NullDisplayText="-" />
+                                            <asp:BoundField DataField="FactoryName" HeaderText="Division" NullDisplayText="-" />
+                                            <asp:BoundField DataField="UnitName" HeaderText="Unit" NullDisplayText="-" />
+                                            <asp:TemplateField HeaderText="Nodal Officer Name">
                                                 <ItemTemplate>
                                                     <asp:Label ID="lblnodelname" runat="server" Text='<%#Eval("NodalOficerName") %>' NullDisplayText="#" SortExpression="NodalOficerName"></asp:Label>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
-                                            <asp:TemplateField HeaderText="CompanyReference No." Visible="False">
+                                            <asp:TemplateField HeaderText="Reference No.">
                                                 <ItemTemplate>
                                                     <asp:Label ID="lblnodelrefno" runat="server" Text='<%#Eval("NodalOfficerRefNo") %>' NullDisplayText="#" SortExpression="NodalOfficerRefNo"></asp:Label>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
-                                            <asp:TemplateField HeaderText="Email">
+                                            <asp:TemplateField HeaderText="Nodal Officer Email">
                                                 <ItemTemplate>
                                                     <asp:Label ID="nodelemail" runat="server" Text='<%#Eval("NodalOfficerEmail") %>' NullDisplayText="#" SortExpression="NodalOfficerEmail"></asp:Label>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
-                                            <asp:TemplateField HeaderText="Role">
+                                            <asp:TemplateField HeaderText="Nodal">
                                                 <ItemTemplate>
-                                                    <asp:Label ID="lblnodalofficer" runat="server" Text='<%#Eval("IsNodalOfficer") %>' NullDisplayText="#" Visible="False" SortExpression="NodalOfficerEmail"></asp:Label>
-                                                    <asp:Label ID="lblnodallogactive" runat="server" Text='<%#Eval("IsLoginActive") %>' NullDisplayText="#" Visible="False" SortExpression="NodalOfficerEmail"></asp:Label>
+                                                    <asp:Label ID="lblnodalofficer" runat="server" Text='<%#Eval("IsNodalOfficer") %>' NullDisplayText="#" SortExpression="NodalOfficerEmail"></asp:Label>
+
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="Company">
@@ -179,9 +190,7 @@
                                                     <asp:Label ID="lblrefno" runat="server" Text='<%#Eval("CompanyName") %>' NullDisplayText="#" SortExpression="Company"></asp:Label>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
-                                            <asp:BoundField DataField="FactoryName" HeaderText="Division" NullDisplayText="-" />
-                                            <asp:BoundField DataField="UnitName" HeaderText="Unit" NullDisplayText="-" />
-                                            <asp:BoundField DataField="CreatedBy" HeaderText="Create By" NullDisplayText="-" />
+
                                             <asp:TemplateField HeaderText="Action">
                                                 <ItemTemplate>
                                                     <asp:LinkButton ID="lblview" runat="server" ToolTip="View Detail of Nodal Officer/Employee" CssClass="fa fa-eye" CommandName="ViewComp" CommandArgument='<%#Eval("NodalOfficerID") %>'></asp:LinkButton>
@@ -202,13 +211,14 @@
                                                     <%#Container.DataItemIndex+1 %>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
+                                            <asp:BoundField DataField="CompanyName" HeaderText="Company" NullDisplayText="-" />
+                                            <asp:BoundField DataField="FactoryName" HeaderText="Division" NullDisplayText="-" />
+                                            <asp:BoundField DataField="UnitName" HeaderText="Unit" NullDisplayText="-" />
                                             <asp:TemplateField HeaderText="Product Reference No.">
                                                 <ItemTemplate>
                                                     <asp:Label ID="lblrefno" runat="server" Text='<%#Eval("ProductRefNo") %>' NullDisplayText="#" SortExpression="ProductRefNo"></asp:Label>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
-                                            <%--  <asp:BoundField DataField="CompanyName" HeaderText="Company" NullDisplayText="#" SortExpression="Company" />--%>
-                                            <asp:BoundField DataField="CompanyRefNo" HeaderText="Company Reference No" Visible="false" NullDisplayText="#" SortExpression="CompanyRefNo" />
                                             <asp:TemplateField HeaderText="OEM PartNumber">
                                                 <ItemTemplate>
                                                     <asp:Label runat="server" ID="lblcompanyrole" Text='<%#Eval("OEMPartNumber") %>'></asp:Label>
