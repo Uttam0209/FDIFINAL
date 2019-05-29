@@ -72,9 +72,9 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
             {
                 if (Request.QueryString["mu"] != null)
                 {
-                    if (objEnc.DecryptData(Request.QueryString["mu"].ToString()) == "View")
+                    if (objEnc.DecryptData(Request.QueryString["mu"].ToString().Replace(" ", "+")) == "View")
                     {
-                        DtGrid = Lo.RetriveProductCode("", "", "ProductMaster", "");
+                        DtGrid = Lo.RetriveProductCode("", "", "ProductMaster", "All");
                         if (DtGrid.Rows.Count > 0)
                         {
                             gvproduct.DataSource = DtGrid;
@@ -206,8 +206,10 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
         }
         else if (e.CommandName == "ViewComp")
         {
-            if (ddlcompany.SelectedItem.Text != "Select" && ddldivision.Visible == false)
-            {hidType.Value = "Company";}
+            if (ddlcompany.SelectedItem.Text == "Select")
+            { hidType.Value = "All"; }
+            else if (ddlcompany.SelectedItem.Text != "Select" && ddldivision.Visible == false)
+            { hidType.Value = "Company"; }
             else if (ddlcompany.SelectedItem.Text != "Select" && ddldivision.SelectedItem.Text != "Select")
             { hidType.Value = "Division"; }
             else if (ddlcompany.SelectedItem.Text != "Select" && ddldivision.SelectedItem.Text != "Select" && ddlunit.SelectedItem.Text != "Select")

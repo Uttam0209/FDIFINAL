@@ -8,6 +8,7 @@ using System.Text;
 using System.Web.UI;
 using System.IO;
 using System.Web.UI.WebControls;
+using System.Web;
 
 public partial class Admin_AddNodalOfficer : System.Web.UI.Page
 {
@@ -586,7 +587,7 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
                 body = reader.ReadToEnd();
             }
             body = body.Replace("{UserName}", txtemailid.Text);
-            body = body.Replace("{refno}", objEnc.EncryptData(empid));
+            body = body.Replace("{refno}", HttpUtility.UrlEncode(objEnc.EncryptData(empid)));
             body = body.Replace("{mcurid}", Resturl(56));
             SendMail s;
             s = new SendMail();

@@ -26,7 +26,8 @@ public partial class Admin_MasterPage : System.Web.UI.MasterPage
         }
         else
         {
-            Response.RedirectToRoute("Login");
+           // ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Session Expire,Please login again');window.location='Login'", true);
+            // Response.RedirectToRoute("Login");
         }
     }
     protected void lbllogout_Click(object sender, EventArgs e)
