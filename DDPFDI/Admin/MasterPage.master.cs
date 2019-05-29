@@ -20,14 +20,16 @@ public partial class Admin_MasterPage : System.Web.UI.MasterPage
     string sType = "";
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (Session["User"] != null)
+        try
         {
-            MenuLogin();
+            if (Session["User"] != null)
+            {
+                MenuLogin();
+            }
         }
-        else
+        catch (Exception exception)
         {
-           // ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Session Expire,Please login again');window.location='Login'", true);
-            // Response.RedirectToRoute("Login");
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Session Expire,Please login again');window.location='Login'", true);
         }
     }
     protected void lbllogout_Click(object sender, EventArgs e)

@@ -361,7 +361,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
             {
                 Co.FillDropdownlist(ddlunit, DtCompanyDDL, "UnitName", "UnitRefNo");
                 // code by gk to select indivisual unit for the particular unit               
-                    ddldivision.SelectedValue = hfcomprefno.Value;
+                ddldivision.SelectedValue = hfcomprefno.Value;
                 //end code
                 BindNodelEmail();
                 ddlunit.Enabled = false;
@@ -1160,13 +1160,19 @@ public partial class Admin_AddProduct : System.Web.UI.Page
             if (chkBx != null && chkBx.Checked)
             {
                 Services = Services + "," + hfservicesid.Value;
-                Remarks = Remarks + "," + txtRemarks.Text;
+                if (txtRemarks.Text != "")
+                {
+                    Remarks = Remarks + "," + txtRemarks.Text;
+                }
             }
         }
         if (Services != "")
         {
             HyPanel1["DPSUServices"] = Co.RSQandSQLInjection(Services.Substring(1).ToString() + ",", "soft");
-            HyPanel1["Remarks"] = Co.RSQandSQLInjection(Remarks.Substring(1).ToString() + ",", "soft");
+            if (Remarks != "")
+            {
+                HyPanel1["Remarks"] = Co.RSQandSQLInjection(Remarks.Substring(1).ToString() + ",", "soft");
+            }
         }
         else
         {
@@ -1181,13 +1187,20 @@ public partial class Admin_AddProduct : System.Web.UI.Page
             if (chkfinanBx != null && chkfinanBx.Checked)
             {
                 FinancialServices = FinancialServices + "," + hffinanservicesid.Value;
-                FinancialRemarks = FinancialRemarks + "," + txtFinancialRemarks.Text;
+                if (txtFinancialRemarks.Text != "")
+                {
+                    FinancialRemarks = FinancialRemarks + "," + txtFinancialRemarks.Text;
+                }
             }
         }
         if (FinancialServices != "")
         {
             HyPanel1["FinancialSupport"] = Co.RSQandSQLInjection(FinancialServices.Substring(1).ToString() + ",", "soft");
-            HyPanel1["FinancialRemark"] = Co.RSQandSQLInjection(FinancialRemarks.Substring(1).ToString() + ",", "soft");
+            if (FinancialRemarks != "")
+            {
+                HyPanel1["FinancialRemark"] =
+                    Co.RSQandSQLInjection(FinancialRemarks.Substring(1).ToString() + ",", "soft");
+            }
         }
         else
         {
@@ -1234,13 +1247,20 @@ public partial class Admin_AddProduct : System.Web.UI.Page
             if (chktest != null && chktest.Checked)
             {
                 ServicesTesting = ServicesTesting + "," + hftestingid.Value;
-                RemarksTesting = RemarksTesting + "," + txtRemarksTest.Text;
+                if (txtRemarksTest.Text != "")
+                {
+                    RemarksTesting = RemarksTesting + "," + txtRemarksTest.Text;
+                }
             }
         }
         if (ServicesTesting != "")
         {
             HyPanel1["Testing"] = Co.RSQandSQLInjection(ServicesTesting.Substring(1).ToString() + ",", "soft");
-            HyPanel1["TestingRemarks"] = Co.RSQandSQLInjection(RemarksTesting.Substring(1).ToString() + ",", "soft");
+            if (RemarksTesting != "")
+            {
+                HyPanel1["TestingRemarks"] =
+                    Co.RSQandSQLInjection(RemarksTesting.Substring(1).ToString() + ",", "soft");
+            }
         }
         else
         {
@@ -1255,13 +1275,19 @@ public partial class Admin_AddProduct : System.Web.UI.Page
             if (chkcerti != null && chkcerti.Checked)
             {
                 ServicesCertification = ServicesCertification + "," + hfcertiid.Value;
-                RemarksCertification = RemarksCertification + "," + txtremarkscerti.Text;
+                if (txtremarkscerti.Text != "")
+                {
+                    RemarksCertification = RemarksCertification + "," + txtremarkscerti.Text;
+                }
             }
         }
         if (ServicesCertification != "")
         {
             HyPanel1["Certification"] = Co.RSQandSQLInjection(ServicesCertification.Substring(1).ToString() + ",", "soft");
-            HyPanel1["CertificationRemark"] = Co.RSQandSQLInjection(RemarksCertification.Substring(1).ToString() + ",", "soft");
+            if (RemarksCertification != "")
+            {
+                HyPanel1["CertificationRemark"] = Co.RSQandSQLInjection(RemarksCertification.Substring(1).ToString() + ",", "soft");
+            }
         }
         else
         {

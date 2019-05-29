@@ -18,10 +18,10 @@ public partial class Admin_ViewDashboard : System.Web.UI.Page
     {
         if (!IsPostBack)
         {
-            // BindCompany();
-            //BindDivision();
-            // BindUnit();
-            // BindEmployee();
+            BindCompany();
+            BindDivision();
+            BindUnit();
+            BindEmployee();
             BindProduct();
         }
     }

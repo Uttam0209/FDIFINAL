@@ -45,7 +45,6 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
                 mType = objEnc.DecryptData(Session["Type"].ToString());
                 mRefNo = Session["CompanyRefNo"].ToString();
                 BindCompany();
-
                 if (mType == "SuperAdmin" || mType == "Admin")
                 {
                     if (Request.QueryString["mu"] != null)
@@ -207,11 +206,9 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
             {
                 ddlcompany.Enabled = false;
             }
-
             ddldivision.Visible = false;
             ddlunit.Visible = false;
         }
-
         else if (mType == "Company")
         {
             DtCompanyDDL = Lo.RetriveMasterData(0, mRefNo, "Company", 0, "", "", "CompanyName");
