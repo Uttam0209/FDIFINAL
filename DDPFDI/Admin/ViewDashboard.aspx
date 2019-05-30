@@ -314,7 +314,7 @@
                                                     <asp:Label ID="lblFaxNo" runat="server"></asp:Label>
                                                 </td>
                                             </tr>
-                                            <tr>
+                                            <tr class="hidden">
                                                 <td class="pass">EmailID</td>
                                                 <td>
                                                     <asp:Label ID="lblEmailID" runat="server"></asp:Label>
@@ -650,7 +650,7 @@
                                             <tr>
                                                 <td class="pass">Company</td>
                                                 <td>
-                                                    <asp:Label ID="Label1" runat="server"></asp:Label>
+                                                    <asp:Label ID="lblNodalComp" runat="server"></asp:Label>
                                                 </td>
                                             </tr>
                                             <tr>

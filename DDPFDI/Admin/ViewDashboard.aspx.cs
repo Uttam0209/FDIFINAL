@@ -397,7 +397,7 @@ public partial class Admin_ViewDashboard : System.Web.UI.Page
         DtView = Lo.RetriveAllNodalOfficer(e.CommandArgument.ToString(), "CompanyID");
         if (DtView.Rows.Count > 0)
         {
-            lblcompanyname.Text = DtView.Rows[0]["CompanyName"].ToString();
+            lblNodalComp.Text = DtView.Rows[0]["CompanyName"].ToString();
             lblDivision.Text = DtView.Rows[0]["FactoryName"].ToString();
             lblUnit.Text = DtView.Rows[0]["UnitName"].ToString();
             lblNodalOfficerRefNo.Text = DtView.Rows[0]["NodalOfficerRefNo"].ToString();
