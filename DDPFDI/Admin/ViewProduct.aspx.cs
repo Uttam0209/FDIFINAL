@@ -206,15 +206,10 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
         }
         else if (e.CommandName == "ViewComp")
         {
-            if (ddlcompany.SelectedItem.Text == "Select")
-            { hidType.Value = "All"; }
-            else if (ddlcompany.SelectedItem.Text != "Select" && ddldivision.Visible == false)
-            { hidType.Value = "Company"; }
-            else if (ddlcompany.SelectedItem.Text != "Select" && ddldivision.SelectedItem.Text != "Select")
-            { hidType.Value = "Division"; }
-            else if (ddlcompany.SelectedItem.Text != "Select" && ddldivision.SelectedItem.Text != "Select" && ddlunit.SelectedItem.Text != "Select")
-            { hidType.Value = "Unit"; }
-            DataTable DtView = Lo.RetriveProductCode("", e.CommandArgument.ToString(), "ProductMasterID", hidType.Value);
+            GridViewRow gvr = (GridViewRow)((Control)e.CommandSource).NamingContainer;
+            int rowIndex = gvr.RowIndex;
+            string Role = (gvproduct.Rows[rowIndex].FindControl("hfrole") as HiddenField).Value;
+            DataTable DtView = Lo.RetriveProductCode("", e.CommandArgument.ToString(), "ProductMasterID", Role);
             if (DtView.Rows.Count > 0)
             {
                 lblcomprefno.Text = DtView.Rows[0]["CompanyRefNo"].ToString();
@@ -429,7 +424,6 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
             {
                 ddlcompany.Enabled = false;
             }
-
             lblselectdivison.Visible = false;
             lblselectunit.Visible = false;
         }
@@ -551,6 +545,7 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
                 ddldivision.Items.Insert(0, "Select");
                 lblselectdivison.Visible = true;
                 ddldivision.Visible = true;
+                lblselectunit.Visible = false;
                 hidCompanyRefNo.Value = ddlcompany.SelectedItem.Value;
                 hidType.Value = "Company";
                 BindGridView();
