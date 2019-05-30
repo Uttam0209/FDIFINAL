@@ -4,10 +4,11 @@
 </asp:Content>
 <asp:Content ID="inner" runat="server" ContentPlaceHolderID="ContentPlaceHolder1">
     <asp:ScriptManager runat="server" ID="sc"></asp:ScriptManager>
-    <asp:UpdatePanel runat="server" ID="up" ChildrenAsTriggers="True">
-        <ContentTemplate>
-            <div class="content oem-content">
-                <div class="sideBg">
+
+    <div class="content oem-content">
+        <div class="sideBg">
+            <asp:UpdatePanel runat="server" ID="up" UpdateMode="Conditional">
+                <ContentTemplate>
                     <div class="col-mod-12">
                         <asp:HiddenField runat="server" ID="hfCatID" />
                         <asp:HiddenField runat="server" ID="hfSubCatID" />
@@ -114,45 +115,50 @@
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                             <asp:BoundField ItemStyle-Width="150px" DataField="CreatedBy" HeaderText="Create By" NullDisplayText="#" />
-                                            <%--     <asp:BoundField ItemStyle-Width="150px" DataField="SCategoryName" HeaderText="FLevel 2" />--%>
                                         </Columns>
                                     </asp:GridView>
                                 </div>
                                 <div class="table-wrapper" id="divinnercat" runat="server">
-                                    <asp:GridView ID="gvlevel3" runat="server" AutoGenerateColumns="false" Class="commonAjaxTbl master-company-table table display responsive no-wrap table-hover manage-user Grid" OnRowDataBound="gvlevel3_RowDataBound">
+                                    <div>
+                                        <asp:Label runat="server" class="label label-primary" ID="lblevel" Text=""></asp:Label>
+                                    </div>
+                                    <asp:GridView ID="gvlevel3" runat="server" AutoGenerateColumns="false" Class=" master-company-table table display
+                                         responsive no-wrap table-hover manage-user Grid">
                                         <Columns>
                                             <asp:TemplateField HeaderText="S.No">
                                                 <ItemTemplate>
                                                     <%#Container.DataItemIndex+1 %>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
-                                            <asp:BoundField runat="server" DataField="SCategoryName" NullDisplayText="#" HeaderText="Level 1" />
-                                            <%--   <asp:BoundField runat="server" DataField="SCategoryName" NullDisplayText="#" HeaderText="Level 2" />
-                                            <asp:BoundField runat="server" DataField="SCategoryName" NullDisplayText="#" HeaderText="Level 3" />--%>
-                                            <asp:BoundField runat="server" DataField="CreatedBy" HeaderText="Created By" NullDisplayText="#" />
+                                            <asp:TemplateField>
+                                                <ItemTemplate>
+                                                    <asp:Label runat="server" ID="lblsublevelcategory" Text='<%#Eval("SCategoryName") %>'></asp:Label>
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:BoundField runat="server" DataField="CreatedBy" NullDisplayText="#" />
                                         </Columns>
                                     </asp:GridView>
                                 </div>
                             </div>
                         </div>
-
                     </div>
                     <div class="clearfix"></div>
-                </div>
-                <div class="footer">� 2019 <a href="#">Department of Defence Production</a> </div>
-            </div>
-        </ContentTemplate>
-    </asp:UpdatePanel>
-    <asp:UpdateProgress ID="UpdateProgress" runat="server" AssociatedUpdatePanelID="up">
-        <ProgressTemplate>
-            <!---Progress Bar ---->
-            <div class="overlay-progress">
-                <div class="custom-progress-bar blue stripes">
-                    <span></span>
-                    <p>Processing</p>
-                </div>
-            </div>
-            <!---Progress Bar ---->
-        </ProgressTemplate>
-    </asp:UpdateProgress>
+                </ContentTemplate>
+            </asp:UpdatePanel>
+            <asp:UpdateProgress ID="UpdateProgress" runat="server" AssociatedUpdatePanelID="up">
+                <ProgressTemplate>
+                    <!---Progress Bar ---->
+                    <div class="overlay-progress">
+                        <div class="custom-progress-bar blue stripes">
+                            <span></span>
+                            <p>Processing</p>
+                        </div>
+                    </div>
+                    <!---Progress Bar ---->
+                </ProgressTemplate>
+            </asp:UpdateProgress>
+
+        </div>
+        <div class="footer">� 2019 <a href="#">Department of Defence Production</a> </div>
+    </div>
 </asp:Content>

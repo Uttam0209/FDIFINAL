@@ -58,15 +58,11 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
                     hidCompanyRefNo.Value = mRefNo.ToString();
                     ViewState["UserLoginEmail"] = objEnc.DecryptData(Session["User"].ToString());
                 }
+                BindCompany();
+                BindMasterDesignation("");
                 if (Request.QueryString["mcurrentcompRefNo"] != null)
                 {
                     EditCode();
-
-                }
-                else
-                {
-                    BindCompany();
-                    BindMasterDesignation("");
                 }
             }
         }
@@ -257,7 +253,6 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
             if (DtCompanyDDL.Rows.Count > 0)
             {
                 Co.FillDropdownlist(ddlcompany, DtCompanyDDL, "CompanyName", "CompanyRefNo");
-
                 ddlcompany.Enabled = false;
             }
             else
@@ -467,7 +462,6 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
         DataTable DtMasterCategroy;
         if (mCompanyRefNo != "")
         {
-
             DtMasterCategroy = Lo.RetriveMasterData(0, mCompanyRefNo, "", 0, "", "", "ViewDesignation");
         }
         else
@@ -477,7 +471,12 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
         if (DtMasterCategroy.Rows.Count > 0)
         {
             Co.FillDropdownlist(ddldesignation, DtMasterCategroy, "Designation", "DesignationId");
-            ddldesignation.Items.Insert(0, "Select");
+            if (Request.QueryString["mcurrentcompRefNo"] != null)
+            {
+                // ddldesignation.Items.Insert(0, "Select");
+            }
+            else
+            { ddldesignation.Items.Insert(0, "Select"); }
         }
     }
     #endregion

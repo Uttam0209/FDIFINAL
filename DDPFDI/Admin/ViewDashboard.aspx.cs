@@ -229,7 +229,10 @@ public partial class Admin_ViewDashboard : System.Web.UI.Page
     private string Certification;
     protected void gvproduct_RowCommand(object sender, GridViewCommandEventArgs e)
     {
-        DataTable DtView = Lo.RetriveProductCode("", e.CommandArgument.ToString(), "ProductMasterID", "All");
+        GridViewRow gvr = (GridViewRow)((Control)e.CommandSource).NamingContainer;
+        int rowIndex = gvr.RowIndex;
+        string Role = (gvproduct.Rows[rowIndex].FindControl("hfrole") as HiddenField).Value;
+        DataTable DtView = Lo.RetriveProductCode("", e.CommandArgument.ToString(), "ProductMasterID", Role);
         if (DtView.Rows.Count > 0)
         {
             lblcomprefno.Text = DtView.Rows[0]["CompanyRefNo"].ToString();
