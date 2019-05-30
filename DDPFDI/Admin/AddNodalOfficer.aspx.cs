@@ -612,7 +612,7 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
     #endregion
     protected void btnsub_Click(object sender, EventArgs e)
     {
-        if (txtemailid.Text == "" && txtname.Text == "")
+        if (txtemailid.Text == "" && txtname.Text == "" && txtemailid.Text != "")
         {
             ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Email id and name can not be empty !')", true);
         }
@@ -626,7 +626,7 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
                 }
                 else
                 {
-                    if (btnsub.Text != "Edit")
+                    if (Request.QueryString["mcurrentcompRefNo"] == null)
                     {
                         if (ddldesignation.SelectedItem.Value != "Select")
                         {
@@ -730,7 +730,6 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
                 {
                     BindCompany("Unit");
                 }
-                btnsub.Text = "Edit";
             }
         }
     }

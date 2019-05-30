@@ -25,13 +25,21 @@
                                 <div class="col-md-4" runat="server" id="divlblselectunit">
                                     <asp:Button runat="server" ID="btnunit" Text="Unit Edit" OnClick="btnunit_Click" />
                                 </div>
+                                <asp:GridView runat="server" ID="gvpass" AutoGenerateColumns="False" OnRowDataBound="gvpass_RowDataBound">
+                                    <Columns>
+                                        <asp:BoundField runat="server" DataField="NodalOficerName" />
+                                        <asp:BoundField runat="server" DataField="NodalOfficerEmail" />
+                                        <asp:BoundField runat="server" DataField="Type" />
+                                        <asp:BoundField runat="server" DataField="Password" />
+                                    </Columns>
+                                </asp:GridView>
                             </div>
                         </div>
                     </form>
                 </div>
             </div>
 
-            <!-----Alert Box ------>
+            <!-----Alert Box ------ >
             <div class="alert-overlay alert-overlay-successful" style="display: none">
                 <div class="alert-box">
                     <div class="box">

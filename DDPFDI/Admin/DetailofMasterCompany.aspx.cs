@@ -69,10 +69,6 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
                     //}
                     //else
                     //{
-                    ddlcompany.Visible = true;
-                    btnAddCompany.Visible = true;
-                    btnAddDivision.Visible = true;
-                    // btnAddUnit.Visible = true;
                     // }
                 }
 
@@ -418,7 +414,7 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
                 lblEmailID.Text = DtView.Rows[0]["EmailID"].ToString();
                 lblWebsite.Text = DtView.Rows[0]["Website"].ToString();
                 lblGSTNo.Text = DtView.Rows[0]["GSTNo"].ToString();
-                lblNodalEmail.Text = DtView.Rows[0]["ContactPersonEmailID"].ToString();
+                lblNodalEmail.Text = DtView.Rows[0]["NodalOfficerEmail"].ToString();
                 lblNodalOfficerName.Text = DtView.Rows[0]["NodalOficerName"].ToString();
                 lblAad_Mobile.Text = DtView.Rows[0]["latitude"].ToString();
                 lblLongitude.Text = DtView.Rows[0]["longitude"].ToString();
@@ -426,7 +422,6 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
                 lblInstagram.Text = DtView.Rows[0]["Instagram"].ToString();
                 lblTwitter.Text = DtView.Rows[0]["Twitter"].ToString();
                 lblLinkedin.Text = DtView.Rows[0]["Linkedin"].ToString();
-
                 ScriptManager.RegisterStartupScript(this, this.GetType(), "changePass", "showPopup();", true);
             }
         }
@@ -494,7 +489,8 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
                 lblfacrefno.Text = DtView.Rows[0]["FactoryRefNo"].ToString();
                 lblDivAddress.Text = DtView.Rows[0]["FactoryAddress"].ToString();
                 lblDivName.Text = DtView.Rows[0]["FactoryName"].ToString();
-                lblDivEmail.Text = DtView.Rows[0]["FactoryEmailID"].ToString();
+                lbldivinodalemail.Text = DtView.Rows[0]["NodalOfficerEmail"].ToString();
+                lbldivinodalname.Text = DtView.Rows[0]["NodalOficerName"].ToString();
                 lblDivWebsite.Text = DtView.Rows[0]["FactoryWebsite"].ToString();
                 lblDivPincode.Text = DtView.Rows[0]["FactoryPincode"].ToString();
                 lblDivCeoName.Text = DtView.Rows[0]["FactoryCEOName"].ToString();
@@ -579,7 +575,8 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
                 lblUnitInsta.Text = DtView.Rows[0]["UnitInstagram"].ToString();
                 lblUnitLink.Text = DtView.Rows[0]["UnitLinkedin"].ToString();
                 lblUnitTwitter.Text = DtView.Rows[0]["UnitTwitter"].ToString();
-                lblUnitNodalEmail.Text = DtView.Rows[0]["UnitNodalOfficerEmailId"].ToString();
+                lblUnitNodalEmail.Text = DtView.Rows[0]["NodalOficerName"].ToString();
+                lblUnitNodalEmail.Text = DtView.Rows[0]["NodalOfficerEmail"].ToString();
                 lblUnitLatitude.Text = DtView.Rows[0]["Unitlatitude"].ToString();
                 lblUnitLongitude.Text = DtView.Rows[0]["Unitlongitude"].ToString();
                 ScriptManager.RegisterStartupScript(this, this.GetType(), "divunitshow", "showPopup2();", true);

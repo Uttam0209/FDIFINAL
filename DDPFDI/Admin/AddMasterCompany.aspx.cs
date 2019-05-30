@@ -170,9 +170,9 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
             //this.gvcompanydetail.Columns[4].Visible = true;
             gvcompanydetail.Columns[5].Visible = false;
             // this.gvcompanydetail.Columns[6].Visible = false;
-            gvcompanydetail.Columns[7].Visible = false;
-            gvcompanydetail.Columns[8].Visible = true;
-            gvcompanydetail.Columns[9].Visible = false;
+            gvcompanydetail.Columns[8].Visible = false;
+            gvcompanydetail.Columns[9].Visible = true;
+            gvcompanydetail.Columns[10].Visible = false;
         }
         else if (Enc.DecryptData(Request.QueryString["mu"].ToString()) == "Panel3")
         {
@@ -182,9 +182,9 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
             gvcompanydetail.Columns[4].Visible = false;
             gvcompanydetail.Columns[5].Visible = true;
             //this.gvcompanydetail.Columns[6].Visible = true;
-            gvcompanydetail.Columns[7].Visible = false;
             gvcompanydetail.Columns[8].Visible = false;
-            gvcompanydetail.Columns[9].Visible = true;
+            gvcompanydetail.Columns[9].Visible = false;
+            gvcompanydetail.Columns[10].Visible = true;
         }
         else
         {
@@ -192,9 +192,9 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
             gvcompanydetail.Columns[4].Visible = false;
             gvcompanydetail.Columns[5].Visible = false;
             gvcompanydetail.Columns[6].Visible = false;
-            gvcompanydetail.Columns[7].Visible = true;
-            gvcompanydetail.Columns[8].Visible = false;
+            gvcompanydetail.Columns[8].Visible = true;
             gvcompanydetail.Columns[9].Visible = false;
+            gvcompanydetail.Columns[10].Visible = false;
         }
 
 
@@ -529,11 +529,11 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
             }
             if (ddlmaster.Visible == true)
             {
-                gvcompanydetail.Columns[12].Visible = false;
+                gvcompanydetail.Columns[13].Visible = false;
             }
             if (ddlfacotry.Visible == true && ddlmaster.Visible == true)
             {
-                gvcompanydetail.Columns[12].Visible = false;
+                gvcompanydetail.Columns[13].Visible = false;
             }
         }
     }

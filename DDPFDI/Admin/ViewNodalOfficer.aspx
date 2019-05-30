@@ -33,6 +33,11 @@
                     <form method="post" class="addfdi">
                         <div class="row">
                             <div class="col-md-12">
+                                <div class="clearfix"></div>
+                                <div style="margin-top: 5px;">
+                                    <a class="fa fa-arrow-circle-left pull-right" href='<%=ResolveUrl("~/Add-Nodal") %>'>&nbsp; &nbsp;Back</a>
+                                </div>
+                                <div class="clearfix"></div>
                                 <asp:HiddenField runat="server" ID="hfrole" />
                                 <div class="table-wrapper">
                                     <div id="Div1" runat="server" visible="False">
@@ -71,7 +76,7 @@
                                 </div>
                                 <div class="clearfix"></div>
                                 <div id="Div3">
-                                    <asp:Button ID="btnAddNodalOfficer" runat="server" Text="Add Employee" CssClass="btn btn-primary pull-right" OnClick="btnAddNodalOfficer_Click" />
+                                    <asp:Button ID="btnAddNodalOfficer" runat="server" Text="Add Employee" Visible="False" CssClass="btn btn-primary pull-right" OnClick="btnAddNodalOfficer_Click" />
 
                                 </div>
                                 <div class="clearfix"></div>
@@ -228,16 +233,16 @@
             </div>
         </ContentTemplate>
     </asp:UpdatePanel>
-<asp:UpdateProgress ID="UpdateProgress" runat="server" AssociatedUpdatePanelID="up">
-    <ProgressTemplate>
-        <!---Progress Bar ---->
-        <div class="overlay-progress">
-            <div class="custom-progress-bar blue stripes">
-                <span></span>
-                <p>Processing</p>
+    <asp:UpdateProgress ID="UpdateProgress" runat="server" AssociatedUpdatePanelID="up">
+        <ProgressTemplate>
+            <!---Progress Bar ---->
+            <div class="overlay-progress">
+                <div class="custom-progress-bar blue stripes">
+                    <span></span>
+                    <p>Processing</p>
+                </div>
             </div>
-        </div>
-        <!---Progress Bar ---->
-    </ProgressTemplate>
-</asp:UpdateProgress>
+            <!---Progress Bar ---->
+        </ProgressTemplate>
+    </asp:UpdateProgress>
 </asp:Content>

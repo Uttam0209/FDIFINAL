@@ -417,7 +417,12 @@ public partial class Admin_ViewDashboard : System.Web.UI.Page
         {
             lblNodalComp.Text = DtView.Rows[0]["CompanyName"].ToString();
             lblDivision.Text = DtView.Rows[0]["FactoryName"].ToString();
-            lblUnit.Text = DtView.Rows[0]["UnitName"].ToString();
+            if (Role == "DivisionID")
+            {
+                lblUnit.Text = "";
+            }
+            else
+            { lblUnit.Text = DtView.Rows[0]["UnitName"].ToString(); }
             lblNodalOfficerRefNo.Text = DtView.Rows[0]["NodalOfficerRefNo"].ToString();
             lblNodalOficerName.Text = DtView.Rows[0]["NodalOficerName"].ToString();
             lblNodalEmpCode.Text = DtView.Rows[0]["NodalEmpCode"].ToString();

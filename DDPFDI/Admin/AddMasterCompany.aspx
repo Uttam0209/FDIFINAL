@@ -4,12 +4,12 @@
 <asp:Content ID="head123" runat="server" ContentPlaceHolderID="head">
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
     <script type="text/javascript">
-     
+
         //Alert pop up box
         function ShowMessage() {
             $("body").css('overflow', 'hidden');
             $('.alert-overlay-error').show();
-            
+
             $('.alertMsg').text("Please select atleast " + atLeast + " intrested in item(s)");
         }
 
@@ -177,7 +177,7 @@
                                     <div class="col-md-12">
                                         <div class="fdi-add-content">
                                             <div class="form-group">
-                                                <asp:Button ID="btncancel" runat="server" Text="Cancel" TabIndex="10" CssClass="btn btn-default pull-right" OnClick="btncancel_Click" />
+                                                <asp:Button ID="btncancel" runat="server" Text="Cancel" Visible="False" TabIndex="10" CssClass="btn btn-default pull-right" OnClick="btncancel_Click" />
                                                 <asp:Button ID="btnsubmit" runat="server" Text="Save" TabIndex="9" CssClass="btn btn-primary pull-right" OnClick="btnsubmit_Click" OnClientClick="return Validate()" />
                                             </div>
                                         </div>
@@ -191,9 +191,9 @@
                             </div>
                             <div class="table-wraper">
                                 <asp:GridView ID="gvcompanydetail" runat="server" Width="100%" Class="commonAjaxTbl master-company-table table display 
-                                    responsive no-wrap table-hover manage-user Grid"
+                                    responsive no-wrap table-hover manage-user Grid text-nowrap"
                                     AutoGenerateColumns="false" AllowPaging="true"
-                                    PageSize="25" AllowSorting="true" RowCommand="gvcompanydetail_RowCommand" OnRowCommand="gvcompanydetail_RowCommand" OnRowDataBound="gvcompanydetail_RowDataBound">
+                                    PageSize="25" AllowSorting="true" RowCommand="gvcompanydetail_RowCommand " OnRowCommand="gvcompanydetail_RowCommand" OnRowDataBound="gvcompanydetail_RowDataBound">
                                     <PagerStyle HorizontalAlign="Center" CssClass="GridPager" />
                                     <Columns>
 
@@ -208,9 +208,10 @@
                                         <asp:BoundField ItemStyle-Width="150px" DataField="FactoryRefNo" Visible="False" HeaderText="Reference No." />
                                         <asp:BoundField ItemStyle-Width="150px" DataField="UnitName" HeaderText="Unit" />
                                         <asp:BoundField ItemStyle-Width="150px" DataField="UnitRefNo" Visible="False" HeaderText="Reference No." />
-                                        <asp:BoundField ItemStyle-Width="150px" DataField="ContactPersonEmailID" HeaderText="Company Nodal Officer" />
-                                        <asp:BoundField ItemStyle-Width="150px" DataField="FactoryNodalOfficerEmailId" HeaderText="Division Nodal Officer" />
-                                        <asp:BoundField ItemStyle-Width="150px" DataField="UnitNodalOfficerEmailId" HeaderText="Unit Nodal Officer" />
+                                        <asp:BoundField ItemStyle-Width="150px" DataField="NodalOficerName" HeaderText="Nodal Officer Name" />
+                                        <asp:BoundField ItemStyle-Width="150px" DataField="NodalOfficerEmail" HeaderText="Company Nodal Officer" />
+                                        <asp:BoundField ItemStyle-Width="150px" DataField="NodalOfficerEmail" HeaderText="Division Nodal Officer" />
+                                        <asp:BoundField ItemStyle-Width="150px" DataField="NodalOfficerEmail" HeaderText="Unit Nodal Officer" />
                                         <asp:BoundField ItemStyle-Width="150px" DataField="Role" HeaderText="Role" />
                                         <asp:BoundField ItemStyle-Width="150px" DataField="CreatedBy" HeaderText="Created By" />
                                         <asp:TemplateField HeaderText="Action" Visible="true">

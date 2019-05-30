@@ -83,6 +83,7 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
                         licc.Visible = false;
                         lisr.Visible = false;
                         licc.Visible = false;
+                        lisc.Visible = false;
                         lblMCompany.Text = "Unit";
                     }
                 }
@@ -640,14 +641,15 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
         }
         HySave["District"] = Co.RSQandSQLInjection(seldistrict.Text.Trim(), "soft");
         HySave["Pincode"] = Co.RSQandSQLInjection(tpincode.Text.Trim(), "soft");
-        if (ddlNodalOfficerEmail.SelectedItem.Value == "0")
-        {
-            HySave["NodalOfficeRefNo"] = "0";
-        }
-        else
-        {
-            HySave["NodalOfficeRefNo"] = ddlNodalOfficerEmail.SelectedItem.Value;
-        }
+        //if (ddlNodalOfficerEmail.SelectedItem.Value == "0")
+        //{
+        //    HySave["NodalOfficeRefNo"] = "0";
+        //}
+        //else
+        //{
+        //    HySave["NodalOfficeRefNo"] = ddlNodalOfficerEmail.SelectedItem.Value;
+        //}
+        HySave["NodalOfficeRefNo"] = "";
         HySave["ContactPersonEmailID"] = Co.RSQandSQLInjection(txtNEmailId.Text.Trim(), "soft");
         HySave["GSTNo"] = Co.RSQandSQLInjection(tgstno.Text.Trim(), "soft");
         HySave["CINNo"] = Co.RSQandSQLInjection(tcinno.Text.Trim(), "soft");
@@ -717,14 +719,15 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
         HySave["FactoryFaxNo"] = Co.RSQandSQLInjection(txtFaxNo.Text.Trim(), "soft");
         HySave["FactoryEmailID"] = Co.RSQandSQLInjection(txtEmailID.Text.Trim(), "soft");
         HySave["FactoryWebsite"] = Co.RSQandSQLInjection(txtWebsite.Text.Trim(), "soft");
-        if (ddlNodalOfficerEmail.SelectedItem.Value == "0")
-        {
-            HySave["NodalOfficeRefNo"] = "0";
-        }
-        else
-        {
-            HySave["NodalOfficeRefNo"] = ddlNodalOfficerEmail.SelectedItem.Value;
-        }
+        //if (ddlNodalOfficerEmail.SelectedItem.Value == "0")
+        //{
+        //    HySave["NodalOfficeRefNo"] = "0";
+        //}
+        //else
+        //{
+        //    HySave["NodalOfficeRefNo"] = ddlNodalOfficerEmail.SelectedItem.Value;
+        //}
+        HySave["NodalOfficeRefNo"] = "";
         HySave["FactoryNodalOfficerEmailId"] = Co.RSQandSQLInjection(txtNEmailId.Text.Trim(), "soft");
         if (selstate.SelectedItem.Text == "Select State")
         {
@@ -765,14 +768,15 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
         }
         HySave["CompanyRefNo"] = Co.RSQandSQLInjection(Session["CompanyRefNo"].ToString(), "soft");
         HySave["UnitAddress"] = Co.RSQandSQLInjection(taddress.Text.Trim(), "soft");
-        if (ddlNodalOfficerEmail.SelectedItem.Value == "0")
-        {
-            HySave["NodalOfficeRefNo"] = "0";
-        }
-        else
-        {
-            HySave["NodalOfficeRefNo"] = ddlNodalOfficerEmail.SelectedItem.Value;
-        }
+        //if (ddlNodalOfficerEmail.SelectedItem.Value == "0")
+        //{
+        //    HySave["NodalOfficeRefNo"] = "0";
+        //}
+        //else
+        //{
+        //    HySave["NodalOfficeRefNo"] = ddlNodalOfficerEmail.SelectedItem.Value;
+        //}
+        HySave["NodalOfficeRefNo"] = "";
         HySave["UnitNodalOfficerEmailId"] = Co.RSQandSQLInjection(txtNEmailId.Text.Trim(), "soft");
         HySave["UnitPincode"] = Co.RSQandSQLInjection(tpincode.Text.Trim(), "soft");
         HySave["UnitCEOName"] = Co.RSQandSQLInjection(txtceoname.Text.Trim(), "soft");

@@ -161,7 +161,7 @@
                                                     </div>
                                                     <div class="col-md-6">
                                                         <div class="form-group" id="DivCEOEmail" runat="server">
-                                                            <label for="tceoname" runat="server" id="lblceoemail" class="control-label">Company Head Email ID </label>
+                                                            <label for="tceoname" runat="server" id="lblceoemail" class="control-label">CEO Email ID </label>
                                                             <asp:TextBox runat="server" ID="txtCEOEmailId" name="tceoemailid" class="form-control form-cascade-control" placeholder=""></asp:TextBox>
                                                         </div>
                                                     </div>
@@ -183,7 +183,7 @@
 
                                                 </div>
                                                 <div class="row">
-                                                    <div class="col-md-6">
+                                                    <div class="col-md-6" runat="server" visible="False">
                                                         <div class="form-group">
                                                             <label>Email ID</label>
                                                             <asp:TextBox runat="server" ID="txtEmailID" name="" class="form-control form-cascade-control " placeholder=""></asp:TextBox>
@@ -225,13 +225,9 @@
                                         <div class="form-group">
                                             <label for="tpersonname" class="control-label">Select Nodal Officer </label>
                                             <asp:DropDownList runat="server" ID="ddlNodalOfficerEmail" class="form-control" AutoPostBack="True" OnSelectedIndexChanged="ddlNodalOfficerEmail_SelectedIndexChanged"></asp:DropDownList>
-
                                         </div>
                                     </div>
-
-
                                 </div>
-
                                 <div class="contactFormRow" id="divNodalOfficer" runat="server" visible="false">
                                     <div class="row">
                                         <div class="col-md-4">
@@ -239,8 +235,6 @@
                                                 <label for="tpersonname" class="control-label">Name</label>
                                                 <asp:TextBox runat="server" ID="txtNName" name="" ReadOnly="True" class="form-control form-cascade-control" placeholder=""></asp:TextBox>
                                             </div>
-
-
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
@@ -458,7 +452,6 @@
                         </ContentTemplate>
                     </asp:UpdatePanel>
                 </div>
-
                 <div id="Location" class="tab-pane fade">
                     <asp:UpdatePanel ID="loc" runat="server" UpdateMode="Always">
                         <ContentTemplate>
@@ -493,7 +486,6 @@
                         </ContentTemplate>
                     </asp:UpdatePanel>
                 </div>
-
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="form-group">

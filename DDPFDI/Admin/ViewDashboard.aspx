@@ -671,7 +671,7 @@
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td class="pass">Nodal Oficer Name</td>
+                                                <td class="pass">Nodal Officer Name</td>
                                                 <td>
                                                     <asp:Label ID="lblNodalOficerName" runat="server"></asp:Label>
                                                 </td>
@@ -695,7 +695,7 @@
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td class="pass">Mobile Number</td>
+                                                <td class="pass">Mobile</td>
                                                 <td>
                                                     <asp:Label ID="lblMobile" runat="server"></asp:Label>
                                                 </td>
@@ -712,8 +712,6 @@
                                                     <asp:Label ID="lblFax" runat="server"></asp:Label>
                                                 </td>
                                             </tr>
-
-
                                             </caption>
                                             </caption>
                                         </tbody>
@@ -1009,9 +1007,9 @@
                                                             <tr>
                                                                 <th class="pass">Employee Code</th>
                                                                 <th class="pass">Designation</th>
-                                                                <th class="pass">E-Mail ID</th>
-                                                                <th class="pass">Mobile Number</th>
-                                                                <th class="pass">Phone Number</th>
+                                                                <th class="pass">Email</th>
+                                                                <th class="pass">Mobile</th>
+                                                                <th class="pass">Phone</th>
                                                                 <th class="pass">Fax</th>
                                                             </tr>
                                                             <tr>
@@ -1044,9 +1042,9 @@
                                                             <tr>
                                                                 <th class="pass">Employee Code</th>
                                                                 <th class="pass">Designation</th>
-                                                                <th class="pass">E-Mail ID</th>
-                                                                <th class="pass">Mobile Number</th>
-                                                                <th class="pass">Phone Number</th>
+                                                                <th class="pass">Email</th>
+                                                                <th class="pass">Mobile</th>
+                                                                <th class="pass">Phone</th>
                                                                 <th class="pass">Fax</th>
 
                                                             </tr>
