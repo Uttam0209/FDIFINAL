@@ -169,6 +169,18 @@
             </div>
         </ContentTemplate>
     </asp:UpdatePanel>
+    <asp:UpdateProgress ID="UpdateProgress" runat="server" AssociatedUpdatePanelID="up">
+        <ProgressTemplate>
+            <!---Progress Bar ---->
+            <div class="overlay-progress">
+                <div class="custom-progress-bar blue stripes">
+                    <span></span>
+                    <p>Processing</p>
+                </div>
+            </div>
+            <!---Progress Bar ---->
+        </ProgressTemplate>
+    </asp:UpdateProgress>
 </asp:Content>
 
 

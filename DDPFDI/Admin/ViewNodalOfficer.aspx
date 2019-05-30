@@ -22,7 +22,6 @@
 <asp:Content ID="innerViewDesignation" runat="server" ContentPlaceHolderID="ContentPlaceHolder1">
     <asp:ScriptManager ID="sc" runat="server"></asp:ScriptManager>
     <asp:UpdatePanel ID="up" runat="server">
-
         <ContentTemplate>
             <div class="content oem-content">
                 <div class="sideBg">
@@ -229,4 +228,16 @@
             </div>
         </ContentTemplate>
     </asp:UpdatePanel>
+<asp:UpdateProgress ID="UpdateProgress" runat="server" AssociatedUpdatePanelID="up">
+    <ProgressTemplate>
+        <!---Progress Bar ---->
+        <div class="overlay-progress">
+            <div class="custom-progress-bar blue stripes">
+                <span></span>
+                <p>Processing</p>
+            </div>
+        </div>
+        <!---Progress Bar ---->
+    </ProgressTemplate>
+</asp:UpdateProgress>
 </asp:Content>

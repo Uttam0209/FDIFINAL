@@ -37,13 +37,16 @@ public partial class Admin_EditHeadDropdown : System.Web.UI.Page
     }
     protected void btncomp_Click(object sender, EventArgs e)
     {
-        string Type = "Company";
-        string RefNo = "C0008";
-        string Edit = "CEdit";
-        string stridNew = Request.QueryString["id"].ToString().Replace(" ", "+");
-        string mstrid = objEnc.EncryptData((objEnc.DecryptData(stridNew) + " >> Edit Test"));
-        Response.Redirect("Test?mlogrole=" + HttpUtility.UrlEncode(objEnc.EncryptData(Type.Trim())) + "&mrefno=" + HttpUtility.UrlEncode(objEnc.EncryptData(RefNo.Trim())) +
-                          "&mEdit=" + HttpUtility.UrlEncode(objEnc.EncryptData(Edit)) + "&id=" + mstrid.ToString());
+        ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "Warning", "SuccessfullPop('test')", true);
+        //Page.ClientScript.RegisterStartupScript(this.GetType(), "myScript", "SuccessfullPop();", true);
+      //  ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Message Display')", true);
+        //string Type = "Company";
+        //string RefNo = "C0008";
+        //string Edit = "CEdit";
+        //string stridNew = Request.QueryString["id"].ToString().Replace(" ", "+");
+        //string mstrid = objEnc.EncryptData((objEnc.DecryptData(stridNew) + " >> Edit Test"));
+        //Response.Redirect("Test?mlogrole=" + HttpUtility.UrlEncode(objEnc.EncryptData(Type.Trim())) + "&mrefno=" + HttpUtility.UrlEncode(objEnc.EncryptData(RefNo.Trim())) +
+        //                  "&mEdit=" + HttpUtility.UrlEncode(objEnc.EncryptData(Edit)) + "&id=" + mstrid.ToString());
 
     }
     protected void btndivision_Click(object sender, EventArgs e)
