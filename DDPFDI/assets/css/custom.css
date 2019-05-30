@@ -1844,6 +1844,7 @@ form label { font-size: 15px !important; font-family: 'Roboto', sans-serif !impo
 .faq-secion .accordion .card-body { padding: 10px; border:2px solid #ddd; background: #fff; color: #333; font-size: 16px; line-height: 21px;}
 .faq-secion .accordion .card-body p {font-size: 16px; line-height: 24px; }
 .faq-secion .accordion .card-body ul li { font-size: 15px; line-height: 19px;}
+.faq-secion .accordion .card-body h3 { font-size: 15px;}
 .tooltip-inner {
     border: 1px solid #F2AF1D;
     background: #FDF1D5;
