@@ -32,8 +32,12 @@
                         </div>
                     </div>
                     <div class="clearfix"></div>
+                    <div style="margin-top: 5px;">
+                        <a class="fa fa-arrow-circle-left pull-right" href='<%=ResolveUrl("~/AddProduct") %>'>&nbsp; &nbsp;Back</a>
+                    </div>
+                    <div class="clearfix"></div>
                     <div id="Div3">
-                        <asp:Button ID="btnAddProduct" runat="server" Text="Add Product" CssClass="btn btn-primary pull-right" OnClick="btnAddProduct_Click" />
+                        <asp:Button ID="btnAddProduct" runat="server" Text="Add Product" Visible="False" CssClass="btn btn-primary pull-right" OnClick="btnAddProduct_Click" />
                     </div>
                     <div class="clearfix"></div>
                     <div class="row">

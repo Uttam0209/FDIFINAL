@@ -25,7 +25,7 @@
                 </div>
             </div>
             <div class="row">
-                <p style="position:absolute; right:35px;">Mark with <span class="mandatory">*</span> is manadatory field.</p>
+                <p style="position: absolute; right: 35px;">Mark with <span class="mandatory">*</span> is manadatory field.</p>
                 <asp:UpdatePanel runat="server" ID="updrop">
                     <ContentTemplate>
                         <div class="col-md-4">
@@ -65,16 +65,16 @@
                     <asp:HiddenField runat="server" ID="hfprodid" />
                     <asp:HiddenField runat="server" ID="hfprodrefno" />
                     <asp:HiddenField runat="server" ID="hfcomprefno" />
-                    
+
                     <div id="pd" class="tab-pane fade in active">
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="add-profile">
                                     <div class="section-pannel">
-                                        
-                                            <asp:UpdatePanel runat="server" ID="upproduct">
-                                                <ContentTemplate>
-                                                    <div class="row">
+
+                                        <asp:UpdatePanel runat="server" ID="upproduct">
+                                            <ContentTemplate>
+                                                <div class="row">
                                                     <div class="col-md-4">
                                                         <div class="form-group">
                                                             <label>
@@ -94,55 +94,58 @@
                                                     <div class="col-md-4">
                                                         <div class="form-group">
                                                             <label>
-                                                                CLASS ITEM</label>
-                                                            <span data-toggle="tooltip" class="fa fa-question" title="Number in bracket indicate NSN class"></span>
+                                                                Item Code</label>
+                                                            <span data-toggle="tooltip" class="fa fa-question" title="Item code indicate item name code in NSN"></span>
                                                             <asp:DropDownList runat="server" ID="ddllevel3product" TabIndex="3" class="form-control"></asp:DropDownList>
                                                         </div>
                                                     </div>
-                                                        </div>
-                                                    <div class="row">
-                                                        <div class="col-md-8">
-                                                            <div class="form-group">
-                                                                <div class="col-sm-3 padding_0">
-                                                                    <label style="font-size:14px !important;">
-                                                                        NSC Code (4 digit)
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-8">
+                                                        <div class="form-group">
+                                                            <div class="col-md-12 padding_0">
+                                                                <label>Nato Stock Number (NSN)</label>
+                                                            </div>
+                                                            <div class="col-sm-3 padding_0">
+                                                                <label style="font-size: 14px !important;">
+                                                                    NSC Code (4 digit)
                                                                         <span data-toggle="tooltip" class="fa fa-question" title="NSC Code = NSN Code (2 digit) + NSN Group Class (2 digit)"></span>
-                                                                    </label>
-                                                                    <asp:TextBox runat="server" ID="txtnsccode" ReadOnly="True" MaxLength="4" TabIndex="4" CssClass="form-cascade-control form-control"></asp:TextBox>
-                                                                </div>
-                                                                <div class="col-sm-9 padding_0">
-                                                                    <label>
-                                                                        NIIN Code (9-digit)
+                                                                </label>
+                                                                <asp:TextBox runat="server" ID="txtnsccode" ReadOnly="True" MaxLength="4" TabIndex="4" CssClass="form-cascade-control form-control"></asp:TextBox>
+                                                            </div>
+                                                            <div class="col-sm-9 padding_0">
+                                                                <label>
+                                                                    NIIN Code (9-digit)
                                                                     <span data-toggle="tooltip" class="fa fa-question" title="Please enter if NIIN code is available"></span>
-                                                                    </label>
-                                                                    <asp:TextBox runat="server" ID="txtniincode" TabIndex="5" MaxLength="9" class="form-control"></asp:TextBox>
-                                                                </div>
+                                                                </label>
+                                                                <asp:TextBox runat="server" ID="txtniincode" TabIndex="5" MaxLength="9" class="form-control"></asp:TextBox>
                                                             </div>
                                                         </div>
+                                                    </div>
 
-                                                        <div class="col-md-4">
-                                                            <div class="form-group">
-                                                                <label>Product Description </label>
-                                                                <asp:TextBox runat="server" ID="txtproductdescription" TextMode="MultiLine" TabIndex="6" class="form-control"></asp:TextBox>
-                                                            </div>
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            <label>Product Description </label>
+                                                            <asp:TextBox runat="server" ID="txtproductdescription" TextMode="MultiLine" TabIndex="6" class="form-control"></asp:TextBox>
                                                         </div>
                                                     </div>
-                                                </ContentTemplate>
-                                            </asp:UpdatePanel>
-                                            <asp:UpdateProgress ID="UpdateProgress3" runat="server" AssociatedUpdatePanelID="upproduct">
-                                                <ProgressTemplate>
-                                                    <!---Progress Bar ---->
-                                                    <div class="overlay-progress">
-                                                        <div class="custom-progress-bar blue stripes">
-                                                            <span></span>
-                                                            <p>Processing</p>
-                                                        </div>
+                                                </div>
+                                            </ContentTemplate>
+                                        </asp:UpdatePanel>
+                                        <asp:UpdateProgress ID="UpdateProgress3" runat="server" AssociatedUpdatePanelID="upproduct">
+                                            <ProgressTemplate>
+                                                <!---Progress Bar ---->
+                                                <div class="overlay-progress">
+                                                    <div class="custom-progress-bar blue stripes">
+                                                        <span></span>
+                                                        <p>Processing</p>
                                                     </div>
-                                                    <!---Progress Bar ---->
-                                                </ProgressTemplate>
-                                            </asp:UpdateProgress>
-                                        </div>
-                                  
+                                                </div>
+                                                <!---Progress Bar ---->
+                                            </ProgressTemplate>
+                                        </asp:UpdateProgress>
+                                    </div>
+
                                     <div class="section-pannel">
                                         <div class="row">
                                             <div class="col-md-4">
@@ -284,7 +287,7 @@
                                                     <div class="col-md-12">
                                                         <div class="form-group">
                                                             <label class="live-status-box productalreadylabel ">
-                                                                Product Already indigenized :
+                                                                Product already indigenized :
                                                                 <asp:RadioButtonList runat="server" ID="rbisindinised" RepeatColumns="2" TabIndex="23" RepeatLayout="Flow" RepeatDirection="Horizontal" AutoPostBack="True" OnSelectedIndexChanged="rbisindinised_CheckedChanged ">
                                                                     <asp:ListItem Value="N" Selected="True">No</asp:ListItem>
                                                                     <asp:ListItem Value="Y" class="yes">Yes</asp:ListItem>
@@ -309,7 +312,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="form-group">
-                                                            <label>Search Keywords (Add more then one search criteria please use ,)</label>
+                                                            <label>Search keywords (To add more than one search keyword please use comma(,))</label>
                                                             <asp:TextBox runat="server" ID="txtsearchkeyword" TextMode="MultiLine" TabIndex="27" class="form-control"></asp:TextBox>
                                                         </div>
                                                     </div>
@@ -585,14 +588,14 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="section-pannel" runat="server" id="divnodal2">
+                                <div class="section-pannel" runat="server" id="divnodal2" visible="False">
                                     <div class="row">
                                         <div class="col-md-12">
                                             <h4 class="page-header secondary">Contact Detail 2</h4>
                                             <div class="form-group select-box">
                                                 <asp:DropDownList runat="server" ID="ddlNodalOfficerEmail2" class="form-control" TabIndex="46" AutoPostBack="True" OnSelectedIndexChanged="ddlNodalOfficerEmail2_SelectedIndexChanged"></asp:DropDownList>
                                             </div>
-                                         </div>
+                                        </div>
                                     </div>
                                     <div class="contactFormRow" runat="server" id="contactpanel2" visible="False">
                                         <div class="row">
@@ -744,7 +747,7 @@
                                         </ProgressTemplate>
                                     </asp:UpdateProgress>
                                 </div>
-                                
+
                             </div>
                         </div>
                     </asp:Panel>

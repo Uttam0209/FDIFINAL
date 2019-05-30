@@ -42,7 +42,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="clearfix"></div>
-                                <div style="margin-top:5px;">
+                                <div style="margin-top: 5px;">
                                     <a class="fa fa-arrow-circle-left pull-right" href='<%=ResolveUrl("~/Dashboard") %>'>&nbsp; &nbsp;Back</a>
                                 </div>
                                 <div class="clearfix"></div>
@@ -182,18 +182,17 @@
                                             <asp:TemplateField HeaderText="Nodal">
                                                 <ItemTemplate>
                                                     <asp:Label ID="lblnodalofficer" runat="server" Text='<%#Eval("IsNodalOfficer") %>' NullDisplayText="#" SortExpression="NodalOfficerEmail"></asp:Label>
-
                                                 </ItemTemplate>
                                             </asp:TemplateField>
-                                            <asp:TemplateField HeaderText="Company">
+                                            <asp:TemplateField HeaderText="Company" Visible="False">
                                                 <ItemTemplate>
                                                     <asp:Label ID="lblrefno" runat="server" Text='<%#Eval("CompanyName") %>' NullDisplayText="#" SortExpression="Company"></asp:Label>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
-
                                             <asp:TemplateField HeaderText="Action">
                                                 <ItemTemplate>
                                                     <asp:LinkButton ID="lblview" runat="server" ToolTip="View Detail of Nodal Officer/Employee" CssClass="fa fa-eye" CommandName="ViewComp" CommandArgument='<%#Eval("NodalOfficerID") %>'></asp:LinkButton>
+                                                    <asp:HiddenField runat="server" ID="hfnodalrole" Value='<%#Eval("Type") %>' />
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                         </Columns>
@@ -672,7 +671,7 @@
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td class="pass">Nodal Oficer Name</td>
+                                                <td class="pass">Nodal Officer Name</td>
                                                 <td>
                                                     <asp:Label ID="lblNodalOficerName" runat="server"></asp:Label>
                                                 </td>
@@ -696,7 +695,7 @@
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td class="pass">Mobile Number</td>
+                                                <td class="pass">Mobile</td>
                                                 <td>
                                                     <asp:Label ID="lblMobile" runat="server"></asp:Label>
                                                 </td>
@@ -713,8 +712,6 @@
                                                     <asp:Label ID="lblFax" runat="server"></asp:Label>
                                                 </td>
                                             </tr>
-
-
                                             </caption>
                                             </caption>
                                         </tbody>
@@ -1010,9 +1007,9 @@
                                                             <tr>
                                                                 <th class="pass">Employee Code</th>
                                                                 <th class="pass">Designation</th>
-                                                                <th class="pass">E-Mail ID</th>
-                                                                <th class="pass">Mobile Number</th>
-                                                                <th class="pass">Phone Number</th>
+                                                                <th class="pass">Email</th>
+                                                                <th class="pass">Mobile</th>
+                                                                <th class="pass">Phone</th>
                                                                 <th class="pass">Fax</th>
                                                             </tr>
                                                             <tr>
@@ -1045,9 +1042,9 @@
                                                             <tr>
                                                                 <th class="pass">Employee Code</th>
                                                                 <th class="pass">Designation</th>
-                                                                <th class="pass">E-Mail ID</th>
-                                                                <th class="pass">Mobile Number</th>
-                                                                <th class="pass">Phone Number</th>
+                                                                <th class="pass">Email</th>
+                                                                <th class="pass">Mobile</th>
+                                                                <th class="pass">Phone</th>
                                                                 <th class="pass">Fax</th>
 
                                                             </tr>
@@ -1135,4 +1132,16 @@
             </div>
         </ContentTemplate>
     </asp:UpdatePanel>
+    <asp:UpdateProgress ID="UpdateProgress" runat="server" AssociatedUpdatePanelID="up">
+        <ProgressTemplate>
+            <!---Progress Bar ---->
+            <div class="overlay-progress">
+                <div class="custom-progress-bar blue stripes">
+                    <span></span>
+                    <p>Processing</p>
+                </div>
+            </div>
+            <!---Progress Bar ---->
+        </ProgressTemplate>
+    </asp:UpdateProgress>
 </asp:Content>

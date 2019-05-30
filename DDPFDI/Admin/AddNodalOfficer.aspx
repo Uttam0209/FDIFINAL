@@ -40,20 +40,20 @@
                                     <div class="row">
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label>Name</label>
+                                                <label>Name</label><span class="mandatory"> * </span>
                                                 <asp:TextBox class="form-control" required="" TabIndex="1" runat="server" ID="txtname"></asp:TextBox>
                                             </div>
                                         </div>
 
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label>Designation</label><span data-toggle="tooltip" tabindex="2" class="fa fa-question" title="Please select designation (if you are not see any designation please add master designation in designation section."></span>
+                                                <label>Designation</label><span class="mandatory"> * </span><span data-toggle="tooltip" tabindex="2" class="fa fa-question" title="Please select designation (if you are not see any designation please add master designation in designation section."></span>
                                                 <asp:DropDownList runat="server" ID="ddldesignation" class="form-control" />
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label>Emp Code</label>
+                                                <label>Employee Code</label>
                                                 <asp:TextBox class="form-control" runat="server" TabIndex="3" ID="txtEmpCode"></asp:TextBox>
                                             </div>
                                         </div>
@@ -61,7 +61,7 @@
                                     <div class="row">
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label>Email ID</label>
+                                                <label>Email ID</label><span class="mandatory"> * </span>
                                                 <asp:TextBox class="form-control" required="" TabIndex="4" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" runat="server" ID="txtemailid"></asp:TextBox>
                                             </div>
                                         </div>
@@ -99,7 +99,7 @@
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group">
-                                                <asp:Button ID="btncancel" runat="server" Text="Cancel" TabIndex="10" CssClass="btn btn-default pull-right" Style="margin-right: 0 !important" OnClick="btncancel_Click" />
+                                                <asp:Button ID="btncancel" runat="server" Text="Cancel" TabIndex="10" Visible="False" CssClass="btn btn-default pull-right" Style="margin-right: 0 !important" OnClick="btncancel_Click" />
                                                 <asp:LinkButton ID="btnsub" runat="server" Text="Save" TabIndex="9" class="btn btn-primary pull-right" OnClick="btnsub_Click" OnClientClick="return confirm('Are you sure you want to save this record?');"></asp:LinkButton>
                                             </div>
                                         </div>
@@ -125,7 +125,7 @@
                                                 <asp:Label ID="lblnodallogactive" runat="server" Text='<%#Eval("IsLoginActive") %>' NullDisplayText="#" Visible="False" SortExpression="NodalOfficerEmail"></asp:Label>
                                             </ItemTemplate>
                                         </asp:TemplateField>
-                                        <asp:BoundField DataField="CreatedBy" HeaderText="Create By" NullDisplayText="#" />
+                                        <asp:BoundField DataField="CreatedBy" HeaderText="Created By" NullDisplayText="#" />
                                         <asp:TemplateField HeaderText="Company">
                                             <ItemTemplate>
                                                 <asp:Label ID="lblrefno" runat="server" Text='<%#Eval("CompanyName") %>' NullDisplayText="#" SortExpression="Company"></asp:Label>

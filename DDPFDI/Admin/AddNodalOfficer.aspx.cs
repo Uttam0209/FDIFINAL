@@ -61,7 +61,6 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
                 if (Request.QueryString["mcurrentcompRefNo"] != null)
                 {
                     EditCode();
-
                 }
                 else
                 {
@@ -110,18 +109,15 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
             {
                 ddlcompany.Enabled = false;
             }
-
             lblselectdivison.Visible = false;
             lblselectunit.Visible = false;
         }
-
         else if (hidType.Value == "Company")
         {
             DtCompanyDDL = Lo.RetriveMasterData(0, mRefNo, "Company", 0, "", "", "CompanyName");
             if (DtCompanyDDL.Rows.Count > 0)
             {
                 Co.FillDropdownlist(ddlcompany, DtCompanyDDL, "CompanyName", "CompanyRefNo");
-
                 GridViewNodalOfficerBind(mRefNo, "Company");
                 ddlcompany.Enabled = false;
             }
@@ -162,7 +158,6 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
             {
                 Co.FillDropdownlist(ddlcompany, DtCompanyDDL, "CompanyName", "CompanyRefNo");
                 ddlcompany.Enabled = false;
-
             }
             else
             {
@@ -257,8 +252,11 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
             if (DtCompanyDDL.Rows.Count > 0)
             {
                 Co.FillDropdownlist(ddlcompany, DtCompanyDDL, "CompanyName", "CompanyRefNo");
-
                 ddlcompany.Enabled = false;
+                if (Request.QueryString["mcurrentcompRefNo"] != null)
+                {
+                    BindMasterDesignation("");
+                }
             }
             else
             {
@@ -294,7 +292,10 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
             {
                 Co.FillDropdownlist(ddlcompany, DtCompanyDDL, "CompanyName", "CompanyRefNo");
                 ddlcompany.Enabled = false;
-
+                if (Request.QueryString["mcurrentcompRefNo"] != null)
+                {
+                    BindMasterDesignation("");
+                }
             }
             else
             {
@@ -331,7 +332,10 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
             {
                 Co.FillDropdownlist(ddlcompany, DtCompanyDDL, "CompanyName", "CompanyRefNo");
                 ddlcompany.Enabled = false;
-
+                if (Request.QueryString["mcurrentcompRefNo"] != null)
+                {
+                    BindMasterDesignation("");
+                }
             }
             else
             {
@@ -467,7 +471,6 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
         DataTable DtMasterCategroy;
         if (mCompanyRefNo != "")
         {
-
             DtMasterCategroy = Lo.RetriveMasterData(0, mCompanyRefNo, "", 0, "", "", "ViewDesignation");
         }
         else
@@ -477,7 +480,12 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
         if (DtMasterCategroy.Rows.Count > 0)
         {
             Co.FillDropdownlist(ddldesignation, DtMasterCategroy, "Designation", "DesignationId");
-            ddldesignation.Items.Insert(0, "Select");
+            if (Request.QueryString["mcurrentcompRefNo"] != null)
+            {
+                // ddldesignation.Items.Insert(0, "Select");
+            }
+            else
+            { ddldesignation.Items.Insert(0, "Select"); }
         }
     }
     #endregion
@@ -604,7 +612,7 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
     #endregion
     protected void btnsub_Click(object sender, EventArgs e)
     {
-        if (txtemailid.Text == "" && txtname.Text == "")
+        if (txtemailid.Text == "" && txtname.Text == "" && txtemailid.Text != "")
         {
             ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Email id and name can not be empty !')", true);
         }
@@ -618,7 +626,7 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
                 }
                 else
                 {
-                    if (btnsub.Text != "Edit")
+                    if (Request.QueryString["mcurrentcompRefNo"] == null)
                     {
                         if (ddldesignation.SelectedItem.Value != "Select")
                         {
@@ -722,7 +730,6 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
                 {
                     BindCompany("Unit");
                 }
-                btnsub.Text = "Edit";
             }
         }
     }

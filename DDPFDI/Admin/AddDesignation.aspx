@@ -56,7 +56,7 @@
                                 <div class="col-md-12">
                                     <div class="fdi-add-content">
                                         <div class="form-group">
-                                            <asp:Button ID="btncancel" runat="server" Text="Cancel" TabIndex="4" CssClass="btn btn-default pull-right" OnClick="btncancel_Click" />
+                                            <asp:Button ID="btncancel" runat="server" Text="Cancel" Visible="False" TabIndex="4" CssClass="btn btn-default pull-right" OnClick="btncancel_Click" />
                                             <asp:Button ID="btnsubmit" runat="server" Text="Save" TabIndex="3" CssClass="btn btn-primary pull-right" OnClick="btnsubmit_Click" OnClientClick="return confirm('Are you sure you want to save this designation?');" />
                                         </div>
                                     </div>

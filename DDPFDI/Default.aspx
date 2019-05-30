@@ -9,6 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="~/assets/images/favicon.ico">
     <link href="~/assets/css/bootstrap.css" rel="stylesheet">
+    <link href="~/assets/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="~/assets/css/style.css" rel="stylesheet" type="text/css">
     <link href="~/assets/css/custom.css" rel="stylesheet" type="text/css">
     <link href="~/assets/css/responsive.css" rel="stylesheet" type="text/css">

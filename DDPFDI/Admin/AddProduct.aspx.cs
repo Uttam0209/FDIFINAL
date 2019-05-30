@@ -361,7 +361,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
             {
                 Co.FillDropdownlist(ddlunit, DtCompanyDDL, "UnitName", "UnitRefNo");
                 // code by gk to select indivisual unit for the particular unit               
-                    ddldivision.SelectedValue = hfcomprefno.Value;
+                ddldivision.SelectedValue = hfcomprefno.Value;
                 //end code
                 BindNodelEmail();
                 ddlunit.Enabled = false;
@@ -524,16 +524,16 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                 txtempcode.Text = DtGetNodel.Rows[0]["NodalEmpCode"].ToString();
                 txtmobnodal.Text = DtGetNodel.Rows[0]["NodalOfficerMobile"].ToString();
                 //===Bind Nodel officer except Nodel one
-                DtCompanyDDL = Lo.RetriveMasterData(Convert.ToInt16(ddlNodalOfficerEmail.SelectedItem.Value), hfcomprefno.Value, "", 0, "", "", "AllNodelNotSelect");
-                if (DtCompanyDDL.Rows.Count > 0)
-                {
-                    Co.FillDropdownlist(ddlNodalOfficerEmail2, DtCompanyDDL, "NodalOficerName", "NodalOfficerID");
-                    ddlNodalOfficerEmail2.Items.Insert(0, "Select");
-                }
-                else
-                {
-                    divnodal2.Visible = false;
-                }
+                //DtCompanyDDL = Lo.RetriveMasterData(Convert.ToInt16(ddlNodalOfficerEmail.SelectedItem.Value), hfcomprefno.Value, "", 0, "", "", "AllNodelNotSelect");
+                //if (DtCompanyDDL.Rows.Count > 0)
+                //{
+                //    Co.FillDropdownlist(ddlNodalOfficerEmail2, DtCompanyDDL, "NodalOficerName", "NodalOfficerID");
+                //    ddlNodalOfficerEmail2.Items.Insert(0, "Select");
+                //}
+                //else
+                //{
+                //    divnodal2.Visible = false;
+                //}
             }
         }
         else
@@ -644,7 +644,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     #region BindServices Testing Certification
     protected void BindServcies()
     {
-        DataTable Dtservices = Lo.RetriveMasterSubCategoryDate(0, "Support Provided by DPSU", "", "SelectInnerMaster1", hfcomprefno.Value, "");
+        DataTable Dtservices = Lo.RetriveMasterSubCategoryDate(0, "TECHNICAL SUPPORT", "", "SelectInnerMaster1", hfcomprefno.Value, "");
         if (Dtservices.Rows.Count > 0)
         {
             gvservices.DataSource = Dtservices;
@@ -685,11 +685,11 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         DataTable DtMasterCategroy = new DataTable();
         if (ddlcompany.SelectedItem.Text != "Select")
         {
-            DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, "Product Category", "", "SelectProductCat", ddlcompany.SelectedItem.Value, "");
+            DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, "NSN GROUP", "", "SelectProductCat", ddlcompany.SelectedItem.Value, "");
         }
         else
         {
-            DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, "Product Category", "", "SelectProductCat", "", "");
+            DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, "NSN GROUP", "", "SelectProductCat", "", "");
         }
         if (DtMasterCategroy.Rows.Count > 0)
         {
@@ -721,9 +721,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     {
         if (ddlsubcategory.SelectedItem.Value != null || ddlsubcategory.SelectedItem.Text != "Select")
         {
-            DataTable DtMasterCategroyLevel3 =
-                Lo.RetriveMasterSubCategoryDate(Convert.ToInt16(ddlsubcategory.SelectedItem.Value), "", "",
-                    "SubSelectID", "", "");
+            DataTable DtMasterCategroyLevel3 = Lo.RetriveMasterSubCategoryDate(Convert.ToInt16(ddlsubcategory.SelectedItem.Value), "", "", "SubSelectID", "", "");
             if (DtMasterCategroyLevel3.Rows.Count > 0)
             {
                 Co.FillDropdownlist(ddllevel3product, DtMasterCategroyLevel3, "SCategoryName", "SCategoryId");
@@ -743,11 +741,11 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         DataTable DtMasterCategroy = new DataTable();
         if (ddlcompany.SelectedItem.Text != "Select")
         {
-            DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, "Technology Category", "", "SelectProductCat", ddlcompany.SelectedItem.Value, "");
+            DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, "PRODUCT (INDUSTRY DOMAIN)", "", "SelectProductCat", ddlcompany.SelectedItem.Value, "");
         }
         else
         {
-            DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, "Technology Category", "", "SelectProductCat", "", "");
+            DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, "PRODUCT (INDUSTRY DOMAIN)", "", "SelectProductCat", "", "");
         }
         if (DtMasterCategroy.Rows.Count > 0)
         {
@@ -756,7 +754,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         }
         else
         {
-            DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, "Technology Category", "", "SelectProductCat", "", "");
+            DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, "PRODUCT (INDUSTRY DOMAIN)", "", "SelectProductCat", "", "");
             Co.FillDropdownlist(ddltechnologycat, DtMasterCategroy, "SCategoryName", "SCategoryID");
             ddltechnologycat.Items.Insert(0, "Select");
         }
@@ -799,11 +797,11 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         DataTable DtMasterCategroy = new DataTable();
         if (ddlcompany.SelectedItem.Text != "Select")
         {
-            DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, "Platform Category", "", "SelectProductCat", ddlcompany.SelectedItem.Value, "");
+            DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, "DEFENCE PLATFORM", "", "SelectProductCat", ddlcompany.SelectedItem.Value, "");
         }
         else
         {
-            DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, "Platform Category", "", "SelectProductCat", "", "");
+            DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, "DEFENCE PLATFORM", "", "SelectProductCat", "", "");
         }
         if (DtMasterCategroy.Rows.Count > 0)
         {
@@ -812,7 +810,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         }
         else
         {
-            DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, "Platform Category", "", "SelectProductCat", "", "");
+            DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, "DEFENCE PLATFORM", "", "SelectProductCat", "", "");
             Co.FillDropdownlist(ddlplatform, DtMasterCategroy, "SCategoryName", "SCategoryID");
             ddlplatform.Items.Insert(0, "Select");
         }
@@ -824,11 +822,11 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         DataTable DtPurposeProcuremnt = new DataTable();
         if (ddlcompany.SelectedItem.Text != "Select")
         {
-            DtPurposeProcuremnt = Lo.RetriveMasterSubCategoryDate(0, "Purpose of Procurement", "", "SelectProductCat", ddlcompany.SelectedItem.Value, "");
+            DtPurposeProcuremnt = Lo.RetriveMasterSubCategoryDate(0, "PROCURMENT CATEGORY", "", "SelectProductCat", ddlcompany.SelectedItem.Value, "");
         }
         else
         {
-            DtPurposeProcuremnt = Lo.RetriveMasterSubCategoryDate(0, "Purpose of Procurement", "", "SelectProductCat", "", "");
+            DtPurposeProcuremnt = Lo.RetriveMasterSubCategoryDate(0, "PROCURMENT CATEGORY", "", "SelectProductCat", "", "");
         }
         if (DtPurposeProcuremnt.Rows.Count > 0)
         {
@@ -837,7 +835,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         }
         else
         {
-            DtPurposeProcuremnt = Lo.RetriveMasterSubCategoryDate(0, "Purpose of Procurement", "", "SelectProductCat", "", "");
+            DtPurposeProcuremnt = Lo.RetriveMasterSubCategoryDate(0, "PROCURMENT CATEGORY", "", "SelectProductCat", "", "");
             Co.FillDropdownlist(ddlprocurmentcategory, DtPurposeProcuremnt, "SCategoryName", "SCategoryID");
             ddlprocurmentcategory.Items.Insert(0, "Select");
         }
@@ -874,11 +872,11 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         DataTable DtMasterCategroy = new DataTable();
         if (ddlcompany.SelectedItem.Text != "Select")
         {
-            DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, "Nomenclature of main system", "", "SelectInnerMaster1", ddlcompany.SelectedItem.Value, "");
+            DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, "NAME OF DEFENCE PLATFORM", "", "SelectInnerMaster1", ddlcompany.SelectedItem.Value, "");
         }
         else
         {
-            DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, "Nomenclature of main system", "", "SelectInnerMaster1", "", "");
+            DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, "NAME OF DEFENCE PLATFORM", "", "SelectInnerMaster1", "", "");
         }
         if (DtMasterCategroy.Rows.Count > 0)
         {
@@ -887,7 +885,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         }
         else
         {
-            DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, "Nomenclature of main system", "", "SelectInnerMaster1", "", "");
+            DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, "NAME OF DEFENCE PLATFORM", "", "SelectInnerMaster1", "", "");
             Co.FillDropdownlist(ddlnomnclature, DtMasterCategroy, "SCategoryName", "SCategoryID");
             ddlnomnclature.Items.Insert(0, "Select");
         }
@@ -957,24 +955,23 @@ public partial class Admin_AddProduct : System.Web.UI.Page
             if (ddlcompany.SelectedItem.Text != "Select" && ddldivision.Visible == false)
             {
                 HyPanel1["CompanyRefNo"] = Co.RSQandSQLInjection(ddlcompany.SelectedItem.Value, "soft");
+                hfcomprefno.Value = ddlcompany.SelectedItem.Value;
                 hidType.Value = "Company";
                 HyPanel1["Role"] = hidType.Value.ToString();
             }
             else if (ddlcompany.SelectedItem.Text != "Select" && ddldivision.SelectedItem.Text != "Select" && ddlunit.Visible == false)
             {
                 HyPanel1["CompanyRefNo"] = Co.RSQandSQLInjection(ddldivision.SelectedItem.Value, "soft");
+                hfcomprefno.Value = ddldivision.SelectedItem.Value;
                 hidType.Value = "Division";
                 HyPanel1["Role"] = hidType.Value.ToString();
             }
             else if (ddlcompany.SelectedItem.Text != "Select" && ddldivision.SelectedItem.Text != "Select" && ddlunit.SelectedItem.Text != "Select")
             {
                 HyPanel1["CompanyRefNo"] = Co.RSQandSQLInjection(ddlunit.SelectedItem.Value, "soft");
+                hfcomprefno.Value = ddlunit.SelectedItem.Value;
                 hidType.Value = "Unit";
                 HyPanel1["Role"] = hidType.Value.ToString();
-            }
-            else
-            {
-                HyPanel1["CompanyRefNo"] = Co.RSQandSQLInjection(hfcomprefno.Value, "soft");
             }
         }
         else
@@ -983,23 +980,22 @@ public partial class Admin_AddProduct : System.Web.UI.Page
             {
                 HyPanel1["CompanyRefNo"] = Co.RSQandSQLInjection(ddlcompany.SelectedItem.Value, "soft");
                 hidType.Value = "Company";
+                hfcomprefno.Value = ddlcompany.SelectedItem.Value;
                 HyPanel1["Role"] = hidType.Value.ToString();
             }
             else if (ddlcompany.SelectedItem.Text != "Select" && ddldivision.SelectedItem.Text != "Select" && ddlunit.SelectedItem.Text == "Select" || ddlunit.SelectedItem.Text == "Select")
             {
                 HyPanel1["CompanyRefNo"] = Co.RSQandSQLInjection(ddldivision.SelectedItem.Value, "soft");
                 hidType.Value = "Division";
+                hfcomprefno.Value = ddldivision.SelectedItem.Value;
                 HyPanel1["Role"] = hidType.Value.ToString();
             }
             else if (ddlcompany.SelectedItem.Text != "Select" && ddldivision.SelectedItem.Text != "Select" && ddlunit.SelectedItem.Text != "Select")
             {
                 HyPanel1["CompanyRefNo"] = Co.RSQandSQLInjection(ddlunit.SelectedItem.Value, "soft");
                 hidType.Value = "Unit";
+                hfcomprefno.Value = ddlunit.SelectedItem.Value;
                 HyPanel1["Role"] = hidType.Value.ToString();
-            }
-            else
-            {
-                HyPanel1["CompanyRefNo"] = Co.RSQandSQLInjection(hfcomprefno.Value, "soft");
             }
         }
         if (ddlmastercategory.SelectedItem.Value != "Select")
@@ -1160,13 +1156,23 @@ public partial class Admin_AddProduct : System.Web.UI.Page
             if (chkBx != null && chkBx.Checked)
             {
                 Services = Services + "," + hfservicesid.Value;
-                Remarks = Remarks + "," + txtRemarks.Text;
+                if (txtRemarks.Text != "")
+                {
+                    Remarks = Remarks + "," + txtRemarks.Text;
+                }
+                else
+                { }
             }
         }
         if (Services != "")
         {
             HyPanel1["DPSUServices"] = Co.RSQandSQLInjection(Services.Substring(1).ToString() + ",", "soft");
-            HyPanel1["Remarks"] = Co.RSQandSQLInjection(Remarks.Substring(1).ToString() + ",", "soft");
+            if (Remarks != "")
+            {
+                HyPanel1["Remarks"] = Co.RSQandSQLInjection(Remarks.Substring(1).ToString() + ",", "soft");
+            }
+            else
+            { HyPanel1["Remarks"] = ""; }
         }
         else
         {
@@ -1181,13 +1187,22 @@ public partial class Admin_AddProduct : System.Web.UI.Page
             if (chkfinanBx != null && chkfinanBx.Checked)
             {
                 FinancialServices = FinancialServices + "," + hffinanservicesid.Value;
-                FinancialRemarks = FinancialRemarks + "," + txtFinancialRemarks.Text;
+                if (txtFinancialRemarks.Text != "")
+                {
+                    FinancialRemarks = FinancialRemarks + "," + txtFinancialRemarks.Text;
+                }
             }
         }
         if (FinancialServices != "")
         {
             HyPanel1["FinancialSupport"] = Co.RSQandSQLInjection(FinancialServices.Substring(1).ToString() + ",", "soft");
-            HyPanel1["FinancialRemark"] = Co.RSQandSQLInjection(FinancialRemarks.Substring(1).ToString() + ",", "soft");
+            if (FinancialRemarks != "")
+            {
+                HyPanel1["FinancialRemark"] =
+                    Co.RSQandSQLInjection(FinancialRemarks.Substring(1).ToString() + ",", "soft");
+            }
+            else
+            { HyPanel1["FinancialRemark"] = ""; }
         }
         else
         {
@@ -1234,13 +1249,22 @@ public partial class Admin_AddProduct : System.Web.UI.Page
             if (chktest != null && chktest.Checked)
             {
                 ServicesTesting = ServicesTesting + "," + hftestingid.Value;
-                RemarksTesting = RemarksTesting + "," + txtRemarksTest.Text;
+                if (txtRemarksTest.Text != "")
+                {
+                    RemarksTesting = RemarksTesting + "," + txtRemarksTest.Text;
+                }
             }
         }
         if (ServicesTesting != "")
         {
             HyPanel1["Testing"] = Co.RSQandSQLInjection(ServicesTesting.Substring(1).ToString() + ",", "soft");
-            HyPanel1["TestingRemarks"] = Co.RSQandSQLInjection(RemarksTesting.Substring(1).ToString() + ",", "soft");
+            if (RemarksTesting != "")
+            {
+                HyPanel1["TestingRemarks"] =
+                    Co.RSQandSQLInjection(RemarksTesting.Substring(1).ToString() + ",", "soft");
+            }
+            else
+            { HyPanel1["TestingRemarks"] = ""; }
         }
         else
         {
@@ -1255,13 +1279,21 @@ public partial class Admin_AddProduct : System.Web.UI.Page
             if (chkcerti != null && chkcerti.Checked)
             {
                 ServicesCertification = ServicesCertification + "," + hfcertiid.Value;
-                RemarksCertification = RemarksCertification + "," + txtremarkscerti.Text;
+                if (txtremarkscerti.Text != "")
+                {
+                    RemarksCertification = RemarksCertification + "," + txtremarkscerti.Text;
+                }
             }
         }
         if (ServicesCertification != "")
         {
             HyPanel1["Certification"] = Co.RSQandSQLInjection(ServicesCertification.Substring(1).ToString() + ",", "soft");
-            HyPanel1["CertificationRemark"] = Co.RSQandSQLInjection(RemarksCertification.Substring(1).ToString() + ",", "soft");
+            if (RemarksCertification != "")
+            {
+                HyPanel1["CertificationRemark"] = Co.RSQandSQLInjection(RemarksCertification.Substring(1).ToString() + ",", "soft");
+            }
+            else
+            { HyPanel1["CertificationRemark"] = ""; }
         }
         else
         {
@@ -1707,8 +1739,8 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     {
         try
         {
-            string a = NSNGroupddl.Substring((NSNGroupddl.IndexOf("(") + 1), NSNGroupddl.IndexOf(")") - (NSNGroupddl.IndexOf("(")+1));
-            string b = NSNClassddl.Substring((NSNClassddl.IndexOf("(") + 1), NSNClassddl.IndexOf(")") - (NSNClassddl.IndexOf("(")+1));
+            string a = NSNGroupddl.Substring((NSNGroupddl.IndexOf("(") + 1), NSNGroupddl.IndexOf(")") - (NSNGroupddl.IndexOf("(") + 1));
+            string b = NSNClassddl.Substring((NSNClassddl.IndexOf("(") + 1), NSNClassddl.IndexOf(")") - (NSNClassddl.IndexOf("(") + 1));
             txtnsccode.Text = a + b;
         }
         catch (Exception ex)

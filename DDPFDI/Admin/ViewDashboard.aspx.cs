@@ -229,7 +229,10 @@ public partial class Admin_ViewDashboard : System.Web.UI.Page
     private string Certification;
     protected void gvproduct_RowCommand(object sender, GridViewCommandEventArgs e)
     {
-        DataTable DtView = Lo.RetriveProductCode("", e.CommandArgument.ToString(), "ProductMasterID", "All");
+        GridViewRow gvr = (GridViewRow)((Control)e.CommandSource).NamingContainer;
+        int rowIndex = gvr.RowIndex;
+        string Role = (gvproduct.Rows[rowIndex].FindControl("hfrole") as HiddenField).Value;
+        DataTable DtView = Lo.RetriveProductCode("", e.CommandArgument.ToString(), "ProductMasterID", Role);
         if (DtView.Rows.Count > 0)
         {
             lblcomprefno.Text = DtView.Rows[0]["CompanyRefNo"].ToString();
@@ -393,13 +396,33 @@ public partial class Admin_ViewDashboard : System.Web.UI.Page
     }
     protected void gvViewNodalOfficer_RowCommand(object sender, GridViewCommandEventArgs e)
     {
+        GridViewRow gvr = (GridViewRow)((Control)e.CommandSource).NamingContainer;
+        int rowIndex = gvr.RowIndex;
+        string Role = (gvViewNodalOfficer.Rows[rowIndex].FindControl("hfnodalrole") as HiddenField).Value;
+        if (Role == "Unit")
+        {
+            Role = "UnitID";
+        }
+        else if (Role == "Division" || Role == "Factory")
+        {
+            Role = "DivisionID";
+        }
+        else if (Role == "Company")
+        {
+            Role = "CompanyID";
+        }
         DataTable DtView = new DataTable();
-        DtView = Lo.RetriveAllNodalOfficer(e.CommandArgument.ToString(), "CompanyID");
+        DtView = Lo.RetriveAllNodalOfficer(e.CommandArgument.ToString(), Role);
         if (DtView.Rows.Count > 0)
         {
             lblNodalComp.Text = DtView.Rows[0]["CompanyName"].ToString();
             lblDivision.Text = DtView.Rows[0]["FactoryName"].ToString();
-            lblUnit.Text = DtView.Rows[0]["UnitName"].ToString();
+            if (Role == "DivisionID")
+            {
+                lblUnit.Text = "";
+            }
+            else
+            { lblUnit.Text = DtView.Rows[0]["UnitName"].ToString(); }
             lblNodalOfficerRefNo.Text = DtView.Rows[0]["NodalOfficerRefNo"].ToString();
             lblNodalOficerName.Text = DtView.Rows[0]["NodalOficerName"].ToString();
             lblNodalEmpCode.Text = DtView.Rows[0]["NodalEmpCode"].ToString();
