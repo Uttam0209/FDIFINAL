@@ -171,7 +171,7 @@
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <asp:Label runat="server" ID="lblenduser" Text="End User"></asp:Label><span class="mandatory"> *</span>
-                                                    <asp:DropDownList runat="server" ID="ddlenduser" class="form-control" TabIndex="19">
+                                                    <asp:DropDownList runat="server" ID="ddlenduser" class="form-control" TabIndex="10">
                                                     </asp:DropDownList>
                                                 </div>
                                             </div>
@@ -185,19 +185,19 @@
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label>DPSU Part Number</label>
-                                                    <asp:TextBox runat="server" ID="txtdpsupartnumber" TabIndex="10" class="form-control"></asp:TextBox>
+                                                    <asp:TextBox runat="server" ID="txtdpsupartnumber" TabIndex="12" class="form-control"></asp:TextBox>
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label>HSN Code</label>
-                                                    <asp:TextBox runat="server" ID="txthsncode" TabIndex="12" class="form-control"></asp:TextBox>
+                                                    <asp:TextBox runat="server" ID="txthsncode" TabIndex="13" class="form-control"></asp:TextBox>
                                                 </div>
                                             </div>
                                             <div class="col-md-4" runat="server" visible="false">
                                                 <div class="form-group">
                                                     <label>DPSU Reference No</label>
-                                                    <asp:TextBox runat="server" ID="txterprefno" TabIndex="13" class="form-control"></asp:TextBox>
+                                                    <asp:TextBox runat="server" ID="txterprefno"  class="form-control"></asp:TextBox>
                                                 </div>
                                             </div>
                                         </div>
@@ -247,18 +247,36 @@
                                     </div>
                                     <div class="section-pannel">
                                         <div class="row">
-                                            <div class="col-md-4">
-                                                <div class="form-group">
-                                                    <label>DEFENCE PLATFORM<span class="mandatory">*</span></label>
-                                                    <asp:DropDownList runat="server" ID="ddlplatform" TabIndex="17" class="form-control"></asp:DropDownList>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <div class="form-group">
-                                                    <asp:Label runat="server" ID="lblNomenclature" Text="NAME OF DEFENCE PLATFORM"></asp:Label><span class="mandatory"> *</span>
-                                                    <asp:DropDownList runat="server" ID="ddlnomnclature" class="form-control" TabIndex="18" />
-                                                </div>
-                                            </div>
+                                            <asp:UpdatePanel runat="server" ID="UpdatePanel4">
+                                                <ContentTemplate>
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            <label>DEFENCE PLATFORM<span class="mandatory">*</span></label>
+                                                            <asp:DropDownList runat="server" ID="ddlplatform" AutoPostBack="True" TabIndex="17" class="form-control" OnSelectedIndexChanged="ddlplatform_SelectedIndexChanged"></asp:DropDownList>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4" style="margin-top: 8px;">
+                                                        <div class="form-group">
+                                                            <asp:Label runat="server" ID="lblNomenclature" Text="NAME OF DEFENCE PLATFORM"></asp:Label><span class="mandatory"> *</span>
+                                                            <asp:DropDownList runat="server" ID="ddlnomnclature" class="form-control" TabIndex="18" />
+                                                        </div>
+                                                    </div>
+                                                </ContentTemplate>
+                                                <Triggers>
+                                                </Triggers>
+                                            </asp:UpdatePanel>
+                                            <asp:UpdateProgress ID="UpdateProgress7" runat="server" AssociatedUpdatePanelID="UpdatePanel4">
+                                                <ProgressTemplate>
+                                                    <!---Progress Bar ---->
+                                                    <div class="overlay-progress">
+                                                        <div class="custom-progress-bar blue stripes">
+                                                            <span></span>
+                                                            <p>Processing</p>
+                                                        </div>
+                                                    </div>
+                                                    <!---Progress Bar ---->
+                                                </ProgressTemplate>
+                                            </asp:UpdateProgress>
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label>PROCURMENT CATEGORY<span class="mandatory">*</span></label>

@@ -70,20 +70,6 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
         {
             if (hidType.Value == "SuperAdmin" || hidType.Value == "Admin")
             {
-                //if (Request.QueryString["mu"] != null)
-                //{
-                //    if (objEnc.DecryptData(Request.QueryString["mu"].ToString().Replace(" ", "+")) == "View")
-                //    {
-                //        DtGrid = Lo.RetriveProductCode("", "", "ProductMaster", "All");
-                //        if (DtGrid.Rows.Count > 0)
-                //        {
-                //            gvproduct.DataSource = DtGrid;
-                //            gvproduct.DataBind();
-                //            gvproduct.Visible = true;
-                //        }
-                //    }
-                //    else
-                //    {
                 if (ddlcompany.SelectedItem.Text != "Select" && ddldivision.Visible == false)
                 {
                     DtGrid = Lo.RetriveProductCode(ddlcompany.SelectedItem.Value, "", "CompanyProduct", "Company");
@@ -106,8 +92,6 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
                 {
                     gvproduct.Visible = false;
                 }
-                //}
-                //}
             }
             else if (hidType.Value == "Company")
             {
@@ -214,7 +198,7 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
             {
                 lblcomprefno.Text = DtView.Rows[0]["CompanyRefNo"].ToString();
                 lblcompname.Text = DtView.Rows[0]["CompanyName"].ToString();
-                lbldiviname.Text = DtView.Rows[0]["DivisionName"].ToString();
+                lbldiviname.Text = DtView.Rows[0]["FactoryName"].ToString();
                 lblunitname.Text = DtView.Rows[0]["UnitName"].ToString();
                 lblprodrefno.Text = DtView.Rows[0]["ProductRefNo"].ToString();
                 lblprodlevel1.Text = DtView.Rows[0]["ProdLevel1Name"].ToString();
@@ -332,20 +316,20 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
                     lblphonenumber.Text = dtNodal.Rows[0]["NodalOfficerTelephone"].ToString();
                     lblfax.Text = dtNodal.Rows[0]["NodalOfficerFax"].ToString();
 
-                    if (dtNodal.Rows.Count == 2)
-                    {
-                        tablenodal2.Visible = true;
-                        lblempcode2.Text = dtNodal.Rows[1]["NodalEmpCode"].ToString();
-                        lbldesignation2.Text = dtNodal.Rows[1]["Designation"].ToString();
-                        lblemailid2.Text = dtNodal.Rows[1]["NodalOfficerEmail"].ToString();
-                        lblmobileno2.Text = dtNodal.Rows[1]["NodalOfficerMobile"].ToString();
-                        lblphoneno2.Text = dtNodal.Rows[1]["NodalOfficerTelephone"].ToString();
-                        lblfax2.Text = dtNodal.Rows[1]["NodalOfficerFax"].ToString();
-                    }
-                    else
-                    {
-                        tablenodal2.Visible = false;
-                    }
+                    //if (dtNodal.Rows.Count == 2)
+                    //{
+                    //    tablenodal2.Visible = true;
+                    //    lblempcode2.Text = dtNodal.Rows[1]["NodalEmpCode"].ToString();
+                    //    lbldesignation2.Text = dtNodal.Rows[1]["Designation"].ToString();
+                    //    lblemailid2.Text = dtNodal.Rows[1]["NodalOfficerEmail"].ToString();
+                    //    lblmobileno2.Text = dtNodal.Rows[1]["NodalOfficerMobile"].ToString();
+                    //    lblphoneno2.Text = dtNodal.Rows[1]["NodalOfficerTelephone"].ToString();
+                    //    lblfax2.Text = dtNodal.Rows[1]["NodalOfficerFax"].ToString();
+                    //}
+                    //else
+                    //{
+                    //    tablenodal2.Visible = false;
+                    //}
                 }
                 DataTable dttesting = Lo.RetriveProductCode("", e.CommandArgument.ToString(), "ProductTesting", hidType.Value);
                 if (dttesting.Rows.Count > 0)
@@ -583,48 +567,6 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
     }
     protected void ddldivision_OnSelectedIndexChanged(object sender, EventArgs e)
     {
-        //if (hidType.Value == "SuperAdmin" || hidType.Value == "Admin")
-        //{
-        //    if (ddldivision.SelectedItem.Text != "Select")
-        //    {
-        //        DtCompanyDDL = Lo.RetriveMasterData(0, ddldivision.SelectedItem.Value, "", 0, "", "", "UnitSelectID");
-        //        if (DtCompanyDDL.Rows.Count > 0)
-        //        {
-        //            Co.FillDropdownlist(ddlunit, DtCompanyDDL, "UnitName", "UnitRefNo");
-        //            ddlunit.Items.Insert(0, "Select");
-        //            ddlunit.Visible = true;
-        //            lblselectunit.Visible = true;
-        //            if (ddlunit.SelectedItem.Text == "Select")
-        //            {
-        //                ddldivision.Enabled = true;
-        //            }
-        //            else
-        //            { ddldivision.Enabled = false; }
-        //            hidCompanyRefNo.Value = ddldivision.SelectedItem.Value;
-        //            hidType.Value = "Factory";
-        //            BindGridView();
-        //        }
-        //        else
-        //        {
-        //            lblselectunit.Visible = false;
-        //            ddlunit.Visible = false;
-        //        }
-        //        hfcomprefno.Value = "";
-        //        hfcomprefno.Value = ddldivision.SelectedItem.Value;
-        //    }
-        //    else if (ddldivision.SelectedItem.Text == "Select")
-        //    {
-        //        ddlcompany.Enabled = true;
-        //        lblselectunit.Visible = false;
-        //        hidCompanyRefNo.Value = ddlcompany.SelectedItem.Value;
-        //        hidType.Value = "Company";
-        //        hfcomprefno.Value = "";
-        //        hfcomprefno.Value = ddlcompany.SelectedItem.Value;
-        //        BindGridView();
-        //    }
-        //}
-        //else
-        //{
         if (ddldivision.SelectedItem.Text != "Select")
         {
             DtCompanyDDL = Lo.RetriveMasterData(0, ddldivision.SelectedItem.Value, "", 0, "", "", "UnitSelectID");
@@ -648,6 +590,7 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
             {
                 lblselectunit.Visible = false;
                 ddlunit.Visible = false;
+                hidType.Value = "Division";
                 BindGridView();
             }
             hfcomprefno.Value = "";

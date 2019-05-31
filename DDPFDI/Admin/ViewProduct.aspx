@@ -140,7 +140,7 @@
                                             <div>
                                                 <table class="table table-bordered">
                                                     <tr>
-                                                        <th>Company Refrence No</th>
+                                                        <th>Refrence No</th>
                                                         <th>Company</th>
                                                         <th>Division/Palnt</th>
                                                         <th>Unit</th>
@@ -432,7 +432,7 @@
                                                         </tbody>
                                                     </table>
                                                 </div>
-                                                <div class="col-sm-12">
+                                                <div class="col-sm-12" runat="server" visible="False">
                                                     <table class="table table-bordered" runat="server" id="tablenodal2">
                                                         <tbody>
                                                             <tr>

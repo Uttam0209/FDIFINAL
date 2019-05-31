@@ -311,7 +311,7 @@ public partial class Admin_ViewNodalOfficer : System.Web.UI.Page
             LinkButton s_lbllogindetail = (LinkButton)e.Row.FindControl("lbllogindetail");
             if (s_lblnodalofficer.Text == "Y")
             {
-                e.Row.Attributes.Add("Class", "bg-purple");
+                // e.Row.Attributes.Add("Class", "bg-purple");
                 s_lblnodalofficer.Text = "Nodal Officer";
                 s_lblnodalofficer.Visible = true;
                 // s_lbllogindetail.Visible = false;

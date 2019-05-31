@@ -279,19 +279,20 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
                     ddldivision.Enabled = true;
                     ddlunit.Visible = false;
                     lblselectunit.Visible = false;
-
                 }
                 else
                 {
-                    ddldivision.Enabled = false;
+                    lblselectunit.Visible = false;
+                    lblselectdivison.Visible = false;
                 }
             }
             else
             {
-                ddldivision.Enabled = false;
+                lblselectunit.Visible = false;
+                lblselectdivison.Visible = false;
             }
         }
-        else if (mType == "Factory" || mType=="Division")
+        else if (mType == "Factory" || mType == "Division")
         {
             DtCompanyDDL = Lo.RetriveMasterData(0, mRefNo, "Company1", 0, "", "", "CompanyName");
             if (DtCompanyDDL.Rows.Count > 0)
@@ -322,6 +323,7 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
             else
             {
                 lblselectdivison.Visible = false;
+                lblselectunit.Visible = false;
             }
             DtCompanyDDL = Lo.RetriveMasterData(0, ddldivision.SelectedItem.Value, "Unit1", 0, "", "", "CompanyName");
             if (DtCompanyDDL.Rows.Count > 0)
@@ -530,7 +532,7 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
         hySaveNodal["NodalOfficerMobile"] = Co.RSQandSQLInjection(txtmobile.Text, "soft");
         hySaveNodal["NodalOfficerTelephone"] = Co.RSQandSQLInjection(txttelephone.Text, "soft");
         hySaveNodal["NodalOfficerFax"] = Co.RSQandSQLInjection(txtfax.Text, "soft");
-        if (ddlcompany.SelectedValue != "Select" && ddldivision.SelectedValue == "Select")
+        if (ddlcompany.SelectedValue != "Select" && ddldivision.SelectedValue == "" || ddldivision.SelectedValue == "Select")
         {
             hySaveNodal["CompanyRefNo"] = ddlcompany.SelectedItem.Value;
             RefNo = ddlcompany.SelectedItem.Value;
@@ -761,7 +763,7 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
             LinkButton s_lbllogindetail = (LinkButton)e.Row.FindControl("lbllogindetail");
             if (s_lblnodalofficer.Text == "Y")
             {
-                e.Row.Attributes.Add("Class", "bg-purple");
+                //   e.Row.Attributes.Add("Class", "bg-purple");
                 s_lblnodalofficer.Text = "Nodal Officer";
                 s_lblnodalofficer.Visible = true;
                 // s_lbllogindetail.Visible = false;

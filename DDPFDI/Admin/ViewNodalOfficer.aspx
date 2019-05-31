@@ -180,7 +180,7 @@
                                                     <asp:Label ID="lblNodalOficerName" runat="server"></asp:Label>
                                                 </td>
                                             </tr>
-                                             <tr>
+                                            <tr>
                                                 <td class="pass">Email ID</td>
                                                 <td>
                                                     <asp:Label ID="lblEmail" runat="server"></asp:Label>
@@ -198,7 +198,7 @@
                                                     <asp:Label ID="lblNodalEmpCode" runat="server"></asp:Label>
                                                 </td>
                                             </tr>
-                                           
+
                                             <tr>
                                                 <td class="pass">Mobile Number</td>
                                                 <td>
@@ -206,13 +206,13 @@
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td class="pass">Telephone</td>
+                                                <td class="pass">Telephone No</td>
                                                 <td>
                                                     <asp:Label ID="lblTelephone" runat="server"></asp:Label>
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td class="pass">Fax</td>
+                                                <td class="pass">Fax No</td>
                                                 <td>
                                                     <asp:Label ID="lblFax" runat="server"></asp:Label>
                                                 </td>

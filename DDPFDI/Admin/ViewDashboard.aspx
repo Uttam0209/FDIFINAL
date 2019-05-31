@@ -50,9 +50,9 @@
                                     <asp:Label ID="lbltotal" runat="server" Text=""></asp:Label>
                                 </div>
                                 <div class="clearfix"></div>
-                                <div class="table-wraper" runat="server" id="divcompanyGrid" visible="False">
+                                <div class="table-wraper table-responsive" runat="server" id="divcompanyGrid" visible="False">
                                     <asp:GridView ID="gvcompanydetail" runat="server" Width="100%" Class="commonAjaxTbl master-company-table table display 
-                                        responsive no-wrap table-hover manage-user Grid"
+                                        responsive no-wrap table-hover manage-user Grid table-responsive"
                                         AutoGenerateColumns="false" OnRowCommand="gvcompanydetail_RowCommand">
                                         <PagerStyle HorizontalAlign="Center" CssClass="GridPager" />
                                         <Columns>
@@ -72,6 +72,7 @@
                                                     <asp:Label runat="server" ID="lblcompanyrole" Text='<%#Eval("Role") %>'></asp:Label>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
+                                            <asp:BoundField ItemStyle-Width="150px" DataField="NodalOficerName" HeaderText="Nodal Officer Name" />
                                             <asp:TemplateField HeaderText="Nodal Officer Email">
                                                 <ItemTemplate>
                                                     <asp:Label ID="lblnodelname" runat="server" Text='<%#Eval("NodalOfficerEmail") %>' NullDisplayText="#"></asp:Label>
@@ -86,8 +87,9 @@
                                     </asp:GridView>
                                 </div>
                                 <div class="clearfix"></div>
-                                <div class="table-wrapper" id="divfactorygrid" runat="server" visible="False">
-                                    <asp:GridView ID="gvfactory" runat="server" AutoGenerateColumns="false" Class="table table-hover ChildGrid" OnRowCommand="gvfactory_RowCommand">
+                                <div class="table-wrapper table-responsive" id="divfactorygrid" runat="server" visible="False">
+                                    <asp:GridView ID="gvfactory" runat="server" AutoGenerateColumns="false" Class="commonAjaxTbl master-company-table ViewProductTable table 
+                                        display responsive no-wrap table-hover manage-user Grid table-responsive" OnRowCommand="gvfactory_RowCommand">
                                         <Columns>
                                             <asp:TemplateField HeaderText="S.No.">
                                                 <ItemTemplate>
@@ -102,6 +104,7 @@
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                             <asp:BoundField ItemStyle-Width="150px" DataField="Role" HeaderText="Role" />
+                                            <asp:BoundField ItemStyle-Width="150px" DataField="NodalOficerName" HeaderText="Nodal Officer Name" />
                                             <asp:TemplateField HeaderText="Nodal Officer Email">
                                                 <ItemTemplate>
                                                     <asp:Label ID="lblfactorynodelname" runat="server" Text='<%#Eval("NodalOfficerEmail") %>' NullDisplayText="#"></asp:Label>
@@ -116,8 +119,9 @@
                                     </asp:GridView>
                                 </div>
                                 <div class="clearfix"></div>
-                                <div class="table-wrapper" id="divunitGrid" runat="server" visible="False">
-                                    <asp:GridView ID="gvunit" runat="server" AutoGenerateColumns="false" Class="table table-hover ChildGrid" OnRowCommand="gvunit_RowCommand">
+                                <div class="table-wrapper table-responsive" id="divunitGrid" runat="server" visible="False" style="overflow: scroll;">
+                                    <asp:GridView ID="gvunit" runat="server" AutoGenerateColumns="false" Class="commonAjaxTbl master-company-table ViewProductTable table
+                                         display responsive no-wrap table-hover manage-user Grid table-responsive" style="overflow: scroll;" OnRowCommand="gvunit_RowCommand">
                                         <PagerStyle HorizontalAlign="Center" CssClass="GridPager" />
                                         <Columns>
                                             <asp:TemplateField HeaderText="S.No.">
@@ -135,6 +139,7 @@
                                                     <asp:Label runat="server" ID="lblunitrole" Text='<%#Eval("Role") %>'></asp:Label>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
+                                            <asp:BoundField ItemStyle-Width="150px" DataField="NodalOficerName" HeaderText="Nodal Officer Name" />
                                             <asp:TemplateField HeaderText="Nodal Officer Email">
                                                 <ItemTemplate>
                                                     <asp:Label ID="lblunitnodelname" runat="server" Text='<%#Eval("NodalOfficerEmail") %>' NullDisplayText="#"></asp:Label>
@@ -150,7 +155,7 @@
                                     </asp:GridView>
                                 </div>
                                 <div class="clearfix"></div>
-                                <div class="table-wraper" id="divEmployeeNodalGrid" runat="server" visible="False">
+                                <div class="table-wraper table-responsive" id="divEmployeeNodalGrid" runat="server" visible="False">
                                     <asp:GridView ID="gvViewNodalOfficer" runat="server" Width="100%" Class="commonAjaxTbl master-company-table table display 
                                         responsive no-wrap table-hover manage-user Grid"
                                         AutoGenerateColumns="false" OnRowCommand="gvViewNodalOfficer_RowCommand">
@@ -161,32 +166,33 @@
                                                     <%#Container.DataItemIndex+1 %>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
-                                            <asp:BoundField DataField="CompanyName" HeaderText="Company" NullDisplayText="-" />
-                                            <asp:BoundField DataField="FactoryName" HeaderText="Division" NullDisplayText="-" />
-                                            <asp:BoundField DataField="UnitName" HeaderText="Unit" NullDisplayText="-" />
+                                            <asp:BoundField DataField="CompanyName" HeaderText="Company" />
+                                            <asp:BoundField DataField="FactoryName" HeaderText="Division" />
+                                            <asp:BoundField DataField="UnitName" HeaderText="Unit" />
                                             <asp:TemplateField HeaderText="Nodal Officer Name">
                                                 <ItemTemplate>
-                                                    <asp:Label ID="lblnodelname" runat="server" Text='<%#Eval("NodalOficerName") %>' NullDisplayText="#" SortExpression="NodalOficerName"></asp:Label>
+                                                    <asp:Label ID="lblnodelname" runat="server" Text='<%#Eval("NodalOficerName") %>' SortExpression="NodalOficerName"></asp:Label>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="Reference No.">
                                                 <ItemTemplate>
-                                                    <asp:Label ID="lblnodelrefno" runat="server" Text='<%#Eval("NodalOfficerRefNo") %>' NullDisplayText="#" SortExpression="NodalOfficerRefNo"></asp:Label>
+                                                    <asp:Label ID="lblnodelrefno" runat="server" Text='<%#Eval("NodalOfficerRefNo") %>' SortExpression="NodalOfficerRefNo"></asp:Label>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
+                                            <asp:BoundField ItemStyle-Width="150px" DataField="NodalOficerName" HeaderText="Nodal Officer Name" />
                                             <asp:TemplateField HeaderText="Nodal Officer Email">
                                                 <ItemTemplate>
-                                                    <asp:Label ID="nodelemail" runat="server" Text='<%#Eval("NodalOfficerEmail") %>' NullDisplayText="#" SortExpression="NodalOfficerEmail"></asp:Label>
+                                                    <asp:Label ID="nodelemail" runat="server" Text='<%#Eval("NodalOfficerEmail") %>' SortExpression="NodalOfficerEmail"></asp:Label>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="Nodal">
                                                 <ItemTemplate>
-                                                    <asp:Label ID="lblnodalofficer" runat="server" Text='<%#Eval("IsNodalOfficer") %>' NullDisplayText="#" SortExpression="NodalOfficerEmail"></asp:Label>
+                                                    <asp:Label ID="lblnodalofficer" runat="server" Text='<%#Eval("IsNodalOfficer") %>' SortExpression="NodalOfficerEmail"></asp:Label>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="Company" Visible="False">
                                                 <ItemTemplate>
-                                                    <asp:Label ID="lblrefno" runat="server" Text='<%#Eval("CompanyName") %>' NullDisplayText="#" SortExpression="Company"></asp:Label>
+                                                    <asp:Label ID="lblrefno" runat="server" Text='<%#Eval("CompanyName") %>' SortExpression="Company"></asp:Label>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="Action">
@@ -201,7 +207,7 @@
                                 <div class="clearfix"></div>
                                 <div class="table-wrapper" id="divProductGrid" runat="server" visible="False">
                                     <asp:GridView ID="gvproduct" runat="server" Width="100%" Class="commonAjaxTbl master-company-table ViewProductTable table display 
-                                        responsive no-wrap table-hover manage-user Grid"
+                                        responsive no-wrap table-hover manage-user Grid table-responsive"
                                         AutoGenerateColumns="false" OnRowCommand="gvproduct_RowCommand">
                                         <PagerStyle HorizontalAlign="Center" CssClass="GridPager" />
                                         <Columns>
@@ -313,6 +319,18 @@
                                                     <asp:Label ID="lblFaxNo" runat="server"></asp:Label>
                                                 </td>
                                             </tr>
+                                            <tr>
+                                                <td class="pass">Nodal Officer Name</td>
+                                                <td>
+                                                    <asp:Label ID="lblNodalOfficerName" runat="server"></asp:Label>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="pass">Nodal Officer Email</td>
+                                                <td>
+                                                    <asp:Label ID="lblNodalEmail" runat="server"></asp:Label>
+                                                </td>
+                                            </tr>
                                             <tr class="hidden">
                                                 <td class="pass">EmailID</td>
                                                 <td>
@@ -341,18 +359,6 @@
                                                 <td class="pass">PAN No</td>
                                                 <td>
                                                     <asp:Label ID="lblpanno" runat="server"></asp:Label>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="pass">Nodal Officer Name</td>
-                                                <td>
-                                                    <asp:Label ID="lblNodalOfficerName" runat="server"></asp:Label>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="pass">Nodal Officer Email</td>
-                                                <td>
-                                                    <asp:Label ID="lblNodalEmail" runat="server"></asp:Label>
                                                 </td>
                                             </tr>
 
@@ -462,12 +468,24 @@
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td class="pass">Contact No</td>
+                                                <td class="pass">Nodal Officer Name</td>
+                                                <td>
+                                                    <asp:Label ID="lblDivNodalName" runat="server"></asp:Label>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="pass">Nodal Officer Email</td>
+                                                <td>
+                                                    <asp:Label ID="lblDivNodalEMail" runat="server"></asp:Label>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="pass">Telephone No</td>
                                                 <td>
                                                     <asp:Label ID="lblDivConNo" runat="server"></asp:Label>
                                                 </td>
                                             </tr>
-                                            <tr>
+                                            <tr class="hidden">
                                                 <td class="pass">Email ID</td>
                                                 <td>
                                                     <asp:Label ID="lblDivEmail" runat="server"></asp:Label>
@@ -479,7 +497,7 @@
                                                     <asp:Label ID="lblDivFax" runat="server"></asp:Label>
                                                 </td>
                                             </tr>
-                                            <tr>
+                                            <tr class="hidden">
                                                 <td class="pass">Website</td>
                                                 <td>
                                                     <asp:Label ID="lblDivWebsite" runat="server"></asp:Label>
@@ -554,66 +572,73 @@
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td class="pass">Nodal Email</td>
-                                                <td>
-                                                    <asp:Label ID="lblUnitNodalEmail" runat="server"></asp:Label>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="pass">Official Email ID</td>
-                                                <td>
-                                                    <asp:Label ID="lblUnitEmail" runat="server"></asp:Label>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="pass">Official Website</td>
-                                                <td>
-                                                    <asp:Label ID="lblUnitWebsite" runat="server"></asp:Label>
-                                                </td>
-                                            </tr>
-                                            <tr>
                                                 <td class="pass">Head of Unit Name</td>
                                                 <td>
                                                     <asp:Label ID="lblUnitCeoName" runat="server"></asp:Label>
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td class="pass">Head of Unit Email ID</td>
+                                                <td class="pass">Head of Unit Email</td>
                                                 <td>
                                                     <asp:Label ID="lblUnitCeoEmail" runat="server"></asp:Label>
                                                 </td>
                                             </tr>
                                             <tr>
+                                                <td class="pass">Nodal Officer Name</td>
+                                                <td>
+                                                    <asp:Label ID="lblUnitNodalName" runat="server"></asp:Label>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="pass">Nodal Officer Email</td>
+                                                <td>
+                                                    <asp:Label ID="lblUnitNodalEmail" runat="server"></asp:Label>
+                                                </td>
+                                            </tr>
+                                            <tr class="hidden">
+                                                <td class="pass">Official Email ID</td>
+                                                <td>
+                                                    <asp:Label ID="lblUnitEmail" runat="server"></asp:Label>
+                                                </td>
+                                            </tr>
+                                            <tr class="hidden">
+                                                <td class="pass">Official Website</td>
+                                                <td>
+                                                    <asp:Label ID="lblUnitWebsite" runat="server"></asp:Label>
+                                                </td>
+                                            </tr>
+
+                                            <tr class="hidden">
                                                 <td class="pass">Facebook</td>
                                                 <td>
                                                     <asp:Label ID="lblUnitFacebook" runat="server"></asp:Label>
                                                 </td>
                                             </tr>
-                                            <tr>
+                                            <tr class="hidden">
                                                 <td class="pass">Twitter</td>
                                                 <td>
                                                     <asp:Label ID="lblUnitTwitter" runat="server"></asp:Label>
                                                 </td>
                                             </tr>
-                                            <tr>
+                                            <tr class="hidden">
                                                 <td class="pass">Instagram</td>
                                                 <td>
                                                     <asp:Label ID="lblUnitInsta" runat="server"></asp:Label>
                                                 </td>
                                             </tr>
-                                            <tr>
+                                            <tr class="hidden">
                                                 <td class="pass">Linkedin</td>
                                                 <td>
                                                     <asp:Label ID="lblUnitLink" runat="server"></asp:Label>
                                                 </td>
                                             </tr>
-                                            <tr>
+                                            <tr class="hidden">
                                                 <td class="pass">Longitude</td>
                                                 <td>
                                                     <asp:Label ID="lblUnitLongitude" runat="server"></asp:Label>
                                                 </td>
                                             </tr>
-                                            <tr>
+                                            <tr class="hidden">
                                                 <td class="pass">Latitude</td>
                                                 <td>
                                                     <asp:Label ID="lblUnitLatitude" runat="server"></asp:Label>
@@ -664,14 +689,14 @@
                                                     <asp:Label ID="lblUnit" runat="server"></asp:Label>
                                                 </td>
                                             </tr>
-                                            <tr>
+                                            <tr class="hidden">
                                                 <td class="pass">Nodal Refernce No</td>
                                                 <td>
-                                                    <asp:Label ID="lblNodalOfficerRefNo" runat="server"></asp:Label>
+                                                    <asp:Label ID="lblempNodalOfficerRefNo" runat="server"></asp:Label>
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td class="pass">Nodal Officer Name</td>
+                                                <td class="pass">Name</td>
                                                 <td>
                                                     <asp:Label ID="lblNodalOficerName" runat="server"></asp:Label>
                                                 </td>
@@ -685,7 +710,7 @@
                                             <tr>
                                                 <td class="pass">Employee Code</td>
                                                 <td>
-                                                    <asp:Label ID="lblNodalEmpCode" runat="server"></asp:Label>
+                                                    <asp:Label ID="lblempNodalEmpCode" runat="server"></asp:Label>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -695,19 +720,19 @@
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td class="pass">Mobile</td>
+                                                <td class="pass">Mobile No.</td>
                                                 <td>
                                                     <asp:Label ID="lblMobile" runat="server"></asp:Label>
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td class="pass">Telephone</td>
+                                                <td class="pass">Telephone No.</td>
                                                 <td>
                                                     <asp:Label ID="lblTelephone" runat="server"></asp:Label>
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td class="pass">Fax</td>
+                                                <td class="pass">Fax No.</td>
                                                 <td>
                                                     <asp:Label ID="lblFax" runat="server"></asp:Label>
                                                 </td>
@@ -752,21 +777,21 @@
                                             <div>
                                                 <table class="table table-bordered">
                                                     <tr>
-                                                        <th>Company Refrence No</th>
+                                                        <th runat="server" visible="False">Refrence No</th>
                                                         <th>Company</th>
                                                         <th>Division/Palnt</th>
                                                         <th>Unit</th>
                                                         <th>Product Refrence No</th>
                                                     </tr>
                                                     <tr>
-                                                        <td>
+                                                        <td runat="server" visible="False">
                                                             <asp:Label ID="lblcomprefno" runat="server"></asp:Label></td>
                                                         <td>
                                                             <asp:Label ID="lblcompname" runat="server"></asp:Label></td>
                                                         <td>
                                                             <asp:Label ID="lbldiviname" runat="server"></asp:Label></td>
                                                         <td>
-                                                            <asp:Label ID="Label1" runat="server"></asp:Label></td>
+                                                            <asp:Label ID="lblprodunitname" runat="server"></asp:Label></td>
                                                         <td>
                                                             <asp:Label ID="lblprodrefno" runat="server"></asp:Label></td>
                                                     </tr>
@@ -1042,7 +1067,7 @@
                                                         </tbody>
                                                     </table>
                                                 </div>
-                                                <div class="col-sm-12">
+                                                <div class="col-sm-12" runat="server" visible="False">
                                                     <table class="table table-bordered" runat="server" id="tablenodal2">
                                                         <tbody>
                                                             <tr>
