@@ -100,7 +100,7 @@
                                             <asp:TemplateField HeaderText="Action">
                                                 <ItemTemplate>
                                                     <asp:LinkButton ID="lblview" runat="server" CssClass="fa fa-eye" CommandName="ViewComp" CommandArgument='<%#Eval("ProductRefNo") %>'></asp:LinkButton>
-                                                    <asp:LinkButton ID="lbledit" runat="server" CssClass="fa fa-edit" CommandName="EditComp"  CommandArgument='<%#Eval("ProductRefNo") %>'></asp:LinkButton>
+                                                    <asp:LinkButton ID="lbledit" runat="server" CssClass="fa fa-edit" CommandName="EditComp" CommandArgument='<%#Eval("ProductRefNo") %>'></asp:LinkButton>
                                                     <asp:LinkButton ID="lbldel" runat="server" CssClass="fa fa-trash" Visible="False" CommandName="DeleteComp" OnClientClick="return confirm('Are you sure you want to delete this product?');" CommandArgument='<%#Eval("ProductRefNo") %>'></asp:LinkButton>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
@@ -141,7 +141,9 @@
                                                 <table class="table table-bordered">
                                                     <tr>
                                                         <th>Company Refrence No</th>
-                                                        <th>Company Name</th>
+                                                        <th>Company</th>
+                                                        <th>Division/Palnt</th>
+                                                        <th>Unit</th>
                                                         <th>Product Refrence No</th>
                                                     </tr>
                                                     <tr>
@@ -149,6 +151,10 @@
                                                             <asp:Label ID="lblcomprefno" runat="server"></asp:Label></td>
                                                         <td>
                                                             <asp:Label ID="lblcompname" runat="server"></asp:Label></td>
+                                                        <td>
+                                                            <asp:Label ID="lbldiviname" runat="server"></asp:Label></td>
+                                                        <td>
+                                                            <asp:Label ID="lblunitname" runat="server"></asp:Label></td>
                                                         <td>
                                                             <asp:Label ID="lblprodrefno" runat="server"></asp:Label></td>
                                                     </tr>
@@ -191,8 +197,6 @@
                                                         <th>DPSU Part Number</th>
                                                         <th>End User Part Number</th>
                                                         <th>HSN Code</th>
-                                                        <%--<th>NATO Code</th>
-                                                        <th>ERP Reference No</th>--%>
                                                     </tr>
                                                     <tr>
                                                         <td>
@@ -207,10 +211,7 @@
                                                             <asp:Label ID="lblenduserpartno" runat="server"></asp:Label></td>
                                                         <td>
                                                             <asp:Label ID="lblhsncode" runat="server"></asp:Label></td>
-                                                        <%--<td>
-                                                            <asp:Label ID="lblnatocode" runat="server"></asp:Label></td>
-                                                        <td>
-                                                            <asp:Label ID="lblerprefno" runat="server"></asp:Label></td>--%>
+
                                                     </tr>
                                                 </table>
                                             </div>
@@ -241,7 +242,6 @@
                                                         <th>End User</th>
                                                         <th>PROCURMENT CATEGORY</th>
                                                         <th>PROCURMENT CATEGORY REMARK</th>
-                                                        <%--<th>Product Time Frame</th>--%>
                                                     </tr>
                                                     <tr>
                                                         <td>
@@ -254,8 +254,7 @@
                                                             <asp:Label ID="lblpurposeofprocurement" runat="server"></asp:Label></td>
                                                         <td>
                                                             <asp:Label ID="lblprocremarks" runat="server"></asp:Label></td>
-                                                        <%--<td>
-                                                            <asp:Label ID="lblprodtimeframe" runat="server"></asp:Label></td>--%>
+
                                                     </tr>
                                                 </table>
                                             </div>

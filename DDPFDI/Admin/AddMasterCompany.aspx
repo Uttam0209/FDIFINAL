@@ -209,9 +209,9 @@
                                         <asp:BoundField ItemStyle-Width="150px" DataField="UnitName" HeaderText="Unit" />
                                         <asp:BoundField ItemStyle-Width="150px" DataField="UnitRefNo" Visible="False" HeaderText="Reference No." />
                                         <asp:BoundField ItemStyle-Width="150px" DataField="NodalOficerName" HeaderText="Nodal Officer Name" />
-                                        <asp:BoundField ItemStyle-Width="150px" DataField="NodalOfficerEmail" HeaderText="Company Nodal Officer" />
-                                        <asp:BoundField ItemStyle-Width="150px" DataField="NodalOfficerEmail" HeaderText="Division Nodal Officer" />
-                                        <asp:BoundField ItemStyle-Width="150px" DataField="NodalOfficerEmail" HeaderText="Unit Nodal Officer" />
+                                        <asp:BoundField ItemStyle-Width="150px" DataField="NodalOfficerEmail" HeaderText="Nodal Officer Email" />
+                                        <asp:BoundField ItemStyle-Width="150px" DataField="NodalOfficerEmail" HeaderText="Nodal Officer Email" />
+                                        <asp:BoundField ItemStyle-Width="150px" DataField="NodalOfficerEmail" HeaderText="Nodal Officer Email" />
                                         <asp:BoundField ItemStyle-Width="150px" DataField="Role" HeaderText="Role" />
                                         <asp:BoundField ItemStyle-Width="150px" DataField="CreatedBy" HeaderText="Created By" />
                                         <asp:TemplateField HeaderText="Action" Visible="true">

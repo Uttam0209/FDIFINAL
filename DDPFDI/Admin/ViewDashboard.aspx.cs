@@ -237,6 +237,8 @@ public partial class Admin_ViewDashboard : System.Web.UI.Page
         {
             lblcomprefno.Text = DtView.Rows[0]["CompanyRefNo"].ToString();
             lblcompname.Text = DtView.Rows[0]["CompanyName"].ToString();
+            lbldiviname.Text = DtView.Rows[0]["DivisionName"].ToString();
+            lblunitname.Text = DtView.Rows[0]["UnitName"].ToString();
             lblprodrefno.Text = DtView.Rows[0]["ProductRefNo"].ToString();
             lblprodlevel1.Text = DtView.Rows[0]["ProdLevel1Name"].ToString();
             productlevel2.Text = DtView.Rows[0]["ProdLevel2Name"].ToString();

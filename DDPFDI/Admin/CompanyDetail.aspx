@@ -317,7 +317,7 @@
                                                 <div class="col-md-12">
                                                     <div class="form-group productalreadylabel">
                                                         <label style="margin-right: 10px;">
-                                                            Are You resitered with Start up India ?</label>
+                                                            Are you resitered with Startup India ?</label>
 
                                                         <asp:RadioButton ID="rdoNo" Checked="true" AutoPostBack="true" OnCheckedChanged="rdoNo_CheckedChanged" Text="No" GroupName="S"
                                                             runat="server" />
@@ -361,7 +361,7 @@
                                                 <div class="col-md-12">
                                                     <div class="form-group productalreadylabel">
                                                         <label>
-                                                            Are you registerd with MSME as a micro or small Enterprise</label>
+                                                            Are you registerd with MSME as a micro or small enterprise</label>
                                                         <asp:RadioButton ID="rdoMNo" Text="No" AutoPostBack="true" Checked="true" OnCheckedChanged="rdoMNo_CheckedChanged" GroupName="M"
                                                             runat="server" />
                                                         <asp:RadioButton ID="rdoMYes" Text="Yes" class="yes" AutoPostBack="true" OnCheckedChanged="rdoMYes_CheckedChanged" GroupName="M"

@@ -304,6 +304,11 @@ public partial class Admin_AddProduct : System.Web.UI.Page
             if (DtCompanyDDL.Rows.Count > 0)
             {
                 Co.FillDropdownlist(ddldivision, DtCompanyDDL, "FactoryName", "FactoryRefNo");
+                // code by gk to select indivisual division for the particular unit
+                DataTable dt = Lo.RetriveMasterData(0, hfcomprefno.Value, "Factory3", 0, "", "", "CompanyName");
+                if (dt.Rows.Count > 0)
+                    ddldivision.SelectedValue = dt.Rows[0]["FactoryRefNo"].ToString();
+                //end code
                 ddlunit.Items.Insert(0, "Select");
                 BindNodelEmail();
                 divlblselectunit.Visible = false;
@@ -360,8 +365,8 @@ public partial class Admin_AddProduct : System.Web.UI.Page
             if (DtCompanyDDL.Rows.Count > 0)
             {
                 Co.FillDropdownlist(ddlunit, DtCompanyDDL, "UnitName", "UnitRefNo");
-                // code by gk to select indivisual unit for the particular unit               
-                ddldivision.SelectedValue = hfcomprefno.Value;
+                // code by gk to select indivisual unit for the particular unit             
+                ddlunit.SelectedValue = hfcomprefno.Value;
                 //end code
                 BindNodelEmail();
                 ddlunit.Enabled = false;
@@ -644,7 +649,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     #region BindServices Testing Certification
     protected void BindServcies()
     {
-        DataTable Dtservices = Lo.RetriveMasterSubCategoryDate(0, "Support Provided by DPSU", "", "SelectInnerMaster1", hfcomprefno.Value, "");
+        DataTable Dtservices = Lo.RetriveMasterSubCategoryDate(0, "TECHNICAL SUPPORT", "", "SelectInnerMaster1", hfcomprefno.Value, "");
         if (Dtservices.Rows.Count > 0)
         {
             gvservices.DataSource = Dtservices;
@@ -685,11 +690,11 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         DataTable DtMasterCategroy = new DataTable();
         if (ddlcompany.SelectedItem.Text != "Select")
         {
-            DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, "Product Category", "", "SelectProductCat", ddlcompany.SelectedItem.Value, "");
+            DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, "NSN GROUP", "", "SelectProductCat", ddlcompany.SelectedItem.Value, "");
         }
         else
         {
-            DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, "Product Category", "", "SelectProductCat", "", "");
+            DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, "NSN GROUP", "", "SelectProductCat", "", "");
         }
         if (DtMasterCategroy.Rows.Count > 0)
         {
@@ -741,11 +746,11 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         DataTable DtMasterCategroy = new DataTable();
         if (ddlcompany.SelectedItem.Text != "Select")
         {
-            DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, "Technology Category", "", "SelectProductCat", ddlcompany.SelectedItem.Value, "");
+            DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, "PRODUCT (INDUSTRY DOMAIN)", "", "SelectProductCat", ddlcompany.SelectedItem.Value, "");
         }
         else
         {
-            DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, "Technology Category", "", "SelectProductCat", "", "");
+            DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, "PRODUCT (INDUSTRY DOMAIN)", "", "SelectProductCat", "", "");
         }
         if (DtMasterCategroy.Rows.Count > 0)
         {
@@ -754,7 +759,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         }
         else
         {
-            DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, "Technology Category", "", "SelectProductCat", "", "");
+            DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, "PRODUCT (INDUSTRY DOMAIN)", "", "SelectProductCat", "", "");
             Co.FillDropdownlist(ddltechnologycat, DtMasterCategroy, "SCategoryName", "SCategoryID");
             ddltechnologycat.Items.Insert(0, "Select");
         }
@@ -797,11 +802,11 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         DataTable DtMasterCategroy = new DataTable();
         if (ddlcompany.SelectedItem.Text != "Select")
         {
-            DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, "Platform Category", "", "SelectProductCat", ddlcompany.SelectedItem.Value, "");
+            DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, "DEFENCE PLATFORM", "", "SelectProductCat", ddlcompany.SelectedItem.Value, "");
         }
         else
         {
-            DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, "Platform Category", "", "SelectProductCat", "", "");
+            DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, "DEFENCE PLATFORM", "", "SelectProductCat", "", "");
         }
         if (DtMasterCategroy.Rows.Count > 0)
         {
@@ -810,7 +815,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         }
         else
         {
-            DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, "Platform Category", "", "SelectProductCat", "", "");
+            DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, "DEFENCE PLATFORM", "", "SelectProductCat", "", "");
             Co.FillDropdownlist(ddlplatform, DtMasterCategroy, "SCategoryName", "SCategoryID");
             ddlplatform.Items.Insert(0, "Select");
         }
@@ -822,11 +827,11 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         DataTable DtPurposeProcuremnt = new DataTable();
         if (ddlcompany.SelectedItem.Text != "Select")
         {
-            DtPurposeProcuremnt = Lo.RetriveMasterSubCategoryDate(0, "Purpose of Procurement", "", "SelectProductCat", ddlcompany.SelectedItem.Value, "");
+            DtPurposeProcuremnt = Lo.RetriveMasterSubCategoryDate(0, "PROCURMENT CATEGORY", "", "SelectProductCat", ddlcompany.SelectedItem.Value, "");
         }
         else
         {
-            DtPurposeProcuremnt = Lo.RetriveMasterSubCategoryDate(0, "Purpose of Procurement", "", "SelectProductCat", "", "");
+            DtPurposeProcuremnt = Lo.RetriveMasterSubCategoryDate(0, "PROCURMENT CATEGORY", "", "SelectProductCat", "", "");
         }
         if (DtPurposeProcuremnt.Rows.Count > 0)
         {
@@ -835,7 +840,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         }
         else
         {
-            DtPurposeProcuremnt = Lo.RetriveMasterSubCategoryDate(0, "Purpose of Procurement", "", "SelectProductCat", "", "");
+            DtPurposeProcuremnt = Lo.RetriveMasterSubCategoryDate(0, "PROCURMENT CATEGORY", "", "SelectProductCat", "", "");
             Co.FillDropdownlist(ddlprocurmentcategory, DtPurposeProcuremnt, "SCategoryName", "SCategoryID");
             ddlprocurmentcategory.Items.Insert(0, "Select");
         }
@@ -872,11 +877,11 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         DataTable DtMasterCategroy = new DataTable();
         if (ddlcompany.SelectedItem.Text != "Select")
         {
-            DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, "Nomenclature of main system", "", "SelectInnerMaster1", ddlcompany.SelectedItem.Value, "");
+            DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, "NAME OF DEFENCE PLATFORM", "", "SelectInnerMaster1", ddlcompany.SelectedItem.Value, "");
         }
         else
         {
-            DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, "Nomenclature of main system", "", "SelectInnerMaster1", "", "");
+            DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, "NAME OF DEFENCE PLATFORM", "", "SelectInnerMaster1", "", "");
         }
         if (DtMasterCategroy.Rows.Count > 0)
         {
@@ -885,7 +890,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         }
         else
         {
-            DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, "Nomenclature of main system", "", "SelectInnerMaster1", "", "");
+            DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, "NAME OF DEFENCE PLATFORM", "", "SelectInnerMaster1", "", "");
             Co.FillDropdownlist(ddlnomnclature, DtMasterCategroy, "SCategoryName", "SCategoryID");
             ddlnomnclature.Items.Insert(0, "Select");
         }

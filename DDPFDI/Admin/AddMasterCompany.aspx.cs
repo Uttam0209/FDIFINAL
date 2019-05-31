@@ -45,7 +45,6 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
                             {
                                 MmCval = "Add";
                             }
-
                             strheadPage.Append("<li class=''><span>" + MmCval + "</span></li>");
                         }
                         divHeadPage.InnerHtml = strheadPage.ToString();

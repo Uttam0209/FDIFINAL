@@ -170,14 +170,22 @@
                                         <div class="row">
                                             <div class="col-md-4">
                                                 <div class="form-group">
-                                                    <label>DPSU Part Number</label>
-                                                    <asp:TextBox runat="server" ID="txtdpsupartnumber" TabIndex="10" class="form-control"></asp:TextBox>
+                                                    <asp:Label runat="server" ID="lblenduser" Text="End User"></asp:Label><span class="mandatory"> *</span>
+                                                    <asp:DropDownList runat="server" ID="ddlenduser" class="form-control" TabIndex="19">
+                                                    </asp:DropDownList>
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label>End User Part Number</label>
                                                     <asp:TextBox runat="server" ID="txtenduserpartnumber" TabIndex="11" class="form-control"></asp:TextBox>
+                                                </div>
+                                            </div>
+                                            <div class="clearfix"></div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label>DPSU Part Number</label>
+                                                    <asp:TextBox runat="server" ID="txtdpsupartnumber" TabIndex="10" class="form-control"></asp:TextBox>
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
@@ -253,20 +261,14 @@
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="form-group">
-                                                    <asp:Label runat="server" ID="lblenduser" Text="End User"></asp:Label><span class="mandatory"> *</span>
-                                                    <asp:DropDownList runat="server" ID="ddlenduser" class="form-control" TabIndex="19">
-                                                    </asp:DropDownList>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-4">
-                                                <div class="form-group">
                                                     <label>PROCURMENT CATEGORY<span class="mandatory">*</span></label>
                                                     <asp:DropDownList runat="server" ID="ddlprocurmentcategory" TabIndex="20" class="form-control"></asp:DropDownList>
                                                 </div>
                                             </div>
-                                            <div class="col-md-8">
+                                        </div>
+                                        <div class="row">
+
+                                            <div class="col-md-12">
                                                 <div class="form-group">
                                                     <asp:Label runat="server" ID="Label1" CssClass="form-label " Text="PROCURMENT CATEGORY REMARK"></asp:Label>
                                                     <asp:TextBox runat="server" ID="txtremarkspro" TabIndex="21" TextMode="MultiLine" class="form-control"></asp:TextBox>
@@ -287,7 +289,7 @@
                                                     <div class="col-md-12">
                                                         <div class="form-group">
                                                             <label class="live-status-box productalreadylabel ">
-                                                                Product Already indigenized :
+                                                                Product already indigenized :
                                                                 <asp:RadioButtonList runat="server" ID="rbisindinised" RepeatColumns="2" TabIndex="23" RepeatLayout="Flow" RepeatDirection="Horizontal" AutoPostBack="True" OnSelectedIndexChanged="rbisindinised_CheckedChanged ">
                                                                     <asp:ListItem Value="N" Selected="True">No</asp:ListItem>
                                                                     <asp:ListItem Value="Y" class="yes">Yes</asp:ListItem>
@@ -312,7 +314,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="form-group">
-                                                            <label>Search Keywords (Add more then one search criteria please use ,)</label>
+                                                            <label>Search keywords (To add more than one search keyword please use comma(,))</label>
                                                             <asp:TextBox runat="server" ID="txtsearchkeyword" TextMode="MultiLine" TabIndex="27" class="form-control"></asp:TextBox>
                                                         </div>
                                                     </div>
@@ -479,8 +481,8 @@
                                                 <label>
                                                     Tender Status</label>
                                                 <asp:DropDownList runat="server" ID="ddltendorstatus" class="form-control" TabIndex="35" AutoPostBack="True" OnSelectedIndexChanged="ddltendorstatus_SelectedIndexChanged">
+                                                    <asp:ListItem Value="Archive" Selected="True">Archive</asp:ListItem>
                                                     <asp:ListItem Value="Live">Live</asp:ListItem>
-                                                    <asp:ListItem Value="Archive">Archive</asp:ListItem>
                                                     <asp:ListItem Value="Not Floated">Not Floated</asp:ListItem>
                                                     <asp:ListItem Value="To be Floated shortly">To be Floated shortly</asp:ListItem>
                                                 </asp:DropDownList>

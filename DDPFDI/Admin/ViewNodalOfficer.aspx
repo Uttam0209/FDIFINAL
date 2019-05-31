@@ -49,7 +49,7 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-md-4">
+                                        <div class="col-md-4" runat="server" id="lblselectcompany">
                                             <div class="form-group">
                                                 <label>Select Company</label>
                                                 <asp:DropDownList runat="server" ID="ddlcompany" CssClass="form-control form-cascade-control" AutoPostBack="True" OnSelectedIndexChanged="ddlcompany_OnSelectedIndexChanged"></asp:DropDownList>
@@ -169,15 +169,21 @@
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td class="pass">Nodal Refernce No</td>
+                                                <td class="pass">Refernce No</td>
                                                 <td>
                                                     <asp:Label ID="lblNodalOfficerRefNo" runat="server"></asp:Label>
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td class="pass">Nodal Oficer Name</td>
+                                                <td class="pass">Name</td>
                                                 <td>
                                                     <asp:Label ID="lblNodalOficerName" runat="server"></asp:Label>
+                                                </td>
+                                            </tr>
+                                             <tr>
+                                                <td class="pass">Email ID</td>
+                                                <td>
+                                                    <asp:Label ID="lblEmail" runat="server"></asp:Label>
                                                 </td>
                                             </tr>
                                             <%--<tr>
@@ -192,12 +198,7 @@
                                                     <asp:Label ID="lblNodalEmpCode" runat="server"></asp:Label>
                                                 </td>
                                             </tr>
-                                            <tr>
-                                                <td class="pass">Email</td>
-                                                <td>
-                                                    <asp:Label ID="lblEmail" runat="server"></asp:Label>
-                                                </td>
-                                            </tr>
+                                           
                                             <tr>
                                                 <td class="pass">Mobile Number</td>
                                                 <td>

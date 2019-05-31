@@ -313,7 +313,7 @@
                                                     <asp:Label ID="lblFaxNo" runat="server"></asp:Label>
                                                 </td>
                                             </tr>
-                                            <tr>
+                                            <tr class="hidden">
                                                 <td class="pass">EmailID</td>
                                                 <td>
                                                     <asp:Label ID="lblEmailID" runat="server"></asp:Label>
@@ -753,7 +753,9 @@
                                                 <table class="table table-bordered">
                                                     <tr>
                                                         <th>Company Refrence No</th>
-                                                        <th>Company Name</th>
+                                                        <th>Company</th>
+                                                        <th>Division/Palnt</th>
+                                                        <th>Unit</th>
                                                         <th>Product Refrence No</th>
                                                     </tr>
                                                     <tr>
@@ -761,6 +763,10 @@
                                                             <asp:Label ID="lblcomprefno" runat="server"></asp:Label></td>
                                                         <td>
                                                             <asp:Label ID="lblcompname" runat="server"></asp:Label></td>
+                                                        <td>
+                                                            <asp:Label ID="lbldiviname" runat="server"></asp:Label></td>
+                                                        <td>
+                                                            <asp:Label ID="Label1" runat="server"></asp:Label></td>
                                                         <td>
                                                             <asp:Label ID="lblprodrefno" runat="server"></asp:Label></td>
                                                     </tr>

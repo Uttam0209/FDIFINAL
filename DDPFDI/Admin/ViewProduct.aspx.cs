@@ -214,6 +214,8 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
             {
                 lblcomprefno.Text = DtView.Rows[0]["CompanyRefNo"].ToString();
                 lblcompname.Text = DtView.Rows[0]["CompanyName"].ToString();
+                lbldiviname.Text = DtView.Rows[0]["DivisionName"].ToString();
+                lblunitname.Text = DtView.Rows[0]["UnitName"].ToString();
                 lblprodrefno.Text = DtView.Rows[0]["ProductRefNo"].ToString();
                 lblprodlevel1.Text = DtView.Rows[0]["ProdLevel1Name"].ToString();
                 productlevel2.Text = DtView.Rows[0]["ProdLevel2Name"].ToString();
@@ -251,7 +253,7 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
                     tablemanufacturename3.Visible = true;
                     lblmanufacturename.Text = DtView.Rows[0]["ManufactureName"].ToString();
                     lblmanaddress.Text = DtView.Rows[0]["ManufactureAddress"].ToString();
-                    lblyearofindiginization.Text = DtView.Rows[0]["YearofIndiginization"].ToString();
+                    lblyearofindiginization.Text = DtView.Rows[0]["FY"].ToString();
                 }
                 else
                 {
@@ -478,6 +480,11 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
             if (DtCompanyDDL.Rows.Count > 0)
             {
                 Co.FillDropdownlist(ddldivision, DtCompanyDDL, "FactoryName", "FactoryRefNo");
+                // code by gk to select indivisual division for the particular unit
+                DataTable dt = Lo.RetriveMasterData(0, mRefNo, "Factory3", 0, "", "", "CompanyName");
+                if (dt.Rows.Count > 0)
+                    ddldivision.SelectedValue = dt.Rows[0]["FactoryRefNo"].ToString();
+                //end code
                 lblselectdivison.Visible = true;
                 ddldivision.Enabled = false;
             }
@@ -514,6 +521,11 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
             if (DtCompanyDDL.Rows.Count > 0)
             {
                 Co.FillDropdownlist(ddldivision, DtCompanyDDL, "FactoryName", "FactoryRefNo");
+                // code by gk to select indivisual division for the particular unit
+                DataTable dt = Lo.RetriveMasterData(0, mRefNo, "Factory3", 0, "", "", "CompanyName");
+                if (dt.Rows.Count > 0)
+                    ddldivision.SelectedValue = dt.Rows[0]["FactoryRefNo"].ToString();
+                //end code
                 lblselectdivison.Visible = true;
                 ddldivision.Enabled = false;
             }
@@ -525,6 +537,7 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
             if (DtCompanyDDL.Rows.Count > 0)
             {
                 Co.FillDropdownlist(ddlunit, DtCompanyDDL, "UnitName", "UnitRefNo");
+                ddlunit.SelectedValue = mRefNo.ToString();
                 ddlunit.Enabled = false;
                 lblselectunit.Visible = true;
             }

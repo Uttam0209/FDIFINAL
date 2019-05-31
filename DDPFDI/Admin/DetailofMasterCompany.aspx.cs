@@ -45,37 +45,9 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
                 mType = objEnc.DecryptData(Session["Type"].ToString());
                 mRefNo = Session["CompanyRefNo"].ToString();
                 BindCompany();
-                if (mType == "SuperAdmin" || mType == "Admin")
-                {
-                    //if (Request.QueryString["mu"] != null)
-                    //{
-                    //    if (objEnc.DecryptData(Request.QueryString["mu"].ToString())=="View")
-                    //    {                            
-                    //        DataTable DtGrid = Lo.RetriveGridViewCompany("0", "", "", "CompanyMainGridView");
-                    //        if (DtGrid.Rows.Count > 0)
-                    //        {
-                    //            gvcompanydetail.DataSource = DtGrid;
-                    //            gvcompanydetail.DataBind();
-                    //            //ddlcompany.Visible = false;
-                    //        }
-                    //    }
-                    //    else
-                    //    {
-                    //        ddlcompany.Visible = true;
-                    //        btnAddCompany.Visible = true;
-                    //        btnAddDivision.Visible = true;
-                    //        // btnAddUnit.Visible = true;
-                    //    }
-                    //}
-                    //else
-                    //{
-                    // }
-                }
-
             }
         }
     }
-
     protected void btnAddCompany_Click(object sender, EventArgs e)
     {
         string stridNew = Request.QueryString["id"].ToString().Replace(" ", "+");
@@ -98,13 +70,12 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
         Response.Redirect("AddMasterCompany?mu=" + HttpUtility.UrlEncode(objEnc.EncryptData("Panel3")) + "&id=" + mstrid);
 
     }
-
     #region Load
     protected void BindGridView(string sortExpression = null)
     {
         try
         {
-            if (mType == "SuperAdmin")
+            if (mType == "SuperAdmin" || mType == "Admin")
             {
                 DataTable DtGrid = Lo.RetriveGridViewCompany("0", "", "", "CompanyMainGridView");
                 if (DtGrid.Rows.Count > 0)
@@ -261,6 +232,9 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
             if (DtCompanyDDL.Rows.Count > 0)
             {
                 Co.FillDropdownlist(ddldivision, DtCompanyDDL, "FactoryName", "FactoryRefNo");
+                DataTable dt = Lo.RetriveMasterData(0, mRefNo, "Factory3", 0, "", "", "CompanyName");
+                if (dt.Rows.Count > 0)
+                    ddldivision.SelectedValue = dt.Rows[0]["FactoryRefNo"].ToString();
                 lblselectdivison.Visible = true;
                 ddldivision.Enabled = false;
                 DataTable DtGrid = Lo.RetriveGridViewCompany(ddlcompany.SelectedItem.Value, ddldivision.SelectedItem.Value, "", "InnerGVFactoryID");
@@ -327,6 +301,11 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
             if (DtCompanyDDL.Rows.Count > 0)
             {
                 Co.FillDropdownlist(ddldivision, DtCompanyDDL, "FactoryName", "FactoryRefNo");
+                // code by gk to select indivisual division for the particular unit
+                DataTable dt = Lo.RetriveMasterData(0, mRefNo, "Factory3", 0, "", "", "CompanyName");
+                if (dt.Rows.Count > 0)
+                    ddldivision.SelectedValue = dt.Rows[0]["FactoryRefNo"].ToString();
+                //end code
                 lblselectdivison.Visible = true;
                 ddldivision.Enabled = false;
                 DataTable DtGrid = Lo.RetriveGridViewCompany(ddlcompany.SelectedItem.Value, ddldivision.SelectedItem.Value, "", "InnerGVFactoryID");
@@ -348,6 +327,9 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
             if (DtCompanyDDL.Rows.Count > 0)
             {
                 Co.FillDropdownlist(ddlunit, DtCompanyDDL, "UnitName", "UnitRefNo");
+                // code by gk to select indivisual unit for the particular unit     
+                ddlunit.SelectedValue = mRefNo.ToString();
+                //end code
                 ddlunit.Enabled = false;
                 lblselectunit.Visible = true;
                 DataTable DtGrid = Lo.RetriveGridViewCompany("", ddldivision.SelectedItem.Value, ddlunit.SelectedItem.Value, "InnerGVUnitID");
@@ -575,7 +557,7 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
                 lblUnitInsta.Text = DtView.Rows[0]["UnitInstagram"].ToString();
                 lblUnitLink.Text = DtView.Rows[0]["UnitLinkedin"].ToString();
                 lblUnitTwitter.Text = DtView.Rows[0]["UnitTwitter"].ToString();
-                lblUnitNodalEmail.Text = DtView.Rows[0]["NodalOficerName"].ToString();
+                lblunitnodalname.Text = DtView.Rows[0]["NodalOficerName"].ToString();
                 lblUnitNodalEmail.Text = DtView.Rows[0]["NodalOfficerEmail"].ToString();
                 lblUnitLatitude.Text = DtView.Rows[0]["Unitlatitude"].ToString();
                 lblUnitLongitude.Text = DtView.Rows[0]["Unitlongitude"].ToString();
