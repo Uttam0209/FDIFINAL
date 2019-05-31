@@ -127,7 +127,21 @@ public partial class Admin_ViewDashboard : System.Web.UI.Page
         DataTable DtGrid = Lo.GetDashboardData("Employee");
         if (DtGrid.Rows.Count > 0)
         {
-            gvViewNodalOfficer.DataSource = DtGrid;
+            for (int a = 0; a < DtGrid.Rows.Count; a++)
+            {
+                if (DtGrid.Rows[a]["UCompany"].ToString() != "")
+                {
+                    DtGrid.Rows[a]["CompanyName"] = DtGrid.Rows[a]["UCompany"];
+                    DtGrid.Rows[a]["FactoryName"] = DtGrid.Rows[a]["UFactory"];
+                }
+                else if (DtGrid.Rows[a]["FCompany"].ToString() != "")
+                {
+                    DtGrid.Rows[a]["CompanyName"] = DtGrid.Rows[a]["FCompany"];
+                }
+            }
+            DataView dv = new DataView(DtGrid);
+            dv.Sort = "CompanyName asc,FactoryName asc";
+            gvViewNodalOfficer.DataSource = dv.ToTable();
             gvViewNodalOfficer.DataBind();
             lbltotal.Text = "Total Records:- " + gvViewNodalOfficer.Rows.Count.ToString();
             divEmployeeNodalGrid.Visible = true;
