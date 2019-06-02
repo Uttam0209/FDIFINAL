@@ -1219,6 +1219,43 @@ namespace DataAccessLayer
                 }
             }
         }
+        public string SaveUploadExcelCompany(DataTable dtMaster)
+        {
+            using (DbConnection Connection = db.CreateConnection())
+            {
+                Connection.Open();
+                DbTransaction Transaction = Connection.BeginTransaction();
+                Int32 errorRow = -1;
+                try
+                {
+                    Int32 mEntryID;
+                    for (int k = 0; k < dtMaster.Rows.Count; k++)
+                    {
+                        mEntryID = 0;
+                        DbCommand cmd = db.GetStoredProcCommand("sp_InsertCategoryFromExcel");
+
+                        db.AddInParameter(cmd, "@Pid", DbType.Int64, "Botl ID");
+                        db.AddInParameter(cmd, "@CatName", DbType.String, dtMaster.Rows[k]["FSG Title"].ToString() + "(" + dtMaster.Rows[k]["Group"].ToString() + ")");
+                        db.AddInParameter(cmd, "@L1Code", DbType.String, dtMaster.Rows[k]["Group"].ToString());
+                        db.AddInParameter(cmd, "@L2Code", DbType.String, String.Empty);
+                        db.AddOutParameter(cmd, "@NewId", DbType.Int32, 50);
+                        db.ExecuteNonQuery(cmd, Transaction);
+                        mEntryID = Convert.ToInt32(db.GetParameterValue(cmd, "@NewId"));                        
+                    }
+                    Transaction.Commit();
+                    return "Save";
+                }
+                catch (Exception ex)
+                {
+                    Transaction.Rollback();
+                    return ex.Message + "Error Found in Excel" + errorRow;
+                }
+                finally
+                {
+                    Connection.Close();
+                }
+            }
+        }
         public DataTable CreateExcelConnection(string FilePath, string SheetName, out string text)
         {
             try
