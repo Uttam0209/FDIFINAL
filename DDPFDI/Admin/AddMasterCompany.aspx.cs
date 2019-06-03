@@ -109,6 +109,11 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
                         chkrole.Attributes.Add("onclick", "radioMe(event);");
                     }
                 }
+                else
+                {
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert",
+                        "alert('Session Expire,Please login again');window.location='Login'", true);
+                }
             }
             catch (Exception ex)
             {

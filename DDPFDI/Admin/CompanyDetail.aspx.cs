@@ -87,7 +87,10 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
                     }
                 }
                 else
-                { Response.RedirectToRoute("Login"); }
+                {
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert",
+                        "alert('Session Expire,Please login again');window.location='Login'", true);
+                }
             }
             catch (Exception ex)
             {

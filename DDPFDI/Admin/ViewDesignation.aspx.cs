@@ -24,26 +24,32 @@ public partial class Admin_ViewDesignation : System.Web.UI.Page
         {
             if (!IsPostBack)
             {
-
-                if (Request.QueryString["id"] != null)
+                if (Session["User"] != null)
                 {
-                    string strid = Request.QueryString["id"].ToString().Replace(" ", "+");
-                    string strPageName = objEnc.DecryptData(strid);
-                    StringBuilder strheadPage = new StringBuilder();
-                    strheadPage.Append("<ul class='breadcrumb'>");
-                    string[] MCateg = strPageName.Split(new string[] { ">>" }, StringSplitOptions.RemoveEmptyEntries);
-                    string MmCval = "";
-                    for (int x = 0; x < MCateg.Length; x++)
+                    if (Request.QueryString["id"] != null)
                     {
-                        MmCval = MCateg[x];
-                        strheadPage.Append("<li class=''><span>" + MmCval + "</span></li>");
+                        string strid = Request.QueryString["id"].ToString().Replace(" ", "+");
+                        string strPageName = objEnc.DecryptData(strid);
+                        StringBuilder strheadPage = new StringBuilder();
+                        strheadPage.Append("<ul class='breadcrumb'>");
+                        string[] MCateg = strPageName.Split(new string[] { ">>" }, StringSplitOptions.RemoveEmptyEntries);
+                        string MmCval = "";
+                        for (int x = 0; x < MCateg.Length; x++)
+                        {
+                            MmCval = MCateg[x];
+                            strheadPage.Append("<li class=''><span>" + MmCval + "</span></li>");
+                        }
+                        divHeadPage.InnerHtml = strheadPage.ToString();
+                        strheadPage.Append("</ul");
+                        mType = objEnc.DecryptData(Session["Type"].ToString());
+                        mRefNo = Session["CompanyRefNo"].ToString();
+                        BindCompany();
                     }
-                    divHeadPage.InnerHtml = strheadPage.ToString();
-                    strheadPage.Append("</ul");
-                    mType = objEnc.DecryptData(Session["Type"].ToString());
-                    mRefNo = Session["CompanyRefNo"].ToString();
-                    BindCompany();
-                    
+                }
+                else
+                {
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert",
+                        "alert('Session Expire,Please login again');window.location='Login'", true);
                 }
             }
         }
@@ -51,7 +57,7 @@ public partial class Admin_ViewDesignation : System.Web.UI.Page
 
     protected void BindCompany()
     {
-        if (mType == "SuperAdmin" || mType=="Admin")
+        if (mType == "SuperAdmin" || mType == "Admin")
         {
             DtCompanyDDL = Lo.RetriveMasterData(0, "", "", 0, "", "", "Select");
             if (DtCompanyDDL.Rows.Count > 0)
@@ -78,7 +84,7 @@ public partial class Admin_ViewDesignation : System.Web.UI.Page
                 else
                 {
                     gvViewDesignation.Visible = false;
-                   
+
                 }
             }
             else
@@ -99,7 +105,7 @@ public partial class Admin_ViewDesignation : System.Web.UI.Page
             string mstrid = objEnc.EncryptData((objEnc.DecryptData(stridNew) + " >> Edit Designation"));
             Response.Redirect("Add-Designation?mrcreaterole=" + HttpUtility.UrlEncode(objEnc.EncryptData(e.CommandArgument.ToString())) + "&mcurrentcompRefNo=" + HttpUtility.UrlEncode(objEnc.EncryptData(e.CommandArgument.ToString())) + "&id=" + mstrid);
         }
-        
+
         else if (e.CommandName == "DeleteComp")
         {
             try
@@ -107,7 +113,7 @@ public partial class Admin_ViewDesignation : System.Web.UI.Page
                 string DeleteRec = Lo.DeleteRecord(e.CommandArgument.ToString(), "InActiveCompany");
                 if (DeleteRec == "true")
                 {
-                   
+
                     ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record delete succssfully.')", true);
                 }
                 else
@@ -120,9 +126,9 @@ public partial class Admin_ViewDesignation : System.Web.UI.Page
                 ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not deleted.')", true);
             }
         }
-        
+
     }
-   
+
     #endregion
 
     protected void btnAddDesignation_Click(object sender, EventArgs e)
@@ -131,7 +137,7 @@ public partial class Admin_ViewDesignation : System.Web.UI.Page
         string stridNew = Request.QueryString["id"].ToString().Replace(" ", "+");
         string mstrid = objEnc.EncryptData((objEnc.DecryptData(stridNew)));
         Response.Redirect("Add-Designation?mrcreaterole=" + objEnc.EncryptData(Role) + "&id=" + mstrid);
-      
+
     }
 
     #region DropDownList Code
@@ -152,10 +158,10 @@ public partial class Admin_ViewDesignation : System.Web.UI.Page
                 ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not found !')", true);
             }
         }
-        
+
     }
 
-   
+
     protected void Search_Click(object sender, EventArgs e)
     {
         if (txtserch.Text != "")
@@ -170,11 +176,11 @@ public partial class Admin_ViewDesignation : System.Web.UI.Page
         }
         else
         {
-           
+
         }
     }
     #endregion
 
-   
-   
+
+
 }

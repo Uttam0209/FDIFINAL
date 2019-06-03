@@ -47,6 +47,11 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
                         BindGridView();
                     }
                 }
+                else
+                {
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert",
+                        "alert('Session Expire,Please login again');window.location='Login'", true);
+                }
             }
         }
         catch (Exception ex)
@@ -73,6 +78,7 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
                 if (ddlcompany.SelectedItem.Text != "Select" && ddldivision.Visible == false)
                 {
                     DtGrid = Lo.RetriveProductCode(ddlcompany.SelectedItem.Value, "", "CompanyProduct", "Company");
+
                 }
                 else if (ddlcompany.SelectedItem.Text != "Select" && ddldivision.SelectedItem.Text != "Select")
                 {
@@ -97,13 +103,37 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
             {
                 if (ddlcompany.SelectedItem.Text != "Select")
                 {
-                    DtGrid = Lo.RetriveProductCode(ddlcompany.SelectedItem.Value, "", "CompanyProduct", hidType.Value);
+                    //  DtGrid = Lo.RetriveProductCode(ddlcompany.SelectedItem.Value, "", "CompanyProduct", hidType.Value);
+                    DtGrid = Lo.GetDashboardData("Product", ddlcompany.SelectedItem.Value);
                 }
                 if (DtGrid.Rows.Count > 0)
                 {
-                    gvproduct.DataSource = DtGrid;
-                    gvproduct.DataBind();
-                    gvproduct.Visible = true;
+                    for (int a = 0; a < DtGrid.Rows.Count; a++)
+                    {
+                        if (DtGrid.Rows[a]["UCompany"].ToString() != "")
+                        {
+                            DtGrid.Rows[a]["CompanyName"] = DtGrid.Rows[a]["UCompany"];
+                            DtGrid.Rows[a]["FactoryName"] = DtGrid.Rows[a]["UFactory"];
+                        }
+                        else if (DtGrid.Rows[a]["FCompany"].ToString() != "")
+                        {
+                            DtGrid.Rows[a]["CompanyName"] = DtGrid.Rows[a]["FCompany"];
+                        }
+                    }
+                    DataView dv = new DataView(DtGrid);
+                    dv.RowFilter = "CompanyName='" + ddlcompany.SelectedItem.Text + "'";
+                    DataTable dtnew = dv.ToTable();
+                    if (dtnew.Rows.Count > 0)
+                    {
+                        dv.RowFilter = "CompanyName='" + dtnew.Rows[0]["CompanyName"].ToString() + "'";
+                        dv.Sort = "CompanyName asc,FactoryName asc";
+                        gvproduct.DataSource = dv.ToTable();
+                        //  gvproduct.DataSource = DtGrid;
+                        gvproduct.DataBind();
+                        gvproduct.Visible = true;
+                    }
+                    else
+                    { gvproduct.Visible = false; }
                 }
                 else
                 {
@@ -114,14 +144,38 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
             {
                 if (ddlcompany.SelectedItem.Text != "Select" && ddldivision.SelectedItem.Value != "Select")
                 {
-                    DtGrid = Lo.RetriveProductCode(ddldivision.SelectedItem.Value, "", "CompanyProduct", hidType.Value);
+                    // DtGrid = Lo.RetriveProductCode(ddldivision.SelectedItem.Value, "", "CompanyProduct", hidType.Value);
+                    DtGrid = Lo.GetDashboardData("Product", ddldivision.SelectedItem.Value);
                 }
                 if (DtGrid.Rows.Count > 0)
                 {
-                    gvproduct.DataSource = DtGrid;
-                    gvproduct.DataBind();
-                    gvproduct.Visible = true;
-                    ddlcompany.Enabled = false;
+                    for (int a = 0; a < DtGrid.Rows.Count; a++)
+                    {
+                        if (DtGrid.Rows[a]["UCompany"].ToString() != "")
+                        {
+                            DtGrid.Rows[a]["CompanyName"] = DtGrid.Rows[a]["UCompany"];
+                            DtGrid.Rows[a]["FactoryName"] = DtGrid.Rows[a]["UFactory"];
+                        }
+                        else if (DtGrid.Rows[a]["FCompany"].ToString() != "")
+                        {
+                            DtGrid.Rows[a]["CompanyName"] = DtGrid.Rows[a]["FCompany"];
+                        }
+                    }
+                    DataView dv = new DataView(DtGrid);
+                    dv.RowFilter = "FactoryName='" + ddldivision.SelectedItem.Text + "'";
+                    DataTable dtnew = dv.ToTable();
+                    if (dtnew.Rows.Count > 0)
+                    {
+                        dv.RowFilter = "FactoryName='" + dtnew.Rows[0]["FactoryName"].ToString() + "'";
+                        dv.Sort = "CompanyName asc,FactoryName asc";
+                        gvproduct.DataSource = dv.ToTable();
+                        //gvproduct.DataSource = DtGrid;
+                        gvproduct.DataBind();
+                        gvproduct.Visible = true;
+                        ddlcompany.Enabled = false;
+                    }
+                    else
+                    { gvproduct.Visible = false; }
                 }
                 else
                 {
@@ -133,13 +187,37 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
             {
                 if (ddlcompany.SelectedItem.Text != "Select" && ddldivision.SelectedItem.Value != "Select" && ddlunit.SelectedItem.Text != "Select")
                 {
-                    DtGrid = Lo.RetriveProductCode(ddlunit.SelectedItem.Value, "", "CompanyProduct", hidType.Value);
+                    //  DtGrid = Lo.RetriveProductCode(ddlunit.SelectedItem.Value, "", "CompanyProduct", hidType.Value);
+                    DtGrid = Lo.GetDashboardData("Product", ddlunit.SelectedItem.Value);
                 }
                 if (DtGrid.Rows.Count > 0)
                 {
-                    gvproduct.DataSource = DtGrid;
-                    gvproduct.DataBind();
-                    gvproduct.Visible = true;
+                    for (int a = 0; a < DtGrid.Rows.Count; a++)
+                    {
+                        if (DtGrid.Rows[a]["UCompany"].ToString() != "")
+                        {
+                            DtGrid.Rows[a]["CompanyName"] = DtGrid.Rows[a]["UCompany"];
+                            DtGrid.Rows[a]["FactoryName"] = DtGrid.Rows[a]["UFactory"];
+                        }
+                        else if (DtGrid.Rows[a]["FCompany"].ToString() != "")
+                        {
+                            DtGrid.Rows[a]["CompanyName"] = DtGrid.Rows[a]["FCompany"];
+                        }
+                    }
+                    DataView dv = new DataView(DtGrid);
+                    dv.RowFilter = "UnitName='" + ddlunit.SelectedItem.Text + "'";
+                    DataTable dtnew = dv.ToTable();
+                    if (dtnew.Rows.Count > 0)
+                    {
+                        dv.RowFilter = "UnitName='" + dtnew.Rows[0]["UnitName"].ToString() + "'";
+                        dv.Sort = "CompanyName asc,FactoryName asc,UnitName asc";
+                        gvproduct.DataSource = dv.ToTable();
+                        // gvproduct.DataSource = DtGrid;
+                        gvproduct.DataBind();
+                        gvproduct.Visible = true;
+                    }
+                    else
+                    { gvproduct.Visible = false; }
                 }
                 else
                 {
@@ -207,6 +285,15 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
                 lblnsccode.Text = DtView.Rows[0]["NSCCode"].ToString();
                 lblniincode.Text = DtView.Rows[0]["NIINCode"].ToString();
                 lblproductdescription.Text = DtView.Rows[0]["ProductDescription"].ToString();
+                if (DtView.Rows[0]["ItemDescriptionPDFFile"].ToString() == "")
+                {
+                    a_downitem.Visible = false;
+                }
+                else
+                {
+                    a_downitem.Visible = true;
+                    a_downitem.HRef = "http://103.73.189.114:801/Upload/" + DtView.Rows[0]["ItemDescriptionPDFFile"].ToString();
+                }
                 lbloempartnumber.Text = DtView.Rows[0]["OEMPartNumber"].ToString();
                 lbloemname.Text = DtView.Rows[0]["OEMName"].ToString();
                 lbloemcountry.Text = DtView.Rows[0]["CountryName"].ToString();

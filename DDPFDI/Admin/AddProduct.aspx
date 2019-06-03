@@ -53,13 +53,13 @@
                 <ul class="nav nav-tabs">
                     <li class="active"><a data-toggle="tab" href="#pd">Description</a></li>
                     <li><a data-toggle="tab" href="#pimg">Image</a></li>
+                    <li><a data-toggle="tab" href="#test">Testing</a></li>
+                    <li><a data-toggle="tab" href="#cer">Certification</a></li>
                     <li><a data-toggle="tab" href="#spd">Technical Support</a></li>
                     <li><a data-toggle="tab" href="#spdpfin">Financial Support</a></li>
                     <li><a data-toggle="tab" href="#qpt">Quantity Required</a></li>
                     <li><a data-toggle="tab" href="#tnd">Tender</a></li>
                     <li><a data-toggle="tab" href="#cd">Contact</a></li>
-                    <li><a data-toggle="tab" href="#test">Testing</a></li>
-                    <li><a data-toggle="tab" href="#cer">Certification</a></li>
                 </ul>
                 <div class="tab-content">
                     <asp:HiddenField runat="server" ID="hfprodid" />
@@ -71,7 +71,6 @@
                             <div class="col-md-12">
                                 <div class="add-profile">
                                     <div class="section-pannel">
-
                                         <asp:UpdatePanel runat="server" ID="upproduct">
                                             <ContentTemplate>
                                                 <div class="row">
@@ -96,7 +95,7 @@
                                                             <label>
                                                                 Item Code</label>
                                                             <span data-toggle="tooltip" class="fa fa-question" title="Item code indicate item name code in NSN"></span>
-                                                            <asp:DropDownList runat="server" ID="ddllevel3product" TabIndex="3" Style="text-transform: uppercase !important;" class="form-control"></asp:DropDownList>
+                                                            <asp:DropDownList runat="server" ID="ddllevel3product" AutoPostBack="True" TabIndex="3" Style="text-transform: uppercase !important;" class="form-control" OnSelectedIndexChanged="ddllevel3product_SelectedIndexChanged"></asp:DropDownList>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -109,7 +108,7 @@
                                                             <div class="col-sm-3 padding_0">
                                                                 <label style="font-size: 14px !important;">
                                                                     NSC Code (4 digit)
-                                                                        <span data-toggle="tooltip" class="fa fa-question" title="NSC Code = NSN Code (2 digit) + NSN Group Class (2 digit)"></span>
+                                                                        <span data-toggle="tooltip" class="fa fa-question" title="NSC Code = NSN Group (2 digit) + NSN Group Class (2 digit)"></span>
                                                                 </label>
                                                                 <asp:TextBox runat="server" ID="txtnsccode" ReadOnly="True" MaxLength="4" TabIndex="4" CssClass="form-cascade-control form-control"></asp:TextBox>
                                                             </div>
@@ -122,17 +121,25 @@
                                                             </div>
                                                         </div>
                                                     </div>
-
                                                     <div class="col-md-4">
                                                         <div class="form-group">
-                                                            <label>Product Description </label>
-                                                            <span class="mandatory">*</span>
+                                                            <label>Item Description </label>
+                                                            <span class="mandatory">* (Editable)</span>  <span data-toggle="tooltip" class="fa fa-question" title="If item description is not relevant, edit the item description."></span>
                                                             <asp:TextBox runat="server" ID="txtproductdescription" required="" TextMode="MultiLine" TabIndex="6" class="form-control"></asp:TextBox>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </ContentTemplate>
                                         </asp:UpdatePanel>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label>Upload document releted to item </label>
+                                                    <span class="mandatory">(Only pdf file)</span>
+                                                    <asp:FileUpload runat="server" ID="fuitemdescriptionfile" CssClass="form-control" />
+                                                </div>
+                                            </div>
+                                        </div>
                                         <asp:UpdateProgress ID="UpdateProgress3" runat="server" AssociatedUpdatePanelID="upproduct">
                                             <ProgressTemplate>
                                                 <!---Progress Bar ---->
@@ -146,7 +153,6 @@
                                             </ProgressTemplate>
                                         </asp:UpdateProgress>
                                     </div>
-
                                     <div class="section-pannel">
                                         <div class="row">
                                             <div class="col-md-4">
@@ -209,6 +215,19 @@
                                                 <ContentTemplate>
                                                     <div class="col-md-4">
                                                         <div class="form-group">
+                                                            <label>DEFENCE PLATFORM<span class="mandatory">*</span></label>
+                                                            <asp:DropDownList runat="server" ID="ddlplatform" AutoPostBack="True" TabIndex="17" Style="text-transform: uppercase !important;" class="form-control" OnSelectedIndexChanged="ddlplatform_SelectedIndexChanged"></asp:DropDownList>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4" style="margin-top: 8px;">
+                                                        <div class="form-group">
+                                                            <asp:Label runat="server" ID="lblNomenclature" Text="NAME OF DEFENCE PLATFORM"></asp:Label><span class="mandatory"> *</span>
+                                                            <asp:DropDownList runat="server" ID="ddlnomnclature" class="form-control" Style="text-transform: uppercase !important;" TabIndex="18" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="clearfix"></div>
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
                                                             <label>PRODUCT (INDUSTRY DOMAIN)<span class="mandatory">*</span></label>
                                                             <span data-toggle="tooltip" class="fa fa-question" title="If you not display your category in this section, please add in Category Master >> Category Dropdown"></span>
                                                             <asp:DropDownList runat="server" ID="ddltechnologycat" class="form-control" TabIndex="14" Style="text-transform: uppercase !important;" AutoPostBack="True" OnSelectedIndexChanged="ddltechnologycat_SelectedIndexChanged"></asp:DropDownList>
@@ -248,52 +267,19 @@
                                     </div>
                                     <div class="section-pannel">
                                         <div class="row">
-                                            <asp:UpdatePanel runat="server" ID="UpdatePanel4">
-                                                <ContentTemplate>
-                                                    <div class="col-md-4">
-                                                        <div class="form-group">
-                                                            <label>DEFENCE PLATFORM<span class="mandatory">*</span></label>
-                                                            <asp:DropDownList runat="server" ID="ddlplatform" AutoPostBack="True" TabIndex="17" Style="text-transform: uppercase !important;" class="form-control" OnSelectedIndexChanged="ddlplatform_SelectedIndexChanged"></asp:DropDownList>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-4" style="margin-top: 8px;">
-                                                        <div class="form-group">
-                                                            <asp:Label runat="server" ID="lblNomenclature" Text="NAME OF DEFENCE PLATFORM"></asp:Label><span class="mandatory"> *</span>
-                                                            <asp:DropDownList runat="server" ID="ddlnomnclature" class="form-control" Style="text-transform: uppercase !important;" TabIndex="18" />
-                                                        </div>
-                                                    </div>
-                                                </ContentTemplate>
-                                                <Triggers>
-                                                </Triggers>
-                                            </asp:UpdatePanel>
-                                            <asp:UpdateProgress ID="UpdateProgress7" runat="server" AssociatedUpdatePanelID="UpdatePanel4">
-                                                <ProgressTemplate>
-                                                    <!---Progress Bar ---->
-                                                    <div class="overlay-progress">
-                                                        <div class="custom-progress-bar blue stripes">
-                                                            <span></span>
-                                                            <p>Processing</p>
-                                                        </div>
-                                                    </div>
-                                                    <!---Progress Bar ---->
-                                                </ProgressTemplate>
-                                            </asp:UpdateProgress>
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label>PROCURMENT CATEGORY<span class="mandatory">*</span></label>
                                                     <asp:DropDownList runat="server" ID="ddlprocurmentcategory" TabIndex="20" Style="text-transform: uppercase !important;" class="form-control"></asp:DropDownList>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="row">
-
-                                            <div class="col-md-12">
+                                            <div class="col-md-8">
                                                 <div class="form-group">
                                                     <asp:Label runat="server" ID="Label1" CssClass="form-label " Text="PROCURMENT CATEGORY REMARK"></asp:Label>
                                                     <asp:TextBox runat="server" ID="txtremarkspro" TabIndex="21" TextMode="MultiLine" class="form-control"></asp:TextBox>
                                                 </div>
                                             </div>
-                                            <div class="col-md-4" runat="server" visible="False">
+                                            <div id="Div1" class="col-md-4" runat="server" visible="False">
                                                 <div class="form-group">
                                                     <asp:Label runat="server" ID="lblprodrequir" CssClass="form-label " Text="Procurement Time Frame"></asp:Label><span class="mandatory"> *</span>
                                                     <asp:DropDownList runat="server" ID="ddlproctimeframe" TabIndex="22" Style="text-transform: uppercase !important;" class="form-control"></asp:DropDownList>
@@ -749,7 +735,7 @@
                                     <asp:UpdatePanel runat="server" ID="UPSUBMIT">
                                         <ContentTemplate>
                                             <asp:Button runat="server" ID="btnsubmitpanel1" class="btn btn-primary pull-right" TabIndex="57" Text="Save" OnClick="btnsubmitpanel1_Click" OnClientClick="return confirm('Are you sure you want to save this product?');" />
-                                            <asp:Button runat="server" ID="btncancelpanel1" class="btn btn-default pull-right" TabIndex="58" Style="margin-right: 10px;" Text="Back" OnClick="btncancelpanel1_Click" />
+                                            <asp:Button runat="server" Visible="false" ID="btncancelpanel1" class="btn btn-default pull-right" TabIndex="58" Style="margin-right: 10px;" Text="Back" OnClick="btncancelpanel1_Click" />
                                         </ContentTemplate>
                                         <Triggers>
                                             <asp:PostBackTrigger runat="server" ControlID="btnsubmitpanel1" />

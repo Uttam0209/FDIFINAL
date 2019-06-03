@@ -26,6 +26,10 @@ public partial class Admin_MasterPage : System.Web.UI.MasterPage
             {
                 MenuLogin();
             }
+            else
+            {
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Session Expire,Please login again');window.location='Login'", true);
+            }
         }
         catch (Exception exception)
         {

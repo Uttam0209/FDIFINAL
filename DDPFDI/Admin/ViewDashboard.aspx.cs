@@ -18,13 +18,24 @@ public partial class Admin_ViewDashboard : System.Web.UI.Page
     {
         if (!IsPostBack)
         {
-            if (Request.QueryString["id"] != null)
+            if (Session["User"] != null)
             {
-                this.ControlGrid(Encrypt.DecryptData(Request.QueryString["id"].ToString()));
+                if (Request.QueryString["id"] != null)
+                {
+                    if (Encrypt.DecryptData(Session["Type"].ToString()) == "Admin" || Encrypt.DecryptData(Session["Type"].ToString()) == "SuperAdmin")
+                        this.ControlGrid(Encrypt.DecryptData(Request.QueryString["id"].ToString()), "");
+                    else
+                        this.ControlGrid(Encrypt.DecryptData(Request.QueryString["id"].ToString()), Session["CompanyRefNo"].ToString());
+                }
+            }
+            else
+            {
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert",
+                    "alert('Session Expire,Please login again');window.location='Login'", true);
             }
         }
     }
-    private void ControlGrid(string mVal)
+    private void ControlGrid(string mVal, string RefNo)
     {
 
         if (mVal == "C")
@@ -34,7 +45,7 @@ public partial class Admin_ViewDashboard : System.Web.UI.Page
             gvunit.Visible = false;
             gvViewNodalOfficer.Visible = false;
             gvproduct.Visible = false;
-            BindCompany(txtsearch.Text);
+            BindCompany(RefNo);
         }
         else if (mVal == "D")
         {
@@ -43,7 +54,7 @@ public partial class Admin_ViewDashboard : System.Web.UI.Page
             gvunit.Visible = false;
             gvViewNodalOfficer.Visible = false;
             gvproduct.Visible = false;
-            BindDivision(txtsearch.Text);
+            BindDivision(RefNo);
         }
         else if (mVal == "U")
         {
@@ -52,7 +63,7 @@ public partial class Admin_ViewDashboard : System.Web.UI.Page
             gvunit.Visible = true;
             gvViewNodalOfficer.Visible = false;
             gvproduct.Visible = false;
-            BindUnit(txtsearch.Text);
+            BindUnit(RefNo);
         }
         else if (mVal == "E")
         {
@@ -61,7 +72,7 @@ public partial class Admin_ViewDashboard : System.Web.UI.Page
             gvunit.Visible = false;
             gvViewNodalOfficer.Visible = true;
             gvproduct.Visible = false;
-            BindEmployee(txtsearch.Text);
+            BindEmployee(RefNo);
         }
         else if (mVal == "P")
         {
@@ -70,87 +81,123 @@ public partial class Admin_ViewDashboard : System.Web.UI.Page
             gvunit.Visible = false;
             gvViewNodalOfficer.Visible = false;
             gvproduct.Visible = true;
-            BindProduct(txtsearch.Text);
+            BindProduct(RefNo);
         }
         else
         {
-            BindCompany(txtsearch.Text);
-            BindDivision(txtsearch.Text);
-            BindUnit(txtsearch.Text);
-            BindEmployee(txtsearch.Text);
-            BindProduct(txtsearch.Text);
+            BindCompany(RefNo);
+            BindDivision(RefNo);
+            BindUnit(RefNo);
+            BindEmployee(RefNo);
+            BindProduct(RefNo);
         }
 
     }
-    protected void BindCompany(string SearchText)
+    protected void BindCompany(string RefNo)
     {
-        if (SearchText == "")
+        if (RefNo == "")
         {
             DtGrid = Lo.GetDashboardData("Company", "");
         }
         else
         {
-            DtGrid = Lo.GetDashboardData("Company", SearchText);
+            DtGrid = Lo.GetDashboardData("Company", RefNo);
         }
         if (DtGrid.Rows.Count > 0)
         {
-            gvcompanydetail.DataSource = DtGrid;
-            gvcompanydetail.DataBind();
-            lbltotal.Text = "Total Records:- " + gvcompanydetail.Rows.Count.ToString();
-            divcompanyGrid.Visible = true;
+            if (RefNo != "")
+            {
+                DataView dv = new DataView(DtGrid);
+                dv.RowFilter = "CompanyRefNo='" + RefNo + "'";
+                gvcompanydetail.DataSource = dv.ToTable();
+                gvcompanydetail.DataBind();
+                lbltotal.Text = "Total Records:- " + gvcompanydetail.Rows.Count.ToString();
+                divcompanyGrid.Visible = true;
+            }
+            else
+            {
+                gvcompanydetail.DataSource = DtGrid;
+                gvcompanydetail.DataBind();
+                lbltotal.Text = "Total Records:- " + gvcompanydetail.Rows.Count.ToString();
+                divcompanyGrid.Visible = true;
+            }
         }
         else
             divcompanyGrid.Visible = false;
     }
-    protected void BindDivision(string SearchText)
+    protected void BindDivision(string RefNo)
     {
-        if (SearchText == "")
+        if (RefNo == "")
         {
             DtGrid = Lo.GetDashboardData("Division", "");
         }
         else
         {
-            DtGrid = Lo.GetDashboardData("Division", SearchText);
+            DtGrid = Lo.GetDashboardData("Division", RefNo);
         }
         if (DtGrid.Rows.Count > 0)
         {
-            gvfactory.DataSource = DtGrid;
-            gvfactory.DataBind();
-            lbltotal.Text = "Total Records:- " + gvfactory.Rows.Count.ToString();
-            divfactorygrid.Visible = true;
+            if (RefNo != "")
+            {
+                DataView dv = new DataView(DtGrid);
+                dv.RowFilter = "CompanyRefNo='" + RefNo + "'";
+                gvfactory.DataSource = dv.ToTable();
+                gvfactory.DataBind();
+                lbltotal.Text = "Total Records:- " + gvfactory.Rows.Count.ToString();
+                divfactorygrid.Visible = true;
+            }
+            else
+            {
+                gvfactory.DataSource = DtGrid;
+                gvfactory.DataBind();
+                lbltotal.Text = "Total Records:- " + gvfactory.Rows.Count.ToString();
+                divfactorygrid.Visible = true;
+            }
         }
         else
             divfactorygrid.Visible = true;
     }
-    protected void BindUnit(string SearchText)
+    protected void BindUnit(string RefNo)
     {
-        if (SearchText == "")
+        if (RefNo == "")
         {
             DtGrid = Lo.GetDashboardData("Unit", "");
         }
         else
         {
-            DtGrid = Lo.GetDashboardData("Unit", SearchText);
+            DtGrid = Lo.GetDashboardData("Unit", RefNo);
         }
         if (DtGrid.Rows.Count > 0)
         {
-            gvunit.DataSource = DtGrid;
-            gvunit.DataBind();
-            lbltotal.Text = "Total Records:- " + gvunit.Rows.Count.ToString();
-            divunitGrid.Visible = true;
+            if (RefNo != "")
+            {
+                DataView dv = new DataView(DtGrid);
+                dv.RowFilter = "CompanyRefNo='" + RefNo + "'";
+                gvunit.DataSource = dv.ToTable();
+                gvunit.DataBind();
+                lbltotal.Text = "Total Records:- " + gvunit.Rows.Count.ToString();
+                divunitGrid.Visible = true;
+            }
+            else
+            {
+                gvunit.DataSource = DtGrid;
+                gvunit.DataBind();
+                lbltotal.Text = "Total Records:- " + gvunit.Rows.Count.ToString();
+                divunitGrid.Visible = true;
+            }
         }
         else
             divunitGrid.Visible = true;
     }
-    protected void BindEmployee(string SearchText)
+    protected void BindEmployee(string RefNo)
     {
-        if (SearchText == "")
+        if (RefNo == "")
         {
             DtGrid = Lo.GetDashboardData("Employee", "");
         }
         else
         {
-            DtGrid = Lo.GetDashboardData("Employee", SearchText);
+            DtGrid = Lo.GetDashboardData("Employee", RefNo);
         }
         if (DtGrid.Rows.Count > 0)
         {
@@ -166,24 +213,39 @@ public partial class Admin_ViewDashboard : System.Web.UI.Page
                     DtGrid.Rows[a]["CompanyName"] = DtGrid.Rows[a]["FCompany"];
                 }
             }
-            DataView dv = new DataView(DtGrid);
-            dv.Sort = "CompanyName asc,FactoryName asc";
-            gvViewNodalOfficer.DataSource = dv.ToTable();
-            gvViewNodalOfficer.DataBind();
-            lbltotal.Text = "Total Records:- " + gvViewNodalOfficer.Rows.Count.ToString();
-            divEmployeeNodalGrid.Visible = true;
+            if (RefNo != "")
+            {
+                DataView dv = new DataView(DtGrid);
+                dv.RowFilter = "CompanyRefNo='" + RefNo + "'";
+                DataTable dtnew = dv.ToTable();
+                dv.RowFilter = "CompanyName='" + dtnew.Rows[0]["CompanyName"].ToString() + "'";
+                dv.Sort = "CompanyName asc,FactoryName asc";
+                gvViewNodalOfficer.DataSource = dv.ToTable();
+                gvViewNodalOfficer.DataBind();
+                lbltotal.Text = "Total Records:- " + gvViewNodalOfficer.Rows.Count.ToString();
+                divEmployeeNodalGrid.Visible = true;
+            }
+            else
+            {
+                DataView dv = new DataView(DtGrid);
+                dv.Sort = "CompanyName asc,FactoryName asc";
+                gvViewNodalOfficer.DataSource = dv.ToTable();
+                gvViewNodalOfficer.DataBind();
+                lbltotal.Text = "Total Records:- " + gvViewNodalOfficer.Rows.Count.ToString();
+                divEmployeeNodalGrid.Visible = true;
+            }
         }
         else
             divEmployeeNodalGrid.Visible = false;
     }
-    protected void BindProduct(string SearchText)
+    protected void BindProduct(string RefNo)
     {
-        if (SearchText == "")
+        if (RefNo == "")
         {
             DtGrid = Lo.GetDashboardData("Product", "");
         }
         else
-        { DtGrid = Lo.GetDashboardData("Product", SearchText); }
+        { DtGrid = Lo.GetDashboardData("Product", RefNo); }
         if (DtGrid.Rows.Count > 0)
         {
             for (int a = 0; a < DtGrid.Rows.Count; a++)
@@ -198,10 +260,31 @@ public partial class Admin_ViewDashboard : System.Web.UI.Page
                     DtGrid.Rows[a]["CompanyName"] = DtGrid.Rows[a]["FCompany"];
                 }
             }
-            gvproduct.DataSource = DtGrid;
-            gvproduct.DataBind();
-            lbltotal.Text = "Total Records:- " + gvproduct.Rows.Count.ToString();
-            divProductGrid.Visible = true;
+            if (RefNo != "")
+            {
+                DataView dv = new DataView(DtGrid);
+                dv.RowFilter = "CompanyRefNo='" + RefNo + "'";
+                DataTable dtnew = dv.ToTable();
+                if (dtnew.Rows.Count > 0)
+                {
+                    dv.RowFilter = "CompanyName='" + dtnew.Rows[0]["CompanyName"].ToString() + "'";
+                    dv.Sort = "CompanyName asc,FactoryName asc";
+                    gvproduct.DataSource = dv.ToTable();
+                    gvproduct.DataBind();
+                    lbltotal.Text = "Total Records:- " + gvproduct.Rows.Count.ToString();
+                    divProductGrid.Visible = true;
+                }
+                else
+                { divProductGrid.Visible = false; }
+
+            }
+            else
+            {
+                gvproduct.DataSource = DtGrid;
+                gvproduct.DataBind();
+                lbltotal.Text = "Total Records:- " + gvproduct.Rows.Count.ToString();
+                divProductGrid.Visible = true;
+            }
         }
     }
     #region RowCommand
@@ -297,6 +380,15 @@ public partial class Admin_ViewDashboard : System.Web.UI.Page
             lblnsccode.Text = DtView.Rows[0]["NSCCode"].ToString();
             lblniincode.Text = DtView.Rows[0]["NIINCode"].ToString();
             lblproductdescription.Text = DtView.Rows[0]["ProductDescription"].ToString();
+            if (DtView.Rows[0]["ItemDescriptionPDFFile"].ToString() == "")
+            {
+                a_downitem.Visible = false;
+            }
+            else
+            {
+                a_downitem.Visible = true;
+                a_downitem.HRef = "http://103.73.189.114:801/Upload/" + DtView.Rows[0]["ItemDescriptionPDFFile"].ToString();
+            }
             lbloempartnumber.Text = DtView.Rows[0]["OEMPartNumber"].ToString();
             lbloemname.Text = DtView.Rows[0]["OEMName"].ToString();
             lbloemcountry.Text = DtView.Rows[0]["CountryName"].ToString();
@@ -520,7 +612,9 @@ public partial class Admin_ViewDashboard : System.Web.UI.Page
     protected void btnseach_Click(object sender, EventArgs e)
     {
         if (txtsearch.Text != "")
-        { this.ControlGrid(Encrypt.DecryptData(Request.QueryString["id"].ToString())); }
+        {
+            this.ControlGrid(Encrypt.DecryptData(Request.QueryString["id"].ToString()), "");
+        }
         else
         {
             ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Please enter any one (Name,emailcompany/division/unit name)", true);

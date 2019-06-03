@@ -28,28 +28,36 @@ public partial class Admin_ViewNodalOfficer : System.Web.UI.Page
             {
                 try
                 {
-                    string strid = Request.QueryString["id"].ToString().Replace(" ", "+");
-                    string strPageName = objEnc.DecryptData(strid);
-                    StringBuilder strheadPage = new StringBuilder();
-                    strheadPage.Append("<ul class='breadcrumb'>");
-                    string[] MCateg = strPageName.Split(new string[] { ">>" }, StringSplitOptions.RemoveEmptyEntries);
-                    string MmCval = "";
-                    for (int x = 0; x < MCateg.Length; x++)
+                    if (Session["User"] != null)
                     {
-                        MmCval = MCateg[x];
-                        strheadPage.Append("<li class=''><span>" + MmCval + "</span></li>");
+                        string strid = Request.QueryString["id"].ToString().Replace(" ", "+");
+                        string strPageName = objEnc.DecryptData(strid);
+                        StringBuilder strheadPage = new StringBuilder();
+                        strheadPage.Append("<ul class='breadcrumb'>");
+                        string[] MCateg = strPageName.Split(new string[] { ">>" }, StringSplitOptions.RemoveEmptyEntries);
+                        string MmCval = "";
+                        for (int x = 0; x < MCateg.Length; x++)
+                        {
+                            MmCval = MCateg[x];
+                            strheadPage.Append("<li class=''><span>" + MmCval + "</span></li>");
+                        }
+
+                        divHeadPage.InnerHtml = strheadPage.ToString();
+                        strheadPage.Append("</ul");
+                        mType = objEnc.DecryptData(Session["Type"].ToString());
+                        mRefNo = Session["CompanyRefNo"].ToString();
+                        BindCompany();
                     }
-                    divHeadPage.InnerHtml = strheadPage.ToString();
-                    strheadPage.Append("</ul");
-                    mType = objEnc.DecryptData(Session["Type"].ToString());
-                    mRefNo = Session["CompanyRefNo"].ToString();
-                    BindCompany();
+                    else
+                    {
+                        ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert",
+                            "alert('Session Expire,Please login again');window.location='Login'", true);
+                    }
                 }
                 catch (Exception ex)
                 {
                     Response.RedirectToRoute("login");
                 }
-
             }
         }
     }
@@ -61,19 +69,49 @@ public partial class Admin_ViewNodalOfficer : System.Web.UI.Page
         Response.Redirect("Add-Nodal?mrcreaterole=" + objEnc.EncryptData(Role) + "&id=" + mstrid);
 
     }
-    public void GridViewNodalOfficerBind(string mRefNo, string mRole)
+    protected void BindEmployee()
     {
-        DataTable DtGrid = Lo.RetriveAllNodalOfficer(mRefNo, mRole);
+        DataTable DtGrid = Lo.GetDashboardData("Employee", "");
         if (DtGrid.Rows.Count > 0)
         {
-            gvViewNodalOfficer.DataSource = DtGrid;
+            for (int a = 0; a < DtGrid.Rows.Count; a++)
+            {
+                if (DtGrid.Rows[a]["UCompany"].ToString() != "")
+                {
+                    DtGrid.Rows[a]["CompanyName"] = DtGrid.Rows[a]["UCompany"];
+                    DtGrid.Rows[a]["FactoryName"] = DtGrid.Rows[a]["UFactory"];
+                }
+                else if (DtGrid.Rows[a]["FCompany"].ToString() != "")
+                {
+                    DtGrid.Rows[a]["CompanyName"] = DtGrid.Rows[a]["FCompany"];
+                }
+            }
+            DataView dv = new DataView(DtGrid);
+            dv.RowFilter = "CompanyName='" + ddlcompany.SelectedItem.Text + "'";
+            dv.Sort = "CompanyName asc,FactoryName asc";
+            gvViewNodalOfficer.DataSource = dv.ToTable();
             gvViewNodalOfficer.DataBind();
-            gvViewNodalOfficer.Visible = true;
+            lbltotal.Text = "Total Records:- " + gvViewNodalOfficer.Rows.Count.ToString();
+            //divEmployeeNodalGrid.Visible = true;
         }
-        else
-        {
-            gvViewNodalOfficer.Visible = false;
-        }
+        //else
+        //divEmployeeNodalGrid.Visible = false;
+    }
+    public void GridViewNodalOfficerBind(string mRefNo, string mRole)
+    {
+        //DataTable DtGrid = Lo.RetriveAllNodalOfficer(mRefNo, mRole);
+        //if (DtGrid.Rows.Count > 0)
+        //{
+        //    gvViewNodalOfficer.DataSource = DtGrid;
+        //    gvViewNodalOfficer.DataBind();
+        //    gvViewNodalOfficer.Visible = true;
+        //}
+        //else
+        //{
+        //    gvViewNodalOfficer.Visible = false;
+        //}
+
+        BindEmployee();
     }
     protected void BindCompany()
     {

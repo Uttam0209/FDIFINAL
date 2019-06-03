@@ -1,6 +1,17 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="AddNodalOfficer.aspx.cs" Inherits="Admin_AddNodalOfficer" MasterPageFile="~/Admin/MasterPage.master" %>
 
 <asp:Content ID="AddNodal" runat="server" ContentPlaceHolderID="ContentPlaceHolder1">
+    <script type="text/javascript">
+        function MutExChkList(chk) {
+            var chkList = chk.parentNode.parentNode.parentNode;
+            var chks = chkList.getElementsByTagName("input");
+            for (var i = 0; i < chks.length; i++) {
+                if (chks[i] != chk && chk.checked) {
+                    chks[i].checked = false;
+                }
+            }
+        }
+</script>
     <div class="content oem-content">
         <asp:ScriptManager ID="sc" runat="server"></asp:ScriptManager>
         <asp:UpdatePanel runat="server" ID="updatepan">
@@ -88,9 +99,9 @@
                                         <div class="col-md-4">
                                             <div class="fdi-add-content NodalRole" id="DivNodalRole" runat="server">
                                                 <div class="form-group">
-                                                    <asp:CheckBoxList runat="server" Style="margin-left: 20px;" CssClass="checkbox-inline" ID="chkrole" TabIndex="8" ToolTip="If you want to give login access please select nodel or user/if check is not selected it will be default employee.">
-                                                        <asp:ListItem Text="Nodal Officer"></asp:ListItem>
-                                                        <asp:ListItem Text="User"></asp:ListItem>
+                                                    <asp:CheckBoxList runat="server" Style="margin-left: 20px;" CssClass="checkbox-inline" ID="chkrole" TabIndex="8" ToolTip="If you want to give login access please select nodel or user/if check is not selected it will be default employee." AutoPostBack="True">
+                                                        <asp:ListItem Text="Nodal Officer" onclick="MutExChkList(this);" Value="1"></asp:ListItem>
+                                                        <asp:ListItem Text="User" Value="2" onclick="MutExChkList(this);" ></asp:ListItem>
                                                     </asp:CheckBoxList>
                                                 </div>
                                             </div>
