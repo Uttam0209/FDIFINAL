@@ -58,6 +58,10 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
                     hidCompanyRefNo.Value = mRefNo.ToString();
                     ViewState["UserLoginEmail"] = objEnc.DecryptData(Session["User"].ToString());
                 }
+                for (int i = 0; i < chkrole.Items.Count; i++)
+                {
+                    chkrole.Items[i].Attributes.Add("onclick", "MutExChkList(this)");
+                }
                 if (Request.QueryString["mcurrentcompRefNo"] != null)
                 {
                     EditCode();
@@ -71,28 +75,57 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
         }
     }
     #region Load
-    public void GridViewNodalOfficerBind(string mRefNo, string mRole)
+    protected void BindEmployee()
     {
-        DataTable DtGrid = Lo.RetriveAllNodalOfficer(mRefNo, mRole);
+        DataTable DtGrid = Lo.GetDashboardData("Employee");
         if (DtGrid.Rows.Count > 0)
         {
-            gvViewNodalOfficer.DataSource = DtGrid;
+            for (int a = 0; a < DtGrid.Rows.Count; a++)
+            {
+                if (DtGrid.Rows[a]["UCompany"].ToString() != "")
+                {
+                    DtGrid.Rows[a]["CompanyName"] = DtGrid.Rows[a]["UCompany"];
+                    DtGrid.Rows[a]["FactoryName"] = DtGrid.Rows[a]["UFactory"];
+                }
+                else if (DtGrid.Rows[a]["FCompany"].ToString() != "")
+                {
+                    DtGrid.Rows[a]["CompanyName"] = DtGrid.Rows[a]["FCompany"];
+                }
+            }
+            DataView dv = new DataView(DtGrid);
+            dv.RowFilter = "CompanyName='" + ddlcompany.SelectedItem.Text + "'";
+            dv.Sort = "CompanyName asc,FactoryName asc";
+            gvViewNodalOfficer.DataSource = dv.ToTable();
             gvViewNodalOfficer.DataBind();
-            gvViewNodalOfficer.Visible = true;
+            //lbltotal.Text = "Total Records:- " + gvViewNodalOfficer.Rows.Count.ToString();
+            //divEmployeeNodalGrid.Visible = true;
         }
-        else
-        {
-            gvViewNodalOfficer.Visible = false;
-        }
-        DataRow[] foundRows = DtGrid.Select("IsNodalOfficer='Y'");
-        if (foundRows.Length != 0)
-        {
-            chkrole.Items[0].Enabled = false;
-        }
-        else
-        {
-            chkrole.Items[0].Enabled = true;
-        }
+        //else
+        //divEmployeeNodalGrid.Visible = false;
+    }
+    public void GridViewNodalOfficerBind(string mRefNo, string mRole)
+    {
+        //DataTable DtGrid = Lo.RetriveAllNodalOfficer(mRefNo, mRole);
+        //if (DtGrid.Rows.Count > 0)
+        //{
+        //    gvViewNodalOfficer.DataSource = DtGrid;
+        //    gvViewNodalOfficer.DataBind();
+        //    gvViewNodalOfficer.Visible = true;
+        //}
+        //else
+        //{
+        //    gvViewNodalOfficer.Visible = false;
+        //}
+        BindEmployee();
+        //DataRow[] foundRows = DtGrid.Select("IsNodalOfficer='Y'");
+        //if (foundRows.Length != 0)
+        //{
+        //    chkrole.Items[0].Enabled = false;
+        //}
+        //else
+        //{
+        //    chkrole.Items[0].Enabled = true;
+        //}
     }
     protected void BindCompany()
     {
@@ -782,4 +815,6 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
             }
         }
     }
+
+    
 }

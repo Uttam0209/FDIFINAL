@@ -1362,17 +1362,17 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                 }
                 else
                 {
-                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Please fill mandatory fields.')", true);
+                    ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "alert('Please fill mandatory fields.')", true);
                 }
             }
             else
             {
-                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Please fill mandatory fields.')", true);
+                ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "alert('Please fill mandatory fields.')", true);
             }
         }
         else
         {
-            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Please fill mandatory fields.')", true);
+            ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "alert('Please fill mandatory fields.')", true);
         }
     }
     protected void btncancelpanel1_Click(object sender, EventArgs e)
@@ -1566,9 +1566,9 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                 btnsubmitpanel1.Text = "Update";
                 hfprodid.Value = DtView.Rows[0]["ProductID"].ToString();
                 hfcomprefno.Value = DtView.Rows[0]["CompanyRefNo"].ToString();
-                ddlmastercategory.SelectedValue = DtView.Rows[0]["ProductLevel1"].ToString();
+                ddlmastercategory.Items.FindByValue(DtView.Rows[0]["ProductLevel1"].ToString()).Selected = true;
                 BindMasterSubCategory();
-                ddlsubcategory.SelectedValue = DtView.Rows[0]["ProductLevel2"].ToString();
+                ddlsubcategory.Items.FindByValue(DtView.Rows[0]["ProductLevel2"].ToString()).Selected = true;
                 BindMaster3levelSubCategory();
                 if (ddllevel3product.SelectedValue != "Select")
                 {
@@ -1585,15 +1585,15 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                 txthsncode.Text = DtView.Rows[0]["HSNCode"].ToString();
                 //   txtnatocode.Text = DtView.Rows[0]["NatoCode"].ToString();
                 txterprefno.Text = DtView.Rows[0]["ERPRefNo"].ToString();
-                ddltechnologycat.SelectedValue = DtView.Rows[0]["TechnologyLevel1"].ToString();
+                ddltechnologycat.Items.FindByValue(DtView.Rows[0]["TechnologyLevel1"].ToString()).Selected = true;
                 BindMasterSubCategoryTech();
-                ddlsubtech.SelectedValue = DtView.Rows[0]["TechnologyLevel2"].ToString();
+                ddlsubtech.Items.FindByValue(DtView.Rows[0]["TechnologyLevel2"].ToString()).Selected = true;
                 BindMasterSubCategoryTechLevel3();
                 if (ddltechlevel3.SelectedValue != "Select")
                 {
                     ddltechlevel3.SelectedValue = DtView.Rows[0]["TechnologyLevel3"].ToString();
                 }
-                ddlplatform.SelectedValue = DtView.Rows[0]["Platform"].ToString();
+                ddlplatform.Items.FindByValue(DtView.Rows[0]["Platform"].ToString()).Selected = true;
                 BindMasterProductNoenCletureCategory();
                 ddlnomnclature.SelectedValue = DtView.Rows[0]["NomenclatureOfMainSystem"].ToString();
                 ddlenduser.SelectedValue = DtView.Rows[0]["EndUser"].ToString();

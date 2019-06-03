@@ -32,9 +32,9 @@
                         </div>
                     </div>
                     <div class="clearfix"></div>
-                    <div style="margin-top: 5px;">
-                        <a class="fa fa-arrow-circle-left pull-right" href='<%=ResolveUrl("~/AddProduct") %>'>&nbsp; &nbsp;Back</a>
-                    </div>
+                    <%--<div style="margin-top: 5px;">
+                        <a class="fa fa-arrow-circle-left pull-right" href='<%=ResolveUrl("~/View-Product") %>'>&nbsp; &nbsp;Back</a>
+                    </div>--%>
                     <div class="clearfix"></div>
                     <div id="Div3">
                         <asp:Button ID="btnAddProduct" runat="server" Text="Add Product" Visible="False" CssClass="btn btn-primary pull-right" OnClick="btnAddProduct_Click" />

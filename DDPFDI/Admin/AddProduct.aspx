@@ -748,7 +748,7 @@
                                     <asp:UpdatePanel runat="server" ID="UPSUBMIT">
                                         <ContentTemplate>
                                             <asp:Button runat="server" ID="btnsubmitpanel1" class="btn btn-primary pull-right" TabIndex="57" Text="Save" OnClick="btnsubmitpanel1_Click" OnClientClick="return confirm('Are you sure you want to save this product?');" />
-                                            <asp:Button runat="server" ID="btncancelpanel1" class="btn btn-default pull-right" TabIndex="58" Style="margin-right: 10px;" Text="Back" OnClick="btncancelpanel1_Click" />
+                                            <asp:Button runat="server" Visible="false" ID="btncancelpanel1" class="btn btn-default pull-right" TabIndex="58" Style="margin-right: 10px;" Text="Back" OnClick="btncancelpanel1_Click" />
                                         </ContentTemplate>
                                         <Triggers>
                                             <asp:PostBackTrigger runat="server" ControlID="btnsubmitpanel1" />

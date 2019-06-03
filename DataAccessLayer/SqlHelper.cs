@@ -1288,6 +1288,7 @@ namespace DataAccessLayer
                 {
                     DbCommand cmd = db.GetStoredProcCommand("sp_GetDashboardData");                 
                     db.AddInParameter(cmd, "@Purpose", DbType.String, Purpose);
+                    db.AddInParameter(cmd, "@SearchText", DbType.String, "");
                     IDataReader dr = db.ExecuteReader(cmd);
                     DataTable dt = new DataTable();
                     if (dr != null)
