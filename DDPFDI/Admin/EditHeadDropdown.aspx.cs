@@ -40,7 +40,7 @@ public partial class Admin_EditHeadDropdown : System.Web.UI.Page
 
     protected void bindnodal()
     {
-        DataTable DtGrid = Lo.GetDashboardData("Employee");
+        DataTable DtGrid = Lo.GetDashboardData("Employee", "");
         if (DtGrid.Rows.Count > 0)
         {
             gvpass.DataSource = DtGrid;

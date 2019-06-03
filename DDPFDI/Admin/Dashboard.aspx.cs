@@ -59,7 +59,7 @@ public partial class Admin_Dashboard : System.Web.UI.Page
 
     protected void lblComp_Click(object sender, EventArgs e)
     {
-        DataTable dt = Lo.GetDashboardData("Company");
+        DataTable dt = Lo.GetDashboardData("Company", "");
         try
         {
             int[] iColumns = { 1, 2, 3, 5, 7 };
@@ -73,7 +73,7 @@ public partial class Admin_Dashboard : System.Web.UI.Page
     }
     protected void lnkDiv_Click(object sender, EventArgs e)
     {
-        DataTable dt = Lo.GetDashboardData("Division");
+        DataTable dt = Lo.GetDashboardData("Division", "");
         try
         {
             int[] iColumns = { 3, 7, 8, 5, 6 };
@@ -87,7 +87,7 @@ public partial class Admin_Dashboard : System.Web.UI.Page
     }
     protected void lnkUnit_Click(object sender, EventArgs e)
     {
-        DataTable dt = Lo.GetDashboardData("Unit");
+        DataTable dt = Lo.GetDashboardData("Unit", "");
         try
         {
             int[] iColumns = { 3, 7, 9, 10, 5, 6 };
@@ -101,7 +101,7 @@ public partial class Admin_Dashboard : System.Web.UI.Page
     }
     protected void lnkEmp_Click(object sender, EventArgs e)
     {
-        DataTable dt = Lo.GetDashboardData("Employee");
+        DataTable dt = Lo.GetDashboardData("Employee", "");
         try
         {
             int[] iColumns = { 4, 7, 2, 8, 10 };
@@ -115,7 +115,7 @@ public partial class Admin_Dashboard : System.Web.UI.Page
     }
     protected void lnkProduct_Click(object sender, EventArgs e)
     {
-        DataTable dt = Lo.GetDashboardData("Product");
+        DataTable dt = Lo.GetDashboardData("Product", "");
         try
         {
             int[] iColumns = { 2, 4, 5, 6, 13, 14, 16, 3 };

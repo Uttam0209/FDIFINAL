@@ -81,14 +81,14 @@
                                                                 NSN GROUP <span class="mandatory">*</span>
                                                                 <span data-toggle="tooltip" class="fa fa-question" title="Number in bracket indicates NSN Group"></span>
                                                             </label>
-                                                            <asp:DropDownList runat="server" ID="ddlmastercategory" class="form-control" TabIndex="1" AutoPostBack="True" OnSelectedIndexChanged="ddlmastercategory_SelectedIndexChanged"></asp:DropDownList>
+                                                            <asp:DropDownList runat="server" ID="ddlmastercategory" class="form-control" Style="text-transform: uppercase !important;" TabIndex="1" AutoPostBack="True" OnSelectedIndexChanged="ddlmastercategory_SelectedIndexChanged"></asp:DropDownList>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-4">
                                                         <div class="form-group">
                                                             <label>NSN GROUP CLASS<span class="mandatory">*</span></label>
                                                             <span data-toggle="tooltip" class="fa fa-question" title="Number in bracket indicates NSN Group class"></span>
-                                                            <asp:DropDownList runat="server" ID="ddlsubcategory" AutoPostBack="True" TabIndex="2" class="form-control" OnSelectedIndexChanged="ddlsubcategory_SelectedIndexChanged"></asp:DropDownList>
+                                                            <asp:DropDownList runat="server" ID="ddlsubcategory" AutoPostBack="True" TabIndex="2" class="form-control" Style="text-transform: uppercase !important;" OnSelectedIndexChanged="ddlsubcategory_SelectedIndexChanged"></asp:DropDownList>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-4">
@@ -96,7 +96,7 @@
                                                             <label>
                                                                 Item Code</label>
                                                             <span data-toggle="tooltip" class="fa fa-question" title="Item code indicate item name code in NSN"></span>
-                                                            <asp:DropDownList runat="server" ID="ddllevel3product" TabIndex="3" class="form-control"></asp:DropDownList>
+                                                            <asp:DropDownList runat="server" ID="ddllevel3product" TabIndex="3" Style="text-transform: uppercase !important;" class="form-control"></asp:DropDownList>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -126,7 +126,8 @@
                                                     <div class="col-md-4">
                                                         <div class="form-group">
                                                             <label>Product Description </label>
-                                                            <asp:TextBox runat="server" ID="txtproductdescription" TextMode="MultiLine" TabIndex="6" class="form-control"></asp:TextBox>
+                                                            <span class="mandatory">*</span>
+                                                            <asp:TextBox runat="server" ID="txtproductdescription" required="" TextMode="MultiLine" TabIndex="6" class="form-control"></asp:TextBox>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -163,7 +164,7 @@
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label>OEM Country</label>
-                                                    <asp:DropDownList ID="ddlcountry" runat="server" TabIndex="9" CssClass="form-control form-cascade-control"></asp:DropDownList>
+                                                    <asp:DropDownList ID="ddlcountry" runat="server" TabIndex="9" Style="text-transform: uppercase !important;" CssClass="form-control form-cascade-control"></asp:DropDownList>
                                                 </div>
                                             </div>
                                         </div>
@@ -171,7 +172,7 @@
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <asp:Label runat="server" ID="lblenduser" Text="End User"></asp:Label><span class="mandatory"> *</span>
-                                                    <asp:DropDownList runat="server" ID="ddlenduser" class="form-control" TabIndex="10">
+                                                    <asp:DropDownList runat="server" ID="ddlenduser" Style="text-transform: uppercase !important;" class="form-control" TabIndex="10">
                                                     </asp:DropDownList>
                                                 </div>
                                             </div>
@@ -197,7 +198,7 @@
                                             <div class="col-md-4" runat="server" visible="false">
                                                 <div class="form-group">
                                                     <label>DPSU Reference No</label>
-                                                    <asp:TextBox runat="server" ID="txterprefno"  class="form-control"></asp:TextBox>
+                                                    <asp:TextBox runat="server" ID="txterprefno" class="form-control"></asp:TextBox>
                                                 </div>
                                             </div>
                                         </div>
@@ -210,21 +211,21 @@
                                                         <div class="form-group">
                                                             <label>PRODUCT (INDUSTRY DOMAIN)<span class="mandatory">*</span></label>
                                                             <span data-toggle="tooltip" class="fa fa-question" title="If you not display your category in this section, please add in Category Master >> Category Dropdown"></span>
-                                                            <asp:DropDownList runat="server" ID="ddltechnologycat" class="form-control" TabIndex="14" AutoPostBack="True" OnSelectedIndexChanged="ddltechnologycat_SelectedIndexChanged"></asp:DropDownList>
+                                                            <asp:DropDownList runat="server" ID="ddltechnologycat" class="form-control" TabIndex="14" Style="text-transform: uppercase !important;" AutoPostBack="True" OnSelectedIndexChanged="ddltechnologycat_SelectedIndexChanged"></asp:DropDownList>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-4">
                                                         <div class="form-group">
                                                             <label>PRODUCT (INDUSTRY SUB DOMAIN)<span class="mandatory">*</span></label>
                                                             <span data-toggle="tooltip" class="fa fa-question" title="It is a subcategory of Product Level 1, if you not see product level 2 please add in Category master >> level 2 "></span>
-                                                            <asp:DropDownList runat="server" ID="ddlsubtech" class="form-control" TabIndex="15" AutoPostBack="True" OnSelectedIndexChanged="ddlsubtech_SelectedIndexChanged"></asp:DropDownList>
+                                                            <asp:DropDownList runat="server" ID="ddlsubtech" class="form-control" TabIndex="15" Style="text-transform: uppercase !important;" AutoPostBack="True" OnSelectedIndexChanged="ddlsubtech_SelectedIndexChanged"></asp:DropDownList>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-4">
                                                         <div class="form-group">
                                                             <label>PRODUCT (INDUSTRY 2nd SUB DOMAIN)</label>
                                                             <span data-toggle="tooltip" class="fa fa-question" title="It is a subcategory of Product Level 2, if you not see product level 3 please add in Category master >> level 3 "></span>
-                                                            <asp:DropDownList runat="server" ID="ddltechlevel3" TabIndex="16" class="form-control"></asp:DropDownList>
+                                                            <asp:DropDownList runat="server" ID="ddltechlevel3" TabIndex="16" Style="text-transform: uppercase !important;" class="form-control"></asp:DropDownList>
                                                         </div>
                                                     </div>
                                                 </ContentTemplate>
@@ -252,13 +253,13 @@
                                                     <div class="col-md-4">
                                                         <div class="form-group">
                                                             <label>DEFENCE PLATFORM<span class="mandatory">*</span></label>
-                                                            <asp:DropDownList runat="server" ID="ddlplatform" AutoPostBack="True" TabIndex="17" class="form-control" OnSelectedIndexChanged="ddlplatform_SelectedIndexChanged"></asp:DropDownList>
+                                                            <asp:DropDownList runat="server" ID="ddlplatform" AutoPostBack="True" TabIndex="17" Style="text-transform: uppercase !important;" class="form-control" OnSelectedIndexChanged="ddlplatform_SelectedIndexChanged"></asp:DropDownList>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-4" style="margin-top: 8px;">
                                                         <div class="form-group">
                                                             <asp:Label runat="server" ID="lblNomenclature" Text="NAME OF DEFENCE PLATFORM"></asp:Label><span class="mandatory"> *</span>
-                                                            <asp:DropDownList runat="server" ID="ddlnomnclature" class="form-control" TabIndex="18" />
+                                                            <asp:DropDownList runat="server" ID="ddlnomnclature" class="form-control" Style="text-transform: uppercase !important;" TabIndex="18" />
                                                         </div>
                                                     </div>
                                                 </ContentTemplate>
@@ -280,7 +281,7 @@
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label>PROCURMENT CATEGORY<span class="mandatory">*</span></label>
-                                                    <asp:DropDownList runat="server" ID="ddlprocurmentcategory" TabIndex="20" class="form-control"></asp:DropDownList>
+                                                    <asp:DropDownList runat="server" ID="ddlprocurmentcategory" TabIndex="20" Style="text-transform: uppercase !important;" class="form-control"></asp:DropDownList>
                                                 </div>
                                             </div>
                                         </div>
@@ -295,7 +296,7 @@
                                             <div class="col-md-4" runat="server" visible="False">
                                                 <div class="form-group">
                                                     <asp:Label runat="server" ID="lblprodrequir" CssClass="form-label " Text="Procurement Time Frame"></asp:Label><span class="mandatory"> *</span>
-                                                    <asp:DropDownList runat="server" ID="ddlproctimeframe" TabIndex="22" class="form-control"></asp:DropDownList>
+                                                    <asp:DropDownList runat="server" ID="ddlproctimeframe" TabIndex="22" Style="text-transform: uppercase !important;" class="form-control"></asp:DropDownList>
                                                 </div>
                                             </div>
                                         </div>
@@ -499,9 +500,9 @@
                                                 <label>
                                                     Tender Status</label>
                                                 <asp:DropDownList runat="server" ID="ddltendorstatus" class="form-control" TabIndex="35" AutoPostBack="True" OnSelectedIndexChanged="ddltendorstatus_SelectedIndexChanged">
-                                                    <asp:ListItem Value="Archive" Selected="True">Archive</asp:ListItem>
+                                                    <asp:ListItem Value="Not Floated" Selected="True">Not Floated</asp:ListItem>
+                                                    <asp:ListItem Value="Archive">Archive</asp:ListItem>
                                                     <asp:ListItem Value="Live">Live</asp:ListItem>
-                                                    <asp:ListItem Value="Not Floated">Not Floated</asp:ListItem>
                                                     <asp:ListItem Value="To be Floated shortly">To be Floated shortly</asp:ListItem>
                                                 </asp:DropDownList>
                                             </div>
@@ -514,8 +515,8 @@
                                                     <strong>Note:</strong> If live, please fill last date of tender submission. 
                                             <span class="checkbox-box productalreadylabel">
                                                 <asp:RadioButtonList runat="server" ID="rbtendordateyesno" RepeatDirection="Horizontal" TabIndex="36" AutoPostBack="True" RepeatColumns="2" RepeatLayout="Flow" OnSelectedIndexChanged="rbtendordateyesno_CheckedChanged">
-                                                    <asp:ListItem Value="N" runat="server">No</asp:ListItem>
-                                                    <asp:ListItem Value="Y" class="yes" Selected="True">Yes</asp:ListItem>
+                                                    <asp:ListItem Value="N" runat="server" Selected="True">No</asp:ListItem>
+                                                    <asp:ListItem Value="Y" class="yes">Yes</asp:ListItem>
                                                 </asp:RadioButtonList>
                                             </span>
                                                 </label>

@@ -24,7 +24,6 @@ public partial class Admin_ViewDashboard : System.Web.UI.Page
             }
         }
     }
-
     private void ControlGrid(string mVal)
     {
 
@@ -35,7 +34,7 @@ public partial class Admin_ViewDashboard : System.Web.UI.Page
             gvunit.Visible = false;
             gvViewNodalOfficer.Visible = false;
             gvproduct.Visible = false;
-            BindCompany();
+            BindCompany(txtsearch.Text);
         }
         else if (mVal == "D")
         {
@@ -44,7 +43,7 @@ public partial class Admin_ViewDashboard : System.Web.UI.Page
             gvunit.Visible = false;
             gvViewNodalOfficer.Visible = false;
             gvproduct.Visible = false;
-            BindDivision();
+            BindDivision(txtsearch.Text);
         }
         else if (mVal == "U")
         {
@@ -53,7 +52,7 @@ public partial class Admin_ViewDashboard : System.Web.UI.Page
             gvunit.Visible = true;
             gvViewNodalOfficer.Visible = false;
             gvproduct.Visible = false;
-            BindUnit();
+            BindUnit(txtsearch.Text);
         }
         else if (mVal == "E")
         {
@@ -62,7 +61,7 @@ public partial class Admin_ViewDashboard : System.Web.UI.Page
             gvunit.Visible = false;
             gvViewNodalOfficer.Visible = true;
             gvproduct.Visible = false;
-            BindEmployee();
+            BindEmployee(txtsearch.Text);
         }
         else if (mVal == "P")
         {
@@ -71,21 +70,28 @@ public partial class Admin_ViewDashboard : System.Web.UI.Page
             gvunit.Visible = false;
             gvViewNodalOfficer.Visible = false;
             gvproduct.Visible = true;
-            BindProduct();
+            BindProduct(txtsearch.Text);
         }
         else
         {
-            BindCompany();
-            BindDivision();
-            BindUnit();
-            BindEmployee();
-            BindProduct();
+            BindCompany(txtsearch.Text);
+            BindDivision(txtsearch.Text);
+            BindUnit(txtsearch.Text);
+            BindEmployee(txtsearch.Text);
+            BindProduct(txtsearch.Text);
         }
 
     }
-    protected void BindCompany()
+    protected void BindCompany(string SearchText)
     {
-        DataTable DtGrid = Lo.GetDashboardData("Company");
+        if (SearchText == "")
+        {
+            DtGrid = Lo.GetDashboardData("Company", "");
+        }
+        else
+        {
+            DtGrid = Lo.GetDashboardData("Company", SearchText);
+        }
         if (DtGrid.Rows.Count > 0)
         {
             gvcompanydetail.DataSource = DtGrid;
@@ -96,9 +102,16 @@ public partial class Admin_ViewDashboard : System.Web.UI.Page
         else
             divcompanyGrid.Visible = false;
     }
-    protected void BindDivision()
+    protected void BindDivision(string SearchText)
     {
-        DataTable DtGrid = Lo.GetDashboardData("Division");
+        if (SearchText == "")
+        {
+            DtGrid = Lo.GetDashboardData("Division", "");
+        }
+        else
+        {
+            DtGrid = Lo.GetDashboardData("Division", SearchText);
+        }
         if (DtGrid.Rows.Count > 0)
         {
             gvfactory.DataSource = DtGrid;
@@ -109,9 +122,16 @@ public partial class Admin_ViewDashboard : System.Web.UI.Page
         else
             divfactorygrid.Visible = true;
     }
-    protected void BindUnit()
+    protected void BindUnit(string SearchText)
     {
-        DataTable DtGrid = Lo.GetDashboardData("Unit");
+        if (SearchText == "")
+        {
+            DtGrid = Lo.GetDashboardData("Unit", "");
+        }
+        else
+        {
+            DtGrid = Lo.GetDashboardData("Unit", SearchText);
+        }
         if (DtGrid.Rows.Count > 0)
         {
             gvunit.DataSource = DtGrid;
@@ -122,9 +142,16 @@ public partial class Admin_ViewDashboard : System.Web.UI.Page
         else
             divunitGrid.Visible = true;
     }
-    protected void BindEmployee()
+    protected void BindEmployee(string SearchText)
     {
-        DataTable DtGrid = Lo.GetDashboardData("Employee");
+        if (SearchText == "")
+        {
+            DtGrid = Lo.GetDashboardData("Employee", "");
+        }
+        else
+        {
+            DtGrid = Lo.GetDashboardData("Employee", SearchText);
+        }
         if (DtGrid.Rows.Count > 0)
         {
             for (int a = 0; a < DtGrid.Rows.Count; a++)
@@ -149,9 +176,14 @@ public partial class Admin_ViewDashboard : System.Web.UI.Page
         else
             divEmployeeNodalGrid.Visible = false;
     }
-    protected void BindProduct()
+    protected void BindProduct(string SearchText)
     {
-        DtGrid = Lo.GetDashboardData("Product");
+        if (SearchText == "")
+        {
+            DtGrid = Lo.GetDashboardData("Product", "");
+        }
+        else
+        { DtGrid = Lo.GetDashboardData("Product", SearchText); }
         if (DtGrid.Rows.Count > 0)
         {
             for (int a = 0; a < DtGrid.Rows.Count; a++)
@@ -460,4 +492,38 @@ public partial class Admin_ViewDashboard : System.Web.UI.Page
         }
     }
     #endregion
+    protected void gvViewNodalOfficer_RowDataBound(object sender, GridViewRowEventArgs e)
+    {
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            Label s_lblnodalofficer = (Label)e.Row.FindControl("lblnodalofficer");
+            Label s_lblnodallogactive = (Label)e.Row.FindControl("lblnodallogactive");
+            LinkButton s_lbllogindetail = (LinkButton)e.Row.FindControl("lbllogindetail");
+            if (s_lblnodalofficer.Text == "Y")
+            {
+                e.Row.Attributes.Add("Class", "bg-purple");
+                s_lblnodalofficer.Text = "Nodal Officer";
+                s_lblnodalofficer.Visible = true;
+            }
+            else if (s_lblnodallogactive.Text == "Y")
+            {
+                s_lblnodallogactive.Text = "User";
+                s_lblnodallogactive.Visible = true;
+            }
+            else if (s_lblnodallogactive.Text == "N" && s_lblnodalofficer.Text == "N")
+            {
+                s_lblnodalofficer.Text = "Employee";
+                s_lblnodalofficer.Visible = true;
+            }
+        }
+    }
+    protected void btnseach_Click(object sender, EventArgs e)
+    {
+        if (txtsearch.Text != "")
+        { this.ControlGrid(Encrypt.DecryptData(Request.QueryString["id"].ToString())); }
+        else
+        {
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Please enter any one (Name,emailcompany/division/unit name)", true);
+        }
+    }
 }

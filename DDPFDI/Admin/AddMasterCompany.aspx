@@ -142,7 +142,7 @@
                                             <div class="form-group">
 
                                                 <h3 class="secondary-heading">Intrested In</h3>
-                                                <asp:CheckBoxList ID="chkintrestedarea" runat="server" CssClass="checkbox-inline" TabIndex="6" RepeatColumns="5" RepeatDirection="Vertical" RepeatLayout="Flow">
+                                                <asp:CheckBoxList ID="chkintrestedarea" runat="server" CssClass="checkbox-inline" TabIndex="6" RepeatColumns="8" RepeatDirection="Vertical" RepeatLayout="Flow">
                                                 </asp:CheckBoxList>
 
                                             </div>
@@ -153,7 +153,7 @@
                                             <div class="form-group">
 
                                                 <h3 class="secondary-heading">Menu Alotted</h3>
-                                                <asp:CheckBoxList ID="chkmastermenuallot" runat="server" CssClass="checkbox-inline" TabIndex="7" RepeatColumns="4" RepeatDirection="Horizontal" RepeatLayout="Flow">
+                                                <asp:CheckBoxList ID="chkmastermenuallot" runat="server" CssClass="checkbox-inline" TabIndex="7" RepeatColumns="8" RepeatDirection="Horizontal" RepeatLayout="Flow">
                                                 </asp:CheckBoxList>
                                             </div>
                                         </div>
@@ -164,7 +164,7 @@
 
                                                 <h3 class="secondary-heading">Role</h3>
 
-                                                <asp:CheckBoxList ID="chkrole" runat="server" onclick="MutExChkList(this);" RepeatColumns="5" TabIndex="8" CssClass="checkbox-inline" RepeatDirection="Horizontal" RepeatLayout="Flow">
+                                                <asp:CheckBoxList ID="chkrole" runat="server" onclick="MutExChkList(this);" RepeatColumns="8" TabIndex="8" CssClass="checkbox-inline" RepeatDirection="Horizontal" RepeatLayout="Flow">
                                                     <asp:ListItem Value="Admin">Admin</asp:ListItem>
                                                     <asp:ListItem Value="Company">Company</asp:ListItem>
                                                 </asp:CheckBoxList>

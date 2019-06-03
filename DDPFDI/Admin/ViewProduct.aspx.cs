@@ -222,6 +222,7 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
                 lblnomenclatureofmainsystem.Text = DtView.Rows[0]["Nomenclature"].ToString();
                 lblenduser.Text = DtView.Rows[0]["EUserName"].ToString();
                 lblpurposeofprocurement.Text = DtView.Rows[0]["PRrocurement"].ToString();
+                lblprocremarks.Text = DtView.Rows[0]["ProcurmentCategoryRemark"].ToString();
                 // lblprodtimeframe.Text = DtView.Rows[0]["PRequirement"].ToString();
                 lblsearchkeyword.Text = DtView.Rows[0]["SearchKeyword"].ToString();
                 lblprodalredyindeginized.Text = DtView.Rows[0]["IsIndeginized"].ToString();

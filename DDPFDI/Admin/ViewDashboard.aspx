@@ -46,6 +46,19 @@
                                     <a class="fa fa-arrow-circle-left pull-right" href='<%=ResolveUrl("~/Dashboard") %>'>&nbsp; &nbsp;Back</a>
                                 </div>
                                 <div class="clearfix"></div>
+                                <div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <asp:TextBox runat="server" ID="txtsearch" placeholder="Search (Name,emailcompany/division/unit name)" CssClass="form-control"></asp:TextBox>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <asp:Button runat="server" ID="btnseach" Text="Search" CssClass="btn btn-primary" OnClick="btnseach_Click" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
                                 <div id="divTotalNumber" class="text-center" style="font-size: 16px; margin-top: 10px;" runat="server">
                                     <asp:Label ID="lbltotal" runat="server" Text=""></asp:Label>
                                 </div>
@@ -61,7 +74,7 @@
                                                     <%#Container.DataItemIndex+1 %>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
-                                            <asp:TemplateField HeaderText="Reference No.">
+                                            <asp:TemplateField HeaderText="Reference No." Visible="False">
                                                 <ItemTemplate>
                                                     <asp:Label ID="lblrefno" runat="server" Text='<%#Eval("CompanyRefNo") %>' NullDisplayText="#"></asp:Label>
                                                 </ItemTemplate>
@@ -89,7 +102,8 @@
                                 <div class="clearfix"></div>
                                 <div class="table-wrapper table-responsive" id="divfactorygrid" runat="server" visible="False">
                                     <asp:GridView ID="gvfactory" runat="server" AutoGenerateColumns="false" Class="commonAjaxTbl master-company-table ViewProductTable table 
-                                        display responsive no-wrap table-hover manage-user Grid table-responsive" OnRowCommand="gvfactory_RowCommand">
+                                        display responsive no-wrap table-hover manage-user Grid table-responsive"
+                                        OnRowCommand="gvfactory_RowCommand">
                                         <Columns>
                                             <asp:TemplateField HeaderText="S.No.">
                                                 <ItemTemplate>
@@ -98,7 +112,7 @@
                                             </asp:TemplateField>
                                             <asp:BoundField DataField="CompanyName" HeaderText="Company" NullDisplayText="#" />
                                             <asp:BoundField ItemStyle-Width="150px" DataField="FactoryName" HeaderText="Division" />
-                                            <asp:TemplateField HeaderText="Reference No.">
+                                            <asp:TemplateField HeaderText="Reference No." Visible="False">
                                                 <ItemTemplate>
                                                     <asp:Label runat="server" ID="lblfactoryrefno" Text='<%#Eval("FactoryRefNo") %>'></asp:Label>
                                                 </ItemTemplate>
@@ -121,7 +135,8 @@
                                 <div class="clearfix"></div>
                                 <div class="table-wrapper table-responsive" id="divunitGrid" runat="server" visible="False" style="overflow: scroll;">
                                     <asp:GridView ID="gvunit" runat="server" AutoGenerateColumns="false" Class="commonAjaxTbl master-company-table ViewProductTable table
-                                         display responsive no-wrap table-hover manage-user Grid table-responsive" style="overflow: scroll;" OnRowCommand="gvunit_RowCommand">
+                                         display responsive no-wrap table-hover manage-user Grid table-responsive"
+                                        Style="overflow: scroll;" OnRowCommand="gvunit_RowCommand">
                                         <PagerStyle HorizontalAlign="Center" CssClass="GridPager" />
                                         <Columns>
                                             <asp:TemplateField HeaderText="S.No.">
@@ -132,7 +147,7 @@
                                             <asp:BoundField DataField="CompanyName" HeaderText="Company" NullDisplayText="#" />
                                             <asp:BoundField DataField="FactoryName" HeaderText="Division" />
                                             <asp:BoundField DataField="UnitName" HeaderText="Unit" />
-                                            <asp:BoundField DataField="UnitRefNo" HeaderText="Reference No." />
+                                            <asp:BoundField DataField="UnitRefNo" HeaderText="Reference No." Visible="False" />
 
                                             <asp:TemplateField HeaderText="Role">
                                                 <ItemTemplate>
@@ -158,7 +173,7 @@
                                 <div class="table-wraper table-responsive" id="divEmployeeNodalGrid" runat="server" visible="False">
                                     <asp:GridView ID="gvViewNodalOfficer" runat="server" Width="100%" Class="commonAjaxTbl master-company-table table display 
                                         responsive no-wrap table-hover manage-user Grid"
-                                        AutoGenerateColumns="false" OnRowCommand="gvViewNodalOfficer_RowCommand">
+                                        AutoGenerateColumns="false" OnRowCommand="gvViewNodalOfficer_RowCommand" OnRowDataBound="gvViewNodalOfficer_RowDataBound">
                                         <PagerStyle HorizontalAlign="Center" CssClass="GridPager" />
                                         <Columns>
                                             <asp:TemplateField HeaderText="S.No.">
@@ -169,25 +184,27 @@
                                             <asp:BoundField DataField="CompanyName" HeaderText="Company" />
                                             <asp:BoundField DataField="FactoryName" HeaderText="Division" />
                                             <asp:BoundField DataField="UnitName" HeaderText="Unit" />
-                                            <asp:TemplateField HeaderText="Nodal Officer Name">
+                                            <asp:TemplateField HeaderText="Nodal Officer Name" Visible="False">
                                                 <ItemTemplate>
                                                     <asp:Label ID="lblnodelname" runat="server" Text='<%#Eval("NodalOficerName") %>' SortExpression="NodalOficerName"></asp:Label>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
-                                            <asp:TemplateField HeaderText="Reference No.">
+                                            <asp:TemplateField HeaderText="Reference No." Visible="False">
                                                 <ItemTemplate>
                                                     <asp:Label ID="lblnodelrefno" runat="server" Text='<%#Eval("NodalOfficerRefNo") %>' SortExpression="NodalOfficerRefNo"></asp:Label>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
-                                            <asp:BoundField ItemStyle-Width="150px" DataField="NodalOficerName" HeaderText="Nodal Officer Name" />
-                                            <asp:TemplateField HeaderText="Nodal Officer Email">
+                                            <asp:BoundField ItemStyle-Width="150px" DataField="NodalOficerName" HeaderText="Name" />
+                                            <asp:TemplateField HeaderText="Email">
                                                 <ItemTemplate>
                                                     <asp:Label ID="nodelemail" runat="server" Text='<%#Eval("NodalOfficerEmail") %>' SortExpression="NodalOfficerEmail"></asp:Label>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
-                                            <asp:TemplateField HeaderText="Nodal">
+                                            <asp:TemplateField HeaderText="Role">
                                                 <ItemTemplate>
-                                                    <asp:Label ID="lblnodalofficer" runat="server" Text='<%#Eval("IsNodalOfficer") %>' SortExpression="NodalOfficerEmail"></asp:Label>
+                                                    <asp:HiddenField runat="server" />
+                                                    <asp:Label ID="lblnodalofficer" runat="server" Text='<%#Eval("IsNodalOfficer") %>' NullDisplayText="#" Visible="False" SortExpression="NodalOfficerEmail"></asp:Label>
+                                                    <asp:Label ID="lblnodallogactive" runat="server" Text='<%#Eval("IsLoginActive") %>' NullDisplayText="#" Visible="False" SortExpression="NodalOfficerEmail"></asp:Label>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="Company" Visible="False">
@@ -219,7 +236,7 @@
                                             <asp:BoundField DataField="CompanyName" HeaderText="Company" NullDisplayText="-" />
                                             <asp:BoundField DataField="FactoryName" HeaderText="Division" NullDisplayText="-" />
                                             <asp:BoundField DataField="UnitName" HeaderText="Unit" NullDisplayText="-" />
-                                            <asp:TemplateField HeaderText="Product Reference No.">
+                                            <asp:TemplateField HeaderText="Product Reference No." Visible="False">
                                                 <ItemTemplate>
                                                     <asp:Label ID="lblrefno" runat="server" Text='<%#Eval("ProductRefNo") %>' NullDisplayText="#" SortExpression="ProductRefNo"></asp:Label>
                                                 </ItemTemplate>

@@ -1352,7 +1352,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     #region PanelSaveButtonCode
     protected void btnsubmitpanel1_Click(object sender, EventArgs e)
     {
-        if (ddlmastercategory.SelectedItem.Text != "Select" && ddlsubcategory.SelectedItem.Text != "Select" && ddltechnologycat.SelectedItem.Text != "Select")
+        if (txtproductdescription.Text != "" && ddlmastercategory.SelectedItem.Text != "Select" && ddlsubcategory.SelectedItem.Text != "Select" && ddltechnologycat.SelectedItem.Text != "Select")
         {
             if (ddlsubtech.SelectedItem.Text != "Select" && ddlnomnclature.SelectedItem.Text != "Select" && ddlenduser.SelectedItem.Text != "Select" && ddlplatform.SelectedItem.Text != "Select")
             {
@@ -1570,7 +1570,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                 BindMasterSubCategory();
                 ddlsubcategory.SelectedValue = DtView.Rows[0]["ProductLevel2"].ToString();
                 BindMaster3levelSubCategory();
-                if (ddllevel3product.SelectedValue != "Select")
+                if (DtView.Rows[0]["ProductLevel3"].ToString() != "")
                 {
                     ddllevel3product.SelectedValue = DtView.Rows[0]["ProductLevel3"].ToString();
                 }
@@ -1589,7 +1589,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                 BindMasterSubCategoryTech();
                 ddlsubtech.SelectedValue = DtView.Rows[0]["TechnologyLevel2"].ToString();
                 BindMasterSubCategoryTechLevel3();
-                if (ddltechlevel3.SelectedValue != "Select")
+                if (DtView.Rows[0]["TechnologyLevel3"].ToString() != "")
                 {
                     ddltechlevel3.SelectedValue = DtView.Rows[0]["TechnologyLevel3"].ToString();
                 }
@@ -1597,7 +1597,6 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                 BindMasterProductNoenCletureCategory();
                 ddlnomnclature.SelectedValue = DtView.Rows[0]["NomenclatureOfMainSystem"].ToString();
                 ddlenduser.SelectedValue = DtView.Rows[0]["EndUser"].ToString();
-
                 ddlprocurmentcategory.SelectedValue = DtView.Rows[0]["PurposeofProcurement"].ToString();
                 txtremarkspro.Text = DtView.Rows[0]["ProcurmentCategoryRemark"].ToString();
                 //ddlprodreqir.SelectedValue = DtView.Rows[0]["ProductRequirment"].ToString();

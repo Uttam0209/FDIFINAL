@@ -33,7 +33,7 @@ namespace BusinessLayer
             DataTable dt = SqlHelper.Instance.CreateExcelConnection(FilePath, SheetName, out text);
             return dt;
         }
-        public string SaveUploadExcelCompany(DataTable dtMaster,DataTable dtExcel)
+        public string SaveUploadExcelCompany(DataTable dtMaster, DataTable dtExcel)
         {
             return SqlHelper.Instance.SaveUploadExcelCompany(dtMaster, dtExcel);
         }
@@ -117,9 +117,9 @@ namespace BusinessLayer
         {
             return SqlHelper.Instance.RetriveGridViewCompany(ID, FactoryRefNo, UnitRefNo, Purpose);
         }
-        public DataTable GetDashboardData(string Purpose)
+        public DataTable GetDashboardData(string Purpose, string Search)
         {
-            return SqlHelper.Instance.GetDashboardData(Purpose);
+            return SqlHelper.Instance.GetDashboardData(Purpose, Search);
         }
         public DataTable RetriveProductCode(string CompanyRefNo, string ProductRefNo, string Purpose, string Type)
         {

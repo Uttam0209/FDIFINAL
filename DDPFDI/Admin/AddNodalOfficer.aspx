@@ -125,7 +125,7 @@
                                                 <asp:Label ID="lblnodallogactive" runat="server" Text='<%#Eval("IsLoginActive") %>' NullDisplayText="#" Visible="False" SortExpression="NodalOfficerEmail"></asp:Label>
                                             </ItemTemplate>
                                         </asp:TemplateField>
-                                        <asp:BoundField DataField="CreatedBy" HeaderText="Created By" NullDisplayText="#" />
+
                                         <asp:TemplateField HeaderText="Company">
                                             <ItemTemplate>
                                                 <asp:Label ID="lblrefno" runat="server" Text='<%#Eval("CompanyName") %>' NullDisplayText="#" SortExpression="Company"></asp:Label>
@@ -134,7 +134,7 @@
 
                                         <asp:BoundField DataField="FactoryName" HeaderText="Division" NullDisplayText="-" />
                                         <asp:BoundField DataField="UnitName" HeaderText="Unit" NullDisplayText="-" />
-
+                                        <asp:BoundField DataField="CreatedBy" HeaderText="Created By" NullDisplayText="#" />
                                     </Columns>
                                 </asp:GridView>
                             </div>
