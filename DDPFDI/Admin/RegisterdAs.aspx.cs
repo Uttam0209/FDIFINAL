@@ -24,25 +24,33 @@ public partial class Admin_RegisterdAs : System.Web.UI.Page
             {
                 try
                 {
-                    string strid = Request.QueryString["id"].ToString().Replace(" ", "+");
-                    string strPageName = objEnc.DecryptData(strid);
-                    StringBuilder strheadPage = new StringBuilder();
-                    strheadPage.Append("<ul class='breadcrumb'>");
-                    string[] MCateg = strPageName.Split(new string[] { ">>" }, StringSplitOptions.RemoveEmptyEntries);
-                    string MmCval = "";
-                    for (int x = 0; x < MCateg.Length; x++)
+                    if (Session["User"] != null)
                     {
-                        MmCval = MCateg[x];
-                        strheadPage.Append("<li class=''><span>" + MmCval + "</span></li>");
+                        string strid = Request.QueryString["id"].ToString().Replace(" ", "+");
+                        string strPageName = objEnc.DecryptData(strid);
+                        StringBuilder strheadPage = new StringBuilder();
+                        strheadPage.Append("<ul class='breadcrumb'>");
+                        string[] MCateg = strPageName.Split(new string[] { ">>" }, StringSplitOptions.RemoveEmptyEntries);
+                        string MmCval = "";
+                        for (int x = 0; x < MCateg.Length; x++)
+                        {
+                            MmCval = MCateg[x];
+                            strheadPage.Append("<li class=''><span>" + MmCval + "</span></li>");
+                        }
+                        divHeadPage.InnerHtml = strheadPage.ToString();
+                        strheadPage.Append("</ul");
+                        hftype.Value = objEnc.DecryptData(Session["Type"].ToString());
+                        mRefNo = Session["CompanyRefNo"].ToString();
+                        ViewState["UserLoginEmail"] = Session["User"].ToString();
+                        ViewState["DisplayPanel"] = objEnc.DecryptData(Request.QueryString["mu"].ToString().Replace(" ", "+"));
+                        BindGridView();
+                        ShowHidePanel();
                     }
-                    divHeadPage.InnerHtml = strheadPage.ToString();
-                    strheadPage.Append("</ul");
-                    hftype.Value = objEnc.DecryptData(Session["Type"].ToString());
-                    mRefNo = Session["CompanyRefNo"].ToString();
-                    ViewState["UserLoginEmail"] = Session["User"].ToString();
-                    ViewState["DisplayPanel"] = objEnc.DecryptData(Request.QueryString["mu"].ToString().Replace(" ", "+"));
-                    BindGridView();
-                    ShowHidePanel();
+                    else
+                    {
+                        ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert",
+                            "alert('Session Expire,Please login again');window.location='Login'", true);
+                    }
                 }
                 catch (Exception exception)
                 {
@@ -418,18 +426,20 @@ public partial class Admin_RegisterdAs : System.Web.UI.Page
     {
         try
         {
-            DataTable DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(Convert.ToInt16(ddlmastercategory.SelectedItem.Value), "", "", "SelectInnerMaster", "", "");
-            if (DtMasterCategroy.Rows.Count > 0)
+            DataTable DtFirstLevelCategroy = Lo.RetriveMasterSubCategoryDate(Convert.ToInt16(ddlmastercategory.SelectedItem.Value), "", "", "SelectInnerMaster", "", "");
+            if (DtFirstLevelCategroy.Rows.Count > 0)
             {
-                Co.FillDropdownlist(ddlcategroy2, DtMasterCategroy, "SCategoryName", "SCategoryId");
+                Co.FillDropdownlist(ddlcategroy2, DtFirstLevelCategroy, "SCategoryName", "SCategoryId");
                 ddlcategroy2.Items.Insert(0, "Select");
-                gvlevel3.DataSource = DtMasterCategroy;
+                gvlevel3.DataSource = DtFirstLevelCategroy;
                 gvlevel3.DataBind();
                 gvlevel3.Visible = true;
                 ddllabel2.Items.Clear();
+                lblevel.Text = "Level 1";
             }
             else
             {
+                lblevel.Text = "";
                 gvlevel3.Visible = false;
                 ddllabel2.Items.Clear();
                 ddlcategroy2.Items.Insert(0, "Select");
@@ -446,17 +456,19 @@ public partial class Admin_RegisterdAs : System.Web.UI.Page
     {
         try
         {
-            DataTable DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(Convert.ToInt16(ddlcategroy2.SelectedItem.Value), "", "", "SubSelectID", "", "");
-            if (DtMasterCategroy.Rows.Count > 0)
+            DataTable Dt2NdLevelCategroy = Lo.RetriveMasterSubCategoryDate(Convert.ToInt16(ddlcategroy2.SelectedItem.Value), "", "", "SubSelectID", "", "");
+            if (Dt2NdLevelCategroy.Rows.Count > 0)
             {
-                Co.FillDropdownlist(ddllabel2, DtMasterCategroy, "SCategoryName", "SCategoryId");
+                Co.FillDropdownlist(ddllabel2, Dt2NdLevelCategroy, "SCategoryName", "SCategoryId");
                 ddllabel2.Items.Insert(0, "Select");
-                gvlevel3.DataSource = DtMasterCategroy;
+                gvlevel3.DataSource = Dt2NdLevelCategroy;
                 gvlevel3.DataBind();
                 gvlevel3.Visible = true;
+                lblevel.Text = "Level 2";
             }
             else
             {
+                lblevel.Text = "";
                 gvlevel3.Visible = false;
                 if (ddllabel2.Visible == true)
                 {
@@ -476,15 +488,17 @@ public partial class Admin_RegisterdAs : System.Web.UI.Page
     {
         try
         {
-            DataTable DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(Convert.ToInt16(ddllabel2.SelectedItem.Value), "", "", "SubSelectID", "", "");
-            if (DtMasterCategroy.Rows.Count > 0)
+            DataTable Dt3LevelCategroy = Lo.RetriveMasterSubCategoryDate(Convert.ToInt16(ddllabel2.SelectedItem.Value), "", "", "SubSelectID", "", "");
+            if (Dt3LevelCategroy.Rows.Count > 0)
             {
-                gvlevel3.DataSource = DtMasterCategroy;
+                gvlevel3.DataSource = Dt3LevelCategroy;
                 gvlevel3.DataBind();
                 gvlevel3.Visible = true;
+                lblevel.Text = "Level 3";
             }
             else
             {
+                lblevel.Text = "";
                 gvlevel3.Visible = false;
             }
         }
@@ -497,59 +511,68 @@ public partial class Admin_RegisterdAs : System.Web.UI.Page
     }
     protected void ddlmastercategory_SelectedIndexChanged(object sender, EventArgs e)
     {
-        BindMasterInnerSubCategory();
+        if (ddlmastercategory.SelectedItem.Text != "Select")
+        {
+            BindMasterInnerSubCategory();
+        }
+        else
+        {
+            gvlevel3.Visible = false;
+            if (ViewState["DisplayPanel"].ToString() == "Panel3")
+            { ddlcategroy2.Items.Clear(); }
+            else if (ViewState["DisplayPanel"].ToString() == "Panel4")
+            {
+                ddlcategroy2.Items.Clear();
+                ddllabel2.Items.Clear();
+            }
+        }
     }
     protected void ddlcategroy2_SelectedIndexChanged(object sender, EventArgs e)
     {
-        BindMasterInnerSubCategorySub();
+        if (ddlcategroy2.SelectedItem.Text != "Select")
+        {
+            BindMasterInnerSubCategorySub();
+        }
+        else
+        {
+
+            gvlevel3.Visible = false;
+            if (ViewState["DisplayPanel"].ToString() == "Panel3")
+            {
+                BindMasterInnerSubCategory();
+            }
+            if (ViewState["DisplayPanel"].ToString() == "Panel4")
+            {
+                BindMasterInnerSubCategory();
+                ddllabel2.Items.Clear();
+            }
+        }
     }
     protected void ddllabel2_SelectedIndexChanged(object sender, EventArgs e)
     {
-        BindMasterInnerIneerSubCat();
-    }
-    protected void gvlevel3_RowDataBound(object sender, GridViewRowEventArgs e)
-    {
-        try
+        if (ddllabel2.SelectedItem.Text != "Select")
         {
-            if (e.Row.RowType == DataControlRowType.DataRow)
-            {
-                if (ViewState["DisplayPanel"].ToString() == "Panel2")
-                {
-                    gvlevel3.Columns[1].HeaderText = "Level 1";
-                }
-                else if (ViewState["DisplayPanel"].ToString() == "Panel3")
-                {
-                    if (ddlmastercategory.SelectedItem.Text != "Select" && ddlcategroy2.SelectedItem.Text == "Select")
-                    {
-                        gvlevel3.Columns[1].HeaderText = "Level 1";
-                    }
-                    else if (ddlmastercategory.SelectedItem.Text != "Select" && ddlcategroy2.SelectedItem.Text != "Select")
-                    {
-                        gvlevel3.Columns[1].HeaderText = "Level 2";
-                    }
-                }
-                else if (ViewState["DisplayPanel"].ToString() == "Panel4")
-                {
-                    if (ddlmastercategory.SelectedItem.Text != "Select" && ddlcategroy2.SelectedItem.Text == "Select")
-                    {
-                        gvlevel3.Columns[1].HeaderText = "Level 1";
-                    }
-                    else if (ddlmastercategory.SelectedItem.Text != "Select" && ddlcategroy2.SelectedItem.Text != "Select" && ddllabel2.SelectedItem.Text == "Select")
-                    {
-                        gvlevel3.Columns[1].HeaderText = "Level 2";
-                    }
-                    else if (ddlmastercategory.SelectedItem.Text != "Select" && ddlcategroy2.SelectedItem.Text != "Select" && ddllabel2.SelectedItem.Text != "Select")
-                    {
-                        gvlevel3.Columns[1].HeaderText = "Level 3";
-                    }
-                }
-            }
+            BindMasterInnerIneerSubCat();
         }
-        catch (Exception ex)
+        else
         {
-            string error = ex.ToString();
-            string Page = Request.Url.AbsolutePath.ToString();
-            Response.Redirect("Error?techerror=" + objEnc.EncryptData(error) + "&page=" + objEnc.EncryptData(Page));
+            gvlevel3.Visible = false;
+            BindMasterInnerSubCategorySub();
+        }
+    }
+    protected void gvCategory_RowDataBound(object sender, GridViewRowEventArgs e)
+    {
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            Label lblHierarchy = (Label)e.Row.FindControl("lblhiraricy");
+            if (lblHierarchy.Text == "Level 2")
+            {
+                e.Row.Attributes.Add("Class", "bg-skyrow");
+            }
+            if (lblHierarchy.Text == "Level 3")
+            {
+                e.Row.Attributes.Add("Class", "bg-bluerow");
+            }
         }
     }
 }

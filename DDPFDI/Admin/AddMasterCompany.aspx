@@ -4,6 +4,15 @@
 <asp:Content ID="head123" runat="server" ContentPlaceHolderID="head">
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
     <script type="text/javascript">
+
+        //Alert pop up box
+        function ShowMessage() {
+            $("body").css('overflow', 'hidden');
+            $('.alert-overlay-error').show();
+
+            $('.alertMsg').text("Please select atleast " + atLeast + " intrested in item(s)");
+        }
+
         function radioMe(e) {
             if (!e) e = window.event;
             var sender = e.target || e.srcElement;
@@ -33,7 +42,8 @@
                 }
             }
             if (atLeast > counter) {
-                alert("Please select atleast " + atLeast + " intrested in item(s)");
+                ShowMessage();
+                //alert("Please select atleast " + atLeast + " intrested in item(s)");
                 return false;
             }
             var checkbox1 = CHK1.getElementsByTagName("input");
@@ -44,7 +54,8 @@
                 }
             }
             if (atLeast > counter) {
-                alert("Please select atleast " + atLeast + " menu alloted item(s)");
+                ShowMessage();
+                //alert("Please select atleast " + atLeast + " menu alloted item(s)");
                 return false;
             }
             var checkbox2 = CHK2.getElementsByTagName("input");
@@ -131,7 +142,7 @@
                                             <div class="form-group">
 
                                                 <h3 class="secondary-heading">Intrested In</h3>
-                                                <asp:CheckBoxList ID="chkintrestedarea" runat="server" CssClass="checkbox-inline" TabIndex="6" RepeatColumns="5" RepeatDirection="Vertical" RepeatLayout="Flow">
+                                                <asp:CheckBoxList ID="chkintrestedarea" runat="server" CssClass="checkbox-inline" TabIndex="6" RepeatColumns="8" RepeatDirection="Vertical" RepeatLayout="Flow">
                                                 </asp:CheckBoxList>
 
                                             </div>
@@ -142,7 +153,7 @@
                                             <div class="form-group">
 
                                                 <h3 class="secondary-heading">Menu Alotted</h3>
-                                                <asp:CheckBoxList ID="chkmastermenuallot" runat="server" CssClass="checkbox-inline" TabIndex="7" RepeatColumns="4" RepeatDirection="Horizontal" RepeatLayout="Flow">
+                                                <asp:CheckBoxList ID="chkmastermenuallot" runat="server" CssClass="checkbox-inline" TabIndex="7" RepeatColumns="8" RepeatDirection="Horizontal" RepeatLayout="Flow">
                                                 </asp:CheckBoxList>
                                             </div>
                                         </div>
@@ -153,7 +164,7 @@
 
                                                 <h3 class="secondary-heading">Role</h3>
 
-                                                <asp:CheckBoxList ID="chkrole" runat="server" onclick="MutExChkList(this);" RepeatColumns="5" TabIndex="8" CssClass="checkbox-inline" RepeatDirection="Horizontal" RepeatLayout="Flow">
+                                                <asp:CheckBoxList ID="chkrole" runat="server" onclick="MutExChkList(this);" RepeatColumns="8" TabIndex="8" CssClass="checkbox-inline" RepeatDirection="Horizontal" RepeatLayout="Flow">
                                                     <asp:ListItem Value="Admin">Admin</asp:ListItem>
                                                     <asp:ListItem Value="Company">Company</asp:ListItem>
                                                 </asp:CheckBoxList>
@@ -166,7 +177,7 @@
                                     <div class="col-md-12">
                                         <div class="fdi-add-content">
                                             <div class="form-group">
-                                                <asp:Button ID="btncancel" runat="server" Text="Cancel" TabIndex="10" CssClass="btn btn-default pull-right" OnClick="btncancel_Click" />
+                                                <asp:Button ID="btncancel" runat="server" Text="Cancel" Visible="False" TabIndex="10" CssClass="btn btn-default pull-right" OnClick="btncancel_Click" />
                                                 <asp:Button ID="btnsubmit" runat="server" Text="Save" TabIndex="9" CssClass="btn btn-primary pull-right" OnClick="btnsubmit_Click" OnClientClick="return Validate()" />
                                             </div>
                                         </div>
@@ -180,9 +191,9 @@
                             </div>
                             <div class="table-wraper">
                                 <asp:GridView ID="gvcompanydetail" runat="server" Width="100%" Class="commonAjaxTbl master-company-table table display 
-                                    responsive no-wrap table-hover manage-user Grid"
+                                    responsive no-wrap table-hover manage-user Grid text-nowrap"
                                     AutoGenerateColumns="false" AllowPaging="true"
-                                    PageSize="25" AllowSorting="true" RowCommand="gvcompanydetail_RowCommand" OnRowCommand="gvcompanydetail_RowCommand" OnRowDataBound="gvcompanydetail_RowDataBound">
+                                    PageSize="25" AllowSorting="true" RowCommand="gvcompanydetail_RowCommand " OnRowCommand="gvcompanydetail_RowCommand" OnRowDataBound="gvcompanydetail_RowDataBound">
                                     <PagerStyle HorizontalAlign="Center" CssClass="GridPager" />
                                     <Columns>
 
@@ -197,9 +208,10 @@
                                         <asp:BoundField ItemStyle-Width="150px" DataField="FactoryRefNo" Visible="False" HeaderText="Reference No." />
                                         <asp:BoundField ItemStyle-Width="150px" DataField="UnitName" HeaderText="Unit" />
                                         <asp:BoundField ItemStyle-Width="150px" DataField="UnitRefNo" Visible="False" HeaderText="Reference No." />
-                                        <asp:BoundField ItemStyle-Width="150px" DataField="ContactPersonEmailID" HeaderText="Company Nodal Officer" />
-                                        <asp:BoundField ItemStyle-Width="150px" DataField="FactoryNodalOfficerEmailId" HeaderText="Division Nodal Officer" />
-                                        <asp:BoundField ItemStyle-Width="150px" DataField="UnitNodalOfficerEmailId" HeaderText="Unit Nodal Officer" />
+                                        <asp:BoundField ItemStyle-Width="150px" DataField="NodalOficerName" HeaderText="Nodal Officer Name" />
+                                        <asp:BoundField ItemStyle-Width="150px" DataField="NodalOfficerEmail" HeaderText="Nodal Officer Email" />
+                                        <asp:BoundField ItemStyle-Width="150px" DataField="NodalOfficerEmail" HeaderText="Nodal Officer Email" />
+                                        <asp:BoundField ItemStyle-Width="150px" DataField="NodalOfficerEmail" HeaderText="Nodal Officer Email" />
                                         <asp:BoundField ItemStyle-Width="150px" DataField="Role" HeaderText="Role" />
                                         <asp:BoundField ItemStyle-Width="150px" DataField="CreatedBy" HeaderText="Created By" />
                                         <asp:TemplateField HeaderText="Action" Visible="true">

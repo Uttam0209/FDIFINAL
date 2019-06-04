@@ -27,6 +27,17 @@ namespace BusinessLayer
             return SqlHelper.Instance.VerifyEmailandCompany(strEmail, strCompany, out _msg);
         }
         #endregion
+
+        public DataTable CreateExcelConnection(string FilePath, string SheetName, out string text)
+        {
+            DataTable dt = SqlHelper.Instance.CreateExcelConnection(FilePath, SheetName, out text);
+            return dt;
+        }
+        public string SaveUploadExcelCompany(DataTable dtMaster, DataTable dtExcel)
+        {
+            return SqlHelper.Instance.SaveUploadExcelCompany(dtMaster, dtExcel);
+        }
+
         #region SaveCode
         public string SaveFDI(HybridDictionary HySave, out string _sysMsg, out string _msg)
         {
@@ -105,6 +116,10 @@ namespace BusinessLayer
         public DataTable RetriveGridViewCompany(string ID, string FactoryRefNo, string UnitRefNo, string Purpose)
         {
             return SqlHelper.Instance.RetriveGridViewCompany(ID, FactoryRefNo, UnitRefNo, Purpose);
+        }
+        public DataTable GetDashboardData(string Purpose, string Search)
+        {
+            return SqlHelper.Instance.GetDashboardData(Purpose, Search);
         }
         public DataTable RetriveProductCode(string CompanyRefNo, string ProductRefNo, string Purpose, string Type)
         {

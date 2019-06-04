@@ -8,6 +8,7 @@ using System.Text;
 using System.Web.UI;
 using System.IO;
 using System.Web.UI.WebControls;
+using System.Web;
 
 public partial class Admin_AddNodalOfficer : System.Web.UI.Page
 {
@@ -57,10 +58,13 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
                     hidCompanyRefNo.Value = mRefNo.ToString();
                     ViewState["UserLoginEmail"] = objEnc.DecryptData(Session["User"].ToString());
                 }
+                for (int i = 0; i < chkrole.Items.Count; i++)
+                {
+                    chkrole.Items[i].Attributes.Add("onclick", "MutExChkList(this)");
+                }
                 if (Request.QueryString["mcurrentcompRefNo"] != null)
                 {
                     EditCode();
-
                 }
                 else
                 {
@@ -68,31 +72,66 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
                     BindMasterDesignation("");
                 }
             }
+            else
+            {
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert",
+                    "alert('Session Expire,Please login again');window.location='Login'", true);
+            }
         }
     }
     #region Load
-    public void GridViewNodalOfficerBind(string mRefNo, string mRole)
+    protected void BindEmployee()
+
     {
-        DataTable DtGrid = Lo.RetriveAllNodalOfficer(mRefNo, mRole);
+        DataTable DtGrid = Lo.GetDashboardData("Employee","");
         if (DtGrid.Rows.Count > 0)
         {
-            gvViewNodalOfficer.DataSource = DtGrid;
+            for (int a = 0; a < DtGrid.Rows.Count; a++)
+            {
+                if (DtGrid.Rows[a]["UCompany"].ToString() != "")
+                {
+                    DtGrid.Rows[a]["CompanyName"] = DtGrid.Rows[a]["UCompany"];
+                    DtGrid.Rows[a]["FactoryName"] = DtGrid.Rows[a]["UFactory"];
+                }
+                else if (DtGrid.Rows[a]["FCompany"].ToString() != "")
+                {
+                    DtGrid.Rows[a]["CompanyName"] = DtGrid.Rows[a]["FCompany"];
+                }
+            }
+            DataView dv = new DataView(DtGrid);
+            dv.RowFilter = "CompanyName='" + ddlcompany.SelectedItem.Text + "'";
+            dv.Sort = "CompanyName asc,FactoryName asc";
+            gvViewNodalOfficer.DataSource = dv.ToTable();
             gvViewNodalOfficer.DataBind();
-            gvViewNodalOfficer.Visible = true;
+            //lbltotal.Text = "Total Records:- " + gvViewNodalOfficer.Rows.Count.ToString();
+            //divEmployeeNodalGrid.Visible = true;
         }
-        else
-        {
-            gvViewNodalOfficer.Visible = false;
-        }
-        DataRow[] foundRows = DtGrid.Select("IsNodalOfficer='Y'");
-        if (foundRows.Length != 0)
-        {
-            chkrole.Items[0].Enabled = false;
-        }
-        else
-        {
-            chkrole.Items[0].Enabled = true;
-        }
+        //else
+        //divEmployeeNodalGrid.Visible = false;
+    }
+    public void GridViewNodalOfficerBind(string mRefNo, string mRole)
+    {
+        //DataTable DtGrid = Lo.RetriveAllNodalOfficer(mRefNo, mRole);
+        //if (DtGrid.Rows.Count > 0)
+        //{
+        //    gvViewNodalOfficer.DataSource = DtGrid;
+        //    gvViewNodalOfficer.DataBind();
+        //    gvViewNodalOfficer.Visible = true;
+        //}
+        //else
+        //{
+        //    gvViewNodalOfficer.Visible = false;
+        //}
+        BindEmployee();
+        //DataRow[] foundRows = DtGrid.Select("IsNodalOfficer='Y'");
+        //if (foundRows.Length != 0)
+        //{
+        //    chkrole.Items[0].Enabled = false;
+        //}
+        //else
+        //{
+        //    chkrole.Items[0].Enabled = true;
+        //}
     }
     protected void BindCompany()
     {
@@ -109,18 +148,15 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
             {
                 ddlcompany.Enabled = false;
             }
-
             lblselectdivison.Visible = false;
             lblselectunit.Visible = false;
         }
-
         else if (hidType.Value == "Company")
         {
             DtCompanyDDL = Lo.RetriveMasterData(0, mRefNo, "Company", 0, "", "", "CompanyName");
             if (DtCompanyDDL.Rows.Count > 0)
             {
                 Co.FillDropdownlist(ddlcompany, DtCompanyDDL, "CompanyName", "CompanyRefNo");
-
                 GridViewNodalOfficerBind(mRefNo, "Company");
                 ddlcompany.Enabled = false;
             }
@@ -161,7 +197,6 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
             {
                 Co.FillDropdownlist(ddlcompany, DtCompanyDDL, "CompanyName", "CompanyRefNo");
                 ddlcompany.Enabled = false;
-
             }
             else
             {
@@ -177,7 +212,7 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
             }
             else
             {
-                ddldivision.Enabled = false;
+                lblselectdivison.Visible = false;
             }
             DtCompanyDDL = Lo.RetriveMasterData(0, ddldivision.SelectedItem.Value, "Unit1", 0, "", "", "CompanyName");
             if (DtCompanyDDL.Rows.Count > 0)
@@ -189,7 +224,7 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
             }
             else
             {
-                ddlunit.Visible = false;
+                lblselectunit.Visible = false;
             }
         }
         else if (hidType.Value == "Unit")
@@ -199,7 +234,6 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
             {
                 Co.FillDropdownlist(ddlcompany, DtCompanyDDL, "CompanyName", "CompanyRefNo");
                 ddlcompany.Enabled = false;
-
             }
             else
             {
@@ -209,6 +243,11 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
             if (DtCompanyDDL.Rows.Count > 0)
             {
                 Co.FillDropdownlist(ddldivision, DtCompanyDDL, "FactoryName", "FactoryRefNo");
+                // code by gk to select indivisual division for the particular unit
+                DataTable dt = Lo.RetriveMasterData(0, mRefNo, "Factory3", 0, "", "", "CompanyName");
+                if (dt.Rows.Count > 0)
+                    ddldivision.SelectedValue = dt.Rows[0]["FactoryRefNo"].ToString();
+                //end code
                 lblselectdivison.Visible = true;
                 ddldivision.Enabled = false;
             }
@@ -220,6 +259,9 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
             if (DtCompanyDDL.Rows.Count > 0)
             {
                 Co.FillDropdownlist(ddlunit, DtCompanyDDL, "UnitName", "UnitRefNo");
+                // code by gk to select indivisual unit for the particular unit     
+                ddlunit.SelectedValue = mRefNo.ToString();
+                //end code
                 lblselectunit.Visible = true;
                 ddlunit.Enabled = false;
                 GridViewNodalOfficerBind(ddlunit.SelectedItem.Value, "Unit");
@@ -245,7 +287,6 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
             {
                 ddlcompany.Enabled = false;
             }
-
             lblselectdivison.Visible = false;
             lblselectunit.Visible = false;
         }
@@ -256,8 +297,11 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
             if (DtCompanyDDL.Rows.Count > 0)
             {
                 Co.FillDropdownlist(ddlcompany, DtCompanyDDL, "CompanyName", "CompanyRefNo");
-
                 ddlcompany.Enabled = false;
+                if (Request.QueryString["mcurrentcompRefNo"] != null)
+                {
+                    BindMasterDesignation("");
+                }
             }
             else
             {
@@ -274,26 +318,30 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
                     ddldivision.Enabled = true;
                     ddlunit.Visible = false;
                     lblselectunit.Visible = false;
-
                 }
                 else
                 {
-                    ddldivision.Enabled = false;
+                    lblselectunit.Visible = false;
+                    lblselectdivison.Visible = false;
                 }
             }
             else
             {
-                ddldivision.Enabled = false;
+                lblselectunit.Visible = false;
+                lblselectdivison.Visible = false;
             }
         }
-        else if (mType == "Factory")
+        else if (mType == "Factory" || mType == "Division")
         {
             DtCompanyDDL = Lo.RetriveMasterData(0, mRefNo, "Company1", 0, "", "", "CompanyName");
             if (DtCompanyDDL.Rows.Count > 0)
             {
                 Co.FillDropdownlist(ddlcompany, DtCompanyDDL, "CompanyName", "CompanyRefNo");
                 ddlcompany.Enabled = false;
-
+                if (Request.QueryString["mcurrentcompRefNo"] != null)
+                {
+                    BindMasterDesignation("");
+                }
             }
             else
             {
@@ -303,12 +351,18 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
             if (DtCompanyDDL.Rows.Count > 0)
             {
                 Co.FillDropdownlist(ddldivision, DtCompanyDDL, "FactoryName", "FactoryRefNo");
+                // code by gk to select indivisual division for the particular unit
+                DataTable dt = Lo.RetriveMasterData(0, mRefNo, "Factory3", 0, "", "", "CompanyName");
+                if (dt.Rows.Count > 0)
+                    ddldivision.SelectedValue = dt.Rows[0]["FactoryRefNo"].ToString();
+                //end code
                 lblselectdivison.Visible = true;
                 ddldivision.Enabled = false;
             }
             else
             {
-                ddldivision.Enabled = false;
+                lblselectdivison.Visible = false;
+                lblselectunit.Visible = false;
             }
             DtCompanyDDL = Lo.RetriveMasterData(0, ddldivision.SelectedItem.Value, "Unit1", 0, "", "", "CompanyName");
             if (DtCompanyDDL.Rows.Count > 0)
@@ -320,7 +374,7 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
             }
             else
             {
-                ddlunit.Visible = false;
+                lblselectunit.Visible = false;
             }
         }
         else if (mType == "Unit")
@@ -330,7 +384,10 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
             {
                 Co.FillDropdownlist(ddlcompany, DtCompanyDDL, "CompanyName", "CompanyRefNo");
                 ddlcompany.Enabled = false;
-
+                if (Request.QueryString["mcurrentcompRefNo"] != null)
+                {
+                    BindMasterDesignation("");
+                }
             }
             else
             {
@@ -340,23 +397,31 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
             if (DtCompanyDDL.Rows.Count > 0)
             {
                 Co.FillDropdownlist(ddldivision, DtCompanyDDL, "FactoryName", "FactoryRefNo");
+                // code by gk to select indivisual division for the particular unit
+                DataTable dt = Lo.RetriveMasterData(0, mRefNo, "Factory3", 0, "", "", "CompanyName");
+                if (dt.Rows.Count > 0)
+                    ddldivision.SelectedValue = dt.Rows[0]["FactoryRefNo"].ToString();
+                //end code
                 lblselectdivison.Visible = true;
                 ddldivision.Enabled = false;
             }
             else
             {
-                ddldivision.Enabled = false;
+                lblselectdivison.Visible = false;
             }
             DtCompanyDDL = Lo.RetriveMasterData(0, ddldivision.SelectedItem.Value, "Unit1", 0, "", "", "CompanyName");
             if (DtCompanyDDL.Rows.Count > 0)
             {
                 Co.FillDropdownlist(ddlunit, DtCompanyDDL, "UnitName", "UnitRefNo");
+                // code by gk to select indivisual unit for the particular unit     
+                ddlunit.SelectedValue = mRefNo.ToString();
+                //end code
                 lblselectunit.Visible = true;
                 ddlunit.Enabled = false;
             }
             else
             {
-                ddlunit.Enabled = false;
+                lblselectunit.Visible = false;
             }
         }
     }
@@ -466,7 +531,6 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
         DataTable DtMasterCategroy;
         if (mCompanyRefNo != "")
         {
-
             DtMasterCategroy = Lo.RetriveMasterData(0, mCompanyRefNo, "", 0, "", "", "ViewDesignation");
         }
         else
@@ -476,7 +540,12 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
         if (DtMasterCategroy.Rows.Count > 0)
         {
             Co.FillDropdownlist(ddldesignation, DtMasterCategroy, "Designation", "DesignationId");
-            ddldesignation.Items.Insert(0, "Select");
+            if (Request.QueryString["mcurrentcompRefNo"] != null)
+            {
+                // ddldesignation.Items.Insert(0, "Select");
+            }
+            else
+            { ddldesignation.Items.Insert(0, "Select"); }
         }
     }
     #endregion
@@ -502,7 +571,7 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
         hySaveNodal["NodalOfficerMobile"] = Co.RSQandSQLInjection(txtmobile.Text, "soft");
         hySaveNodal["NodalOfficerTelephone"] = Co.RSQandSQLInjection(txttelephone.Text, "soft");
         hySaveNodal["NodalOfficerFax"] = Co.RSQandSQLInjection(txtfax.Text, "soft");
-        if (ddlcompany.SelectedValue != "Select" && ddldivision.SelectedValue == "Select")
+        if (ddlcompany.SelectedValue != "Select" && ddldivision.SelectedValue == "" || ddldivision.SelectedValue == "Select")
         {
             hySaveNodal["CompanyRefNo"] = ddlcompany.SelectedItem.Value;
             RefNo = ddlcompany.SelectedItem.Value;
@@ -586,7 +655,7 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
                 body = reader.ReadToEnd();
             }
             body = body.Replace("{UserName}", txtemailid.Text);
-            body = body.Replace("{refno}", objEnc.EncryptData(empid));
+            body = body.Replace("{refno}", HttpUtility.UrlEncode(objEnc.EncryptData(empid)));
             body = body.Replace("{mcurid}", Resturl(56));
             SendMail s;
             s = new SendMail();
@@ -603,7 +672,7 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
     #endregion
     protected void btnsub_Click(object sender, EventArgs e)
     {
-        if (txtemailid.Text == "" && txtname.Text == "")
+        if (txtemailid.Text == "" && txtname.Text == "" && txtemailid.Text != "")
         {
             ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Email id and name can not be empty !')", true);
         }
@@ -617,7 +686,7 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
                 }
                 else
                 {
-                    if (btnsub.Text != "Edit")
+                    if (Request.QueryString["mcurrentcompRefNo"] == null)
                     {
                         if (ddldesignation.SelectedItem.Value != "Select")
                         {
@@ -721,7 +790,6 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
                 {
                     BindCompany("Unit");
                 }
-                btnsub.Text = "Edit";
             }
         }
     }
@@ -737,20 +805,19 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
                 e.Row.Attributes.Add("Class", "bg-purple");
                 s_lblnodalofficer.Text = "Nodal Officer";
                 s_lblnodalofficer.Visible = true;
-                // s_lbllogindetail.Visible = false;
             }
             else if (s_lblnodallogactive.Text == "Y")
             {
                 s_lblnodallogactive.Text = "User";
                 s_lblnodallogactive.Visible = true;
-                //  s_lbllogindetail.Visible = false;
             }
             else if (s_lblnodallogactive.Text == "N" && s_lblnodalofficer.Text == "N")
             {
                 s_lblnodalofficer.Text = "Employee";
                 s_lblnodalofficer.Visible = true;
-                //  s_lbllogindetail.Visible = true;
             }
         }
     }
+
+    
 }

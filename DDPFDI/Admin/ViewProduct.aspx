@@ -32,8 +32,12 @@
                         </div>
                     </div>
                     <div class="clearfix"></div>
+                    <%--<div style="margin-top: 5px;">
+                        <a class="fa fa-arrow-circle-left pull-right" href='<%=ResolveUrl("~/View-Product") %>'>&nbsp; &nbsp;Back</a>
+                    </div>--%>
+                    <div class="clearfix"></div>
                     <div id="Div3">
-                        <asp:Button ID="btnAddProduct" runat="server" Text="Add Product" CssClass="btn btn-primary pull-right" OnClick="btnAddProduct_Click" />
+                        <asp:Button ID="btnAddProduct" runat="server" Text="Add Product" Visible="False" CssClass="btn btn-primary pull-right" OnClick="btnAddProduct_Click" />
                     </div>
                     <div class="clearfix"></div>
                     <div class="row">
@@ -64,7 +68,7 @@
                     <form method="post" class="addfdi">
                         <div class="row">
                             <div class="col-md-12">
-                                <div class="table-wraper">
+                                <div class="table-wraper" style="overflow: scroll;">
                                     <asp:GridView ID="gvproduct" runat="server" Width="100%" Class="commonAjaxTbl master-company-table ViewProductTable table display responsive no-wrap table-hover manage-user Grid" AutoGenerateColumns="false" AllowPaging="true"
                                         OnPageIndexChanging="OnPageIndexChanging" PageSize="25" AllowSorting="true" OnSorting="OnSorting" OnRowCommand="gvproduct_RowCommand">
                                         <PagerStyle HorizontalAlign="Center" CssClass="GridPager" />
@@ -74,12 +78,15 @@
                                                     <%#Container.DataItemIndex+1 %>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
-                                            <asp:TemplateField HeaderText="Product Reference No.">
+                                            <asp:BoundField DataField="CompanyName" HeaderText="Company" NullDisplayText="-" />
+                                            <asp:BoundField DataField="FactoryName" HeaderText="Division" NullDisplayText="-" />
+                                            <asp:BoundField DataField="UnitName" HeaderText="Unit" NullDisplayText="-" />
+                                            <asp:TemplateField HeaderText="Product Reference No." Visible="False">
                                                 <ItemTemplate>
                                                     <asp:Label ID="lblrefno" runat="server" Text='<%#Eval("ProductRefNo") %>' NullDisplayText="#" SortExpression="ProductRefNo"></asp:Label>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
-                                            <%--  <asp:BoundField DataField="CompanyName" HeaderText="Company" NullDisplayText="#" SortExpression="Company" />--%>
+                                            <asp:BoundField DataField="ProductDescription" HeaderText="Item Description" ItemStyle-Wrap="true" ItemStyle-Width="150" NullDisplayText="#" SortExpression="Description" />
                                             <asp:BoundField DataField="CompanyRefNo" HeaderText="Company Reference No" Visible="false" NullDisplayText="#" SortExpression="CompanyRefNo" />
                                             <asp:TemplateField HeaderText="OEM PartNumber">
                                                 <ItemTemplate>
@@ -110,7 +117,7 @@
                 <div class="footer">© 2019 <a href="#">Department of Defence Production</a> </div>
             </div>
             <div class="modal fade" id="changePass" role="dialog">
-                <div class="modal-dialog" style="width: 1000px; z-index: 9999999999;">
+                <div class="modal-dialog" style="width: 1100px; z-index: 9999999999;">
                     <!-- Modal content-->
                     <div class="modal-content">
                         <div class="modal-header modal-header1">
@@ -123,20 +130,23 @@
                                     <ul class="nav nav-tabs" style="margin-top: 10px;">
                                         <li class="active"><a data-toggle="tab" href="#pd">Description</a></li>
                                         <li><a data-toggle="tab" href="#pimg">Image</a></li>
-                                        <li><a data-toggle="tab" href="#spd">Support by DPSU</a></li>
+                                        <li><a data-toggle="tab" href="#test">Testing</a></li>
+                                        <li><a data-toggle="tab" href="#cer">Certification</a></li>
+                                        <li><a data-toggle="tab" href="#spd">Technical Support</a></li>
+                                        <li><a data-toggle="tab" href="#spfinn">Financial Support</a></li>
                                         <li><a data-toggle="tab" href="#qpt">Quantity Required</a></li>
                                         <li><a data-toggle="tab" href="#tdr">Tender</a></li>
                                         <li><a data-toggle="tab" href="#cd">Contact</a></li>
-                                        <li><a data-toggle="tab" href="#test">Testing</a></li>
-                                        <li><a data-toggle="tab" href="#cer">Certification</a></li>
                                     </ul>
                                     <div class="tab-content">
                                         <div id="pd" class="tab-pane fade in active">
                                             <div>
                                                 <table class="table table-bordered">
                                                     <tr>
-                                                        <th>Company Refrence No</th>
-                                                        <th>Company Name</th>
+                                                        <th>Refrence No</th>
+                                                        <th>Company</th>
+                                                        <th>Division/Palnt</th>
+                                                        <th>Unit</th>
                                                         <th>Product Refrence No</th>
                                                     </tr>
                                                     <tr>
@@ -145,6 +155,10 @@
                                                         <td>
                                                             <asp:Label ID="lblcompname" runat="server"></asp:Label></td>
                                                         <td>
+                                                            <asp:Label ID="lbldiviname" runat="server"></asp:Label></td>
+                                                        <td>
+                                                            <asp:Label ID="lblunitname" runat="server"></asp:Label></td>
+                                                        <td>
                                                             <asp:Label ID="lblprodrefno" runat="server"></asp:Label></td>
                                                     </tr>
                                                 </table>
@@ -152,97 +166,126 @@
                                             <div>
                                                 <table class="table table-bordered">
                                                     <tr>
-                                                        <th>OEM Part Number</th>
-                                                        <th>DPSU Part Number</th>
-                                                        <th>End User Part Number</th>
-                                                        <th>HSN Code</th>
-                                                        <th>NATO Code</th>
-                                                        <th>ERP Reference No</th>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            <asp:Label ID="lbloempartnumber" runat="server"></asp:Label></td>
-                                                        <td>
-                                                            <asp:Label ID="lbldpsupartno" runat="server"></asp:Label></td>
-                                                        <td>
-                                                            <asp:Label ID="lblenduserpartno" runat="server"></asp:Label></td>
-                                                        <td>
-                                                            <asp:Label ID="lblhsncode" runat="server"></asp:Label></td>
-                                                        <td>
-                                                            <asp:Label ID="lblnatocode" runat="server"></asp:Label></td>
-                                                        <td>
-                                                            <asp:Label ID="lblerprefno" runat="server"></asp:Label></td>
-                                                    </tr>
-                                                </table>
-                                            </div>
-                                            <div>
-                                                <table class="table table-bordered">
-                                                    <tr>
-                                                        <th>Nomenclature of main system</th>
-                                                        <th>Product Level 1</th>
-                                                        <th>Product Level 2</th>
+
+                                                        <th>NSN GROUP</th>
+                                                        <th>NSN GROUP CLASS</th>
+                                                        <th>CLASS ITEM</th>
+                                                        <th>NSC Code (4 digit)</th>
+                                                        <th>NIIN Code (9-digit)</th>
                                                         <th>Product Description</th>
                                                     </tr>
                                                     <tr>
-                                                        <td>
-                                                            <asp:Label ID="lblnomenclatureofmainsystem" runat="server"></asp:Label></td>
+
                                                         <td>
                                                             <asp:Label ID="lblprodlevel1" runat="server"></asp:Label></td>
                                                         <td>
                                                             <asp:Label ID="productlevel2" runat="server"></asp:Label></td>
                                                         <td>
-                                                            <asp:Label ID="lblproductdescription" runat="server"></asp:Label></td>
+                                                            <asp:Label ID="lblprodlevel3" runat="server"></asp:Label></td>
+                                                        <td>
+                                                            <asp:Label ID="lblnsccode" runat="server"></asp:Label></td>
+                                                        <td>
+                                                            <asp:Label ID="lblniincode" runat="server"></asp:Label></td>
+                                                        <td>
+                                                            <asp:Label ID="lblproductdescription" runat="server"></asp:Label>
+                                                            <a runat="server" id="a_downitem" href="#" target="_Blank" class="fa fa-download pull-right"
+                                                                tooltip="Download item description document releted to item"></a>
+                                                        </td>
                                                     </tr>
                                                 </table>
                                             </div>
                                             <div>
                                                 <table class="table table-bordered">
                                                     <tr>
-                                                        <th>Technology Level 1</th>
-                                                        <th>Technology Level 2</th>
+                                                        <th>OEM Part Number</th>
+                                                        <th>OEM Name</th>
+                                                        <th>OEM Country</th>
+                                                        <th>DPSU Part Number</th>
                                                         <th>End User</th>
+                                                        <th>End User Part Number</th>
+                                                        <th>HSN Code</th>
                                                     </tr>
                                                     <tr>
                                                         <td>
-                                                            <asp:Label ID="lbltechlevel1" runat="server"></asp:Label></td>
+                                                            <asp:Label ID="lbloempartnumber" runat="server"></asp:Label></td>
                                                         <td>
-                                                            <asp:Label ID="lbltechlevel2" runat="server"></asp:Label></td>
+                                                            <asp:Label ID="lbloemname" runat="server"></asp:Label></td>
+                                                        <td>
+                                                            <asp:Label ID="lbloemcountry" runat="server"></asp:Label></td>
+                                                        <td>
+                                                            <asp:Label ID="lbldpsupartno" runat="server"></asp:Label></td>
                                                         <td>
                                                             <asp:Label ID="lblenduser" runat="server"></asp:Label></td>
+                                                        <td>
+                                                            <asp:Label ID="lblenduserpartno" runat="server"></asp:Label></td>
+                                                        <td>
+                                                            <asp:Label ID="lblhsncode" runat="server"></asp:Label></td>
+
                                                     </tr>
                                                 </table>
                                             </div>
                                             <div>
                                                 <table class="table table-bordered">
                                                     <tr>
-                                                        <th>Platform :</th>
-                                                        <th>Purpose of Procurement :</th>
-                                                        <th>Product Time Frame</th>
+                                                        <th>DEFENCE PLATFORM</th>
+                                                        <th>NAME OF DEFENCE PLATFORM</th>
+                                                        <th>PRODUCT (INDUSTRY DOMAIN)</th>
+                                                        <th>PRODUCT (INDUSTRY SUB DOMAIN)</th>
+                                                        <th>PRODUCT (INDUSTRY 2nd SUB DOMAIN)</th>
+
                                                     </tr>
                                                     <tr>
                                                         <td>
                                                             <asp:Label ID="lblplatform" runat="server"></asp:Label></td>
                                                         <td>
-                                                            <asp:Label ID="lblpurposeofprocurement" runat="server"></asp:Label></td>
+                                                            <asp:Label ID="lblnomenclatureofmainsystem" runat="server"></asp:Label></td>
                                                         <td>
-                                                            <asp:Label ID="lblprodtimeframe" runat="server"></asp:Label></td>
+                                                            <asp:Label ID="lbltechlevel1" runat="server"></asp:Label></td>
+                                                        <td>
+                                                            <asp:Label ID="lbltechlevel2" runat="server"></asp:Label></td>
+                                                        <td>
+                                                            <asp:Label ID="lbltechlevel3" runat="server"></asp:Label></td>
+
                                                     </tr>
                                                 </table>
                                             </div>
                                             <div>
                                                 <table class="table table-bordered">
                                                     <tr>
-                                                        <th>Search Keywords :</th>
-                                                        <th>Product Already Indeginized </th>
-                                                        <th runat="server" id="tablemanufacturename">Manufacturer Name</th>
+                                                        <th>PROCURMENT CATEGORY</th>
+                                                        <th>PROCURMENT CATEGORY REMARK</th>
                                                     </tr>
                                                     <tr>
                                                         <td>
-                                                            <asp:Label ID="lblsearchkeyword" runat="server"></asp:Label></td>
+                                                            <asp:Label ID="lblpurposeofprocurement" runat="server"></asp:Label></td>
+                                                        <td>
+                                                            <asp:Label ID="lblprocremarks" runat="server"></asp:Label></td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                            <div>
+                                                <table class="table table-bordered">
+                                                    <tr>
+
+                                                        <th>Product Already Indeginized</th>
+                                                        <th runat="server" id="tablemanufacturename">Manufacturer Name</th>
+                                                        <th runat="server" id="tablemanufactureAddress">Address</th>
+                                                        <th runat="server" id="tablemanufactureYear">Year of Indiginization</th>
+                                                        <th>Search Keywords :</th>
+
+                                                    </tr>
+                                                    <tr>
                                                         <td>
                                                             <asp:Label ID="lblprodalredyindeginized" runat="server"></asp:Label></td>
                                                         <td runat="server" id="tablemanufacturename1">
-                                                            <asp:Label ID="lblmanufacturename" runat="server"></asp:Label></td>
+                                                            <asp:Label ID="lblmanufacturename" runat="server"></asp:Label>
+                                                        </td>
+                                                        <td runat="server" id="tablemanufacturename2">
+                                                            <asp:Label ID="lblmanaddress" runat="server"></asp:Label></td>
+                                                        <td runat="server" id="tablemanufacturename3">
+                                                            <asp:Label ID="lblyearofindiginization" runat="server"></asp:Label></td>
+                                                        <td>
+                                                            <asp:Label ID="lblsearchkeyword" runat="server"></asp:Label></td>
                                                     </tr>
                                                 </table>
                                             </div>
@@ -266,7 +309,7 @@
                                                     <table class="table table-bordered">
                                                         <tbody>
                                                             <tr>
-                                                                <th class="pass" width="30%">Support Provided by DPSU</th>
+                                                                <th class="pass" width="30%">Technical Support</th>
                                                                 <th class="pass" width="30%">Remarks</th>
                                                             </tr>
                                                             <tr>
@@ -276,6 +319,29 @@
 
                                                                 <td>
                                                                     <asp:Label ID="lblremarks" runat="server"></asp:Label>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="spfinn" class="tab-pane fade in">
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <table class="table table-bordered">
+                                                        <tbody>
+                                                            <tr>
+                                                                <th class="pass" width="30%">Financial Support</th>
+                                                                <th class="pass" width="30%">Remarks</th>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>
+                                                                    <asp:Label ID="lblfinancial" runat="server"></asp:Label>
+                                                                </td>
+
+                                                                <td>
+                                                                    <asp:Label ID="lblfinancialRemark" runat="server"></asp:Label>
                                                                 </td>
                                                             </tr>
                                                         </tbody>
@@ -371,7 +437,7 @@
                                                         </tbody>
                                                     </table>
                                                 </div>
-                                                <div class="col-sm-12">
+                                                <div class="col-sm-12" runat="server" visible="False">
                                                     <table class="table table-bordered" runat="server" id="tablenodal2">
                                                         <tbody>
                                                             <tr>
@@ -409,7 +475,6 @@
                                                 </div>
                                             </div>
                                         </div>
-
                                         <div id="test" class="tab-pane fade in">
                                             <div class="row">
                                                 <div class="col-sm-12">
@@ -456,8 +521,6 @@
                                                 </div>
                                             </div>
                                         </div>
-
-
                                     </div>
                                 </div>
                             </div>
@@ -470,4 +533,16 @@
             </div>
         </ContentTemplate>
     </asp:UpdatePanel>
+    <asp:UpdateProgress ID="UpdateProgress1" runat="server" AssociatedUpdatePanelID="up">
+        <ProgressTemplate>
+            <!---Progress Bar ---->
+            <div class="overlay-progress">
+                <div class="custom-progress-bar blue stripes">
+                    <span></span>
+                    <p>Processing</p>
+                </div>
+            </div>
+            <!---Progress Bar ---->
+        </ProgressTemplate>
+    </asp:UpdateProgress>
 </asp:Content>
