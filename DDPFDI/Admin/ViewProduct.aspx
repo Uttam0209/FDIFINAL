@@ -93,6 +93,8 @@
                                                     <asp:Label runat="server" ID="lblcompanyrole" Text='<%#Eval("OEMPartNumber") %>'></asp:Label>
                                                     <asp:HiddenField ID="hfrole" runat="server" Value='<%#Eval("Role") %>' />
                                                     <asp:HiddenField ID="hfcomprefno" runat="server" Value='<%#Eval("CompanyRefNo") %>' />
+                                                    <asp:HiddenField ID="hfdivisionrefno" runat="server" Value='<%#Eval("FactoryRefNo") %>' />
+                                                    <asp:HiddenField ID="hfunitrefno" runat="server" Value='<%#Eval("UnitRefNo") %>' />
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="DPSUPartNumber" Visible="false">
@@ -407,6 +409,7 @@
                                                         <tbody>
                                                             <tr>
                                                                 <th class="pass">Employee Code</th>
+                                                                <th class="pass">Employee Name</th>
                                                                 <th class="pass">Designation</th>
                                                                 <th class="pass">E-Mail ID</th>
                                                                 <th class="pass">Mobile Number</th>
@@ -417,7 +420,9 @@
                                                                 <td>
                                                                     <asp:Label ID="lblempcode" runat="server"></asp:Label>
                                                                 </td>
-
+                                                                <td>
+                                                                    <asp:Label ID="lblempname" runat="server"></asp:Label>
+                                                                </td>
                                                                 <td>
                                                                     <asp:Label ID="lbldesignation" runat="server"></asp:Label>
                                                                 </td>

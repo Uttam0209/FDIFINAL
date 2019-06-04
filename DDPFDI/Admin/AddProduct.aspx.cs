@@ -62,12 +62,19 @@ public partial class Admin_AddProduct : System.Web.UI.Page
 
                             strheadPage.Append("<li class=''><span>" + MmCval + "</span></li>");
                         }
-
                         divHeadPage.InnerHtml = strheadPage.ToString().Trim();
                         strheadPage.Append("</ul");
-                        hidType.Value = objEnc.DecryptData(Session["Type"].ToString().Trim());
                         ViewState["UserLoginEmail"] = objEnc.DecryptData(Session["User"].ToString()).Trim();
-                        hfcomprefno.Value = Session["CompanyRefNo"].ToString().Trim();
+                        if (Request.QueryString["mcurrentcompRefNo"] != null)
+                        {
+                            hidType.Value = objEnc.DecryptData(Request.QueryString["mrcreaterole"].ToString().Trim());
+                            hfcomprefno.Value = objEnc.DecryptData(Request.QueryString["mcurrentcompRefNo"].ToString().Trim());
+                        }
+                        else
+                        {
+                            hidType.Value = objEnc.DecryptData(Session["Type"].ToString().Trim());
+                            hfcomprefno.Value = Session["CompanyRefNo"].ToString().Trim();
+                        }
                         if (hidType.Value.ToString() != "SuperAdmin" || hidType.Value.ToString() != "Admin")
                         {
                             BindCompany();
@@ -159,7 +166,6 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     }
     protected void BindCompany()
     {
-
         if (hidType.Value == "SuperAdmin" || hidType.Value == "Admin")
         {
             if (Request.QueryString["mcurrentcompRefNo"] != null)
@@ -204,6 +210,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                 }
                 else if (objEnc.DecryptData(Request.QueryString["mrcreaterole"].ToString()) == "Unit")
                 {
+                    // DtCompanyDDL = Lo.RetriveMasterData(0, objEnc.DecryptData(Request.QueryString["mcurrentcompRefNo"].ToString()), "Company2", 0, "", "", "CompanyName");
                     DtCompanyDDL = Lo.RetriveMasterData(0, objEnc.DecryptData(Request.QueryString["mcurrentcompRefNo"].ToString()), "Company2", 0, "", "", "CompanyName");
                     ddlcompany.Enabled = false;
                     if (DtCompanyDDL.Rows.Count > 0)
@@ -1304,23 +1311,23 @@ public partial class Admin_AddProduct : System.Web.UI.Page
             HyPanel1["TenderFillDate"] = null;
         }
         HyPanel1["TenderUrl"] = Co.RSQandSQLInjection(txttendorurl.Text, "soft");
-        if (ddlNodalOfficerEmail.Text == "" && ddlNodalOfficerEmail2.Text == "")
+        if (ddlNodalOfficerEmail.Text == "")// && ddlNodalOfficerEmail2.Text == "")
         {
             HyPanel1["NodelDetail"] = null;
         }
-        else if (ddlNodalOfficerEmail.SelectedItem.Text != "Select" && ddlNodalOfficerEmail2.SelectedItem.Text == "Select")
+        else if (ddlNodalOfficerEmail.SelectedItem.Text != "Select") //&& ddlNodalOfficerEmail2.SelectedItem.Text == "Select")
         {
             HyPanel1["NodelDetail"] = Co.RSQandSQLInjection(ddlNodalOfficerEmail.SelectedItem.Value, "soft") + ",";
         }
-        else if (ddlNodalOfficerEmail.SelectedItem.Text == "Select" && ddlNodalOfficerEmail2.SelectedItem.Text != "Select")
-        {
-            HyPanel1["NodelDetail"] = Co.RSQandSQLInjection(ddlNodalOfficerEmail2.SelectedItem.Value, "soft") + ",";
-        }
-        else if (ddlNodalOfficerEmail.SelectedItem.Text != "Select" && ddlNodalOfficerEmail2.SelectedItem.Text != "Select")
-        {
-            HyPanel1["NodelDetail"] = Co.RSQandSQLInjection(ddlNodalOfficerEmail.SelectedItem.Value, "soft") + "," +
-                                      Co.RSQandSQLInjection(ddlNodalOfficerEmail2.SelectedItem.Value, "soft") + ",";
-        }
+        //else if (ddlNodalOfficerEmail.SelectedItem.Text == "Select" && ddlNodalOfficerEmail2.SelectedItem.Text != "Select")
+        //{
+        //    HyPanel1["NodelDetail"] = Co.RSQandSQLInjection(ddlNodalOfficerEmail2.SelectedItem.Value, "soft") + ",";
+        //}
+        //else if (ddlNodalOfficerEmail.SelectedItem.Text != "Select" && ddlNodalOfficerEmail2.SelectedItem.Text != "Select")
+        //{
+        //    HyPanel1["NodelDetail"] = Co.RSQandSQLInjection(ddlNodalOfficerEmail.SelectedItem.Value, "soft") + "," +
+        //                              Co.RSQandSQLInjection(ddlNodalOfficerEmail2.SelectedItem.Value, "soft") + ",";
+        //}
         foreach (GridViewRow rw in gvtesting.Rows)
         {
             CheckBox chktest = (CheckBox)rw.FindControl("chktesting");
@@ -1476,7 +1483,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         if (ddlNodalOfficerEmail.Text != "")
         {
             ddlNodalOfficerEmail.SelectedIndex = 0;
-            ddlNodalOfficerEmail2.SelectedIndex = 0;
+           // ddlNodalOfficerEmail2.SelectedIndex = 0;
         }
         foreach (GridViewRow rw in gvservices.Rows)
         {
