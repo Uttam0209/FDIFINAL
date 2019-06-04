@@ -10,7 +10,6 @@ using Encryption;
 public partial class Admin_RegisterdAs : System.Web.UI.Page
 {
     Cryptography objEnc = new Cryptography();
-
     DataUtility Co = new DataUtility();
     Logic Lo = new Logic();
     private string DisplayPanel;
@@ -22,9 +21,9 @@ public partial class Admin_RegisterdAs : System.Web.UI.Page
         {
             if (!IsPostBack)
             {
-                try
+                if (Session["User"] != null)
                 {
-                    if (Session["User"] != null)
+                    try
                     {
                         string strid = Request.QueryString["id"].ToString().Replace(" ", "+");
                         string strPageName = objEnc.DecryptData(strid);
@@ -46,17 +45,17 @@ public partial class Admin_RegisterdAs : System.Web.UI.Page
                         BindGridView();
                         ShowHidePanel();
                     }
-                    else
+                    catch (Exception exception)
                     {
-                        ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert",
-                            "alert('Session Expire,Please login again');window.location='Login'", true);
+                        string error = exception.ToString();
+                        string Page = Request.Url.AbsolutePath.ToString();
+                        Response.Redirect("Error?techerror=" + objEnc.EncryptData(error) + "&page=" + objEnc.EncryptData(Page));
                     }
                 }
-                catch (Exception exception)
+                else
                 {
-                    string error = exception.ToString();
-                    string Page = Request.Url.AbsolutePath.ToString();
-                    Response.Redirect("Error?techerror=" + objEnc.EncryptData(error) + "&page=" + objEnc.EncryptData(Page));
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert",
+                        "alert('Session Expire,Please login again');window.location='Login'", true);
                 }
             }
         }

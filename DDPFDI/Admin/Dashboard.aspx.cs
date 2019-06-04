@@ -1,15 +1,7 @@
-﻿
-using System;
-using System.Collections.Specialized;
-using System.Text.RegularExpressions;
+﻿using System;
 using System.Data;
-using System.IO;
 using System.Web.UI;
-using System.Text;
 using BusinessLayer;
-using System.Web.UI.WebControls;
-using System.Web.UI.DataVisualization.Charting;
-using System.Data.SqlClient;
 using Encryption;
 using System.Web;
 
@@ -32,7 +24,8 @@ public partial class Admin_Dashboard : System.Web.UI.Page
             }
         }
         else
-            Response.RedirectToRoute("Login");
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert",
+                "alert('Session Expire,Please login again');window.location='Login'", true);
     }
     protected void lnkbtnTotComp_Click(object sender, EventArgs e)
     {
@@ -47,7 +40,6 @@ public partial class Admin_Dashboard : System.Web.UI.Page
     {
         Response.Redirect("Dashboard-View?id=" + HttpUtility.UrlEncode(objCrypto.EncryptData("U")));
     }
-
     protected void lnkbtnTotEmp_Click(object sender, EventArgs e)
     {
         Response.Redirect("Dashboard-View?id=" + HttpUtility.UrlEncode(objCrypto.EncryptData("E")));
@@ -56,7 +48,6 @@ public partial class Admin_Dashboard : System.Web.UI.Page
     {
         Response.Redirect("Dashboard-View?id=" + HttpUtility.UrlEncode(objCrypto.EncryptData("P")));
     }
-
     protected void lblComp_Click(object sender, EventArgs e)
     {
         DataTable dt = Lo.GetDashboardData("Company", "");

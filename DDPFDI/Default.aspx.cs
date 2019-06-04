@@ -7,14 +7,7 @@ using System.Web.UI;
 using System.Text;
 using BusinessLayer;
 using System.Web.UI.WebControls;
-using System.Data.SqlClient;
 using Encryption;
-
-using System.Web.Services;
-using System.Configuration;
-using System.Data.SqlClient;
-using System.Collections.Generic;
-using System.Security.AccessControl;
 using System.Web;
 
 
@@ -87,8 +80,7 @@ public partial class _Default : System.Web.UI.Page
         }
         catch (Exception ex)
         {
-            string message = ex.Message;
-            Response.Redirect("Error?string=" + message);
+            Response.RedirectToRoute("login");
         }
     }
     protected void btnCaptchaNew_Click(object sender, EventArgs e)
@@ -103,26 +95,32 @@ public partial class _Default : System.Web.UI.Page
     }
     protected void btnsendmail_Click(object sender, EventArgs e)
     {
-        if (txtforgotemailid.Text != "")
+        try
         {
-            if (IsValidEmailId(txtforgotemailid.Text) == true)
+            if (txtforgotemailid.Text != "")
             {
-                DataTable DtSendMailForgotpassword = LO.RetriveForgotPasswordEmail(Co.RSQandSQLInjection(txtforgotemailid.Text, "soft"), "ForgotPassword");
-                if (DtSendMailForgotpassword.Rows.Count > 0)
+                if (IsValidEmailId(txtforgotemailid.Text) == true)
                 {
-                    string EmpCode = DtSendMailForgotpassword.Rows[0]["NodalOfficerRefNo"].ToString();
-                    SendEmailCode(EmpCode);
-                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Email send to your registerd emaid id successfully.');", true);
+                    DataTable DtSendMailForgotpassword = LO.RetriveForgotPasswordEmail(Co.RSQandSQLInjection(txtforgotemailid.Text, "soft"), "ForgotPassword");
+                    if (DtSendMailForgotpassword.Rows.Count > 0)
+                    {
+                        string EmpCode = DtSendMailForgotpassword.Rows[0]["NodalOfficerRefNo"].ToString();
+                        SendEmailCode(EmpCode);
+                        ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Email send to your registerd emaid id successfully.');", true);
+                    }
+                    else
+                    {
+                        ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Email id not registerd with us.');", true);
+                    }
                 }
                 else
                 {
-                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Email id not registerd with us.');", true);
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Invalid email format.');", true);
                 }
             }
-            else
-            {
-                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Invalid email format.');", true);
-            }
+        }
+        catch (Exception ex)
+        {
         }
     }
     #region Send Mail
