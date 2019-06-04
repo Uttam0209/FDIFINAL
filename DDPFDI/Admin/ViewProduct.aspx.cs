@@ -18,7 +18,6 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
     private string mRefNo = "";
     protected void Page_Load(object sender, EventArgs e)
     {
-
         if (!IsPostBack)
         {
             if (Session["Type"].ToString() != null || Session["User"] != null)
@@ -58,11 +57,10 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
             }
             else
             {
-                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert",
+                ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert",
                     "alert('Session Expire,Please login again');window.location='Login'", true);
             }
         }
-
     }
     protected void btnAddProduct_Click(object sender, EventArgs e)
     {

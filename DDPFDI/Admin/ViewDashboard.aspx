@@ -771,7 +771,7 @@
                 </div>
             </div>
             <div class="modal fade" id="ProductCompany" role="dialog">
-                <div class="modal-dialog" style="width: 1100px; z-index: 9999999999;">
+                <div class="modal-dialog" style="width: 1200px; z-index: 9999999999;">
                     <!-- Modal content-->
                     <div class="modal-content">
                         <div class="modal-header modal-header1">

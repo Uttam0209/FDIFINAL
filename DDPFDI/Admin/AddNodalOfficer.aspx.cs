@@ -73,7 +73,7 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
             }
             else
             {
-                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert",
+                ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert",
                     "alert('Session Expire,Please login again');window.location='Login'", true);
             }
         }

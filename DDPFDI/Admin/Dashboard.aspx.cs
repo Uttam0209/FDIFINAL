@@ -24,7 +24,7 @@ public partial class Admin_Dashboard : System.Web.UI.Page
             }
         }
         else
-            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert",
+            ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert",
                 "alert('Session Expire,Please login again');window.location='Login'", true);
     }
     protected void lnkbtnTotComp_Click(object sender, EventArgs e)

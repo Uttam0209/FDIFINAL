@@ -54,7 +54,7 @@ public partial class Admin_RegisterdAs : System.Web.UI.Page
                 }
                 else
                 {
-                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert",
+                    ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert",
                         "alert('Session Expire,Please login again');window.location='Login'", true);
                 }
             }
@@ -200,7 +200,7 @@ public partial class Admin_RegisterdAs : System.Web.UI.Page
         {
             DataTable DtGetAddDropdown = Lo.RetriveMasterSubCategoryDate(0, txtmastercategory.Text.Trim(), "", "DupMasterCat", "", "");
             if (DtGetAddDropdown.Rows.Count > 0)
-            { ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('duplicate record found, record already inserted.')", true); }
+            { ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('This category " + txtmastercategory.Text + " already inserted in database, record not inserted.')", true); }
             else
             {
                 DataTable StrCat = Lo.RetriveMasterCategoryDate(0, Co.RSQandSQLInjection(txtmastercategory.Text, "soft"), "", rbflag.SelectedItem.Value, rbactive.SelectedItem.Value, "Insert", objEnc.DecryptData(ViewState["UserLoginEmail"].ToString()));
@@ -229,7 +229,7 @@ public partial class Admin_RegisterdAs : System.Web.UI.Page
         {
             DataTable DtGetAddDropdown = Lo.RetriveMasterSubCategoryDate(0, txtsubcategory.Text.Trim(), "", "DupSubCat", "", "");
             if (DtGetAddDropdown.Rows.Count > 0)
-            { ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('duplicate record found, record already inserted.')", true); }
+            { ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('This category " + txtsubcategory.Text + " already inserted in " + ddlmastercategory.SelectedItem.Text + ", record not inserted.')", true); }
             else
             {
                 DataTable StrCat = Lo.RetriveMasterSubCategoryDate(
@@ -260,9 +260,9 @@ public partial class Admin_RegisterdAs : System.Web.UI.Page
     {
         try
         {
-            DataTable DtGetAddDropdown = Lo.RetriveMasterSubCategoryDate(0, txtcategory3.Text.Trim(), "", "DupSubCat", "", "");
+            DataTable DtGetAddDropdown = Lo.RetriveMasterSubCategoryDate(Convert.ToInt16(ddlcategroy2.SelectedItem.Value), txtcategory3.Text.Trim(), "", "DupSubCat", "", "");
             if (DtGetAddDropdown.Rows.Count > 0)
-            { ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('duplicate record found, record already inserted.')", true); }
+            { ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('This category " + txtcategory3.Text + " already inserted in " + ddlcategroy2.SelectedItem.Text + ",record not inserted.')", true); }
             else
             {
                 DataTable StrCat = Lo.RetriveMasterSubCategoryDate(Convert.ToInt16(ddlcategroy2.SelectedItem.Value),
@@ -292,9 +292,9 @@ public partial class Admin_RegisterdAs : System.Web.UI.Page
     {
         try
         {
-            DataTable DtGetAddDropdown = Lo.RetriveMasterSubCategoryDate(0, txtlevel3.Text.Trim(), "", "DupSubCat", "", "");
+            DataTable DtGetAddDropdown = Lo.RetriveMasterSubCategoryDate(Convert.ToInt16(ddllabel2.SelectedItem.Value), txtlevel3.Text.Trim(), "", "DupSubCat", "", "");
             if (DtGetAddDropdown.Rows.Count > 0)
-            { ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('duplicate record found, record already inserted.')", true); }
+            { ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('This category " + txtlevel3.Text + " already inserted in " + ddllabel2.SelectedItem.Text + ",record not inserted.')", true); }
             else
             {
                 DataTable StrCat = Lo.RetriveMasterSubCategoryDate(Convert.ToInt16(ddllabel2.SelectedItem.Value),

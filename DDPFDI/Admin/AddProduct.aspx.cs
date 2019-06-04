@@ -113,7 +113,6 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                             BindCertification();
                         }
                     }
-
                     if (hidType.Value == "Company")
                     {
                         ddlcompany.Visible = true;
@@ -149,14 +148,12 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                 {
                     string error = ex.ToString();
                     string Page = Request.Url.AbsolutePath.ToString();
-                    Response.Redirect("Error?techerror=" + objEnc.EncryptData(error) + "&page=" +
-                                      objEnc.EncryptData(Page));
+                    Response.Redirect("Error?techerror=" + objEnc.EncryptData(error) + "&page=" + objEnc.EncryptData(Page));
                 }
             }
             else
             {
-                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert",
-                    "alert('Session Expire,Please login again');window.location='Login'", true);
+                ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "alert('Session Expire,Please login again');window.location='Login'", true);
             }
         }
     }
@@ -395,7 +392,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
             {
                 DtCompanyDDL = Lo.RetriveMasterData(0, ddlcompany.SelectedItem.Value, "", 0, "", "", "CompanyNodelDetail");
             }
-            else if (ddlcompany.SelectedItem.Text != "Select" && ddldivision.SelectedItem.Text != "Select")
+            else if (ddlcompany.SelectedItem.Text != "Select" && ddldivision.SelectedItem.Text != "Select" && ddlunit.Visible == false || ddlunit.SelectedItem.Text == "Select")
             {
                 DtCompanyDDL = Lo.RetriveMasterData(0, ddldivision.SelectedItem.Value, "", 0, "", "", "CompanyNodelDetail");
             }
@@ -407,18 +404,22 @@ public partial class Admin_AddProduct : System.Web.UI.Page
             {
                 Co.FillDropdownlist(ddlNodalOfficerEmail, DtCompanyDDL, "NodalOficerName", "NodalOfficerID");
                 ddlNodalOfficerEmail.Items.Insert(0, "Select");
-                Co.FillDropdownlist(ddlNodalOfficerEmail2, DtCompanyDDL, "NodalOficerName", "NodalOfficerID");
-                ddlNodalOfficerEmail2.Items.Insert(0, "Select");
+                //Co.FillDropdownlist(ddlNodalOfficerEmail2, DtCompanyDDL, "NodalOficerName", "NodalOfficerID");
+                //ddlNodalOfficerEmail2.Items.Insert(0, "Select");
             }
             else
             {
-                ddlNodalOfficerEmail.Items.Insert(0, "Select");
-                ddlNodalOfficerEmail2.Items.Insert(0, "Select");
+                contactpanel1.Visible = false;
+                ddlNodalOfficerEmail.Items.Clear();
+                //  ddlNodalOfficerEmail.Items.Insert(0, "Select");
+                //ddlNodalOfficerEmail2.Items.Insert(0, "Select");
             }
         }
         else
         {
-            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Company not select nodal offcier will not be displayed')", true);
+            contactpanel1.Visible = false;
+            ddlNodalOfficerEmail.Items.Clear();
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('select Company for displayed nodal offcier')", true);
         }
     }
     #region DropDownList Code
@@ -512,7 +513,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         {
             hidCompanyRefNo.Value = ddldivision.SelectedItem.Value;
             hidType.Value = "Division";
-            ddldivision.Enabled = false;
+            // ddldivision.Enabled = false;
             hfcomprefno.Value = "";
             hfcomprefno.Value = ddldivision.SelectedItem.Value;
             BindNodelEmail();
@@ -665,8 +666,21 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         }
         else
         {
-            divtendordate.Visible = false;
-            divtdate.Visible = false;
+            if (rbtendordateyesno.SelectedItem.Value == "N" && ddltendorstatus.SelectedItem.Value == "Live")
+            {
+                divtendordate.Visible = true;
+                divtdate.Visible = false;
+            }
+            else if (rbtendordateyesno.SelectedItem.Value == "Y")
+            {
+                divtendordate.Visible = true;
+                divtdate.Visible = true;
+            }
+            else
+            {
+                divtendordate.Visible = false;
+                divtdate.Visible = false;
+            }
         }
     }
     #endregion

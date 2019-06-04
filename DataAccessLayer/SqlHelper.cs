@@ -1116,7 +1116,6 @@ namespace DataAccessLayer
         }
         #endregion
         #region "Dashboard"
-
         public DataTable RetriveAggregateValue(string function, string entity)
         {
             using (DbConnection dbCon = db.CreateConnection())
@@ -1288,7 +1287,7 @@ namespace DataAccessLayer
                 {
                     DbCommand cmd = db.GetStoredProcCommand("sp_GetDashboardData");                 
                     db.AddInParameter(cmd, "@Purpose", DbType.String, Purpose);
-                    db.AddInParameter(cmd, "@SearchText", DbType.String, "");
+                    db.AddInParameter(cmd, "@SearchText", DbType.String, Search);
                     IDataReader dr = db.ExecuteReader(cmd);
                     DataTable dt = new DataTable();
                     if (dr != null)
@@ -1301,7 +1300,6 @@ namespace DataAccessLayer
                 }
             }
         }
-
         #endregion
         #region Forgot password
         public DataTable RetriveForgotPasswordEmail(string email, string type)

@@ -9,8 +9,6 @@ using System.Text;
 using System.IO;
 using System.Web;
 
-
-
 public partial class Admin_ViewNodalOfficer : System.Web.UI.Page
 {
     Logic Lo = new Logic();
@@ -50,20 +48,20 @@ public partial class Admin_ViewNodalOfficer : System.Web.UI.Page
                     }
                     catch (Exception ex)
                     {
-                        string error = exception.ToString();
+                        string error = ex.ToString();
                         string Page = Request.Url.AbsolutePath.ToString();
                         Response.Redirect("Error?techerror=" + objEnc.EncryptData(error) + "&page=" + objEnc.EncryptData(Page));
                     }
                 }
                 else
                 {
-                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert",
+                    ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert",
                         "alert('Session Expire,Please login again');window.location='Login'", true);
                 }
             }
             else
             {
-                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert",
+                ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert",
                     "alert('Session Expire,Please login again');window.location='Login'", true);
             }
         }
@@ -477,5 +475,4 @@ public partial class Admin_ViewNodalOfficer : System.Web.UI.Page
         return res.ToString();
     }
     #endregion
-
 }
