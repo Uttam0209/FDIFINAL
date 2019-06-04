@@ -50,7 +50,7 @@ public partial class Admin_ViewNodalOfficer : System.Web.UI.Page
                     }
                     catch (Exception ex)
                     {
-                        string error = exception.ToString();
+                        string error = ex.ToString();
                         string Page = Request.Url.AbsolutePath.ToString();
                         Response.Redirect("Error?techerror=" + objEnc.EncryptData(error) + "&page=" + objEnc.EncryptData(Page));
                     }

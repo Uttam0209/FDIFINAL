@@ -6,4 +6,3 @@ D:\FDIFINAL\Encryption\bin\Debug\Encryption.dll
 D:\FDIFINAL\Encryption\bin\Debug\Encryption.pdb
 D:\FDIFINAL\Encryption\obj\Debug\Encryption.dll
 D:\FDIFINAL\Encryption\obj\Debug\Encryption.pdb
-D:\FDIFINAL\Encryption\obj\Debug\Encryption.csprojResolveAssemblyReference.cache

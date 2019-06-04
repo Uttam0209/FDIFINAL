@@ -187,28 +187,10 @@ public partial class Admin_ViewDashboard : System.Web.UI.Page
     }
     protected void BindEmployee(string RefNo)
     {
-        if (RefNo == "")
-        {
-            DtGrid = Lo.GetDashboardData("Employee", "");
-        }
-        else
-        {
-            DtGrid = Lo.GetDashboardData("Employee", RefNo);
-        }
+        DtGrid = Lo.GetDashboardData("Employee", txtsearch.Text.Trim());
         if (DtGrid.Rows.Count > 0)
         {
-            for (int a = 0; a < DtGrid.Rows.Count; a++)
-            {
-                if (DtGrid.Rows[a]["UCompany"].ToString() != "")
-                {
-                    DtGrid.Rows[a]["CompanyName"] = DtGrid.Rows[a]["UCompany"];
-                    DtGrid.Rows[a]["FactoryName"] = DtGrid.Rows[a]["UFactory"];
-                }
-                else if (DtGrid.Rows[a]["FCompany"].ToString() != "")
-                {
-                    DtGrid.Rows[a]["CompanyName"] = DtGrid.Rows[a]["FCompany"];
-                }
-            }
+            this.UpdateDtGridValue();
             if (RefNo != "")
             {
                 DataView dv = new DataView(DtGrid);
@@ -236,26 +218,10 @@ public partial class Admin_ViewDashboard : System.Web.UI.Page
     }
     protected void BindProduct(string RefNo)
     {
-        if (RefNo == "")
-        {
-            DtGrid = Lo.GetDashboardData("Product", "");
-        }
-        else
-        { DtGrid = Lo.GetDashboardData("Product", RefNo); }
+        DtGrid = Lo.GetDashboardData("Product", txtsearch.Text.Trim());
         if (DtGrid.Rows.Count > 0)
         {
-            for (int a = 0; a < DtGrid.Rows.Count; a++)
-            {
-                if (DtGrid.Rows[a]["UCompany"].ToString() != "")
-                {
-                    DtGrid.Rows[a]["CompanyName"] = DtGrid.Rows[a]["UCompany"];
-                    DtGrid.Rows[a]["FactoryName"] = DtGrid.Rows[a]["UFactory"];
-                }
-                else if (DtGrid.Rows[a]["FCompany"].ToString() != "")
-                {
-                    DtGrid.Rows[a]["CompanyName"] = DtGrid.Rows[a]["FCompany"];
-                }
-            }
+            this.UpdateDtGridValue();
             if (RefNo != "")
             {
                 DataView dv = new DataView(DtGrid);
@@ -607,13 +573,28 @@ public partial class Admin_ViewDashboard : System.Web.UI.Page
     }
     protected void btnseach_Click(object sender, EventArgs e)
     {
-        if (txtsearch.Text != "")
-        {
+        if (Encrypt.DecryptData(Session["Type"].ToString()) == "Admin" || Encrypt.DecryptData(Session["Type"].ToString()) == "SuperAdmin")
             this.ControlGrid(Encrypt.DecryptData(Request.QueryString["id"].ToString()), "");
-        }
         else
+            this.ControlGrid(Encrypt.DecryptData(Request.QueryString["id"].ToString()), Session["CompanyRefNo"].ToString()); 
+    }
+
+    protected void UpdateDtGridValue()
+    {
+        for (int a = 0; a < DtGrid.Rows.Count; a++)
         {
-            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Please enter any one (Name,emailcompany/division/unit name)", true);
+            if (DtGrid.Rows[a]["UCompany"].ToString() != "")
+            {
+                DtGrid.Rows[a]["CompanyName"] = DtGrid.Rows[a]["UCompany"];
+                DtGrid.Rows[a]["FactoryName"] = DtGrid.Rows[a]["UFactory"];
+                DtGrid.Rows[a]["CompanyRefNo"] = DtGrid.Rows[a]["UCompRefNo"];
+                DtGrid.Rows[a]["FactoryRefNo"] = DtGrid.Rows[a]["UFactoryRefNo"];
+            }
+            else if (DtGrid.Rows[a]["FCompany"].ToString() != "")
+            {
+                DtGrid.Rows[a]["CompanyName"] = DtGrid.Rows[a]["FCompany"];
+                DtGrid.Rows[a]["CompanyRefNo"] = DtGrid.Rows[a]["FCompRefNo"];
+            }
         }
     }
 }
