@@ -2,7 +2,6 @@
 using Encryption;
 using System;
 using System.Collections.Specialized;
-using System.Configuration;
 using System.Data;
 using System.Text;
 using System.Web.UI;
@@ -818,6 +817,4 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
             }
         }
     }
-
-    
 }

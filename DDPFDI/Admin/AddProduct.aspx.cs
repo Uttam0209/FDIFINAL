@@ -40,9 +40,9 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     {
         if (!IsPostBack)
         {
-            try
+            if (Session["User"] != null)
             {
-                if (Session["User"] != null)
+                try
                 {
                     if (Request.QueryString["id"] != null)
                     {
@@ -145,17 +145,18 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                         }
                     }
                 }
-                else
+                catch (Exception ex)
                 {
-                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert",
-                        "alert('Session Expire,Please login again');window.location='Login'", true);
+                    string error = ex.ToString();
+                    string Page = Request.Url.AbsolutePath.ToString();
+                    Response.Redirect("Error?techerror=" + objEnc.EncryptData(error) + "&page=" +
+                                      objEnc.EncryptData(Page));
                 }
             }
-            catch (Exception ex)
+            else
             {
-                string error = ex.ToString();
-                string Page = Request.Url.AbsolutePath.ToString();
-                Response.Redirect("Error?techerror=" + objEnc.EncryptData(error) + "&page=" + objEnc.EncryptData(Page));
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert",
+                    "alert('Session Expire,Please login again');window.location='Login'", true);
             }
         }
     }

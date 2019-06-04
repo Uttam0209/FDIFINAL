@@ -1,7 +1,6 @@
 ﻿using BusinessLayer;
 using Encryption;
 using System;
-using System.Activities.Statements;
 using System.Collections.Specialized;
 using System.Data;
 using System.Text;
@@ -26,9 +25,10 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
     {
         if (!IsPostBack)
         {
-            try
+
+            if (Session["Type"] != null)
             {
-                if (Session["Type"] != null)
+                try
                 {
                     if (Request.QueryString["mu"] != null)
                     {
@@ -45,6 +45,7 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
                             {
                                 MmCval = "Add";
                             }
+
                             strheadPage.Append("<li class=''><span>" + MmCval + "</span></li>");
                         }
                         divHeadPage.InnerHtml = strheadPage.ToString();
@@ -108,19 +109,23 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
                         lblfactoryName.Text = "Select Divison/Plant ";
                         chkrole.Attributes.Add("onclick", "radioMe(event);");
                     }
+                    else
+                    { Response.RedirectToRoute("login");}
                 }
-                else
+                catch (Exception ex)
                 {
-                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert",
-                        "alert('Session Expire,Please login again');window.location='Login'", true);
+                    string error = ex.ToString();
+                    string Page = Request.Url.AbsolutePath.ToString();
+                    Response.Redirect("Error?techerror=" + HttpUtility.UrlEncode(Enc.EncryptData(error)) + "&page=" +
+                                      HttpUtility.UrlEncode(Enc.EncryptData(Page)));
                 }
             }
-            catch (Exception ex)
+            else
             {
-                string error = ex.ToString();
-                string Page = Request.Url.AbsolutePath.ToString();
-                Response.Redirect("Error?techerror=" + HttpUtility.UrlEncode(Enc.EncryptData(error)) + "&page=" + HttpUtility.UrlEncode(Enc.EncryptData(Page)));
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert",
+                    "alert('Session Expire,Please login again');window.location='Login'", true);
             }
+
         }
 
     }

@@ -1,10 +1,6 @@
 ﻿using System;
 using BusinessLayer;
 using System.Data;
-using System.Data.OleDb;
-using System.IO;
-using System.Web.UI;
-using System.Data.OleDb;
 
 public partial class frmUploadExcel : System.Web.UI.Page
 {

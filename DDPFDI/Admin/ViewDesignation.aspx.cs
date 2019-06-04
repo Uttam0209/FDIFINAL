@@ -4,9 +4,7 @@ using System.Web.UI.WebControls;
 using BusinessLayer;
 using Encryption;
 using System.Data;
-using System.Text.RegularExpressions;
 using System.Text;
-using System.IO;
 using System.Web;
 
 public partial class Admin_ViewDesignation : System.Web.UI.Page
@@ -54,7 +52,6 @@ public partial class Admin_ViewDesignation : System.Web.UI.Page
             }
         }
     }
-
     protected void BindCompany()
     {
         if (mType == "SuperAdmin" || mType == "Admin")
@@ -93,7 +90,6 @@ public partial class Admin_ViewDesignation : System.Web.UI.Page
             }
         }
     }
-
     #region RowCommand
     protected void gvViewDesignation_RowCommand(object sender, GridViewCommandEventArgs e)
     {
@@ -128,9 +124,7 @@ public partial class Admin_ViewDesignation : System.Web.UI.Page
         }
 
     }
-
     #endregion
-
     protected void btnAddDesignation_Click(object sender, EventArgs e)
     {
         string Role = "Company";
@@ -139,7 +133,6 @@ public partial class Admin_ViewDesignation : System.Web.UI.Page
         Response.Redirect("Add-Designation?mrcreaterole=" + objEnc.EncryptData(Role) + "&id=" + mstrid);
 
     }
-
     #region DropDownList Code
     protected void ddlcompany_OnSelectedIndexChanged(object sender, EventArgs e)
     {
@@ -180,7 +173,4 @@ public partial class Admin_ViewDesignation : System.Web.UI.Page
         }
     }
     #endregion
-
-
-
 }

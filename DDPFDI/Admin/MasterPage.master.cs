@@ -1,15 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
 using Encryption;
 using BusinessLayer;
-using System.Web.UI.HtmlControls;
 using System.Text;
 using System.Data;
-using System.Data.Sql;
 
 public partial class Admin_MasterPage : System.Web.UI.MasterPage
 {
@@ -20,18 +15,18 @@ public partial class Admin_MasterPage : System.Web.UI.MasterPage
     string sType = "";
     protected void Page_Load(object sender, EventArgs e)
     {
-        try
+        if (Session["User"] != null)
         {
-            if (Session["User"] != null)
+            try
             {
                 MenuLogin();
             }
-            else
+            catch (Exception exception)
             {
                 ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Session Expire,Please login again');window.location='Login'", true);
             }
         }
-        catch (Exception exception)
+        else
         {
             ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Session Expire,Please login again');window.location='Login'", true);
         }

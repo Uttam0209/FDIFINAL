@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
 using System.Data;
 using System.Text;
 using BusinessLayer;
 using Encryption;
-using System.IO;
 using System.Collections.Specialized;
 
 public partial class Admin_AddDesignation : System.Web.UI.Page
@@ -26,9 +22,9 @@ public partial class Admin_AddDesignation : System.Web.UI.Page
     {
         if (!IsPostBack)
         {
-            try
+            if (Session["User"] != null)
             {
-                if (Session["User"] != null)
+                try
                 {
                     if (Request.QueryString["id"] != null)
                     {
@@ -53,7 +49,6 @@ public partial class Admin_AddDesignation : System.Web.UI.Page
                         strheadPage.Append("</ul");
                         BindMasterCompany();
                     }
-
                     ViewState["UserLoginEmail"] = Session["User"].ToString();
                     mType = Enc.DecryptData(Session["Type"].ToString());
                     mRefNo = Session["CompanyRefNo"].ToString();
@@ -62,17 +57,17 @@ public partial class Admin_AddDesignation : System.Web.UI.Page
                         EditCode();
                     }
                 }
-                else
+                catch (Exception ex)
                 {
-                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert",
-                        "alert('Session Expire,Please login again');window.location='Login'", true);
+                    string error = ex.ToString();
+                    string Page = Request.Url.AbsolutePath.ToString();
+                    Response.Redirect("Error?techerror=" + HttpUtility.UrlEncode(Enc.EncryptData(error)) + "&page=" + HttpUtility.UrlEncode(Enc.EncryptData(Page)));
                 }
             }
-            catch (Exception ex)
+            else
             {
-                string error = ex.ToString();
-                string Page = Request.Url.AbsolutePath.ToString();
-                Response.Redirect("Error?techerror=" + HttpUtility.UrlEncode(Enc.EncryptData(error)) + "&page=" + HttpUtility.UrlEncode(Enc.EncryptData(Page)));
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert",
+                    "alert('Session Expire,Please login again');window.location='Login'", true);
             }
         }
     }

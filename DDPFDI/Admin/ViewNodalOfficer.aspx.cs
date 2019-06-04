@@ -24,11 +24,11 @@ public partial class Admin_ViewNodalOfficer : System.Web.UI.Page
     {
         if (!IsPostBack)
         {
-            if (Request.QueryString["id"] != null)
+            if (Session["User"] != null)
             {
-                try
+                if (Request.QueryString["id"] != null)
                 {
-                    if (Session["User"] != null)
+                    try
                     {
                         string strid = Request.QueryString["id"].ToString().Replace(" ", "+");
                         string strPageName = objEnc.DecryptData(strid);
@@ -48,16 +48,23 @@ public partial class Admin_ViewNodalOfficer : System.Web.UI.Page
                         mRefNo = Session["CompanyRefNo"].ToString();
                         BindCompany();
                     }
-                    else
+                    catch (Exception ex)
                     {
-                        ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert",
-                            "alert('Session Expire,Please login again');window.location='Login'", true);
+                        string error = exception.ToString();
+                        string Page = Request.Url.AbsolutePath.ToString();
+                        Response.Redirect("Error?techerror=" + objEnc.EncryptData(error) + "&page=" + objEnc.EncryptData(Page));
                     }
                 }
-                catch (Exception ex)
+                else
                 {
-                    Response.RedirectToRoute("login");
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert",
+                        "alert('Session Expire,Please login again');window.location='Login'", true);
                 }
+            }
+            else
+            {
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert",
+                    "alert('Session Expire,Please login again');window.location='Login'", true);
             }
         }
     }

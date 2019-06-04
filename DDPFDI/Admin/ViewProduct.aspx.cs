@@ -18,13 +18,14 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
     private string mRefNo = "";
     protected void Page_Load(object sender, EventArgs e)
     {
-        try
+
+        if (!IsPostBack)
         {
-            if (!IsPostBack)
+            if (Session["Type"].ToString() != null || Session["User"] != null)
             {
-                if (Session["Type"].ToString() != null)
+                if (Request.QueryString["id"] != null)
                 {
-                    if (Request.QueryString["id"] != null)
+                    try
                     {
                         string strid = Request.QueryString["id"].ToString().Replace(" ", "+");
                         string strPageName = objEnc.DecryptData(strid);
@@ -37,7 +38,6 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
                             MmCval = MCateg[x];
                             strheadPage.Append("<li class=''><span>" + MmCval + "</span></li>");
                         }
-
                         divHeadPage.InnerHtml = strheadPage.ToString();
                         strheadPage.Append("</ul");
                         currentPage = System.IO.Path.GetFileName(Request.Url.AbsolutePath);
@@ -46,20 +46,23 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
                         BindCompany();
                         BindGridView();
                     }
+                    catch (Exception ex)
+                    {
+                        string error = ex.ToString();
+                        string Page = Request.Url.AbsolutePath.ToString();
+                        Response.Redirect("Error?techerror=" + objEnc.EncryptData(error) + "&page=" + objEnc.EncryptData(Page));
+                    }
                 }
                 else
-                {
-                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert",
-                        "alert('Session Expire,Please login again');window.location='Login'", true);
-                }
+                { Response.RedirectToRoute("login"); }
+            }
+            else
+            {
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert",
+                    "alert('Session Expire,Please login again');window.location='Login'", true);
             }
         }
-        catch (Exception ex)
-        {
-            string error = ex.ToString();
-            string Page = Request.Url.AbsolutePath.ToString();
-            Response.Redirect("Error?techerror=" + objEnc.EncryptData(error) + "&page=" + objEnc.EncryptData(Page));
-        }
+
     }
     protected void btnAddProduct_Click(object sender, EventArgs e)
     {
