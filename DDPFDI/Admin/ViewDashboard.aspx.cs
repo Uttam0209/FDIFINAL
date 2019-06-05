@@ -26,8 +26,7 @@ public partial class Admin_ViewDashboard : System.Web.UI.Page
             }
             else
             {
-                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert",
-                    "alert('Session Expire,Please login again');window.location='Login'", true);
+                ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "alert('Session Expire,Please login again');window.location='Login'", true);
             }
         }
     }
@@ -91,14 +90,7 @@ public partial class Admin_ViewDashboard : System.Web.UI.Page
     }
     protected void BindCompany(string RefNo)
     {
-        if (RefNo == "")
-        {
-            DtGrid = Lo.GetDashboardData("Company", "");
-        }
-        else
-        {
-            DtGrid = Lo.GetDashboardData("Company", RefNo);
-        }
+        DtGrid = Lo.GetDashboardData("Company", txtsearch.Text.Trim());
         if (DtGrid.Rows.Count > 0)
         {
             if (RefNo != "")
@@ -123,14 +115,7 @@ public partial class Admin_ViewDashboard : System.Web.UI.Page
     }
     protected void BindDivision(string RefNo)
     {
-        if (RefNo == "")
-        {
-            DtGrid = Lo.GetDashboardData("Division", "");
-        }
-        else
-        {
-            DtGrid = Lo.GetDashboardData("Division", RefNo);
-        }
+        DtGrid = Lo.GetDashboardData("Division", txtsearch.Text.Trim());
         if (DtGrid.Rows.Count > 0)
         {
             if (RefNo != "")
@@ -155,14 +140,7 @@ public partial class Admin_ViewDashboard : System.Web.UI.Page
     }
     protected void BindUnit(string RefNo)
     {
-        if (RefNo == "")
-        {
-            DtGrid = Lo.GetDashboardData("Unit", "");
-        }
-        else
-        {
-            DtGrid = Lo.GetDashboardData("Unit", RefNo);
-        }
+        DtGrid = Lo.GetDashboardData("Unit", txtsearch.Text.Trim());
         if (DtGrid.Rows.Count > 0)
         {
             if (RefNo != "")
@@ -187,28 +165,10 @@ public partial class Admin_ViewDashboard : System.Web.UI.Page
     }
     protected void BindEmployee(string RefNo)
     {
-        if (RefNo == "")
-        {
-            DtGrid = Lo.GetDashboardData("Employee", "");
-        }
-        else
-        {
-            DtGrid = Lo.GetDashboardData("Employee", RefNo);
-        }
+        DtGrid = Lo.GetDashboardData("Employee", txtsearch.Text.Trim());
         if (DtGrid.Rows.Count > 0)
         {
-            for (int a = 0; a < DtGrid.Rows.Count; a++)
-            {
-                if (DtGrid.Rows[a]["UCompany"].ToString() != "")
-                {
-                    DtGrid.Rows[a]["CompanyName"] = DtGrid.Rows[a]["UCompany"];
-                    DtGrid.Rows[a]["FactoryName"] = DtGrid.Rows[a]["UFactory"];
-                }
-                else if (DtGrid.Rows[a]["FCompany"].ToString() != "")
-                {
-                    DtGrid.Rows[a]["CompanyName"] = DtGrid.Rows[a]["FCompany"];
-                }
-            }
+            this.UpdateDtGridValue();
             if (RefNo != "")
             {
                 DataView dv = new DataView(DtGrid);
@@ -236,26 +196,10 @@ public partial class Admin_ViewDashboard : System.Web.UI.Page
     }
     protected void BindProduct(string RefNo)
     {
-        if (RefNo == "")
-        {
-            DtGrid = Lo.GetDashboardData("Product", "");
-        }
-        else
-        { DtGrid = Lo.GetDashboardData("Product", RefNo); }
+        DtGrid = Lo.GetDashboardData("Product", txtsearch.Text.Trim());
         if (DtGrid.Rows.Count > 0)
         {
-            for (int a = 0; a < DtGrid.Rows.Count; a++)
-            {
-                if (DtGrid.Rows[a]["UCompany"].ToString() != "")
-                {
-                    DtGrid.Rows[a]["CompanyName"] = DtGrid.Rows[a]["UCompany"];
-                    DtGrid.Rows[a]["FactoryName"] = DtGrid.Rows[a]["UFactory"];
-                }
-                else if (DtGrid.Rows[a]["FCompany"].ToString() != "")
-                {
-                    DtGrid.Rows[a]["CompanyName"] = DtGrid.Rows[a]["FCompany"];
-                }
-            }
+            this.UpdateDtGridValue();
             if (RefNo != "")
             {
                 DataView dv = new DataView(DtGrid);
@@ -518,7 +462,7 @@ public partial class Admin_ViewDashboard : System.Web.UI.Page
             {
                 lbltesting.Text = Testing.Substring(1).ToString();
             }
-            lbltestingremarks.Text = DtView.Rows[0]["Remarks"].ToString();
+            lbltestingremarks.Text = DtView.Rows[0]["TestingRemarks"].ToString();
             DataTable dtcertification = Lo.RetriveProductCode("", e.CommandArgument.ToString(), "ProductCertification", "");
             if (dtcertification.Rows.Count > 0)
             {
@@ -531,7 +475,7 @@ public partial class Admin_ViewDashboard : System.Web.UI.Page
             {
                 lblcertification.Text = Certification.Substring(1).ToString();
             }
-            lblcertificationremarks.Text = DtView.Rows[0]["Remarks"].ToString();
+            lblcertificationremarks.Text = DtView.Rows[0]["CertificationRemark"].ToString();
             ScriptManager.RegisterStartupScript(this, GetType(), "ProductCompany", "showPopup4();", true);
         }
     }
@@ -607,13 +551,27 @@ public partial class Admin_ViewDashboard : System.Web.UI.Page
     }
     protected void btnseach_Click(object sender, EventArgs e)
     {
-        if (txtsearch.Text != "")
-        {
+        if (Encrypt.DecryptData(Session["Type"].ToString()) == "Admin" || Encrypt.DecryptData(Session["Type"].ToString()) == "SuperAdmin")
             this.ControlGrid(Encrypt.DecryptData(Request.QueryString["id"].ToString()), "");
-        }
         else
+            this.ControlGrid(Encrypt.DecryptData(Request.QueryString["id"].ToString()), Session["CompanyRefNo"].ToString());
+    }
+    protected void UpdateDtGridValue()
+    {
+        for (int a = 0; a < DtGrid.Rows.Count; a++)
         {
-            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Please enter any one (Name,emailcompany/division/unit name)", true);
+            if (DtGrid.Rows[a]["UCompany"].ToString() != "")
+            {
+                DtGrid.Rows[a]["CompanyName"] = DtGrid.Rows[a]["UCompany"];
+                DtGrid.Rows[a]["FactoryName"] = DtGrid.Rows[a]["UFactory"];
+                DtGrid.Rows[a]["CompanyRefNo"] = DtGrid.Rows[a]["UCompRefNo"];
+                DtGrid.Rows[a]["FactoryRefNo"] = DtGrid.Rows[a]["UFactoryRefNo"];
+            }
+            else if (DtGrid.Rows[a]["FCompany"].ToString() != "")
+            {
+                DtGrid.Rows[a]["CompanyName"] = DtGrid.Rows[a]["FCompany"];
+                DtGrid.Rows[a]["CompanyRefNo"] = DtGrid.Rows[a]["FCompRefNo"];
+            }
         }
     }
 }

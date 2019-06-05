@@ -18,7 +18,6 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
     private string mRefNo = "";
     protected void Page_Load(object sender, EventArgs e)
     {
-
         if (!IsPostBack)
         {
             if (Session["Type"].ToString() != null || Session["User"] != null)
@@ -58,11 +57,10 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
             }
             else
             {
-                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert",
+                ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert",
                     "alert('Session Expire,Please login again');window.location='Login'", true);
             }
         }
-
     }
     protected void btnAddProduct_Click(object sender, EventArgs e)
     {
@@ -72,160 +70,60 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
 
     }
     #region Load
+    protected void UpdateDtGridValue()
+    {
+        for (int a = 0; a < DtGrid.Rows.Count; a++)
+        {
+            if (DtGrid.Rows[a]["UCompany"].ToString() != "")
+            {
+                DtGrid.Rows[a]["CompanyName"] = DtGrid.Rows[a]["UCompany"];
+                DtGrid.Rows[a]["FactoryName"] = DtGrid.Rows[a]["UFactory"];
+                DtGrid.Rows[a]["CompanyRefNo"] = DtGrid.Rows[a]["UCompRefNo"];
+                DtGrid.Rows[a]["FactoryRefNo"] = DtGrid.Rows[a]["UFactoryRefNo"];
+            }
+            else if (DtGrid.Rows[a]["FCompany"].ToString() != "")
+            {
+                DtGrid.Rows[a]["CompanyName"] = DtGrid.Rows[a]["FCompany"];
+                DtGrid.Rows[a]["CompanyRefNo"] = DtGrid.Rows[a]["FCompRefNo"];
+            }
+        }
+    }
     protected void BindGridView(string sortExpression = null)
     {
         try
         {
-            if (hidType.Value == "SuperAdmin" || hidType.Value == "Admin")
+            DtGrid = Lo.GetDashboardData("Product", "");          
+            if (DtGrid.Rows.Count > 0)
             {
-                if (ddlcompany.SelectedItem.Text != "Select" && ddldivision.Visible == false)
+                this.UpdateDtGridValue();
+                DataView dv = new DataView(DtGrid);
+                dv.RowFilter = "CompanyRefNo='" + ddlcompany.SelectedItem.Value + "'";
+                DataTable dtnew = dv.ToTable();
+                if (dtnew.Rows.Count > 0)
                 {
-                    DtGrid = Lo.RetriveProductCode(ddlcompany.SelectedItem.Value, "", "CompanyProduct", "Company");
-
-                }
-                else if (ddlcompany.SelectedItem.Text != "Select" && ddldivision.SelectedItem.Text != "Select")
-                {
-                    DtGrid = Lo.RetriveProductCode(ddldivision.SelectedItem.Value, "", "CompanyProduct", "Division");
-                }
-                else if (ddlcompany.SelectedItem.Text != "Select" && ddldivision.SelectedItem.Text != "Select" && ddlunit.SelectedItem.Text != "Select")
-                {
-                    DtGrid = Lo.RetriveProductCode(ddlunit.SelectedItem.Value, "", "CompanyProduct", "Unit");
-                }
-                if (DtGrid.Rows.Count > 0)
-                {
-                    gvproduct.DataSource = DtGrid;
+                    if (ddlcompany.SelectedItem.Text != "Select" && ddldivision.SelectedItem.Text != "Select" && ddlunit.SelectedItem.Text != "Select")
+                    {
+                        dv.RowFilter = "UnitName='" + ddlunit.SelectedItem.Text + "'";
+                    }
+                    else if (ddlcompany.SelectedItem.Text != "Select" && ddldivision.SelectedItem.Text != "Select")
+                    {
+                        dv.RowFilter = "FactoryName='" + ddldivision.SelectedItem.Text + "'";
+                    }
+                    else if (ddlcompany.SelectedItem.Text != "Select" && ddldivision.Visible == false || ddldivision.SelectedItem.Text == "Select")
+                    {
+                        dv.RowFilter = "CompanyName='" + ddlcompany.SelectedItem.Text + "'";
+                    }
+                    dv.Sort = "CompanyName asc,FactoryName asc";
+                    gvproduct.DataSource = dv.ToTable();
                     gvproduct.DataBind();
                     gvproduct.Visible = true;
                 }
                 else
-                {
-                    gvproduct.Visible = false;
-                }
+                { gvproduct.Visible = false; }
             }
-            else if (hidType.Value == "Company")
+            else
             {
-                if (ddlcompany.SelectedItem.Text != "Select")
-                {
-                    //  DtGrid = Lo.RetriveProductCode(ddlcompany.SelectedItem.Value, "", "CompanyProduct", hidType.Value);
-                    DtGrid = Lo.GetDashboardData("Product", ddlcompany.SelectedItem.Value);
-                }
-                if (DtGrid.Rows.Count > 0)
-                {
-                    for (int a = 0; a < DtGrid.Rows.Count; a++)
-                    {
-                        if (DtGrid.Rows[a]["UCompany"].ToString() != "")
-                        {
-                            DtGrid.Rows[a]["CompanyName"] = DtGrid.Rows[a]["UCompany"];
-                            DtGrid.Rows[a]["FactoryName"] = DtGrid.Rows[a]["UFactory"];
-                        }
-                        else if (DtGrid.Rows[a]["FCompany"].ToString() != "")
-                        {
-                            DtGrid.Rows[a]["CompanyName"] = DtGrid.Rows[a]["FCompany"];
-                        }
-                    }
-                    DataView dv = new DataView(DtGrid);
-                    dv.RowFilter = "CompanyName='" + ddlcompany.SelectedItem.Text + "'";
-                    DataTable dtnew = dv.ToTable();
-                    if (dtnew.Rows.Count > 0)
-                    {
-                        dv.RowFilter = "CompanyName='" + dtnew.Rows[0]["CompanyName"].ToString() + "'";
-                        dv.Sort = "CompanyName asc,FactoryName asc";
-                        gvproduct.DataSource = dv.ToTable();
-                        //  gvproduct.DataSource = DtGrid;
-                        gvproduct.DataBind();
-                        gvproduct.Visible = true;
-                    }
-                    else
-                    { gvproduct.Visible = false; }
-                }
-                else
-                {
-                    gvproduct.Visible = false;
-                }
-            }
-            else if (hidType.Value == "Factory" || hidType.Value == "Division")
-            {
-                if (ddlcompany.SelectedItem.Text != "Select" && ddldivision.SelectedItem.Value != "Select")
-                {
-                    // DtGrid = Lo.RetriveProductCode(ddldivision.SelectedItem.Value, "", "CompanyProduct", hidType.Value);
-                    DtGrid = Lo.GetDashboardData("Product", ddldivision.SelectedItem.Value);
-                }
-                if (DtGrid.Rows.Count > 0)
-                {
-                    for (int a = 0; a < DtGrid.Rows.Count; a++)
-                    {
-                        if (DtGrid.Rows[a]["UCompany"].ToString() != "")
-                        {
-                            DtGrid.Rows[a]["CompanyName"] = DtGrid.Rows[a]["UCompany"];
-                            DtGrid.Rows[a]["FactoryName"] = DtGrid.Rows[a]["UFactory"];
-                        }
-                        else if (DtGrid.Rows[a]["FCompany"].ToString() != "")
-                        {
-                            DtGrid.Rows[a]["CompanyName"] = DtGrid.Rows[a]["FCompany"];
-                        }
-                    }
-                    DataView dv = new DataView(DtGrid);
-                    dv.RowFilter = "FactoryName='" + ddldivision.SelectedItem.Text + "'";
-                    DataTable dtnew = dv.ToTable();
-                    if (dtnew.Rows.Count > 0)
-                    {
-                        dv.RowFilter = "FactoryName='" + dtnew.Rows[0]["FactoryName"].ToString() + "'";
-                        dv.Sort = "CompanyName asc,FactoryName asc";
-                        gvproduct.DataSource = dv.ToTable();
-                        //gvproduct.DataSource = DtGrid;
-                        gvproduct.DataBind();
-                        gvproduct.Visible = true;
-                        ddlcompany.Enabled = false;
-                    }
-                    else
-                    { gvproduct.Visible = false; }
-                }
-                else
-                {
-                    ddldivision.Enabled = true;
-                    gvproduct.Visible = false;
-                }
-            }
-            else if (hidType.Value == "Unit")
-            {
-                if (ddlcompany.SelectedItem.Text != "Select" && ddldivision.SelectedItem.Value != "Select" && ddlunit.SelectedItem.Text != "Select")
-                {
-                    //  DtGrid = Lo.RetriveProductCode(ddlunit.SelectedItem.Value, "", "CompanyProduct", hidType.Value);
-                    DtGrid = Lo.GetDashboardData("Product", ddlunit.SelectedItem.Value);
-                }
-                if (DtGrid.Rows.Count > 0)
-                {
-                    for (int a = 0; a < DtGrid.Rows.Count; a++)
-                    {
-                        if (DtGrid.Rows[a]["UCompany"].ToString() != "")
-                        {
-                            DtGrid.Rows[a]["CompanyName"] = DtGrid.Rows[a]["UCompany"];
-                            DtGrid.Rows[a]["FactoryName"] = DtGrid.Rows[a]["UFactory"];
-                        }
-                        else if (DtGrid.Rows[a]["FCompany"].ToString() != "")
-                        {
-                            DtGrid.Rows[a]["CompanyName"] = DtGrid.Rows[a]["FCompany"];
-                        }
-                    }
-                    DataView dv = new DataView(DtGrid);
-                    dv.RowFilter = "UnitName='" + ddlunit.SelectedItem.Text + "'";
-                    DataTable dtnew = dv.ToTable();
-                    if (dtnew.Rows.Count > 0)
-                    {
-                        dv.RowFilter = "UnitName='" + dtnew.Rows[0]["UnitName"].ToString() + "'";
-                        dv.Sort = "CompanyName asc,FactoryName asc,UnitName asc";
-                        gvproduct.DataSource = dv.ToTable();
-                        // gvproduct.DataSource = DtGrid;
-                        gvproduct.DataBind();
-                        gvproduct.Visible = true;
-                    }
-                    else
-                    { gvproduct.Visible = false; }
-                }
-                else
-                {
-                    gvproduct.Visible = false;
-                }
+                gvproduct.Visible = false;
             }
         }
         catch (Exception ex)
@@ -257,6 +155,7 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
     private string Financial;
     private string Testing;
     private string Certification;
+    private string mhiddenRefNo;
     protected void gvproduct_RowCommand(object sender, GridViewCommandEventArgs e)
     {
         if (e.CommandName == "EditComp")
@@ -265,9 +164,19 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
             int rowIndex = gvr.RowIndex;
             string Role = (gvproduct.Rows[rowIndex].FindControl("hfrole") as HiddenField).Value;
             string CRefNo = (gvproduct.Rows[rowIndex].FindControl("hfcomprefno") as HiddenField).Value;
+            string FRefNo = (gvproduct.Rows[rowIndex].FindControl("hfdivisionrefno") as HiddenField).Value;
+            string URefNo = (gvproduct.Rows[rowIndex].FindControl("hfunitrefno") as HiddenField).Value;
+            if (URefNo != "")
+            {
+                mhiddenRefNo = URefNo.ToString();
+            }
+            else if (FRefNo != "")
+            { mhiddenRefNo = FRefNo.ToString(); }
+            else if (CRefNo != "" && FRefNo == "")
+            { mhiddenRefNo = CRefNo.ToString(); }
             string stridNew = Request.QueryString["id"].ToString().Replace(" ", "+");
             string mstrid = objEnc.EncryptData((objEnc.DecryptData(stridNew) + " >> Edit Product"));
-            Response.Redirect("AddProduct?mrcreaterole=" + HttpUtility.UrlEncode(objEnc.EncryptData(Role.Trim())) + "&mcurrentcompRefNo= " + HttpUtility.UrlEncode(objEnc.EncryptData(CRefNo.Trim())) + "&MProductRefNo=" + HttpUtility.UrlEncode((objEnc.EncryptData(e.CommandArgument.ToString().Trim()))) + "&id=" + mstrid.Trim());
+            Response.Redirect("AddProduct?mrcreaterole=" + HttpUtility.UrlEncode(objEnc.EncryptData(Role.Trim())) + "&mcurrentcompRefNo= " + HttpUtility.UrlEncode(objEnc.EncryptData(mhiddenRefNo.Trim())) + "&MProductRefNo=" + HttpUtility.UrlEncode((objEnc.EncryptData(e.CommandArgument.ToString().Trim()))) + "&id=" + mstrid.Trim());
         }
         else if (e.CommandName == "ViewComp")
         {
@@ -434,7 +343,7 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
                 {
                     lbltesting.Text = Testing.Substring(1).ToString();
                 }
-                lbltestingremarks.Text = DtView.Rows[0]["Remarks"].ToString();
+                lbltestingremarks.Text = DtView.Rows[0]["TestingRemarks"].ToString();
                 DataTable dtcertification = Lo.RetriveProductCode("", e.CommandArgument.ToString(), "ProductCertification", hidType.Value);
                 if (dtcertification.Rows.Count > 0)
                 {
@@ -447,7 +356,7 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
                 {
                     lblcertification.Text = Certification.Substring(1).ToString();
                 }
-                lblcertificationremarks.Text = DtView.Rows[0]["Remarks"].ToString();
+                lblcertificationremarks.Text = DtView.Rows[0]["CertificationRemark"].ToString();
                 ScriptManager.RegisterStartupScript(this, GetType(), "changePass", "showPopup();", true);
             }
         }

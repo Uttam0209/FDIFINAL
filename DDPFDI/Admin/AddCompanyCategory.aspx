@@ -48,6 +48,14 @@
                 </div>
             </div>
             <div class="row">
+                <div class="col-md-12">
+                    <div class="clearfix"></div>
+                    <div style="margin-top: 5px;">
+                        <a class="fa fa-arrow-circle-left pull-right" href="javascript: history.go(-1)">&nbsp; &nbsp;Back</a>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                 <div class="clearfix" style="margin-bottom:10px;"></div>
                 <asp:UpdatePanel runat="server" ID="updrop">
                     <ContentTemplate>
                         <div class="col-md-4">
@@ -58,8 +66,8 @@
                         </div>
                     </ContentTemplate>
                 </asp:UpdatePanel>
-            </div>
-            <div class="section-pannel">
+    </div>
+    <div class="section-pannel">
                 <div class="row">
                     <asp:UpdatePanel runat="server" ID="up">
                         <ContentTemplate>

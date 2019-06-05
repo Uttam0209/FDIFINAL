@@ -18,7 +18,7 @@
                             <div class="col-md-12">
                                 <div class="clearfix"></div>
                                 <div style="margin-top: 5px;">
-                                    <a class="fa fa-arrow-circle-left pull-right" href='<%=ResolveUrl("~/Master-Category") %>'>&nbsp; &nbsp;Back</a>
+                                    <a class="fa fa-arrow-circle-left pull-right" href="javascript: history.go(-1)">&nbsp; &nbsp;Back</a>
                                 </div>
                                 <div class="clearfix"></div>
                                 <div class="row">

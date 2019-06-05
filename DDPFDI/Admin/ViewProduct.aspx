@@ -30,12 +30,18 @@
                         <div class="col-md-12 padding_0">
                             <div id="divHeadPage" runat="server"></div>
                         </div>
+                    <div class="col-md-12">
+                                <div class="clearfix"></div>
+                                <div style="margin-top: 5px;">
+                                    <a class="fa fa-arrow-circle-left pull-right" href="javascript: history.go(-1)">&nbsp; &nbsp;Back</a>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
                     </div>
+
+                     <div class="clearfix" style="margin-bottom:10px;"></div>
                     <div class="clearfix"></div>
-                    <%--<div style="margin-top: 5px;">
-                        <a class="fa fa-arrow-circle-left pull-right" href='<%=ResolveUrl("~/View-Product") %>'>&nbsp; &nbsp;Back</a>
-                    </div>--%>
-                    <div class="clearfix"></div>
+                   
                     <div id="Div3">
                         <asp:Button ID="btnAddProduct" runat="server" Text="Add Product" Visible="False" CssClass="btn btn-primary pull-right" OnClick="btnAddProduct_Click" />
                     </div>
@@ -93,6 +99,8 @@
                                                     <asp:Label runat="server" ID="lblcompanyrole" Text='<%#Eval("OEMPartNumber") %>'></asp:Label>
                                                     <asp:HiddenField ID="hfrole" runat="server" Value='<%#Eval("Role") %>' />
                                                     <asp:HiddenField ID="hfcomprefno" runat="server" Value='<%#Eval("CompanyRefNo") %>' />
+                                                    <asp:HiddenField ID="hfdivisionrefno" runat="server" Value='<%#Eval("FactoryRefNo") %>' />
+                                                    <asp:HiddenField ID="hfunitrefno" runat="server" Value='<%#Eval("UnitRefNo") %>' />
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="DPSUPartNumber" Visible="false">
@@ -117,7 +125,7 @@
                 <div class="footer">© 2019 <a href="#">Department of Defence Production</a> </div>
             </div>
             <div class="modal fade" id="changePass" role="dialog">
-                <div class="modal-dialog" style="width: 1100px; z-index: 9999999999;">
+                <div class="modal-dialog" style="width: 1200px; z-index: 9999999999;">
                     <!-- Modal content-->
                     <div class="modal-content">
                         <div class="modal-header modal-header1">
@@ -407,6 +415,7 @@
                                                         <tbody>
                                                             <tr>
                                                                 <th class="pass">Employee Code</th>
+                                                                <th class="pass">Employee Name</th>
                                                                 <th class="pass">Designation</th>
                                                                 <th class="pass">E-Mail ID</th>
                                                                 <th class="pass">Mobile Number</th>
@@ -417,7 +426,9 @@
                                                                 <td>
                                                                     <asp:Label ID="lblempcode" runat="server"></asp:Label>
                                                                 </td>
-
+                                                                <td>
+                                                                    <asp:Label ID="lblempname" runat="server"></asp:Label>
+                                                                </td>
                                                                 <td>
                                                                     <asp:Label ID="lbldesignation" runat="server"></asp:Label>
                                                                 </td>

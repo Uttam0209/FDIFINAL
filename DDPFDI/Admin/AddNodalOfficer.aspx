@@ -11,7 +11,7 @@
                 }
             }
         }
-</script>
+    </script>
     <div class="content oem-content">
         <asp:ScriptManager ID="sc" runat="server"></asp:ScriptManager>
         <asp:UpdatePanel runat="server" ID="updatepan">
@@ -23,7 +23,15 @@
                         <div class="col-mod-12 padding_0">
                             <div id="divHeadPage" runat="server"></div>
                         </div>
+                        <div class="col-md-12">
+                            <div class="clearfix"></div>
+                            <div style="margin-top: 5px;">
+                                <a class="fa fa-arrow-circle-left pull-right" href="javascript: history.go(-1)">&nbsp; &nbsp;Back</a>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
                     </div>
+                    <div class="clearfix" style="margin-bottom: 10px;"></div>
                     <div class="NodalOfficer">
                         <div class="row">
                             <div class="col-md-4">
@@ -101,7 +109,7 @@
                                                 <div class="form-group">
                                                     <asp:CheckBoxList runat="server" Style="margin-left: 20px;" CssClass="checkbox-inline" ID="chkrole" TabIndex="8" ToolTip="If you want to give login access please select nodel or user/if check is not selected it will be default employee." AutoPostBack="True">
                                                         <asp:ListItem Text="Nodal Officer" onclick="MutExChkList(this);" Value="1"></asp:ListItem>
-                                                        <asp:ListItem Text="User" Value="2" onclick="MutExChkList(this);" ></asp:ListItem>
+                                                        <asp:ListItem Text="User" Value="2" onclick="MutExChkList(this);"></asp:ListItem>
                                                     </asp:CheckBoxList>
                                                 </div>
                                             </div>
@@ -117,6 +125,12 @@
                                     </div>
                                 </asp:Panel>
                             </div>
+                            <div class="clearfix"></div>
+                            <div id="divTotalNumber" class="text-center" style="font-size: 16px; margin-top: 10px;" runat="server" visible="False">
+
+                                <asp:Label ID="lbltotal" runat="server" Text=""></asp:Label>
+                            </div>
+                            <div class="clearfix"></div>
                             <div class="table-wraper">
                                 <asp:GridView ID="gvViewNodalOfficer" runat="server" Width="100%" Class="commonAjaxTbl master-company-table table display responsive no-wrap table-hover manage-user Grid"
                                     AutoGenerateColumns="false" AllowPaging="true" PageSize="25" AllowSorting="true" OnRowDataBound="gvViewNodalOfficer_RowDataBound">
