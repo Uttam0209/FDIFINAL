@@ -1416,7 +1416,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         {
             if (ddlsubtech.SelectedItem.Text != "Select" && ddlnomnclature.SelectedItem.Text != "Select" && ddlenduser.SelectedItem.Text != "Select" && ddlplatform.SelectedItem.Text != "Select")
             {
-                if (ddlprocurmentcategory.SelectedItem.Text != "Select")
+                if (ddlprocurmentcategory.SelectedItem.Text != "Select" && ddlcountry.SelectedItem.Text!="Select")
                 {
                     SaveProductDescription();
                 }

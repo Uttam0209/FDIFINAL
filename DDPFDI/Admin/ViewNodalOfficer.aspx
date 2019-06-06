@@ -125,7 +125,7 @@
                                             </asp:TemplateField>
                                             <asp:BoundField DataField="FactoryName" HeaderText="Division" NullDisplayText="-" />
                                             <asp:BoundField DataField="UnitName" HeaderText="Unit" NullDisplayText="-" />
-                                            <asp:BoundField DataField="CreatedBy" HeaderText="Create By" NullDisplayText="-" />
+                                            <asp:BoundField DataField="CreatedBy" HeaderText="Created By" NullDisplayText="-" />
                                             <asp:TemplateField HeaderText="Action">
                                                 <ItemTemplate>
                                                     <asp:LinkButton ID="lblview" runat="server" ToolTip="View Detail of Nodal Officer/Employee" CssClass="fa fa-eye" CommandName="ViewComp" CommandArgument='<%#Eval("NodalOfficerID") %>'></asp:LinkButton>

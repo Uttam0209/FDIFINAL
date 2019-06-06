@@ -94,9 +94,15 @@
                                             </asp:TemplateField>
                                             <asp:BoundField DataField="ProductDescription" HeaderText="Item Description" ItemStyle-Wrap="true" ItemStyle-Width="150" NullDisplayText="#" SortExpression="Description" />
                                             <asp:BoundField DataField="CompanyRefNo" HeaderText="Company Reference No" Visible="false" NullDisplayText="#" SortExpression="CompanyRefNo" />
-                                            <asp:TemplateField HeaderText="OEM PartNumber">
+                                            
+                                            <asp:TemplateField HeaderText="OEM PartNumber" Visible="false">
                                                 <ItemTemplate>
                                                     <asp:Label runat="server" ID="lblcompanyrole" Text='<%#Eval("OEMPartNumber") %>'></asp:Label>
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField HeaderText="Last Updated">
+                                                <ItemTemplate>
+                                                    <asp:Label runat="server" ID="lblLastUpdated" Text='<%#Eval("LastUpdated") %>'></asp:Label>
                                                     <asp:HiddenField ID="hfrole" runat="server" Value='<%#Eval("Role") %>' />
                                                     <asp:HiddenField ID="hfcomprefno" runat="server" Value='<%#Eval("CompanyRefNo") %>' />
                                                     <asp:HiddenField ID="hfdivisionrefno" runat="server" Value='<%#Eval("FactoryRefNo") %>' />
