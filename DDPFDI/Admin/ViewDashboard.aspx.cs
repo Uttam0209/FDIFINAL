@@ -91,14 +91,7 @@ public partial class Admin_ViewDashboard : System.Web.UI.Page
     }
     protected void BindCompany(string RefNo)
     {
-        if (RefNo == "")
-        {
-            DtGrid = Lo.GetDashboardData("Company", "");
-        }
-        else
-        {
-            DtGrid = Lo.GetDashboardData("Company", RefNo);
-        }
+        DtGrid = Lo.GetDashboardData("Company", txtsearch.Text.Trim());
         if (DtGrid.Rows.Count > 0)
         {
             if (RefNo != "")
@@ -123,14 +116,7 @@ public partial class Admin_ViewDashboard : System.Web.UI.Page
     }
     protected void BindDivision(string RefNo)
     {
-        if (RefNo == "")
-        {
-            DtGrid = Lo.GetDashboardData("Division", "");
-        }
-        else
-        {
-            DtGrid = Lo.GetDashboardData("Division", RefNo);
-        }
+        DtGrid = Lo.GetDashboardData("Division", txtsearch.Text.Trim());
         if (DtGrid.Rows.Count > 0)
         {
             if (RefNo != "")
@@ -155,14 +141,8 @@ public partial class Admin_ViewDashboard : System.Web.UI.Page
     }
     protected void BindUnit(string RefNo)
     {
-        if (RefNo == "")
-        {
-            DtGrid = Lo.GetDashboardData("Unit", "");
-        }
-        else
-        {
-            DtGrid = Lo.GetDashboardData("Unit", RefNo);
-        }
+        DtGrid = Lo.GetDashboardData("Unit", txtsearch.Text.Trim());
+
         if (DtGrid.Rows.Count > 0)
         {
             if (RefNo != "")
@@ -576,7 +556,7 @@ public partial class Admin_ViewDashboard : System.Web.UI.Page
         if (Encrypt.DecryptData(Session["Type"].ToString()) == "Admin" || Encrypt.DecryptData(Session["Type"].ToString()) == "SuperAdmin")
             this.ControlGrid(Encrypt.DecryptData(Request.QueryString["id"].ToString()), "");
         else
-            this.ControlGrid(Encrypt.DecryptData(Request.QueryString["id"].ToString()), Session["CompanyRefNo"].ToString()); 
+            this.ControlGrid(Encrypt.DecryptData(Request.QueryString["id"].ToString()), Session["CompanyRefNo"].ToString());
     }
 
     protected void UpdateDtGridValue()
