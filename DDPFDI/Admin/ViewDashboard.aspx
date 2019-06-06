@@ -37,15 +37,21 @@
                         <div class="col-md-12 padding_0">
                             <div id="divHeadPage" runat="server"></div>
                         </div>
+                        <div class="col-md-12">
+                            <div class="clearfix"></div>
+                            <div style="margin-top: 5px;">
+                                <a class="fa fa-arrow-circle-left pull-right" href="javascript: history.go(-1)">&nbsp; &nbsp;Back</a>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
                     </div>
+
+                    <div class="clearfix" style="margin-bottom: 10px;"></div>
                     <form method="post" class="addfdi">
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="clearfix"></div>
-                                <div style="margin-top: 5px;">
-                                    <a class="fa fa-arrow-circle-left pull-right" href='<%=ResolveUrl("~/Dashboard") %>'>&nbsp; &nbsp;Back</a>
-                                </div>
-                                <div class="clearfix"></div>
+
                                 <div>
                                     <div class="col-md-6">
                                         <div class="form-group">
@@ -771,7 +777,7 @@
                 </div>
             </div>
             <div class="modal fade" id="ProductCompany" role="dialog">
-                <div class="modal-dialog" style="width: 1100px; z-index: 9999999999;">
+                <div class="modal-dialog" style="width: 1200px; z-index: 9999999999;">
                     <!-- Modal content-->
                     <div class="modal-content">
                         <div class="modal-header modal-header1">

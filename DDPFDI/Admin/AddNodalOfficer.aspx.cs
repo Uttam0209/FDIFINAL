@@ -73,13 +73,13 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
             }
             else
             {
-                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert",
+                ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert",
                     "alert('Session Expire,Please login again');window.location='Login'", true);
             }
         }
     }
     #region Load
-    protected void BindEmployee()
+    protected void BindEmployee(string mRoleEmployee)
 
     {
         DataTable DtGrid = Lo.GetDashboardData("Employee","");
@@ -98,30 +98,31 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
                 }
             }
             DataView dv = new DataView(DtGrid);
-            dv.RowFilter = "CompanyName='" + ddlcompany.SelectedItem.Text + "'";
+            if (mRoleEmployee == "Company")
+            {
+                dv.RowFilter = "CompanyName='" + ddlcompany.SelectedItem.Text + "'";
+            }
+            else if (mRoleEmployee == "Division")
+            {
+                dv.RowFilter = "FactoryName='" + ddldivision.SelectedItem.Text + "'";
+            }
+            else if (mRoleEmployee == "Unit")
+            {
+                dv.RowFilter = "UnitName='" + ddlunit.SelectedItem.Text + "'";
+            }
             dv.Sort = "CompanyName asc,FactoryName asc";
             gvViewNodalOfficer.DataSource = dv.ToTable();
             gvViewNodalOfficer.DataBind();
-            //lbltotal.Text = "Total Records:- " + gvViewNodalOfficer.Rows.Count.ToString();
-            //divEmployeeNodalGrid.Visible = true;
+            lbltotal.Text = "Total Records:- " + gvViewNodalOfficer.Rows.Count.ToString();
+            divTotalNumber.Visible = true;
         }
-        //else
-        //divEmployeeNodalGrid.Visible = false;
+        else
+            divTotalNumber.Visible = false;
     }
     public void GridViewNodalOfficerBind(string mRefNo, string mRole)
     {
-        //DataTable DtGrid = Lo.RetriveAllNodalOfficer(mRefNo, mRole);
-        //if (DtGrid.Rows.Count > 0)
-        //{
-        //    gvViewNodalOfficer.DataSource = DtGrid;
-        //    gvViewNodalOfficer.DataBind();
-        //    gvViewNodalOfficer.Visible = true;
-        //}
-        //else
-        //{
-        //    gvViewNodalOfficer.Visible = false;
-        //}
-        BindEmployee();
+        
+        BindEmployee(mRole);
         //DataRow[] foundRows = DtGrid.Select("IsNodalOfficer='Y'");
         //if (foundRows.Length != 0)
         //{

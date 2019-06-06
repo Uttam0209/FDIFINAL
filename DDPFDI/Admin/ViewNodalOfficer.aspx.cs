@@ -9,8 +9,6 @@ using System.Text;
 using System.IO;
 using System.Web;
 
-
-
 public partial class Admin_ViewNodalOfficer : System.Web.UI.Page
 {
     Logic Lo = new Logic();
@@ -57,13 +55,13 @@ public partial class Admin_ViewNodalOfficer : System.Web.UI.Page
                 }
                 else
                 {
-                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert",
+                    ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert",
                         "alert('Session Expire,Please login again');window.location='Login'", true);
                 }
             }
             else
             {
-                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert",
+                ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert",
                     "alert('Session Expire,Please login again');window.location='Login'", true);
             }
         }
@@ -76,7 +74,7 @@ public partial class Admin_ViewNodalOfficer : System.Web.UI.Page
         Response.Redirect("Add-Nodal?mrcreaterole=" + objEnc.EncryptData(Role) + "&id=" + mstrid);
 
     }
-    protected void BindEmployee()
+    protected void BindEmployee(string mRoleEmployee)
     {
         DataTable DtGrid = Lo.GetDashboardData("Employee", "");
         if (DtGrid.Rows.Count > 0)
@@ -94,31 +92,30 @@ public partial class Admin_ViewNodalOfficer : System.Web.UI.Page
                 }
             }
             DataView dv = new DataView(DtGrid);
-            dv.RowFilter = "CompanyName='" + ddlcompany.SelectedItem.Text + "'";
+            if (mRoleEmployee == "Company")
+            {
+                dv.RowFilter = "CompanyName='" + ddlcompany.SelectedItem.Text + "'";
+            }
+            else if (mRoleEmployee == "Division")
+            {
+                dv.RowFilter = "FactoryName='" + ddldivision.SelectedItem.Text + "'";
+            }
+            else if (mRoleEmployee == "Unit")
+            {
+                dv.RowFilter = "UnitName='" + ddlunit.SelectedItem.Text + "'";
+            }
             dv.Sort = "CompanyName asc,FactoryName asc";
             gvViewNodalOfficer.DataSource = dv.ToTable();
             gvViewNodalOfficer.DataBind();
             lbltotal.Text = "Total Records:- " + gvViewNodalOfficer.Rows.Count.ToString();
-            //divEmployeeNodalGrid.Visible = true;
+            divTotalNumber.Visible = true;
         }
-        //else
-        //divEmployeeNodalGrid.Visible = false;
+        else
+            divTotalNumber.Visible = false;
     }
     public void GridViewNodalOfficerBind(string mRefNo, string mRole)
     {
-        //DataTable DtGrid = Lo.RetriveAllNodalOfficer(mRefNo, mRole);
-        //if (DtGrid.Rows.Count > 0)
-        //{
-        //    gvViewNodalOfficer.DataSource = DtGrid;
-        //    gvViewNodalOfficer.DataBind();
-        //    gvViewNodalOfficer.Visible = true;
-        //}
-        //else
-        //{
-        //    gvViewNodalOfficer.Visible = false;
-        //}
-
-        BindEmployee();
+        BindEmployee(mRole);
     }
     protected void BindCompany()
     {
@@ -477,5 +474,4 @@ public partial class Admin_ViewNodalOfficer : System.Web.UI.Page
         return res.ToString();
     }
     #endregion
-
 }

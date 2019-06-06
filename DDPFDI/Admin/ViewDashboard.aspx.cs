@@ -26,11 +26,11 @@ public partial class Admin_ViewDashboard : System.Web.UI.Page
             }
             else
             {
-                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert",
-                    "alert('Session Expire,Please login again');window.location='Login'", true);
+                ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "alert('Session Expire,Please login again');window.location='Login'", true);
             }
         }
     }
+
     private void ControlGrid(string mVal, string RefNo)
     {
 
@@ -89,6 +89,7 @@ public partial class Admin_ViewDashboard : System.Web.UI.Page
         }
 
     }
+
     protected void BindCompany(string RefNo)
     {
         DtGrid = Lo.GetDashboardData("Company", txtsearch.Text.Trim());
@@ -97,7 +98,15 @@ public partial class Admin_ViewDashboard : System.Web.UI.Page
             if (RefNo != "")
             {
                 DataView dv = new DataView(DtGrid);
-                dv.RowFilter = "CompanyRefNo='" + RefNo + "'";
+                //code to filter role wise 
+                DataTable dtParentNode = Lo.RetriveParentNode(Encrypt.DecryptData(Session["Type"].ToString()).ToUpper(), RefNo);
+                if (Encrypt.DecryptData(Session["Type"].ToString()).ToUpper() == "COMPANY")
+                    dv.RowFilter = "CompanyRefNo='" + RefNo + "'";
+                else if (Encrypt.DecryptData(Session["Type"].ToString()).ToUpper() == "DIVISION")
+                    dv.RowFilter = "CompanyRefNo='" + dtParentNode.Rows[0]["CompanyRefNo"].ToString() + "'";
+                else
+                    dv.RowFilter = "CompanyRefNo='" + dtParentNode.Rows[0]["CompanyRefNo"].ToString() + "'";
+
                 gvcompanydetail.DataSource = dv.ToTable();
                 gvcompanydetail.DataBind();
                 lbltotal.Text = "Total Records:- " + gvcompanydetail.Rows.Count.ToString();
@@ -114,6 +123,7 @@ public partial class Admin_ViewDashboard : System.Web.UI.Page
         else
             divcompanyGrid.Visible = false;
     }
+
     protected void BindDivision(string RefNo)
     {
         DtGrid = Lo.GetDashboardData("Division", txtsearch.Text.Trim());
@@ -122,7 +132,15 @@ public partial class Admin_ViewDashboard : System.Web.UI.Page
             if (RefNo != "")
             {
                 DataView dv = new DataView(DtGrid);
-                dv.RowFilter = "CompanyRefNo='" + RefNo + "'";
+                //code to filter role wise 
+                DataTable dtParentNode = Lo.RetriveParentNode(Encrypt.DecryptData(Session["Type"].ToString()).ToUpper(), RefNo);
+                if (Encrypt.DecryptData(Session["Type"].ToString()).ToUpper() == "COMPANY")
+                    dv.RowFilter = "CompanyRefNo='" + RefNo + "'";
+                else if (Encrypt.DecryptData(Session["Type"].ToString()).ToUpper() == "DIVISION")
+                    dv.RowFilter = "FactoryRefNo='" + dtParentNode.Rows[0]["FactoryRefNo"].ToString() + "'";
+                else
+                    dv.RowFilter = "UnitRefNo='" + dtParentNode.Rows[0]["UnitRefNo"].ToString() + "'";
+
                 gvfactory.DataSource = dv.ToTable();
                 gvfactory.DataBind();
                 lbltotal.Text = "Total Records:- " + gvfactory.Rows.Count.ToString();
@@ -139,16 +157,24 @@ public partial class Admin_ViewDashboard : System.Web.UI.Page
         else
             divfactorygrid.Visible = true;
     }
+
     protected void BindUnit(string RefNo)
     {
         DtGrid = Lo.GetDashboardData("Unit", txtsearch.Text.Trim());
-
         if (DtGrid.Rows.Count > 0)
         {
             if (RefNo != "")
             {
                 DataView dv = new DataView(DtGrid);
-                dv.RowFilter = "CompanyRefNo='" + RefNo + "'";
+                //code to filter role wise 
+                DataTable dtParentNode = Lo.RetriveParentNode(Encrypt.DecryptData(Session["Type"].ToString()).ToUpper(), RefNo);
+                if (Encrypt.DecryptData(Session["Type"].ToString()).ToUpper() == "COMPANY")
+                    dv.RowFilter = "CompanyRefNo='" + RefNo + "'";
+                else if (Encrypt.DecryptData(Session["Type"].ToString()).ToUpper() == "DIVISION")
+                    dv.RowFilter = "FactoryRefNo='" + dtParentNode.Rows[0]["FactoryRefNo"].ToString() + "'";
+                else
+                    dv.RowFilter = "UnitRefNo='" + dtParentNode.Rows[0]["UnitRefNo"].ToString() + "'";
+
                 gvunit.DataSource = dv.ToTable();
                 gvunit.DataBind();
                 lbltotal.Text = "Total Records:- " + gvunit.Rows.Count.ToString();
@@ -165,6 +191,7 @@ public partial class Admin_ViewDashboard : System.Web.UI.Page
         else
             divunitGrid.Visible = true;
     }
+
     protected void BindEmployee(string RefNo)
     {
         DtGrid = Lo.GetDashboardData("Employee", txtsearch.Text.Trim());
@@ -174,9 +201,14 @@ public partial class Admin_ViewDashboard : System.Web.UI.Page
             if (RefNo != "")
             {
                 DataView dv = new DataView(DtGrid);
-                dv.RowFilter = "CompanyRefNo='" + RefNo + "'";
-                DataTable dtnew = dv.ToTable();
-                dv.RowFilter = "CompanyName='" + dtnew.Rows[0]["CompanyName"].ToString() + "'";
+                 // code to filter row role wise
+                if (Encrypt.DecryptData(Session["Type"].ToString()).ToUpper() == "COMPANY")
+                    dv.RowFilter = "CompanyRefNo='" + RefNo + "'";
+                else if (Encrypt.DecryptData(Session["Type"].ToString()).ToUpper() == "DIVISION")
+                    dv.RowFilter = "FactoryRefNo='" + RefNo + "'";
+                else
+                    dv.RowFilter = "UnitRefNo='" + RefNo + "'";
+
                 dv.Sort = "CompanyName asc,FactoryName asc";
                 gvViewNodalOfficer.DataSource = dv.ToTable();
                 gvViewNodalOfficer.DataBind();
@@ -205,19 +237,19 @@ public partial class Admin_ViewDashboard : System.Web.UI.Page
             if (RefNo != "")
             {
                 DataView dv = new DataView(DtGrid);
-                dv.RowFilter = "CompanyRefNo='" + RefNo + "'";
-                DataTable dtnew = dv.ToTable();
-                if (dtnew.Rows.Count > 0)
-                {
-                    dv.RowFilter = "CompanyName='" + dtnew.Rows[0]["CompanyName"].ToString() + "'";
-                    dv.Sort = "CompanyName asc,FactoryName asc";
-                    gvproduct.DataSource = dv.ToTable();
-                    gvproduct.DataBind();
-                    lbltotal.Text = "Total Records:- " + gvproduct.Rows.Count.ToString();
-                    divProductGrid.Visible = true;
-                }
+              // code to filter row role wise
+                if (Encrypt.DecryptData(Session["Type"].ToString()).ToUpper() == "COMPANY")
+                    dv.RowFilter = "CompanyRefNo='" + RefNo + "'";
+                else if (Encrypt.DecryptData(Session["Type"].ToString()).ToUpper() == "DIVISION")
+                    dv.RowFilter = "FactoryRefNo='" + RefNo + "'";
                 else
-                { divProductGrid.Visible = false; }
+                    dv.RowFilter = "UnitRefNo='" + RefNo + "'";
+                dv.Sort = "CompanyName asc,FactoryName asc";
+
+                gvproduct.DataSource = dv.ToTable();
+                gvproduct.DataBind();
+                lbltotal.Text = "Total Records:- " + gvproduct.Rows.Count.ToString();
+                divProductGrid.Visible = true;
 
             }
             else
@@ -464,7 +496,7 @@ public partial class Admin_ViewDashboard : System.Web.UI.Page
             {
                 lbltesting.Text = Testing.Substring(1).ToString();
             }
-            lbltestingremarks.Text = DtView.Rows[0]["Remarks"].ToString();
+            lbltestingremarks.Text = DtView.Rows[0]["TestingRemarks"].ToString();
             DataTable dtcertification = Lo.RetriveProductCode("", e.CommandArgument.ToString(), "ProductCertification", "");
             if (dtcertification.Rows.Count > 0)
             {
@@ -477,7 +509,7 @@ public partial class Admin_ViewDashboard : System.Web.UI.Page
             {
                 lblcertification.Text = Certification.Substring(1).ToString();
             }
-            lblcertificationremarks.Text = DtView.Rows[0]["Remarks"].ToString();
+            lblcertificationremarks.Text = DtView.Rows[0]["CertificationRemark"].ToString();
             ScriptManager.RegisterStartupScript(this, GetType(), "ProductCompany", "showPopup4();", true);
         }
     }
@@ -558,7 +590,6 @@ public partial class Admin_ViewDashboard : System.Web.UI.Page
         else
             this.ControlGrid(Encrypt.DecryptData(Request.QueryString["id"].ToString()), Session["CompanyRefNo"].ToString());
     }
-
     protected void UpdateDtGridValue()
     {
         for (int a = 0; a < DtGrid.Rows.Count; a++)
