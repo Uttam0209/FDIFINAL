@@ -4,7 +4,8 @@
     <!----------------------------------jquery Show image on load------------------------------------------------>
 
     <style>
-        .gallery img {
+        .gallery img
+        {
             width: 100px;
             margin-right: 10px;
             border: 2px solid #333;
@@ -23,7 +24,15 @@
                 <div class="col-md-12 padding_0">
                     <div id="divHeadPage" runat="server"></div>
                 </div>
+                <div class="col-md-12">
+                    <div class="clearfix"></div>
+                    <div style="margin-top: 5px;">
+                        <a class="fa fa-arrow-circle-left pull-right" href="javascript: history.go(-1)">&nbsp; &nbsp;Back</a>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
             </div>
+            <div class="clearfix" style="margin-bottom: 10px;"></div>
             <div class="row">
                 <p style="position: absolute; right: 35px;">Mark with <span class="mandatory">*</span> is manadatory field.</p>
                 <asp:UpdatePanel runat="server" ID="updrop">

@@ -29,14 +29,20 @@
                         <div class="col-md-12 padding_0">
                             <div id="divHeadPage" runat="server"></div>
                         </div>
+                    <div class="col-md-12">
+                                <div class="clearfix"></div>
+                                <div style="margin-top: 5px;">
+                                    <a class="fa fa-arrow-circle-left pull-right" href="javascript: history.go(-1)">&nbsp; &nbsp;Back</a>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
                     </div>
+
+                     <div class="clearfix" style="margin-bottom:10px;"></div>
                     <form method="post" class="addfdi">
                         <div class="row">
                             <div class="col-md-12">
-                                <div class="clearfix"></div>
-                                <div style="margin-top: 5px;">
-                                    <a class="fa fa-arrow-circle-left pull-right" href='<%=ResolveUrl("~/Add-Nodal") %>'>&nbsp; &nbsp;Back</a>
-                                </div>
+                               
                                 <div class="clearfix"></div>
                                 <asp:HiddenField runat="server" ID="hfrole" />
                                 <div class="table-wrapper">
@@ -70,15 +76,16 @@
                                     </div>
                                 </div>
                                 <div class="clearfix"></div>
-                                <div id="Div2" class="text-center" style="font-size: 16px; margin-top: 10px;" runat="server" visible="False">
-                                    Total number of  Nodal Officer :<strong>
-                                        <asp:Label ID="lbltotal" runat="server" Text=""></asp:Label></strong>
+                                <div id="divTotalNumber" class="text-center" style="font-size: 16px; margin-top: 10px;" runat="server" visible="False">
+                                   
+                                        <asp:Label ID="lbltotal" runat="server" Text=""></asp:Label>
                                 </div>
                                 <div class="clearfix"></div>
                                 <div id="Div3">
                                     <asp:Button ID="btnAddNodalOfficer" runat="server" Text="Add Employee" Visible="False" CssClass="btn btn-primary pull-right" OnClick="btnAddNodalOfficer_Click" />
 
                                 </div>
+                               
                                 <div class="clearfix"></div>
                                 <div class="table-wraper">
                                     <asp:GridView ID="gvViewNodalOfficer" runat="server" Width="100%" Class="commonAjaxTbl master-company-table table display responsive no-wrap table-hover manage-user Grid" AutoGenerateColumns="false" AllowPaging="true"
@@ -118,10 +125,11 @@
                                             </asp:TemplateField>
                                             <asp:BoundField DataField="FactoryName" HeaderText="Division" NullDisplayText="-" />
                                             <asp:BoundField DataField="UnitName" HeaderText="Unit" NullDisplayText="-" />
-                                            <asp:BoundField DataField="CreatedBy" HeaderText="Create By" NullDisplayText="-" />
+                                            <asp:BoundField DataField="CreatedBy" HeaderText="Created By" NullDisplayText="-" />
                                             <asp:TemplateField HeaderText="Action">
                                                 <ItemTemplate>
                                                     <asp:LinkButton ID="lblview" runat="server" ToolTip="View Detail of Nodal Officer/Employee" CssClass="fa fa-eye" CommandName="ViewComp" CommandArgument='<%#Eval("NodalOfficerID") %>'></asp:LinkButton>
+                                                     <asp:HiddenField runat="server" ID="hfnodalrole" Value='<%#Eval("Type") %>' />
                                                     <asp:LinkButton ID="lbledit" runat="server" ToolTip="Edit or Update Nodal officer/Employee" CssClass="fa fa-edit" CommandName="EditComp" CommandArgument='<%#Eval("NodalOfficerID") %>'></asp:LinkButton>
                                                     <asp:LinkButton ID="lbldel" runat="server" Visible="False" CssClass="fa fa-trash" CommandName="DeleteComp" OnClientClick="return confirm('Are you sure you want to delete this Company?');" CommandArgument='<%#Eval("NodalOfficerID") %>'></asp:LinkButton>
                                                     <asp:LinkButton ID="lbllogindetail" runat="server" ToolTip="Send mail to create password" CssClass=" fa fa-paper-plane" CommandName="SendLogin" OnClientClick="return confirm('Are you sure you want to send login detail?');" CommandArgument='<%#Eval("NodalOfficerID") %>'></asp:LinkButton>

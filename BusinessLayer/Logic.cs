@@ -169,6 +169,10 @@ namespace BusinessLayer
         {
             return SqlHelper.Instance.GetDataTable("select * from fn_GetAggregateValue('" + action + "','" + role + "','" + refno + "')");
         }
+        public DataTable RetriveParentNode(string role, string refno)
+        {
+            return SqlHelper.Instance.GetDataTable("select * from fn_ParentNode('" + role + "','" + refno + "')");
+        }
         public DataTable RetriveAggregateValueWithParam(string function, string entity, string clmn, string val)
         {
             return SqlHelper.Instance.RetriveAggregateValueWithParam(function, entity, clmn, val);

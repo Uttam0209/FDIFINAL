@@ -37,15 +37,21 @@
                         <div class="col-md-12 padding_0">
                             <div id="divHeadPage" runat="server"></div>
                         </div>
+                        <div class="col-md-12">
+                            <div class="clearfix"></div>
+                            <div style="margin-top: 5px;">
+                                <a class="fa fa-arrow-circle-left pull-right" href="javascript: history.go(-1)">&nbsp; &nbsp;Back</a>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
                     </div>
+
+                    <div class="clearfix" style="margin-bottom: 10px;"></div>
                     <form method="post" class="addfdi">
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="clearfix"></div>
-                                <div style="margin-top: 5px;">
-                                    <a class="fa fa-arrow-circle-left pull-right" href='<%=ResolveUrl("~/Dashboard") %>'>&nbsp; &nbsp;Back</a>
-                                </div>
-                                <div class="clearfix"></div>
+
                                 <div>
                                     <div class="col-md-6">
                                         <div class="form-group">
@@ -248,13 +254,20 @@
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                             <asp:BoundField DataField="ProductDescription" HeaderText="Item Description" NullDisplayText="#" ItemStyle-Wrap="true" ItemStyle-Width="100" SortExpression="Description" />
-                                            <asp:TemplateField HeaderText="OEM PartNumber">
+                                            <asp:TemplateField HeaderText="OEM PartNumber" Visible="false">
                                                 <ItemTemplate>
                                                     <asp:Label runat="server" ID="lblcompanyrole" Text='<%#Eval("OEMPartNumber") %>'></asp:Label>
+                                                    
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField HeaderText="Last Updated">
+                                                <ItemTemplate>
+                                                    <asp:Label runat="server" ID="lblLastUpdated" Text='<%#Eval("LastUpdated") %>'></asp:Label>
                                                     <asp:HiddenField ID="hfrole" runat="server" Value='<%#Eval("Role") %>' />
                                                     <asp:HiddenField ID="hfcomprefno" runat="server" Value='<%#Eval("CompanyRefNo") %>' />
                                                 </ItemTemplate>
                                             </asp:TemplateField>
+                                           
                                             <asp:TemplateField HeaderText="DPSUPartNumber" Visible="false">
                                                 <ItemTemplate>
                                                     <asp:Label ID="lblnodelname" runat="server" Text='<%#Eval("DPSUPartNumber") %>' NullDisplayText="#" SortExpression="DPSUPartNumber"></asp:Label>
