@@ -4,8 +4,7 @@
     <!----------------------------------jquery Show image on load------------------------------------------------>
 
     <style>
-        .gallery img
-        {
+        .gallery img {
             width: 100px;
             margin-right: 10px;
             border: 2px solid #333;
@@ -536,6 +535,22 @@
                                             <div class="form-group">
                                                 <label>Estimated Quantity</label>
                                                 <asp:TextBox runat="server" ID="txtestimatequantity" TabIndex="33" class="form-control"></asp:TextBox>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label>Estimated Quantity In</label>
+                                                <asp:DropDownList runat="server" ID="ddlestimatequantityidle" TabIndex="34" class="form-control">
+                                                    <asp:ListItem Selected="True" Value="Select">Select</asp:ListItem>
+                                                    <asp:ListItem Value="Kg">Kg</asp:ListItem>
+                                                    <asp:ListItem Value="Gram">Gram</asp:ListItem>
+                                                    <asp:ListItem Value="Mtr">Mtr</asp:ListItem>
+                                                    <asp:ListItem Value="Inch">Inch</asp:ListItem>
+                                                    <asp:ListItem Value="Centimeter">Centimeter</asp:ListItem>
+                                                    <asp:ListItem Value="Ounce">Ounce</asp:ListItem>
+                                                    <asp:ListItem Value="Pound">Pound</asp:ListItem>
+                                                    <asp:ListItem Value="Ton">Ton</asp:ListItem>
+                                                </asp:DropDownList>
                                             </div>
                                         </div>
                                         <div class="col-md-4">
