@@ -9,6 +9,7 @@ public partial class Admin_Dashboard : System.Web.UI.Page
 {
     Cryptography objCrypto = new Cryptography();
     Logic Lo = new Logic();
+    DataTable DtGrid = new DataTable();
     protected void Page_Load(object sender, EventArgs e)
     {
         if (Session["User"] != null)
@@ -50,12 +51,27 @@ public partial class Admin_Dashboard : System.Web.UI.Page
     }
     protected void lblComp_Click(object sender, EventArgs e)
     {
-        DataTable dt = Lo.GetDashboardData("Company", "");
+        DtGrid = Lo.GetDashboardData("Company", "");
+        DataView dv = new DataView(DtGrid);
+        if (objCrypto.DecryptData(Session["Type"].ToString()) != "Admin" && objCrypto.DecryptData(Session["Type"].ToString()) != "SuperAdmin")
+        {
+            if (DtGrid.Rows.Count > 0)
+            {
+                //code to filter role wise 
+                DataTable dtParentNode = Lo.RetriveParentNode(objCrypto.DecryptData(Session["Type"].ToString()).ToUpper(), Session["CompanyRefNo"].ToString());
+                if (objCrypto.DecryptData(Session["Type"].ToString()).ToUpper() == "COMPANY")
+                    dv.RowFilter = "CompanyRefNo='" + Session["CompanyRefNo"].ToString() + "'";
+                else if (objCrypto.DecryptData(Session["Type"].ToString()).ToUpper() == "DIVISION")
+                    dv.RowFilter = "CompanyRefNo='" + dtParentNode.Rows[0]["CompanyRefNo"].ToString() + "'";
+                else
+                    dv.RowFilter = "CompanyRefNo='" + dtParentNode.Rows[0]["CompanyRefNo"].ToString() + "'";
+            }
+        }
         try
         {
-            int[] iColumns = { 1, 2, 3, 5, 7 };
+            int[] iColumns = { 1, 2, 6, 5, 7 };
             RKLib.ExportData.Export objExport = new RKLib.ExportData.Export("Web");
-            objExport.ExportDetails(dt, iColumns, RKLib.ExportData.Export.ExportFormat.Excel, "Company.xls");
+            objExport.ExportDetails(dv.ToTable(), iColumns, RKLib.ExportData.Export.ExportFormat.Excel, "CompanyList.xls");
         }
         catch (Exception ex)
         {
@@ -64,12 +80,31 @@ public partial class Admin_Dashboard : System.Web.UI.Page
     }
     protected void lnkDiv_Click(object sender, EventArgs e)
     {
-        DataTable dt = Lo.GetDashboardData("Division", "");
+        DtGrid = Lo.GetDashboardData("Division", "");
+        DataView dv = new DataView(DtGrid);
+        if (objCrypto.DecryptData(Session["Type"].ToString()) != "Admin" && objCrypto.DecryptData(Session["Type"].ToString()) != "SuperAdmin")
+        {
+            if (DtGrid.Rows.Count > 0)
+            {
+                //code to filter role wise 
+                DataTable dtParentNode = Lo.RetriveParentNode(objCrypto.DecryptData(Session["Type"].ToString()).ToUpper(), Session["CompanyRefNo"].ToString());
+                if (objCrypto.DecryptData(Session["Type"].ToString()).ToUpper() == "COMPANY")
+                    dv.RowFilter = "CompanyRefNo='" + Session["CompanyRefNo"].ToString() + "'";
+                else if (objCrypto.DecryptData(Session["Type"].ToString()).ToUpper() == "DIVISION")
+                    dv.RowFilter = "FactoryRefNo='" + dtParentNode.Rows[0]["FactoryRefNo"].ToString() + "'";
+                else
+                    dv.RowFilter = "UnitRefNo='" + dtParentNode.Rows[0]["UnitRefNo"].ToString() + "'";
+            }
+        }
+        //renaming colm for user
+        dv.Table.Columns["FactoryRefNo"].ColumnName = "DivisionRefNo";
+        dv.Table.Columns["FactoryName"].ColumnName = "DivisionName";
+
         try
         {
-            int[] iColumns = { 3, 7, 8, 5, 6 };
+            int[] iColumns = { 3, 6, 5, 8, 10 };
             RKLib.ExportData.Export objExport = new RKLib.ExportData.Export("Web");
-            objExport.ExportDetails(dt, iColumns, RKLib.ExportData.Export.ExportFormat.Excel, "Division.xls");
+            objExport.ExportDetails(dv.ToTable(), iColumns, RKLib.ExportData.Export.ExportFormat.Excel, "Division.xls");
         }
         catch (Exception ex)
         {
@@ -78,12 +113,29 @@ public partial class Admin_Dashboard : System.Web.UI.Page
     }
     protected void lnkUnit_Click(object sender, EventArgs e)
     {
-        DataTable dt = Lo.GetDashboardData("Unit", "");
+        DtGrid = Lo.GetDashboardData("Unit", "");
+        DataView dv = new DataView(DtGrid);
+        if (objCrypto.DecryptData(Session["Type"].ToString()) != "Admin" && objCrypto.DecryptData(Session["Type"].ToString()) != "SuperAdmin")
+        {
+            if (DtGrid.Rows.Count > 0)
+            {
+                //code to filter role wise 
+                DataTable dtParentNode = Lo.RetriveParentNode(objCrypto.DecryptData(Session["Type"].ToString()).ToUpper(), Session["CompanyRefNo"].ToString());
+                if (objCrypto.DecryptData(Session["Type"].ToString()).ToUpper() == "COMPANY")
+                    dv.RowFilter = "CompanyRefNo='" + Session["CompanyRefNo"].ToString() + "'";
+                else if (objCrypto.DecryptData(Session["Type"].ToString()).ToUpper() == "DIVISION")
+                    dv.RowFilter = "FactoryRefNo='" + dtParentNode.Rows[0]["FactoryRefNo"].ToString() + "'";
+                else
+                    dv.RowFilter = "UnitRefNo='" + dtParentNode.Rows[0]["UnitRefNo"].ToString() + "'";
+            }
+        }
+        //renaming colm for user
+        dv.Table.Columns["FactoryName"].ColumnName = "DivisionName";
         try
         {
-            int[] iColumns = { 3, 7, 9, 10, 5, 6 };
+            int[] iColumns = { 3, 5, 8, 7, 10, 11 };
             RKLib.ExportData.Export objExport = new RKLib.ExportData.Export("Web");
-            objExport.ExportDetails(dt, iColumns, RKLib.ExportData.Export.ExportFormat.Excel, "Unit.xls");
+            objExport.ExportDetails(dv.ToTable(), iColumns, RKLib.ExportData.Export.ExportFormat.Excel, "Unit.xls");
         }
         catch (Exception ex)
         {
@@ -92,12 +144,33 @@ public partial class Admin_Dashboard : System.Web.UI.Page
     }
     protected void lnkEmp_Click(object sender, EventArgs e)
     {
-        DataTable dt = Lo.GetDashboardData("Employee", "");
+        DtGrid = Lo.GetDashboardData("Employee", "");
+        DataView dv = new DataView(DtGrid);
+        if (objCrypto.DecryptData(Session["Type"].ToString()) != "Admin" && objCrypto.DecryptData(Session["Type"].ToString()) != "SuperAdmin")
+        {
+            if (DtGrid.Rows.Count > 0)
+            {
+                this.UpdateDtGridValue();
+                // code to filter row role wise
+                if (objCrypto.DecryptData(Session["Type"].ToString()).ToUpper() == "COMPANY")
+                    dv.RowFilter = "CompanyRefNo='" + Session["CompanyRefNo"].ToString() + "'";
+                else if (objCrypto.DecryptData(Session["Type"].ToString()).ToUpper() == "DIVISION")
+                    dv.RowFilter = "FactoryRefNo='" + Session["CompanyRefNo"].ToString() + "'";
+                else
+                    dv.RowFilter = "UnitRefNo='" + Session["CompanyRefNo"].ToString() + "'";
+            }
+        }
+        dv.Sort = "CompanyName asc,FactoryName asc";
+
+        //renaming colm for user
+        dv.Table.Columns["Type"].ColumnName = "Role";
+        dv.Table.Columns["FactoryName"].ColumnName = "DivisionName";
+
         try
         {
-            int[] iColumns = { 4, 7, 2, 8, 10 };
+            int[] iColumns = { 1, 2, 3, 4, 8, 11, 14, 19 };
             RKLib.ExportData.Export objExport = new RKLib.ExportData.Export("Web");
-            objExport.ExportDetails(dt, iColumns, RKLib.ExportData.Export.ExportFormat.Excel, "Employee.xls");
+            objExport.ExportDetails(dv.ToTable(), iColumns, RKLib.ExportData.Export.ExportFormat.Excel, "Employee.xls");
         }
         catch (Exception ex)
         {
@@ -106,16 +179,53 @@ public partial class Admin_Dashboard : System.Web.UI.Page
     }
     protected void lnkProduct_Click(object sender, EventArgs e)
     {
-        DataTable dt = Lo.GetDashboardData("Product", "");
+        DtGrid = Lo.GetDashboardData("Product", "");
+        DataView dv = new DataView(DtGrid);
+        if (objCrypto.DecryptData(Session["Type"].ToString()) != "Admin" && objCrypto.DecryptData(Session["Type"].ToString()) != "SuperAdmin")
+        {
+            if (DtGrid.Rows.Count > 0)
+            {
+                this.UpdateDtGridValue();
+                // code to filter row role wise
+                if (objCrypto.DecryptData(Session["Type"].ToString()).ToUpper() == "COMPANY")
+                    dv.RowFilter = "CompanyRefNo='" + Session["CompanyRefNo"].ToString() + "'";
+                else if (objCrypto.DecryptData(Session["Type"].ToString()).ToUpper() == "DIVISION")
+                    dv.RowFilter = "FactoryRefNo='" + Session["CompanyRefNo"].ToString() + "'";
+                else
+                    dv.RowFilter = "UnitRefNo='" + Session["CompanyRefNo"].ToString() + "'";
+            }
+        }
+        dv.Sort = "CompanyName asc,FactoryName asc";
+        //renaming colm for user                
+        dv.Table.Columns["FactoryName"].ColumnName = "DivisionName";
         try
         {
-            int[] iColumns = { 2, 4, 5, 6, 13, 14, 16, 3 };
+            int[] iColumns = { 10, 9, 4, 14, 18, 19, 20, 21, 22, 24, 25 };
             RKLib.ExportData.Export objExport = new RKLib.ExportData.Export("Web");
-            objExport.ExportDetails(dt, iColumns, RKLib.ExportData.Export.ExportFormat.Excel, "Product.xls");
+            objExport.ExportDetails(dv.ToTable(), iColumns, RKLib.ExportData.Export.ExportFormat.Excel, "Product.xls");
         }
         catch (Exception ex)
         {
 
+        }
+    }
+
+    protected void UpdateDtGridValue()
+    {
+        for (int a = 0; a < DtGrid.Rows.Count; a++)
+        {
+            if (DtGrid.Rows[a]["UCompany"].ToString() != "")
+            {
+                DtGrid.Rows[a]["CompanyName"] = DtGrid.Rows[a]["UCompany"];
+                DtGrid.Rows[a]["FactoryName"] = DtGrid.Rows[a]["UFactory"];
+                DtGrid.Rows[a]["CompanyRefNo"] = DtGrid.Rows[a]["UCompRefNo"];
+                DtGrid.Rows[a]["FactoryRefNo"] = DtGrid.Rows[a]["UFactoryRefNo"];
+            }
+            else if (DtGrid.Rows[a]["FCompany"].ToString() != "")
+            {
+                DtGrid.Rows[a]["CompanyName"] = DtGrid.Rows[a]["FCompany"];
+                DtGrid.Rows[a]["CompanyRefNo"] = DtGrid.Rows[a]["FCompRefNo"];
+            }
         }
     }
 }

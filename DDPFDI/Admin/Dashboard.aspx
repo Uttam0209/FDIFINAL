@@ -41,7 +41,7 @@
                                                     </li>
                                                 </ul>
                                                 <div class="file-export">
-                                                    <asp:LinkButton ID="lblComp" Visible="false" runat="server" class="fa fa-file-export" data-toggle="tooltip" ToolTip="Export to Excel" OnClick="lblComp_Click"></asp:LinkButton>
+                                                    <asp:LinkButton ID="lblComp" Visible="true" runat="server" class="fa fa-file-export" data-toggle="tooltip" ToolTip="Export to Excel" OnClick="lblComp_Click"></asp:LinkButton>
                                                 </div>
                                             </div>
                                         </div>
@@ -62,7 +62,7 @@
                                                     </li>
                                                 </ul>
                                                 <div class="file-export">
-                                                    <asp:LinkButton ID="lnkDiv" runat="server" Visible="false" class="fa fa-file-export" data-toggle="tooltip" ToolTip="Export to Excel" OnClick="lnkDiv_Click"></asp:LinkButton>
+                                                    <asp:LinkButton ID="lnkDiv" runat="server" Visible="true" class="fa fa-file-export" data-toggle="tooltip" ToolTip="Export to Excel" OnClick="lnkDiv_Click"></asp:LinkButton>
                                                 </div>
                                             </div>
                                         </div>
@@ -82,7 +82,7 @@
                                                     </li>
                                                 </ul>
                                                 <div class="file-export">
-                                                    <asp:LinkButton ID="lnkUnit" runat="server" Visible="false" class="fa fa-file-export" data-toggle="tooltip" ToolTip="Export to Excel" OnClick="lnkUnit_Click"></asp:LinkButton>
+                                                    <asp:LinkButton ID="lnkUnit" runat="server" Visible="true" class="fa fa-file-export" data-toggle="tooltip" ToolTip="Export to Excel" OnClick="lnkUnit_Click"></asp:LinkButton>
                                                 </div>
                                             </div>
                                         </div>
@@ -104,7 +104,7 @@
                                                     </li>
                                                 </ul>
                                                 <div class="file-export">
-                                                    <asp:LinkButton ID="lnkEmp" runat="server" Visible="false" class="fa fa-file-export" data-toggle="tooltip" ToolTip="Export to Excel" OnClick="lnkEmp_Click"></asp:LinkButton>
+                                                    <asp:LinkButton ID="lnkEmp" runat="server" Visible="true" class="fa fa-file-export" data-toggle="tooltip" ToolTip="Export to Excel" OnClick="lnkEmp_Click"></asp:LinkButton>
 
                                                 </div>
                                             </div>
@@ -125,7 +125,7 @@
                                                     </li>
                                                 </ul>
                                                 <div class="file-export">
-                                                    <asp:LinkButton ID="lnkProduct" runat="server" Visible="false" class="fa fa-file-export" data-toggle="tooltip" ToolTip="Export to Excel" OnClick="lnkProduct_Click"></asp:LinkButton>
+                                                    <asp:LinkButton ID="lnkProduct" runat="server" Visible="true" class="fa fa-file-export" data-toggle="tooltip" ToolTip="Export to Excel" OnClick="lnkProduct_Click"></asp:LinkButton>
                                                 </div>
                                             </div>
                                         </div>
