@@ -254,13 +254,20 @@
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                             <asp:BoundField DataField="ProductDescription" HeaderText="Item Description" NullDisplayText="#" ItemStyle-Wrap="true" ItemStyle-Width="100" SortExpression="Description" />
-                                            <asp:TemplateField HeaderText="OEM PartNumber">
+                                            <asp:TemplateField HeaderText="OEM PartNumber" Visible="false">
                                                 <ItemTemplate>
                                                     <asp:Label runat="server" ID="lblcompanyrole" Text='<%#Eval("OEMPartNumber") %>'></asp:Label>
+                                                    
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField HeaderText="Last Updated">
+                                                <ItemTemplate>
+                                                    <asp:Label runat="server" ID="lblLastUpdated" Text='<%#Eval("LastUpdated") %>'></asp:Label>
                                                     <asp:HiddenField ID="hfrole" runat="server" Value='<%#Eval("Role") %>' />
                                                     <asp:HiddenField ID="hfcomprefno" runat="server" Value='<%#Eval("CompanyRefNo") %>' />
                                                 </ItemTemplate>
                                             </asp:TemplateField>
+                                           
                                             <asp:TemplateField HeaderText="DPSUPartNumber" Visible="false">
                                                 <ItemTemplate>
                                                     <asp:Label ID="lblnodelname" runat="server" Text='<%#Eval("DPSUPartNumber") %>' NullDisplayText="#" SortExpression="DPSUPartNumber"></asp:Label>

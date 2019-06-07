@@ -1,4 +1,3 @@
-D:\FDIFINAL\BusinessLayer\obj\Debug\BusinessLayer.csprojResolveAssemblyReference.cache
 D:\FDIFINAL\BusinessLayer\bin\Debug\BusinessLayer.dll
 D:\FDIFINAL\BusinessLayer\bin\Debug\BusinessLayer.pdb
 D:\FDIFINAL\BusinessLayer\bin\Debug\DataAccessLayer.dll
@@ -9,31 +8,6 @@ D:\FDIFINAL\BusinessLayer\bin\Debug\Microsoft.Practices.Unity.dll
 D:\FDIFINAL\BusinessLayer\bin\Debug\Microsoft.Practices.Unity.Interception.dll
 D:\FDIFINAL\BusinessLayer\bin\Debug\DataAccessLayer.pdb
 D:\FDIFINAL\BusinessLayer\bin\Debug\Encryption.pdb
+D:\FDIFINAL\BusinessLayer\obj\Debug\BusinessLayer.csprojResolveAssemblyReference.cache
 D:\FDIFINAL\BusinessLayer\obj\Debug\BusinessLayer.dll
 D:\FDIFINAL\BusinessLayer\obj\Debug\BusinessLayer.pdb
-F:\FDIFINAL\BusinessLayer\bin\Debug\BusinessLayer.dll
-F:\FDIFINAL\BusinessLayer\bin\Debug\BusinessLayer.pdb
-F:\FDIFINAL\BusinessLayer\bin\Debug\DataAccessLayer.dll
-F:\FDIFINAL\BusinessLayer\bin\Debug\Encryption.dll
-F:\FDIFINAL\BusinessLayer\bin\Debug\Microsoft.Practices.EnterpriseLibrary.Data.dll
-F:\FDIFINAL\BusinessLayer\bin\Debug\Microsoft.Practices.EnterpriseLibrary.Common.dll
-F:\FDIFINAL\BusinessLayer\bin\Debug\Microsoft.Practices.Unity.dll
-F:\FDIFINAL\BusinessLayer\bin\Debug\Microsoft.Practices.Unity.Interception.dll
-F:\FDIFINAL\BusinessLayer\bin\Debug\DataAccessLayer.pdb
-F:\FDIFINAL\BusinessLayer\bin\Debug\Encryption.pdb
-F:\FDIFINAL\BusinessLayer\obj\Debug\BusinessLayer.csprojResolveAssemblyReference.cache
-F:\FDIFINAL\BusinessLayer\obj\Debug\BusinessLayer.dll
-F:\FDIFINAL\BusinessLayer\obj\Debug\BusinessLayer.pdb
-C:\Users\Aarav\Desktop\Backup Drive (D)\CurrentProject2019\FDFinalProject\FDIFINAL\BusinessLayer\bin\Debug\BusinessLayer.dll
-C:\Users\Aarav\Desktop\Backup Drive (D)\CurrentProject2019\FDFinalProject\FDIFINAL\BusinessLayer\bin\Debug\BusinessLayer.pdb
-C:\Users\Aarav\Desktop\Backup Drive (D)\CurrentProject2019\FDFinalProject\FDIFINAL\BusinessLayer\bin\Debug\DataAccessLayer.dll
-C:\Users\Aarav\Desktop\Backup Drive (D)\CurrentProject2019\FDFinalProject\FDIFINAL\BusinessLayer\bin\Debug\Encryption.dll
-C:\Users\Aarav\Desktop\Backup Drive (D)\CurrentProject2019\FDFinalProject\FDIFINAL\BusinessLayer\bin\Debug\Microsoft.Practices.EnterpriseLibrary.Data.dll
-C:\Users\Aarav\Desktop\Backup Drive (D)\CurrentProject2019\FDFinalProject\FDIFINAL\BusinessLayer\bin\Debug\Microsoft.Practices.EnterpriseLibrary.Common.dll
-C:\Users\Aarav\Desktop\Backup Drive (D)\CurrentProject2019\FDFinalProject\FDIFINAL\BusinessLayer\bin\Debug\Microsoft.Practices.Unity.dll
-C:\Users\Aarav\Desktop\Backup Drive (D)\CurrentProject2019\FDFinalProject\FDIFINAL\BusinessLayer\bin\Debug\Microsoft.Practices.Unity.Interception.dll
-C:\Users\Aarav\Desktop\Backup Drive (D)\CurrentProject2019\FDFinalProject\FDIFINAL\BusinessLayer\bin\Debug\DataAccessLayer.pdb
-C:\Users\Aarav\Desktop\Backup Drive (D)\CurrentProject2019\FDFinalProject\FDIFINAL\BusinessLayer\bin\Debug\Encryption.pdb
-C:\Users\Aarav\Desktop\Backup Drive (D)\CurrentProject2019\FDFinalProject\FDIFINAL\BusinessLayer\obj\Debug\BusinessLayer.csprojResolveAssemblyReference.cache
-C:\Users\Aarav\Desktop\Backup Drive (D)\CurrentProject2019\FDFinalProject\FDIFINAL\BusinessLayer\obj\Debug\BusinessLayer.dll
-C:\Users\Aarav\Desktop\Backup Drive (D)\CurrentProject2019\FDFinalProject\FDIFINAL\BusinessLayer\obj\Debug\BusinessLayer.pdb

@@ -255,7 +255,7 @@
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="temailid" class=" control-label">Email ID <span class="mandatory">*</span></label>
-                                                <asp:TextBox runat="server" ID="txtNEmailId" name="" AutoCompleteType="Email" required="" class="form-control form-cascade-control"
+                                                <asp:TextBox runat="server" ID="txtNEmailId" name="" ReadOnly="True"  AutoCompleteType="Email" required="" class="form-control form-cascade-control"
                                                     placeholder=""></asp:TextBox>
                                                 <p class="note">*Note: will be used as username </p>
                                             </div>

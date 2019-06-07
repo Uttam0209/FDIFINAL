@@ -534,10 +534,16 @@ public partial class Admin_ViewDashboard : System.Web.UI.Page
         DtView = Lo.RetriveAllNodalOfficer(e.CommandArgument.ToString(), Role);
         if (DtView.Rows.Count > 0)
         {
-            if (Role == "CompanyID")
-            {
+            
                 lblNodalComp.Text = DtView.Rows[0]["CompanyName"].ToString();
-                lblDivision.Text = DtView.Rows[0]["FactoryName"].ToString();
+                if (Role == "CompanyID")
+                {
+                    lblDivision.Text = "";
+                }
+                else
+                {
+                    lblDivision.Text = DtView.Rows[0]["FactoryName"].ToString();
+                }
                 if (Role == "DivisionID")
                 {
                     lblUnit.Text = "";
@@ -553,8 +559,7 @@ public partial class Admin_ViewDashboard : System.Web.UI.Page
                 lblMobile.Text = DtView.Rows[0]["NodalOfficerMobile"].ToString();
                 lblTelephone.Text = DtView.Rows[0]["NodalOfficerTelephone"].ToString();
                 lblFax.Text = DtView.Rows[0]["NodalOfficerFax"].ToString();
-            }
-            ScriptManager.RegisterStartupScript(this, this.GetType(), "ViewNodalDetail", "showPopup3();", true);
+             ScriptManager.RegisterStartupScript(this, this.GetType(), "ViewNodalDetail", "showPopup3();", true);
         }
     }
     #endregion

@@ -125,10 +125,11 @@
                                             </asp:TemplateField>
                                             <asp:BoundField DataField="FactoryName" HeaderText="Division" NullDisplayText="-" />
                                             <asp:BoundField DataField="UnitName" HeaderText="Unit" NullDisplayText="-" />
-                                            <asp:BoundField DataField="CreatedBy" HeaderText="Create By" NullDisplayText="-" />
+                                            <asp:BoundField DataField="CreatedBy" HeaderText="Created By" NullDisplayText="-" />
                                             <asp:TemplateField HeaderText="Action">
                                                 <ItemTemplate>
                                                     <asp:LinkButton ID="lblview" runat="server" ToolTip="View Detail of Nodal Officer/Employee" CssClass="fa fa-eye" CommandName="ViewComp" CommandArgument='<%#Eval("NodalOfficerID") %>'></asp:LinkButton>
+                                                     <asp:HiddenField runat="server" ID="hfnodalrole" Value='<%#Eval("Type") %>' />
                                                     <asp:LinkButton ID="lbledit" runat="server" ToolTip="Edit or Update Nodal officer/Employee" CssClass="fa fa-edit" CommandName="EditComp" CommandArgument='<%#Eval("NodalOfficerID") %>'></asp:LinkButton>
                                                     <asp:LinkButton ID="lbldel" runat="server" Visible="False" CssClass="fa fa-trash" CommandName="DeleteComp" OnClientClick="return confirm('Are you sure you want to delete this Company?');" CommandArgument='<%#Eval("NodalOfficerID") %>'></asp:LinkButton>
                                                     <asp:LinkButton ID="lbllogindetail" runat="server" ToolTip="Send mail to create password" CssClass=" fa fa-paper-plane" CommandName="SendLogin" OnClientClick="return confirm('Are you sure you want to send login detail?');" CommandArgument='<%#Eval("NodalOfficerID") %>'></asp:LinkButton>

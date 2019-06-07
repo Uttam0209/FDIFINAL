@@ -403,8 +403,23 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
                 lblEmailID.Text = DtView.Rows[0]["EmailID"].ToString();
                 lblWebsite.Text = DtView.Rows[0]["Website"].ToString();
                 lblGSTNo.Text = DtView.Rows[0]["GSTNo"].ToString();
-                lblNodalEmail.Text = DtView.Rows[0]["NodalOfficerEmail"].ToString();
-                lblNodalOfficerName.Text = DtView.Rows[0]["NodalOficerName"].ToString();
+                DataView dv = new DataView(DtView);
+
+                dv.RowFilter = "isNodalOfficer='Y'";
+
+                DataTable DtGetNodel = dv.ToTable();
+                if (DtGetNodel.Rows.Count > 0)
+                {
+
+                    lblNodalEmail.Text = DtGetNodel.Rows[0]["NodalOfficerEmail"].ToString();
+                    lblNodalOfficerName.Text = DtGetNodel.Rows[0]["NodalOficerName"].ToString();
+                }
+                else
+                {
+                    lblNodalEmail.Text = "";
+                    lblNodalOfficerName.Text = "";
+                }
+                
                 lblAad_Mobile.Text = DtView.Rows[0]["latitude"].ToString();
                 lblLongitude.Text = DtView.Rows[0]["longitude"].ToString();
                 lblFacebook.Text = DtView.Rows[0]["Facebook"].ToString();
@@ -478,8 +493,23 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
                 lblfacrefno.Text = DtView.Rows[0]["FactoryRefNo"].ToString();
                 lblDivAddress.Text = DtView.Rows[0]["FactoryAddress"].ToString();
                 lblDivName.Text = DtView.Rows[0]["FactoryName"].ToString();
-                lbldivinodalemail.Text = DtView.Rows[0]["NodalOfficerEmail"].ToString();
-                lbldivinodalname.Text = DtView.Rows[0]["NodalOficerName"].ToString();
+
+                DataView dv = new DataView(DtView);
+
+                dv.RowFilter = "isNodalOfficer='Y'";
+
+                DataTable DtGetNodel = dv.ToTable();
+                if (DtGetNodel.Rows.Count > 0)
+                {
+
+                    lbldivinodalemail.Text = DtGetNodel.Rows[0]["NodalOfficerEmail"].ToString();
+                    lbldivinodalname.Text = DtGetNodel.Rows[0]["NodalOficerName"].ToString();
+                }
+                else
+                {
+                    lbldivinodalemail.Text = "";
+                    lbldivinodalname.Text = "";
+                }
                 lblDivWebsite.Text = DtView.Rows[0]["FactoryWebsite"].ToString();
                 lblDivPincode.Text = DtView.Rows[0]["FactoryPincode"].ToString();
                 lblDivCeoName.Text = DtView.Rows[0]["FactoryCEOName"].ToString();
@@ -487,11 +517,6 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
                 lblDivFax.Text = DtView.Rows[0]["FactoryFaxNo"].ToString();
                 lblDivState.Text = DtView.Rows[0]["StateName"].ToString();
                 lblDivConNo.Text = DtView.Rows[0]["FactoryTelephoneNo"].ToString();
-                //lblDivNodalEmail.Text = DtView.Rows[0]["FactoryNodalOfficerEmailId"].ToString();
-                //lblDivFacebook.Text = DtView.Rows[0]["FactoryFacebook"].ToString();
-                //lblDivTwitter.Text = DtView.Rows[0]["FactoryTwitter"].ToString();
-                //lblDivInstagram.Text = DtView.Rows[0]["FactoryInstagram"].ToString();
-                //lblDivLinkedin.Text = DtView.Rows[0]["FactoryLinkedin"].ToString();
                 lblDivlatitude.Text = DtView.Rows[0]["Factorylatitude"].ToString();
                 lblDivLongitude.Text = DtView.Rows[0]["Factorylongitude"].ToString();
                 ScriptManager.RegisterStartupScript(this, this.GetType(), "divfactoryshow", "showPopup1();", true);
@@ -564,8 +589,23 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
                 lblUnitInsta.Text = DtView.Rows[0]["UnitInstagram"].ToString();
                 lblUnitLink.Text = DtView.Rows[0]["UnitLinkedin"].ToString();
                 lblUnitTwitter.Text = DtView.Rows[0]["UnitTwitter"].ToString();
-                lblunitnodalname.Text = DtView.Rows[0]["NodalOficerName"].ToString();
-                lblUnitNodalEmail.Text = DtView.Rows[0]["NodalOfficerEmail"].ToString();
+                DataView dv = new DataView(DtView);
+
+                dv.RowFilter = "isNodalOfficer='Y'";
+
+                DataTable DtGetNodel = dv.ToTable();
+                if (DtGetNodel.Rows.Count > 0)
+                {
+
+                    lblUnitNodalEmail.Text = DtGetNodel.Rows[0]["NodalOfficerEmail"].ToString();
+                    lblunitnodalname.Text = DtGetNodel.Rows[0]["NodalOficerName"].ToString();
+                }
+                else
+                {
+                    lblUnitNodalEmail.Text = "";
+                    lblunitnodalname.Text = "";
+                }
+                
                 lblUnitLatitude.Text = DtView.Rows[0]["Unitlatitude"].ToString();
                 lblUnitLongitude.Text = DtView.Rows[0]["Unitlongitude"].ToString();
                 ScriptManager.RegisterStartupScript(this, this.GetType(), "divunitshow", "showPopup2();", true);

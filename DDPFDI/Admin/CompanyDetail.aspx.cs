@@ -188,6 +188,11 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
                 txtInstagram.Text = DtView.Rows[0]["Instagram"].ToString();
 
                 DataTable DtGetNodel = Lo.RetriveAllNodalOfficer(objCrypto.DecryptData(Request.QueryString["mcurrentcompRefNo"].ToString()), "Company");
+                DataView dv = new DataView(DtGetNodel);
+
+                dv.RowFilter = "CompanyRefNo='" + DtView.Rows[0]["CompanyRefNo"].ToString() + "' and isNodalOfficer='Y'";
+
+                DtGetNodel = dv.ToTable();
                 if (DtGetNodel.Rows.Count > 0)
                 {
                     txtNName.Text = DtGetNodel.Rows[0]["NodalOficerName"].ToString();
@@ -355,6 +360,11 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
                 tcompanyname.ReadOnly = true;
 
                 DataTable DtGetNodel = Lo.RetriveAllNodalOfficer(objCrypto.DecryptData(Request.QueryString["mcurrentcompRefNo"].ToString()), "Company");
+                DataView dv = new DataView(DtGetNodel);
+
+                dv.RowFilter = "FactoryRefNo='" + DtView.Rows[0]["FactoryRefNo"].ToString() + "' and isNodalOfficer='Y'";
+
+                DtGetNodel = dv.ToTable();
                 if (DtGetNodel.Rows.Count > 0)
                 {
                     txtNName.Text = DtGetNodel.Rows[0]["NodalOficerName"].ToString();
@@ -501,8 +511,13 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
                 lblceo.InnerText = "Unit Head Name";
                 lblceoemail.InnerText = "Unit Head Email ID";
                 selstate.SelectedValue = DtView.Rows[0]["UnitStateID"].ToString();
-                ddlNodalOfficerEmail.SelectedValue = DtView.Rows[0]["NodalOfficeRefNo"].ToString();
-                DataTable DtGetNodel = Lo.RetriveAllNodalOfficer(objCrypto.DecryptData(Request.QueryString["mcurrentcompRefNo"].ToString()), "AllNodalDetail");
+                //ddlNodalOfficerEmail.SelectedValue = DtView.Rows[0]["NodalOfficeRefNo"].ToString();
+                DataTable DtGetNodel = Lo.RetriveAllNodalOfficer(objCrypto.DecryptData(Request.QueryString["mcurrentcompRefNo"].ToString()), "Company");
+                DataView dv = new DataView(DtGetNodel);
+
+                dv.RowFilter = "UnitRefNo='" + DtView.Rows[0]["UnitRefNo"].ToString() + "' and isNodalOfficer='Y'";
+
+                DtGetNodel = dv.ToTable();
                 if (DtGetNodel.Rows.Count > 0)
                 {
                     txtNName.Text = DtGetNodel.Rows[0]["NodalOficerName"].ToString();
@@ -527,7 +542,7 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
                 txtInstagram.Text = DtView.Rows[0]["UnitInstagram"].ToString();
                 txtlatitude.Text = DtView.Rows[0]["Unitlatitude"].ToString();
                 txtlongitude.Text = DtView.Rows[0]["Unitlongitude"].ToString();
-                txtNEmailId.Enabled = false;
+                //txtNEmailId.Enabled = false;
                 DivCEOEmail.Visible = true;
                 if (lbltypelogin == "SuperAdmin" || lbltypelogin == "Admin")
                 {
