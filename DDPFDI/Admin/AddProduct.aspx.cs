@@ -33,6 +33,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     private string RefNo;
     private string UserEmail;
     private string currentPage = "";
+    public string IsImportedyesYear = "";
     private short Mid = 0;
     private DataTable DtCompanyDDL = new DataTable();
     private HybridDictionary HyPanel1 = new HybridDictionary();
@@ -81,6 +82,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                             BindFinancialYear();
                             BindCountry();
                             tendorstatus();
+                            IsProductImported();
                             BindServcies();
                             BindFinancialSupport();
                             BindTesting();
@@ -114,6 +116,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                             BindFinancialYear();
                             BindCountry();
                             tendorstatus();
+                            IsProductImported();
                             BindServcies();
                             BindFinancialSupport();
                             BindTesting();
@@ -690,6 +693,32 @@ public partial class Admin_AddProduct : System.Web.UI.Page
             }
         }
     }
+    protected void rbproductImported_CheckedChanged(object sender, EventArgs e)
+    {
+        if (rbproductImported.SelectedItem.Value == "Y")
+        {
+            divyearofimportNo.Visible = false;
+            divyearofimportYes.Visible = true;
+        }
+        else if (rbproductImported.SelectedItem.Value == "N")
+        {
+            divyearofimportNo.Visible = true;
+            divyearofimportYes.Visible = false;
+        }
+    }
+    protected void IsProductImported()
+    {
+        if (rbproductImported.SelectedItem.Value == "Y")
+        {
+            divyearofimportNo.Visible = false;
+            divyearofimportYes.Visible = true;
+        }
+        else if (rbproductImported.SelectedItem.Value == "N")
+        {
+            divyearofimportNo.Visible = true;
+            divyearofimportYes.Visible = false;
+        }
+    }
     #endregion
     #region BindServices Testing Certification
     protected void BindServcies()
@@ -1235,6 +1264,26 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                 dtImage = imagedb();
             }
         }
+
+        if (rbproductImported.SelectedItem.Value == "N")
+        {
+            HyPanel1["IsProductImported"] = Co.RSQandSQLInjection(rbproductImported.SelectedItem.Value.Trim(), "soft");
+            HyPanel1["YearofImport"] = Co.RSQandSQLInjection(chkyearofimportall.SelectedItem.Value, "soft");
+            HyPanel1["YearofImportRemarks"] = Co.RSQandSQLInjection(txtyearofimportremarksno.Text.Trim(), "soft");
+        }
+        else
+        {
+            HyPanel1["IsProductImported"] = Co.RSQandSQLInjection(rbproductImported.SelectedItem.Value.Trim(), "soft");
+            foreach (CheckBoxList chk in chklistimportyearfive.Items)
+            {
+                if (chk.SelectedItem.Selected == true)
+                {
+                    IsImportedyesYear = IsImportedyesYear + "," + chk.SelectedItem.Value;
+                }
+            }
+            HyPanel1["YearofImport"] = Co.RSQandSQLInjection(IsImportedyesYear.ToString(), "soft");
+            HyPanel1["YearofImportRemarks"] = Co.RSQandSQLInjection(txtremarksyearofimportyes.Text.Trim(), "soft");
+        }
         foreach (GridViewRow rw in gvservices.Rows)
         {
             CheckBox chkBx = (CheckBox)rw.FindControl("chk");
@@ -1469,6 +1518,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         ddlprocurmentcategory.SelectedIndex = 0;
         ddlproctimeframe.SelectedIndex = 0;
         rbisindinised.SelectedIndex = 0;
+        divisIndigenized.Visible = false;
         txtmanufacturename.Text = "";
         txtsearchkeyword.Text = "";
         txtestimatequantity.Text = "";
@@ -1483,7 +1533,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         if (ddlNodalOfficerEmail.Text != "")
         {
             ddlNodalOfficerEmail.SelectedIndex = 0;
-           // ddlNodalOfficerEmail2.SelectedIndex = 0;
+            // ddlNodalOfficerEmail2.SelectedIndex = 0;
         }
         foreach (GridViewRow rw in gvservices.Rows)
         {
@@ -1533,6 +1583,11 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                 hfcertification.Value = "";
             }
         }
+        txtremarksyearofimportyes.Text = "";
+        txtyearofimportremarksno.Text = "";
+        rbtendordateyesno.SelectedIndex = 0;
+        divyearofimportYes.Visible = false;
+        divyearofimportNo.Visible = true;
     }
     #endregion
     #region Image Code
@@ -1685,6 +1740,26 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                 else
                 {
                     divimgdel.Visible = false;
+                }
+                rbproductImported.SelectedValue = DtView.Rows[0]["IsProductImported"].ToString();
+                if (rbproductImported.SelectedItem.Value == "N")
+                {
+                    foreach (ListItem chkno in chkyearofimportall.Items)
+                    {
+                        if (DtView.Rows[0]["YearofImport"].ToString() != "")
+                        {
+                            chkno.Selected = true;
+                        }
+                    }
+                    txtyearofimportremarksno.Text = DtView.Rows[0]["YearofImportRemarks"].ToString();
+                }
+                else
+                {
+                    foreach (ListItem chk in chklistimportyearfive.Items)
+                    {
+                        chk.Selected = true;
+                    }
+                    txtremarksyearofimportyes.Text = DtView.Rows[0]["YearofImportRemarks"].ToString();
                 }
                 DataTable dtpsdq = Lo.RetriveProductCode("", hfprodrefno.Value, "ProductPSDQ", hidType.Value);
                 if (dtpsdq.Rows.Count > 0)

@@ -258,50 +258,40 @@
                 source: function (request, response) {
                     $.ajax({
                         url: '<%=ResolveUrl("~/Admin/AddProduct.aspx/GetOEMName") %>',
-                    data: "{ 'prefix': '" + request.term + "'}",
-                    dataType: "json",
-                    type: "POST",
-                    contentType: "application/json; charset=utf-8",
-                    success: function (data) {
-                        response($.map(data.d, function (item) {
-                            return {
-                                label: item.split('-')[0],
-                                val: item.split('-')[1]
-                            };
-                        }))
-                    }
-                });
-            }
-        });
-    }
+                        data: "{ 'prefix': '" + request.term + "'}",
+                        dataType: "json",
+                        type: "POST",
+                        contentType: "application/json; charset=utf-8",
+                        success: function (data) {
+                            response($.map(data.d, function (item) {
+                                return {
+                                    label: item.split('-')[0],
+                                    val: item.split('-')[1]
+                                };
+                            }))
+                        }
+                    });
+                }
+            });
+        }
     </script>
-    <script>
-        function isNumber(evt) {
-            evt = (evt) ? evt : window.event;
-            var charCode = (evt.which) ? evt.which : evt.keyCode;
-            if (charCode > 31 && (charCode < 48 || charCode > 57)) {
-                return false;
-            }
-            return true;
+    <script type="text/javascript">
+        $(function () {
+            SetAutoCompleteCountry();
+        });
+        var prm = Sys.WebForms.PageRequestManager.getInstance();
+        if (prm != null) {
+            prm.add_endRequest(function (sender, e) {
+                if (sender._postBackSettings.panelsToUpdate != null) {
+                    SetAutoCompleteCountry();
+                }
+            });
         };
-    </script>
-<script type="text/javascript">
-    $(function () {
-        SetAutoCompleteCountry();
-    });
-    var prm = Sys.WebForms.PageRequestManager.getInstance();
-    if (prm != null) {
-        prm.add_endRequest(function (sender, e) {
-            if (sender._postBackSettings.panelsToUpdate != null) {
-                SetAutoCompleteCountry();
-            }
-        });
-    };
-    function SetAutoCompleteCountry() {
-        $("[id$=txtcountry]").autocomplete({
-            source: function (request, response) {
-                $.ajax({
-                    url: '<%=ResolveUrl("~/Admin/AddProduct.aspx/GetCountry") %>',
+        function SetAutoCompleteCountry() {
+            $("[id$=txtcountry]").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: '<%=ResolveUrl("~/Admin/AddProduct.aspx/GetCountry") %>',
                     data: "{ 'prefix': '" + request.term + "'}",
                     dataType: "json",
                     type: "POST",
@@ -318,7 +308,7 @@
             }
         });
     }
-</script>
+    </script>
     <!--------------------------Gallery----------------------->
     <script>
         $(function () {
@@ -357,7 +347,7 @@
                     var charCode = e.which;
                 }
                 else { return true; }
-                if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+                if (charCode != 46 && charCode > 31  && (charCode < 48 || charCode > 57)) {
                     alert("Only number allowed");
                     return false;
                 }
@@ -368,6 +358,7 @@
             }
         }
     </script>
+   
     <!--------------------------End Only Number----------------------->
     <!-----Alert Box ------>
     <div class="alert-overlay alert-overlay-error" style="display: none">
@@ -376,16 +367,15 @@
                 <div class="error-checkmark">
                     <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
                 </div>
-            <div class="alert alertMsg">
-            
+                <div class="alert alertMsg">
+                </div>
+                <button class="btn btn-success close_alert">OK</button>
             </div>
-             <button class="btn btn-success close_alert">OK</button>
-             </div>
         </div>
     </div>
     <!-----Alert Box ------>
 
-     <!-----Alert Box ------>
+    <!-----Alert Box ------>
     <div class="alert-overlay alert-overlay-successful" style="display: none">
         <div class="alert-box">
             <div class="box">
@@ -397,12 +387,12 @@
                         <div class="icon-fix"></div>
                     </div>
                 </div>
-               
-            <div class="alert alertMsg">
-                Sucessfull Saved !
+
+                <div class="alert alertMsg">
+                    Sucessfull Saved !
+                </div>
+                <button class="btn btn-success close_alert">OK</button>
             </div>
-             <button class="btn btn-success close_alert">OK</button>
-             </div>
         </div>
     </div>
     <!-----Alert Box ------>

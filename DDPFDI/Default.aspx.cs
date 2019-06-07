@@ -106,7 +106,7 @@ public partial class _Default : System.Web.UI.Page
                     {
                         string EmpCode = DtSendMailForgotpassword.Rows[0]["NodalOfficerRefNo"].ToString();
                         SendEmailCode(EmpCode);
-                        ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Email send to your registerd emaid id successfully.');", true);
+                        ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Email send to your registerd email id successfully.');", true);
                     }
                     else
                     {

@@ -632,6 +632,9 @@ namespace DataAccessLayer
                     db.AddInParameter(cmd, "@ManufactureAddress", DbType.String, hyProduct["ManufactureAddress"]);
                     db.AddInParameter(cmd, "@YearofIndiginization", DbType.Int64, hyProduct["YearofIndiginization"]);
                     db.AddInParameter(cmd, "@SearchKeyword", DbType.String, hyProduct["SearchKeyword"]);
+                    db.AddInParameter(cmd, "@IsProductImported", DbType.String, hyProduct["IsProductImported"]);
+                    db.AddInParameter(cmd, "@YearofImport", DbType.String, hyProduct["YearofImport"]);
+                    db.AddInParameter(cmd, "@YearofImportRemarks", DbType.String, hyProduct["YearofImportRemarks"]);
                     db.AddInParameter(cmd, "@DPSUServices", DbType.String, hyProduct["DPSUServices"].ToString().Trim());
                     db.AddInParameter(cmd, "@Remarks", DbType.String, hyProduct["Remarks"].ToString().Trim());
                     db.AddInParameter(cmd, "@FinancialSupport", DbType.String, hyProduct["FinancialSupport"].ToString().Trim());
@@ -875,7 +878,7 @@ namespace DataAccessLayer
                 }
             }
         }
-        public DataTable RetriveProductCode(string CompanyRefNo, string ProdRefNo, string Purpose,string Type)
+        public DataTable RetriveProductCode(string CompanyRefNo, string ProdRefNo, string Purpose, string Type)
         {
             using (DbConnection dbCon = db.CreateConnection())
             {
@@ -971,7 +974,7 @@ namespace DataAccessLayer
                     throw ex;
                 }
             }
-        }       
+        }
         public DataTable RetriveMasterCategoryDate(Int64 CatID, string CatName, string SCatValue, string Flag, string LavelActive, string Criteria, string CreatedBy)
         {
             using (DbConnection dbCon = db.CreateConnection())
@@ -1164,7 +1167,7 @@ namespace DataAccessLayer
                 }
             }
         }
-        public string SaveUploadExcelCompany(DataTable dtMaster,DataTable dtExcel)
+        public string SaveUploadExcelCompany(DataTable dtMaster, DataTable dtExcel)
         {
             using (DbConnection Connection = db.CreateConnection())
             {
@@ -1239,7 +1242,7 @@ namespace DataAccessLayer
                         db.AddInParameter(cmd, "@L2Code", DbType.String, String.Empty);
                         db.AddOutParameter(cmd, "@NewId", DbType.Int32, 50);
                         db.ExecuteNonQuery(cmd, Transaction);
-                        mEntryID = Convert.ToInt32(db.GetParameterValue(cmd, "@NewId"));                        
+                        mEntryID = Convert.ToInt32(db.GetParameterValue(cmd, "@NewId"));
                     }
                     Transaction.Commit();
                     return "Save";
@@ -1278,14 +1281,14 @@ namespace DataAccessLayer
                 return ds.Tables[0];
             }
         }
-        public DataTable GetDashboardData(string Purpose,string Search)
+        public DataTable GetDashboardData(string Purpose, string Search)
         {
             using (DbConnection dbCon = db.CreateConnection())
             {
                 dbCon.Open();
                 try
                 {
-                    DbCommand cmd = db.GetStoredProcCommand("sp_GetDashboardData");                 
+                    DbCommand cmd = db.GetStoredProcCommand("sp_GetDashboardData");
                     db.AddInParameter(cmd, "@Purpose", DbType.String, Purpose);
                     db.AddInParameter(cmd, "@SearchText", DbType.String, Search);
                     IDataReader dr = db.ExecuteReader(cmd);

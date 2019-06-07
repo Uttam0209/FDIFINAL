@@ -11,7 +11,7 @@
                 }
             }
         }
-</script>
+    </script>
     <div class="content oem-content">
         <asp:ScriptManager ID="sc" runat="server"></asp:ScriptManager>
         <asp:UpdatePanel runat="server" ID="updatepan">
@@ -79,7 +79,7 @@
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label>Mobile</label>
-                                                <asp:TextBox class="form-control" runat="server" TabIndex="5" MaxLength="12" onkeydown="return onlyNos(event)" ID="txtmobile"></asp:TextBox>
+                                                <asp:TextBox class="form-control" runat="server" TabIndex="5" onkeydown="return onlyNos(event)" MaxLength="12" ID="txtmobile"></asp:TextBox>
                                             </div>
                                         </div>
                                         <div class="col-md-4">
@@ -101,7 +101,7 @@
                                                 <div class="form-group">
                                                     <asp:CheckBoxList runat="server" Style="margin-left: 20px;" CssClass="checkbox-inline" ID="chkrole" TabIndex="8" ToolTip="If you want to give login access please select nodel or user/if check is not selected it will be default employee." AutoPostBack="True">
                                                         <asp:ListItem Text="Nodal Officer" onclick="MutExChkList(this);" Value="1"></asp:ListItem>
-                                                        <asp:ListItem Text="User" Value="2" onclick="MutExChkList(this);" ></asp:ListItem>
+                                                        <asp:ListItem Text="User" Value="2" onclick="MutExChkList(this);"></asp:ListItem>
                                                     </asp:CheckBoxList>
                                                 </div>
                                             </div>
@@ -167,5 +167,4 @@
             </ProgressTemplate>
         </asp:UpdateProgress>
     </div>
-
 </asp:Content>

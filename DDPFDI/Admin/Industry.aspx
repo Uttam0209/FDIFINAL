@@ -27,7 +27,7 @@
                     <li><a data-toggle="tab" href="#spez">Specialization</a></li>
                     <li><a data-toggle="tab" href="#pd">Project Details</a></li>
                     <li><a data-toggle="tab" href="#mp">Manufacturing Plant</a></li>
-                   
+
                 </ul>
 
                 <div class="tab-content">
@@ -54,12 +54,12 @@
                                         </select>
                                     </div>
                                 </div>
-                                
+
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label>Regsitration Number</label>
                                         <div class="multiinput">
-                                            <input type="text" style="margin-right:32px;" class="form-control" />
+                                            <input type="text" style="margin-right: 32px;" class="form-control" />
                                             <select class="form-control">
                                                 <option>Year</option>
                                             </select>
@@ -95,9 +95,9 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group productalreadylabel">
-                                         <label>
+                                        <label>
                                             MSME
-                                          <span class="checkbox-box productalreadylabel" style="margin-left:10px;">
+                                          <span class="checkbox-box productalreadylabel" style="margin-left: 10px;">
                                               <input type="radio" name="msme">No
                                               <input type="radio" name="msme">Yes
                                           </span>
@@ -106,14 +106,14 @@
                                         <span class="yes">
                                             <input type="text" class="form-control" placeholder="VAN No">
                                         </span>
-                                        
+
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>
                                             Start Up
-                                          <span class="checkbox-box productalreadylabel" style="margin-left:10px;">
+                                          <span class="checkbox-box productalreadylabel" style="margin-left: 10px;">
                                               <input type="radio" name="msme">No
                                               <input type="radio" name="msme">Yes
                                           </span>
@@ -122,18 +122,18 @@
                                         <span class="yes">
                                             <input type="text" class="form-control" placeholder="Start Up Registration No">
                                         </span>
-                                        
+
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div class="section-pannel">
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Address</label>
-                                        <textarea class="form-control" style="height: 34px; overflow:hidden"></textarea>
+                                        <textarea class="form-control" style="height: 34px; overflow: hidden"></textarea>
                                     </div>
 
                                 </div>
@@ -145,7 +145,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                 <div class="col-md-3">
+                                <div class="col-md-3">
                                     <div class="form-group">
                                         <label>District</label>
                                         <select class="form-control">
@@ -165,7 +165,7 @@
                                         <input type="text" class="form-control" />
                                     </div>
                                 </div>
-                                
+
                             </div>
                         </div>
                         <div class="section-pannel">
@@ -350,7 +350,8 @@
                                                         <option>2017-2018</option>
                                                     </select>
                                                 </td>
-                                                <td><input type="text" class="form-control"></td>
+                                                <td>
+                                                    <input type="text" class="form-control"></td>
 
                                             </tr>
                                             <tr>
@@ -363,7 +364,8 @@
                                                         <option>2017-2018</option>
                                                     </select>
                                                 </td>
-                                                <td><input type="text" class="form-control"></td>
+                                                <td>
+                                                    <input type="text" class="form-control"></td>
 
                                             </tr>
                                         </table>
@@ -455,7 +457,8 @@
                                                         <option>2017-2018</option>
                                                     </select>
                                                 </td>
-                                                <td><input type="text" class="form-control"></td>
+                                                <td>
+                                                    <input type="text" class="form-control"></td>
 
                                             </tr>
                                             <tr>
@@ -468,7 +471,8 @@
                                                         <option>2017-2018</option>
                                                     </select>
                                                 </td>
-                                                <td><input type="text" class="form-control"></td>
+                                                <td>
+                                                    <input type="text" class="form-control"></td>
 
                                             </tr>
                                             <tr>
@@ -481,7 +485,8 @@
                                                         <option>2017-2018</option>
                                                     </select>
                                                 </td>
-                                                <td><input type="text" class="form-control"></td>
+                                                <td>
+                                                    <input type="text" class="form-control"></td>
 
                                             </tr>
                                         </table>
@@ -744,8 +749,8 @@
                                         <input type="text" class="form-control" />
                                     </div>
                                 </div>
-                                
-                                
+
+
                             </div>
                         </div>
                         <div class="section-pannel">
@@ -814,28 +819,27 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
-                                   
                                 </div>
                             </div>
                         </div>
                     </div>
-                    
-                    </div>
+
                 </div>
-
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="form-group">
-                            <input type="submit" class="btn btn-default pull-right" style="margin-right: 10px;" value="Cancel" />
-                            <input type="submit" class="btn btn-primary pull-right" value="Save" />
-
-                        </div>
-                    </div>
-                </div>
-
             </div>
 
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <input type="submit" class="btn btn-default pull-right" style="margin-right: 10px;" value="Cancel" />
+                        <input type="submit" class="btn btn-primary pull-right" value="Save" />
+
+                    </div>
+                </div>
+            </div>
 
         </div>
-    
+
+
+    </div>
+
 </asp:Content>

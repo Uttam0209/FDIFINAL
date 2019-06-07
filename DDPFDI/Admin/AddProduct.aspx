@@ -53,6 +53,7 @@
                 <ul class="nav nav-tabs">
                     <li class="active"><a data-toggle="tab" href="#pd">Description</a></li>
                     <li><a data-toggle="tab" href="#pimg">Image</a></li>
+                    <li><a data-toggle="tab" href="#impprod">Imported products</a></li>
                     <li><a data-toggle="tab" href="#test">Testing</a></li>
                     <li><a data-toggle="tab" href="#cer">Certification</a></li>
                     <li><a data-toggle="tab" href="#spd">Technical Support</a></li>
@@ -374,6 +375,81 @@
                                             </ItemTemplate>
                                         </asp:DataList>
                                     </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="impprod" class="tab-pane fade">
+                        <div class="section-pannel">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <asp:UpdatePanel runat="server" ID="UpdatePanel4">
+                                        <ContentTemplate>
+                                            <div class="form-group">
+                                                <label class="checkbox-box productalreadylabel">
+                                                    Is Product imported in last 5 years?
+                                                </label>
+                                                <asp:RadioButtonList runat="server" ID="rbproductImported" RepeatColumns="2" TabIndex="1" RepeatLayout="Flow" RepeatDirection="Horizontal" AutoPostBack="True" OnSelectedIndexChanged="rbproductImported_CheckedChanged ">
+                                                    <asp:ListItem Value="N" Selected="True" style="margin-left: 5px;">No</asp:ListItem>
+                                                    <asp:ListItem Value="Y" class="yes" style="margin-left: 10px;">Yes</asp:ListItem>
+                                                </asp:RadioButtonList>
+                                                <div class="clearfix" style="margin-top: 10px;"></div>
+                                                <div class="row">
+                                                    <div runat="server" id="divyearofimportNo" visible="False">
+                                                        <div class="col-sm-6">
+                                                            <div class="form-group">
+                                                                <label>Year of import</label>
+                                                                <div class="clearfix"></div>
+                                                                <asp:CheckBoxList runat="server" ID="chkyearofimportall" RepeatDirection="Horizontal" TabIndex="2" RepeatLayout="Flow" RepeatColumns="1">
+                                                                    <asp:ListItem Value="All (Expect Last Five Year)" Selected="True">All (Expect Last Five Year)</asp:ListItem>
+                                                                </asp:CheckBoxList>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-6">
+                                                            <div class="form-group">
+                                                                <label>Remarks</label>
+                                                                <asp:TextBox runat="server" ID="txtyearofimportremarksno" TextMode="MultiLine" TabIndex="3" class="form-control"></asp:TextBox>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div runat="server" id="divyearofimportYes" visible="False">
+                                                        <div class="col-sm-6">
+                                                            <div class="form-group">
+                                                                <label>Year of import</label>
+                                                                <div class="clearfix"></div>
+                                                                <asp:CheckBoxList runat="server" ID="chklistimportyearfive" RepeatDirection="Horizontal" TabIndex="2" RepeatLayout="Flow" RepeatColumns="5">
+                                                                    <asp:ListItem Value="2019-20" Selected="True">2019-20</asp:ListItem>
+                                                                    <asp:ListItem Value="2018-19" Selected="True">2018-19</asp:ListItem>
+                                                                    <asp:ListItem Value="2017-18" Selected="True">2017-18</asp:ListItem>
+                                                                    <asp:ListItem Value="2016-17" Selected="True">2016-17</asp:ListItem>
+                                                                    <asp:ListItem Value="2015-16" Selected="True">2015-16</asp:ListItem>
+                                                                </asp:CheckBoxList>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-6">
+                                                            <div class="form-group">
+                                                                <label>Remarks</label>
+                                                                <asp:TextBox runat="server" ID="txtremarksyearofimportyes" TextMode="MultiLine" TabIndex="3" class="form-control"></asp:TextBox>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </ContentTemplate>
+                                    </asp:UpdatePanel>
+                                    <asp:UpdateProgress ID="UpdateProgress7" runat="server" AssociatedUpdatePanelID="UpdatePanel4">
+                                        <ProgressTemplate>
+                                            <!---Progress Bar ---->
+                                            <div class="overlay-progress">
+                                                <div class="custom-progress-bar blue stripes">
+                                                    <span></span>
+                                                    <p>Processing</p>
+                                                </div>
+                                            </div>
+                                            <!---Progress Bar ---->
+                                        </ProgressTemplate>
+                                    </asp:UpdateProgress>
                                 </div>
                             </div>
                         </div>
