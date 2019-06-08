@@ -11,6 +11,9 @@ using System.Web.UI.WebControls;
 
 public partial class Admin_Industry : System.Web.UI.Page
 {
+    private Logic Lo = new Logic();
+    private Cryptography objCrypto = new Cryptography();
+    private string currentPage = "";
     protected void Page_Load(object sender, EventArgs e)
     {
         if (Session["Type"] != null)

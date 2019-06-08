@@ -61,7 +61,7 @@
                 <ul class="nav nav-tabs">
                     <li class="active"><a data-toggle="tab" href="#pd">Description</a></li>
                     <li><a data-toggle="tab" href="#pimg">Image</a></li>
-                    <li><a data-toggle="tab" href="#impprod">Imported products</a></li>
+                    <li><a data-toggle="tab" href="#impprod">Import Years</a></li>
                     <li><a data-toggle="tab" href="#test">Testing</a></li>
                     <li><a data-toggle="tab" href="#cer">Certification</a></li>
                     <li><a data-toggle="tab" href="#spd">Technical Support</a></li>
@@ -405,7 +405,7 @@
                                                 <div class="row">
                                                     <div runat="server" id="divyearofimportNo" visible="False">
                                                         <div class="col-sm-6">
-                                                            <div class="form-group">
+                                                            <div class="form-group hidden">
                                                                 <label>Year of import</label>
                                                                 <div class="clearfix"></div>
                                                                 <asp:CheckBoxList runat="server" ID="chkyearofimportall" RepeatDirection="Horizontal" TabIndex="2" RepeatLayout="Flow" RepeatColumns="1">
@@ -426,11 +426,11 @@
                                                                 <label>Year of import</label>
                                                                 <div class="clearfix"></div>
                                                                 <asp:CheckBoxList runat="server" ID="chklistimportyearfive" RepeatDirection="Horizontal" TabIndex="2" RepeatLayout="Flow" RepeatColumns="5">
-                                                                    <asp:ListItem Value="2019-20" Selected="True">2019-20</asp:ListItem>
-                                                                    <asp:ListItem Value="2018-19" Selected="True">2018-19</asp:ListItem>
-                                                                    <asp:ListItem Value="2017-18" Selected="True">2017-18</asp:ListItem>
-                                                                    <asp:ListItem Value="2016-17" Selected="True">2016-17</asp:ListItem>
-                                                                    <asp:ListItem Value="2015-16" Selected="True">2015-16</asp:ListItem>
+                                                                    <asp:ListItem Value="2019-20" Text="2019-20"></asp:ListItem>
+                                                                    <asp:ListItem Value="2018-19" Text="2018-19" ></asp:ListItem>
+                                                                    <asp:ListItem Value="2017-18" Text="2017-18"></asp:ListItem>
+                                                                    <asp:ListItem Value="2016-17" Text="2016-17"></asp:ListItem>
+                                                                    <asp:ListItem Value="2015-16" Text="2015-16"></asp:ListItem>
                                                                 </asp:CheckBoxList>
                                                             </div>
                                                         </div>
