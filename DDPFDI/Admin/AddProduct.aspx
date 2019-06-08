@@ -145,7 +145,8 @@
                                                 <div class="form-group">
                                                     <label>Upload document releted to item </label>
                                                     <span class="mandatory">(Only pdf file)</span>
-                                                    <asp:FileUpload runat="server" ID="fuitemdescriptionfile" CssClass="form-control" />
+                                                    <asp:FileUpload runat="server" ID="fuitemdescriptionfile" CssClass="form-control" TabIndex="7" />
+                                                    <asp:Label runat="server" ID="lblfuitemdescriptionfile" Visible="False"></asp:Label>
                                                 </div>
                                             </div>
                                         </div>
@@ -167,19 +168,22 @@
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label>OEM Part Number</label>
-                                                    <asp:TextBox runat="server" ID="txtoempartnumber" TabIndex="7" class="form-control"></asp:TextBox>
+                                                    <asp:TextBox runat="server" ID="txtoempartnumber" TabIndex="8" class="form-control"></asp:TextBox>
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label>OEM Name</label>
-                                                    <asp:TextBox runat="server" ID="txtoemname" TabIndex="8" class="form-control"></asp:TextBox>
+                                                    <asp:TextBox runat="server" ID="txtoemname" TabIndex="9" class="form-control"></asp:TextBox>
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label>OEM Country</label>
-                                                    <asp:DropDownList ID="ddlcountry" runat="server" TabIndex="9" Style="text-transform: uppercase !important;" CssClass="form-control form-cascade-control"></asp:DropDownList>
+                                                    <span class="mandatory">*</span>
+                                                    <%--<asp:DropDownList ID="ddlcountry" runat="server" TabIndex="9" Style="text-transform: uppercase !important;" CssClass="form-control form-cascade-control"></asp:DropDownList>
+                                                    --%><asp:TextBox runat="server" ID="txtcountry" TabIndex="10" class="form-control"></asp:TextBox>
+
                                                 </div>
                                             </div>
                                         </div>
@@ -187,27 +191,27 @@
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <asp:Label runat="server" ID="lblenduser" Text="End User"></asp:Label><span class="mandatory"> *</span>
-                                                    <asp:DropDownList runat="server" ID="ddlenduser" Style="text-transform: uppercase !important;" class="form-control" TabIndex="10">
+                                                    <asp:DropDownList runat="server" ID="ddlenduser" Style="text-transform: uppercase !important;" class="form-control" TabIndex="11">
                                                     </asp:DropDownList>
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label>End User Part Number</label>
-                                                    <asp:TextBox runat="server" ID="txtenduserpartnumber" TabIndex="11" class="form-control"></asp:TextBox>
+                                                    <asp:TextBox runat="server" ID="txtenduserpartnumber" TabIndex="12" class="form-control"></asp:TextBox>
                                                 </div>
                                             </div>
                                             <div class="clearfix"></div>
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label>DPSU Part Number</label>
-                                                    <asp:TextBox runat="server" ID="txtdpsupartnumber" TabIndex="12" class="form-control"></asp:TextBox>
+                                                    <asp:TextBox runat="server" ID="txtdpsupartnumber" TabIndex="13" class="form-control"></asp:TextBox>
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label>HSN Code</label>
-                                                    <asp:TextBox runat="server" ID="txthsncode" TabIndex="13" class="form-control"></asp:TextBox>
+                                                    <asp:TextBox runat="server" ID="txthsncode" TabIndex="14" class="form-control"></asp:TextBox>
                                                 </div>
                                             </div>
                                             <div class="col-md-4" runat="server" visible="false">
@@ -225,13 +229,13 @@
                                                     <div class="col-md-4">
                                                         <div class="form-group">
                                                             <label>DEFENCE PLATFORM<span class="mandatory">*</span></label>
-                                                            <asp:DropDownList runat="server" ID="ddlplatform" AutoPostBack="True" TabIndex="17" Style="text-transform: uppercase !important;" class="form-control" OnSelectedIndexChanged="ddlplatform_SelectedIndexChanged"></asp:DropDownList>
+                                                            <asp:DropDownList runat="server" ID="ddlplatform" AutoPostBack="True" TabIndex="15" Style="text-transform: uppercase !important;" class="form-control" OnSelectedIndexChanged="ddlplatform_SelectedIndexChanged"></asp:DropDownList>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-4" style="margin-top: 8px;">
                                                         <div class="form-group">
                                                             <asp:Label runat="server" ID="lblNomenclature" Text="NAME OF DEFENCE PLATFORM"></asp:Label><span class="mandatory"> *</span>
-                                                            <asp:DropDownList runat="server" ID="ddlnomnclature" class="form-control" Style="text-transform: uppercase !important;" TabIndex="18" />
+                                                            <asp:DropDownList runat="server" ID="ddlnomnclature" class="form-control" Style="text-transform: uppercase !important;" TabIndex="16" />
                                                         </div>
                                                     </div>
                                                     <div class="clearfix"></div>
@@ -239,21 +243,21 @@
                                                         <div class="form-group">
                                                             <label>PRODUCT (INDUSTRY DOMAIN)<span class="mandatory">*</span></label>
                                                             <span data-toggle="tooltip" class="fa fa-question" title="If you not display your category in this section, please add in Category Master >> Category Dropdown"></span>
-                                                            <asp:DropDownList runat="server" ID="ddltechnologycat" class="form-control" TabIndex="14" Style="text-transform: uppercase !important;" AutoPostBack="True" OnSelectedIndexChanged="ddltechnologycat_SelectedIndexChanged"></asp:DropDownList>
+                                                            <asp:DropDownList runat="server" ID="ddltechnologycat" class="form-control" TabIndex="17" Style="text-transform: uppercase !important;" AutoPostBack="True" OnSelectedIndexChanged="ddltechnologycat_SelectedIndexChanged"></asp:DropDownList>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-4">
                                                         <div class="form-group">
                                                             <label>PRODUCT (INDUSTRY SUB DOMAIN)<span class="mandatory">*</span></label>
                                                             <span data-toggle="tooltip" class="fa fa-question" title="It is a subcategory of Product Level 1, if you not see product level 2 please add in Category master >> level 2 "></span>
-                                                            <asp:DropDownList runat="server" ID="ddlsubtech" class="form-control" TabIndex="15" Style="text-transform: uppercase !important;" AutoPostBack="True" OnSelectedIndexChanged="ddlsubtech_SelectedIndexChanged"></asp:DropDownList>
+                                                            <asp:DropDownList runat="server" ID="ddlsubtech" class="form-control" TabIndex="18" Style="text-transform: uppercase !important;" AutoPostBack="True" OnSelectedIndexChanged="ddlsubtech_SelectedIndexChanged"></asp:DropDownList>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-4">
                                                         <div class="form-group">
                                                             <label>PRODUCT (INDUSTRY 2nd SUB DOMAIN)</label>
                                                             <span data-toggle="tooltip" class="fa fa-question" title="It is a subcategory of Product Level 2, if you not see product level 3 please add in Category master >> level 3 "></span>
-                                                            <asp:DropDownList runat="server" ID="ddltechlevel3" TabIndex="16" Style="text-transform: uppercase !important;" class="form-control"></asp:DropDownList>
+                                                            <asp:DropDownList runat="server" ID="ddltechlevel3" TabIndex="19" Style="text-transform: uppercase !important;" class="form-control"></asp:DropDownList>
                                                         </div>
                                                     </div>
                                                 </ContentTemplate>
@@ -359,7 +363,7 @@
                                     <div class="form-group">
                                         <label>Product Image</label>
                                         <div class="fr">
-                                            <asp:FileUpload ID="files" runat="server" CssClass="uploadimage form-control" TabIndex="28" type="file" name="image_file_arr[]" Multiple="Multiple" />
+                                            <asp:FileUpload ID="files" runat="server" CssClass="uploadimage form-control" TabIndex="1" type="file" name="image_file_arr[]" Multiple="Multiple" />
                                         </div>
 
                                     </div>
@@ -427,7 +431,7 @@
                                                                 <div class="clearfix"></div>
                                                                 <asp:CheckBoxList runat="server" ID="chklistimportyearfive" RepeatDirection="Horizontal" TabIndex="2" RepeatLayout="Flow" RepeatColumns="5">
                                                                     <asp:ListItem Value="2019-20" Text="2019-20"></asp:ListItem>
-                                                                    <asp:ListItem Value="2018-19" Text="2018-19" ></asp:ListItem>
+                                                                    <asp:ListItem Value="2018-19" Text="2018-19"></asp:ListItem>
                                                                     <asp:ListItem Value="2017-18" Text="2017-18"></asp:ListItem>
                                                                     <asp:ListItem Value="2016-17" Text="2016-17"></asp:ListItem>
                                                                     <asp:ListItem Value="2015-16" Text="2015-16"></asp:ListItem>
@@ -474,7 +478,7 @@
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="Confirm if support provided by DPSU">
                                             <ItemTemplate>
-                                                <asp:CheckBox runat="server" ID="chk" TabIndex="29" />
+                                                <asp:CheckBox runat="server" ID="chk" TabIndex="1" />
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="">
@@ -486,7 +490,7 @@
 
                                         <asp:TemplateField HeaderText="Remarks">
                                             <ItemTemplate>
-                                                <asp:TextBox runat="server" ID="txtRemarks" TabIndex="30" class="form-control"></asp:TextBox>
+                                                <asp:TextBox runat="server" ID="txtRemarks" TabIndex="2" class="form-control"></asp:TextBox>
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                     </Columns>
@@ -506,7 +510,7 @@
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="Confirm if support provided by DPSU">
                                             <ItemTemplate>
-                                                <asp:CheckBox runat="server" ID="chkfinan" TabIndex="31" />
+                                                <asp:CheckBox runat="server" ID="chkfinan" TabIndex="1" />
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="">
@@ -518,7 +522,7 @@
 
                                         <asp:TemplateField HeaderText="Remarks">
                                             <ItemTemplate>
-                                                <asp:TextBox runat="server" ID="txtfinancialRemarks" TabIndex="32" class="form-control"></asp:TextBox>
+                                                <asp:TextBox runat="server" ID="txtfinancialRemarks" TabIndex="2" class="form-control"></asp:TextBox>
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                     </Columns>
@@ -534,13 +538,13 @@
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label>Estimated Quantity</label>
-                                                <asp:TextBox runat="server" ID="txtestimatequantity" TabIndex="33" class="form-control"></asp:TextBox>
+                                                <asp:TextBox runat="server" ID="txtestimatequantity" TabIndex="1" class="form-control"></asp:TextBox>
                                             </div>
                                         </div>
                                         <div class="col-md-2">
                                             <div class="form-group">
                                                 <label>Estimated Quantity In</label>
-                                                <asp:DropDownList runat="server" ID="ddlestimatequantityidle" TabIndex="34" class="form-control">
+                                                <asp:DropDownList runat="server" ID="ddlestimatequantityidle" TabIndex="2" class="form-control">
                                                     <asp:ListItem Selected="True" Value="Select">Select</asp:ListItem>
                                                     <asp:ListItem Value="Kg">Kg</asp:ListItem>
                                                     <asp:ListItem Value="Gram">Gram</asp:ListItem>
@@ -556,7 +560,7 @@
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label>Estimated Price / LPP</label>
-                                                <asp:TextBox runat="server" ID="txtestimateprice" TabIndex="34" class="form-control"></asp:TextBox>
+                                                <asp:TextBox runat="server" ID="txtestimateprice" TabIndex="3" class="form-control"></asp:TextBox>
                                             </div>
                                         </div>
                                     </div>
@@ -585,7 +589,7 @@
                                             <div class="form-group ">
                                                 <label>
                                                     Tender Status</label>
-                                                <asp:DropDownList runat="server" ID="ddltendorstatus" class="form-control" TabIndex="35" AutoPostBack="True" OnSelectedIndexChanged="ddltendorstatus_SelectedIndexChanged">
+                                                <asp:DropDownList runat="server" ID="ddltendorstatus" class="form-control" TabIndex="1" AutoPostBack="True" OnSelectedIndexChanged="ddltendorstatus_SelectedIndexChanged">
                                                     <asp:ListItem Value="Not Floated" Selected="True">Not Floated</asp:ListItem>
                                                     <asp:ListItem Value="Archive">Archive</asp:ListItem>
                                                     <asp:ListItem Value="Live">Live</asp:ListItem>
@@ -600,7 +604,7 @@
                                                 <label>
                                                     <strong>Note:</strong> If live, please fill last date of tender submission. 
                                             <span class="checkbox-box productalreadylabel">
-                                                <asp:RadioButtonList runat="server" ID="rbtendordateyesno" RepeatDirection="Horizontal" TabIndex="36" AutoPostBack="True" RepeatColumns="2" RepeatLayout="Flow" OnSelectedIndexChanged="rbtendordateyesno_CheckedChanged">
+                                                <asp:RadioButtonList runat="server" ID="rbtendordateyesno" RepeatDirection="Horizontal" TabIndex="2" AutoPostBack="True" RepeatColumns="2" RepeatLayout="Flow" OnSelectedIndexChanged="rbtendordateyesno_CheckedChanged">
                                                     <asp:ListItem Value="N" runat="server" Selected="True">No</asp:ListItem>
                                                     <asp:ListItem Value="Y" class="yes">Yes</asp:ListItem>
                                                 </asp:RadioButtonList>
@@ -612,13 +616,13 @@
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>Last date of tender submission</label>
-                                                    <asp:TextBox runat="server" ID="txttendordate" type="date" TabIndex="37" class="form-control inputbox"></asp:TextBox>
+                                                    <asp:TextBox runat="server" ID="txttendordate" type="date" TabIndex="3" class="form-control inputbox"></asp:TextBox>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>Tender URL</label>
-                                                    <asp:TextBox runat="server" ID="txttendorurl" TabIndex="38" class="form-control"></asp:TextBox>
+                                                    <asp:TextBox runat="server" ID="txttendorurl" TabIndex="4" class="form-control"></asp:TextBox>
                                                 </div>
                                             </div>
                                         </div>
@@ -647,7 +651,7 @@
                                         <div class="col-md-12">
                                             <h4 class="page-header secondary">Contact Detail 1  </h4>
                                             <div class="form-group contactD1Select">
-                                                <asp:DropDownList runat="server" ID="ddlNodalOfficerEmail" class="form-control" TabIndex="39" AutoPostBack="True" OnSelectedIndexChanged="ddlNodalOfficerEmail_SelectedIndexChanged"></asp:DropDownList>
+                                                <asp:DropDownList runat="server" ID="ddlNodalOfficerEmail" class="form-control" TabIndex="1" AutoPostBack="True" OnSelectedIndexChanged="ddlNodalOfficerEmail_SelectedIndexChanged"></asp:DropDownList>
                                             </div>
                                         </div>
                                     </div>
@@ -656,19 +660,19 @@
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label>Employee Code</label>
-                                                    <asp:TextBox runat="server" ID="txtempcode" name="" Enabled="false" TabIndex="40" CssClass="form-control form-cascade-control" placeholder=""></asp:TextBox>
+                                                    <asp:TextBox runat="server" ID="txtempcode" name="" Enabled="false" TabIndex="2" CssClass="form-control form-cascade-control" placeholder=""></asp:TextBox>
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label>Designation</label>
-                                                    <asp:TextBox runat="server" ID="txtDesignation" name="" Enabled="false" TabIndex="41" CssClass="form-control form-cascade-control" placeholder=""></asp:TextBox>
+                                                    <asp:TextBox runat="server" ID="txtDesignation" name="" Enabled="false" TabIndex="3" CssClass="form-control form-cascade-control" placeholder=""></asp:TextBox>
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label>E-Mail ID</label>
-                                                    <asp:TextBox runat="server" ID="txtNEmailId" name="" Enabled="false" TabIndex="42" CssClass="form-control form-cascade-control" placeholder=""></asp:TextBox>
+                                                    <asp:TextBox runat="server" ID="txtNEmailId" name="" Enabled="false" TabIndex="4" CssClass="form-control form-cascade-control" placeholder=""></asp:TextBox>
                                                 </div>
                                             </div>
                                         </div>
@@ -676,19 +680,19 @@
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label>Mobile Number</label>
-                                                    <asp:TextBox runat="server" ID="txtmobnodal" Enabled="false" TabIndex="43" CssClass="form-control"></asp:TextBox>
+                                                    <asp:TextBox runat="server" ID="txtmobnodal" Enabled="false" TabIndex="5" CssClass="form-control"></asp:TextBox>
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label>Phone Number</label>
-                                                    <asp:TextBox runat="server" ID="txtNTelephone" name="" Enabled="false" TabIndex="44" CssClass="form-control form-cascade-control" placeholder=""></asp:TextBox>
+                                                    <asp:TextBox runat="server" ID="txtNTelephone" name="" Enabled="false" TabIndex="6" CssClass="form-control form-cascade-control" placeholder=""></asp:TextBox>
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label>Fax</label>
-                                                    <asp:TextBox runat="server" ID="txtNFaxNo" name="" Enabled="false" TabIndex="45" CssClass="form-control form-cascade-control" placeholder=""></asp:TextBox>
+                                                    <asp:TextBox runat="server" ID="txtNFaxNo" name="" Enabled="false" TabIndex="7" CssClass="form-control form-cascade-control" placeholder=""></asp:TextBox>
                                                 </div>
                                             </div>
                                         </div>
@@ -699,7 +703,7 @@
                                         <div class="col-md-12">
                                             <h4 class="page-header secondary">Contact Detail 2</h4>
                                             <div class="form-group select-box">
-                                                <asp:DropDownList runat="server" ID="ddlNodalOfficerEmail2" class="form-control" TabIndex="46" AutoPostBack="True" OnSelectedIndexChanged="ddlNodalOfficerEmail2_SelectedIndexChanged"></asp:DropDownList>
+                                                <asp:DropDownList runat="server" ID="ddlNodalOfficerEmail2" class="form-control" TabIndex="8" AutoPostBack="True" OnSelectedIndexChanged="ddlNodalOfficerEmail2_SelectedIndexChanged"></asp:DropDownList>
                                             </div>
                                         </div>
                                     </div>
@@ -708,20 +712,20 @@
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label>Employee Code</label>
-                                                    <asp:TextBox runat="server" ID="txtempcode2" name="" Enabled="false" TabIndex="47" CssClass="form-control form-cascade-control" placeholder=""></asp:TextBox>
+                                                    <asp:TextBox runat="server" ID="txtempcode2" name="" Enabled="false" TabIndex="9" CssClass="form-control form-cascade-control" placeholder=""></asp:TextBox>
                                                 </div>
 
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label>Designation</label>
-                                                    <asp:TextBox runat="server" ID="txtdesignationnodal2" name="" TabIndex="48" Enabled="false" CssClass="form-control form-cascade-control" placeholder=""></asp:TextBox>
+                                                    <asp:TextBox runat="server" ID="txtdesignationnodal2" name="" TabIndex="10" Enabled="false" CssClass="form-control form-cascade-control" placeholder=""></asp:TextBox>
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label>E-Mail ID</label>
-                                                    <asp:TextBox runat="server" ID="txtNEmailId2" name="" Enabled="false" TabIndex="49" CssClass="form-control form-cascade-control" placeholder=""></asp:TextBox>
+                                                    <asp:TextBox runat="server" ID="txtNEmailId2" name="" Enabled="false" TabIndex="11" CssClass="form-control form-cascade-control" placeholder=""></asp:TextBox>
 
                                                 </div>
                                             </div>
@@ -730,20 +734,20 @@
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label>Mobile Number</label>
-                                                    <asp:TextBox runat="server" ID="txtmobnodal2" name="" Enabled="false" TabIndex="50" CssClass="form-control form-cascade-control" placeholder=""></asp:TextBox>
+                                                    <asp:TextBox runat="server" ID="txtmobnodal2" name="" Enabled="false" TabIndex="12" CssClass="form-control form-cascade-control" placeholder=""></asp:TextBox>
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label>Phone Number</label>
-                                                    <asp:TextBox runat="server" ID="txtNTelephone2" name="" Enabled="false" TabIndex="51" CssClass="form-control form-cascade-control" placeholder=""></asp:TextBox>
+                                                    <asp:TextBox runat="server" ID="txtNTelephone2" name="" Enabled="false" TabIndex="13" CssClass="form-control form-cascade-control" placeholder=""></asp:TextBox>
 
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label>Fax</label>
-                                                    <asp:TextBox runat="server" ID="txtNFaxNo2" name="" Enabled="false" TabIndex="52" CssClass="form-control form-cascade-control" placeholder=""></asp:TextBox>
+                                                    <asp:TextBox runat="server" ID="txtNFaxNo2" name="" Enabled="false" TabIndex="14" CssClass="form-control form-cascade-control" placeholder=""></asp:TextBox>
                                                 </div>
                                             </div>
                                         </div>
@@ -776,7 +780,7 @@
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="Confirm if testing needed">
                                             <ItemTemplate>
-                                                <asp:CheckBox runat="server" ID="chktesting" TabIndex="53" />
+                                                <asp:CheckBox runat="server" ID="chktesting" TabIndex="1" />
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="">
@@ -787,7 +791,7 @@
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="Remarks">
                                             <ItemTemplate>
-                                                <asp:TextBox runat="server" ID="txttestingRemarks" TabIndex="54" class="form-control"></asp:TextBox>
+                                                <asp:TextBox runat="server" ID="txttestingRemarks" TabIndex="2" class="form-control"></asp:TextBox>
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                     </Columns>
@@ -807,7 +811,7 @@
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="Confirm if certification needed">
                                             <ItemTemplate>
-                                                <asp:CheckBox runat="server" ID="chkcertification" TabIndex="55" />
+                                                <asp:CheckBox runat="server" ID="chkcertification" TabIndex="1" />
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="">
@@ -819,7 +823,7 @@
 
                                         <asp:TemplateField HeaderText="Remarks">
                                             <ItemTemplate>
-                                                <asp:TextBox runat="server" ID="txtCertificationRemarks" TabIndex="56" class="form-control"></asp:TextBox>
+                                                <asp:TextBox runat="server" ID="txtCertificationRemarks" TabIndex="2" class="form-control"></asp:TextBox>
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                     </Columns>

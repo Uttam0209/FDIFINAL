@@ -96,9 +96,9 @@ namespace BusinessLayer
         {
             return SqlHelper.Instance.RetriveGridView(ID);
         }
-        public DataTable RetriveCountry(string text)
+        public DataTable RetriveCountry(Int64 CountryID, string text)
         {
-            return SqlHelper.Instance.RetriveCountry(text);
+            return SqlHelper.Instance.RetriveCountry(CountryID, text);
         }
         public DataTable RetriveState(string text)
         {

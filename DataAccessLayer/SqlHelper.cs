@@ -903,7 +903,7 @@ namespace DataAccessLayer
                 }
             }
         }
-        public DataTable RetriveCountry(string text)
+        public DataTable RetriveCountry(Int64 countryid,string text)
         {
             using (DbConnection dbCon = db.CreateConnection())
             {
@@ -911,7 +911,7 @@ namespace DataAccessLayer
                 try
                 {
                     DbCommand cmd = db.GetStoredProcCommand("sp_country");
-                    db.AddInParameter(cmd, "@CountryID", DbType.Int64, 0);
+                    db.AddInParameter(cmd, "@CountryID", DbType.Int64, countryid);
                     db.AddInParameter(cmd, "@CountryName", DbType.String, "");
                     db.AddInParameter(cmd, "@WorkCodeFor", DbType.String, text);
                     IDataReader dr = db.ExecuteReader(cmd);
