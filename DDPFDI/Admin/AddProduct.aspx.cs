@@ -1274,14 +1274,14 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         else
         {
             HyPanel1["IsProductImported"] = Co.RSQandSQLInjection(rbproductImported.SelectedItem.Value.Trim(), "soft");
-            foreach (CheckBoxList chk in chklistimportyearfive.Items)
+            foreach (ListItem chk in chklistimportyearfive.Items)
             {
-                if (chk.SelectedItem.Selected == true)
+                if (chk.Selected == true)
                 {
-                    IsImportedyesYear = IsImportedyesYear + "," + chk.SelectedItem.Value;
+                    IsImportedyesYear = IsImportedyesYear + "," + chk.Value;
                 }
             }
-            HyPanel1["YearofImport"] = Co.RSQandSQLInjection(IsImportedyesYear.ToString(), "soft");
+            HyPanel1["YearofImport"] = Co.RSQandSQLInjection(IsImportedyesYear.Substring(1).ToString(), "soft");
             HyPanel1["YearofImportRemarks"] = Co.RSQandSQLInjection(txtremarksyearofimportyes.Text.Trim(), "soft");
         }
         foreach (GridViewRow rw in gvservices.Rows)
@@ -1346,6 +1346,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
             HyPanel1["FinancialRemark"] = "";
         }
         HyPanel1["Estimatequantity"] = Co.RSQandSQLInjection(txtestimatequantity.Text, "soft");
+        HyPanel1["EstimatequantityIdle"] = Co.RSQandSQLInjection(ddlestimatequantityidle.SelectedItem.Text, "soft");
         HyPanel1["EstimatePriceLLP"] = Co.RSQandSQLInjection(txtestimateprice.Text, "soft");
         HyPanel1["TenderStatus"] = Co.RSQandSQLInjection(ddltendorstatus.SelectedItem.Value, "soft");
         HyPanel1["TenderSubmition"] = Co.RSQandSQLInjection(rbtendordateyesno.SelectedItem.Value, "soft");
@@ -1530,6 +1531,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         ddllevel3product.Items.Clear();
         ddlsubtech.Items.Clear();
         ddltechlevel3.Items.Clear();
+        ddlestimatequantityidle.SelectedIndex = 0;
         if (ddlNodalOfficerEmail.Text != "")
         {
             ddlNodalOfficerEmail.SelectedIndex = 0;
@@ -1585,7 +1587,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         }
         txtremarksyearofimportyes.Text = "";
         txtyearofimportremarksno.Text = "";
-        rbtendordateyesno.SelectedIndex = 0;
+        rbproductImported.SelectedIndex = 0;
         divyearofimportYes.Visible = false;
         divyearofimportNo.Visible = true;
     }
@@ -1752,6 +1754,8 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                         }
                     }
                     txtyearofimportremarksno.Text = DtView.Rows[0]["YearofImportRemarks"].ToString();
+                    divyearofimportNo.Visible = true;
+                    divyearofimportYes.Visible = false;
                 }
                 else
                 {
@@ -1760,6 +1764,8 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                         chk.Selected = true;
                     }
                     txtremarksyearofimportyes.Text = DtView.Rows[0]["YearofImportRemarks"].ToString();
+                    divyearofimportNo.Visible = false;
+                    divyearofimportYes.Visible = true;
                 }
                 DataTable dtpsdq = Lo.RetriveProductCode("", hfprodrefno.Value, "ProductPSDQ", hidType.Value);
                 if (dtpsdq.Rows.Count > 0)
@@ -1794,6 +1800,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                     }
                 }
                 txtestimatequantity.Text = DtView.Rows[0]["Estimatequantity"].ToString();
+                ddlestimatequantityidle.SelectedValue = DtView.Rows[0]["EstimatequantityIdle"].ToString();
                 txtestimateprice.Text = DtView.Rows[0]["EstimatePriceLLP"].ToString();
                 ddltendorstatus.SelectedValue = DtView.Rows[0]["TenderStatus"].ToString();
                 rbtendordateyesno.SelectedValue = DtView.Rows[0]["TenderSubmition"].ToString();

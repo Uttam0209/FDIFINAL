@@ -92,7 +92,7 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
     {
         try
         {
-            DtGrid = Lo.GetDashboardData("Product", "");          
+            DtGrid = Lo.GetDashboardData("Product", "");
             if (DtGrid.Rows.Count > 0)
             {
                 this.UpdateDtGridValue();
@@ -224,6 +224,9 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
                 lblprocremarks.Text = DtView.Rows[0]["ProcurmentCategoryRemark"].ToString();
                 // lblprodtimeframe.Text = DtView.Rows[0]["PRequirement"].ToString();
                 lblsearchkeyword.Text = DtView.Rows[0]["SearchKeyword"].ToString();
+                lblisproductimported.Text = DtView.Rows[0]["IsProductImported"].ToString();
+                lblyearofimport.Text = DtView.Rows[0]["YearofImport"].ToString();
+                lblremarksproductimported.Text = DtView.Rows[0]["YearofImportRemarks"].ToString();
                 lblprodalredyindeginized.Text = DtView.Rows[0]["IsIndeginized"].ToString();
                 if (lblprodalredyindeginized.Text == "Y")
                 {
@@ -288,6 +291,7 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
                 }
                 lblfinancialRemark.Text = DtView.Rows[0]["FinancialRemark"].ToString();
                 lblestimatedquantity.Text = DtView.Rows[0]["Estimatequantity"].ToString();
+                lblEstimatedQuantityIn.Text = DtView.Rows[0]["EstimatequantityIdle"].ToString();
                 lblestimatedprice.Text = DtView.Rows[0]["EstimatePriceLLP"].ToString();
                 lbltenderstatus.Text = DtView.Rows[0]["TenderStatus"].ToString();
                 string tensub = DtView.Rows[0]["TenderSubmition"].ToString();

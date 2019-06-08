@@ -105,6 +105,11 @@ namespace BusinessLayer
             return SqlHelper.Instance.RetriveState(text);
         }
 
+        public DataTable RetriveProductIndig()
+        {
+            return SqlHelper.Instance.GetExecuteData("select * from fn_companywiseproduct()");
+        }
+
         public DataTable RetriveAllCompany(string UnitRefNo, string Role)
         {
             return SqlHelper.Instance.RetriveAllCompany(UnitRefNo, Role);

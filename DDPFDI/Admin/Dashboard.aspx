@@ -3,6 +3,51 @@
 <%@ Register Assembly="System.Web.DataVisualization, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" Namespace="System.Web.UI.DataVisualization.Charting" TagPrefix="asp" %>
 
 <asp:Content ID="conhead" runat="server" ContentPlaceHolderID="head">
+    <%-- Here We need to write some js code for load google chart with database data --%>
+    <script src="~/assets/js/jquery-1.7.1.js"></script>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+
+    <script>
+        var chartData; // globar variable for hold chart data
+        google.load("visualization", "1", { packages: ["corechart"] });
+
+        // Here We will fill chartData
+
+        $(document).ready(function () {
+
+            $.ajax({
+                url: "GetChartData",
+                data: "",
+                dataType: "json",
+                type: "POST",
+                contentType: "application/json; chartset=utf-8",
+                success: function (data) {
+                    chartData = data.d;
+                },
+                error: function () {
+                    alert("Error loading data! Please try again.");
+                }
+            }).done(function () {
+                // after complete loading data
+                google.setOnLoadCallback(drawChart);
+                drawChart();
+            });
+        });
+
+        function drawChart() {
+            var data = google.visualization.arrayToDataTable(chartData);
+
+            var options = {
+                title: "Company Revenue",
+                pointSize: 5
+            };
+
+            var pieChart = new google.visualization.PieChart(document.getElementById('chart_div'));
+            pieChart.draw(data, options);
+
+        }
+    </script>
+
 </asp:Content>
 <asp:Content ID="coninner" runat="server" ContentPlaceHolderID="ContentPlaceHolder1">
     <asp:ScriptManager ID="sc" runat="server"></asp:ScriptManager>
@@ -25,7 +70,7 @@
                                 <div class="col-md-12">
                                     <div class="row">
                                         <!--- box start----->
-                                        <div class="col-lg-4 col-sm-6 col-xs-12">
+                                        <div class="col-lg-3 col-sm-6 col-xs-12">
                                             <div class="white-box analytics-info total-comp">
                                                 <ul class="list-inline two-part">
                                                     <li>
@@ -46,7 +91,7 @@
                                             </div>
                                         </div>
                                         <!--- box End----->
-                                        <div class="col-lg-4 col-sm-6 col-xs-12">
+                                        <div class="col-lg-3 col-sm-6 col-xs-12">
                                             <div class="white-box analytics-info total-fdi">
                                                 <ul class="list-inline two-part">
                                                     <li>
@@ -66,7 +111,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-lg-4 col-sm-6 col-xs-12">
+                                        <div class="col-lg-3 col-sm-6 col-xs-12">
                                             <div class="white-box analytics-info last-fdi">
                                                 <ul class="list-inline two-part">
                                                     <li>
@@ -86,9 +131,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="row" style="margin-top: 10px;">
-                                        <div class="col-lg-4 col-sm-6 col-xs-12">
+                                        <div class="col-lg-3 col-sm-6 col-xs-12">
                                             <div class="white-box analytics-info last-fdi">
                                                 <ul class="list-inline two-part">
                                                     <li>
@@ -109,6 +152,9 @@
                                                 </div>
                                             </div>
                                         </div>
+                                    </div>
+                                    <div class="row" style="margin-top: 10px;">
+
                                         <div class="col-lg-4 col-sm-6 col-xs-12">
                                             <div class="white-box analytics-info last-fdi">
                                                 <ul class="list-inline two-part">
@@ -150,18 +196,36 @@
                                             </div>
                                         </div>
                                     </div>
+                                    
+
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <div id="divPieChart">
-                                                <div id="chartPie" style="height: 370px; width: 100%; margin-top: 20px"></div>
-                                            </div>
-                                            <div id="divLineChart" style="display: none">
-                                                <div id="chartLine" style="height: 370px; width: 100%; margin-top: 20px"></div>
+                                            <div class="table-wrapper table-responsive" id="divfactorygrid" runat="server">
+                                                <asp:GridView ID="gvPrdoct" runat="server" AutoGenerateColumns="false" Class="commonAjaxTbl master-company-table ViewProductTable table 
+                                        display responsive no-wrap table-hover manage-user Grid table-responsive"
+                                                    >
+                                                    <Columns>
+                                                        <asp:TemplateField HeaderText="S.No.">
+                                                            <ItemTemplate>
+                                                                <%#Container.DataItemIndex+1 %>
+                                                            </ItemTemplate>
+                                                        </asp:TemplateField>
+                                                        <asp:BoundField DataField="CompName" HeaderText="Company" NullDisplayText="#" />
+                                                       
+                                                        <asp:BoundField DataField="TotalProd" HeaderText="Total Product" NullDisplayText="#" />
+                                                        <asp:BoundField DataField="IsIndiginised" HeaderText="Indigenized Product" NullDisplayText="#" />
+                                                    </Columns>
+                                                </asp:GridView>
                                             </div>
                                         </div>
-                                        <div>
-                                        </div>
-
+                                    </div>
+                                    <div class="row">
+                                         <div class="col-md-12">
+                                             <div id="chart_div" style="width:500px;height:400px">
+                <%-- Here Chart Will Load --%>
+                                                 
+            </div>
+                                             </div>
                                     </div>
                                 </div>
                             </div>
