@@ -11,13 +11,6 @@
             <div class="row">
                 <div class="col-md-12 padding_0">
                     <div id="divHeadPage" runat="server"></div>
-                    <div id="ContentPlaceHolder1_divHeadPage">
-                        <ul class="breadcrumb">
-                            <li class=""><span>Company Master </span></li>
-                            <li class=""><span>Add </span></li>
-                            <li class=""><span>Company</span></li>
-                        </ul>
-                    </div>
                 </div>
             </div>
             <div class="tabing-section">
