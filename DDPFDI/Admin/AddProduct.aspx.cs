@@ -18,6 +18,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     private Logic Lo = new Logic();
     private DataTable dtImage = new DataTable();
     private string DisplayPanel = "";
+    public static Int64 CountryID = 0;
     private string _msg = string.Empty;
     private string _sysMsg = string.Empty;
     public string Services = "";
@@ -80,7 +81,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                         {
                             BindCompany();
                             BindFinancialYear();
-                            BindCountry();
+                            // BindCountry();
                             tendorstatus();
                             IsProductImported();
                             BindServcies();
@@ -114,7 +115,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                         {
                             BindCompany();
                             BindFinancialYear();
-                            BindCountry();
+                            //  BindCountry();
                             tendorstatus();
                             IsProductImported();
                             BindServcies();
@@ -1033,15 +1034,15 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     }
     #endregion
     #region For Country
-    protected void BindCountry()
-    {
-        DataTable DtCountry = Lo.RetriveCountry("Select");
-        if (DtCountry.Rows.Count > 0)
-        {
-            Co.FillDropdownlist(ddlcountry, DtCountry, "CountryName", "CountryID");
-            ddlcountry.Items.Insert(0, "Select");
-        }
-    }
+    //protected void BindCountry()
+    //{
+    //    DataTable DtCountry = Lo.RetriveCountry(0,"Select");
+    //    if (DtCountry.Rows.Count > 0)
+    //    {
+    //        Co.FillDropdownlist(ddlcountry, DtCountry, "CountryName", "CountryID");
+    //        ddlcountry.Items.Insert(0, "Select");
+    //    }
+    //}
     #endregion
     #region PanelSaveCode
     protected void SaveProductDescription()
@@ -1140,17 +1141,27 @@ public partial class Admin_AddProduct : System.Web.UI.Page
             {
                 HyPanel1["ItemDescriptionPDFFile"] = "";
             }
+            else
+            {
+                if (lblfuitemdescriptionfile.Text != "")
+                { HyPanel1["ItemDescriptionPDFFile"] = lblfuitemdescriptionfile.Text; }
+                else
+                {
+                    HyPanel1["ItemDescriptionPDFFile"] = "";
+                }
+            }
         }
         HyPanel1["OEMPartNumber"] = Co.RSQandSQLInjection(txtoempartnumber.Text.Trim(), "soft");
         HyPanel1["OEMName"] = Co.RSQandSQLInjection(txtoemname.Text.Trim(), "soft");
-        if (ddlcountry.SelectedItem.Text == "Select")
-        {
-            HyPanel1["OEMCountry"] = null;
-        }
-        else
-        {
-            HyPanel1["OEMCountry"] = Convert.ToInt64(ddlcountry.SelectedItem.Value.ToString());
-        }
+        //if (ddlcountry.SelectedItem.Text == "Select")
+        //{
+        //    HyPanel1["OEMCountry"] = null;
+        //}
+        //else
+        //{
+        //    HyPanel1["OEMCountry"] = Convert.ToInt64(ddlcountry.SelectedItem.Value.ToString());
+        //}
+        HyPanel1["OEMCountry"] = Convert.ToInt64(CountryID.ToString());
         HyPanel1["DPSUPartNumber"] = Co.RSQandSQLInjection(txtdpsupartnumber.Text.Trim(), "soft");
         HyPanel1["EndUserPartNumber"] = Co.RSQandSQLInjection(txtenduserpartnumber.Text.Trim(), "soft");
         HyPanel1["HSNCode"] = Co.RSQandSQLInjection(txthsncode.Text.Trim(), "soft");
@@ -1243,7 +1254,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                     short CountImageTotal = Convert.ToInt16(files.PostedFiles.Count);
                     short AlreadyUploadImage = Convert.ToInt16(dtImageBind.Rows.Count);
                     ImageMaxCount = (CountImageTotal + AlreadyUploadImage);
-                    if (ImageMaxCount <= 4)
+                    if (ImageMaxCount <= 5)
                     {
                         dtImage = imagedb();
                     }
@@ -1252,7 +1263,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                 {
                     if (files.HasFiles != false)
                     {
-                        ImageMaxCount = 4;
+                        ImageMaxCount = 5;
                         dtImage = imagedb();
                     }
                 }
@@ -1260,7 +1271,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
             }
             else
             {
-                ImageMaxCount = 4;
+                ImageMaxCount = 5;
                 dtImage = imagedb();
             }
         }
@@ -1466,7 +1477,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         {
             if (ddlsubtech.SelectedItem.Text != "Select" && ddlnomnclature.SelectedItem.Text != "Select" && ddlenduser.SelectedItem.Text != "Select" && ddlplatform.SelectedItem.Text != "Select")
             {
-                if (ddlprocurmentcategory.SelectedItem.Text != "Select" && ddlcountry.SelectedItem.Text != "Select")
+                if (ddlprocurmentcategory.SelectedItem.Text != "Select") //&& ddlcountry.SelectedItem.Text != "Select")
                 {
                     SaveProductDescription();
                 }
@@ -1497,7 +1508,8 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         hfprodrefno.Value = "";
         txtoempartnumber.Text = "";
         txtoemname.Text = "";
-        ddlcountry.SelectedIndex = 0;
+        //  ddlcountry.SelectedIndex = 0;
+        txtcountry.Text = "";
         txtmanifacaddress.Text = "";
         ddlyearofindiginization.SelectedIndex = 0;
         txtremarkspro.Text = "";
@@ -1532,6 +1544,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         ddlsubtech.Items.Clear();
         ddltechlevel3.Items.Clear();
         ddlestimatequantityidle.SelectedIndex = 0;
+        CountryID = 0;
         if (ddlNodalOfficerEmail.Text != "")
         {
             ddlNodalOfficerEmail.SelectedIndex = 0;
@@ -1596,7 +1609,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     private int ImageMaxCount;
     protected DataTable imagedb()
     {
-        HttpFileCollection uploadedFiles = Request.Files;
+        HttpFileCollection OnlyImageuploadedFiles = Request.Files;
         DataTable dt = new DataTable();
         dt.Columns.Add(new DataColumn("ImageID", typeof(long)));
         dt.Columns.Add(new DataColumn("ImageName", typeof(string)));
@@ -1610,11 +1623,9 @@ public partial class Admin_AddProduct : System.Web.UI.Page
             {
                 for (int i = 0; i < ImageMaxCount; i++)
                 {
-                    HttpPostedFile hpf = uploadedFiles[i];
+                    HttpPostedFile hpf = OnlyImageuploadedFiles[i];
                     string FileType = hpf.ContentType;
                     int FileSize = hpf.ContentLength;
-                    // if (FileSize < 102400)
-                    //{
                     if (Co.GetImageFilter(hpf.FileName) == true)
                     {
                         string FilePathName = hfcomprefno.Value + "_" + DateTime.Now.ToString("hh_mm_ss") + hpf.FileName;
@@ -1628,7 +1639,6 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                         dr["Priority"] = i + 1;
                         dt.Rows.Add(dr);
                     }
-                    // }
                 }
             }
             catch (Exception)
@@ -1669,6 +1679,36 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         // NicCode = FinalNicCode;
         return customers.ToArray();
     }
+    [System.Web.Services.WebMethod]
+    [System.Web.Script.Services.ScriptMethod()]
+    public static string[] GetCountry(string prefix)
+    {
+        Cryptography objCrypto1 = new Cryptography();
+        List<string> customers = new List<string>();
+        Int64 FinalNicCode = 0;
+        using (SqlConnection conn = new SqlConnection())
+        {
+            conn.ConnectionString = objCrypto1.DecryptData(ConfigurationManager.ConnectionStrings["connectiondb"].ConnectionString);
+            using (SqlCommand cmd = new SqlCommand())
+            {
+                cmd.CommandText = "select Upper(CountryName) as CountryName,CountryId from tbl_mst_Country where CountryName like @SearchText + '%' and IsActive='Y'";
+                cmd.Parameters.AddWithValue("@SearchText", prefix);
+                cmd.Connection = conn;
+                conn.Open();
+                using (SqlDataReader sdr = cmd.ExecuteReader())
+                {
+                    while (sdr.Read())
+                    {
+                        customers.Add(string.Format("{0}-{1}", sdr["CountryName"], sdr["CountryID"]));
+                        FinalNicCode = Convert.ToInt64(sdr["CountryId"].ToString());
+                    }
+                }
+                conn.Close();
+            }
+        }
+        CountryID = FinalNicCode;
+        return customers.ToArray();
+    }
     #endregion
     #region EditCodeForProduct
     protected void EditCode()
@@ -1697,7 +1737,11 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                 HyPanel1["ItemDescriptionPDFFile"] = DtView.Rows[0]["ItemDescriptionPDFFile"].ToString();
                 txtoempartnumber.Text = DtView.Rows[0]["OEMPartNumber"].ToString();
                 txtoemname.Text = DtView.Rows[0]["OEMName"].ToString();
-                ddlcountry.SelectedValue = DtView.Rows[0]["OEMCountry"].ToString();
+                DataTable dtcount = Lo.RetriveCountry(Convert.ToInt64(DtView.Rows[0]["OEMCountry"].ToString()), "GetCountryByID");
+                if (dtcount.Rows.Count > 0)
+                { txtcountry.Text = dtcount.Rows[0]["CountryName"].ToString(); }
+                CountryID = Convert.ToInt16(DtView.Rows[0]["OEMCountry"].ToString());
+                //ddlcountry.SelectedValue = DtView.Rows[0]["OEMCountry"].ToString();
                 txtdpsupartnumber.Text = DtView.Rows[0]["DPSUPartNumber"].ToString();
                 txtenduserpartnumber.Text = DtView.Rows[0]["EndUserPartNumber"].ToString();
                 txthsncode.Text = DtView.Rows[0]["HSNCode"].ToString();
@@ -1732,6 +1776,16 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                     divisIndigenized.Visible = false;
                 }
                 txtsearchkeyword.Text = DtView.Rows[0]["SearchKeyword"].ToString();
+                if (DtView.Rows[0]["ItemDescriptionPDFFile"].ToString() != "")
+                {
+                    lblfuitemdescriptionfile.Text = DtView.Rows[0]["ItemDescriptionPDFFile"].ToString();
+                    lblfuitemdescriptionfile.Visible = true;
+                }
+                else
+                {
+                    lblfuitemdescriptionfile.Text = "";
+                    lblfuitemdescriptionfile.Visible = false;
+                }
                 DataTable dtImageBind = Lo.RetriveProductCode("", hfprodrefno.Value, "ProductImage", hidType.Value);
                 if (dtImageBind.Rows.Count > 0)
                 {
