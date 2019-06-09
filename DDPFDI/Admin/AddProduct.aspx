@@ -178,7 +178,7 @@
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="form-group">
-                                                    <label>OEM Country</label>
+                                                    <label>OEM Country</label><span class="mandatory"> *</span>
                                                     <asp:DropDownList ID="ddlcountry" runat="server" TabIndex="9" Style="text-transform: uppercase !important;" CssClass="form-control form-cascade-control"></asp:DropDownList>
                                                 </div>
                                             </div>

@@ -26,6 +26,7 @@ public partial class Admin_Dashboard : System.Web.UI.Page
                 lnkbtnTotUnit.Text = dt.Rows[0]["TotUnit"].ToString();
                 lnkbtnTotEmp.Text = dt.Rows[0]["TotEmployee"].ToString();
                 lnkbtnProduct.Text = dt.Rows[0]["TotProduct"].ToString();
+                lnkbtnIndigenizedProduct.Text = dt.Rows[0]["IsIndiginised"].ToString();
                 if (objCrypto.DecryptData(Session["Type"].ToString()) == "Admin" || objCrypto.DecryptData(Session["Type"].ToString()) == "SuperAdmin")
                 {
                     FillProduct();
@@ -47,9 +48,9 @@ public partial class Admin_Dashboard : System.Web.UI.Page
         DataTable data = Lo.RetriveProductIndig();
         var chartData = new object[data.Rows.Count + 1];
         chartData[0] = new object[]{
-                "CompName",
-                "TotalProd",
-                "IsIndiginised"
+                "Company Name",
+                "P",
+                "I"
             };
         int j = 0;
         for (int i = 0; data.Rows.Count > i; i++ )
@@ -91,6 +92,10 @@ public partial class Admin_Dashboard : System.Web.UI.Page
     protected void lnkbtnProduct_Click(object sender, EventArgs e)
     {
         Response.Redirect("Dashboard-View?id=" + HttpUtility.UrlEncode(objCrypto.EncryptData("P")));
+    }
+    protected void lnkbtnIndigenizedProduct_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("Dashboard-View?id=" + HttpUtility.UrlEncode(objCrypto.EncryptData("PI")));
     }
     protected void lblComp_Click(object sender, EventArgs e)
     {

@@ -4,7 +4,7 @@
 
 <asp:Content ID="conhead" runat="server" ContentPlaceHolderID="head">
     <%-- Here We need to write some js code for load google chart with database data --%>
-    <script src="~/assets/js/jquery-1.7.1.js"></script>
+    <script src="assets/js/jquery-1.7.1.js"></script>
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
 
     <script>
@@ -16,7 +16,7 @@
         $(document).ready(function () {
 
             $.ajax({
-                url: "GetChartData",
+                url: "Admin/Dashboard.aspx/GetChartData",
                 data: "",
                 dataType: "json",
                 type: "POST",
@@ -38,12 +38,16 @@
             var data = google.visualization.arrayToDataTable(chartData);
 
             var options = {
-                title: "Company Revenue",
-                pointSize: 5
+                pointSize: 5,
+                seriesType: "bars",
+                series: { 3: { type: "line" } }
             };
 
             var pieChart = new google.visualization.PieChart(document.getElementById('chart_div'));
             pieChart.draw(data, options);
+
+            var lineChart = new google.visualization.ComboChart(document.getElementById('chart_div1'));
+            lineChart.draw(data, options);
 
         }
     </script>
@@ -155,7 +159,7 @@
                                     </div>
                                     <div class="row" style="margin-top: 10px;">
 
-                                        <div class="col-lg-4 col-sm-6 col-xs-12">
+                                        <div class="col-lg-6 col-sm-6 col-xs-12">
                                             <div class="white-box analytics-info last-fdi">
                                                 <ul class="list-inline two-part">
                                                     <li>
@@ -175,7 +179,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-lg-4 col-sm-6 col-xs-12 hidden">
+                                        <div class="col-lg-6 col-sm-6 col-xs-12">
                                             <div class="white-box analytics-info last-fdi">
                                                 <ul class="list-inline two-part">
                                                     <li>
@@ -183,57 +187,82 @@
                                                             <i class="fa fa-users" aria-hidden="true"></i>
                                                         </div>
                                                         <div class="compName">
-                                                            <h3 class="box-title">Total ??</h3>
+                                                            <h3 class="box-title">Indigenized Product</h3>
                                                             <div class="Number">
-                                                                <asp:LinkButton ID="lnkbtnNA" runat="server" Text="0"></asp:LinkButton>
+                                                                <asp:LinkButton ID="lnkbtnIndigenizedProduct" runat="server" CssClass="comp_number" Text="0" OnClick="lnkbtnIndigenizedProduct_Click"></asp:LinkButton>
                                                             </div>
                                                         </div>
                                                     </li>
                                                 </ul>
                                                 <div class="file-export">
-                                                    <i class="fa fa-file-export" data-toggle="tooltip" title="Export to Excel"></i>
+                                                    <asp:LinkButton ID="LinkButton2" runat="server" Visible="true" class="fa fa-file-export" data-toggle="tooltip" ToolTip="Export to Excel" OnClick="lnkProduct_Click"></asp:LinkButton>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    
 
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="table-wrapper table-responsive" id="divfactorygrid" runat="server">
-                                                <asp:GridView ID="gvPrdoct" runat="server" AutoGenerateColumns="false" Class="commonAjaxTbl master-company-table ViewProductTable table 
-                                        display responsive no-wrap table-hover manage-user Grid table-responsive"
-                                                    >
-                                                    <Columns>
-                                                        <asp:TemplateField HeaderText="S.No.">
-                                                            <ItemTemplate>
-                                                                <%#Container.DataItemIndex+1 %>
-                                                            </ItemTemplate>
-                                                        </asp:TemplateField>
-                                                        <asp:BoundField DataField="CompName" HeaderText="Company" NullDisplayText="#" />
-                                                       
-                                                        <asp:BoundField DataField="TotalProd" HeaderText="Total Product" NullDisplayText="#" />
-                                                        <asp:BoundField DataField="IsIndiginised" HeaderText="Indigenized Product" NullDisplayText="#" />
-                                                    </Columns>
-                                                </asp:GridView>
+                                    <div class="row" style="margin-top: 20px;">
+                                        <div class="col-lg-12 col-sm-6 col-xs-12">
+                                            
+                                            <h4 class="box-title">Company Performance Product Category Wise</h4>
+                                               
+                                        </div>
+                                    </div>
+
+                                    <div class="row" style="margin-top: 5px;">
+
+                                        <div class="col-lg-6 col-sm-6 col-xs-12">
+
+                                            <div class="white-box analytics-info last-fdi">
+
+                                                <div id="chart_div" style="width: 400px; height: 200px">
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <%--</div>
+                                         <div class="row" style="margin-top: 10px;">--%>
+                                        <div class="col-lg-6 col-sm-6 col-xs-12">
+                                            <div class="white-box analytics-info last-fdi">
+                                                <div id="chart_div1" style="width: 400px; height: 200px">
+                                                </div>
+
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row">
-                                         <div class="col-md-12">
-                                             <div id="chart_div" style="width:500px;height:400px">
-                <%-- Here Chart Will Load --%>
-                                                 
-            </div>
-                                             </div>
+                                     <div class="row" style="margin-top: 20px;">
+                                        <div class="col-lg-6 col-sm-6 col-xs-12">
+                                            <div class="white-box analytics-info last-fdi">
+                                           
+                                                 <div class="table-wrapper table-responsive" id="divfactorygrid" runat="server">
+                                            <asp:GridView ID="gvPrdoct" runat="server" AutoGenerateColumns="false" Class="commonAjaxTbl master-company-table ViewProductTable table 
+                                        display responsive no-wrap table-hover manage-user Grid table-responsive">
+                                                <Columns>
+                                                    <asp:TemplateField HeaderText="S.No.">
+                                                        <ItemTemplate>
+                                                            <%#Container.DataItemIndex+1 %>
+                                                        </ItemTemplate>
+                                                    </asp:TemplateField>
+                                                    <asp:BoundField DataField="CompName" HeaderText="Company" NullDisplayText="#" />
+
+                                                    <asp:BoundField DataField="TotalProd" HeaderText="Total Product" NullDisplayText="#" />
+                                                    <asp:BoundField DataField="IsIndiginised" HeaderText="Indigenized Product" NullDisplayText="#" />
+                                                </Columns>
+                                            </asp:GridView>
+                                        </div>
+                                                </div>
+                                        </div>
                                     </div>
                                 </div>
+                               
+                               
                             </div>
                         </div>
-
-                    </form>
                 </div>
-                <div class="footer">© 2019 <a href="#">Department of Defence Production</a> </div>
+
+                </form>
+            </div>
+            <div class="footer">© 2019 <a href="#">Department of Defence Production</a> </div>
             </div>
 
         </ContentTemplate>

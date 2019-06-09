@@ -79,6 +79,15 @@ public partial class Admin_ViewDashboard : System.Web.UI.Page
             gvproduct.Visible = true;
             BindProduct(RefNo);
         }
+        else if (mVal == "PI")
+        {
+            gvcompanydetail.Visible = false;
+            gvfactory.Visible = false;
+            gvunit.Visible = false;
+            gvViewNodalOfficer.Visible = false;
+            gvproduct.Visible = true;
+            BindProduct(RefNo);
+        }
         else
         {
             BindCompany(RefNo);
@@ -254,10 +263,23 @@ public partial class Admin_ViewDashboard : System.Web.UI.Page
             }
             else
             {
-                gvproduct.DataSource = DtGrid;
-                gvproduct.DataBind();
-                lbltotal.Text = "Total Records:- " + gvproduct.Rows.Count.ToString();
-                divProductGrid.Visible = true;
+                if (Request.QueryString["id"] != null)
+                {
+                    if (Encrypt.DecryptData(Request.QueryString["id"].ToString()) == "PI")
+                    {
+                        DataView dv = new DataView(DtGrid);
+                        dv.RowFilter = "IsIndeginized='Y'";
+                        dv.Sort = "CompanyName asc,FactoryName asc";
+                        gvproduct.DataSource = dv.ToTable();
+                    }
+                    else
+                    {
+                        gvproduct.DataSource = DtGrid;
+                    }
+                    gvproduct.DataBind();
+                    lbltotal.Text = "Total Records:- " + gvproduct.Rows.Count.ToString();
+                    divProductGrid.Visible = true;
+                }
             }
         }
     }
