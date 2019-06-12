@@ -590,7 +590,7 @@ namespace DataAccessLayer
                 }
             }
         }
-        public string SaveCodeProduct(HybridDictionary hyProduct, DataTable dt, out string _sysMsg, out string _msg, string Criteria)
+        public string SaveCodeProduct(HybridDictionary hyProduct, DataTable dt, DataTable dtProdInfo, DataTable dtEstimateQuantity, out string _sysMsg, out string _msg, string Criteria)
         {
             using (DbConnection dbCon = db.CreateConnection())
             {
@@ -646,7 +646,8 @@ namespace DataAccessLayer
                     db.AddInParameter(cmd, "@TenderSubmition", DbType.String, hyProduct["TenderSubmition"].ToString().Trim());
                     db.AddInParameter(cmd, "@TenderFillDate", DbType.Date, hyProduct["TenderFillDate"]);
                     db.AddInParameter(cmd, "@TenderUrl", DbType.String, hyProduct["TenderUrl"]);
-                    db.AddInParameter(cmd, "@NodelDetail", DbType.String, hyProduct["NodelDetail"]);
+                    db.AddInParameter(cmd, "@NodelDetail", DbType.Int16, hyProduct["NodelDetail"]);
+                    db.AddInParameter(cmd, "@NodalDetail2", DbType.Int16, hyProduct["NodalDetail2"]);
                     db.AddInParameter(cmd, "@Testing", DbType.String, hyProduct["Testing"].ToString().Trim());
                     db.AddInParameter(cmd, "@TestingRemarks", DbType.String, hyProduct["TestingRemarks"].ToString().Trim());
                     db.AddInParameter(cmd, "@Certification", DbType.String, hyProduct["Certification"].ToString().Trim());
@@ -668,6 +669,28 @@ namespace DataAccessLayer
                         db.AddInParameter(dbcom1, "@Priority", DbType.String, dt.Rows[i]["Priority"]);
                         db.AddInParameter(dbcom1, "@CompanyRefNo", DbType.String, dt.Rows[i]["CompanyRefNo"]);
                         db.ExecuteNonQuery(dbcom1, dbTran);
+                    }
+                    for (int j = 0; j < dtProdInfo.Rows.Count; j++)
+                    {
+                        DbCommand dbcom2 = db.GetStoredProcCommand("sp_trn_ProductInformation");
+                        db.AddInParameter(dbcom2, "@ProdInfoId", DbType.Int64, dtProdInfo.Rows[j]["ProdInfoId"]);
+                        db.AddInParameter(dbcom2, "@ProductRefNo", DbType.String, mCurrentID);
+                        db.AddInParameter(dbcom2, "@NameOfSpec", DbType.String, dtProdInfo.Rows[j]["NameOfSpec"]);
+                        db.AddInParameter(dbcom2, "@Value", DbType.Decimal, dtProdInfo.Rows[j]["Value"]);
+                        db.AddInParameter(dbcom2, "@Unit", DbType.String, dtProdInfo.Rows[j]["Unit"]);
+                        db.ExecuteNonQuery(dbcom2, dbTran);
+                    }
+                    for (int k = 0; k < dtEstimateQuantity.Rows.Count; k++)
+                    {
+                        DbCommand dbcom3 = db.GetStoredProcCommand("sp_trn_ProdQtyPrice");
+                        db.AddInParameter(dbcom3, "@ProdQtyPriceId", DbType.Int64, dtEstimateQuantity.Rows[k]["ProdQtyPriceId"]);
+                        db.AddInParameter(dbcom3, "@ProductRefNo", DbType.String, mCurrentID);
+                        db.AddInParameter(dbcom3, "@Year", DbType.Int64, dtEstimateQuantity.Rows[k]["Year"]);
+                        db.AddInParameter(dbcom3, "@FYear", DbType.String, dtEstimateQuantity.Rows[k]["FYear"]);
+                        db.AddInParameter(dbcom3, "@EstimatedQty", DbType.Decimal, dtEstimateQuantity.Rows[k]["EstimatedQty"]);
+                        db.AddInParameter(dbcom3, "@Unit", DbType.String, dtEstimateQuantity.Rows[k]["Unit"]);
+                        db.AddInParameter(dbcom3, "@EstimatedPrice", DbType.Decimal, dtEstimateQuantity.Rows[k]["EstimatedPrice"]);
+                        db.ExecuteNonQuery(dbcom3, dbTran);
                     }
                     dbTran.Commit();
                     _msg = "Save";
@@ -903,7 +926,7 @@ namespace DataAccessLayer
                 }
             }
         }
-        public DataTable RetriveCountry(Int64 countryid,string text)
+        public DataTable RetriveCountry(Int64 countryid, string text)
         {
             using (DbConnection dbCon = db.CreateConnection())
             {

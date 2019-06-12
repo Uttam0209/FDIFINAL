@@ -75,9 +75,9 @@ namespace BusinessLayer
         {
             return SqlHelper.Instance.SaveMasterNodal(hySaveNodal, out _sysMsg, out _msg);
         }
-        public string SaveCodeProduct(HybridDictionary hyProduct, DataTable DtImage, out string _sysMsg, out string _msg, string Criteria)
+        public string SaveCodeProduct(HybridDictionary hyProduct, DataTable DtImage, DataTable dtProdInfo, DataTable dtEstimateQuantity, out string _sysMsg, out string _msg, string Criteria)
         {
-            return SqlHelper.Instance.SaveCodeProduct(hyProduct, DtImage, out _sysMsg, out _msg, Criteria);
+            return SqlHelper.Instance.SaveCodeProduct(hyProduct, DtImage, dtProdInfo, dtEstimateQuantity, out _sysMsg, out _msg, Criteria);
         }
         public string SaveCompDesignation(HybridDictionary hysavecomp, out string _sysMsg, out string _msg)
         {
@@ -107,7 +107,7 @@ namespace BusinessLayer
 
         public DataTable RetriveProductIndig()
         {
-            return SqlHelper.Instance.GetExecuteData("select * from fn_companywiseproduct()");
+            return SqlHelper.Instance.GetExecuteData("select * from fn_companywiseproduct() order by compName");
         }
 
         public DataTable RetriveAllCompany(string UnitRefNo, string Role)
