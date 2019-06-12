@@ -322,7 +322,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
             {
                 Co.FillDropdownlist(ddldivision, DtCompanyDDL, "FactoryName", "FactoryRefNo");
                 // code by gk to select indivisual division for the particular unit
-                DataTable dt = Lo.RetriveMasterData(0, hfcomprefno.Value, "Factory3", 0, "", "", "CompanyName");
+                DataTable dt = Lo.RetriveMasterData(0, hfcomprefno.Value, "Factory2", 0, "", "", "CompanyName");
                 if (dt.Rows.Count > 0)
                     ddldivision.SelectedValue = dt.Rows[0]["FactoryRefNo"].ToString();
                 //end code
