@@ -87,7 +87,7 @@
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label>Mobile</label>
-                                                <asp:TextBox class="form-control" runat="server" TabIndex="5" MaxLength="12" onkeydown="return onlyNos(event)" ID="txtmobile"></asp:TextBox>
+                                                <asp:TextBox class="form-control" runat="server" TabIndex="5" onkeydown="return onlyNos(event)" MaxLength="12" ID="txtmobile"></asp:TextBox>
                                             </div>
                                         </div>
                                         <div class="col-md-4">
@@ -181,5 +181,4 @@
             </ProgressTemplate>
         </asp:UpdateProgress>
     </div>
-
 </asp:Content>

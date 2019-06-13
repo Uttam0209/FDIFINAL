@@ -30,18 +30,18 @@
                         <div class="col-md-12 padding_0">
                             <div id="divHeadPage" runat="server"></div>
                         </div>
-                    <div class="col-md-12">
-                                <div class="clearfix"></div>
-                                <div style="margin-top: 5px;">
-                                    <a class="fa fa-arrow-circle-left pull-right" href="javascript: history.go(-1)">&nbsp; &nbsp;Back</a>
-                                </div>
-                                <div class="clearfix"></div>
+                        <div class="col-md-12">
+                            <div class="clearfix"></div>
+                            <div style="margin-top: 5px;">
+                                <a class="fa fa-arrow-circle-left pull-right" href="javascript: history.go(-1)">&nbsp; &nbsp;Back</a>
                             </div>
+                            <div class="clearfix"></div>
+                        </div>
                     </div>
 
-                     <div class="clearfix" style="margin-bottom:10px;"></div>
+                    <div class="clearfix" style="margin-bottom: 10px;"></div>
                     <div class="clearfix"></div>
-                   
+
                     <div id="Div3">
                         <asp:Button ID="btnAddProduct" runat="server" Text="Add Product" Visible="False" CssClass="btn btn-primary pull-right" OnClick="btnAddProduct_Click" />
                     </div>
@@ -94,7 +94,7 @@
                                             </asp:TemplateField>
                                             <asp:BoundField DataField="ProductDescription" HeaderText="Item Description" ItemStyle-Wrap="true" ItemStyle-Width="150" NullDisplayText="#" SortExpression="Description" />
                                             <asp:BoundField DataField="CompanyRefNo" HeaderText="Company Reference No" Visible="false" NullDisplayText="#" SortExpression="CompanyRefNo" />
-                                            
+
                                             <asp:TemplateField HeaderText="OEM PartNumber" Visible="false">
                                                 <ItemTemplate>
                                                     <asp:Label runat="server" ID="lblcompanyrole" Text='<%#Eval("OEMPartNumber") %>'></asp:Label>
@@ -144,6 +144,7 @@
                                     <ul class="nav nav-tabs" style="margin-top: 10px;">
                                         <li class="active"><a data-toggle="tab" href="#pd">Description</a></li>
                                         <li><a data-toggle="tab" href="#pimg">Image</a></li>
+                                        <li><a data-toggle="tab" href="#impprod">Imported products</a></li>
                                         <li><a data-toggle="tab" href="#test">Testing</a></li>
                                         <li><a data-toggle="tab" href="#cer">Certification</a></li>
                                         <li><a data-toggle="tab" href="#spd">Technical Support</a></li>
@@ -317,6 +318,33 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <div id="impprod" class="tab-pane fade in">
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <table class="table table-bordered">
+                                                        <tbody>
+                                                            <tr>
+                                                                <th class="pass" width="30%">Is Product Imported</th>
+                                                                <th class="pass" width="30%">Year of Import</th>
+                                                                <th class="pass" width="30%">Remarks</th>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>
+                                                                    <asp:Label ID="lblisproductimported" runat="server"></asp:Label>
+                                                                </td>
+
+                                                                <td>
+                                                                    <asp:Label ID="lblyearofimport" runat="server"></asp:Label>
+                                                                </td>
+                                                                <td>
+                                                                    <asp:Label ID="lblremarksproductimported" runat="server"></asp:Label>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
                                         <div id="spd" class="tab-pane fade in">
                                             <div class="row">
                                                 <div class="col-sm-12">
@@ -370,11 +398,15 @@
                                                         <tbody>
                                                             <tr>
                                                                 <th class="pass">Estimated Quantity</th>
+                                                                <th class="pass">Estimated Quantity In</th>
                                                                 <th class="pass">Estimated Price / LLP</th>
                                                             </tr>
                                                             <tr>
                                                                 <td>
                                                                     <asp:Label ID="lblestimatedquantity" runat="server"></asp:Label>
+                                                                </td>
+                                                                <td>
+                                                                    <asp:Label ID="lblEstimatedQuantityIn" runat="server"></asp:Label>
                                                                 </td>
                                                                 <td>
                                                                     <asp:Label ID="lblestimatedprice" runat="server"></asp:Label>

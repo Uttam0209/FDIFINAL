@@ -25,12 +25,8 @@ public partial class _Default : System.Web.UI.Page
     #endregion
     protected void Page_Load(object sender, EventArgs e)
     {
-        // string s = objEnc.EncryptData("PRO0006");
-        //string d = objEnc.DecryptData(s);
-        // string c = objEnc.DecryptData("zLKoGmaRQOs=");
-        // string s = objEnc.EncryptData("Indig@rgera");
-        // string s = objEnc.EncryptData(@"Data Source=DE73P-DBAERO-00\SQLEXPRESS;Initial Catalog=Gip_AeroIndia2018_new;User ID=sa;Password=Adm@2^3SqlServ");
-        //  string d = objEnc.DecryptData("aL88ocdv5/LvxKi0O2Gs6kF35uJ5Iz4xWbJBsJ8R+marLTVA2W7Pt0PDHgFG4Wx3HJgCG5QjEr1C1Q7WGTiNwa2AB1N5OvU+45sa48G+2HZnZapUUB4NgatRxGyMc5ZecSf34VN2rLqINQzCMknoOQ==");
+        // string a = objEnc.EncryptData("Data Source=103.73.189.114;Initial Catalog=ddp_fdiFinal;User ID=ddp;Password=%>#%7ZeL3");
+        // string d = objEnc.DecryptData("aL88ocdv5/Kq/MF8J1Qtk+6AnMaH6dJtcBkuT7qx2N9CyzbHTAaAEtMwUxH5+xB7Q0HeiKdW8IeVNXq+zK3BW4DzrasGKnYXQ35xAT4/wHWFoPTtqo6qnA==");
     }
     #region "Login Code"
     public static bool IsValidEmailId(string InputEmail)
@@ -106,7 +102,7 @@ public partial class _Default : System.Web.UI.Page
                     {
                         string EmpCode = DtSendMailForgotpassword.Rows[0]["NodalOfficerRefNo"].ToString();
                         SendEmailCode(EmpCode);
-                        ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Email send to your registerd emaid id successfully.');", true);
+                        ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Email send to your registerd email id successfully.');", true);
                     }
                     else
                     {

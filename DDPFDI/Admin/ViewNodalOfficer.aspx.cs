@@ -56,13 +56,13 @@ public partial class Admin_ViewNodalOfficer : System.Web.UI.Page
                 else
                 {
                     ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert",
-                        "alert('Session Expire,Please login again');window.location='Login'", true);
+                        "alert('Session Expired,Please login again');window.location='Login'", true);
                 }
             }
             else
             {
                 ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert",
-                    "alert('Session Expire,Please login again');window.location='Login'", true);
+                    "alert('Session Expired,Please login again');window.location='Login'", true);
             }
         }
     }
@@ -187,6 +187,11 @@ public partial class Admin_ViewNodalOfficer : System.Web.UI.Page
             if (DtCompanyDDL.Rows.Count > 0)
             {
                 Co.FillDropdownlist(ddldivision, DtCompanyDDL, "FactoryName", "FactoryRefNo");
+                // code by gk to select indivisual division for the particular unit
+                DataTable dt = Lo.RetriveMasterData(0, mRefNo, "Factory2", 0, "", "", "CompanyName");
+                if (dt.Rows.Count > 0)
+                    ddldivision.SelectedValue = dt.Rows[0]["FactoryRefNo"].ToString();
+                //end code
                 lblselectdivison.Visible = true;
                 ddldivision.Enabled = false;
                 GridViewNodalOfficerBind(ddldivision.SelectedItem.Value, "Division");
@@ -299,7 +304,7 @@ public partial class Admin_ViewNodalOfficer : System.Web.UI.Page
             if (DtView.Rows.Count > 0)
             {
                 lblcompanyname.Text = DtView.Rows[0]["CompanyName"].ToString();
-               
+
                 if (Role == "CompanyID")
                 {
                     lblDivision.Text = "";

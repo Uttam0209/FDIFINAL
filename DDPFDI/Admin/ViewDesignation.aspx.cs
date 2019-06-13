@@ -47,7 +47,7 @@ public partial class Admin_ViewDesignation : System.Web.UI.Page
                 else
                 {
                     ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert",
-                        "alert('Session Expire,Please login again');window.location='Login'", true);
+                        "alert('Session Expired,Please login again');window.location='Login'", true);
                 }
             }
         }

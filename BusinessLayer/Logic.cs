@@ -37,6 +37,10 @@ namespace BusinessLayer
         {
             return SqlHelper.Instance.SaveUploadExcelCompany(dtMaster, dtExcel);
         }
+        public string SaveExcel3510(DataTable dtMaster, Int16 l1, Int16 l2, int pid)
+        {
+            return SqlHelper.Instance.SaveExcel3510(dtMaster, l1, l2,pid);
+        }
 
         #region SaveCode
         public string SaveFDI(HybridDictionary HySave, out string _sysMsg, out string _msg)
@@ -75,9 +79,9 @@ namespace BusinessLayer
         {
             return SqlHelper.Instance.SaveMasterNodal(hySaveNodal, out _sysMsg, out _msg);
         }
-        public string SaveCodeProduct(HybridDictionary hyProduct, DataTable DtImage, out string _sysMsg, out string _msg, string Criteria)
+        public string SaveCodeProduct(HybridDictionary hyProduct, DataTable DtImage, DataTable dtProdInfo, DataTable dtEstimateQuantity, out string _sysMsg, out string _msg, string Criteria)
         {
-            return SqlHelper.Instance.SaveCodeProduct(hyProduct, DtImage, out _sysMsg, out _msg, Criteria);
+            return SqlHelper.Instance.SaveCodeProduct(hyProduct, DtImage, dtProdInfo, dtEstimateQuantity, out _sysMsg, out _msg, Criteria);
         }
         public string SaveCompDesignation(HybridDictionary hysavecomp, out string _sysMsg, out string _msg)
         {
@@ -96,13 +100,18 @@ namespace BusinessLayer
         {
             return SqlHelper.Instance.RetriveGridView(ID);
         }
-        public DataTable RetriveCountry(string text)
+        public DataTable RetriveCountry(Int64 CountryID, string text)
         {
-            return SqlHelper.Instance.RetriveCountry(text);
+            return SqlHelper.Instance.RetriveCountry(CountryID, text);
         }
         public DataTable RetriveState(string text)
         {
             return SqlHelper.Instance.RetriveState(text);
+        }
+
+        public DataTable RetriveProductIndig()
+        {
+            return SqlHelper.Instance.GetExecuteData("select * from fn_companywiseproduct() order by compName");
         }
 
         public DataTable RetriveAllCompany(string UnitRefNo, string Role)
@@ -168,6 +177,10 @@ namespace BusinessLayer
         public DataTable RetriveAggregateValue(string action, string role, string refno)
         {
             return SqlHelper.Instance.GetDataTable("select * from fn_GetAggregateValue('" + action + "','" + role + "','" + refno + "')");
+        }
+        public DataTable RetrivePid(int l1, int l2)
+        {
+            return SqlHelper.Instance.GetDataTable("select SCategoryId from tbl_mst_SubCategorytest where pid=(select SCategoryId from tbl_mst_subcategorytest where pid=0 and l1code='" + l1 + "') and L2Code='" + l2 + "'");
         }
         public DataTable RetriveParentNode(string role, string refno)
         {

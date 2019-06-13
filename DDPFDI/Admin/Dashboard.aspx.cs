@@ -4,6 +4,10 @@ using System.Web.UI;
 using BusinessLayer;
 using Encryption;
 using System.Web;
+using System.Web.Script.Services;
+using System.Web.Services;
+using System.Web.UI.WebControls;
+using System.Collections.Generic;
 
 public partial class Admin_Dashboard : System.Web.UI.Page
 {
@@ -22,12 +26,52 @@ public partial class Admin_Dashboard : System.Web.UI.Page
                 lnkbtnTotUnit.Text = dt.Rows[0]["TotUnit"].ToString();
                 lnkbtnTotEmp.Text = dt.Rows[0]["TotEmployee"].ToString();
                 lnkbtnProduct.Text = dt.Rows[0]["TotProduct"].ToString();
+                lnkbtnIndigenizedProduct.Text = dt.Rows[0]["IsIndiginised"].ToString();
+                if (objCrypto.DecryptData(Session["Type"].ToString()) == "Admin" || objCrypto.DecryptData(Session["Type"].ToString()) == "SuperAdmin")
+                {
+                    FillProduct();
+                    GetChartData();
+                }
             }
         }
         else
             ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert",
-                "alert('Session Expire,Please login again');window.location='Login'", true);
+                "alert('Session Expired,Please login again');window.location='Login'", true);
     }
+
+    [WebMethod]
+    [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+    public static object[] GetChartData()
+    {
+        Logic Lo=new Logic();
+
+        DataTable data = Lo.RetriveProductIndig();
+        var chartData = new object[data.Rows.Count + 1];
+        chartData[0] = new object[]{
+                "Company Name",
+                "P",
+                "I"
+            };
+        int j = 0;
+        for (int i = 0; data.Rows.Count > i; i++ )
+        {
+            j++;
+            chartData[j] = new object[] { data.Rows[i]["CompName"], data.Rows[i]["TotalProd"], data.Rows[i]["IsIndiginised"] };
+        }
+
+        return chartData;
+    }
+
+    public void FillProduct()
+    {
+        DataTable dtProductDetail = Lo.RetriveProductIndig();
+        if (dtProductDetail.Rows.Count > 0)
+        {
+            gvPrdoct.DataSource = dtProductDetail;
+            gvPrdoct.DataBind();
+        }
+    }
+
     protected void lnkbtnTotComp_Click(object sender, EventArgs e)
     {
         Response.Redirect("Dashboard-View?id=" + HttpUtility.UrlEncode(objCrypto.EncryptData("C")));
@@ -48,6 +92,10 @@ public partial class Admin_Dashboard : System.Web.UI.Page
     protected void lnkbtnProduct_Click(object sender, EventArgs e)
     {
         Response.Redirect("Dashboard-View?id=" + HttpUtility.UrlEncode(objCrypto.EncryptData("P")));
+    }
+    protected void lnkbtnIndigenizedProduct_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("Dashboard-View?id=" + HttpUtility.UrlEncode(objCrypto.EncryptData("PI")));
     }
     protected void lblComp_Click(object sender, EventArgs e)
     {

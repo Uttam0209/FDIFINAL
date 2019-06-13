@@ -257,7 +257,7 @@
                                             <asp:TemplateField HeaderText="OEM PartNumber" Visible="false">
                                                 <ItemTemplate>
                                                     <asp:Label runat="server" ID="lblcompanyrole" Text='<%#Eval("OEMPartNumber") %>'></asp:Label>
-                                                    
+
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="Last Updated">
@@ -267,7 +267,7 @@
                                                     <asp:HiddenField ID="hfcomprefno" runat="server" Value='<%#Eval("CompanyRefNo") %>' />
                                                 </ItemTemplate>
                                             </asp:TemplateField>
-                                           
+
                                             <asp:TemplateField HeaderText="DPSUPartNumber" Visible="false">
                                                 <ItemTemplate>
                                                     <asp:Label ID="lblnodelname" runat="server" Text='<%#Eval("DPSUPartNumber") %>' NullDisplayText="#" SortExpression="DPSUPartNumber"></asp:Label>
@@ -797,6 +797,7 @@
                                     <ul class="nav nav-tabs" style="margin-top: 10px;">
                                         <li class="active"><a data-toggle="tab" href="#pd">Description</a></li>
                                         <li><a data-toggle="tab" href="#pimg">Image</a></li>
+                                        <li><a data-toggle="tab" href="#impprod">Imported products</a></li>
                                         <li><a data-toggle="tab" href="#test">Testing</a></li>
                                         <li><a data-toggle="tab" href="#cer">Certification</a></li>
                                         <li><a data-toggle="tab" href="#spd">Technical Support</a></li>
@@ -971,6 +972,33 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <div id="impprod" class="tab-pane fade in">
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <table class="table table-bordered">
+                                                        <tbody>
+                                                            <tr>
+                                                                <th class="pass" width="30%">Is Product Imported</th>
+                                                                <th class="pass" width="30%">Year of Import</th>
+                                                                <th class="pass" width="30%">Remarks</th>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>
+                                                                    <asp:Label ID="lblisproductimported" runat="server"></asp:Label>
+                                                                </td>
+
+                                                                <td>
+                                                                    <asp:Label ID="lblyearofimport" runat="server"></asp:Label>
+                                                                </td>
+                                                                <td>
+                                                                    <asp:Label ID="lblremarksproductimported" runat="server"></asp:Label>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
                                         <div id="spd" class="tab-pane fade in">
                                             <div class="row">
                                                 <div class="col-sm-12">
@@ -1024,11 +1052,15 @@
                                                         <tbody>
                                                             <tr>
                                                                 <th class="pass">Estimated Quantity</th>
+                                                                <th class="pass">Estimated Quantity In</th>
                                                                 <th class="pass">Estimated Price / LLP</th>
                                                             </tr>
                                                             <tr>
                                                                 <td>
                                                                     <asp:Label ID="lblestimatedquantity" runat="server"></asp:Label>
+                                                                </td>
+                                                                <td>
+                                                                    <asp:Label ID="lblEstimatedQuantityIn" runat="server"></asp:Label>
                                                                 </td>
                                                                 <td>
                                                                     <asp:Label ID="lblestimatedprice" runat="server"></asp:Label>
@@ -1075,6 +1107,7 @@
                                                         <tbody>
                                                             <tr>
                                                                 <th class="pass">Employee Code</th>
+                                                                <th class="pass">Employee Name</th>
                                                                 <th class="pass">Designation</th>
                                                                 <th class="pass">Email</th>
                                                                 <th class="pass">Mobile</th>
@@ -1085,7 +1118,9 @@
                                                                 <td>
                                                                     <asp:Label ID="lblempcode" runat="server"></asp:Label>
                                                                 </td>
-
+                                                                <td>
+                                                                    <asp:Label ID="lblempname" runat="server"></asp:Label>
+                                                                </td>
                                                                 <td>
                                                                     <asp:Label ID="lbldesignation" runat="server"></asp:Label>
                                                                 </td>
