@@ -142,7 +142,7 @@
                                                         <div class="form-group">
                                                             <label>Item Description </label>
                                                             <span class="mandatory">* (Editable)</span>  <span data-toggle="tooltip" class="fa fa-question" title="If item description is not relevant, edit the item description."></span>
-                                                            <asp:TextBox runat="server" ID="txtproductdescription" required="" Height="70px" MaxLength="250" TextMode="MultiLine" TabIndex="6" class="form-control"></asp:TextBox>
+                                                            <asp:TextBox runat="server" ID="txtproductdescription" required="" Height="70px" MaxLength="250"  TabIndex="6" class="form-control"></asp:TextBox>
                                                             <div class="clearfix" style="margin-top: 5px;"></div>
                                                             <span>(Max length 250 words only)</span>
                                                         </div>
@@ -372,7 +372,7 @@
                                                                     <div class="col-sm-6">
                                                                         <div class="form-group">
                                                                             <label>Remarks</label>
-                                                                            <asp:TextBox runat="server" ID="txtyearofimportremarksno" Height="70px" TextMode="MultiLine" MaxLength="250" TabIndex="26" class="form-control"></asp:TextBox>
+                                                                            <asp:TextBox runat="server" ID="txtyearofimportremarksno" Height="70px"  MaxLength="250" TabIndex="26" class="form-control"></asp:TextBox>
                                                                             <div class="clearfix" style="margin-top: 5px;"></div>
                                                                             <span>(Max length 250 words only)</span>
                                                                         </div>
@@ -395,7 +395,7 @@
                                                                     <div class="col-sm-6">
                                                                         <div class="form-group">
                                                                             <label>Remarks</label>
-                                                                            <asp:TextBox runat="server" ID="txtremarksyearofimportyes" TextMode="MultiLine" Height="70px" TabIndex="28" MaxLength="250" class="form-control"></asp:TextBox>
+                                                                            <asp:TextBox runat="server" ID="txtremarksyearofimportyes"  Height="70px" TabIndex="28" MaxLength="250" class="form-control"></asp:TextBox>
                                                                             <div class="clearfix" style="margin-top: 5px;"></div>
                                                                             <span>(Max length 250 words only)</span>
                                                                         </div>
@@ -473,7 +473,7 @@
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <label>Features & Details</label><span class="mandatory"> (Editable)</span>
-                                                    <asp:TextBox runat="server" ID="txtfeaturesanddetails" Style="background-color: #fff !important;" TabIndex="31" Width="1000" Height="70px" placeholder="Ductile,Tensile,Lusture" MaxLength="250" TextMode="MultiLine"></asp:TextBox>
+                                                    <asp:TextBox runat="server" ID="txtfeaturesanddetails" Style="background-color: #fff !important;" TabIndex="31" Width="1000" Height="70px" placeholder="Ductile,Tensile,Lusture" MaxLength="250" ></asp:TextBox>
                                                     <asp:HtmlEditorExtender ID="HtmlEditorExtender1" runat="server" TargetControlID="txtfeaturesanddetails">
                                                     </asp:HtmlEditorExtender>
                                                     <div class="clearfix" style="margin-top: 35px;"></div>
@@ -545,7 +545,7 @@
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <label>Additional Information</label><span class="mandatory"> (Editable)</span>
-                                                    <asp:TextBox runat="server" ID="txtadditionalinfo" TextMode="MultiLine" Height="70px" TabIndex="37" class="form-control" placeholder="Warranty,Guarantee"></asp:TextBox>
+                                                    <asp:TextBox runat="server" ID="txtadditionalinfo"  Height="70px" TabIndex="37" class="form-control" placeholder="Warranty,Guarantee"></asp:TextBox>
                                                     <div class="clearfix" style="margin-top: 5px;"></div>
                                                     <span>(Max length 250)</span>
                                                 </div>
@@ -589,7 +589,7 @@
                                                         </asp:GridView>
                                                         <div class="clearfix"></div>
                                                         <div class="form-group">
-                                                            <asp:TextBox runat="server" ID="txtservisesremarks" MaxLength="50" Height="50px" TextMode="MultiLine" TabIndex="39" class="form-control"></asp:TextBox>
+                                                            <asp:TextBox runat="server" ID="txtservisesremarks" MaxLength="50" Height="50px"  TabIndex="39" class="form-control"></asp:TextBox>
                                                             <div class="clearfix" style="margin-top: 5px;"></div>
                                                             <span>(Remarks max length 50 words only)</span>
                                                         </div>
@@ -625,7 +625,7 @@
                                                         </asp:GridView>
                                                         <div class="clearfix"></div>
                                                         <div class="form-group">
-                                                            <asp:TextBox runat="server" ID="txtfinancialsuppRemarks" MaxLength="50" Height="50px" TextMode="MultiLine" TabIndex="41" class="form-control"></asp:TextBox>
+                                                            <asp:TextBox runat="server" ID="txtfinancialsuppRemarks" MaxLength="50" Height="50px"  TabIndex="41" class="form-control"></asp:TextBox>
                                                             <div class="clearfix" style="margin-top: 5px;"></div>
                                                             <span>(Remarks max length 50 words only)</span>
                                                         </div>
@@ -651,7 +651,7 @@
                                                             <asp:BoundField DataField="RowNumber" HeaderText="Row Number" />
                                                             <asp:TemplateField HeaderText="Year">
                                                                 <ItemTemplate>
-                                                                    <asp:DropDownList ID="ddlestimatequanYear" runat="server" class="form-control" TabIndex="43" AppendDataBoundItems="true">
+                                                                    <asp:DropDownList ID="ddlestimatequanYear" runat="server" class="form-control" TabIndex="43">
                                                                         <asp:ListItem Selected="True" Value="-1">Select</asp:ListItem>
                                                                         <asp:ListItem Value="1">2019-20</asp:ListItem>
                                                                         <asp:ListItem Value="2">2020-21</asp:ListItem>
@@ -668,7 +668,7 @@
                                                             </asp:TemplateField>
                                                             <asp:TemplateField HeaderText="Measuring Unit">
                                                                 <ItemTemplate>
-                                                                    <asp:DropDownList ID="ddlMeasurUnit" runat="server" AppendDataBoundItems="true" TabIndex="45" class="form-control">
+                                                                    <asp:DropDownList ID="ddlMeasurUnit" runat="server" TabIndex="45" class="form-control">
                                                                         <asp:ListItem Value="-1" Selected="True">Select</asp:ListItem>
                                                                         <asp:ListItem Value="Centimeter">Centimeter</asp:ListItem>
                                                                         <asp:ListItem Value="Gram">Gram</asp:ListItem>
@@ -680,7 +680,6 @@
                                                                         <asp:ListItem Value="Ton">Other</asp:ListItem>
                                                                         <asp:ListItem Value="Pound">Pound</asp:ListItem>
                                                                         <asp:ListItem Value="Ton">Ton</asp:ListItem>
-
                                                                     </asp:DropDownList>
                                                                 </ItemTemplate>
                                                             </asp:TemplateField>
@@ -744,7 +743,7 @@
                                             <div id="Div1" class="col-md-12" runat="server">
                                                 <div class="form-group">
                                                     <asp:Label runat="server" ID="Label1" CssClass="form-label " Text="PROCURMENT CATEGORY REMARK"></asp:Label>
-                                                    <asp:TextBox runat="server" ID="txtremarksprocurmentCategory" TabIndex="49" MaxLength="250" Height="70px" TextMode="MultiLine" class="form-control"></asp:TextBox>
+                                                    <asp:TextBox runat="server" ID="txtremarksprocurmentCategory" TabIndex="49" MaxLength="250" Height="70px"  class="form-control"></asp:TextBox>
                                                     <div class="clearfix" style="margin-top: 5px;"></div>
                                                     <span>(Max length 250 words only)</span>
                                                 </div>

@@ -14,6 +14,7 @@ using System.Web.UI.WebControls;
 
 public partial class Admin_AddProduct : System.Web.UI.Page
 {
+    #region Load Variable
     private Cryptography objEnc = new Cryptography();
     private DataUtility Co = new DataUtility();
     private Logic Lo = new Logic();
@@ -43,6 +44,8 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     private short Mid = 0;
     private DataTable DtCompanyDDL = new DataTable();
     private HybridDictionary HyPanel1 = new HybridDictionary();
+    #endregion
+    #region PageLoad
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
@@ -445,6 +448,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
             ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('select Company for displayed nodal offcier')", true);
         }
     }
+    #endregion
     #region DropDownList Code
     protected void ddlcompany_OnSelectedIndexChanged(object sender, EventArgs e)
     {
@@ -732,6 +736,19 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         {
             divyearofimportNo.Visible = true;
             divyearofimportYes.Visible = false;
+        }
+    }
+    private void NSCCode(string NSNGroupddl, string NSNClassddl)
+    {
+        try
+        {
+            string a = NSNGroupddl.Substring((NSNGroupddl.IndexOf("(") + 1), NSNGroupddl.IndexOf(")") - (NSNGroupddl.IndexOf("(") + 1));
+            string b = NSNClassddl.Substring((NSNClassddl.IndexOf("(") + 1), NSNClassddl.IndexOf(")") - (NSNClassddl.IndexOf("(") + 1));
+            txtnsccode.Text = a + b;
+        }
+        catch (Exception ex)
+        {
+            txtnsccode.Text = "";
         }
     }
     #endregion
@@ -1162,14 +1179,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         HyPanel1["NIINCode"] = Co.RSQandSQLInjection(txtniincode.Text.Trim(), "soft");
         HyPanel1["OEMPartNumber"] = Co.RSQandSQLInjection(txtoempartnumber.Text.Trim(), "soft");
         HyPanel1["OEMName"] = Co.RSQandSQLInjection(txtoemname.Text.Trim(), "soft");
-        if (CountryID != 0)
-        {
-            HyPanel1["OEMCountry"] = Convert.ToInt64(CountryID.ToString());
-        }
-        else
-        {
-            HyPanel1["OEMCountry"] = null;
-        }
+        HyPanel1["OEMCountry"] = Convert.ToInt64(CountryID.ToString());
         HyPanel1["DPSUPartNumber"] = Co.RSQandSQLInjection(txtdpsupartnumber.Text.Trim(), "soft");
         HyPanel1["HSNCode"] = Co.RSQandSQLInjection(txthsncode.Text.Trim(), "soft");
         HyPanel1["EndUserPartNumber"] = Co.RSQandSQLInjection(txtenduserpartnumber.Text.Trim(), "soft");
@@ -1341,8 +1351,8 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         HyPanel1["ProcurmentCategoryRemark"] = Co.RSQandSQLInjection(txtremarksprocurmentCategory.Text.Trim(), "soft");
         foreach (GridViewRow gvqa in gvqaagency.Rows)
         {
-            CheckBox chkqaagency = (CheckBox)rw.FindControl("chkqaagency");
-            HiddenField hfqaagency = (HiddenField)rw.FindControl("hfqaagency");
+            CheckBox chkqaagency = (CheckBox)gvqa.FindControl("chkqaagency");
+            HiddenField hfqaagency = (HiddenField)gvqa.FindControl("hfqaagency");
             if (chkqaagency != null && chkqaagency.Checked)
             {
                 QAAgency = QAAgency + "," + hfqaagency.Value;
@@ -1484,104 +1494,95 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     #region PanelSaveButtonCode
     protected void btnsubmitpanel1_Click(object sender, EventArgs e)
     {
-        if (ViewState["CurrentTableEstimateQuan"] != null)
+        if (txtproductdescription.Text != "" && ddlmastercategory.SelectedItem.Text != "Select" && ddlsubcategory.SelectedItem.Text != "Select" && ddltechnologycat.SelectedItem.Text != "Select")
         {
-            dtSaveEstimateQuantity = SaveCodeEstimateQuantity();
+            if (ddlsubtech.SelectedItem.Text != "Select" && ddlnomnclature.SelectedItem.Text != "Select" && ddlenduser.SelectedItem.Text != "Select" && ddlplatform.SelectedItem.Text != "Select")
+            {
+                if (txtcountry.Text != "" && txtdpsupartnumber.Text != "")
+                {
+                    if (fuitemdescriptionfile.HasFile != false)
+                    {
+                        int iFileSize = fuitemdescriptionfile.PostedFile.ContentLength;
+                        if (iFileSize > 1048576) // 1MB
+                        {
+                            ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "alert('Maximum 1 Mb pdf file can be uploaded')", true);
+                        }
+                        else
+                        {
+                            if (fuimages.HasFile != false)
+                            {
+                                int filecount = 0;
+                                filecount = Convert.ToInt16(fuimages.PostedFiles.Count.ToString());
+                                if (filecount <= 4)
+                                {
+                                    int iImageFileSize = fuimages.PostedFile.ContentLength;
+                                    if (iImageFileSize > 4194304)
+                                    {
+                                        ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert",
+                                            "alert('Maximum 1 Mb .jpg,.jpeg,.png,.tif images can be uploaded')", true);
+                                    }
+                                    else
+                                    {
+                                        SaveProductDescription();
+                                    }
+                                }
+                                else
+                                {
+                                    ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert",
+                                        "alert('Maximum 4 files can be uploaded')", true);
+                                }
+                            }
+                            else
+                            {
+                                SaveProductDescription();
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (fuimages.HasFile != false)
+                        {
+                            int filecount = 0;
+                            filecount = Convert.ToInt16(fuimages.PostedFiles.Count.ToString());
+                            if (filecount <= 4)
+                            {
+                                int iImageFileSize = fuimages.PostedFile.ContentLength;
+                                if (iImageFileSize > 4194304)
+                                {
+                                    ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert",
+                                        "alert('Maximum 1 Mb .jpg,.jpeg,.png,.tif images can be uploaded')", true);
+                                }
+                                else
+                                {
+                                    SaveProductDescription();
+                                }
+                            }
+                            else
+                            {
+                                ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert",
+                                    "alert('Maximum 4 files can be uploaded')", true);
+                            }
+                        }
+                        else
+                        {
+                            SaveProductDescription();
+                        }
+                    }
+                }
+                else
+                {
+                    ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "alert('Please fill mandatory fields.')", true);
+                }
+            }
+            else
+            {
+                ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "alert('Please fill mandatory fields.')", true);
+            }
         }
         else
         {
-            dtSaveEstimateQuantity = null;
-
+            ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "alert('Please fill mandatory fields.')", true);
         }
-        //if (txtproductdescription.Text != "" && ddlmastercategory.SelectedItem.Text != "Select" && ddlsubcategory.SelectedItem.Text != "Select" && ddltechnologycat.SelectedItem.Text != "Select")
-        //{
-        //    if (ddlsubtech.SelectedItem.Text != "Select" && ddlnomnclature.SelectedItem.Text != "Select" && ddlenduser.SelectedItem.Text != "Select" && ddlplatform.SelectedItem.Text != "Select")
-        //    {
-        //        if (txtcountry.Text != "" && txtdpsupartnumber.Text != "")
-        //        {
-        //            if (fuitemdescriptionfile.HasFile != false)
-        //            {
-        //                int iFileSize = fuitemdescriptionfile.PostedFile.ContentLength;
-        //                if (iFileSize > 1048576) // 1MB
-        //                {
-        //                    ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "alert('Maximum 1 Mb pdf file can be uploaded')", true);
-        //                }
-        //                else
-        //                {
-        //                    if (fuimages.HasFile != false)
-        //                    {
-        //                        int filecount = 0;
-        //                        filecount = Convert.ToInt16(fuimages.PostedFiles.Count.ToString());
-        //                        if (filecount <= 4)
-        //                        {
-        //                            int iImageFileSize = fuimages.PostedFile.ContentLength;
-        //                            if (iImageFileSize > 4194304)
-        //                            {
-        //                                ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert",
-        //                                    "alert('Maximum 1 Mb .jpg,.jpeg,.png,.tif images can be uploaded')", true);
-        //                            }
-        //                            else
-        //                            {
-        //                                SaveProductDescription();
-        //                            }
-        //                        }
-        //                        else
-        //                        {
-        //                            ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert",
-        //                                "alert('Maximum 4 files can be uploaded')", true);
-        //                        }
-        //                    }
-        //                    else
-        //                    {
-        //                        SaveProductDescription();
-        //                    }
-        //                }
-        //            }
-        //            else
-        //            {
-        //                if (fuimages.HasFile != false)
-        //                {
-        //                    int filecount = 0;
-        //                    filecount = Convert.ToInt16(fuimages.PostedFiles.Count.ToString());
-        //                    if (filecount <= 4)
-        //                    {
-        //                        int iImageFileSize = fuimages.PostedFile.ContentLength;
-        //                        if (iImageFileSize > 4194304)
-        //                        {
-        //                            ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert",
-        //                                "alert('Maximum 1 Mb .jpg,.jpeg,.png,.tif images can be uploaded')", true);
-        //                        }
-        //                        else
-        //                        {
-        //                            SaveProductDescription();
-        //                        }
-        //                    }
-        //                    else
-        //                    {
-        //                        ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert",
-        //                            "alert('Maximum 4 files can be uploaded')", true);
-        //                    }
-        //                }
-        //                else
-        //                {
-        //                    SaveProductDescription();
-        //                }
-        //            }
-        //        }
-        //        else
-        //        {
-        //            ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "alert('Please fill mandatory fields.')", true);
-        //        }
-        //    }
-        //    else
-        //    {
-        //        ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "alert('Please fill mandatory fields.')", true);
-        //    }
-        //}
-        //else
-        //{
-        //    ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "alert('Please fill mandatory fields.')", true);
-        //}
     }
     protected void btncancelpanel1_Click(object sender, EventArgs e)
     {
@@ -1670,6 +1671,16 @@ public partial class Admin_AddProduct : System.Web.UI.Page
             if (chk.Selected == true)
             {
                 chk.Selected = false;
+            }
+        }
+        foreach (GridViewRow gvqa in gvqaagency.Rows)
+        {
+            CheckBox chkqaagency = (CheckBox)gvqa.FindControl("chkqaagency");
+            HiddenField hfqaagency = (HiddenField)gvqa.FindControl("hfqaagency");
+            if (chkqaagency != null && chkqaagency.Checked)
+            {
+                chkqaagency.Checked = false;
+                hfqaagency.Value = "";
             }
         }
         foreach (GridViewRow rw in gvtesting.Rows)
@@ -2059,19 +2070,6 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         }
     }
     #endregion
-    private void NSCCode(string NSNGroupddl, string NSNClassddl)
-    {
-        try
-        {
-            string a = NSNGroupddl.Substring((NSNGroupddl.IndexOf("(") + 1), NSNGroupddl.IndexOf(")") - (NSNGroupddl.IndexOf("(") + 1));
-            string b = NSNClassddl.Substring((NSNClassddl.IndexOf("(") + 1), NSNClassddl.IndexOf(")") - (NSNClassddl.IndexOf("(") + 1));
-            txtnsccode.Text = a + b;
-        }
-        catch (Exception ex)
-        {
-            txtnsccode.Text = "";
-        }
-    }
     #region PDF File itemDescription
     protected void PDFFileItemDescription()
     {
@@ -2238,7 +2236,6 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     }
     protected DataTable SaveCodeProdInfo()
     {
-        int rowIndex = 0;
         DataTable DtNProdInfo = new DataTable();
         DtNProdInfo.Columns.Add(new DataColumn("ProdInfoId", typeof(int)));
         DtNProdInfo.Columns.Add(new DataColumn("Length", typeof(string)));
@@ -2250,14 +2247,11 @@ public partial class Admin_AddProduct : System.Web.UI.Page
             {
                 if (ViewState["CurrentTableProdInfo"] != null)
                 {
-                    for (int i = 1; i <= gvProductInformation.Rows.Count; i++)
+                    for (int i = 0; i <= gvProductInformation.Rows.Count; i++)
                     {
-                        TextBox txtlenth =
-                            (TextBox)gvProductInformation.Rows[rowIndex].Cells[1].FindControl("txtlenth");
-                        TextBox txtvalue =
-                            (TextBox)gvProductInformation.Rows[rowIndex].Cells[2].FindControl("txtvalue");
-                        TextBox txtProdInfoUnit = (TextBox)gvProductInformation.Rows[rowIndex].Cells[3]
-                            .FindControl("txtProdInfoUnit");
+                        TextBox txtlenth = (TextBox)gvProductInformation.Rows[i].Cells[1].FindControl("txtlenth");
+                        TextBox txtvalue = (TextBox)gvProductInformation.Rows[i].Cells[2].FindControl("txtvalue");
+                        TextBox txtProdInfoUnit = (TextBox)gvProductInformation.Rows[i].Cells[3].FindControl("txtProdInfoUnit");
                         drProdInfoSave = DtNProdInfo.NewRow();
                         drProdInfoSave["ProdInfoId"] = "-1";
                         drProdInfoSave["Length"] = txtlenth.Text.Trim();
@@ -2353,10 +2347,13 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                     TextBox txtestimPrice = (TextBox)GvEstimateQuanPrice.Rows[i].Cells[4].FindControl("txtestimPrice");
                     if (i < dt.Rows.Count - 1)
                     {
+                        ddlestimatequanYear.ClearSelection();
                         ddlestimatequanYear.Items.FindByText(dt.Rows[i]["Year"].ToString()).Selected = true;
                         txtEstimateQuantity.Text = dt.Rows[i]["EstimateQuantity"].ToString();
+                        ddlMeasurUnit.ClearSelection();
                         ddlMeasurUnit.Items.FindByText(dt.Rows[i]["MeasuringUnit"].ToString()).Selected = true;
                         txtestimPrice.Text = dt.Rows[i]["EstimatePrice"].ToString();
+
                     }
                     rowIndex++;
                 }
@@ -2430,11 +2427,9 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     protected DataTable SaveCodeEstimateQuantity()
     {
         DataTable DNSaveEstimateQuen = new DataTable();
-        int rowIndex = 0;
-
         DNSaveEstimateQuen.Columns.Add(new DataColumn("ProdQtyPriceId", typeof(int)));
         DNSaveEstimateQuen.Columns.Add(new DataColumn("Year", typeof(int)));
-        DNSaveEstimateQuen.Columns.Add(new DataColumn("FYear", typeof(decimal)));
+        DNSaveEstimateQuen.Columns.Add(new DataColumn("FYear", typeof(string)));
         DNSaveEstimateQuen.Columns.Add(new DataColumn("EstimatedQty", typeof(decimal)));
         DNSaveEstimateQuen.Columns.Add(new DataColumn("Unit", typeof(string)));
         DNSaveEstimateQuen.Columns.Add(new DataColumn("EstimatedPrice", typeof(decimal)));
@@ -2444,16 +2439,12 @@ public partial class Admin_AddProduct : System.Web.UI.Page
             {
                 if (ViewState["CurrentTableEstimateQuan"] != null)
                 {
-                    for (int i = 1; i <= GvEstimateQuanPrice.Rows.Count; i++)
+                    for (int i = 0; i <= GvEstimateQuanPrice.Rows.Count; i++)
                     {
-                        DropDownList ddlestimatequanYear = (DropDownList)GvEstimateQuanPrice.Rows[rowIndex]
-                            .Cells[1].FindControl("ddlestimatequanYear");
-                        TextBox txtEstimateQuantity = (TextBox)GvEstimateQuanPrice.Rows[rowIndex].Cells[2]
-                            .FindControl("txtEstimateQuantity");
-                        DropDownList ddlMeasurUnit = (DropDownList)GvEstimateQuanPrice.Rows[rowIndex].Cells[3]
-                            .FindControl("ddlMeasurUnit");
-                        TextBox txtestimPrice = (TextBox)GvEstimateQuanPrice.Rows[rowIndex].Cells[4]
-                            .FindControl("txtestimPrice");
+                        DropDownList ddlestimatequanYear = (DropDownList)GvEstimateQuanPrice.Rows[i].Cells[1].FindControl("ddlestimatequanYear");
+                        TextBox txtEstimateQuantity = (TextBox)GvEstimateQuanPrice.Rows[i].Cells[2].FindControl("txtEstimateQuantity");
+                        DropDownList ddlMeasurUnit = (DropDownList)GvEstimateQuanPrice.Rows[i].Cells[3].FindControl("ddlMeasurUnit");
+                        TextBox txtestimPrice = (TextBox)GvEstimateQuanPrice.Rows[i].Cells[4].FindControl("txtestimPrice");
                         drEstimateQuantitySave = DNSaveEstimateQuen.NewRow();
                         drEstimateQuantitySave["ProdQtyPriceId"] = "-1";
                         drEstimateQuantitySave["Year"] = Convert.ToInt64(ddlestimatequanYear.SelectedItem.Value);
