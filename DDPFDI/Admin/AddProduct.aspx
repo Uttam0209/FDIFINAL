@@ -244,13 +244,13 @@
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="form-group">
-                                                    <asp:Label runat="server" ID="lblNomenclature" Text="NAME OF DEFENCE PLATFORM"></asp:Label><span class="mandatory"> *</span>
+                                                    <asp:Label runat="server" ID="lblNomenclature" CssClass="form-label" Text="NAME OF DEFENCE PLATFORM"></asp:Label><span class="mandatory"> *</span>
                                                     <asp:DropDownList runat="server" ID="ddlnomnclature" class="form-control" TabIndex="18" />
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="form-group">
-                                                    <asp:Label runat="server" ID="lblenduser" Text="End User"></asp:Label><span class="mandatory"> *</span>
+                                                    <asp:Label runat="server" ID="lblenduser" Text="End User" CssClass="form-label"></asp:Label><span class="mandatory"> *</span>
                                                     <asp:DropDownList runat="server" ID="ddlenduser" class="form-control" TabIndex="19">
                                                     </asp:DropDownList>
                                                 </div>

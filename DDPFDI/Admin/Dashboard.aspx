@@ -114,7 +114,7 @@
                                                 <ul class="list-inline two-part">
                                                     <li>
                                                         <div class="icon-box">
-                                                            <i class="fa fa-users" aria-hidden="true"></i>
+                                                            <i class="fab fa-product-hunt"></i>
                                                         </div>
                                                         <div class="compName">
                                                             <h3 class="box-title">Products</h3>
