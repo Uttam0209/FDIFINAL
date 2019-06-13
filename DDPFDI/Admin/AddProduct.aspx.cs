@@ -14,6 +14,7 @@ using System.Web.UI.WebControls;
 
 public partial class Admin_AddProduct : System.Web.UI.Page
 {
+    #region Load Variable
     private Cryptography objEnc = new Cryptography();
     private DataUtility Co = new DataUtility();
     private Logic Lo = new Logic();
@@ -30,6 +31,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     public string FinancialServices = "";
     public string FinancialRemarks = "";
     public string ServicesTesting = "";
+    public string QAAgency = "";
     public string RemarksTesting = "";
     public string ServicesCertification = "";
     public string RemarksCertification = "";
@@ -42,6 +44,8 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     private short Mid = 0;
     private DataTable DtCompanyDDL = new DataTable();
     private HybridDictionary HyPanel1 = new HybridDictionary();
+    #endregion
+    #region PageLoad
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
@@ -94,6 +98,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                             BindFinancialSupport();
                             BindTesting();
                             BindCertification();
+                            BindQAAgency();
                             if (Request.QueryString["mcurrentcompRefNo"] != null)
                             {
                                 BindMasterCategory();
@@ -128,6 +133,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                             BindFinancialSupport();
                             BindTesting();
                             BindCertification();
+                            BindQAAgency();
                         }
                     }
                     if (hidType.Value == "Company")
@@ -442,6 +448,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
             ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('select Company for displayed nodal offcier')", true);
         }
     }
+    #endregion
     #region DropDownList Code
     protected void ddlcompany_OnSelectedIndexChanged(object sender, EventArgs e)
     {
@@ -731,8 +738,21 @@ public partial class Admin_AddProduct : System.Web.UI.Page
             divyearofimportYes.Visible = false;
         }
     }
+    private void NSCCode(string NSNGroupddl, string NSNClassddl)
+    {
+        try
+        {
+            string a = NSNGroupddl.Substring((NSNGroupddl.IndexOf("(") + 1), NSNGroupddl.IndexOf(")") - (NSNGroupddl.IndexOf("(") + 1));
+            string b = NSNClassddl.Substring((NSNClassddl.IndexOf("(") + 1), NSNClassddl.IndexOf(")") - (NSNClassddl.IndexOf("(") + 1));
+            txtnsccode.Text = a + b;
+        }
+        catch (Exception ex)
+        {
+            txtnsccode.Text = "";
+        }
+    }
     #endregion
-    #region BindServices Testing Certification
+    #region BindServices Testing Certification QA Agencty
     protected void BindServcies()
     {
         DataTable Dtservices = Lo.RetriveMasterSubCategoryDate(0, "TECHNICAL SUPPORT", "", "SelectInnerMaster1", hfcomprefno.Value, "");
@@ -767,6 +787,15 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         {
             gvCertification.DataSource = DtCertification;
             gvCertification.DataBind();
+        }
+    }
+    protected void BindQAAgency()
+    {
+        DataTable dtqaagency = Lo.RetriveMasterSubCategoryDate(0, "QA AGENCY", "", "SelectInnerMaster1", hfcomprefno.Value, "");
+        if (dtqaagency.Rows.Count > 0)
+        {
+            gvqaagency.DataSource = dtqaagency;
+            gvqaagency.DataBind();
         }
     }
     #endregion
@@ -1148,34 +1177,36 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         HyPanel1["ProductDescription"] = Co.RSQandSQLInjection(txtproductdescription.Text.Trim(), "soft");
         HyPanel1["NSCCode"] = Co.RSQandSQLInjection(txtnsccode.Text.Trim(), "soft");
         HyPanel1["NIINCode"] = Co.RSQandSQLInjection(txtniincode.Text.Trim(), "soft");
-        if (fuitemdescriptionfile.HasFile != false)
-        {
-            PDFFileItemDescription();
-        }
-        else
-        {
-            if (hfprodid.Value == "")
-            {
-                HyPanel1["ItemDescriptionPDFFile"] = "";
-            }
-            else
-            {
-                if (lblfuitemdescriptionfile.Text != "")
-                { HyPanel1["ItemDescriptionPDFFile"] = lblfuitemdescriptionfile.Text; }
-                else
-                {
-                    HyPanel1["ItemDescriptionPDFFile"] = "";
-                }
-            }
-        }
         HyPanel1["OEMPartNumber"] = Co.RSQandSQLInjection(txtoempartnumber.Text.Trim(), "soft");
         HyPanel1["OEMName"] = Co.RSQandSQLInjection(txtoemname.Text.Trim(), "soft");
         HyPanel1["OEMCountry"] = Convert.ToInt64(CountryID.ToString());
         HyPanel1["DPSUPartNumber"] = Co.RSQandSQLInjection(txtdpsupartnumber.Text.Trim(), "soft");
-        HyPanel1["EndUserPartNumber"] = Co.RSQandSQLInjection(txtenduserpartnumber.Text.Trim(), "soft");
         HyPanel1["HSNCode"] = Co.RSQandSQLInjection(txthsncode.Text.Trim(), "soft");
-        HyPanel1["NatoCode"] = "";//Co.RSQandSQLInjection(txtnatocode.Text, "soft");
-        HyPanel1["ERPRefNo"] = "";// Co.RSQandSQLInjection(txterprefno.Text.Trim(), "soft");
+        HyPanel1["EndUserPartNumber"] = Co.RSQandSQLInjection(txtenduserpartnumber.Text.Trim(), "soft");
+        if (ddlenduser.SelectedItem.Value != "Select")
+        {
+            HyPanel1["EndUser"] = Co.RSQandSQLInjection(ddlenduser.SelectedItem.Value, "soft");
+        }
+        else
+        {
+            HyPanel1["EndUser"] = null;
+        }
+        if (ddlplatform.SelectedItem.Value != "Select")
+        {
+            HyPanel1["Platform"] = Co.RSQandSQLInjection(ddlplatform.SelectedItem.Value, "soft");
+        }
+        else
+        {
+            HyPanel1["Platform"] = null;
+        }
+        if (ddlnomnclature.SelectedItem.Value != "Select")
+        {
+            HyPanel1["NomenclatureOfMainSystem"] = Co.RSQandSQLInjection(ddlnomnclature.SelectedItem.Value, "soft");
+        }
+        else
+        {
+            HyPanel1["NomenclatureOfMainSystem"] = null;
+        }
         if (ddltechnologycat.SelectedItem.Value != "Select")
         {
             HyPanel1["TechnologyLevel1"] = Co.RSQandSQLInjection(ddltechnologycat.SelectedItem.Value, "soft");
@@ -1200,49 +1231,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         {
             HyPanel1["TechnologyLevel3"] = null;
         }
-        if (ddlplatform.SelectedItem.Value != "Select")
-        {
-            HyPanel1["Platform"] = Co.RSQandSQLInjection(ddlplatform.SelectedItem.Value, "soft");
-        }
-        else
-        {
-            HyPanel1["Platform"] = null;
-        }
-        if (ddlnomnclature.SelectedItem.Value != "Select")
-        {
-            HyPanel1["NomenclatureOfMainSystem"] = Co.RSQandSQLInjection(ddlnomnclature.SelectedItem.Value, "soft");
-        }
-        else
-        {
-            HyPanel1["NomenclatureOfMainSystem"] = null;
-        }
-        if (ddlenduser.SelectedItem.Value != "Select")
-        {
-            HyPanel1["EndUser"] = Co.RSQandSQLInjection(ddlenduser.SelectedItem.Value, "soft");
-        }
-        else
-        {
-            HyPanel1["EndUser"] = null;
-        }
-        foreach (GridViewRow gvPofPROCURMENT in gvprocurmentcategory.Rows)
-        {
-            CheckBox chkBxProc = (CheckBox)gvPofPROCURMENT.FindControl("chkprocurmentcategory");
-            HiddenField hfProcCatId = (HiddenField)gvPofPROCURMENT.FindControl("hfproccateid");
-            if (chkBxProc != null && chkBxProc.Checked)
-            {
-                ProcurmentCat = ProcurmentCat + "," + hfProcCatId.Value;
-            }
-        }
-        if (ProcurmentCat.ToString() != "")
-        {
-            HyPanel1["PurposeofProcurement"] = Co.RSQandSQLInjection(ProcurmentCat.Substring(1).ToString() + ",", "soft");
-        }
-        else
-        {
-            HyPanel1["PurposeofProcurement"] = "";
-        }
-        HyPanel1["ProcurmentCategoryRemark"] = Co.RSQandSQLInjection(txtremarksprocurmentCategory.Text.Trim(), "soft");
-        HyPanel1["ProductRequirment"] = null;
+        HyPanel1["SearchKeyword"] = Co.RSQandSQLInjection(txtsearchkeyword.Text.Trim(), "soft");
         HyPanel1["IsIndeginized"] = Co.RSQandSQLInjection(rbisindinised.SelectedItem.Value, "soft");
         HyPanel1["ManufactureName"] = Co.RSQandSQLInjection(txtmanufacturename.Text.Trim(), "soft");
         HyPanel1["ManufactureAddress"] = Co.RSQandSQLInjection(txtmanifacaddress.Text.Trim(), "soft");
@@ -1254,7 +1243,45 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         {
             HyPanel1["YearofIndiginization"] = Co.RSQandSQLInjection(ddlyearofindiginization.SelectedItem.Value, "soft");
         }
-        HyPanel1["SearchKeyword"] = Co.RSQandSQLInjection(txtsearchkeyword.Text.Trim(), "soft");
+        if (rbproductImported.SelectedItem.Value == "N")
+        {
+            HyPanel1["IsProductImported"] = Co.RSQandSQLInjection(rbproductImported.SelectedItem.Value.Trim(), "soft");
+            HyPanel1["YearofImport"] = Co.RSQandSQLInjection(chkyearofimportall.SelectedItem.Value, "soft");
+            HyPanel1["YearofImportRemarks"] = Co.RSQandSQLInjection(txtyearofimportremarksno.Text.Trim(), "soft");
+        }
+        else
+        {
+            HyPanel1["IsProductImported"] = Co.RSQandSQLInjection(rbproductImported.SelectedItem.Value.Trim(), "soft");
+            foreach (ListItem chk in chklistimportyearfive.Items)
+            {
+                if (chk.Selected == true)
+                {
+                    IsImportedyesYear = IsImportedyesYear + "," + chk.Value;
+                }
+            }
+            HyPanel1["YearofImport"] = Co.RSQandSQLInjection(IsImportedyesYear.Substring(1).ToString(), "soft");
+            HyPanel1["YearofImportRemarks"] = Co.RSQandSQLInjection(txtremarksyearofimportyes.Text.Trim(), "soft");
+        }
+        if (fuitemdescriptionfile.HasFile != false)
+        {
+            PDFFileItemDescription();
+        }
+        else
+        {
+            if (hfprodid.Value == "")
+            {
+                HyPanel1["ItemDescriptionPDFFile"] = "";
+            }
+            else
+            {
+                if (lblfuitemdescriptionfile.Text != "")
+                { HyPanel1["ItemDescriptionPDFFile"] = lblfuitemdescriptionfile.Text; }
+                else
+                {
+                    HyPanel1["ItemDescriptionPDFFile"] = "";
+                }
+            }
+        }
         if (fuimages.HasFiles != false)
         {
             if (hfprodid.Value != "")
@@ -1285,61 +1312,16 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                 dtImage = imagedb();
             }
         }
-        if (rbproductImported.SelectedItem.Value == "N")
+        HyPanel1["FeatursandDetail"] = Co.RSQandSQLInjection(txtremarksyearofimportyes.Text.Trim(), "soft");
+        if (ViewState["CurrentTableProdInfo"] != null)
         {
-            HyPanel1["IsProductImported"] = Co.RSQandSQLInjection(rbproductImported.SelectedItem.Value.Trim(), "soft");
-            HyPanel1["YearofImport"] = Co.RSQandSQLInjection(chkyearofimportall.SelectedItem.Value, "soft");
-            HyPanel1["YearofImportRemarks"] = Co.RSQandSQLInjection(txtyearofimportremarksno.Text.Trim(), "soft");
+            dtSaveProdInfo = SaveCodeProdInfo();
         }
         else
         {
-            HyPanel1["IsProductImported"] = Co.RSQandSQLInjection(rbproductImported.SelectedItem.Value.Trim(), "soft");
-            foreach (ListItem chk in chklistimportyearfive.Items)
-            {
-                if (chk.Selected == true)
-                {
-                    IsImportedyesYear = IsImportedyesYear + "," + chk.Value;
-                }
-            }
-            HyPanel1["YearofImport"] = Co.RSQandSQLInjection(IsImportedyesYear.Substring(1).ToString(), "soft");
-            HyPanel1["YearofImportRemarks"] = Co.RSQandSQLInjection(txtremarksyearofimportyes.Text.Trim(), "soft");
+            dtSaveProdInfo = null;
         }
-        foreach (GridViewRow rw in gvservices.Rows)
-        {
-            CheckBox chkBx = (CheckBox)rw.FindControl("chk");
-            HiddenField hfservicesid = (HiddenField)rw.FindControl("hfservicesid");
-            if (chkBx != null && chkBx.Checked)
-            {
-                Services = Services + "," + hfservicesid.Value;
-            }
-        }
-        if (Services.ToString() != "")
-        {
-            HyPanel1["DPSUServices"] = Co.RSQandSQLInjection(Services.Substring(1).ToString() + ",", "soft");
-        }
-        else
-        {
-            HyPanel1["DPSUServices"] = "";
-        }
-        HyPanel1["Remarks"] = Co.RSQandSQLInjection(txtservisesremarks.Text.Trim() + ",", "soft");
-        foreach (GridViewRow rw in gvfinancialsupp.Rows)
-        {
-            CheckBox chkfinanBx = (CheckBox)rw.FindControl("chkfinan");
-            HiddenField hffinanservicesid = (HiddenField)rw.FindControl("hffinanciailserviceid");
-            if (chkfinanBx != null && chkfinanBx.Checked)
-            {
-                FinancialServices = FinancialServices + "," + hffinanservicesid.Value;
-            }
-        }
-        if (FinancialServices.ToString() != "")
-        {
-            HyPanel1["FinancialSupport"] = Co.RSQandSQLInjection(FinancialServices.Substring(1).ToString() + ",", "soft");
-        }
-        else
-        {
-            HyPanel1["FinancialSupport"] = "";
-        }
-        HyPanel1["FinancialRemark"] = Co.RSQandSQLInjection(txtfinancialsuppRemarks.Text.Trim() + ",", "soft");
+        HyPanel1["AdditionalDetail"] = Co.RSQandSQLInjection(txtremarksyearofimportyes.Text.Trim(), "soft");
         if (ViewState["CurrentTableEstimateQuan"] != null)
         {
             dtSaveEstimateQuantity = SaveCodeEstimateQuantity();
@@ -1349,43 +1331,42 @@ public partial class Admin_AddProduct : System.Web.UI.Page
             dtSaveEstimateQuantity = null;
 
         }
-        if (ViewState["CurrentTableProdInfo"] != null)
+        foreach (GridViewRow gvPofPROCURMENT in gvprocurmentcategory.Rows)
         {
-            dtSaveProdInfo = SaveCodeProdInfo();
+            CheckBox chkBxProc = (CheckBox)gvPofPROCURMENT.FindControl("chkprocurmentcategory");
+            HiddenField hfProcCatId = (HiddenField)gvPofPROCURMENT.FindControl("hfproccateid");
+            if (chkBxProc != null && chkBxProc.Checked)
+            {
+                ProcurmentCat = ProcurmentCat + "," + hfProcCatId.Value;
+            }
+        }
+        if (ProcurmentCat.ToString() != "")
+        {
+            HyPanel1["PurposeofProcurement"] = Co.RSQandSQLInjection(ProcurmentCat.Substring(1).ToString() + ",", "soft");
         }
         else
         {
-            dtSaveProdInfo = null;
+            HyPanel1["PurposeofProcurement"] = "";
         }
-        HyPanel1["TenderStatus"] = Co.RSQandSQLInjection(ddltendorstatus.SelectedItem.Value, "soft");
-        HyPanel1["TenderSubmition"] = Co.RSQandSQLInjection(rbtendordateyesno.SelectedItem.Value, "soft");
-        if (txttendordate.Text != "")
+        HyPanel1["ProcurmentCategoryRemark"] = Co.RSQandSQLInjection(txtremarksprocurmentCategory.Text.Trim(), "soft");
+        foreach (GridViewRow gvqa in gvqaagency.Rows)
         {
-            DateTime Datetendor = Convert.ToDateTime(txttendordate.Text);
-            string FinalDate = Datetendor.ToString("dd-MMM-yyyy");
-            HyPanel1["TenderFillDate"] = Co.RSQandSQLInjection(FinalDate.ToString(), "soft");
+            CheckBox chkqaagency = (CheckBox)gvqa.FindControl("chkqaagency");
+            HiddenField hfqaagency = (HiddenField)gvqa.FindControl("hfqaagency");
+            if (chkqaagency != null && chkqaagency.Checked)
+            {
+                QAAgency = QAAgency + "," + hfqaagency.Value;
+            }
+        }
+        if (QAAgency.ToString() != "")
+        {
+            HyPanel1["QAAgency"] = Co.RSQandSQLInjection(QAAgency.Substring(1).ToString() + ",", "soft");
         }
         else
         {
-            HyPanel1["TenderFillDate"] = null;
+            HyPanel1["QAAgency"] = "";
         }
-        HyPanel1["TenderUrl"] = Co.RSQandSQLInjection(txttendorurl.Text, "soft");
-        if (ddlNodalOfficerEmail.Text == "" || ddlNodalOfficerEmail.SelectedItem.Text == "Select")
-        {
-            HyPanel1["NodelDetail"] = null;
-        }
-        else
-        {
-            HyPanel1["NodelDetail"] = Convert.ToInt16(ddlNodalOfficerEmail.SelectedItem.Value);
-        }
-        if (ddlNodalOfficerEmail2.Text == "" || ddlNodalOfficerEmail2.SelectedItem.Text == "Select")//ddlprocurmentcategory
-        {
-            HyPanel1["NodalDetail2"] = null;
-        }
-        else
-        {
-            HyPanel1["NodalDetail2"] = Convert.ToInt16(ddlNodalOfficerEmail2.SelectedItem.Value);
-        }
+        HyPanel1["QAReamrks"] = Co.RSQandSQLInjection(txtqaagencyremarks.Text.Trim() + ",", "soft");
         foreach (GridViewRow rw in gvtesting.Rows)
         {
             CheckBox chktest = (CheckBox)rw.FindControl("chktesting");
@@ -1422,6 +1403,72 @@ public partial class Admin_AddProduct : System.Web.UI.Page
             HyPanel1["Certification"] = "";
         }
         HyPanel1["CertificationRemark"] = Co.RSQandSQLInjection(txtcertificationremarks.Text.Trim() + ",", "soft");
+        foreach (GridViewRow rw in gvservices.Rows)
+        {
+            CheckBox chkBx = (CheckBox)rw.FindControl("chk");
+            HiddenField hfservicesid = (HiddenField)rw.FindControl("hfservicesid");
+            if (chkBx != null && chkBx.Checked)
+            {
+                Services = Services + "," + hfservicesid.Value;
+            }
+        }
+        if (Services.ToString() != "")
+        {
+            HyPanel1["DPSUServices"] = Co.RSQandSQLInjection(Services.Substring(1).ToString() + ",", "soft");
+        }
+        else
+        {
+            HyPanel1["DPSUServices"] = "";
+        }
+        HyPanel1["Remarks"] = Co.RSQandSQLInjection(txtservisesremarks.Text.Trim() + ",", "soft");
+        foreach (GridViewRow rw in gvfinancialsupp.Rows)
+        {
+            CheckBox chkfinanBx = (CheckBox)rw.FindControl("chkfinan");
+            HiddenField hffinanservicesid = (HiddenField)rw.FindControl("hffinanciailserviceid");
+            if (chkfinanBx != null && chkfinanBx.Checked)
+            {
+                FinancialServices = FinancialServices + "," + hffinanservicesid.Value;
+            }
+        }
+        if (FinancialServices.ToString() != "")
+        {
+            HyPanel1["FinancialSupport"] = Co.RSQandSQLInjection(FinancialServices.Substring(1).ToString() + ",", "soft");
+        }
+        else
+        {
+            HyPanel1["FinancialSupport"] = "";
+        }
+        HyPanel1["FinancialRemark"] = Co.RSQandSQLInjection(txtfinancialsuppRemarks.Text.Trim() + ",", "soft");
+
+        HyPanel1["TenderStatus"] = Co.RSQandSQLInjection(ddltendorstatus.SelectedItem.Value, "soft");
+        HyPanel1["TenderSubmition"] = Co.RSQandSQLInjection(rbtendordateyesno.SelectedItem.Value, "soft");
+        if (txttendordate.Text != "")
+        {
+            DateTime Datetendor = Convert.ToDateTime(txttendordate.Text);
+            string FinalDate = Datetendor.ToString("dd-MMM-yyyy");
+            HyPanel1["TenderFillDate"] = Co.RSQandSQLInjection(FinalDate.ToString(), "soft");
+        }
+        else
+        {
+            HyPanel1["TenderFillDate"] = null;
+        }
+        HyPanel1["TenderUrl"] = Co.RSQandSQLInjection(txttendorurl.Text, "soft");
+        if (ddlNodalOfficerEmail.Text == "" || ddlNodalOfficerEmail.SelectedItem.Text == "Select")
+        {
+            HyPanel1["NodelDetail"] = null;
+        }
+        else
+        {
+            HyPanel1["NodelDetail"] = Convert.ToInt16(ddlNodalOfficerEmail.SelectedItem.Value);
+        }
+        if (ddlNodalOfficerEmail2.Text == "" || ddlNodalOfficerEmail2.SelectedItem.Text == "Select")//ddlprocurmentcategory
+        {
+            HyPanel1["NodalDetail2"] = null;
+        }
+        else
+        {
+            HyPanel1["NodalDetail2"] = Convert.ToInt16(ddlNodalOfficerEmail2.SelectedItem.Value);
+        }
         HyPanel1["CreatedBy"] = ViewState["UserLoginEmail"].ToString();
         string StrProductDescription = Lo.SaveCodeProduct(HyPanel1, dtImage, dtSaveProdInfo, dtSaveEstimateQuantity, out _sysMsg, out _msg, "Product");
         if (StrProductDescription != "-1")
@@ -1570,8 +1617,6 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         divisIndigenized.Visible = false;
         txtmanufacturename.Text = "";
         txtsearchkeyword.Text = "";
-        // txtestimatequantity.Text = "";
-        // txtestimateprice.Text = "";
         ddltendorstatus.SelectedIndex = 0;
         txttendordate.Text = "";
         txttendorurl.Text = "";
@@ -1579,8 +1624,24 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         ddllevel3product.Items.Clear();
         ddlsubtech.Items.Clear();
         ddltechlevel3.Items.Clear();
-        //  ddlestimatequantityidle.SelectedIndex = 0;
         CountryID = 0;
+        txtfeaturesanddetails.Text = "";
+        txtadditionalinfo.Text = "";
+        txtremarksyearofimportyes.Text = "";
+        txtyearofimportremarksno.Text = "";
+        rbproductImported.SelectedIndex = 0;
+        divyearofimportYes.Visible = false;
+        divyearofimportNo.Visible = true;
+        SetInitialRowGvEstimateQuanPrice();
+        SetInitialRowProductInfo();
+        txttestingremarks.Text = "";
+        txtcertificationremarks.Text = "";
+        txtservisesremarks.Text = "";
+        txtfinancialsuppRemarks.Text = "";
+        rbtendordateyesno.SelectedValue = "N";
+        divtdate.Visible = false;
+        contactpanel1.Visible = false;
+        divnodal2.Visible = false;
         if (ddlNodalOfficerEmail.Text != "")
         {
             ddlNodalOfficerEmail.SelectedIndex = 0;
@@ -1605,6 +1666,23 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                 hffinnid.Value = "";
             }
         }
+        foreach (ListItem chk in chklistimportyearfive.Items)
+        {
+            if (chk.Selected == true)
+            {
+                chk.Selected = false;
+            }
+        }
+        foreach (GridViewRow gvqa in gvqaagency.Rows)
+        {
+            CheckBox chkqaagency = (CheckBox)gvqa.FindControl("chkqaagency");
+            HiddenField hfqaagency = (HiddenField)gvqa.FindControl("hfqaagency");
+            if (chkqaagency != null && chkqaagency.Checked)
+            {
+                chkqaagency.Checked = false;
+                hfqaagency.Value = "";
+            }
+        }
         foreach (GridViewRow rw in gvtesting.Rows)
         {
             CheckBox chktesting = (CheckBox)rw.FindControl("chktesting");
@@ -1625,11 +1703,16 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                 hfcertification.Value = "";
             }
         }
-        txtremarksyearofimportyes.Text = "";
-        txtyearofimportremarksno.Text = "";
-        rbproductImported.SelectedIndex = 0;
-        divyearofimportYes.Visible = false;
-        divyearofimportNo.Visible = true;
+        foreach (GridViewRow gvPofPROCURMENT in gvprocurmentcategory.Rows)
+        {
+            CheckBox chkBxProc = (CheckBox)gvPofPROCURMENT.FindControl("chkprocurmentcategory");
+            HiddenField hfProcCatId = (HiddenField)gvPofPROCURMENT.FindControl("hfproccateid");
+            if (chkBxProc != null && chkBxProc.Checked)
+            {
+                chkBxProc.Checked = false;
+                hfProcCatId.Value = "";
+            }
+        }
     }
     #endregion
     #region Image Code
@@ -1987,19 +2070,6 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         }
     }
     #endregion
-    private void NSCCode(string NSNGroupddl, string NSNClassddl)
-    {
-        try
-        {
-            string a = NSNGroupddl.Substring((NSNGroupddl.IndexOf("(") + 1), NSNGroupddl.IndexOf(")") - (NSNGroupddl.IndexOf("(") + 1));
-            string b = NSNClassddl.Substring((NSNClassddl.IndexOf("(") + 1), NSNClassddl.IndexOf(")") - (NSNClassddl.IndexOf("(") + 1));
-            txtnsccode.Text = a + b;
-        }
-        catch (Exception ex)
-        {
-            txtnsccode.Text = "";
-        }
-    }
     #region PDF File itemDescription
     protected void PDFFileItemDescription()
     {
@@ -2026,7 +2096,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         DataRow drProductInfo = null;
         dtProductInfo.Columns.Add(new DataColumn("RowNumber", typeof(string)));
         dtProductInfo.Columns.Add(new DataColumn("Length", typeof(string)));
-        dtProductInfo.Columns.Add(new DataColumn("Value", typeof(decimal)));
+        dtProductInfo.Columns.Add(new DataColumn("Value", typeof(string)));
         dtProductInfo.Columns.Add(new DataColumn("ProductUnit", typeof(string)));
         drProductInfo = dtProductInfo.NewRow();
         drProductInfo["RowNumber"] = 1;
@@ -2166,7 +2236,6 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     }
     protected DataTable SaveCodeProdInfo()
     {
-        int rowIndex = 0;
         DataTable DtNProdInfo = new DataTable();
         DtNProdInfo.Columns.Add(new DataColumn("ProdInfoId", typeof(int)));
         DtNProdInfo.Columns.Add(new DataColumn("Length", typeof(string)));
@@ -2178,14 +2247,11 @@ public partial class Admin_AddProduct : System.Web.UI.Page
             {
                 if (ViewState["CurrentTableProdInfo"] != null)
                 {
-                    for (int i = 1; i <= gvProductInformation.Rows.Count; i++)
+                    for (int i = 0; i <= gvProductInformation.Rows.Count; i++)
                     {
-                        TextBox txtlenth =
-                            (TextBox)gvProductInformation.Rows[rowIndex].Cells[1].FindControl("txtlenth");
-                        TextBox txtvalue =
-                            (TextBox)gvProductInformation.Rows[rowIndex].Cells[2].FindControl("txtvalue");
-                        TextBox txtProdInfoUnit = (TextBox)gvProductInformation.Rows[rowIndex].Cells[3]
-                            .FindControl("txtProdInfoUnit");
+                        TextBox txtlenth = (TextBox)gvProductInformation.Rows[i].Cells[1].FindControl("txtlenth");
+                        TextBox txtvalue = (TextBox)gvProductInformation.Rows[i].Cells[2].FindControl("txtvalue");
+                        TextBox txtProdInfoUnit = (TextBox)gvProductInformation.Rows[i].Cells[3].FindControl("txtProdInfoUnit");
                         drProdInfoSave = DtNProdInfo.NewRow();
                         drProdInfoSave["ProdInfoId"] = "-1";
                         drProdInfoSave["Length"] = txtlenth.Text.Trim();
@@ -2213,10 +2279,10 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         DtEstimateQuanPrice.Columns.Add(new DataColumn("EstimatePrice", typeof(string)));//for TextBox value
         drEstimateQuanPrice = DtEstimateQuanPrice.NewRow();
         drEstimateQuanPrice["RowNumber"] = 1;
-        drEstimateQuanPrice["EstimateQuantity"] = string.Empty;
-        drEstimateQuanPrice["EstimatePrice"] = string.Empty;
         drEstimateQuanPrice["Year"] = "-1";
+        drEstimateQuanPrice["EstimateQuantity"] = string.Empty;
         drEstimateQuanPrice["MeasuringUnit"] = "-1";
+        drEstimateQuanPrice["EstimatePrice"] = string.Empty;
         DtEstimateQuanPrice.Rows.Add(drEstimateQuanPrice);
         ViewState["CurrentTableEstimateQuan"] = DtEstimateQuanPrice;
         GvEstimateQuanPrice.DataSource = DtEstimateQuanPrice;
@@ -2281,10 +2347,13 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                     TextBox txtestimPrice = (TextBox)GvEstimateQuanPrice.Rows[i].Cells[4].FindControl("txtestimPrice");
                     if (i < dt.Rows.Count - 1)
                     {
+                        ddlestimatequanYear.ClearSelection();
                         ddlestimatequanYear.Items.FindByText(dt.Rows[i]["Year"].ToString()).Selected = true;
                         txtEstimateQuantity.Text = dt.Rows[i]["EstimateQuantity"].ToString();
+                        ddlMeasurUnit.ClearSelection();
                         ddlMeasurUnit.Items.FindByText(dt.Rows[i]["MeasuringUnit"].ToString()).Selected = true;
                         txtestimPrice.Text = dt.Rows[i]["EstimatePrice"].ToString();
+
                     }
                     rowIndex++;
                 }
@@ -2358,13 +2427,11 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     protected DataTable SaveCodeEstimateQuantity()
     {
         DataTable DNSaveEstimateQuen = new DataTable();
-        int rowIndex = 0;
-
         DNSaveEstimateQuen.Columns.Add(new DataColumn("ProdQtyPriceId", typeof(int)));
         DNSaveEstimateQuen.Columns.Add(new DataColumn("Year", typeof(int)));
-        DNSaveEstimateQuen.Columns.Add(new DataColumn("FYear", typeof(decimal)));
-        DNSaveEstimateQuen.Columns.Add(new DataColumn("Unit", typeof(string)));
+        DNSaveEstimateQuen.Columns.Add(new DataColumn("FYear", typeof(string)));
         DNSaveEstimateQuen.Columns.Add(new DataColumn("EstimatedQty", typeof(decimal)));
+        DNSaveEstimateQuen.Columns.Add(new DataColumn("Unit", typeof(string)));
         DNSaveEstimateQuen.Columns.Add(new DataColumn("EstimatedPrice", typeof(decimal)));
         DataRow drEstimateQuantitySave;
         {
@@ -2372,16 +2439,12 @@ public partial class Admin_AddProduct : System.Web.UI.Page
             {
                 if (ViewState["CurrentTableEstimateQuan"] != null)
                 {
-                    for (int i = 1; i <= GvEstimateQuanPrice.Rows.Count; i++)
+                    for (int i = 0; i <= GvEstimateQuanPrice.Rows.Count; i++)
                     {
-                        DropDownList ddlestimatequanYear = (DropDownList)GvEstimateQuanPrice.Rows[rowIndex]
-                            .Cells[1].FindControl("ddlestimatequanYear");
-                        TextBox txtEstimateQuantity = (TextBox)GvEstimateQuanPrice.Rows[rowIndex].Cells[2]
-                            .FindControl("txtEstimateQuantity");
-                        DropDownList ddlMeasurUnit = (DropDownList)GvEstimateQuanPrice.Rows[rowIndex].Cells[3]
-                            .FindControl("ddlMeasurUnit");
-                        TextBox txtestimPrice = (TextBox)GvEstimateQuanPrice.Rows[rowIndex].Cells[4]
-                            .FindControl("txtestimPrice");
+                        DropDownList ddlestimatequanYear = (DropDownList)GvEstimateQuanPrice.Rows[i].Cells[1].FindControl("ddlestimatequanYear");
+                        TextBox txtEstimateQuantity = (TextBox)GvEstimateQuanPrice.Rows[i].Cells[2].FindControl("txtEstimateQuantity");
+                        DropDownList ddlMeasurUnit = (DropDownList)GvEstimateQuanPrice.Rows[i].Cells[3].FindControl("ddlMeasurUnit");
+                        TextBox txtestimPrice = (TextBox)GvEstimateQuanPrice.Rows[i].Cells[4].FindControl("txtestimPrice");
                         drEstimateQuantitySave = DNSaveEstimateQuen.NewRow();
                         drEstimateQuantitySave["ProdQtyPriceId"] = "-1";
                         drEstimateQuantitySave["Year"] = Convert.ToInt64(ddlestimatequanYear.SelectedItem.Value);
