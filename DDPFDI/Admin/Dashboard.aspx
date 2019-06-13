@@ -82,7 +82,7 @@
                                                             <i class="far fa-building"></i>
                                                         </div>
                                                         <div class="compName">
-                                                            <h3 class="box-title">Companies</h3>
+                                                            <h3 class="box-title">Organization</h3>
                                                             <div class="Number">
                                                                 <asp:LinkButton ID="lnkbtnTotComp" CssClass="comp_number" runat="server" Text="0" OnClick="lnkbtnTotComp_Click"></asp:LinkButton>
                                                             </div>
@@ -103,7 +103,7 @@
                                                             <i class="far fa-building"></i>
                                                         </div>
                                                         <div class="compName">
-                                                            <h3 class="box-title">Divsions</h3>
+                                                            <h3 class="box-title">org-Divsions</h3>
                                                             <div class="Number">
                                                                 <asp:LinkButton ID="lnkbtnTotDiv" runat="server" CssClass="comp_number" Text="0" OnClick="lnkbtnTotDiv_Click"></asp:LinkButton>
                                                             </div>
@@ -123,7 +123,7 @@
                                                             <i class="far fa-building"></i>
                                                         </div>
                                                         <div class="compName">
-                                                            <h3 class="box-title">Units</h3>
+                                                            <h3 class="box-title">org-Units</h3>
                                                             <div class="Number">
                                                                 <asp:LinkButton ID="lnkbtnTotUnit" runat="server" CssClass="comp_number" Text="0" OnClick="lnkbtnTotUnit_Click"></asp:LinkButton>
                                                             </div>
@@ -143,7 +143,7 @@
                                                             <i class="fa fa-users" aria-hidden="true"></i>
                                                         </div>
                                                         <div class="compName">
-                                                            <h3 class="box-title">Employees</h3>
+                                                            <h3 class="box-title">org-Employee</h3>
                                                             <div class="Number">
                                                                 <asp:LinkButton ID="lnkbtnTotEmp" runat="server" CssClass="comp_number" Text="0" OnClick="lnkbtnTotEmp_Click"></asp:LinkButton>
                                                             </div>
@@ -167,7 +167,7 @@
                                                             <i class="fa fa-users" aria-hidden="true"></i>
                                                         </div>
                                                         <div class="compName">
-                                                            <h3 class="box-title">Products</h3>
+                                                            <h3 class="box-title">Items Uploaded</h3>
                                                             <div class="Number">
                                                                 <asp:LinkButton ID="lnkbtnProduct" runat="server" CssClass="comp_number" Text="0" OnClick="lnkbtnProduct_Click"></asp:LinkButton>
                                                             </div>
@@ -187,7 +187,7 @@
                                                             <i class="fa fa-users" aria-hidden="true"></i>
                                                         </div>
                                                         <div class="compName">
-                                                            <h3 class="box-title">Indigenized Product</h3>
+                                                            <h3 class="box-title">Items Indigenized</h3>
                                                             <div class="Number">
                                                                 <asp:LinkButton ID="lnkbtnIndigenizedProduct" runat="server" CssClass="comp_number" Text="0" OnClick="lnkbtnIndigenizedProduct_Click"></asp:LinkButton>
                                                             </div>
@@ -203,9 +203,9 @@
 
                                     <div class="row" style="margin-top: 20px;">
                                         <div class="col-lg-12 col-sm-6 col-xs-12">
-                                            
-                                            <h4 class="box-title">Company Performance Product Category Wise</h4>
-                                               
+
+                                            <h4 class="box-title">ORGANIZATION PERFORMANCE ON ITEMS UPLOADED</h4>
+
                                         </div>
                                     </div>
 
@@ -230,32 +230,32 @@
                                             </div>
                                         </div>
                                     </div>
-                                     <div class="row" style="margin-top: 20px;">
+                                    <div class="row" style="margin-top: 20px;">
                                         <div class="col-lg-6 col-sm-6 col-xs-12">
                                             <div class="white-box analytics-info last-fdi">
-                                           
-                                                 <div class="table-wrapper table-responsive" id="divfactorygrid" runat="server">
-                                            <asp:GridView ID="gvPrdoct" runat="server" AutoGenerateColumns="false" Class="commonAjaxTbl master-company-table ViewProductTable table 
-                                        display responsive no-wrap table-hover manage-user Grid table-responsive">
-                                                <Columns>
-                                                    <asp:TemplateField HeaderText="S.No.">
-                                                        <ItemTemplate>
-                                                            <%#Container.DataItemIndex+1 %>
-                                                        </ItemTemplate>
-                                                    </asp:TemplateField>
-                                                    <asp:BoundField DataField="CompName" HeaderText="Company" NullDisplayText="#" />
 
-                                                    <asp:BoundField DataField="TotalProd" HeaderText="Total Product" NullDisplayText="#" />
-                                                    <asp:BoundField DataField="IsIndiginised" HeaderText="Indigenized Product" NullDisplayText="#" />
-                                                </Columns>
-                                            </asp:GridView>
-                                        </div>
+                                                <div class="table-wrapper table-responsive" id="divfactorygrid" runat="server">
+                                                    <asp:GridView ID="gvPrdoct" runat="server" AutoGenerateColumns="false" Class="commonAjaxTbl master-company-table ViewProductTable table 
+                                        display responsive no-wrap table-hover manage-user Grid table-responsive">
+                                                        <Columns>
+                                                            <asp:TemplateField HeaderText="S.No.">
+                                                                <ItemTemplate>
+                                                                    <%#Container.DataItemIndex+1 %>
+                                                                </ItemTemplate>
+                                                            </asp:TemplateField>
+                                                            <asp:BoundField DataField="CompName" HeaderText="ORGANIZATION" NullDisplayText="#" />
+
+                                                            <asp:BoundField DataField="TotalProd" HeaderText="Total ITEMS" NullDisplayText="#" />
+                                                            <asp:BoundField DataField="IsIndiginised" HeaderText="ITEMS INDIGENIZED" NullDisplayText="#" />
+                                                        </Columns>
+                                                    </asp:GridView>
                                                 </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                               
-                               
+
+
                             </div>
                         </div>
                 </div>

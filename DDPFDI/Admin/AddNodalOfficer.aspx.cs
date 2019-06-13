@@ -74,15 +74,14 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
             else
             {
                 ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert",
-                    "alert('Session Expire,Please login again');window.location='Login'", true);
+                    "alert('Session Expired,Please login again');window.location='Login'", true);
             }
         }
     }
     #region Load
     protected void BindEmployee(string mRoleEmployee)
-
     {
-        DataTable DtGrid = Lo.GetDashboardData("Employee","");
+        DataTable DtGrid = Lo.GetDashboardData("Employee", "");
         if (DtGrid.Rows.Count > 0)
         {
             for (int a = 0; a < DtGrid.Rows.Count; a++)
@@ -121,7 +120,7 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
     }
     public void GridViewNodalOfficerBind(string mRefNo, string mRole)
     {
-        
+
         BindEmployee(mRole);
         //DataRow[] foundRows = DtGrid.Select("IsNodalOfficer='Y'");
         //if (foundRows.Length != 0)
@@ -206,6 +205,11 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
             if (DtCompanyDDL.Rows.Count > 0)
             {
                 Co.FillDropdownlist(ddldivision, DtCompanyDDL, "FactoryName", "FactoryRefNo");
+                // code by gk to select indivisual division for the particular unit
+                DataTable dt = Lo.RetriveMasterData(0, mRefNo, "Factory2", 0, "", "", "CompanyName");
+                if (dt.Rows.Count > 0)
+                    ddldivision.SelectedValue = dt.Rows[0]["FactoryRefNo"].ToString();
+                //end code
                 lblselectdivison.Visible = true;
                 ddldivision.Enabled = false;
                 GridViewNodalOfficerBind(ddldivision.SelectedItem.Value, "Division");

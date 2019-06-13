@@ -17,6 +17,9 @@ ul {
 .red {
     color: #f00;
 }
+
+.ajax__html_editor_extender_texteditor { background-color:#fff !important;
+}
 /*---Progress Bar Animation ---*/
 .custom-progress-bar {
     width: 500px;
@@ -96,7 +99,6 @@ ul {
 
 /*------Custom Checkbox------*/
 input[type=checkbox] + label {
-    display: block;
     margin: 0.2em;
     cursor: pointer;
     padding: 0.2em;

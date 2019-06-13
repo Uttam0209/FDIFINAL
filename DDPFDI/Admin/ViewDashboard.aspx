@@ -1107,6 +1107,7 @@
                                                         <tbody>
                                                             <tr>
                                                                 <th class="pass">Employee Code</th>
+                                                                <th class="pass">Employee Name</th>
                                                                 <th class="pass">Designation</th>
                                                                 <th class="pass">Email</th>
                                                                 <th class="pass">Mobile</th>
@@ -1117,7 +1118,9 @@
                                                                 <td>
                                                                     <asp:Label ID="lblempcode" runat="server"></asp:Label>
                                                                 </td>
-
+                                                                <td>
+                                                                    <asp:Label ID="lblempname" runat="server"></asp:Label>
+                                                                </td>
                                                                 <td>
                                                                     <asp:Label ID="lbldesignation" runat="server"></asp:Label>
                                                                 </td>

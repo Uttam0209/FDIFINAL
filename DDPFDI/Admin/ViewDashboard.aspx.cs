@@ -26,7 +26,7 @@ public partial class Admin_ViewDashboard : System.Web.UI.Page
             }
             else
             {
-                ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "alert('Session Expire,Please login again');window.location='Login'", true);
+                ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "alert('Session Expired,Please login again');window.location='Login'", true);
             }
         }
     }
@@ -485,32 +485,33 @@ public partial class Admin_ViewDashboard : System.Web.UI.Page
                 lbltenderdate.Text = tDate.ToString();
             }
             lbltenderurl.Text = DtView.Rows[0]["TenderUrl"].ToString();
-            DataTable dtNodal = Lo.RetriveProductCode("", e.CommandArgument.ToString(), "ProductNodal", "");
-            if (dtNodal.Rows.Count > 0)
-            {
-                // lblempcode.Text = dtNodal.Rows[0]["NodalEmpCode"].ToString();
-                lblempcode.Text = dtNodal.Rows[0]["NodalEmpCode"].ToString();
-                lbldesignation.Text = dtNodal.Rows[0]["Designation"].ToString();
-                lblemailprod.Text = dtNodal.Rows[0]["NodalOfficerEmail"].ToString();
-                lblmobilenumber.Text = dtNodal.Rows[0]["NodalOfficerMobile"].ToString();
-                lblphonenumber.Text = dtNodal.Rows[0]["NodalOfficerTelephone"].ToString();
-                lblfaxprod.Text = dtNodal.Rows[0]["NodalOfficerFax"].ToString();
+            //DataTable dtNodal = Lo.RetriveProductCode("", e.CommandArgument.ToString(), "ProductNodal", "");
+            //if (dtNodal.Rows.Count > 0)
+            //{
+            // lblempcode.Text = dtNodal.Rows[0]["NodalEmpCode"].ToString();
+            lblempcode.Text = DtView.Rows[0]["NodalOfficerRefNo"].ToString();
+            lblempname.Text = DtView.Rows[0]["NodalOficerName"].ToString();
+            lbldesignation.Text = DtView.Rows[0]["Designation"].ToString();
+            lblemailprod.Text = DtView.Rows[0]["NodalOfficerEmail"].ToString();
+            lblmobilenumber.Text = DtView.Rows[0]["NodalOfficerMobile"].ToString();
+            lblphonenumber.Text = DtView.Rows[0]["NodalOfficerTelephone"].ToString();
+            lblfaxprod.Text = DtView.Rows[0]["NodalOfficerFax"].ToString();
 
-                //if (dtNodal.Rows.Count == 2)
-                //{
-                //    tablenodal2.Visible = true;
-                //    lblempcode2.Text = dtNodal.Rows[1]["NodalEmpCode"].ToString();
-                //    lbldesignation2.Text = dtNodal.Rows[1]["Designation"].ToString();
-                //    lblemailid2.Text = dtNodal.Rows[1]["NodalOfficerEmail"].ToString();
-                //    lblmobileno2.Text = dtNodal.Rows[1]["NodalOfficerMobile"].ToString();
-                //    lblphoneno2.Text = dtNodal.Rows[1]["NodalOfficerTelephone"].ToString();
-                //    lblfax2.Text = dtNodal.Rows[1]["NodalOfficerFax"].ToString();
-                //}
-                //else
-                //{
-                //    tablenodal2.Visible = false;
-                //}
-            }
+            //if (dtNodal.Rows.Count == 2)
+            //{
+            //    tablenodal2.Visible = true;
+            //    lblempcode2.Text = dtNodal.Rows[1]["NodalEmpCode"].ToString();
+            //    lbldesignation2.Text = dtNodal.Rows[1]["Designation"].ToString();
+            //    lblemailid2.Text = dtNodal.Rows[1]["NodalOfficerEmail"].ToString();
+            //    lblmobileno2.Text = dtNodal.Rows[1]["NodalOfficerMobile"].ToString();
+            //    lblphoneno2.Text = dtNodal.Rows[1]["NodalOfficerTelephone"].ToString();
+            //    lblfax2.Text = dtNodal.Rows[1]["NodalOfficerFax"].ToString();
+            //}
+            //else
+            //{
+            //    tablenodal2.Visible = false;
+            //}
+            //}
             DataTable dttesting = Lo.RetriveProductCode("", e.CommandArgument.ToString(), "ProductTesting", "");
             if (dttesting.Rows.Count > 0)
             {
