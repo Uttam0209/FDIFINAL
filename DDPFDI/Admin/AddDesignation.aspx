@@ -20,7 +20,15 @@
                         <div class="col-md-12 padding_0">
                             <div id="divHeadPage" runat="server"></div>
                         </div>
+                        <div class="col-md-12">
+                                <div class="clearfix"></div>
+                                <div style="margin-top: 5px;">
+                                    <a class="fa fa-arrow-circle-left pull-right" href="javascript: history.go(-1)">&nbsp; &nbsp;Back</a>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
                     </div>
+                     <div class="clearfix" style="margin-bottom:10px;"></div>
                     <div class="addfdi">
                         <asp:Panel ID="Panel1" runat="server" DefaultButton="btnsubmit">
                             <div class="section-pannel">
@@ -56,7 +64,7 @@
                                 <div class="col-md-12">
                                     <div class="fdi-add-content">
                                         <div class="form-group">
-                                            <asp:Button ID="btncancel" runat="server" Text="Cancel" TabIndex="4" CssClass="btn btn-default pull-right" OnClick="btncancel_Click" />
+                                            <asp:Button ID="btncancel" runat="server" Text="Cancel" Visible="False" TabIndex="4" CssClass="btn btn-default pull-right" OnClick="btncancel_Click" />
                                             <asp:Button ID="btnsubmit" runat="server" Text="Save" TabIndex="3" CssClass="btn btn-primary pull-right" OnClick="btnsubmit_Click" OnClientClick="return confirm('Are you sure you want to save this designation?');" />
                                         </div>
                                     </div>

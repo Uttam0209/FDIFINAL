@@ -7,14 +7,7 @@ using System.Web.UI;
 using System.Text;
 using BusinessLayer;
 using System.Web.UI.WebControls;
-using System.Data.SqlClient;
 using Encryption;
-
-using System.Web.Services;
-using System.Configuration;
-using System.Data.SqlClient;
-using System.Collections.Generic;
-using System.Security.AccessControl;
 using System.Web;
 
 
@@ -32,12 +25,8 @@ public partial class _Default : System.Web.UI.Page
     #endregion
     protected void Page_Load(object sender, EventArgs e)
     {
-        // string s = objEnc.EncryptData("PRO0006");
-        //string d = objEnc.DecryptData(s);
-        // string c = objEnc.DecryptData("zLKoGmaRQOs=");
-        // string s = objEnc.EncryptData("Indig@rgera");
-        // string s = objEnc.EncryptData(@"Data Source=DE73P-DBAERO-00\SQLEXPRESS;Initial Catalog=Gip_AeroIndia2018_new;User ID=sa;Password=Adm@2^3SqlServ");
-        //  string d = objEnc.DecryptData("aL88ocdv5/LvxKi0O2Gs6kF35uJ5Iz4xWbJBsJ8R+marLTVA2W7Pt0PDHgFG4Wx3HJgCG5QjEr1C1Q7WGTiNwa2AB1N5OvU+45sa48G+2HZnZapUUB4NgatRxGyMc5ZecSf34VN2rLqINQzCMknoOQ==");
+        // string a = objEnc.EncryptData("Data Source=103.73.189.114;Initial Catalog=ddp_fdiFinal;User ID=ddp;Password=%>#%7ZeL3");
+        //string d = objEnc.DecryptData("xF/KNK0Gdsw=");
     }
     #region "Login Code"
     public static bool IsValidEmailId(string InputEmail)
@@ -87,8 +76,7 @@ public partial class _Default : System.Web.UI.Page
         }
         catch (Exception ex)
         {
-            string message = ex.Message;
-            Response.Redirect("Error?string=" + message);
+            Response.RedirectToRoute("login");
         }
     }
     protected void btnCaptchaNew_Click(object sender, EventArgs e)
@@ -103,26 +91,32 @@ public partial class _Default : System.Web.UI.Page
     }
     protected void btnsendmail_Click(object sender, EventArgs e)
     {
-        if (txtforgotemailid.Text != "")
+        try
         {
-            if (IsValidEmailId(txtforgotemailid.Text) == true)
+            if (txtforgotemailid.Text != "")
             {
-                DataTable DtSendMailForgotpassword = LO.RetriveForgotPasswordEmail(Co.RSQandSQLInjection(txtforgotemailid.Text, "soft"), "ForgotPassword");
-                if (DtSendMailForgotpassword.Rows.Count > 0)
+                if (IsValidEmailId(txtforgotemailid.Text) == true)
                 {
-                    string EmpCode = DtSendMailForgotpassword.Rows[0]["NodalOfficerRefNo"].ToString();
-                    SendEmailCode(EmpCode);
-                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Email send to your registerd emaid id successfully.');", true);
+                    DataTable DtSendMailForgotpassword = LO.RetriveForgotPasswordEmail(Co.RSQandSQLInjection(txtforgotemailid.Text, "soft"), "ForgotPassword");
+                    if (DtSendMailForgotpassword.Rows.Count > 0)
+                    {
+                        string EmpCode = DtSendMailForgotpassword.Rows[0]["NodalOfficerRefNo"].ToString();
+                        SendEmailCode(EmpCode);
+                        ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Email send to your registerd email id successfully.');", true);
+                    }
+                    else
+                    {
+                        ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Email id not registerd with us.');", true);
+                    }
                 }
                 else
                 {
-                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Email id not registerd with us.');", true);
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Invalid email format.');", true);
                 }
             }
-            else
-            {
-                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Invalid email format.');", true);
-            }
+        }
+        catch (Exception ex)
+        {
         }
     }
     #region Send Mail

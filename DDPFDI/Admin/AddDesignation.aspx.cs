@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
 using System.Data;
 using System.Text;
 using BusinessLayer;
 using Encryption;
-using System.IO;
 using System.Collections.Specialized;
 
 public partial class Admin_AddDesignation : System.Web.UI.Page
@@ -26,42 +22,52 @@ public partial class Admin_AddDesignation : System.Web.UI.Page
     {
         if (!IsPostBack)
         {
-            try
+            if (Session["User"] != null)
             {
-                if (Request.QueryString["id"] != null)
+                try
                 {
-                    string strid = Request.QueryString["id"].ToString().Replace(" ", "+");
-                    string strPageName = Enc.DecryptData(strid);
-                    StringBuilder strheadPage = new StringBuilder();
-                    strheadPage.Append("<ul class='breadcrumb'>");
-                    string[] MCateg = strPageName.Split(new string[] { ">>" }, StringSplitOptions.RemoveEmptyEntries);
-                    string MmCval = "";
-                    for (int x = 0; x < MCateg.Length; x++)
+                    if (Request.QueryString["id"] != null)
                     {
-                        MmCval = MCateg[x];
-                        if (MmCval == " View ")
+                        string strid = Request.QueryString["id"].ToString().Replace(" ", "+");
+                        string strPageName = Enc.DecryptData(strid);
+                        StringBuilder strheadPage = new StringBuilder();
+                        strheadPage.Append("<ul class='breadcrumb'>");
+                        string[] MCateg = strPageName.Split(new string[] { ">>" }, StringSplitOptions.RemoveEmptyEntries);
+                        string MmCval = "";
+                        for (int x = 0; x < MCateg.Length; x++)
                         {
-                            MmCval = "Add";
+                            MmCval = MCateg[x];
+                            if (MmCval == " View ")
+                            {
+                                MmCval = "Add";
+                            }
+
+                            strheadPage.Append("<li class=''><span>" + MmCval + "</span></li>");
                         }
-                        strheadPage.Append("<li class=''><span>" + MmCval + "</span></li>");
+
+                        divHeadPage.InnerHtml = strheadPage.ToString();
+                        strheadPage.Append("</ul");
+                        BindMasterCompany();
                     }
-                    divHeadPage.InnerHtml = strheadPage.ToString();
-                    strheadPage.Append("</ul");
-                    BindMasterCompany();
+                    ViewState["UserLoginEmail"] = Session["User"].ToString();
+                    mType = Enc.DecryptData(Session["Type"].ToString());
+                    mRefNo = Session["CompanyRefNo"].ToString();
+                    if (Request.QueryString["mcurrentcompRefNo"] != null)
+                    {
+                        EditCode();
+                    }
                 }
-                ViewState["UserLoginEmail"] = Session["User"].ToString();
-                mType = Enc.DecryptData(Session["Type"].ToString());
-                mRefNo = Session["CompanyRefNo"].ToString();
-                if (Request.QueryString["mcurrentcompRefNo"] != null)
+                catch (Exception ex)
                 {
-                    EditCode();
+                    string error = ex.ToString();
+                    string Page = Request.Url.AbsolutePath.ToString();
+                    Response.Redirect("Error?techerror=" + HttpUtility.UrlEncode(Enc.EncryptData(error)) + "&page=" + HttpUtility.UrlEncode(Enc.EncryptData(Page)));
                 }
             }
-            catch (Exception ex)
+            else
             {
-                string error = ex.ToString();
-                string Page = Request.Url.AbsolutePath.ToString();
-                Response.Redirect("Error?techerror=" + HttpUtility.UrlEncode(Enc.EncryptData(error)) + "&page=" + HttpUtility.UrlEncode(Enc.EncryptData(Page)));
+                ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert",
+                    "alert('Session Expired,Please login again');window.location='Login'", true);
             }
         }
     }
@@ -191,20 +197,17 @@ public partial class Admin_AddDesignation : System.Web.UI.Page
             StrSaveComp = Lo.SaveCompDesignation(HySave, out _sysMsg, out _msg);
             if (_sysMsg != "")
             {
-                if (btnsubmit.Text == "Save")
+                if (hdid.Value == "")
                 {
                     GridViewBindSelectedIndexchange();
                     txtDesignation.Text = "";
-                    hdid.Value = "";
-                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Save successfully !')",
-                        true);
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Save successfully !')", true);
                 }
                 else
                 {
                     GridViewBindSelectedIndexchange();
                     txtDesignation.Text = "";
                     hdid.Value = "";
-                    btnsubmit.Text = "Save";
                     ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Designation updated successfully !')", true);
                 }
             }
@@ -270,7 +273,6 @@ public partial class Admin_AddDesignation : System.Web.UI.Page
                 }
                 lblMastcompany.Text = "Select Company ";
                 txtDesignation.Text = DtView.Rows[0]["Designation"].ToString();
-                btnsubmit.Text = "Edit";
             }
         }
     }

@@ -4,7 +4,6 @@ using System.Web.UI.WebControls;
 using BusinessLayer;
 using Encryption;
 using System.Data;
-using System.Text.RegularExpressions;
 using System.Text;
 using System.IO;
 using System.Web;
@@ -26,60 +25,36 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
     {
         if (!IsPostBack)
         {
-            if (Request.QueryString["id"] != null)
+            if (Session["User"] != null)
             {
-                string strid = Request.QueryString["id"].ToString().Replace(" ", "+");
-                string strPageName = objEnc.DecryptData(strid);
-                StringBuilder strheadPage = new StringBuilder();
-                strheadPage.Append("<ul class='breadcrumb'>");
-                string[] MCateg = strPageName.Split(new string[] { ">>" }, StringSplitOptions.RemoveEmptyEntries);
-                string MmCval = "";
-                for (int x = 0; x < MCateg.Length; x++)
+                if (Request.QueryString["id"] != null)
                 {
-                    MmCval = MCateg[x];
-                    strheadPage.Append("<li class=''><span>" + MmCval + "</span></li>");
+                    string strid = Request.QueryString["id"].ToString().Replace(" ", "+");
+                    string strPageName = objEnc.DecryptData(strid);
+                    StringBuilder strheadPage = new StringBuilder();
+                    strheadPage.Append("<ul class='breadcrumb'>");
+                    string[] MCateg = strPageName.Split(new string[] { ">>" }, StringSplitOptions.RemoveEmptyEntries);
+                    string MmCval = "";
+                    for (int x = 0; x < MCateg.Length; x++)
+                    {
+                        MmCval = MCateg[x];
+                        strheadPage.Append("<li class=''><span>" + MmCval + "</span></li>");
+                    }
+                    divHeadPage.InnerHtml = strheadPage.ToString();
+                    strheadPage.Append("</ul");
+                    currentPage = System.IO.Path.GetFileName(Request.Url.AbsolutePath);
+                    mType = objEnc.DecryptData(Session["Type"].ToString());
+                    mRefNo = Session["CompanyRefNo"].ToString();
+                    BindCompany();
                 }
-                divHeadPage.InnerHtml = strheadPage.ToString();
-                strheadPage.Append("</ul");
-                currentPage = System.IO.Path.GetFileName(Request.Url.AbsolutePath);
-                mType = objEnc.DecryptData(Session["Type"].ToString());
-                mRefNo = Session["CompanyRefNo"].ToString();
-                BindCompany();
-                if (mType == "SuperAdmin" || mType == "Admin")
-                {
-                    //if (Request.QueryString["mu"] != null)
-                    //{
-                    //    if (objEnc.DecryptData(Request.QueryString["mu"].ToString())=="View")
-                    //    {                            
-                    //        DataTable DtGrid = Lo.RetriveGridViewCompany("0", "", "", "CompanyMainGridView");
-                    //        if (DtGrid.Rows.Count > 0)
-                    //        {
-                    //            gvcompanydetail.DataSource = DtGrid;
-                    //            gvcompanydetail.DataBind();
-                    //            //ddlcompany.Visible = false;
-                    //        }
-                    //    }
-                    //    else
-                    //    {
-                    //        ddlcompany.Visible = true;
-                    //        btnAddCompany.Visible = true;
-                    //        btnAddDivision.Visible = true;
-                    //        // btnAddUnit.Visible = true;
-                    //    }
-                    //}
-                    //else
-                    //{
-                    ddlcompany.Visible = true;
-                    btnAddCompany.Visible = true;
-                    btnAddDivision.Visible = true;
-                    // btnAddUnit.Visible = true;
-                    // }
-                }
-
+            }
+            else
+            {
+                ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert",
+                    "alert('Session Expired,Please login again');window.location='Login'", true);
             }
         }
     }
-
     protected void btnAddCompany_Click(object sender, EventArgs e)
     {
         string stridNew = Request.QueryString["id"].ToString().Replace(" ", "+");
@@ -102,13 +77,12 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
         Response.Redirect("AddMasterCompany?mu=" + HttpUtility.UrlEncode(objEnc.EncryptData("Panel3")) + "&id=" + mstrid);
 
     }
-
     #region Load
     protected void BindGridView(string sortExpression = null)
     {
         try
         {
-            if (mType == "SuperAdmin")
+            if (mType == "SuperAdmin" || mType == "Admin")
             {
                 DataTable DtGrid = Lo.RetriveGridViewCompany("0", "", "", "CompanyMainGridView");
                 if (DtGrid.Rows.Count > 0)
@@ -265,6 +239,9 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
             if (DtCompanyDDL.Rows.Count > 0)
             {
                 Co.FillDropdownlist(ddldivision, DtCompanyDDL, "FactoryName", "FactoryRefNo");
+                DataTable dt = Lo.RetriveMasterData(0, mRefNo, "Factory2", 0, "", "", "CompanyName");
+                if (dt.Rows.Count > 0)
+                    ddldivision.SelectedValue = dt.Rows[0]["FactoryRefNo"].ToString();
                 lblselectdivison.Visible = true;
                 ddldivision.Enabled = false;
                 DataTable DtGrid = Lo.RetriveGridViewCompany(ddlcompany.SelectedItem.Value, ddldivision.SelectedItem.Value, "", "InnerGVFactoryID");
@@ -331,6 +308,11 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
             if (DtCompanyDDL.Rows.Count > 0)
             {
                 Co.FillDropdownlist(ddldivision, DtCompanyDDL, "FactoryName", "FactoryRefNo");
+                // code by gk to select indivisual division for the particular unit
+                DataTable dt = Lo.RetriveMasterData(0, mRefNo, "Factory3", 0, "", "", "CompanyName");
+                if (dt.Rows.Count > 0)
+                    ddldivision.SelectedValue = dt.Rows[0]["FactoryRefNo"].ToString();
+                //end code
                 lblselectdivison.Visible = true;
                 ddldivision.Enabled = false;
                 DataTable DtGrid = Lo.RetriveGridViewCompany(ddlcompany.SelectedItem.Value, ddldivision.SelectedItem.Value, "", "InnerGVFactoryID");
@@ -352,6 +334,9 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
             if (DtCompanyDDL.Rows.Count > 0)
             {
                 Co.FillDropdownlist(ddlunit, DtCompanyDDL, "UnitName", "UnitRefNo");
+                // code by gk to select indivisual unit for the particular unit     
+                ddlunit.SelectedValue = mRefNo.ToString();
+                //end code
                 ddlunit.Enabled = false;
                 lblselectunit.Visible = true;
                 DataTable DtGrid = Lo.RetriveGridViewCompany("", ddldivision.SelectedItem.Value, ddlunit.SelectedItem.Value, "InnerGVUnitID");
@@ -418,15 +403,29 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
                 lblEmailID.Text = DtView.Rows[0]["EmailID"].ToString();
                 lblWebsite.Text = DtView.Rows[0]["Website"].ToString();
                 lblGSTNo.Text = DtView.Rows[0]["GSTNo"].ToString();
-                lblNodalEmail.Text = DtView.Rows[0]["ContactPersonEmailID"].ToString();
-                lblNodalOfficerName.Text = DtView.Rows[0]["NodalOficerName"].ToString();
+                DataView dv = new DataView(DtView);
+
+                dv.RowFilter = "isNodalOfficer='Y'";
+
+                DataTable DtGetNodel = dv.ToTable();
+                if (DtGetNodel.Rows.Count > 0)
+                {
+
+                    lblNodalEmail.Text = DtGetNodel.Rows[0]["NodalOfficerEmail"].ToString();
+                    lblNodalOfficerName.Text = DtGetNodel.Rows[0]["NodalOficerName"].ToString();
+                }
+                else
+                {
+                    lblNodalEmail.Text = "";
+                    lblNodalOfficerName.Text = "";
+                }
+                
                 lblAad_Mobile.Text = DtView.Rows[0]["latitude"].ToString();
                 lblLongitude.Text = DtView.Rows[0]["longitude"].ToString();
                 lblFacebook.Text = DtView.Rows[0]["Facebook"].ToString();
                 lblInstagram.Text = DtView.Rows[0]["Instagram"].ToString();
                 lblTwitter.Text = DtView.Rows[0]["Twitter"].ToString();
                 lblLinkedin.Text = DtView.Rows[0]["Linkedin"].ToString();
-
                 ScriptManager.RegisterStartupScript(this, this.GetType(), "changePass", "showPopup();", true);
             }
         }
@@ -494,7 +493,23 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
                 lblfacrefno.Text = DtView.Rows[0]["FactoryRefNo"].ToString();
                 lblDivAddress.Text = DtView.Rows[0]["FactoryAddress"].ToString();
                 lblDivName.Text = DtView.Rows[0]["FactoryName"].ToString();
-                lblDivEmail.Text = DtView.Rows[0]["FactoryEmailID"].ToString();
+
+                DataView dv = new DataView(DtView);
+
+                dv.RowFilter = "isNodalOfficer='Y'";
+
+                DataTable DtGetNodel = dv.ToTable();
+                if (DtGetNodel.Rows.Count > 0)
+                {
+
+                    lbldivinodalemail.Text = DtGetNodel.Rows[0]["NodalOfficerEmail"].ToString();
+                    lbldivinodalname.Text = DtGetNodel.Rows[0]["NodalOficerName"].ToString();
+                }
+                else
+                {
+                    lbldivinodalemail.Text = "";
+                    lbldivinodalname.Text = "";
+                }
                 lblDivWebsite.Text = DtView.Rows[0]["FactoryWebsite"].ToString();
                 lblDivPincode.Text = DtView.Rows[0]["FactoryPincode"].ToString();
                 lblDivCeoName.Text = DtView.Rows[0]["FactoryCEOName"].ToString();
@@ -502,11 +517,6 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
                 lblDivFax.Text = DtView.Rows[0]["FactoryFaxNo"].ToString();
                 lblDivState.Text = DtView.Rows[0]["StateName"].ToString();
                 lblDivConNo.Text = DtView.Rows[0]["FactoryTelephoneNo"].ToString();
-                //lblDivNodalEmail.Text = DtView.Rows[0]["FactoryNodalOfficerEmailId"].ToString();
-                //lblDivFacebook.Text = DtView.Rows[0]["FactoryFacebook"].ToString();
-                //lblDivTwitter.Text = DtView.Rows[0]["FactoryTwitter"].ToString();
-                //lblDivInstagram.Text = DtView.Rows[0]["FactoryInstagram"].ToString();
-                //lblDivLinkedin.Text = DtView.Rows[0]["FactoryLinkedin"].ToString();
                 lblDivlatitude.Text = DtView.Rows[0]["Factorylatitude"].ToString();
                 lblDivLongitude.Text = DtView.Rows[0]["Factorylongitude"].ToString();
                 ScriptManager.RegisterStartupScript(this, this.GetType(), "divfactoryshow", "showPopup1();", true);
@@ -579,7 +589,23 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
                 lblUnitInsta.Text = DtView.Rows[0]["UnitInstagram"].ToString();
                 lblUnitLink.Text = DtView.Rows[0]["UnitLinkedin"].ToString();
                 lblUnitTwitter.Text = DtView.Rows[0]["UnitTwitter"].ToString();
-                lblUnitNodalEmail.Text = DtView.Rows[0]["UnitNodalOfficerEmailId"].ToString();
+                DataView dv = new DataView(DtView);
+
+                dv.RowFilter = "isNodalOfficer='Y'";
+
+                DataTable DtGetNodel = dv.ToTable();
+                if (DtGetNodel.Rows.Count > 0)
+                {
+
+                    lblUnitNodalEmail.Text = DtGetNodel.Rows[0]["NodalOfficerEmail"].ToString();
+                    lblunitnodalname.Text = DtGetNodel.Rows[0]["NodalOficerName"].ToString();
+                }
+                else
+                {
+                    lblUnitNodalEmail.Text = "";
+                    lblunitnodalname.Text = "";
+                }
+                
                 lblUnitLatitude.Text = DtView.Rows[0]["Unitlatitude"].ToString();
                 lblUnitLongitude.Text = DtView.Rows[0]["Unitlongitude"].ToString();
                 ScriptManager.RegisterStartupScript(this, this.GetType(), "divunitshow", "showPopup2();", true);

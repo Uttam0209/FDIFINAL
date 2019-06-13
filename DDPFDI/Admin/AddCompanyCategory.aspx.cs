@@ -4,10 +4,7 @@ using BusinessLayer;
 using Encryption;
 using System.Collections.Specialized;
 using System.Web.UI;
-using System.Text.RegularExpressions;
 using System.Text;
-using System.IO;
-using System.Net;
 using System.Web.UI.WebControls;
 using System.Web;
 
@@ -31,36 +28,46 @@ public partial class Admin_AddCompanyCategory : System.Web.UI.Page
     {
         if (!IsPostBack)
         {
-            try
+            if (Session["User"] != null)
             {
-                if (Request.QueryString["id"] != null)
+                try
                 {
-                    string strid = Request.QueryString["id"].ToString().Replace(" ", "+");
-                    string strPageName = objCrypto.DecryptData(strid);
-                    StringBuilder strheadPage = new StringBuilder();
-                    strheadPage.Append("<ul class='breadcrumb'>");
-                    string[] MCateg = strPageName.Split(new string[] { ">>" }, StringSplitOptions.RemoveEmptyEntries);
-                    string MmCval = "";
-                    for (int x = 0; x < MCateg.Length; x++)
+                    if (Request.QueryString["id"] != null)
                     {
-                        MmCval = MCateg[x];
-                        strheadPage.Append("<li class=''><span>" + MmCval + "</span></li>");
+                        string strid = Request.QueryString["id"].ToString().Replace(" ", "+");
+                        string strPageName = objCrypto.DecryptData(strid);
+                        StringBuilder strheadPage = new StringBuilder();
+                        strheadPage.Append("<ul class='breadcrumb'>");
+                        string[] MCateg = strPageName.Split(new string[] { ">>" }, StringSplitOptions.RemoveEmptyEntries);
+                        string MmCval = "";
+                        for (int x = 0; x < MCateg.Length; x++)
+                        {
+                            MmCval = MCateg[x];
+                            strheadPage.Append("<li class=''><span>" + MmCval + "</span></li>");
+                        }
+
+                        divHeadPage.InnerHtml = strheadPage.ToString();
+                        strheadPage.Append("</ul");
                     }
-                    divHeadPage.InnerHtml = strheadPage.ToString();
-                    strheadPage.Append("</ul");
+                    currentPage = System.IO.Path.GetFileName(Request.Url.AbsolutePath);
+                    hidType.Value = objCrypto.DecryptData(Session["Type"].ToString());
+                    hfcomprefno.Value = Session["CompanyRefNo"].ToString();
+                    ViewState["UserLoginEmail"] = Session["User"].ToString();
+                    BindCompany();
+                    BindMasterCategory();
                 }
-                currentPage = System.IO.Path.GetFileName(Request.Url.AbsolutePath);
-                hidType.Value = objCrypto.DecryptData(Session["Type"].ToString());
-                hfcomprefno.Value = Session["CompanyRefNo"].ToString();
-                ViewState["UserLoginEmail"] = Session["User"].ToString();
-                BindCompany();
-                BindMasterCategory();
+                catch (Exception ex)
+                {
+                    string error = ex.ToString();
+                    string Page = Request.Url.AbsolutePath.ToString();
+                    Response.Redirect("Error?techerror=" + HttpUtility.UrlEncode(objCrypto.EncryptData(error)) +
+                                      "&page=" + HttpUtility.UrlEncode(objCrypto.EncryptData(Page)));
+                }
             }
-            catch (Exception ex)
+            else
             {
-                string error = ex.ToString();
-                string Page = Request.Url.AbsolutePath.ToString();
-                Response.Redirect("Error?techerror=" + HttpUtility.UrlEncode(objCrypto.EncryptData(error)) + "&page=" + HttpUtility.UrlEncode(objCrypto.EncryptData(Page)));
+                ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert",
+                    "alert('Session Expired,Please login again');window.location='Login'", true);
             }
         }
     }

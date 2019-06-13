@@ -20,7 +20,15 @@
                 <div class="col-md-12 padding_0">
                     <div id="divHeadPage" runat="server"></div>
                 </div>
+                <div class="col-md-12">
+                    <div class="clearfix"></div>
+                    <div style="margin-top: 5px;">
+                        <a class="fa fa-arrow-circle-left pull-right" href="javascript: history.go(-1)">&nbsp; &nbsp;Back</a>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
             </div>
+            <div class="clearfix" style="margin-bottom: 10px;"></div>
             <label for="activityname" class="control-label pull-right">(<span class="mandatory">*</span>) are manadatory field</label>
             <div class="clearfix"></div>
 
@@ -161,7 +169,7 @@
                                                     </div>
                                                     <div class="col-md-6">
                                                         <div class="form-group" id="DivCEOEmail" runat="server">
-                                                            <label for="tceoname" runat="server" id="lblceoemail" class="control-label">Company Head Email ID </label>
+                                                            <label for="tceoname" runat="server" id="lblceoemail" class="control-label">CEO Email ID </label>
                                                             <asp:TextBox runat="server" ID="txtCEOEmailId" name="tceoemailid" class="form-control form-cascade-control" placeholder=""></asp:TextBox>
                                                         </div>
                                                     </div>
@@ -183,7 +191,7 @@
 
                                                 </div>
                                                 <div class="row">
-                                                    <div class="col-md-6">
+                                                    <div class="col-md-6" runat="server" visible="False">
                                                         <div class="form-group">
                                                             <label>Email ID</label>
                                                             <asp:TextBox runat="server" ID="txtEmailID" name="" class="form-control form-cascade-control " placeholder=""></asp:TextBox>
@@ -225,13 +233,9 @@
                                         <div class="form-group">
                                             <label for="tpersonname" class="control-label">Select Nodal Officer </label>
                                             <asp:DropDownList runat="server" ID="ddlNodalOfficerEmail" class="form-control" AutoPostBack="True" OnSelectedIndexChanged="ddlNodalOfficerEmail_SelectedIndexChanged"></asp:DropDownList>
-
                                         </div>
                                     </div>
-
-
                                 </div>
-
                                 <div class="contactFormRow" id="divNodalOfficer" runat="server" visible="false">
                                     <div class="row">
                                         <div class="col-md-4">
@@ -239,8 +243,6 @@
                                                 <label for="tpersonname" class="control-label">Name</label>
                                                 <asp:TextBox runat="server" ID="txtNName" name="" ReadOnly="True" class="form-control form-cascade-control" placeholder=""></asp:TextBox>
                                             </div>
-
-
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
@@ -253,7 +255,7 @@
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="temailid" class=" control-label">Email ID <span class="mandatory">*</span></label>
-                                                <asp:TextBox runat="server" ID="txtNEmailId" name="" AutoCompleteType="Email" required="" class="form-control form-cascade-control"
+                                                <asp:TextBox runat="server" ID="txtNEmailId" name="" ReadOnly="True"  AutoCompleteType="Email" required="" class="form-control form-cascade-control"
                                                     placeholder=""></asp:TextBox>
                                                 <p class="note">*Note: will be used as username </p>
                                             </div>
@@ -323,7 +325,7 @@
                                                 <div class="col-md-12">
                                                     <div class="form-group productalreadylabel">
                                                         <label style="margin-right: 10px;">
-                                                            Are You resitered with Start up India ?</label>
+                                                            Are you resitered with Startup India ?</label>
 
                                                         <asp:RadioButton ID="rdoNo" Checked="true" AutoPostBack="true" OnCheckedChanged="rdoNo_CheckedChanged" Text="No" GroupName="S"
                                                             runat="server" />
@@ -367,7 +369,7 @@
                                                 <div class="col-md-12">
                                                     <div class="form-group productalreadylabel">
                                                         <label>
-                                                            Are you registerd with MSME as a micro or small Enterprise</label>
+                                                            Are you registerd with MSME as a micro or small enterprise</label>
                                                         <asp:RadioButton ID="rdoMNo" Text="No" AutoPostBack="true" Checked="true" OnCheckedChanged="rdoMNo_CheckedChanged" GroupName="M"
                                                             runat="server" />
                                                         <asp:RadioButton ID="rdoMYes" Text="Yes" class="yes" AutoPostBack="true" OnCheckedChanged="rdoMYes_CheckedChanged" GroupName="M"
@@ -458,7 +460,6 @@
                         </ContentTemplate>
                     </asp:UpdatePanel>
                 </div>
-
                 <div id="Location" class="tab-pane fade">
                     <asp:UpdatePanel ID="loc" runat="server" UpdateMode="Always">
                         <ContentTemplate>
@@ -493,7 +494,6 @@
                         </ContentTemplate>
                     </asp:UpdatePanel>
                 </div>
-
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="form-group">

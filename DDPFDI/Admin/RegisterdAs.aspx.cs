@@ -10,7 +10,6 @@ using Encryption;
 public partial class Admin_RegisterdAs : System.Web.UI.Page
 {
     Cryptography objEnc = new Cryptography();
-
     DataUtility Co = new DataUtility();
     Logic Lo = new Logic();
     private string DisplayPanel;
@@ -22,33 +21,41 @@ public partial class Admin_RegisterdAs : System.Web.UI.Page
         {
             if (!IsPostBack)
             {
-                try
+                if (Session["User"] != null)
                 {
-                    string strid = Request.QueryString["id"].ToString().Replace(" ", "+");
-                    string strPageName = objEnc.DecryptData(strid);
-                    StringBuilder strheadPage = new StringBuilder();
-                    strheadPage.Append("<ul class='breadcrumb'>");
-                    string[] MCateg = strPageName.Split(new string[] { ">>" }, StringSplitOptions.RemoveEmptyEntries);
-                    string MmCval = "";
-                    for (int x = 0; x < MCateg.Length; x++)
+                    try
                     {
-                        MmCval = MCateg[x];
-                        strheadPage.Append("<li class=''><span>" + MmCval + "</span></li>");
+                        string strid = Request.QueryString["id"].ToString().Replace(" ", "+");
+                        string strPageName = objEnc.DecryptData(strid);
+                        StringBuilder strheadPage = new StringBuilder();
+                        strheadPage.Append("<ul class='breadcrumb'>");
+                        string[] MCateg = strPageName.Split(new string[] { ">>" }, StringSplitOptions.RemoveEmptyEntries);
+                        string MmCval = "";
+                        for (int x = 0; x < MCateg.Length; x++)
+                        {
+                            MmCval = MCateg[x];
+                            strheadPage.Append("<li class=''><span>" + MmCval + "</span></li>");
+                        }
+                        divHeadPage.InnerHtml = strheadPage.ToString();
+                        strheadPage.Append("</ul");
+                        hftype.Value = objEnc.DecryptData(Session["Type"].ToString());
+                        mRefNo = Session["CompanyRefNo"].ToString();
+                        ViewState["UserLoginEmail"] = Session["User"].ToString();
+                        ViewState["DisplayPanel"] = objEnc.DecryptData(Request.QueryString["mu"].ToString().Replace(" ", "+"));
+                        BindGridView();
+                        ShowHidePanel();
                     }
-                    divHeadPage.InnerHtml = strheadPage.ToString();
-                    strheadPage.Append("</ul");
-                    hftype.Value = objEnc.DecryptData(Session["Type"].ToString());
-                    mRefNo = Session["CompanyRefNo"].ToString();
-                    ViewState["UserLoginEmail"] = Session["User"].ToString();
-                    ViewState["DisplayPanel"] = objEnc.DecryptData(Request.QueryString["mu"].ToString().Replace(" ", "+"));
-                    BindGridView();
-                    ShowHidePanel();
+                    catch (Exception exception)
+                    {
+                        string error = exception.ToString();
+                        string Page = Request.Url.AbsolutePath.ToString();
+                        Response.Redirect("Error?techerror=" + objEnc.EncryptData(error) + "&page=" + objEnc.EncryptData(Page));
+                    }
                 }
-                catch (Exception exception)
+                else
                 {
-                    string error = exception.ToString();
-                    string Page = Request.Url.AbsolutePath.ToString();
-                    Response.Redirect("Error?techerror=" + objEnc.EncryptData(error) + "&page=" + objEnc.EncryptData(Page));
+                    ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert",
+                        "alert('Session Expired,Please login again');window.location='Login'", true);
                 }
             }
         }
@@ -193,7 +200,7 @@ public partial class Admin_RegisterdAs : System.Web.UI.Page
         {
             DataTable DtGetAddDropdown = Lo.RetriveMasterSubCategoryDate(0, txtmastercategory.Text.Trim(), "", "DupMasterCat", "", "");
             if (DtGetAddDropdown.Rows.Count > 0)
-            { ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('duplicate record found, record already inserted.')", true); }
+            { ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('This category " + txtmastercategory.Text + " already inserted in database, record not inserted.')", true); }
             else
             {
                 DataTable StrCat = Lo.RetriveMasterCategoryDate(0, Co.RSQandSQLInjection(txtmastercategory.Text, "soft"), "", rbflag.SelectedItem.Value, rbactive.SelectedItem.Value, "Insert", objEnc.DecryptData(ViewState["UserLoginEmail"].ToString()));
@@ -222,7 +229,7 @@ public partial class Admin_RegisterdAs : System.Web.UI.Page
         {
             DataTable DtGetAddDropdown = Lo.RetriveMasterSubCategoryDate(0, txtsubcategory.Text.Trim(), "", "DupSubCat", "", "");
             if (DtGetAddDropdown.Rows.Count > 0)
-            { ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('duplicate record found, record already inserted.')", true); }
+            { ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('This category " + txtsubcategory.Text + " already inserted in " + ddlmastercategory.SelectedItem.Text + ", record not inserted.')", true); }
             else
             {
                 DataTable StrCat = Lo.RetriveMasterSubCategoryDate(
@@ -253,9 +260,9 @@ public partial class Admin_RegisterdAs : System.Web.UI.Page
     {
         try
         {
-            DataTable DtGetAddDropdown = Lo.RetriveMasterSubCategoryDate(0, txtcategory3.Text.Trim(), "", "DupSubCat", "", "");
+            DataTable DtGetAddDropdown = Lo.RetriveMasterSubCategoryDate(Convert.ToInt16(ddlcategroy2.SelectedItem.Value), txtcategory3.Text.Trim(), "", "DupSubCat", "", "");
             if (DtGetAddDropdown.Rows.Count > 0)
-            { ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('duplicate record found, record already inserted.')", true); }
+            { ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('This category " + txtcategory3.Text + " already inserted in " + ddlcategroy2.SelectedItem.Text + ",record not inserted.')", true); }
             else
             {
                 DataTable StrCat = Lo.RetriveMasterSubCategoryDate(Convert.ToInt16(ddlcategroy2.SelectedItem.Value),
@@ -285,9 +292,9 @@ public partial class Admin_RegisterdAs : System.Web.UI.Page
     {
         try
         {
-            DataTable DtGetAddDropdown = Lo.RetriveMasterSubCategoryDate(0, txtlevel3.Text.Trim(), "", "DupSubCat", "", "");
+            DataTable DtGetAddDropdown = Lo.RetriveMasterSubCategoryDate(Convert.ToInt16(ddllabel2.SelectedItem.Value), txtlevel3.Text.Trim(), "", "DupSubCat", "", "");
             if (DtGetAddDropdown.Rows.Count > 0)
-            { ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('duplicate record found, record already inserted.')", true); }
+            { ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('This category " + txtlevel3.Text + " already inserted in " + ddllabel2.SelectedItem.Text + ",record not inserted.')", true); }
             else
             {
                 DataTable StrCat = Lo.RetriveMasterSubCategoryDate(Convert.ToInt16(ddllabel2.SelectedItem.Value),

@@ -62,8 +62,9 @@
         routes.MapPageRoute("Industry", "Industry", "~/Admin/Industry.aspx", true);
         routes.MapPageRoute("FAQ", "FAQ", "~/Admin/faq.aspx", true);
         routes.MapPageRoute("ViewDashboard", "ViewDashboard", "~/Admin/ViewDashboard.aspx", true);
-        routes.MapPageRoute("Test", "Test", "~/Admin/HeadDropdown.aspx", true);
+        //routes.MapPageRoute("Test", "Test", "~/Admin/HeadDropdown.aspx", true);
         routes.MapPageRoute("Test1", "Test1", "~/Admin/EditHeadDropdown.aspx", true);
+        routes.MapPageRoute("Test", "Test", "~/test.aspx", true);
 
     }    
 </script>

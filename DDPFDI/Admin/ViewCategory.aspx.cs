@@ -4,10 +4,7 @@ using System.Web.UI.WebControls;
 using BusinessLayer;
 using Encryption;
 using System.Data;
-using System.Text.RegularExpressions;
 using System.Text;
-using System.IO;
-using System.Threading;
 using System.Web;
 
 public partial class Admin_ViewCategory : System.Web.UI.Page
@@ -53,10 +50,11 @@ public partial class Admin_ViewCategory : System.Web.UI.Page
                 BindGridView();
                 BindMasterCategory();
             }
-        }
-        else
-        {
-
+            else
+            {
+                ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert",
+                    "alert('Session Expired,Please login again');window.location='Login'", true);
+            }
         }
     }
     #region Load

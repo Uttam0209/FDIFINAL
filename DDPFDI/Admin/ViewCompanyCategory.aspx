@@ -14,27 +14,38 @@
                         <div class="col-md-12 padding_0">
                             <div id="divHeadPage" runat="server"></div>
                         </div>
+                        <div class="col-md-12">
+                            <div class="clearfix"></div>
+                            <div style="margin-top: 5px;">
+                                <a class="fa fa-arrow-circle-left pull-right" href="javascript: history.go(-1)">&nbsp; &nbsp;Back</a>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
                     </div>
+
+                    <div class="clearfix" style="margin-bottom: 10px;"></div>
                     <form method="post" class="addfdi">
                         <div class="row">
+                            <div class="clearfix"></div>
+
                             <div class="col-md-12">
                                 <div class="row">
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>Select Company</label>
-                                            <asp:DropDownList runat="server" ID="ddlcompany" Cssclass="form-cascade-control form-control"></asp:DropDownList>
+                                            <asp:DropDownList runat="server" ID="ddlcompany" CssClass="form-cascade-control form-control"></asp:DropDownList>
                                         </div>
                                     </div>
                                     <div class="col-md-4" runat="server" id="lblselectdivison" visible="False">
                                         <div class="form-group">
                                             <label>Select Division/Palnt</label>
-                                            <asp:DropDownList runat="server" ID="ddldivision" Cssclass="form-cascade-control form-control"></asp:DropDownList>
+                                            <asp:DropDownList runat="server" ID="ddldivision" CssClass="form-cascade-control form-control"></asp:DropDownList>
                                         </div>
                                     </div>
                                     <div class="col-md-4" runat="server" id="lblselectunit" visible="False">
                                         <div class="form-group">
                                             <label>Select Unit</label>
-                                            <asp:DropDownList runat="server" ID="ddlunit" Cssclass="form-cascade-control form-control"></asp:DropDownList>
+                                            <asp:DropDownList runat="server" ID="ddlunit" CssClass="form-cascade-control form-control"></asp:DropDownList>
                                         </div>
                                     </div>
                                 </div>
@@ -169,6 +180,18 @@
             </div>
         </ContentTemplate>
     </asp:UpdatePanel>
+    <asp:UpdateProgress ID="UpdateProgress" runat="server" AssociatedUpdatePanelID="up">
+        <ProgressTemplate>
+            <!---Progress Bar ---->
+            <div class="overlay-progress">
+                <div class="custom-progress-bar blue stripes">
+                    <span></span>
+                    <p>Processing</p>
+                </div>
+            </div>
+            <!---Progress Bar ---->
+        </ProgressTemplate>
+    </asp:UpdateProgress>
 </asp:Content>
 
 
