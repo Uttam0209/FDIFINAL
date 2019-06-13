@@ -81,7 +81,7 @@
                                 <div class="col-md-6" id="level1" runat="server" visible="False">
                                     <div class="form-group">
                                         <h3 class="secondary-heading">Level 1 <span class="mandatory">*</span></h3>
-                                        <asp:CheckBoxList ID="chkSubCategory" runat="server" TabIndex="2" CssClass="checkbox-inline" RepeatColumns="25" RepeatDirection="Vertical"
+                                        <asp:CheckBoxList ID="chkSubCategory" runat="server" TabIndex="2"  RepeatColumns="1" RepeatDirection="Vertical"
                                             RepeatLayout="Flow">
                                         </asp:CheckBoxList>
                                     </div>
