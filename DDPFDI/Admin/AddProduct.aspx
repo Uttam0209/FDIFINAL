@@ -357,7 +357,7 @@
                                                                         <div class="form-group">
                                                                             <label>Year of import</label>
                                                                             <div class="clearfix"></div>
-                                                                            <asp:CheckBoxList runat="server" class="mr-3" ID="chklistimportyearfive" RepeatDirection="Horizontal" TabIndex="2" RepeatLayout="Flow" RepeatColumns="5">
+                                                                            <asp:CheckBoxList runat="server" class="mr-3 ProddisplayInline" ID="chklistimportyearfive" RepeatDirection="Horizontal" TabIndex="2" RepeatLayout="Flow" RepeatColumns="5">
                                                                                 <asp:ListItem Value="2019-20" Text="2019-20"></asp:ListItem>
                                                                                 <asp:ListItem Value="2018-19" Text="2018-19"></asp:ListItem>
                                                                                 <asp:ListItem Value="2017-18" Text="2017-18"></asp:ListItem>
@@ -398,7 +398,7 @@
                             </div>
                         </div>
                     </div>
-                    <div id="pimg" class="tab-pane fade in active">
+                    <div id="pimg" class="tab-pane">
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="add-profile">
@@ -447,7 +447,7 @@
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <label>Features & Details</label><span class="mandatory"> (Editable)</span>
-                                                    <asp:TextBox runat="server" ID="txtfeaturesanddetails" CssClass="form-control" Style="background-color:#fff !important;" Width="100%" Height="200px" placeholder="Ductile,Tensile,Lusture" MaxLength="250" TextMode="MultiLine"></asp:TextBox>
+                                                    <asp:TextBox runat="server" ID="txtfeaturesanddetails" CssClass="form-control" Style="background-color: #fff !important;" Height="70px" placeholder="Ductile,Tensile,Lusture" MaxLength="250" TextMode="MultiLine"></asp:TextBox>
                                                     <asp:HtmlEditorExtender ID="HtmlEditorExtender1" runat="server" TargetControlID="txtfeaturesanddetails">
                                                     </asp:HtmlEditorExtender>
                                                     <div class="clearfix" style="margin-top: 5px;"></div>
@@ -456,6 +456,12 @@
                                             </div>
                                         </div>
                                     </div>
+                                   
+
+
+                                   
+
+
                                     <div class="section-pannel">
                                         <div class="row">
                                             <div class="col-md-12">

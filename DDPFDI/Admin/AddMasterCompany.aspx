@@ -161,7 +161,7 @@
                                             <div class="form-group">
 
                                                 <h3 class="secondary-heading">Menu Alotted</h3>
-                                                <asp:CheckBoxList ID="chkmastermenuallot" runat="server" CssClass="checkbox-inline" TabIndex="7" RepeatColumns="8" RepeatDirection="Horizontal" RepeatLayout="Flow">
+                                                <asp:CheckBoxList ID="chkmastermenuallot" runat="server"  TabIndex="7" RepeatColumns="1" RepeatDirection="Vertical" RepeatLayout="Flow">
                                                 </asp:CheckBoxList>
                                             </div>
                                         </div>
@@ -172,7 +172,7 @@
 
                                                 <h3 class="secondary-heading">Role</h3>
 
-                                                <asp:CheckBoxList ID="chkrole" runat="server" onclick="MutExChkList(this);" RepeatColumns="8" TabIndex="8" CssClass="checkbox-inline" RepeatDirection="Horizontal" RepeatLayout="Flow">
+                                                <asp:CheckBoxList ID="chkrole" runat="server" onclick="MutExChkList(this);" RepeatColumns="1" TabIndex="8"  RepeatDirection="Horizontal" RepeatLayout="Flow">
                                                     <asp:ListItem Value="Admin">Admin</asp:ListItem>
                                                     <asp:ListItem Value="Company">Company</asp:ListItem>
                                                 </asp:CheckBoxList>

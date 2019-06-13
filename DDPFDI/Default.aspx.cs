@@ -36,7 +36,6 @@ public partial class _Default : System.Web.UI.Page
         //string d = objEnc.DecryptData("aL88ocdv5/LvxKi0O2Gs6kF35uJ5Iz4xWbJBsJ8R+marLTVA2W7Pt0PDHgFG4Wx3HJgCG5QjEr1C1Q7WGTiNwa2AB1N5OvU+45sa48G+2HZnZapUUB4NgatRxGyMc5ZeIZ+IoVr5cJvbHkEUWdvWZA==");
 
         }
-
     #region "Login Code"
     public static bool IsValidEmailId(string InputEmail)
     {

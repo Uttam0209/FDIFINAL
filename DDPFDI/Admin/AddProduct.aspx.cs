@@ -2031,7 +2031,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         drProductInfo = dtProductInfo.NewRow();
         drProductInfo["RowNumber"] = 1;
         drProductInfo["Length"] = string.Empty;
-        drProductInfo["Value"] = string.Empty;
+        drProductInfo["Value"] = "0.0";
         drProductInfo["ProductUnit"] = string.Empty;
         dtProductInfo.Rows.Add(drProductInfo);
         ViewState["CurrentTableProdInfo"] = dtProductInfo;
@@ -2207,14 +2207,14 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         DataTable DtEstimateQuanPrice = new DataTable();
         DataRow drEstimateQuanPrice = null;
         DtEstimateQuanPrice.Columns.Add(new DataColumn("RowNumber", typeof(string)));
-        DtEstimateQuanPrice.Columns.Add(new DataColumn("Year", typeof(string)));//for DropDownList selected item 
-        DtEstimateQuanPrice.Columns.Add(new DataColumn("EstimateQuantity", typeof(string)));//for TextBox value 
+        DtEstimateQuanPrice.Columns.Add(new DataColumn("Year", typeof(int)));//for DropDownList selected item 
+        DtEstimateQuanPrice.Columns.Add(new DataColumn("EstimateQuantity", typeof(decimal)));//for TextBox value 
         DtEstimateQuanPrice.Columns.Add(new DataColumn("MeasuringUnit", typeof(string)));//for DropDownList selected item
-        DtEstimateQuanPrice.Columns.Add(new DataColumn("EstimatePrice", typeof(string)));//for TextBox value
+        DtEstimateQuanPrice.Columns.Add(new DataColumn("EstimatePrice", typeof(decimal)));//for TextBox value
         drEstimateQuanPrice = DtEstimateQuanPrice.NewRow();
         drEstimateQuanPrice["RowNumber"] = 1;
-        drEstimateQuanPrice["EstimateQuantity"] = string.Empty;
-        drEstimateQuanPrice["EstimatePrice"] = string.Empty;
+        drEstimateQuanPrice["EstimateQuantity"] = "0.0";
+        drEstimateQuanPrice["EstimatePrice"] = "0.0";
         drEstimateQuanPrice["Year"] = "-1";
         drEstimateQuanPrice["MeasuringUnit"] = "-1";
         DtEstimateQuanPrice.Rows.Add(drEstimateQuanPrice);

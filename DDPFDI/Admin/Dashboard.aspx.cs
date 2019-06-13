@@ -43,7 +43,7 @@ public partial class Admin_Dashboard : System.Web.UI.Page
     [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
     public static object[] GetChartData()
     {
-        Logic Lo=new Logic();
+        Logic Lo = new Logic();
 
         DataTable data = Lo.RetriveProductIndig();
         var chartData = new object[data.Rows.Count + 1];
@@ -53,7 +53,7 @@ public partial class Admin_Dashboard : System.Web.UI.Page
                 "I"
             };
         int j = 0;
-        for (int i = 0; data.Rows.Count > i; i++ )
+        for (int i = 0; data.Rows.Count > i; i++)
         {
             j++;
             chartData[j] = new object[] { data.Rows[i]["CompName"], data.Rows[i]["TotalProd"], data.Rows[i]["IsIndiginised"] };

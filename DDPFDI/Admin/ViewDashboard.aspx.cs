@@ -465,10 +465,10 @@ public partial class Admin_ViewDashboard : System.Web.UI.Page
                 lblfinancial.Text = Financial.Substring(1).ToString();
             }
             lblfinancialRemark.Text = DtView.Rows[0]["FinancialRemark"].ToString();
-            lblestimatedquantity.Text = DtView.Rows[0]["Estimatequantity"].ToString();
-            lblEstimatedQuantityIn.Text = DtView.Rows[0]["EstimatequantityIdle"].ToString();
-            lblestimatedprice.Text = DtView.Rows[0]["EstimatePriceLLP"].ToString();
-            lbltenderstatus.Text = DtView.Rows[0]["TenderStatus"].ToString();
+            //lblestimatedquantity.Text = DtView.Rows[0]["Estimatequantity"].ToString();
+            //lblEstimatedQuantityIn.Text = DtView.Rows[0]["EstimatequantityIdle"].ToString();
+            //lblestimatedprice.Text = DtView.Rows[0]["EstimatePriceLLP"].ToString();
+            //lbltenderstatus.Text = DtView.Rows[0]["TenderStatus"].ToString();
             string tensub = DtView.Rows[0]["TenderSubmition"].ToString();
             if (tensub.ToString() == "Y")
             {
@@ -489,7 +489,7 @@ public partial class Admin_ViewDashboard : System.Web.UI.Page
             //if (dtNodal.Rows.Count > 0)
             //{
             // lblempcode.Text = dtNodal.Rows[0]["NodalEmpCode"].ToString();
-            lblempcode.Text = DtView.Rows[0]["NodalOfficerRefNo"].ToString();
+           // lblempcode.Text = DtView.Rows[0]["NodalOfficerRefNo"].ToString();
             lblempname.Text = DtView.Rows[0]["NodalOficerName"].ToString();
             lbldesignation.Text = DtView.Rows[0]["Designation"].ToString();
             lblemailprod.Text = DtView.Rows[0]["NodalOfficerEmail"].ToString();
