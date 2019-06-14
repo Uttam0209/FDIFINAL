@@ -74,7 +74,7 @@
                     <form method="post" class="addfdi">
                         <div class="row">
                             <div class="col-md-12">
-                                <div class="table-wraper" style="overflow: scroll;">
+                                <div class="table-wraper" style="overflow-x: auto;">
                                     <asp:GridView ID="gvproduct" runat="server" Width="100%" Class="commonAjaxTbl master-company-table ViewProductTable table display responsive no-wrap table-hover manage-user Grid" AutoGenerateColumns="false" AllowPaging="true"
                                         OnPageIndexChanging="OnPageIndexChanging" PageSize="25" AllowSorting="true" OnSorting="OnSorting" OnRowCommand="gvproduct_RowCommand">
                                         <PagerStyle HorizontalAlign="Center" CssClass="GridPager" />
@@ -140,435 +140,432 @@
                         </div>
                         <form class="form-horizontal changepassword" role="form">
                             <div class="modal-body sideBg">
-                                <div class="tabing-section">
-                                    <ul class="nav nav-tabs" style="margin-top: 10px;">
-                                        <li class="active"><a data-toggle="tab" href="#pd">Description</a></li>
-                                        <li><a data-toggle="tab" href="#pimg">Image</a></li>
-                                        <li><a data-toggle="tab" href="#impprod">Imported products</a></li>
-                                        <li><a data-toggle="tab" href="#test">Testing</a></li>
-                                        <li><a data-toggle="tab" href="#cer">Certification</a></li>
-                                        <li><a data-toggle="tab" href="#spd">Technical Support</a></li>
-                                        <li><a data-toggle="tab" href="#spfinn">Financial Support</a></li>
-                                        <li><a data-toggle="tab" href="#qpt">Quantity Required</a></li>
-                                        <li><a data-toggle="tab" href="#tdr">Tender</a></li>
-                                        <li><a data-toggle="tab" href="#cd">Contact</a></li>
-                                    </ul>
-                                    <div class="tab-content">
-                                        <div id="pd" class="tab-pane fade in active">
-                                            <div>
-                                                <table class="table table-bordered">
-                                                    <tr>
-                                                        <th>Refrence No</th>
-                                                        <th>Company</th>
-                                                        <th>Division/Palnt</th>
-                                                        <th>Unit</th>
-                                                        <th>Product Refrence No</th>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            <asp:Label ID="lblcomprefno" runat="server"></asp:Label></td>
-                                                        <td>
-                                                            <asp:Label ID="lblcompname" runat="server"></asp:Label></td>
-                                                        <td>
-                                                            <asp:Label ID="lbldiviname" runat="server"></asp:Label></td>
-                                                        <td>
-                                                            <asp:Label ID="lblunitname" runat="server"></asp:Label></td>
-                                                        <td>
-                                                            <asp:Label ID="lblprodrefno" runat="server"></asp:Label></td>
-                                                    </tr>
-                                                </table>
-                                            </div>
-                                            <div>
-                                                <table class="table table-bordered">
-                                                    <tr>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="faq-secion product-view">
+                                        <div class="accordion" id="accordion">
+                                             <div class="card">
+                                                <div class="card-header">
+                                                    <h2>Description 
+                                                            
+                                                    </h2>
+                                                </div>
 
-                                                        <th>NSN GROUP</th>
-                                                        <th>NSN GROUP CLASS</th>
-                                                        <th>CLASS ITEM</th>
-                                                        <th>NSC Code (4 digit)</th>
-                                                        <th>NIIN Code (9-digit)</th>
-                                                        <th>Product Description</th>
+                                <div id="faq1" class="collapse in" aria-labelledby="headingOne">
+                                    <div class="card-body">
+                                        <ul>
+                                            <li>
+                                                <div class="row two-col">
+                                                     <div class="col-md-6">
+                                                         <table>
+                                                       <tr>
+                                                        <td>Refrence No:</td>
+                                                        <td>C0004</td>
                                                     </tr>
                                                     <tr>
+                                                        <td>Company:</td>
+                                                        <td>HAL</td>
+                                                    </tr>
+                                                     <tr>
+                                                        <td>Division/Palnt:</td>
+                                                        <td></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Unit:</td>
+                                                        <td></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Product Refrence No:</td>
+                                                        <td>PRO0213</td>
+                                                    </tr>
+                                                         </table>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <table>
+                                                            <tr>
+                                                        <td>NSN GROUP:</td>
+                                                        <td>Hardware and Abrasives(53)</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>NSN GROUP CLASS:</td>
+                                                        <td>O-Ring(31)</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>CLASS ITEM:</td>
+                                                        <td></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>NSC Code (4 digit):</td>
+                                                        <td>5331</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>NIIN Code (9-digit):</td>
+                                                        <td>720324606</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Product Description:</td>
+                                                        <td>Rubber sealing ring</td>
+                                                    </tr>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                                <div class="row two-col">
+                                                    <div class="col-md-6">
+                                                        <table>
+                                                             <tr>
+                                                        <td>OEM Part Number:</td>
+                                                        <td>2267A-154-2</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>OEM Name:</td>
+                                                        <td>Rosoboron Export</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>OEM Country:</td>
+                                                        <td>Russia</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>DPSU Part Number:</td>
+                                                        <td>K-2267A-154-2</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>End User:</td>
+                                                        <td>INDIAN AIRFORCE</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>End User Part Number:</td>
+                                                        <td>K-2267A-154-2</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>HSN Code:</td>
+                                                        <td>88033000</td>
+                                                    </tr>
 
-                                                        <td>
-                                                            <asp:Label ID="lblprodlevel1" runat="server"></asp:Label></td>
-                                                        <td>
-                                                            <asp:Label ID="productlevel2" runat="server"></asp:Label></td>
-                                                        <td>
-                                                            <asp:Label ID="lblprodlevel3" runat="server"></asp:Label></td>
-                                                        <td>
-                                                            <asp:Label ID="lblnsccode" runat="server"></asp:Label></td>
-                                                        <td>
-                                                            <asp:Label ID="lblniincode" runat="server"></asp:Label></td>
-                                                        <td>
-                                                            <asp:Label ID="lblproductdescription" runat="server"></asp:Label>
-                                                            <a runat="server" id="a_downitem" href="#" target="_Blank" class="fa fa-download pull-right"
-                                                                tooltip="Download item description document releted to item"></a>
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                            </div>
-                                            <div>
-                                                <table class="table table-bordered">
-                                                    <tr>
-                                                        <th>OEM Part Number</th>
-                                                        <th>OEM Name</th>
-                                                        <th>OEM Country</th>
-                                                        <th>DPSU Part Number</th>
-                                                        <th>End User</th>
-                                                        <th>End User Part Number</th>
-                                                        <th>HSN Code</th>
+                                                        </table>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <table>
+                                                            <tr>
+                                                        <td>DEFENCE PLATFORM:</td>
+                                                        <td>FIGHTER AIRCRAFT</td>
                                                     </tr>
                                                     <tr>
-                                                        <td>
-                                                            <asp:Label ID="lbloempartnumber" runat="server"></asp:Label></td>
-                                                        <td>
-                                                            <asp:Label ID="lbloemname" runat="server"></asp:Label></td>
-                                                        <td>
-                                                            <asp:Label ID="lbloemcountry" runat="server"></asp:Label></td>
-                                                        <td>
-                                                            <asp:Label ID="lbldpsupartno" runat="server"></asp:Label></td>
-                                                        <td>
-                                                            <asp:Label ID="lblenduser" runat="server"></asp:Label></td>
-                                                        <td>
-                                                            <asp:Label ID="lblenduserpartno" runat="server"></asp:Label></td>
-                                                        <td>
-                                                            <asp:Label ID="lblhsncode" runat="server"></asp:Label></td>
-
-                                                    </tr>
-                                                </table>
-                                            </div>
-                                            <div>
-                                                <table class="table table-bordered">
-                                                    <tr>
-                                                        <th>DEFENCE PLATFORM</th>
-                                                        <th>NAME OF DEFENCE PLATFORM</th>
-                                                        <th>PRODUCT (INDUSTRY DOMAIN)</th>
-                                                        <th>PRODUCT (INDUSTRY SUB DOMAIN)</th>
-                                                        <th>PRODUCT (INDUSTRY 2nd SUB DOMAIN)</th>
-
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            <asp:Label ID="lblplatform" runat="server"></asp:Label></td>
-                                                        <td>
-                                                            <asp:Label ID="lblnomenclatureofmainsystem" runat="server"></asp:Label></td>
-                                                        <td>
-                                                            <asp:Label ID="lbltechlevel1" runat="server"></asp:Label></td>
-                                                        <td>
-                                                            <asp:Label ID="lbltechlevel2" runat="server"></asp:Label></td>
-                                                        <td>
-                                                            <asp:Label ID="lbltechlevel3" runat="server"></asp:Label></td>
-
-                                                    </tr>
-                                                </table>
-                                            </div>
-                                            <div>
-                                                <table class="table table-bordered">
-                                                    <tr>
-                                                        <th>PROCURMENT CATEGORY</th>
-                                                        <th>PROCURMENT CATEGORY REMARK</th>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            <asp:Label ID="lblpurposeofprocurement" runat="server"></asp:Label></td>
-                                                        <td>
-                                                            <asp:Label ID="lblprocremarks" runat="server"></asp:Label></td>
-                                                    </tr>
-                                                </table>
-                                            </div>
-                                            <div>
-                                                <table class="table table-bordered">
-                                                    <tr>
-
-                                                        <th>Product Already Indeginized</th>
-                                                        <th runat="server" id="tablemanufacturename">Manufacturer Name</th>
-                                                        <th runat="server" id="tablemanufactureAddress">Address</th>
-                                                        <th runat="server" id="tablemanufactureYear">Year of Indiginization</th>
-                                                        <th>Search Keywords :</th>
+                                                        <td>NAME OF DEFENCE PLATFORM:</td>
+                                                        <td>MiG</td>
 
                                                     </tr>
                                                     <tr>
-                                                        <td>
-                                                            <asp:Label ID="lblprodalredyindeginized" runat="server"></asp:Label></td>
-                                                        <td runat="server" id="tablemanufacturename1">
-                                                            <asp:Label ID="lblmanufacturename" runat="server"></asp:Label>
-                                                        </td>
-                                                        <td runat="server" id="tablemanufacturename2">
-                                                            <asp:Label ID="lblmanaddress" runat="server"></asp:Label></td>
-                                                        <td runat="server" id="tablemanufacturename3">
-                                                            <asp:Label ID="lblyearofindiginization" runat="server"></asp:Label></td>
-                                                        <td>
-                                                            <asp:Label ID="lblsearchkeyword" runat="server"></asp:Label></td>
+                                                        <td>PRODUCT (INDUSTRY DOMAIN):</td>
+                                                        <td>MECHANICAL</td>
                                                     </tr>
-                                                </table>
-                                            </div>
-                                        </div>
-                                        <div id="pimg" class="tab-pane fade in">
-                                            <div class="row">
-                                                <div class="col-sm-12">
-                                                    <asp:DataList runat="server" ID="dlimage" RepeatColumns="4" RepeatDirection="Horizontal" RepeatLayout="Flow">
-                                                        <ItemTemplate>
-                                                            <div class="col-sm-3">
-                                                                <asp:Image runat="server" ID="imgprodimage" class="image img-responsive img-rounded" Height="120px" Width="120" src='<%#Eval("ImageName") %>' />
+                                                    <tr>
+                                                        <td>PRODUCT (INDUSTRY SUB DOMAIN):</td>
+                                                        <td>Machining</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>PRODUCT (INDUSTRY 2nd SUB DOMAIN):</td>
+                                                        <td></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>PROCURMENT CATEGORY:</td>
+                                                        <td></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>PROCURMENT CATEGORY REMARK</td>
+                                                        <td></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Product Already Indeginized</td>
+                                                        <td>No</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Search Keywords:</td>
+                                                        <td></td>
+                                                    </tr>
+
+                                                    
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                                             <div class="card">
+                                                <div class="card-header">
+                                                    <h2 data-toggle="collapse" data-parent="#accordion" class="collapsed" data-target="#faq2" aria-expanded="false" aria-controls="faq2">Image
+                                                            <i class="fa fa-plus pull-right"></i>
+                                                    </h2>
+                                                </div>
+
+                                                <div id="faq2" class="collapse">
+                                                    <div class="card-body">
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <table>
+                                                                        <tr>
+                                                                            <td></td>
+                                                                            <td></td>
+                                                                        </tr>
+                                                                    </table>
+                                                                </div>
                                                             </div>
-                                                        </ItemTemplate>
-                                                    </asp:DataList>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                             <div class="card">
+                                                <div class="card-header">
+                                                    <h2 data-toggle="collapse" data-parent="#accordion" class="collapsed" data-target="#faq3" aria-expanded="false" aria-controls="faq3">Imported products
+                                                            <i class="fa fa-plus pull-right"></i>
+                                                    </h2>
+                                                </div>
+
+                                                <div id="faq3" class="collapse">
+                                                    <div class="card-body">
+                                                        <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <table>
+                                                                        <tr>
+                                                                            <td>Is Product Imported:</td>
+                                                                            <td>N</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>Year of Import:</td>
+                                                                            <td>All (Expect Last Five Year)</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>Remarks:</td>
+                                                                            <td>All (Expect Last Five Year)</td>
+                                                                        </tr>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                             <div class="card">
+                                                <div class="card-header">
+                                                    <h2 data-toggle="collapse" data-parent="#accordion" class="collapsed" data-target="#faq4" aria-expanded="false" aria-controls="faq4">Testing
+                                                            <i class="fa fa-plus pull-right"></i>
+                                                    </h2>
+                                                </div>
+
+                                                <div id="faq4" class="collapse">
+                                                    <div class="card-body">
+                                                         <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <table>
+                                                                        <tr>
+                                                                            <td>Testing:</td>
+                                                                            <td></td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>Remarks:</td>
+                                                                            <td>All (Expect Last Five Year)</td>
+                                                                        </tr>
+                                                                        
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                             <div class="card">
+                                                <div class="card-header">
+                                                    <h2 data-toggle="collapse" data-parent="#accordion" class="collapsed" data-target="#faq5" aria-expanded="false" aria-controls="faq5">Certification
+                                                            <i class="fa fa-plus pull-right"></i>
+                                                    </h2>
+                                                </div>
+
+                                                <div id="faq5" class="collapse">
+                                                    <div class="card-body">
+                                                        <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <table>
+                                                                        <tr>
+                                                                            <td>Certification:</td>
+                                                                            <td></td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>Remarks:</td>
+                                                                            <td></td>
+                                                                        </tr>
+                                                                        
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                             <div class="card">
+                                                <div class="card-header">
+                                                    <h2 data-toggle="collapse" data-parent="#accordion" class="collapsed" data-target="#faq6" aria-expanded="false" aria-controls="faq6">Technical Support
+                                                            <i class="fa fa-plus pull-right"></i>
+                                                    </h2>
+                                                </div>
+
+                                                <div id="faq6" class="collapse">
+                                                    <div class="card-body">
+                                                         <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <table>
+                                                                        <tr>
+                                                                            <td>Technical Support:</td>
+                                                                            <td></td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>Remarks:</td>
+                                                                            <td></td>
+                                                                        </tr>
+                                                                        
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                             <div class="card">
+                                                <div class="card-header">
+                                                    <h2 data-toggle="collapse" data-parent="#accordion" class="collapsed" data-target="#faq7" aria-expanded="false" aria-controls="faq7">Financial Support
+                                                            <i class="fa fa-plus pull-right"></i>
+                                                    </h2>
+                                                </div>
+
+                                                <div id="faq7" class="collapse">
+                                                    <div class="card-body">
+                                                        <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <table>
+                                                                        <tr>
+                                                                            <td>Financial Support:</td>
+                                                                            <td></td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>Remarks:</td>
+                                                                            <td></td>
+                                                                        </tr>
+                                                                        
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                             <div class="card">
+                                                <div class="card-header">
+                                                    <h2 data-toggle="collapse" data-parent="#accordion" class="collapsed" data-target="#faq8" aria-expanded="false" aria-controls="faq8">Quantity Required
+                                                            <i class="fa fa-plus pull-right"></i>
+                                                    </h2>
+                                                </div>
+
+                                                <div id="faq8" class="collapse">
+                                                    <div class="card-body">
+                                                        <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <table>
+                                                                        <tr>
+                                                                            <td>Estimated Quantity:</td>
+                                                                            <td></td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>Estimated Quantity In:</td>
+                                                                            <td></td>
+                                                                        </tr>
+                                                                         <tr>
+                                                                            <td>Estimated Price / LLP:</td>
+                                                                            <td></td>
+                                                                        </tr>
+                                                                        
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                             <div class="card">
+                                                <div class="card-header">
+                                                    <h2 data-toggle="collapse" data-parent="#accordion" class="collapsed" data-target="#faq9" aria-expanded="false" aria-controls="faq9">Tender
+                                                            <i class="fa fa-plus pull-right"></i>
+                                                    </h2>
+                                                </div>
+
+                                                <div id="faq9" class="collapse">
+                                                    <div class="card-body">
+                                                         <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <table>
+                                                                        <tr>
+                                                                            <td>Tender Status:</td>
+                                                                            <td></td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>Tender Submission:</td>
+                                                                            <td></td>
+                                                                        </tr>
+                                                                         <tr>
+                                                                            <td>Tender Date:</td>
+                                                                            <td></td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>Tender URL:</td>
+                                                                            <td></td>
+                                                                        </tr>
+                                                                        
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="card">
+                                                <div class="card-header">
+                                                    <h2 data-toggle="collapse" data-parent="#accordion" class="collapsed" data-target="#faq10" aria-expanded="false" aria-controls="faq10">Contact
+                                                            <i class="fa fa-plus pull-right"></i>
+                                                    </h2>
+                                                </div>
+
+                                                <div id="faq10" class="collapse">
+                                                    <div class="card-body">
+                                                        <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <table>
+                                                                        <tr>
+                                                                            <td>Employee Code:</td>
+                                                                            <td></td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>Employee Name:</td>
+                                                                            <td></td>
+                                                                        </tr>
+                                                                         <tr>
+                                                                            <td>Designation:</td>
+                                                                            <td></td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>E-Mail ID:</td>
+                                                                            <td></td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>Mobile Number:</td>
+                                                                            <td></td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>Phone Number:</td>
+                                                                            <td></td>
+                                                                        </tr>
+                                                                         <tr>
+                                                                            <td>Fax:</td>
+                                                                            <td></td>
+                                                                        </tr>
+                                                                        
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div id="impprod" class="tab-pane fade in">
-                                            <div class="row">
-                                                <div class="col-sm-12">
-                                                    <table class="table table-bordered">
-                                                        <tbody>
-                                                            <tr>
-                                                                <th class="pass" width="30%">Is Product Imported</th>
-                                                                <th class="pass" width="30%">Year of Import</th>
-                                                                <th class="pass" width="30%">Remarks</th>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>
-                                                                    <asp:Label ID="lblisproductimported" runat="server"></asp:Label>
-                                                                </td>
-
-                                                                <td>
-                                                                    <asp:Label ID="lblyearofimport" runat="server"></asp:Label>
-                                                                </td>
-                                                                <td>
-                                                                    <asp:Label ID="lblremarksproductimported" runat="server"></asp:Label>
-                                                                </td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div id="spd" class="tab-pane fade in">
-                                            <div class="row">
-                                                <div class="col-sm-12">
-                                                    <table class="table table-bordered">
-                                                        <tbody>
-                                                            <tr>
-                                                                <th class="pass" width="30%">Technical Support</th>
-                                                                <th class="pass" width="30%">Remarks</th>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>
-                                                                    <asp:Label ID="lblsupportprovidedbydpsu" runat="server"></asp:Label>
-                                                                </td>
-
-                                                                <td>
-                                                                    <asp:Label ID="lblremarks" runat="server"></asp:Label>
-                                                                </td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div id="spfinn" class="tab-pane fade in">
-                                            <div class="row">
-                                                <div class="col-sm-12">
-                                                    <table class="table table-bordered">
-                                                        <tbody>
-                                                            <tr>
-                                                                <th class="pass" width="30%">Financial Support</th>
-                                                                <th class="pass" width="30%">Remarks</th>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>
-                                                                    <asp:Label ID="lblfinancial" runat="server"></asp:Label>
-                                                                </td>
-
-                                                                <td>
-                                                                    <asp:Label ID="lblfinancialRemark" runat="server"></asp:Label>
-                                                                </td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div id="qpt" class="tab-pane fade in">
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <table class="table table-bordered">
-                                                        <tbody>
-                                                            <tr>
-                                                                <th class="pass">Estimated Quantity</th>
-                                                                <th class="pass">Estimated Quantity In</th>
-                                                                <th class="pass">Estimated Price / LLP</th>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>
-                                                                    <asp:Label ID="lblestimatedquantity" runat="server"></asp:Label>
-                                                                </td>
-                                                                <td>
-                                                                    <asp:Label ID="lblEstimatedQuantityIn" runat="server"></asp:Label>
-                                                                </td>
-                                                                <td>
-                                                                    <asp:Label ID="lblestimatedprice" runat="server"></asp:Label>
-                                                                </td>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div id="tdr" class="tab-pane fade in">
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <table class="table table-bordered">
-                                                        <tbody>
-                                                            <tr>
-                                                                <th class="pass">Tender Status</th>
-                                                                <th class="pass">Tender Submission</th>
-                                                                <th class="pass">Tender Date</th>
-                                                                <th class="pass">Tender URL</th>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>
-                                                                    <asp:Label ID="lbltenderstatus" runat="server"></asp:Label>
-                                                                </td>
-                                                                <td>
-                                                                    <asp:Label ID="lbltendersubmission" runat="server"></asp:Label>
-                                                                </td>
-                                                                <td>
-                                                                    <asp:Label ID="lbltenderdate" runat="server"></asp:Label>
-                                                                </td>
-
-                                                                <td>
-                                                                    <asp:Label ID="lbltenderurl" runat="server"></asp:Label>
-                                                                </td>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div id="cd" class="tab-pane fade in">
-                                            <div class="row">
-                                                <div class="col-sm-12">
-                                                    <table class="table table-bordered">
-                                                        <tbody>
-                                                            <tr>
-                                                                <th class="pass">Employee Code</th>
-                                                                <th class="pass">Employee Name</th>
-                                                                <th class="pass">Designation</th>
-                                                                <th class="pass">E-Mail ID</th>
-                                                                <th class="pass">Mobile Number</th>
-                                                                <th class="pass">Phone Number</th>
-                                                                <th class="pass">Fax</th>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>
-                                                                    <asp:Label ID="lblempcode" runat="server"></asp:Label>
-                                                                </td>
-                                                                <td>
-                                                                    <asp:Label ID="lblempname" runat="server"></asp:Label>
-                                                                </td>
-                                                                <td>
-                                                                    <asp:Label ID="lbldesignation" runat="server"></asp:Label>
-                                                                </td>
-                                                                <td>
-                                                                    <asp:Label ID="lblemailid" runat="server"></asp:Label>
-                                                                </td>
-                                                                <td>
-                                                                    <asp:Label ID="lblmobilenumber" runat="server"></asp:Label>
-                                                                </td>
-                                                                <td>
-                                                                    <asp:Label ID="lblphonenumber" runat="server"></asp:Label>
-                                                                </td>
-                                                                <td>
-                                                                    <asp:Label ID="lblfax" runat="server"></asp:Label>
-                                                                </td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                                <div class="col-sm-12" runat="server" visible="False">
-                                                    <table class="table table-bordered" runat="server" id="tablenodal2">
-                                                        <tbody>
-                                                            <tr>
-                                                                <th class="pass">Employee Code</th>
-                                                                <th class="pass">Designation</th>
-                                                                <th class="pass">E-Mail ID</th>
-                                                                <th class="pass">Mobile Number</th>
-                                                                <th class="pass">Phone Number</th>
-                                                                <th class="pass">Fax</th>
-
-                                                            </tr>
-                                                            <tr>
-                                                                <td>
-                                                                    <asp:Label ID="lblempcode2" runat="server"></asp:Label>
-                                                                </td>
-                                                                <td>
-                                                                    <asp:Label ID="lbldesignation2" runat="server"></asp:Label>
-                                                                </td>
-                                                                <td>
-                                                                    <asp:Label ID="lblemailid2" runat="server"></asp:Label>
-                                                                </td>
-                                                                <td>
-                                                                    <asp:Label ID="lblmobileno2" runat="server"></asp:Label>
-                                                                </td>
-                                                                <td>
-                                                                    <asp:Label ID="lblphoneno2" runat="server"></asp:Label>
-                                                                </td>
-                                                                <td>
-                                                                    <asp:Label ID="lblfax2" runat="server"></asp:Label>
-                                                                </td>
-                                                            </tr>
-
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div id="test" class="tab-pane fade in">
-                                            <div class="row">
-                                                <div class="col-sm-12">
-                                                    <table class="table table-bordered">
-                                                        <tbody>
-                                                            <tr>
-                                                                <th class="pass" width="30%">Testing</th>
-                                                                <th class="pass" width="30%">Remarks</th>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>
-                                                                    <asp:Label ID="lbltesting" runat="server"></asp:Label>
-                                                                </td>
-
-                                                                <td>
-                                                                    <asp:Label ID="lbltestingremarks" runat="server"></asp:Label>
-                                                                </td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div id="cer" class="tab-pane fade in">
-                                            <div class="row">
-                                                <div class="col-sm-12">
-                                                    <table class="table table-bordered">
-                                                        <tbody>
-                                                            <tr>
-                                                                <th class="pass" width="30%">Certification</th>
-                                                                <th class="pass" width="30%">Remarks</th>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>
-                                                                    <asp:Label ID="lblcertification" runat="server"></asp:Label>
-                                                                </td>
-
-                                                                <td>
-                                                                    <asp:Label ID="lblcertificationremarks" runat="server"></asp:Label>
-                                                                </td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </div>
                                         </div>
                                     </div>
                                 </div>

@@ -185,182 +185,182 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
             DataTable DtView = Lo.RetriveProductCode("", e.CommandArgument.ToString(), "ProductMasterID", Role);
             if (DtView.Rows.Count > 0)
             {
-                lblcomprefno.Text = DtView.Rows[0]["CompanyRefNo"].ToString();
-                lblcompname.Text = DtView.Rows[0]["CompanyName"].ToString();
-                lbldiviname.Text = DtView.Rows[0]["FactoryName"].ToString();
-                lblunitname.Text = DtView.Rows[0]["UnitName"].ToString();
-                lblprodrefno.Text = DtView.Rows[0]["ProductRefNo"].ToString();
-                lblprodlevel1.Text = DtView.Rows[0]["ProdLevel1Name"].ToString();
-                productlevel2.Text = DtView.Rows[0]["ProdLevel2Name"].ToString();
-                lblprodlevel3.Text = DtView.Rows[0]["ProdLevel3Name"].ToString();
-                lblnsccode.Text = DtView.Rows[0]["NSCCode"].ToString();
-                lblniincode.Text = DtView.Rows[0]["NIINCode"].ToString();
-                lblproductdescription.Text = DtView.Rows[0]["ProductDescription"].ToString();
-                if (DtView.Rows[0]["ItemDescriptionPDFFile"].ToString() == "")
-                {
-                    a_downitem.Visible = false;
-                }
-                else
-                {
-                    a_downitem.Visible = true;
-                    a_downitem.HRef = "http://103.73.189.114:801/Upload/" + DtView.Rows[0]["ItemDescriptionPDFFile"].ToString();
-                }
-                lbloempartnumber.Text = DtView.Rows[0]["OEMPartNumber"].ToString();
-                lbloemname.Text = DtView.Rows[0]["OEMName"].ToString();
-                lbloemcountry.Text = DtView.Rows[0]["CountryName"].ToString();
-                lbldpsupartno.Text = DtView.Rows[0]["DPSUPartNumber"].ToString();
-                lblenduserpartno.Text = DtView.Rows[0]["EndUserPartNumber"].ToString();
-                lblhsncode.Text = DtView.Rows[0]["HSNCode"].ToString();
-                //  lblnatocode.Text = DtView.Rows[0]["NatoCode"].ToString();
-                // lblerprefno.Text = DtView.Rows[0]["ERPRefNo"].ToString();
-                lbltechlevel1.Text = DtView.Rows[0]["TechLevel1Name"].ToString();
-                lbltechlevel2.Text = DtView.Rows[0]["Techlevel2Name"].ToString();
-                lbltechlevel3.Text = DtView.Rows[0]["Techlevel3Name"].ToString();
-                lblplatform.Text = DtView.Rows[0]["PlatName"].ToString();
-                lblnomenclatureofmainsystem.Text = DtView.Rows[0]["Nomenclature"].ToString();
-                lblenduser.Text = DtView.Rows[0]["EUserName"].ToString();
-                lblpurposeofprocurement.Text = DtView.Rows[0]["PRrocurement"].ToString();
-                lblprocremarks.Text = DtView.Rows[0]["ProcurmentCategoryRemark"].ToString();
-                // lblprodtimeframe.Text = DtView.Rows[0]["PRequirement"].ToString();
-                lblsearchkeyword.Text = DtView.Rows[0]["SearchKeyword"].ToString();
-                lblisproductimported.Text = DtView.Rows[0]["IsProductImported"].ToString();
-                lblyearofimport.Text = DtView.Rows[0]["YearofImport"].ToString();
-                lblremarksproductimported.Text = DtView.Rows[0]["YearofImportRemarks"].ToString();
-                lblprodalredyindeginized.Text = DtView.Rows[0]["IsIndeginized"].ToString();
-                if (lblprodalredyindeginized.Text == "Y")
-                {
-                    lblprodalredyindeginized.Text = "Yes";
-                    tablemanufacturename.Visible = true;
-                    tablemanufacturename1.Visible = true;
-                    tablemanufactureAddress.Visible = true;
-                    tablemanufactureYear.Visible = true;
-                    tablemanufacturename1.Visible = true;
-                    tablemanufacturename2.Visible = true;
-                    tablemanufacturename3.Visible = true;
-                    lblmanufacturename.Text = DtView.Rows[0]["ManufactureName"].ToString();
-                    lblmanaddress.Text = DtView.Rows[0]["ManufactureAddress"].ToString();
-                    lblyearofindiginization.Text = DtView.Rows[0]["FY"].ToString();
-                }
-                else
-                {
-                    lblprodalredyindeginized.Text = "No";
-                    tablemanufacturename1.Visible = false;
-                    tablemanufacturename.Visible = false;
-                    tablemanufactureAddress.Visible = false;
-                    tablemanufactureYear.Visible = false;
-                    tablemanufacturename1.Visible = false;
-                    tablemanufacturename2.Visible = false;
-                    tablemanufacturename3.Visible = false;
-                }
-                DataTable dtImageBind = Lo.RetriveProductCode("", e.CommandArgument.ToString(), "ProductImage", hidType.Value);
-                if (dtImageBind.Rows.Count > 0)
-                {
-                    dlimage.DataSource = dtImageBind;
-                    dlimage.DataBind();
-                    dlimage.Visible = true;
-                }
-                else
-                {
-                    dlimage.Visible = false;
-                }
-                DataTable dtpsdq = Lo.RetriveProductCode("", e.CommandArgument.ToString(), "ProductPSDQ", hidType.Value);
-                if (dtpsdq.Rows.Count > 0)
-                {
-                    for (int i = 0; dtpsdq.Rows.Count > i; i++)
-                    {
-                        stpsdq = stpsdq + "," + dtpsdq.Rows[i]["SCategoryName"].ToString();
-                    }
-                }
-                if (stpsdq != null)
-                {
-                    lblsupportprovidedbydpsu.Text = stpsdq.Substring(1).ToString();
-                }
-                lblremarks.Text = DtView.Rows[0]["Remarks"].ToString();
-                DataTable dtFinn = Lo.RetriveProductCode("", e.CommandArgument.ToString(), "ProductFinancial", hidType.Value);
-                if (dtFinn.Rows.Count > 0)
-                {
-                    for (int i = 0; dtFinn.Rows.Count > i; i++)
-                    {
-                        Financial = Financial + "," + dtFinn.Rows[i]["SCategoryName"].ToString();
-                    }
-                }
-                if (Financial != null)
-                {
-                    lblfinancial.Text = Financial.Substring(1).ToString();
-                }
-                lblfinancialRemark.Text = DtView.Rows[0]["FinancialRemark"].ToString();
-                lblestimatedquantity.Text = DtView.Rows[0]["Estimatequantity"].ToString();
-                lblEstimatedQuantityIn.Text = DtView.Rows[0]["EstimatequantityIdle"].ToString();
-                lblestimatedprice.Text = DtView.Rows[0]["EstimatePriceLLP"].ToString();
-                lbltenderstatus.Text = DtView.Rows[0]["TenderStatus"].ToString();
-                string tensub = DtView.Rows[0]["TenderSubmition"].ToString();
-                if (tensub.ToString() == "Y")
-                {
-                    lbltendersubmission.Text = "Yes";
-                }
-                else
-                {
-                    lbltendersubmission.Text = "No";
-                }
-                if (DtView.Rows[0]["TenderFillDate"].ToString() != "")
-                {
-                    DateTime tenderdate = Convert.ToDateTime(DtView.Rows[0]["TenderFillDate"].ToString());
-                    string tDate = tenderdate.ToString("dd-MMM-yyyy");
-                    lbltenderdate.Text = tDate.ToString();
-                }
-                lbltenderurl.Text = DtView.Rows[0]["TenderUrl"].ToString();
-                //DataTable dtNodal = Lo.RetriveProductCode("", e.CommandArgument.ToString(), "ProductNodal", hidType.Value);
-                //if (dtNodal.Rows.Count > 0)
-                //{
-                lblempcode.Text = DtView.Rows[0]["NodalOfficerRefNo"].ToString();
-                lblempname.Text = DtView.Rows[0]["NodalOficerName"].ToString();
-                lbldesignation.Text = DtView.Rows[0]["Designation"].ToString();
-                lblemailid.Text = DtView.Rows[0]["NodalOfficerEmail"].ToString();
-                lblmobilenumber.Text = DtView.Rows[0]["NodalOfficerMobile"].ToString();
-                lblphonenumber.Text = DtView.Rows[0]["NodalOfficerTelephone"].ToString();
-                lblfax.Text = DtView.Rows[0]["NodalOfficerFax"].ToString();
+              //  lblcomprefno.Text = DtView.Rows[0]["CompanyRefNo"].ToString();
+              //  lblcompname.Text = DtView.Rows[0]["CompanyName"].ToString();
+              //  lbldiviname.Text = DtView.Rows[0]["FactoryName"].ToString();
+              //  lblunitname.Text = DtView.Rows[0]["UnitName"].ToString();
+              //  lblprodrefno.Text = DtView.Rows[0]["ProductRefNo"].ToString();
+              //  lblprodlevel1.Text = DtView.Rows[0]["ProdLevel1Name"].ToString();
+              //  productlevel2.Text = DtView.Rows[0]["ProdLevel2Name"].ToString();
+              //  lblprodlevel3.Text = DtView.Rows[0]["ProdLevel3Name"].ToString();
+              //  lblnsccode.Text = DtView.Rows[0]["NSCCode"].ToString();
+              //  lblniincode.Text = DtView.Rows[0]["NIINCode"].ToString();
+              //  lblproductdescription.Text = DtView.Rows[0]["ProductDescription"].ToString();
+              //  if (DtView.Rows[0]["ItemDescriptionPDFFile"].ToString() == "")
+              //  {
+              //      a_downitem.Visible = false;
+              //  }
+              //  else
+              //  {
+              //      a_downitem.Visible = true;
+              //      a_downitem.HRef = "http://103.73.189.114:801/Upload/" + DtView.Rows[0]["ItemDescriptionPDFFile"].ToString();
+              //  }
+              //  lbloempartnumber.Text = DtView.Rows[0]["OEMPartNumber"].ToString();
+              //  lbloemname.Text = DtView.Rows[0]["OEMName"].ToString();
+              //  lbloemcountry.Text = DtView.Rows[0]["CountryName"].ToString();
+              //  lbldpsupartno.Text = DtView.Rows[0]["DPSUPartNumber"].ToString();
+              //  lblenduserpartno.Text = DtView.Rows[0]["EndUserPartNumber"].ToString();
+              //  lblhsncode.Text = DtView.Rows[0]["HSNCode"].ToString();
+              //  //  lblnatocode.Text = DtView.Rows[0]["NatoCode"].ToString();
+              //  // lblerprefno.Text = DtView.Rows[0]["ERPRefNo"].ToString();
+              //  lbltechlevel1.Text = DtView.Rows[0]["TechLevel1Name"].ToString();
+              //  lbltechlevel2.Text = DtView.Rows[0]["Techlevel2Name"].ToString();
+              //  lbltechlevel3.Text = DtView.Rows[0]["Techlevel3Name"].ToString();
+              //  lblplatform.Text = DtView.Rows[0]["PlatName"].ToString();
+              //  lblnomenclatureofmainsystem.Text = DtView.Rows[0]["Nomenclature"].ToString();
+              //  lblenduser.Text = DtView.Rows[0]["EUserName"].ToString();
+              //  lblpurposeofprocurement.Text = DtView.Rows[0]["PRrocurement"].ToString();
+              //  lblprocremarks.Text = DtView.Rows[0]["ProcurmentCategoryRemark"].ToString();
+              //  // lblprodtimeframe.Text = DtView.Rows[0]["PRequirement"].ToString();
+              //  lblsearchkeyword.Text = DtView.Rows[0]["SearchKeyword"].ToString();
+              //  lblisproductimported.Text = DtView.Rows[0]["IsProductImported"].ToString();
+              //  lblyearofimport.Text = DtView.Rows[0]["YearofImport"].ToString();
+              //  lblremarksproductimported.Text = DtView.Rows[0]["YearofImportRemarks"].ToString();
+              //  lblprodalredyindeginized.Text = DtView.Rows[0]["IsIndeginized"].ToString();
+              //  if (lblprodalredyindeginized.Text == "Y")
+              //  {
+              //      lblprodalredyindeginized.Text = "Yes";
+              //      tablemanufacturename.Visible = true;
+              //      tablemanufacturename1.Visible = true;
+              //      tablemanufactureAddress.Visible = true;
+              //      tablemanufactureYear.Visible = true;
+              //      tablemanufacturename1.Visible = true;
+              //      tablemanufacturename2.Visible = true;
+              //      tablemanufacturename3.Visible = true;
+              //      lblmanufacturename.Text = DtView.Rows[0]["ManufactureName"].ToString();
+              //      lblmanaddress.Text = DtView.Rows[0]["ManufactureAddress"].ToString();
+              //      lblyearofindiginization.Text = DtView.Rows[0]["FY"].ToString();
+              //  }
+              //  else
+              //  {
+              //      lblprodalredyindeginized.Text = "No";
+              //      tablemanufacturename1.Visible = false;
+              //      tablemanufacturename.Visible = false;
+              //      tablemanufactureAddress.Visible = false;
+              //      tablemanufactureYear.Visible = false;
+              //      tablemanufacturename1.Visible = false;
+              //      tablemanufacturename2.Visible = false;
+              //      tablemanufacturename3.Visible = false;
+              //  }
+              //  DataTable dtImageBind = Lo.RetriveProductCode("", e.CommandArgument.ToString(), "ProductImage", hidType.Value);
+              //  if (dtImageBind.Rows.Count > 0)
+              //  {
+              //      dlimage.DataSource = dtImageBind;
+              //      dlimage.DataBind();
+              //      dlimage.Visible = true;
+              //  }
+              //  else
+              //  {
+              //      dlimage.Visible = false;
+              //  }
+              //  DataTable dtpsdq = Lo.RetriveProductCode("", e.CommandArgument.ToString(), "ProductPSDQ", hidType.Value);
+              //  if (dtpsdq.Rows.Count > 0)
+              //  {
+              //      for (int i = 0; dtpsdq.Rows.Count > i; i++)
+              //      {
+              //          stpsdq = stpsdq + "," + dtpsdq.Rows[i]["SCategoryName"].ToString();
+              //      }
+              //  }
+              //  if (stpsdq != null)
+              //  {
+              //      lblsupportprovidedbydpsu.Text = stpsdq.Substring(1).ToString();
+              //  }
+              //  lblremarks.Text = DtView.Rows[0]["Remarks"].ToString();
+              //  DataTable dtFinn = Lo.RetriveProductCode("", e.CommandArgument.ToString(), "ProductFinancial", hidType.Value);
+              //  if (dtFinn.Rows.Count > 0)
+              //  {
+              //      for (int i = 0; dtFinn.Rows.Count > i; i++)
+              //      {
+              //          Financial = Financial + "," + dtFinn.Rows[i]["SCategoryName"].ToString();
+              //      }
+              //  }
+              //  if (Financial != null)
+              //  {
+              //      lblfinancial.Text = Financial.Substring(1).ToString();
+              //  }
+              //  lblfinancialRemark.Text = DtView.Rows[0]["FinancialRemark"].ToString();
+              // // lblestimatedquantity.Text = DtView.Rows[0]["Estimatequantity"].ToString();
+              // // lblEstimatedQuantityIn.Text = DtView.Rows[0]["EstimatequantityIdle"].ToString();
+              ////  lblestimatedprice.Text = DtView.Rows[0]["EstimatePriceLLP"].ToString();
+              //  lbltenderstatus.Text = DtView.Rows[0]["TenderStatus"].ToString();
+              //  string tensub = DtView.Rows[0]["TenderSubmition"].ToString();
+              //  if (tensub.ToString() == "Y")
+              //  {
+              //      lbltendersubmission.Text = "Yes";
+              //  }
+              //  else
+              //  {
+              //      lbltendersubmission.Text = "No";
+              //  }
+              //  if (DtView.Rows[0]["TenderFillDate"].ToString() != "")
+              //  {
+              //      DateTime tenderdate = Convert.ToDateTime(DtView.Rows[0]["TenderFillDate"].ToString());
+              //      string tDate = tenderdate.ToString("dd-MMM-yyyy");
+              //      lbltenderdate.Text = tDate.ToString();
+              //  }
+              //  lbltenderurl.Text = DtView.Rows[0]["TenderUrl"].ToString();
+              //  //DataTable dtNodal = Lo.RetriveProductCode("", e.CommandArgument.ToString(), "ProductNodal", hidType.Value);
+              //  //if (dtNodal.Rows.Count > 0)
+              //  //{
+              //  //lblempcode.Text = DtView.Rows[0]["NodalOfficerRefNo"].ToString();
+              // // lblempname.Text = DtView.Rows[0]["NodalOficerName"].ToString();
+              // /// lbldesignation.Text = DtView.Rows[0]["Designation"].ToString();
+              // // lblemailid.Text = DtView.Rows[0]["NodalOfficerEmail"].ToString();
+              // // lblmobilenumber.Text = DtView.Rows[0]["NodalOfficerMobile"].ToString();
+              //  //lblphonenumber.Text = DtView.Rows[0]["NodalOfficerTelephone"].ToString();
+              //  //lblfax.Text = DtView.Rows[0]["NodalOfficerFax"].ToString();
 
-                //if (dtNodal.Rows.Count == 2)
-                //{
-                //    tablenodal2.Visible = true;
-                //    lblempcode2.Text = dtNodal.Rows[1]["NodalEmpCode"].ToString();
-                //    lbldesignation2.Text = dtNodal.Rows[1]["Designation"].ToString();
-                //    lblemailid2.Text = dtNodal.Rows[1]["NodalOfficerEmail"].ToString();
-                //    lblmobileno2.Text = dtNodal.Rows[1]["NodalOfficerMobile"].ToString();
-                //    lblphoneno2.Text = dtNodal.Rows[1]["NodalOfficerTelephone"].ToString();
-                //    lblfax2.Text = dtNodal.Rows[1]["NodalOfficerFax"].ToString();
-                //}
-                //else
-                //{
-                //    tablenodal2.Visible = false;
-                //}
-                //}
-                DataTable dttesting = Lo.RetriveProductCode("", e.CommandArgument.ToString(), "ProductTesting", hidType.Value);
-                if (dttesting.Rows.Count > 0)
-                {
-                    for (int i = 0; dttesting.Rows.Count > i; i++)
-                    {
-                        Testing = Testing + "," + dttesting.Rows[i]["SCategoryName"].ToString();
-                    }
-                }
-                if (Testing != null)
-                {
-                    lbltesting.Text = Testing.Substring(1).ToString();
-                }
-                lbltestingremarks.Text = DtView.Rows[0]["TestingRemarks"].ToString();
-                DataTable dtcertification = Lo.RetriveProductCode("", e.CommandArgument.ToString(), "ProductCertification", hidType.Value);
-                if (dtcertification.Rows.Count > 0)
-                {
-                    for (int i = 0; dtcertification.Rows.Count > i; i++)
-                    {
-                        Certification = Certification + "," + dtcertification.Rows[i]["SCategoryName"].ToString();
-                    }
-                }
-                if (Certification != null)
-                {
-                    lblcertification.Text = Certification.Substring(1).ToString();
-                }
-                lblcertificationremarks.Text = DtView.Rows[0]["CertificationRemark"].ToString();
+              //  //if (dtNodal.Rows.Count == 2)
+              //  //{
+              //  //    tablenodal2.Visible = true;
+              //  //    lblempcode2.Text = dtNodal.Rows[1]["NodalEmpCode"].ToString();
+              //  //    lbldesignation2.Text = dtNodal.Rows[1]["Designation"].ToString();
+              //  //    lblemailid2.Text = dtNodal.Rows[1]["NodalOfficerEmail"].ToString();
+              //  //    lblmobileno2.Text = dtNodal.Rows[1]["NodalOfficerMobile"].ToString();
+              //  //    lblphoneno2.Text = dtNodal.Rows[1]["NodalOfficerTelephone"].ToString();
+              //  //    lblfax2.Text = dtNodal.Rows[1]["NodalOfficerFax"].ToString();
+              //  //}
+              //  //else
+              //  //{
+              //  //    tablenodal2.Visible = false;
+              //  //}
+              //  //}
+              //  DataTable dttesting = Lo.RetriveProductCode("", e.CommandArgument.ToString(), "ProductTesting", hidType.Value);
+              //  if (dttesting.Rows.Count > 0)
+              //  {
+              //      for (int i = 0; dttesting.Rows.Count > i; i++)
+              //      {
+              //          Testing = Testing + "," + dttesting.Rows[i]["SCategoryName"].ToString();
+              //      }
+              //  }
+              //  if (Testing != null)
+              //  {
+              //      lbltesting.Text = Testing.Substring(1).ToString();
+              //  }
+              //  lbltestingremarks.Text = DtView.Rows[0]["TestingRemarks"].ToString();
+              //  DataTable dtcertification = Lo.RetriveProductCode("", e.CommandArgument.ToString(), "ProductCertification", hidType.Value);
+              //  if (dtcertification.Rows.Count > 0)
+              //  {
+              //      for (int i = 0; dtcertification.Rows.Count > i; i++)
+              //      {
+              //          Certification = Certification + "," + dtcertification.Rows[i]["SCategoryName"].ToString();
+              //      }
+              //  }
+              //  if (Certification != null)
+              //  {
+              //      lblcertification.Text = Certification.Substring(1).ToString();
+              //  }
+              //  lblcertificationremarks.Text = DtView.Rows[0]["CertificationRemark"].ToString();
                 ScriptManager.RegisterStartupScript(this, GetType(), "changePass", "showPopup();", true);
             }
         }
