@@ -37,6 +37,10 @@ namespace BusinessLayer
         {
             return SqlHelper.Instance.SaveUploadExcelCompany(dtMaster, dtExcel);
         }
+        public string SaveExcel3510(DataTable dtMaster, Int16 l1, Int16 l2, int pid)
+        {
+            return SqlHelper.Instance.SaveExcel3510(dtMaster, l1, l2,pid);
+        }
 
         #region SaveCode
         public string SaveFDI(HybridDictionary HySave, out string _sysMsg, out string _msg)
@@ -173,6 +177,10 @@ namespace BusinessLayer
         public DataTable RetriveAggregateValue(string action, string role, string refno)
         {
             return SqlHelper.Instance.GetDataTable("select * from fn_GetAggregateValue('" + action + "','" + role + "','" + refno + "')");
+        }
+        public DataTable RetrivePid(int l1, int l2)
+        {
+            return SqlHelper.Instance.GetDataTable("select SCategoryId from tbl_mst_SubCategorytest where pid=(select SCategoryId from tbl_mst_subcategorytest where pid=0 and l1code='" + l1 + "') and L2Code='" + l2 + "'");
         }
         public DataTable RetriveParentNode(string role, string refno)
         {
