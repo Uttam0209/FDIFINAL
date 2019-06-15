@@ -90,6 +90,8 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
                 {
                     DtGrid.Rows[a]["CompanyName"] = DtGrid.Rows[a]["UCompany"];
                     DtGrid.Rows[a]["FactoryName"] = DtGrid.Rows[a]["UFactory"];
+
+
                 }
                 else if (DtGrid.Rows[a]["FCompany"].ToString() != "")
                 {
@@ -112,11 +114,15 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
             dv.Sort = "CompanyName asc,FactoryName asc";
             gvViewNodalOfficer.DataSource = dv.ToTable();
             gvViewNodalOfficer.DataBind();
+            gvViewNodalOfficer.Visible = true;
             lbltotal.Text = "Total Records:- " + gvViewNodalOfficer.Rows.Count.ToString();
             divTotalNumber.Visible = true;
         }
         else
+        {
             divTotalNumber.Visible = false;
+            gvViewNodalOfficer.Visible = false;
+        }
     }
     public void GridViewNodalOfficerBind(string mRefNo, string mRole)
     {

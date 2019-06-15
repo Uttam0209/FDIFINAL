@@ -139,12 +139,12 @@
                                                     <%#Container.DataItemIndex+1 %>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
-                                            <asp:TemplateField>
+                                            <asp:TemplateField HeaderText="Categroy Name">
                                                 <ItemTemplate>
                                                     <asp:Label runat="server" ID="lblsublevelcategory" Text='<%#Eval("SCategoryName") %>'></asp:Label>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
-                                            <asp:BoundField runat="server" DataField="CreatedBy" NullDisplayText="#" />
+                                            <asp:BoundField runat="server" DataField="CreatedBy" HeaderText="Created By" NullDisplayText="#" />
                                         </Columns>
                                     </asp:GridView>
                                 </div>

@@ -60,6 +60,7 @@
         routes.MapPageRoute("Company-Category", "Company-Category", "~/Admin/AddCompanyCategory.aspx", true);
         routes.MapPageRoute("ViewCompany-Category", "ViewCompany-Category", "~/Admin/ViewCompanyCategory.aspx", true);
         routes.MapPageRoute("Industry", "Industry", "~/Admin/Industry.aspx", true);
+        //routes.MapPageRoute("Industry", "Industry", "~/Admin/Industry.html", true);
         routes.MapPageRoute("FAQ", "FAQ", "~/Admin/faq.aspx", true);
         routes.MapPageRoute("ViewDashboard", "ViewDashboard", "~/Admin/ViewDashboard.aspx", true);
         //routes.MapPageRoute("Test", "Test", "~/Admin/HeadDropdown.aspx", true);

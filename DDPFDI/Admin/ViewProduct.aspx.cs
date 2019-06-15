@@ -155,6 +155,7 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
     private string Testing;
     private string Certification;
     private string mhiddenRefNo;
+    private string m_purposeofproc;
     protected void gvproduct_RowCommand(object sender, GridViewCommandEventArgs e)
     {
         if (e.CommandName == "EditComp")
@@ -219,7 +220,19 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
                 lblplatform.Text = DtView.Rows[0]["PlatName"].ToString();
                 lblnomenclatureofmainsystem.Text = DtView.Rows[0]["Nomenclature"].ToString();
                 lblenduser.Text = DtView.Rows[0]["EUserName"].ToString();
-                lblpurposeofprocurement.Text = DtView.Rows[0]["PRrocurement"].ToString();
+                DataTable dtpurposeofprocurment = Lo.RetriveProductCode("", e.CommandArgument.ToString(), "PROCURMENT CATEGORY", hidType.Value);
+                if (dtpurposeofprocurment.Rows.Count > 0)
+                {
+                    for (int i = 0; dtpurposeofprocurment.Rows.Count > i; i++)
+                    {
+                        m_purposeofproc = m_purposeofproc + "," + dtpurposeofprocurment.Rows[i]["SCategoryName"].ToString();
+                    }
+                }
+                if (m_purposeofproc != null)
+                {
+                    lblpurposeofprocurement.Text = m_purposeofproc.Substring(1).ToString();
+                }
+                // lblpurposeofprocurement.Text = DtView.Rows[0]["PRrocurement"].ToString();
                 lblprocremarks.Text = DtView.Rows[0]["ProcurmentCategoryRemark"].ToString();
                 // lblprodtimeframe.Text = DtView.Rows[0]["PRequirement"].ToString();
                 lblsearchkeyword.Text = DtView.Rows[0]["SearchKeyword"].ToString();
@@ -313,12 +326,12 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
                 //if (dtNodal.Rows.Count > 0)
                 //{
                 //lblempcode.Text = DtView.Rows[0]["NodalOfficerRefNo"].ToString();
-                lblempname.Text = DtView.Rows[0]["NodalOficerName"].ToString();
-                lbldesignation.Text = DtView.Rows[0]["Designation"].ToString();
-                lblemailid.Text = DtView.Rows[0]["NodalOfficerEmail"].ToString();
-                lblmobilenumber.Text = DtView.Rows[0]["NodalOfficerMobile"].ToString();
-                lblphonenumber.Text = DtView.Rows[0]["NodalOfficerTelephone"].ToString();
-                lblfax.Text = DtView.Rows[0]["NodalOfficerFax"].ToString();
+                //lblempname.Text = DtView.Rows[0]["NodalOficerName"].ToString();
+                //lbldesignation.Text = DtView.Rows[0]["Designation"].ToString();
+                //lblemailid.Text = DtView.Rows[0]["NodalOfficerEmail"].ToString();
+                //lblmobilenumber.Text = DtView.Rows[0]["NodalOfficerMobile"].ToString();
+                //lblphonenumber.Text = DtView.Rows[0]["NodalOfficerTelephone"].ToString();
+                //lblfax.Text = DtView.Rows[0]["NodalOfficerFax"].ToString();
 
                 //if (dtNodal.Rows.Count == 2)
                 //{
@@ -345,7 +358,15 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
                 }
                 if (Testing != null)
                 {
-                    lbltesting.Text = Testing.Substring(1).ToString();
+                    foreach (var item in Testing)
+                    {
+                        if (Testing != "")
+                        {
+                            Testing += ", " + Environment.NewLine;
+                        }
+                        Testing += item;
+                    }
+                    lbltesting.Text = Testing.ToString();// Testing.Substring(1).ToString();
                 }
                 lbltestingremarks.Text = DtView.Rows[0]["TestingRemarks"].ToString();
                 DataTable dtcertification = Lo.RetriveProductCode("", e.CommandArgument.ToString(), "ProductCertification", hidType.Value);

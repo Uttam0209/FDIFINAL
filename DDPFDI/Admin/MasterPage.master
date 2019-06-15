@@ -19,7 +19,7 @@
     <link href="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.9.2/themes/blitzer/jquery-ui.css" rel="Stylesheet" type="text/css" />
 
 
-
+    <link href="~/assets/css/aaryan.css" rel="stylesheet" />
     
                                   
 
