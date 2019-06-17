@@ -30,6 +30,12 @@
                                 <asp:Label ID="lblRowCount" runat="server" class="label label-info"></asp:Label>
                             </h4>
                         </label>
+                        <asp:TextBox ID="txtL1" runat="server" ></asp:TextBox>
+                         <asp:TextBox ID="txtL2" runat="server" ></asp:TextBox>
+                         <div class="col-sm-3">
+                            <asp:Button ID="btnexcel3510" runat="server" class="btn btn-primary btn-sm btn-block"
+                                Text="Upload Excel Sheet File" OnClick="btnexcel3510_Click" />
+                        </div>
                         <div class="col-sm-3">
                             <asp:Button ID="btnexcel" runat="server" class="btn btn-primary btn-sm btn-block"
                                 Text="Upload Excel Sheet File" OnClick="btnexcel_Click" />

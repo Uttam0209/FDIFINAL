@@ -435,6 +435,7 @@
                                                     <label>Upload document related to item </label>
                                                     <span class="mandatory">(only pdf file of maximum 1 Mb can be uploaded.)</span>
                                                     <asp:FileUpload runat="server" ID="fuitemdescriptionfile" CssClass="form-control" TabIndex="29" />
+                                                    <div class="clearfix mt5"></div>
                                                     <asp:Label runat="server" ID="lblfuitemdescriptionfile" Visible="False"></asp:Label>
                                                 </div>
                                             </div>
@@ -446,24 +447,25 @@
                                                         <asp:FileUpload ID="fuimages" runat="server" CssClass="uploadimage form-control" AllowMultiple="true" TabIndex="30" />
                                                     </div>
                                                 </div>
+                                                <!-------uplode photo----------->
+                                                <div class="gallery"></div>
+                                                <br />
                                             </div>
-                                        </div>
-                                        <!-------uplode photo----------->
-                                        <div class="gallery"></div>
-                                        <br />
-                                        <div class="col-sm-6"></div>
-                                        <div class="col-sm-6">
-                                            <div runat="server" id="divimgdel" visible="False">
-                                                <div class="row">
-                                                    <asp:DataList runat="server" ID="dlimage" RepeatColumns="4" RepeatDirection="Horizontal" RepeatLayout="Flow" OnItemCommand="dlimage_ItemCommand">
-                                                        <ItemTemplate>
-                                                            <div class="col-sm-3">
-                                                                <asp:Image runat="server" ID="imgprodimage" class="image img-responsive img-rounded" Height="120px" Width="120" src='<%#Eval("ImageName") %>' />
-                                                                <div class="clearfix"></div>
-                                                                <asp:LinkButton runat="server" ID="lblremoveimg" class="fa fa-trash text-center" CommandName="removeimg" CommandArgument='<%#Eval("ImageId") %>'></asp:LinkButton>
-                                                            </div>
-                                                        </ItemTemplate>
-                                                    </asp:DataList>
+                                            <div class="clearfix mt5"></div>
+                                            <div class="col-sm-6"></div>
+                                            <div class="col-sm-6">
+                                                <div runat="server" id="divimgdel" visible="False">
+                                                    <div class="row">
+                                                        <asp:DataList runat="server" ID="dlimage" RepeatColumns="4" RepeatDirection="Horizontal" RepeatLayout="Flow" OnItemCommand="dlimage_ItemCommand">
+                                                            <ItemTemplate>
+                                                                <div class="col-sm-3">
+                                                                    <asp:Image runat="server" ID="imgprodimage" class="image img-responsive img-rounded" Height="120px" Width="120" src='<%#Eval("ImageName") %>' />
+                                                                    <div class="clearfix"></div>
+                                                                    <asp:LinkButton runat="server" ID="lblremoveimg" class="fa fa-trash text-center" CommandName="removeimg" CommandArgument='<%#Eval("ImageId") %>'></asp:LinkButton>
+                                                                </div>
+                                                            </ItemTemplate>
+                                                        </asp:DataList>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>

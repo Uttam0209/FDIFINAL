@@ -1205,6 +1205,7 @@ namespace DataAccessLayer
                         DbCommand cmd = db.GetStoredProcCommand("sp_InsertCategoryFromExcel");
 
                         db.AddInParameter(cmd, "@Pid", DbType.Int64, mEntryID);
+                        db.AddInParameter(cmd, "@Desc", DbType.String, "");
                         db.AddInParameter(cmd, "@CatName", DbType.String, dtMaster.Rows[k]["FSG Title"].ToString() + "(" + dtMaster.Rows[k]["Group"].ToString() + ")");
                         db.AddInParameter(cmd, "@L1Code", DbType.String, dtMaster.Rows[k]["Group"].ToString());
                         db.AddInParameter(cmd, "@L2Code", DbType.String, String.Empty);
@@ -1243,6 +1244,7 @@ namespace DataAccessLayer
                 }
             }
         }
+
         public string SaveUploadExcelCompany(DataTable dtMaster)
         {
             using (DbConnection Connection = db.CreateConnection())
@@ -1280,6 +1282,46 @@ namespace DataAccessLayer
                 }
             }
         }
+
+        public string SaveExcel3510(DataTable dtMaster,int l1, int l2, int pid)
+        {
+            using (DbConnection Connection = db.CreateConnection())
+            {
+                Connection.Open();
+                DbTransaction Transaction = Connection.BeginTransaction();
+                Int32 errorRow = -1;
+                try
+                {
+                    Int32 mEntryID;
+                    for (int k = 0; k < dtMaster.Rows.Count; k++)
+                    {
+                        mEntryID = 0;
+                        DbCommand cmd = db.GetStoredProcCommand("sp_InsertCategoryFromExcel");
+
+                        db.AddInParameter(cmd, "@Pid", DbType.Int64, pid);
+                        db.AddInParameter(cmd, "@L1Code", DbType.String, l2);
+                        db.AddInParameter(cmd, "@L2Code", DbType.String, dtMaster.Rows[k]["INC"].ToString());  
+                        db.AddInParameter(cmd, "@CatName", DbType.String, dtMaster.Rows[k]["Item Name"].ToString() + "(" + dtMaster.Rows[k]["INC"].ToString() + ")");
+                        db.AddInParameter(cmd, "@Desc", DbType.String, dtMaster.Rows[k]["Item Name"].ToString());
+                        db.AddOutParameter(cmd, "@NewId", DbType.Int32, 50);
+                        db.ExecuteNonQuery(cmd, Transaction);
+                        mEntryID = Convert.ToInt32(db.GetParameterValue(cmd, "@NewId"));
+                    }
+                    Transaction.Commit();
+                    return "Save";
+                }
+                catch (Exception ex)
+                {
+                    Transaction.Rollback();
+                    return ex.Message + "Error Found in Excel" + errorRow;
+                }
+                finally
+                {
+                    Connection.Close();
+                }
+            }
+        }
+
         public DataTable CreateExcelConnection(string FilePath, string SheetName, out string text)
         {
             try
@@ -1303,6 +1345,7 @@ namespace DataAccessLayer
                 return ds.Tables[0];
             }
         }
+
         public DataTable GetDashboardData(string Purpose, string Search)
         {
             using (DbConnection dbCon = db.CreateConnection())

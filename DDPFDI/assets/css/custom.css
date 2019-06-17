@@ -1844,10 +1844,11 @@ form label { font-size: 15px !important; font-family: 'Roboto', sans-serif !impo
 .comp_fact_unit { display: flex !important;}
 .comp_fact_unit #DivCompanyName > span { display: flex !important}
 .comp_fact_unit #DivCompanyName span {  padding: 0 10px;}
-.faq-secion .accordion .card-header h2 { background: #e2e3e5; border: 1px solid  #d6d8db; font-size: 18px; padding: 10px;  cursor: pointer; margin: 0;}
+.faq-secion .accordion .card-header h2 { background: #e2e3e5; border: 1px solid  #d6d8db; font-size: 15px; padding: 5px;  cursor: pointer; margin: 0;}
 .faq-secion .accordion .card-body { padding: 10px; border:2px solid #ddd; background: #fff; color: #333; font-size: 16px; line-height: 21px;}
 .faq-secion .accordion .card-body p {font-size: 16px; line-height: 24px; }
 .faq-secion .accordion .card-body ul li { font-size: 15px; line-height: 19px;}
+.faq-secion .accordion .card-body h3 { font-size: 15px;}
 .tooltip-inner {
     border: 1px solid #F2AF1D;
     background: #FDF1D5;
@@ -1938,3 +1939,9 @@ form label { font-size: 15px !important; font-family: 'Roboto', sans-serif !impo
 .ShowDivisionFromDashboard table >.clone-row { display: block !important}
 .admin-dashboard .white-box ul li .compName { position:relative;}
 .admin-dashboard .white-box a.comp_number {position: absolute; top: -11px; bottom: 0; right: 0; left: 0; height: 57px;  vertical-align: bottom; padding-top: 31px; z-index: 99999;}
+.product-view table { width: 100%;}
+.product-view { margin-top: 10px;}
+.product-view .row { margin-bottom: 15px;}
+.product-view table tr td { text-align:left; text-transform:uppercase; font-size: 12px; padding: 3px;}
+.product-view table tr td:first-child { width: 28%; color:#333; font-weight:500; }
+.product-view .two-col table tr td:first-child { width: 45% !important;}

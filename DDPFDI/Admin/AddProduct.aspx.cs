@@ -1366,7 +1366,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         {
             HyPanel1["QAAgency"] = "";
         }
-        HyPanel1["QAReamrks"] = Co.RSQandSQLInjection(txtqaagencyremarks.Text.Trim() + ",", "soft");
+        HyPanel1["QAReamrks"] = Co.RSQandSQLInjection(txtqaagencyremarks.Text.Trim(), "soft");
         foreach (GridViewRow rw in gvtesting.Rows)
         {
             CheckBox chktest = (CheckBox)rw.FindControl("chktesting");
@@ -1384,7 +1384,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         {
             HyPanel1["Testing"] = "";
         }
-        HyPanel1["TestingRemarks"] = Co.RSQandSQLInjection(txttestingremarks.Text.Trim() + ",", "soft");
+        HyPanel1["TestingRemarks"] = Co.RSQandSQLInjection(txttestingremarks.Text.Trim(), "soft");
         foreach (GridViewRow rw in gvCertification.Rows)
         {
             CheckBox chkcerti = (CheckBox)rw.FindControl("chkcertification");
@@ -1402,7 +1402,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         {
             HyPanel1["Certification"] = "";
         }
-        HyPanel1["CertificationRemark"] = Co.RSQandSQLInjection(txtcertificationremarks.Text.Trim() + ",", "soft");
+        HyPanel1["CertificationRemark"] = Co.RSQandSQLInjection(txtcertificationremarks.Text.Trim(), "soft");
         foreach (GridViewRow rw in gvservices.Rows)
         {
             CheckBox chkBx = (CheckBox)rw.FindControl("chk");
@@ -1420,7 +1420,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         {
             HyPanel1["DPSUServices"] = "";
         }
-        HyPanel1["Remarks"] = Co.RSQandSQLInjection(txtservisesremarks.Text.Trim() + ",", "soft");
+        HyPanel1["Remarks"] = Co.RSQandSQLInjection(txtservisesremarks.Text.Trim(), "soft");
         foreach (GridViewRow rw in gvfinancialsupp.Rows)
         {
             CheckBox chkfinanBx = (CheckBox)rw.FindControl("chkfinan");
@@ -1438,7 +1438,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         {
             HyPanel1["FinancialSupport"] = "";
         }
-        HyPanel1["FinancialRemark"] = Co.RSQandSQLInjection(txtfinancialsuppRemarks.Text.Trim() + ",", "soft");
+        HyPanel1["FinancialRemark"] = Co.RSQandSQLInjection(txtfinancialsuppRemarks.Text.Trim(), "soft");
 
         HyPanel1["TenderStatus"] = Co.RSQandSQLInjection(ddltendorstatus.SelectedItem.Value, "soft");
         HyPanel1["TenderSubmition"] = Co.RSQandSQLInjection(rbtendordateyesno.SelectedItem.Value, "soft");

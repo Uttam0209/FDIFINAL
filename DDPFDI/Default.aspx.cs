@@ -25,7 +25,8 @@ public partial class _Default : System.Web.UI.Page
     #endregion
     protected void Page_Load(object sender, EventArgs e)
     {
-        // string s = objEnc.EncryptData("12345");
+         //string s = objEnc.EncryptData("Data Source=DESKTOP-11TFGRC\\MOHDWALI;Initial Catalog=ddp_fdiFinal;User ID=sa;Password=wali");
+       // string a = objEnc.DecryptData("aL88ocdv5/Kq/MF8J1Qtk+6AnMaH6dJtcBkuT7qx2N9CyzbHTAaAEtMwUxH5+xB79+XP0NvDMbN0hWCFyNkxCGNisV6TxWSvIZIG3wVAnEZWnkjh7rz+cQ==");
      
         }
     #region "Login Code"
