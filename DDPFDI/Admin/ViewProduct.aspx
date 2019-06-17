@@ -139,15 +139,15 @@
                             <h4 class="modal-title">Product Detail</h4>
                         </div>
                         <form class="form-horizontal changepassword" role="form">
-                            <div class="modal-body sideBg">
+                            <div class="modal-body">
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="faq-secion product-view">
                                             <div class="accordion" id="accordion">
                                                 <div class="card">
                                                     <div class="card-header">
-                                                        <h2>Description 
-                                                            
+                                                        <h2 data-toggle="collapse" data-parent="#accordion" data-target="#faq1" aria-expanded="false" aria-controls="faq1">Description 
+                                                            <i class="fa fa-minus pull-right"></i>
                                                         </h2>
                                                     </div>
                                                     <div id="faq1" class="collapse in" aria-labelledby="headingOne">
@@ -352,40 +352,43 @@
                                                             <div class="row">
                                                                 <div class="col-md-12">
                                                                     <div runat="server" id="itemdocument">
-                                                                        <div class="col-sm-4">
-                                                                            <label>
-                                                                            Document related to item
-                                                                        </div>
-                                                                        <div class="col-sm-8">
-                                                                            <a href="#" target="_blank" runat="server" id="a_downitem" class="fa fa-download"></a>
-                                                                            <span data-toggle="tooltip" class="fa fa-question" title="Click on icon for downloaf"></span>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="clearfix"></div>
-                                                                    <div class="col-sm-3">
-                                                                        <label>Product Image</label>
-                                                                    </div>
-                                                                    <div class="col-sm-9">
-                                                                        <asp:DataList ID="dlimage" runat="server" RepeatColumns="4" RepeatDirection="Horizontal" RepeatLayout="Flow">
+
+                                                                        <table>
+                                                                            <tr>
+                                                                                <td>Document related to item</td>
+                                                                                <td>
+                                                                                     <a href="#" target="_blank" runat="server" id="a_downitem" class="fa fa-download"></a>
+                                                                                    <span data-toggle="tooltip" class="fa fa-question" title="Click on icon for downloaf"></span>
+                                                                                </td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td>Product Image</td>
+                                                                                <td>
+                                                                                    <asp:DataList ID="dlimage" runat="server" RepeatColumns="4" RepeatDirection="Horizontal" RepeatLayout="Flow">
                                                                             <ItemTemplate>
                                                                                 <div class="col-sm-3">
                                                                                     <asp:Image ID="imgprodimage" runat="server" Height="90px" Width="110px" src='<%#Eval("[ImageName]") %>' />
                                                                                 </div>
                                                                             </ItemTemplate>
                                                                         </asp:DataList>
-                                                                    </div>
-                                                                    <div class="clearfix"></div>
-                                                                    <div class="col-sm-3">
-                                                                        <label>Features & Details</label>
-                                                                    </div>
-                                                                    <div class="col-sm-9">
-                                                                        <asp:Label ID="lblfeaturesanddetail" runat="server" Text=""></asp:Label>
-                                                                    </div>
-
-                                                                    <div class="clearfix"></div>
-                                                                    <div class="col-sm-3">Product Information</div>
-                                                                    <div class="col-sm-9">
-                                                                        <asp:GridView ID="gvProdInfo" runat="server" AutoGenerateColumns="false" CssClass="table table-hover">
+                                                                                </td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td>Features & Details</td>
+                                                                                <td><asp:Label ID="lblfeaturesanddetail" runat="server" Text=""></asp:Label></td>
+                                                                            </tr>
+                                                                            
+                                                                            <tr>
+                                                                                <td>Additional Information</td>
+                                                                                <td> <asp:Label ID="lbladditionalinfo" runat="server" Text=""></asp:Label></td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td>Product Information</td>
+                                                                                <td>&nbsp;</td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td colspan="2">
+                                                                                    <asp:GridView ID="gvProdInfo" runat="server" AutoGenerateColumns="false" CssClass="table table-hover">
                                                                             <Columns>
                                                                                 <asp:BoundField DataField="NameOfSpec" HeaderText="Name of Specification" />
                                                                                 <asp:BoundField DataField="Value" HeaderText="Value " />
@@ -393,12 +396,13 @@
                                                                             </Columns>
 
                                                                         </asp:GridView>
+                                                                                </td>
+                                                                            </tr>
+                                                                            
+                                                                        </table>
+                                                                       
                                                                     </div>
-                                                                    <div class="clearfix"></div>
-                                                                    <div class="col-sm-3">Additional Information</div>
-                                                                    <div class="col-sm-9">
-                                                                        <asp:Label ID="lbladditionalinfo" runat="server" Text=""></asp:Label>
-                                                                    </div>
+                                           
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -414,9 +418,25 @@
                                                         <div class="card-body">
                                                             <div class="row">
                                                                 <div class="col-md-12">
-                                                                    <div class="col-sm-4">Estimate Quantity or Price</div>
-                                                                    <div class="col-sm-8">
-                                                                        <asp:GridView ID="gvestimatequanorprice" runat="server" AutoGenerateColumns="false" CssClass="table table-hover">
+                                                                    <table>
+                                                                        
+                                                                         <tr>
+                                                                            <td>PROCURMENT CATEGORY</td>
+                                                                            <td><asp:Label ID="lblpurposeofprocurement" runat="server" Text=""></asp:Label></td>
+                                                                        </tr>
+                                                                         <tr>
+                                                                            <td> PROCURMENT CATEGORY REMARK</td>
+                                                                            <td><asp:Label ID="lblprocremarks" runat="server" Text=""></asp:Label></td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>Estimate Quantity or Price</td>
+                                                                            <td>
+                                                                                &nbsp;
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td colspan="2">
+                                                                                 <asp:GridView ID="gvestimatequanorprice" runat="server" AutoGenerateColumns="false" CssClass="table table-hover">
                                                                             <Columns>
                                                                                 <asp:BoundField DataField="FYear" HeaderText="Year" />
                                                                                 <asp:BoundField DataField="EstimatedQty" HeaderText="Estimated Quantity" />
@@ -424,22 +444,10 @@
                                                                                 <asp:BoundField DataField="EstimatedPrice" HeaderText="Estimated Price / LPP" />
                                                                             </Columns>
                                                                         </asp:GridView>
-                                                                    </div>
-                                                                    <div class="clearfix"></div>
-                                                                    <div class="col-md-4">
-                                                                        PROCURMENT CATEGORY
-                                                                    </div>
-                                                                    <div class="col-md-8">
-                                                                        <asp:Label ID="lblpurposeofprocurement" runat="server" Text=""></asp:Label>
-                                                                    </div>
-                                                                    <div class="clearfix"></div>
-                                                                    <div class="col-md-4">
-                                                                        <td>
-                                                                        PROCURMENT CATEGORY REMARK
-                                                                    </div>
-                                                                    <div class="col-md-8">
-                                                                        <asp:Label ID="lblprocremarks" runat="server" Text=""></asp:Label>
-                                                                    </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </table>
+
                                                                 </div>
                                                             </div>
                                                         </div>
