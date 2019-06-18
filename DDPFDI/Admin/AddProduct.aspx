@@ -493,12 +493,31 @@
                                                             <h4>Product Information</h4>
                                                             <div class="clearfix"></div>
                                                             <div class="table table-responsive">
-                                                                <asp:GridView ID="gvProductInformation" runat="server" AutoGenerateColumns="false" Class="table table-hover" OnRowDataBound="OnRowDataBound"
+                                                                <table border="0" cellpadding="0" cellspacing="0" class="gridFormTable" style="border-collapse: collapse; width: 100%">
+                                                                    <tr>
+                                                                        <td style="width: 320px">
+                                                                            <label>Name of Specification</label>
+                                                                            <asp:TextBox ID="txtNameOfSpecificationAdd" CssClass="form-control" Style="width: 385px;" runat="server" />
+                                                                        </td>
+                                                                        <td style="width: 320px">
+                                                                            <label>Value (Only Number)</label>
+                                                                            <asp:TextBox ID="TxtValueProdAdd" runat="server" Style="width: 294px;" CssClass="form-control" />
+                                                                        </td>
+                                                                        <td style="width: 320px">
+                                                                            <label>Unit</label>
+                                                                            <asp:TextBox ID="txtUnitProdAdd" runat="server" Style="width: 159px;" CssClass="form-control" />
+                                                                        </td>
+                                                                        <td style="width: 320px">
+                                                                            <asp:LinkButton ID="btnAdd" runat="server" Style="margin-top: 18px;"  CssClass="btn btn-primary pull-right" Text="Add" OnClick="Insert"></asp:LinkButton>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                                <asp:GridView ID="gvProductInformation" runat="server" AutoGenerateColumns="false" Class="table table-hover manage-user gridFormTableResult" OnRowDataBound="OnRowDataBound"
                                                                     DataKeyNames="ProdInfoId" OnRowEditing="OnRowEditing" OnRowCancelingEdit="OnRowCancelingEdit" PageSize="5" AllowPaging="true" OnPageIndexChanging="OnPaging"
                                                                     OnRowUpdating="OnRowUpdating" OnRowDeleting="OnRowDeleting" EmptyDataText="No records has been added."
                                                                     Width="100%">
                                                                     <Columns>
-                                                                        <asp:TemplateField HeaderText="Name of Specification  (Editable)">
+                                                                        <asp:TemplateField HeaderText="S.No">
                                                                             <ItemTemplate>
                                                                                 <%#Container.DataItemIndex+1 %>
                                                                             </ItemTemplate>
@@ -508,7 +527,7 @@
                                                                                 <asp:Label ID="lblNameofspec" runat="server" Text='<%# Eval("NameofSpec") %>'></asp:Label>
                                                                             </ItemTemplate>
                                                                             <EditItemTemplate>
-                                                                                <asp:TextBox ID="txtNameofspeci" runat="server" Text='<%# Eval("NameofSpec") %>'></asp:TextBox>
+                                                                                <asp:TextBox ID="txtNameofspeci" CssClass="form-control" runat="server" Text='<%# Eval("NameofSpec") %>'></asp:TextBox>
                                                                             </EditItemTemplate>
                                                                         </asp:TemplateField>
                                                                         <asp:TemplateField HeaderText="Value  (Editable, Only Number)">
@@ -516,7 +535,7 @@
                                                                                 <asp:Label ID="lblvalueProd" runat="server" Text='<%# Eval("Value") %>'></asp:Label>
                                                                             </ItemTemplate>
                                                                             <EditItemTemplate>
-                                                                                <asp:TextBox ID="txtValueProd" runat="server" Text='<%# Eval("Value") %>'></asp:TextBox>
+                                                                                <asp:TextBox ID="txtValueProd" CssClass="form-control" runat="server" Text='<%# Eval("Value") %>'></asp:TextBox>
                                                                             </EditItemTemplate>
                                                                         </asp:TemplateField>
                                                                         <asp:TemplateField HeaderText="Unit (Editable)">
@@ -524,28 +543,13 @@
                                                                                 <asp:Label ID="lblUnitProd" runat="server" Text='<%# Eval("Unit") %>'></asp:Label>
                                                                             </ItemTemplate>
                                                                             <EditItemTemplate>
-                                                                                <asp:TextBox ID="txtUnitProd" runat="server" Text='<%# Eval("Unit") %>'></asp:TextBox>
+                                                                                <asp:TextBox ID="txtUnitProd" CssClass="form-control" runat="server" Text='<%# Eval("Unit") %>'></asp:TextBox>
                                                                             </EditItemTemplate>
                                                                         </asp:TemplateField>
-                                                                        <asp:CommandField ButtonType="Link" ShowEditButton="true" ShowDeleteButton="true" />
+                                                                        <asp:CommandField ButtonType="Link" ShowEditButton="true" HeaderText="Action" ShowDeleteButton="true" />
                                                                     </Columns>
                                                                 </asp:GridView>
-                                                                <table border="1" cellpadding="0" cellspacing="0" style="border-collapse: collapse; width: 100%">
-                                                                    <tr>
-                                                                        <td style="width: 320px">Name of Specification<br />
-                                                                            <asp:TextBox ID="txtNameOfSpecificationAdd" CssClass="form-control" Style="width: 350px;" runat="server" />
-                                                                        </td>
-                                                                        <td style="width: 320px">Value (Only Number)<br />
-                                                                            <asp:TextBox ID="TxtValueProdAdd" runat="server" Style="width: 320px;" CssClass="form-control" />
-                                                                        </td>
-                                                                        <td style="width: 320px">Unit<br />
-                                                                            <asp:TextBox ID="txtUnitProdAdd" runat="server" Style="width: 250px;" CssClass="form-control" />
-                                                                        </td>
-                                                                        <td style="width: 320px">
-                                                                            <asp:LinkButton ID="btnAdd" runat="server" CssClass="btn btn-primary pull-right" Text="Add" OnClick="Insert"></asp:LinkButton>
-                                                                        </td>
-                                                                    </tr>
-                                                                </table>
+                                                                
                                                             </div>
                                                         </div>
                                                     </ContentTemplate>
@@ -591,7 +595,48 @@
                                         <asp:UpdatePanel runat="server" ID="UpdatePanel1">
                                             <ContentTemplate>
                                                 <div class="table table-responsive">
-                                                    <asp:GridView ID="GvEstimateQuanPrice" runat="server" CssClass="table table-hover" Style="width: 100%" AutoGenerateColumns="false" OnRowDataBound="GvEstimateQuanPrice_RowDataBound"
+                                                     <table border="0" cellpadding="0" class="gridFormTable EstimateGridview" cellspacing="0" style="border-collapse: collapse; width: 100%">
+                                                        <tr>
+                                                            <td><label>Year:</label>
+                                                                <asp:DropDownList ID="ddlYearEstimate" runat="server" CssClass="form-control">
+                                                                    <asp:ListItem Value="-1">Select</asp:ListItem>
+                                                                    <asp:ListItem Value="1">2019-20</asp:ListItem>
+                                                                    <asp:ListItem Value="2">2019-21</asp:ListItem>
+                                                                    <asp:ListItem Value="3">2019-22</asp:ListItem>
+                                                                    <asp:ListItem Value="4">2019-23</asp:ListItem>
+                                                                    <asp:ListItem Value="5">2019-24</asp:ListItem>
+                                                                </asp:DropDownList>
+                                                            </td>
+                                                            <td>
+                                                                <label>Estimated Quantity (Only Number)</label>
+                                                                <asp:TextBox ID="txtestimateQuantity" runat="server"  CssClass="form-control" />
+                                                            </td>
+                                                            <td><label>Measuring Unit</label>
+                                                                <asp:DropDownList ID="ddlMeasuringUnit" runat="server" CssClass="form-control">
+                                                                    <asp:ListItem Value="-1">Select</asp:ListItem>
+                                                                    <asp:ListItem Value="Centimeter">Centimeter</asp:ListItem>
+                                                                    <asp:ListItem Value="Gram">Gram</asp:ListItem>
+                                                                    <asp:ListItem Value="Inch">Inch</asp:ListItem>
+                                                                    <asp:ListItem Value="Kg">Kg</asp:ListItem>
+                                                                    <asp:ListItem Value="Mtr">Mtr</asp:ListItem>
+                                                                    <asp:ListItem Value="Inch">Inch</asp:ListItem>
+                                                                    <asp:ListItem Value="Number">Number</asp:ListItem>
+                                                                    <asp:ListItem Value="Ounce">Ounce</asp:ListItem>
+                                                                    <asp:ListItem Value="Other">Other</asp:ListItem>
+                                                                    <asp:ListItem Value="Pound">Pound</asp:ListItem>
+                                                                    <asp:ListItem Value="Ton">Ton</asp:ListItem>
+                                                                </asp:DropDownList>
+                                                            </td>
+                                                            <td>
+                                                                <label>Estimated Price / LPP (Only Numbers)</label>
+                                                                <asp:TextBox ID="txtestimatePriceLLp" runat="server"  CssClass="form-control" />
+                                                            </td>
+                                                            <td>
+                                                                <asp:LinkButton ID="btnAddEstimate" runat="server" Style="margin-top: 18px;" CssClass="btn btn-primary"  Text="Add" OnClick="EstimateInsert"></asp:LinkButton>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                    <asp:GridView ID="GvEstimateQuanPrice" runat="server" CssClass="table table-hover EstimateGridviewResult manage-user" Style="width: 100%" AutoGenerateColumns="false" OnRowDataBound="GvEstimateQuanPrice_RowDataBound"
                                                         DataKeyNames="ProdQtyPriceId" OnRowEditing="GvEstimateQuanPrice_RowEditing" OnRowCancelingEdit="GvEstimateQuanPrice_RowCancelingEdit" PageSize="8" AllowPaging="true" OnPageIndexChanging="GvEstimateQuanPrice_Paging"
                                                         OnRowUpdating="GvEstimateQuanPrice_RowUpdating" OnRowDeleting="GvEstimateQuanPrice_RowDeleting" EmptyDataText="No records has been added."
                                                         Width="450">
@@ -658,45 +703,7 @@
                                                             <asp:CommandField ButtonType="Link" ShowEditButton="true" ShowDeleteButton="true" />
                                                         </Columns>
                                                     </asp:GridView>
-                                                    <table border="1" cellpadding="0" cellspacing="0" style="border-collapse: collapse; width: 100%">
-                                                        <tr>
-                                                            <td style="width: 250px">Year:<br />
-                                                                <asp:DropDownList ID="ddlYearEstimate" runat="server" CssClass="form-control">
-                                                                    <asp:ListItem Value="-1">Select</asp:ListItem>
-                                                                    <asp:ListItem Value="1">2019-20</asp:ListItem>
-                                                                    <asp:ListItem Value="2">2019-21</asp:ListItem>
-                                                                    <asp:ListItem Value="3">2019-22</asp:ListItem>
-                                                                    <asp:ListItem Value="4">2019-23</asp:ListItem>
-                                                                    <asp:ListItem Value="5">2019-24</asp:ListItem>
-                                                                </asp:DropDownList>
-                                                            </td>
-                                                            <td style="width: 250px">Estimated Quantity (Only Number)<br />
-                                                                <asp:TextBox ID="txtestimateQuantity" runat="server" Width="140" />
-                                                            </td>
-                                                            <td style="width: 250px">Measuring Unit<br />
-                                                                <asp:DropDownList ID="ddlMeasuringUnit" runat="server" CssClass="form-control">
-                                                                    <asp:ListItem Value="-1">Select</asp:ListItem>
-                                                                    <asp:ListItem Value="Centimeter">Centimeter</asp:ListItem>
-                                                                    <asp:ListItem Value="Gram">Gram</asp:ListItem>
-                                                                    <asp:ListItem Value="Inch">Inch</asp:ListItem>
-                                                                    <asp:ListItem Value="Kg">Kg</asp:ListItem>
-                                                                    <asp:ListItem Value="Mtr">Mtr</asp:ListItem>
-                                                                    <asp:ListItem Value="Inch">Inch</asp:ListItem>
-                                                                    <asp:ListItem Value="Number">Number</asp:ListItem>
-                                                                    <asp:ListItem Value="Ounce">Ounce</asp:ListItem>
-                                                                    <asp:ListItem Value="Other">Other</asp:ListItem>
-                                                                    <asp:ListItem Value="Pound">Pound</asp:ListItem>
-                                                                    <asp:ListItem Value="Ton">Ton</asp:ListItem>
-                                                                </asp:DropDownList>
-                                                            </td>
-                                                            <td style="width: 250px">Estimated Price / LPP (Only Numbers)<br />
-                                                                <asp:TextBox ID="txtestimatePriceLLp" runat="server" Width="140" />
-                                                            </td>
-                                                            <td style="width: 250px">
-                                                                <asp:LinkButton ID="btnAddEstimate" runat="server" CssClass="btn btn-primary" Text="Add" OnClick="EstimateInsert"></asp:LinkButton>
-                                                            </td>
-                                                        </tr>
-                                                    </table>
+                                                   
                                                 </div>
                                             </ContentTemplate>
                                         </asp:UpdatePanel>
