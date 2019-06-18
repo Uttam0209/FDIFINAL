@@ -72,7 +72,6 @@
                     <li class="active"><a data-toggle="tab" href="#pd">Product Description</a></li>
                     <li><a data-toggle="tab" href="#pimg">Product Specification</a></li>
                     <li><a data-toggle="tab" href="#qpt">Estimated Quantity & Price</a></li>
-                    <%--<li><a data-toggle="tab" href="#impprod">Previous Years Import</a></li>--%>
                     <li><a data-toggle="tab" href="#test">Testing & Certification</a></li>
                     <li><a data-toggle="tab" href="#spd">Technical & Financial Support</a></li>
                     <li><a data-toggle="tab" href="#tnd">Tender</a></li>
@@ -182,6 +181,7 @@
                                                     <label>OEM Country</label>
                                                     <span class="mandatory">*</span>
                                                     <asp:TextBox runat="server" ID="txtcountry" TabIndex="9" class="form-control"></asp:TextBox>
+                                                    <%--<asp:HiddenField ID="hfcountry" runat="server" />--%>
                                                 </div>
                                             </div>
                                         </div>
@@ -493,36 +493,59 @@
                                                             <h4>Product Information</h4>
                                                             <div class="clearfix"></div>
                                                             <div class="table table-responsive">
-                                                                <asp:GridView ID="gvProductInformation" runat="server" class="table table-hover" TabIndex="32" ShowFooter="true" AutoGenerateColumns="false"
-                                                                    OnRowCreated="gvProductInformation_RowCreated">
+                                                                <asp:GridView ID="gvProductInformation" runat="server" AutoGenerateColumns="false" Class="table table-hover" OnRowDataBound="OnRowDataBound"
+                                                                    DataKeyNames="ProdInfoId" OnRowEditing="OnRowEditing" OnRowCancelingEdit="OnRowCancelingEdit" PageSize="5" AllowPaging="true" OnPageIndexChanging="OnPaging"
+                                                                    OnRowUpdating="OnRowUpdating" OnRowDeleting="OnRowDeleting" EmptyDataText="No records has been added."
+                                                                    Width="100%">
                                                                     <Columns>
-                                                                        <asp:BoundField DataField="RowNumber" HeaderText="Row Number" />
                                                                         <asp:TemplateField HeaderText="Name of Specification  (Editable)">
                                                                             <ItemTemplate>
-                                                                                <asp:TextBox ID="txtlenth" class="form-control" placeholder="Length" TabIndex="33" runat="server"></asp:TextBox>
+                                                                                <%#Container.DataItemIndex+1 %>
                                                                             </ItemTemplate>
+                                                                        </asp:TemplateField>
+                                                                        <asp:TemplateField HeaderText="Name of Specification  (Editable)">
+                                                                            <ItemTemplate>
+                                                                                <asp:Label ID="lblNameofspec" runat="server" Text='<%# Eval("NameofSpec") %>'></asp:Label>
+                                                                            </ItemTemplate>
+                                                                            <EditItemTemplate>
+                                                                                <asp:TextBox ID="txtNameofspeci" runat="server" Text='<%# Eval("NameofSpec") %>'></asp:TextBox>
+                                                                            </EditItemTemplate>
                                                                         </asp:TemplateField>
                                                                         <asp:TemplateField HeaderText="Value  (Editable, Only Number)">
                                                                             <ItemTemplate>
-                                                                                <asp:TextBox ID="txtvalue" runat="server" class="form-control" TabIndex="34" Placeholder="100"></asp:TextBox>
+                                                                                <asp:Label ID="lblvalueProd" runat="server" Text='<%# Eval("Value") %>'></asp:Label>
                                                                             </ItemTemplate>
+                                                                            <EditItemTemplate>
+                                                                                <asp:TextBox ID="txtValueProd" runat="server" Text='<%# Eval("Value") %>'></asp:TextBox>
+                                                                            </EditItemTemplate>
                                                                         </asp:TemplateField>
                                                                         <asp:TemplateField HeaderText="Unit (Editable)">
                                                                             <ItemTemplate>
-                                                                                <asp:TextBox ID="txtProdInfoUnit" runat="server" class="form-control" TabIndex="35" Placeholder="Centimetre"></asp:TextBox>
+                                                                                <asp:Label ID="lblUnitProd" runat="server" Text='<%# Eval("Unit") %>'></asp:Label>
                                                                             </ItemTemplate>
-                                                                            <FooterStyle HorizontalAlign="Right" />
-                                                                            <FooterTemplate>
-                                                                                <asp:LinkButton runat="server" ID="btnaddmore" Text="Add New Row" TabIndex="36" Class="btn btn-primary pull-right" OnClick="btnaddmore_Click"></asp:LinkButton>
-                                                                            </FooterTemplate>
+                                                                            <EditItemTemplate>
+                                                                                <asp:TextBox ID="txtUnitProd" runat="server" Text='<%# Eval("Unit") %>'></asp:TextBox>
+                                                                            </EditItemTemplate>
                                                                         </asp:TemplateField>
-                                                                        <asp:TemplateField>
-                                                                            <ItemTemplate>
-                                                                                <asp:LinkButton ID="lbRemove" runat="server" OnClick="lbRemove_Click">Remove</asp:LinkButton>
-                                                                            </ItemTemplate>
-                                                                        </asp:TemplateField>
+                                                                        <asp:CommandField ButtonType="Link" ShowEditButton="true" ShowDeleteButton="true" />
                                                                     </Columns>
                                                                 </asp:GridView>
+                                                                <table border="1" cellpadding="0" cellspacing="0" style="border-collapse: collapse; width: 100%">
+                                                                    <tr>
+                                                                        <td style="width: 320px">Name of Specification<br />
+                                                                            <asp:TextBox ID="txtNameOfSpecificationAdd" CssClass="form-control" Style="width: 350px;" runat="server" />
+                                                                        </td>
+                                                                        <td style="width: 320px">Value (Only Number)<br />
+                                                                            <asp:TextBox ID="TxtValueProdAdd" runat="server" Style="width: 320px;" CssClass="form-control" />
+                                                                        </td>
+                                                                        <td style="width: 320px">Unit<br />
+                                                                            <asp:TextBox ID="txtUnitProdAdd" runat="server" Style="width: 250px;" CssClass="form-control" />
+                                                                        </td>
+                                                                        <td style="width: 320px">
+                                                                            <asp:LinkButton ID="btnAdd" runat="server" CssClass="btn btn-primary pull-right" Text="Add" OnClick="Insert"></asp:LinkButton>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
                                                             </div>
                                                         </div>
                                                     </ContentTemplate>
@@ -556,6 +579,280 @@
                                         </div>
                                     </div>
 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="qpt" class="tab-pane fade">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="add-profile">
+                                    <div class="section-pannel">
+                                        <asp:UpdatePanel runat="server" ID="UpdatePanel1">
+                                            <ContentTemplate>
+                                                <div class="table table-responsive">
+                                                    <asp:GridView ID="GvEstimateQuanPrice" runat="server" CssClass="table table-hover" Style="width: 100%" AutoGenerateColumns="false" OnRowDataBound="GvEstimateQuanPrice_RowDataBound"
+                                                        DataKeyNames="ProdQtyPriceId" OnRowEditing="GvEstimateQuanPrice_RowEditing" OnRowCancelingEdit="GvEstimateQuanPrice_RowCancelingEdit" PageSize="8" AllowPaging="true" OnPageIndexChanging="GvEstimateQuanPrice_Paging"
+                                                        OnRowUpdating="GvEstimateQuanPrice_RowUpdating" OnRowDeleting="GvEstimateQuanPrice_RowDeleting" EmptyDataText="No records has been added."
+                                                        Width="450">
+                                                        <Columns>
+                                                            <asp:TemplateField HeaderText="Sr.No">
+                                                                <ItemTemplate>
+                                                                    <%#Container.DataItemIndex+1 %>
+                                                                </ItemTemplate>
+                                                            </asp:TemplateField>
+                                                            <asp:TemplateField HeaderText="Year">
+                                                                <ItemTemplate>
+                                                                    <asp:Label ID="lblYear" runat="server" Text='<%# Eval("FYear") %>'></asp:Label>
+                                                                </ItemTemplate>
+                                                                <EditItemTemplate>
+                                                                    <asp:DropDownList ID="ddlYearEstimateGrid" runat="server" CssClass="form-control">
+                                                                        <asp:ListItem Value="-1">Select</asp:ListItem>
+                                                                        <asp:ListItem Value="1">2019-20</asp:ListItem>
+                                                                        <asp:ListItem Value="2">2019-21</asp:ListItem>
+                                                                        <asp:ListItem Value="3">2019-22</asp:ListItem>
+                                                                        <asp:ListItem Value="4">2019-23</asp:ListItem>
+                                                                        <asp:ListItem Value="5">2019-24</asp:ListItem>
+                                                                    </asp:DropDownList>
+                                                                </EditItemTemplate>
+                                                            </asp:TemplateField>
+                                                            <asp:TemplateField HeaderText="Estimated Quantity (Only Number)">
+                                                                <ItemTemplate>
+                                                                    <asp:Label ID="lblestimateQuantityGrid" runat="server" Text='<%# Eval("EstimatedQty") %>'></asp:Label>
+                                                                </ItemTemplate>
+                                                                <EditItemTemplate>
+                                                                    <asp:TextBox ID="txtEstimateQuantityGrid" runat="server" CssClass="form-control">                                                                        
+                                                                    </asp:TextBox>
+                                                                </EditItemTemplate>
+                                                            </asp:TemplateField>
+                                                            <asp:TemplateField HeaderText="Measuring Unit">
+                                                                <ItemTemplate>
+                                                                    <asp:Label ID="lblMeasuringUnitGrid" runat="server" Text='<%# Eval("Unit") %>'></asp:Label>
+                                                                </ItemTemplate>
+                                                                <EditItemTemplate>
+                                                                    <asp:DropDownList ID="ddlEstimateUnit" runat="server" CssClass="form-control">
+                                                                        <asp:ListItem Value="-1">Select</asp:ListItem>
+                                                                        <asp:ListItem Value="Centimeter">Centimeter</asp:ListItem>
+                                                                        <asp:ListItem Value="Gram">Gram</asp:ListItem>
+                                                                        <asp:ListItem Value="Inch">Inch</asp:ListItem>
+                                                                        <asp:ListItem Value="Kg">Kg</asp:ListItem>
+                                                                        <asp:ListItem Value="Mtr">Mtr</asp:ListItem>
+                                                                        <asp:ListItem Value="Inch">Inch</asp:ListItem>
+                                                                        <asp:ListItem Value="Number">Number</asp:ListItem>
+                                                                        <asp:ListItem Value="Ounce">Ounce</asp:ListItem>
+                                                                        <asp:ListItem Value="Other">Other</asp:ListItem>
+                                                                        <asp:ListItem Value="Pound">Pound</asp:ListItem>
+                                                                        <asp:ListItem Value="Ton">Ton</asp:ListItem>
+                                                                    </asp:DropDownList>
+                                                                </EditItemTemplate>
+                                                            </asp:TemplateField>
+                                                            <asp:TemplateField HeaderText="Estimated Price / LPP (Only Numbers)">
+                                                                <ItemTemplate>
+                                                                    <asp:Label ID="lblestimatePriceLLpGrid" runat="server" Text='<%# Eval("EstimatedQty") %>'></asp:Label>
+                                                                </ItemTemplate>
+                                                                <EditItemTemplate>
+                                                                    <asp:TextBox ID="txtEstimatePriceLLpGrid" runat="server" CssClass="form-control">                                                                        
+                                                                    </asp:TextBox>
+                                                                </EditItemTemplate>
+                                                            </asp:TemplateField>
+                                                            <asp:CommandField ButtonType="Link" ShowEditButton="true" ShowDeleteButton="true" />
+                                                        </Columns>
+                                                    </asp:GridView>
+                                                    <table border="1" cellpadding="0" cellspacing="0" style="border-collapse: collapse; width: 100%">
+                                                        <tr>
+                                                            <td style="width: 250px">Year:<br />
+                                                                <asp:DropDownList ID="ddlYearEstimate" runat="server" CssClass="form-control">
+                                                                    <asp:ListItem Value="-1">Select</asp:ListItem>
+                                                                    <asp:ListItem Value="1">2019-20</asp:ListItem>
+                                                                    <asp:ListItem Value="2">2019-21</asp:ListItem>
+                                                                    <asp:ListItem Value="3">2019-22</asp:ListItem>
+                                                                    <asp:ListItem Value="4">2019-23</asp:ListItem>
+                                                                    <asp:ListItem Value="5">2019-24</asp:ListItem>
+                                                                </asp:DropDownList>
+                                                            </td>
+                                                            <td style="width: 250px">Estimated Quantity (Only Number)<br />
+                                                                <asp:TextBox ID="txtestimateQuantity" runat="server" Width="140" />
+                                                            </td>
+                                                            <td style="width: 250px">Measuring Unit<br />
+                                                                <asp:DropDownList ID="ddlMeasuringUnit" runat="server" CssClass="form-control">
+                                                                    <asp:ListItem Value="-1">Select</asp:ListItem>
+                                                                    <asp:ListItem Value="Centimeter">Centimeter</asp:ListItem>
+                                                                    <asp:ListItem Value="Gram">Gram</asp:ListItem>
+                                                                    <asp:ListItem Value="Inch">Inch</asp:ListItem>
+                                                                    <asp:ListItem Value="Kg">Kg</asp:ListItem>
+                                                                    <asp:ListItem Value="Mtr">Mtr</asp:ListItem>
+                                                                    <asp:ListItem Value="Inch">Inch</asp:ListItem>
+                                                                    <asp:ListItem Value="Number">Number</asp:ListItem>
+                                                                    <asp:ListItem Value="Ounce">Ounce</asp:ListItem>
+                                                                    <asp:ListItem Value="Other">Other</asp:ListItem>
+                                                                    <asp:ListItem Value="Pound">Pound</asp:ListItem>
+                                                                    <asp:ListItem Value="Ton">Ton</asp:ListItem>
+                                                                </asp:DropDownList>
+                                                            </td>
+                                                            <td style="width: 250px">Estimated Price / LPP (Only Numbers)<br />
+                                                                <asp:TextBox ID="txtestimatePriceLLp" runat="server" Width="140" />
+                                                            </td>
+                                                            <td style="width: 250px">
+                                                                <asp:LinkButton ID="btnAddEstimate" runat="server" CssClass="btn btn-primary" Text="Add" OnClick="EstimateInsert"></asp:LinkButton>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+                                            </ContentTemplate>
+                                        </asp:UpdatePanel>
+                                        <asp:UpdateProgress ID="UpdateProgress2" runat="server" AssociatedUpdatePanelID="UpdatePanel1">
+                                            <ProgressTemplate>
+                                                <!---Progress Bar ---->
+                                                <div class="overlay-progress">
+                                                    <div class="custom-progress-bar blue stripes">
+                                                        <span></span>
+                                                        <p>Processing</p>
+                                                    </div>
+                                                </div>
+                                                <!---Progress Bar ---->
+                                            </ProgressTemplate>
+                                        </asp:UpdateProgress>
+                                    </div>
+                                    <div class="section-pannel">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label>PROCURMENT CATEGORY</label>
+                                                    <div class="clearfix"></div>
+                                                    <asp:GridView runat="server" ID="gvprocurmentcategory" TabIndex="48" class="table-responsive table" AutoGenerateColumns="False">
+                                                        <Columns>
+                                                            <asp:TemplateField HeaderText="Sr.No">
+                                                                <ItemTemplate>
+                                                                    <%#Container.DataItemIndex+1 %>
+                                                                </ItemTemplate>
+                                                            </asp:TemplateField>
+                                                            <asp:TemplateField>
+                                                                <ItemTemplate>
+                                                                    <asp:CheckBox runat="server" ID="chkprocurmentcategory" />
+                                                                    <asp:HiddenField runat="server" ID="hfproccateid" Value='<%#Eval("SCategoryId") %>' />
+                                                                </ItemTemplate>
+                                                            </asp:TemplateField>
+                                                            <asp:BoundField runat="server" DataField="SCategoryName" />
+                                                        </Columns>
+                                                    </asp:GridView>
+                                                </div>
+                                            </div>
+                                            <div class="clearfix"></div>
+                                            <div id="Div1" class="col-md-12" runat="server">
+                                                <div class="form-group">
+                                                    <asp:Label runat="server" ID="Label1" CssClass="form-label " Text="PROCURMENT CATEGORY REMARK"></asp:Label>
+                                                    <asp:TextBox runat="server" ID="txtremarksprocurmentCategory" TabIndex="49" MaxLength="250" Height="70px" class="form-control"></asp:TextBox>
+                                                    <div class="clearfix" style="margin-top: 5px;"></div>
+                                                    <span>(Max length 250 words only)</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="test" class="tab-pane fade">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="add-profile">
+                                    <div class="section-pannel">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <asp:GridView runat="server" ID="gvqaagency" AutoGenerateColumns="False" TabIndex="68" class=" table responsive no-wrap table-hover manage-user Grid">
+                                                    <Columns>
+                                                        <asp:TemplateField>
+                                                            <ItemTemplate>
+                                                                <%#Container.DataItemIndex+1 %>
+                                                            </ItemTemplate>
+                                                        </asp:TemplateField>
+                                                        <asp:TemplateField HeaderText="Confirm if QA Agency">
+                                                            <ItemTemplate>
+                                                                <asp:CheckBox runat="server" ID="chkqaagency" TabIndex="1" />
+                                                            </ItemTemplate>
+                                                        </asp:TemplateField>
+                                                        <asp:TemplateField HeaderText="">
+                                                            <ItemTemplate>
+                                                                <asp:Label runat="server" ID="lblqaagency" Text='<%#Eval("SCategoryName") %>'></asp:Label>
+                                                                <asp:HiddenField runat="server" ID="hfqaagency" Value='<%#Eval("SCategoryId") %>' />
+                                                            </ItemTemplate>
+                                                        </asp:TemplateField>
+                                                    </Columns>
+                                                </asp:GridView>
+                                                <div class="clearfix"></div>
+                                                <div class="form-group">
+                                                    <asp:TextBox runat="server" ID="txtqaagencyremarks" MaxLength="50" TextMode="MultiLine" Height="50px" TabIndex="69" class="form-control"></asp:TextBox>
+                                                    <div class="clearfix" style="margin-top: 5px;"></div>
+                                                    <span>(Remarks max length 50 words only)</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="section-pannel">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <asp:GridView runat="server" ID="gvtesting" AutoGenerateColumns="False" TabIndex="68" class=" table responsive no-wrap table-hover manage-user Grid">
+                                                    <Columns>
+                                                        <asp:TemplateField>
+                                                            <ItemTemplate>
+                                                                <%#Container.DataItemIndex+1 %>
+                                                            </ItemTemplate>
+                                                        </asp:TemplateField>
+                                                        <asp:TemplateField HeaderText="Confirm if testing needed">
+                                                            <ItemTemplate>
+                                                                <asp:CheckBox runat="server" ID="chktesting" TabIndex="1" />
+                                                            </ItemTemplate>
+                                                        </asp:TemplateField>
+                                                        <asp:TemplateField HeaderText="">
+                                                            <ItemTemplate>
+                                                                <asp:Label runat="server" ID="lbltesting" Text='<%#Eval("SCategoryName") %>'></asp:Label>
+                                                                <asp:HiddenField runat="server" ID="hftestingid" Value='<%#Eval("SCategoryId") %>' />
+                                                            </ItemTemplate>
+                                                        </asp:TemplateField>
+
+                                                    </Columns>
+                                                </asp:GridView>
+                                                <div class="clearfix"></div>
+                                                <div class="form-group">
+                                                    <asp:TextBox runat="server" ID="txttestingremarks" MaxLength="50" TextMode="MultiLine" Height="50px" TabIndex="69" class="form-control"></asp:TextBox>
+                                                    <div class="clearfix" style="margin-top: 5px;"></div>
+                                                    <span>(Remarks max length 50 words only)</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="section-pannel">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <asp:GridView runat="server" ID="gvCertification" AutoGenerateColumns="False" TabIndex="70" class=" table responsive no-wrap table-hover manage-user Grid">
+                                                    <Columns>
+                                                        <asp:TemplateField>
+                                                            <ItemTemplate>
+                                                                <%#Container.DataItemIndex+1 %>
+                                                            </ItemTemplate>
+                                                        </asp:TemplateField>
+                                                        <asp:TemplateField HeaderText="Confirm if certification needed">
+                                                            <ItemTemplate>
+                                                                <asp:CheckBox runat="server" ID="chkcertification" TabIndex="1" />
+                                                            </ItemTemplate>
+                                                        </asp:TemplateField>
+                                                        <asp:TemplateField HeaderText="">
+                                                            <ItemTemplate>
+                                                                <asp:Label runat="server" ID="lblcertification" Text='<%#Eval("SCategoryName") %>'></asp:Label>
+                                                                <asp:HiddenField runat="server" ID="hfcertification" Value='<%#Eval("SCategoryId") %>' />
+                                                            </ItemTemplate>
+                                                        </asp:TemplateField>
+                                                    </Columns>
+                                                </asp:GridView>
+                                                <div class="clearfix"></div>
+                                                <div class="form-group">
+                                                    <asp:TextBox runat="server" ID="txtcertificationremarks" MaxLength="50" Height="50px" TextMode="MultiLine" TabIndex="71" class="form-control"></asp:TextBox>
+                                                    <div class="clearfix" style="margin-top: 5px;"></div>
+                                                    <span>(Remarks max length 50 words only)</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -632,122 +929,6 @@
                                                             <span>(Remarks max length 50 words only)</span>
                                                         </div>
                                                     </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="qpt" class="tab-pane fade">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="add-profile">
-                                    <div class="section-pannel">
-                                        <asp:UpdatePanel runat="server" ID="UpdatePanel1">
-                                            <ContentTemplate>
-                                                <div class="table table-responsive">
-                                                    <asp:GridView ID="GvEstimateQuanPrice" runat="server" ShowFooter="true" class="table table-hover" TabIndex="42" AutoGenerateColumns="false" OnRowCreated="GvEstimateQuanPrice_RowCreated">
-                                                        <Columns>
-                                                            <asp:BoundField DataField="RowNumber" HeaderText="Row Number" />
-                                                            <asp:TemplateField HeaderText="Year">
-                                                                <ItemTemplate>
-                                                                    <asp:DropDownList ID="ddlestimatequanYear" runat="server" class="form-control" TabIndex="43">
-                                                                        <asp:ListItem Selected="True" Value="-1">Select</asp:ListItem>
-                                                                        <asp:ListItem Value="1">2019-20</asp:ListItem>
-                                                                        <asp:ListItem Value="2">2020-21</asp:ListItem>
-                                                                        <asp:ListItem Value="3">2021-22</asp:ListItem>
-                                                                        <asp:ListItem Value="4">2022-23</asp:ListItem>
-                                                                        <asp:ListItem Value="5">2023-24</asp:ListItem>
-                                                                    </asp:DropDownList>
-                                                                </ItemTemplate>
-                                                            </asp:TemplateField>
-                                                            <asp:TemplateField HeaderText="Estimated Quantity (Only Number)">
-                                                                <ItemTemplate>
-                                                                    <asp:TextBox ID="txtEstimateQuantity" runat="server" class="form-control" TabIndex="44"></asp:TextBox>
-                                                                </ItemTemplate>
-                                                            </asp:TemplateField>
-                                                            <asp:TemplateField HeaderText="Measuring Unit">
-                                                                <ItemTemplate>
-                                                                    <asp:DropDownList ID="ddlMeasurUnit" runat="server" TabIndex="45" class="form-control">
-                                                                        <asp:ListItem Value="-1" Selected="True">Select</asp:ListItem>
-                                                                        <asp:ListItem Value="Centimeter">Centimeter</asp:ListItem>
-                                                                        <asp:ListItem Value="Gram">Gram</asp:ListItem>
-                                                                        <asp:ListItem Value="Inch">Inch</asp:ListItem>
-                                                                        <asp:ListItem Value="Kg">Kg</asp:ListItem>
-                                                                        <asp:ListItem Value="Mtr">Mtr</asp:ListItem>
-                                                                        <asp:ListItem Value="Number">Number</asp:ListItem>
-                                                                        <asp:ListItem Value="Ounce">Ounce</asp:ListItem>
-                                                                        <asp:ListItem Value="Ton">Other</asp:ListItem>
-                                                                        <asp:ListItem Value="Pound">Pound</asp:ListItem>
-                                                                        <asp:ListItem Value="Ton">Ton</asp:ListItem>
-                                                                    </asp:DropDownList>
-                                                                </ItemTemplate>
-                                                            </asp:TemplateField>
-                                                            <asp:TemplateField HeaderText="Estimated Price / LPP (Only Numbers)">
-                                                                <ItemTemplate>
-                                                                    <asp:TextBox ID="txtestimPrice" runat="server" class="form-control" TabIndex="46"></asp:TextBox>
-                                                                </ItemTemplate>
-                                                                <FooterStyle HorizontalAlign="Right" />
-                                                                <FooterTemplate>
-                                                                    <asp:LinkButton ID="lbAddMoreRow" runat="server" class="btn btn-primary" TabIndex="47" Text="Add New Row" OnClick="lbAddMoreRow_Click"></asp:LinkButton>
-                                                                </FooterTemplate>
-                                                            </asp:TemplateField>
-                                                            <asp:TemplateField>
-                                                                <ItemTemplate>
-                                                                    <asp:LinkButton ID="lbRemoveEstiQuan" runat="server" OnClick="lbRemoveEstiQuan_Click">Remove</asp:LinkButton>
-                                                                </ItemTemplate>
-                                                            </asp:TemplateField>
-                                                        </Columns>
-                                                    </asp:GridView>
-                                                </div>
-                                            </ContentTemplate>
-                                        </asp:UpdatePanel>
-                                        <asp:UpdateProgress ID="UpdateProgress2" runat="server" AssociatedUpdatePanelID="UpdatePanel1">
-                                            <ProgressTemplate>
-                                                <!---Progress Bar ---->
-                                                <div class="overlay-progress">
-                                                    <div class="custom-progress-bar blue stripes">
-                                                        <span></span>
-                                                        <p>Processing</p>
-                                                    </div>
-                                                </div>
-                                                <!---Progress Bar ---->
-                                            </ProgressTemplate>
-                                        </asp:UpdateProgress>
-                                    </div>
-                                    <div class="section-pannel">
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <div class="form-group">
-                                                    <label>PROCURMENT CATEGORY</label>
-                                                    <div class="clearfix"></div>
-                                                    <asp:GridView runat="server" ID="gvprocurmentcategory" TabIndex="48" class="table-responsive table" AutoGenerateColumns="False">
-                                                        <Columns>
-                                                            <asp:TemplateField HeaderText="Sr.No">
-                                                                <ItemTemplate>
-                                                                    <%#Container.DataItemIndex+1 %>
-                                                                </ItemTemplate>
-                                                            </asp:TemplateField>
-                                                            <asp:TemplateField>
-                                                                <ItemTemplate>
-                                                                    <asp:CheckBox runat="server" ID="chkprocurmentcategory" />
-                                                                    <asp:HiddenField runat="server" ID="hfproccateid" Value='<%#Eval("SCategoryId") %>' />
-                                                                </ItemTemplate>
-                                                            </asp:TemplateField>
-                                                            <asp:BoundField runat="server" DataField="SCategoryName" />
-                                                        </Columns>
-                                                    </asp:GridView>
-                                                </div>
-                                            </div>
-                                            <div class="clearfix"></div>
-                                            <div id="Div1" class="col-md-12" runat="server">
-                                                <div class="form-group">
-                                                    <asp:Label runat="server" ID="Label1" CssClass="form-label " Text="PROCURMENT CATEGORY REMARK"></asp:Label>
-                                                    <asp:TextBox runat="server" ID="txtremarksprocurmentCategory" TabIndex="49" MaxLength="250" Height="70px" class="form-control"></asp:TextBox>
-                                                    <div class="clearfix" style="margin-top: 5px;"></div>
-                                                    <span>(Max length 250 words only)</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -952,111 +1133,6 @@
                                             <!---Progress Bar ---->
                                         </ProgressTemplate>
                                     </asp:UpdateProgress>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="test" class="tab-pane fade">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="add-profile">
-                                    <div class="section-pannel">
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <asp:GridView runat="server" ID="gvqaagency" AutoGenerateColumns="False" TabIndex="68" class=" table responsive no-wrap table-hover manage-user Grid">
-                                                    <Columns>
-                                                        <asp:TemplateField>
-                                                            <ItemTemplate>
-                                                                <%#Container.DataItemIndex+1 %>
-                                                            </ItemTemplate>
-                                                        </asp:TemplateField>
-                                                        <asp:TemplateField HeaderText="Confirm if QA Agency">
-                                                            <ItemTemplate>
-                                                                <asp:CheckBox runat="server" ID="chkqaagency" TabIndex="1" />
-                                                            </ItemTemplate>
-                                                        </asp:TemplateField>
-                                                        <asp:TemplateField HeaderText="">
-                                                            <ItemTemplate>
-                                                                <asp:Label runat="server" ID="lblqaagency" Text='<%#Eval("SCategoryName") %>'></asp:Label>
-                                                                <asp:HiddenField runat="server" ID="hfqaagency" Value='<%#Eval("SCategoryId") %>' />
-                                                            </ItemTemplate>
-                                                        </asp:TemplateField>
-                                                    </Columns>
-                                                </asp:GridView>
-                                                <div class="clearfix"></div>
-                                                <div class="form-group">
-                                                    <asp:TextBox runat="server" ID="txtqaagencyremarks" MaxLength="50" TextMode="MultiLine" Height="50px" TabIndex="69" class="form-control"></asp:TextBox>
-                                                    <div class="clearfix" style="margin-top: 5px;"></div>
-                                                    <span>(Remarks max length 50 words only)</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="section-pannel">
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <asp:GridView runat="server" ID="gvtesting" AutoGenerateColumns="False" TabIndex="68" class=" table responsive no-wrap table-hover manage-user Grid">
-                                                    <Columns>
-                                                        <asp:TemplateField>
-                                                            <ItemTemplate>
-                                                                <%#Container.DataItemIndex+1 %>
-                                                            </ItemTemplate>
-                                                        </asp:TemplateField>
-                                                        <asp:TemplateField HeaderText="Confirm if testing needed">
-                                                            <ItemTemplate>
-                                                                <asp:CheckBox runat="server" ID="chktesting" TabIndex="1" />
-                                                            </ItemTemplate>
-                                                        </asp:TemplateField>
-                                                        <asp:TemplateField HeaderText="">
-                                                            <ItemTemplate>
-                                                                <asp:Label runat="server" ID="lbltesting" Text='<%#Eval("SCategoryName") %>'></asp:Label>
-                                                                <asp:HiddenField runat="server" ID="hftestingid" Value='<%#Eval("SCategoryId") %>' />
-                                                            </ItemTemplate>
-                                                        </asp:TemplateField>
-
-                                                    </Columns>
-                                                </asp:GridView>
-                                                <div class="clearfix"></div>
-                                                <div class="form-group">
-                                                    <asp:TextBox runat="server" ID="txttestingremarks" MaxLength="50" TextMode="MultiLine" Height="50px" TabIndex="69" class="form-control"></asp:TextBox>
-                                                    <div class="clearfix" style="margin-top: 5px;"></div>
-                                                    <span>(Remarks max length 50 words only)</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="section-pannel">
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <asp:GridView runat="server" ID="gvCertification" AutoGenerateColumns="False" TabIndex="70" class=" table responsive no-wrap table-hover manage-user Grid">
-                                                    <Columns>
-                                                        <asp:TemplateField>
-                                                            <ItemTemplate>
-                                                                <%#Container.DataItemIndex+1 %>
-                                                            </ItemTemplate>
-                                                        </asp:TemplateField>
-                                                        <asp:TemplateField HeaderText="Confirm if certification needed">
-                                                            <ItemTemplate>
-                                                                <asp:CheckBox runat="server" ID="chkcertification" TabIndex="1" />
-                                                            </ItemTemplate>
-                                                        </asp:TemplateField>
-                                                        <asp:TemplateField HeaderText="">
-                                                            <ItemTemplate>
-                                                                <asp:Label runat="server" ID="lblcertification" Text='<%#Eval("SCategoryName") %>'></asp:Label>
-                                                                <asp:HiddenField runat="server" ID="hfcertification" Value='<%#Eval("SCategoryId") %>' />
-                                                            </ItemTemplate>
-                                                        </asp:TemplateField>
-                                                    </Columns>
-                                                </asp:GridView>
-                                                <div class="clearfix"></div>
-                                                <div class="form-group">
-                                                    <asp:TextBox runat="server" ID="txtcertificationremarks" MaxLength="50" Height="50px" TextMode="MultiLine" TabIndex="71" class="form-control"></asp:TextBox>
-                                                    <div class="clearfix" style="margin-top: 5px;"></div>
-                                                    <span>(Remarks max length 50 words only)</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
                         </div>
