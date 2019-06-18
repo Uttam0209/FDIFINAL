@@ -1943,5 +1943,6 @@ form label { font-size: 15px !important; font-family: 'Roboto', sans-serif !impo
 .product-view { margin-top: 10px;}
 .product-view .row { margin-bottom: 15px;}
 .product-view table tr td { text-align:left; text-transform:uppercase; font-size: 12px; padding: 3px;}
-.product-view table tr td:first-child { width: 28%; color:#333; font-weight:500; }
-.product-view .two-col table tr td:first-child { width: 45% !important;}
+.product-view table tr td:first-child { width: 28%; color:#333; font-weight:500; vertical-align:top; }
+.product-view .two-col table tr td:first-child { width: 50% !important; white-space:nowrap;}
+.commonAjaxTbl.master-company-table tr td:last-child { white-space:nowrap !important;}
