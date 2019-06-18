@@ -60,7 +60,7 @@ body{ background:#f1f1f1;}
 .tableHead{ background:#fff !important; color:#000 !important;}
 .tableHead tr th{color:#000 !important;}
 
-.table>tbody>tr>td{ background:#f8f8f8; padding:5px 10px 0px; color:#000; text-align:left;}
+.table>tbody>tr>td{ background:#f8f8f8;  color:#000; text-align:left;}
 h5{ color:#000;}
 a { font-weight:300;
     color: #000000;
