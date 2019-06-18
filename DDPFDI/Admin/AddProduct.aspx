@@ -498,7 +498,7 @@
                                                                     OnRowUpdating="OnRowUpdating" OnRowDeleting="OnRowDeleting" EmptyDataText="No records has been added."
                                                                     Width="100%">
                                                                     <Columns>
-                                                                        <asp:TemplateField HeaderText="Name of Specification  (Editable)">
+                                                                        <asp:TemplateField HeaderText="Sr.No">
                                                                             <ItemTemplate>
                                                                                 <%#Container.DataItemIndex+1 %>
                                                                             </ItemTemplate>
