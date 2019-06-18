@@ -1307,12 +1307,12 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                 dtImage = imagedb();
             }
         }
-        HyPanel1["FeatursandDetail"] = Co.RSQandSQLInjection(txtremarksyearofimportyes.Text.Trim(), "soft");
+        HyPanel1["FeatursandDetail"] = Co.RSQandSQLInjection(txtfeaturesanddetails.Text.Trim(), "soft");
         if (gvProductInformation.Rows.Count != 0)
         {
             dtSaveProdInfo = SaveCodeProdInfo();
         }
-        HyPanel1["AdditionalDetail"] = Co.RSQandSQLInjection(txtremarksyearofimportyes.Text.Trim(), "soft");
+        HyPanel1["AdditionalDetail"] = Co.RSQandSQLInjection(txtadditionalinfo.Text.Trim(), "soft");
         if (GvEstimateQuanPrice.Rows.Count != 0)
         {
             dtSaveEstimateQuantity = SaveCodeEstimateQuantity();
@@ -1635,6 +1635,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         txtservisesremarks.Text = "";
         txtfinancialsuppRemarks.Text = "";
         rbtendordateyesno.SelectedValue = "N";
+
         divtdate.Visible = false;
         contactpanel1.Visible = false;
         divnodal2.Visible = false;
@@ -1814,7 +1815,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
             }
         }
         CountryID = FinalNicCode;
-       // ViewState["CountryId"] = FinalNicCode.ToString();
+        // ViewState["CountryId"] = FinalNicCode.ToString();
         //  hfCountryId.Value = FinalNicCode.ToString();
         return customers.ToArray();
     }
@@ -2053,37 +2054,54 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                 btnsubmitpanel1.Text = "Update";
                 hfprodid.Value = DtView.Rows[0]["ProductID"].ToString();
                 hfcomprefno.Value = DtView.Rows[0]["CompanyRefNo"].ToString();
-                ddlmastercategory.Items.FindByValue(DtView.Rows[0]["ProductLevel1"].ToString()).Selected = true;
-                BindMasterSubCategory();
-                ddlsubcategory.Items.FindByValue(DtView.Rows[0]["ProductLevel2"].ToString()).Selected = true;
-                BindMaster3levelSubCategory();
-                if (DtView.Rows[0]["ProductLevel3"].ToString() != "")
+                if (DtView.Rows[0]["ProductLevel1"].ToString() != "")
                 {
-                    ddllevel3product.SelectedValue = DtView.Rows[0]["ProductLevel3"].ToString();
+                    ddlmastercategory.Items.FindByValue(DtView.Rows[0]["ProductLevel1"].ToString()).Selected = true;
+                    BindMasterSubCategory();
+                    ddlsubcategory.Items.FindByValue(DtView.Rows[0]["ProductLevel2"].ToString()).Selected = true;
+                    BindMaster3levelSubCategory();
+                    if (DtView.Rows[0]["ProductLevel3"].ToString() != "")
+                    {
+                        ddllevel3product.SelectedValue = DtView.Rows[0]["ProductLevel3"].ToString();
+                    }
                 }
                 txtnsccode.Text = DtView.Rows[0]["NSCCode"].ToString();
                 txtniincode.Text = DtView.Rows[0]["NIINCode"].ToString();
                 txtproductdescription.Text = DtView.Rows[0]["ProductDescription"].ToString();
                 txtoempartnumber.Text = DtView.Rows[0]["OEMPartNumber"].ToString();
                 txtoemname.Text = DtView.Rows[0]["OEMName"].ToString();
-                DataTable dtcount = Lo.RetriveCountry(Convert.ToInt64(DtView.Rows[0]["OEMCountry"].ToString()), "GetCountryByID");
-                if (dtcount.Rows.Count > 0)
-                { txtcountry.Text = dtcount.Rows[0]["CountryName"].ToString(); }
-                CountryID = Convert.ToInt16(DtView.Rows[0]["OEMCountry"].ToString());
+                if (DtView.Rows[0]["OEMCountry"].ToString() != "")
+                {
+                    DataTable dtcount = Lo.RetriveCountry(Convert.ToInt64(DtView.Rows[0]["OEMCountry"].ToString()), "GetCountryByID");
+                    if (dtcount.Rows.Count > 0)
+                    {
+                        txtcountry.Text = dtcount.Rows[0]["CountryName"].ToString();
+                        CountryID = Convert.ToInt16(DtView.Rows[0]["OEMCountry"].ToString());
+                    }
+                }
                 txtdpsupartnumber.Text = DtView.Rows[0]["DPSUPartNumber"].ToString();
                 txtenduserpartnumber.Text = DtView.Rows[0]["EndUserPartNumber"].ToString();
                 txthsncode.Text = DtView.Rows[0]["HSNCode"].ToString();
-                ddlenduser.SelectedValue = DtView.Rows[0]["EndUser"].ToString();
-                ddlplatform.Items.FindByValue(DtView.Rows[0]["Platform"].ToString()).Selected = true;
-                BindMasterProductNoenCletureCategory();
-                ddlnomnclature.SelectedValue = DtView.Rows[0]["NomenclatureOfMainSystem"].ToString();
-                ddltechnologycat.Items.FindByValue(DtView.Rows[0]["TechnologyLevel1"].ToString()).Selected = true;
-                BindMasterSubCategoryTech();
-                ddlsubtech.Items.FindByValue(DtView.Rows[0]["TechnologyLevel2"].ToString()).Selected = true;
-                BindMasterSubCategoryTechLevel3();
-                if (DtView.Rows[0]["TechnologyLevel3"].ToString() != "")
+                if (DtView.Rows[0]["EndUser"].ToString() != "")
                 {
-                    ddltechlevel3.SelectedValue = DtView.Rows[0]["TechnologyLevel3"].ToString();
+                    ddlenduser.SelectedValue = DtView.Rows[0]["EndUser"].ToString();
+                }
+                if (DtView.Rows[0]["Platform"].ToString() != "")
+                {
+                    ddlplatform.Items.FindByValue(DtView.Rows[0]["Platform"].ToString()).Selected = true;
+                    BindMasterProductNoenCletureCategory();
+                    ddlnomnclature.SelectedValue = DtView.Rows[0]["NomenclatureOfMainSystem"].ToString();
+                }
+                if (DtView.Rows[0]["TechnologyLevel1"].ToString() != "")
+                {
+                    ddltechnologycat.Items.FindByValue(DtView.Rows[0]["TechnologyLevel1"].ToString()).Selected = true;
+                    BindMasterSubCategoryTech();
+                    ddlsubtech.Items.FindByValue(DtView.Rows[0]["TechnologyLevel2"].ToString()).Selected = true;
+                    BindMasterSubCategoryTechLevel3();
+                    if (DtView.Rows[0]["TechnologyLevel3"].ToString() != "")
+                    {
+                        ddltechlevel3.SelectedValue = DtView.Rows[0]["TechnologyLevel3"].ToString();
+                    }
                 }
                 txtsearchkeyword.Text = DtView.Rows[0]["SearchKeyword"].ToString();
                 rbisindinised.SelectedValue = DtView.Rows[0]["IsIndeginized"].ToString();
@@ -2154,7 +2172,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                     gvProductInformation.DataSource = DtPInfoEditBind;
                     gvProductInformation.DataBind();
                 }
-                txtadditionalinfo.Text = DtView.Rows[0]["FeatursandDetail"].ToString();
+                txtadditionalinfo.Text = DtView.Rows[0]["AdditionalDetail"].ToString();
                 BindGridEstimateQuantity();
                 DataTable DTporCat = Lo.RetriveProductCode("", hfprodrefno.Value, "ProductPOP", hidType.Value);
                 if (DTporCat.Rows.Count > 0)

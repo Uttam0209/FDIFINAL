@@ -393,7 +393,7 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
                 if (Nodel2Id.ToString() != "")
                 {
                     DataTable dtNodal2 = Lo.RetriveProductCode(Nodel2Id.ToString(), "", "ProdNodal", "");
-                    if (dtNodal2.Rows.Count == 2)
+                    if (dtNodal2.Rows.Count > 0)
                     {
                         lblempcode2.Text = dtNodal2.Rows[0]["NodalOfficerRefNo"].ToString();
                         lblempname2.Text = dtNodal2.Rows[0]["NodalOficerName"].ToString();

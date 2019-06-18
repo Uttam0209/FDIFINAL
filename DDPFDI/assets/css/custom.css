@@ -985,6 +985,7 @@ form label {
 .tabing-section .nav-tabs > li > a {
     background: #ddd;
     color: #2b3d51;
+    padding: 10px 9px;
 }
 
 .tabing-section .nav-tabs > li.active > a {
@@ -1946,3 +1947,13 @@ form label { font-size: 15px !important; font-family: 'Roboto', sans-serif !impo
 .product-view table tr td:first-child { width: 28%; color:#333; font-weight:500; vertical-align:top; }
 .product-view .two-col table tr td:first-child { width: 50% !important; white-space:nowrap;}
 .commonAjaxTbl.master-company-table tr td:last-child { white-space:nowrap !important;}
+.gridFormTable tr td { padding: 5px;}
+.gridFormTableResult tr td:last-child { width: 100px !important;}
+.gridFormTableResult tr td:first-child { width: 84px;} 
+.gridFormTableResult tr td:nth-child(2) {width: 310px;}
+.gridFormTableResult tr td:nth-child(3) {width: 307px;}
+.gridFormTableResult .form-control,.EstimateGridviewResult .form-control { height: 27px; }
+.EstimateGridview tr td:first-child { width: 157px;}
+.EstimateGridviewResult td:nth-child(2) {width: 100px;}
+.EstimateGridviewResult td:nth-child(3) {width: 286px;}
+.EstimateGridviewResult td:nth-child(4) {width: 155px;}
