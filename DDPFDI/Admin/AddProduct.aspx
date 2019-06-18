@@ -147,6 +147,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                                
                                             </ContentTemplate>
                                         </asp:UpdatePanel>
                                         <asp:UpdateProgress ID="UpdateProgress3" runat="server" AssociatedUpdatePanelID="upproduct">

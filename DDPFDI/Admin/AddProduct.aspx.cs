@@ -936,15 +936,21 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         if (DtMasterCategroy.Rows.Count > 0)
         {
             Co.FillDropdownlist(ddlplatform, DtMasterCategroy, "SCategoryName", "SCategoryID");
+
             ddlplatform.Items.Insert(0, "Select");
         }
         else
         {
             DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, "DEFENCE PLATFORM", "", "SelectProductCat", "", "");
+
+
             Co.FillDropdownlist(ddlplatform, DtMasterCategroy, "SCategoryName", "SCategoryID");
+
             ddlplatform.Items.Insert(0, "Select");
+
         }
     }
+
     #endregion
     #region For PROCURMENT CATEGORY
     protected void BindPurposeProcuremnt()
@@ -1814,7 +1820,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
             }
         }
         CountryID = FinalNicCode;
-       // ViewState["CountryId"] = FinalNicCode.ToString();
+        // ViewState["CountryId"] = FinalNicCode.ToString();
         //  hfCountryId.Value = FinalNicCode.ToString();
         return customers.ToArray();
     }

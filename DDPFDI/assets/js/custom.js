@@ -178,5 +178,10 @@ var count = 0;
           $(this).parents('.card').siblings().find('.collapse').removeClass('in');
         });
 
+    //Select 2 Dropwdown
+        $("#ContentPlaceHolder1_select2").select2({
+            
+        });
+
 });
 
