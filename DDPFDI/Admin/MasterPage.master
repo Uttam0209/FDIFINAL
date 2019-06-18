@@ -222,40 +222,6 @@
             });
         }
     </script>
-    <script type="text/javascript">
-        $(function () {
-            SetAutoCompleteCountry();
-        });
-        var prm = Sys.WebForms.PageRequestManager.getInstance();
-        if (prm != null) {
-            prm.add_endRequest(function (sender, e) {
-                if (sender._postBackSettings.panelsToUpdate != null) {
-                    SetAutoCompleteCountry();
-                }
-            });
-        };
-        function SetAutoCompleteCountry() {
-            $("[id$=txtcountry]").autocomplete({
-                source: function (request, response) {
-                    $.ajax({
-                        url: '<%=ResolveUrl("~/Admin/AddProduct.aspx/GetCountry") %>',
-                        data: "{ 'prefix': '" + request.term + "'}",
-                        dataType: "json",
-                        type: "POST",
-                        contentType: "application/json; charset=utf-8",
-                        success: function (data) {
-                            response($.map(data.d, function (item) {
-                                return {
-                                    label: item.split('-')[0],
-                                    val: item.split('-')[1]
-                                };
-                            }))
-                        }
-                    });
-                }
-            });
-        }
-    </script>
     <!--------------------------Gallery----------------------->
     <script>
         $(function () {

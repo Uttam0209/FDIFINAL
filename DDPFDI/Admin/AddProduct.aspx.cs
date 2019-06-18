@@ -23,7 +23,6 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     public DataTable dtSaveEstimateQuantity = new DataTable();
 
     private string DisplayPanel = "";
-    public static Int64 CountryID;
     private string _msg = string.Empty;
     private string _sysMsg = string.Empty;
     public string Services = "";
@@ -91,6 +90,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                         if (hidType.Value.ToString() != "SuperAdmin" || hidType.Value.ToString() != "Admin")
                         {
                             BindCompany();
+                            BindCountry();
                             BindFinancialYear();
                             tendorstatus();
                             IsProductImported();
@@ -121,6 +121,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                         else
                         {
                             BindCompany();
+                            BindCountry();
                             BindFinancialYear();
                             tendorstatus();
                             IsProductImported();
@@ -1081,15 +1082,15 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     }
     #endregion
     #region For Country
-    //protected void BindCountry()
-    //{
-    //    DataTable DtCountry = Lo.RetriveCountry(0,"Select");
-    //    if (DtCountry.Rows.Count > 0)
-    //    {
-    //        Co.FillDropdownlist(ddlcountry, DtCountry, "CountryName", "CountryID");
-    //        ddlcountry.Items.Insert(0, "Select");
-    //    }
-    //}
+    protected void BindCountry()
+    {
+        DataTable DtCountry = Lo.RetriveCountry(0, "Select");
+        if (DtCountry.Rows.Count > 0)
+        {
+            Co.FillDropdownlist(txtcountry, DtCountry, "CountryName", "CountryID");
+            txtcountry.Items.Insert(0, "Select");
+        }
+    }
     #endregion
     #region PanelSaveCode
     protected void SaveProductDescription()
@@ -1180,7 +1181,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         HyPanel1["NIINCode"] = Co.RSQandSQLInjection(txtniincode.Text.Trim(), "soft");
         HyPanel1["OEMPartNumber"] = Co.RSQandSQLInjection(txtoempartnumber.Text.Trim(), "soft");
         HyPanel1["OEMName"] = Co.RSQandSQLInjection(txtoemname.Text.Trim(), "soft");
-        HyPanel1["OEMCountry"] = Convert.ToInt64(CountryID.ToString());
+        HyPanel1["OEMCountry"] = Convert.ToInt64(txtcountry.SelectedItem.Value);
         HyPanel1["DPSUPartNumber"] = Co.RSQandSQLInjection(txtdpsupartnumber.Text.Trim(), "soft");
         HyPanel1["HSNCode"] = Co.RSQandSQLInjection(txthsncode.Text.Trim(), "soft");
         HyPanel1["EndUserPartNumber"] = Co.RSQandSQLInjection(txtenduserpartnumber.Text.Trim(), "soft");
@@ -1490,7 +1491,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         {
             if (ddlsubtech.SelectedItem.Text != "Select" && ddlnomnclature.SelectedItem.Text != "Select" && ddlenduser.SelectedItem.Text != "Select" && ddlplatform.SelectedItem.Text != "Select")
             {
-                if (txtcountry.Text != "" && txtdpsupartnumber.Text != "")
+                if (txtcountry.SelectedItem.Text != "" && txtdpsupartnumber.Text != "")
                 {
                     if (fuitemdescriptionfile.HasFile != false)
                     {
@@ -1588,7 +1589,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         hfprodrefno.Value = "";
         txtoempartnumber.Text = "";
         txtoemname.Text = "";
-        txtcountry.Text = "";
+        txtcountry.SelectedIndex = 0;
         txtmanifacaddress.Text = "";
         ddlyearofindiginization.SelectedIndex = 0;
         txtremarksprocurmentCategory.Text = "";
@@ -1616,7 +1617,6 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         ddllevel3product.Items.Clear();
         ddlsubtech.Items.Clear();
         ddltechlevel3.Items.Clear();
-        CountryID = 0;
         txtfeaturesanddetails.Text = "";
         txtadditionalinfo.Text = "";
         txtremarksyearofimportyes.Text = "";
@@ -1791,38 +1791,6 @@ public partial class Admin_AddProduct : System.Web.UI.Page
             }
         }
         // NicCode = FinalNicCode;
-        return customers.ToArray();
-    }
-    [System.Web.Services.WebMethod]
-    [System.Web.Script.Services.ScriptMethod()]
-    public static string[] GetCountry(string prefix)
-    {
-        Cryptography objCrypto1 = new Cryptography();
-        List<string> customers = new List<string>();
-        Int64 FinalNicCode = 0;
-        using (SqlConnection conn = new SqlConnection())
-        {
-            conn.ConnectionString = objCrypto1.DecryptData(ConfigurationManager.ConnectionStrings["connectiondb"].ConnectionString);
-            using (SqlCommand cmd = new SqlCommand())
-            {
-                cmd.CommandText = "select Upper(CountryName) as CountryName,CountryId from tbl_mst_Country where CountryName like @SearchText + '%' and IsActive='Y'";
-                cmd.Parameters.AddWithValue("@SearchText", prefix);
-                cmd.Connection = conn;
-                conn.Open();
-                using (SqlDataReader sdr = cmd.ExecuteReader())
-                {
-                    while (sdr.Read())
-                    {
-                        customers.Add(string.Format("{0}-{1}", sdr["CountryName"], sdr["CountryID"]));
-                        FinalNicCode = Convert.ToInt64(sdr["CountryId"].ToString());
-                    }
-                }
-                conn.Close();
-            }
-        }
-        CountryID = FinalNicCode;
-        // ViewState["CountryId"] = FinalNicCode.ToString();
-        //  hfCountryId.Value = FinalNicCode.ToString();
         return customers.ToArray();
     }
     #endregion
@@ -2078,12 +2046,11 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                 txtoemname.Text = DtView.Rows[0]["OEMName"].ToString();
                 if (DtView.Rows[0]["OEMCountry"].ToString() != "")
                 {
-                    DataTable dtcount = Lo.RetriveCountry(Convert.ToInt64(DtView.Rows[0]["OEMCountry"].ToString()), "GetCountryByID");
-                    if (dtcount.Rows.Count > 0)
-                    {
-                        txtcountry.Text = dtcount.Rows[0]["CountryName"].ToString();
-                        CountryID = Convert.ToInt16(DtView.Rows[0]["OEMCountry"].ToString());
-                    }
+                    // DataTable dtcount = Lo.RetriveCountry(Convert.ToInt64(DtView.Rows[0]["OEMCountry"].ToString()), "GetCountryByID");
+                    // if (dtcount.Rows.Count > 0)
+                    //  {
+                    txtcountry.SelectedValue = DtView.Rows[0]["OEMCountry"].ToString();
+                    //  }
                 }
                 txtdpsupartnumber.Text = DtView.Rows[0]["DPSUPartNumber"].ToString();
                 txtenduserpartnumber.Text = DtView.Rows[0]["EndUserPartNumber"].ToString();

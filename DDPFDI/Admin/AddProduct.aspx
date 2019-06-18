@@ -147,7 +147,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                
+
                                             </ContentTemplate>
                                         </asp:UpdatePanel>
                                         <asp:UpdateProgress ID="UpdateProgress3" runat="server" AssociatedUpdatePanelID="upproduct">
@@ -181,7 +181,9 @@
                                                 <div class="form-group">
                                                     <label>OEM Country</label>
                                                     <span class="mandatory">*</span>
-                                                    <asp:TextBox runat="server" ID="txtcountry" TabIndex="9" class="form-control"></asp:TextBox>
+                                                    <%--<asp:TextBox runat="server" ID="txtcountry" TabIndex="9" class="form-control"></asp:TextBox>--%>
+                                                    <asp:DropDownList ID="txtcountry" runat="server" TabIndex="9" class="form-control">
+                                                    </asp:DropDownList>
                                                     <%--<asp:HiddenField ID="hfcountry" runat="server" />--%>
                                                 </div>
                                             </div>

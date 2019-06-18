@@ -179,7 +179,7 @@ var count = 0;
         });
 
     //Select 2 Dropwdown
-        $("#ContentPlaceHolder1_select2").select2({
+        $("#ContentPlaceHolder1_txtcountry").select2({
             
         });
 
