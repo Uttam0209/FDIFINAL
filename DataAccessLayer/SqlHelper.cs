@@ -1283,7 +1283,7 @@ namespace DataAccessLayer
             }
         }
 
-        public string SaveExcel3510(DataTable dtMaster,int l1, int l2, int pid)
+        public string SaveExcel3510(DataTable dtMaster,string l1, string l2, string pid)
         {
             using (DbConnection Connection = db.CreateConnection())
             {

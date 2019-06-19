@@ -111,7 +111,13 @@ public partial class frmUploadExcel : System.Web.UI.Page
                 string path = Server.MapPath("~/App_Data/") + fuexcel.PostedFile.FileName;
                 fuexcel.SaveAs(path);
                 dtExcel = Lo.CreateExcelConnection(path, "data", out ErrText);
+                DataView dv=new DataView(dtExcel);
+                dv.RowFilter = "Status='A'";
+                dtExcel = dv.ToTable();
 
+
+                diverror.Visible = true;
+                diverror.InnerHtml = ErrText;
                 //dtMaster = dtExcel.Copy();
 
                 //dtMaster = dtMaster.DefaultView.ToTable(true, "GROUP", "FSG Title");
@@ -126,9 +132,9 @@ public partial class frmUploadExcel : System.Web.UI.Page
             }
             if (dtExcel.Rows.Count < 1)
             {
-                diverror.Visible = true;
-                diverror.InnerHtml = "No data imported from excel file !!";
-                diverror.Attributes.Add("class", "alert alert-danger");
+               // diverror.Visible = true;
+               // diverror.InnerHtml = "No data imported from excel file !!";
+               // diverror.Attributes.Add("class", "alert alert-danger");
                 return;
             }
             else
@@ -137,7 +143,7 @@ public partial class frmUploadExcel : System.Web.UI.Page
                 {
                     var rowsCount = Convert.ToInt32(dtExcel.Rows.Count);
                     lblRowCount.Text = "Rows Processed:- " + rowsCount;
-                    DataTable dtPid=Lo.RetrivePid(Int16.Parse(txtL1.Text), Int16.Parse(txtL2.Text));
+                    DataTable dtPid=Lo.RetrivePid((txtL1.Text),(txtL2.Text));
                     if (dtPid.Rows.Count < 1)
                     {
                         diverror.Visible = true;
@@ -146,7 +152,7 @@ public partial class frmUploadExcel : System.Web.UI.Page
                         return;
                     }
 
-                    str = Lo.SaveExcel3510(dtExcel, Int16.Parse(txtL1.Text), Int16.Parse(txtL2.Text),Int16.Parse(dtPid.Rows[0][0].ToString()));
+                    str = Lo.SaveExcel3510(dtExcel,(txtL1.Text), (txtL2.Text),(dtPid.Rows[0][0].ToString()));
                     if (str == "Save")
                     {
                         diverror.Visible = true;

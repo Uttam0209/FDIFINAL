@@ -30,10 +30,10 @@ public partial class _Default : System.Web.UI.Page
         // string c = objEnc.DecryptData("zLKoGmaRQOs=");
         // string s = objEnc.EncryptData("Indig@rgera");
 
-       
+        //string s = objEnc.EncryptData("Data Source=103.73.189.114;Initial Catalog=ddp_cmsV1;User ID=sa;Password=mXy<wxh3:Mh@U");
         // string s = objEnc.EncryptData(@"Data Source=DE73P-DBAERO-00\SQLEXPRESS;Initial Catalog=Gip_AeroIndia2018_new;User ID=sa;Password=Adm@2^3SqlServ");
-        //  string d = objEnc.DecryptData("aL88ocdv5/LvxKi0O2Gs6kF35uJ5Iz4xWbJBsJ8R+marLTVA2W7Pt0PDHgFG4Wx3HJgCG5QjEr1C1Q7WGTiNwa2AB1N5OvU+45sa48G+2HZnZapUUB4NgatRxGyMc5ZecSf34VN2rLqINQzCMknoOQ==");
-        //string d = objEnc.DecryptData("aL88ocdv5/LvxKi0O2Gs6kF35uJ5Iz4xWbJBsJ8R+marLTVA2W7Pt0PDHgFG4Wx3HJgCG5QjEr1C1Q7WGTiNwa2AB1N5OvU+45sa48G+2HZnZapUUB4NgatRxGyMc5ZeIZ+IoVr5cJvbHkEUWdvWZA==");
+        //string d = objEnc.DecryptData("aL88ocdv5/LvxKi0O2Gs6kF35uJ5Iz4xWbJBsJ8R+marLTVA2W7Pt0PDHgFG4Wx3HJgCG5QjEr1C1Q7WGTiNwa2AB1N5OvU+45sa48G+2HZnZapUUB4NgatRxGyMc5ZecSf34VN2rLqINQzCMknoOQ==");
+      // string c = objEnc.DecryptData("aL88ocdv5/LvxKi0O2Gs6kF35uJ5Iz4xWbJBsJ8R+marLTVA2W7Pt0PDHgFG4Wx3HJgCG5QjEr1C1Q7WGTiNwa2AB1N5OvU+45sa48G+2HZnZapUUB4NgatRxGyMc5ZeIZ+IoVr5cJvbHkEUWdvWZA==");
 
         }
     #region "Login Code"
