@@ -93,7 +93,7 @@
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label>Telephone No </label>
-                                                <asp:TextBox class="form-control" runat="server" MaxLength="10" TabIndex="6" ID="txttelephone"></asp:TextBox>
+                                                <asp:TextBox class="form-control" runat="server" MaxLength="15" TabIndex="6" ID="txttelephone"></asp:TextBox>
                                             </div>
                                         </div>
                                     </div>
@@ -101,7 +101,7 @@
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label>Fax No </label>
-                                                <asp:TextBox class="form-control" runat="server" MaxLength="10" TabIndex="7" ID="txtfax"></asp:TextBox>
+                                                <asp:TextBox class="form-control" runat="server" MaxLength="15" TabIndex="7" ID="txtfax"></asp:TextBox>
                                             </div>
                                         </div>
                                         <div class="col-md-4">

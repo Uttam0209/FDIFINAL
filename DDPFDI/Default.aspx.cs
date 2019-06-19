@@ -25,16 +25,9 @@ public partial class _Default : System.Web.UI.Page
     #endregion
     protected void Page_Load(object sender, EventArgs e)
     {
-        // string s = objEnc.EncryptData("PRO0006");
-        //string d = objEnc.DecryptData(s);
-        // string c = objEnc.DecryptData("zLKoGmaRQOs=");
-        // string s = objEnc.EncryptData("Indig@rgera");
-
-       
-        // string s = objEnc.EncryptData(@"Data Source=DE73P-DBAERO-00\SQLEXPRESS;Initial Catalog=Gip_AeroIndia2018_new;User ID=sa;Password=Adm@2^3SqlServ");
-        //  string d = objEnc.DecryptData("aL88ocdv5/LvxKi0O2Gs6kF35uJ5Iz4xWbJBsJ8R+marLTVA2W7Pt0PDHgFG4Wx3HJgCG5QjEr1C1Q7WGTiNwa2AB1N5OvU+45sa48G+2HZnZapUUB4NgatRxGyMc5ZecSf34VN2rLqINQzCMknoOQ==");
-        //string d = objEnc.DecryptData("aL88ocdv5/LvxKi0O2Gs6kF35uJ5Iz4xWbJBsJ8R+marLTVA2W7Pt0PDHgFG4Wx3HJgCG5QjEr1C1Q7WGTiNwa2AB1N5OvU+45sa48G+2HZnZapUUB4NgatRxGyMc5ZeIZ+IoVr5cJvbHkEUWdvWZA==");
-
+         //string s = objEnc.EncryptData("Data Source=DESKTOP-11TFGRC\\MOHDWALI;Initial Catalog=ddp_fdiFinal;User ID=sa;Password=wali");
+       // string a = objEnc.DecryptData("aL88ocdv5/Kq/MF8J1Qtk+6AnMaH6dJtcBkuT7qx2N9CyzbHTAaAEtMwUxH5+xB79+XP0NvDMbN0hWCFyNkxCGNisV6TxWSvIZIG3wVAnEZWnkjh7rz+cQ==");
+     
         }
     #region "Login Code"
     public static bool IsValidEmailId(string InputEmail)

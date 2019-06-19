@@ -1,0 +1,84 @@
+@charset "utf-8";
+/* CSS Document */
+body{ background:#f1f1f1;}
+.whiteBg{ width:100%; min-height:700px; background:#fff; padding:5px 15px;}
+.mt10{ margin:10px 0px;}
+
+
+
+#exTab1 .tab-content {
+  color : white;
+  background-color: #428bca;
+  padding : 5px 15px 15px 15px;
+  
+}
+
+#exTab2 h3 {
+  color : white;
+  background-color: #428bca;
+  padding : 5px 0px;
+}
+
+/* remove border radius for the tab */
+
+#exTab1 .nav-pills > li > a {
+  border-radius: 0;
+}
+
+/* change border radius for the tab , apply corners on top*/
+
+#exTab3 .nav-pills > li > a {
+  border-radius: 4px 4px 0 0 ;
+  border-top:1px solid #f1f1f1;
+  border-left:1px solid #f1f1f1;
+  border-right:1px solid #f1f1f1;
+}
+
+#exTab3 .tab-content {
+  color : white;
+  background-color: #f1f1f1;
+  padding : 5px 15px;
+  min-height:600px;
+}
+.nav-pills>li.active>a{ background:#2b3d51 !important;}
+.nav-pills>li.active>a, .nav-pills>li.active>a:focus, .nav-pills>li.active>a:hover{ background:#f1f1f1;}
+.form-control{ border-radius:0px;}
+.form-group label{ color:#000 !important; font-weight:normal !important;}
+
+.tab-pane{ padding-top:20px;}
+.radio-inline{ color:#000 !important;}
+
+.whitebg{ background:#fff;}
+.m10{ margin:5px 15px; padding:15px;}
+.brd{ border:1px solid #f1f1f1 !important; margin-top:5px;}
+.spanMr{margin-right:20px; color:#000;}
+.mt5{ margin-top:5px;}
+.pt20px{ padding-top:25px;}
+.balckColor{ color:#000; font-weight:normal;}
+
+
+.tableHead{ background:#fff !important; color:#000 !important;}
+.tableHead tr th{color:#000 !important;}
+
+.table>tbody>tr>td{ background:#f8f8f8;  color:#000; text-align:left;}
+h5{ color:#000;}
+a { font-weight:300;
+    color: #000000;
+    text-decoration: none;
+}
+.pb15{ padding-bottom:15px;}
+
+.table-striped tr td{ color:#000; border-bottom:1px solid #999 !important; }
+
+.checkbox-inline{ color:#000;}
+h4{ color:#000;}
+.label{ margin:0px;}
+
+.fontW{ font-weight:normal; color:#000;}
+
+
+
+
+
+
+

@@ -2,4 +2,3 @@ F:\FDIFINAL\Encryption\bin\Release\Encryption.dll
 F:\FDIFINAL\Encryption\bin\Release\Encryption.pdb
 F:\FDIFINAL\Encryption\obj\Release\Encryption.dll
 F:\FDIFINAL\Encryption\obj\Release\Encryption.pdb
-F:\FDIFINAL\Encryption\obj\Release\Encryption.csprojResolveAssemblyReference.cache
