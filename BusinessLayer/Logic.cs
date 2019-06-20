@@ -39,7 +39,7 @@ namespace BusinessLayer
         }
         public string SaveExcel3510(DataTable dtMaster, string l1, string l2, string pid)
         {
-            return SqlHelper.Instance.SaveExcel3510(dtMaster, l1, l2,pid);
+            return SqlHelper.Instance.SaveExcel3510(dtMaster, l1, l2, pid);
         }
 
         #region SaveCode
@@ -194,6 +194,18 @@ namespace BusinessLayer
         {
             return SqlHelper.Instance.GetDataTable("SELECT CompanyName, FY, ExchangeTotalAmount from vw_Chart order by fyid");
         }
+        #endregion
+
+        #region Test
+        public DataTable TestGrid(string Function, string ProdRefNo, Int16 ProdInfoId, string Name, decimal Value, string Unit)
+        {
+            return SqlHelper.Instance.TestGrid(Function, ProdRefNo, ProdInfoId, Name, Value, Unit);
+        }
+        public DataTable RetriveSaveEstimateGrid(string Function, Int16 ProdInfoId, string ProdRefNo, Int16 Year, string FYear, decimal EstimateQuantity, string Unit, decimal Price)
+        {
+            return SqlHelper.Instance.RetriveSaveEstimateGrid(Function, ProdInfoId, ProdRefNo, Year, FYear, EstimateQuantity, Unit, Price);
+        }
+
         #endregion
     }
 }

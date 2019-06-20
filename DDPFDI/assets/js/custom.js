@@ -173,9 +173,14 @@ var count = 0;
         
         // bootstrap Accordion closing parent
 
-        $(".faq-secion .accordion .card-header h2").click(function(){
+        $("body").on( 'click','.faq-secion .accordion .card-header h2', function(){
             console.log('testing');
           $(this).parents('.card').siblings().find('.collapse').removeClass('in');
+        });
+
+    //Select 2 Dropwdown
+        $("#ContentPlaceHolder1_txtcountry").select2({
+            
         });
 
 });

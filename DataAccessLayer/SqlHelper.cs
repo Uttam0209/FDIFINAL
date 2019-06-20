@@ -1282,8 +1282,8 @@ namespace DataAccessLayer
                 }
             }
         }
-
         public string SaveExcel3510(DataTable dtMaster,string l1, string l2, string pid)
+
         {
             using (DbConnection Connection = db.CreateConnection())
             {
@@ -1300,7 +1300,7 @@ namespace DataAccessLayer
 
                         db.AddInParameter(cmd, "@Pid", DbType.Int64, pid);
                         db.AddInParameter(cmd, "@L1Code", DbType.String, l2);
-                        db.AddInParameter(cmd, "@L2Code", DbType.String, dtMaster.Rows[k]["INC"].ToString());  
+                        db.AddInParameter(cmd, "@L2Code", DbType.String, dtMaster.Rows[k]["INC"].ToString());
                         db.AddInParameter(cmd, "@CatName", DbType.String, dtMaster.Rows[k]["Item Name"].ToString() + "(" + dtMaster.Rows[k]["INC"].ToString() + ")");
                         db.AddInParameter(cmd, "@Desc", DbType.String, dtMaster.Rows[k]["Item Name"].ToString());
                         db.AddOutParameter(cmd, "@NewId", DbType.Int32, 50);
@@ -1356,6 +1356,60 @@ namespace DataAccessLayer
                     DbCommand cmd = db.GetStoredProcCommand("sp_GetDashboardData");
                     db.AddInParameter(cmd, "@Purpose", DbType.String, Purpose);
                     db.AddInParameter(cmd, "@SearchText", DbType.String, Search);
+                    IDataReader dr = db.ExecuteReader(cmd);
+                    DataTable dt = new DataTable();
+                    if (dr != null)
+                        dt.Load(dr);
+                    return dt;
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+        }
+        public DataTable TestGrid(string Function, string ProdRefNo, Int16 ProdInfoId, string Name, decimal Value, string Unit)
+        {
+            using (DbConnection dbCon = db.CreateConnection())
+            {
+                dbCon.Open();
+                try
+                {
+                    DbCommand cmd = db.GetStoredProcCommand("sp_InsertProductInfo");
+                    db.AddInParameter(cmd, "@Function", DbType.String, Function);
+                    db.AddInParameter(cmd, "@ProdRefNo", DbType.String, ProdRefNo);
+                    db.AddInParameter(cmd, "@ProdInfoId", DbType.Int16, ProdInfoId);
+                    db.AddInParameter(cmd, "@Name", DbType.String, Name);
+                    db.AddInParameter(cmd, "@Value", DbType.Decimal, Value);
+                    db.AddInParameter(cmd, "@Unit", DbType.String, Unit);
+                    IDataReader dr = db.ExecuteReader(cmd);
+                    DataTable dt = new DataTable();
+                    if (dr != null)
+                        dt.Load(dr);
+                    return dt;
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+        }
+        public DataTable RetriveSaveEstimateGrid(string Function, Int16 ProdInfoId, string ProdRefNo, Int16 Year, string FYear, decimal EstimateQuantity, string Unit, decimal Price)
+        {
+            using (DbConnection dbCon = db.CreateConnection())
+            {
+                dbCon.Open();
+                try
+                {
+                    DbCommand cmd = db.GetStoredProcCommand("sp_InsertProductPrice");
+                    db.AddInParameter(cmd, "@Function", DbType.String, Function);
+                    db.AddInParameter(cmd, "@ProdQtyId", DbType.Int16, ProdInfoId);
+                    db.AddInParameter(cmd, "@ProdRefNo", DbType.String, ProdRefNo);
+                    db.AddInParameter(cmd, "@Year", DbType.Int16, Year);
+                    db.AddInParameter(cmd, "@FYear", DbType.String, FYear);
+                    db.AddInParameter(cmd, "@EstimatedQty", DbType.Decimal, EstimateQuantity);
+                    db.AddInParameter(cmd, "@Unit", DbType.String, Unit);
+                    db.AddInParameter(cmd, "@EstimatedPrice", DbType.Decimal, Price);
                     IDataReader dr = db.ExecuteReader(cmd);
                     DataTable dt = new DataTable();
                     if (dr != null)
