@@ -41,6 +41,10 @@ namespace BusinessLayer
         {
             return SqlHelper.Instance.SaveExcel3510(dtMaster, l1, l2, pid);
         }
+        public string SaveExcelProduct(DataTable dtMaster)
+        {
+            return SqlHelper.Instance.SaveExcelProduct(dtMaster);
+        }
 
         #region SaveCode
         public string SaveFDI(HybridDictionary HySave, out string _sysMsg, out string _msg)

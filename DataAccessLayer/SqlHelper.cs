@@ -1322,6 +1322,64 @@ namespace DataAccessLayer
             }
         }
 
+        public string SaveExcelProduct(DataTable dtMaster)
+        {
+            using (DbConnection Connection = db.CreateConnection())
+            {
+                Connection.Open();
+                DbTransaction Transaction = Connection.BeginTransaction();
+                Int32 errorRow = -1;
+                try
+                {
+                    for (int k = 0; k < dtMaster.Rows.Count; k++)
+                    {
+                        DbCommand cmd = db.GetStoredProcCommand("sp_InsertProductFromExcel");
+
+                        db.AddInParameter(cmd, "@CompanyRefNo", DbType.String, "");
+                        db.AddInParameter(cmd, "@Role", DbType.String, "");
+                        db.AddInParameter(cmd, "@ProductLevel1", DbType.Int64, "");
+                        db.AddInParameter(cmd, "@ProductLevel2", DbType.Int64, "");
+                        db.AddInParameter(cmd, "@ProductLevel3", DbType.Int64, "");
+                        db.AddInParameter(cmd, "@ProductDescription", DbType.String, "");
+                        db.AddInParameter(cmd, "@NSCCode", DbType.String, "");
+                        db.AddInParameter(cmd, "@NIINCode", DbType.String, "");
+                        db.AddInParameter(cmd, "@OEMPartNumber", DbType.String, "");
+                        db.AddInParameter(cmd, "@OEMName", DbType.String, "");
+                        db.AddInParameter(cmd, "@OEMCountry", DbType.Int64, "");
+                        db.AddInParameter(cmd, "@DPSUPartNumber", DbType.String, "");
+                        db.AddInParameter(cmd, "@HSNCode", DbType.String, "");
+                        db.AddInParameter(cmd, "@EndUserPartNumber", DbType.String, "");
+
+                        db.AddInParameter(cmd, "@EndUser", DbType.Int64, "");
+                        db.AddInParameter(cmd, "@Platform", DbType.Int64, "");
+                        db.AddInParameter(cmd, "@NomenclatureOfMainSystem", DbType.Int64, "");
+                        db.AddInParameter(cmd, "@TechnologyLevel1", DbType.Int64, "");
+                        db.AddInParameter(cmd, "@TechnologyLevel2", DbType.Int64, "");
+                        db.AddInParameter(cmd, "@TechnologyLevel3", DbType.Int64, "");
+
+                        db.AddInParameter(cmd, "@SearchKeyword", DbType.String, "");
+                        db.AddInParameter(cmd, "@IsIndeginized", DbType.String, "");
+                        db.AddInParameter(cmd, "@ManufactureName", DbType.String, "");
+
+                        db.AddInParameter(cmd, "@ManufactureAddress", DbType.String, "");
+                        db.AddInParameter(cmd, "@YearofIndiginization", DbType.Int64, "");
+
+                    }
+                    Transaction.Commit();
+                    return "Save";
+                }
+                catch (Exception ex)
+                {
+                    Transaction.Rollback();
+                    return ex.Message + "Error Found in Excel" + errorRow;
+                }
+                finally
+                {
+                    Connection.Close();
+                }
+            }
+        }
+
         public DataTable CreateExcelConnection(string FilePath, string SheetName, out string text)
         {
             try
