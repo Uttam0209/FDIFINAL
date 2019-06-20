@@ -248,7 +248,7 @@ public partial class Admin_ViewDashboard : System.Web.UI.Page
                     dv.RowFilter = "FactoryRefNo='" + RefNo + "'";
                 else
                     dv.RowFilter = "UnitRefNo='" + RefNo + "'";
-                dv.Sort = "CompanyName asc,FactoryName asc";
+                dv.Sort = "LastUpdated desc,CompanyName asc,FactoryName asc";
 
                 gvproduct.DataSource = dv.ToTable();
                 gvproduct.DataBind();
@@ -264,7 +264,7 @@ public partial class Admin_ViewDashboard : System.Web.UI.Page
                     {
                         DataView dv = new DataView(DtGrid);
                         dv.RowFilter = "IsIndeginized='Y'";
-                        dv.Sort = "CompanyName asc,FactoryName asc";
+                        dv.Sort = "LastUpdated desc,CompanyName asc,FactoryName asc";
                         gvproduct.DataSource = dv.ToTable();
                     }
                     else

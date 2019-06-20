@@ -37,7 +37,7 @@ namespace BusinessLayer
         {
             return SqlHelper.Instance.SaveUploadExcelCompany(dtMaster, dtExcel);
         }
-        public string SaveExcel3510(DataTable dtMaster, Int16 l1, Int16 l2, int pid)
+        public string SaveExcel3510(DataTable dtMaster, string l1, string l2, string pid)
         {
             return SqlHelper.Instance.SaveExcel3510(dtMaster, l1, l2, pid);
         }
@@ -182,9 +182,9 @@ namespace BusinessLayer
         {
             return SqlHelper.Instance.GetDataTable("select * from fn_GetAggregateValue('" + action + "','" + role + "','" + refno + "')");
         }
-        public DataTable RetrivePid(int l1, int l2)
+        public DataTable RetrivePid(string l1, string l2)
         {
-            return SqlHelper.Instance.GetDataTable("select SCategoryId from tbl_mst_SubCategorytest where pid=(select SCategoryId from tbl_mst_subcategorytest where pid=0 and l1code='" + l1 + "') and L2Code='" + l2 + "'");
+            return SqlHelper.Instance.GetDataTable("select SCategoryId from tbl_mst_SubCategory where pid=(select SCategoryId from tbl_mst_subcategory where pid=0 and l1code='" + l1 + "') and L2Code='" + l2 + "'");
         }
         public DataTable RetriveParentNode(string role, string refno)
         {

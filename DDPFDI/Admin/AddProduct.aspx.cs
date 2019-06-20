@@ -847,6 +847,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
             {
                 ddllevel3product.Items.Clear();
                 ddllevel3product.Items.Insert(0, "Select");
+                ddllevel3product.Items.Insert(1, "NA");
             }
         }
     }
@@ -854,10 +855,17 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     {
         if (ddllevel3product.SelectedItem.Value != null || ddllevel3product.SelectedItem.Text != "Select")
         {
-            DataTable DtItemDescription = Lo.RetriveMasterSubCategoryDate(Convert.ToInt16(ddllevel3product.SelectedItem.Value), "", "", "Level3ID", "", "");
-            if (DtItemDescription.Rows.Count > 0)
+            if (ddllevel3product.SelectedItem.Value != "NA")
             {
-                txtproductdescription.Text = DtItemDescription.Rows[0]["Description"].ToString();
+                DataTable DtItemDescription = Lo.RetriveMasterSubCategoryDate(Convert.ToInt16(ddllevel3product.SelectedItem.Value), "", "", "Level3ID", "", "");
+                if (DtItemDescription.Rows.Count > 0)
+                {
+                    txtproductdescription.Text = DtItemDescription.Rows[0]["Description"].ToString();
+                }
+                else
+                {
+                    txtproductdescription.Text = "";
+                }
             }
             else
             {

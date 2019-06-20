@@ -112,7 +112,7 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
                     {
                         dv.RowFilter = "CompanyName='" + ddlcompany.SelectedItem.Text + "'";
                     }
-                    dv.Sort = "CompanyName asc,FactoryName asc";
+                    dv.Sort = "LastUpdated desc,CompanyName asc,FactoryName asc";
                     gvproduct.DataSource = dv.ToTable();
                     gvproduct.DataBind();
                     gvproduct.Visible = true;
