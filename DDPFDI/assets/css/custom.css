@@ -1957,3 +1957,7 @@ form label { font-size: 15px !important; font-family: 'Roboto', sans-serif !impo
 .EstimateGridviewResult td:nth-child(2) {width: 100px;}
 .EstimateGridviewResult td:nth-child(3) {width: 286px;}
 .EstimateGridviewResult td:nth-child(4) {width: 155px;}
+
+/*---Datatable Design -----*/
+#ContentPlaceHolder1_gvPrdoct_length {float:left;}
+.shadow-box  {padding: 4%; box-shadow: 0 0 6px rgba(0,0,0,.1); border-radius: 4px;}

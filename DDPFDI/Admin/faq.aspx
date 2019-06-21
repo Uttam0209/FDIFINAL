@@ -399,6 +399,26 @@
                                 </div>
                             </div>
 
+                            <div class="card">
+                                <div class="card-header">
+                                    <h2 data-toggle="collapse" data-parent="#accordion" class="collapsed" data-target="#faq11" aria-expanded="false" aria-controls="faq11">2.Company Master
+                                            <i class="fa fa-plus pull-right"></i>
+                                    </h2>
+                                </div>
+
+                                <div id="faq11" class="collapse">
+                                    <div class="card-body">
+                                        <p>
+                                            The Indenisation portal will have the functionality where a company Nodal Officer is able to add division and units along with designation  and employee.
+                                            The steps for adding division and units along with designation  and employee are given below :- 
+                                        </p>
+                                        <div class="faq-img">
+                                            <img src="../assets/images/faq-images/Company-master.jpg" alt="" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
 
                         </div>
                     </div>
