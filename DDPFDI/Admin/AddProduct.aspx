@@ -147,7 +147,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                
+
                                             </ContentTemplate>
                                         </asp:UpdatePanel>
                                         <asp:UpdateProgress ID="UpdateProgress3" runat="server" AssociatedUpdatePanelID="upproduct">
@@ -181,7 +181,9 @@
                                                 <div class="form-group">
                                                     <label>OEM Country</label>
                                                     <span class="mandatory">*</span>
-                                                    <asp:TextBox runat="server" ID="txtcountry" TabIndex="9" class="form-control"></asp:TextBox>
+                                                    <%--<asp:TextBox runat="server" ID="txtcountry" TabIndex="9" class="form-control"></asp:TextBox>--%>
+                                                    <asp:DropDownList ID="txtcountry" runat="server" TabIndex="9" class="form-control">
+                                                    </asp:DropDownList>
                                                     <%--<asp:HiddenField ID="hfcountry" runat="server" />--%>
                                                 </div>
                                             </div>
@@ -509,7 +511,7 @@
                                                                             <asp:TextBox ID="txtUnitProdAdd" runat="server" Style="width: 159px;" CssClass="form-control" />
                                                                         </td>
                                                                         <td style="width: 320px">
-                                                                            <asp:LinkButton ID="btnAdd" runat="server" Style="margin-top: 18px;"  CssClass="btn btn-primary pull-right" Text="Add" OnClick="Insert"></asp:LinkButton>
+                                                                            <asp:LinkButton ID="btnAdd" runat="server" Style="margin-top: 18px;" CssClass="btn btn-primary pull-right" Text="Add" OnClick="Insert"></asp:LinkButton>
                                                                         </td>
                                                                     </tr>
                                                                 </table>
@@ -550,7 +552,7 @@
                                                                         <asp:CommandField ButtonType="Link" ShowEditButton="true" HeaderText="Action" ShowDeleteButton="true" />
                                                                     </Columns>
                                                                 </asp:GridView>
-                                                                
+
                                                             </div>
                                                         </div>
                                                     </ContentTemplate>
@@ -596,9 +598,10 @@
                                         <asp:UpdatePanel runat="server" ID="UpdatePanel1">
                                             <ContentTemplate>
                                                 <div class="table table-responsive">
-                                                     <table border="0" cellpadding="0" class="gridFormTable EstimateGridview" cellspacing="0" style="border-collapse: collapse; width: 100%">
+                                                    <table border="0" cellpadding="0" class="gridFormTable EstimateGridview" cellspacing="0" style="border-collapse: collapse; width: 100%">
                                                         <tr>
-                                                            <td><label>Year:</label>
+                                                            <td>
+                                                                <label>Year:</label>
                                                                 <asp:DropDownList ID="ddlYearEstimate" runat="server" CssClass="form-control">
                                                                     <asp:ListItem Value="-1">Select</asp:ListItem>
                                                                     <asp:ListItem Value="1">2019-20</asp:ListItem>
@@ -610,9 +613,10 @@
                                                             </td>
                                                             <td>
                                                                 <label>Estimated Quantity (Only Number)</label>
-                                                                <asp:TextBox ID="txtestimateQuantity" runat="server"  CssClass="form-control" />
+                                                                <asp:TextBox ID="txtestimateQuantity" runat="server" CssClass="form-control" />
                                                             </td>
-                                                            <td><label>Measuring Unit</label>
+                                                            <td>
+                                                                <label>Measuring Unit</label>
                                                                 <asp:DropDownList ID="ddlMeasuringUnit" runat="server" CssClass="form-control">
                                                                     <asp:ListItem Value="-1">Select</asp:ListItem>
                                                                     <asp:ListItem Value="Centimeter">Centimeter</asp:ListItem>
@@ -630,10 +634,10 @@
                                                             </td>
                                                             <td>
                                                                 <label>Estimated Price / LPP (Only Numbers)</label>
-                                                                <asp:TextBox ID="txtestimatePriceLLp" runat="server"  CssClass="form-control" />
+                                                                <asp:TextBox ID="txtestimatePriceLLp" runat="server" CssClass="form-control" />
                                                             </td>
                                                             <td>
-                                                                <asp:LinkButton ID="btnAddEstimate" runat="server" Style="margin-top: 18px;" CssClass="btn btn-primary"  Text="Add" OnClick="EstimateInsert"></asp:LinkButton>
+                                                                <asp:LinkButton ID="btnAddEstimate" runat="server" Style="margin-top: 18px;" CssClass="btn btn-primary" Text="Add" OnClick="EstimateInsert"></asp:LinkButton>
                                                             </td>
                                                         </tr>
                                                     </table>
@@ -704,7 +708,7 @@
                                                             <asp:CommandField ButtonType="Link" ShowEditButton="true" ShowDeleteButton="true" />
                                                         </Columns>
                                                     </asp:GridView>
-                                                   
+
                                                 </div>
                                             </ContentTemplate>
                                         </asp:UpdatePanel>
