@@ -183,5 +183,8 @@ var count = 0;
             
         });
 
+    //DataTable 
+        $('#ContentPlaceHolder1_gvPrdoct').DataTable();
+
 });
 
