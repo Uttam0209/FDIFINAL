@@ -604,8 +604,8 @@ namespace DataAccessLayer
                     db.AddInParameter(cmd, "@ProductRefNo", DbType.String, hyProduct["ProductRefNo"]);
                     db.AddInParameter(cmd, "@CompanyRefNo", DbType.String, hyProduct["CompanyRefNo"]);
                     db.AddInParameter(cmd, "@ProductLevel1", DbType.Int64, hyProduct["ProductLevel1"]);
-                    db.AddInParameter(cmd, "@ProductLevel2", DbType.Int16, hyProduct["ProductLevel2"]);
-                    db.AddInParameter(cmd, "@ProductLevel3", DbType.Int16, hyProduct["ProductLevel3"]);
+                    db.AddInParameter(cmd, "@ProductLevel2", DbType.Int32, hyProduct["ProductLevel2"]);
+                    db.AddInParameter(cmd, "@ProductLevel3", DbType.Int32, hyProduct["ProductLevel3"]);
                     db.AddInParameter(cmd, "@ProductDescription", DbType.String, hyProduct["ProductDescription"]);
                     db.AddInParameter(cmd, "@NSCCode", DbType.String, hyProduct["NSCCode"]);
                     db.AddInParameter(cmd, "@NIINCode", DbType.String, hyProduct["NIINCode"]);
@@ -1426,7 +1426,7 @@ namespace DataAccessLayer
                 }
             }
         }
-        public DataTable TestGrid(string Function, string ProdRefNo, Int16 ProdInfoId, string Name, decimal Value, string Unit)
+        public DataTable TestGrid(string Function, string ProdRefNo, Int32 ProdInfoId, string Name, decimal Value, string Unit)
         {
             using (DbConnection dbCon = db.CreateConnection())
             {
@@ -1436,7 +1436,7 @@ namespace DataAccessLayer
                     DbCommand cmd = db.GetStoredProcCommand("sp_InsertProductInfo");
                     db.AddInParameter(cmd, "@Function", DbType.String, Function);
                     db.AddInParameter(cmd, "@ProdRefNo", DbType.String, ProdRefNo);
-                    db.AddInParameter(cmd, "@ProdInfoId", DbType.Int16, ProdInfoId);
+                    db.AddInParameter(cmd, "@ProdInfoId", DbType.Int32, ProdInfoId);
                     db.AddInParameter(cmd, "@Name", DbType.String, Name);
                     db.AddInParameter(cmd, "@Value", DbType.Decimal, Value);
                     db.AddInParameter(cmd, "@Unit", DbType.String, Unit);
@@ -1452,7 +1452,7 @@ namespace DataAccessLayer
                 }
             }
         }
-        public DataTable RetriveSaveEstimateGrid(string Function, Int16 ProdInfoId, string ProdRefNo, Int16 Year, string FYear, decimal EstimateQuantity, string Unit, decimal Price)
+        public DataTable RetriveSaveEstimateGrid(string Function, Int32 ProdInfoId, string ProdRefNo, Int32 Year, string FYear, decimal EstimateQuantity, string Unit, decimal Price)
         {
             using (DbConnection dbCon = db.CreateConnection())
             {
@@ -1461,9 +1461,9 @@ namespace DataAccessLayer
                 {
                     DbCommand cmd = db.GetStoredProcCommand("sp_InsertProductPrice");
                     db.AddInParameter(cmd, "@Function", DbType.String, Function);
-                    db.AddInParameter(cmd, "@ProdQtyId", DbType.Int16, ProdInfoId);
+                    db.AddInParameter(cmd, "@ProdQtyId", DbType.Int32, ProdInfoId);
                     db.AddInParameter(cmd, "@ProdRefNo", DbType.String, ProdRefNo);
-                    db.AddInParameter(cmd, "@Year", DbType.Int16, Year);
+                    db.AddInParameter(cmd, "@Year", DbType.Int32, Year);
                     db.AddInParameter(cmd, "@FYear", DbType.String, FYear);
                     db.AddInParameter(cmd, "@EstimatedQty", DbType.Decimal, EstimateQuantity);
                     db.AddInParameter(cmd, "@Unit", DbType.String, Unit);

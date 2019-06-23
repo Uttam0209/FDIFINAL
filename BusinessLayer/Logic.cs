@@ -201,11 +201,11 @@ namespace BusinessLayer
         #endregion
 
         #region Test
-        public DataTable TestGrid(string Function, string ProdRefNo, Int16 ProdInfoId, string Name, decimal Value, string Unit)
+        public DataTable TestGrid(string Function, string ProdRefNo, Int32 ProdInfoId, string Name, decimal Value, string Unit)
         {
             return SqlHelper.Instance.TestGrid(Function, ProdRefNo, ProdInfoId, Name, Value, Unit);
         }
-        public DataTable RetriveSaveEstimateGrid(string Function, Int16 ProdInfoId, string ProdRefNo, Int16 Year, string FYear, decimal EstimateQuantity, string Unit, decimal Price)
+        public DataTable RetriveSaveEstimateGrid(string Function, Int32 ProdInfoId, string ProdRefNo, Int32 Year, string FYear, decimal EstimateQuantity, string Unit, decimal Price)
         {
             return SqlHelper.Instance.RetriveSaveEstimateGrid(Function, ProdInfoId, ProdRefNo, Year, FYear, EstimateQuantity, Unit, Price);
         }

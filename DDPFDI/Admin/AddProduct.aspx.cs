@@ -550,7 +550,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     {
         if (ddlNodalOfficerEmail.SelectedItem.Text != "Select")
         {
-            DataTable DtGetNodel = Lo.RetriveMasterData(Convert.ToInt16(ddlNodalOfficerEmail.SelectedItem.Value), "", "", 0, "", "", "SearchNodalOfficerID");
+            DataTable DtGetNodel = Lo.RetriveMasterData(Convert.ToInt32(ddlNodalOfficerEmail.SelectedItem.Value), "", "", 0, "", "", "SearchNodalOfficerID");
             if (DtGetNodel.Rows.Count > 0)
             {
                 contactpanel1.Visible = true;
@@ -562,7 +562,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                 txtempcode.Text = DtGetNodel.Rows[0]["NodalEmpCode"].ToString();
                 txtmobnodal.Text = DtGetNodel.Rows[0]["NodalOfficerMobile"].ToString();
                 //===Bind Nodel officer except Nodel one
-                DtCompanyDDL = Lo.RetriveMasterData(Convert.ToInt16(ddlNodalOfficerEmail.SelectedItem.Value), DtGetNodel.Rows[0]["CompanyRefNo"].ToString(), "", 0, "", "", "AllNodelNotSelect");
+                DtCompanyDDL = Lo.RetriveMasterData(Convert.ToInt32(ddlNodalOfficerEmail.SelectedItem.Value), DtGetNodel.Rows[0]["CompanyRefNo"].ToString(), "", 0, "", "", "AllNodelNotSelect");
                 if (DtCompanyDDL.Rows.Count > 0)
                 {
                     Co.FillDropdownlist(ddlNodalOfficerEmail2, DtCompanyDDL, "NodalOficerName", "NodalOfficerID");
@@ -589,7 +589,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     {
         if (ddlNodalOfficerEmail2.SelectedItem.Text != "Select")
         {
-            DataTable DtGetNodel = Lo.RetriveMasterData(Convert.ToInt16(ddlNodalOfficerEmail2.SelectedItem.Value), "", "", 0, "", "", "SearchNodalOfficerID");
+            DataTable DtGetNodel = Lo.RetriveMasterData(Convert.ToInt32(ddlNodalOfficerEmail2.SelectedItem.Value), "", "", 0, "", "", "SearchNodalOfficerID");
             if (DtGetNodel.Rows.Count > 0)
             {
                 contactpanel2.Visible = true;
@@ -601,7 +601,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                 txtempcode2.Text = DtGetNodel.Rows[0]["NodalEmpCode"].ToString();
                 txtmobnodal2.Text = DtGetNodel.Rows[0]["NodalOfficerMobile"].ToString();
                 //===Bind Nodel officer expect Nodel Two                
-                DtCompanyDDL = Lo.RetriveMasterData(Convert.ToInt16(ddlNodalOfficerEmail2.SelectedItem.Value), DtGetNodel.Rows[0]["CompanyRefNo"].ToString(), "", 0, "", "", "AllNodelNotSelect");
+                DtCompanyDDL = Lo.RetriveMasterData(Convert.ToInt32(ddlNodalOfficerEmail2.SelectedItem.Value), DtGetNodel.Rows[0]["CompanyRefNo"].ToString(), "", 0, "", "", "AllNodelNotSelect");
                 if (DtCompanyDDL.Rows.Count > 0)
                 {
                     Co.FillDropdownlist(ddlNodalOfficerEmail, DtCompanyDDL, "NodalOficerName", "NodalOfficerID");
@@ -821,7 +821,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     }
     protected void BindMasterSubCategory()
     {
-        DataTable DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(Convert.ToInt16(ddlmastercategory.SelectedItem.Value), "", "", "SubSelectID", "", "");
+        DataTable DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(Convert.ToInt32(ddlmastercategory.SelectedItem.Value), "", "", "SubSelectID", "", "");
         if (DtMasterCategroy.Rows.Count > 0)
         {
             Co.FillDropdownlist(ddlsubcategory, DtMasterCategroy, "SCategoryName", "SCategoryId");
@@ -837,7 +837,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     {
         if (ddlsubcategory.SelectedItem.Value != null || ddlsubcategory.SelectedItem.Text != "Select")
         {
-            DataTable DtMasterCategroyLevel3 = Lo.RetriveMasterSubCategoryDate(Convert.ToInt16(ddlsubcategory.SelectedItem.Value), "", "", "SubSelectID", "", "");
+            DataTable DtMasterCategroyLevel3 = Lo.RetriveMasterSubCategoryDate(Convert.ToInt32(ddlsubcategory.SelectedItem.Value), "", "", "SubSelectID", "", "");
             if (DtMasterCategroyLevel3.Rows.Count > 0)
             {
                 Co.FillDropdownlist(ddllevel3product, DtMasterCategroyLevel3, "SCategoryName", "SCategoryId");
@@ -857,7 +857,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         {
             if (ddllevel3product.SelectedItem.Value != "NA")
             {
-                DataTable DtItemDescription = Lo.RetriveMasterSubCategoryDate(Convert.ToInt16(ddllevel3product.SelectedItem.Value), "", "", "Level3ID", "", "");
+                DataTable DtItemDescription = Lo.RetriveMasterSubCategoryDate(Convert.ToInt32(ddllevel3product.SelectedItem.Value), "", "", "Level3ID", "", "");
                 if (DtItemDescription.Rows.Count > 0)
                 {
                     txtproductdescription.Text = DtItemDescription.Rows[0]["Description"].ToString();
@@ -900,7 +900,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     }
     protected void BindMasterSubCategoryTech()
     {
-        DataTable DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(Convert.ToInt16(ddltechnologycat.SelectedItem.Value), "", "", "SubSelectID", "", "");
+        DataTable DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(Convert.ToInt32(ddltechnologycat.SelectedItem.Value), "", "", "SubSelectID", "", "");
         if (DtMasterCategroy.Rows.Count > 0)
         {
             Co.FillDropdownlist(ddlsubtech, DtMasterCategroy, "SCategoryName", "SCategoryId");
@@ -916,7 +916,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     {
         if (ddlsubtech.SelectedItem.Value != null || ddlsubtech.SelectedItem.Text != "Select")
         {
-            DataTable DtMasterCategroyLevel3 = Lo.RetriveMasterSubCategoryDate(Convert.ToInt16(ddlsubtech.SelectedItem.Value), "", "", "SubSelectID", "", "");
+            DataTable DtMasterCategroyLevel3 = Lo.RetriveMasterSubCategoryDate(Convert.ToInt32(ddlsubtech.SelectedItem.Value), "", "", "SubSelectID", "", "");
             if (DtMasterCategroyLevel3.Rows.Count > 0)
             {
                 Co.FillDropdownlist(ddltechlevel3, DtMasterCategroyLevel3, "SCategoryName", "SCategoryId");
@@ -1040,7 +1040,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         //    Co.FillDropdownlist(ddlnomnclature, DtMasterCategroy, "SCategoryName", "SCategoryID");
         //    ddlnomnclature.Items.Insert(0, "Select");
         //}
-        DataTable DtNAMEOFDEFENCEPLATFORM = Lo.RetriveMasterSubCategoryDate(Convert.ToInt16(ddlplatform.SelectedItem.Value), "", "", "SubSelectID", "", "");
+        DataTable DtNAMEOFDEFENCEPLATFORM = Lo.RetriveMasterSubCategoryDate(Convert.ToInt32(ddlplatform.SelectedItem.Value), "", "", "SubSelectID", "", "");
         if (DtNAMEOFDEFENCEPLATFORM.Rows.Count > 0)
         {
             Co.FillDropdownlist(ddlnomnclature, DtNAMEOFDEFENCEPLATFORM, "SCategoryName", "SCategoryId");
@@ -1105,7 +1105,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     {
         if (hfprodid.Value != "")
         {
-            HyPanel1["ProductID"] = Convert.ToInt16(hfprodid.Value);
+            HyPanel1["ProductID"] = Convert.ToInt32(hfprodid.Value);
             HyPanel1["ProductRefNo"] = Co.RSQandSQLInjection(hfprodrefno.Value.Trim(), "soft");
         }
         else
@@ -1460,7 +1460,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         }
         else
         {
-            HyPanel1["NodelDetail"] = Convert.ToInt16(ddlNodalOfficerEmail.SelectedItem.Value);
+            HyPanel1["NodelDetail"] = Convert.ToInt32(ddlNodalOfficerEmail.SelectedItem.Value);
         }
         if (ddlNodalOfficerEmail2.Text == "" || ddlNodalOfficerEmail2.SelectedItem.Text == "Select")//ddlprocurmentcategory
         {
@@ -1468,7 +1468,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         }
         else
         {
-            HyPanel1["NodalDetail2"] = Convert.ToInt16(ddlNodalOfficerEmail2.SelectedItem.Value);
+            HyPanel1["NodalDetail2"] = Convert.ToInt32(ddlNodalOfficerEmail2.SelectedItem.Value);
         }
         HyPanel1["CreatedBy"] = ViewState["UserLoginEmail"].ToString();
         string StrProductDescription = Lo.SaveCodeProduct(HyPanel1, dtImage, dtSaveProdInfo, dtSaveEstimateQuantity, out _sysMsg, out _msg, "Product");
@@ -1513,7 +1513,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                             if (fuimages.HasFile != false)
                             {
                                 int filecount = 0;
-                                filecount = Convert.ToInt16(fuimages.PostedFiles.Count.ToString());
+                                filecount = Convert.ToInt32(fuimages.PostedFiles.Count.ToString());
                                 if (filecount <= 4)
                                 {
                                     int iImageFileSize = fuimages.PostedFile.ContentLength;
@@ -1544,7 +1544,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                         if (fuimages.HasFile != false)
                         {
                             int filecount = 0;
-                            filecount = Convert.ToInt16(fuimages.PostedFiles.Count.ToString());
+                            filecount = Convert.ToInt32(fuimages.PostedFiles.Count.ToString());
                             if (filecount <= 4)
                             {
                                 int iImageFileSize = fuimages.PostedFile.ContentLength;
@@ -1835,7 +1835,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
             {
                 for (int i = 0; i <= gvProductInformation.Rows.Count; i++)
                 {
-                    Int16 txtProdInfoId = Convert.ToInt16(gvProductInformation.DataKeys[i].Value.ToString());
+                    Int32 txtProdInfoId = Convert.ToInt32(gvProductInformation.DataKeys[i].Value.ToString());
                     Label txtlenth = (Label)gvProductInformation.Rows[i].Cells[1].FindControl("lblNameofspec");
                     Label txtvalue = (Label)gvProductInformation.Rows[i].Cells[2].FindControl("lblvalueProd");
                     Label txtProdInfoUnit = (Label)gvProductInformation.Rows[i].Cells[3].FindControl("lblUnitProd");
@@ -1881,7 +1881,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     protected void OnRowUpdating(object sender, GridViewUpdateEventArgs e)
     {
         GridViewRow row = gvProductInformation.Rows[e.RowIndex];
-        Int16 ProdSpeciId = Convert.ToInt16(gvProductInformation.DataKeys[e.RowIndex].Values[0]);
+        Int32 ProdSpeciId = Convert.ToInt32(gvProductInformation.DataKeys[e.RowIndex].Values[0]);
         string namePro = (row.FindControl("txtNameofspeci") as TextBox).Text;
         decimal ValuePro = Convert.ToDecimal((row.FindControl("txtValueProd") as TextBox).Text);
         string unitPro = (row.FindControl("txtUnitProd") as TextBox).Text;
@@ -1896,7 +1896,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     }
     protected void OnRowDeleting(object sender, GridViewDeleteEventArgs e)
     {
-        Int16 ProdIdDel = Convert.ToInt16(gvProductInformation.DataKeys[e.RowIndex].Values[0]);
+        Int32 ProdIdDel = Convert.ToInt32(gvProductInformation.DataKeys[e.RowIndex].Values[0]);
         Lo.TestGrid("Delete", "", ProdIdDel, "", 0, "");
         this.BindGrid();
     }
@@ -1970,7 +1970,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     protected void EstimateInsert(object sender, EventArgs e)
     {
         string EstimateYear = ddlYearEstimate.SelectedItem.Text;
-        Int16 EsitmateYearId = Convert.ToInt16(ddlYearEstimate.SelectedItem.Value);
+        Int32 EsitmateYearId = Convert.ToInt32(ddlYearEstimate.SelectedItem.Value);
         decimal EstimateQuantity = Convert.ToDecimal(txtestimateQuantity.Text);
         string EstimateMeasuring = ddlMeasuringUnit.SelectedItem.Text;
         decimal UnitProd = Convert.ToDecimal(txtestimatePriceLLp.Text);
@@ -1989,9 +1989,9 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     protected void GvEstimateQuanPrice_RowUpdating(object sender, GridViewUpdateEventArgs e)
     {
         GridViewRow row = GvEstimateQuanPrice.Rows[e.RowIndex];
-        Int16 ProdSpeciId = Convert.ToInt16(GvEstimateQuanPrice.DataKeys[e.RowIndex].Values[0]);
+        Int32 ProdSpeciId = Convert.ToInt32(GvEstimateQuanPrice.DataKeys[e.RowIndex].Values[0]);
         string EditEstimateYear = (row.FindControl("ddlYearEstimateGrid") as DropDownList).SelectedItem.Text;
-        Int16 EditEstimateYearId = Convert.ToInt16((row.FindControl("ddlYearEstimateGrid") as DropDownList).SelectedItem.Value);
+        Int32 EditEstimateYearId = Convert.ToInt32((row.FindControl("ddlYearEstimateGrid") as DropDownList).SelectedItem.Value);
         decimal EditEstimateQuan = Convert.ToDecimal((row.FindControl("txtEstimateQuantityGrid") as TextBox).Text);
         string EditEstimateUnit = (row.FindControl("ddlEstimateUnit") as DropDownList).SelectedItem.Text;
         decimal EditEstimatePrice = Convert.ToDecimal((row.FindControl("txtEstimatePriceLLpGrid") as TextBox).Text);
@@ -2006,7 +2006,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     }
     protected void GvEstimateQuanPrice_RowDeleting(object sender, GridViewDeleteEventArgs e)
     {
-        Int16 EstimateIdDel = Convert.ToInt16(GvEstimateQuanPrice.DataKeys[e.RowIndex].Values[0]);
+        Int32 EstimateIdDel = Convert.ToInt32(GvEstimateQuanPrice.DataKeys[e.RowIndex].Values[0]);
         Lo.RetriveSaveEstimateGrid("Delete", EstimateIdDel, "", 0, "", 0, "", 0);
         this.BindGridEstimateQuantity();
     }
