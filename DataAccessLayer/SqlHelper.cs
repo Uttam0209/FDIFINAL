@@ -604,8 +604,8 @@ namespace DataAccessLayer
                     db.AddInParameter(cmd, "@ProductRefNo", DbType.String, hyProduct["ProductRefNo"]);
                     db.AddInParameter(cmd, "@CompanyRefNo", DbType.String, hyProduct["CompanyRefNo"]);
                     db.AddInParameter(cmd, "@ProductLevel1", DbType.Int64, hyProduct["ProductLevel1"]);
-                    db.AddInParameter(cmd, "@ProductLevel2", DbType.Int16, hyProduct["ProductLevel2"]);
-                    db.AddInParameter(cmd, "@ProductLevel3", DbType.Int16, hyProduct["ProductLevel3"]);
+                    db.AddInParameter(cmd, "@ProductLevel2", DbType.Int64, hyProduct["ProductLevel2"]);
+                    db.AddInParameter(cmd, "@ProductLevel3", DbType.Int64, hyProduct["ProductLevel3"]);
                     db.AddInParameter(cmd, "@ProductDescription", DbType.String, hyProduct["ProductDescription"]);
                     db.AddInParameter(cmd, "@NSCCode", DbType.String, hyProduct["NSCCode"]);
                     db.AddInParameter(cmd, "@NIINCode", DbType.String, hyProduct["NIINCode"]);
@@ -1337,7 +1337,7 @@ namespace DataAccessLayer
 
                         db.AddInParameter(cmd, "@CompanyRefNo", DbType.String, "");
                         db.AddInParameter(cmd, "@Role", DbType.String, "");
-                        db.AddInParameter(cmd, "@ProductLevel1", DbType.Int64, "");
+                        db.AddInParameter(cmd, "@ProductLevel1", DbType.Int16, "");
                         db.AddInParameter(cmd, "@ProductLevel2", DbType.Int64, "");
                         db.AddInParameter(cmd, "@ProductLevel3", DbType.Int64, "");
                         db.AddInParameter(cmd, "@ProductDescription", DbType.String, "");
