@@ -401,7 +401,7 @@
 
                             <div class="card">
                                 <div class="card-header">
-                                    <h2 data-toggle="collapse" data-parent="#accordion" class="collapsed" data-target="#faq11" aria-expanded="false" aria-controls="faq11">2.Company Master
+                                    <h2 data-toggle="collapse" data-parent="#accordion" class="collapsed" data-target="#faq11" aria-expanded="false" aria-controls="faq11">2.Category Master
                                             <i class="fa fa-plus pull-right"></i>
                                     </h2>
                                 </div>
@@ -409,16 +409,116 @@
                                 <div id="faq11" class="collapse">
                                     <div class="card-body">
                                         <p>
-                                            The Indenisation portal will have the functionality where a company Nodal Officer is able to add division and units along with designation  and employee.
-                                            The steps for adding division and units along with designation  and employee are given below :- 
+                                            The Indenisation portal will have the functionality where a company Nodal Officer is able to add Dropdown master,  Level 1, Level 2 and Level 3.
+                                            The steps for adding Dropdown Level are given below :- 
                                         </p>
                                         <div class="faq-img">
-                                            <img src="../assets/images/faq-images/Company-master.jpg" alt="" />
+                                            <img src="../assets/images/faq-images/category-master.jpg" alt="" />
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                            <div class="card">
+                                <div class="card-header">
+                                    <h2 data-toggle="collapse" data-parent="#accordion" class="collapsed" data-target="#faq12" aria-expanded="false" aria-controls="faq12">2.1 Dropdown Master Level 1
+                                            <i class="fa fa-plus pull-right"></i>
+                                    </h2>
+                                </div>
 
+                                <div id="faq12" class="collapse">
+                                    <div class="card-body">
+                                        <p>
+                                            Steps to Add Dropdown master Level 1:-
+                                        </p>
+                                        <ol>
+                                            <li>Click on Category Master Tab at the left hand corner of the portal after login.</li>
+                                            <li>Click on Dropdown Master Tab</li>
+                                            <li>Click on Level 1</li>
+                                            <li>See the below image to add Dropdown level 1</li>
+                                            
+                                        </ol>
+                                        <div class="faq-img">
+                                            <img src="../assets/images/faq-images/add-lavel-1.jpg" alt="" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-header">
+                                    <h2 data-toggle="collapse" data-parent="#accordion" class="collapsed" data-target="#faq13" aria-expanded="false" aria-controls="faq13">2.2.Dropdown Master Level 2
+                                            <i class="fa fa-plus pull-right"></i>
+                                    </h2>
+                                </div>
+
+                                <div id="faq13" class="collapse">
+                                    <div class="card-body">
+                                        <p>
+                                            Steps to Add Dropdown master Level 2:-
+                                        </p>
+                                        <ol>
+                                            <li>Click on Category Master Tab at the left hand corner of the portal after login.</li>
+                                            <li>Click on Dropdown Master Tab</li>
+                                            <li>Click on Level 2</li>
+                                            <li>See the below image to add Dropdown level 2</li>
+                                            
+                                        </ol>
+                                        <div class="faq-img">
+                                            <img src="../assets/images/faq-images/add-level-2.jpg" alt="" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-header">
+                                    <h2 data-toggle="collapse" data-parent="#accordion" class="collapsed" data-target="#faq14" aria-expanded="false" aria-controls="faq14">2.3.Dropdown Master Level 3
+                                            <i class="fa fa-plus pull-right"></i>
+                                    </h2>
+                                </div>
+
+                                <div id="faq14" class="collapse">
+                                    <div class="card-body">
+                                        <p>
+                                            Steps to Add Dropdown master Level 3:-
+                                        </p>
+                                        <ol>
+                                            <li>Click on Category Master Tab at the left hand corner of the portal after login.</li>
+                                            <li>Click on Dropdown Master Tab</li>
+                                            <li>Click on Level 3</li>
+                                            <li>See the below image to add Dropdown level 3</li>
+                                            
+                                        </ol>
+                                        <div class="faq-img">
+                                            <img src="../assets/images/faq-images/add-level-3.jpg" alt="" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                             <div class="card">
+                                <div class="card-header">
+                                    <h2 data-toggle="collapse" data-parent="#accordion" class="collapsed" data-target="#faq15" aria-expanded="false" aria-controls="faq15">2.4. Category Dropdown
+                                            <i class="fa fa-plus pull-right"></i>
+                                    </h2>
+                                </div>
+
+                                <div id="faq15" class="collapse">
+                                    <div class="card-body">
+                                        <p>
+                                            Steps to Choose Dropdown master Level :-
+                                        </p>
+                                        <ol>
+                                            <li>Click on Category Master Tab at the left hand corner of the portal after login.</li>
+                                            <li>Click on Dropdown Master Tab</li>
+                                            <li>Click on Category Dropdown</li>
+                                            <li>See the below image to choose  Level </li>
+                                            
+                                        </ol>
+                                        <div class="faq-img">
+                                            <img src="../assets/images/faq-images/category-dropdown.jpg" alt="" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
 
                         </div>
                     </div>
