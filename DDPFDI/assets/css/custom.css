@@ -1961,3 +1961,7 @@ form label { font-size: 15px !important; font-family: 'Roboto', sans-serif !impo
 /*---Datatable Design -----*/
 #ContentPlaceHolder1_gvPrdoct_length {float:left;}
 .shadow-box  {padding: 4%; box-shadow: 0 0 6px rgba(0,0,0,.1); border-radius: 4px;}
+
+/*----25th June 2019-----*/
+.faq-secion .faq-img { margin-bottom: 20px;}
+.faq-secion .card ol li { font-size: 15px; }
