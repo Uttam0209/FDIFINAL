@@ -231,12 +231,14 @@
                                         </div>
                                     </div>
                                     <div class="row" style="margin-top: 20px;">
-                                        <div class="col-lg-6 col-sm-6 col-xs-12">
-                                            <div class="white-box analytics-info last-fdi">
+                                        <div class="col-lg-12 col-sm-6 col-xs-12">
+                                            <div class="shadow-box analytics-info last-fdi">
+
 
                                                 <div class="table-wrapper table-responsive" id="divfactorygrid" runat="server">
-                                                    <asp:GridView ID="gvPrdoct" runat="server" AutoGenerateColumns="false" Class="commonAjaxTbl master-company-table ViewProductTable table 
-                                        display responsive no-wrap table-hover manage-user Grid table-responsive">
+                                                    <asp:GridView ID="gvPrdoct" runat="server" AutoGenerateColumns="false" Class="commonAjaxTbl dataTable master-company-table ViewProductTable table 
+                                        display responsive no-wrap table-hover manage-user Grid table-responsive"
+                                                        OnRowCreated="gvPrdoct_RowCreated">
                                                         <Columns>
                                                             <asp:TemplateField HeaderText="S.No.">
                                                                 <ItemTemplate>
