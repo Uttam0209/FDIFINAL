@@ -1,1 +1,13 @@
+D:\FDIFINAL\BusinessLayer\bin\Debug\BusinessLayer.dll
+D:\FDIFINAL\BusinessLayer\bin\Debug\BusinessLayer.pdb
+D:\FDIFINAL\BusinessLayer\bin\Debug\DataAccessLayer.dll
+D:\FDIFINAL\BusinessLayer\bin\Debug\Encryption.dll
+D:\FDIFINAL\BusinessLayer\bin\Debug\Microsoft.Practices.EnterpriseLibrary.Data.dll
+D:\FDIFINAL\BusinessLayer\bin\Debug\Microsoft.Practices.EnterpriseLibrary.Common.dll
+D:\FDIFINAL\BusinessLayer\bin\Debug\Microsoft.Practices.Unity.dll
+D:\FDIFINAL\BusinessLayer\bin\Debug\Microsoft.Practices.Unity.Interception.dll
+D:\FDIFINAL\BusinessLayer\bin\Debug\DataAccessLayer.pdb
+D:\FDIFINAL\BusinessLayer\bin\Debug\Encryption.pdb
 D:\FDIFINAL\BusinessLayer\obj\Debug\BusinessLayer.csprojResolveAssemblyReference.cache
+D:\FDIFINAL\BusinessLayer\obj\Debug\BusinessLayer.dll
+D:\FDIFINAL\BusinessLayer\obj\Debug\BusinessLayer.pdb
