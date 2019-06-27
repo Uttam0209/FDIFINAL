@@ -99,6 +99,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                             BindTesting();
                             BindCertification();
                             BindQAAgency();
+
                             if (Request.QueryString["mcurrentcompRefNo"] != null)
                             {
                                 BindMasterCategory();
@@ -107,6 +108,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                                 BindPurposeProcuremnt();
                                 BindEndUser();
                                 BindNodelEmail();
+                                HSCode();
                                 //EditCode():
                             }
                             else
@@ -116,6 +118,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                                 BindMasterPlatCategory();
                                 BindPurposeProcuremnt();
                                 BindEndUser();
+                                HSCode();
                             }
                         }
                         else
@@ -130,6 +133,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                             BindTesting();
                             BindCertification();
                             BindQAAgency();
+                            HSCode();
                         }
                     }
                     if (hidType.Value == "Company")
@@ -1078,6 +1082,21 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         }
     }
     #endregion
+
+    #region for HS Code
+
+    public void HSCode()
+    {
+        DataTable DtMasterHS = Lo.RetriveMasterSubCategoryDate(0, "HS Code", "", "SelectInnerHSMaster", "", "");
+
+        if (DtMasterHS.Rows.Count > 0)
+        {
+            Co.FillDropdownlist(ddlHSNCode, DtMasterHS, "SCategoryName", "SCategoryID");
+            ddlHSNCode.Items.Insert(0, "Select");
+        }
+    }
+
+    #endregion
     #region For FinancialYear
     protected void BindFinancialYear()
     {
@@ -1191,6 +1210,14 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         HyPanel1["OEMName"] = Co.RSQandSQLInjection(txtoemname.Text.Trim(), "soft");
         HyPanel1["OEMCountry"] = Convert.ToInt64(txtcountry.SelectedItem.Value);
         HyPanel1["DPSUPartNumber"] = Co.RSQandSQLInjection(txtdpsupartnumber.Text.Trim(), "soft");
+        if (ddlHSNCode.SelectedItem.Value != "Select")
+        {
+            HyPanel1["HSCode"] = Co.RSQandSQLInjection(ddlHSNCode.SelectedItem.Value, "soft");
+        }
+        else
+        {
+            HyPanel1["HSCode"] = null;
+        }
         HyPanel1["HSNCode"] = Co.RSQandSQLInjection(txthsncode.Text.Trim(), "soft");
         HyPanel1["EndUserPartNumber"] = Co.RSQandSQLInjection(txtenduserpartnumber.Text.Trim(), "soft");
         if (ddlenduser.SelectedItem.Value != "Select")
@@ -1495,9 +1522,9 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     #region PanelSaveButtonCode
     protected void btnsubmitpanel1_Click(object sender, EventArgs e)
     {
-        if (txtproductdescription.Text != "" && ddlmastercategory.SelectedItem.Text != "Select" && ddlsubcategory.SelectedItem.Text != "Select" && ddltechnologycat.SelectedItem.Text != "Select")
+        if (txtproductdescription.Text != "" && ddlmastercategory.SelectedItem.Text != "Select" && ddlsubcategory.SelectedItem.Text != "Select" && ddltechnologycat.SelectedItem.Text != "Select" && ddlHSNCode.SelectedItem.Text != "Select")
         {
-            if (ddlsubtech.SelectedItem.Text != "Select" && ddlnomnclature.SelectedItem.Text != "Select" && ddlenduser.SelectedItem.Text != "Select" && ddlplatform.SelectedItem.Text != "Select")
+            if (ddlsubtech.SelectedItem.Text != "Select" && ddlnomnclature.SelectedItem.Text != "Select" && ddlenduser.SelectedItem.Text != "Select" && ddlplatform.SelectedItem.Text != "Select" && ddllevel3product.SelectedItem.Text != "Select")
             {
                 if (txtcountry.SelectedItem.Text != "" && txtdpsupartnumber.Text != "")
                 {
@@ -2062,6 +2089,11 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                 }
                 txtdpsupartnumber.Text = DtView.Rows[0]["DPSUPartNumber"].ToString();
                 txtenduserpartnumber.Text = DtView.Rows[0]["EndUserPartNumber"].ToString();
+                if (DtView.Rows[0]["HSCode"].ToString() != "")
+                {
+
+                    ddlHSNCode.SelectedValue = DtView.Rows[0]["HSCode"].ToString();
+                }
                 txthsncode.Text = DtView.Rows[0]["HSNCode"].ToString();
                 if (DtView.Rows[0]["EndUser"].ToString() != "")
                 {

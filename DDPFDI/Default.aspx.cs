@@ -25,8 +25,8 @@ public partial class _Default : System.Web.UI.Page
     #endregion
     protected void Page_Load(object sender, EventArgs e)
     {
-         //string s = objEnc.EncryptData("Data Source=DESKTOP-11TFGRC\\MOHDWALI;Initial Catalog=ddp_fdiFinal;User ID=sa;Password=wali");
-       // string a = objEnc.DecryptData("aL88ocdv5/Kq/MF8J1Qtk+6AnMaH6dJtcBkuT7qx2N9CyzbHTAaAEtMwUxH5+xB79+XP0NvDMbN0hWCFyNkxCGNisV6TxWSvIZIG3wVAnEZWnkjh7rz+cQ==");
+        string s = objEnc.EncryptData("Data Source=103.73.189.114;Initial Catalog=ddp_cmsV1;User ID=sa;Password=mXy<wxh3:Mh@U");
+        string a = objEnc.DecryptData("aL88ocdv5/Ixdr/+Dtk9vguy4XrszcqvQRVrxD/UURYbfxfZoNQ/slH40ZNMn79SQzU69Y+PJE2GhK6b37iKbSavaXlq/Ptl6qjBEDY0BJF2LUCW1YbxmEnDlPlryODw");
         }
     #region "Login Code"
     public static bool IsValidEmailId(string InputEmail)

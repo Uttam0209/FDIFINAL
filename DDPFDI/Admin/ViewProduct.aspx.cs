@@ -195,14 +195,14 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
                 lblnsngroup.Text = DtView.Rows[0]["ProdLevel1Name"].ToString();
                 lblnsngroupclass.Text = DtView.Rows[0]["ProdLevel2Name"].ToString();
                 lblclassitem.Text = DtView.Rows[0]["ProdLevel3Name"].ToString();
-                lblnsccode.Text = DtView.Rows[0]["NSCCode"].ToString();
+                lblnsccode.Text =  DtView.Rows[0]["NSCCode"].ToString();
                 lblniincode.Text = DtView.Rows[0]["NIINCode"].ToString();
                 lblproductdescription.Text = DtView.Rows[0]["ProductDescription"].ToString();
                 lbloempartnumber.Text = DtView.Rows[0]["OEMPartNumber"].ToString();
                 lbloemname.Text = DtView.Rows[0]["OEMName"].ToString();
                 lbloemcountry.Text = DtView.Rows[0]["CountryName"].ToString();
                 lbldpsupartno.Text = DtView.Rows[0]["DPSUPartNumber"].ToString();
-                lblhsncode.Text = DtView.Rows[0]["HSNCode"].ToString();
+                lblhsncode.Text = DtView.Rows[0]["HSCodeName"].ToString() + DtView.Rows[0]["HSNCode"].ToString();
                 lblenduserpartno.Text = DtView.Rows[0]["EndUserPartNumber"].ToString();
                 lblenduser.Text = DtView.Rows[0]["EUserName"].ToString();
                 lbldefenceplatform.Text = DtView.Rows[0]["PlatName"].ToString();

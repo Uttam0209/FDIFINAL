@@ -378,7 +378,7 @@ public partial class Admin_ViewDashboard : System.Web.UI.Page
             lbloemname.Text = DtView.Rows[0]["OEMName"].ToString();
             lbloemcountry.Text = DtView.Rows[0]["CountryName"].ToString();
             lbldpsupartno.Text = DtView.Rows[0]["DPSUPartNumber"].ToString();
-            lblhsncode.Text = DtView.Rows[0]["HSNCode"].ToString();
+            lblhsncode.Text = DtView.Rows[0]["HSCodeName"].ToString() + DtView.Rows[0]["HSNCode"].ToString();
             lblenduserpartno.Text = DtView.Rows[0]["EndUserPartNumber"].ToString();
             lblenduser.Text = DtView.Rows[0]["EUserName"].ToString();
             lbldefenceplatform.Text = DtView.Rows[0]["PlatName"].ToString();
