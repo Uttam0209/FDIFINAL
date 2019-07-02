@@ -204,7 +204,7 @@ public partial class frmUploadExcel : System.Web.UI.Page
             {
                 string path = Server.MapPath("~/App_Data/") + fuexcel.PostedFile.FileName;
                 fuexcel.SaveAs(path);
-                dtExcel = Lo.CreateExcelConnection(path, "data", out ErrText);
+                dtExcel = Lo.CreateExcelConnection(path, "Sheet2", out ErrText);
                 if (ErrText.ToLower() != "success") // if sqlhelper returning ERROR in importing
                 {
                     diverror.Visible = true;

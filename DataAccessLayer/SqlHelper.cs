@@ -1333,67 +1333,65 @@ namespace DataAccessLayer
                 Int32 errorRow = -1;
                 try
                 {
-                    IDataReader drIds;    //  to execute reader to get ids values
                     DataTable dtIds;      //  to store ids value
                     for (int k = 0; k < dtMaster.Rows.Count; k++)
                     {
-                        // getting related id to insert into produt table
-                        DbCommand ids = db.GetStoredProcCommand("fn_GetIdsForProductTable");
-                        db.AddInParameter(ids, "@CompanyName", DbType.String, dtMaster.Rows[k]["COMPANY"].ToString());
-                        db.AddInParameter(ids, "@DivisionName", DbType.String, dtMaster.Rows[k]["DIVISION"].ToString());
-                        db.AddInParameter(ids, "@UnitName", DbType.String, dtMaster.Rows[k]["UNIT"].ToString());
-                        db.AddInParameter(ids, "@ProductLevel1", DbType.String, dtMaster.Rows[k]["NSN GROUP"].ToString());
-                        db.AddInParameter(ids, "@ProductLevel2", DbType.String, dtMaster.Rows[k]["NSN GROUP CLASS"].ToString());
-                        db.AddInParameter(ids, "@ProductLevel3", DbType.String, dtMaster.Rows[k]["ITEM CODE"].ToString());
-                        db.AddInParameter(ids, "@OEMCountryName", DbType.String, dtMaster.Rows[k]["OEM COUNTRY"].ToString());
-                        db.AddInParameter(ids, "@EndUserName", DbType.String, dtMaster.Rows[k]["END USER"].ToString());
-                        db.AddInParameter(ids, "@PlatformName", DbType.String, dtMaster.Rows[k]["DEFENCE PLATFORM"].ToString());
-                        db.AddInParameter(ids, "@NomenclatureName", DbType.String, dtMaster.Rows[k]["NAME OF DEFENCE PLATFORM"].ToString());
-                        db.AddInParameter(ids, "@TechnologyLevel1", DbType.String, dtMaster.Rows[k]["PRODUCT (INDUSTRY DOMAIN)"].ToString());
-                        db.AddInParameter(ids, "@TechnologyLevel2", DbType.String, dtMaster.Rows[k]["PRODUCT (INDUSTRY SUB DOMAIN)"].ToString());
-                        db.AddInParameter(ids, "@TechnologyLevel3", DbType.String, dtMaster.Rows[k]["PRODUCT (INDUSTRY 2ND SUB DOMAIN)"].ToString());
-                        db.AddInParameter(ids, "@YrOfIndiginisation", DbType.String, dtMaster.Rows[k]["YEAR OF INDIGINISATION"].ToString());
-
-                        drIds = db.ExecuteReader(ids);
-                        dtIds = new DataTable();
-                        if (drIds != null)
-                            dtIds.Load(drIds);
-                        // Inserting values in product table
-                        DbCommand cmd = db.GetStoredProcCommand("sp_InsertProductFromExcel");
-
-                        db.AddInParameter(cmd, "@CompanyRefNo", DbType.String, dtIds.Rows[0]["RefNo"].ToString());
-                        db.AddInParameter(cmd, "@Role", DbType.String, dtIds.Rows[0]["Role"].ToString());
-                        db.AddInParameter(cmd, "@ProductLevel1", DbType.Int16, dtIds.Rows[0]["ProdLevel1"].ToString());
-                        db.AddInParameter(cmd, "@ProductLevel2", DbType.Int64, dtIds.Rows[0]["ProdLevel2"].ToString());
-                        db.AddInParameter(cmd, "@ProductLevel3", DbType.Int64, dtIds.Rows[0]["ProdLevel3"].ToString());
-
-                        db.AddInParameter(cmd, "@ProductDescription", DbType.String, dtMaster.Rows[k]["ITEM DESCRIPTION"].ToString());
-                        db.AddInParameter(cmd, "@NSCCode", DbType.String, dtMaster.Rows[k]["NSC CODE"].ToString());
-                        db.AddInParameter(cmd, "@NIINCode", DbType.String, dtMaster.Rows[k]["NIIN CODE"].ToString());
-                        db.AddInParameter(cmd, "@OEMPartNumber", DbType.String, dtMaster.Rows[k]["OEM PART NUMBER"].ToString());
-                        db.AddInParameter(cmd, "@OEMName", DbType.String, dtMaster.Rows[k]["OEM NAME"].ToString());
-                        db.AddInParameter(cmd, "@OEMCountry", DbType.Int64, dtIds.Rows[0]["OEMCountry"].ToString());
-                        db.AddInParameter(cmd, "@DPSUPartNumber", DbType.String, dtMaster.Rows[k]["DPSU PART NUMBER"].ToString());
-                        db.AddInParameter(cmd, "@HSNCode", DbType.String, dtMaster.Rows[k]["HSN CODE"].ToString());
-                        db.AddInParameter(cmd, "@EndUserPartNumber", DbType.String, dtMaster.Rows[k]["END USER PART NUMBAR"].ToString());
-
-                        db.AddInParameter(cmd, "@EndUser", DbType.Int64, dtIds.Rows[0]["EndUser"].ToString());
-                        db.AddInParameter(cmd, "@Platform", DbType.Int64, dtIds.Rows[0]["Platform"].ToString());
-                        db.AddInParameter(cmd, "@NomenclatureOfMainSystem", DbType.Int64, dtIds.Rows[0]["Nomenclature"].ToString());
-                        db.AddInParameter(cmd, "@TechnologyLevel1", DbType.Int64, dtIds.Rows[0]["TechLevel1"].ToString());
-                        db.AddInParameter(cmd, "@TechnologyLevel2", DbType.Int64, dtIds.Rows[0]["TechLevel2"].ToString());
-                        db.AddInParameter(cmd, "@TechnologyLevel3", DbType.Int64, dtIds.Rows[0]["TechLevel3"].ToString());
-
-                        db.AddInParameter(cmd, "@SearchKeyword", DbType.String, dtMaster.Rows[k]["SEARCH KEYWORDS"].ToString());
-                        if (dtMaster.Rows[k]["MANUFACTURER NAME IF INDIGINISED"].ToString().Trim() == "" || dtMaster.Rows[k]["MANUFACTURER NAME IF INDIGINISED"].ToString().Trim() == "-")
-                            db.AddInParameter(cmd, "@IsIndeginized", DbType.String, "N");
-                        else
-                            db.AddInParameter(cmd, "@IsIndeginized", DbType.String, "Y");
-                        db.AddInParameter(cmd, "@ManufactureName", DbType.String, dtMaster.Rows[k]["MANUFACTURER NAME IF INDIGINISED"].ToString());
-
-                        db.AddInParameter(cmd, "@ManufactureAddress", DbType.String, dtMaster.Rows[k]["MANUFACTURER ADD."].ToString());
-                        db.AddInParameter(cmd, "@YearofIndiginization", DbType.Int64, dtIds.Rows[0]["YearOfIndiginisation"].ToString());
                         errorRow = k;
+                        // getting related id to insert into produt table
+                        DbCommand ids = db.GetSqlStringCommand("select * from fn_GetIdsForProductTable('" + dtMaster.Rows[k]["COMPANY"].ToString() + "','" + dtMaster.Rows[k]["DIVISION"].ToString() + "'," +
+                      "'" + dtMaster.Rows[k]["UNIT"].ToString() + "','" + dtMaster.Rows[k]["NSN GROUP"].ToString() + "', '" + dtMaster.Rows[k]["NSN GROUP CLASS"].ToString() + "'," +
+                      "'" + dtMaster.Rows[k]["ITEM CODE"].ToString() + "','" + dtMaster.Rows[k]["OEM COUNTRY"].ToString() + "','" + dtMaster.Rows[k]["END USER"].ToString() + "'," +
+                      "'" + dtMaster.Rows[k]["DEFENCE PLATFORM"].ToString() + "','" + dtMaster.Rows[k]["NAME OF DEFENCE PLATFORM"].ToString() + "','" + dtMaster.Rows[k]["PRODUCT (INDUSTRY DOMAIN)"].ToString() + "'," +
+                      "'" + dtMaster.Rows[k]["PRODUCT (INDUSTRY SUB DOMAIN)"].ToString() + "', '" + dtMaster.Rows[k]["PRODUCT (INDUSTRY 2ND SUB DOMAIN)"].ToString() + "'," +
+                      "'" + dtMaster.Rows[k]["YEAR OF INDIGINISATION"].ToString() + "')");
+
+                        dtIds = db.ExecuteDataSet(ids).Tables[0].Copy();
+
+                        // checking if ref no is not blank only then allow to enter else do not enter product
+                        if (!String.IsNullOrEmpty(dtIds.Rows[0]["RefNo"].ToString().Trim()))
+                        {
+                            // Inserting values in product table
+                            DbCommand cmd = db.GetStoredProcCommand("sp_InsertProductFromExcel");
+
+                            db.AddInParameter(cmd, "@CompanyRefNo", DbType.String, dtIds.Rows[0]["RefNo"].ToString());
+                            db.AddInParameter(cmd, "@Role", DbType.String, dtIds.Rows[0]["Role"].ToString());
+                            db.AddInParameter(cmd, "@ProductLevel1", DbType.Int16, dtIds.Rows[0]["ProdLevel1"].ToString());
+                            db.AddInParameter(cmd, "@ProductLevel2", DbType.Int64, dtIds.Rows[0]["ProdLevel2"].ToString());
+                            db.AddInParameter(cmd, "@ProductLevel3", DbType.Int64, dtIds.Rows[0]["ProdLevel3"].ToString());
+
+                            db.AddInParameter(cmd, "@ProductDescription", DbType.String, dtMaster.Rows[k]["ITEM DESCRIPTION"].ToString());
+                            db.AddInParameter(cmd, "@NSCCode", DbType.String, dtMaster.Rows[k]["NSC CODE"].ToString());
+                            db.AddInParameter(cmd, "@NIINCode", DbType.String, dtMaster.Rows[k]["NIIN CODE"].ToString());
+                            db.AddInParameter(cmd, "@OEMPartNumber", DbType.String, dtMaster.Rows[k]["OEM PART NUMBER"].ToString());
+                            db.AddInParameter(cmd, "@OEMName", DbType.String, dtMaster.Rows[k]["OEM NAME"].ToString());
+                            db.AddInParameter(cmd, "@OEMCountry", DbType.Int64, dtIds.Rows[0]["OEMCountry"].ToString());
+                            db.AddInParameter(cmd, "@DPSUPartNumber", DbType.String, dtMaster.Rows[k]["DPSU PART NUMBER"].ToString());
+                            db.AddInParameter(cmd, "@HSNCode", DbType.String, dtMaster.Rows[k]["HSN CODE"].ToString());
+                            db.AddInParameter(cmd, "@EndUserPartNumber", DbType.String, dtMaster.Rows[k]["END USER PART NUMBAR"].ToString());
+
+                            db.AddInParameter(cmd, "@EndUser", DbType.Int64, dtIds.Rows[0]["EndUser"].ToString());
+                            db.AddInParameter(cmd, "@Platform", DbType.Int64, dtIds.Rows[0]["Platform"].ToString());
+                            db.AddInParameter(cmd, "@NomenclatureOfMainSystem", DbType.Int64, dtIds.Rows[0]["Nomenclature"].ToString());
+                            db.AddInParameter(cmd, "@TechnologyLevel1", DbType.Int64, dtIds.Rows[0]["TechLevel1"].ToString());
+                            db.AddInParameter(cmd, "@TechnologyLevel2", DbType.Int64, dtIds.Rows[0]["TechLevel2"].ToString());
+                            db.AddInParameter(cmd, "@TechnologyLevel3", DbType.Int64, dtIds.Rows[0]["TechLevel3"].ToString());
+
+                            db.AddInParameter(cmd, "@SearchKeyword", DbType.String, dtMaster.Rows[k]["SEARCH KEYWORDS"].ToString());
+                            if (dtMaster.Rows[k]["MANUFACTURER NAME IF INDIGINISED"].ToString().Trim() == "" || dtMaster.Rows[k]["MANUFACTURER NAME IF INDIGINISED"].ToString().Trim() == "-")
+                                db.AddInParameter(cmd, "@IsIndeginized", DbType.String, "N");
+                            else
+                                db.AddInParameter(cmd, "@IsIndeginized", DbType.String, "Y");
+                            db.AddInParameter(cmd, "@ManufactureName", DbType.String, dtMaster.Rows[k]["MANUFACTURER NAME IF INDIGINISED"].ToString());
+
+                            db.AddInParameter(cmd, "@ManufactureAddress", DbType.String, dtMaster.Rows[k]["MANUFACTURER ADD"].ToString());
+                            db.AddInParameter(cmd, "@YearofIndiginization", DbType.Int64, dtIds.Rows[0]["YearOfIndiginisation"].ToString());                            
+                            db.ExecuteNonQuery(cmd, Transaction);
+                        }
+                        else
+                        {
+                            Transaction.Rollback();
+                            return "RefNo not found for given data in Excel in row : " + errorRow;
+                        }
                     }
                     Transaction.Commit();
                     return "Save";
