@@ -248,7 +248,7 @@ public partial class Admin_ViewDashboard : System.Web.UI.Page
                     dv.RowFilter = "FactoryRefNo='" + RefNo + "'";
                 else
                     dv.RowFilter = "UnitRefNo='" + RefNo + "'";
-                dv.Sort = "CompanyName asc,FactoryName asc";
+                dv.Sort = "LastUpdated desc,CompanyName asc,FactoryName asc";
 
                 gvproduct.DataSource = dv.ToTable();
                 gvproduct.DataBind();
@@ -264,7 +264,7 @@ public partial class Admin_ViewDashboard : System.Web.UI.Page
                     {
                         DataView dv = new DataView(DtGrid);
                         dv.RowFilter = "IsIndeginized='Y'";
-                        dv.Sort = "CompanyName asc,FactoryName asc";
+                        dv.Sort = "LastUpdated desc,CompanyName asc,FactoryName asc";
                         gvproduct.DataSource = dv.ToTable();
                     }
                     else
@@ -378,7 +378,10 @@ public partial class Admin_ViewDashboard : System.Web.UI.Page
             lbloemname.Text = DtView.Rows[0]["OEMName"].ToString();
             lbloemcountry.Text = DtView.Rows[0]["CountryName"].ToString();
             lbldpsupartno.Text = DtView.Rows[0]["DPSUPartNumber"].ToString();
-            lblhsncode.Text = DtView.Rows[0]["HSNCode"].ToString();
+            lblhsncode.Text = DtView.Rows[0]["HSCodeName"].ToString() + DtView.Rows[0]["HSNCode"].ToString();
+            lblhsncodelevel1.Text = DtView.Rows[0]["HsnCodeLevel1Name"].ToString();
+            lblhsncodelevel2.Text = DtView.Rows[0]["HsnCodeLevel2Name"].ToString();
+            lblhsncodelevel3.Text = DtView.Rows[0]["HsnCodeLevel3Name"].ToString();
             lblenduserpartno.Text = DtView.Rows[0]["EndUserPartNumber"].ToString();
             lblenduser.Text = DtView.Rows[0]["EUserName"].ToString();
             lbldefenceplatform.Text = DtView.Rows[0]["PlatName"].ToString();
@@ -416,7 +419,7 @@ public partial class Admin_ViewDashboard : System.Web.UI.Page
             else
             {
                 itemdocument.Visible = true;
-                a_downitem.HRef = "http://103.73.189.114:801/Admin/Upload/" + DtView.Rows[0]["ItemDescriptionPDFFile"].ToString();
+                a_downitem.HRef = "http://103.73.189.114:801/Upload/" + DtView.Rows[0]["ItemDescriptionPDFFile"].ToString();
             }
             DataTable dtImageBind = Lo.RetriveProductCode("", e.CommandArgument.ToString(), "ProductImage", "");
             if (dtImageBind.Rows.Count > 0)

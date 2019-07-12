@@ -38,7 +38,6 @@ public partial class Admin_Dashboard : System.Web.UI.Page
             ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert",
                 "alert('Session Expired,Please login again');window.location='Login'", true);
     }
-
     [WebMethod]
     [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
     public static object[] GetChartData()
@@ -274,6 +273,21 @@ public partial class Admin_Dashboard : System.Web.UI.Page
                 DtGrid.Rows[a]["CompanyName"] = DtGrid.Rows[a]["FCompany"];
                 DtGrid.Rows[a]["CompanyRefNo"] = DtGrid.Rows[a]["FCompRefNo"];
             }
+        }
+    }
+    protected void gvPrdoct_RowCreated(object sender, GridViewRowEventArgs e)
+    {
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            e.Row.TableSection = TableRowSection.TableBody;
+        }
+        else if (e.Row.RowType == DataControlRowType.Header)
+        {
+            e.Row.TableSection = TableRowSection.TableHeader;
+        }
+        else if (e.Row.RowType == DataControlRowType.Footer)
+        {
+            e.Row.TableSection = TableRowSection.TableFooter;
         }
     }
 }

@@ -55,7 +55,7 @@
                     </div>
                     <div class="clearfix"></div>
                 </div>
-                 <div class="clearfix" style="margin-bottom:10px;"></div>
+                <div class="clearfix" style="margin-bottom: 10px;"></div>
                 <asp:UpdatePanel runat="server" ID="updrop">
                     <ContentTemplate>
                         <div class="col-md-4">
@@ -66,8 +66,8 @@
                         </div>
                     </ContentTemplate>
                 </asp:UpdatePanel>
-    </div>
-    <div class="section-pannel">
+            </div>
+            <div class="section-pannel">
                 <div class="row">
                     <asp:UpdatePanel runat="server" ID="up">
                         <ContentTemplate>
@@ -81,7 +81,7 @@
                                 <div class="col-md-6" id="level1" runat="server" visible="False">
                                     <div class="form-group">
                                         <h3 class="secondary-heading">Level 1 <span class="mandatory">*</span></h3>
-                                        <asp:CheckBoxList ID="chkSubCategory" runat="server" TabIndex="2"  RepeatColumns="1" RepeatDirection="Vertical"
+                                        <asp:CheckBoxList ID="chkSubCategory" runat="server" TabIndex="2" RepeatColumns="1" RepeatDirection="Vertical"
                                             RepeatLayout="Flow">
                                         </asp:CheckBoxList>
                                     </div>

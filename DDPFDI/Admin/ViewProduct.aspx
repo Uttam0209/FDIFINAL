@@ -243,10 +243,40 @@
                                                                                     <td>
                                                                                         <asp:Label ID="lbldpsupartno" runat="server" Text=""></asp:Label></td>
                                                                                 </tr>
-                                                                                <tr>
+                                                                                <tr runat="server" visible="false">
                                                                                     <td>HSN Code:</td>
                                                                                     <td>
                                                                                         <asp:Label ID="lblhsncode" runat="server" Text=""></asp:Label></td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>HS Chapter:</td>
+                                                                                    <td>
+                                                                                        <asp:Label ID="lblhschapter" runat="server" Text=""></asp:Label></td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>HS Heading No:</td>
+                                                                                    <td>
+                                                                                        <asp:Label ID="lblhsncodelevel1" runat="server" Text=""></asp:Label></td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>Description:</td>
+                                                                                    <td>
+                                                                                        <asp:Label ID="lblhsncodelevel2" runat="server" Text=""></asp:Label></td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>HSN Code:</td>
+                                                                                    <td>
+                                                                                        <asp:Label ID="lblhsncodelevel3" runat="server" Text=""></asp:Label></td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>HS Code (4 digit)</td>
+                                                                                    <td>
+                                                                                        <asp:Label ID="lblhscode4digit" runat="server" Text=""></asp:Label></td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>HSN Code (8-digit)</td>
+                                                                                    <td>
+                                                                                        <asp:Label ID="lblhsncode8digit" runat="server" Text=""></asp:Label></td>
                                                                                 </tr>
                                                                                 <tr>
                                                                                     <td>End User Part Number:</td>

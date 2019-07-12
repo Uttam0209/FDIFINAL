@@ -139,6 +139,37 @@ namespace DataAccessLayer
                 return "";
             }
         }
+        public string VerifyVendorEmployee(HybridDictionary hyLogin, out string _msg, out string Defaultpage)
+        {
+            try
+            {
+                DbCommand _dbCmd = db.GetStoredProcCommand("sp_Verify_VendorLogin");
+                db.AddInParameter(_dbCmd, "@UserName", DbType.String, hyLogin["UserName"]);
+                db.AddInParameter(_dbCmd, "@Password", DbType.String, hyLogin["Password"]);
+                db.AddOutParameter(_dbCmd, "@CompanyRefNo", DbType.String, 50);
+                db.AddOutParameter(_dbCmd, "@LType", DbType.String, 50);
+                db.AddOutParameter(_dbCmd, "@Defaultpage", DbType.String, 50);
+                db.ExecuteNonQuery(_dbCmd);
+                string Comp_ID = db.GetParameterValue(_dbCmd, "@CompanyRefNo").ToString();
+                string ID = db.GetParameterValue(_dbCmd, "@LType").ToString();
+                Defaultpage = db.GetParameterValue(_dbCmd, "@Defaultpage").ToString();
+                _msg = ID;
+                return Comp_ID;
+
+            }
+            catch (SqlException ex)
+            {
+                _msg = "0";
+                Defaultpage = "0";
+                return "";
+            }
+            catch (Exception ex)
+            {
+                Defaultpage = "0";
+                _msg = "0";
+                return "";
+            }
+        }
         #endregion
         #region "Email and Company Name"
         public string VerifyEmailandCompany(string strEmail, string strCompany, out string _msg)
@@ -604,8 +635,8 @@ namespace DataAccessLayer
                     db.AddInParameter(cmd, "@ProductRefNo", DbType.String, hyProduct["ProductRefNo"]);
                     db.AddInParameter(cmd, "@CompanyRefNo", DbType.String, hyProduct["CompanyRefNo"]);
                     db.AddInParameter(cmd, "@ProductLevel1", DbType.Int64, hyProduct["ProductLevel1"]);
-                    db.AddInParameter(cmd, "@ProductLevel2", DbType.Int16, hyProduct["ProductLevel2"]);
-                    db.AddInParameter(cmd, "@ProductLevel3", DbType.Int16, hyProduct["ProductLevel3"]);
+                    db.AddInParameter(cmd, "@ProductLevel2", DbType.Int64, hyProduct["ProductLevel2"]);
+                    db.AddInParameter(cmd, "@ProductLevel3", DbType.Int64, hyProduct["ProductLevel3"]);
                     db.AddInParameter(cmd, "@ProductDescription", DbType.String, hyProduct["ProductDescription"]);
                     db.AddInParameter(cmd, "@NSCCode", DbType.String, hyProduct["NSCCode"]);
                     db.AddInParameter(cmd, "@NIINCode", DbType.String, hyProduct["NIINCode"]);
@@ -613,7 +644,12 @@ namespace DataAccessLayer
                     db.AddInParameter(cmd, "@OEMName", DbType.String, hyProduct["OEMName"].ToString().Trim());
                     db.AddInParameter(cmd, "@OEMCountry", DbType.Int64, hyProduct["OEMCountry"].ToString().Trim());
                     db.AddInParameter(cmd, "@DPSUPartNumber", DbType.String, hyProduct["DPSUPartNumber"]);
+                    db.AddInParameter(cmd, "@HSCode", DbType.Int64, hyProduct["HSCode"]);
                     db.AddInParameter(cmd, "@HSNCode", DbType.String, hyProduct["HSNCode"]);
+                    // db.AddInParameter(cmd, "@HSChapter", DbType.Int64, hyProduct["HSChapter"]);
+                    db.AddInParameter(cmd, "@HSNCodeLevel1", DbType.Int64, hyProduct["HSNCodeLevel1"]);
+                    db.AddInParameter(cmd, "@HSNCodeLevel2", DbType.Int64, hyProduct["HSNCodeLevel2"]);
+                    db.AddInParameter(cmd, "@HSNCodeLevel3", DbType.Int64, hyProduct["HSNCodeLevel3"]);
                     db.AddInParameter(cmd, "@EndUserPartNumber", DbType.String, hyProduct["EndUserPartNumber"]);
                     db.AddInParameter(cmd, "@EndUser", DbType.Int64, hyProduct["EndUser"]);
                     db.AddInParameter(cmd, "@Platform", DbType.Int64, hyProduct["Platform"]);
@@ -780,6 +816,57 @@ namespace DataAccessLayer
                 finally
                 {
                     dbcon.Close();
+                }
+            }
+        }
+        public string SaveVendorRegis(HybridDictionary hysavecomp, out string _sysMsg, out string _msg)
+        {
+            using (DbConnection dbCon = db.CreateConnection())
+            {
+                string mCurrentID = "";
+                dbCon.Open();
+                DbTransaction dbTran = dbCon.BeginTransaction();
+                try
+                {
+                    DbCommand cmd = db.GetStoredProcCommand("sp_VendorRegistration");
+                    db.AddInParameter(cmd, "@VendorID", DbType.Int64, hysavecomp["VendorID"]);
+                    db.AddInParameter(cmd, "@IsGST", DbType.String, hysavecomp["IsGST"]);
+                    db.AddInParameter(cmd, "@GSTNo", DbType.String, hysavecomp["GSTNo"]);
+                    db.AddInParameter(cmd, "@BusinessName", DbType.String, hysavecomp["BusinessName"]);
+                    db.AddInParameter(cmd, "@NodalOfficerPrefix", DbType.String, hysavecomp["NodalOfficerPrefix"].ToString().Trim());
+                    db.AddInParameter(cmd, "@NodalOfficerFirstName", DbType.String, hysavecomp["NodalOfficerFirstName"].ToString().Trim());
+                    db.AddInParameter(cmd, "@NodalOfficerMiddleName", DbType.String, hysavecomp["NodalOfficerMiddleName"]);
+                    db.AddInParameter(cmd, "@NodalOfficerLastName", DbType.String, hysavecomp["NodalOfficerLastName"]);
+                    db.AddInParameter(cmd, "@NodalOfficerEmail", DbType.String, hysavecomp["NodalOfficerEmail"]);
+                    db.AddInParameter(cmd, "@TypeOfBuisness", DbType.Int64, hysavecomp["TypeOfBuisness"].ToString().Trim());
+                    db.AddInParameter(cmd, "@BusinessSector", DbType.Int64, hysavecomp["BusinessSector"].ToString().Trim());
+                    db.AddInParameter(cmd, "@StreetAddress", DbType.String, hysavecomp["StreetAddress"]);
+                    db.AddInParameter(cmd, "@StreetAddressLine2", DbType.String, hysavecomp["StreetAddressLine2"]);
+                    db.AddInParameter(cmd, "@City", DbType.String, hysavecomp["City"]);
+                    db.AddInParameter(cmd, "@State", DbType.String, hysavecomp["State"].ToString().Trim());
+                    db.AddInParameter(cmd, "@ZipCode", DbType.String, hysavecomp["ZipCode"].ToString().Trim());
+                    db.AddInParameter(cmd, "@Country", DbType.Int64, hysavecomp["Country"]);
+                    db.AddInParameter(cmd, "@ContactNo", DbType.String, hysavecomp["ContactNo"]);
+                    db.AddInParameter(cmd, "@FaxNo", DbType.String, hysavecomp["FaxNo"]);
+                    db.AddOutParameter(cmd, "@ReturnID", DbType.String, 20);
+                    db.ExecuteNonQuery(cmd, dbTran);
+                    mCurrentID = db.GetParameterValue(cmd, "@ReturnID").ToString();
+                    dbTran.Commit();
+                    _msg = "Save";
+                    _sysMsg = "Save";
+                    return mCurrentID;
+                }
+
+                catch (Exception ex)
+                {
+                    dbTran.Rollback();
+                    _msg = ex.Message;
+                    _sysMsg = "";
+                    return _sysMsg;
+                }
+                finally
+                {
+                    dbCon.Close();
                 }
             }
         }
@@ -1071,6 +1158,30 @@ namespace DataAccessLayer
                 }
             }
         }
+        public DataTable RetriveVendor(Int64 Vid, string VRefNo, string VEmail, string RetFor)
+        {
+            using (DbConnection dbCon = db.CreateConnection())
+            {
+                dbCon.Open();
+                try
+                {
+                    DbCommand cmd = db.GetStoredProcCommand("sp_VendorRegisDetail");
+                    db.AddInParameter(cmd, "@VendorId", DbType.Int64, Vid);
+                    db.AddInParameter(cmd, "@VendorRefNo", DbType.String, VRefNo);
+                    db.AddInParameter(cmd, "@Email", DbType.String, VEmail);
+                    db.AddInParameter(cmd, "@WorkCodeFor", DbType.String, RetFor);
+                    IDataReader dr = db.ExecuteReader(cmd);
+                    DataTable dt = new DataTable();
+                    if (dr != null)
+                        dt.Load(dr);
+                    return dt;
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+        }
         #endregion
         #region DeleteCode
         public string DeleteRecord(string CompRefNo, string Criteria)
@@ -1282,8 +1393,7 @@ namespace DataAccessLayer
                 }
             }
         }
-
-        public string SaveExcel3510(DataTable dtMaster, int l1, int l2, int pid)
+        public string SaveExcel3510(DataTable dtMaster, string l1, string l2, string pid)
         {
             using (DbConnection Connection = db.CreateConnection())
             {
@@ -1314,6 +1424,90 @@ namespace DataAccessLayer
                 {
                     Transaction.Rollback();
                     return ex.Message + "Error Found in Excel" + errorRow;
+                }
+                finally
+                {
+                    Connection.Close();
+                }
+            }
+        }
+
+        public string SaveExcelProduct(DataTable dtMaster)
+        {
+            using (DbConnection Connection = db.CreateConnection())
+            {
+                Connection.Open();
+                DbTransaction Transaction = Connection.BeginTransaction();
+                Int32 errorRow = -1;
+                try
+                {
+                    DataTable dtIds;      //  to store ids value
+                    for (int k = 0; k < dtMaster.Rows.Count; k++)
+                    {
+                        errorRow = k;
+                        // getting related id to insert into produt table
+                        DbCommand ids = db.GetSqlStringCommand("select * from fn_GetIdsForProductTable('" + dtMaster.Rows[k]["COMPANY"].ToString() + "','" + dtMaster.Rows[k]["DIVISION"].ToString() + "'," +
+                      "'" + dtMaster.Rows[k]["UNIT"].ToString() + "','" + dtMaster.Rows[k]["NSN GROUP"].ToString() + "', '" + dtMaster.Rows[k]["NSN GROUP CLASS"].ToString() + "'," +
+                      "'" + dtMaster.Rows[k]["ITEM CODE"].ToString() + "','" + dtMaster.Rows[k]["OEM COUNTRY"].ToString() + "','" + dtMaster.Rows[k]["END USER"].ToString() + "'," +
+                      "'" + dtMaster.Rows[k]["DEFENCE PLATFORM"].ToString() + "','" + dtMaster.Rows[k]["NAME OF DEFENCE PLATFORM"].ToString() + "','" + dtMaster.Rows[k]["PRODUCT (INDUSTRY DOMAIN)"].ToString() + "'," +
+                      "'" + dtMaster.Rows[k]["PRODUCT (INDUSTRY SUB DOMAIN)"].ToString() + "', '" + dtMaster.Rows[k]["PRODUCT (INDUSTRY 2ND SUB DOMAIN)"].ToString() + "'," +
+                      "'" + dtMaster.Rows[k]["YEAR OF INDIGINISATION"].ToString() + "')");
+
+                        dtIds = db.ExecuteDataSet(ids).Tables[0].Copy();
+
+                        // checking if ref no is not blank only then allow to enter else do not enter product
+                        if (!String.IsNullOrEmpty(dtIds.Rows[0]["RefNo"].ToString().Trim()))
+                        {
+                            // Inserting values in product table
+                            DbCommand cmd = db.GetStoredProcCommand("sp_InsertProductFromExcel");
+
+                            db.AddInParameter(cmd, "@CompanyRefNo", DbType.String, dtIds.Rows[0]["RefNo"].ToString());
+                            db.AddInParameter(cmd, "@Role", DbType.String, dtIds.Rows[0]["Role"].ToString());
+                            db.AddInParameter(cmd, "@ProductLevel1", DbType.Int16, dtIds.Rows[0]["ProdLevel1"].ToString());
+                            db.AddInParameter(cmd, "@ProductLevel2", DbType.Int64, dtIds.Rows[0]["ProdLevel2"].ToString());
+                            db.AddInParameter(cmd, "@ProductLevel3", DbType.Int64, dtIds.Rows[0]["ProdLevel3"].ToString());
+
+                            db.AddInParameter(cmd, "@ProductDescription", DbType.String, dtMaster.Rows[k]["ITEM DESCRIPTION"].ToString());
+                            db.AddInParameter(cmd, "@NSCCode", DbType.String, dtMaster.Rows[k]["NSC CODE"].ToString());
+                            db.AddInParameter(cmd, "@NIINCode", DbType.String, dtMaster.Rows[k]["NIIN CODE"].ToString());
+                            db.AddInParameter(cmd, "@OEMPartNumber", DbType.String, dtMaster.Rows[k]["OEM PART NUMBER"].ToString());
+                            db.AddInParameter(cmd, "@OEMName", DbType.String, dtMaster.Rows[k]["OEM NAME"].ToString());
+                            db.AddInParameter(cmd, "@OEMCountry", DbType.Int64, dtIds.Rows[0]["OEMCountry"].ToString());
+                            db.AddInParameter(cmd, "@DPSUPartNumber", DbType.String, dtMaster.Rows[k]["DPSU PART NUMBER"].ToString());
+                            db.AddInParameter(cmd, "@HSNCode", DbType.String, dtMaster.Rows[k]["HSN CODE"].ToString());
+                            db.AddInParameter(cmd, "@EndUserPartNumber", DbType.String, dtMaster.Rows[k]["END USER PART NUMBAR"].ToString());
+
+                            db.AddInParameter(cmd, "@EndUser", DbType.Int64, dtIds.Rows[0]["EndUser"].ToString());
+                            db.AddInParameter(cmd, "@Platform", DbType.Int64, dtIds.Rows[0]["Platform"].ToString());
+                            db.AddInParameter(cmd, "@NomenclatureOfMainSystem", DbType.Int64, dtIds.Rows[0]["Nomenclature"].ToString());
+                            db.AddInParameter(cmd, "@TechnologyLevel1", DbType.Int64, dtIds.Rows[0]["TechLevel1"].ToString());
+                            db.AddInParameter(cmd, "@TechnologyLevel2", DbType.Int64, dtIds.Rows[0]["TechLevel2"].ToString());
+                            db.AddInParameter(cmd, "@TechnologyLevel3", DbType.Int64, dtIds.Rows[0]["TechLevel3"].ToString());
+
+                            db.AddInParameter(cmd, "@SearchKeyword", DbType.String, dtMaster.Rows[k]["SEARCH KEYWORDS"].ToString());
+                            if (dtMaster.Rows[k]["MANUFACTURER NAME IF INDIGINISED"].ToString().Trim() == "" || dtMaster.Rows[k]["MANUFACTURER NAME IF INDIGINISED"].ToString().Trim() == "-")
+                                db.AddInParameter(cmd, "@IsIndeginized", DbType.String, "N");
+                            else
+                                db.AddInParameter(cmd, "@IsIndeginized", DbType.String, "Y");
+                            db.AddInParameter(cmd, "@ManufactureName", DbType.String, dtMaster.Rows[k]["MANUFACTURER NAME IF INDIGINISED"].ToString());
+
+                            db.AddInParameter(cmd, "@ManufactureAddress", DbType.String, dtMaster.Rows[k]["MANUFACTURER ADD"].ToString());
+                            db.AddInParameter(cmd, "@YearofIndiginization", DbType.Int64, dtIds.Rows[0]["YearOfIndiginisation"].ToString());
+                            db.ExecuteNonQuery(cmd, Transaction);
+                        }
+                        else
+                        {
+                            Transaction.Rollback();
+                            return "RefNo not found for given data in Excel in row : " + errorRow;
+                        }
+                    }
+                    Transaction.Commit();
+                    return "Save";
+                }
+                catch (Exception ex)
+                {
+                    Transaction.Rollback();
+                    return ex.Message + "Error Found in Excel in row : " + errorRow;
                 }
                 finally
                 {
@@ -1368,7 +1562,7 @@ namespace DataAccessLayer
                 }
             }
         }
-        public DataTable TestGrid(string Function, string ProdRefNo, Int16 ProdInfoId, string Name, decimal Value, string Unit)
+        public DataTable TestGrid(string Function, string ProdRefNo, Int32 ProdInfoId, string Name, decimal Value, string Unit)
         {
             using (DbConnection dbCon = db.CreateConnection())
             {
@@ -1378,7 +1572,7 @@ namespace DataAccessLayer
                     DbCommand cmd = db.GetStoredProcCommand("sp_InsertProductInfo");
                     db.AddInParameter(cmd, "@Function", DbType.String, Function);
                     db.AddInParameter(cmd, "@ProdRefNo", DbType.String, ProdRefNo);
-                    db.AddInParameter(cmd, "@ProdInfoId", DbType.Int16, ProdInfoId);
+                    db.AddInParameter(cmd, "@ProdInfoId", DbType.Int32, ProdInfoId);
                     db.AddInParameter(cmd, "@Name", DbType.String, Name);
                     db.AddInParameter(cmd, "@Value", DbType.Decimal, Value);
                     db.AddInParameter(cmd, "@Unit", DbType.String, Unit);
@@ -1394,7 +1588,7 @@ namespace DataAccessLayer
                 }
             }
         }
-        public DataTable RetriveSaveEstimateGrid(string Function, Int16 ProdInfoId, string ProdRefNo, Int16 Year, string FYear, decimal EstimateQuantity, string Unit, decimal Price)
+        public DataTable RetriveSaveEstimateGrid(string Function, Int32 ProdInfoId, string ProdRefNo, Int32 Year, string FYear, decimal EstimateQuantity, string Unit, decimal Price)
         {
             using (DbConnection dbCon = db.CreateConnection())
             {
@@ -1403,9 +1597,9 @@ namespace DataAccessLayer
                 {
                     DbCommand cmd = db.GetStoredProcCommand("sp_InsertProductPrice");
                     db.AddInParameter(cmd, "@Function", DbType.String, Function);
-                    db.AddInParameter(cmd, "@ProdQtyId", DbType.Int16, ProdInfoId);
+                    db.AddInParameter(cmd, "@ProdQtyId", DbType.Int32, ProdInfoId);
                     db.AddInParameter(cmd, "@ProdRefNo", DbType.String, ProdRefNo);
-                    db.AddInParameter(cmd, "@Year", DbType.Int16, Year);
+                    db.AddInParameter(cmd, "@Year", DbType.Int32, Year);
                     db.AddInParameter(cmd, "@FYear", DbType.String, FYear);
                     db.AddInParameter(cmd, "@EstimatedQty", DbType.Decimal, EstimateQuantity);
                     db.AddInParameter(cmd, "@Unit", DbType.String, Unit);

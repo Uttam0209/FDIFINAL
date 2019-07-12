@@ -6,7 +6,6 @@
     <%-- Here We need to write some js code for load google chart with database data --%>
     <script src="assets/js/jquery-1.7.1.js"></script>
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-
     <script>
         var chartData; // globar variable for hold chart data
         google.load("visualization", "1", { packages: ["corechart"] });
@@ -51,7 +50,6 @@
 
         }
     </script>
-
 </asp:Content>
 <asp:Content ID="coninner" runat="server" ContentPlaceHolderID="ContentPlaceHolder1">
     <asp:ScriptManager ID="sc" runat="server"></asp:ScriptManager>
@@ -231,12 +229,12 @@
                                         </div>
                                     </div>
                                     <div class="row" style="margin-top: 20px;">
-                                        <div class="col-lg-6 col-sm-6 col-xs-12">
-                                            <div class="white-box analytics-info last-fdi">
-
+                                        <div class="col-lg-12 col-sm-6 col-xs-12">
+                                            <div class="shadow-box analytics-info last-fdi">
                                                 <div class="table-wrapper table-responsive" id="divfactorygrid" runat="server">
-                                                    <asp:GridView ID="gvPrdoct" runat="server" AutoGenerateColumns="false" Class="commonAjaxTbl master-company-table ViewProductTable table 
-                                        display responsive no-wrap table-hover manage-user Grid table-responsive">
+                                                    <asp:GridView ID="gvPrdoct" runat="server" AutoGenerateColumns="false" Class="commonAjaxTbl dataTable master-company-table ViewProductTable table 
+                                        display responsive no-wrap table-hover manage-user Grid table-responsive"
+                                                        OnRowCreated="gvPrdoct_RowCreated">
                                                         <Columns>
                                                             <asp:TemplateField HeaderText="S.No.">
                                                                 <ItemTemplate>
@@ -244,7 +242,6 @@
                                                                 </ItemTemplate>
                                                             </asp:TemplateField>
                                                             <asp:BoundField DataField="CompName" HeaderText="ORGANIZATION" NullDisplayText="#" />
-
                                                             <asp:BoundField DataField="TotalProd" HeaderText="Total ITEMS" NullDisplayText="#" />
                                                             <asp:BoundField DataField="IsIndiginised" HeaderText="ITEMS INDIGENIZED" NullDisplayText="#" />
                                                         </Columns>

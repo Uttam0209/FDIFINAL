@@ -20,6 +20,10 @@ namespace BusinessLayer
         {
             return SqlHelper.Instance.VerifyEmployee(hyLogin, out _msg, out Defaultpage);
         }
+        public string VerifyVendorEmployee(HybridDictionary hyLogin, out string _msg, out string Defaultpage)
+        {
+            return SqlHelper.Instance.VerifyVendorEmployee(hyLogin, out _msg, out Defaultpage);
+        }
         #endregion
         #region Email and Company Name"
         public string VerifyEmailandCompany(string strEmail, string strCompany, out string _msg)
@@ -27,7 +31,6 @@ namespace BusinessLayer
             return SqlHelper.Instance.VerifyEmailandCompany(strEmail, strCompany, out _msg);
         }
         #endregion
-
         public DataTable CreateExcelConnection(string FilePath, string SheetName, out string text)
         {
             DataTable dt = SqlHelper.Instance.CreateExcelConnection(FilePath, SheetName, out text);
@@ -37,11 +40,14 @@ namespace BusinessLayer
         {
             return SqlHelper.Instance.SaveUploadExcelCompany(dtMaster, dtExcel);
         }
-        public string SaveExcel3510(DataTable dtMaster, Int16 l1, Int16 l2, int pid)
+        public string SaveExcel3510(DataTable dtMaster, string l1, string l2, string pid)
         {
             return SqlHelper.Instance.SaveExcel3510(dtMaster, l1, l2, pid);
         }
-
+        public string SaveExcelProduct(DataTable dtMaster)
+        {
+            return SqlHelper.Instance.SaveExcelProduct(dtMaster);
+        }
         #region SaveCode
         public string SaveFDI(HybridDictionary HySave, out string _sysMsg, out string _msg)
         {
@@ -86,6 +92,10 @@ namespace BusinessLayer
         public string SaveCompDesignation(HybridDictionary hysavecomp, out string _sysMsg, out string _msg)
         {
             return SqlHelper.Instance.SaveCompDesignation(hysavecomp, out _sysMsg, out _msg);
+        }
+        public string SaveVendorRegis(HybridDictionary hysavecomp, out string _sysMsg, out string _msg)
+        {
+            return SqlHelper.Instance.SaveVendorRegis(hysavecomp, out _sysMsg, out _msg);
         }
         #endregion
         #region UpdateCode
@@ -156,6 +166,10 @@ namespace BusinessLayer
         {
             return SqlHelper.Instance.RetriveForgotPasswordEmail(Email, Type);
         }
+        public DataTable RetriveVendor(Int64 Vid, string VRefNo,string VEmail, string RetFor )
+        {
+            return SqlHelper.Instance.RetriveVendor(Vid, VRefNo, VEmail, RetFor);
+        }
         #endregion
         #region DeleteCode
         public string DeleteRecord(string CompRefNo, string Criteria)
@@ -178,9 +192,9 @@ namespace BusinessLayer
         {
             return SqlHelper.Instance.GetDataTable("select * from fn_GetAggregateValue('" + action + "','" + role + "','" + refno + "')");
         }
-        public DataTable RetrivePid(int l1, int l2)
+        public DataTable RetrivePid(string l1, string l2)
         {
-            return SqlHelper.Instance.GetDataTable("select SCategoryId from tbl_mst_SubCategorytest where pid=(select SCategoryId from tbl_mst_subcategorytest where pid=0 and l1code='" + l1 + "') and L2Code='" + l2 + "'");
+            return SqlHelper.Instance.GetDataTable("select SCategoryId from tbl_mst_SubCategory where pid=(select SCategoryId from tbl_mst_subcategory where pid=0 and l1code='" + l1 + "') and L2Code='" + l2 + "'");
         }
         public DataTable RetriveParentNode(string role, string refno)
         {
@@ -195,13 +209,12 @@ namespace BusinessLayer
             return SqlHelper.Instance.GetDataTable("SELECT CompanyName, FY, ExchangeTotalAmount from vw_Chart order by fyid");
         }
         #endregion
-
         #region Test
-        public DataTable TestGrid(string Function, string ProdRefNo, Int16 ProdInfoId, string Name, decimal Value, string Unit)
+        public DataTable TestGrid(string Function, string ProdRefNo, Int32 ProdInfoId, string Name, decimal Value, string Unit)
         {
             return SqlHelper.Instance.TestGrid(Function, ProdRefNo, ProdInfoId, Name, Value, Unit);
         }
-        public DataTable RetriveSaveEstimateGrid(string Function, Int16 ProdInfoId, string ProdRefNo, Int16 Year, string FYear, decimal EstimateQuantity, string Unit, decimal Price)
+        public DataTable RetriveSaveEstimateGrid(string Function, Int32 ProdInfoId, string ProdRefNo, Int32 Year, string FYear, decimal EstimateQuantity, string Unit, decimal Price)
         {
             return SqlHelper.Instance.RetriveSaveEstimateGrid(Function, ProdInfoId, ProdRefNo, Year, FYear, EstimateQuantity, Unit, Price);
         }

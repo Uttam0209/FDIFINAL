@@ -584,6 +584,10 @@ form .form-group {
     box-shadow: 0 0 8px rgba(0,0,0,0.2);
     background: #fff;
 }
+.VendorloginBg {
+    width: 70% !important;
+}
+
 
     .loginBg h3 {
         font-size: 22px;
@@ -1957,3 +1961,11 @@ form label { font-size: 15px !important; font-family: 'Roboto', sans-serif !impo
 .EstimateGridviewResult td:nth-child(2) {width: 100px;}
 .EstimateGridviewResult td:nth-child(3) {width: 286px;}
 .EstimateGridviewResult td:nth-child(4) {width: 155px;}
+
+/*---Datatable Design -----*/
+#ContentPlaceHolder1_gvPrdoct_length {float:left;}
+.shadow-box  {padding: 4%; box-shadow: 0 0 6px rgba(0,0,0,.1); border-radius: 4px;}
+
+/*----25th June 2019-----*/
+.faq-secion .faq-img { margin-bottom: 20px;}
+.faq-secion .card ol li { font-size: 15px; }

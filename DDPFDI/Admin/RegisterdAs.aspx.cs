@@ -82,7 +82,7 @@ public partial class Admin_RegisterdAs : System.Web.UI.Page
                 }
                 else
                 {
-                    DataTable DtGrid = Lo.RetriveMasterCategoryDate(Convert.ToInt16(ddlmastercategory.SelectedItem.Value), "", "", "", "", "SelectByID", "");
+                    DataTable DtGrid = Lo.RetriveMasterCategoryDate(Convert.ToInt32(ddlmastercategory.SelectedItem.Value), "", "", "", "", "SelectByID", "");
                     if (DtGrid.Rows.Count > 0)
                     {
                         gvCategory.DataSource = DtGrid;
@@ -233,7 +233,7 @@ public partial class Admin_RegisterdAs : System.Web.UI.Page
             else
             {
                 DataTable StrCat = Lo.RetriveMasterSubCategoryDate(
-                    Convert.ToInt16(ddlmastercategory.SelectedItem.Value),
+                    Convert.ToInt32(ddlmastercategory.SelectedItem.Value),
                     Co.RSQandSQLInjection(txtsubcategory.Text, "soft"), "0", "InsertInnerID", "",
                     objEnc.DecryptData(ViewState["UserLoginEmail"].ToString()));
                 if (StrCat != null)
@@ -260,12 +260,12 @@ public partial class Admin_RegisterdAs : System.Web.UI.Page
     {
         try
         {
-            DataTable DtGetAddDropdown = Lo.RetriveMasterSubCategoryDate(Convert.ToInt16(ddlcategroy2.SelectedItem.Value), txtcategory3.Text.Trim(), "", "DupSubCat", "", "");
+            DataTable DtGetAddDropdown = Lo.RetriveMasterSubCategoryDate(Convert.ToInt32(ddlcategroy2.SelectedItem.Value), txtcategory3.Text.Trim(), "", "DupSubCat", "", "");
             if (DtGetAddDropdown.Rows.Count > 0)
             { ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('This category " + txtcategory3.Text + " already inserted in " + ddlcategroy2.SelectedItem.Text + ",record not inserted.')", true); }
             else
             {
-                DataTable StrCat = Lo.RetriveMasterSubCategoryDate(Convert.ToInt16(ddlcategroy2.SelectedItem.Value),
+                DataTable StrCat = Lo.RetriveMasterSubCategoryDate(Convert.ToInt32(ddlcategroy2.SelectedItem.Value),
                     Co.RSQandSQLInjection(txtcategory3.Text, "soft"), "0", "InsertInnerSubID", "",
                     objEnc.DecryptData(ViewState["UserLoginEmail"].ToString()));
                 if (StrCat != null)
@@ -292,12 +292,12 @@ public partial class Admin_RegisterdAs : System.Web.UI.Page
     {
         try
         {
-            DataTable DtGetAddDropdown = Lo.RetriveMasterSubCategoryDate(Convert.ToInt16(ddllabel2.SelectedItem.Value), txtlevel3.Text.Trim(), "", "DupSubCat", "", "");
+            DataTable DtGetAddDropdown = Lo.RetriveMasterSubCategoryDate(Convert.ToInt32(ddllabel2.SelectedItem.Value), txtlevel3.Text.Trim(), "", "DupSubCat", "", "");
             if (DtGetAddDropdown.Rows.Count > 0)
             { ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('This category " + txtlevel3.Text + " already inserted in " + ddllabel2.SelectedItem.Text + ",record not inserted.')", true); }
             else
             {
-                DataTable StrCat = Lo.RetriveMasterSubCategoryDate(Convert.ToInt16(ddllabel2.SelectedItem.Value),
+                DataTable StrCat = Lo.RetriveMasterSubCategoryDate(Convert.ToInt32(ddllabel2.SelectedItem.Value),
                     Co.RSQandSQLInjection(txtlevel3.Text, "soft"), "0", "InsertInnerSubID", "",
                     objEnc.DecryptData(ViewState["UserLoginEmail"].ToString()));
                 if (StrCat != null)
@@ -425,7 +425,7 @@ public partial class Admin_RegisterdAs : System.Web.UI.Page
     {
         try
         {
-            DataTable DtFirstLevelCategroy = Lo.RetriveMasterSubCategoryDate(Convert.ToInt16(ddlmastercategory.SelectedItem.Value), "", "", "SelectInnerMaster", "", "");
+            DataTable DtFirstLevelCategroy = Lo.RetriveMasterSubCategoryDate(Convert.ToInt32(ddlmastercategory.SelectedItem.Value), "", "", "SelectInnerMaster", "", "");
             if (DtFirstLevelCategroy.Rows.Count > 0)
             {
                 Co.FillDropdownlist(ddlcategroy2, DtFirstLevelCategroy, "SCategoryName", "SCategoryId");
@@ -455,7 +455,7 @@ public partial class Admin_RegisterdAs : System.Web.UI.Page
     {
         try
         {
-            DataTable Dt2NdLevelCategroy = Lo.RetriveMasterSubCategoryDate(Convert.ToInt16(ddlcategroy2.SelectedItem.Value), "", "", "SubSelectID", "", "");
+            DataTable Dt2NdLevelCategroy = Lo.RetriveMasterSubCategoryDate(Convert.ToInt32(ddlcategroy2.SelectedItem.Value), "", "", "SubSelectID", "", "");
             if (Dt2NdLevelCategroy.Rows.Count > 0)
             {
                 Co.FillDropdownlist(ddllabel2, Dt2NdLevelCategroy, "SCategoryName", "SCategoryId");
@@ -487,7 +487,7 @@ public partial class Admin_RegisterdAs : System.Web.UI.Page
     {
         try
         {
-            DataTable Dt3LevelCategroy = Lo.RetriveMasterSubCategoryDate(Convert.ToInt16(ddllabel2.SelectedItem.Value), "", "", "SubSelectID", "", "");
+            DataTable Dt3LevelCategroy = Lo.RetriveMasterSubCategoryDate(Convert.ToInt32(ddllabel2.SelectedItem.Value), "", "", "SubSelectID", "", "");
             if (Dt3LevelCategroy.Rows.Count > 0)
             {
                 gvlevel3.DataSource = Dt3LevelCategroy;

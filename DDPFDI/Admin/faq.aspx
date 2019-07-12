@@ -399,6 +399,265 @@
                                 </div>
                             </div>
 
+                            <div class="card">
+                                <div class="card-header">
+                                    <h2 data-toggle="collapse" data-parent="#accordion" class="collapsed" data-target="#faq11" aria-expanded="false" aria-controls="faq11">2.Category Master
+                                            <i class="fa fa-plus pull-right"></i>
+                                    </h2>
+                                </div>
+
+                                <div id="faq11" class="collapse">
+                                    <div class="card-body">
+                                        <p>
+                                            Indigenisation portal captures Product information through Product Master tab. 
+                                            In Product master tab under indigenisation heading add option is given to add products in the portal. 
+                                            The format for input data require various drop down menu to be selected for correct choice to be populated under the relevant space for e.g. in  END USER either ARMY . NAVY , AIRFORCE , Coast Guard to be selected for filling the details. The category master allows the details to be customized as per the requirement of DPSUs/OFB. Barring NATO group , NATO class and INC Code other drop downs information are recommended to be customised through Category Master .
+                                        </p>
+                                        <div class="faq-img">
+                                            <img src="../assets/images/faq-images/category-master.jpg" alt="" />
+
+                                            <p style="margin-top:20px; font-weight:bold;">Under Category Master following structure for capturing information are given as per their  :-</p>
+
+                                        </div>
+                                        <div class="faq-table">
+                                            <table class="table manage-user">
+                                                <tr>
+                                                    <th>S.No</th>
+                                                    <th>Drop Down Label </th>
+                                                    <th>Level 1</th>
+                                                    <th>Level 2</th>
+                                                    <th>Level 3</th>
+                                                </tr>
+                                            <tr>
+                                                <td>1</td>
+                                                <td>Certification</td>
+                                                <td>Yes </td>
+                                                <td>No</td>
+                                                <td>No</td>
+                                                
+                                            </tr>
+                                            <tr>
+                                                <td>2</td>
+                                                <td>Defence Platform</td>
+                                                <td>Yes </td>
+                                                <td>Yes(Name of Defence Platform)</td>
+                                                <td>No</td>
+                                                
+                                            </tr>
+                                            <tr>
+                                                <td>3</td>
+                                                <td>Financial Support </td>
+                                                <td>Yes </td>
+                                                <td>No</td>
+                                                <td>No</td>
+                                                
+                                            </tr>
+                                            <tr>
+                                                <td>4</td>
+                                                <td>HS Code</td>
+                                                <td>Yes </td>
+                                                <td>No</td>
+                                                <td>No</td>
+                                                
+                                            </tr>
+                                             <tr>
+                                                <td>5</td>
+                                                <td>NSN group</td>
+                                                <td>Yes</td>
+                                                <td>Yes (NSN Class) </td>
+                                                <td>Yes  (INC Code) </td>
+                                                
+                                                
+                                            </tr>
+                                            
+                                            <tr>
+                                                <td>6</td>
+                                                <td>Procurement Category</td>
+                                                <td>Yes</td>
+                                                <td>No</td>
+                                                <td>No</td>
+                                                
+                                                
+                                            </tr>
+                                            <tr>
+                                                <td>7</td>
+                                                <td>Product (Industry domain )</td>
+                                                <td>Yes</td>
+                                                <td>Yes</td>
+                                                <td>Yes</td>
+                                                
+                                                
+                                            </tr>
+                                            <tr>
+                                                <td>8</td>
+                                                <td>QA Agency</td>
+                                                <td>Yes</td>
+                                                <td>No</td>
+                                                <td>No</td>
+                                                
+                                                
+                                            </tr>
+                                            <tr>
+                                                <td>9</td>
+                                                <td>Technical Support</td>
+                                                <td>Yes</td>
+                                                <td>No</td>
+                                                <td>No</td>
+                                                
+                                                
+                                            </tr>
+                                            <tr>
+                                                <td>10</td>
+                                                <td>Testing</td>
+                                                <td>Yes</td>
+                                                <td>No</td>
+                                                <td>No</td>
+                                                
+                                            </tr>
+                                        </table>
+                                            <p style="font-weight:bold;">The above table can be understand be example stated below :- </p>
+                                            <ol style="list-style-type:lower-alpha">
+                                                <li>Certification have only one level i.e. level 1 so any information needed on product add page( Product Master tab)  under Certification heading can be added here to be reflected in drop down menu.</li>
+                                                <li>Defence Platform have two level i.e. level 1(Defence platform)  and level 2( Name of Defence Platform) so any information needed on product add page( Product Master tab)  under Defence Platform  and Name of Defence platform heading can be added here to be reflected in drop down menu. E.g. for adding new defence  platform say ’ X ‘ the same will be added under level 1 of category master tab and if the name  of defence platform ’ X ‘  say ‘Ý’ is to be added then the level 2 of category master tab is to be selected where at level 1 ’ X ‘  is to be selected then say ‘Ý’.</li>
+                                            </ol>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-header">
+                                    <h2 data-toggle="collapse" data-parent="#accordion" class="collapsed" data-target="#faq12" aria-expanded="false" aria-controls="faq12">2.1 ADD Level 1
+                                            <i class="fa fa-plus pull-right"></i>
+                                    </h2>
+                                </div>
+
+                                <div id="faq12" class="collapse">
+                                    <div class="card-body">
+                                        <p>
+                                            Steps to Add Dropdown master Level 1:-
+                                        </p>
+                                        <ol>
+                                            <li>Click on Category Master Tab at the left hand corner of the portal after login.</li>
+                                            <li>Click on Dropdown Master Tab</li>
+                                            <li>Click on Level 1 and type level 1 value and click save button for adding level 1</li>
+                                            <li>See the below image to add Dropdown level 1
+                                                <div class="faq-img">
+                                                     <img src="../assets/images/faq-images/add-lavel-1.jpg" alt="" />
+                                                </div>
+
+                                            </li>
+                                            <li>
+                                                Level 1 will be displayed after save button clicked.
+                                                <div class="faq-img">
+                                                    <img src="../assets/images/faq-images/view-level-1.jpg" alt="" />
+                                                 </div>
+                                            </li>
+                                            
+                                            
+                                        </ol>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-header">
+                                    <h2 data-toggle="collapse" data-parent="#accordion" class="collapsed" data-target="#faq13" aria-expanded="false" aria-controls="faq13">2.2.ADD Level 2
+                                            <i class="fa fa-plus pull-right"></i>
+                                    </h2>
+                                </div>
+
+                                <div id="faq13" class="collapse">
+                                    <div class="card-body">
+                                        <p>
+                                            Steps to Add Dropdown master Level 2:-
+                                        </p>
+                                        <ol>
+                                            <li>Click on Category Master Tab at the left hand corner of the portal after login.</li>
+                                            <li>Click on Dropdown Master Tab, Select drop down label e.g. defence platform and choose level 1 from available options </li>
+                                            <li>Click on Level 2 and type value to be entered and click save to save level 2</li>
+                                            <li>See the below image to add Dropdown level 2
+                                                <div class="faq-img">
+                                                     <img src="../assets/images/faq-images/add-level-2.jpg" alt="" />
+                                                </div>
+
+                                            </li>
+
+                                           <li>
+                                                Level 2 will be displayed after save button clicked.
+                                                <div class="faq-img">
+                                                    <img src="../assets/images/faq-images/view-level-2.jpg" alt="" />
+                                                 </div>
+                                            </li>
+                                            
+                                        </ol>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-header">
+                                    <h2 data-toggle="collapse" data-parent="#accordion" class="collapsed" data-target="#faq14" aria-expanded="false" aria-controls="faq14">2.3.ADD Level 3
+                                            <i class="fa fa-plus pull-right"></i>
+                                    </h2>
+                                </div>
+
+                                <div id="faq14" class="collapse">
+                                    <div class="card-body">
+                                        <p>
+                                            Steps to Add Dropdown master Level 3:-
+                                        </p>
+                                        <ol>
+                                            <li>Click on Category Master Tab at the left hand corner of the portal after login.</li>
+                                            <li>Click on Dropdown Master Tab, and choose label e.g. NSN Group then Select level 1 and Level 2</li>
+                                            <li>Click on Level 3 and type value that need to be saved at level 3, click save to save it.</li>
+                                            <li>See the below image to add Dropdown level 3
+                                                <div class="faq-img">
+                                                    <img src="../assets/images/faq-images/add-level-3.jpg" alt="" />
+                                                </div>
+                                            </li>
+
+                                            <li>
+                                                Level 3 will be displayed after save button clicked.
+                                                <div class="faq-img">
+                                                    <img src="../assets/images/faq-images/view-level-3.jpg" alt="" />
+                                                 </div>
+                                            </li>
+                                            
+                                        </ol>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                             <div class="card">
+                                <div class="card-header">
+                                    <h2 data-toggle="collapse" data-parent="#accordion" class="collapsed" data-target="#faq15" aria-expanded="false" aria-controls="faq15">2.4. ADD Dropdown
+                                            <i class="fa fa-plus pull-right"></i>
+                                    </h2>
+                                </div>
+
+                                <div id="faq15" class="collapse">
+                                    <div class="card-body">
+                                        <p>
+                                           Drop down mention in the above matrix will contain each and every value that is being added into the portal by using Add level 1 , 
+                                            level 2 or level 3 as per the case. However the same may also be customised as per the requirement of DPSUs/OFB by selecting drop down from 
+                                            Category  master  then selecting required dropdown label. All the values entered for that label will appear as radio button. 
+                                            Select those option which required  to be  reflected in the product  master add page.The above process is described in the image below:-
+                                        </p>
+                                        <ol>
+                                            <li>Click on Category Master Tab at the left hand corner of the portal after login.</li>
+                                            <li>Click on Dropdown Master Tab and Select dropdown lebel for e.g. certification</li>
+                                            <li>On selecting required label all the values related with the label will appear in right hand side.</li>
+                                            <li>Select the radio button for selecting those values that are required to be visible in the drop down menu at Product Master</li>
+                                            
+                                        </ol>
+                                        <div class="faq-img">
+                                            <img src="../assets/images/faq-images/category-dropdown.jpg" alt="" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
 
                         </div>
                     </div>

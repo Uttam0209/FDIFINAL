@@ -165,6 +165,89 @@
                                     </div>
                                     <div class="section-pannel">
                                         <div class="row">
+                                            <div class="col-md-4" runat="server" visible="false">
+                                                <div class="form-group">
+                                                    <label>
+                                                        Sub heading No.(HSN) (digit) (Hidden)
+                                                     <span data-toggle="tooltip" class="fa fa-question" title="Please enter if HSN code is available"></span>
+                                                    </label>
+                                                    <asp:TextBox runat="server" ID="txthsncode" TabIndex="5" MaxLength="9" class="form-control"></asp:TextBox>
+                                                </div>
+                                            </div>
+                                            <asp:UpdatePanel runat="server" ID="UpdatePanel7">
+                                                <ContentTemplate>
+                                                    <div class="col-md-3" runat="server" visible="false">
+                                                        <div class="form-group">
+                                                            <label>HS Code (Hidden)</label>
+                                                            <span class="mandatory">*</span>
+                                                            <asp:DropDownList runat="server" ID="ddlHSNCode" TabIndex="2" class="form-control" Height="35px" Style="text-transform: uppercase !important;"></asp:DropDownList>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <div class="form-group">
+                                                            <label>HS Chapter</label>
+                                                            <span class="mandatory">*</span>
+                                                            <asp:DropDownList runat="server" ID="ddlhschapter" AutoPostBack="true" OnSelectedIndexChanged="ddlhschapter_SelectedIndexChanged" class="form-control" Height="35px" Style="text-transform: uppercase !important;"></asp:DropDownList>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <div class="form-group">
+                                                            <label>HS Heading No</label>
+                                                            <span class="mandatory">*</span>
+                                                            <asp:DropDownList runat="server" ID="ddlhsncodelev1" TabIndex="2" AutoPostBack="true" OnSelectedIndexChanged="ddlhsncodelev1_SelectedIndexChanged" class="form-control" Height="35px" Style="text-transform: uppercase !important;"></asp:DropDownList>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <div class="form-group">
+                                                            <label>Description</label>
+                                                            <span class="mandatory">*</span>
+                                                            <asp:DropDownList runat="server" ID="ddlhsncodelevel2" TabIndex="2" AutoPostBack="true" OnSelectedIndexChanged="ddlhsncodelevel2_SelectedIndexChanged" class="form-control" Height="35px" Style="text-transform: uppercase !important;"></asp:DropDownList>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <div class="form-group">
+                                                            <label>HSN Code</label>
+                                                            <span class="mandatory">*</span>
+                                                            <asp:DropDownList runat="server" ID="ddlhsncodelevel3" AutoPostBack="true" OnSelectedIndexChanged="ddlhsncodelevel3_SelectedIndexChanged" class="form-control" Height="35px" Style="text-transform: uppercase !important;"></asp:DropDownList>
+                                                        </div>
+                                                    </div>
+                                                    <div class="clearfix"></div>
+                                                    <div class="col-sm-3">
+                                                    </div>
+                                                    <div class="col-sm-3">
+                                                        <label style="font-size: 14px !important;">
+                                                            HS Code (4 digit)
+                                                                        <span data-toggle="tooltip" class="fa fa-question" title="HS Code 4 digit"></span>
+                                                        </label>
+                                                        <asp:TextBox runat="server" ID="txthscodereadonly" ReadOnly="True" MaxLength="4" CssClass="form-cascade-control form-control"></asp:TextBox>
+                                                    </div>
+                                                    <div class="col-sm-3">
+                                                    </div>
+                                                    <div class="col-sm-3">
+                                                        <label>
+                                                            HSN Code (8-digit)
+                                                                    <span data-toggle="tooltip" class="fa fa-question" title="HSN Code (8-digit)"></span>
+                                                        </label>
+                                                        <asp:TextBox runat="server" ID="txthsncodereadonly" ReadOnly="True" MaxLength="8" class="form-control"></asp:TextBox>
+                                                    </div>
+                                                </ContentTemplate>
+                                            </asp:UpdatePanel>
+                                            <asp:UpdateProgress ID="UpdateProgress10" runat="server" AssociatedUpdatePanelID="upproduct">
+                                                <ProgressTemplate>
+                                                    <!---Progress Bar ---->
+                                                    <div class="overlay-progress">
+                                                        <div class="custom-progress-bar blue stripes">
+                                                            <span></span>
+                                                            <p>Processing</p>
+                                                        </div>
+                                                    </div>
+                                                    <!---Progress Bar ---->
+                                                </ProgressTemplate>
+                                            </asp:UpdateProgress>
+                                        </div>
+                                    </div>
+                                    <div class="section-pannel">
+                                        <div class="row">
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label>OEM Part Number</label>
@@ -181,10 +264,8 @@
                                                 <div class="form-group">
                                                     <label>OEM Country</label>
                                                     <span class="mandatory">*</span>
-                                                    <%--<asp:TextBox runat="server" ID="txtcountry" TabIndex="9" class="form-control"></asp:TextBox>--%>
-                                                    <asp:DropDownList ID="txtcountry" runat="server" TabIndex="9" class="form-control">
+                                                    <asp:DropDownList ID="txtcountry" runat="server" Height="35px" TabIndex="9" class="form-control">
                                                     </asp:DropDownList>
-                                                    <%--<asp:HiddenField ID="hfcountry" runat="server" />--%>
                                                 </div>
                                             </div>
                                         </div>
@@ -197,18 +278,12 @@
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="form-group">
-                                                    <label>HSN Code</label>
-                                                    <asp:TextBox runat="server" ID="txthsncode" TabIndex="11" class="form-control"></asp:TextBox>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <div class="form-group">
                                                     <label>End User Part Number</label>
                                                     <asp:TextBox runat="server" ID="txtenduserpartnumber" TabIndex="12" class="form-control"></asp:TextBox>
                                                 </div>
                                             </div>
                                             <div class="clearfix"></div>
-                                            <div class="col-md-4">
+                                            <div class="col-md-4 mt5">
                                                 <div class="form-group">
                                                     <asp:Label runat="server" ID="lblenduser" Text="End User"></asp:Label><span class="mandatory"> *</span>
                                                     <asp:DropDownList runat="server" ID="ddlenduser" Style="text-transform: uppercase !important;" class="form-control ui fluid dropdown" TabIndex="13">
@@ -325,7 +400,7 @@
                                                                     </div>
                                                                     <div class="col-sm-4">
                                                                         <label>Year of Indiginization</label>
-                                                                        <asp:DropDownList runat="server" ID="ddlyearofindiginization" TabIndex="23" class="form-control"></asp:DropDownList>
+                                                                        <asp:DropDownList runat="server" ID="ddlyearofindiginization" Height="35px" TabIndex="23" class="form-control"></asp:DropDownList>
                                                                     </div>
                                                                 </div>
                                                             </div>

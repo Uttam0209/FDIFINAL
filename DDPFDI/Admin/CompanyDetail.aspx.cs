@@ -359,7 +359,7 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
                 lblceoemail.InnerText = "Division Head Email ID";
                 tcompanyname.ReadOnly = true;
 
-                DataTable DtGetNodel = Lo.RetriveAllNodalOfficer(objCrypto.DecryptData(Request.QueryString["mcurrentcompRefNo"].ToString()), "Company");
+                DataTable DtGetNodel = Lo.RetriveAllNodalOfficer(objCrypto.DecryptData(Request.QueryString["mcurrentcompRefNo"].ToString()), "Division");
                 DataView dv = new DataView(DtGetNodel);
 
                 dv.RowFilter = "FactoryRefNo='" + DtView.Rows[0]["FactoryRefNo"].ToString() + "' and isNodalOfficer='Y'";
@@ -512,7 +512,7 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
                 lblceoemail.InnerText = "Unit Head Email ID";
                 selstate.SelectedValue = DtView.Rows[0]["UnitStateID"].ToString();
                 //ddlNodalOfficerEmail.SelectedValue = DtView.Rows[0]["NodalOfficeRefNo"].ToString();
-                DataTable DtGetNodel = Lo.RetriveAllNodalOfficer(objCrypto.DecryptData(Request.QueryString["mcurrentcompRefNo"].ToString()), "Company");
+                DataTable DtGetNodel = Lo.RetriveAllNodalOfficer(objCrypto.DecryptData(Request.QueryString["mcurrentcompRefNo"].ToString()), "Unit");
                 DataView dv = new DataView(DtGetNodel);
 
                 dv.RowFilter = "UnitRefNo='" + DtView.Rows[0]["UnitRefNo"].ToString() + "' and isNodalOfficer='Y'";

@@ -107,6 +107,9 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                                 BindPurposeProcuremnt();
                                 BindEndUser();
                                 BindNodelEmail();
+                                HSCode();
+                                HSNCodeLevel();
+                                // HSNCodeLevel1();
                                 //EditCode():
                             }
                             else
@@ -116,6 +119,9 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                                 BindMasterPlatCategory();
                                 BindPurposeProcuremnt();
                                 BindEndUser();
+                                HSCode();
+                                HSNCodeLevel();
+                                //  HSNCodeLevel1();
                             }
                         }
                         else
@@ -130,6 +136,9 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                             BindTesting();
                             BindCertification();
                             BindQAAgency();
+                            HSCode();
+                            HSNCodeLevel();
+                            //HSNCodeLevel1();
                         }
                     }
                     if (hidType.Value == "Company")
@@ -550,7 +559,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     {
         if (ddlNodalOfficerEmail.SelectedItem.Text != "Select")
         {
-            DataTable DtGetNodel = Lo.RetriveMasterData(Convert.ToInt16(ddlNodalOfficerEmail.SelectedItem.Value), "", "", 0, "", "", "SearchNodalOfficerID");
+            DataTable DtGetNodel = Lo.RetriveMasterData(Convert.ToInt32(ddlNodalOfficerEmail.SelectedItem.Value), "", "", 0, "", "", "SearchNodalOfficerID");
             if (DtGetNodel.Rows.Count > 0)
             {
                 contactpanel1.Visible = true;
@@ -562,7 +571,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                 txtempcode.Text = DtGetNodel.Rows[0]["NodalEmpCode"].ToString();
                 txtmobnodal.Text = DtGetNodel.Rows[0]["NodalOfficerMobile"].ToString();
                 //===Bind Nodel officer except Nodel one
-                DtCompanyDDL = Lo.RetriveMasterData(Convert.ToInt16(ddlNodalOfficerEmail.SelectedItem.Value), DtGetNodel.Rows[0]["CompanyRefNo"].ToString(), "", 0, "", "", "AllNodelNotSelect");
+                DtCompanyDDL = Lo.RetriveMasterData(Convert.ToInt32(ddlNodalOfficerEmail.SelectedItem.Value), DtGetNodel.Rows[0]["CompanyRefNo"].ToString(), "", 0, "", "", "AllNodelNotSelect");
                 if (DtCompanyDDL.Rows.Count > 0)
                 {
                     Co.FillDropdownlist(ddlNodalOfficerEmail2, DtCompanyDDL, "NodalOficerName", "NodalOfficerID");
@@ -589,7 +598,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     {
         if (ddlNodalOfficerEmail2.SelectedItem.Text != "Select")
         {
-            DataTable DtGetNodel = Lo.RetriveMasterData(Convert.ToInt16(ddlNodalOfficerEmail2.SelectedItem.Value), "", "", 0, "", "", "SearchNodalOfficerID");
+            DataTable DtGetNodel = Lo.RetriveMasterData(Convert.ToInt32(ddlNodalOfficerEmail2.SelectedItem.Value), "", "", 0, "", "", "SearchNodalOfficerID");
             if (DtGetNodel.Rows.Count > 0)
             {
                 contactpanel2.Visible = true;
@@ -601,7 +610,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                 txtempcode2.Text = DtGetNodel.Rows[0]["NodalEmpCode"].ToString();
                 txtmobnodal2.Text = DtGetNodel.Rows[0]["NodalOfficerMobile"].ToString();
                 //===Bind Nodel officer expect Nodel Two                
-                DtCompanyDDL = Lo.RetriveMasterData(Convert.ToInt16(ddlNodalOfficerEmail2.SelectedItem.Value), DtGetNodel.Rows[0]["CompanyRefNo"].ToString(), "", 0, "", "", "AllNodelNotSelect");
+                DtCompanyDDL = Lo.RetriveMasterData(Convert.ToInt32(ddlNodalOfficerEmail2.SelectedItem.Value), DtGetNodel.Rows[0]["CompanyRefNo"].ToString(), "", 0, "", "", "AllNodelNotSelect");
                 if (DtCompanyDDL.Rows.Count > 0)
                 {
                     Co.FillDropdownlist(ddlNodalOfficerEmail, DtCompanyDDL, "NodalOficerName", "NodalOfficerID");
@@ -747,6 +756,47 @@ public partial class Admin_AddProduct : System.Web.UI.Page
             txtnsccode.Text = "";
         }
     }
+    private void HsHeadingNo(string NSNGroupddl)
+    {
+        try
+        {
+            string a = NSNGroupddl.Substring((NSNGroupddl.IndexOf("(") + 1), NSNGroupddl.IndexOf(")") - (NSNGroupddl.IndexOf("(") + 1));
+            txthscodereadonly.Text = a;
+        }
+        catch (Exception ex)
+        {
+            txthscodereadonly.Text = "";
+        }
+    }
+    private void Nsncode8digit(string NSNGroupddl)
+    {
+        try
+        {
+            string a = NSNGroupddl.Substring((NSNGroupddl.IndexOf("(") + 1), NSNGroupddl.IndexOf(")") - (NSNGroupddl.IndexOf("(") + 1));
+            txthsncodereadonly.Text = a;
+        }
+        catch (Exception ex)
+        {
+            txthsncodereadonly.Text = "";
+        }
+    }
+    protected void ddlhschapter_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        HSNCodeLevel1();
+    }
+    protected void ddlhsncodelev1_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        BindMasterHSNLevel2();
+        HsHeadingNo(ddlhsncodelev1.SelectedItem.Text);
+    }
+    protected void ddlhsncodelevel2_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        BindMasterHSNLevel3();
+    }
+    protected void ddlhsncodelevel3_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        Nsncode8digit(ddlhsncodelevel3.SelectedItem.Text);
+    }
     #endregion
     #region BindServices Testing Certification QA Agencty
     protected void BindServcies()
@@ -821,7 +871,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     }
     protected void BindMasterSubCategory()
     {
-        DataTable DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(Convert.ToInt16(ddlmastercategory.SelectedItem.Value), "", "", "SubSelectID", "", "");
+        DataTable DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(Convert.ToInt32(ddlmastercategory.SelectedItem.Value), "", "", "SubSelectID", "", "");
         if (DtMasterCategroy.Rows.Count > 0)
         {
             Co.FillDropdownlist(ddlsubcategory, DtMasterCategroy, "SCategoryName", "SCategoryId");
@@ -837,7 +887,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     {
         if (ddlsubcategory.SelectedItem.Value != null || ddlsubcategory.SelectedItem.Text != "Select")
         {
-            DataTable DtMasterCategroyLevel3 = Lo.RetriveMasterSubCategoryDate(Convert.ToInt16(ddlsubcategory.SelectedItem.Value), "", "", "SubSelectID", "", "");
+            DataTable DtMasterCategroyLevel3 = Lo.RetriveMasterSubCategoryDate(Convert.ToInt32(ddlsubcategory.SelectedItem.Value), "", "", "SubSelectID", "", "");
             if (DtMasterCategroyLevel3.Rows.Count > 0)
             {
                 Co.FillDropdownlist(ddllevel3product, DtMasterCategroyLevel3, "SCategoryName", "SCategoryId");
@@ -847,6 +897,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
             {
                 ddllevel3product.Items.Clear();
                 ddllevel3product.Items.Insert(0, "Select");
+                ddllevel3product.Items.Insert(1, "NA");
             }
         }
     }
@@ -854,10 +905,17 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     {
         if (ddllevel3product.SelectedItem.Value != null || ddllevel3product.SelectedItem.Text != "Select")
         {
-            DataTable DtItemDescription = Lo.RetriveMasterSubCategoryDate(Convert.ToInt16(ddllevel3product.SelectedItem.Value), "", "", "Level3ID", "", "");
-            if (DtItemDescription.Rows.Count > 0)
+            if (ddllevel3product.SelectedItem.Value != "NA")
             {
-                txtproductdescription.Text = DtItemDescription.Rows[0]["Description"].ToString();
+                DataTable DtItemDescription = Lo.RetriveMasterSubCategoryDate(Convert.ToInt32(ddllevel3product.SelectedItem.Value), "", "", "Level3ID", "", "");
+                if (DtItemDescription.Rows.Count > 0)
+                {
+                    txtproductdescription.Text = DtItemDescription.Rows[0]["Description"].ToString();
+                }
+                else
+                {
+                    txtproductdescription.Text = "";
+                }
             }
             else
             {
@@ -892,7 +950,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     }
     protected void BindMasterSubCategoryTech()
     {
-        DataTable DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(Convert.ToInt16(ddltechnologycat.SelectedItem.Value), "", "", "SubSelectID", "", "");
+        DataTable DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(Convert.ToInt32(ddltechnologycat.SelectedItem.Value), "", "", "SubSelectID", "", "");
         if (DtMasterCategroy.Rows.Count > 0)
         {
             Co.FillDropdownlist(ddlsubtech, DtMasterCategroy, "SCategoryName", "SCategoryId");
@@ -908,7 +966,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     {
         if (ddlsubtech.SelectedItem.Value != null || ddlsubtech.SelectedItem.Text != "Select")
         {
-            DataTable DtMasterCategroyLevel3 = Lo.RetriveMasterSubCategoryDate(Convert.ToInt16(ddlsubtech.SelectedItem.Value), "", "", "SubSelectID", "", "");
+            DataTable DtMasterCategroyLevel3 = Lo.RetriveMasterSubCategoryDate(Convert.ToInt32(ddlsubtech.SelectedItem.Value), "", "", "SubSelectID", "", "");
             if (DtMasterCategroyLevel3.Rows.Count > 0)
             {
                 Co.FillDropdownlist(ddltechlevel3, DtMasterCategroyLevel3, "SCategoryName", "SCategoryId");
@@ -1032,7 +1090,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         //    Co.FillDropdownlist(ddlnomnclature, DtMasterCategroy, "SCategoryName", "SCategoryID");
         //    ddlnomnclature.Items.Insert(0, "Select");
         //}
-        DataTable DtNAMEOFDEFENCEPLATFORM = Lo.RetriveMasterSubCategoryDate(Convert.ToInt16(ddlplatform.SelectedItem.Value), "", "", "SubSelectID", "", "");
+        DataTable DtNAMEOFDEFENCEPLATFORM = Lo.RetriveMasterSubCategoryDate(Convert.ToInt32(ddlplatform.SelectedItem.Value), "", "", "SubSelectID", "", "");
         if (DtNAMEOFDEFENCEPLATFORM.Rows.Count > 0)
         {
             Co.FillDropdownlist(ddlnomnclature, DtNAMEOFDEFENCEPLATFORM, "SCategoryName", "SCategoryId");
@@ -1070,6 +1128,73 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         }
     }
     #endregion
+    #region for HS Code
+
+    public void HSCode()
+    {
+        DataTable DtMasterHS = Lo.RetriveMasterSubCategoryDate(0, "HS Code", "", "SelectInnerHSMaster", "", "");
+
+        if (DtMasterHS.Rows.Count > 0)
+        {
+            Co.FillDropdownlist(ddlHSNCode, DtMasterHS, "SCategoryName", "SCategoryID");
+            ddlHSNCode.Items.Insert(0, "Select");
+        }
+    }
+
+    #endregion
+    #region for HSN Code
+    public void HSNCodeLevel()
+    {
+        DataTable DtMasterHSN = Lo.RetriveMasterSubCategoryDate(0, "HSN CODE", "", "SelectInnerHSMaster", "", "");
+        if (DtMasterHSN.Rows.Count > 0)
+        {
+            Co.FillDropdownlist(ddlhschapter, DtMasterHSN, "SCategoryName", "SCategoryID");
+            ddlhschapter.Items.Insert(0, "Select");
+        }
+    }
+    public void HSNCodeLevel1()
+    {
+        DataTable DtMasterHSN = Lo.RetriveMasterSubCategoryDate(Convert.ToInt32(ddlhschapter.SelectedItem.Value), "", "", "SubSelectID", "", "");
+        if (DtMasterHSN.Rows.Count > 0)
+        {
+            Co.FillDropdownlist(ddlhsncodelev1, DtMasterHSN, "SCategoryName", "SCategoryID");
+            ddlhsncodelev1.Items.Insert(0, "Select");
+        }
+    }
+    protected void BindMasterHSNLevel2()
+    {
+        DataTable DtMasterHSNLev2 = Lo.RetriveMasterSubCategoryDate(Convert.ToInt32(ddlhsncodelev1.SelectedItem.Value), "", "", "SubSelectID", "", "");
+        if (DtMasterHSNLev2.Rows.Count > 0)
+        {
+            Co.FillDropdownlist(ddlhsncodelevel2, DtMasterHSNLev2, "SCategoryName", "SCategoryId");
+            ddlhsncodelevel2.Items.Insert(0, "Select");
+        }
+        else
+        {
+            ddlhsncodelevel2.Items.Clear();
+            ddlhsncodelevel2.Items.Insert(0, "Select");
+            txthscodereadonly.Text = "";
+        }
+    }
+    protected void BindMasterHSNLevel3()
+    {
+        if (ddlhsncodelevel2.SelectedItem.Value != null || ddlhsncodelevel2.SelectedItem.Text != "Select")
+        {
+            DataTable DtMasterHSNLevel3 = Lo.RetriveMasterSubCategoryDate(Convert.ToInt32(ddlhsncodelevel2.SelectedItem.Value), "", "", "SubSelectID", "", "");
+            if (DtMasterHSNLevel3.Rows.Count > 0)
+            {
+                Co.FillDropdownlist(ddlhsncodelevel3, DtMasterHSNLevel3, "SCategoryName", "SCategoryId");
+                ddlhsncodelevel3.Items.Insert(0, "Select");
+            }
+            else
+            {
+                ddlhsncodelevel3.Items.Clear();
+                ddlhsncodelevel3.Items.Insert(0, "Select");
+                ddlhsncodelevel3.Items.Insert(1, "NA");
+            }
+        }
+    }
+    #endregion
     #region For FinancialYear
     protected void BindFinancialYear()
     {
@@ -1097,7 +1222,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     {
         if (hfprodid.Value != "")
         {
-            HyPanel1["ProductID"] = Convert.ToInt16(hfprodid.Value);
+            HyPanel1["ProductID"] = Convert.ToInt32(hfprodid.Value);
             HyPanel1["ProductRefNo"] = Co.RSQandSQLInjection(hfprodrefno.Value.Trim(), "soft");
         }
         else
@@ -1183,7 +1308,50 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         HyPanel1["OEMName"] = Co.RSQandSQLInjection(txtoemname.Text.Trim(), "soft");
         HyPanel1["OEMCountry"] = Convert.ToInt64(txtcountry.SelectedItem.Value);
         HyPanel1["DPSUPartNumber"] = Co.RSQandSQLInjection(txtdpsupartnumber.Text.Trim(), "soft");
+        if (ddlHSNCode.SelectedItem.Value != "Select")
+        {
+            HyPanel1["HSCode"] = Co.RSQandSQLInjection(ddlHSNCode.SelectedItem.Value, "soft");
+        }
+        else
+        {
+            HyPanel1["HSCode"] = null;
+        }
         HyPanel1["HSNCode"] = Co.RSQandSQLInjection(txthsncode.Text.Trim(), "soft");
+
+        if (ddlhschapter.SelectedItem.Value != "Select")
+        {
+            HyPanel1["HSChapter"] = Co.RSQandSQLInjection(ddlhschapter.SelectedItem.Value, "soft");
+        }
+        else
+        {
+            HyPanel1["HSChapter"] = null;
+        }
+        if (ddlhsncodelev1.SelectedItem.Value != "Select")
+        {
+            HyPanel1["HSNCodeLevel1"] = Co.RSQandSQLInjection(ddlhsncodelev1.SelectedItem.Value, "soft");
+        }
+        else
+        {
+            HyPanel1["HSNCodeLevel1"] = null;
+        }
+        if (ddlhsncodelevel2.SelectedItem.Value != "Select")
+        {
+            HyPanel1["HSNCodeLevel2"] = Co.RSQandSQLInjection(ddlhsncodelevel2.SelectedItem.Value, "soft");
+        }
+        else
+        {
+            HyPanel1["HSNCodeLevel2"] = null;
+        }
+        if (ddlhsncodelevel3.SelectedItem.Value != "Select")
+        {
+            HyPanel1["HSNCodeLevel3"] = Co.RSQandSQLInjection(ddlhsncodelevel3.SelectedItem.Value, "soft");
+        }
+        else
+        {
+            HyPanel1["HSNCodeLevel3"] = null;
+        }
+        HyPanel1["HsCode4digit"] = txthscodereadonly.Text.Trim();
+        HyPanel1["HsnCode8digit"] = txthsncodereadonly.Text.Trim();
         HyPanel1["EndUserPartNumber"] = Co.RSQandSQLInjection(txtenduserpartnumber.Text.Trim(), "soft");
         if (ddlenduser.SelectedItem.Value != "Select")
         {
@@ -1452,7 +1620,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         }
         else
         {
-            HyPanel1["NodelDetail"] = Convert.ToInt16(ddlNodalOfficerEmail.SelectedItem.Value);
+            HyPanel1["NodelDetail"] = Convert.ToInt32(ddlNodalOfficerEmail.SelectedItem.Value);
         }
         if (ddlNodalOfficerEmail2.Text == "" || ddlNodalOfficerEmail2.SelectedItem.Text == "Select")//ddlprocurmentcategory
         {
@@ -1460,7 +1628,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         }
         else
         {
-            HyPanel1["NodalDetail2"] = Convert.ToInt16(ddlNodalOfficerEmail2.SelectedItem.Value);
+            HyPanel1["NodalDetail2"] = Convert.ToInt32(ddlNodalOfficerEmail2.SelectedItem.Value);
         }
         HyPanel1["CreatedBy"] = ViewState["UserLoginEmail"].ToString();
         string StrProductDescription = Lo.SaveCodeProduct(HyPanel1, dtImage, dtSaveProdInfo, dtSaveEstimateQuantity, out _sysMsg, out _msg, "Product");
@@ -1491,21 +1659,54 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         {
             if (ddlsubtech.SelectedItem.Text != "Select" && ddlnomnclature.SelectedItem.Text != "Select" && ddlenduser.SelectedItem.Text != "Select" && ddlplatform.SelectedItem.Text != "Select")
             {
-                if (txtcountry.SelectedItem.Text != "" && txtdpsupartnumber.Text != "")
+                if (ddlhsncodelev1.SelectedItem.Text != "Select" && ddlhsncodelevel2.SelectedItem.Text != "Select" && ddlhsncodelevel3.SelectedItem.Text != "Select")
                 {
-                    if (fuitemdescriptionfile.HasFile != false)
+                    if (txtcountry.SelectedItem.Text != "" && txtdpsupartnumber.Text != "")
                     {
-                        int iFileSize = fuitemdescriptionfile.PostedFile.ContentLength;
-                        if (iFileSize > 1048576) // 1MB
+                        if (fuitemdescriptionfile.HasFile != false)
                         {
-                            ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "alert('Maximum 1 Mb pdf file can be uploaded')", true);
+                            int iFileSize = fuitemdescriptionfile.PostedFile.ContentLength;
+                            if (iFileSize > 1048576) // 1MB
+                            {
+                                ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "alert('Maximum 1 Mb pdf file can be uploaded')", true);
+                            }
+                            else
+                            {
+                                if (fuimages.HasFile != false)
+                                {
+                                    int filecount = 0;
+                                    filecount = Convert.ToInt32(fuimages.PostedFiles.Count.ToString());
+                                    if (filecount <= 4)
+                                    {
+                                        int iImageFileSize = fuimages.PostedFile.ContentLength;
+                                        if (iImageFileSize > 4194304)
+                                        {
+                                            ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert",
+                                                "alert('Maximum 1 Mb .jpg,.jpeg,.png,.tif images can be uploaded')", true);
+                                        }
+                                        else
+                                        {
+                                            SaveProductDescription();
+                                        }
+                                    }
+                                    else
+                                    {
+                                        ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert",
+                                            "alert('Maximum 4 files can be uploaded')", true);
+                                    }
+                                }
+                                else
+                                {
+                                    SaveProductDescription();
+                                }
+                            }
                         }
                         else
                         {
                             if (fuimages.HasFile != false)
                             {
                                 int filecount = 0;
-                                filecount = Convert.ToInt16(fuimages.PostedFiles.Count.ToString());
+                                filecount = Convert.ToInt32(fuimages.PostedFiles.Count.ToString());
                                 if (filecount <= 4)
                                 {
                                     int iImageFileSize = fuimages.PostedFile.ContentLength;
@@ -1533,33 +1734,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                     }
                     else
                     {
-                        if (fuimages.HasFile != false)
-                        {
-                            int filecount = 0;
-                            filecount = Convert.ToInt16(fuimages.PostedFiles.Count.ToString());
-                            if (filecount <= 4)
-                            {
-                                int iImageFileSize = fuimages.PostedFile.ContentLength;
-                                if (iImageFileSize > 4194304)
-                                {
-                                    ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert",
-                                        "alert('Maximum 1 Mb .jpg,.jpeg,.png,.tif images can be uploaded')", true);
-                                }
-                                else
-                                {
-                                    SaveProductDescription();
-                                }
-                            }
-                            else
-                            {
-                                ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert",
-                                    "alert('Maximum 4 files can be uploaded')", true);
-                            }
-                        }
-                        else
-                        {
-                            SaveProductDescription();
-                        }
+                        ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "alert('Please fill mandatory fields.')", true);
                     }
                 }
                 else
@@ -1598,6 +1773,9 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         txtdpsupartnumber.Text = "";
         txtenduserpartnumber.Text = "";
         txthsncode.Text = "";
+        ddlhsncodelev1.SelectedIndex = 0;
+        ddlhsncodelevel2.SelectedIndex = 0;
+        ddlhsncodelevel3.SelectedIndex = 0;
         ddlnomnclature.SelectedIndex = 0;
         ddlmastercategory.SelectedIndex = 0;
         ddlsubcategory.SelectedIndex = 0;
@@ -1827,7 +2005,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
             {
                 for (int i = 0; i <= gvProductInformation.Rows.Count; i++)
                 {
-                    Int16 txtProdInfoId = Convert.ToInt16(gvProductInformation.DataKeys[i].Value.ToString());
+                    Int32 txtProdInfoId = Convert.ToInt32(gvProductInformation.DataKeys[i].Value.ToString());
                     Label txtlenth = (Label)gvProductInformation.Rows[i].Cells[1].FindControl("lblNameofspec");
                     Label txtvalue = (Label)gvProductInformation.Rows[i].Cells[2].FindControl("lblvalueProd");
                     Label txtProdInfoUnit = (Label)gvProductInformation.Rows[i].Cells[3].FindControl("lblUnitProd");
@@ -1873,7 +2051,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     protected void OnRowUpdating(object sender, GridViewUpdateEventArgs e)
     {
         GridViewRow row = gvProductInformation.Rows[e.RowIndex];
-        Int16 ProdSpeciId = Convert.ToInt16(gvProductInformation.DataKeys[e.RowIndex].Values[0]);
+        Int32 ProdSpeciId = Convert.ToInt32(gvProductInformation.DataKeys[e.RowIndex].Values[0]);
         string namePro = (row.FindControl("txtNameofspeci") as TextBox).Text;
         decimal ValuePro = Convert.ToDecimal((row.FindControl("txtValueProd") as TextBox).Text);
         string unitPro = (row.FindControl("txtUnitProd") as TextBox).Text;
@@ -1888,7 +2066,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     }
     protected void OnRowDeleting(object sender, GridViewDeleteEventArgs e)
     {
-        Int16 ProdIdDel = Convert.ToInt16(gvProductInformation.DataKeys[e.RowIndex].Values[0]);
+        Int32 ProdIdDel = Convert.ToInt32(gvProductInformation.DataKeys[e.RowIndex].Values[0]);
         Lo.TestGrid("Delete", "", ProdIdDel, "", 0, "");
         this.BindGrid();
     }
@@ -1962,7 +2140,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     protected void EstimateInsert(object sender, EventArgs e)
     {
         string EstimateYear = ddlYearEstimate.SelectedItem.Text;
-        Int16 EsitmateYearId = Convert.ToInt16(ddlYearEstimate.SelectedItem.Value);
+        Int32 EsitmateYearId = Convert.ToInt32(ddlYearEstimate.SelectedItem.Value);
         decimal EstimateQuantity = Convert.ToDecimal(txtestimateQuantity.Text);
         string EstimateMeasuring = ddlMeasuringUnit.SelectedItem.Text;
         decimal UnitProd = Convert.ToDecimal(txtestimatePriceLLp.Text);
@@ -1981,9 +2159,9 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     protected void GvEstimateQuanPrice_RowUpdating(object sender, GridViewUpdateEventArgs e)
     {
         GridViewRow row = GvEstimateQuanPrice.Rows[e.RowIndex];
-        Int16 ProdSpeciId = Convert.ToInt16(GvEstimateQuanPrice.DataKeys[e.RowIndex].Values[0]);
+        Int32 ProdSpeciId = Convert.ToInt32(GvEstimateQuanPrice.DataKeys[e.RowIndex].Values[0]);
         string EditEstimateYear = (row.FindControl("ddlYearEstimateGrid") as DropDownList).SelectedItem.Text;
-        Int16 EditEstimateYearId = Convert.ToInt16((row.FindControl("ddlYearEstimateGrid") as DropDownList).SelectedItem.Value);
+        Int32 EditEstimateYearId = Convert.ToInt32((row.FindControl("ddlYearEstimateGrid") as DropDownList).SelectedItem.Value);
         decimal EditEstimateQuan = Convert.ToDecimal((row.FindControl("txtEstimateQuantityGrid") as TextBox).Text);
         string EditEstimateUnit = (row.FindControl("ddlEstimateUnit") as DropDownList).SelectedItem.Text;
         decimal EditEstimatePrice = Convert.ToDecimal((row.FindControl("txtEstimatePriceLLpGrid") as TextBox).Text);
@@ -1998,7 +2176,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     }
     protected void GvEstimateQuanPrice_RowDeleting(object sender, GridViewDeleteEventArgs e)
     {
-        Int16 EstimateIdDel = Convert.ToInt16(GvEstimateQuanPrice.DataKeys[e.RowIndex].Values[0]);
+        Int32 EstimateIdDel = Convert.ToInt32(GvEstimateQuanPrice.DataKeys[e.RowIndex].Values[0]);
         Lo.RetriveSaveEstimateGrid("Delete", EstimateIdDel, "", 0, "", 0, "", 0);
         this.BindGridEstimateQuantity();
     }
@@ -2054,7 +2232,26 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                 }
                 txtdpsupartnumber.Text = DtView.Rows[0]["DPSUPartNumber"].ToString();
                 txtenduserpartnumber.Text = DtView.Rows[0]["EndUserPartNumber"].ToString();
+                if (DtView.Rows[0]["HSCode"].ToString() != "")
+                {
+                    ddlHSNCode.SelectedValue = DtView.Rows[0]["HSCode"].ToString();
+                }
                 txthsncode.Text = DtView.Rows[0]["HSNCode"].ToString();
+                if (DtView.Rows[0]["HSChapter"].ToString() != "")
+                {
+                    ddlhschapter.Items.FindByValue(DtView.Rows[0]["HSChapter"].ToString()).Selected = true;
+                    HSNCodeLevel1();
+                    ddlhsncodelev1.Items.FindByValue(DtView.Rows[0]["HSNCodeLevel1"].ToString()).Selected = true;
+                    BindMasterHSNLevel2();
+                    ddlhsncodelevel2.Items.FindByValue(DtView.Rows[0]["HSNCodeLevel2"].ToString()).Selected = true;
+                    BindMasterHSNLevel3();
+                    if (DtView.Rows[0]["HSNCodeLevel3"].ToString() != "")
+                    {
+                        ddlhsncodelevel3.SelectedValue = DtView.Rows[0]["HSNCodeLevel3"].ToString();
+                    }
+                }
+                txthscodereadonly.Text = DtView.Rows[0]["HsCode4digit"].ToString();
+                txthsncodereadonly.Text = DtView.Rows[0]["HsnCode8digit"].ToString();
                 if (DtView.Rows[0]["EndUser"].ToString() != "")
                 {
                     ddlenduser.SelectedValue = DtView.Rows[0]["EndUser"].ToString();
