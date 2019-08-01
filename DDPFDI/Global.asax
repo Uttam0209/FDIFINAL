@@ -8,9 +8,14 @@
         System.Net.ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls12;
         RegisterRoutes(RouteTable.Routes);
     }
-    protected void Application_BeginRequest(Object sender, EventArgs e)
+    protected void Application_BeginRequest(object sender, EventArgs e)
     {
         string currentUrl = HttpContext.Current.Request.Url.ToString().ToLower();
+        var app = sender as HttpApplication;
+        if (app != null && app.Context != null)
+        {
+            app.Context.Response.Headers.Remove("Server");
+        }
     }
     void Application_Error(object sender, EventArgs e)
     {
@@ -21,9 +26,10 @@
             if (404 == errorCode)
             {
                 Server.ClearError();
-                //Response.Redirect("~/Error");
+                Response.Redirect("~/PageNotFound");
             }
         }
+        // An error has occured on a .Net page.
     }
     void Session_Start(object sender, EventArgs e)
     {
@@ -32,6 +38,7 @@
     {
         //routes.MapPageRoute("Faq", "Faq", "~/Admin/website manual.pdf", true);
         routes.MapPageRoute("Login", "Login", "~/Default.aspx", true);
+        routes.MapPageRoute("PageNotFound", "PageNotFound", "~/404.aspx", true);
         routes.MapPageRoute("Error", "Error", "~/Error.aspx", true);
         routes.MapPageRoute("FDIRegistration", "FDIRegistration", "~/Admin/frmAddFDI.aspx", true);
         routes.MapPageRoute("ChangePassword", "ChangePassword", "~/Admin/ChangePassword.aspx", true);
@@ -72,6 +79,8 @@
         routes.MapPageRoute("CreateVenPass", "CreateVenPass", "~/Vendor/CreateVendorPassword.aspx", true);
         routes.MapPageRoute("ForgotPassVendor", "ForgotPassVendor", "~/Vendor/VendorForgotPassword.aspx", true);
         routes.MapPageRoute("VendorLogin", "VendorLogin", "~/Vendor/VendorLogin.aspx", true);
+        routes.MapPageRoute("Vendor-Dashobard", "Vendor-Dashobard", "~/Vendor/DashboardVendor.aspx", true);
+        routes.MapPageRoute("View-VendorRegis", "View-VendorRegis", "~/Vendor/ViewVendorRegistrationDetail.aspx", true);
 
     }    
 </script>

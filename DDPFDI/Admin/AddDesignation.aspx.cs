@@ -6,6 +6,7 @@ using System.Text;
 using BusinessLayer;
 using Encryption;
 using System.Collections.Specialized;
+using System.Web.UI.WebControls;
 
 public partial class Admin_AddDesignation : System.Web.UI.Page
 {
@@ -274,6 +275,21 @@ public partial class Admin_AddDesignation : System.Web.UI.Page
                 lblMastcompany.Text = "Select Company ";
                 txtDesignation.Text = DtView.Rows[0]["Designation"].ToString();
             }
+        }
+    }
+    protected void gvViewDesignation_RowCreated(object sender, GridViewRowEventArgs e)
+    {
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            e.Row.TableSection = TableRowSection.TableBody;
+        }
+        else if (e.Row.RowType == DataControlRowType.Header)
+        {
+            e.Row.TableSection = TableRowSection.TableHeader;
+        }
+        else if (e.Row.RowType == DataControlRowType.Footer)
+        {
+            e.Row.TableSection = TableRowSection.TableFooter;
         }
     }
 }

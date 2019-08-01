@@ -83,12 +83,14 @@ public partial class Vendor_VendorRegistrationStep1 : System.Web.UI.Page
         string str = Lo.SaveVendorRegis(HySaveVendor, out _sysMsg, out _msg);
         if (str != "")
         {
-            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Registration succssfully done.A login releted mail send to your registerd mail id.')", true);
             SendEmailCode(str);
             cleartext();
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "changePass", "showPopup();", true);
         }
         else
-        { ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not saved.')", true); }
+        {
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "modelfail", "showPopup1();", true);
+        }
     }
     protected void btnsubmit_Click(object sender, EventArgs e)
     {

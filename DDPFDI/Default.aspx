@@ -44,7 +44,7 @@
     </style>
 </head>
 <body>
-    <form id="form1" runat="server">
+    <form id="form1" runat="server" method="post" asp-antiforgery="false">
         <asp:ScriptManager runat="server" ID="sc"></asp:ScriptManager>
         <nav class="navbar" role="navigation">
 

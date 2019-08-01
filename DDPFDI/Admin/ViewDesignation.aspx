@@ -84,11 +84,11 @@
 
                                 </div>
 
-                                <div class="clearfix"></div>
-                                <div class="table-wraper">
-                                    <asp:GridView ID="gvViewDesignation" runat="server" Width="100%" Class="commonAjaxTbl master-company-table table display responsive no-wrap table-hover manage-user Grid" AutoGenerateColumns="false" AllowPaging="true"
-                                        PageSize="25" AllowSorting="true" OnRowCommand="gvViewDesignation_RowCommand">
-                                        <PagerStyle HorizontalAlign="Center" CssClass="GridPager" />
+                                <div class="clearfix mt10"></div>
+                                <div class="table-wraper table-responsive">
+                                    <asp:GridView ID="gvViewDesignation" runat="server" Width="100%" Class="commonAjaxTbl master-company-table table display 
+                                        responsive no-wrap table-hover manage-user Grid"
+                                        AutoGenerateColumns="false" OnRowCommand="gvViewDesignation_RowCommand" OnRowCreated="gvViewDesignation_RowCreated">
                                         <Columns>
 
                                             <asp:TemplateField HeaderText="S.No.">

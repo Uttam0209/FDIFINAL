@@ -16,6 +16,10 @@ namespace BusinessLayer
             return ds;
         }
         #region Login"
+        public string VerifyEmail(HybridDictionary hyLogin, out string _msg, out string mp)
+        {
+            return SqlHelper.Instance.VerifyEmail(hyLogin, out _msg, out  mp);
+        }
         public string VerifyEmployee(HybridDictionary hyLogin, out string _msg, out string Defaultpage)
         {
             return SqlHelper.Instance.VerifyEmployee(hyLogin, out _msg, out Defaultpage);
@@ -93,15 +97,11 @@ namespace BusinessLayer
         {
             return SqlHelper.Instance.SaveCompDesignation(hysavecomp, out _sysMsg, out _msg);
         }
-        public string SaveVendorRegis(HybridDictionary hysavecomp, out string _sysMsg, out string _msg)
-        {
-            return SqlHelper.Instance.SaveVendorRegis(hysavecomp, out _sysMsg, out _msg);
-        }
         #endregion
         #region UpdateCode
-        public string UpdateLoginPassword(string NewPass, string OldPass, string User, string type)
+        public string UpdateLoginPassword(string NewPass, string OldPass, string User, string type, string MzefPass, string Salt)
         {
-            return SqlHelper.Instance.UpdateLoginPassword(NewPass, OldPass, User, type);
+            return SqlHelper.Instance.UpdateLoginPassword(NewPass, OldPass, User, type, MzefPass, Salt);
         }
 
         #endregion
@@ -166,10 +166,7 @@ namespace BusinessLayer
         {
             return SqlHelper.Instance.RetriveForgotPasswordEmail(Email, Type);
         }
-        public DataTable RetriveVendor(Int64 Vid, string VRefNo,string VEmail, string RetFor )
-        {
-            return SqlHelper.Instance.RetriveVendor(Vid, VRefNo, VEmail, RetFor);
-        }
+
         #endregion
         #region DeleteCode
         public string DeleteRecord(string CompRefNo, string Criteria)
@@ -219,6 +216,27 @@ namespace BusinessLayer
             return SqlHelper.Instance.RetriveSaveEstimateGrid(Function, ProdInfoId, ProdRefNo, Year, FYear, EstimateQuantity, Unit, Price);
         }
 
+        #endregion
+        ////////////////////////////////////////================================ Vendor Code=======================================//////////////////////////////////////
+        #region Code for vendor  Save
+        public string SaveVendorRegis(HybridDictionary hysavecomp, out string _sysMsg, out string _msg)
+        {
+            return SqlHelper.Instance.SaveVendorRegis(hysavecomp, out _sysMsg, out _msg);
+        }
+        public string SaveVendorRegistrationDetails(HybridDictionary HySaveVendorRegisdetail, DataTable DtFristGrid, DataTable dt2, DataTable dt3, DataTable dt4, DataTable dt5, DataTable dt6, out string _sysMsg, out string _msg)
+        {
+            return SqlHelper.Instance.SaveVendorRegistrationDetails(HySaveVendorRegisdetail, DtFristGrid, dt2, dt3, dt4, dt5, dt6, out _sysMsg, out _msg);
+        }
+        #endregion
+        #region Code for vendor  Delete
+        #endregion
+        #region Code for vendor  Update
+        #endregion
+        #region Code for vendor  Retrive
+        public DataTable RetriveVendor(Int64 Vid, string VRefNo, string VEmail, string RetFor)
+        {
+            return SqlHelper.Instance.RetriveVendor(Vid, VRefNo, VEmail, RetFor);
+        }
         #endregion
     }
 }

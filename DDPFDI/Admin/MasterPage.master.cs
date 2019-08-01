@@ -35,6 +35,9 @@ public partial class Admin_MasterPage : System.Web.UI.MasterPage
     {
         Session.Abandon();
         Session.Clear();
+        HttpContext.Current.Response.AddHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+        HttpContext.Current.Response.AddHeader("Pragma", "no-cache");
+        HttpContext.Current.Response.AddHeader("Expires", "0");
         Response.RedirectToRoute("Login");
     }
     private void bindMenu(string sType)
@@ -183,8 +186,6 @@ public partial class Admin_MasterPage : System.Web.UI.MasterPage
                     DivCompanyName.Visible = true;
                     lblmastercompany.Text = "Company - " + dtCompany.Rows[0]["CompanyName"].ToString() + " , ";
                 }
-
-
                 strInterestedArea = dtCompany.Rows[0]["InterestedArea"].ToString();
                 strMasterAlloted = dtCompany.Rows[0]["MasterAllowed"].ToString();
             }

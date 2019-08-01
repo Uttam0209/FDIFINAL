@@ -87,7 +87,7 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
             }
         }
     }
-    protected void BindGridView(string sortExpression = null)
+    protected void BindGridView()
     {
         try
         {
@@ -113,16 +113,16 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
                         dv.RowFilter = "CompanyName='" + ddlcompany.SelectedItem.Text + "'";
                     }
                     dv.Sort = "LastUpdated desc,CompanyName asc,FactoryName asc";
-                    gvproduct.DataSource = dv.ToTable();
-                    gvproduct.DataBind();
-                    gvproduct.Visible = true;
+                    gvproductItem.DataSource = dv.ToTable();
+                    gvproductItem.DataBind();
+                    gvproductItem.Visible = true;
                 }
                 else
-                { gvproduct.Visible = false; }
+                { gvproductItem.Visible = false; }
             }
             else
             {
-                gvproduct.Visible = false;
+                gvproductItem.Visible = false;
             }
         }
         catch (Exception ex)
@@ -131,22 +131,6 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
             string Page = Request.Url.AbsolutePath.ToString().Substring(1);
             Response.Redirect("Error?techerror=" + objEnc.EncryptData(error) + "&page=" + objEnc.EncryptData(Page));
         }
-    }
-    private string SortDirection
-    {
-        get { return ViewState["SortDirection"] != null ? ViewState["SortDirection"].ToString() : "ASC"; }
-        set { ViewState["SortDirection"] = value; }
-    }
-    #endregion
-    #region PageIndex or Sorting
-    protected void OnPageIndexChanging(object sender, GridViewPageEventArgs e)
-    {
-        gvproduct.PageIndex = e.NewPageIndex;
-        BindGridView();
-    }
-    protected void OnSorting(object sender, GridViewSortEventArgs e)
-    {
-        BindGridView(e.SortExpression);
     }
     #endregion
     #region RowCommand
@@ -157,16 +141,16 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
     private string mhiddenRefNo;
     private string POProc;
     private string QAAValue;
-    protected void gvproduct_RowCommand(object sender, GridViewCommandEventArgs e)
+    protected void gvproductItem_RowCommand(object sender, GridViewCommandEventArgs e)
     {
         if (e.CommandName == "EditComp")
         {
             GridViewRow gvr = (GridViewRow)((Control)e.CommandSource).NamingContainer;
             int rowIndex = gvr.RowIndex;
-            string Role = (gvproduct.Rows[rowIndex].FindControl("hfrole") as HiddenField).Value;
-            string CRefNo = (gvproduct.Rows[rowIndex].FindControl("hfcomprefno") as HiddenField).Value;
-            string FRefNo = (gvproduct.Rows[rowIndex].FindControl("hfdivisionrefno") as HiddenField).Value;
-            string URefNo = (gvproduct.Rows[rowIndex].FindControl("hfunitrefno") as HiddenField).Value;
+            string Role = (gvproductItem.Rows[rowIndex].FindControl("hfrole") as HiddenField).Value;
+            string CRefNo = (gvproductItem.Rows[rowIndex].FindControl("hfcomprefno") as HiddenField).Value;
+            string FRefNo = (gvproductItem.Rows[rowIndex].FindControl("hfdivisionrefno") as HiddenField).Value;
+            string URefNo = (gvproductItem.Rows[rowIndex].FindControl("hfunitrefno") as HiddenField).Value;
             if (URefNo != "")
             {
                 mhiddenRefNo = URefNo.ToString();
@@ -183,7 +167,7 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
         {
             GridViewRow gvr = (GridViewRow)((Control)e.CommandSource).NamingContainer;
             int rowIndex = gvr.RowIndex;
-            string Role = (gvproduct.Rows[rowIndex].FindControl("hfrole") as HiddenField).Value;
+            string Role = (gvproductItem.Rows[rowIndex].FindControl("hfrole") as HiddenField).Value;
             DataTable DtView = Lo.RetriveProductCode("", e.CommandArgument.ToString(), "ProductMasterID", Role);
             if (DtView.Rows.Count > 0)
             {
@@ -604,7 +588,7 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
             {
                 ddldivision.Visible = false;
                 lblselectdivison.Visible = false;
-                gvproduct.Visible = false;
+                gvproductItem.Visible = false;
                 BindGridView();
             }
         }
@@ -689,4 +673,19 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
 
     }
     #endregion
+    protected void gvproductItem_RowCreated(object sender, GridViewRowEventArgs e)
+    {
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            e.Row.TableSection = TableRowSection.TableBody;
+        }
+        else if (e.Row.RowType == DataControlRowType.Header)
+        {
+            e.Row.TableSection = TableRowSection.TableHeader;
+        }
+        else if (e.Row.RowType == DataControlRowType.Footer)
+        {
+            e.Row.TableSection = TableRowSection.TableFooter;
+        }
+    }
 }

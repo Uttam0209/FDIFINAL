@@ -17,16 +17,16 @@
                             <div class="col-md-12 padding_0">
                                 <div id="divHeadPage" runat="server"></div>
                             </div>
-                        <div class="col-md-12">
+                            <div class="col-md-12">
                                 <div class="clearfix"></div>
                                 <div style="margin-top: 5px;">
                                     <a class="fa fa-arrow-circle-left pull-right" href="javascript: history.go(-1)">&nbsp; &nbsp;Back</a>
                                 </div>
                                 <div class="clearfix"></div>
                             </div>
-                    </div>
+                        </div>
 
-                     <div class="clearfix" style="margin-bottom:10px;"></div>
+                        <div class="clearfix" style="margin-bottom: 10px;"></div>
                         <div class="UserInnerpage">
                             <div class="resitered">
                                 <div class="section-pannel">
@@ -103,9 +103,9 @@
                                     </div>
                                 </div>
                                 <div class="table-wraper" runat="server" id="divmastercategory">
-                                    <asp:GridView ID="gvCategory" runat="server" Width="100%" Class="commonAjaxTbl master-company-table table display responsive no-wrap table-hover manage-user Grid" AutoGenerateColumns="false" AllowPaging="true"
-                                        PageSize="25" AllowSorting="true" OnRowDataBound="gvCategory_RowDataBound">
-                                        <PagerStyle HorizontalAlign="Center" CssClass="GridPager" />
+                                    <asp:GridView ID="gvCategory" runat="server" Width="100%" Class="commonAjaxTbl master-company-table table display responsive
+                                         no-wrap table-hover manage-user Grid"
+                                        AutoGenerateColumns="false" OnRowDataBound="gvCategory_RowDataBound" OnRowCreated="gvCategory_RowCreated">
                                         <Columns>
                                             <asp:TemplateField HeaderText="S.No">
                                                 <ItemTemplate>
@@ -131,8 +131,10 @@
                                     <div>
                                         <asp:Label runat="server" class="label label-primary" ID="lblevel" Text=""></asp:Label>
                                     </div>
-                                    <asp:GridView ID="gvlevel3" runat="server" AutoGenerateColumns="false" Class=" master-company-table table display
-                                         responsive no-wrap table-hover manage-user Grid">
+                                    <div class="clearfix mt10"></div>
+                                    <asp:GridView ID="gvlevel3" runat="server" AutoGenerateColumns="false" Class="commonAjaxTbl master-company-table table display responsive
+                                         no-wrap table-hover manage-user Grid"
+                                        OnRowCreated="gvlevel3_RowCreated">
                                         <Columns>
                                             <asp:TemplateField HeaderText="S.No">
                                                 <ItemTemplate>

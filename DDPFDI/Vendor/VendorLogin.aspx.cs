@@ -59,7 +59,7 @@ public partial class Vendor_VendorLogin : System.Web.UI.Page
                     {
                         Session["Type"] = objEnc.EncryptData(_msg);
                         Session["User"] = objEnc.EncryptData(txtUserName.Text);
-                        Session["CompanyRefNo"] = objEnc.EncryptData(_EmpId);
+                        Session["VendorRefNo"] = objEnc.EncryptData(_EmpId);
                         Response.RedirectToRoute(Defaultpage);
                     }
                     else

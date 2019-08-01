@@ -61,7 +61,7 @@
     </script>
 </head>
 <body>
-    <form id="form1" runat="server">
+    <form id="form1" runat="server" method="post" asp-antiforgery="false">
     <div>
     <div id="chart_div" style="width:800px;height:600px">
                 <%-- Here Chart Will Load --%>

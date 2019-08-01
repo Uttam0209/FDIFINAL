@@ -161,7 +161,7 @@
                                             <div class="form-group">
 
                                                 <h3 class="secondary-heading">Menu Alotted</h3>
-                                                <asp:CheckBoxList ID="chkmastermenuallot" runat="server"  TabIndex="7" RepeatColumns="1" RepeatDirection="Vertical" RepeatLayout="Flow">
+                                                <asp:CheckBoxList ID="chkmastermenuallot" runat="server" TabIndex="7" RepeatColumns="1" RepeatDirection="Vertical" RepeatLayout="Flow">
                                                 </asp:CheckBoxList>
                                             </div>
                                         </div>
@@ -172,7 +172,7 @@
 
                                                 <h3 class="secondary-heading">Role</h3>
 
-                                                <asp:CheckBoxList ID="chkrole" runat="server" onclick="MutExChkList(this);" RepeatColumns="1" TabIndex="8"  RepeatDirection="Horizontal" RepeatLayout="Flow">
+                                                <asp:CheckBoxList ID="chkrole" runat="server" onclick="MutExChkList(this);" RepeatColumns="1" TabIndex="8" RepeatDirection="Horizontal" RepeatLayout="Flow">
                                                     <asp:ListItem Value="Admin">Admin</asp:ListItem>
                                                     <asp:ListItem Value="Company">Company</asp:ListItem>
                                                 </asp:CheckBoxList>
@@ -200,11 +200,8 @@
                             <div class="table-wraper">
                                 <asp:GridView ID="gvcompanydetail" runat="server" Width="100%" Class="commonAjaxTbl master-company-table table display 
                                     responsive no-wrap table-hover manage-user Grid text-nowrap"
-                                    AutoGenerateColumns="false" AllowPaging="true"
-                                    PageSize="25" AllowSorting="true" RowCommand="gvcompanydetail_RowCommand " OnRowCommand="gvcompanydetail_RowCommand" OnRowDataBound="gvcompanydetail_RowDataBound">
-                                    <PagerStyle HorizontalAlign="Center" CssClass="GridPager" />
+                                    AutoGenerateColumns="false" RowCommand="gvcompanydetail_RowCommand" OnRowCreated="gvcompanydetail_RowCreated" OnRowCommand="gvcompanydetail_RowCommand" OnRowDataBound="gvcompanydetail_RowDataBound">
                                     <Columns>
-
                                         <asp:TemplateField HeaderText="S.No.">
                                             <ItemTemplate>
                                                 <%#Container.DataItemIndex+1 %>

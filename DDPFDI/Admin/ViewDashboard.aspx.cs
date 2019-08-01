@@ -12,7 +12,7 @@ public partial class Admin_ViewDashboard : System.Web.UI.Page
     Cryptography Encrypt = new Cryptography();
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (!IsPostBack)
+        if (Page.IsPostBack == false)
         {
             if (Session["User"] != null)
             {
@@ -359,8 +359,8 @@ public partial class Admin_ViewDashboard : System.Web.UI.Page
     {
         GridViewRow gvr = (GridViewRow)((Control)e.CommandSource).NamingContainer;
         int rowIndex = gvr.RowIndex;
-        string Role = (gvproduct.Rows[rowIndex].FindControl("hfrole") as HiddenField).Value;
-        DataTable DtView = Lo.RetriveProductCode("", e.CommandArgument.ToString(), "ProductMasterID", Role);
+        string Role = (gvproduct.Rows[rowIndex].FindControl("hfroleProd") as HiddenField).Value;
+        DataTable DtView = Lo.RetriveProductCode("", e.CommandArgument.ToString(), "ProductMasterID", Role.ToString());
         if (DtView.Rows.Count > 0)
         {
             lblcomprefno.Text = DtView.Rows[0]["CompanyRefNo"].ToString();
@@ -379,9 +379,12 @@ public partial class Admin_ViewDashboard : System.Web.UI.Page
             lbloemcountry.Text = DtView.Rows[0]["CountryName"].ToString();
             lbldpsupartno.Text = DtView.Rows[0]["DPSUPartNumber"].ToString();
             lblhsncode.Text = DtView.Rows[0]["HSCodeName"].ToString() + DtView.Rows[0]["HSNCode"].ToString();
+            lblhschapter.Text = DtView.Rows[0]["HsChapterName"].ToString();
             lblhsncodelevel1.Text = DtView.Rows[0]["HsnCodeLevel1Name"].ToString();
             lblhsncodelevel2.Text = DtView.Rows[0]["HsnCodeLevel2Name"].ToString();
             lblhsncodelevel3.Text = DtView.Rows[0]["HsnCodeLevel3Name"].ToString();
+            lblhscode4digit.Text = DtView.Rows[0]["HsCode4digit"].ToString();
+            lblhsncode8digit.Text = DtView.Rows[0]["HsnCode8digit"].ToString();
             lblenduserpartno.Text = DtView.Rows[0]["EndUserPartNumber"].ToString();
             lblenduser.Text = DtView.Rows[0]["EUserName"].ToString();
             lbldefenceplatform.Text = DtView.Rows[0]["PlatName"].ToString();
@@ -684,6 +687,81 @@ public partial class Admin_ViewDashboard : System.Web.UI.Page
                 DtGrid.Rows[a]["CompanyName"] = DtGrid.Rows[a]["FCompany"];
                 DtGrid.Rows[a]["CompanyRefNo"] = DtGrid.Rows[a]["FCompRefNo"];
             }
+        }
+    }
+    protected void gvcompanydetail_RowCreated(object sender, GridViewRowEventArgs e)
+    {
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            e.Row.TableSection = TableRowSection.TableBody;
+        }
+        else if (e.Row.RowType == DataControlRowType.Header)
+        {
+            e.Row.TableSection = TableRowSection.TableHeader;
+        }
+        else if (e.Row.RowType == DataControlRowType.Footer)
+        {
+            e.Row.TableSection = TableRowSection.TableFooter;
+        }
+    }
+    protected void gvfactory_RowCreated(object sender, GridViewRowEventArgs e)
+    {
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            e.Row.TableSection = TableRowSection.TableBody;
+        }
+        else if (e.Row.RowType == DataControlRowType.Header)
+        {
+            e.Row.TableSection = TableRowSection.TableHeader;
+        }
+        else if (e.Row.RowType == DataControlRowType.Footer)
+        {
+            e.Row.TableSection = TableRowSection.TableFooter;
+        }
+    }
+    protected void gvunit_RowCreated(object sender, GridViewRowEventArgs e)
+    {
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            e.Row.TableSection = TableRowSection.TableBody;
+        }
+        else if (e.Row.RowType == DataControlRowType.Header)
+        {
+            e.Row.TableSection = TableRowSection.TableHeader;
+        }
+        else if (e.Row.RowType == DataControlRowType.Footer)
+        {
+            e.Row.TableSection = TableRowSection.TableFooter;
+        }
+    }
+    protected void gvViewNodalOfficer_RowCreated(object sender, GridViewRowEventArgs e)
+    {
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            e.Row.TableSection = TableRowSection.TableBody;
+        }
+        else if (e.Row.RowType == DataControlRowType.Header)
+        {
+            e.Row.TableSection = TableRowSection.TableHeader;
+        }
+        else if (e.Row.RowType == DataControlRowType.Footer)
+        {
+            e.Row.TableSection = TableRowSection.TableFooter;
+        }
+    }
+    protected void gvproduct_RowCreated(object sender, GridViewRowEventArgs e)
+    {
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            e.Row.TableSection = TableRowSection.TableBody;
+        }
+        else if (e.Row.RowType == DataControlRowType.Header)
+        {
+            e.Row.TableSection = TableRowSection.TableHeader;
+        }
+        else if (e.Row.RowType == DataControlRowType.Footer)
+        {
+            e.Row.TableSection = TableRowSection.TableFooter;
         }
     }
 }

@@ -26,6 +26,12 @@
             $('#ProductCompany').modal('show');
         }
     </script>
+    <script type="text/javascript">
+        function datatable() {
+            $('#ContentPlaceHolder1_gvproduct').DataTable({
+            });
+        }
+    </script>
 </asp:Content>
 <asp:Content ID="inner" runat="server" ContentPlaceHolderID="ContentPlaceHolder1">
     <asp:ScriptManager ID="sc" runat="server"></asp:ScriptManager>
@@ -47,12 +53,12 @@
                     </div>
 
                     <div class="clearfix" style="margin-bottom: 10px;"></div>
-                    <form method="post" class="addfdi">
+                    <div class="addfdi">
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="clearfix"></div>
 
-                                <div>
+                                <div runat="server" id="divsearch" visible="false">
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <asp:TextBox runat="server" ID="txtsearch" placeholder="Search (Name,emailcompany/division/unit name)" CssClass="form-control"></asp:TextBox>
@@ -69,10 +75,11 @@
                                     <asp:Label ID="lbltotal" runat="server" Text=""></asp:Label>
                                 </div>
                                 <div class="clearfix"></div>
+
                                 <div class="table-wraper table-responsive" runat="server" id="divcompanyGrid" visible="False">
-                                    <asp:GridView ID="gvcompanydetail" runat="server" Width="100%" Class="commonAjaxTbl master-company-table table display 
-                                        responsive no-wrap table-hover manage-user Grid table-responsive"
-                                        AutoGenerateColumns="false" OnRowCommand="gvcompanydetail_RowCommand">
+                                    <asp:GridView ID="gvcompanydetail" runat="server" Width="100%" Class="commonAjaxTbl dataTable master-company-table ViewProductTable table 
+                                                       display responsive no-wrap table-hover manage-user Grid table-responsive"
+                                        AutoGenerateColumns="false" OnRowCommand="gvcompanydetail_RowCommand" OnRowCreated="gvcompanydetail_RowCreated">
                                         <PagerStyle HorizontalAlign="Center" CssClass="GridPager" />
                                         <Columns>
                                             <asp:TemplateField HeaderText="S.No.">
@@ -109,7 +116,7 @@
                                 <div class="table-wrapper table-responsive" id="divfactorygrid" runat="server" visible="False">
                                     <asp:GridView ID="gvfactory" runat="server" AutoGenerateColumns="false" Class="commonAjaxTbl master-company-table ViewProductTable table 
                                         display responsive no-wrap table-hover manage-user Grid table-responsive"
-                                        OnRowCommand="gvfactory_RowCommand">
+                                        OnRowCommand="gvfactory_RowCommand" OnRowCreated="gvfactory_RowCreated">
                                         <Columns>
                                             <asp:TemplateField HeaderText="S.No.">
                                                 <ItemTemplate>
@@ -142,7 +149,7 @@
                                 <div class="table-wrapper table-responsive" id="divunitGrid" runat="server" visible="False" style="overflow: scroll;">
                                     <asp:GridView ID="gvunit" runat="server" AutoGenerateColumns="false" Class="commonAjaxTbl master-company-table ViewProductTable table
                                          display responsive no-wrap table-hover manage-user Grid table-responsive"
-                                        Style="overflow: scroll;" OnRowCommand="gvunit_RowCommand">
+                                        Style="overflow: scroll;" OnRowCommand="gvunit_RowCommand" OnRowCreated="gvunit_RowCreated">
                                         <PagerStyle HorizontalAlign="Center" CssClass="GridPager" />
                                         <Columns>
                                             <asp:TemplateField HeaderText="S.No.">
@@ -179,7 +186,7 @@
                                 <div class="table-wraper table-responsive" id="divEmployeeNodalGrid" runat="server" visible="False">
                                     <asp:GridView ID="gvViewNodalOfficer" runat="server" Width="100%" Class="commonAjaxTbl master-company-table table display 
                                         responsive no-wrap table-hover manage-user Grid"
-                                        AutoGenerateColumns="false" OnRowCommand="gvViewNodalOfficer_RowCommand" OnRowDataBound="gvViewNodalOfficer_RowDataBound">
+                                        AutoGenerateColumns="false" OnRowCommand="gvViewNodalOfficer_RowCommand" OnRowDataBound="gvViewNodalOfficer_RowDataBound" OnRowCreated="gvViewNodalOfficer_RowCreated">
                                         <PagerStyle HorizontalAlign="Center" CssClass="GridPager" />
                                         <Columns>
                                             <asp:TemplateField HeaderText="S.No.">
@@ -232,7 +239,7 @@
                                     <asp:GridView ID="gvproduct" runat="server" Width="100%" Class="commonAjaxTbl master-company-table ViewProductTable table display 
                                         responsive no-wrap table-hover manage-user Grid table-responsive"
                                         Style="overflow: scroll;"
-                                        AutoGenerateColumns="false" OnRowCommand="gvproduct_RowCommand">
+                                        AutoGenerateColumns="false" OnRowCommand="gvproduct_RowCommand" OnRowCreated="gvproduct_RowCreated">
                                         <PagerStyle HorizontalAlign="Center" CssClass="GridPager" />
                                         <Columns>
                                             <asp:TemplateField HeaderText="S.No.">
@@ -243,12 +250,14 @@
                                             <asp:TemplateField HeaderText="Action">
                                                 <ItemTemplate>
                                                     <asp:LinkButton ID="lblview" runat="server" CssClass="fa fa-eye" CommandName="ViewComp" CommandArgument='<%#Eval("ProductRefNo") %>'></asp:LinkButton>
+                                                    <asp:HiddenField ID="hfroleProd" runat="server" Value='<%#Eval("Role") %>' />
+                                                    <asp:HiddenField ID="hfcomprefno" runat="server" Value='<%#Eval("CompanyRefNo") %>' />
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                             <asp:BoundField DataField="CompanyName" HeaderText="Company" NullDisplayText="-" />
                                             <asp:BoundField DataField="FactoryName" HeaderText="Division" NullDisplayText="-" />
                                             <asp:BoundField DataField="UnitName" HeaderText="Unit" NullDisplayText="-" />
-                                            <asp:TemplateField HeaderText="Product Reference No." Visible="False">
+                                            <asp:TemplateField HeaderText="Item Reference No." Visible="False">
                                                 <ItemTemplate>
                                                     <asp:Label ID="lblrefno" runat="server" Text='<%#Eval("ProductRefNo") %>' NullDisplayText="#" SortExpression="ProductRefNo"></asp:Label>
                                                 </ItemTemplate>
@@ -257,14 +266,11 @@
                                             <asp:TemplateField HeaderText="OEM PartNumber" Visible="false">
                                                 <ItemTemplate>
                                                     <asp:Label runat="server" ID="lblcompanyrole" Text='<%#Eval("OEMPartNumber") %>'></asp:Label>
-
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="Last Updated">
                                                 <ItemTemplate>
                                                     <asp:Label runat="server" ID="lblLastUpdated" Text='<%#Eval("LastUpdated") %>'></asp:Label>
-                                                    <asp:HiddenField ID="hfrole" runat="server" Value='<%#Eval("Role") %>' />
-                                                    <asp:HiddenField ID="hfcomprefno" runat="server" Value='<%#Eval("CompanyRefNo") %>' />
                                                 </ItemTemplate>
                                             </asp:TemplateField>
 
@@ -279,7 +285,7 @@
                                 </div>
                             </div>
                         </div>
-                    </form>
+                    </div>
                 </div>
                 <div class="footer">© 2019 <a href="#">Department of Defence Production</a> </div>
             </div>
@@ -789,7 +795,7 @@
                     <div class="modal-content">
                         <div class="modal-header modal-header1">
                             <button type="button" class="close close1" data-dismiss="modal">&times;</button>
-                            <h4 class="modal-title">Product Detail</h4>
+                            <h4 class="modal-title">Item Detail</h4>
                         </div>
                         <form class="form-horizontal changepassword" role="form">
                             <div class="modal-body">
@@ -833,49 +839,10 @@
                                                                                         <asp:Label ID="lblunitnamepro" runat="server" Text=""></asp:Label></td>
                                                                                 </tr>
                                                                                 <tr>
-                                                                                    <td>Product Refrence No:</td>
+                                                                                    <td>Item Refrence No:</td>
                                                                                     <td>
                                                                                         <asp:Label ID="lblprodrefno" runat="server" Text=""></asp:Label></td>
                                                                                 </tr>
-
-                                                                            </table>
-                                                                        </div>
-                                                                        <div class="col-md-6">
-                                                                            <table>
-                                                                                <tr>
-                                                                                    <td>NSN GROUP:</td>
-                                                                                    <td>
-                                                                                        <asp:Label ID="lblnsngroup" runat="server" Text=""></asp:Label></td>
-                                                                                </tr>
-                                                                                <tr>
-                                                                                    <td>NSN GROUP CLASS:</td>
-                                                                                    <td>
-                                                                                        <asp:Label ID="lblnsngroupclass" runat="server" Text=""></asp:Label></td>
-                                                                                </tr>
-                                                                                <tr>
-                                                                                    <td>CLASS ITEM:</td>
-                                                                                    <td>
-                                                                                        <asp:Label ID="lblclassitem" runat="server" Text=""></asp:Label></td>
-                                                                                </tr>
-                                                                                <tr>
-                                                                                    <td>NSC Code (4 digit):</td>
-                                                                                    <td>
-                                                                                        <asp:Label ID="lblnsccode" runat="server" Text=""></asp:Label></td>
-                                                                                </tr>
-                                                                                <tr>
-                                                                                    <td>NIIN Code (9-digit):</td>
-                                                                                    <td>
-                                                                                        <asp:Label ID="lblniincode" runat="server" Text=""></asp:Label></td>
-                                                                                </tr>
-                                                                                <tr>
-                                                                                    <td>Product Description:</td>
-                                                                                    <td>
-                                                                                        <asp:Label ID="lblproductdescription" runat="server" Text=""></asp:Label></td>
-                                                                                </tr>
-                                                                            </table>
-                                                                        </div>
-                                                                        <div class="col-md-6">
-                                                                            <table>
                                                                                 <tr>
                                                                                     <td>OEM Part Number:</td>
                                                                                     <td>
@@ -896,40 +863,86 @@
                                                                                     <td>
                                                                                         <asp:Label ID="lbldpsupartno" runat="server" Text=""></asp:Label></td>
                                                                                 </tr>
-                                                                                <tr runat="server" visible="false">
-                                                                                    <td>HSN Code:</td>
-                                                                                    <td>
-                                                                                        <asp:Label ID="lblhsncode" runat="server" Text=""></asp:Label></td>
-                                                                                </tr>
                                                                                 <tr>
-                                                                                    <td>HSN Code Level 1:</td>
+                                                                                    <td>HSN Code (8-digit)</td>
                                                                                     <td>
-                                                                                        <asp:Label ID="lblhsncodelevel1" runat="server" Text=""></asp:Label></td>
-                                                                                </tr>
-                                                                                <tr>
-                                                                                    <td>HSN Code Level 2:</td>
-                                                                                    <td>
-                                                                                        <asp:Label ID="lblhsncodelevel2" runat="server" Text=""></asp:Label></td>
-                                                                                </tr>
-                                                                                <tr>
-                                                                                    <td>HSN Code Level 3:</td>
-                                                                                    <td>
-                                                                                        <asp:Label ID="lblhsncodelevel3" runat="server" Text=""></asp:Label></td>
-                                                                                </tr>
-                                                                                <tr>
-                                                                                    <td>End User Part Number:</td>
-                                                                                    <td>
-                                                                                        <asp:Label ID="lblenduserpartno" runat="server" Text=""></asp:Label></td>
+                                                                                        <asp:Label ID="lblhsncode8digit" runat="server" Text=""></asp:Label></td>
                                                                                 </tr>
                                                                                 <tr>
                                                                                     <td>End User:</td>
                                                                                     <td>
                                                                                         <asp:Label ID="lblenduser" runat="server" Text=""></asp:Label></td>
                                                                                 </tr>
+                                                                                <tr>
+                                                                                    <td>NSN GROUP:</td>
+                                                                                    <td>
+                                                                                        <asp:Label ID="lblnsngroup" runat="server" Text=""></asp:Label></td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>NSN GROUP CLASS:</td>
+                                                                                    <td>
+                                                                                        <asp:Label ID="lblnsngroupclass" runat="server" Text=""></asp:Label></td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>CLASS ITEM:</td>
+                                                                                    <td>
+                                                                                        <asp:Label ID="lblclassitem" runat="server" Text=""></asp:Label></td>
+                                                                                </tr>
+                                                                                <tr id="Tr1" runat="server" visible="false">
+                                                                                    <td>HSN Code:</td>
+                                                                                    <td>
+                                                                                        <asp:Label ID="lblhsncode" runat="server" Text=""></asp:Label></td>
+                                                                                </tr>
+                                                                                <tr id="Tr2" runat="server" visible="false">
+                                                                                    <td>HS Chapter:</td>
+                                                                                    <td>
+                                                                                        <asp:Label ID="lblhschapter" runat="server" Text=""></asp:Label></td>
+                                                                                </tr>
+                                                                                <tr id="Tr3" runat="server" visible="false">
+                                                                                    <td>HS Heading No:</td>
+                                                                                    <td>
+                                                                                        <asp:Label ID="lblhsncodelevel1" runat="server" Text=""></asp:Label></td>
+                                                                                </tr>
+                                                                                <tr id="Tr4" runat="server" visible="false">
+                                                                                    <td>Description:</td>
+                                                                                    <td>
+                                                                                        <asp:Label ID="lblhsncodelevel2" runat="server" Text=""></asp:Label></td>
+                                                                                </tr>
+                                                                                <tr id="Tr5" runat="server" visible="false">
+                                                                                    <td>HSN Code:</td>
+                                                                                    <td>
+                                                                                        <asp:Label ID="lblhsncodelevel3" runat="server" Text=""></asp:Label></td>
+                                                                                </tr>
+                                                                                <tr id="Tr6" runat="server" visible="false">
+                                                                                    <td>HS Code (4 digit)</td>
+                                                                                    <td>
+                                                                                        <asp:Label ID="lblhscode4digit" runat="server" Text=""></asp:Label></td>
+                                                                                </tr>
+                                                                                <tr id="Tr7" runat="server" visible="false">
+                                                                                    <td>End User Part Number:</td>
+                                                                                    <td>
+                                                                                        <asp:Label ID="lblenduserpartno" runat="server" Text=""></asp:Label></td>
+                                                                                </tr>
                                                                             </table>
                                                                         </div>
                                                                         <div class="col-md-6">
                                                                             <table>
+
+                                                                                <tr>
+                                                                                    <td>NSC Code (4 digit):</td>
+                                                                                    <td>
+                                                                                        <asp:Label ID="lblnsccode" runat="server" Text=""></asp:Label></td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>NIIN Code (9-digit):</td>
+                                                                                    <td>
+                                                                                        <asp:Label ID="lblniincode" runat="server" Text=""></asp:Label></td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>Item Description:</td>
+                                                                                    <td>
+                                                                                        <asp:Label ID="lblproductdescription" runat="server" Text=""></asp:Label></td>
+                                                                                </tr>
                                                                                 <tr>
                                                                                     <td>DEFENCE PLATFORM:</td>
                                                                                     <td>
@@ -962,7 +975,7 @@
                                                                                         <asp:Label ID="lblsearchkeyword" runat="server" Text=""></asp:Label></td>
                                                                                 </tr>
                                                                                 <tr>
-                                                                                    <td>Product Already Indeginized</td>
+                                                                                    <td>Item Already Indeginized</td>
                                                                                     <td>
                                                                                         <asp:Label ID="lblprodalredyindeginized" runat="server" Text=""></asp:Label></td>
                                                                                 </tr>
@@ -987,7 +1000,7 @@
 
                                                                                 </div>
                                                                                 <tr>
-                                                                                    <td>Is Product Imported</td>
+                                                                                    <td>Is Item Imported</td>
                                                                                     <td>
                                                                                         <asp:Label ID="lblisproductimported" runat="server" Text=""></asp:Label></td>
                                                                                 </tr>
@@ -1011,7 +1024,7 @@
                                                 </div>
                                                 <div class="card">
                                                     <div class="card-header">
-                                                        <h2 data-toggle="collapse" data-parent="#accordion" class="collapsed" data-target="#faq2" aria-expanded="false" aria-controls="faq2">Product Specification
+                                                        <h2 data-toggle="collapse" data-parent="#accordion" class="collapsed" data-target="#faq2" aria-expanded="false" aria-controls="faq2">Item Specification
                                                             <i class="fa fa-plus pull-right"></i>
                                                         </h2>
                                                     </div>
@@ -1030,7 +1043,7 @@
                                                                                 </td>
                                                                             </tr>
                                                                             <tr>
-                                                                                <td>Product Image</td>
+                                                                                <td>Item Image</td>
                                                                                 <td>
                                                                                     <asp:DataList ID="dlimage" runat="server" RepeatColumns="4" RepeatDirection="Horizontal" RepeatLayout="Flow">
                                                                                         <ItemTemplate>
@@ -1053,7 +1066,7 @@
                                                                                     <asp:Label ID="lbladditionalinfo" runat="server" Text=""></asp:Label></td>
                                                                             </tr>
                                                                             <tr>
-                                                                                <td>Product Information</td>
+                                                                                <td>Item Information</td>
                                                                                 <td>&nbsp;</td>
                                                                             </tr>
                                                                             <tr>
@@ -1078,9 +1091,9 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="card">
+                                                <div class="card" runat="server" visible="false">
                                                     <div class="card-header">
-                                                        <h2 data-toggle="collapse" data-parent="#accordion" class="collapsed" data-target="#faq3" aria-expanded="false" aria-controls="faq3">Estimated Quantity & Price
+                                                        <h2 data-toggle="collapse" data-parent="#accordion" class="collapsed" data-target="#faq3" aria-expanded="false" aria-controls="faq3">Estimated Quantity
                                                             <i class="fa fa-plus pull-right"></i>
                                                         </h2>
                                                     </div>
@@ -1112,7 +1125,7 @@
                                                                                         <asp:BoundField DataField="FYear" HeaderText="Year" />
                                                                                         <asp:BoundField DataField="EstimatedQty" HeaderText="Estimated Quantity" />
                                                                                         <asp:BoundField DataField="Unit" HeaderText="Measuring Unit" />
-                                                                                        <asp:BoundField DataField="EstimatedPrice" HeaderText="Estimated Price / LPP" />
+                                                                                        <%--<asp:BoundField DataField="EstimatedPrice" HeaderText="Estimated Price / LPP" />--%>
                                                                                     </Columns>
                                                                                 </asp:GridView>
                                                                             </td>
@@ -1124,7 +1137,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="card">
+                                                <div class="card" runat="server" visible="false">
                                                     <div class="card-header">
                                                         <h2 data-toggle="collapse" data-parent="#accordion" class="collapsed" data-target="#faq4" aria-expanded="false" aria-controls="faq4">Testing & Certification
                                                             <i class="fa fa-plus pull-right"></i>
@@ -1181,7 +1194,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="card">
+                                                <div class="card" runat="server" visible="false">
                                                     <div class="card-header">
                                                         <h2 data-toggle="collapse" data-parent="#accordion" class="collapsed" data-target="#faq6" aria-expanded="false" aria-controls="faq6">Technical & Financial Support
                                                             <i class="fa fa-plus pull-right"></i>
@@ -1389,6 +1402,9 @@
                 </div>
             </div>
         </ContentTemplate>
+        <Triggers>
+            <asp:AsyncPostBackTrigger ControlID="gvproduct" EventName="RowCommand" />
+        </Triggers>
     </asp:UpdatePanel>
     <asp:UpdateProgress ID="UpdateProgress" runat="server" AssociatedUpdatePanelID="up">
         <ProgressTemplate>
@@ -1402,4 +1418,6 @@
             <!---Progress Bar ---->
         </ProgressTemplate>
     </asp:UpdateProgress>
+
+
 </asp:Content>

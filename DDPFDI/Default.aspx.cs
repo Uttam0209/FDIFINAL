@@ -25,10 +25,9 @@ public partial class _Default : System.Web.UI.Page
     #endregion
     protected void Page_Load(object sender, EventArgs e)
     {
-       // string s = objEnc.EncryptData("Data Source=103.73.189.114;Initial Catalog=ddp_cmsV1;User ID=sa;Password=mXy<wxh3:Mh@U");
-       // string a = objEnc.DecryptData("aL88ocdv5/Ixdr/+Dtk9vguy4XrszcqvQRVrxD/UURYbfxfZoNQ/slH40ZNMn79SQzU69Y+PJE2GhK6b37iKbSavaXlq/Ptl6qjBEDY0BJF2LUCW1YbxmEnDlPlryODw");
-
-        }
+        //string s = objEnc.EncryptData("Data Source=103.73.189.114;Initial Catalog=ddp_cmsV1;User ID=sa;Password=mXy<wxh3:Mh@U");
+        // string a = objEnc.DecryptData("aL88ocdv5/Ixdr/+Dtk9vguy4XrszcqvQRVrxD/UURYbfxfZoNQ/slH40ZNMn79SQzU69Y+PJE2GhK6b37iKbSavaXlq/Ptl6qjBEDY0BJF2LUCW1YbxmEnDlPlryODw");
+    }
     #region "Login Code"
     public static bool IsValidEmailId(string InputEmail)
     {
@@ -55,19 +54,37 @@ public partial class _Default : System.Web.UI.Page
                 else
                 {
                     hyLogin["UserName"] = Co.RSQandSQLInjection(txtUserName.Text.Trim() + "'", "hard" + "'");
-                    hyLogin["Password"] = objEnc.EncryptData(txtPwd.Text.Trim());
-                    string _EmpId = LO.VerifyEmployee(hyLogin, out _msg, out Defaultpage);
-                    if (_EmpId != "0" && _EmpId != "1" && _msg != "")
+                    string _VerEmail = LO.VerifyEmail(hyLogin, out _msg, out _sysMsg);
+                    if (_VerEmail != "0" && _VerEmail != "1" && _msg != "0" && _sysMsg != "")
                     {
-                        Session["Type"] = objEnc.EncryptData(_msg);
-                        Session["User"] = objEnc.EncryptData(txtUserName.Text);
-                        Session["CompanyRefNo"] = _EmpId;
-                        Response.RedirectToRoute(Defaultpage);
+                        string HashedPassword = _msg.ToString();
+                        string Salt = _sysMsg.ToString();
+                        byte[] passwordAndSalt = System.Text.Encoding.UTF8.GetBytes(txtPwd.Text + Salt);
+                        byte[] hashPass = new System.Security.Cryptography.SHA256Managed().ComputeHash(passwordAndSalt);
+                        string hashCode = Convert.ToBase64String(hashPass);
+                        if (hashCode == HashedPassword)
+                        {
+                            hyLogin["Password"] = _msg.ToString();
+                            string _EmpId = LO.VerifyEmployee(hyLogin, out _msg, out Defaultpage);
+                            if (_EmpId != "0" && _EmpId != "1" && _msg != "")
+                            {
+                                Session["Type"] = objEnc.EncryptData(_msg);
+                                Session["User"] = objEnc.EncryptData(txtUserName.Text);
+                                Session["CompanyRefNo"] = _EmpId;
+                                Response.RedirectToRoute(Defaultpage);
+                            }
+                            else
+                            {
+                                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Invalid Login. Either user id or password or both are incorrect.');", true);
+                            }
+                        }
+                        else
+                        {
+                            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Invalid Login. Either user id or password or both are incorrect.');", true);
+                        }
                     }
                     else
-                    {
-                        ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Invalid Login. Either user id or password or both are incorrect.');", true);
-                    }
+                    { ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Invalid User.');", true); }
                 }
             }
             else

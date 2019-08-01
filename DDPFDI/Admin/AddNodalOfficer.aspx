@@ -131,10 +131,10 @@
                                 <asp:Label ID="lbltotal" runat="server" Text=""></asp:Label>
                             </div>
                             <div class="clearfix"></div>
-                            <div class="table-wraper">
-                                <asp:GridView ID="gvViewNodalOfficer" runat="server" Width="100%" Class="commonAjaxTbl master-company-table table display responsive no-wrap table-hover manage-user Grid"
-                                    AutoGenerateColumns="false" AllowPaging="true" PageSize="25" AllowSorting="true" OnRowDataBound="gvViewNodalOfficer_RowDataBound">
-                                    <PagerStyle HorizontalAlign="Center" CssClass="GridPager" />
+                            <div class="table-wraper table-responsive">
+                                <asp:GridView ID="gvViewNodalOfficerAdd" runat="server" Width="100%" Class="commonAjaxTbl master-company-table table display 
+                                    responsive no-wrap table-hover manage-user Grid"
+                                    AutoGenerateColumns="false" OnRowDataBound="gvViewNodalOfficerAdd_RowDataBound" OnRowCreated="gvViewNodalOfficerAdd_RowCreated">
                                     <Columns>
                                         <asp:TemplateField HeaderText="S.No.">
                                             <ItemTemplate>

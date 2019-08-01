@@ -93,13 +93,13 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
                         this.SortDirection = this.SortDirection == "ASC" ? "DESC" : "ASC";
 
                         dv.Sort = sortExpression + " " + this.SortDirection;
-                        gvcompanydetail.DataSource = dv;
+                        gvcompanydetailmaster.DataSource = dv;
                     }
                     else
                     {
-                        gvcompanydetail.DataSource = DtGrid;
+                        gvcompanydetailmaster.DataSource = DtGrid;
                     }
-                    gvcompanydetail.DataBind();
+                    gvcompanydetailmaster.DataBind();
                     lbltotal.Text = DtGrid.Rows.Count.ToString();
                 }
             }
@@ -108,8 +108,8 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
                 DataTable DtGrid = Lo.RetriveGridViewCompany(mRefNo, "", "", "CompanyMainGridView");
                 if (DtGrid.Rows.Count > 0)
                 {
-                    gvcompanydetail.DataSource = DtGrid;
-                    gvcompanydetail.DataBind();
+                    gvcompanydetailmaster.DataSource = DtGrid;
+                    gvcompanydetailmaster.DataBind();
                 }
             }
             else if (mType != "Factroy" && mRefNo != "")
@@ -123,13 +123,13 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
                         this.SortDirection = this.SortDirection == "ASC" ? "DESC" : "ASC";
 
                         dv.Sort = sortExpression + " " + this.SortDirection;
-                        gvcompanydetail.DataSource = dv;
+                        gvcompanydetailmaster.DataSource = dv;
                     }
                     else
                     {
-                        gvcompanydetail.DataSource = DtGrid;
+                        gvcompanydetailmaster.DataSource = DtGrid;
                     }
-                    gvcompanydetail.DataBind();
+                    gvcompanydetailmaster.DataBind();
                     lbltotal.Text = DtGrid.Rows.Count.ToString();
                 }
             }
@@ -144,13 +144,13 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
                         this.SortDirection = this.SortDirection == "ASC" ? "DESC" : "ASC";
 
                         dv.Sort = sortExpression + " " + this.SortDirection;
-                        gvcompanydetail.DataSource = dv;
+                        gvcompanydetailmaster.DataSource = dv;
                     }
                     else
                     {
-                        gvcompanydetail.DataSource = DtGrid;
+                        gvcompanydetailmaster.DataSource = DtGrid;
                     }
-                    gvcompanydetail.DataBind();
+                    gvcompanydetailmaster.DataBind();
                     lbltotal.Text = DtGrid.Rows.Count.ToString();
                 }
             }
@@ -227,8 +227,8 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
                 DataTable DtGrid = Lo.RetriveGridViewCompany(ddlcompany.SelectedItem.Value, "", "", "CompanyMainGridView");
                 if (DtGrid.Rows.Count > 0)
                 {
-                    gvcompanydetail.DataSource = DtGrid;
-                    gvcompanydetail.DataBind();
+                    gvcompanydetailmaster.DataSource = DtGrid;
+                    gvcompanydetailmaster.DataBind();
                 }
             }
             else
@@ -247,7 +247,7 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
                 DataTable DtGrid = Lo.RetriveGridViewCompany(ddlcompany.SelectedItem.Value, ddldivision.SelectedItem.Value, "", "InnerGVFactoryID");
                 if (DtGrid.Rows.Count > 0)
                 {
-                    foreach (GridViewRow row in gvcompanydetail.Rows)
+                    foreach (GridViewRow row in gvcompanydetailmaster.Rows)
                     {
                         gvinnerfactory = ((GridView)row.FindControl("gvfactory"));
                     }
@@ -269,7 +269,7 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
                 DataTable DtGrid = Lo.RetriveGridViewCompany("", ddldivision.SelectedItem.Value, ddlunit.SelectedItem.Value, "InnerGVUnitID");
                 if (DtGrid.Rows.Count > 0)
                 {
-                    foreach (GridViewRow row in gvcompanydetail.Rows)
+                    foreach (GridViewRow row in gvcompanydetailmaster.Rows)
                     {
                         gvinnerfactroyforunit = ((GridView)row.FindControl("gvfactory"));
                     }
@@ -296,8 +296,8 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
                 DataTable DtGrid = Lo.RetriveGridViewCompany(ddlcompany.SelectedItem.Value, "", "", "CompanyMainGridView");
                 if (DtGrid.Rows.Count > 0)
                 {
-                    gvcompanydetail.DataSource = DtGrid;
-                    gvcompanydetail.DataBind();
+                    gvcompanydetailmaster.DataSource = DtGrid;
+                    gvcompanydetailmaster.DataBind();
                 }
             }
             else
@@ -318,7 +318,7 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
                 DataTable DtGrid = Lo.RetriveGridViewCompany(ddlcompany.SelectedItem.Value, ddldivision.SelectedItem.Value, "", "InnerGVFactoryID");
                 if (DtGrid.Rows.Count > 0)
                 {
-                    foreach (GridViewRow row in gvcompanydetail.Rows)
+                    foreach (GridViewRow row in gvcompanydetailmaster.Rows)
                     {
                         gvinnerfactory = ((GridView)row.FindControl("gvfactory"));
                     }
@@ -342,7 +342,7 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
                 DataTable DtGrid = Lo.RetriveGridViewCompany("", ddldivision.SelectedItem.Value, ddlunit.SelectedItem.Value, "InnerGVUnitID");
                 if (DtGrid.Rows.Count > 0)
                 {
-                    foreach (GridViewRow row in gvcompanydetail.Rows)
+                    foreach (GridViewRow row in gvcompanydetailmaster.Rows)
                     {
                         gvinnerfactroyforunit = ((GridView)row.FindControl("gvfactory"));
                     }
@@ -364,7 +364,7 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
     #region PageIndex or Sorting
     protected void OnPageIndexChanging(object sender, GridViewPageEventArgs e)
     {
-        gvcompanydetail.PageIndex = e.NewPageIndex;
+        gvcompanydetailmaster.PageIndex = e.NewPageIndex;
         this.BindGridView();
     }
     protected void OnSorting(object sender, GridViewSortEventArgs e)
@@ -373,13 +373,13 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
     }
     #endregion
     #region RowCommand
-    protected void gvcompanydetail_RowCommand(object sender, GridViewCommandEventArgs e)
+    protected void gvcompanydetailmaster_RowCommand(object sender, GridViewCommandEventArgs e)
     {
         if (e.CommandName == "EditComp")
         {
             GridViewRow gvr = (GridViewRow)((Control)e.CommandSource).NamingContainer;
             int rowIndex = gvr.RowIndex;
-            string Role = (gvcompanydetail.Rows[rowIndex].FindControl("lblcompanyrole") as Label).Text;
+            string Role = (gvcompanydetailmaster.Rows[rowIndex].FindControl("lblcompanyrole") as Label).Text;
             string stridNew = Request.QueryString["id"].ToString().Replace(" ", "+");
             string mstrid = objEnc.EncryptData((objEnc.DecryptData(stridNew) + " >> Edit Company"));
             Response.Redirect("Add-Company?mrcreaterole=" + HttpUtility.UrlEncode(objEnc.EncryptData(Role)) + "&mcurrentcompRefNo=" + HttpUtility.UrlEncode(objEnc.EncryptData(e.CommandArgument.ToString())) + "&id=" + mstrid);
@@ -455,9 +455,9 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
             {
                 GridViewRow gvr = (GridViewRow)((Control)e.CommandSource).NamingContainer;
                 int rowIndex = gvr.RowIndex;
-                RefNo = (gvcompanydetail.Rows[rowIndex].FindControl("lblrefno") as Label).Text;
-                UserName = (gvcompanydetail.Rows[rowIndex].FindControl("lblnodelname") as Label).Text;
-                UserEmail = (gvcompanydetail.Rows[rowIndex].FindControl("hfemail") as HiddenField).Value;
+                RefNo = (gvcompanydetailmaster.Rows[rowIndex].FindControl("lblrefno") as Label).Text;
+                UserName = (gvcompanydetailmaster.Rows[rowIndex].FindControl("lblnodelname") as Label).Text;
+                UserEmail = (gvcompanydetailmaster.Rows[rowIndex].FindControl("hfemail") as HiddenField).Value;
                 SendEmailCode();
             }
             catch (Exception ex)
@@ -472,7 +472,7 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
         {
             GridViewRow gvr = (GridViewRow)((Control)e.CommandSource).NamingContainer;
             int rowIndex = gvr.RowIndex;
-            //string Role = (gvcompanydetail.Rows[rowIndex].FindControl("lblfactoryrole") as Label).Text;
+            //string Role = (gvcompanydetailmaster.Rows[rowIndex].FindControl("lblfactoryrole") as Label).Text;
             string Role = "Factory";
             string stridNew = Request.QueryString["id"].ToString().Replace(" ", "+");
             string mstrid = objEnc.EncryptData((objEnc.DecryptData(stridNew) + " >> Edit Division"));
@@ -548,9 +548,9 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
             {
                 GridViewRow gvr = (GridViewRow)((Control)e.CommandSource).NamingContainer;
                 int rowIndex = gvr.RowIndex;
-                RefNo = (gvcompanydetail.Rows[rowIndex].FindControl("lblrefno") as Label).Text;
-                UserName = (gvcompanydetail.Rows[rowIndex].FindControl("lblnodelname") as Label).Text;
-                UserEmail = (gvcompanydetail.Rows[rowIndex].FindControl("hfemail") as HiddenField).Value;
+                RefNo = (gvcompanydetailmaster.Rows[rowIndex].FindControl("lblrefno") as Label).Text;
+                UserName = (gvcompanydetailmaster.Rows[rowIndex].FindControl("lblnodelname") as Label).Text;
+                UserEmail = (gvcompanydetailmaster.Rows[rowIndex].FindControl("hfemail") as HiddenField).Value;
                 SendEmailCode();
             }
             catch (Exception ex)
@@ -565,7 +565,7 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
         {
             GridViewRow gvr = (GridViewRow)((Control)e.CommandSource).NamingContainer;
             int rowIndex = gvr.RowIndex;
-            //string Role = (gvcompanydetail.Rows[rowIndex].FindControl("lblunitrole") as Label).Text;
+            //string Role = (gvcompanydetailmaster.Rows[rowIndex].FindControl("lblunitrole") as Label).Text;
             string Role = "Unit";
             string stridNew = Request.QueryString["id"].ToString().Replace(" ", "+");
             string mstrid = objEnc.EncryptData((objEnc.DecryptData(stridNew) + " >> Edit Unit"));
@@ -637,9 +637,9 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
             {
                 GridViewRow gvr = (GridViewRow)((Control)e.CommandSource).NamingContainer;
                 int rowIndex = gvr.RowIndex;
-                RefNo = (gvcompanydetail.Rows[rowIndex].FindControl("lblrefno") as Label).Text;
-                UserName = (gvcompanydetail.Rows[rowIndex].FindControl("lblnodelname") as Label).Text;
-                UserEmail = (gvcompanydetail.Rows[rowIndex].FindControl("hfemail") as HiddenField).Value;
+                RefNo = (gvcompanydetailmaster.Rows[rowIndex].FindControl("lblrefno") as Label).Text;
+                UserName = (gvcompanydetailmaster.Rows[rowIndex].FindControl("lblnodelname") as Label).Text;
+                UserEmail = (gvcompanydetailmaster.Rows[rowIndex].FindControl("hfemail") as HiddenField).Value;
                 SendEmailCode();
             }
             catch (Exception ex)
@@ -767,8 +767,8 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
             DataTable DtGrid = Lo.RetriveGridViewCompany(ddlcompany.SelectedItem.Value, "", "", "CompanyMainGridView");
             if (DtGrid.Rows.Count > 0)
             {
-                gvcompanydetail.DataSource = DtGrid;
-                gvcompanydetail.DataBind();
+                gvcompanydetailmaster.DataSource = DtGrid;
+                gvcompanydetailmaster.DataBind();
                 DtCompanyDDL = Lo.RetriveMasterData(0, ddlcompany.SelectedItem.Value, "", 0, "", "", "FactoryCompanyID");
                 if (DtCompanyDDL.Rows.Count > 0)
                 {
@@ -792,8 +792,8 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
             DataTable DtGrid = Lo.RetriveGridViewCompany("0", "", "", "CompanyMainGridView");
             if (DtGrid.Rows.Count > 0)
             {
-                gvcompanydetail.DataSource = DtGrid;
-                gvcompanydetail.DataBind();
+                gvcompanydetailmaster.DataSource = DtGrid;
+                gvcompanydetailmaster.DataBind();
                 ddldivision.Visible = false;
                 ddlunit.Visible = false;
                 lblselectunit.Visible = false;
@@ -822,7 +822,7 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
             DataTable DtGrid = Lo.RetriveGridViewCompany(ddlcompany.SelectedItem.Value, ddldivision.SelectedItem.Value, "", "InnerGVFactoryID");
             if (DtGrid.Rows.Count > 0)
             {
-                foreach (GridViewRow row in gvcompanydetail.Rows)
+                foreach (GridViewRow row in gvcompanydetailmaster.Rows)
                 {
                     gvinnerfactory = ((GridView)row.FindControl("gvfactory"));
                 }
@@ -851,7 +851,7 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
             DataTable DtGrid = Lo.RetriveGridViewCompany(ddlcompany.SelectedItem.Value, "", "", "InnerGridViewFactory");
             if (DtGrid.Rows.Count > 0)
             {
-                foreach (GridViewRow row in gvcompanydetail.Rows)
+                foreach (GridViewRow row in gvcompanydetailmaster.Rows)
                 {
                     gvinnerfactory = ((GridView)row.FindControl("gvfactory"));
                 }
@@ -871,7 +871,7 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
             DataTable DtGrid = Lo.RetriveGridViewCompany("", ddldivision.SelectedItem.Value, ddlunit.SelectedItem.Value, "InnerGVUnitID");
             if (DtGrid.Rows.Count > 0)
             {
-                foreach (GridViewRow row in gvcompanydetail.Rows)
+                foreach (GridViewRow row in gvcompanydetailmaster.Rows)
                 {
                     gvinnerfactroyforunit = ((GridView)row.FindControl("gvfactory"));
                 }
@@ -888,7 +888,7 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
             DataTable DtGrid = Lo.RetriveGridViewCompany("", ddldivision.SelectedItem.Value, "", "InnerGridViewUnit");
             if (DtGrid.Rows.Count > 0)
             {
-                foreach (GridViewRow row in gvcompanydetail.Rows)
+                foreach (GridViewRow row in gvcompanydetailmaster.Rows)
                 {
                     gvinnerfactroyforunit = ((GridView)row.FindControl("gvfactory"));
                 }
@@ -913,8 +913,8 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
             DataTable DtGrid = Lo.SearchResultCompany(Co.RSQandSQLInjection("'%" + txtserch.Text + "%'", "hard"));
             if (DtGrid.Rows.Count > 0)
             {
-                gvcompanydetail.DataSource = DtGrid;
-                gvcompanydetail.DataBind();
+                gvcompanydetailmaster.DataSource = DtGrid;
+                gvcompanydetailmaster.DataBind();
 
                 lbltotal.Text = DtGrid.Rows.Count.ToString();
             }
@@ -925,4 +925,5 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
         }
     }
     #endregion
+   
 }

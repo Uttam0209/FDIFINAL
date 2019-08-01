@@ -5,7 +5,8 @@
 <asp:Content ID="conhead" runat="server" ContentPlaceHolderID="head">
     <%-- Here We need to write some js code for load google chart with database data --%>
     <script src="assets/js/jquery-1.7.1.js"></script>
-    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <%--<script type="text/javascript" src="https://www.google.com/jsapi"></script>--%>
+    <script src="assets/js/jsapi.js"></script>
     <script>
         var chartData; // globar variable for hold chart data
         google.load("visualization", "1", { packages: ["corechart"] });
@@ -233,7 +234,7 @@
                                             <div class="shadow-box analytics-info last-fdi">
                                                 <div class="table-wrapper table-responsive" id="divfactorygrid" runat="server">
                                                     <asp:GridView ID="gvPrdoct" runat="server" AutoGenerateColumns="false" Class="commonAjaxTbl dataTable master-company-table ViewProductTable table 
-                                        display responsive no-wrap table-hover manage-user Grid table-responsive"
+                                                       display responsive no-wrap table-hover manage-user Grid table-responsive"
                                                         OnRowCreated="gvPrdoct_RowCreated">
                                                         <Columns>
                                                             <asp:TemplateField HeaderText="S.No.">

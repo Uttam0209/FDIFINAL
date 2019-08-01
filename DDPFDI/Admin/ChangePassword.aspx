@@ -21,7 +21,10 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="activityname" class="control-label">Confirm Password <span class="mandatory">*</span></label>
-                                    <asp:TextBox runat="server" ID="txtreppass" type="password" MaxLength="15" TabIndex="3" class="form-control  form-cascade-control input-small" placeholder="Confirm New Password"></asp:TextBox>
+                                    <asp:TextBox runat="server" ID="txtreppass" type="password" onblur="checkLength(this)" MaxLength="15" TabIndex="3" class="form-control  form-cascade-control input-small" placeholder="Confirm New Password"></asp:TextBox>
+                                    <div class="clearfix mt5"></div>
+                                    <asp:RegularExpressionValidator ID="valPassword" runat="server" ControlToValidate="txtreppass"
+                                        ErrorMessage="Minimum Length is (8) charactor" ForeColor="Red" ValidationExpression="^[\s\S]{8,15}$" />
                                 </div>
 
                             </div>
@@ -30,6 +33,10 @@
                             <div class="form-group">
                                 <label for="tcompanyname" class=" control-label">New Password <span class="mandatory">*</span></label>
                                 <asp:TextBox runat="server" ID="txtnewpass" type="password" MaxLength="15" TabIndex="2" class="form-control  form-cascade-control input-small" placeholder="Enter New Password"></asp:TextBox>
+                                <div class="clearfix mt5"></div>
+                                <asp:RegularExpressionValidator ID="RegularExpressionValidator1" runat="server" ControlToValidate="txtnewpass"
+                                    ErrorMessage="Minimum Length is (8) charactor" ForeColor="Red" ValidationExpression="^[\s\S]{8,15}$" />
+
                             </div>
                             <br />
                             <div class="form-group">

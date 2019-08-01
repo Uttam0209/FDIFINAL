@@ -22,22 +22,32 @@ public partial class Admin_ChangePassword : System.Web.UI.Page
         {
             if (txtnewpass.Text == txtreppass.Text)
             {
-                string UpdatePassword = Lo.UpdateLoginPassword(ObjEnc.EncryptData(txtnewpass.Text), ObjEnc.EncryptData(txtoldpass.Text), ObjEnc.DecryptData(Session["User"].ToString()), "LoginOld");
-                if (UpdatePassword == "true")
+                if (txtreppass.Text.Length >= 8)
                 {
-                    divmsg.InnerHtml = "Password change successfully";
-                    divmsg.Attributes.Add("Class", "alert alert-success");
-                    divmsg.Visible = true;
+                    GenerateHash HashAndSalt = new GenerateHash();
+                    string GetSalt = HashAndSalt.CreateSalt(10);
+                    string hashString = HashAndSalt.GenarateHash(txtnewpass.Text, GetSalt);
+                    string UpdatePassword = Lo.UpdateLoginPassword(hashString, txtoldpass.Text, ObjEnc.DecryptData(Session["User"].ToString()), "LoginOld", txtnewpass.Text, GetSalt);
+                    if (UpdatePassword == "true")
+                    {
+                        divmsg.InnerHtml = "Password change successfully";
+                        divmsg.Attributes.Add("Class", "alert alert-success");
+                        divmsg.Visible = true;
+                    }
+                    else
+                    {
+                        divmsg.InnerHtml = "Password not change";
+                        divmsg.Attributes.Add("Class", "alert alert-danger");
+                        divmsg.Visible = true;
 
+                    }
                 }
                 else
                 {
-                    divmsg.InnerHtml = "Password not change";
-                    divmsg.Attributes.Add("Class", "alert alert-danger");
+                    divmsg.InnerHtml = "Minimum Length is (8) charactor";
+                    divmsg.Attributes.Add("Class", "alert alert-warning");
                     divmsg.Visible = true;
-
                 }
-
             }
             else
             {
@@ -66,5 +76,21 @@ public partial class Admin_ChangePassword : System.Web.UI.Page
         txtreppass.Text = "";
         divmsg.InnerHtml = "";
         divmsg.Visible = false;
+    }
+    class GenerateHash
+    {
+        public string CreateSalt(int SaltSize)
+        {
+            var rng = new System.Security.Cryptography.RNGCryptoServiceProvider();
+            byte[] Salt = new byte[SaltSize];
+            rng.GetBytes(Salt);
+            return Convert.ToBase64String(Salt);
+        }
+        public string GenarateHash(string UserPassword, string salt)
+        {
+            byte[] bytes = System.Text.Encoding.UTF8.GetBytes(UserPassword + salt);
+            byte[] PasswordHash = new System.Security.Cryptography.SHA256Managed().ComputeHash(bytes);
+            return Convert.ToBase64String(PasswordHash);
+        }
     }
 }

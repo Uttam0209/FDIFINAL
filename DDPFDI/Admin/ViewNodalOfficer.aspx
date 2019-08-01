@@ -86,11 +86,12 @@
 
                                 </div>
 
-                                <div class="clearfix"></div>
-                                <div class="table-wraper">
-                                    <asp:GridView ID="gvViewNodalOfficer" runat="server" Width="100%" Class="commonAjaxTbl master-company-table table display responsive no-wrap table-hover manage-user Grid" AutoGenerateColumns="false" AllowPaging="true"
-                                        PageSize="60" AllowSorting="true" OnRowCommand="gvViewDesignation_RowCommand" OnRowDataBound="gvViewNodalOfficer_RowDataBound">
-                                        <PagerStyle HorizontalAlign="Center" CssClass="GridPager" />
+                                <div class="clearfix mt10"></div>
+                                <div class="table-wraper table-responsive">
+                                    <asp:GridView ID="gvViewNodalOfficer" runat="server" Width="100%" Class="commonAjaxTbl master-company-table table display responsive
+                                         no-wrap table-hover manage-user Grid"
+                                        AutoGenerateColumns="false" OnRowCommand="gvViewDesignation_RowCommand" OnRowDataBound="gvViewNodalOfficer_RowDataBound"
+                                        OnRowCreated="gvViewNodalOfficer_RowCreated">
                                         <Columns>
                                             <asp:TemplateField HeaderText="S.No.">
                                                 <ItemTemplate>

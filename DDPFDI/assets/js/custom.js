@@ -181,18 +181,53 @@
     //Select 2 Dropwdown
     $("#ContentPlaceHolder1_txtcountry").select2({});
     $("#ContentPlaceHolder1_ddlcountry").select2({});
-    //$("#ContentPlaceHolder1_ddlmastercategory").select2({});
-    //$("#ContentPlaceHolder1_ddlsubcategory").select2({});
-    //$("#ContentPlaceHolder1_ddllevel3product").select2({});
-    $("#ContentPlaceHolder1_ddlHSNCode").select2({});
-    //$("#ContentPlaceHolder1_ddlplatform").select2({});
-    //$("#ContentPlaceHolder1_ddlnomnclature").select2({});
-    //$("#ContentPlaceHolder1_ddltechnologycat").select2({});
-    //$("#ContentPlaceHolder1_ddlsubtech").select2({});
-    //$("#ContentPlaceHolder1_ddltechlevel3").select2({});
-    // $("#ContentPlaceHolder1_ddlyearofindiginization").select2({});
-
+    $(document).ready(function () {
+        BindControls();
+    });
+    function BindControls() {
+        $("#ContentPlaceHolder1_ddlcategroy2").select2({});
+        $("#ContentPlaceHolder1_ddllabel2").select2({});
+        $("#ContentPlaceHolder1_ddlmastercategory").select2({});
+        $("#ContentPlaceHolder1_ddlsubcategory").select2({});
+        $("#ContentPlaceHolder1_ddllevel3product").select2({});
+        $("#ContentPlaceHolder1_ddlHSNCode").select2({});
+        $("#ContentPlaceHolder1_ddlplatform").select2({});
+        $("#ContentPlaceHolder1_ddlnomnclature").select2({});
+        $("#ContentPlaceHolder1_ddltechnologycat").select2({});
+        $("#ContentPlaceHolder1_ddlsubtech").select2({});
+        $("#ContentPlaceHolder1_ddltechlevel3").select2({});
+        $("#ContentPlaceHolder1_ddlyearofindiginization").select2({});
+        $("#ContentPlaceHolder1_ddlenduser").select2({});
+    }
+    var req = Sys.WebForms.PageRequestManager.getInstance();
+    req.add_endRequest(function () {
+        BindControls();
+    });
     //DataTable 
-    $('#ContentPlaceHolder1_gvPrdoct').DataTable();
+    $(function () { BindGrid(); });
+    var prm = Sys.WebForms.PageRequestManager.getInstance();
+    if (prm != null) {
+        prm.add_endRequest
+            (function (sender, e) {
+                if (sender._postBackSettings.panelsToUpdate != null)
+                { BindGrid(); }
+                else
+                { }// BindGrid(); }
+            });
+    };
+    function BindGrid() {
+        $('#ContentPlaceHolder1_gvPrdoct').DataTable();
+        $('#ContentPlaceHolder1_gvcompanydetail').DataTable();
+        $('#ContentPlaceHolder1_gvfactory').DataTable();
+        $('#ContentPlaceHolder1_gvunit').DataTable();
+        $('#ContentPlaceHolder1_gvViewNodalOfficer').DataTable();
+        $('#ContentPlaceHolder1_gvViewNodalOfficerAdd').DataTable();
+        $('#ContentPlaceHolder1_gvproduct').DataTable();
+        $('#ContentPlaceHolder1_gvproductItem').DataTable();
+        $('#ContentPlaceHolder1_gvViewDesignation').DataTable();
+        $('#ContentPlaceHolder1_gvCategory').DataTable();
+        $('#ContentPlaceHolder1_gvlevel3').DataTable();
+        $('#ContentPlaceHolder1_gvVendorDetails').DataTable();
+    }
 });
 

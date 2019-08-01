@@ -112,16 +112,16 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
                 dv.RowFilter = "UnitName='" + ddlunit.SelectedItem.Text + "'";
             }
             dv.Sort = "CompanyName asc,FactoryName asc";
-            gvViewNodalOfficer.DataSource = dv.ToTable();
-            gvViewNodalOfficer.DataBind();
-            gvViewNodalOfficer.Visible = true;
-            lbltotal.Text = "Total Records:- " + gvViewNodalOfficer.Rows.Count.ToString();
+            gvViewNodalOfficerAdd.DataSource = dv.ToTable();
+            gvViewNodalOfficerAdd.DataBind();
+            gvViewNodalOfficerAdd.Visible = true;
+            lbltotal.Text = "Total Records:- " + gvViewNodalOfficerAdd.Rows.Count.ToString();
             divTotalNumber.Visible = true;
         }
         else
         {
             divTotalNumber.Visible = false;
-            gvViewNodalOfficer.Visible = false;
+            gvViewNodalOfficerAdd.Visible = false;
         }
     }
     public void GridViewNodalOfficerBind(string mRefNo, string mRole)
@@ -362,7 +362,7 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
             {
                 Co.FillDropdownlist(ddldivision, DtCompanyDDL, "FactoryName", "FactoryRefNo");
                 // code by gk to select indivisual division for the particular unit
-                DataTable dt = Lo.RetriveMasterData(0, mRefNo, "Factory3", 0, "", "", "CompanyName");
+                DataTable dt = Lo.RetriveMasterData(0, mRefNo, "Factory2", 0, "", "", "CompanyName");
                 if (dt.Rows.Count > 0)
                     ddldivision.SelectedValue = dt.Rows[0]["FactoryRefNo"].ToString();
                 //end code
@@ -523,7 +523,7 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
         if (ddlunit.SelectedItem.Text == "Select")
         {
             //ddldivision_OnSelectedIndexChanged(sender, e);
-            gvViewNodalOfficer.Visible = false;
+            gvViewNodalOfficerAdd.Visible = false;
         }
         else
         {
@@ -803,7 +803,7 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
             }
         }
     }
-    protected void gvViewNodalOfficer_RowDataBound(object sender, GridViewRowEventArgs e)
+    protected void gvViewNodalOfficerAdd_RowDataBound(object sender, GridViewRowEventArgs e)
     {
         if (e.Row.RowType == DataControlRowType.DataRow)
         {
@@ -826,6 +826,21 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
                 s_lblnodalofficer.Text = "Employee";
                 s_lblnodalofficer.Visible = true;
             }
+        }
+    }
+    protected void gvViewNodalOfficerAdd_RowCreated(object sender, GridViewRowEventArgs e)
+    {
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            e.Row.TableSection = TableRowSection.TableBody;
+        }
+        else if (e.Row.RowType == DataControlRowType.Header)
+        {
+            e.Row.TableSection = TableRowSection.TableHeader;
+        }
+        else if (e.Row.RowType == DataControlRowType.Footer)
+        {
+            e.Row.TableSection = TableRowSection.TableFooter;
         }
     }
 }

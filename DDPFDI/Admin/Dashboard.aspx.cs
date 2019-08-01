@@ -60,7 +60,6 @@ public partial class Admin_Dashboard : System.Web.UI.Page
 
         return chartData;
     }
-
     public void FillProduct()
     {
         DataTable dtProductDetail = Lo.RetriveProductIndig();
@@ -70,7 +69,6 @@ public partial class Admin_Dashboard : System.Web.UI.Page
             gvPrdoct.DataBind();
         }
     }
-
     protected void lnkbtnTotComp_Click(object sender, EventArgs e)
     {
         Response.Redirect("Dashboard-View?id=" + HttpUtility.UrlEncode(objCrypto.EncryptData("C")));
@@ -256,7 +254,6 @@ public partial class Admin_Dashboard : System.Web.UI.Page
 
         }
     }
-
     protected void UpdateDtGridValue()
     {
         for (int a = 0; a < DtGrid.Rows.Count; a++)

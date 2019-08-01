@@ -85,11 +85,10 @@
                                     <asp:Button ID="btnAddDivision" Visible="False" runat="server" Text="Add Division/Plant" CssClass="btn btn-primary pull-right" OnClick="btnAddDivision_Click" />
                                     <asp:Button ID="btnAddCompany" Visible="False" runat="server" Text="Add Company" CssClass="btn btn-primary pull-right" OnClick="btnAddCompany_Click" />
                                 </div>
-                                <div class="clearfix"></div>
-                                <div class="table-wraper">
-                                    <asp:GridView ID="gvcompanydetail" runat="server" Width="100%" Class="commonAjaxTbl master-company-table table display responsive no-wrap table-hover manage-user Grid" AutoGenerateColumns="false" AllowPaging="true"
-                                        OnPageIndexChanging="OnPageIndexChanging" PageSize="25" AllowSorting="true" OnSorting="OnSorting" OnRowCommand="gvcompanydetail_RowCommand" OnRowDataBound="OnRowDataBound">
-                                        <PagerStyle HorizontalAlign="Center" CssClass="GridPager" />
+                                <div class="clearfix mt10"></div>
+                                <div class="table-responsive">
+                                    <asp:GridView ID="gvcompanydetailmaster" runat="server" Width="100%" Class="table table-hover"
+                                        AutoGenerateColumns="false" OnRowCommand="gvcompanydetailmaster_RowCommand" OnRowDataBound="OnRowDataBound">
                                         <Columns>
                                             <asp:TemplateField>
                                                 <ItemTemplate>

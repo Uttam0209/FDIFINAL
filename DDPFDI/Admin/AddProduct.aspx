@@ -69,11 +69,11 @@
             </div>
             <div class="tabing-section">
                 <ul class="nav nav-tabs">
-                    <li class="active"><a data-toggle="tab" href="#pd">Product Description</a></li>
-                    <li><a data-toggle="tab" href="#pimg">Product Specification</a></li>
-                    <li><a data-toggle="tab" href="#qpt">Estimated Quantity & Price</a></li>
-                    <li><a data-toggle="tab" href="#test">Testing & Certification</a></li>
-                    <li><a data-toggle="tab" href="#spd">Technical & Financial Support</a></li>
+                    <li class="active"><a data-toggle="tab" href="#pd">Item Description</a></li>
+                    <li><a data-toggle="tab" href="#pimg">Item Specification</a></li>
+                    <li><a data-toggle="tab" href="#qpt">Estimated Quantity</a></li>
+                    <li><a data-toggle="tab" href="#test" runat="server" visible="false">Testing & Certification</a></li>
+                    <li><a data-toggle="tab" href="#spd" runat="server" visible="false">Technical & Financial Support</a></li>
                     <li><a data-toggle="tab" href="#tnd">Tender</a></li>
                     <li><a data-toggle="tab" href="#cd">Contact</a></li>
                 </ul>
@@ -86,7 +86,7 @@
                             <div class="col-md-12">
                                 <div class="add-profile">
                                     <div class="section-pannel">
-                                        <asp:UpdatePanel runat="server" ID="upproduct">
+                                        <asp:UpdatePanel runat="server" ID="upproduct" UpdateMode="Conditional">
                                             <ContentTemplate>
                                                 <div class="row">
                                                     <div class="col-md-4">
@@ -136,7 +136,6 @@
                                                             </div>
                                                         </div>
                                                     </div>
-
                                                     <div class="col-md-4">
                                                         <div class="form-group">
                                                             <label>Item Description </label>
@@ -147,7 +146,46 @@
                                                         </div>
                                                     </div>
                                                 </div>
-
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label>Upload document related to item </label>
+                                                            <span class="mandatory">(only pdf file of maximum 1 Mb can be uploaded.)</span>
+                                                            <asp:FileUpload runat="server" ID="fuitemdescriptionfile" CssClass="form-control" TabIndex="29" />
+                                                            <div class="clearfix mt5"></div>
+                                                            <asp:Label runat="server" ID="lblfuitemdescriptionfile" Visible="False"></asp:Label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label>Item Image</label>
+                                                            <span class="mandatory">(only .jpeg, .png, .jpg files of max 1 Mb.(max 4 files))</span>
+                                                            <div class="fr">
+                                                                <asp:FileUpload ID="fuimages" runat="server" CssClass="uploadimage form-control" AllowMultiple="true" TabIndex="30" />
+                                                            </div>
+                                                        </div>
+                                                        <!-------uplode photo----------->
+                                                        <div class="gallery"></div>
+                                                        <br />
+                                                    </div>
+                                                    <div class="clearfix mt5"></div>
+                                                    <div class="col-sm-6"></div>
+                                                    <div class="col-sm-6">
+                                                        <div runat="server" id="divimgdel" visible="False">
+                                                            <div class="row">
+                                                                <asp:DataList runat="server" ID="dlimage" RepeatColumns="4" RepeatDirection="Horizontal" RepeatLayout="Flow" OnItemCommand="dlimage_ItemCommand">
+                                                                    <ItemTemplate>
+                                                                        <div class="col-sm-3">
+                                                                            <asp:Image runat="server" ID="imgprodimage" class="image img-responsive img-rounded" Height="90px" Width="90" src='<%#Eval("ImageName") %>' />
+                                                                            <div class="clearfix"></div>
+                                                                            <asp:LinkButton runat="server" ID="lblremoveimg" class="fa fa-trash text-center" CommandName="removeimg" CommandArgument='<%#Eval("ImageId") %>'></asp:LinkButton>
+                                                                        </div>
+                                                                    </ItemTemplate>
+                                                                </asp:DataList>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </ContentTemplate>
                                         </asp:UpdatePanel>
                                         <asp:UpdateProgress ID="UpdateProgress3" runat="server" AssociatedUpdatePanelID="upproduct">
@@ -164,6 +202,25 @@
                                         </asp:UpdateProgress>
                                     </div>
                                     <div class="section-pannel">
+                                        <div class="row">
+                                            <div class="col-sm-8">
+                                                <div class="form-group">
+                                                    <label>
+                                                        HSN Code (4-8 digit) <span class="mandatory">*</span> <a href="https://www.cbic-gst.gov.in/gst-goods-services-rates.html" target="_blank">(For finding hsn code please click here to get redirected to gst website.)<span data-toggle="tooltip" class="fa fa-question" title="HSN Code (4-8 digit ) and Link for find hsn code"></span></a>
+                                                    </label>
+                                                    <asp:TextBox runat="server" ID="txthsncodereadonly" MaxLength="8" required="" class="form-control"></asp:TextBox>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <div class="form-group">
+                                                    <label>DPSU Part Number</label>
+                                                    <asp:TextBox runat="server" ID="txtdpsupartnumber" TabIndex="9" class="form-control"></asp:TextBox>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="section-pannel" runat="server" visible="false">
                                         <div class="row">
                                             <div class="col-md-4" runat="server" visible="false">
                                                 <div class="form-group">
@@ -183,28 +240,28 @@
                                                             <asp:DropDownList runat="server" ID="ddlHSNCode" TabIndex="2" class="form-control" Height="35px" Style="text-transform: uppercase !important;"></asp:DropDownList>
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-3">
+                                                    <div class="col-md-3" runat="server" visible="false">
                                                         <div class="form-group">
                                                             <label>HS Chapter</label>
                                                             <span class="mandatory">*</span>
                                                             <asp:DropDownList runat="server" ID="ddlhschapter" AutoPostBack="true" OnSelectedIndexChanged="ddlhschapter_SelectedIndexChanged" class="form-control" Height="35px" Style="text-transform: uppercase !important;"></asp:DropDownList>
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-3">
+                                                    <div class="col-md-3" runat="server" visible="false">
                                                         <div class="form-group">
                                                             <label>HS Heading No</label>
                                                             <span class="mandatory">*</span>
                                                             <asp:DropDownList runat="server" ID="ddlhsncodelev1" TabIndex="2" AutoPostBack="true" OnSelectedIndexChanged="ddlhsncodelev1_SelectedIndexChanged" class="form-control" Height="35px" Style="text-transform: uppercase !important;"></asp:DropDownList>
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-3">
+                                                    <div class="col-md-3" runat="server" visible="false">
                                                         <div class="form-group">
                                                             <label>Description</label>
                                                             <span class="mandatory">*</span>
                                                             <asp:DropDownList runat="server" ID="ddlhsncodelevel2" TabIndex="2" AutoPostBack="true" OnSelectedIndexChanged="ddlhsncodelevel2_SelectedIndexChanged" class="form-control" Height="35px" Style="text-transform: uppercase !important;"></asp:DropDownList>
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-3">
+                                                    <div class="col-md-3" runat="server" visible="false">
                                                         <div class="form-group">
                                                             <label>HSN Code</label>
                                                             <span class="mandatory">*</span>
@@ -212,24 +269,18 @@
                                                         </div>
                                                     </div>
                                                     <div class="clearfix"></div>
-                                                    <div class="col-sm-3">
-                                                    </div>
-                                                    <div class="col-sm-3">
+
+
+                                                    <div class="col-sm-3" runat="server" visible="false">
                                                         <label style="font-size: 14px !important;">
                                                             HS Code (4 digit)
                                                                         <span data-toggle="tooltip" class="fa fa-question" title="HS Code 4 digit"></span>
                                                         </label>
                                                         <asp:TextBox runat="server" ID="txthscodereadonly" ReadOnly="True" MaxLength="4" CssClass="form-cascade-control form-control"></asp:TextBox>
                                                     </div>
-                                                    <div class="col-sm-3">
+                                                    <div class="col-sm-3" runat="server" visible="false">
                                                     </div>
-                                                    <div class="col-sm-3">
-                                                        <label>
-                                                            HSN Code (8-digit)
-                                                                    <span data-toggle="tooltip" class="fa fa-question" title="HSN Code (8-digit)"></span>
-                                                        </label>
-                                                        <asp:TextBox runat="server" ID="txthsncodereadonly" ReadOnly="True" MaxLength="8" class="form-control"></asp:TextBox>
-                                                    </div>
+
                                                 </ContentTemplate>
                                             </asp:UpdatePanel>
                                             <asp:UpdateProgress ID="UpdateProgress10" runat="server" AssociatedUpdatePanelID="upproduct">
@@ -268,15 +319,10 @@
                                                     </asp:DropDownList>
                                                 </div>
                                             </div>
+
                                         </div>
                                         <div class="row">
-                                            <div class="col-md-4">
-                                                <div class="form-group">
-                                                    <label>DPSU Part Number</label><span class="mandatory"> *</span>
-                                                    <asp:TextBox runat="server" ID="txtdpsupartnumber" required="" TabIndex="10" class="form-control"></asp:TextBox>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4">
+                                            <div class="col-md-4" runat="server" visible="false">
                                                 <div class="form-group">
                                                     <label>End User Part Number</label>
                                                     <asp:TextBox runat="server" ID="txtenduserpartnumber" TabIndex="12" class="form-control"></asp:TextBox>
@@ -334,26 +380,19 @@
                                                     <div class="col-md-4">
                                                         <div class="form-group">
                                                             <label>PRODUCT (INDUSTRY SUB DOMAIN)<span class="mandatory">*</span></label>
-                                                            <span data-toggle="tooltip" class="fa fa-question" title="It is a subcategory of Product Level 1, if you not see product level 2 please add in Category master >> level 2 "></span>
+                                                            <span data-toggle="tooltip" class="fa fa-question" title="It is a subcategory of Item Level 1, if you not see product level 2 please add in Category master >> level 2 "></span>
                                                             <asp:DropDownList runat="server" ID="ddlsubtech" class="form-control" TabIndex="17" Style="text-transform: uppercase !important;" AutoPostBack="True" OnSelectedIndexChanged="ddlsubtech_SelectedIndexChanged"></asp:DropDownList>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-4">
                                                         <div class="form-group">
                                                             <label>PRODUCT (INDUSTRY 2nd SUB DOMAIN)</label>
-                                                            <span data-toggle="tooltip" class="fa fa-question" title="It is a subcategory of Product Level 2, if you not see product level 3 please add in Category master >> level 3 "></span>
+                                                            <span data-toggle="tooltip" class="fa fa-question" title="It is a subcategory of Item Level 2, if you not see product level 3 please add in Category master >> level 3 "></span>
                                                             <asp:DropDownList runat="server" ID="ddltechlevel3" TabIndex="18" Style="text-transform: uppercase !important;" class="form-control"></asp:DropDownList>
                                                         </div>
                                                     </div>
                                                     <div class="clearfix"></div>
-                                                    <div class="col-sm-6">
-                                                        <div class="form-group">
-                                                            <label>Search keywords (To add more than one search keyword please use comma(,))</label>
-                                                            <asp:TextBox runat="server" ID="txtsearchkeyword" MaxLength="50" TabIndex="19" class="form-control"></asp:TextBox>
-                                                            <div class="clearfix" style="margin-top: 5px;"></div>
-                                                            <span>(Max length 50 words only)</span>
-                                                        </div>
-                                                    </div>
+
                                                 </ContentTemplate>
                                                 <Triggers>
                                                 </Triggers>
@@ -378,13 +417,23 @@
                                                 <ContentTemplate>
                                                     <div class="col-md-12">
                                                         <div class="form-group">
-                                                            <label class="live-status-box productalreadylabel ">
-                                                                Product already indigenized :
+                                                            <div class="col-sm-6">
+                                                                <div class="form-group">
+                                                                    <label>Search keywords (To add more than one search keyword please use comma(,))</label>
+                                                                    <asp:TextBox runat="server" ID="txtsearchkeyword" MaxLength="50" TabIndex="19" class="form-control"></asp:TextBox>
+                                                                    <div class="clearfix" style="margin-top: 5px;"></div>
+                                                                    <span>(Max length 50 words only)</span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-6">
+                                                                <label class="live-status-box productalreadylabel">
+                                                                    Item already indigenized :
                                                                 <asp:RadioButtonList runat="server" ID="rbisindinised" RepeatColumns="2" TabIndex="20" RepeatLayout="Flow" RepeatDirection="Horizontal" AutoPostBack="True" OnSelectedIndexChanged="rbisindinised_CheckedChanged ">
                                                                     <asp:ListItem Value="N" Selected="True">No</asp:ListItem>
                                                                     <asp:ListItem Value="Y" class="yes">Yes</asp:ListItem>
                                                                 </asp:RadioButtonList>
-                                                            </label>
+                                                                </label>
+                                                            </div>
                                                             <div class="clearfix" style="margin-top: 10px;"></div>
                                                             <div class="row">
                                                                 <div runat="server" id="divisIndigenized" visible="False">
@@ -427,37 +476,21 @@
                                             <div class="col-md-12">
                                                 <asp:UpdatePanel runat="server" ID="UpdatePanel4">
                                                     <ContentTemplate>
-                                                        <div class="form-group">
-                                                            <label class="checkbox-box productalreadylabel">
-                                                                Is Product imported in last 5 years?
-                                                            </label>
-                                                            <asp:RadioButtonList runat="server" ID="rbproductImported" RepeatColumns="2" TabIndex="24" RepeatLayout="Flow" RepeatDirection="Horizontal" AutoPostBack="True" OnSelectedIndexChanged="rbproductImported_CheckedChanged ">
-                                                                <asp:ListItem Value="N" Selected="True" style="margin-left: 5px;">No</asp:ListItem>
-                                                                <asp:ListItem Value="Y" class="yes" style="margin-left: 10px;">Yes</asp:ListItem>
-                                                            </asp:RadioButtonList>
-                                                            <div class="clearfix" style="margin-top: 10px;"></div>
-                                                            <div class="row">
-                                                                <div runat="server" id="divyearofimportNo" visible="False">
-                                                                    <div class="col-sm-6">
-                                                                        <div class="form-group hidden">
-                                                                            <label>Year of import</label>
-                                                                            <div class="clearfix"></div>
-                                                                            <asp:CheckBoxList runat="server" ID="chkyearofimportall" RepeatDirection="Horizontal" TabIndex="25" RepeatLayout="Flow" RepeatColumns="1">
-                                                                                <asp:ListItem Value="All (Expect Last Five Year)" Selected="True">All (Expect Last Five Year)</asp:ListItem>
-                                                                            </asp:CheckBoxList>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-sm-6">
-                                                                        <div class="form-group">
-                                                                            <label>Remarks</label>
-                                                                            <asp:TextBox runat="server" ID="txtyearofimportremarksno" Height="70px" MaxLength="250" TabIndex="26" class="form-control"></asp:TextBox>
-                                                                            <div class="clearfix" style="margin-top: 5px;"></div>
-                                                                            <span>(Max length 250 words only)</span>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div runat="server" id="divyearofimportYes" visible="False">
-                                                                    <div class="col-sm-6">
+                                                        <div class="col-sm-6">
+                                                            <div class="form-group">
+                                                                <label class="checkbox-box productalreadylabel">
+                                                                    Is Item imported in last 5 years?
+                                                                </label>
+                                                                <asp:RadioButtonList runat="server" ID="rbproductImported" RepeatColumns="2" TabIndex="24" RepeatLayout="Flow"
+                                                                    RepeatDirection="Horizontal" AutoPostBack="True" OnSelectedIndexChanged="rbproductImported_CheckedChanged ">
+                                                                    <asp:ListItem Value="N" Selected="True" style="margin-left: 5px;">No</asp:ListItem>
+                                                                    <asp:ListItem Value="Y" class="yes" style="margin-left: 10px;">Yes</asp:ListItem>
+                                                                </asp:RadioButtonList>
+                                                            </div>
+                                                            <div class="clearfix mt5"></div>
+                                                            <div runat="server" id="divyearofimportYes" visible="False">
+                                                                <div class="row">
+                                                                    <div class="col-sm-12">
                                                                         <div class="form-group">
                                                                             <label>Year of import</label>
                                                                             <div class="clearfix"></div>
@@ -470,15 +503,15 @@
                                                                             </asp:CheckBoxList>
                                                                         </div>
                                                                     </div>
-                                                                    <div class="col-sm-6">
-                                                                        <div class="form-group">
-                                                                            <label>Remarks</label>
-                                                                            <asp:TextBox runat="server" ID="txtremarksyearofimportyes" Height="70px" TabIndex="28" MaxLength="250" class="form-control"></asp:TextBox>
-                                                                            <div class="clearfix" style="margin-top: 5px;"></div>
-                                                                            <span>(Max length 250 words only)</span>
-                                                                        </div>
-                                                                    </div>
                                                                 </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-6">
+                                                            <div class="form-group">
+                                                                <label>Remarks</label>
+                                                                <asp:TextBox runat="server" ID="txtremarksyearofimportyes" Height="70px" TabIndex="28" MaxLength="250" class="form-control"></asp:TextBox>
+                                                                <div class="clearfix" style="margin-top: 5px;"></div>
+                                                                <span>(Max length 250 words only)</span>
                                                             </div>
                                                         </div>
                                                     </ContentTemplate>
@@ -508,52 +541,11 @@
                                 <div class="add-profile">
                                     <div class="section-pannel">
                                         <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label>Upload document related to item </label>
-                                                    <span class="mandatory">(only pdf file of maximum 1 Mb can be uploaded.)</span>
-                                                    <asp:FileUpload runat="server" ID="fuitemdescriptionfile" CssClass="form-control" TabIndex="29" />
-                                                    <div class="clearfix mt5"></div>
-                                                    <asp:Label runat="server" ID="lblfuitemdescriptionfile" Visible="False"></asp:Label>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label>Product Image</label>
-                                                    <span class="mandatory">(only .jpeg, .png, .jpg files of max 1 Mb.(max 4 files))</span>
-                                                    <div class="fr">
-                                                        <asp:FileUpload ID="fuimages" runat="server" CssClass="uploadimage form-control" AllowMultiple="true" TabIndex="30" />
-                                                    </div>
-                                                </div>
-                                                <!-------uplode photo----------->
-                                                <div class="gallery"></div>
-                                                <br />
-                                            </div>
-                                            <div class="clearfix mt5"></div>
-                                            <div class="col-sm-6"></div>
-                                            <div class="col-sm-6">
-                                                <div runat="server" id="divimgdel" visible="False">
-                                                    <div class="row">
-                                                        <asp:DataList runat="server" ID="dlimage" RepeatColumns="4" RepeatDirection="Horizontal" RepeatLayout="Flow" OnItemCommand="dlimage_ItemCommand">
-                                                            <ItemTemplate>
-                                                                <div class="col-sm-3">
-                                                                    <asp:Image runat="server" ID="imgprodimage" class="image img-responsive img-rounded" Height="120px" Width="120" src='<%#Eval("ImageName") %>' />
-                                                                    <div class="clearfix"></div>
-                                                                    <asp:LinkButton runat="server" ID="lblremoveimg" class="fa fa-trash text-center" CommandName="removeimg" CommandArgument='<%#Eval("ImageId") %>'></asp:LinkButton>
-                                                                </div>
-                                                            </ItemTemplate>
-                                                        </asp:DataList>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="section-pannel">
-                                        <div class="row">
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <label>Features & Details</label><span class="mandatory"> (Editable)</span>
-                                                    <asp:TextBox runat="server" ID="txtfeaturesanddetails" Style="background-color: #fff !important;" TabIndex="31" Width="1000" Height="70px" placeholder="Ductile,Tensile,Lusture" MaxLength="250"></asp:TextBox>
+                                                    <asp:TextBox runat="server" ID="txtfeaturesanddetails" Style="background-color: #fff !important;" TabIndex="31"
+                                                        Width="1000" Height="70px" placeholder="Ductile,Tensile,Lusture" MaxLength="250"></asp:TextBox>
                                                     <asp:HtmlEditorExtender ID="HtmlEditorExtender1" runat="server" TargetControlID="txtfeaturesanddetails">
                                                     </asp:HtmlEditorExtender>
                                                     <div class="clearfix" style="margin-top: 35px;"></div>
@@ -568,7 +560,7 @@
                                                 <asp:UpdatePanel runat="server" ID="UpdatePanel5">
                                                     <ContentTemplate>
                                                         <div class="form-group">
-                                                            <h4>Product Information</h4>
+                                                            <h4>Item Information</h4>
                                                             <div class="clearfix"></div>
                                                             <div class="table table-responsive">
                                                                 <table border="0" cellpadding="0" cellspacing="0" class="gridFormTable" style="border-collapse: collapse; width: 100%">
@@ -660,7 +652,6 @@
                                             </div>
                                         </div>
                                     </div>
-
                                 </div>
                             </div>
                         </div>
@@ -680,10 +671,10 @@
                                                                 <asp:DropDownList ID="ddlYearEstimate" runat="server" CssClass="form-control">
                                                                     <asp:ListItem Value="-1">Select</asp:ListItem>
                                                                     <asp:ListItem Value="1">2019-20</asp:ListItem>
-                                                                    <asp:ListItem Value="2">2019-21</asp:ListItem>
-                                                                    <asp:ListItem Value="3">2019-22</asp:ListItem>
-                                                                    <asp:ListItem Value="4">2019-23</asp:ListItem>
-                                                                    <asp:ListItem Value="5">2019-24</asp:ListItem>
+                                                                    <asp:ListItem Value="2">2020-21</asp:ListItem>
+                                                                    <asp:ListItem Value="3">2021-22</asp:ListItem>
+                                                                    <asp:ListItem Value="4">2022-23</asp:ListItem>
+                                                                    <asp:ListItem Value="5">2023-24</asp:ListItem>
                                                                 </asp:DropDownList>
                                                             </td>
                                                             <td>
@@ -707,7 +698,7 @@
                                                                     <asp:ListItem Value="Ton">Ton</asp:ListItem>
                                                                 </asp:DropDownList>
                                                             </td>
-                                                            <td>
+                                                            <td runat="server" visible="false">
                                                                 <label>Estimated Price / LPP (Only Numbers)</label>
                                                                 <asp:TextBox ID="txtestimatePriceLLp" runat="server" CssClass="form-control" />
                                                             </td>

@@ -29,7 +29,7 @@ public partial class Vendor_CreateVendorPassword : System.Web.UI.Page
             if (txtpassword.Text == txtrepeatpassword.Text)
             {
                 string sType = "LoginNewVenPass";
-                string Updatepass = Lo.UpdateLoginPassword(Enc.EncryptData(txtpassword.Text), "", ViewState["Refno"].ToString(), sType);
+                string Updatepass = Lo.UpdateLoginPassword(Enc.EncryptData(txtpassword.Text), "", ViewState["Refno"].ToString(), sType,"","");
                 if (Updatepass == "true")
                 {
                     ScriptManager.RegisterStartupScript(this, this.GetType(), "alert", "alert('Password created successfully.Please login with new password.We will redirected to you login page');window.location ='VendorLogin';", true);
