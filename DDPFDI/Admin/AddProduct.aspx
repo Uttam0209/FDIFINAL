@@ -22,7 +22,6 @@
     <!-------------------------------------------image show end------------------------------->
 </asp:Content>
 <asp:Content ID="inner" runat="server" ContentPlaceHolderID="ContentPlaceHolder1">
-    <%--<asp:ScriptManager runat="server" ID="sc"></asp:ScriptManager>--%>
     <asp:ToolkitScriptManager ID="ToolkitScriptManager1" runat="server">
     </asp:ToolkitScriptManager>
     <asp:HiddenField ID="hidCompanyRefNo" runat="server" />
@@ -150,7 +149,7 @@
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label>Upload document related to item </label>
-                                                            <span class="mandatory">(only pdf file of maximum 1 Mb can be uploaded.)</span>
+                                                            <span class="mandatory">(only pdf file of maximum 5 Mb can be uploaded.)</span>
                                                             <asp:FileUpload runat="server" ID="fuitemdescriptionfile" CssClass="form-control" TabIndex="29" />
                                                             <div class="clearfix mt5"></div>
                                                             <asp:Label runat="server" ID="lblfuitemdescriptionfile" Visible="False"></asp:Label>
@@ -159,7 +158,7 @@
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label>Item Image</label>
-                                                            <span class="mandatory">(only .jpeg, .png, .jpg files of max 1 Mb.(max 4 files))</span>
+                                                            <span class="mandatory">(only .jpeg, .png, .jpg files of each max 1 Mb.(max 4 files))</span>
                                                             <div class="fr">
                                                                 <asp:FileUpload ID="fuimages" runat="server" CssClass="uploadimage form-control" AllowMultiple="true" TabIndex="30" />
                                                             </div>
@@ -1020,52 +1019,52 @@
                             <div class="col-md-12">
                                 <div class="add-profile">
                                     <div class="section-pannel">
-                                        <asp:UpdatePanel runat="server" ID="UpdatePanel3">
+                                         <asp:UpdatePanel runat="server" ID="UpdatePanel3">
                                             <ContentTemplate>
-                                                <div class="row">
-                                                    <div class="col-md-12">
-                                                        <div class="form-group ">
-                                                            <label>
-                                                                Tender Status</label>
-                                                            <asp:DropDownList runat="server" ID="ddltendorstatus" class="form-control" TabIndex="50" AutoPostBack="True" OnSelectedIndexChanged="ddltendorstatus_SelectedIndexChanged">
-                                                                <asp:ListItem Value="Not Floated" Selected="True">Not Floated</asp:ListItem>
-                                                                <asp:ListItem Value="Archive">Archive</asp:ListItem>
-                                                                <asp:ListItem Value="Live">Live</asp:ListItem>
-                                                                <asp:ListItem Value="To be Floated shortly">To be Floated shortly</asp:ListItem>
-                                                            </asp:DropDownList>
-                                                        </div>
-                                                    </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group ">
+                                                    <label>
+                                                        Tender Status</label>
+                                                    <asp:DropDownList runat="server" ID="ddltendorstatus" class="form-control" TabIndex="50" AutoPostBack="True" OnSelectedIndexChanged="ddltendorstatus_SelectedIndexChanged">
+                                                        <asp:ListItem Value="Not Floated" Selected="True">Not Floated</asp:ListItem>
+                                                        <asp:ListItem Value="Archive">Archive</asp:ListItem>
+                                                        <asp:ListItem Value="Live">Live</asp:ListItem>
+                                                        <asp:ListItem Value="To be Floated shortly">To be Floated shortly</asp:ListItem>
+                                                    </asp:DropDownList>
                                                 </div>
-                                                <div class="row">
-                                                    <div class="col-md-12" runat="server" cssclass="hidden" id="divtendordate" visible="False">
-                                                        <div class="form-group live-status-box">
-                                                            <label>
-                                                                <strong>Note:</strong> If live, please fill last date of tender submission. 
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12" runat="server" cssclass="hidden" id="divtendordate" visible="False">
+                                                <div class="form-group live-status-box">
+                                                    <label>
+                                                        <strong>Note:</strong> If live, please fill last date of tender submission. 
                                             <span class="checkbox-box productalreadylabel">
                                                 <asp:RadioButtonList runat="server" ID="rbtendordateyesno" RepeatDirection="Horizontal" TabIndex="51" AutoPostBack="True" RepeatColumns="2" RepeatLayout="Flow" OnSelectedIndexChanged="rbtendordateyesno_CheckedChanged">
                                                     <asp:ListItem Value="N" runat="server" Selected="True">No</asp:ListItem>
                                                     <asp:ListItem Value="Y" class="yes">Yes</asp:ListItem>
                                                 </asp:RadioButtonList>
                                             </span>
-                                                            </label>
-                                                        </div>
-                                                    </div>
-                                                    <div class="Turl_Tdate" runat="server" visible="False" id="divtdate">
-                                                        <div class="col-md-6">
-                                                            <div class="form-group">
-                                                                <label>Last date of tender submission</label>
-                                                                <asp:TextBox runat="server" ID="txttendordate" type="date" TabIndex="52" class="form-control inputbox"></asp:TextBox>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <div class="form-group">
-                                                                <label>Tender URL</label>
-                                                                <asp:TextBox runat="server" ID="txttendorurl" TabIndex="53" class="form-control"></asp:TextBox>
-                                                            </div>
-                                                        </div>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="Turl_Tdate" runat="server" visible="False" id="divtdate">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label>Last date of tender submission</label>
+                                                        <asp:TextBox runat="server" ID="txttendordate" type="date" TabIndex="52" class="form-control inputbox"></asp:TextBox>
                                                     </div>
                                                 </div>
-                                            </ContentTemplate>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label>Tender URL</label>
+                                                        <asp:TextBox runat="server" ID="txttendorurl" TabIndex="53" class="form-control"></asp:TextBox>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        </ContentTemplate>
                                         </asp:UpdatePanel>
                                         <asp:UpdateProgress ID="UpdateProgress1" runat="server" AssociatedUpdatePanelID="UpdatePanel3">
                                             <ProgressTemplate>
@@ -1221,6 +1220,7 @@
                                 <div class="form-group">
                                     <asp:UpdatePanel runat="server" ID="UPSUBMIT">
                                         <ContentTemplate>
+                                            <div runat="server" id="myhtmldiv"></div>
                                             <asp:Button runat="server" ID="btnsubmitpanel1" class="btn btn-primary pull-right" TabIndex="72" Text="Save" OnClick="btnsubmitpanel1_Click" OnClientClick="return confirm('Are you sure you want to save this product?');" />
                                         </ContentTemplate>
                                         <Triggers>

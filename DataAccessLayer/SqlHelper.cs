@@ -1434,7 +1434,8 @@ namespace DataAccessLayer
                             db.AddInParameter(cmd, "@OEMCountry", DbType.Int64, dtIds.Rows[0]["OEMCountry"].ToString());
                             db.AddInParameter(cmd, "@DPSUPartNumber", DbType.String, dtMaster.Rows[k]["DPSU PART NUMBER"].ToString());
                             db.AddInParameter(cmd, "@HSNCode", DbType.String, dtMaster.Rows[k]["HSN CODE"].ToString());
-                            db.AddInParameter(cmd, "@EndUserPartNumber", DbType.String, dtMaster.Rows[k]["END USER PART NUMBAR"].ToString());
+                            // db.AddInParameter(cmd, "@HSNCode8Digit", DbType.String, dtMaster.Rows[k]["HSN CODE"].ToString());
+                            db.AddInParameter(cmd, "@EndUserPartNumber", DbType.String, "");
 
                             db.AddInParameter(cmd, "@EndUser", DbType.Int64, dtIds.Rows[0]["EndUser"].ToString());
                             db.AddInParameter(cmd, "@Platform", DbType.Int64, dtIds.Rows[0]["Platform"].ToString());

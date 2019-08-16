@@ -111,7 +111,6 @@
                         </div>
                         <asp:LinkButton ID="btnLogin" runat="server" TabIndex="4" CssClass="btn btn-info" ToolTip="After validate your username or password we will redirect to your dashboard."
                             OnClick="btnLogin_Click" Text="Login"></asp:LinkButton>
-                        <span class="psw"></span>
                         <asp:UpdatePanel ID="UpdatePanel1" runat="server" ChildrenAsTriggers="True">
                             <ContentTemplate>
                                 <div class="clearfix" style="border-bottom: 1px solid #fff; margin-top: 15px; text-align: right;">
@@ -122,6 +121,9 @@
                                 <%--<asp:PostBackTrigger ControlID="btnLogin" />--%>
                             </Triggers>
                         </asp:UpdatePanel>
+                        <div class="clearfix" style="margin-top: 15px;">
+                        </div>
+                        <p>Note:- We are change our password policy.If you are facing any problem during login please reset your password just click on forgot password.</p>
                     </asp:Panel>
                 </div>
             </div>
@@ -155,8 +157,8 @@
             </div>
         </div>
     </form>
-    <script src="assets/js/jquery-1.12.4.js">
-    </script>
+    <%-- <script src="assets/js/jquery-1.12.4.js"></script> --%>
+    <script src="assets/js/jquery-3.4.1.js"></script>
     <script src="assets/js/bootstrap.min.js"></script>
     <script src="assets/js/custom.js"></script>
     <script type="text/javascript">

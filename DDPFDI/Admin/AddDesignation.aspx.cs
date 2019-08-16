@@ -7,6 +7,8 @@ using BusinessLayer;
 using Encryption;
 using System.Collections.Specialized;
 using System.Web.UI.WebControls;
+using System.Web.Helpers;
+using System.Net.Http;
 
 public partial class Admin_AddDesignation : System.Web.UI.Page
 {
@@ -21,9 +23,9 @@ public partial class Admin_AddDesignation : System.Web.UI.Page
     HybridDictionary HySave = new HybridDictionary();
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (!IsPostBack)
+        if (Session["User"] != null)
         {
-            if (Session["User"] != null)
+            if (!IsPostBack)
             {
                 try
                 {
@@ -65,12 +67,13 @@ public partial class Admin_AddDesignation : System.Web.UI.Page
                     Response.Redirect("Error?techerror=" + HttpUtility.UrlEncode(Enc.EncryptData(error)) + "&page=" + HttpUtility.UrlEncode(Enc.EncryptData(Page)));
                 }
             }
-            else
-            {
-                ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert",
-                    "alert('Session Expired,Please login again');window.location='Login'", true);
-            }
         }
+        else
+        {
+            ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert",
+                "alert('Session Expired,Please login again');window.location='Login'", true);
+        }
+
     }
     protected void ddlmaster_OnSelectedIndexChanged(object sender, EventArgs e)
     {
@@ -95,13 +98,13 @@ public partial class Admin_AddDesignation : System.Web.UI.Page
                 }
                 if (DtGrid.Rows.Count > 0)
                 {
-                    gvViewDesignation.DataSource = DtGrid;
-                    gvViewDesignation.DataBind();
-                    gvViewDesignation.Visible = true;
+                    gvViewDesignationSave.DataSource = DtGrid;
+                    gvViewDesignationSave.DataBind();
+                    gvViewDesignationSave.Visible = true;
                 }
                 else
                 {
-                    gvViewDesignation.Visible = false;
+                    gvViewDesignationSave.Visible = false;
                 }
             }
         }
@@ -203,6 +206,7 @@ public partial class Admin_AddDesignation : System.Web.UI.Page
                     GridViewBindSelectedIndexchange();
                     txtDesignation.Text = "";
                     ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Save successfully !')", true);
+                    // myhtmldiv.InnerHtml = AntiForgery.GetHtml().ToString();
                 }
                 else
                 {
@@ -210,6 +214,7 @@ public partial class Admin_AddDesignation : System.Web.UI.Page
                     txtDesignation.Text = "";
                     hdid.Value = "";
                     ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Designation updated successfully !')", true);
+                    // myhtmldiv.InnerHtml = AntiForgery.GetHtml().ToString();
                 }
             }
             else
@@ -226,17 +231,24 @@ public partial class Admin_AddDesignation : System.Web.UI.Page
     }
     protected void btnsubmit_Click(object sender, EventArgs e)
     {
-        if (txtDesignation.Text.Trim() != "")
+        try
         {
-            if (ddlmaster.SelectedItem.Value != "Select")
+            if (txtDesignation.Text.Trim() != "")
             {
-                if (ddlmaster.Enabled == true)
+                if (ddlmaster.SelectedItem.Value != "Select")
                 {
-                    DataTable dtIsDesignation = Lo.RetriveMasterData(0, ddlmaster.SelectedItem.Value, txtDesignation.Text, 0, "", "", "ValidDesignation");
-                    if (dtIsDesignation.Rows.Count > 0)
+                    if (ddlmaster.Enabled == true)
                     {
+                        DataTable dtIsDesignation = Lo.RetriveMasterData(0, ddlmaster.SelectedItem.Value, txtDesignation.Text, 0, "", "", "ValidDesignation");
+                        if (dtIsDesignation.Rows.Count > 0)
+                        {
 
-                        ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Designation already exists !')", true);
+                            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Designation already exists !')", true);
+                        }
+                        else
+                        {
+                            SaveComp();
+                        }
                     }
                     else
                     {
@@ -245,17 +257,17 @@ public partial class Admin_AddDesignation : System.Web.UI.Page
                 }
                 else
                 {
-                    SaveComp();
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Select company !')", true);
                 }
             }
             else
             {
-                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Select company !')", true);
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Designation can not be empty !')", true);
             }
         }
-        else
+        catch (Exception rx)
         {
-            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Designation can not be empty !')", true);
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('" + rx.Message + "')", true);
         }
     }
     protected void EditCode()
@@ -277,7 +289,7 @@ public partial class Admin_AddDesignation : System.Web.UI.Page
             }
         }
     }
-    protected void gvViewDesignation_RowCreated(object sender, GridViewRowEventArgs e)
+    protected void gvViewDesignationSave_RowCreated(object sender, GridViewRowEventArgs e)
     {
         if (e.Row.RowType == DataControlRowType.DataRow)
         {

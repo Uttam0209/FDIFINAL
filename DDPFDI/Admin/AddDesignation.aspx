@@ -2,7 +2,6 @@
 
 <asp:Content ID="headDesignation" runat="server" ContentPlaceHolderID="head">
     <script>
-        //Alert pop up box
         function ShowMessage() {
             console.log('testing');
             $("body").css('overflow', 'hidden');
@@ -74,9 +73,9 @@
                             </div>
                         </asp:Panel>
                         <div class="table-wraper table-responsive">
-                            <asp:GridView ID="gvViewDesignation" runat="server" Width="100%" Class="commonAjaxTbl master-company-table table display 
+                            <asp:GridView ID="gvViewDesignationSave" runat="server" Width="100%" Class="commonAjaxTbl master-company-table table display 
                                 responsive no-wrap table-hover manage-user Grid"
-                                AutoGenerateColumns="false" OnRowCreated="gvViewDesignation_RowCreated">
+                                AutoGenerateColumns="false" OnRowCreated="gvViewDesignationSave_RowCreated">
                                 <Columns>
                                     <asp:TemplateField HeaderText="S.No.">
                                         <ItemTemplate>
@@ -102,14 +101,12 @@
         </asp:UpdatePanel>
         <asp:UpdateProgress ID="UpdateProgress" runat="server" AssociatedUpdatePanelID="updatepan">
             <ProgressTemplate>
-                <!---Progress Bar ---->
                 <div class="overlay-progress">
                     <div class="custom-progress-bar blue stripes">
                         <span></span>
                         <p>Processing</p>
                     </div>
                 </div>
-                <!---Progress Bar ---->
             </ProgressTemplate>
         </asp:UpdateProgress>
     </div>

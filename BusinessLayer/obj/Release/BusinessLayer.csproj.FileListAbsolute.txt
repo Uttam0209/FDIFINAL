@@ -11,3 +11,14 @@ F:\FDIFINAL\BusinessLayer\bin\Release\Encryption.pdb
 F:\FDIFINAL\BusinessLayer\obj\Release\BusinessLayer.csprojResolveAssemblyReference.cache
 F:\FDIFINAL\BusinessLayer\obj\Release\BusinessLayer.dll
 F:\FDIFINAL\BusinessLayer\obj\Release\BusinessLayer.pdb
+F:\FDIFINAL\BusinessLayer\bin\Release\Microsoft.Web.Infrastructure.dll
+F:\FDIFINAL\BusinessLayer\bin\Release\System.Web.Helpers.dll
+F:\FDIFINAL\BusinessLayer\bin\Release\System.Web.Razor.dll
+F:\FDIFINAL\BusinessLayer\bin\Release\System.Web.WebPages.Deployment.dll
+F:\FDIFINAL\BusinessLayer\bin\Release\System.Web.WebPages.dll
+F:\FDIFINAL\BusinessLayer\bin\Release\System.Web.WebPages.Razor.dll
+F:\FDIFINAL\BusinessLayer\bin\Release\System.Web.Helpers.xml
+F:\FDIFINAL\BusinessLayer\bin\Release\System.Web.Razor.xml
+F:\FDIFINAL\BusinessLayer\bin\Release\System.Web.WebPages.xml
+F:\FDIFINAL\BusinessLayer\bin\Release\System.Web.WebPages.Deployment.xml
+F:\FDIFINAL\BusinessLayer\bin\Release\System.Web.WebPages.Razor.xml

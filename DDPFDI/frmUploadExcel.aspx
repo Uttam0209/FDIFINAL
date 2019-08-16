@@ -88,11 +88,13 @@
                             </div>
                             <div class="col-sm-4">
                                 <div class="col-sm-12">
+                                     <div runat="server" id="Div2"></div>
                                     <asp:Button ID="btnexcel3510" runat="server" Visible="false" class="btn btn-primary btn-sm pull-right"
                                         Text="Upload Excel Sheet Iteam Code File" OnClick="btnexcel3510_Click" />
                                 </div>
 
                                 <div class="col-sm-12">
+                                     <div runat="server" id="myhtmldiv"></div>
                                     <asp:Button ID="btnexcel" runat="server" Visible="false" class="btn btn-primary btn-sm pull-right"
                                         Text="Upload Excel Sheet NSN File" OnClick="btnexcel_Click" />
                                 </div>

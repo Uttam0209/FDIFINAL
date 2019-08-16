@@ -255,7 +255,7 @@
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="temailid" class=" control-label">Email ID <span class="mandatory">*</span></label>
-                                                <asp:TextBox runat="server" ID="txtNEmailId" name="" ReadOnly="True"  AutoCompleteType="Email" required="" class="form-control form-cascade-control"
+                                                <asp:TextBox runat="server" ID="txtNEmailId" name="" ReadOnly="True" AutoCompleteType="Email" required="" class="form-control form-cascade-control"
                                                     placeholder=""></asp:TextBox>
                                                 <p class="note">*Note: will be used as username </p>
                                             </div>
@@ -461,38 +461,38 @@
                     </asp:UpdatePanel>
                 </div>
                 <div id="Location" class="tab-pane fade">
-                    <asp:UpdatePanel ID="loc" runat="server" UpdateMode="Always">
-                        <ContentTemplate>
-                            <div class="section-pannel">
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label for="activityname" class="control-label">Latitude </label>
-                                            <asp:TextBox runat="server" ID="txtlatitude" name="txtlatitude" class="form-control form-cascade-control " placeholder=""></asp:TextBox>
-                                        </div>
+                    <%--  <asp:UpdatePanel ID="loc" runat="server" UpdateMode="Always">
+                        <ContentTemplate>--%>
+                    <div class="section-pannel">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="activityname" class="control-label">Latitude </label>
+                                    <asp:TextBox runat="server" ID="txtlatitude" name="txtlatitude" class="form-control form-cascade-control " placeholder=""></asp:TextBox>
+                                </div>
 
 
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label for="activityname" class="control-label">Longitude</label>
-                                            <asp:TextBox runat="server" ID="txtlongitude" name="txtlongitude" class="form-control form-cascade-control " placeholder=""></asp:TextBox>
-
-                                        </div>
-                                    </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="activityname" class="control-label">Longitude</label>
+                                    <asp:TextBox runat="server" ID="txtlongitude" name="txtlongitude" class="form-control form-cascade-control " placeholder=""></asp:TextBox>
 
                                 </div>
                             </div>
-                            <div class="row">
 
-                                <div class="col-md-12">
-                                    <div class="map-box">
-                                        <iframe src="Admin/Map.aspx" width="100%" height="250" frameborder="0" style="border: 0" allowfullscreen></iframe>
-                                    </div>
-                                </div>
+                        </div>
+                    </div>
+                    <div class="row">
+
+                        <div class="col-md-12">
+                            <div class="map-box">
+                                <iframe src="Admin/Map.aspx" width="100%" height="250" frameborder="0" style="border: 0" allowfullscreen></iframe>
                             </div>
-                        </ContentTemplate>
-                    </asp:UpdatePanel>
+                        </div>
+                    </div>
+                    <%--  </ContentTemplate>
+                    </asp:UpdatePanel>--%>
                 </div>
                 <div class="row">
                     <div class="col-sm-12">

@@ -30,7 +30,6 @@
 <asp:Content ID="innerViewDesignation" runat="server" ContentPlaceHolderID="ContentPlaceHolder1">
     <asp:ScriptManager ID="sc" runat="server"></asp:ScriptManager>
     <asp:UpdatePanel ID="up" runat="server">
-
         <ContentTemplate>
             <div class="content oem-content">
                 <div class="sideBg">
@@ -85,12 +84,11 @@
                                 </div>
 
                                 <div class="clearfix mt10"></div>
-                                <div class="table-wraper table-responsive">
-                                    <asp:GridView ID="gvViewDesignation" runat="server" Width="100%" Class="commonAjaxTbl master-company-table table display 
-                                        responsive no-wrap table-hover manage-user Grid"
+                                <div class="table-responsive">
+                                    <asp:HiddenField ID="hfmtype" runat="server" />
+                                    <asp:GridView ID="gvViewDesignation" runat="server" Width="100%" Class="table table-hover"
                                         AutoGenerateColumns="false" OnRowCommand="gvViewDesignation_RowCommand" OnRowCreated="gvViewDesignation_RowCreated">
                                         <Columns>
-
                                             <asp:TemplateField HeaderText="S.No.">
                                                 <ItemTemplate>
                                                     <%#Container.DataItemIndex+1 %>
@@ -112,9 +110,37 @@
                                             </asp:TemplateField>
                                         </Columns>
                                     </asp:GridView>
+                                    <!-----------------------------------------Code for pageindexing----------------------------------------------------->
+                                    <div class="row" runat="server" id="divpageindex" visible="false">
+                                        <div class="col-sm-2">
+                                            <asp:LinkButton ID="lnkbtnPgFirst" runat="server" CssClass="btn  btn-success  btn-sm"
+                                                OnClick="lnkbtnPgFirst_Click">First</asp:LinkButton>
+                                            <asp:LinkButton ID="lnkbtnPgPrevious" runat="server" CssClass="btn btn-success  btn-sm"
+                                                OnClick="lnkbtnPgPrevious_Click">Previous</asp:LinkButton>
+                                        </div>
+                                        <div class="col-sm-8">
+                                            <asp:DataList ID="DataListPaging" runat="server" RepeatDirection="Horizontal" OnItemCommand="DataListPaging_ItemCommand"
+                                                OnItemDataBound="DataListPaging_ItemDataBound">
+                                                <ItemTemplate>
+                                                    <asp:LinkButton ID="Pagingbtn" runat="server" CssClass="btn btn-success mt5 btn-xs"
+                                                        CommandArgument='<%# Eval("PageIndex") %>' CommandName="Newpage" Text='<%# Eval("PageText")%>'></asp:LinkButton>
+                                                </ItemTemplate>
+                                            </asp:DataList>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <asp:LinkButton ID="lnkbtnPgLast" runat="server" CssClass="btn  btn-success btn-sm pull-right"
+                                                OnClick="lnkbtnPgLast_Click">Last</asp:LinkButton>
+                                            <asp:LinkButton ID="lnkbtnPgNext" runat="server" CssClass="btn  btn-success btn-sm pull-right" Style="margin-right: 3px;"
+                                                OnClick="lnkbtnPgNext_Click">Next</asp:LinkButton>
+                                        </div>
+                                        <div class="clearfix padding_0 mt10">
+                                        </div>
+                                        <div class="text-center">
+                                            <asp:Label ID="lblpaging" runat="server" class="btn btn-primary text-center" Text=""></asp:Label>
+                                        </div>
+                                    </div>
+                                    <!-----------------------------------------end code for page indexing----------------------------------------------------->
                                 </div>
-
-
                             </div>
                         </div>
                     </form>

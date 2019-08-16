@@ -25,8 +25,6 @@ public partial class _Default : System.Web.UI.Page
     #endregion
     protected void Page_Load(object sender, EventArgs e)
     {
-        //string s = objEnc.EncryptData("Data Source=103.73.189.114;Initial Catalog=ddp_cmsV1;User ID=sa;Password=mXy<wxh3:Mh@U");
-        // string a = objEnc.DecryptData("aL88ocdv5/Ixdr/+Dtk9vguy4XrszcqvQRVrxD/UURYbfxfZoNQ/slH40ZNMn79SQzU69Y+PJE2GhK6b37iKbSavaXlq/Ptl6qjBEDY0BJF2LUCW1YbxmEnDlPlryODw");
     }
     #region "Login Code"
     public static bool IsValidEmailId(string InputEmail)
@@ -49,6 +47,7 @@ public partial class _Default : System.Web.UI.Page
             {
                 if (Session["ChkCaptcha"].ToString().ToLower() != txtCaptcha.Text.ToLower())
                 {
+                    txtPwd.Text = "";
                     ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Invalid Captcha')", true);
                 }
                 else
@@ -75,20 +74,26 @@ public partial class _Default : System.Web.UI.Page
                             }
                             else
                             {
+                                txtPwd.Text = "";
                                 ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Invalid Login. Either user id or password or both are incorrect.');", true);
                             }
                         }
                         else
                         {
+                            txtPwd.Text = "";
                             ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Invalid Login. Either user id or password or both are incorrect.');", true);
                         }
                     }
                     else
-                    { ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Invalid User.');", true); }
+                    {
+                        txtPwd.Text = "";
+                        ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Invalid User.');", true);
+                    }
                 }
             }
             else
             {
+                txtPwd.Text = "";
                 ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Invalid email format.');", true);
             }
         }
@@ -175,4 +180,5 @@ public partial class _Default : System.Web.UI.Page
         return res.ToString();
     }
     #endregion
+    
 }

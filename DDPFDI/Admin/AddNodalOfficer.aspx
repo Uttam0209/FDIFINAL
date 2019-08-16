@@ -118,6 +118,7 @@
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group">
+                                                <div runat="server" id="myhtmldiv"></div>
                                                 <asp:Button ID="btncancel" runat="server" Text="Cancel" TabIndex="10" Visible="False" CssClass="btn btn-default pull-right" Style="margin-right: 0 !important" OnClick="btncancel_Click" />
                                                 <asp:LinkButton ID="btnsub" runat="server" Text="Save" TabIndex="9" class="btn btn-primary pull-right" OnClick="btnsub_Click" OnClientClick="return confirm('Are you sure you want to save this record?');"></asp:LinkButton>
                                             </div>
@@ -150,13 +151,11 @@
                                                 <asp:Label ID="lblnodallogactive" runat="server" Text='<%#Eval("IsLoginActive") %>' NullDisplayText="#" Visible="False" SortExpression="NodalOfficerEmail"></asp:Label>
                                             </ItemTemplate>
                                         </asp:TemplateField>
-
                                         <asp:TemplateField HeaderText="Company">
                                             <ItemTemplate>
                                                 <asp:Label ID="lblrefno" runat="server" Text='<%#Eval("CompanyName") %>' NullDisplayText="#" SortExpression="Company"></asp:Label>
                                             </ItemTemplate>
                                         </asp:TemplateField>
-
                                         <asp:BoundField DataField="FactoryName" HeaderText="Division" NullDisplayText="-" />
                                         <asp:BoundField DataField="UnitName" HeaderText="Unit" NullDisplayText="-" />
                                         <asp:BoundField DataField="CreatedBy" HeaderText="Created By" NullDisplayText="#" />

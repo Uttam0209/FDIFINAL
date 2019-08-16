@@ -46,18 +46,17 @@
                         <div class="col-md-12">
                             <div class="clearfix"></div>
                             <div style="margin-top: 5px;">
-                                <a class="fa fa-arrow-circle-left pull-right" href="javascript: history.go(-1)">&nbsp; &nbsp;Back</a>
+                                <%--<a class="fa fa-arrow-circle-left pull-right" href="javascript: history.go(-1)">&nbsp; &nbsp;Back</a>--%>
+                                <asp:LinkButton ID="lblback" runat="server" class="fa fa-arrow-circle-left pull-right" OnClick="lblback_Click">Back</asp:LinkButton>
                             </div>
                             <div class="clearfix"></div>
                         </div>
                     </div>
-
                     <div class="clearfix" style="margin-bottom: 10px;"></div>
                     <div class="addfdi">
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="clearfix"></div>
-
                                 <div runat="server" id="divsearch" visible="false">
                                     <div class="col-md-6">
                                         <div class="form-group">
@@ -75,12 +74,11 @@
                                     <asp:Label ID="lbltotal" runat="server" Text=""></asp:Label>
                                 </div>
                                 <div class="clearfix"></div>
-
-                                <div class="table-wraper table-responsive" runat="server" id="divcompanyGrid" visible="False">
-                                    <asp:GridView ID="gvcompanydetail" runat="server" Width="100%" Class="commonAjaxTbl dataTable master-company-table ViewProductTable table 
-                                                       display responsive no-wrap table-hover manage-user Grid table-responsive"
+                                <asp:HiddenField runat="server" ID="hfmtype" />
+                                <asp:HiddenField runat="server" ID="hfmref" />
+                                <div class="table-responsive" runat="server" id="divcompanyGrid" visible="False">
+                                    <asp:GridView ID="gvcompanydetail" runat="server" Width="100%" Class="table table-hover"
                                         AutoGenerateColumns="false" OnRowCommand="gvcompanydetail_RowCommand" OnRowCreated="gvcompanydetail_RowCreated">
-                                        <PagerStyle HorizontalAlign="Center" CssClass="GridPager" />
                                         <Columns>
                                             <asp:TemplateField HeaderText="S.No.">
                                                 <ItemTemplate>
@@ -113,9 +111,8 @@
                                     </asp:GridView>
                                 </div>
                                 <div class="clearfix"></div>
-                                <div class="table-wrapper table-responsive" id="divfactorygrid" runat="server" visible="False">
-                                    <asp:GridView ID="gvfactory" runat="server" AutoGenerateColumns="false" Class="commonAjaxTbl master-company-table ViewProductTable table 
-                                        display responsive no-wrap table-hover manage-user Grid table-responsive"
+                                <div class="table-responsive" id="divfactorygrid" runat="server" visible="False">
+                                    <asp:GridView ID="gvfactory" runat="server" AutoGenerateColumns="false" Class="table table-hover"
                                         OnRowCommand="gvfactory_RowCommand" OnRowCreated="gvfactory_RowCreated">
                                         <Columns>
                                             <asp:TemplateField HeaderText="S.No.">
@@ -146,9 +143,8 @@
                                     </asp:GridView>
                                 </div>
                                 <div class="clearfix"></div>
-                                <div class="table-wrapper table-responsive" id="divunitGrid" runat="server" visible="False" style="overflow: scroll;">
-                                    <asp:GridView ID="gvunit" runat="server" AutoGenerateColumns="false" Class="commonAjaxTbl master-company-table ViewProductTable table
-                                         display responsive no-wrap table-hover manage-user Grid table-responsive"
+                                <div class="table-responsive" id="divunitGrid" runat="server" visible="False" style="overflow: scroll;">
+                                    <asp:GridView ID="gvunit" runat="server" AutoGenerateColumns="false" Class="table table-hover"
                                         Style="overflow: scroll;" OnRowCommand="gvunit_RowCommand" OnRowCreated="gvunit_RowCreated">
                                         <PagerStyle HorizontalAlign="Center" CssClass="GridPager" />
                                         <Columns>
@@ -183,9 +179,8 @@
                                     </asp:GridView>
                                 </div>
                                 <div class="clearfix"></div>
-                                <div class="table-wraper table-responsive" id="divEmployeeNodalGrid" runat="server" visible="False">
-                                    <asp:GridView ID="gvViewNodalOfficer" runat="server" Width="100%" Class="commonAjaxTbl master-company-table table display 
-                                        responsive no-wrap table-hover manage-user Grid"
+                                <div class="table-responsive" id="divEmployeeNodalGrid" runat="server" visible="False">
+                                    <asp:GridView ID="gvViewNodalOfficer" runat="server" Width="100%" Class="table table-hover"
                                         AutoGenerateColumns="false" OnRowCommand="gvViewNodalOfficer_RowCommand" OnRowDataBound="gvViewNodalOfficer_RowDataBound" OnRowCreated="gvViewNodalOfficer_RowCreated">
                                         <PagerStyle HorizontalAlign="Center" CssClass="GridPager" />
                                         <Columns>
@@ -235,9 +230,8 @@
                                     </asp:GridView>
                                 </div>
                                 <div class="clearfix"></div>
-                                <div class="table-wrapper" id="divProductGrid" runat="server" visible="False" style="overflow: scroll;">
-                                    <asp:GridView ID="gvproduct" runat="server" Width="100%" Class="commonAjaxTbl master-company-table ViewProductTable table display 
-                                        responsive no-wrap table-hover manage-user Grid table-responsive"
+                                <div class="table-responsive" id="divProductGrid" runat="server" visible="False" style="overflow: scroll;">
+                                    <asp:GridView ID="gvproduct" runat="server" Width="100%" Class="table table-hover"
                                         Style="overflow: scroll;"
                                         AutoGenerateColumns="false" OnRowCommand="gvproduct_RowCommand" OnRowCreated="gvproduct_RowCreated">
                                         <PagerStyle HorizontalAlign="Center" CssClass="GridPager" />
@@ -283,6 +277,37 @@
                                         </Columns>
                                     </asp:GridView>
                                 </div>
+                                <div class="clearfix"></div>
+                                <!-----------------------------------------Code for pageindexing----------------------------------------------------->
+                                <div class="row" runat="server" id="divpageindex" visible="false">
+                                    <div class="col-sm-2">
+                                        <asp:LinkButton ID="lnkbtnPgFirst" runat="server" CssClass="btn  btn-success  btn-sm"
+                                            OnClick="lnkbtnPgFirst_Click">First</asp:LinkButton>
+                                        <asp:LinkButton ID="lnkbtnPgPrevious" runat="server" CssClass="btn btn-success  btn-sm"
+                                            OnClick="lnkbtnPgPrevious_Click">Previous</asp:LinkButton>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <asp:DataList ID="DataListPaging" runat="server" RepeatDirection="Horizontal" OnItemCommand="DataListPaging_ItemCommand"
+                                            OnItemDataBound="DataListPaging_ItemDataBound">
+                                            <ItemTemplate>
+                                                <asp:LinkButton ID="Pagingbtn" runat="server" CssClass="btn btn-success mt5 btn-xs"
+                                                    CommandArgument='<%# Eval("PageIndex") %>' CommandName="Newpage" Text='<%# Eval("PageText")%>'></asp:LinkButton>
+                                            </ItemTemplate>
+                                        </asp:DataList>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <asp:LinkButton ID="lnkbtnPgLast" runat="server" CssClass="btn  btn-success btn-sm pull-right"
+                                            OnClick="lnkbtnPgLast_Click">Last</asp:LinkButton>
+                                        <asp:LinkButton ID="lnkbtnPgNext" runat="server" CssClass="btn  btn-success btn-sm pull-right" Style="margin-right: 3px;"
+                                            OnClick="lnkbtnPgNext_Click">Next</asp:LinkButton>
+                                    </div>
+                                    <div class="clearfix padding_0 mt10">
+                                    </div>
+                                    <div class="text-center">
+                                        <asp:Label ID="lblpaging" runat="server" class="btn btn-primary text-center" Text=""></asp:Label>
+                                    </div>
+                                </div>
+                                <!-----------------------------------------end code for page indexing----------------------------------------------------->
                             </div>
                         </div>
                     </div>

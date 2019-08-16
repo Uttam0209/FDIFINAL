@@ -6,6 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using BusinessLayer;
 using Encryption;
+using System.Web.Helpers;
 
 public partial class Admin_RegisterdAs : System.Web.UI.Page
 {

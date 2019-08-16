@@ -2,9 +2,8 @@
 
 
 <asp:Content ID="head123" runat="server" ContentPlaceHolderID="head">
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script src="../assets/js/jquery-3.4.1.min.js"></script>
     <script type="text/javascript">
-
         //Alert pop up box
         function ShowMessage() {
             $("body").css('overflow', 'hidden');
@@ -12,7 +11,6 @@
 
             $('.alertMsg').text("Please select atleast " + atLeast + " intrested in item(s)");
         }
-
         function radioMe(e) {
             if (!e) e = window.event;
             var sender = e.target || e.srcElement;
@@ -26,7 +24,6 @@
                     chks[i].checked = false;
             }
         }
-
     </script>
     <script type="text/javascript">
         var atLeast = 1
@@ -78,7 +75,6 @@
         }
     </script>
 </asp:Content>
-
 <asp:Content ID="inner2" runat="server" ContentPlaceHolderID="ContentPlaceHolder1">
     <div class="content oem-content">
         <asp:ScriptManager ID="sn" runat="server"></asp:ScriptManager>
@@ -169,14 +165,11 @@
                                     <div class="col-md-3" id="divRole" visible="False" runat="server">
                                         <div class="fdi-add-content">
                                             <div class="form-group">
-
                                                 <h3 class="secondary-heading">Role</h3>
-
                                                 <asp:CheckBoxList ID="chkrole" runat="server" onclick="MutExChkList(this);" RepeatColumns="1" TabIndex="8" RepeatDirection="Horizontal" RepeatLayout="Flow">
                                                     <asp:ListItem Value="Admin">Admin</asp:ListItem>
                                                     <asp:ListItem Value="Company">Company</asp:ListItem>
                                                 </asp:CheckBoxList>
-
                                             </div>
                                         </div>
                                     </div>
@@ -189,8 +182,6 @@
                                                 <asp:Button ID="btnsubmit" runat="server" Text="Save" TabIndex="9" CssClass="btn btn-primary pull-right" OnClick="btnsubmit_Click" OnClientClick="return Validate()" />
                                             </div>
                                         </div>
-                                        <div>
-                                        </div>
                                     </div>
                                 </div>
                             </asp:Panel>
@@ -198,9 +189,10 @@
                                 Company : <span>Demo</span>
                             </div>
                             <div class="table-wraper">
-                                <asp:GridView ID="gvcompanydetail" runat="server" Width="100%" Class="commonAjaxTbl master-company-table table display 
+                                <asp:GridView ID="gvcompanydetailsave" runat="server" Width="100%" Class="commonAjaxTbl master-company-table table display 
                                     responsive no-wrap table-hover manage-user Grid text-nowrap"
-                                    AutoGenerateColumns="false" RowCommand="gvcompanydetail_RowCommand" OnRowCreated="gvcompanydetail_RowCreated" OnRowCommand="gvcompanydetail_RowCommand" OnRowDataBound="gvcompanydetail_RowDataBound">
+                                    AutoGenerateColumns="false" RowCommand="gvcompanydetailsave_RowCommand" OnRowCreated="gvcompanydetailsave_RowCreated"
+                                     OnRowCommand="gvcompanydetailsave_RowCommand" OnRowDataBound="gvcompanydetailsave_RowDataBound">
                                     <Columns>
                                         <asp:TemplateField HeaderText="S.No.">
                                             <ItemTemplate>

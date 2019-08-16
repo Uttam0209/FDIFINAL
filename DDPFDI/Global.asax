@@ -8,6 +8,7 @@
         System.Net.ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls12;
         RegisterRoutes(RouteTable.Routes);
     }
+
     protected void Application_BeginRequest(object sender, EventArgs e)
     {
         string currentUrl = HttpContext.Current.Request.Url.ToString().ToLower();
@@ -28,11 +29,23 @@
                 Server.ClearError();
                 Response.Redirect("~/PageNotFound");
             }
+            else
+            {
+                Server.ClearError();
+                Response.Redirect("~/Error");
+
+            }
         }
         // An error has occured on a .Net page.
     }
     void Session_Start(object sender, EventArgs e)
     {
+        Session.Timeout = 20;
+    }
+    void Session_Remove(object sender, EventArgs e)
+    {
+        Session.Clear();
+        Session.Abandon();
     }
     static void RegisterRoutes(RouteCollection routes)
     {
@@ -72,7 +85,7 @@
         routes.MapPageRoute("ViewDashboard", "ViewDashboard", "~/Admin/ViewDashboard.aspx", true);
         //routes.MapPageRoute("Test", "Test", "~/Admin/HeadDropdown.aspx", true);
         routes.MapPageRoute("Test1", "Test1", "~/Admin/EditHeadDropdown.aspx", true);
-        routes.MapPageRoute("Test", "Test", "~/test.aspx", true);
+        routes.MapPageRoute("Test", "Test", "~/Admin/Test.aspx", true);
         routes.MapPageRoute("UExcel", "UExcel", "~/frmUploadExcel.aspx", true);
         routes.MapPageRoute("VendorRegistration", "VendorRegistration", "~/Vendor/VendorRegistration.aspx", true);
         routes.MapPageRoute("VendorRegistrationStep", "VendorRegistrationStep", "~/Vendor/VendorRegistrationStep1.aspx", true);
@@ -81,6 +94,8 @@
         routes.MapPageRoute("VendorLogin", "VendorLogin", "~/Vendor/VendorLogin.aspx", true);
         routes.MapPageRoute("Vendor-Dashobard", "Vendor-Dashobard", "~/Vendor/DashboardVendor.aspx", true);
         routes.MapPageRoute("View-VendorRegis", "View-VendorRegis", "~/Vendor/ViewVendorRegistrationDetail.aspx", true);
+
+        routes.MapPageRoute("TestCSRF", "TestCSRF", "~/Admin/TestCSRF.aspx", true);
 
     }    
 </script>

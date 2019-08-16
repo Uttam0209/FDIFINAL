@@ -16,12 +16,15 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
     private DataTable DtCompanyDDL = new DataTable();
     private string currentPage = "";
     private string mRefNo = "";
+    PagedDataSource pgsource = new PagedDataSource();
+    int firstindex, lastindex;
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (!IsPostBack)
+        if (Session["Type"] != null || Session["User"] != null)
         {
-            if (Session["Type"] != null || Session["User"] != null)
+            if (!IsPostBack)
             {
+
                 if (Request.QueryString["id"] != null)
                 {
                     try
@@ -55,10 +58,10 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
                 else
                 { Response.RedirectToRoute("login"); }
             }
-            else
-            {
-                ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "alert('Session Expired,Please login again');window.location='Login'", true);
-            }
+        }
+        else
+        {
+            ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "alert('Session Expired,Please login again');window.location='Login'", true);
         }
     }
     protected void btnAddProduct_Click(object sender, EventArgs e)
@@ -100,22 +103,37 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
                 DataTable dtnew = dv.ToTable();
                 if (dtnew.Rows.Count > 0)
                 {
-                    if (ddlcompany.SelectedItem.Text != "Select" && ddldivision.SelectedItem.Text != "Select" && ddlunit.SelectedItem.Text != "Select")
-                    {
-                        dv.RowFilter = "UnitName='" + ddlunit.SelectedItem.Text + "'";
-                    }
-                    else if (ddlcompany.SelectedItem.Text != "Select" && ddldivision.SelectedItem.Text != "Select")
-                    {
-                        dv.RowFilter = "FactoryName='" + ddldivision.SelectedItem.Text + "'";
-                    }
-                    else if (ddlcompany.SelectedItem.Text != "Select" && ddldivision.Visible == false || ddldivision.SelectedItem.Text == "Select")
+                    if (ddlcompany.SelectedItem.Text != "Select" && ddldivision.Visible == false || ddldivision.SelectedItem.Text == "Select")
                     {
                         dv.RowFilter = "CompanyName='" + ddlcompany.SelectedItem.Text + "'";
                     }
-                    dv.Sort = "LastUpdated desc,CompanyName asc,FactoryName asc";
-                    gvproductItem.DataSource = dv.ToTable();
+                    else if (ddlcompany.SelectedItem.Text != "Select" && ddldivision.SelectedItem.Text != "Select" && ddlunit.Visible == false || ddlunit.SelectedItem.Text == "Select")
+                    {
+                        dv.RowFilter = "FactoryName='" + ddldivision.SelectedItem.Text + "'";
+                    }
+                    else if (ddlcompany.SelectedItem.Text != "Select" && ddldivision.SelectedItem.Text != "Select" && ddlunit.SelectedItem.Text != "Select")
+                    {
+                        dv.RowFilter = "UnitName='" + ddlunit.SelectedItem.Text + "'";
+                    }
+                    else
+                        dv.Sort = "LastUpdated desc,CompanyName asc,FactoryName asc";
+                    DataTable dtads = dv.ToTable();
+                    pgsource.DataSource = dtads.DefaultView;
+                    pgsource.AllowPaging = true;
+                    pgsource.PageSize = 25;
+                    pgsource.CurrentPageIndex = pagingCurrentPage;
+                    ViewState["totpage"] = pgsource.PageCount;
+                    lblpaging.Text = "Page " + (pagingCurrentPage + 1) + " of " + pgsource.PageCount;
+                    lnkbtnPgPrevious.Enabled = !pgsource.IsFirstPage;
+                    lnkbtnPgNext.Enabled = !pgsource.IsLastPage;
+                    lnkbtnPgFirst.Enabled = !pgsource.IsFirstPage;
+                    lnkbtnPgLast.Enabled = !pgsource.IsLastPage;
+                    pgsource.DataSource = dtads.DefaultView;
+                    gvproductItem.DataSource = pgsource;
                     gvproductItem.DataBind();
+                    DataListPagingMethod();
                     gvproductItem.Visible = true;
+                    divpageindex.Visible = true;
                 }
                 else
                 { gvproductItem.Visible = false; }
@@ -688,4 +706,95 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
             e.Row.TableSection = TableRowSection.TableFooter;
         }
     }
+    #region //------------------------pageindex code--------------//
+    protected void lnkbtnPgFirst_Click(object sender, EventArgs e)
+    {
+        pagingCurrentPage = 0;
+        BindGridView();
+    }
+    protected void lnkbtnPgPrevious_Click(object sender, EventArgs e)
+    {
+        pagingCurrentPage -= 1;
+        BindGridView();
+    }
+    protected void lnkbtnPgNext_Click(object sender, EventArgs e)
+    {
+        pagingCurrentPage += 1;
+        BindGridView();
+    }
+    protected void lnkbtnPgLast_Click(object sender, EventArgs e)
+    {
+        pagingCurrentPage = (Convert.ToInt32(ViewState["totpage"]) - 1);
+        BindGridView();
+    }
+    protected void DataListPaging_ItemCommand(object source, DataListCommandEventArgs e)
+    {
+        if (e.CommandName.Equals("Newpage"))
+        {
+            pagingCurrentPage = Convert.ToInt32(e.CommandArgument.ToString());
+            BindGridView();
+        }
+    }
+    protected void DataListPaging_ItemDataBound(object sender, DataListItemEventArgs e)
+    {
+        LinkButton lnkPage = (LinkButton)e.Item.FindControl("Pagingbtn");
+        if (lnkPage.CommandArgument.ToString() == pagingCurrentPage.ToString())
+        {
+            lnkPage.Enabled = false;
+        }
+    }
+    private int pagingCurrentPage
+    {
+        get
+        {
+            if (ViewState["pagingCurrentPage"] == null)
+            {
+                return 0;
+            }
+            else
+            {
+                return ((int)ViewState["pagingCurrentPage"]);
+            }
+        }
+        set
+        {
+            ViewState["pagingCurrentPage"] = value;
+        }
+    }
+    private void DataListPagingMethod()
+    {
+        DataTable dt = new DataTable();
+        dt.Columns.Add("PageIndex");
+        dt.Columns.Add("PageText");
+        firstindex = pagingCurrentPage - 25;
+        if (pagingCurrentPage > 25)
+        {
+            lastindex = pagingCurrentPage + 25;
+        }
+        else
+        {
+            lastindex = 24;
+        }
+        if (lastindex > Convert.ToInt32(ViewState["totpage"]))
+        {
+            lastindex = Convert.ToInt32(ViewState["totpage"]);
+            firstindex = lastindex - 24;
+        }
+        if (firstindex < 0)
+        {
+            firstindex = 0;
+        }
+        for (int i = firstindex; i < lastindex; i++)
+        {
+            DataRow dr = dt.NewRow();
+            dr[0] = i;
+            dr[1] = i + 1;
+            dt.Rows.Add(dr);
+        }
+
+        DataListPaging.DataSource = dt;
+        DataListPaging.DataBind();
+    }
+    //end page index---------------------------------------//
+    #endregion
 }

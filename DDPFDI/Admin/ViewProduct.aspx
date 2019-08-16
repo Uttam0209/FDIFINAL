@@ -74,9 +74,8 @@
                     <form method="post" class="addfdi">
                         <div class="row">
                             <div class="col-md-12">
-                                <div class="table-wrapper table-responsive" style="overflow-x: auto;" id="divproductgridview" runat="server">
-                                    <asp:GridView ID="gvproductItem" runat="server" Width="100%" Class="commonAjaxTbl master-company-table ViewProductTable table display 
-                                        responsive no-wrap table-hover manage-user Grid"
+                                <div class="table-responsive" style="overflow-x: auto;" id="divproductgridview" runat="server">
+                                    <asp:GridView ID="gvproductItem" runat="server" Width="100%" Class="table table-bordered table-wraper table-hover"
                                         AutoGenerateColumns="false" OnRowCommand="gvproductItem_RowCommand" OnRowCreated="gvproductItem_RowCreated">
                                         <Columns>
                                             <asp:TemplateField HeaderText="S.No.">
@@ -122,6 +121,36 @@
                                             </asp:TemplateField>
                                         </Columns>
                                     </asp:GridView>
+                                    <!-----------------------------------------Code for pageindexing----------------------------------------------------->
+                                    <div class="row" runat="server" id="divpageindex" visible="false">
+                                        <div class="col-sm-2">
+                                            <asp:LinkButton ID="lnkbtnPgFirst" runat="server" CssClass="btn  btn-success  btn-sm"
+                                                OnClick="lnkbtnPgFirst_Click">First</asp:LinkButton>
+                                            <asp:LinkButton ID="lnkbtnPgPrevious" runat="server" CssClass="btn btn-success  btn-sm"
+                                                OnClick="lnkbtnPgPrevious_Click">Previous</asp:LinkButton>
+                                        </div>
+                                        <div class="col-sm-8">
+                                            <asp:DataList ID="DataListPaging" runat="server" RepeatDirection="Horizontal" OnItemCommand="DataListPaging_ItemCommand"
+                                                OnItemDataBound="DataListPaging_ItemDataBound">
+                                                <ItemTemplate>
+                                                    <asp:LinkButton ID="Pagingbtn" runat="server" CssClass="btn btn-success mt5 btn-xs"
+                                                        CommandArgument='<%# Eval("PageIndex") %>' CommandName="Newpage" Text='<%# Eval("PageText")%>'></asp:LinkButton>
+                                                </ItemTemplate>
+                                            </asp:DataList>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <asp:LinkButton ID="lnkbtnPgLast" runat="server" CssClass="btn  btn-success btn-sm pull-right"
+                                                OnClick="lnkbtnPgLast_Click">Last</asp:LinkButton>
+                                            <asp:LinkButton ID="lnkbtnPgNext" runat="server" CssClass="btn  btn-success btn-sm pull-right" Style="margin-right: 3px;"
+                                                OnClick="lnkbtnPgNext_Click">Next</asp:LinkButton>
+                                        </div>
+                                        <div class="clearfix padding_0 mt10">
+                                        </div>
+                                        <div class="text-center">
+                                            <asp:Label ID="lblpaging" runat="server" class="btn btn-primary text-center" Text=""></asp:Label>
+                                        </div>
+                                    </div>
+                                    <!-----------------------------------------end code for page indexing----------------------------------------------------->
                                 </div>
                             </div>
                         </div>

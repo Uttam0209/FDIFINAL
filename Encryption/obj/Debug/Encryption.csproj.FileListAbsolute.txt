@@ -7,3 +7,15 @@ F:\FDIFINAL\Encryption\bin\Debug\Encryption.dll
 F:\FDIFINAL\Encryption\bin\Debug\Encryption.pdb
 F:\FDIFINAL\Encryption\obj\Debug\Encryption.dll
 F:\FDIFINAL\Encryption\obj\Debug\Encryption.pdb
+F:\FDIFINAL\Encryption\bin\Debug\Microsoft.Web.Infrastructure.dll
+F:\FDIFINAL\Encryption\bin\Debug\System.Web.Helpers.dll
+F:\FDIFINAL\Encryption\bin\Debug\System.Web.Razor.dll
+F:\FDIFINAL\Encryption\bin\Debug\System.Web.WebPages.Deployment.dll
+F:\FDIFINAL\Encryption\bin\Debug\System.Web.WebPages.dll
+F:\FDIFINAL\Encryption\bin\Debug\System.Web.WebPages.Razor.dll
+F:\FDIFINAL\Encryption\bin\Debug\System.Web.Helpers.xml
+F:\FDIFINAL\Encryption\bin\Debug\System.Web.Razor.xml
+F:\FDIFINAL\Encryption\bin\Debug\System.Web.WebPages.xml
+F:\FDIFINAL\Encryption\bin\Debug\System.Web.WebPages.Deployment.xml
+F:\FDIFINAL\Encryption\bin\Debug\System.Web.WebPages.Razor.xml
+F:\FDIFINAL\Encryption\obj\Debug\Encryption.csprojResolveAssemblyReference.cache

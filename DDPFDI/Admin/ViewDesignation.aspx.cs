@@ -14,8 +14,10 @@ public partial class Admin_ViewDesignation : System.Web.UI.Page
     Cryptography objEnc = new Cryptography();
     DataTable DtGrid = new DataTable();
     DataTable DtCompanyDDL = new DataTable();
-    private string mType = "";
-    private string mRefNo = "";
+    //  private string mType="";
+    private string mRefNo;
+    PagedDataSource pgsource = new PagedDataSource();
+    int firstindex, lastindex;
     protected void Page_Load(object sender, EventArgs e)
     {
         if (Session["Type"] != null)
@@ -39,7 +41,7 @@ public partial class Admin_ViewDesignation : System.Web.UI.Page
                         }
                         divHeadPage.InnerHtml = strheadPage.ToString();
                         strheadPage.Append("</ul");
-                        mType = objEnc.DecryptData(Session["Type"].ToString());
+                        hfmtype.Value = objEnc.DecryptData(Session["Type"].ToString());
                         mRefNo = Session["CompanyRefNo"].ToString();
                         BindCompany();
                     }
@@ -54,32 +56,51 @@ public partial class Admin_ViewDesignation : System.Web.UI.Page
     }
     protected void BindCompany()
     {
-        if (mType == "SuperAdmin" || mType == "Admin")
+        if (hfmtype.Value == "SuperAdmin" || hfmtype.Value == "Admin")
         {
             DtCompanyDDL = Lo.RetriveMasterData(0, "", "", 0, "", "", "Select");
             if (DtCompanyDDL.Rows.Count > 0)
             {
-                Co.FillDropdownlist(ddlcompany, DtCompanyDDL, "CompanyName", "CompanyRefNo");
-                ddlcompany.Items.Insert(0, "Select");
-                ddlcompany.Enabled = true;
+                if (!IsPostBack)
+                {
+                    Co.FillDropdownlist(ddlcompany, DtCompanyDDL, "CompanyName", "CompanyRefNo");
+                    ddlcompany.Items.Insert(0, "Select");
+                    ddlcompany.Enabled = true;
+                }
+                if (ddlcompany.SelectedItem.Text != "Select")
+                {
+                    DataTable DtGrid = Lo.RetriveMasterData(0, ddlcompany.SelectedItem.Value, "", 0, "", "", "ViewDesignation");
+                    if (DtGrid.Rows.Count > 0)
+                    {
+                        BindGrid(DtGrid);
+                    }
+                    else
+                    {
+                        divpageindex.Visible = false;
+                        gvViewDesignation.Visible = false;
+
+                    }
+                }
             }
         }
-        else if (mType == "Company")
+        else if (hfmtype.Value == "Company")
         {
             DtCompanyDDL = Lo.RetriveMasterData(0, mRefNo, "Company", 0, "", "", "CompanyName");
             if (DtCompanyDDL.Rows.Count > 0)
             {
-                Co.FillDropdownlist(ddlcompany, DtCompanyDDL, "CompanyName", "CompanyRefNo");
-                ddlcompany.Enabled = false;
+                if (!IsPostBack)
+                {
+                    Co.FillDropdownlist(ddlcompany, DtCompanyDDL, "CompanyName", "CompanyRefNo");
+                    ddlcompany.Enabled = false;
+                }
                 DataTable DtGrid = Lo.RetriveMasterData(0, ddlcompany.SelectedItem.Value, "", 0, "", "", "ViewDesignation");
                 if (DtGrid.Rows.Count > 0)
                 {
-                    gvViewDesignation.DataSource = DtGrid;
-                    gvViewDesignation.DataBind();
-                    gvViewDesignation.Visible = true;
+                    BindGrid(DtGrid);
                 }
                 else
                 {
+                    divpageindex.Visible = false;
                     gvViewDesignation.Visible = false;
 
                 }
@@ -89,6 +110,26 @@ public partial class Admin_ViewDesignation : System.Web.UI.Page
                 ddlcompany.Enabled = false;
             }
         }
+    }
+    protected void BindGrid(DataTable DtGrid)
+    {
+        DataTable dtads = DtGrid;
+        pgsource.DataSource = dtads.DefaultView;
+        pgsource.AllowPaging = true;
+        pgsource.PageSize = 25;
+        pgsource.CurrentPageIndex = pagingCurrentPage;
+        ViewState["totpage"] = pgsource.PageCount;
+        lblpaging.Text = "Page " + (pagingCurrentPage + 1) + " of " + pgsource.PageCount;
+        lnkbtnPgPrevious.Enabled = !pgsource.IsFirstPage;
+        lnkbtnPgNext.Enabled = !pgsource.IsLastPage;
+        lnkbtnPgFirst.Enabled = !pgsource.IsFirstPage;
+        lnkbtnPgLast.Enabled = !pgsource.IsLastPage;
+        pgsource.DataSource = dtads.DefaultView;
+        gvViewDesignation.DataSource = pgsource;// DtGrid;
+        gvViewDesignation.DataBind();
+        DataListPagingMethod();
+        gvViewDesignation.Visible = true;
+        divpageindex.Visible = true;
     }
     #region RowCommand
     protected void gvViewDesignation_RowCommand(object sender, GridViewCommandEventArgs e)
@@ -141,20 +182,17 @@ public partial class Admin_ViewDesignation : System.Web.UI.Page
             DataTable DtGrid = Lo.RetriveMasterData(0, ddlcompany.SelectedItem.Value, "", 0, "", "", "ViewDesignation");
             if (DtGrid.Rows.Count > 0)
             {
-                gvViewDesignation.DataSource = DtGrid;
-                gvViewDesignation.DataBind();
-                gvViewDesignation.Visible = true;
+                BindGrid(DtGrid);
             }
             else
             {
+                divpageindex.Visible = false;
                 gvViewDesignation.Visible = false;
                 ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not found !')", true);
             }
         }
 
     }
-
-
     protected void Search_Click(object sender, EventArgs e)
     {
         if (txtserch.Text != "")
@@ -166,10 +204,14 @@ public partial class Admin_ViewDesignation : System.Web.UI.Page
                 gvViewDesignation.DataBind();
                 lbltotal.Text = DtGrid.Rows.Count.ToString();
             }
+            else
+            {
+                divpageindex.Visible = false;
+                gvViewDesignation.Visible = false;
+            }
         }
         else
         {
-
         }
     }
     #endregion
@@ -188,4 +230,94 @@ public partial class Admin_ViewDesignation : System.Web.UI.Page
             e.Row.TableSection = TableRowSection.TableFooter;
         }
     }
+    //------------------------pageindex code--------------//
+    protected void lnkbtnPgFirst_Click(object sender, EventArgs e)
+    {
+        pagingCurrentPage = 0;
+        BindCompany();
+    }
+    protected void lnkbtnPgPrevious_Click(object sender, EventArgs e)
+    {
+        pagingCurrentPage -= 1;
+        BindCompany();
+    }
+    protected void lnkbtnPgNext_Click(object sender, EventArgs e)
+    {
+        pagingCurrentPage += 1;
+        BindCompany();
+    }
+    protected void lnkbtnPgLast_Click(object sender, EventArgs e)
+    {
+        pagingCurrentPage = (Convert.ToInt32(ViewState["totpage"]) - 1);
+        BindCompany();
+    }
+    protected void DataListPaging_ItemCommand(object source, DataListCommandEventArgs e)
+    {
+        if (e.CommandName.Equals("Newpage"))
+        {
+            pagingCurrentPage = Convert.ToInt32(e.CommandArgument.ToString());
+            BindCompany();
+        }
+    }
+    protected void DataListPaging_ItemDataBound(object sender, DataListItemEventArgs e)
+    {
+        LinkButton lnkPage = (LinkButton)e.Item.FindControl("Pagingbtn");
+        if (lnkPage.CommandArgument.ToString() == pagingCurrentPage.ToString())
+        {
+            lnkPage.Enabled = false;
+        }
+    }
+    private int pagingCurrentPage
+    {
+        get
+        {
+            if (ViewState["pagingCurrentPage"] == null)
+            {
+                return 0;
+            }
+            else
+            {
+                return ((int)ViewState["pagingCurrentPage"]);
+            }
+        }
+        set
+        {
+            ViewState["pagingCurrentPage"] = value;
+        }
+    }
+    private void DataListPagingMethod()
+    {
+        DataTable dt = new DataTable();
+        dt.Columns.Add("PageIndex");
+        dt.Columns.Add("PageText");
+        firstindex = pagingCurrentPage - 25;
+        if (pagingCurrentPage > 25)
+        {
+            lastindex = pagingCurrentPage + 25;
+        }
+        else
+        {
+            lastindex = 24;
+        }
+        if (lastindex > Convert.ToInt32(ViewState["totpage"]))
+        {
+            lastindex = Convert.ToInt32(ViewState["totpage"]);
+            firstindex = lastindex - 24;
+        }
+        if (firstindex < 0)
+        {
+            firstindex = 0;
+        }
+        for (int i = firstindex; i < lastindex; i++)
+        {
+            DataRow dr = dt.NewRow();
+            dr[0] = i;
+            dr[1] = i + 1;
+            dt.Rows.Add(dr);
+        }
+
+        DataListPaging.DataSource = dt;
+        DataListPaging.DataBind();
+    }
+    //end page index---------------------------------------//
 }

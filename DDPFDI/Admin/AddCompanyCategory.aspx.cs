@@ -7,6 +7,7 @@ using System.Web.UI;
 using System.Text;
 using System.Web.UI.WebControls;
 using System.Web;
+using System.Web.Helpers;
 
 public partial class Admin_AddCompanyCategory : System.Web.UI.Page
 {
@@ -26,9 +27,9 @@ public partial class Admin_AddCompanyCategory : System.Web.UI.Page
     string strCRole, strDRole, strURole;
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (!IsPostBack)
+        if (Session["User"] != null)
         {
-            if (Session["User"] != null)
+            if (!IsPostBack)
             {
                 try
                 {
@@ -64,11 +65,11 @@ public partial class Admin_AddCompanyCategory : System.Web.UI.Page
                                       "&page=" + HttpUtility.UrlEncode(objCrypto.EncryptData(Page)));
                 }
             }
-            else
-            {
-                ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert",
-                    "alert('Session Expired,Please login again');window.location='Login'", true);
-            }
+        }
+        else
+        {
+            ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert",
+                "alert('Session Expired,Please login again');window.location='Login'", true);
         }
     }
     protected void BindMasterCategory()
@@ -308,6 +309,7 @@ public partial class Admin_AddCompanyCategory : System.Web.UI.Page
             {
                 ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Please select any dropdown to save record.')", true);
             }
+
         }
         catch (Exception ex)
         {

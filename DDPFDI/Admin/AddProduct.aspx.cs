@@ -11,6 +11,7 @@ using System.Text;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Web.Helpers;
 
 public partial class Admin_AddProduct : System.Web.UI.Page
 {
@@ -47,9 +48,10 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     #region PageLoad
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (!IsPostBack)
+
+        if (Session["User"] != null)
         {
-            if (Session["User"] != null)
+            if (!IsPostBack)
             {
                 try
                 {
@@ -107,7 +109,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                                 BindEndUser();
                                 BindNodelEmail();
                                 //   HSCode();
-                                //  HSNCodeLevel();
+                                HSNCodeLevel();
                                 // HSNCodeLevel1();
                                 //EditCode():
                             }
@@ -119,7 +121,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                                 BindPurposeProcuremnt();
                                 BindEndUser();
                                 // HSCode();
-                                //  HSNCodeLevel();
+                                HSNCodeLevel();
                                 //  HSNCodeLevel1();
                             }
                         }
@@ -136,7 +138,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                             //  BindCertification();
                             //  BindQAAgency();
                             // HSCode();
-                            // HSNCodeLevel();
+                            HSNCodeLevel();
                             //HSNCodeLevel1();
                         }
                     }
@@ -179,11 +181,12 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                     Response.Redirect("Error?techerror=" + objEnc.EncryptData(error) + "&page=" + objEnc.EncryptData(Page));
                 }
             }
-            else
-            {
-                ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "alert('Session Expired,Please login again');window.location='Login'", true);
-            }
         }
+        else
+        {
+            ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "alert('Session Expired,Please login again');window.location='Login'", true);
+        }
+
     }
     protected void BindCompany()
     {
@@ -1667,9 +1670,9 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                     if (fuitemdescriptionfile.HasFile != false)
                     {
                         int iFileSize = fuitemdescriptionfile.PostedFile.ContentLength;
-                        if (iFileSize > 1048576) // 1MB
+                        if (iFileSize > 5242880) // 1MB
                         {
-                            ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "alert('Maximum 1 Mb pdf file can be uploaded')", true);
+                            ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "alert('Maximum 5 Mb pdf file can be uploaded')", true);
                         }
                         else
                         {
@@ -1683,7 +1686,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                                     if (iImageFileSize > 4194304)
                                     {
                                         ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert",
-                                            "alert('Maximum 1 Mb .jpg,.jpeg,.png,.tif images can be uploaded')", true);
+                                            "alert('Maximum 1 Mb each .jpg,.jpeg,.png,.tif images can be uploaded')", true);
                                     }
                                     else
                                     {
@@ -1714,7 +1717,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                                 if (iImageFileSize > 4194304)
                                 {
                                     ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert",
-                                        "alert('Maximum 1 Mb .jpg,.jpeg,.png,.tif images can be uploaded')", true);
+                                        "alert('Maximum 1 Mb each .jpg,.jpeg,.png,.tif images can be uploaded')", true);
                                 }
                                 else
                                 {
@@ -1924,7 +1927,8 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                     {
                         string FileType = Path.GetExtension(postfiles.FileName);
                         int FileSize = postfiles.ContentLength;
-                        if (Co.GetImageFilter(postfiles.FileName) == true) ;
+                        // if (Co.GetImageFilter(postfiles.FileName) == true) ;
+                        if (DataUtility.Instance.GetImageFilter(postfiles.FileName) != false)
                         {
                             string FilePathName = hfcomprefno.Value + "_" + DateTime.Now.ToString("hh_mm_ss") + postfiles.FileName;
                             postfiles.SaveAs(HttpContext.Current.Server.MapPath("/Upload") + "\\" + FilePathName);
@@ -1936,6 +1940,10 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                             dr["CompanyRefNo"] = hfcomprefno.Value;
                             dr["Priority"] = ImageMaxCount++ + 1;
                             dt.Rows.Add(dr);
+                        }
+                        else
+                        {
+                            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Invalid file format " + postfiles.FileName + "')", true);
                         }
                     }
                 }

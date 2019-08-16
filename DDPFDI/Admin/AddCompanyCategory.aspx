@@ -1,7 +1,7 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="AddCompanyCategory.aspx.cs" Inherits="Admin_AddCompanyCategory" MasterPageFile="MasterPage.master" %>
 
 <asp:Content ID="headDesignation" runat="server" ContentPlaceHolderID="head">
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script src="assets/js/jquery-3.4.1.min.js"></script>
     <script type="text/javascript">
         function radioMe(e) {
             if (!e) e = window.event;
@@ -86,7 +86,6 @@
                                         </asp:CheckBoxList>
                                     </div>
                                 </div>
-                                <div class="clearfix"></div>
                                 <div class="col-sm-12">
                                     <div class="form-group">
                                         <asp:LinkButton ID="btndemofirst" runat="server" CssClass="btn btn-primary pull-right" TabIndex="3" Style="margin-left: 10px;" Text="Save"
@@ -98,14 +97,12 @@
                     </asp:UpdatePanel>
                     <asp:UpdateProgress ID="UpdateProgress1" runat="server" AssociatedUpdatePanelID="up">
                         <ProgressTemplate>
-                            <!---Progress Bar ---->
                             <div class="overlay-progress">
                                 <div class="custom-progress-bar blue stripes">
                                     <span></span>
                                     <p>Processing</p>
                                 </div>
                             </div>
-                            <!---Progress Bar ---->
                         </ProgressTemplate>
                     </asp:UpdateProgress>
                 </div>

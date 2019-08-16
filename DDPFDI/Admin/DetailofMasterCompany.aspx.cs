@@ -7,6 +7,7 @@ using System.Data;
 using System.Text;
 using System.IO;
 using System.Web;
+using System.Web.Helpers;
 
 public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
 {
@@ -23,9 +24,9 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
     private string mRefNo = "";
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (!IsPostBack)
+        if (Session["User"] != null)
         {
-            if (Session["User"] != null)
+            if (!IsPostBack)
             {
                 if (Request.QueryString["id"] != null)
                 {
@@ -48,12 +49,13 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
                     BindCompany();
                 }
             }
-            else
-            {
-                ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert",
-                    "alert('Session Expired,Please login again');window.location='Login'", true);
-            }
         }
+        else
+        {
+            ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert",
+                "alert('Session Expired,Please login again');window.location='Login'", true);
+        }
+
     }
     protected void btnAddCompany_Click(object sender, EventArgs e)
     {
@@ -419,7 +421,7 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
                     lblNodalEmail.Text = "";
                     lblNodalOfficerName.Text = "";
                 }
-                
+
                 lblAad_Mobile.Text = DtView.Rows[0]["latitude"].ToString();
                 lblLongitude.Text = DtView.Rows[0]["longitude"].ToString();
                 lblFacebook.Text = DtView.Rows[0]["Facebook"].ToString();
@@ -605,7 +607,7 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
                     lblUnitNodalEmail.Text = "";
                     lblunitnodalname.Text = "";
                 }
-                
+
                 lblUnitLatitude.Text = DtView.Rows[0]["Unitlatitude"].ToString();
                 lblUnitLongitude.Text = DtView.Rows[0]["Unitlongitude"].ToString();
                 ScriptManager.RegisterStartupScript(this, this.GetType(), "divunitshow", "showPopup2();", true);
@@ -925,5 +927,5 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
         }
     }
     #endregion
-   
+
 }

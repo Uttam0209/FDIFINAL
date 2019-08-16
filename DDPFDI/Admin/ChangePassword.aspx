@@ -11,7 +11,6 @@
                 </h3>
                 <div class="col-md-12 col-mod-12">
                     <div class="row">
-
                         <div class="col-sm-6">
                             <div class="indiacompanydetails">
                                 <div class="form-group">
@@ -26,7 +25,6 @@
                                     <asp:RegularExpressionValidator ID="valPassword" runat="server" ControlToValidate="txtreppass"
                                         ErrorMessage="Minimum Length is (8) charactor" ForeColor="Red" ValidationExpression="^[\s\S]{8,15}$" />
                                 </div>
-
                             </div>
                         </div>
                         <div class="col-sm-6">
@@ -36,7 +34,6 @@
                                 <div class="clearfix mt5"></div>
                                 <asp:RegularExpressionValidator ID="RegularExpressionValidator1" runat="server" ControlToValidate="txtnewpass"
                                     ErrorMessage="Minimum Length is (8) charactor" ForeColor="Red" ValidationExpression="^[\s\S]{8,15}$" />
-
                             </div>
                             <br />
                             <div class="form-group">

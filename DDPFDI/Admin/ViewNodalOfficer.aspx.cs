@@ -18,11 +18,13 @@ public partial class Admin_ViewNodalOfficer : System.Web.UI.Page
     DataTable DtCompanyDDL = new DataTable();
     private string mType = "";
     private string mRefNo = "";
+    PagedDataSource pgsource = new PagedDataSource();
+    int firstindex, lastindex;
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (!IsPostBack)
+        if (Session["User"] != null)
         {
-            if (Session["User"] != null)
+            if (!IsPostBack)
             {
                 if (Request.QueryString["id"] != null)
                 {
@@ -59,11 +61,11 @@ public partial class Admin_ViewNodalOfficer : System.Web.UI.Page
                         "alert('Session Expired,Please login again');window.location='Login'", true);
                 }
             }
-            else
-            {
-                ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert",
-                    "alert('Session Expired,Please login again');window.location='Login'", true);
-            }
+        }
+        else
+        {
+            ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert",
+                "alert('Session Expired,Please login again');window.location='Login'", true);
         }
     }
     protected void btnAddNodalOfficer_Click(object sender, EventArgs e)
@@ -105,9 +107,24 @@ public partial class Admin_ViewNodalOfficer : System.Web.UI.Page
                 dv.RowFilter = "UnitName='" + ddlunit.SelectedItem.Text + "'";
             }
             dv.Sort = "CompanyName asc,FactoryName asc";
-            gvViewNodalOfficer.DataSource = dv.ToTable();
+            DataTable DtAdd = dv.ToTable();
+            pgsource.DataSource = DtAdd.DefaultView;
+            pgsource.AllowPaging = true;
+            pgsource.PageSize = 25;
+            pgsource.CurrentPageIndex = pagingCurrentPage;
+            ViewState["totpage"] = pgsource.PageCount;
+            lblpaging.Text = "Page " + (pagingCurrentPage + 1) + " of " + pgsource.PageCount;
+            lnkbtnPgPrevious.Enabled = !pgsource.IsFirstPage;
+            lnkbtnPgNext.Enabled = !pgsource.IsLastPage;
+            lnkbtnPgFirst.Enabled = !pgsource.IsFirstPage;
+            lnkbtnPgLast.Enabled = !pgsource.IsLastPage;
+            pgsource.DataSource = DtAdd.DefaultView;
+            gvViewNodalOfficer.DataSource = pgsource;
             gvViewNodalOfficer.DataBind();
-            lbltotal.Text = "Total Records:- " + gvViewNodalOfficer.Rows.Count.ToString();
+            DataListPagingMethod();
+            gvViewNodalOfficer.Visible = true;
+            divpageindex.Visible = true;
+            lbltotal.Text = "Total Records:- " + DtAdd.Rows.Count.ToString();
             divTotalNumber.Visible = true;
         }
         else
@@ -115,7 +132,8 @@ public partial class Admin_ViewNodalOfficer : System.Web.UI.Page
     }
     public void GridViewNodalOfficerBind(string mRefNo, string mRole)
     {
-        BindEmployee(mRole);
+        hfmrole.Value = mRole.ToString();
+        BindEmployee(hfmrole.Value);
     }
     protected void BindCompany()
     {
@@ -141,7 +159,6 @@ public partial class Admin_ViewNodalOfficer : System.Web.UI.Page
             if (DtCompanyDDL.Rows.Count > 0)
             {
                 Co.FillDropdownlist(ddlcompany, DtCompanyDDL, "CompanyName", "CompanyRefNo");
-
                 GridViewNodalOfficerBind(mRefNo, "Company");
                 ddlcompany.Enabled = false;
             }
@@ -526,4 +543,94 @@ public partial class Admin_ViewNodalOfficer : System.Web.UI.Page
             e.Row.TableSection = TableRowSection.TableFooter;
         }
     }
+    //------------------------pageindex code--------------//
+    protected void lnkbtnPgFirst_Click(object sender, EventArgs e)
+    {
+        pagingCurrentPage = 0;
+        BindEmployee(hfmrole.Value);
+    }
+    protected void lnkbtnPgPrevious_Click(object sender, EventArgs e)
+    {
+        pagingCurrentPage -= 1;
+        BindEmployee(hfmrole.Value);
+    }
+    protected void lnkbtnPgNext_Click(object sender, EventArgs e)
+    {
+        pagingCurrentPage += 1;
+        BindEmployee(hfmrole.Value);
+    }
+    protected void lnkbtnPgLast_Click(object sender, EventArgs e)
+    {
+        pagingCurrentPage = (Convert.ToInt32(ViewState["totpage"]) - 1);
+        BindEmployee(hfmrole.Value);
+    }
+    protected void DataListPaging_ItemCommand(object source, DataListCommandEventArgs e)
+    {
+        if (e.CommandName.Equals("Newpage"))
+        {
+            pagingCurrentPage = Convert.ToInt32(e.CommandArgument.ToString());
+            BindEmployee(hfmrole.Value);
+        }
+    }
+    protected void DataListPaging_ItemDataBound(object sender, DataListItemEventArgs e)
+    {
+        LinkButton lnkPage = (LinkButton)e.Item.FindControl("Pagingbtn");
+        if (lnkPage.CommandArgument.ToString() == pagingCurrentPage.ToString())
+        {
+            lnkPage.Enabled = false;
+        }
+    }
+    private int pagingCurrentPage
+    {
+        get
+        {
+            if (ViewState["pagingCurrentPage"] == null)
+            {
+                return 0;
+            }
+            else
+            {
+                return ((int)ViewState["pagingCurrentPage"]);
+            }
+        }
+        set
+        {
+            ViewState["pagingCurrentPage"] = value;
+        }
+    }
+    private void DataListPagingMethod()
+    {
+        DataTable dt = new DataTable();
+        dt.Columns.Add("PageIndex");
+        dt.Columns.Add("PageText");
+        firstindex = pagingCurrentPage - 25;
+        if (pagingCurrentPage > 25)
+        {
+            lastindex = pagingCurrentPage + 25;
+        }
+        else
+        {
+            lastindex = 24;
+        }
+        if (lastindex > Convert.ToInt32(ViewState["totpage"]))
+        {
+            lastindex = Convert.ToInt32(ViewState["totpage"]);
+            firstindex = lastindex - 24;
+        }
+        if (firstindex < 0)
+        {
+            firstindex = 0;
+        }
+        for (int i = firstindex; i < lastindex; i++)
+        {
+            DataRow dr = dt.NewRow();
+            dr[0] = i;
+            dr[1] = i + 1;
+            dt.Rows.Add(dr);
+        }
+
+        DataListPaging.DataSource = dt;
+        DataListPaging.DataBind();
+    }
+    //end page index---------------------------------------//
 }

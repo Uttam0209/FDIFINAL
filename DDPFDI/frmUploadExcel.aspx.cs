@@ -1,6 +1,7 @@
 ﻿using System;
 using BusinessLayer;
 using System.Data;
+using System.Web.Helpers;
 
 public partial class frmUploadExcel : System.Web.UI.Page
 {
@@ -19,7 +20,6 @@ public partial class frmUploadExcel : System.Web.UI.Page
     }
     protected void btnexcel_Click(object sender, EventArgs e)
     {
-
         if (fuexcel.FileName == null && fuexcel.FileName == "")  //if no file selected the give error
         {
             diverror.Visible = true;
@@ -97,7 +97,6 @@ public partial class frmUploadExcel : System.Web.UI.Page
     }
     protected void btnexcel3510_Click(object sender, EventArgs e)
     {
-
         if (fuexcel.FileName == null && fuexcel.FileName == "") //if no file selected the give error
         {
             diverror.Visible = true;
@@ -110,7 +109,7 @@ public partial class frmUploadExcel : System.Web.UI.Page
             diverror.Visible = true;
             diverror.InnerHtml = fuexcel.FileName;
             string ErrText = "";
-            DataTable dtExcel = new DataTable();           
+            DataTable dtExcel = new DataTable();
             try
             {
                 string path = Server.MapPath("~/App_Data/") + fuexcel.PostedFile.FileName;
@@ -184,10 +183,8 @@ public partial class frmUploadExcel : System.Web.UI.Page
             }
         }
     }
-
     protected void btnexcelProduct_Click(object sender, EventArgs e)
     {
-
         if (fuexcel.FileName == null && fuexcel.FileName == "")  //if no file selected the give error
         {
             diverror.Visible = true;

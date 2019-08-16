@@ -2,6 +2,7 @@
 using System.Web.UI;
 using BusinessLayer;
 using Encryption;
+using System.Web.Helpers;
 
 public partial class Admin_CreatePasswordCompany : System.Web.UI.Page
 {
@@ -11,8 +12,9 @@ public partial class Admin_CreatePasswordCompany : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
         if (Request.QueryString["mcref"] != "" && Request.QueryString["mcurid"] != "")
+        //   if (Request.QueryString["mcref"] != "")
         {
-            ViewState["Refno"] = Enc.DecryptData(Request.QueryString["mcref"].ToString());
+            ViewState["Refno"] = Enc.DecryptData(Request.QueryString["mcref"].ToString()); //Request.QueryString["mcref"].ToString();
         }
         else
         {
@@ -34,7 +36,11 @@ public partial class Admin_CreatePasswordCompany : System.Web.UI.Page
                     string Updatepass = Lo.UpdateLoginPassword(hashString, "", ViewState["Refno"].ToString(), sType, txtpassword.Text, GetSalt);
                     if (Updatepass == "true")
                     {
+                        ViewState["Refno"] = null;
+                        txtpassword.Text = "";
+                        txttnewpass.Text = "";
                         ScriptManager.RegisterStartupScript(this, this.GetType(), "alert", "alert('Password created successfully.Please login with new password.We will redirected to you login page');window.location ='Login';", true);
+                       
                     }
                     else
                     {

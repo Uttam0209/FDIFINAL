@@ -55,27 +55,29 @@
                     You may wish to Check the error logs or  <a href="https://rgera@gov.in" rel="nofollow">Contact Support
                     </a>
                 </p>
+                <asp:Label ID="FriendlyErrorMsg" runat="server" Text="Label" Font-Size="Large" Style="color: red"></asp:Label>
+                <asp:Panel ID="DetailedErrorPanel" runat="server" Visible="false">
+                    <p>&nbsp;</p>
+                    <h4>Detailed Error:</h4>
+                    <p>
+                        <asp:Label ID="ErrorDetailedMsg" runat="server" Font-Size="Small" /><br />
+                    </p>
+                    <h4>Error Handler:</h4>
+                    <p>
+                        <asp:Label ID="ErrorHandler" runat="server" Font-Size="Small" /><br />
+                    </p>
+                    <h4>Detailed Error Message:</h4>
+                    <p>
+                        <asp:Label ID="InnerMessage" runat="server" Font-Size="Small" /><br />
+                    </p>
+                    <p>
+                        <asp:Label ID="InnerTrace" runat="server" />
+                    </p>
+                </asp:Panel>
 
             </div>
-            <div class="clearfix">
-            </div>
 
 
-            <asp:Panel runat="server" ID="panerror">
-                <%-- <h4 class="text-center">Error Info:- PageName:-
-                    <asp:Label runat="server" ID="lblpagename" Text=""></asp:Label></h4>
-                <div class="clearfix"></div>--%>
-                <div class="bg-info">
-                    <div class="header text-center">
-                        <p class="text-center">Technical Error</p>
-                    </div>
-                    <div class="clearfix"></div>
-                    <div class="text-center">
-                        <div runat="server" id="divtechnicalerror" class="text-center">
-                        </div>
-                    </div>
-                </div>
-            </asp:Panel>
         </div>
     </form>
 </body>

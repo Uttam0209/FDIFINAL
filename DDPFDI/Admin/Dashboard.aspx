@@ -5,7 +5,6 @@
 <asp:Content ID="conhead" runat="server" ContentPlaceHolderID="head">
     <%-- Here We need to write some js code for load google chart with database data --%>
     <script src="assets/js/jquery-1.7.1.js"></script>
-    <%--<script type="text/javascript" src="https://www.google.com/jsapi"></script>--%>
     <script src="assets/js/jsapi.js"></script>
     <script>
         var chartData; // globar variable for hold chart data

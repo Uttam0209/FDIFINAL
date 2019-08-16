@@ -198,12 +198,16 @@
         $("#ContentPlaceHolder1_ddltechlevel3").select2({});
         $("#ContentPlaceHolder1_ddlyearofindiginization").select2({});
         $("#ContentPlaceHolder1_ddlenduser").select2({});
+        $("#ContentPlaceHolder1_ddlmaster").select2({});
+        $("#ContentPlaceHolder1_ddlfacotry").select2({});
     }
     var req = Sys.WebForms.PageRequestManager.getInstance();
     req.add_endRequest(function () {
         BindControls();
     });
-    //DataTable 
+
+    //DataTable Jquery
+
     $(function () { BindGrid(); });
     var prm = Sys.WebForms.PageRequestManager.getInstance();
     if (prm != null) {
@@ -217,17 +221,18 @@
     };
     function BindGrid() {
         $('#ContentPlaceHolder1_gvPrdoct').DataTable();
-        $('#ContentPlaceHolder1_gvcompanydetail').DataTable();
-        $('#ContentPlaceHolder1_gvfactory').DataTable();
-        $('#ContentPlaceHolder1_gvunit').DataTable();
-        $('#ContentPlaceHolder1_gvViewNodalOfficer').DataTable();
+        $('#ContentPlaceHolder1_gvcompanydetailsave').DataTable();
+        //  $('#ContentPlaceHolder1_gvfactory').DataTable();
+        //   $('#ContentPlaceHolder1_gvunit').DataTable();
+        //  $('#ContentPlaceHolder1_gvViewNodalOfficer').DataTable();
         $('#ContentPlaceHolder1_gvViewNodalOfficerAdd').DataTable();
-        $('#ContentPlaceHolder1_gvproduct').DataTable();
-        $('#ContentPlaceHolder1_gvproductItem').DataTable();
-        $('#ContentPlaceHolder1_gvViewDesignation').DataTable();
+        // $('#ContentPlaceHolder1_gvproduct').DataTable();
+        //  $('#ContentPlaceHolder1_gvproductItem').DataTable();
+        $('#ContentPlaceHolder1_gvViewDesignationSave').DataTable();
         $('#ContentPlaceHolder1_gvCategory').DataTable();
         $('#ContentPlaceHolder1_gvlevel3').DataTable();
         $('#ContentPlaceHolder1_gvVendorDetails').DataTable();
+        $('#ContentPlaceHolder1_gvViewNodalOfficertest').DataTable();
     }
 });
 

@@ -22,9 +22,9 @@ public partial class Admin_ViewCategory : System.Web.UI.Page
     private string mRefNo = "";
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (!IsPostBack)
+        if (Session["Type"] != null)
         {
-            if (Session["Type"] != null)
+            if (!IsPostBack)
             {
                 if (Request.QueryString["id"] != null)
                 {
@@ -50,11 +50,11 @@ public partial class Admin_ViewCategory : System.Web.UI.Page
                 BindGridView();
                 BindMasterCategory();
             }
-            else
-            {
-                ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert",
-                    "alert('Session Expired,Please login again');window.location='Login'", true);
-            }
+        }
+        else
+        {
+            ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert",
+                "alert('Session Expired,Please login again');window.location='Login'", true);
         }
     }
     #region Load

@@ -93,6 +93,7 @@
                                                     <asp:TextBox class="form-control" required="" TabIndex="9" runat="server" ID="txtlevel3"></asp:TextBox>
                                                 </div>
                                             </div>
+
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <asp:LinkButton ID="btncancle" runat="server" class="btn btn-danger pull-right" Text="Cancel" Style="margin-right: 0 !important;" OnClick="btncancle_Click"></asp:LinkButton>
@@ -168,7 +169,6 @@
                     <!---Progress Bar ---->
                 </ProgressTemplate>
             </asp:UpdateProgress>
-
         </div>
         <div class="footer">� 2019 <a href="#">Department of Defence Production</a> </div>
     </div>

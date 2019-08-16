@@ -144,10 +144,10 @@ public class DataUtility
         string fileType = fileName.Substring(fileName.LastIndexOf("."), fileName.Length - fileName.LastIndexOf("."));
         if (fileType.ToUpper() == ".PDF")
             return true;
-        else if (fileType.ToUpper() == ".txt")
-            return true;
-        else if (fileType.ToUpper() == ".xlxs")
-            return true;
+        //    else if (fileType.ToUpper() == ".txt")
+        //      return true;
+        //else if (fileType.ToUpper() == ".xlxs")
+        //  return true;
         else
             return false;
     }

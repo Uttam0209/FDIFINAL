@@ -26,9 +26,10 @@ public partial class Admin_ViewCompanyCategory : System.Web.UI.Page
     string strCRole, strDRole, strURole;
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (!IsPostBack)
+
+        if (Session["User"] != null)
         {
-            if (Session["User"] != null)
+            if (!IsPostBack)
             {
                 if (Request.QueryString["id"] != null)
                 {
@@ -53,12 +54,13 @@ public partial class Admin_ViewCompanyCategory : System.Web.UI.Page
                 BindCompany();
                 BindGridView();
             }
-            else
-            {
-                ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert",
-                    "alert('Session Expired,Please login again');window.location='Login'", true);
-            }
         }
+        else
+        {
+            ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert",
+                "alert('Session Expired,Please login again');window.location='Login'", true);
+        }
+
     }
     #region Load
     protected void BindGridView()

@@ -2,6 +2,7 @@
 using System.Web.UI;
 using Encryption;
 using BusinessLayer;
+using System.Web.Helpers;
 
 public partial class Admin_ChangePassword : System.Web.UI.Page
 {
@@ -10,11 +11,16 @@ public partial class Admin_ChangePassword : System.Web.UI.Page
     Cryptography objEnc = new Cryptography();
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (Request.QueryString["id"] != null)
-        {
-            string id = Request.QueryString["id"].ToString().Replace(" ", "+");
-            lblPageName.Text = objEnc.DecryptData(id);
-        }
+        //if (Request.QueryString["id"].ToString() != null)
+        // {
+        //string id = Request.QueryString["id"].ToString().Replace(" ", "+");
+        //lblPageName.Text = objEnc.DecryptData(id);
+        //   }
+        //   else
+        //   {
+        // ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert",
+        //        "alert('Request you generate is false we will redirect you to login page');window.location='Login'", true);
+        //   }
     }
     protected void btnsub_Click(object sender, EventArgs e)
     {
@@ -30,16 +36,14 @@ public partial class Admin_ChangePassword : System.Web.UI.Page
                     string UpdatePassword = Lo.UpdateLoginPassword(hashString, txtoldpass.Text, ObjEnc.DecryptData(Session["User"].ToString()), "LoginOld", txtnewpass.Text, GetSalt);
                     if (UpdatePassword == "true")
                     {
-                        divmsg.InnerHtml = "Password change successfully";
-                        divmsg.Attributes.Add("Class", "alert alert-success");
-                        divmsg.Visible = true;
+                        divmsg.Visible = false;
+                        ScriptManager.RegisterStartupScript(this, this.GetType(), "alert", "alert('Password change successfully.You just changed your password.Please login with your new password we will redirect you to login page');window.location ='Login';", true);
                     }
                     else
                     {
                         divmsg.InnerHtml = "Password not change";
                         divmsg.Attributes.Add("Class", "alert alert-danger");
                         divmsg.Visible = true;
-
                     }
                 }
                 else

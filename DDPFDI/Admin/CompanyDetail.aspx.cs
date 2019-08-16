@@ -8,6 +8,7 @@ using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Web.Helpers;
 
 public partial class Admin_CompanyDetail : System.Web.UI.Page
 {
@@ -31,7 +32,6 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
     {
         if (!IsPostBack)
         {
-
             if (Session["Type"] != null)
             {
                 try

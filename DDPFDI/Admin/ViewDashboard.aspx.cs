@@ -10,6 +10,8 @@ public partial class Admin_ViewDashboard : System.Web.UI.Page
     Logic Lo = new Logic();
     DataTable DtGrid = new DataTable();
     Cryptography Encrypt = new Cryptography();
+    PagedDataSource pgsource = new PagedDataSource();
+    int firstindex, lastindex;
     protected void Page_Load(object sender, EventArgs e)
     {
         if (Page.IsPostBack == false)
@@ -32,97 +34,124 @@ public partial class Admin_ViewDashboard : System.Web.UI.Page
     }
     private void ControlGrid(string mVal, string RefNo)
     {
-
-        if (mVal == "C")
+        hfmtype.Value = mVal.ToString();
+        hfmref.Value = RefNo.ToString();
+        if (hfmtype.Value == "C")
         {
             gvcompanydetail.Visible = true;
             gvfactory.Visible = false;
             gvunit.Visible = false;
             gvViewNodalOfficer.Visible = false;
             gvproduct.Visible = false;
-            BindCompany(RefNo);
+            BindCompany(hfmref.Value);
         }
-        else if (mVal == "D")
+        else if (hfmtype.Value == "D")
         {
             gvcompanydetail.Visible = false;
             gvfactory.Visible = true;
             gvunit.Visible = false;
             gvViewNodalOfficer.Visible = false;
             gvproduct.Visible = false;
-            BindDivision(RefNo);
+            BindDivision(hfmref.Value);
         }
-        else if (mVal == "U")
+        else if (hfmtype.Value == "U")
         {
             gvcompanydetail.Visible = false;
             gvfactory.Visible = false;
             gvunit.Visible = true;
             gvViewNodalOfficer.Visible = false;
             gvproduct.Visible = false;
-            BindUnit(RefNo);
+            BindUnit(hfmref.Value);
         }
-        else if (mVal == "E")
+        else if (hfmtype.Value == "E")
         {
             gvcompanydetail.Visible = false;
             gvfactory.Visible = false;
             gvunit.Visible = false;
             gvViewNodalOfficer.Visible = true;
             gvproduct.Visible = false;
-            BindEmployee(RefNo);
+            BindEmployee(hfmref.Value);
         }
-        else if (mVal == "P")
+        else if (hfmtype.Value == "P")
         {
             gvcompanydetail.Visible = false;
             gvfactory.Visible = false;
             gvunit.Visible = false;
             gvViewNodalOfficer.Visible = false;
             gvproduct.Visible = true;
-            BindProduct(RefNo);
+            BindProduct(hfmref.Value);
         }
-        else if (mVal == "PI")
+        else if (hfmtype.Value == "PI")
         {
             gvcompanydetail.Visible = false;
             gvfactory.Visible = false;
             gvunit.Visible = false;
             gvViewNodalOfficer.Visible = false;
             gvproduct.Visible = true;
-            BindProduct(RefNo);
+            BindProduct(hfmref.Value);
         }
         else
         {
-            BindCompany(RefNo);
-            BindDivision(RefNo);
-            BindUnit(RefNo);
-            BindEmployee(RefNo);
-            BindProduct(RefNo);
+            BindCompany(hfmref.Value);
+            BindDivision(hfmref.Value);
+            BindUnit(hfmref.Value);
+            BindEmployee(hfmref.Value);
+            BindProduct(hfmref.Value);
         }
-
     }
     protected void BindCompany(string RefNo)
     {
         DtGrid = Lo.GetDashboardData("Company", txtsearch.Text.Trim());
         if (DtGrid.Rows.Count > 0)
         {
-            if (RefNo != "")
+            if (hfmref.Value != "")
             {
                 DataView dv = new DataView(DtGrid);
                 //code to filter role wise 
-                DataTable dtParentNode = Lo.RetriveParentNode(Encrypt.DecryptData(Session["Type"].ToString()).ToUpper(), RefNo);
+                DataTable dtParentNode = Lo.RetriveParentNode(Encrypt.DecryptData(Session["Type"].ToString()).ToUpper(), hfmref.Value);
                 if (Encrypt.DecryptData(Session["Type"].ToString()).ToUpper() == "COMPANY")
-                    dv.RowFilter = "CompanyRefNo='" + RefNo + "'";
+                    dv.RowFilter = "CompanyRefNo='" + hfmref.Value + "'";
                 else if (Encrypt.DecryptData(Session["Type"].ToString()).ToUpper() == "DIVISION")
                     dv.RowFilter = "CompanyRefNo='" + dtParentNode.Rows[0]["CompanyRefNo"].ToString() + "'";
                 else
                     dv.RowFilter = "CompanyRefNo='" + dtParentNode.Rows[0]["CompanyRefNo"].ToString() + "'";
-
-                gvcompanydetail.DataSource = dv.ToTable();
+                DataTable dtads = dv.ToTable();
+                pgsource.DataSource = dtads.DefaultView;
+                pgsource.AllowPaging = true;
+                pgsource.PageSize = 25;
+                pgsource.CurrentPageIndex = pagingCurrentPage;
+                ViewState["totpage"] = pgsource.PageCount;
+                lblpaging.Text = "Page " + (pagingCurrentPage + 1) + " of " + pgsource.PageCount;
+                lnkbtnPgPrevious.Enabled = !pgsource.IsFirstPage;
+                lnkbtnPgNext.Enabled = !pgsource.IsLastPage;
+                lnkbtnPgFirst.Enabled = !pgsource.IsFirstPage;
+                lnkbtnPgLast.Enabled = !pgsource.IsLastPage;
+                pgsource.DataSource = dtads.DefaultView;
+                gvcompanydetail.DataSource = pgsource;
                 gvcompanydetail.DataBind();
+                DataListPagingMethod();
+                divpageindex.Visible = true;
                 lbltotal.Text = "Total Records:- " + gvcompanydetail.Rows.Count.ToString();
                 divcompanyGrid.Visible = true;
             }
             else
             {
-                gvcompanydetail.DataSource = DtGrid;
+                DataTable dtads = DtGrid;
+                pgsource.DataSource = dtads.DefaultView;
+                pgsource.AllowPaging = true;
+                pgsource.PageSize = 25;
+                pgsource.CurrentPageIndex = pagingCurrentPage;
+                ViewState["totpage"] = pgsource.PageCount;
+                lblpaging.Text = "Page " + (pagingCurrentPage + 1) + " of " + pgsource.PageCount;
+                lnkbtnPgPrevious.Enabled = !pgsource.IsFirstPage;
+                lnkbtnPgNext.Enabled = !pgsource.IsLastPage;
+                lnkbtnPgFirst.Enabled = !pgsource.IsFirstPage;
+                lnkbtnPgLast.Enabled = !pgsource.IsLastPage;
+                pgsource.DataSource = dtads.DefaultView;
+                gvcompanydetail.DataSource = pgsource;
                 gvcompanydetail.DataBind();
+                DataListPagingMethod();
+                divpageindex.Visible = true;
                 lbltotal.Text = "Total Records:- " + gvcompanydetail.Rows.Count.ToString();
                 divcompanyGrid.Visible = true;
             }
@@ -135,27 +164,54 @@ public partial class Admin_ViewDashboard : System.Web.UI.Page
         DtGrid = Lo.GetDashboardData("Division", txtsearch.Text.Trim());
         if (DtGrid.Rows.Count > 0)
         {
-            if (RefNo != "")
+            if (hfmref.Value != "")
             {
                 DataView dv = new DataView(DtGrid);
                 //code to filter role wise 
-                DataTable dtParentNode = Lo.RetriveParentNode(Encrypt.DecryptData(Session["Type"].ToString()).ToUpper(), RefNo);
+                DataTable dtParentNode = Lo.RetriveParentNode(Encrypt.DecryptData(Session["Type"].ToString()).ToUpper(), hfmref.Value);
                 if (Encrypt.DecryptData(Session["Type"].ToString()).ToUpper() == "COMPANY")
-                    dv.RowFilter = "CompanyRefNo='" + RefNo + "'";
+                    dv.RowFilter = "CompanyRefNo='" + hfmref.Value + "'";
                 else if (Encrypt.DecryptData(Session["Type"].ToString()).ToUpper() == "DIVISION")
                     dv.RowFilter = "FactoryRefNo='" + dtParentNode.Rows[0]["FactoryRefNo"].ToString() + "'";
                 else
                     dv.RowFilter = "UnitRefNo='" + dtParentNode.Rows[0]["UnitRefNo"].ToString() + "'";
-
-                gvfactory.DataSource = dv.ToTable();
+                DataTable dtads = dv.ToTable();
+                pgsource.DataSource = dtads.DefaultView;
+                pgsource.AllowPaging = true;
+                pgsource.PageSize = 25;
+                pgsource.CurrentPageIndex = pagingCurrentPage;
+                ViewState["totpage"] = pgsource.PageCount;
+                lblpaging.Text = "Page " + (pagingCurrentPage + 1) + " of " + pgsource.PageCount;
+                lnkbtnPgPrevious.Enabled = !pgsource.IsFirstPage;
+                lnkbtnPgNext.Enabled = !pgsource.IsLastPage;
+                lnkbtnPgFirst.Enabled = !pgsource.IsFirstPage;
+                lnkbtnPgLast.Enabled = !pgsource.IsLastPage;
+                pgsource.DataSource = dtads.DefaultView;
+                gvfactory.DataSource = pgsource;
                 gvfactory.DataBind();
+                DataListPagingMethod();
+                divpageindex.Visible = true;
                 lbltotal.Text = "Total Records:- " + gvfactory.Rows.Count.ToString();
                 divfactorygrid.Visible = true;
             }
             else
             {
-                gvfactory.DataSource = DtGrid;
+                DataTable dtads = DtGrid;
+                pgsource.DataSource = dtads.DefaultView;
+                pgsource.AllowPaging = true;
+                pgsource.PageSize = 25;
+                pgsource.CurrentPageIndex = pagingCurrentPage;
+                ViewState["totpage"] = pgsource.PageCount;
+                lblpaging.Text = "Page " + (pagingCurrentPage + 1) + " of " + pgsource.PageCount;
+                lnkbtnPgPrevious.Enabled = !pgsource.IsFirstPage;
+                lnkbtnPgNext.Enabled = !pgsource.IsLastPage;
+                lnkbtnPgFirst.Enabled = !pgsource.IsFirstPage;
+                lnkbtnPgLast.Enabled = !pgsource.IsLastPage;
+                pgsource.DataSource = dtads.DefaultView;
+                gvfactory.DataSource = pgsource;
                 gvfactory.DataBind();
+                DataListPagingMethod();
+                divpageindex.Visible = true;
                 lbltotal.Text = "Total Records:- " + gvfactory.Rows.Count.ToString();
                 divfactorygrid.Visible = true;
             }
@@ -168,27 +224,55 @@ public partial class Admin_ViewDashboard : System.Web.UI.Page
         DtGrid = Lo.GetDashboardData("Unit", txtsearch.Text.Trim());
         if (DtGrid.Rows.Count > 0)
         {
-            if (RefNo != "")
+            if (hfmref.Value != "")
             {
                 DataView dv = new DataView(DtGrid);
                 //code to filter role wise 
-                DataTable dtParentNode = Lo.RetriveParentNode(Encrypt.DecryptData(Session["Type"].ToString()).ToUpper(), RefNo);
+                DataTable dtParentNode = Lo.RetriveParentNode(Encrypt.DecryptData(Session["Type"].ToString()).ToUpper(), hfmref.Value);
                 if (Encrypt.DecryptData(Session["Type"].ToString()).ToUpper() == "COMPANY")
-                    dv.RowFilter = "CompanyRefNo='" + RefNo + "'";
+                    dv.RowFilter = "CompanyRefNo='" + hfmref.Value + "'";
                 else if (Encrypt.DecryptData(Session["Type"].ToString()).ToUpper() == "DIVISION")
                     dv.RowFilter = "FactoryRefNo='" + dtParentNode.Rows[0]["FactoryRefNo"].ToString() + "'";
                 else
                     dv.RowFilter = "UnitRefNo='" + dtParentNode.Rows[0]["UnitRefNo"].ToString() + "'";
 
-                gvunit.DataSource = dv.ToTable();
+                DataTable dtads = dv.ToTable();
+                pgsource.DataSource = dtads.DefaultView;
+                pgsource.AllowPaging = true;
+                pgsource.PageSize = 25;
+                pgsource.CurrentPageIndex = pagingCurrentPage;
+                ViewState["totpage"] = pgsource.PageCount;
+                lblpaging.Text = "Page " + (pagingCurrentPage + 1) + " of " + pgsource.PageCount;
+                lnkbtnPgPrevious.Enabled = !pgsource.IsFirstPage;
+                lnkbtnPgNext.Enabled = !pgsource.IsLastPage;
+                lnkbtnPgFirst.Enabled = !pgsource.IsFirstPage;
+                lnkbtnPgLast.Enabled = !pgsource.IsLastPage;
+                pgsource.DataSource = dtads.DefaultView;
+                gvunit.DataSource = pgsource;
                 gvunit.DataBind();
+                DataListPagingMethod();
+                divpageindex.Visible = true;
                 lbltotal.Text = "Total Records:- " + gvunit.Rows.Count.ToString();
                 divunitGrid.Visible = true;
             }
             else
             {
-                gvunit.DataSource = DtGrid;
+                DataTable dtads = DtGrid;
+                pgsource.DataSource = dtads.DefaultView;
+                pgsource.AllowPaging = true;
+                pgsource.PageSize = 25;
+                pgsource.CurrentPageIndex = pagingCurrentPage;
+                ViewState["totpage"] = pgsource.PageCount;
+                lblpaging.Text = "Page " + (pagingCurrentPage + 1) + " of " + pgsource.PageCount;
+                lnkbtnPgPrevious.Enabled = !pgsource.IsFirstPage;
+                lnkbtnPgNext.Enabled = !pgsource.IsLastPage;
+                lnkbtnPgFirst.Enabled = !pgsource.IsFirstPage;
+                lnkbtnPgLast.Enabled = !pgsource.IsLastPage;
+                pgsource.DataSource = dtads.DefaultView;
+                gvunit.DataSource = pgsource;
                 gvunit.DataBind();
+                DataListPagingMethod();
+                divpageindex.Visible = true;
                 lbltotal.Text = "Total Records:- " + gvunit.Rows.Count.ToString();
                 divunitGrid.Visible = true;
             }
@@ -202,20 +286,35 @@ public partial class Admin_ViewDashboard : System.Web.UI.Page
         if (DtGrid.Rows.Count > 0)
         {
             this.UpdateDtGridValue();
-            if (RefNo != "")
+            if (hfmref.Value != "")
             {
                 DataView dv = new DataView(DtGrid);
                 // code to filter row role wise
                 if (Encrypt.DecryptData(Session["Type"].ToString()).ToUpper() == "COMPANY")
-                    dv.RowFilter = "CompanyRefNo='" + RefNo + "'";
+                    dv.RowFilter = "CompanyRefNo='" + hfmref.Value + "'";
                 else if (Encrypt.DecryptData(Session["Type"].ToString()).ToUpper() == "DIVISION")
-                    dv.RowFilter = "FactoryRefNo='" + RefNo + "'";
+                    dv.RowFilter = "FactoryRefNo='" + hfmref.Value + "'";
                 else
-                    dv.RowFilter = "UnitRefNo='" + RefNo + "'";
+                    dv.RowFilter = "UnitRefNo='" + hfmref.Value + "'";
 
                 dv.Sort = "CompanyName asc,FactoryName asc";
-                gvViewNodalOfficer.DataSource = dv.ToTable();
+
+                DataTable dtads = dv.ToTable();
+                pgsource.DataSource = dtads.DefaultView;
+                pgsource.AllowPaging = true;
+                pgsource.PageSize = 25;
+                pgsource.CurrentPageIndex = pagingCurrentPage;
+                ViewState["totpage"] = pgsource.PageCount;
+                lblpaging.Text = "Page " + (pagingCurrentPage + 1) + " of " + pgsource.PageCount;
+                lnkbtnPgPrevious.Enabled = !pgsource.IsFirstPage;
+                lnkbtnPgNext.Enabled = !pgsource.IsLastPage;
+                lnkbtnPgFirst.Enabled = !pgsource.IsFirstPage;
+                lnkbtnPgLast.Enabled = !pgsource.IsLastPage;
+                pgsource.DataSource = dtads.DefaultView;
+                gvViewNodalOfficer.DataSource = pgsource;
                 gvViewNodalOfficer.DataBind();
+                DataListPagingMethod();
+                divpageindex.Visible = true;
                 lbltotal.Text = "Total Records:- " + gvViewNodalOfficer.Rows.Count.ToString();
                 divEmployeeNodalGrid.Visible = true;
             }
@@ -223,8 +322,23 @@ public partial class Admin_ViewDashboard : System.Web.UI.Page
             {
                 DataView dv = new DataView(DtGrid);
                 dv.Sort = "CompanyName asc,FactoryName asc";
-                gvViewNodalOfficer.DataSource = dv.ToTable();
+
+                DataTable dtads = dv.ToTable();
+                pgsource.DataSource = dtads.DefaultView;
+                pgsource.AllowPaging = true;
+                pgsource.PageSize = 25;
+                pgsource.CurrentPageIndex = pagingCurrentPage;
+                ViewState["totpage"] = pgsource.PageCount;
+                lblpaging.Text = "Page " + (pagingCurrentPage + 1) + " of " + pgsource.PageCount;
+                lnkbtnPgPrevious.Enabled = !pgsource.IsFirstPage;
+                lnkbtnPgNext.Enabled = !pgsource.IsLastPage;
+                lnkbtnPgFirst.Enabled = !pgsource.IsFirstPage;
+                lnkbtnPgLast.Enabled = !pgsource.IsLastPage;
+                pgsource.DataSource = dtads.DefaultView;
+                gvViewNodalOfficer.DataSource = pgsource;
                 gvViewNodalOfficer.DataBind();
+                DataListPagingMethod();
+                divpageindex.Visible = true;
                 lbltotal.Text = "Total Records:- " + gvViewNodalOfficer.Rows.Count.ToString();
                 divEmployeeNodalGrid.Visible = true;
             }
@@ -238,20 +352,35 @@ public partial class Admin_ViewDashboard : System.Web.UI.Page
         if (DtGrid.Rows.Count > 0)
         {
             this.UpdateDtGridValue();
-            if (RefNo != "")
+            if (hfmref.Value != "")
             {
                 DataView dv = new DataView(DtGrid);
                 // code to filter row role wise
                 if (Encrypt.DecryptData(Session["Type"].ToString()).ToUpper() == "COMPANY")
-                    dv.RowFilter = "CompanyRefNo='" + RefNo + "'";
+                    dv.RowFilter = "CompanyRefNo='" + hfmref.Value + "'";
                 else if (Encrypt.DecryptData(Session["Type"].ToString()).ToUpper() == "DIVISION")
-                    dv.RowFilter = "FactoryRefNo='" + RefNo + "'";
+                    dv.RowFilter = "FactoryRefNo='" + hfmref.Value + "'";
                 else
-                    dv.RowFilter = "UnitRefNo='" + RefNo + "'";
+                    dv.RowFilter = "UnitRefNo='" + hfmref.Value + "'";
                 dv.Sort = "LastUpdated desc,CompanyName asc,FactoryName asc";
 
-                gvproduct.DataSource = dv.ToTable();
+
+                DataTable dtads = dv.ToTable();
+                pgsource.DataSource = dtads.DefaultView;
+                pgsource.AllowPaging = true;
+                pgsource.PageSize = 25;
+                pgsource.CurrentPageIndex = pagingCurrentPage;
+                ViewState["totpage"] = pgsource.PageCount;
+                lblpaging.Text = "Page " + (pagingCurrentPage + 1) + " of " + pgsource.PageCount;
+                lnkbtnPgPrevious.Enabled = !pgsource.IsFirstPage;
+                lnkbtnPgNext.Enabled = !pgsource.IsLastPage;
+                lnkbtnPgFirst.Enabled = !pgsource.IsFirstPage;
+                lnkbtnPgLast.Enabled = !pgsource.IsLastPage;
+                pgsource.DataSource = dtads.DefaultView;
+                gvproduct.DataSource = pgsource;
                 gvproduct.DataBind();
+                DataListPagingMethod();
+                divpageindex.Visible = true;
                 lbltotal.Text = "Total Records:- " + gvproduct.Rows.Count.ToString();
                 divProductGrid.Visible = true;
 
@@ -265,13 +394,40 @@ public partial class Admin_ViewDashboard : System.Web.UI.Page
                         DataView dv = new DataView(DtGrid);
                         dv.RowFilter = "IsIndeginized='Y'";
                         dv.Sort = "LastUpdated desc,CompanyName asc,FactoryName asc";
-                        gvproduct.DataSource = dv.ToTable();
+
+                        DataTable dtads = dv.ToTable();
+                        pgsource.DataSource = dtads.DefaultView;
+                        pgsource.AllowPaging = true;
+                        pgsource.PageSize = 25;
+                        pgsource.CurrentPageIndex = pagingCurrentPage;
+                        ViewState["totpage"] = pgsource.PageCount;
+                        lblpaging.Text = "Page " + (pagingCurrentPage + 1) + " of " + pgsource.PageCount;
+                        lnkbtnPgPrevious.Enabled = !pgsource.IsFirstPage;
+                        lnkbtnPgNext.Enabled = !pgsource.IsLastPage;
+                        lnkbtnPgFirst.Enabled = !pgsource.IsFirstPage;
+                        lnkbtnPgLast.Enabled = !pgsource.IsLastPage;
+                        pgsource.DataSource = dtads.DefaultView;
+                        gvproduct.DataSource = pgsource;
                     }
                     else
                     {
-                        gvproduct.DataSource = DtGrid;
+                        DataTable dtads = DtGrid;
+                        pgsource.DataSource = dtads.DefaultView;
+                        pgsource.AllowPaging = true;
+                        pgsource.PageSize = 25;
+                        pgsource.CurrentPageIndex = pagingCurrentPage;
+                        ViewState["totpage"] = pgsource.PageCount;
+                        lblpaging.Text = "Page " + (pagingCurrentPage + 1) + " of " + pgsource.PageCount;
+                        lnkbtnPgPrevious.Enabled = !pgsource.IsFirstPage;
+                        lnkbtnPgNext.Enabled = !pgsource.IsLastPage;
+                        lnkbtnPgFirst.Enabled = !pgsource.IsFirstPage;
+                        lnkbtnPgLast.Enabled = !pgsource.IsLastPage;
+                        pgsource.DataSource = dtads.DefaultView;
+                        gvproduct.DataSource = pgsource;
                     }
                     gvproduct.DataBind();
+                    DataListPagingMethod();
+                    divpageindex.Visible = true;
                     lbltotal.Text = "Total Records:- " + gvproduct.Rows.Count.ToString();
                     divProductGrid.Visible = true;
                 }
@@ -639,6 +795,7 @@ public partial class Admin_ViewDashboard : System.Web.UI.Page
         }
     }
     #endregion
+    #region  Other Code
     protected void gvViewNodalOfficer_RowDataBound(object sender, GridViewRowEventArgs e)
     {
         if (e.Row.RowType == DataControlRowType.DataRow)
@@ -763,5 +920,197 @@ public partial class Admin_ViewDashboard : System.Web.UI.Page
         {
             e.Row.TableSection = TableRowSection.TableFooter;
         }
+    }
+
+    #endregion
+    #region //------------------------pageindex code--------------//
+    protected void lnkbtnPgFirst_Click(object sender, EventArgs e)
+    {
+        pagingCurrentPage = 0;
+        if (hfmtype.Value == "C")
+        {
+            BindCompany(hfmref.Value);
+        }
+        else if (hfmtype.Value == "D")
+        {
+            BindDivision(hfmref.Value);
+        }
+        else if (hfmtype.Value == "U")
+        {
+            BindUnit(hfmref.Value);
+        }
+        else if (hfmtype.Value == "E")
+        {
+            BindEmployee(hfmref.Value);
+        }
+        else if (hfmtype.Value == "P")
+        { BindProduct(hfmref.Value); }
+        else if (hfmtype.Value == "PI")
+        { BindProduct(hfmref.Value); }
+    }
+    protected void lnkbtnPgPrevious_Click(object sender, EventArgs e)
+    {
+        pagingCurrentPage -= 1;
+        if (hfmtype.Value == "C")
+        {
+            BindCompany(hfmref.Value);
+        }
+        else if (hfmtype.Value == "D")
+        {
+            BindDivision(hfmref.Value);
+        }
+        else if (hfmtype.Value == "U")
+        {
+            BindUnit(hfmref.Value);
+        }
+        else if (hfmtype.Value == "E")
+        {
+            BindEmployee(hfmref.Value);
+        }
+        else if (hfmtype.Value == "P")
+        { BindProduct(hfmref.Value); }
+        else if (hfmtype.Value == "PI")
+        { BindProduct(hfmref.Value); }
+    }
+    protected void lnkbtnPgNext_Click(object sender, EventArgs e)
+    {
+        pagingCurrentPage += 1;
+        if (hfmtype.Value == "C")
+        {
+            BindCompany(hfmref.Value);
+        }
+        else if (hfmtype.Value == "D")
+        {
+            BindDivision(hfmref.Value);
+        }
+        else if (hfmtype.Value == "U")
+        {
+            BindUnit(hfmref.Value);
+        }
+        else if (hfmtype.Value == "E")
+        {
+            BindEmployee(hfmref.Value);
+        }
+        else if (hfmtype.Value == "P")
+        { BindProduct(hfmref.Value); }
+        else if (hfmtype.Value == "PI")
+        { BindProduct(hfmref.Value); }
+    }
+    protected void lnkbtnPgLast_Click(object sender, EventArgs e)
+    {
+        pagingCurrentPage = (Convert.ToInt32(ViewState["totpage"]) - 1);
+        if (hfmtype.Value == "C")
+        {
+            BindCompany(hfmref.Value);
+        }
+        else if (hfmtype.Value == "D")
+        {
+            BindDivision(hfmref.Value);
+        }
+        else if (hfmtype.Value == "U")
+        {
+            BindUnit(hfmref.Value);
+        }
+        else if (hfmtype.Value == "E")
+        {
+            BindEmployee(hfmref.Value);
+        }
+        else if (hfmtype.Value == "P")
+        { BindProduct(hfmref.Value); }
+        else if (hfmtype.Value == "PI")
+        { BindProduct(hfmref.Value); }
+    }
+    protected void DataListPaging_ItemCommand(object source, DataListCommandEventArgs e)
+    {
+        if (e.CommandName.Equals("Newpage"))
+        {
+            pagingCurrentPage = Convert.ToInt32(e.CommandArgument.ToString());
+            if (hfmtype.Value == "C")
+            {
+                BindCompany(hfmref.Value);
+            }
+            else if (hfmtype.Value == "D")
+            {
+                BindDivision(hfmref.Value);
+            }
+            else if (hfmtype.Value == "U")
+            {
+                BindUnit(hfmref.Value);
+            }
+            else if (hfmtype.Value == "E")
+            {
+                BindEmployee(hfmref.Value);
+            }
+            else if (hfmtype.Value == "P")
+            { BindProduct(hfmref.Value); }
+            else if (hfmtype.Value == "PI")
+            { BindProduct(hfmref.Value); }
+        }
+    }
+    protected void DataListPaging_ItemDataBound(object sender, DataListItemEventArgs e)
+    {
+        LinkButton lnkPage = (LinkButton)e.Item.FindControl("Pagingbtn");
+        if (lnkPage.CommandArgument.ToString() == pagingCurrentPage.ToString())
+        {
+            lnkPage.Enabled = false;
+        }
+    }
+    private int pagingCurrentPage
+    {
+        get
+        {
+            if (ViewState["pagingCurrentPage"] == null)
+            {
+                return 0;
+            }
+            else
+            {
+                return ((int)ViewState["pagingCurrentPage"]);
+            }
+        }
+        set
+        {
+            ViewState["pagingCurrentPage"] = value;
+        }
+    }
+    private void DataListPagingMethod()
+    {
+        DataTable dt = new DataTable();
+        dt.Columns.Add("PageIndex");
+        dt.Columns.Add("PageText");
+        firstindex = pagingCurrentPage - 25;
+        if (pagingCurrentPage > 25)
+        {
+            lastindex = pagingCurrentPage + 25;
+        }
+        else
+        {
+            lastindex = 24;
+        }
+        if (lastindex > Convert.ToInt32(ViewState["totpage"]))
+        {
+            lastindex = Convert.ToInt32(ViewState["totpage"]);
+            firstindex = lastindex - 24;
+        }
+        if (firstindex < 0)
+        {
+            firstindex = 0;
+        }
+        for (int i = firstindex; i < lastindex; i++)
+        {
+            DataRow dr = dt.NewRow();
+            dr[0] = i;
+            dr[1] = i + 1;
+            dt.Rows.Add(dr);
+        }
+
+        DataListPaging.DataSource = dt;
+        DataListPaging.DataBind();
+    }
+    //end page index---------------------------------------//
+    #endregion
+    protected void lblback_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("Dashboard?mu=" + Encrypt.EncryptData(Session["Type"].ToString()) + "&id=" + Encrypt.EncryptData(Session["CompanyRefNo"].ToString()));
     }
 }

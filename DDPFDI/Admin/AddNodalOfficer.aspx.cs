@@ -8,6 +8,7 @@ using System.Web.UI;
 using System.IO;
 using System.Web.UI.WebControls;
 using System.Web;
+using System.Web.Helpers;
 
 public partial class Admin_AddNodalOfficer : System.Web.UI.Page
 {
@@ -29,9 +30,10 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
     private Int16 Mid = 0;
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (!IsPostBack)
+
+        if (Session["Type"] != null)
         {
-            if (Session["Type"] != null)
+            if (!IsPostBack)
             {
                 if (Request.QueryString["id"] != null)
                 {
@@ -71,12 +73,13 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
                     BindMasterDesignation("");
                 }
             }
-            else
-            {
-                ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert",
-                    "alert('Session Expired,Please login again');window.location='Login'", true);
-            }
         }
+        else
+        {
+            ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert",
+                "alert('Session Expired,Please login again');window.location='Login'", true);
+        }
+
     }
     #region Load
     protected void BindEmployee(string mRoleEmployee)
@@ -682,49 +685,56 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
     #endregion
     protected void btnsub_Click(object sender, EventArgs e)
     {
-        if (txtemailid.Text == "" && txtname.Text == "" && txtemailid.Text != "")
+        try
         {
-            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Email id and name can not be empty !')", true);
-        }
-        else
-        {
-            if (ddlcompany.SelectedItem.Value != "Select")
+            if (txtemailid.Text == "" && txtname.Text == "" && txtemailid.Text != "")
             {
-                if (chkrole.Items[0].Selected == true && chkrole.Items[1].Selected == true)
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Email id and name can not be empty !')", true);
+            }
+            else
+            {
+                if (ddlcompany.SelectedItem.Value != "Select")
                 {
-                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('check only nodel or user any one.')", true);
-                }
-                else
-                {
-                    if (Request.QueryString["mcurrentcompRefNo"] == null)
+                    if (chkrole.Items[0].Selected == true && chkrole.Items[1].Selected == true)
                     {
-                        if (ddldesignation.SelectedItem.Value != "Select")
+                        ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('check only nodel or user any one.')", true);
+                    }
+                    else
+                    {
+                        if (Request.QueryString["mcurrentcompRefNo"] == null)
                         {
-                            DataTable dtNodalOfficerEmail = Lo.RetriveMasterData(0, txtemailid.Text, "", 0, "", "", "ValidEmail");
-                            if (dtNodalOfficerEmail.Rows.Count > 0)
+                            if (ddldesignation.SelectedItem.Value != "Select")
                             {
-                                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Email id already exists !')", true);
+                                DataTable dtNodalOfficerEmail = Lo.RetriveMasterData(0, txtemailid.Text, "", 0, "", "", "ValidEmail");
+                                if (dtNodalOfficerEmail.Rows.Count > 0)
+                                {
+                                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Email id already exists !')", true);
+                                }
+                                else
+                                {
+                                    SaveNodal();
+                                }
                             }
                             else
                             {
-                                SaveNodal();
+                                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Select designation !')", true);
                             }
                         }
                         else
                         {
-                            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Select designation !')", true);
+                            SaveNodal();
                         }
                     }
-                    else
-                    {
-                        SaveNodal();
-                    }
+                }
+                else
+                {
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Select company !')", true);
                 }
             }
-            else
-            {
-                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Select company !')", true);
-            }
+        }
+        catch (Exception ex)
+        {
+            ex.Message.ToString();
         }
     }
     protected void Cleartext()

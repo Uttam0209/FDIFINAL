@@ -7,7 +7,8 @@ using System.Text;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-
+using System.Web.Security;
+using System.Web.Helpers;
 public partial class Admin_AddMasterCompany : System.Web.UI.Page
 {
     private Logic Lo = new Logic();
@@ -25,7 +26,6 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
     {
         if (!IsPostBack)
         {
-
             if (Session["Type"] != null)
             {
                 try
@@ -63,7 +63,7 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
                             Intrested.Visible = true;
                             MenuAlot.Visible = true;
                             divRole.Visible = true;
-                            gvcompanydetail.Visible = false;
+                            gvcompanydetailsave.Visible = false;
                         }
                         else if (Enc.DecryptData(Request.QueryString["mu"].ToString()) == "Panel2")
                         {
@@ -102,7 +102,7 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
                                 divRole.Visible = true;
                             }
 
-                            gvcompanydetail.Visible = true;
+                            gvcompanydetailsave.Visible = true;
                             GridCompanyBind();
                         }
                         lblMastcompany.Text = "Select Company ";
@@ -110,7 +110,7 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
                         chkrole.Attributes.Add("onclick", "radioMe(event);");
                     }
                     else
-                    { Response.RedirectToRoute("login");}
+                    { Response.RedirectToRoute("login"); }
                 }
                 catch (Exception ex)
                 {
@@ -122,12 +122,9 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
             }
             else
             {
-                ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert",
-                    "alert('Session Expired,Please login again');window.location='Login'", true);
+                ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "alert('Session Expired,Please login again');window.location='Login'", true);
             }
-
         }
-
     }
     public void GridcompanyVisible()
     {
@@ -136,7 +133,7 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
         }
         else
         {
-            gvcompanydetail.Visible = true;
+            gvcompanydetailsave.Visible = true;
             GridCompanyBind();
             Intrested.Visible = false;
             MenuAlot.Visible = false;
@@ -160,50 +157,50 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
         }
         if (DtGrid.Rows.Count > 0)
         {
-            gvcompanydetail.DataSource = DtGrid;
-            gvcompanydetail.DataBind();
+            gvcompanydetailsave.DataSource = DtGrid;
+            gvcompanydetailsave.DataBind();
             CompGrid();
         }
         else
         {
-            gvcompanydetail.Visible = false;
+            gvcompanydetailsave.Visible = false;
         }
     }
     protected void CompGrid()
     {
         if (Enc.DecryptData(Request.QueryString["mu"].ToString()) == "Panel2")
         {
-            gvcompanydetail.Columns[1].Visible = true;
-            gvcompanydetail.Columns[2].Visible = false;
-            gvcompanydetail.Columns[3].Visible = true;
-            //this.gvcompanydetail.Columns[4].Visible = true;
-            gvcompanydetail.Columns[5].Visible = false;
-            // this.gvcompanydetail.Columns[6].Visible = false;
-            gvcompanydetail.Columns[8].Visible = false;
-            gvcompanydetail.Columns[9].Visible = true;
-            gvcompanydetail.Columns[10].Visible = false;
+            gvcompanydetailsave.Columns[1].Visible = true;
+            gvcompanydetailsave.Columns[2].Visible = false;
+            gvcompanydetailsave.Columns[3].Visible = true;
+            //this.gvcompanydetailsave.Columns[4].Visible = true;
+            gvcompanydetailsave.Columns[5].Visible = false;
+            // this.gvcompanydetailsave.Columns[6].Visible = false;
+            gvcompanydetailsave.Columns[8].Visible = false;
+            gvcompanydetailsave.Columns[9].Visible = true;
+            gvcompanydetailsave.Columns[10].Visible = false;
         }
         else if (Enc.DecryptData(Request.QueryString["mu"].ToString()) == "Panel3")
         {
-            gvcompanydetail.Columns[1].Visible = true;
-            gvcompanydetail.Columns[2].Visible = false;
-            gvcompanydetail.Columns[3].Visible = true;
-            gvcompanydetail.Columns[4].Visible = false;
-            gvcompanydetail.Columns[5].Visible = true;
-            //this.gvcompanydetail.Columns[6].Visible = true;
-            gvcompanydetail.Columns[8].Visible = false;
-            gvcompanydetail.Columns[9].Visible = false;
-            gvcompanydetail.Columns[10].Visible = true;
+            gvcompanydetailsave.Columns[1].Visible = true;
+            gvcompanydetailsave.Columns[2].Visible = false;
+            gvcompanydetailsave.Columns[3].Visible = true;
+            gvcompanydetailsave.Columns[4].Visible = false;
+            gvcompanydetailsave.Columns[5].Visible = true;
+            //this.gvcompanydetailsave.Columns[6].Visible = true;
+            gvcompanydetailsave.Columns[8].Visible = false;
+            gvcompanydetailsave.Columns[9].Visible = false;
+            gvcompanydetailsave.Columns[10].Visible = true;
         }
         else
         {
-            gvcompanydetail.Columns[3].Visible = false;
-            gvcompanydetail.Columns[4].Visible = false;
-            gvcompanydetail.Columns[5].Visible = false;
-            gvcompanydetail.Columns[6].Visible = false;
-            gvcompanydetail.Columns[8].Visible = true;
-            gvcompanydetail.Columns[9].Visible = false;
-            gvcompanydetail.Columns[10].Visible = false;
+            gvcompanydetailsave.Columns[3].Visible = false;
+            gvcompanydetailsave.Columns[4].Visible = false;
+            gvcompanydetailsave.Columns[5].Visible = false;
+            gvcompanydetailsave.Columns[6].Visible = false;
+            gvcompanydetailsave.Columns[8].Visible = true;
+            gvcompanydetailsave.Columns[9].Visible = false;
+            gvcompanydetailsave.Columns[10].Visible = false;
         }
 
 
@@ -357,7 +354,7 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
         if (StrSaveComp != "")
         {
 
-            gvcompanydetail.Visible = true;
+            gvcompanydetailsave.Visible = true;
             GridCompanyBind();
             if (btnsubmit.Text == "Save Division")
             {
@@ -467,20 +464,20 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
                 //  Co.FillDropdownlist(ddlfacotry, DtBindSubFactory, "FactoryName", "FactoryRefNo");
                 if (Enc.DecryptData(Request.QueryString["mu"].ToString()) == "Panel3")
                 {
-                    gvcompanydetail.Visible = false;
+                    gvcompanydetailsave.Visible = false;
                     if (ddlfacotry.Enabled == true)
                     {
                         ddlfacotry.Items.Insert(0, "Select");
                     }
                     else
                     {
-                        gvcompanydetail.Visible = true;
+                        gvcompanydetailsave.Visible = true;
                         GridCompanyBind();
                     }
                 }
                 else
                 {
-                    gvcompanydetail.Visible = true;
+                    gvcompanydetailsave.Visible = true;
                     GridCompanyBind();
                     ddlfacotry.Items.Insert(0, "Select");
                 }
@@ -488,21 +485,21 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
             }
             else
             {
-                gvcompanydetail.Visible = false;
+                gvcompanydetailsave.Visible = false;
             }
         }
         else
         {
-            gvcompanydetail.Visible = false;
+            gvcompanydetailsave.Visible = false;
 
         }
     }
     protected void ddlfacotry_SelectedIndexChanged(object sender, EventArgs e)
     {
-        gvcompanydetail.Visible = true;
+        gvcompanydetailsave.Visible = true;
         GridCompanyBind();
     }
-    protected void gvcompanydetail_RowCommand(object sender, GridViewCommandEventArgs e)
+    protected void gvcompanydetailsave_RowCommand(object sender, GridViewCommandEventArgs e)
     {
         if (e.CommandName == "viewComp")
         {
@@ -528,7 +525,7 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
         return res.ToString();
     }
     #endregion
-    protected void gvcompanydetail_RowDataBound(object sender, GridViewRowEventArgs e)
+    protected void gvcompanydetailsave_RowDataBound(object sender, GridViewRowEventArgs e)
     {
         if (e.Row.RowType == DataControlRowType.DataRow)
         {
@@ -538,15 +535,15 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
             }
             if (ddlmaster.Visible == true)
             {
-                gvcompanydetail.Columns[13].Visible = false;
+                gvcompanydetailsave.Columns[13].Visible = false;
             }
             if (ddlfacotry.Visible == true && ddlmaster.Visible == true)
             {
-                gvcompanydetail.Columns[13].Visible = false;
+                gvcompanydetailsave.Columns[13].Visible = false;
             }
         }
     }
-    protected void gvcompanydetail_RowCreated(object sender, GridViewRowEventArgs e)
+    protected void gvcompanydetailsave_RowCreated(object sender, GridViewRowEventArgs e)
     {
         if (e.Row.RowType == DataControlRowType.DataRow)
         {
