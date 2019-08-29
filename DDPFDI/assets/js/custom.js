@@ -233,6 +233,7 @@
         $('#ContentPlaceHolder1_gvlevel3').DataTable();
         $('#ContentPlaceHolder1_gvVendorDetails').DataTable();
         $('#ContentPlaceHolder1_gvViewNodalOfficertest').DataTable();
+        $('#ContentPlaceHolder1_gvnewsadd').DataTable();
     }
 
     $('[data-fancybox="Prodgridviewgellry"]').fancybox({

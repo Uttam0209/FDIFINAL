@@ -95,6 +95,7 @@
         routes.MapPageRoute("Vendor-Dashobard", "Vendor-Dashobard", "~/Vendor/DashboardVendor.aspx", true);
         routes.MapPageRoute("View-VendorRegis", "View-VendorRegis", "~/Vendor/ViewVendorRegistrationDetail.aspx", true);
         routes.MapPageRoute("News", "News", "~/Admin/ImportantNews.aspx", true);
+        routes.MapPageRoute("AddNews", "AddNews", "~/Admin/AddImpNews.aspx", true);
 
     }    
 </script>

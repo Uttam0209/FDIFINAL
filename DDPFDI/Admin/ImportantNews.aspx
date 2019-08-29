@@ -33,7 +33,7 @@
                                     <i class="fa fa-hand-point-right" style="margin-right: 7px; color: #f00;"></i><%#Eval("News") %>
                                 </ItemTemplate>
                             </asp:TemplateField>
-                            <asp:BoundField DataField="Date" HeaderText="Updated Date" />
+                            <asp:BoundField DataField="Date" DataFormatString = "{0:dd/MM/yyyy}" HeaderText="Updated Date" />
                             <asp:BoundField DataField="Pages" HeaderText="Pages" />
                         </Columns>
                     </asp:GridView>

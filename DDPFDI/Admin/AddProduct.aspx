@@ -69,7 +69,7 @@
             </div>
             <div class="tabing-section">
                 <ul class="nav nav-tabs">
-                    <li class="active"><a data-toggle="tab" href="#pd"> Item brief description</a></li>
+                    <li class="active"><a data-toggle="tab" href="#pd">Item description</a></li>
                     <li><a data-toggle="tab" href="#pimg">Item Specification</a></li>
                     <li><a data-toggle="tab" href="#qpt">Estimated Quantity</a></li>
                     <li><a data-toggle="tab" href="#test" runat="server" visible="false">Testing & Certification</a></li>

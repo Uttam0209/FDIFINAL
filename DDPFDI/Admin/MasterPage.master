@@ -1,7 +1,6 @@
 ﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="MasterPage.master.cs" Inherits="Admin_MasterPage" %>
 
 <!DOCTYPE html>
-
 <html lang="en">
 <head id="Head1" runat="server">
     <title></title>

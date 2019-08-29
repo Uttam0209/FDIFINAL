@@ -24,7 +24,7 @@ public partial class _Default : System.Web.UI.Page
     string notvalidate = string.Empty;
     #endregion
     protected void Page_Load(object sender, EventArgs e)
-    {}
+    { }
     #region "Login Code"
     public static bool IsValidEmailId(string InputEmail)
     {
@@ -37,6 +37,11 @@ public partial class _Default : System.Web.UI.Page
     }
     protected void ValidateCaptcha(object sender, ServerValidateEventArgs e)
     {
+        Captcha1.ValidateCaptcha(txtCaptcha.Text.Trim());
+        e.IsValid = Captcha1.UserValidated;
+        if (e.IsValid)
+        {
+        }
     }
     protected void btnLogin_Click(object sender, EventArgs e)
     {
@@ -44,7 +49,8 @@ public partial class _Default : System.Web.UI.Page
         {
             if (IsValidEmailId(txtUserName.Text) == true)
             {
-                if (Session["ChkCaptcha"].ToString().ToLower() != txtCaptcha.Text.ToLower())
+                //if (Session["ChkCaptcha"].ToString().ToLower() != txtCaptcha.Text.ToLower())
+                if (Captcha1.UserValidated == false)
                 {
                     txtPwd.Text = "";
                     ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Invalid Captcha')", true);
@@ -101,10 +107,10 @@ public partial class _Default : System.Web.UI.Page
             Response.RedirectToRoute("login");
         }
     }
-    protected void btnCaptchaNew_Click(object sender, EventArgs e)
-    {
-        Image2.ImageUrl = "~/CaptchaCall.aspx?random=" + DateTime.Now.Ticks.ToString();
-    }
+    //protected void btnCaptchaNew_Click(object sender, EventArgs e)
+    //{
+    //    Image2.ImageUrl = "~/CaptchaCall.aspx?random=" + DateTime.Now.Ticks.ToString();
+    //}
     #endregion
     protected void lblforgotpass_Click(object sender, EventArgs e)
     {
@@ -179,5 +185,5 @@ public partial class _Default : System.Web.UI.Page
         return res.ToString();
     }
     #endregion
-    
+
 }

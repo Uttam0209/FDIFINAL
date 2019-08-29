@@ -1,5 +1,6 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Default.aspx.cs" Inherits="_Default" %>
 
+<%@ Register Assembly="MSCaptcha" Namespace="MSCaptcha" TagPrefix="cc1" %>
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -36,29 +37,18 @@
             border-radius: 0px;
             font: normal 14px/18px Arial, Helvetica, sans-serif;
         }
-        /* .indiacompanydetails
-    {
-      display: none;
-    }*/
     </style>
 </head>
 <body>
     <form id="form1" runat="server" method="post" asp-antiforgery="false">
         <asp:ScriptManager runat="server" ID="sc"></asp:ScriptManager>
         <nav class="navbar" role="navigation">
-
-            <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
                 <a class="navbar-brand" href="#">
-                    <span class="main-logo" title="Department of Defense Product">DDP</span>
+                    <span class="main-logo" title="Department of Defense Product">MOD</span>
                 </a>
             </div>
-
-            <!-- Collect the nav links, forms, and other content for toggling -->
-
-            <!-- /.navbar-collapse -->
         </nav>
-
         <div class="container">
             <div class="row">
                 <div class="loginBg clearfix">
@@ -85,21 +75,20 @@
                             <div class="row">
                                 <div class="col-sm-6">
                                     <div class="row">
-                                        <asp:TextBox runat="server" name="txtCaptcha" type="text" ID="txtCaptcha" TabIndex="3" ToolTip="enter captcha (case sensitive)" class="form-control" autocomplete="off" placeholder="Captcha" required=""></asp:TextBox>
+                                        <asp:TextBox runat="server" ID="txtCaptcha" TabIndex="3" ToolTip="enter captcha (case sensitive)" class="form-control" autocomplete="off" placeholder="Captcha" required=""></asp:TextBox>
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="col-sm-9">
-                                        <asp:Image ID="Image2" runat="server" Height="35px" ImageUrl="~/CaptchaCall.aspx"
-                                            Width="120px" />
+                                        <cc1:CaptchaControl ID="Captcha1" runat="server" CaptchaBackgroundNoise="Low" CaptchaLength="4"
+                                            CaptchaHeight="35" CaptchaWidth="125" CaptchaMinTimeout="5" CaptchaMaxTimeout="240"
+                                            FontColor="#D20B0C" NoiseColor="#B1B1B1" />
                                     </div>
                                     <div class="col-sm-1" style="margin-top: 15px;">
-                                        <asp:LinkButton ID="btnCaptchaNew" runat="server" class="" CausesValidation="false" OnClick="btnCaptchaNew_Click"><i class="fas fa-sync-alt fa-lg"></i></asp:LinkButton>
+                                        <asp:LinkButton ID="btnCaptchaNew" runat="server" class="" CausesValidation="false"><i class="fas fa-sync-alt fa-lg"></i></asp:LinkButton>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="clearfix">
                         </div>
                         <div class="clearfix" style="border-bottom: 1px solid #fff; margin-top: 15px;">
                         </div>
@@ -117,17 +106,16 @@
                                 </div>
                             </ContentTemplate>
                             <Triggers>
-                                <%--<asp:PostBackTrigger ControlID="btnLogin" />--%>
                             </Triggers>
                         </asp:UpdatePanel>
                         <div class="clearfix" style="margin-top: 15px;">
                         </div>
                         <p>Note:- We are change our password policy.If you are facing any problem during login please reset your password just click on forgot password.</p>
+                        <p>Note:- For better site experiance please use Google Chrome,Mozila FireFox,Internet Edge,Safari.</p>
                     </asp:Panel>
                 </div>
             </div>
         </div>
-
         <div class="modal fade" id="changePass" role="dialog" data-keyboard="false" data-backdrop="static">
             <div class="modal-dialog" style="width: 400px;">
                 <!-- Modal content-->
@@ -156,7 +144,6 @@
             </div>
         </div>
     </form>
-    <%-- <script src="assets/js/jquery-1.12.4.js"></script> --%>
     <script src="assets/js/jquery-3.4.1.js"></script>
     <script src="assets/js/bootstrap.min.js"></script>
     <script src="assets/js/custom.js"></script>

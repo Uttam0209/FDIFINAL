@@ -817,6 +817,41 @@ namespace DataAccessLayer
                 }
             }
         }
+        public string SaveImpNews(HybridDictionary hysavecomp, out string _sysMsg, out string _msg)
+        {
+            using (DbConnection dbCon = db.CreateConnection())
+            {
+                string mCurrentID = "";
+                dbCon.Open();
+                DbTransaction dbTran = dbCon.BeginTransaction();
+                try
+                {
+                    DbCommand cmd = db.GetStoredProcCommand("sp_ImpNews");
+                    db.AddInParameter(cmd, "@NewsId", DbType.Int64, hysavecomp["NewsId"]);
+                    db.AddInParameter(cmd, "@News", DbType.String, hysavecomp["News"]);
+                    db.AddInParameter(cmd, "@Date", DbType.DateTime, hysavecomp["Date"]);
+                    db.AddInParameter(cmd, "@Pages", DbType.String, hysavecomp["Pages"]);
+                    db.AddOutParameter(cmd, "@ReturnID", DbType.String, 20);
+                    db.ExecuteNonQuery(cmd, dbTran);
+                    mCurrentID = db.GetParameterValue(cmd, "@ReturnID").ToString();
+                    dbTran.Commit();
+                    _msg = "Save";
+                    _sysMsg = "Save";
+                    return _sysMsg;
+                }
+                catch (Exception ex)
+                {
+                    dbTran.Rollback();
+                    _msg = ex.Message;
+                    _sysMsg = "";
+                    return _sysMsg;
+                }
+                finally
+                {
+                    dbCon.Close();
+                }
+            }
+        }
         public string SaveImages(DataTable dt, out string _sysMsg, out string _msg, string Criteria)
         {
             using (DbConnection dbcon = db.CreateConnection())
