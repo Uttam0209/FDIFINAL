@@ -77,7 +77,7 @@
                                 <asp:HiddenField runat="server" ID="hfmtype" />
                                 <asp:HiddenField runat="server" ID="hfmref" />
                                 <div class="table-responsive" runat="server" id="divcompanyGrid" visible="False">
-                                    <asp:GridView ID="gvcompanydetail" runat="server" Width="100%" Class="table table-hover"
+                                    <asp:GridView ID="gvcompanydetail" runat="server" Width="100%" Class="table table-hover manage-user"
                                         AutoGenerateColumns="false" OnRowCommand="gvcompanydetail_RowCommand" OnRowCreated="gvcompanydetail_RowCreated">
                                         <Columns>
                                             <asp:TemplateField HeaderText="S.No.">
@@ -112,7 +112,7 @@
                                 </div>
                                 <div class="clearfix"></div>
                                 <div class="table-responsive" id="divfactorygrid" runat="server" visible="False">
-                                    <asp:GridView ID="gvfactory" runat="server" AutoGenerateColumns="false" Class="table table-hover"
+                                    <asp:GridView ID="gvfactory" runat="server" AutoGenerateColumns="false" Class="table table-hover manage-user"
                                         OnRowCommand="gvfactory_RowCommand" OnRowCreated="gvfactory_RowCreated">
                                         <Columns>
                                             <asp:TemplateField HeaderText="S.No.">
@@ -144,7 +144,7 @@
                                 </div>
                                 <div class="clearfix"></div>
                                 <div class="table-responsive" id="divunitGrid" runat="server" visible="False" style="overflow: scroll;">
-                                    <asp:GridView ID="gvunit" runat="server" AutoGenerateColumns="false" Class="table table-hover"
+                                    <asp:GridView ID="gvunit" runat="server" AutoGenerateColumns="false" Class="table table-hover manage-user"
                                         Style="overflow: scroll;" OnRowCommand="gvunit_RowCommand" OnRowCreated="gvunit_RowCreated">
                                         <PagerStyle HorizontalAlign="Center" CssClass="GridPager" />
                                         <Columns>
@@ -179,8 +179,9 @@
                                     </asp:GridView>
                                 </div>
                                 <div class="clearfix"></div>
+
                                 <div class="table-responsive" id="divEmployeeNodalGrid" runat="server" visible="False">
-                                    <asp:GridView ID="gvViewNodalOfficer" runat="server" Width="100%" Class="table table-hover"
+                                    <asp:GridView ID="gvViewNodalOfficer" runat="server" Width="100%" Class="table table-hover manage-user"
                                         AutoGenerateColumns="false" OnRowCommand="gvViewNodalOfficer_RowCommand" OnRowDataBound="gvViewNodalOfficer_RowDataBound" OnRowCreated="gvViewNodalOfficer_RowCreated">
                                         <PagerStyle HorizontalAlign="Center" CssClass="GridPager" />
                                         <Columns>
@@ -231,9 +232,9 @@
                                 </div>
                                 <div class="clearfix"></div>
                                 <div class="table-responsive" id="divProductGrid" runat="server" visible="False" style="overflow: scroll;">
-                                    <asp:GridView ID="gvproduct" runat="server" Width="100%" Class="table table-hover"
+                                    <asp:GridView ID="gvproduct" runat="server" Width="100%" Class="table table-hover manage-user"
                                         Style="overflow: scroll;"
-                                        AutoGenerateColumns="false" OnRowCommand="gvproduct_RowCommand" OnRowCreated="gvproduct_RowCreated">
+                                        AutoGenerateColumns="false" OnRowCommand="gvproduct_RowCommand" OnRowCreated="gvproduct_RowCreated" OnRowDataBound="gvproduct_RowDataBound">
                                         <PagerStyle HorizontalAlign="Center" CssClass="GridPager" />
                                         <Columns>
                                             <asp:TemplateField HeaderText="S.No.">
@@ -248,32 +249,47 @@
                                                     <asp:HiddenField ID="hfcomprefno" runat="server" Value='<%#Eval("CompanyRefNo") %>' />
                                                 </ItemTemplate>
                                             </asp:TemplateField>
+                                            <asp:TemplateField HeaderText="PDF">
+                                                <ItemTemplate>
+                                                    <asp:HyperLink runat="server" ID="lbpdffile" Target="_blank" NavigateUrl='<%#Eval("ItemDescriptionPDFFile","~/Upload/{0}") %>' CssClass="fa fa-file-pdf"></asp:HyperLink>
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField HeaderText="Image">
+                                                <ItemTemplate>
+                                                    <a data-fancybox="Prodgridviewgellry" href='<%#Eval("TopImages") %>'>
+                                                        <asp:Image ID="imgtop" runat="server" Height="80px" Width="80px" src='<%#Eval("TopImages") %>' />
+                                                    </a>
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
                                             <asp:BoundField DataField="CompanyName" HeaderText="Company" NullDisplayText="-" />
-                                            <asp:BoundField DataField="FactoryName" HeaderText="Division" NullDisplayText="-" />
-                                            <asp:BoundField DataField="UnitName" HeaderText="Unit" NullDisplayText="-" />
+
+                                            <asp:BoundField DataField="FactoryName" Visible="false" HeaderText="Division" NullDisplayText="-" />
+                                            <asp:BoundField DataField="UnitName" Visible="false" HeaderText="Unit" NullDisplayText="-" />
                                             <asp:TemplateField HeaderText="Item Reference No." Visible="False">
                                                 <ItemTemplate>
                                                     <asp:Label ID="lblrefno" runat="server" Text='<%#Eval("ProductRefNo") %>' NullDisplayText="#" SortExpression="ProductRefNo"></asp:Label>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
-                                            <asp:BoundField DataField="ProductDescription" HeaderText="Item Description" NullDisplayText="#" ItemStyle-Wrap="true" ItemStyle-Width="100" SortExpression="Description" />
+                                            <asp:BoundField DataField="ProductDescription" HeaderText="Item Description" NullDisplayText="#" ItemStyle-Wrap="true" ItemStyle-Width="100" SortExpression="ProductDescription" />
+                                            <asp:BoundField DataField="ProdIndustryDoamin" HeaderText="Product (Industry Domain)" NullDisplayText="#" ItemStyle-Wrap="true" ItemStyle-Width="100" SortExpression="ProdIndustryDoamin" />
+                                            <asp:BoundField DataField="NSNGroup" HeaderText="NSN Group" NullDisplayText="#" ItemStyle-Wrap="true" ItemStyle-Width="100" SortExpression="NameDefencePlatform" />
+                                            <asp:BoundField DataField="DefencePlatform" HeaderText="Defence Platform" NullDisplayText="#" ItemStyle-Wrap="true" ItemStyle-Width="100" SortExpression="DefencePlatform" />
                                             <asp:TemplateField HeaderText="OEM PartNumber" Visible="false">
                                                 <ItemTemplate>
                                                     <asp:Label runat="server" ID="lblcompanyrole" Text='<%#Eval("OEMPartNumber") %>'></asp:Label>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
+                                            <asp:TemplateField HeaderText="DPSUPartNumber">
+                                                <ItemTemplate>
+                                                    <asp:Label ID="lblnodelname" runat="server" Text='<%#Eval("DPSUPartNumber") %>' NullDisplayText="#" SortExpression="DPSUPartNumber"></asp:Label>
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:BoundField DataField="IsIndeginized" HeaderText="Item Indeginized" NullDisplayText="#" ItemStyle-Wrap="true" ItemStyle-Width="100" SortExpression="IsIndeginized" />
                                             <asp:TemplateField HeaderText="Last Updated">
                                                 <ItemTemplate>
                                                     <asp:Label runat="server" ID="lblLastUpdated" Text='<%#Eval("LastUpdated") %>'></asp:Label>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
-
-                                            <asp:TemplateField HeaderText="DPSUPartNumber" Visible="false">
-                                                <ItemTemplate>
-                                                    <asp:Label ID="lblnodelname" runat="server" Text='<%#Eval("DPSUPartNumber") %>' NullDisplayText="#" SortExpression="DPSUPartNumber"></asp:Label>
-                                                </ItemTemplate>
-                                            </asp:TemplateField>
-
                                         </Columns>
                                     </asp:GridView>
                                 </div>
@@ -853,6 +869,7 @@
                                                                                     <td>
                                                                                         <asp:Label ID="lblcompname" runat="server" Text=""></asp:Label></td>
                                                                                 </tr>
+
                                                                                 <tr>
                                                                                     <td>Division/Palnt:</td>
                                                                                     <td>
@@ -862,6 +879,11 @@
                                                                                     <td>Unit:</td>
                                                                                     <td>
                                                                                         <asp:Label ID="lblunitnamepro" runat="server" Text=""></asp:Label></td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>Item Description:</td>
+                                                                                    <td>
+                                                                                        <asp:Label ID="lblproductdescription" runat="server" Text=""></asp:Label></td>
                                                                                 </tr>
                                                                                 <tr>
                                                                                     <td>Item Refrence No:</td>
@@ -963,11 +985,7 @@
                                                                                     <td>
                                                                                         <asp:Label ID="lblniincode" runat="server" Text=""></asp:Label></td>
                                                                                 </tr>
-                                                                                <tr>
-                                                                                    <td>Item Description:</td>
-                                                                                    <td>
-                                                                                        <asp:Label ID="lblproductdescription" runat="server" Text=""></asp:Label></td>
-                                                                                </tr>
+
                                                                                 <tr>
                                                                                     <td>DEFENCE PLATFORM:</td>
                                                                                     <td>
@@ -1057,66 +1075,70 @@
                                                         <div class="card-body">
                                                             <div class="row">
                                                                 <div class="col-md-12">
-                                                                    <div runat="server" id="itemdocument">
-
-                                                                        <table>
-                                                                            <tr>
-                                                                                <td>Document related to item</td>
+                                                                    <table>
+                                                                        <tr>
+                                                                            <td>Document related to item</td>
+                                                                            <div runat="server" id="itemdocument">
                                                                                 <td>
                                                                                     <a href="#" target="_blank" runat="server" id="a_downitem" class="fa fa-download"></a>
                                                                                     <span data-toggle="tooltip" class="fa fa-question" title="Click on icon for downloaf"></span>
                                                                                 </td>
-                                                                            </tr>
-                                                                            <tr>
-                                                                                <td>Item Image</td>
-                                                                                <td>
-                                                                                    <asp:DataList ID="dlimage" runat="server" RepeatColumns="4" RepeatDirection="Horizontal" RepeatLayout="Flow">
-                                                                                        <ItemTemplate>
-                                                                                            <div class="col-sm-3">
-                                                                                                <asp:Image ID="imgprodimage" runat="server" Height="90px" Width="110px" src='<%#Eval("[ImageName]") %>' />
-                                                                                            </div>
-                                                                                        </ItemTemplate>
-                                                                                    </asp:DataList>
-                                                                                </td>
-                                                                            </tr>
-                                                                            <tr>
-                                                                                <td>Features & Details</td>
-                                                                                <td>
-                                                                                    <asp:Label ID="lblfeaturesanddetail" runat="server" Text=""></asp:Label></td>
-                                                                            </tr>
+                                                                            </div>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>Item Image</td>
+                                                                            <td>
+                                                                                <asp:DataList ID="dlimage" runat="server" RepeatColumns="4" Visible="true" RepeatDirection="Horizontal" RepeatLayout="Flow">
+                                                                                    <ItemTemplate>
+                                                                                        <div class="col-sm-3">
+                                                                                            <a data-fancybox="Prodgridviewgellry" href='<%#Eval("[ImageName]") %>'>
+                                                                                                <asp:Image ID="imgprodimage" runat="server" CssClass="img-responsive img-container" Height="90px" Width="110px" src='<%#Eval("[ImageName]") %>' />
+                                                                                            </a>
+                                                                                        </div>
+                                                                                    </ItemTemplate>
+                                                                                </asp:DataList>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>Features & Details</td>
+                                                                            <td>
+                                                                                <asp:Label ID="lblfeaturesanddetail" runat="server" Text=""></asp:Label></td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>Item Specification</td>
+                                                                            <td>
+                                                                                <asp:Label ID="lblitemspecification" runat="server" Text=""></asp:Label></td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>Additional Information</td>
+                                                                            <td>
+                                                                                <asp:Label ID="lbladditionalinfo" runat="server" Text=""></asp:Label></td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>Item Information
+                                                                            </td>
+                                                                            <td>&nbsp;
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td colspan="2">
+                                                                                <asp:GridView ID="gvProdInfo" runat="server" AutoGenerateColumns="false" CssClass="table table-hover">
+                                                                                    <Columns>
+                                                                                        <asp:BoundField DataField="NameOfSpec" HeaderText="Name of Specification" />
+                                                                                        <asp:BoundField DataField="Value" HeaderText="Value " />
+                                                                                        <asp:BoundField DataField="Unit" HeaderText="Unit" />
+                                                                                    </Columns>
 
-                                                                            <tr>
-                                                                                <td>Additional Information</td>
-                                                                                <td>
-                                                                                    <asp:Label ID="lbladditionalinfo" runat="server" Text=""></asp:Label></td>
-                                                                            </tr>
-                                                                            <tr>
-                                                                                <td>Item Information</td>
-                                                                                <td>&nbsp;</td>
-                                                                            </tr>
-                                                                            <tr>
-                                                                                <td colspan="2">
-                                                                                    <asp:GridView ID="gvProdInfo" runat="server" AutoGenerateColumns="false" CssClass="table table-hover">
-                                                                                        <Columns>
-                                                                                            <asp:BoundField DataField="NameOfSpec" HeaderText="Name of Specification" />
-                                                                                            <asp:BoundField DataField="Value" HeaderText="Value " />
-                                                                                            <asp:BoundField DataField="Unit" HeaderText="Unit" />
-                                                                                        </Columns>
-
-                                                                                    </asp:GridView>
-                                                                                </td>
-                                                                            </tr>
-
-                                                                        </table>
-
-                                                                    </div>
-
+                                                                                </asp:GridView>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </table>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="card" runat="server" visible="false">
+                                                <div class="card" runat="server">
                                                     <div class="card-header">
                                                         <h2 data-toggle="collapse" data-parent="#accordion" class="collapsed" data-target="#faq3" aria-expanded="false" aria-controls="faq3">Estimated Quantity
                                                             <i class="fa fa-plus pull-right"></i>
@@ -1271,7 +1293,7 @@
                                                     <div id="faq9" class="collapse">
                                                         <div class="card-body">
                                                             <div class="row">
-                                                                <div class="col-md-12">
+                                                                <div class="col-md-6">
                                                                     <table>
                                                                         <tr>
                                                                             <td>Tender Status:</td>
@@ -1294,6 +1316,33 @@
                                                                                 <td>Tender URL:</td>
                                                                                 <td>
                                                                                     <asp:Label ID="lbltenderurl" runat="server" Text=""></asp:Label></td>
+                                                                            </tr>
+                                                                        </table>
+                                                                    </table>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <table>
+                                                                        <tr>
+                                                                            <td>EOI Status:</td>
+                                                                            <td>
+                                                                                <asp:Label ID="lbleoistatus" runat="server" Text=""></asp:Label></td>
+                                                                        </tr>
+
+                                                                        <tr>
+                                                                            <td>EOI Submission:</td>
+                                                                            <td>
+                                                                                <asp:Label ID="lbleoisub" runat="server" Text=""></asp:Label></td>
+                                                                        </tr>
+                                                                        <table runat="server" id="tbleoidate">
+                                                                            <tr>
+                                                                                <td>EOI Date:</td>
+                                                                                <td>
+                                                                                    <asp:Label ID="lbleoidate" runat="server" Text=""></asp:Label></td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td>EOI URL:</td>
+                                                                                <td>
+                                                                                    <asp:Label ID="lbleoiurl" runat="server" Text=""></asp:Label></td>
                                                                             </tr>
                                                                         </table>
                                                                     </table>

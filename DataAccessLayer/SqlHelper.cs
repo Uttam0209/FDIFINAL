@@ -682,7 +682,7 @@ namespace DataAccessLayer
                     db.AddInParameter(cmd, "@HsCode4digit", DbType.String, hyProduct["HsCode4digit"]);
                     db.AddInParameter(cmd, "@HsnCode8digit", DbType.String, hyProduct["HsnCode8digit"]);
                     db.AddInParameter(cmd, "@EndUserPartNumber", DbType.String, hyProduct["EndUserPartNumber"]);
-                    db.AddInParameter(cmd, "@EndUser", DbType.Int64, hyProduct["EndUser"]);
+                    db.AddInParameter(cmd, "@EndUser", DbType.String, hyProduct["EndUser"]);
                     db.AddInParameter(cmd, "@Platform", DbType.Int64, hyProduct["Platform"]);
                     db.AddInParameter(cmd, "@NomenclatureOfMainSystem", DbType.Int64, hyProduct["NomenclatureOfMainSystem"]);
                     db.AddInParameter(cmd, "@TechnologyLevel1", DbType.Int64, hyProduct["TechnologyLevel1"]);
@@ -698,6 +698,7 @@ namespace DataAccessLayer
                     db.AddInParameter(cmd, "@YearofImportRemarks", DbType.String, hyProduct["YearofImportRemarks"]);
                     db.AddInParameter(cmd, "@ItemDescriptionPDFFile", DbType.String, hyProduct["ItemDescriptionPDFFile"]);
                     db.AddInParameter(cmd, "@FeatursandDetail", DbType.String, hyProduct["FeatursandDetail"]);
+                    db.AddInParameter(cmd, "@ItemSpecification", DbType.String, hyProduct["ItemSpecification"]);
                     db.AddInParameter(cmd, "@AdditionalDetail", DbType.String, hyProduct["AdditionalDetail"]);
                     db.AddInParameter(cmd, "@PurposeofProcurement", DbType.String, hyProduct["PurposeofProcurement"]);
                     db.AddInParameter(cmd, "@ProcurmentCategoryRemark", DbType.String, hyProduct["ProcurmentCategoryRemark"]);
@@ -715,6 +716,10 @@ namespace DataAccessLayer
                     db.AddInParameter(cmd, "@TenderSubmition", DbType.String, hyProduct["TenderSubmition"].ToString().Trim());
                     db.AddInParameter(cmd, "@TenderFillDate", DbType.Date, hyProduct["TenderFillDate"]);
                     db.AddInParameter(cmd, "@TenderUrl", DbType.String, hyProduct["TenderUrl"]);
+                    db.AddInParameter(cmd, "@EOIStatus", DbType.String, hyProduct["EOIStatus"].ToString().Trim());
+                    db.AddInParameter(cmd, "@EOISubmition", DbType.String, hyProduct["EOISubmition"].ToString().Trim());
+                    db.AddInParameter(cmd, "@EOIFillDate", DbType.Date, hyProduct["EOIFillDate"]);
+                    db.AddInParameter(cmd, "@EOIURL", DbType.String, hyProduct["EOIURL"]);
                     db.AddInParameter(cmd, "@NodelDetail", DbType.Int16, hyProduct["NodelDetail"]);
                     db.AddInParameter(cmd, "@NodalDetail2", DbType.Int16, hyProduct["NodalDetail2"]);
                     db.AddInParameter(cmd, "@Role", DbType.String, hyProduct["Role"]);
@@ -1314,7 +1319,6 @@ namespace DataAccessLayer
                 }
             }
         }
-
         public string SaveUploadExcelCompany(DataTable dtMaster)
         {
             using (DbConnection Connection = db.CreateConnection())
@@ -1390,7 +1394,6 @@ namespace DataAccessLayer
                 }
             }
         }
-
         public string SaveExcelProduct(DataTable dtMaster)
         {
             using (DbConnection Connection = db.CreateConnection())
@@ -1475,7 +1478,6 @@ namespace DataAccessLayer
                 }
             }
         }
-
         public DataTable CreateExcelConnection(string FilePath, string SheetName, out string text)
         {
             try
@@ -1499,7 +1501,6 @@ namespace DataAccessLayer
                 return ds.Tables[0];
             }
         }
-
         public DataTable GetDashboardData(string Purpose, string Search)
         {
             using (DbConnection dbCon = db.CreateConnection())
@@ -1522,7 +1523,7 @@ namespace DataAccessLayer
                 }
             }
         }
-        public DataTable TestGrid(string Function, string ProdRefNo, Int32 ProdInfoId, string Name, decimal Value, string Unit)
+        public DataTable TestGrid(string Function, string ProdRefNo, Int32 ProdInfoId, string Name, string Value, string Unit)
         {
             using (DbConnection dbCon = db.CreateConnection())
             {
@@ -1534,7 +1535,7 @@ namespace DataAccessLayer
                     db.AddInParameter(cmd, "@ProdRefNo", DbType.String, ProdRefNo);
                     db.AddInParameter(cmd, "@ProdInfoId", DbType.Int32, ProdInfoId);
                     db.AddInParameter(cmd, "@Name", DbType.String, Name);
-                    db.AddInParameter(cmd, "@Value", DbType.Decimal, Value);
+                    db.AddInParameter(cmd, "@Value", DbType.String, Value);
                     db.AddInParameter(cmd, "@Unit", DbType.String, Unit);
                     IDataReader dr = db.ExecuteReader(cmd);
                     DataTable dt = new DataTable();
@@ -1548,7 +1549,7 @@ namespace DataAccessLayer
                 }
             }
         }
-        public DataTable RetriveSaveEstimateGrid(string Function, Int32 ProdInfoId, string ProdRefNo, Int32 Year, string FYear, decimal EstimateQuantity, string Unit, decimal Price)
+        public DataTable RetriveSaveEstimateGrid(string Function, Int32 ProdInfoId, string ProdRefNo, Int32 Year, string FYear, string EstimateQuantity, string Unit, decimal Price)
         {
             using (DbConnection dbCon = db.CreateConnection())
             {
@@ -1561,7 +1562,7 @@ namespace DataAccessLayer
                     db.AddInParameter(cmd, "@ProdRefNo", DbType.String, ProdRefNo);
                     db.AddInParameter(cmd, "@Year", DbType.Int32, Year);
                     db.AddInParameter(cmd, "@FYear", DbType.String, FYear);
-                    db.AddInParameter(cmd, "@EstimatedQty", DbType.Decimal, EstimateQuantity);
+                    db.AddInParameter(cmd, "@EstimatedQty", DbType.String, EstimateQuantity);
                     db.AddInParameter(cmd, "@Unit", DbType.String, Unit);
                     db.AddInParameter(cmd, "@EstimatedPrice", DbType.Decimal, Price);
                     IDataReader dr = db.ExecuteReader(cmd);

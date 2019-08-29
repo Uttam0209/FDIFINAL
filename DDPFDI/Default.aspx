@@ -17,7 +17,6 @@
         .swal2-container.swal2-center.swal2-shown {
             z-index: 22222;
         }
-
         .modal {
             margin-top: 70px !important;
         }

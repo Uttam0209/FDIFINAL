@@ -27,11 +27,11 @@ public partial class Admin_Dashboard : System.Web.UI.Page
                 lnkbtnTotEmp.Text = dt.Rows[0]["TotEmployee"].ToString();
                 lnkbtnProduct.Text = dt.Rows[0]["TotProduct"].ToString();
                 lnkbtnIndigenizedProduct.Text = dt.Rows[0]["IsIndiginised"].ToString();
-                if (objCrypto.DecryptData(Session["Type"].ToString()) == "Admin" || objCrypto.DecryptData(Session["Type"].ToString()) == "SuperAdmin")
-                {
-                    FillProduct();
-                    GetChartData();
-                }
+                //  if (objCrypto.DecryptData(Session["Type"].ToString()) == "Admin" || objCrypto.DecryptData(Session["Type"].ToString()) == "SuperAdmin")
+                // {
+                FillProduct();
+                GetChartData();
+                //  }
             }
         }
         else
@@ -62,6 +62,7 @@ public partial class Admin_Dashboard : System.Web.UI.Page
     }
     public void FillProduct()
     {
+
         DataTable dtProductDetail = Lo.RetriveProductIndig();
         if (dtProductDetail.Rows.Count > 0)
         {
@@ -285,6 +286,13 @@ public partial class Admin_Dashboard : System.Web.UI.Page
         else if (e.Row.RowType == DataControlRowType.Footer)
         {
             e.Row.TableSection = TableRowSection.TableFooter;
+        }
+    }
+    protected void gvPrdoct_RowCommand(object sender, GridViewCommandEventArgs e)
+    {
+        if (e.CommandName == "ViewComp")
+        {
+            Response.Redirect("Dashboard-View?id=" + HttpUtility.UrlEncode(objCrypto.EncryptData("P")) + "&strangone=" + HttpUtility.UrlEncode(objCrypto.EncryptData(e.CommandArgument.ToString())));
         }
     }
 }

@@ -197,7 +197,7 @@
         $("#ContentPlaceHolder1_ddlsubtech").select2({});
         $("#ContentPlaceHolder1_ddltechlevel3").select2({});
         $("#ContentPlaceHolder1_ddlyearofindiginization").select2({});
-        $("#ContentPlaceHolder1_ddlenduser").select2({});
+        //  $("#ContentPlaceHolder1_ddlenduser").select2({});
         $("#ContentPlaceHolder1_ddlmaster").select2({});
         $("#ContentPlaceHolder1_ddlfacotry").select2({});
     }
@@ -234,5 +234,20 @@
         $('#ContentPlaceHolder1_gvVendorDetails').DataTable();
         $('#ContentPlaceHolder1_gvViewNodalOfficertest').DataTable();
     }
+
+    $('[data-fancybox="Prodgridviewgellry"]').fancybox({
+        // Options will go here
+    });
+
+    // document.multiselect('#ddlenduser');
+
+    $(function () {
+        $('[id*=ddlenduser]').multiselect({
+            includeSelectAllOption: true
+        });
+    });
+
 });
+
+
 

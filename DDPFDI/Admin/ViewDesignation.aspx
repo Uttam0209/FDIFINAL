@@ -86,7 +86,7 @@
                                 <div class="clearfix mt10"></div>
                                 <div class="table-responsive">
                                     <asp:HiddenField ID="hfmtype" runat="server" />
-                                    <asp:GridView ID="gvViewDesignation" runat="server" Width="100%" Class="table table-hover"
+                                    <asp:GridView ID="gvViewDesignation" runat="server" Width="100%" Class="table table-hover manage-user"
                                         AutoGenerateColumns="false" OnRowCommand="gvViewDesignation_RowCommand" OnRowCreated="gvViewDesignation_RowCreated">
                                         <Columns>
                                             <asp:TemplateField HeaderText="S.No.">

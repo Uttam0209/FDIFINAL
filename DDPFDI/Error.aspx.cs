@@ -22,10 +22,8 @@ public partial class Error : System.Web.UI.Page
             "If this error continues, please contact support.";
         string httpErrorMsg = "An HTTP error occurred. Page Not found. Please try again.";
         string unhandledErrorMsg = "The error was unhandled by application code.";
-
         // Display safe error message.
         FriendlyErrorMsg.Text = generalErrorMsg;
-
         // Determine where error was handled.
         string errorHandler = Request.QueryString["handler"];
         if (errorHandler == null)

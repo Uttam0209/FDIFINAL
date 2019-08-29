@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="AddProduct.aspx.cs" Inherits="Admin_AddProduct" MasterPageFile="~/Admin/MasterPage.master" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="AddProduct.aspx.cs" Inherits="Admin_AddProduct" ValidateRequest="false" MasterPageFile="~/Admin/MasterPage.master" %>
 
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="asp" %>
 <asp:Content ID="head" runat="server" ContentPlaceHolderID="head">
@@ -40,7 +40,8 @@
                     <div class="clearfix"></div>
                 </div>
             </div>
-            <div class="clearfix" style="margin-bottom: 10px;"></div>
+            <div class="clearfix" style="margin-bottom: 10px;">
+            </div>
             <div class="row">
                 <p style="position: absolute; right: 35px;">Mark with <span class="mandatory">*</span> is manadatory field.</p>
                 <asp:UpdatePanel runat="server" ID="updrop">
@@ -68,18 +69,15 @@
             </div>
             <div class="tabing-section">
                 <ul class="nav nav-tabs">
-                    <li class="active"><a data-toggle="tab" href="#pd">Item Description</a></li>
+                    <li class="active"><a data-toggle="tab" href="#pd"> Item brief description</a></li>
                     <li><a data-toggle="tab" href="#pimg">Item Specification</a></li>
                     <li><a data-toggle="tab" href="#qpt">Estimated Quantity</a></li>
                     <li><a data-toggle="tab" href="#test" runat="server" visible="false">Testing & Certification</a></li>
                     <li><a data-toggle="tab" href="#spd" runat="server" visible="false">Technical & Financial Support</a></li>
-                    <li><a data-toggle="tab" href="#tnd">Tender</a></li>
+                    <li><a data-toggle="tab" href="#tnd">Tender and EOI</a></li>
                     <li><a data-toggle="tab" href="#cd">Contact</a></li>
                 </ul>
                 <div class="tab-content">
-                    <asp:HiddenField runat="server" ID="hfprodid" />
-                    <asp:HiddenField runat="server" ID="hfprodrefno" />
-                    <asp:HiddenField runat="server" ID="hfcomprefno" />
                     <div id="pd" class="tab-pane fade in active">
                         <div class="row">
                             <div class="col-md-12">
@@ -137,7 +135,7 @@
                                                     </div>
                                                     <div class="col-md-4">
                                                         <div class="form-group">
-                                                            <label>Item Description </label>
+                                                            <label>Item brief description</label>
                                                             <span class="mandatory">* (Editable)</span>  <span data-toggle="tooltip" class="fa fa-question" title="If item description is not relevant, edit the item description."></span>
                                                             <asp:TextBox runat="server" ID="txtproductdescription" required="" Height="70px" MaxLength="250" TabIndex="6" class="form-control"></asp:TextBox>
                                                             <div class="clearfix" style="margin-top: 5px;"></div>
@@ -158,7 +156,7 @@
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label>Item Image</label>
-                                                            <span class="mandatory">(only .jpeg, .png, .jpg files of each max 1 Mb.(max 4 files))</span>
+                                                            <span class="mandatory">(only .jpeg, .png, .jpg files of each max 5 Mb.(max 4 files))</span>
                                                             <div class="fr">
                                                                 <asp:FileUpload ID="fuimages" runat="server" CssClass="uploadimage form-control" AllowMultiple="true" TabIndex="30" />
                                                             </div>
@@ -174,10 +172,10 @@
                                                             <div class="row">
                                                                 <asp:DataList runat="server" ID="dlimage" RepeatColumns="4" RepeatDirection="Horizontal" RepeatLayout="Flow" OnItemCommand="dlimage_ItemCommand">
                                                                     <ItemTemplate>
-                                                                        <div class="col-sm-3">
+                                                                        <div class="col-sm-3" style="border: 1px solid #ccc">
                                                                             <asp:Image runat="server" ID="imgprodimage" class="image img-responsive img-rounded" Height="90px" Width="90" src='<%#Eval("ImageName") %>' />
                                                                             <div class="clearfix"></div>
-                                                                            <asp:LinkButton runat="server" ID="lblremoveimg" class="fa fa-trash text-center" CommandName="removeimg" CommandArgument='<%#Eval("ImageId") %>'></asp:LinkButton>
+                                                                            <asp:LinkButton runat="server" ID="lblremoveimg" class="fa fa-trash text-center imgdel" CommandName="removeimg" CommandArgument='<%#Eval("ImageId") %>'></asp:LinkButton>
                                                                         </div>
                                                                     </ItemTemplate>
                                                                 </asp:DataList>
@@ -205,9 +203,9 @@
                                             <div class="col-sm-8">
                                                 <div class="form-group">
                                                     <label>
-                                                        HSN Code (4-8 digit) <span class="mandatory">*</span> <a href="https://www.cbic-gst.gov.in/gst-goods-services-rates.html" target="_blank">(For finding hsn code please click here to get redirected to gst website.)<span data-toggle="tooltip" class="fa fa-question" title="HSN Code (4-8 digit ) and Link for find hsn code"></span></a>
+                                                        HSN Code (4-8 digit) <%--<span class="mandatory">*</span>--%> <a href="https://www.cbic-gst.gov.in/gst-goods-services-rates.html" target="_blank">(For finding hsn code please click here to get redirected to gst website.)<span data-toggle="tooltip" class="fa fa-question" title="HSN Code (4-8 digit ) and Link for find hsn code"></span></a>
                                                     </label>
-                                                    <asp:TextBox runat="server" ID="txthsncodereadonly" MaxLength="8" required="" class="form-control"></asp:TextBox>
+                                                    <asp:TextBox runat="server" ID="txthsncodereadonly" MaxLength="8" class="form-control"></asp:TextBox>
                                                 </div>
                                             </div>
                                             <div class="col-sm-4">
@@ -328,11 +326,11 @@
                                                 </div>
                                             </div>
                                             <div class="clearfix"></div>
-                                            <div class="col-md-4 mt5">
+                                            <div class="col-md-4">
                                                 <div class="form-group">
                                                     <asp:Label runat="server" ID="lblenduser" Text="End User"></asp:Label><span class="mandatory"> *</span>
-                                                    <asp:DropDownList runat="server" ID="ddlenduser" Style="text-transform: uppercase !important;" class="form-control ui fluid dropdown" TabIndex="13">
-                                                    </asp:DropDownList>
+                                                    <div class="clearfix"></div>
+                                                    <asp:ListBox runat="server" ID="ddlenduser" SelectionMode="Multiple" Style="text-transform: uppercase !important;" class="form-control ui fluid dropdown" TabIndex="13"></asp:ListBox>
                                                 </div>
                                             </div>
                                             <asp:UpdatePanel runat="server" ID="UpdatePanel6">
@@ -556,25 +554,40 @@
                                     <div class="section-pannel">
                                         <div class="row">
                                             <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label><strong>Type of item specification</strong></label>
+                                                    <div class="clearfix mt5"></div>
+                                                    <asp:RadioButtonList ID="rbitemspecification" runat="server" RepeatColumns="1" RepeatDirection="Horizontal" RepeatLayout="Flow">
+                                                        <asp:ListItem Value="Specification are available in open source/DPSU spec">Specification are available in open source/DPSU spec</asp:ListItem>
+                                                        <asp:ListItem Value="Items with OEM specification">Items with OEM specification</asp:ListItem>
+                                                        <asp:ListItem Value="Items where no specification are available">Items where no specification are available</asp:ListItem>
+                                                    </asp:RadioButtonList>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="section-pannel">
+                                        <div class="row">
+                                            <div class="col-md-12">
                                                 <asp:UpdatePanel runat="server" ID="UpdatePanel5">
                                                     <ContentTemplate>
                                                         <div class="form-group">
-                                                            <h4>Item Information</h4>
-                                                            <div class="clearfix"></div>
+                                                            <label>Item Information</label>
+                                                            <div class="clearfix mt5"></div>
                                                             <div class="table table-responsive">
                                                                 <table border="0" cellpadding="0" cellspacing="0" class="gridFormTable" style="border-collapse: collapse; width: 100%">
                                                                     <tr>
                                                                         <td style="width: 320px">
                                                                             <label>Name of Specification</label>
-                                                                            <asp:TextBox ID="txtNameOfSpecificationAdd" CssClass="form-control" Style="width: 385px;" runat="server" />
+                                                                            <asp:TextBox ID="txtNameOfSpecificationAdd" CssClass="form-control" runat="server" />
                                                                         </td>
                                                                         <td style="width: 320px">
-                                                                            <label>Value (Only Number)</label>
-                                                                            <asp:TextBox ID="TxtValueProdAdd" runat="server" Style="width: 294px;" CssClass="form-control" />
+                                                                            <label>Dimension</label>
+                                                                            <asp:TextBox ID="TxtValueProdAdd" runat="server" CssClass="form-control" />
                                                                         </td>
                                                                         <td style="width: 320px">
                                                                             <label>Unit</label>
-                                                                            <asp:TextBox ID="txtUnitProdAdd" runat="server" Style="width: 159px;" CssClass="form-control" />
+                                                                            <asp:TextBox ID="txtUnitProdAdd" runat="server" CssClass="form-control" />
                                                                         </td>
                                                                         <td style="width: 320px">
                                                                             <asp:LinkButton ID="btnAdd" runat="server" Style="margin-top: 18px;" CssClass="btn btn-primary pull-right" Text="Add" OnClick="Insert"></asp:LinkButton>
@@ -591,7 +604,7 @@
                                                                                 <%#Container.DataItemIndex+1 %>
                                                                             </ItemTemplate>
                                                                         </asp:TemplateField>
-                                                                        <asp:TemplateField HeaderText="Name of Specification  (Editable)">
+                                                                        <asp:TemplateField HeaderText="Name of Specification (Editable)">
                                                                             <ItemTemplate>
                                                                                 <asp:Label ID="lblNameofspec" runat="server" Text='<%# Eval("NameofSpec") %>'></asp:Label>
                                                                             </ItemTemplate>
@@ -599,7 +612,7 @@
                                                                                 <asp:TextBox ID="txtNameofspeci" CssClass="form-control" runat="server" Text='<%# Eval("NameofSpec") %>'></asp:TextBox>
                                                                             </EditItemTemplate>
                                                                         </asp:TemplateField>
-                                                                        <asp:TemplateField HeaderText="Value  (Editable, Only Number)">
+                                                                        <asp:TemplateField HeaderText="Dimention (Editable)">
                                                                             <ItemTemplate>
                                                                                 <asp:Label ID="lblvalueProd" runat="server" Text='<%# Eval("Value") %>'></asp:Label>
                                                                             </ItemTemplate>
@@ -677,7 +690,7 @@
                                                                 </asp:DropDownList>
                                                             </td>
                                                             <td>
-                                                                <label>Estimated Quantity (Only Number)</label>
+                                                                <label>Estimated Quantity</label>
                                                                 <asp:TextBox ID="txtestimateQuantity" runat="server" CssClass="form-control" />
                                                             </td>
                                                             <td>
@@ -702,7 +715,7 @@
                                                                 <asp:TextBox ID="txtestimatePriceLLp" runat="server" CssClass="form-control" />
                                                             </td>
                                                             <td>
-                                                                <asp:LinkButton ID="btnAddEstimate" runat="server" Style="margin-top: 18px;" CssClass="btn btn-primary" Text="Add" OnClick="EstimateInsert"></asp:LinkButton>
+                                                                <asp:LinkButton ID="btnAddEstimate" runat="server" Style="margin-top: 18px;" CssClass="btn btn-primary" Text="Add" OnClick="btnAddEstimate_Click"></asp:LinkButton>
                                                             </td>
                                                         </tr>
                                                     </table>
@@ -711,12 +724,12 @@
                                                         OnRowUpdating="GvEstimateQuanPrice_RowUpdating" OnRowDeleting="GvEstimateQuanPrice_RowDeleting" EmptyDataText="No records has been added."
                                                         Width="450">
                                                         <Columns>
-                                                            <asp:TemplateField HeaderText="Sr.No">
+                                                            <asp:TemplateField HeaderText="Sr.No" ItemStyle-Width="10%">
                                                                 <ItemTemplate>
                                                                     <%#Container.DataItemIndex+1 %>
                                                                 </ItemTemplate>
                                                             </asp:TemplateField>
-                                                            <asp:TemplateField HeaderText="Year">
+                                                            <asp:TemplateField HeaderText="Year (Editable)" ItemStyle-Width="25%">
                                                                 <ItemTemplate>
                                                                     <asp:Label ID="lblYear" runat="server" Text='<%# Eval("FYear") %>'></asp:Label>
                                                                 </ItemTemplate>
@@ -731,7 +744,7 @@
                                                                     </asp:DropDownList>
                                                                 </EditItemTemplate>
                                                             </asp:TemplateField>
-                                                            <asp:TemplateField HeaderText="Estimated Quantity (Only Number)">
+                                                            <asp:TemplateField HeaderText="Estimated Quantity (Editable)" ItemStyle-Width="25%">
                                                                 <ItemTemplate>
                                                                     <asp:Label ID="lblestimateQuantityGrid" runat="server" Text='<%# Eval("EstimatedQty") %>'></asp:Label>
                                                                 </ItemTemplate>
@@ -740,7 +753,7 @@
                                                                     </asp:TextBox>
                                                                 </EditItemTemplate>
                                                             </asp:TemplateField>
-                                                            <asp:TemplateField HeaderText="Measuring Unit">
+                                                            <asp:TemplateField HeaderText="Measuring Unit (Editable)" ItemStyle-Width="25%">
                                                                 <ItemTemplate>
                                                                     <asp:Label ID="lblMeasuringUnitGrid" runat="server" Text='<%# Eval("Unit") %>'></asp:Label>
                                                                 </ItemTemplate>
@@ -761,7 +774,7 @@
                                                                     </asp:DropDownList>
                                                                 </EditItemTemplate>
                                                             </asp:TemplateField>
-                                                            <asp:TemplateField HeaderText="Estimated Price / LPP (Only Numbers)">
+                                                            <asp:TemplateField HeaderText="Estimated Price / LPP (Only Numbers) (Editable)" Visible="false">
                                                                 <ItemTemplate>
                                                                     <asp:Label ID="lblestimatePriceLLpGrid" runat="server" Text='<%# Eval("EstimatedQty") %>'></asp:Label>
                                                                 </ItemTemplate>
@@ -770,10 +783,9 @@
                                                                     </asp:TextBox>
                                                                 </EditItemTemplate>
                                                             </asp:TemplateField>
-                                                            <asp:CommandField ButtonType="Link" ShowEditButton="true" ShowDeleteButton="true" />
+                                                            <asp:CommandField ButtonType="Link" ShowEditButton="true" ItemStyle-Width="15%" ShowDeleteButton="true" />
                                                         </Columns>
                                                     </asp:GridView>
-
                                                 </div>
                                             </ContentTemplate>
                                         </asp:UpdatePanel>
@@ -825,6 +837,251 @@
                                             </div>
                                         </div>
                                     </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="tnd" class="tab-pane fade">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="add-profile">
+                                    <div class="section-pannel">
+                                        <asp:UpdatePanel runat="server" ID="UpdatePanel8">
+                                            <ContentTemplate>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="form-group ">
+                                                            <label>
+                                                                Tender Status</label>
+                                                            <asp:DropDownList runat="server" ID="ddltendorstatus" class="form-control" TabIndex="50" AutoPostBack="True" OnSelectedIndexChanged="ddltendorstatus_SelectedIndexChanged">
+                                                                <asp:ListItem Value="Not Floated" Selected="True">Not Floated</asp:ListItem>
+                                                                <asp:ListItem Value="Archive">Archive</asp:ListItem>
+                                                                <asp:ListItem Value="Live">Live</asp:ListItem>
+                                                                <asp:ListItem Value="To be Floated shortly">To be Floated shortly</asp:ListItem>
+                                                            </asp:DropDownList>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-12" runat="server" cssclass="hidden" id="divtendordate" visible="False">
+                                                        <div class="form-group live-status-box">
+                                                            <label>
+                                                                <strong>Note:</strong> If live, please fill last date of tender submission. 
+                                            <span class="checkbox-box productalreadylabel">
+                                                <asp:RadioButtonList runat="server" ID="rbtendordateyesno" RepeatDirection="Horizontal" TabIndex="51" AutoPostBack="True" RepeatColumns="2" RepeatLayout="Flow" OnSelectedIndexChanged="rbtendordateyesno_CheckedChanged">
+                                                    <asp:ListItem Value="N" runat="server" Selected="True">No</asp:ListItem>
+                                                    <asp:ListItem Value="Y" class="yes">Yes</asp:ListItem>
+                                                </asp:RadioButtonList>
+                                            </span>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="Turl_Tdate" runat="server" visible="False" id="divtdate">
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label>Last date of tender submission</label>
+                                                                <asp:TextBox runat="server" ID="txttendordate" type="date" TabIndex="52" class="form-control inputbox"></asp:TextBox>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label>Tender URL</label>
+                                                                <asp:TextBox runat="server" ID="txttendorurl" TabIndex="53" class="form-control"></asp:TextBox>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="clearfix mt10"></div>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="form-group ">
+                                                            <label>
+                                                                EOI Status</label>
+                                                            <asp:DropDownList runat="server" ID="ddleoi" class="form-control" TabIndex="50" AutoPostBack="True" OnSelectedIndexChanged="ddleoi_SelectedIndexChanged">
+                                                                <asp:ListItem Value="Not Floated" Selected="True">Not Floated</asp:ListItem>
+                                                                <asp:ListItem Value="Archive">Archive</asp:ListItem>
+                                                                <asp:ListItem Value="Live">Live</asp:ListItem>
+                                                                <asp:ListItem Value="To be Floated shortly">To be Floated shortly</asp:ListItem>
+                                                            </asp:DropDownList>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-12" runat="server" cssclass="hidden" id="diveoiyesno" visible="False">
+                                                        <div class="form-group live-status-box">
+                                                            <label>
+                                                                <strong>Note:</strong> If live, please fill last date of eoi submission. </strong>
+                                            <span class="checkbox-box productalreadylabel">
+                                                <asp:RadioButtonList runat="server" ID="rbeoistatus" RepeatDirection="Horizontal" TabIndex="51" AutoPostBack="True"
+                                                    RepeatColumns="2" RepeatLayout="Flow" OnSelectedIndexChanged="rbeoistatus_SelectedIndexChanged">
+                                                    <asp:ListItem Value="N" runat="server" Selected="True">No</asp:ListItem>
+                                                    <asp:ListItem Value="Y" class="yes">Yes</asp:ListItem>
+                                                </asp:RadioButtonList>
+                                            </span>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="Turl_Tdate" runat="server" visible="False" id="diveoidateurl">
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label>Last date of eoi submission</label>
+                                                                <asp:TextBox runat="server" ID="txtlastdateeoi" type="date" TabIndex="52" class="form-control inputbox"></asp:TextBox>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label>EOI URL</label>
+                                                                <asp:TextBox runat="server" ID="txteoiurl" TabIndex="53" class="form-control"></asp:TextBox>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </ContentTemplate>
+                                        </asp:UpdatePanel>
+                                        <asp:UpdateProgress ID="UpdateProgress11" runat="server" AssociatedUpdatePanelID="UpdatePanel8">
+                                            <ProgressTemplate>
+                                                <!---Progress Bar ---->
+                                                <div class="overlay-progress">
+                                                    <div class="custom-progress-bar blue stripes">
+                                                        <span></span>
+                                                        <p>Processing</p>
+                                                    </div>
+                                                </div>
+                                                <!---Progress Bar ---->
+                                            </ProgressTemplate>
+                                        </asp:UpdateProgress>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="cd" class="tab-pane fade">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="add-profile">
+                                    <asp:UpdatePanel runat="server" ID="UpdatePanel2">
+                                        <ContentTemplate>
+                                            <div class="section-pannel" runat="server" id="divnodal">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <h4 class="page-header secondary">Contact Detail 1  </h4>
+                                                        <div class="form-group contactD1Select">
+                                                            <asp:DropDownList runat="server" ID="ddlNodalOfficerEmail" class="form-control" TabIndex="54" AutoPostBack="True" OnSelectedIndexChanged="ddlNodalOfficerEmail_SelectedIndexChanged"></asp:DropDownList>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="contactFormRow" runat="server" id="contactpanel1" visible="False">
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label>Employee Code</label>
+                                                                <asp:TextBox runat="server" ID="txtempcode" name="" Enabled="false" TabIndex="55" CssClass="form-control form-cascade-control" placeholder=""></asp:TextBox>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label>Designation</label>
+                                                                <asp:TextBox runat="server" ID="txtDesignation" name="" Enabled="false" TabIndex="56" CssClass="form-control form-cascade-control" placeholder=""></asp:TextBox>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label>E-Mail ID</label>
+                                                                <asp:TextBox runat="server" ID="txtNEmailId" name="" Enabled="false" TabIndex="57" CssClass="form-control form-cascade-control" placeholder=""></asp:TextBox>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label>Mobile Number</label>
+                                                                <asp:TextBox runat="server" ID="txtmobnodal" Enabled="false" TabIndex="58" CssClass="form-control"></asp:TextBox>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label>Phone Number</label>
+                                                                <asp:TextBox runat="server" ID="txtNTelephone" name="" Enabled="false" TabIndex="59" CssClass="form-control form-cascade-control" placeholder=""></asp:TextBox>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label>Fax</label>
+                                                                <asp:TextBox runat="server" ID="txtNFaxNo" name="" Enabled="false" TabIndex="60" CssClass="form-control form-cascade-control" placeholder=""></asp:TextBox>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="section-pannel" runat="server" id="divnodal2" visible="False">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <h4 class="page-header secondary">Contact Detail 2</h4>
+                                                        <div class="form-group select-box">
+                                                            <asp:DropDownList runat="server" ID="ddlNodalOfficerEmail2" class="form-control" TabIndex="61" AutoPostBack="True" OnSelectedIndexChanged="ddlNodalOfficerEmail2_SelectedIndexChanged"></asp:DropDownList>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="contactFormRow" runat="server" id="contactpanel2" visible="False">
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label>Employee Code</label>
+                                                                <asp:TextBox runat="server" ID="txtempcode2" name="" Enabled="false" TabIndex="62" CssClass="form-control form-cascade-control" placeholder=""></asp:TextBox>
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label>Designation</label>
+                                                                <asp:TextBox runat="server" ID="txtdesignationnodal2" name="" TabIndex="63" Enabled="false" CssClass="form-control form-cascade-control" placeholder=""></asp:TextBox>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label>E-Mail ID</label>
+                                                                <asp:TextBox runat="server" ID="txtNEmailId2" name="" Enabled="false" TabIndex="64" CssClass="form-control form-cascade-control" placeholder=""></asp:TextBox>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label>Mobile Number</label>
+                                                                <asp:TextBox runat="server" ID="txtmobnodal2" name="" Enabled="false" TabIndex="65" CssClass="form-control form-cascade-control" placeholder=""></asp:TextBox>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label>Phone Number</label>
+                                                                <asp:TextBox runat="server" ID="txtNTelephone2" name="" Enabled="false" TabIndex="66" CssClass="form-control form-cascade-control" placeholder=""></asp:TextBox>
+
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label>Fax</label>
+                                                                <asp:TextBox runat="server" ID="txtNFaxNo2" name="" Enabled="false" TabIndex="67" CssClass="form-control form-cascade-control" placeholder=""></asp:TextBox>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </ContentTemplate>
+                                    </asp:UpdatePanel>
+                                    <asp:UpdateProgress ID="UpdateProgress" runat="server" AssociatedUpdatePanelID="UpdatePanel2">
+                                        <ProgressTemplate>
+                                            <!---Progress Bar ---->
+                                            <div class="overlay-progress">
+                                                <div class="custom-progress-bar blue stripes">
+                                                    <span></span>
+                                                    <p>Processing</p>
+                                                </div>
+                                            </div>
+                                            <!---Progress Bar ---->
+                                        </ProgressTemplate>
+                                    </asp:UpdateProgress>
                                 </div>
                             </div>
                         </div>
@@ -1014,206 +1271,6 @@
                             </div>
                         </div>
                     </div>
-                    <div id="tnd" class="tab-pane fade">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="add-profile">
-                                    <div class="section-pannel">
-                                         <asp:UpdatePanel runat="server" ID="UpdatePanel3">
-                                            <ContentTemplate>
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <div class="form-group ">
-                                                    <label>
-                                                        Tender Status</label>
-                                                    <asp:DropDownList runat="server" ID="ddltendorstatus" class="form-control" TabIndex="50" AutoPostBack="True" OnSelectedIndexChanged="ddltendorstatus_SelectedIndexChanged">
-                                                        <asp:ListItem Value="Not Floated" Selected="True">Not Floated</asp:ListItem>
-                                                        <asp:ListItem Value="Archive">Archive</asp:ListItem>
-                                                        <asp:ListItem Value="Live">Live</asp:ListItem>
-                                                        <asp:ListItem Value="To be Floated shortly">To be Floated shortly</asp:ListItem>
-                                                    </asp:DropDownList>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-12" runat="server" cssclass="hidden" id="divtendordate" visible="False">
-                                                <div class="form-group live-status-box">
-                                                    <label>
-                                                        <strong>Note:</strong> If live, please fill last date of tender submission. 
-                                            <span class="checkbox-box productalreadylabel">
-                                                <asp:RadioButtonList runat="server" ID="rbtendordateyesno" RepeatDirection="Horizontal" TabIndex="51" AutoPostBack="True" RepeatColumns="2" RepeatLayout="Flow" OnSelectedIndexChanged="rbtendordateyesno_CheckedChanged">
-                                                    <asp:ListItem Value="N" runat="server" Selected="True">No</asp:ListItem>
-                                                    <asp:ListItem Value="Y" class="yes">Yes</asp:ListItem>
-                                                </asp:RadioButtonList>
-                                            </span>
-                                                    </label>
-                                                </div>
-                                            </div>
-                                            <div class="Turl_Tdate" runat="server" visible="False" id="divtdate">
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label>Last date of tender submission</label>
-                                                        <asp:TextBox runat="server" ID="txttendordate" type="date" TabIndex="52" class="form-control inputbox"></asp:TextBox>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label>Tender URL</label>
-                                                        <asp:TextBox runat="server" ID="txttendorurl" TabIndex="53" class="form-control"></asp:TextBox>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        </ContentTemplate>
-                                        </asp:UpdatePanel>
-                                        <asp:UpdateProgress ID="UpdateProgress1" runat="server" AssociatedUpdatePanelID="UpdatePanel3">
-                                            <ProgressTemplate>
-                                                <!---Progress Bar ---->
-                                                <div class="overlay-progress">
-                                                    <div class="custom-progress-bar blue stripes">
-                                                        <span></span>
-                                                        <p>Processing</p>
-                                                    </div>
-                                                </div>
-                                                <!---Progress Bar ---->
-                                            </ProgressTemplate>
-                                        </asp:UpdateProgress>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="cd" class="tab-pane fade">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="add-profile">
-                                    <asp:UpdatePanel runat="server" ID="UpdatePanel2">
-                                        <ContentTemplate>
-                                            <div class="section-pannel" runat="server" id="divnodal">
-                                                <div class="row">
-                                                    <div class="col-md-12">
-                                                        <h4 class="page-header secondary">Contact Detail 1  </h4>
-                                                        <div class="form-group contactD1Select">
-                                                            <asp:DropDownList runat="server" ID="ddlNodalOfficerEmail" class="form-control" TabIndex="54" AutoPostBack="True" OnSelectedIndexChanged="ddlNodalOfficerEmail_SelectedIndexChanged"></asp:DropDownList>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="contactFormRow" runat="server" id="contactpanel1" visible="False">
-                                                    <div class="row">
-                                                        <div class="col-md-4">
-                                                            <div class="form-group">
-                                                                <label>Employee Code</label>
-                                                                <asp:TextBox runat="server" ID="txtempcode" name="" Enabled="false" TabIndex="55" CssClass="form-control form-cascade-control" placeholder=""></asp:TextBox>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <div class="form-group">
-                                                                <label>Designation</label>
-                                                                <asp:TextBox runat="server" ID="txtDesignation" name="" Enabled="false" TabIndex="56" CssClass="form-control form-cascade-control" placeholder=""></asp:TextBox>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <div class="form-group">
-                                                                <label>E-Mail ID</label>
-                                                                <asp:TextBox runat="server" ID="txtNEmailId" name="" Enabled="false" TabIndex="57" CssClass="form-control form-cascade-control" placeholder=""></asp:TextBox>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col-md-4">
-                                                            <div class="form-group">
-                                                                <label>Mobile Number</label>
-                                                                <asp:TextBox runat="server" ID="txtmobnodal" Enabled="false" TabIndex="58" CssClass="form-control"></asp:TextBox>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <div class="form-group">
-                                                                <label>Phone Number</label>
-                                                                <asp:TextBox runat="server" ID="txtNTelephone" name="" Enabled="false" TabIndex="59" CssClass="form-control form-cascade-control" placeholder=""></asp:TextBox>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <div class="form-group">
-                                                                <label>Fax</label>
-                                                                <asp:TextBox runat="server" ID="txtNFaxNo" name="" Enabled="false" TabIndex="60" CssClass="form-control form-cascade-control" placeholder=""></asp:TextBox>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="section-pannel" runat="server" id="divnodal2" visible="False">
-                                                <div class="row">
-                                                    <div class="col-md-12">
-                                                        <h4 class="page-header secondary">Contact Detail 2</h4>
-                                                        <div class="form-group select-box">
-                                                            <asp:DropDownList runat="server" ID="ddlNodalOfficerEmail2" class="form-control" TabIndex="61" AutoPostBack="True" OnSelectedIndexChanged="ddlNodalOfficerEmail2_SelectedIndexChanged"></asp:DropDownList>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="contactFormRow" runat="server" id="contactpanel2" visible="False">
-                                                    <div class="row">
-                                                        <div class="col-md-4">
-                                                            <div class="form-group">
-                                                                <label>Employee Code</label>
-                                                                <asp:TextBox runat="server" ID="txtempcode2" name="" Enabled="false" TabIndex="62" CssClass="form-control form-cascade-control" placeholder=""></asp:TextBox>
-                                                            </div>
-
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <div class="form-group">
-                                                                <label>Designation</label>
-                                                                <asp:TextBox runat="server" ID="txtdesignationnodal2" name="" TabIndex="63" Enabled="false" CssClass="form-control form-cascade-control" placeholder=""></asp:TextBox>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <div class="form-group">
-                                                                <label>E-Mail ID</label>
-                                                                <asp:TextBox runat="server" ID="txtNEmailId2" name="" Enabled="false" TabIndex="64" CssClass="form-control form-cascade-control" placeholder=""></asp:TextBox>
-
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col-md-4">
-                                                            <div class="form-group">
-                                                                <label>Mobile Number</label>
-                                                                <asp:TextBox runat="server" ID="txtmobnodal2" name="" Enabled="false" TabIndex="65" CssClass="form-control form-cascade-control" placeholder=""></asp:TextBox>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <div class="form-group">
-                                                                <label>Phone Number</label>
-                                                                <asp:TextBox runat="server" ID="txtNTelephone2" name="" Enabled="false" TabIndex="66" CssClass="form-control form-cascade-control" placeholder=""></asp:TextBox>
-
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <div class="form-group">
-                                                                <label>Fax</label>
-                                                                <asp:TextBox runat="server" ID="txtNFaxNo2" name="" Enabled="false" TabIndex="67" CssClass="form-control form-cascade-control" placeholder=""></asp:TextBox>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </ContentTemplate>
-                                    </asp:UpdatePanel>
-                                    <asp:UpdateProgress ID="UpdateProgress" runat="server" AssociatedUpdatePanelID="UpdatePanel2">
-                                        <ProgressTemplate>
-                                            <!---Progress Bar ---->
-                                            <div class="overlay-progress">
-                                                <div class="custom-progress-bar blue stripes">
-                                                    <span></span>
-                                                    <p>Processing</p>
-                                                </div>
-                                            </div>
-                                            <!---Progress Bar ---->
-                                        </ProgressTemplate>
-                                    </asp:UpdateProgress>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                     <asp:Panel ID="Panel1" runat="server" DefaultButton="btnsubmitpanel1">
                         <div class="row">
                             <div class="col-md-12">
@@ -1243,6 +1300,9 @@
                             </div>
                         </div>
                     </asp:Panel>
+                    <asp:HiddenField runat="server" ID="hfprodid" />
+                    <asp:HiddenField runat="server" ID="hfprodrefno" />
+                    <asp:HiddenField runat="server" ID="hfcomprefno" />
                 </div>
             </div>
         </div>

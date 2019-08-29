@@ -24,8 +24,7 @@ public partial class _Default : System.Web.UI.Page
     string notvalidate = string.Empty;
     #endregion
     protected void Page_Load(object sender, EventArgs e)
-    {
-    }
+    {}
     #region "Login Code"
     public static bool IsValidEmailId(string InputEmail)
     {

@@ -234,8 +234,13 @@
                                                 <div class="table-wrapper table-responsive" id="divfactorygrid" runat="server">
                                                     <asp:GridView ID="gvPrdoct" runat="server" AutoGenerateColumns="false" Class="commonAjaxTbl dataTable master-company-table ViewProductTable table 
                                                        display responsive no-wrap table-hover manage-user Grid table-responsive"
-                                                        OnRowCreated="gvPrdoct_RowCreated">
+                                                        OnRowCreated="gvPrdoct_RowCreated" OnRowCommand="gvPrdoct_RowCommand">
                                                         <Columns>
+                                                            <asp:TemplateField HeaderText="View">
+                                                                <ItemTemplate>
+                                                                    <asp:LinkButton runat="server" ID="lblviewcompprod" CssClass="fa fa-eye" CommandName="ViewComp" CommandArgument='<%#Eval("CompanyRefNo") %>'></asp:LinkButton>
+                                                                </ItemTemplate>
+                                                            </asp:TemplateField>
                                                             <asp:TemplateField HeaderText="S.No.">
                                                                 <ItemTemplate>
                                                                     <%#Container.DataItemIndex+1 %>

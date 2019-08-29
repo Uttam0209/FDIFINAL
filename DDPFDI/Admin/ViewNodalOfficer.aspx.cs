@@ -110,7 +110,7 @@ public partial class Admin_ViewNodalOfficer : System.Web.UI.Page
             DataTable DtAdd = dv.ToTable();
             pgsource.DataSource = DtAdd.DefaultView;
             pgsource.AllowPaging = true;
-            pgsource.PageSize = 25;
+            pgsource.PageSize = 100;
             pgsource.CurrentPageIndex = pagingCurrentPage;
             ViewState["totpage"] = pgsource.PageCount;
             lblpaging.Text = "Page " + (pagingCurrentPage + 1) + " of " + pgsource.PageCount;
@@ -603,10 +603,10 @@ public partial class Admin_ViewNodalOfficer : System.Web.UI.Page
         DataTable dt = new DataTable();
         dt.Columns.Add("PageIndex");
         dt.Columns.Add("PageText");
-        firstindex = pagingCurrentPage - 25;
-        if (pagingCurrentPage > 25)
+        firstindex = pagingCurrentPage - 100;
+        if (pagingCurrentPage > 100)
         {
-            lastindex = pagingCurrentPage + 25;
+            lastindex = pagingCurrentPage + 100;
         }
         else
         {

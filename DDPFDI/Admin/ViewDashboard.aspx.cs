@@ -21,7 +21,14 @@ public partial class Admin_ViewDashboard : System.Web.UI.Page
                 if (Request.QueryString["id"] != null)
                 {
                     if (Encrypt.DecryptData(Session["Type"].ToString()) == "Admin" || Encrypt.DecryptData(Session["Type"].ToString()) == "SuperAdmin")
-                        this.ControlGrid(Encrypt.DecryptData(Request.QueryString["id"].ToString()), "");
+                        if (Request.QueryString["strangone"] != null)
+                        {
+                            this.ControlGrid(Encrypt.DecryptData(Request.QueryString["id"].ToString()), Encrypt.DecryptData(Request.QueryString["strangone"].ToString()));
+                        }
+                        else
+                        {
+                            this.ControlGrid(Encrypt.DecryptData(Request.QueryString["id"].ToString()), "");
+                        }
                     else
                         this.ControlGrid(Encrypt.DecryptData(Request.QueryString["id"].ToString()), Session["CompanyRefNo"].ToString());
                 }
@@ -118,7 +125,7 @@ public partial class Admin_ViewDashboard : System.Web.UI.Page
                 DataTable dtads = dv.ToTable();
                 pgsource.DataSource = dtads.DefaultView;
                 pgsource.AllowPaging = true;
-                pgsource.PageSize = 25;
+                pgsource.PageSize = 100;
                 pgsource.CurrentPageIndex = pagingCurrentPage;
                 ViewState["totpage"] = pgsource.PageCount;
                 lblpaging.Text = "Page " + (pagingCurrentPage + 1) + " of " + pgsource.PageCount;
@@ -139,7 +146,7 @@ public partial class Admin_ViewDashboard : System.Web.UI.Page
                 DataTable dtads = DtGrid;
                 pgsource.DataSource = dtads.DefaultView;
                 pgsource.AllowPaging = true;
-                pgsource.PageSize = 25;
+                pgsource.PageSize = 100;
                 pgsource.CurrentPageIndex = pagingCurrentPage;
                 ViewState["totpage"] = pgsource.PageCount;
                 lblpaging.Text = "Page " + (pagingCurrentPage + 1) + " of " + pgsource.PageCount;
@@ -178,7 +185,7 @@ public partial class Admin_ViewDashboard : System.Web.UI.Page
                 DataTable dtads = dv.ToTable();
                 pgsource.DataSource = dtads.DefaultView;
                 pgsource.AllowPaging = true;
-                pgsource.PageSize = 25;
+                pgsource.PageSize = 100;
                 pgsource.CurrentPageIndex = pagingCurrentPage;
                 ViewState["totpage"] = pgsource.PageCount;
                 lblpaging.Text = "Page " + (pagingCurrentPage + 1) + " of " + pgsource.PageCount;
@@ -199,7 +206,7 @@ public partial class Admin_ViewDashboard : System.Web.UI.Page
                 DataTable dtads = DtGrid;
                 pgsource.DataSource = dtads.DefaultView;
                 pgsource.AllowPaging = true;
-                pgsource.PageSize = 25;
+                pgsource.PageSize = 100;
                 pgsource.CurrentPageIndex = pagingCurrentPage;
                 ViewState["totpage"] = pgsource.PageCount;
                 lblpaging.Text = "Page " + (pagingCurrentPage + 1) + " of " + pgsource.PageCount;
@@ -239,7 +246,7 @@ public partial class Admin_ViewDashboard : System.Web.UI.Page
                 DataTable dtads = dv.ToTable();
                 pgsource.DataSource = dtads.DefaultView;
                 pgsource.AllowPaging = true;
-                pgsource.PageSize = 25;
+                pgsource.PageSize = 100;
                 pgsource.CurrentPageIndex = pagingCurrentPage;
                 ViewState["totpage"] = pgsource.PageCount;
                 lblpaging.Text = "Page " + (pagingCurrentPage + 1) + " of " + pgsource.PageCount;
@@ -260,7 +267,7 @@ public partial class Admin_ViewDashboard : System.Web.UI.Page
                 DataTable dtads = DtGrid;
                 pgsource.DataSource = dtads.DefaultView;
                 pgsource.AllowPaging = true;
-                pgsource.PageSize = 25;
+                pgsource.PageSize = 100;
                 pgsource.CurrentPageIndex = pagingCurrentPage;
                 ViewState["totpage"] = pgsource.PageCount;
                 lblpaging.Text = "Page " + (pagingCurrentPage + 1) + " of " + pgsource.PageCount;
@@ -302,7 +309,7 @@ public partial class Admin_ViewDashboard : System.Web.UI.Page
                 DataTable dtads = dv.ToTable();
                 pgsource.DataSource = dtads.DefaultView;
                 pgsource.AllowPaging = true;
-                pgsource.PageSize = 25;
+                pgsource.PageSize = 100;
                 pgsource.CurrentPageIndex = pagingCurrentPage;
                 ViewState["totpage"] = pgsource.PageCount;
                 lblpaging.Text = "Page " + (pagingCurrentPage + 1) + " of " + pgsource.PageCount;
@@ -326,7 +333,7 @@ public partial class Admin_ViewDashboard : System.Web.UI.Page
                 DataTable dtads = dv.ToTable();
                 pgsource.DataSource = dtads.DefaultView;
                 pgsource.AllowPaging = true;
-                pgsource.PageSize = 25;
+                pgsource.PageSize = 100;
                 pgsource.CurrentPageIndex = pagingCurrentPage;
                 ViewState["totpage"] = pgsource.PageCount;
                 lblpaging.Text = "Page " + (pagingCurrentPage + 1) + " of " + pgsource.PageCount;
@@ -356,19 +363,33 @@ public partial class Admin_ViewDashboard : System.Web.UI.Page
             {
                 DataView dv = new DataView(DtGrid);
                 // code to filter row role wise
-                if (Encrypt.DecryptData(Session["Type"].ToString()).ToUpper() == "COMPANY")
+                if (Request.QueryString["strangone"] != null)
+                    dv.RowFilter = "CompanyRefNo='" + hfmref.Value + "'";
+                else if (Encrypt.DecryptData(Session["Type"].ToString()).ToUpper() == "COMPANY")
                     dv.RowFilter = "CompanyRefNo='" + hfmref.Value + "'";
                 else if (Encrypt.DecryptData(Session["Type"].ToString()).ToUpper() == "DIVISION")
                     dv.RowFilter = "FactoryRefNo='" + hfmref.Value + "'";
-                else
+                else if (Encrypt.DecryptData(Session["Type"].ToString()).ToUpper() == "UNIT")
                     dv.RowFilter = "UnitRefNo='" + hfmref.Value + "'";
                 dv.Sort = "LastUpdated desc,CompanyName asc,FactoryName asc";
-
-
                 DataTable dtads = dv.ToTable();
+                dtads.Columns.Add("TopImages", typeof(System.String));
+                for (int i = 0; dtads.Rows.Count > i; i++)
+                {
+                    string mProdRefTime = dtads.Rows[i]["ProductRefNo"].ToString();
+                    DataTable dtImageBind = Lo.RetriveProductCode("", mProdRefTime, "RetImageTop", "");
+                    if (dtImageBind.Rows.Count > 0)
+                    {
+                        dtads.Rows[i]["TopImages"] = dtImageBind.Rows[0]["ImageName"].ToString();
+                    }
+                    else
+                    {
+                        dtads.Rows[i]["TopImages"] = "assets/images/Noimage.png";
+                    }
+                }
                 pgsource.DataSource = dtads.DefaultView;
                 pgsource.AllowPaging = true;
-                pgsource.PageSize = 25;
+                pgsource.PageSize = 100;
                 pgsource.CurrentPageIndex = pagingCurrentPage;
                 ViewState["totpage"] = pgsource.PageCount;
                 lblpaging.Text = "Page " + (pagingCurrentPage + 1) + " of " + pgsource.PageCount;
@@ -396,9 +417,23 @@ public partial class Admin_ViewDashboard : System.Web.UI.Page
                         dv.Sort = "LastUpdated desc,CompanyName asc,FactoryName asc";
 
                         DataTable dtads = dv.ToTable();
+                        dtads.Columns.Add("TopImages", typeof(System.String));
+                        for (int i = 0; dtads.Rows.Count > i; i++)
+                        {
+                            string mProdRefTime = dtads.Rows[i]["ProductRefNo"].ToString();
+                            DataTable dtImageBind = Lo.RetriveProductCode("", mProdRefTime, "RetImageTop", "");
+                            if (dtImageBind.Rows.Count > 0)
+                            {
+                                dtads.Rows[i]["TopImages"] = dtImageBind.Rows[0]["ImageName"].ToString();
+                            }
+                            else
+                            {
+                                dtads.Rows[i]["TopImages"] = "assets/images/Noimage.png";
+                            }
+                        }
                         pgsource.DataSource = dtads.DefaultView;
                         pgsource.AllowPaging = true;
-                        pgsource.PageSize = 25;
+                        pgsource.PageSize = 100;
                         pgsource.CurrentPageIndex = pagingCurrentPage;
                         ViewState["totpage"] = pgsource.PageCount;
                         lblpaging.Text = "Page " + (pagingCurrentPage + 1) + " of " + pgsource.PageCount;
@@ -412,9 +447,23 @@ public partial class Admin_ViewDashboard : System.Web.UI.Page
                     else
                     {
                         DataTable dtads = DtGrid;
+                        dtads.Columns.Add("TopImages", typeof(System.String));
+                        for (int i = 0; dtads.Rows.Count > i; i++)
+                        {
+                            string mProdRefTime = dtads.Rows[i]["ProductRefNo"].ToString();
+                            DataTable dtImageBind = Lo.RetriveProductCode("", mProdRefTime, "RetImageTop", "");
+                            if (dtImageBind.Rows.Count > 0)
+                            {
+                                dtads.Rows[i]["TopImages"] = dtImageBind.Rows[0]["ImageName"].ToString();
+                            }
+                            else
+                            {
+                                dtads.Rows[i]["TopImages"] = "assets/images/Noimage.png";
+                            }
+                        }
                         pgsource.DataSource = dtads.DefaultView;
                         pgsource.AllowPaging = true;
-                        pgsource.PageSize = 25;
+                        pgsource.PageSize = 100;
                         pgsource.CurrentPageIndex = pagingCurrentPage;
                         ViewState["totpage"] = pgsource.PageCount;
                         lblpaging.Text = "Page " + (pagingCurrentPage + 1) + " of " + pgsource.PageCount;
@@ -511,6 +560,7 @@ public partial class Admin_ViewDashboard : System.Web.UI.Page
     private string mhiddenRefNo;
     private string POProc;
     private string QAAValue;
+    private string EndUserValue;
     protected void gvproduct_RowCommand(object sender, GridViewCommandEventArgs e)
     {
         GridViewRow gvr = (GridViewRow)((Control)e.CommandSource).NamingContainer;
@@ -542,7 +592,19 @@ public partial class Admin_ViewDashboard : System.Web.UI.Page
             lblhscode4digit.Text = DtView.Rows[0]["HsCode4digit"].ToString();
             lblhsncode8digit.Text = DtView.Rows[0]["HsnCode8digit"].ToString();
             lblenduserpartno.Text = DtView.Rows[0]["EndUserPartNumber"].ToString();
-            lblenduser.Text = DtView.Rows[0]["EUserName"].ToString();
+            DataTable dtenduser = Lo.RetriveProductCode("", e.CommandArgument.ToString(), "EndUser", "");
+            if (dtenduser.Rows.Count > 0)
+            {
+                for (int i = 0; dtenduser.Rows.Count > i; i++)
+                {
+                    EndUserValue = EndUserValue + ", " + dtenduser.Rows[i]["EndUser"].ToString();
+                }
+            }
+            if (EndUserValue != null)
+            {
+                lblenduser.Text = EndUserValue.Substring(1).ToString();
+            }
+            //lblenduser.Text = DtView.Rows[0]["EUserName"].ToString();
             lbldefenceplatform.Text = DtView.Rows[0]["PlatName"].ToString();
             lblnameofdefenceplatform.Text = DtView.Rows[0]["Nomenclature"].ToString();
             prodIndustryDomain.Text = DtView.Rows[0]["TechLevel1Name"].ToString();
@@ -578,12 +640,13 @@ public partial class Admin_ViewDashboard : System.Web.UI.Page
             else
             {
                 itemdocument.Visible = true;
-                a_downitem.HRef = "http://103.73.189.114:801/Upload/" + DtView.Rows[0]["ItemDescriptionPDFFile"].ToString();
+                a_downitem.HRef = "http://srijandefence.in/Upload/" + DtView.Rows[0]["ItemDescriptionPDFFile"].ToString();
+                //  a_downitem.HRef = "http://103.73.189.114:801/Upload/" + DtView.Rows[0]["ItemDescriptionPDFFile"].ToString();
             }
-            DataTable dtImageBind = Lo.RetriveProductCode("", e.CommandArgument.ToString(), "ProductImage", "");
-            if (dtImageBind.Rows.Count > 0)
+            DataTable dtImageBindfinal = Lo.RetriveProductCode("", e.CommandArgument.ToString(), "ProductImage", "");
+            if (dtImageBindfinal.Rows.Count > 0)
             {
-                dlimage.DataSource = dtImageBind;
+                dlimage.DataSource = dtImageBindfinal;
                 dlimage.DataBind();
                 dlimage.Visible = true;
             }
@@ -592,6 +655,7 @@ public partial class Admin_ViewDashboard : System.Web.UI.Page
                 dlimage.Visible = false;
             }
             lblfeaturesanddetail.Text = DtView.Rows[0]["FeatursandDetail"].ToString();
+            lblitemspecification.Text = DtView.Rows[0]["ItemSpecification"].ToString();
             DataTable dtProdInfo = Lo.RetriveProductCode("", e.CommandArgument.ToString(), "RetriveProdInfo", "");
             if (dtProdInfo.Rows.Count > 0)
             {
@@ -711,6 +775,26 @@ public partial class Admin_ViewDashboard : System.Web.UI.Page
             {
                 lbltendersubmission.Text = "No";
                 tenderstatus.Visible = false;
+            }
+
+            lbleoistatus.Text = DtView.Rows[0]["EOIStatus"].ToString();
+            string eoisub = DtView.Rows[0]["EOISubmition"].ToString();
+            if (eoisub.ToString() == "Y")
+            {
+                lbleoisub.Text = "Yes";
+                if (DtView.Rows[0]["TenderFillDate"].ToString() != "")
+                {
+                    DateTime eoidate = Convert.ToDateTime(DtView.Rows[0]["EOIFillDate"].ToString());
+                    string eDate = eoidate.ToString("dd-MMM-yyyy");
+                    lbleoidate.Text = eDate.ToString();
+                }
+                lbleoiurl.Text = DtView.Rows[0]["TenderUrl"].ToString();
+                tbleoidate.Visible = true;
+            }
+            else
+            {
+                lbleoisub.Text = "No";
+                tbleoidate.Visible = false;
             }
             string Nodel1Id = DtView.Rows[0]["NodelDetail"].ToString();
             if (Nodel1Id.ToString() != "")
@@ -921,7 +1005,6 @@ public partial class Admin_ViewDashboard : System.Web.UI.Page
             e.Row.TableSection = TableRowSection.TableFooter;
         }
     }
-
     #endregion
     #region //------------------------pageindex code--------------//
     protected void lnkbtnPgFirst_Click(object sender, EventArgs e)
@@ -1078,19 +1161,19 @@ public partial class Admin_ViewDashboard : System.Web.UI.Page
         DataTable dt = new DataTable();
         dt.Columns.Add("PageIndex");
         dt.Columns.Add("PageText");
-        firstindex = pagingCurrentPage - 25;
-        if (pagingCurrentPage > 25)
+        firstindex = pagingCurrentPage - 100;
+        if (pagingCurrentPage > 100)
         {
-            lastindex = pagingCurrentPage + 25;
+            lastindex = pagingCurrentPage + 100;
         }
         else
         {
-            lastindex = 24;
+            lastindex = 25;
         }
         if (lastindex > Convert.ToInt32(ViewState["totpage"]))
         {
             lastindex = Convert.ToInt32(ViewState["totpage"]);
-            firstindex = lastindex - 24;
+            firstindex = lastindex - 25;
         }
         if (firstindex < 0)
         {
@@ -1112,5 +1195,18 @@ public partial class Admin_ViewDashboard : System.Web.UI.Page
     protected void lblback_Click(object sender, EventArgs e)
     {
         Response.Redirect("Dashboard?mu=" + Encrypt.EncryptData(Session["Type"].ToString()) + "&id=" + Encrypt.EncryptData(Session["CompanyRefNo"].ToString()));
+    }
+    protected void gvproduct_RowDataBound(object sender, GridViewRowEventArgs e)
+    {
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            HyperLink hy = (e.Row.FindControl("lbpdffile") as HyperLink);
+            if (hy.NavigateUrl.Trim() == "" || hy.NavigateUrl.Trim() == null)
+            {
+                e.Row.Cells[2].Text = "NA";
+            }
+            else
+            { }
+        }
     }
 }

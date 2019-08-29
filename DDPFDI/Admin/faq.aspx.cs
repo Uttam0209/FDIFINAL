@@ -9,6 +9,13 @@ public partial class Admin_faq : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-
+        if (Session["User"] != null)
+        {
+        }
+        else
+        {
+            ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert",
+               "alert('Session Expired,Please login again');window.location='Login'", true);
+        }
     }
 }

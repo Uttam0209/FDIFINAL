@@ -50,6 +50,13 @@ public class DataUtility
         cmb.DataValueField = ValueField;
         cmb.DataBind();
     }
+    public void FillListBoxlist(ListBox cmb, DataTable dt, string TextField, string ValueField)
+    {
+        cmb.DataSource = dt;
+        cmb.DataTextField = TextField;
+        cmb.DataValueField = ValueField;
+        cmb.DataBind();
+    }
     public void FillCheckBox(CheckBoxList CB, DataTable dt, string TextField, string ValueField)
     {
         CB.DataSource = dt;
