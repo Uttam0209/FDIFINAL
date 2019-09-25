@@ -48,7 +48,7 @@ public partial class Admin_Industry : System.Web.UI.Page
         else
         {
             ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert",
-                "alert('Session Expired,Please login again');window.location='Login'", true);
+                "ErrorMssgPopup('Session Expired,Please login again');window.location='Login'", true);
         }
     }
 }

@@ -13,6 +13,33 @@
     <link href="~/assets/css/bootstrap.css" rel="stylesheet">
     <link href="~/assets/css/style.css" rel="stylesheet" type="text/css">
     <link href="~/assets/css/custom.css" rel="stylesheet" type="text/css">
+    <script src="assets/js/jquery-3.4.1.js"></script>
+    <script>
+        function SuccessfullPop(data) {
+            $("body").addClass('CaptchaError');
+            $("#alertPopupS").show();
+            $("#alertPopupS .alertMsg").append(data);
+            return false;
+        }
+        //Hide Alert Pop up
+        $('.close_alert').on('click', function () {
+            $("body").css('overflow', 'visible');
+            $('.alert-overlay-successful').hide();
+        });
+    </script>
+    <script>
+        function ErrorMssgPopup(data) {
+            $("body").addClass('CaptchaError');
+            $("#alertPopup").show();
+            $("#alertPopup .alertMsg").append(data);
+            return false;
+        }
+        //Hide Alert Pop up
+        $('.close_alert').on('click', function () {
+            $("body").css('overflow', 'visible');
+            $('.alert-overlay-error').hide();
+        });
+    </script>
 </head>
 <body>
     <form id="form1" runat="server">
@@ -34,7 +61,37 @@
                 ErrorMessage="Minimum Length is (8) charactor" ForeColor="Red" ValidationExpression="^[\s\S]{8,15}$" />
             <asp:Button runat="server" ID="btnchangepass" Text="Submit" CssClass="btn btn-primary createLoginPass" OnClick="btnchangepass_Click" />
         </div>
-
+        <!-----Alert Box Success Fail Massage Popup ------>
+        <div id="alertPopup" class="alert-overlay alert-overlay-error" style="display: none">
+            <div class="alert-box">
+                <div class="box">
+                    <div class="error-checkmark">
+                        <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                    </div>
+                    <div class="alert alertMsg">
+                    </div>
+                    <button class="btn btn-success close_alert">Close</button>
+                </div>
+            </div>
+        </div>
+        <div id="alertPopupS" class="alert-overlay alert-overlay-successful" style="display: none">
+            <div class="alert-box">
+                <div class="box">
+                    <div class="success-checkmark">
+                        <div class="check-icon">
+                            <span class="icon-line line-tip"></span>
+                            <span class="icon-line line-long"></span>
+                            <div class="icon-circle"></div>
+                            <div class="icon-fix"></div>
+                        </div>
+                    </div>
+                    <div class="alert alertMsg">
+                    </div>
+                    <button class="btn btn-success close_alert">Close</button>
+                </div>
+            </div>
+        </div>
+        <!-----End Alert Box ------>
     </form>
 </body>
 </html>

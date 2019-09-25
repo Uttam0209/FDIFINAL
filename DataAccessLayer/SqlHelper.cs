@@ -228,6 +228,105 @@ namespace DataAccessLayer
         }
         #endregion
         #region SaveCode
+        public string InsertLogProd(HybridDictionary hySaveProdInfo, out string _sysMsg, out string _msg)
+        {
+            using (DbConnection dbcon = db.CreateConnection())
+            {
+                dbcon.Open();
+                DbTransaction dbTran = dbcon.BeginTransaction();
+                try
+                {
+                    DbCommand dbcom = db.GetStoredProcCommand("sp_LogProduct");
+                    db.AddInParameter(dbcom, "@ProdRefNo", DbType.String, hySaveProdInfo["ProdRefNo"]);
+                    db.AddInParameter(dbcom, "@ProductChanges", DbType.String, hySaveProdInfo["ProductChanges"]);
+                    db.AddInParameter(dbcom, "@ChangesBy", DbType.String, hySaveProdInfo["ChangesBy"]);
+                    db.AddInParameter(dbcom, "@Mailsend", DbType.String, hySaveProdInfo["Mailsend"]);
+                    db.AddInParameter(dbcom, "@Status", DbType.String, hySaveProdInfo["Status"]);
+                    db.ExecuteNonQuery(dbcom, dbTran);
+                    dbTran.Commit();
+                    _msg = "Save";
+                    _sysMsg = "Save";
+                    return "Save";
+                }
+                catch (SqlException ex)
+                {
+                    dbTran.Rollback();
+                    _msg = ex.Message;
+                    _sysMsg = ex.Message;
+                    return "-1";
+                }
+                finally
+                {
+                    dbcon.Close();
+                }
+            }
+        }
+        public string SaveLog(HybridDictionary hyLog, out string _sysMsg, out string _msg)
+        {
+            using (DbConnection dbcon = db.CreateConnection())
+            {
+                dbcon.Open();
+                DbTransaction dbTran = dbcon.BeginTransaction();
+                try
+                {
+                    DbCommand dbcom = db.GetStoredProcCommand("sp_Log");
+                    db.AddInParameter(dbcom, "@UserId", DbType.String, hyLog["UserId"]);
+                    db.AddInParameter(dbcom, "@IPAddress", DbType.String, hyLog["IPAddress"]);
+                    db.AddInParameter(dbcom, "@SystemName", DbType.String, hyLog["SystemName"]);
+                    db.AddInParameter(dbcom, "@Form", DbType.String, hyLog["Form"]);
+                    db.AddInParameter(dbcom, "@Activity", DbType.String, hyLog["Activity"]);
+                    db.AddInParameter(dbcom, "@LoginDate", DbType.String, hyLog["LoginDate"]);
+                    db.AddInParameter(dbcom, "@LoginTime", DbType.String, hyLog["LoginTime"]);
+                    db.ExecuteNonQuery(dbcom, dbTran);
+                    dbTran.Commit();
+                    _msg = "Save";
+                    _sysMsg = "Save";
+                    return "Save";
+                }
+                catch (SqlException ex)
+                {
+                    dbTran.Rollback();
+                    _msg = ex.Message;
+                    _sysMsg = ex.Message;
+                    return "-1";
+                }
+                finally
+                {
+                    dbcon.Close();
+                }
+            }
+        }
+        public string SaveLogoutstatus(HybridDictionary hyLogOut, out string _sysMsg, out string _msg)
+        {
+            using (DbConnection dbcon = db.CreateConnection())
+            {
+                dbcon.Open();
+                DbTransaction dbTran = dbcon.BeginTransaction();
+                try
+                {
+                    DbCommand dbcom = db.GetStoredProcCommand("sp_LogOutStatus");
+                    db.AddInParameter(dbcom, "@LoginUser", DbType.String, hyLogOut["LoginUser"]);
+                    db.AddInParameter(dbcom, "@IsLogedIn", DbType.String, hyLogOut["IsLogedIn"]);
+                    db.AddInParameter(dbcom, "@IsLogedOutTime", DbType.DateTime, hyLogOut["IsLogedOutTime"]);
+                    db.ExecuteNonQuery(dbcom, dbTran);
+                    dbTran.Commit();
+                    _msg = "Save";
+                    _sysMsg = "Save";
+                    return "Save";
+                }
+                catch (SqlException ex)
+                {
+                    dbTran.Rollback();
+                    _msg = ex.Message;
+                    _sysMsg = ex.Message;
+                    return "-1";
+                }
+                finally
+                {
+                    dbcon.Close();
+                }
+            }
+        }
         public string SaveFDI(HybridDictionary HySave, out string _sysMsg, out string _msg)
         {
             // string mCurrentID = "";
@@ -918,6 +1017,29 @@ namespace DataAccessLayer
                 }
             }
         }
+        public string UpdateStatus(Int64 ID, string Value1, string Value2)
+        {
+            using (DbConnection dbCon = db.CreateConnection())
+            {
+                dbCon.Open();
+                DbTransaction dbTran = dbCon.BeginTransaction();
+                try
+                {
+                    DbCommand cmd = db.GetStoredProcCommand("sp_Country");
+                    db.AddInParameter(cmd, "@CountryID", DbType.Int64, ID);
+                    db.AddInParameter(cmd, "@CountryName", DbType.String, Value1);
+                    db.AddInParameter(cmd, "@WorkCodeFor", DbType.String, Value2);
+                    db.ExecuteNonQuery(cmd, dbTran);
+                    dbTran.Commit();
+                    return "true";
+                }
+                catch (Exception ex)
+                {
+                    dbTran.Rollback();
+                    return "-1";
+                }
+            }
+        }
         #endregion
         #region retriveCode
         public DataTable RetriveGridView(string ID)
@@ -929,6 +1051,27 @@ namespace DataAccessLayer
                 {
                     DbCommand cmd = db.GetStoredProcCommand("sp_SearchFDIGrid");
                     db.AddInParameter(cmd, "@CompanyRefNo", DbType.String, ID);
+                    IDataReader dr = db.ExecuteReader(cmd);
+                    DataTable dt = new DataTable();
+                    if (dr != null)
+                        dt.Load(dr);
+                    return dt;
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+        }
+        public DataTable GetLogOutStatus(string ID)
+        {
+            using (DbConnection dbCon = db.CreateConnection())
+            {
+                dbCon.Open();
+                try
+                {
+                    DbCommand cmd = db.GetStoredProcCommand("sp_LogoutTime");
+                    db.AddInParameter(cmd, "@UserId", DbType.String, ID);
                     IDataReader dr = db.ExecuteReader(cmd);
                     DataTable dt = new DataTable();
                     if (dr != null)
@@ -1044,6 +1187,29 @@ namespace DataAccessLayer
                     db.AddInParameter(cmd, "@CountryID", DbType.Int64, countryid);
                     db.AddInParameter(cmd, "@CountryName", DbType.String, "");
                     db.AddInParameter(cmd, "@WorkCodeFor", DbType.String, text);
+                    IDataReader dr = db.ExecuteReader(cmd);
+                    DataTable dt = new DataTable();
+                    if (dr != null)
+                        dt.Load(dr);
+                    return dt;
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+        }
+        public DataTable RetriveCountry(Int64 countryid, string text,string forword)
+        {
+            using (DbConnection dbCon = db.CreateConnection())
+            {
+                dbCon.Open();
+                try
+                {
+                    DbCommand cmd = db.GetStoredProcCommand("sp_country");
+                    db.AddInParameter(cmd, "@CountryID", DbType.Int64, countryid);
+                    db.AddInParameter(cmd, "@CountryName", DbType.String, text);
+                    db.AddInParameter(cmd, "@WorkCodeFor", DbType.String, forword);
                     IDataReader dr = db.ExecuteReader(cmd);
                     DataTable dt = new DataTable();
                     if (dr != null)
@@ -1454,44 +1620,93 @@ namespace DataAccessLayer
 
                         // checking if ref no is not blank only then allow to enter else do not enter product
                         if (!String.IsNullOrEmpty(dtIds.Rows[0]["RefNo"].ToString().Trim()))
-                        {
-                            // Inserting values in product table
-                            DbCommand cmd = db.GetStoredProcCommand("sp_InsertProductFromExcel");
+                        {// checking if nsn group no is not blank only then allow to enter else do not enter product
+                            if (dtIds.Rows[0]["ProdLevel1"].ToString().Trim() != "-1")
+                            {// checking if defence platform no is not blank only then allow to enter else do not enter product
+                                if (dtIds.Rows[0]["Platform"].ToString().Trim() != "-1")
+                                {// checking if PRODUCT (INDUSTRY DOMAIN) no is not blank only then allow to enter else do not enter product
+                                    if (dtIds.Rows[0]["TechLevel1"].ToString().Trim() != "-1")
+                                    {
+                                        if (dtIds.Rows[0]["ProdLevel2"].ToString().Trim() != "-1")
+                                        {// checking if nsn group class  no is not blank only then allow to enter else do not enter product
+                                            if (dtIds.Rows[0]["Nomenclature"].ToString().Trim() != "-1")
+                                            {// checking if name of defence paltform no is not blank only then allow to enter else do not enter product
+                                                if (dtIds.Rows[0]["TechLevel2"].ToString().Trim() != "-1")
+                                                {// checking if PRODUCT (INDUSTRY sub DOMAIN) no is not blank only then allow to enter else do not enter product
+                                                    // Inserting values in product table
+                                                    DbCommand cmd = db.GetStoredProcCommand("sp_InsertProductFromExcel");
 
-                            db.AddInParameter(cmd, "@CompanyRefNo", DbType.String, dtIds.Rows[0]["RefNo"].ToString());
-                            db.AddInParameter(cmd, "@Role", DbType.String, dtIds.Rows[0]["Role"].ToString());
-                            db.AddInParameter(cmd, "@ProductLevel1", DbType.Int16, dtIds.Rows[0]["ProdLevel1"].ToString());
-                            db.AddInParameter(cmd, "@ProductLevel2", DbType.Int64, dtIds.Rows[0]["ProdLevel2"].ToString());
-                            db.AddInParameter(cmd, "@ProductLevel3", DbType.Int64, dtIds.Rows[0]["ProdLevel3"].ToString());
+                                                    db.AddInParameter(cmd, "@CompanyRefNo", DbType.String, dtIds.Rows[0]["RefNo"].ToString());
+                                                    db.AddInParameter(cmd, "@Role", DbType.String, dtIds.Rows[0]["Role"].ToString());
+                                                    db.AddInParameter(cmd, "@ProductLevel1", DbType.Int16, dtIds.Rows[0]["ProdLevel1"].ToString());
+                                                    db.AddInParameter(cmd, "@ProductLevel2", DbType.Int64, dtIds.Rows[0]["ProdLevel2"].ToString());
+                                                    db.AddInParameter(cmd, "@ProductLevel3", DbType.Int64, dtIds.Rows[0]["ProdLevel3"].ToString());
 
-                            db.AddInParameter(cmd, "@ProductDescription", DbType.String, dtMaster.Rows[k]["ITEM DESCRIPTION"].ToString());
-                            db.AddInParameter(cmd, "@NSCCode", DbType.String, dtMaster.Rows[k]["NSC CODE"].ToString());
-                            db.AddInParameter(cmd, "@NIINCode", DbType.String, dtMaster.Rows[k]["NIIN CODE"].ToString());
-                            db.AddInParameter(cmd, "@OEMPartNumber", DbType.String, dtMaster.Rows[k]["OEM PART NUMBER"].ToString());
-                            db.AddInParameter(cmd, "@OEMName", DbType.String, dtMaster.Rows[k]["OEM NAME"].ToString());
-                            db.AddInParameter(cmd, "@OEMCountry", DbType.Int64, dtIds.Rows[0]["OEMCountry"].ToString());
-                            db.AddInParameter(cmd, "@DPSUPartNumber", DbType.String, dtMaster.Rows[k]["DPSU PART NUMBER"].ToString());
-                            db.AddInParameter(cmd, "@HSNCode", DbType.String, dtMaster.Rows[k]["HSN CODE"].ToString());
-                            // db.AddInParameter(cmd, "@HSNCode8Digit", DbType.String, dtMaster.Rows[k]["HSN CODE"].ToString());
-                            db.AddInParameter(cmd, "@EndUserPartNumber", DbType.String, "");
+                                                    db.AddInParameter(cmd, "@ProductDescription", DbType.String, dtMaster.Rows[k]["ITEM DESCRIPTION"].ToString());
+                                                    db.AddInParameter(cmd, "@NSCCode", DbType.String, dtMaster.Rows[k]["NSC CODE"].ToString());
+                                                    db.AddInParameter(cmd, "@NIINCode", DbType.String, dtMaster.Rows[k]["NIIN CODE"].ToString());
+                                                    db.AddInParameter(cmd, "@OEMPartNumber", DbType.String, dtMaster.Rows[k]["OEM PART NUMBER"].ToString());
+                                                    db.AddInParameter(cmd, "@OEMName", DbType.String, dtMaster.Rows[k]["OEM NAME"].ToString());
+                                                    db.AddInParameter(cmd, "@OEMCountry", DbType.Int64, dtIds.Rows[0]["OEMCountry"].ToString());
+                                                    db.AddInParameter(cmd, "@DPSUPartNumber", DbType.String, dtMaster.Rows[k]["DPSU PART NUMBER"].ToString());
+                                                    db.AddInParameter(cmd, "@HSNCode", DbType.String, dtMaster.Rows[k]["HSN CODE"].ToString());
+                                                    // db.AddInParameter(cmd, "@HSNCode8Digit", DbType.String, dtMaster.Rows[k]["HSN CODE"].ToString());
+                                                    db.AddInParameter(cmd, "@EndUserPartNumber", DbType.String, "");
 
-                            db.AddInParameter(cmd, "@EndUser", DbType.Int64, dtIds.Rows[0]["EndUser"].ToString());
-                            db.AddInParameter(cmd, "@Platform", DbType.Int64, dtIds.Rows[0]["Platform"].ToString());
-                            db.AddInParameter(cmd, "@NomenclatureOfMainSystem", DbType.Int64, dtIds.Rows[0]["Nomenclature"].ToString());
-                            db.AddInParameter(cmd, "@TechnologyLevel1", DbType.Int64, dtIds.Rows[0]["TechLevel1"].ToString());
-                            db.AddInParameter(cmd, "@TechnologyLevel2", DbType.Int64, dtIds.Rows[0]["TechLevel2"].ToString());
-                            db.AddInParameter(cmd, "@TechnologyLevel3", DbType.Int64, dtIds.Rows[0]["TechLevel3"].ToString());
+                                                    db.AddInParameter(cmd, "@EndUser", DbType.Int64, dtIds.Rows[0]["EndUser"].ToString());
+                                                    db.AddInParameter(cmd, "@Platform", DbType.Int64, dtIds.Rows[0]["Platform"].ToString());
+                                                    db.AddInParameter(cmd, "@NomenclatureOfMainSystem", DbType.Int64, dtIds.Rows[0]["Nomenclature"].ToString());
+                                                    db.AddInParameter(cmd, "@TechnologyLevel1", DbType.Int64, dtIds.Rows[0]["TechLevel1"].ToString());
+                                                    db.AddInParameter(cmd, "@TechnologyLevel2", DbType.Int64, dtIds.Rows[0]["TechLevel2"].ToString());
+                                                    db.AddInParameter(cmd, "@TechnologyLevel3", DbType.Int64, dtIds.Rows[0]["TechLevel3"].ToString());
 
-                            db.AddInParameter(cmd, "@SearchKeyword", DbType.String, dtMaster.Rows[k]["SEARCH KEYWORDS"].ToString());
-                            if (dtMaster.Rows[k]["MANUFACTURER NAME IF INDIGINISED"].ToString().Trim() == "" || dtMaster.Rows[k]["MANUFACTURER NAME IF INDIGINISED"].ToString().Trim() == "-")
-                                db.AddInParameter(cmd, "@IsIndeginized", DbType.String, "N");
+                                                    db.AddInParameter(cmd, "@SearchKeyword", DbType.String, dtMaster.Rows[k]["SEARCH KEYWORDS"].ToString());
+                                                    if (dtMaster.Rows[k]["MANUFACTURER NAME IF INDIGINISED"].ToString().Trim() == "" || dtMaster.Rows[k]["MANUFACTURER NAME IF INDIGINISED"].ToString().Trim() == "-")
+                                                        db.AddInParameter(cmd, "@IsIndeginized", DbType.String, "N");
+                                                    else
+                                                        db.AddInParameter(cmd, "@IsIndeginized", DbType.String, "Y");
+                                                    db.AddInParameter(cmd, "@ManufactureName", DbType.String, dtMaster.Rows[k]["MANUFACTURER NAME IF INDIGINISED"].ToString());
+
+                                                    db.AddInParameter(cmd, "@ManufactureAddress", DbType.String, dtMaster.Rows[k]["MANUFACTURER ADD"].ToString());
+                                                    db.AddInParameter(cmd, "@YearofIndiginization", DbType.Int64, dtIds.Rows[0]["YearOfIndiginisation"].ToString());
+                                                    db.ExecuteNonQuery(cmd, Transaction);
+                                                }
+                                                else
+                                                {
+                                                    Transaction.Rollback();
+                                                    return "PRODUCT (INDUSTRY SUB DOMAIN) not found for given data in Excel in row : " + errorRow;
+                                                }
+                                            }
+                                            else
+                                            {
+                                                Transaction.Rollback();
+                                                return "NAME OF DEFENCE PLATFORM not found for given data in Excel in row : " + errorRow;
+                                            }
+                                        }
+                                        else
+                                        {
+                                            Transaction.Rollback();
+                                            return "NSN GROUP CLASS not found for given data in Excel in row : " + errorRow;
+
+                                        }
+                                    }
+                                    else
+                                    {
+                                        Transaction.Rollback();
+                                        return "PRODUCT (INDUSTRY DOMAIN) not found for given data in Excel in row : " + errorRow;
+                                    }
+                                }
+                                else
+                                {
+                                    Transaction.Rollback();
+                                    return "DEFENCE PLATFORM not found for given data in Excel in row : " + errorRow;
+                                }
+                            }
                             else
-                                db.AddInParameter(cmd, "@IsIndeginized", DbType.String, "Y");
-                            db.AddInParameter(cmd, "@ManufactureName", DbType.String, dtMaster.Rows[k]["MANUFACTURER NAME IF INDIGINISED"].ToString());
-
-                            db.AddInParameter(cmd, "@ManufactureAddress", DbType.String, dtMaster.Rows[k]["MANUFACTURER ADD"].ToString());
-                            db.AddInParameter(cmd, "@YearofIndiginization", DbType.Int64, dtIds.Rows[0]["YearOfIndiginisation"].ToString());
-                            db.ExecuteNonQuery(cmd, Transaction);
+                            {
+                                Transaction.Rollback();
+                                return "NSN GROUP not found for given data in Excel in row : " + errorRow;
+                            }
                         }
                         else
                         {

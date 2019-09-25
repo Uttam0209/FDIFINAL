@@ -76,10 +76,8 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
         }
         else
         {
-            ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert",
-                "alert('Session Expired,Please login again');window.location='Login'", true);
+            ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "ErrorMssgPopup('Session Expired,Please login again');window.location='Login'", true);
         }
-
     }
     #region Load
     protected void BindEmployee(string mRoleEmployee)
@@ -129,17 +127,7 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
     }
     public void GridViewNodalOfficerBind(string mRefNo, string mRole)
     {
-
         BindEmployee(mRole);
-        //DataRow[] foundRows = DtGrid.Select("IsNodalOfficer='Y'");
-        //if (foundRows.Length != 0)
-        //{
-        //    chkrole.Items[0].Enabled = false;
-        //}
-        //else
-        //{
-        //    chkrole.Items[0].Enabled = true;
-        //}
     }
     protected void BindCompany()
     {
@@ -568,7 +556,6 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
         if (Request.QueryString["mcurrentcompRefNo"] != null)
         {
             hySaveNodal["NodalOfficerID"] = objEnc.DecryptData(Request.QueryString["mcurrentcompRefNo"].ToString());
-
         }
         else
         {
@@ -647,13 +634,12 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
                 else
                 { }
             }
-            //GridViewNodalOfficerBind(mRefNo, hidType.Value);
             Cleartext();
-            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record saved successsfully')", true);
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "popup", "SuccessfullPop('Record saved successsfully')", true);
         }
         else
         {
-            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not saved successsfully')", true);
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "ErrorMssgPopup('Record not saved successsfully')", true);
         }
     }
     #endregion
@@ -672,13 +658,12 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
             body = body.Replace("{mcurid}", Resturl(56));
             SendMail s;
             s = new SendMail();
-            s.CreateMail("aeroindia-ddp@gov.in", txtemailid.Text, "Create Password Email", body);
+            s.CreateMail("noreply@srijandefence.gov.in", txtemailid.Text, "Create Password Email", body);
             s.sendMail();
-            // ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Create password email send successfully.')", true);
         }
         catch (Exception ex)
         {
-            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('" + ex.Message + "')", true);
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "ErrorMssgPopup('" + ex.Message + "')", true);
         }
 
     }
@@ -689,7 +674,7 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
         {
             if (txtemailid.Text == "" && txtname.Text == "" && txtemailid.Text != "")
             {
-                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Email id and name can not be empty !')", true);
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "ErrorMssgPopup('Email id and name can not be empty !')", true);
             }
             else
             {
@@ -697,7 +682,7 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
                 {
                     if (chkrole.Items[0].Selected == true && chkrole.Items[1].Selected == true)
                     {
-                        ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('check only nodel or user any one.')", true);
+                        ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "ErrorMssgPopup('check only nodel or user any one.')", true);
                     }
                     else
                     {
@@ -708,7 +693,7 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
                                 DataTable dtNodalOfficerEmail = Lo.RetriveMasterData(0, txtemailid.Text, "", 0, "", "", "ValidEmail");
                                 if (dtNodalOfficerEmail.Rows.Count > 0)
                                 {
-                                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Email id already exists !')", true);
+                                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "ErrorMssgPopup('Email id already exists !')", true);
                                 }
                                 else
                                 {
@@ -717,7 +702,7 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
                             }
                             else
                             {
-                                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Select designation !')", true);
+                                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "ErrorMssgPopup('Select designation !')", true);
                             }
                         }
                         else
@@ -728,7 +713,7 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
                 }
                 else
                 {
-                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Select company !')", true);
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "ErrorMssgPopup('Select company !')", true);
                 }
             }
         }

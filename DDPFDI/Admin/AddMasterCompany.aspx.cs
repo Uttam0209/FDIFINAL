@@ -122,7 +122,7 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
             }
             else
             {
-                ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "alert('Session Expired,Please login again');window.location='Login'", true);
+                ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "ErrorMssgPopup('Session Expired,Please login again');window.location='Login'", true);
             }
         }
     }
@@ -358,21 +358,21 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
             GridCompanyBind();
             if (btnsubmit.Text == "Save Division")
             {
-                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Division added successfully , to fill all details of company,please click on view >> company >> division >> edit and fill other company details')", true);
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "SuccessfullPop('Division added successfully , to fill all details of company,please click on view >> company >> division >> edit and fill other company details')", true);
             }
             else if (btnsubmit.Text == "Save Unit")
             {
-                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Unit added successfully, to fill all details of company,please click on view >> company >> unit >> edit and fill other unit details')", true);
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "SuccessfullPop('Unit added successfully, to fill all details of company,please click on view >> company >> unit >> edit and fill other unit details')", true);
             }
             else
             {
-                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Company added successfully, to fill all details of company,please click on view >> company >> edit and fill other division details')", true);
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "SuccessfullPop('Company added successfully, to fill all details of company,please click on view >> company >> edit and fill other division details')", true);
             }
             Cleartext();
         }
         else
         {
-            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not saved.')", true);
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "ErrorMssgPopup('Record not saved.')", true);
         }
     }
     protected void btncancel_Click(object sender, EventArgs e)
@@ -389,7 +389,7 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
                 if (_msg != "0" && _msg != "")
                 {
                     ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert",
-                        "alert('" + txtcomp.Text + " name already exist !')", true);
+                        "ErrorMssgPopup('" + txtcomp.Text + " name already exist !')", true);
                 }
                 else
                 {
@@ -402,7 +402,7 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
                         else
                         {
                             ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert",
-                                "alert('Select Company !')", true);
+                                "ErrorMssgPopup('Select Company !')", true);
                         }
                     }
                     else if (btnsubmit.Text == "Save Unit")
@@ -414,7 +414,7 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
                         else
                         {
                             ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert",
-                                "alert('Select company and division !')", true);
+                                "ErrorMssgPopup('Select company and division !')", true);
                         }
                     }
 
@@ -428,7 +428,7 @@ public partial class Admin_AddMasterCompany : System.Web.UI.Page
             else
             {
                 ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert",
-                    "alert('" + lblName.Text + " can not be empty !')", true);
+                    "ErrorMssgPopup('" + lblName.Text + " can not be empty !')", true);
             }
         }
         catch (Exception ex)

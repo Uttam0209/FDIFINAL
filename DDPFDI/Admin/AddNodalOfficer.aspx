@@ -13,7 +13,7 @@
         }
     </script>
     <div class="content oem-content">
-        <asp:ScriptManager ID="sc" runat="server"></asp:ScriptManager>
+
         <asp:UpdatePanel runat="server" ID="updatepan">
             <ContentTemplate>
                 <asp:HiddenField ID="hidCompanyRefNo" runat="server" />

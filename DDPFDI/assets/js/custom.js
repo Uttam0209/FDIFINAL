@@ -8,15 +8,11 @@
         $('.toggle-left').toggleClass('rotate-toggle-btn');
         return false;
     });
-
     //Slide Sidebar in Responsive
-
     $(".btn-nav-toggle-responsive").click(function () {
         $(".left-sidebar").toggleClass("slide-leftbar")
     });
-
     //Slide Sidebar Nav
-
     $(".sidebar-holder .parent-nav > a").click(function () {
         $(this).next().slideToggle();
         $(this).parents('.parent-nav').siblings().find('.parent-nav-child').slideUp();
@@ -24,8 +20,6 @@
 
         $(this).find('.fa-angle-down').toggleClass('rotate-icon');
     });
-
-
     // Add Current Page in Sidebar
     //var CURRENT_URL= window.location.href;
     var CURRENT_URL = window.location.href.split('/').slice(3).join('/');
@@ -34,25 +28,6 @@
     $Sidebar.find('a[href="' + CURRENT_URL + '"]').parents(".parent-nav-child").addClass('active').siblings(".parent-nav-child").removeClass("active");
     $Sidebar.find('a[href="' + CURRENT_URL + '"]').addClass('active');
     console.log(CURRENT_URL);
-
-    //Hide Show Chart
-
-    //$(".GraphType").on('change', function () {
-    //    var $Chartvalue = $(this).val();
-    //    console.log($Chartvalue);
-    //    if ($Chartvalue == 'Pie Chart') {
-    //        $("#divPieChart").show();
-    //        $("#divLineChart").hide();
-    //    }
-
-    //    else if ($Chartvalue == 'Line Chart') {
-    //        $("#divLineChart").show();
-    //        $("#divPieChart").hide();
-    //    }
-
-    //});
-
-
     //Table Accordian
     $(document).on('click', '.toggle-table-plus', function () {
         $(this).closest("tr").after("<tr class='clone-row'><td colspan='7' style='padding:0;'>" + $(this).next().html() + "</td></tr>")
@@ -60,44 +35,36 @@
         $(this).prev('.toggle-table-minus').show();
 
     });
-
     $(document).on('click', '.toggle-table-minus', function () {
         $(this).parents('tr').next('.clone-row').remove();
         $(this).hide();
         $(this).next('.toggle-table-plus').show();
     });
-
-    // Hide Show when checkbox checked
-
-    $(".live-status-box input[type='radio']").on('change', function () {
-        var $inputChecked = $('.live-status-box .yes').is(":checked");
-        if ($inputChecked == true) {
-            $(".Turl_Tdate").show();
-
-        }
-        else {
-            $(".Turl_Tdate").hide();
-        }
-    });
-
-    //Alert pop up box
-    function SuccessfullPop() {
-        console.log('testing');
-        $("body").css('overflow', 'hidden');
-        $('.alert-overlay').show();
+    //Alert pop up box   
+    function ErrorMssgPopup(data) {
+        $("body").addClass('CaptchaError');
+        $("#alertPopup").show();
+        $("#alertPopup .alertMsg").append(data);
+        return false;
     }
-
     //Hide Alert Pop up
     $('.close_alert').on('click', function () {
         $("body").css('overflow', 'visible');
         $('.alert-overlay-error').hide();
     });
-
+    function SuccessfullPop(data) {
+        $("body").addClass('CaptchaError');
+        $("#alertPopupS").show();
+        $("#alertPopupS .alertMsg").append(data);
+        return false;
+    }
+    //Hide Alert Pop up
+    $('.close_alert').on('click', function () {
+        $("body").css('overflow', 'visible');
+        $('.alert-overlay-successful').hide();
+    });
     //Show Hide Contact Details
-    //Sys.Application.add_load(BindFunction);
-
     $('body').on('click', '.showMoreLink', function () {
-
         $(this).parents('.section-pannel').find('.contactFormRow').slideToggle();
         var $ToggleText = $(this).text();
 
@@ -108,15 +75,11 @@
             $($(this)).text('Show Details');
         }
     });
-
     //Show Map
-
     $('body').on('click', '.showMap', function () {
         $('.map-box').show();
     });
-
     //Password Show on Click
-
     $(".toggle-password").on('click', function () {
 
         $(this).toggleClass("fa-eye fa-eye-slash");
@@ -127,8 +90,6 @@
             input.attr("type", "password");
         }
     });
-
-
     //image Uplodad Functionality
     var count = 0;
     function handleFileSelect(evt) {
@@ -166,18 +127,13 @@
         $(this).parent('span').remove();
         //           parseInt($fileUpload.get(0).files.length - 1;
     });
-
     //Tooltip
-
     $('[data-toggle="tooltip"]').tooltip();
-
     // bootstrap Accordion closing parent
-
     $("body").on('click', '.faq-secion .accordion .card-header h2', function () {
         console.log('testing');
         $(this).parents('.card').siblings().find('.collapse').removeClass('in');
     });
-
     //Select 2 Dropwdown
     $("#ContentPlaceHolder1_txtcountry").select2({});
     $("#ContentPlaceHolder1_ddlcountry").select2({});
@@ -205,9 +161,7 @@
     req.add_endRequest(function () {
         BindControls();
     });
-
     //DataTable Jquery
-
     $(function () { BindGrid(); });
     var prm = Sys.WebForms.PageRequestManager.getInstance();
     if (prm != null) {
@@ -234,18 +188,66 @@
         $('#ContentPlaceHolder1_gvVendorDetails').DataTable();
         $('#ContentPlaceHolder1_gvViewNodalOfficertest').DataTable();
         $('#ContentPlaceHolder1_gvnewsadd').DataTable();
+        $('#ContentPlaceHolder1_gvmastercategoryupdate').DataTable();
+        $('#ContentPlaceHolder1_gvmastersubcategory').DataTable();
     }
-
     $('[data-fancybox="Prodgridviewgellry"]').fancybox({
         // Options will go here
     });
-
     // document.multiselect('#ddlenduser');
-
     $(function () {
         $('[id*=ddlenduser]').multiselect({
             includeSelectAllOption: true
         });
+    });
+
+
+    //ProCurment Category Checkbox 
+
+    $("#ContentPlaceHolder1_gvprocurmentcategory td input[type='checkbox']").on('change', function () {
+        $(this).each(function () {
+            var StatusChecked = $(this).is(':checked');
+            var Checkbox1 = $("ContentPlaceHolder1_gvprocurmentcategory_chkprocurmentcategory_0").is(':checked');
+            var Checkbox2 = $("#ContentPlaceHolder1_gvprocurmentcategory_chkprocurmentcategory_1").is(':checked');
+            var Checkbox3 = $("#ContentPlaceHolder1_gvprocurmentcategory_chkprocurmentcategory_2").is(':checked');
+
+            if (StatusChecked == true) {
+                $("#divmake2status").show();
+            }
+            else if (Checkbox1 || Checkbox2 || Checkbox3 == true) {
+                $("#divmake2status").show();
+            }
+
+            else if (Checkbox1 & Checkbox2 & Checkbox3 == false) {
+                $("#divmake2status").hide();
+            }
+        });
+        
+
+    });
+    $("#ContentPlaceHolder1_ddlteneoi td input[type='dropdownlist']").on('change', function () {
+
+        var Statusselect = $(this).is(':changed');
+        console.log(Statusselect)
+        if (Statusselect != 'select') {
+            $("#divtimedateurl").show();
+        }
+        else {
+            $("#divtimedateurl").hide();
+        }
+
+    });
+    $("#ContentPlaceHolder1_ddlstatus td input[type='dropdownlist']").on('change', function () {
+
+        var Statustimeurl = $(this).is(':changed');
+        console.log(Statustimeurl)
+        if (Statustimeurl == 'Live') {
+            $("#extimedatevisible").show();
+        }
+        else {
+            $("#extimedatevisible").hide();
+        }
+
     });
 
 });

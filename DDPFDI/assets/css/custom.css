@@ -1078,7 +1078,7 @@ form label {
         bottom: 10px;
         font-size: 18px;
         cursor: pointer;
-        color: #d95459;
+        color: #d95459 !important;
     }
 
 .btn-nav-toggle-responsive {
@@ -2197,7 +2197,8 @@ form label {
 
         .alert-box .box .alert {
             text-align: center;
-            font-size: 18px;
+            font-size: 16px;
+            line-height: 22px
         }
 
 .overlay-progress {
@@ -2585,5 +2586,9 @@ form label {
 
 .faq-secion .card ol li {
     font-size: 15px;
+}
+.fancybox-container
+{
+z-index:99999;
 }
 

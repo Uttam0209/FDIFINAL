@@ -34,8 +34,7 @@
     </script>
 </asp:Content>
 <asp:Content ID="inner" runat="server" ContentPlaceHolderID="ContentPlaceHolder1">
-    <asp:ScriptManager ID="sc" runat="server"></asp:ScriptManager>
-    <asp:UpdatePanel ID="up" runat="server">
+    <asp:UpdatePanel ID="up" runat="server" UpdateMode="Conditional" ChildrenAsTriggers="false">
         <ContentTemplate>
             <div class="content oem-content">
                 <div class="sideBg">
@@ -273,6 +272,8 @@
                                             <asp:BoundField DataField="ProductDescription" HeaderText="Item Description" NullDisplayText="#" ItemStyle-Wrap="true" ItemStyle-Width="100" SortExpression="ProductDescription" />
                                             <asp:BoundField DataField="ProdIndustryDoamin" HeaderText="Product (Industry Domain)" NullDisplayText="#" ItemStyle-Wrap="true" ItemStyle-Width="100" SortExpression="ProdIndustryDoamin" />
                                             <asp:BoundField DataField="NSNGroup" HeaderText="NSN Group" NullDisplayText="#" ItemStyle-Wrap="true" ItemStyle-Width="100" SortExpression="NameDefencePlatform" />
+                                            <asp:BoundField DataField="NSNGroupClass" HeaderText="NSN GROUP CLASS" NullDisplayText="#" ItemStyle-Wrap="true" ItemStyle-Width="100" SortExpression="NameDefencePlatform" />
+
                                             <asp:BoundField DataField="DefencePlatform" HeaderText="Defence Platform" NullDisplayText="#" ItemStyle-Wrap="true" ItemStyle-Width="100" SortExpression="DefencePlatform" />
                                             <asp:TemplateField HeaderText="OEM PartNumber" Visible="false">
                                                 <ItemTemplate>
@@ -293,34 +294,27 @@
                                         </Columns>
                                     </asp:GridView>
                                 </div>
-                                <div class="clearfix"></div>
+                                <div class="clearfix mt10"></div>
                                 <!-----------------------------------------Code for pageindexing----------------------------------------------------->
                                 <div class="row" runat="server" id="divpageindex" visible="false">
-                                    <div class="col-sm-2">
-                                        <asp:LinkButton ID="lnkbtnPgFirst" runat="server" CssClass="btn  btn-success  btn-sm"
-                                            OnClick="lnkbtnPgFirst_Click">First</asp:LinkButton>
-                                        <asp:LinkButton ID="lnkbtnPgPrevious" runat="server" CssClass="btn btn-success  btn-sm"
-                                            OnClick="lnkbtnPgPrevious_Click">Previous</asp:LinkButton>
+                                    <div class="col-sm-9">
+                                        <div class="col-sm-4 row">
+                                            <asp:LinkButton ID="lnkbtnPgPrevious" runat="server" CssClass="btn btn-info  btn-sm"
+                                                OnClick="lnkbtnPgPrevious_Click">Previous</asp:LinkButton>
+                                        </div>
+                                        <div class="col-sm-4" style="display: flex">
+                                            <asp:TextBox runat="server" ID="txtpageno" CssClass="form-control btn-defualt text-center red" AutoCompleteType="Search" Placeholder="Please enter no of page"></asp:TextBox>
+                                            <asp:LinkButton ID="btngoto" runat="server" CssClass="btn btn-primary" OnClick="btngoto_Click">Go to</asp:LinkButton>
+                                        </div>
+                                        <div class="col-sm-4 row">
+                                            <asp:LinkButton ID="lnkbtnPgNext" runat="server" CssClass="btn btn-info btn-sm pull-right" Style="margin-right: 3px;"
+                                                OnClick="lnkbtnPgNext_Click">Next</asp:LinkButton>
+                                        </div>
                                     </div>
-                                    <div class="col-sm-8">
-                                        <asp:DataList ID="DataListPaging" runat="server" RepeatDirection="Horizontal" OnItemCommand="DataListPaging_ItemCommand"
-                                            OnItemDataBound="DataListPaging_ItemDataBound">
-                                            <ItemTemplate>
-                                                <asp:LinkButton ID="Pagingbtn" runat="server" CssClass="btn btn-success mt5 btn-xs"
-                                                    CommandArgument='<%# Eval("PageIndex") %>' CommandName="Newpage" Text='<%# Eval("PageText")%>'></asp:LinkButton>
-                                            </ItemTemplate>
-                                        </asp:DataList>
-                                    </div>
-                                    <div class="col-sm-2">
-                                        <asp:LinkButton ID="lnkbtnPgLast" runat="server" CssClass="btn  btn-success btn-sm pull-right"
-                                            OnClick="lnkbtnPgLast_Click">Last</asp:LinkButton>
-                                        <asp:LinkButton ID="lnkbtnPgNext" runat="server" CssClass="btn  btn-success btn-sm pull-right" Style="margin-right: 3px;"
-                                            OnClick="lnkbtnPgNext_Click">Next</asp:LinkButton>
-                                    </div>
-                                    <div class="clearfix padding_0 mt10">
-                                    </div>
-                                    <div class="text-center">
-                                        <asp:Label ID="lblpaging" runat="server" class="btn btn-primary text-center" Text=""></asp:Label>
+                                    <div class="col-sm-3">
+                                        <div class="pull-right">
+                                            <asp:Label ID="lblpaging" runat="server" class="btn btn-primary text-center" Text=""></asp:Label>
+                                        </div>
                                     </div>
                                 </div>
                                 <!-----------------------------------------end code for page indexing----------------------------------------------------->
@@ -838,7 +832,7 @@
                             <button type="button" class="close close1" data-dismiss="modal">&times;</button>
                             <h4 class="modal-title">Item Detail</h4>
                         </div>
-                        <form class="form-horizontal changepassword" role="form">
+                        <div class="form-horizontal changepassword">
                             <div class="modal-body">
                                 <div class="row">
                                     <div class="col-md-12">
@@ -1469,15 +1463,26 @@
                                     </div>
                                 </div>
                                 <div class="modal-footer">
+                                    <asp:Panel ID="pancheck" runat="server" Visible="false">
+                                        <asp:TextBox ID="txtappdisappmssg" runat="server" CssClass="form-control" required="" Height="100px" TextMode="MultiLine" placeholder="Please enter details of changes you done in this item.">
+                                        </asp:TextBox>
+                                        <div class="clearfix mt10"></div>
+                                        <asp:LinkButton ID="btnapprove" runat="server" Text="Approved" CssClass="btn btn-success pull-left" OnClick="btnapprove_Click"></asp:LinkButton>
+                                        <asp:LinkButton ID="btndisapproved" runat="server" Text="DisApproved" CssClass="btn btn-danger pull-left" Style="marign-left: 10px;" OnClick="btndisapproved_Click"></asp:LinkButton>
+                                    </asp:Panel>
                                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                                 </div>
-                        </form>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </ContentTemplate>
         <Triggers>
             <asp:AsyncPostBackTrigger ControlID="gvproduct" EventName="RowCommand" />
+            <asp:PostBackTrigger ControlID="lnkbtnPgPrevious" />
+            <asp:PostBackTrigger ControlID="btngoto" />
+            <asp:PostBackTrigger ControlID="lnkbtnPgNext" />
         </Triggers>
     </asp:UpdatePanel>
     <asp:UpdateProgress ID="UpdateProgress" runat="server" AssociatedUpdatePanelID="up">
@@ -1492,6 +1497,4 @@
             <!---Progress Bar ---->
         </ProgressTemplate>
     </asp:UpdateProgress>
-
-
 </asp:Content>

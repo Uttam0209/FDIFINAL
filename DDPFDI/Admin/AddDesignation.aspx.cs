@@ -71,7 +71,7 @@ public partial class Admin_AddDesignation : System.Web.UI.Page
         else
         {
             ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert",
-                "alert('Session Expired,Please login again');window.location='Login'", true);
+                "ErrorMssgPopup('Session Expired,Please login again');window.location='Login'", true);
         }
 
     }
@@ -205,7 +205,7 @@ public partial class Admin_AddDesignation : System.Web.UI.Page
                 {
                     GridViewBindSelectedIndexchange();
                     txtDesignation.Text = "";
-                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Save successfully !')", true);
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "SuccessfullPop('Save successfully !')", true);
                     // myhtmldiv.InnerHtml = AntiForgery.GetHtml().ToString();
                 }
                 else
@@ -213,13 +213,13 @@ public partial class Admin_AddDesignation : System.Web.UI.Page
                     GridViewBindSelectedIndexchange();
                     txtDesignation.Text = "";
                     hdid.Value = "";
-                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Designation updated successfully !')", true);
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "SuccessfullPop('Designation updated successfully !')", true);
                     // myhtmldiv.InnerHtml = AntiForgery.GetHtml().ToString();
                 }
             }
             else
             {
-                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not saved.')", true);
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "ErrorMssgPopup('Record not saved.')", true);
             }
         }
         catch (Exception ex)
@@ -242,8 +242,7 @@ public partial class Admin_AddDesignation : System.Web.UI.Page
                         DataTable dtIsDesignation = Lo.RetriveMasterData(0, ddlmaster.SelectedItem.Value, txtDesignation.Text, 0, "", "", "ValidDesignation");
                         if (dtIsDesignation.Rows.Count > 0)
                         {
-
-                            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Designation already exists !')", true);
+                            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "ErrorMssgPopup('Designation already exists !')", true);
                         }
                         else
                         {
@@ -257,17 +256,17 @@ public partial class Admin_AddDesignation : System.Web.UI.Page
                 }
                 else
                 {
-                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Select company !')", true);
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "ErrorMssgPopup('Select company !')", true);
                 }
             }
             else
             {
-                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Designation can not be empty !')", true);
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "ErrorMssgPopup('Designation can not be empty !')", true);
             }
         }
         catch (Exception rx)
         {
-            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('" + rx.Message + "')", true);
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "ErrorMssgPopup('" + rx.Message + "')", true);
         }
     }
     protected void EditCode()

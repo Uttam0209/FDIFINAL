@@ -69,7 +69,7 @@ public partial class Admin_AddCompanyCategory : System.Web.UI.Page
         else
         {
             ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert",
-                "alert('Session Expired,Please login again');window.location='Login'", true);
+                "ErrorMssgPopup('Session Expired,Please login again');window.location='Login'", true);
         }
     }
     protected void BindMasterCategory()
@@ -271,11 +271,11 @@ public partial class Admin_AddCompanyCategory : System.Web.UI.Page
             if (mStrCategory == "Save")
             {
                 cleartext();
-                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Master Category saved successfully.')", true);
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "SuccessfullPop('Master Category saved successfully.')", true);
             }
             else
             {
-                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not saved')", true);
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "ErrorMssgPopup('Record not saved')", true);
             }
         }
         catch (Exception ex)
@@ -297,17 +297,17 @@ public partial class Admin_AddCompanyCategory : System.Web.UI.Page
                     string StrSaveFDIComp = Lo.SaveMasterCompany(HySave, out _msg, out _sysMsg);
                     if (StrSaveFDIComp != "0" && StrSaveFDIComp != "-1")
                     {
-                        ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "alert('Record save successfully')", true);
+                        ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "SuccessfullPop('Record save successfully')", true);
                     }
                     else
                     {
-                        ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not save successfully.')", true);
+                        ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "ErrorMssgPopup('Record not save successfully.')", true);
                     }
                 }
             }
             else
             {
-                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Please select any dropdown to save record.')", true);
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "ErrorMssgPopup('Please select any dropdown to save record.')", true);
             }
 
         }

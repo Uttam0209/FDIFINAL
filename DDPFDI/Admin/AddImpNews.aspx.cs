@@ -62,7 +62,7 @@ public partial class Admin_AddImpNews : System.Web.UI.Page
         else
         {
             ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert",
-                "alert('Session Expired,Please login again');window.location='Login'", true);
+                "ErrorMssgPopup('Session Expired,Please login again');window.location='Login'", true);
         }
     }
     protected void SaveComp()
@@ -83,11 +83,11 @@ public partial class Admin_AddImpNews : System.Web.UI.Page
                 txtnews.Text = "";
                 txtdate.Text = "";
                 txtpages.Text = "";
-                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Save successfully !')", true);
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "SuccessfullPop('Save successfully !')", true);
             }
             else
             {
-                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not saved.')", true);
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "ErrorMssgPopup('Record not saved.')", true);
             }
         }
         catch (Exception ex)
@@ -107,12 +107,12 @@ public partial class Admin_AddImpNews : System.Web.UI.Page
             }
             else
             {
-                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Field fill mandatory.')", true);
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "ErrorMssgPopup('Field fill mandatory.')", true);
             }
         }
         catch (Exception rx)
         {
-            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('" + rx.Message + "')", true);
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "ErrorMssgPopup('" + rx.Message + "')", true);
         }
     }
     protected void gvnewsadd_RowCreated(object sender, GridViewRowEventArgs e)

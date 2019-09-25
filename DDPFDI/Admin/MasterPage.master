@@ -1,5 +1,6 @@
 ﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="MasterPage.master.cs" Inherits="Admin_MasterPage" %>
 
+<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="asp" %>
 <!DOCTYPE html>
 <html lang="en">
 <head id="Head1" runat="server">
@@ -33,6 +34,91 @@
         window.onpageshow = function (evt) { if (evt.persisted) DisableBackButton() }
         window.onunload = function () { void (0) }
     </script>--%>
+    <style type="text/css">
+        .modalBackground {
+            background-color: Black;
+            filter: alpha(opacity=60);
+            opacity: 0.6;
+        }
+
+        .modalPopup {
+            background-color: #FFFFFF;
+            width: 300px;
+            border: 3px solid #d95459;
+            border-radius: 12px;
+            padding: 0;
+            z-index: 999999 !important;
+        }
+
+            .modalPopup .header {
+                background-color: #d95459;
+                height: 30px;
+                color: White;
+                line-height: 30px;
+                text-align: center;
+                font-weight: bold;
+                border-top-left-radius: 6px;
+                border-top-right-radius: 6px;
+            }
+
+            .modalPopup .body {
+                padding: 10px;
+                min-height: 50px;
+                text-align: center;
+                font-weight: bold;
+            }
+
+            .modalPopup .footer {
+                padding: 6px;
+            }
+
+            .modalPopup .yes, .modalPopup .no {
+                height: 23px;
+                color: White;
+                line-height: 23px;
+                text-align: center;
+                font-weight: bold;
+                cursor: pointer;
+                border-radius: 4px;
+            }
+
+            .modalPopup .yes {
+                background-color: #2FBDF1;
+                border: 1px solid #0DA9D0;
+            }
+
+            .modalPopup .no {
+                background-color: #9F9F9F;
+                border: 1px solid #5C5C5C;
+            }
+    </style>
+    <script src="assets/js/jquery-3.4.1.js"></script>
+    <script>
+        function SuccessfullPop(data) {
+            $("body").addClass('CaptchaError');
+            $("#alertPopupS").show();
+            $("#alertPopupS .alertMsg").append(data);
+            return false;
+        }
+        //Hide Alert Pop up
+        $('.close_alert').on('click', function () {
+            $("body").css('overflow', 'visible');
+            $('.alert-overlay-successful').hide();
+        });
+    </script>
+    <script>
+        function ErrorMssgPopup(data) {
+            $("body").addClass('CaptchaError');
+            $("#alertPopup").show();
+            $("#alertPopup .alertMsg").append(data);
+            return false;
+        }
+        //Hide Alert Pop up
+        $('.close_alert').on('click', function () {
+            $("body").css('overflow', 'visible');
+            $('.alert-overlay-error').hide();
+        });
+    </script>
 </head>
 <body>
     <form id="form1" runat="server" method="post" enctype="multipart/form-data">
@@ -78,14 +164,89 @@
                         </button>
                         <div runat="server" id="MasterMenu"></div>
                         <div runat="server" id="menu"></div>
+                        <asp:ToolkitScriptManager ID="ToolkitScriptManager1" runat="server" EnablePageMethods="true">
+                        </asp:ToolkitScriptManager>
+                        <h4 style="text-align: center;">Session ends in:-<span id="secondsIdle"></span>&nbsp;sec.</h4>
+                        <asp:LinkButton ID="lnkFake" runat="server" />
+                        <asp:ModalPopupExtender ID="mpeTimeout" BehaviorID="mpeTimeout" runat="server" PopupControlID="pnlPopup"
+                            TargetControlID="lnkFake" OkControlID="btnYes" BackgroundCssClass="modalBackground"
+                            OnOkScript="ResetSession()">
+                        </asp:ModalPopupExtender>
+                        <asp:Panel ID="pnlPopup" runat="server" CssClass="modalPopup" Style="display: block">
+                            <div class="header">
+                                Session Expiring!
+                            </div>
+                            <div class="body">
+                                Your Session will expire in&nbsp;<span id="seconds"></span>&nbsp;seconds.<br />
+                                Do you want to reset?                               
+                            </div>
+                            <div class="clearfix pb15"></div>
+                            <div class="pull-right">
+                                <asp:LinkButton ID="btnYes" runat="server" Text="Yes" CssClass="btn btn-success btn-sm" Style="margin-right: 5px;"></asp:LinkButton>
+                                <asp:LinkButton ID="btnNo" runat="server" Text="No" OnClick="btnNo_Click" CssClass="btn btn-danger btn-sm" Style="margin-right: 5px;"></asp:LinkButton>
+                            </div>
+                            <div class="clearfix pb15"></div>
+                        </asp:Panel>
                     </div>
                 </div>
                 <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
                 </asp:ContentPlaceHolder>
             </div>
         </div>
+        <script type="text/javascript">
+            function SessionExpireAlert(timeout) {
+                var seconds = timeout / 1000;
+                document.getElementsByName("secondsIdle").innerHTML = seconds;
+                document.getElementsByName("seconds").innerHTML = seconds;
+                setInterval(function () {
+                    seconds--;
+                    document.getElementById("seconds").innerHTML = seconds;
+                    document.getElementById("secondsIdle").innerHTML = seconds;
+                }, 1000);
+                setTimeout(function () {
+                    //Show Popup before 20 seconds of timeout.
+                    $find("mpeTimeout").show();
+                }, timeout - 20 * 1000);
+                setTimeout(function () {
+                    window.location = "Login";
+                }, timeout);
+            };
+            function ResetSession() {
+                window.location = window.location.href;
+            }
+        </script>
+        <!-----Alert Box Success Fail Massage Popup ------>
+        <div id="alertPopup" class="alert-overlay alert-overlay-error" style="display: none">
+            <div class="alert-box">
+                <div class="box">
+                    <div class="error-checkmark">
+                        <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                    </div>
+                    <div class="alert alertMsg">
+                    </div>
+                    <button class="btn btn-success close_alert">Close</button>
+                </div>
+            </div>
+        </div>
+        <div id="alertPopupS" class="alert-overlay alert-overlay-successful" style="display: none">
+            <div class="alert-box">
+                <div class="box">
+                    <div class="success-checkmark">
+                        <div class="check-icon">
+                            <span class="icon-line line-tip"></span>
+                            <span class="icon-line line-long"></span>
+                            <div class="icon-circle"></div>
+                            <div class="icon-fix"></div>
+                        </div>
+                    </div>
+                    <div class="alert alertMsg">
+                    </div>
+                    <button class="btn btn-success close_alert">Close</button>
+                </div>
+            </div>
+        </div>
+        <!-----End Alert Box ------>
     </form>
-    <%--<script src="assets/js/jquery-1.12.4.js"></script>--%>
     <script src="assets/js/jquery-3.4.1.js"></script>
     <script src="assets/js/jquery-ui.min.js"></script>
     <script src="assets/js/bootstrap.min.js"></script>
@@ -145,40 +306,5 @@
         }
     </script>
     <!--------------------------End Only Number----------------------->
-    <!-----Alert Box ------>
-    <div class="alert-overlay alert-overlay-error" style="display: none">
-        <div class="alert-box">
-            <div class="box">
-                <div class="error-checkmark">
-                    <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
-                </div>
-                <div class="alert alertMsg">
-                </div>
-                <button class="btn btn-success close_alert">OK</button>
-            </div>
-        </div>
-    </div>
-    <!-----Alert Box ------>
-    <!-----Alert Box ------>
-    <div class="alert-overlay alert-overlay-successful" style="display: none">
-        <div class="alert-box">
-            <div class="box">
-                <div class="success-checkmark">
-                    <div class="check-icon">
-                        <span class="icon-line line-tip"></span>
-                        <span class="icon-line line-long"></span>
-                        <div class="icon-circle"></div>
-                        <div class="icon-fix"></div>
-                    </div>
-                </div>
-
-                <div class="alert alertMsg">
-                    Sucessfull Saved !
-                </div>
-                <button class="btn btn-success close_alert">OK</button>
-            </div>
-        </div>
-    </div>
-    <!-----Alert Box ------>
 </body>
 </html>

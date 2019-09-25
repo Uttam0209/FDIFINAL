@@ -11,16 +11,6 @@ public partial class Admin_ChangePassword : System.Web.UI.Page
     Cryptography objEnc = new Cryptography();
     protected void Page_Load(object sender, EventArgs e)
     {
-        //if (Request.QueryString["id"].ToString() != null)
-        // {
-        //string id = Request.QueryString["id"].ToString().Replace(" ", "+");
-        //lblPageName.Text = objEnc.DecryptData(id);
-        //   }
-        //   else
-        //   {
-        // ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert",
-        //        "alert('Request you generate is false we will redirect you to login page');window.location='Login'", true);
-        //   }
     }
     protected void btnsub_Click(object sender, EventArgs e)
     {
@@ -37,7 +27,7 @@ public partial class Admin_ChangePassword : System.Web.UI.Page
                     if (UpdatePassword == "true")
                     {
                         divmsg.Visible = false;
-                        ScriptManager.RegisterStartupScript(this, this.GetType(), "alert", "alert('Password change successfully.You just changed your password.Please login with your new password we will redirect you to login page');window.location ='Login';", true);
+                        ScriptManager.RegisterStartupScript(this, this.GetType(), "alert", "SuccessfullPop('Password change successfully.You just changed your password.Please login with your new password we will redirect you to login page');window.location ='Login';", true);
                     }
                     else
                     {

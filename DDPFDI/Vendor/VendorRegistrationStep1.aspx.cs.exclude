@@ -159,7 +159,7 @@ public partial class Vendor_VendorRegistrationStep1 : System.Web.UI.Page
             body = body.Replace("{mcurid}", Resturl(56));
             SendMail s;
             s = new SendMail();
-            s.CreateMail("aeroindia-ddp@gov.in", txtemail.Text, "Create Password Email", body);
+            s.CreateMail("noreply@srijandefence.gov.in", txtemail.Text, "Create Password Email", body);
             s.sendMail();
         }
         catch (Exception ex)

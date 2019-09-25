@@ -4,11 +4,16 @@ using System.Web.UI.WebControls;
 using BusinessLayer;
 using Encryption;
 using System.Data;
+using System.Collections.Specialized;
+using System.IO;
 
 public partial class Admin_ViewDashboard : System.Web.UI.Page
 {
     Logic Lo = new Logic();
     DataTable DtGrid = new DataTable();
+    HybridDictionary hySaveProdInfo = new HybridDictionary();
+    string _msg = string.Empty;
+    string _sysMsg = string.Empty;
     Cryptography Encrypt = new Cryptography();
     PagedDataSource pgsource = new PagedDataSource();
     int firstindex, lastindex;
@@ -35,7 +40,7 @@ public partial class Admin_ViewDashboard : System.Web.UI.Page
             }
             else
             {
-                ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "alert('Session Expired,Please login again');window.location='Login'", true);
+                ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "ErrorMssgPopup('Session Expired,Please login again');window.location='Login'", true);
             }
         }
     }
@@ -97,6 +102,33 @@ public partial class Admin_ViewDashboard : System.Web.UI.Page
             gvproduct.Visible = true;
             BindProduct(hfmref.Value);
         }
+        else if (hfmtype.Value == "M2")
+        {
+            gvcompanydetail.Visible = false;
+            gvfactory.Visible = false;
+            gvunit.Visible = false;
+            gvViewNodalOfficer.Visible = false;
+            gvproduct.Visible = true;
+            BindProduct(hfmref.Value);
+        }
+        else if (hfmtype.Value == "PH")
+        {
+            gvcompanydetail.Visible = false;
+            gvfactory.Visible = false;
+            gvunit.Visible = false;
+            gvViewNodalOfficer.Visible = false;
+            gvproduct.Visible = true;
+            BindProduct(hfmref.Value);
+        }
+        else if (hfmtype.Value == "WPH")
+        {
+            gvcompanydetail.Visible = false;
+            gvfactory.Visible = false;
+            gvunit.Visible = false;
+            gvViewNodalOfficer.Visible = false;
+            gvproduct.Visible = true;
+            BindProduct(hfmref.Value);
+        }
         else
         {
             BindCompany(hfmref.Value);
@@ -131,14 +163,11 @@ public partial class Admin_ViewDashboard : System.Web.UI.Page
                 lblpaging.Text = "Page " + (pagingCurrentPage + 1) + " of " + pgsource.PageCount;
                 lnkbtnPgPrevious.Enabled = !pgsource.IsFirstPage;
                 lnkbtnPgNext.Enabled = !pgsource.IsLastPage;
-                lnkbtnPgFirst.Enabled = !pgsource.IsFirstPage;
-                lnkbtnPgLast.Enabled = !pgsource.IsLastPage;
                 pgsource.DataSource = dtads.DefaultView;
                 gvcompanydetail.DataSource = pgsource;
                 gvcompanydetail.DataBind();
-                DataListPagingMethod();
                 divpageindex.Visible = true;
-                lbltotal.Text = "Total Records:- " + gvcompanydetail.Rows.Count.ToString();
+                lbltotal.Text = "Showing  " + gvcompanydetail.Rows.Count.ToString() + " result from page " + (pagingCurrentPage + 1) + " out of " + pgsource.PageCount + " pages";
                 divcompanyGrid.Visible = true;
             }
             else
@@ -152,14 +181,11 @@ public partial class Admin_ViewDashboard : System.Web.UI.Page
                 lblpaging.Text = "Page " + (pagingCurrentPage + 1) + " of " + pgsource.PageCount;
                 lnkbtnPgPrevious.Enabled = !pgsource.IsFirstPage;
                 lnkbtnPgNext.Enabled = !pgsource.IsLastPage;
-                lnkbtnPgFirst.Enabled = !pgsource.IsFirstPage;
-                lnkbtnPgLast.Enabled = !pgsource.IsLastPage;
                 pgsource.DataSource = dtads.DefaultView;
                 gvcompanydetail.DataSource = pgsource;
                 gvcompanydetail.DataBind();
-                DataListPagingMethod();
                 divpageindex.Visible = true;
-                lbltotal.Text = "Total Records:- " + gvcompanydetail.Rows.Count.ToString();
+                lbltotal.Text = "Showing  " + gvcompanydetail.Rows.Count.ToString() + " result from page " + (pagingCurrentPage + 1) + " out of " + pgsource.PageCount + " pages";
                 divcompanyGrid.Visible = true;
             }
         }
@@ -191,14 +217,11 @@ public partial class Admin_ViewDashboard : System.Web.UI.Page
                 lblpaging.Text = "Page " + (pagingCurrentPage + 1) + " of " + pgsource.PageCount;
                 lnkbtnPgPrevious.Enabled = !pgsource.IsFirstPage;
                 lnkbtnPgNext.Enabled = !pgsource.IsLastPage;
-                lnkbtnPgFirst.Enabled = !pgsource.IsFirstPage;
-                lnkbtnPgLast.Enabled = !pgsource.IsLastPage;
                 pgsource.DataSource = dtads.DefaultView;
                 gvfactory.DataSource = pgsource;
                 gvfactory.DataBind();
-                DataListPagingMethod();
                 divpageindex.Visible = true;
-                lbltotal.Text = "Total Records:- " + gvfactory.Rows.Count.ToString();
+                lbltotal.Text = "Showing  " + gvfactory.Rows.Count.ToString() + " result from page " + (pagingCurrentPage + 1) + " out of " + pgsource.PageCount + " pages";
                 divfactorygrid.Visible = true;
             }
             else
@@ -212,14 +235,11 @@ public partial class Admin_ViewDashboard : System.Web.UI.Page
                 lblpaging.Text = "Page " + (pagingCurrentPage + 1) + " of " + pgsource.PageCount;
                 lnkbtnPgPrevious.Enabled = !pgsource.IsFirstPage;
                 lnkbtnPgNext.Enabled = !pgsource.IsLastPage;
-                lnkbtnPgFirst.Enabled = !pgsource.IsFirstPage;
-                lnkbtnPgLast.Enabled = !pgsource.IsLastPage;
                 pgsource.DataSource = dtads.DefaultView;
                 gvfactory.DataSource = pgsource;
                 gvfactory.DataBind();
-                DataListPagingMethod();
                 divpageindex.Visible = true;
-                lbltotal.Text = "Total Records:- " + gvfactory.Rows.Count.ToString();
+                lbltotal.Text = "Showing  " + gvfactory.Rows.Count.ToString() + " result from page " + (pagingCurrentPage + 1) + " out of " + pgsource.PageCount + " pages";
                 divfactorygrid.Visible = true;
             }
         }
@@ -252,14 +272,11 @@ public partial class Admin_ViewDashboard : System.Web.UI.Page
                 lblpaging.Text = "Page " + (pagingCurrentPage + 1) + " of " + pgsource.PageCount;
                 lnkbtnPgPrevious.Enabled = !pgsource.IsFirstPage;
                 lnkbtnPgNext.Enabled = !pgsource.IsLastPage;
-                lnkbtnPgFirst.Enabled = !pgsource.IsFirstPage;
-                lnkbtnPgLast.Enabled = !pgsource.IsLastPage;
                 pgsource.DataSource = dtads.DefaultView;
                 gvunit.DataSource = pgsource;
                 gvunit.DataBind();
-                DataListPagingMethod();
                 divpageindex.Visible = true;
-                lbltotal.Text = "Total Records:- " + gvunit.Rows.Count.ToString();
+                lbltotal.Text = "Showing  " + gvunit.Rows.Count.ToString() + " result from page " + (pagingCurrentPage + 1) + " out of " + pgsource.PageCount + " pages";
                 divunitGrid.Visible = true;
             }
             else
@@ -273,14 +290,11 @@ public partial class Admin_ViewDashboard : System.Web.UI.Page
                 lblpaging.Text = "Page " + (pagingCurrentPage + 1) + " of " + pgsource.PageCount;
                 lnkbtnPgPrevious.Enabled = !pgsource.IsFirstPage;
                 lnkbtnPgNext.Enabled = !pgsource.IsLastPage;
-                lnkbtnPgFirst.Enabled = !pgsource.IsFirstPage;
-                lnkbtnPgLast.Enabled = !pgsource.IsLastPage;
                 pgsource.DataSource = dtads.DefaultView;
                 gvunit.DataSource = pgsource;
                 gvunit.DataBind();
-                DataListPagingMethod();
                 divpageindex.Visible = true;
-                lbltotal.Text = "Total Records:- " + gvunit.Rows.Count.ToString();
+                lbltotal.Text = "Showing  " + gvunit.Rows.Count.ToString() + " result from page " + (pagingCurrentPage + 1) + " out of " + pgsource.PageCount + " pages";
                 divunitGrid.Visible = true;
             }
         }
@@ -315,14 +329,11 @@ public partial class Admin_ViewDashboard : System.Web.UI.Page
                 lblpaging.Text = "Page " + (pagingCurrentPage + 1) + " of " + pgsource.PageCount;
                 lnkbtnPgPrevious.Enabled = !pgsource.IsFirstPage;
                 lnkbtnPgNext.Enabled = !pgsource.IsLastPage;
-                lnkbtnPgFirst.Enabled = !pgsource.IsFirstPage;
-                lnkbtnPgLast.Enabled = !pgsource.IsLastPage;
                 pgsource.DataSource = dtads.DefaultView;
                 gvViewNodalOfficer.DataSource = pgsource;
                 gvViewNodalOfficer.DataBind();
-                DataListPagingMethod();
                 divpageindex.Visible = true;
-                lbltotal.Text = "Total Records:- " + gvViewNodalOfficer.Rows.Count.ToString();
+                lbltotal.Text = "Showing  " + gvViewNodalOfficer.Rows.Count.ToString() + " result from page " + (pagingCurrentPage + 1) + " out of " + pgsource.PageCount + " pages";
                 divEmployeeNodalGrid.Visible = true;
             }
             else
@@ -339,14 +350,11 @@ public partial class Admin_ViewDashboard : System.Web.UI.Page
                 lblpaging.Text = "Page " + (pagingCurrentPage + 1) + " of " + pgsource.PageCount;
                 lnkbtnPgPrevious.Enabled = !pgsource.IsFirstPage;
                 lnkbtnPgNext.Enabled = !pgsource.IsLastPage;
-                lnkbtnPgFirst.Enabled = !pgsource.IsFirstPage;
-                lnkbtnPgLast.Enabled = !pgsource.IsLastPage;
                 pgsource.DataSource = dtads.DefaultView;
                 gvViewNodalOfficer.DataSource = pgsource;
                 gvViewNodalOfficer.DataBind();
-                DataListPagingMethod();
                 divpageindex.Visible = true;
-                lbltotal.Text = "Total Records:- " + gvViewNodalOfficer.Rows.Count.ToString();
+                lbltotal.Text = "Showing  " + gvViewNodalOfficer.Rows.Count.ToString() + " result from page " + (pagingCurrentPage + 1) + " out of " + pgsource.PageCount + " pages";
                 divEmployeeNodalGrid.Visible = true;
             }
         }
@@ -395,14 +403,11 @@ public partial class Admin_ViewDashboard : System.Web.UI.Page
                 lblpaging.Text = "Page " + (pagingCurrentPage + 1) + " of " + pgsource.PageCount;
                 lnkbtnPgPrevious.Enabled = !pgsource.IsFirstPage;
                 lnkbtnPgNext.Enabled = !pgsource.IsLastPage;
-                lnkbtnPgFirst.Enabled = !pgsource.IsFirstPage;
-                lnkbtnPgLast.Enabled = !pgsource.IsLastPage;
                 pgsource.DataSource = dtads.DefaultView;
                 gvproduct.DataSource = pgsource;
                 gvproduct.DataBind();
-                DataListPagingMethod();
                 divpageindex.Visible = true;
-                lbltotal.Text = "Total Records:- " + gvproduct.Rows.Count.ToString();
+                lbltotal.Text = "Showing  " + gvproduct.Rows.Count.ToString() + " result from page " + (pagingCurrentPage + 1) + " out of " + pgsource.PageCount + " pages";
                 divProductGrid.Visible = true;
 
             }
@@ -439,8 +444,38 @@ public partial class Admin_ViewDashboard : System.Web.UI.Page
                         lblpaging.Text = "Page " + (pagingCurrentPage + 1) + " of " + pgsource.PageCount;
                         lnkbtnPgPrevious.Enabled = !pgsource.IsFirstPage;
                         lnkbtnPgNext.Enabled = !pgsource.IsLastPage;
-                        lnkbtnPgFirst.Enabled = !pgsource.IsFirstPage;
-                        lnkbtnPgLast.Enabled = !pgsource.IsLastPage;
+                        pgsource.DataSource = dtads.DefaultView;
+                        gvproduct.DataSource = pgsource;
+                    }
+                    else if (Encrypt.DecryptData(Request.QueryString["id"].ToString()) == "M2")
+                    {
+                        DataView dv = new DataView(DtGrid);
+                        dv.RowFilter = "PurposeofProcurement like '%25%'";
+                        dv.Sort = "LastUpdated desc,CompanyName asc,FactoryName asc";
+
+                        DataTable dtads = dv.ToTable();
+                        dtads.Columns.Add("TopImages", typeof(System.String));
+                        for (int i = 0; dtads.Rows.Count > i; i++)
+                        {
+                            string mProdRefTime = dtads.Rows[i]["ProductRefNo"].ToString();
+                            DataTable dtImageBind = Lo.RetriveProductCode("", mProdRefTime, "RetImageTop", "");
+                            if (dtImageBind.Rows.Count > 0)
+                            {
+                                dtads.Rows[i]["TopImages"] = dtImageBind.Rows[0]["ImageName"].ToString();
+                            }
+                            else
+                            {
+                                dtads.Rows[i]["TopImages"] = "assets/images/Noimage.png";
+                            }
+                        }
+                        pgsource.DataSource = dtads.DefaultView;
+                        pgsource.AllowPaging = true;
+                        pgsource.PageSize = 100;
+                        pgsource.CurrentPageIndex = pagingCurrentPage;
+                        ViewState["totpage"] = pgsource.PageCount;
+                        lblpaging.Text = "Page " + (pagingCurrentPage + 1) + " of " + pgsource.PageCount;
+                        lnkbtnPgPrevious.Enabled = !pgsource.IsFirstPage;
+                        lnkbtnPgNext.Enabled = !pgsource.IsLastPage;
                         pgsource.DataSource = dtads.DefaultView;
                         gvproduct.DataSource = pgsource;
                     }
@@ -469,15 +504,12 @@ public partial class Admin_ViewDashboard : System.Web.UI.Page
                         lblpaging.Text = "Page " + (pagingCurrentPage + 1) + " of " + pgsource.PageCount;
                         lnkbtnPgPrevious.Enabled = !pgsource.IsFirstPage;
                         lnkbtnPgNext.Enabled = !pgsource.IsLastPage;
-                        lnkbtnPgFirst.Enabled = !pgsource.IsFirstPage;
-                        lnkbtnPgLast.Enabled = !pgsource.IsLastPage;
                         pgsource.DataSource = dtads.DefaultView;
                         gvproduct.DataSource = pgsource;
                     }
                     gvproduct.DataBind();
-                    DataListPagingMethod();
                     divpageindex.Visible = true;
-                    lbltotal.Text = "Total Records:- " + gvproduct.Rows.Count.ToString();
+                    lbltotal.Text = "Showing  " + gvproduct.Rows.Count.ToString() + " result from page " + (pagingCurrentPage + 1) + " out of " + pgsource.PageCount + " pages";
                     divProductGrid.Visible = true;
                 }
             }
@@ -569,6 +601,10 @@ public partial class Admin_ViewDashboard : System.Web.UI.Page
         DataTable DtView = Lo.RetriveProductCode("", e.CommandArgument.ToString(), "ProductMasterID", Role.ToString());
         if (DtView.Rows.Count > 0)
         {
+            if (Encrypt.DecryptData(Session["User"].ToString()) == "oicncbops.defstand@gov.in" || Encrypt.DecryptData(Session["User"].ToString()) == "OICNCBOPS.DEFSTAND@GOV.IN")
+            { pancheck.Visible = true; }
+            else
+            { pancheck.Visible = false; }
             lblcomprefno.Text = DtView.Rows[0]["CompanyRefNo"].ToString();
             lblcompname.Text = DtView.Rows[0]["CompanyName"].ToString();
             lbldiviname.Text = DtView.Rows[0]["FactoryName"].ToString();
@@ -640,8 +676,7 @@ public partial class Admin_ViewDashboard : System.Web.UI.Page
             else
             {
                 itemdocument.Visible = true;
-                a_downitem.HRef = "http://srijandefence.in/Upload/" + DtView.Rows[0]["ItemDescriptionPDFFile"].ToString();
-                //  a_downitem.HRef = "http://103.73.189.114:801/Upload/" + DtView.Rows[0]["ItemDescriptionPDFFile"].ToString();
+                a_downitem.HRef = "http://srijandefence.gov.in/Upload/" + DtView.Rows[0]["ItemDescriptionPDFFile"].ToString();
             }
             DataTable dtImageBindfinal = Lo.RetriveProductCode("", e.CommandArgument.ToString(), "ProductImage", "");
             if (dtImageBindfinal.Rows.Count > 0)
@@ -1007,32 +1042,9 @@ public partial class Admin_ViewDashboard : System.Web.UI.Page
     }
     #endregion
     #region //------------------------pageindex code--------------//
-    protected void lnkbtnPgFirst_Click(object sender, EventArgs e)
-    {
-        pagingCurrentPage = 0;
-        if (hfmtype.Value == "C")
-        {
-            BindCompany(hfmref.Value);
-        }
-        else if (hfmtype.Value == "D")
-        {
-            BindDivision(hfmref.Value);
-        }
-        else if (hfmtype.Value == "U")
-        {
-            BindUnit(hfmref.Value);
-        }
-        else if (hfmtype.Value == "E")
-        {
-            BindEmployee(hfmref.Value);
-        }
-        else if (hfmtype.Value == "P")
-        { BindProduct(hfmref.Value); }
-        else if (hfmtype.Value == "PI")
-        { BindProduct(hfmref.Value); }
-    }
     protected void lnkbtnPgPrevious_Click(object sender, EventArgs e)
     {
+        txtpageno.Text = "";
         pagingCurrentPage -= 1;
         if (hfmtype.Value == "C")
         {
@@ -1054,10 +1066,14 @@ public partial class Admin_ViewDashboard : System.Web.UI.Page
         { BindProduct(hfmref.Value); }
         else if (hfmtype.Value == "PI")
         { BindProduct(hfmref.Value); }
+        else if (hfmtype.Value == "M2")
+        { BindProduct(hfmref.Value); }
     }
     protected void lnkbtnPgNext_Click(object sender, EventArgs e)
     {
         pagingCurrentPage += 1;
+        int txtpage = Convert.ToInt32(pagingCurrentPage) + 1;
+        txtpageno.Text = txtpage.ToString();
         if (hfmtype.Value == "C")
         {
             BindCompany(hfmref.Value);
@@ -1078,36 +1094,37 @@ public partial class Admin_ViewDashboard : System.Web.UI.Page
         { BindProduct(hfmref.Value); }
         else if (hfmtype.Value == "PI")
         { BindProduct(hfmref.Value); }
-    }
-    protected void lnkbtnPgLast_Click(object sender, EventArgs e)
-    {
-        pagingCurrentPage = (Convert.ToInt32(ViewState["totpage"]) - 1);
-        if (hfmtype.Value == "C")
-        {
-            BindCompany(hfmref.Value);
-        }
-        else if (hfmtype.Value == "D")
-        {
-            BindDivision(hfmref.Value);
-        }
-        else if (hfmtype.Value == "U")
-        {
-            BindUnit(hfmref.Value);
-        }
-        else if (hfmtype.Value == "E")
-        {
-            BindEmployee(hfmref.Value);
-        }
-        else if (hfmtype.Value == "P")
-        { BindProduct(hfmref.Value); }
-        else if (hfmtype.Value == "PI")
+        else if (hfmtype.Value == "M2")
         { BindProduct(hfmref.Value); }
     }
-    protected void DataListPaging_ItemCommand(object source, DataListCommandEventArgs e)
+    private int pagingCurrentPage
     {
-        if (e.CommandName.Equals("Newpage"))
+        get
         {
-            pagingCurrentPage = Convert.ToInt32(e.CommandArgument.ToString());
+            if (ViewState["pagingCurrentPage"] == null)
+            {
+                return 0;
+            }
+            else
+            {
+                return ((int)ViewState["pagingCurrentPage"]);
+            }
+        }
+        set
+        {
+            ViewState["pagingCurrentPage"] = value;
+        }
+    }
+    protected void btngoto_Click(object sender, EventArgs e)
+    {
+        if (System.Text.RegularExpressions.Regex.IsMatch(txtpageno.Text, "[^0-9]"))
+        {
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "ErrorMssgPopup('Please enter only number')", true);
+        }
+        else
+        {
+            int txtpage = Convert.ToInt32(txtpageno.Text) - 1;
+            pagingCurrentPage = Convert.ToInt32(txtpage.ToString());
             if (hfmtype.Value == "C")
             {
                 BindCompany(hfmref.Value);
@@ -1128,67 +1145,9 @@ public partial class Admin_ViewDashboard : System.Web.UI.Page
             { BindProduct(hfmref.Value); }
             else if (hfmtype.Value == "PI")
             { BindProduct(hfmref.Value); }
+            else if (hfmtype.Value == "M2")
+            { BindProduct(hfmref.Value); }
         }
-    }
-    protected void DataListPaging_ItemDataBound(object sender, DataListItemEventArgs e)
-    {
-        LinkButton lnkPage = (LinkButton)e.Item.FindControl("Pagingbtn");
-        if (lnkPage.CommandArgument.ToString() == pagingCurrentPage.ToString())
-        {
-            lnkPage.Enabled = false;
-        }
-    }
-    private int pagingCurrentPage
-    {
-        get
-        {
-            if (ViewState["pagingCurrentPage"] == null)
-            {
-                return 0;
-            }
-            else
-            {
-                return ((int)ViewState["pagingCurrentPage"]);
-            }
-        }
-        set
-        {
-            ViewState["pagingCurrentPage"] = value;
-        }
-    }
-    private void DataListPagingMethod()
-    {
-        DataTable dt = new DataTable();
-        dt.Columns.Add("PageIndex");
-        dt.Columns.Add("PageText");
-        firstindex = pagingCurrentPage - 100;
-        if (pagingCurrentPage > 100)
-        {
-            lastindex = pagingCurrentPage + 100;
-        }
-        else
-        {
-            lastindex = 25;
-        }
-        if (lastindex > Convert.ToInt32(ViewState["totpage"]))
-        {
-            lastindex = Convert.ToInt32(ViewState["totpage"]);
-            firstindex = lastindex - 25;
-        }
-        if (firstindex < 0)
-        {
-            firstindex = 0;
-        }
-        for (int i = firstindex; i < lastindex; i++)
-        {
-            DataRow dr = dt.NewRow();
-            dr[0] = i;
-            dr[1] = i + 1;
-            dt.Rows.Add(dr);
-        }
-
-        DataListPaging.DataSource = dt;
-        DataListPaging.DataBind();
     }
     //end page index---------------------------------------//
     #endregion
@@ -1201,12 +1160,156 @@ public partial class Admin_ViewDashboard : System.Web.UI.Page
         if (e.Row.RowType == DataControlRowType.DataRow)
         {
             HyperLink hy = (e.Row.FindControl("lbpdffile") as HyperLink);
-            if (hy.NavigateUrl.Trim() == "" || hy.NavigateUrl.Trim() == null)
+            if (hy.NavigateUrl.Trim() == "" || hy.NavigateUrl.Trim() == "~/Upload/" || hy.NavigateUrl.Trim() == null)
             {
                 e.Row.Cells[2].Text = "NA";
             }
             else
             { }
         }
+    }
+    protected void btnapprove_Click(object sender, EventArgs e)
+    {
+        try
+        {
+            if (txtappdisappmssg.Text != "")
+            {
+                string DeleteRec = Lo.DeleteRecord(lblprodrefno.Text, "ActiveProd");
+                if (DeleteRec == "true")
+                {
+                    hySaveProdInfo["Status"] = "Y";
+                    SendMailApproved();
+                    SaveUpdateInfoProduct();
+                    txtappdisappmssg.Text = "";
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "SuccessfullPop('Product approved successfully.')", true);
+                }
+                else
+                {
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "ErrorMssgPopup('product not approved.')", true);
+                }
+            }
+            else
+            {
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "ErrorMssgPopup('please give reasone of approval.')", true);
+            }
+        }
+        catch (Exception)
+        {
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "ErrorMssgPopup('product not approved.')", true);
+        }
+    }
+    protected void btndisapproved_Click(object sender, EventArgs e)
+    {
+        try
+        {
+            if (txtappdisappmssg.Text != "")
+            {
+                string DeleteRec = Lo.DeleteRecord(lblprodrefno.Text, "InActiveProd");
+                if (DeleteRec == "true")
+                {
+                    hySaveProdInfo["Status"] = "N";
+                    SendMailDisApproved();
+                    SaveUpdateInfoProduct();
+                    txtappdisappmssg.Text = "";
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "SuccessfullPop('Product deactive successfully.')", true);
+                }
+                else
+                {
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "ErrorMssgPopup('Record not deleted.')", true);
+                }
+            }
+            else
+            {
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "ErrorMssgPopup('Please enter detail of disapproval.')", true);
+            }
+        }
+        catch (Exception)
+        {
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "ErrorMssgPopup('Record not deleted.')", true);
+        }
+    }
+    protected void SendMailApproved()
+    {
+        try
+        {
+            string body;
+            using (StreamReader reader = new StreamReader(Server.MapPath("~/emailPage/ProductAppDis.html")))
+            {
+                body = reader.ReadToEnd();
+            }
+            body = body.Replace("{MESSAGE}", txtappdisappmssg.Text.Trim());
+            body = body.Replace("{refno}", lblprodrefno.Text);
+            SendMail s;
+            s = new SendMail();
+            if (lblemailidpro.Text != "")
+            {
+                s.CreateMail("noreply@srijandefence.gov.in", lblemailidpro.Text, "Amendment in product", body);
+                s.sendMail();
+                hySaveProdInfo["Mailsend"] = "Y";
+            }
+            else
+            {
+                DataTable DtNodalEmail = Lo.RetriveAllNodalOfficer(lblcomprefno.Text, "NodalForEmail");
+                if (DtNodalEmail.Rows.Count > 0)
+                {
+                    s.CreateMail("noreply@srijandefence.gov.in", lblemailidpro.Text, "Amendment in product", body);
+                    s.sendMail();
+                    hySaveProdInfo["Mailsend"] = "Y";
+                }
+                else
+                { hySaveProdInfo["Mailsend"] = "N"; }
+            }
+
+        }
+        catch (Exception ex)
+        {
+            hySaveProdInfo["Mailsend"] = "N";
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "ErrorMssgPopup('" + ex.Message + "')", true);
+        }
+    }
+    protected void SendMailDisApproved()
+    {
+        try
+        {
+            string body;
+            using (StreamReader reader = new StreamReader(Server.MapPath("~/emailPage/ProductAppDis.html")))
+            {
+                body = reader.ReadToEnd();
+            }
+            body = body.Replace("{MESSAGE}", txtappdisappmssg.Text.Trim());
+            body = body.Replace("{refno}", lblprodrefno.Text);
+            SendMail s;
+            s = new SendMail();
+            if (lblemailidpro.Text != "")
+            {
+                s.CreateMail("noreply@srijandefence.gov.in", lblemailidpro.Text, "Amendment in product", body);
+                s.sendMail();
+                hySaveProdInfo["Mailsend"] = "Y";
+            }
+            else
+            {
+                DataTable DtNodalEmail = Lo.RetriveAllNodalOfficer(lblcomprefno.Text, "NodalForEmail");
+                if (DtNodalEmail.Rows.Count > 0)
+                {
+                    s.CreateMail("noreply@srijandefence.gov.in", lblemailidpro.Text, "Amendment in product", body);
+                    s.sendMail();
+                    hySaveProdInfo["Mailsend"] = "Y";
+                }
+                else
+                { hySaveProdInfo["Mailsend"] = "N"; }
+            }
+        }
+        catch (Exception ex)
+        {
+            hySaveProdInfo["Mailsend"] = "N";
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "ErrorMssgPopup('" + ex.Message + "')", true);
+        }
+    }
+    public void SaveUpdateInfoProduct()
+    {
+        hySaveProdInfo["ProdRefNo"] = lblprodrefno.Text;
+        hySaveProdInfo["ProductChanges"] = txtappdisappmssg.Text;
+        hySaveProdInfo["ChangesBy"] = Encrypt.DecryptData(Session["User"].ToString());
+        string InsertLogProdSave = Lo.InsertLogProd(hySaveProdInfo, out  _sysMsg, out  _msg);
     }
 }

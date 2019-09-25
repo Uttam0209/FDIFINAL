@@ -9,6 +9,7 @@ using BusinessLayer;
 using System.Web.UI.WebControls;
 using Encryption;
 using System.Web;
+using System.Net;
 
 
 public partial class _Default : System.Web.UI.Page
@@ -18,10 +19,14 @@ public partial class _Default : System.Web.UI.Page
     DataUtility Co = new DataUtility();
     Cryptography objEnc = new Cryptography();
     HybridDictionary hyLogin = new HybridDictionary();
+    HybridDictionary hyLog = new HybridDictionary();
+    HybridDictionary HyLoginStatus = new HybridDictionary();
     string _msg = string.Empty;
     string Defaultpage = string.Empty;
     string _sysMsg = string.Empty;
     string notvalidate = string.Empty;
+    string GetIp = "";
+    string Getsystem = "";
     #endregion
     protected void Page_Load(object sender, EventArgs e)
     { }
@@ -49,11 +54,10 @@ public partial class _Default : System.Web.UI.Page
         {
             if (IsValidEmailId(txtUserName.Text) == true)
             {
-                //if (Session["ChkCaptcha"].ToString().ToLower() != txtCaptcha.Text.ToLower())
                 if (Captcha1.UserValidated == false)
                 {
                     txtPwd.Text = "";
-                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Invalid Captcha')", true);
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "ErrorMssgPopup('Invalid Captcha')", true);
                 }
                 else
                 {
@@ -72,34 +76,84 @@ public partial class _Default : System.Web.UI.Page
                             string _EmpId = LO.VerifyEmployee(hyLogin, out _msg, out Defaultpage);
                             if (_EmpId != "0" && _EmpId != "1" && _msg != "")
                             {
-                                Session["Type"] = objEnc.EncryptData(_msg);
-                                Session["User"] = objEnc.EncryptData(txtUserName.Text);
-                                Session["CompanyRefNo"] = _EmpId;
-                                Response.RedirectToRoute(Defaultpage);
+                                DataTable DtLastLogoutStatus = LO.GetLogOutStatus(txtUserName.Text);
+                                if (DtLastLogoutStatus.Rows.Count > 0)
+                                {
+                                    if (DtLastLogoutStatus.Rows[0]["IsLogedIn"].ToString() == "N")
+                                    {
+                                        Session["Type"] = objEnc.EncryptData(_msg);
+                                        Session["User"] = objEnc.EncryptData(txtUserName.Text);
+                                        Session["CompanyRefNo"] = _EmpId;
+                                        Logoutstatus();
+                                        UserLoginLog();
+                                        Response.RedirectToRoute(Defaultpage);
+                                    }
+                                    else
+                                    {
+                                        if (txtUserName.Text == "rgera@nic.in" || txtUserName.Text == "shrishkumar.ofb@ofb.gov.in")
+                                        {
+                                            Session["Type"] = objEnc.EncryptData(_msg);
+                                            Session["User"] = objEnc.EncryptData(txtUserName.Text);
+                                            Session["CompanyRefNo"] = _EmpId;
+                                            Logoutstatus();
+                                            UserLoginLog();
+                                            Response.RedirectToRoute(Defaultpage);
+                                        }
+                                        else
+                                        {
+                                            DateTime DT1 = Convert.ToDateTime(DtLastLogoutStatus.Rows[0]["IsLogedOutTime"].ToString()).AddMinutes(5);
+                                            string dtchng = DT1.ToString("hh:mm:ss");
+                                            DateTime DT2 = Convert.ToDateTime(DateTime.Now);
+                                            string dtchng2 = DT2.ToString("hh:mm:ss");
+                                            if (Convert.ToDateTime(dtchng) < Convert.ToDateTime(dtchng2))
+                                            {
+                                                Session["Type"] = objEnc.EncryptData(_msg);
+                                                Session["User"] = objEnc.EncryptData(txtUserName.Text);
+                                                Session["CompanyRefNo"] = _EmpId;
+                                                Logoutstatus();
+                                                UserLoginLog();
+                                                Response.RedirectToRoute(Defaultpage);
+                                            }
+                                            else
+                                            {
+                                                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "popup", "ErrorMssgPopup('It seems that you are not logged out properly it may be either you are logged in from other system or device, please log out from there or wait for sometime then try again.')", true);
+                                            }
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    Session["Type"] = objEnc.EncryptData(_msg);
+                                    Session["User"] = objEnc.EncryptData(txtUserName.Text);
+                                    Session["CompanyRefNo"] = _EmpId;
+                                    Logoutstatus();
+                                    UserLoginLog();
+                                    Response.RedirectToRoute(Defaultpage);
+                                }
                             }
                             else
                             {
                                 txtPwd.Text = "";
-                                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Invalid Login. Either user id or password or both are incorrect.');", true);
+                                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "popup", "ErrorMssgPopup('Invalid Login. Either user id or password or both are incorrect.')", true);
                             }
                         }
                         else
                         {
                             txtPwd.Text = "";
-                            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Invalid Login. Either user id or password or both are incorrect.');", true);
+                            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "popup", "ErrorMssgPopup('Invalid Login. Either user id or password or both are incorrect.')", true);
                         }
                     }
                     else
                     {
                         txtPwd.Text = "";
-                        ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Invalid User.');", true);
+                        ScriptManager.RegisterStartupScript(Page, Page.GetType(), "popup", "ErrorMssgPopup('Invalid User.Email id not registerd with us.')", true);
                     }
                 }
             }
             else
             {
                 txtPwd.Text = "";
-                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Invalid email format.');", true);
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "popup", "ErrorMssgPopup('Invalid email format.')", true);
             }
         }
         catch (Exception ex)
@@ -130,16 +184,16 @@ public partial class _Default : System.Web.UI.Page
                     {
                         string EmpCode = DtSendMailForgotpassword.Rows[0]["NodalOfficerRefNo"].ToString();
                         SendEmailCode(EmpCode);
-                        ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Email send to your registerd email id successfully.');", true);
+                        ScriptManager.RegisterStartupScript(Page, Page.GetType(), "popup", "ErrorMssgPopup('Email send to your registerd email id successfully.')", true);
                     }
                     else
                     {
-                        ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Email id not registerd with us.');", true);
+                        ScriptManager.RegisterStartupScript(Page, Page.GetType(), "popup", "ErrorMssgPopup('Email id not registerd with us.')", true);
                     }
                 }
                 else
                 {
-                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Invalid email format.');", true);
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "popup", "ErrorMssgPopup('Invalid email format.')", true);
                 }
             }
         }
@@ -162,12 +216,12 @@ public partial class _Default : System.Web.UI.Page
             body = body.Replace("{mcurid}", Resturl(56));
             SendMail s;
             s = new SendMail();
-            s.CreateMail("aeroindia-ddp@gov.in", txtforgotemailid.Text, "Reset Password Email", body);
+            s.CreateMail("noreply@srijandefence.gov.in", txtforgotemailid.Text, "Reset Password Email", body);
             s.sendMail();
         }
         catch (Exception ex)
         {
-            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('" + ex.Message + "')", true);
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "popup", "ErrorMssgPopup('" + ex.Message + "')", true);
         }
 
     }
@@ -185,5 +239,54 @@ public partial class _Default : System.Web.UI.Page
         return res.ToString();
     }
     #endregion
-
+    protected void UserLoginLog()
+    {
+        try
+        {
+            hyLog["UserId"] = objEnc.DecryptData(Session["User"].ToString());
+            GetIpAddress();
+            hyLog["Form"] = Path.GetFileName(Request.Url.AbsolutePath);
+            hyLog["Activity"] = "Login";
+            DateTime Date = Convert.ToDateTime(DateTime.Now.ToString());
+            string mDate = Date.ToString("dd-MM-yyyy");
+            hyLog["LoginDate"] = mDate;
+            DateTime Time = Convert.ToDateTime(DateTime.Now.ToString());
+            string mTime = Time.ToString("hh:mm:ss");
+            hyLog["LoginTime"] = mTime;
+            string InsertLog = LO.SaveLog(hyLog, out  _sysMsg, out  _msg);
+        }
+        catch (Exception ex)
+        { }
+    }
+    public void GetIpAddress()  // Get IP Address
+    {
+        IPHostEntry ipEntry = Dns.GetHostEntry(GetCompCode());
+        IPAddress[] addr = ipEntry.AddressList;
+        string ip = "";
+        ip = addr[1].ToString();
+        string s = ipEntry.HostName.ToString();
+        hyLog["SystemName"] = s.ToString();
+        hyLog["IPAddress"] = ip.ToString();
+        //return ip;        
+    }
+    public static string GetCompCode()  // Get Computer Name
+    {
+        string strHostName = "";
+        strHostName = Dns.GetHostName();
+        return strHostName;
+    }
+    protected void Logoutstatus()
+    {
+        try
+        {
+            HyLoginStatus["LoginUser"] = txtUserName.Text;
+            HyLoginStatus["IsLogedIn"] = "Y";
+            DateTime Date = Convert.ToDateTime(DateTime.Now);
+            string dateformat = Date.ToString("yyyy-MM-dd hh:mm:ss");
+            HyLoginStatus["IsLogedOutTime"] = dateformat.ToString();
+            string InsertLogOutStatus = LO.SaveLogoutstatus(HyLoginStatus, out  _sysMsg, out  _msg);
+        }
+        catch (Exception ex)
+        { }
+    }
 }

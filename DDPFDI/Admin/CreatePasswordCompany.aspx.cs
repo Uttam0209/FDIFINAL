@@ -12,9 +12,8 @@ public partial class Admin_CreatePasswordCompany : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
         if (Request.QueryString["mcref"] != "" && Request.QueryString["mcurid"] != "")
-        //   if (Request.QueryString["mcref"] != "")
         {
-            ViewState["Refno"] = Enc.DecryptData(Request.QueryString["mcref"].ToString()); //Request.QueryString["mcref"].ToString();
+            ViewState["Refno"] = Enc.DecryptData(Request.QueryString["mcref"].ToString()); 
         }
         else
         {
@@ -39,27 +38,27 @@ public partial class Admin_CreatePasswordCompany : System.Web.UI.Page
                         ViewState["Refno"] = null;
                         txtpassword.Text = "";
                         txttnewpass.Text = "";
-                        ScriptManager.RegisterStartupScript(this, this.GetType(), "alert", "alert('Password created successfully.Please login with new password.We will redirected to you login page');window.location ='Login';", true);
+                        ScriptManager.RegisterStartupScript(this, this.GetType(), "alert", "SuccessfullPop('Password created successfully.Please login with new password.We will redirected to you login page');window.location ='Login';", true);
                        
                     }
                     else
                     {
-                        ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Password not created. Some error occured.')", true);
+                        ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "ErrorMssgPopup('Password not created. Some error occured.')", true);
                     }
                 }
                 else
                 {
-                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Minimum Length is (8) charactor')", true);
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "ErrorMssgPopup('Minimum Length is (8) charactor')", true);
                 }
             }
             else
             {
-                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Password mismatch')", true);
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "ErrorMssgPopup('Password mismatch')", true);
             }
         }
         else
         {
-            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Enter password')", true);
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "ErrorMssgPopup('Enter password')", true);
         }
     }
     class GenerateHash

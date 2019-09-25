@@ -77,7 +77,7 @@
 </asp:Content>
 <asp:Content ID="inner2" runat="server" ContentPlaceHolderID="ContentPlaceHolder1">
     <div class="content oem-content">
-        <asp:ScriptManager ID="sn" runat="server"></asp:ScriptManager>
+        
         <div class="sideBg clearfix">
             <div class="row">
                 <div class="col-md-12 padding_0">

@@ -3,7 +3,6 @@
 <asp:Content ID="head" runat="server" ContentPlaceHolderID="head">
 </asp:Content>
 <asp:Content ID="inner" runat="server" ContentPlaceHolderID="ContentPlaceHolder1">
-    <asp:ScriptManager ID="sc" runat="server"></asp:ScriptManager>
     <asp:HiddenField runat="server" ID="hidType" />
     <asp:HiddenField runat="server" ID="hfcomprefno" />
     <asp:UpdatePanel ID="up" runat="server">

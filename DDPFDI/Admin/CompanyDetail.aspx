@@ -14,7 +14,6 @@
 </asp:Content>
 <asp:Content ID="inner" runat="server" ContentPlaceHolderID="ContentPlaceHolder1">
     <div class="content oem-content crearfix">
-        <asp:ScriptManager ID="sc" runat="server"></asp:ScriptManager>
         <div class="sideBg">
             <div class="row">
                 <div class="col-md-12 padding_0">

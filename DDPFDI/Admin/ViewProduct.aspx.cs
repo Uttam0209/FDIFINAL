@@ -61,7 +61,7 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
         }
         else
         {
-            ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "alert('Session Expired,Please login again');window.location='Login'", true);
+            ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "ErrorMssgPopup('Session Expired,Please login again');window.location='Login'", true);
         }
     }
     protected void btnAddProduct_Click(object sender, EventArgs e)
@@ -126,13 +126,11 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
                     lblpaging.Text = "Page " + (pagingCurrentPage + 1) + " of " + pgsource.PageCount;
                     lnkbtnPgPrevious.Enabled = !pgsource.IsFirstPage;
                     lnkbtnPgNext.Enabled = !pgsource.IsLastPage;
-                    lnkbtnPgFirst.Enabled = !pgsource.IsFirstPage;
-                    lnkbtnPgLast.Enabled = !pgsource.IsLastPage;
                     pgsource.DataSource = dtads.DefaultView;
                     gvproductItem.DataSource = pgsource;
-                    gvproductItem.DataBind();
-                    DataListPagingMethod();
+                    gvproductItem.DataBind();                   
                     gvproductItem.Visible = true;
+                    lbltot.Text = "Showing  " + gvproductItem.Rows.Count.ToString() + " result from page " + (pagingCurrentPage + 1) + " out of " + pgsource.PageCount + " pages";
                     divpageindex.Visible = true;
                 }
                 else
@@ -261,8 +259,7 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
                 else
                 {
                     itemdocument.Visible = true;
-                    a_downitem.HRef = "http://srijandefence.in/Upload/" + DtView.Rows[0]["ItemDescriptionPDFFile"].ToString();
-                    // a_downitem.HRef = "http://103.73.189.114:801/Upload/" + DtView.Rows[0]["ItemDescriptionPDFFile"].ToString();
+                    a_downitem.HRef = "http://srijandefence.gov.in/Upload/" + DtView.Rows[0]["ItemDescriptionPDFFile"].ToString();
                 }
                 DataTable dtImageBind = Lo.RetriveProductCode("", e.CommandArgument.ToString(), "ProductImage", "");
                 if (dtImageBind.Rows.Count > 0)
@@ -457,16 +454,16 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
                 string DeleteRec = Lo.DeleteRecord(e.CommandArgument.ToString(), "InActiveProd");
                 if (DeleteRec == "true")
                 {
-                    ScriptManager.RegisterStartupScript(this, GetType(), "alert", "alert('User details saved sucessfully');window.location ='View-Product';", true);
+                    ScriptManager.RegisterStartupScript(this, GetType(), "alert", "SuccessfullPop('Product deactive successfully.');window.location ='View-Product';", true);
                 }
                 else
                 {
-                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not deleted.')", true);
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "ErrorMssgPopup('Record not deleted.')", true);
                 }
             }
             catch (Exception)
             {
-                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not deleted.')", true);
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "ErrorMssgPopup('Record not deleted.')", true);
             }
         }
     }
@@ -742,11 +739,6 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
         }
     }
     #region //------------------------pageindex code--------------//
-    protected void lnkbtnPgFirst_Click(object sender, EventArgs e)
-    {
-        pagingCurrentPage = 0;
-        BindGridView();
-    }
     protected void lnkbtnPgPrevious_Click(object sender, EventArgs e)
     {
         pagingCurrentPage -= 1;
@@ -756,26 +748,18 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
     {
         pagingCurrentPage += 1;
         BindGridView();
-    }
-    protected void lnkbtnPgLast_Click(object sender, EventArgs e)
+    }  
+    protected void btngoto_Click(object sender, EventArgs e)
     {
-        pagingCurrentPage = (Convert.ToInt32(ViewState["totpage"]) - 1);
-        BindGridView();
-    }
-    protected void DataListPaging_ItemCommand(object source, DataListCommandEventArgs e)
-    {
-        if (e.CommandName.Equals("Newpage"))
+        if (System.Text.RegularExpressions.Regex.IsMatch(txtpageno.Text, "[^0-9]"))
         {
-            pagingCurrentPage = Convert.ToInt32(e.CommandArgument.ToString());
-            BindGridView();
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "ErrorMssgPopup('Please enter only number')", true);
         }
-    }
-    protected void DataListPaging_ItemDataBound(object sender, DataListItemEventArgs e)
-    {
-        LinkButton lnkPage = (LinkButton)e.Item.FindControl("Pagingbtn");
-        if (lnkPage.CommandArgument.ToString() == pagingCurrentPage.ToString())
+        else
         {
-            lnkPage.Enabled = false;
+            int txtpage = Convert.ToInt32(txtpageno.Text) - 1;
+            pagingCurrentPage = Convert.ToInt32(txtpage.ToString());
+            BindGridView();
         }
     }
     private int pagingCurrentPage
@@ -796,40 +780,22 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
             ViewState["pagingCurrentPage"] = value;
         }
     }
-    private void DataListPagingMethod()
-    {
-        DataTable dt = new DataTable();
-        dt.Columns.Add("PageIndex");
-        dt.Columns.Add("PageText");
-        firstindex = pagingCurrentPage - 100;
-        if (pagingCurrentPage > 100)
-        {
-            lastindex = pagingCurrentPage + 100;
-        }
-        else
-        {
-            lastindex = 24;
-        }
-        if (lastindex > Convert.ToInt32(ViewState["totpage"]))
-        {
-            lastindex = Convert.ToInt32(ViewState["totpage"]);
-            firstindex = lastindex - 24;
-        }
-        if (firstindex < 0)
-        {
-            firstindex = 0;
-        }
-        for (int i = firstindex; i < lastindex; i++)
-        {
-            DataRow dr = dt.NewRow();
-            dr[0] = i;
-            dr[1] = i + 1;
-            dt.Rows.Add(dr);
-        }
-
-        DataListPaging.DataSource = dt;
-        DataListPaging.DataBind();
-    }
     //end page index---------------------------------------//
     #endregion
+    protected void gvproductItem_RowDataBound(object sender, GridViewRowEventArgs e)
+    {
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            if (objEnc.DecryptData(Session["Type"].ToString()) == "SuperAdmin")
+            {
+                LinkButton delpro = ((LinkButton)e.Row.FindControl("lbldel"));
+                delpro.Visible = true;
+            }
+            else
+            {
+                LinkButton delpro = ((LinkButton)e.Row.FindControl("lbldel"));
+                delpro.Visible = false;
+            }
+        }
+    }
 }

@@ -3,7 +3,6 @@
 <asp:Content ID="head" runat="server" ContentPlaceHolderID="head">
 </asp:Content>
 <asp:Content ID="inner" runat="server" ContentPlaceHolderID="ContentPlaceHolder1">
-    <asp:ScriptManager ID="sc" runat="server"></asp:ScriptManager>
     <asp:UpdatePanel ID="up" runat="server">
         <ContentTemplate>
             <div class="content oem-content">

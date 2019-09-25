@@ -54,7 +54,7 @@ public partial class Admin_ViewCategory : System.Web.UI.Page
         else
         {
             ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert",
-                "alert('Session Expired,Please login again');window.location='Login'", true);
+                "ErrorMssgPopup('Session Expired,Please login again');window.location='Login'", true);
         }
     }
     #region Load
@@ -235,16 +235,16 @@ public partial class Admin_ViewCategory : System.Web.UI.Page
                 if (DeleteRec == "true")
                 {
                     BindGridView();
-                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record delete succssfully.')", true);
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "SuccessfullPop('Record delete succssfully.')", true);
                 }
                 else
                 {
-                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not deleted.')", true);
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "ErrorMssgPopup('Record not deleted.')", true);
                 }
             }
             catch (Exception ex)
             {
-                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not deleted.')", true);
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "ErrorMssgPopup('Record not deleted.')", true);
             }
         }
         else if (e.CommandName == "labelactive")
@@ -255,16 +255,16 @@ public partial class Admin_ViewCategory : System.Web.UI.Page
                 if (DeleteRec == "true")
                 {
                     BindGridView();
-                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('label active succssfully.')", true);
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "SuccessfullPop('label active succssfully.')", true);
                 }
                 else
                 {
-                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('label not active.')", true);
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "ErrorMssgPopup('label not active.')", true);
                 }
             }
             catch (Exception ex)
             {
-                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('label not active.')", true);
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "ErrorMssgPopup('label not active.')", true);
             }
         }
     }
@@ -285,16 +285,16 @@ public partial class Admin_ViewCategory : System.Web.UI.Page
                 if (DeleteRec == "true")
                 {
                     BindGridView();
-                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record delete succssfully.')", true);
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "SuccessfullPop('Record delete succssfully.')", true);
                 }
                 else
                 {
-                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not deleted.')", true);
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "ErrorMssgPopup('Record not deleted.')", true);
                 }
             }
             catch (Exception ex)
             {
-                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not deleted.')", true);
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "ErrorMssgPopup('Record not deleted.')", true);
             }
         }
     }
@@ -315,29 +315,21 @@ public partial class Admin_ViewCategory : System.Web.UI.Page
                 if (DeleteRec == "true")
                 {
                     BindGridView();
-                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record delete succssfully.')", true);
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "SuccessfullPop('Record delete succssfully.')", true);
                 }
                 else
                 {
-                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not deleted.')", true);
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "ErrorMssgPopup('Record not deleted.')", true);
                 }
             }
             catch (Exception ex)
             {
-                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not deleted.')", true);
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "ErrorMssgPopup('Record not deleted.')", true);
             }
         }
     }
     protected void gvlevel3_RowCommand(object sender, GridViewCommandEventArgs e)
     {
-        //if (e.CommandName == "level2edit")
-        //{
-        //    GridViewRow gvr = (GridViewRow)((Control)e.CommandSource).NamingContainer;
-        //    int rowIndex = gvr.RowIndex;
-        //    string Role = (gvCategory.Rows[rowIndex].FindControl("lblunitrole") as Label).Text;
-        //    Response.Redirect("Master-Category?mrcreaterole=" + objEnc.EncryptData(Role) + "&mcurrentUnitRefNo=" + (objEnc.EncryptData(e.CommandArgument.ToString())) + "&id=" + Request.QueryString["id"].ToString());
-        //}
-        //else 
         if (e.CommandName == "level3delete")
         {
             try
@@ -346,16 +338,16 @@ public partial class Admin_ViewCategory : System.Web.UI.Page
                 if (DeleteRec == "true")
                 {
                     BindGridView();
-                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record delete succssfully.')", true);
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "SuccessfullPop('Record delete succssfully.')", true);
                 }
                 else
                 {
-                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not deleted.')", true);
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "ErrorMssgPopup('Record not deleted.')", true);
                 }
             }
             catch (Exception ex)
             {
-                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not deleted.')", true);
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "ErrorMssgPopup('Record not deleted.')", true);
             }
         }
     }

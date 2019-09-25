@@ -28,6 +28,17 @@
                         <hr />
                         <div class="form-group row">
                             <label class="col-sm-3 form-control-label">
+                                Select File Type</label>
+                            <div class="col-sm-9">
+                                <asp:RadioButtonList ID="rbtypefile" runat="server" CssClass="" RepeatColumns="2" RepeatDirection="Horizontal" RepeatLayout="Flow">
+                                    <asp:ListItem Selected="True" Value="1">Excel Format</asp:ListItem>
+                                    <asp:ListItem Value="2" style="margin-left: 10px;">CSV Format</asp:ListItem>
+                                </asp:RadioButtonList>
+                            </div>
+                        </div>
+                        <div class="clearfix pb15"></div>
+                        <div class="form-group row">
+                            <label class="col-sm-3 form-control-label">
                                 Select Excel File</label>
                             <div class="col-sm-9">
                                 <asp:FileUpload runat="server" class="form-control" ID="fuexcel" />
@@ -45,11 +56,23 @@
                             <p>2. All mandatory dropdown like (NSN GROUP,NSN GROUP CLASS,ITEM CODE,HS CODE etc) should be correct and as per master given data in website.</p>
                             <p>
                                 3. Please download sample before upload product excel file &nbsp;                           
-                                <a href="http://103.73.189.114:801/Upload/Sample%20Format.xlsx" target="_blank" class="fa fa-download"></a>
+                                <a href="http://srijandefence.gov.in/Upload/Sample%20Format.xlsx" target="_blank" class="fa fa-download"></a>
                             </p>
                             <p>4. Headers are given in sample excel, please add rows as per your data.</p>
                             <p>
                                 5.Always check excel sheet name should be Sheet1.
+                            </p>
+                            <div class="clearfix mt10"></div>
+                            <h3>CSV Format Instruction</h3>
+                            <p>
+                                1.After fill all details in excel sheet please save excel in csv format.
+                            </p>
+                            <p>
+                                <b style="color: red;">2.After fill all details in excel csv sheet remove headers row.</b>
+                            </p>
+                            <p>
+                                3. Please download sample before upload product csv excel file &nbsp;                     
+                                <a href="http://srijandefence.gov.in/Upload/Csv%20Format.docx" target="_blank" class="fa fa-download"></a>
                             </p>
                         </div>
                         <div class="clearfix mt10"></div>
@@ -88,13 +111,13 @@
                             </div>
                             <div class="col-sm-4">
                                 <div class="col-sm-12">
-                                     <div runat="server" id="Div2"></div>
+                                    <div runat="server" id="Div2"></div>
                                     <asp:Button ID="btnexcel3510" runat="server" Visible="false" class="btn btn-primary btn-sm pull-right"
                                         Text="Upload Excel Sheet Iteam Code File" OnClick="btnexcel3510_Click" />
                                 </div>
 
                                 <div class="col-sm-12">
-                                     <div runat="server" id="myhtmldiv"></div>
+                                    <div runat="server" id="myhtmldiv"></div>
                                     <asp:Button ID="btnexcel" runat="server" Visible="false" class="btn btn-primary btn-sm pull-right"
                                         Text="Upload Excel Sheet NSN File" OnClick="btnexcel_Click" />
                                 </div>

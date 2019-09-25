@@ -3,7 +3,7 @@
 <asp:Content ID="head" runat="server" ContentPlaceHolderID="head">
 </asp:Content>
 <asp:Content ID="inner" runat="server" ContentPlaceHolderID="ContentPlaceHolder1">
-    <asp:ScriptManager runat="server" ID="sc"></asp:ScriptManager>
+
 
     <div class="content oem-content">
         <div class="sideBg">
@@ -121,7 +121,7 @@
                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="Status">
                                                 <ItemTemplate>
-                                                    <asp:Label ID="lblstatus" runat="server" Text='<%#Eval("IsActive") %>' NullDisplayText="#"></asp:Label>
+                                                    <asp:Label ID="lblcatstatus" runat="server" Text='<%#Eval("IsActive") %>' NullDisplayText="#"></asp:Label>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                             <asp:BoundField ItemStyle-Width="150px" DataField="CreatedBy" HeaderText="Create By" NullDisplayText="#" />
@@ -135,7 +135,7 @@
                                     <div class="clearfix mt10"></div>
                                     <asp:GridView ID="gvlevel3" runat="server" AutoGenerateColumns="false" Class="commonAjaxTbl master-company-table table display responsive
                                          no-wrap table-hover manage-user Grid"
-                                        OnRowCreated="gvlevel3_RowCreated">
+                                        OnRowCreated="gvlevel3_RowCreated" OnRowCommand="gvlevel3_RowCommand" OnRowDataBound="gvlevel3_RowDataBound">
                                         <Columns>
                                             <asp:TemplateField HeaderText="S.No">
                                                 <ItemTemplate>
@@ -148,6 +148,13 @@
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                             <asp:BoundField runat="server" DataField="CreatedBy" HeaderText="Created By" NullDisplayText="#" />
+                                            <asp:BoundField DataField="IsActive" HeaderText="Status" />
+                                            <asp:TemplateField HeaderText="Action">
+                                                <ItemTemplate>
+                                                    <asp:LinkButton ID="lbsubactive" runat="server" CssClass="fa fa-check-circle" Text=" Active" OnClientClick="return confirm('Are you sure you want to active this subcategory record?');" CommandArgument='<%#Eval("SCategoryID") %>' CommandName="subactive"></asp:LinkButton>
+                                                    <asp:LinkButton ID="lbsubunactive" runat="server" CssClass="fa fa-trash-restore" Text=" DeActive" OnClientClick="return confirm('Are you sure you want to deactive this subcategory record?');" CommandArgument='<%#Eval("SCategoryID") %>' CommandName="subdeactive"></asp:LinkButton>
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
                                         </Columns>
                                     </asp:GridView>
                                 </div>

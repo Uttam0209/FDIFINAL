@@ -5,8 +5,6 @@ C:\Users\Aarav\Desktop\Backup Drive (D)\CurrentProject2019\FDFinalProject\FDIFIN
 C:\Users\Aarav\Desktop\Backup Drive (D)\CurrentProject2019\FDFinalProject\FDIFINAL\Encryption\obj\Debug\Encryption.csprojResolveAssemblyReference.cache
 F:\FDIFINAL\Encryption\bin\Debug\Encryption.dll
 F:\FDIFINAL\Encryption\bin\Debug\Encryption.pdb
-F:\FDIFINAL\Encryption\obj\Debug\Encryption.dll
-F:\FDIFINAL\Encryption\obj\Debug\Encryption.pdb
 F:\FDIFINAL\Encryption\bin\Debug\Microsoft.Web.Infrastructure.dll
 F:\FDIFINAL\Encryption\bin\Debug\System.Web.Helpers.dll
 F:\FDIFINAL\Encryption\bin\Debug\System.Web.Razor.dll
@@ -18,3 +16,6 @@ F:\FDIFINAL\Encryption\bin\Debug\System.Web.Razor.xml
 F:\FDIFINAL\Encryption\bin\Debug\System.Web.WebPages.xml
 F:\FDIFINAL\Encryption\bin\Debug\System.Web.WebPages.Deployment.xml
 F:\FDIFINAL\Encryption\bin\Debug\System.Web.WebPages.Razor.xml
+F:\FDIFINAL\Encryption\obj\Debug\Encryption.dll
+F:\FDIFINAL\Encryption\obj\Debug\Encryption.pdb
+F:\FDIFINAL\Encryption\obj\Debug\Encryption.csprojResolveAssemblyReference.cache

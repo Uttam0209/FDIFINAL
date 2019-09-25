@@ -18,7 +18,6 @@
     </script>
 </asp:Content>
 <asp:Content ID="inner" runat="server" ContentPlaceHolderID="ContentPlaceHolder1">
-    <asp:ScriptManager ID="sc" runat="server"></asp:ScriptManager>
     <asp:UpdatePanel ID="up" runat="server">
         <ContentTemplate>
             <asp:HiddenField ID="hfcomprefno" runat="server" />
@@ -74,9 +73,11 @@
                     <form method="post" class="addfdi">
                         <div class="row">
                             <div class="col-md-12">
+                                <asp:Label ID="lbltot" runat="server" CssClass="text-center"></asp:Label>
+                                <div class="clearfix mt10"></div>
                                 <div class="table-responsive" style="overflow-x: auto;" id="divproductgridview" runat="server">
                                     <asp:GridView ID="gvproductItem" runat="server" Width="100%" Class="table table-bordered table-wraper table-hover manage-user"
-                                        AutoGenerateColumns="false" OnRowCommand="gvproductItem_RowCommand" OnRowCreated="gvproductItem_RowCreated">
+                                        AutoGenerateColumns="false" OnRowCommand="gvproductItem_RowCommand" OnRowCreated="gvproductItem_RowCreated" OnRowDataBound="gvproductItem_RowDataBound">
                                         <Columns>
                                             <asp:TemplateField HeaderText="S.No.">
                                                 <ItemTemplate>
@@ -123,31 +124,24 @@
                                     </asp:GridView>
                                     <!-----------------------------------------Code for pageindexing----------------------------------------------------->
                                     <div class="row" runat="server" id="divpageindex" visible="false">
-                                        <div class="col-sm-2">
-                                            <asp:LinkButton ID="lnkbtnPgFirst" runat="server" CssClass="btn  btn-success  btn-sm"
-                                                OnClick="lnkbtnPgFirst_Click">First</asp:LinkButton>
-                                            <asp:LinkButton ID="lnkbtnPgPrevious" runat="server" CssClass="btn btn-success  btn-sm"
-                                                OnClick="lnkbtnPgPrevious_Click">Previous</asp:LinkButton>
+                                        <div class="col-sm-9">
+                                            <div class="col-sm-4 row">
+                                                <asp:LinkButton ID="lnkbtnPgPrevious" runat="server" CssClass="btn btn-info  btn-sm"
+                                                    OnClick="lnkbtnPgPrevious_Click">Previous</asp:LinkButton>
+                                            </div>
+                                            <div class="col-sm-4" style="display: flex">
+                                                <asp:TextBox runat="server" ID="txtpageno" CssClass="form-control btn-defualt text-center red" AutoCompleteType="Search" Placeholder="Please enter no of page"></asp:TextBox>
+                                                <asp:LinkButton ID="btngoto" runat="server" CssClass="btn btn-primary" OnClick="btngoto_Click">Go to</asp:LinkButton>
+                                            </div>
+                                            <div class="col-sm-4 row">
+                                                <asp:LinkButton ID="lnkbtnPgNext" runat="server" CssClass="btn  btn-info btn-sm pull-right" Style="margin-right: 3px;"
+                                                    OnClick="lnkbtnPgNext_Click">Next</asp:LinkButton>
+                                            </div>
                                         </div>
-                                        <div class="col-sm-8">
-                                            <asp:DataList ID="DataListPaging" runat="server" RepeatDirection="Horizontal" OnItemCommand="DataListPaging_ItemCommand"
-                                                OnItemDataBound="DataListPaging_ItemDataBound">
-                                                <ItemTemplate>
-                                                    <asp:LinkButton ID="Pagingbtn" runat="server" CssClass="btn btn-success mt5 btn-xs"
-                                                        CommandArgument='<%# Eval("PageIndex") %>' CommandName="Newpage" Text='<%# Eval("PageText")%>'></asp:LinkButton>
-                                                </ItemTemplate>
-                                            </asp:DataList>
-                                        </div>
-                                        <div class="col-sm-2">
-                                            <asp:LinkButton ID="lnkbtnPgLast" runat="server" CssClass="btn  btn-success btn-sm pull-right"
-                                                OnClick="lnkbtnPgLast_Click">Last</asp:LinkButton>
-                                            <asp:LinkButton ID="lnkbtnPgNext" runat="server" CssClass="btn  btn-success btn-sm pull-right" Style="margin-right: 3px;"
-                                                OnClick="lnkbtnPgNext_Click">Next</asp:LinkButton>
-                                        </div>
-                                        <div class="clearfix padding_0 mt10">
-                                        </div>
-                                        <div class="text-center">
-                                            <asp:Label ID="lblpaging" runat="server" class="btn btn-primary text-center" Text=""></asp:Label>
+                                        <div class="col-sm-3">
+                                            <div class="pull-right">
+                                                <asp:Label ID="lblpaging" runat="server" class="btn btn-primary text-center" Text=""></asp:Label>
+                                            </div>
                                         </div>
                                     </div>
                                     <!-----------------------------------------end code for page indexing----------------------------------------------------->
@@ -794,6 +788,7 @@
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
                                 </div>
                         </form>
                     </div>
@@ -801,6 +796,11 @@
             </div>
             </label>
         </ContentTemplate>
+        <Triggers>
+            <asp:PostBackTrigger ControlID="lnkbtnPgPrevious" />
+            <asp:PostBackTrigger ControlID="btngoto" />
+            <asp:PostBackTrigger ControlID="lnkbtnPgNext" />
+        </Triggers>
     </asp:UpdatePanel>
     <asp:UpdateProgress ID="UpdateProgress1" runat="server" AssociatedUpdatePanelID="up">
         <ProgressTemplate>

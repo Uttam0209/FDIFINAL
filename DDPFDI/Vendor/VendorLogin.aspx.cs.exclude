@@ -135,7 +135,7 @@ public partial class Vendor_VendorLogin : System.Web.UI.Page
             body = body.Replace("{mcurid}", Resturl(56));
             SendMail s;
             s = new SendMail();
-            s.CreateMail("aeroindia-ddp@gov.in", txtforgotemailid.Text, "Forgot Password Recover Mail", body);
+            s.CreateMail("noreply@srijandefence.gov.in", txtforgotemailid.Text, "Forgot Password Recover Mail", body);
             s.sendMail();
         }
         catch (Exception ex)

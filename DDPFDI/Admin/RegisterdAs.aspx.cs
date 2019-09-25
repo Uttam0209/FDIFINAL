@@ -7,6 +7,7 @@ using System.Web.UI.WebControls;
 using BusinessLayer;
 using Encryption;
 using System.Web.Helpers;
+using System.Web;
 
 public partial class Admin_RegisterdAs : System.Web.UI.Page
 {
@@ -45,6 +46,7 @@ public partial class Admin_RegisterdAs : System.Web.UI.Page
                         ViewState["DisplayPanel"] = objEnc.DecryptData(Request.QueryString["mu"].ToString().Replace(" ", "+"));
                         BindGridView();
                         ShowHidePanel();
+                        ViewState["RefUrl"] = HttpContext.Current.Request.Url.AbsoluteUri;
                     }
                     catch (Exception exception)
                     {
@@ -56,7 +58,7 @@ public partial class Admin_RegisterdAs : System.Web.UI.Page
                 else
                 {
                     ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert",
-                        "alert('Session Expired,Please login again');window.location='Login'", true);
+                        "ErrorMssgPopup('Session Expired,Please login again');window.location='Login'", true);
                 }
             }
         }
@@ -99,9 +101,6 @@ public partial class Admin_RegisterdAs : System.Web.UI.Page
         }
         catch (Exception ex)
         {
-            string error = ex.ToString();
-            string Page = Request.Url.AbsolutePath.ToString();
-            Response.Redirect("Error?techerror=" + objEnc.EncryptData(error) + "&page=" + objEnc.EncryptData(Page));
         }
     }
     protected void ShowHidePanel()
@@ -174,15 +173,6 @@ public partial class Admin_RegisterdAs : System.Web.UI.Page
             txtmastercategory.Text = "";
             txtsubcategory.Text = "";
             txtlevel3.Text = "";
-            //ddlmastercategory.SelectedValue = "Select";
-            //if (ddlcategroy2.Visible = true)
-            //{
-            //    ddlcategroy2.SelectedValue = "Select";
-            //}
-            //if (ddllabel2.Visible = true)
-            //{
-            //    ddllabel2.SelectedValue = "Select";
-            //}
         }
         catch (Exception e)
         {
@@ -201,7 +191,7 @@ public partial class Admin_RegisterdAs : System.Web.UI.Page
         {
             DataTable DtGetAddDropdown = Lo.RetriveMasterSubCategoryDate(0, txtmastercategory.Text.Trim(), "", "DupMasterCat", "", "");
             if (DtGetAddDropdown.Rows.Count > 0)
-            { ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('This category " + txtmastercategory.Text + " already inserted in database, record not inserted.')", true); }
+            { ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "ErrorMssgPopup('This category " + txtmastercategory.Text + " already inserted in database, record not inserted.')", true); }
             else
             {
                 DataTable StrCat = Lo.RetriveMasterCategoryDate(0, Co.RSQandSQLInjection(txtmastercategory.Text, "soft"), "", rbflag.SelectedItem.Value, rbactive.SelectedItem.Value, "Insert", objEnc.DecryptData(ViewState["UserLoginEmail"].ToString()));
@@ -209,11 +199,11 @@ public partial class Admin_RegisterdAs : System.Web.UI.Page
                 {
                     BindGridView();
                     cleartext();
-                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record saved')", true);
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "SuccessfullPop('Record saved')", true);
                 }
                 else
                 {
-                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not saved')", true);
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "ErrorMssgPopup('Record not saved')", true);
                 }
             }
         }
@@ -230,7 +220,7 @@ public partial class Admin_RegisterdAs : System.Web.UI.Page
         {
             DataTable DtGetAddDropdown = Lo.RetriveMasterSubCategoryDate(0, txtsubcategory.Text.Trim(), "", "DupSubCat", "", "");
             if (DtGetAddDropdown.Rows.Count > 0)
-            { ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('This category " + txtsubcategory.Text + " already inserted in " + ddlmastercategory.SelectedItem.Text + ", record not inserted.')", true); }
+            { ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "ErrorMssgPopup('This category " + txtsubcategory.Text + " already inserted in " + ddlmastercategory.SelectedItem.Text + ", record not inserted.')", true); }
             else
             {
                 DataTable StrCat = Lo.RetriveMasterSubCategoryDate(
@@ -241,11 +231,11 @@ public partial class Admin_RegisterdAs : System.Web.UI.Page
                 {
                     BindMasterInnerSubCategory();
                     cleartext();
-                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record saved')", true);
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "SuccessfullPop('Record saved')", true);
                 }
                 else
                 {
-                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not saved')",
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "SuccessfullPop('Record not saved')",
                         true);
                 }
             }
@@ -263,7 +253,7 @@ public partial class Admin_RegisterdAs : System.Web.UI.Page
         {
             DataTable DtGetAddDropdown = Lo.RetriveMasterSubCategoryDate(Convert.ToInt32(ddlcategroy2.SelectedItem.Value), txtcategory3.Text.Trim(), "", "DupSubCat", "", "");
             if (DtGetAddDropdown.Rows.Count > 0)
-            { ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('This category " + txtcategory3.Text + " already inserted in " + ddlcategroy2.SelectedItem.Text + ",record not inserted.')", true); }
+            { ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "ErrorMssgPopup('This category " + txtcategory3.Text + " already inserted in " + ddlcategroy2.SelectedItem.Text + ",record not inserted.')", true); }
             else
             {
                 DataTable StrCat = Lo.RetriveMasterSubCategoryDate(Convert.ToInt32(ddlcategroy2.SelectedItem.Value),
@@ -273,11 +263,11 @@ public partial class Admin_RegisterdAs : System.Web.UI.Page
                 {
                     BindMasterInnerSubCategorySub();
                     cleartext();
-                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record saved')", true);
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "SuccessfullPop('Record saved')", true);
                 }
                 else
                 {
-                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not saved')",
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "ErrorMssgPopup('Record not saved')",
                         true);
                 }
             }
@@ -295,7 +285,7 @@ public partial class Admin_RegisterdAs : System.Web.UI.Page
         {
             DataTable DtGetAddDropdown = Lo.RetriveMasterSubCategoryDate(Convert.ToInt32(ddllabel2.SelectedItem.Value), txtlevel3.Text.Trim(), "", "DupSubCat", "", "");
             if (DtGetAddDropdown.Rows.Count > 0)
-            { ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('This category " + txtlevel3.Text + " already inserted in " + ddllabel2.SelectedItem.Text + ",record not inserted.')", true); }
+            { ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "ErrorMssgPopup('This category " + txtlevel3.Text + " already inserted in " + ddllabel2.SelectedItem.Text + ",record not inserted.')", true); }
             else
             {
                 DataTable StrCat = Lo.RetriveMasterSubCategoryDate(Convert.ToInt32(ddllabel2.SelectedItem.Value),
@@ -305,11 +295,11 @@ public partial class Admin_RegisterdAs : System.Web.UI.Page
                 {
                     BindMasterInnerIneerSubCat();
                     cleartext();
-                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record saved')", true);
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "SuccessfullPop('Record saved')", true);
                 }
                 else
                 {
-                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not saved')",
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "ErrorMssgPopup('Record not saved')",
                         true);
                 }
             }
@@ -330,11 +320,11 @@ public partial class Admin_RegisterdAs : System.Web.UI.Page
                 if (txtmastercategory.Text != "")
                 {
                     SaveCode();
-                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record saved successfully')", true);
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "SuccessfullPop('Record saved successfully')", true);
                 }
                 else
                 {
-                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('All field fill mandatory')", true);
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "ErrorMssgPopup('All field fill mandatory')", true);
                 }
             }
             else if (btnsave.Text == "Save Level 1")
@@ -342,11 +332,11 @@ public partial class Admin_RegisterdAs : System.Web.UI.Page
                 if (ddlmastercategory.SelectedIndex != 0 && txtsubcategory.Text != "")
                 {
                     SaveCodeSub();
-                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record saved successfully')", true);
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "SuccessfullPop('Record saved successfully')", true);
                 }
                 else
                 {
-                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('All field fill mandatory')", true);
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "ErrorMssgPopup('All field fill mandatory')", true);
                 }
             }
             else if (btnsave.Text == "Save Level 2")
@@ -354,11 +344,11 @@ public partial class Admin_RegisterdAs : System.Web.UI.Page
                 if (ddlmastercategory.SelectedIndex != 0 && ddlcategroy2.SelectedIndex != 0 && txtcategory3.Text != "")
                 {
                     SaveCodeInnerSub();
-                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record saved successfully')", true);
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "SuccessfullPop('Record saved successfully')", true);
                 }
                 else
                 {
-                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('All field fill mandatory')", true);
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "ErrorMssgPopup('All field fill mandatory')", true);
                 }
             }
             else if (btnsave.Text == "Save Level 3")
@@ -366,11 +356,11 @@ public partial class Admin_RegisterdAs : System.Web.UI.Page
                 if (ddlmastercategory.SelectedIndex != 0 && ddlcategroy2.SelectedIndex != 0 && ddllabel2.SelectedIndex != 0 && txtlevel3.Text != "")
                 {
                     SaveCodeInnerSubSub();
-                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record saved successfully')", true);
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "SuccessfullPop('Record saved successfully')", true);
                 }
                 else
                 {
-                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('All field fill mandatory')", true);
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "ErrorMssgPopup('All field fill mandatory')", true);
                 }
             }
         }
@@ -565,6 +555,7 @@ public partial class Admin_RegisterdAs : System.Web.UI.Page
         if (e.Row.RowType == DataControlRowType.DataRow)
         {
             Label lblHierarchy = (Label)e.Row.FindControl("lblhiraricy");
+            Label lblbstatus = (Label)e.Row.FindControl("lblcatstatus");
             if (lblHierarchy.Text == "Level 2")
             {
                 e.Row.Attributes.Add("Class", "bg-skyrow");
@@ -588,6 +579,53 @@ public partial class Admin_RegisterdAs : System.Web.UI.Page
         else if (e.Row.RowType == DataControlRowType.Footer)
         {
             e.Row.TableSection = TableRowSection.TableFooter;
+        }
+    }
+    protected void gvlevel3_RowCommand(object sender, GridViewCommandEventArgs e)
+    {
+        if (e.CommandName == "subactive")
+        {
+            string UpdateCatActive = Lo.UpdateStatus(Convert.ToInt64(e.CommandArgument.ToString()), "", "upysubCat");
+            if (UpdateCatActive != "-1")
+            {
+                object refUrl = ViewState["RefUrl"];
+                if (refUrl != null)
+                    Response.Redirect((string)refUrl);
+            }
+            else
+            { ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "ErrorMssgPopup('Oops some error occured.')", true); }
+        }
+        else if (e.CommandName == "subdeactive")
+        {
+            string UpdateCatActive = Lo.UpdateStatus(Convert.ToInt64(e.CommandArgument.ToString()), "", "upnsubCat");
+            if (UpdateCatActive != "-1")
+            {
+                object refUrl = ViewState["RefUrl"];
+                if (refUrl != null) Response.Redirect((string)refUrl);
+
+            }
+            else
+            { ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "ErrorMssgPopup('Oops some error occured.')", true); }
+        }
+    }
+    protected void gvlevel3_RowDataBound(object sender, GridViewRowEventArgs e)
+    {
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            if (e.Row.Cells[3].Text == "Y")
+            {
+                LinkButton lblsubactive = (e.Row.FindControl("lbsubactive") as LinkButton);
+                lblsubactive.Visible = false;
+                LinkButton lblsubunactive = (e.Row.FindControl("lbsubunactive") as LinkButton);
+                lblsubunactive.Visible = true;
+            }
+            else
+            {
+                LinkButton lblsubactive = (e.Row.FindControl("lbsubactive") as LinkButton);
+                lblsubactive.Visible = true;
+                LinkButton lblsubunactive = (e.Row.FindControl("lbsubunactive") as LinkButton);
+                lblsubunactive.Visible = false;
+            }
         }
     }
     protected void gvlevel3_RowCreated(object sender, GridViewRowEventArgs e)

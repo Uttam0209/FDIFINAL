@@ -53,7 +53,7 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
         else
         {
             ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert",
-                "alert('Session Expired,Please login again');window.location='Login'", true);
+                "ErrorMssgPopup('Session Expired,Please login again');window.location='Login'", true);
         }
 
     }
@@ -439,16 +439,16 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
                 if (DeleteRec == "true")
                 {
                     BindGridView();
-                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record delete succssfully.')", true);
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "SuccessfullPop('Record delete succssfully.')", true);
                 }
                 else
                 {
-                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not deleted.')", true);
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "ErrorMssgPopup('Record not deleted.')", true);
                 }
             }
             catch (Exception ex)
             {
-                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not deleted.')", true);
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "ErrorMssgPopup('Record not deleted.')", true);
             }
         }
         else if (e.CommandName == "SendLogin")
@@ -464,7 +464,7 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
             }
             catch (Exception ex)
             {
-                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Mail not sent error occured.')", true);
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "ErrorMssgPopup('Mail not sent error occured.')", true);
             }
         }
     }
@@ -532,16 +532,16 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
                 if (DeleteRec == "true")
                 {
                     BindGridView();
-                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record delete succssfully.')", true);
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "SuccessfullPop('Record delete succssfully.')", true);
                 }
                 else
                 {
-                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not deleted.')", true);
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "ErrorMssgPopup('Record not deleted.')", true);
                 }
             }
             catch (Exception ex)
             {
-                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not deleted.')", true);
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "ErrorMssgPopup('Record not deleted.')", true);
             }
         }
         else if (e.CommandName == "factorySendLogin")
@@ -557,7 +557,7 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
             }
             catch (Exception ex)
             {
-                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Mail not send error occured.')", true);
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "ErrorMssgPopup('Mail not send error occured.')", true);
             }
         }
     }
@@ -621,16 +621,16 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
                 if (DeleteRec == "true")
                 {
                     BindGridView();
-                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record delete succssfully.')", true);
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "SuccessfullPop('Record delete succssfully.')", true);
                 }
                 else
                 {
-                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not deleted.')", true);
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "ErrorMssgPopup('Record not deleted.')", true);
                 }
             }
             catch (Exception ex)
             {
-                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not deleted.')", true);
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "ErrorMssgPopup('Record not deleted.')", true);
             }
         }
         else if (e.CommandName == "unitSendLogin")
@@ -646,7 +646,7 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
             }
             catch (Exception ex)
             {
-                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Mail not send error occured.')", true);
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "ErrorMssgPopup('Mail not send error occured.')", true);
             }
         }
     }
@@ -737,13 +737,13 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
             body = body.Replace("{mcurid}", Resturl(56));
             SendMail s;
             s = new SendMail();
-            s.CreateMail("aeroindia-ddp@gov.in", UserEmail, "Create Password", body);
+            s.CreateMail("noreply@srijandefence.gov.in", UserEmail, "Create Password", body);
             s.sendMail();
-            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Password change mail send successfully.')", true);
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "SuccessfullPop('Password change mail send successfully.')", true);
         }
         catch (Exception ex)
         {
-            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('" + ex.Message + "')", true);
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "ErrorMssgPopup('" + ex.Message + "')", true);
         }
 
     }

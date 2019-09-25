@@ -53,6 +53,18 @@ namespace BusinessLayer
             return SqlHelper.Instance.SaveExcelProduct(dtMaster);
         }
         #region SaveCode
+        public string SaveLog(HybridDictionary hyLog, out string _sysMsg, out string _msg)
+        {
+            return SqlHelper.Instance.SaveLog(hyLog, out _sysMsg, out _msg);
+        }
+        public string InsertLogProd(HybridDictionary hySaveProdInfo, out string _sysMsg, out string _msg)
+        {
+            return SqlHelper.Instance.InsertLogProd(hySaveProdInfo, out _sysMsg, out _msg);
+        }
+        public string SaveLogoutstatus(HybridDictionary hyLog, out string _sysMsg, out string _msg)
+        {
+            return SqlHelper.Instance.SaveLogoutstatus(hyLog, out _sysMsg, out _msg);
+        }
         public string SaveFDI(HybridDictionary HySave, out string _sysMsg, out string _msg)
         {
             return SqlHelper.Instance.SaveFDI(HySave, out _sysMsg, out _msg);
@@ -107,6 +119,10 @@ namespace BusinessLayer
         {
             return SqlHelper.Instance.UpdateLoginPassword(NewPass, OldPass, User, type, MzefPass, Salt);
         }
+        public string UpdateStatus(Int64 ID, string Value1, string Value2)
+        {
+            return SqlHelper.Instance.UpdateStatus(ID, Value1, Value2);
+        }
 
         #endregion
         #region retriveCode
@@ -114,9 +130,17 @@ namespace BusinessLayer
         {
             return SqlHelper.Instance.RetriveGridView(ID);
         }
+        public DataTable GetLogOutStatus(string UEID)
+        {
+            return SqlHelper.Instance.GetLogOutStatus(UEID);
+        }
         public DataTable RetriveCountry(Int64 CountryID, string text)
         {
             return SqlHelper.Instance.RetriveCountry(CountryID, text);
+        }
+        public DataTable RetriveCountry(Int64 CountryID, string text,string codefor)
+        {
+            return SqlHelper.Instance.RetriveCountry(CountryID, text, codefor);
         }
         public DataTable RetriveState(string text)
         {

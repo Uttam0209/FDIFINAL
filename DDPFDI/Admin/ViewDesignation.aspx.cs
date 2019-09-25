@@ -49,7 +49,7 @@ public partial class Admin_ViewDesignation : System.Web.UI.Page
                 else
                 {
                     ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert",
-                        "alert('Session Expired,Please login again');window.location='Login'", true);
+                        "ErrorMssgPopup('Session Expired,Please login again');window.location='Login'", true);
                 }
             }
         }
@@ -121,14 +121,12 @@ public partial class Admin_ViewDesignation : System.Web.UI.Page
         ViewState["totpage"] = pgsource.PageCount;
         lblpaging.Text = "Page " + (pagingCurrentPage + 1) + " of " + pgsource.PageCount;
         lnkbtnPgPrevious.Enabled = !pgsource.IsFirstPage;
-        lnkbtnPgNext.Enabled = !pgsource.IsLastPage;
-        lnkbtnPgFirst.Enabled = !pgsource.IsFirstPage;
-        lnkbtnPgLast.Enabled = !pgsource.IsLastPage;
+        lnkbtnPgNext.Enabled = !pgsource.IsLastPage;       
         pgsource.DataSource = dtads.DefaultView;
         gvViewDesignation.DataSource = pgsource;// DtGrid;
         gvViewDesignation.DataBind();
-        DataListPagingMethod();
         gvViewDesignation.Visible = true;
+        lbltotalpage.Text = "Showing  " + gvViewDesignation.Rows.Count.ToString() + " result from page " + (pagingCurrentPage + 1) + " out of " + pgsource.PageCount + " pages";
         divpageindex.Visible = true;
     }
     #region RowCommand
@@ -151,16 +149,16 @@ public partial class Admin_ViewDesignation : System.Web.UI.Page
                 if (DeleteRec == "true")
                 {
 
-                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record delete succssfully.')", true);
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "SuccessfullPop('Record delete succssfully.')", true);
                 }
                 else
                 {
-                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not deleted.')", true);
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "ErrorMssgPopup('Record not deleted.')", true);
                 }
             }
             catch (Exception ex)
             {
-                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not deleted.')", true);
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "ErrorMssgPopup('Record not deleted.')", true);
             }
         }
 
@@ -188,7 +186,7 @@ public partial class Admin_ViewDesignation : System.Web.UI.Page
             {
                 divpageindex.Visible = false;
                 gvViewDesignation.Visible = false;
-                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not found !')", true);
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "ErrorMssgPopup('Record not found !')", true);
             }
         }
 
@@ -230,12 +228,7 @@ public partial class Admin_ViewDesignation : System.Web.UI.Page
             e.Row.TableSection = TableRowSection.TableFooter;
         }
     }
-    //------------------------pageindex code--------------//
-    protected void lnkbtnPgFirst_Click(object sender, EventArgs e)
-    {
-        pagingCurrentPage = 0;
-        BindCompany();
-    }
+    //------------------------pageindex code--------------//   
     protected void lnkbtnPgPrevious_Click(object sender, EventArgs e)
     {
         pagingCurrentPage -= 1;
@@ -244,28 +237,9 @@ public partial class Admin_ViewDesignation : System.Web.UI.Page
     protected void lnkbtnPgNext_Click(object sender, EventArgs e)
     {
         pagingCurrentPage += 1;
+        int txtpage = Convert.ToInt32(pagingCurrentPage) + 1;
+        txtpageno.Text = txtpage.ToString();
         BindCompany();
-    }
-    protected void lnkbtnPgLast_Click(object sender, EventArgs e)
-    {
-        pagingCurrentPage = (Convert.ToInt32(ViewState["totpage"]) - 1);
-        BindCompany();
-    }
-    protected void DataListPaging_ItemCommand(object source, DataListCommandEventArgs e)
-    {
-        if (e.CommandName.Equals("Newpage"))
-        {
-            pagingCurrentPage = Convert.ToInt32(e.CommandArgument.ToString());
-            BindCompany();
-        }
-    }
-    protected void DataListPaging_ItemDataBound(object sender, DataListItemEventArgs e)
-    {
-        LinkButton lnkPage = (LinkButton)e.Item.FindControl("Pagingbtn");
-        if (lnkPage.CommandArgument.ToString() == pagingCurrentPage.ToString())
-        {
-            lnkPage.Enabled = false;
-        }
     }
     private int pagingCurrentPage
     {
@@ -285,39 +259,18 @@ public partial class Admin_ViewDesignation : System.Web.UI.Page
             ViewState["pagingCurrentPage"] = value;
         }
     }
-    private void DataListPagingMethod()
+     protected void btngoto_Click(object sender, EventArgs e)
     {
-        DataTable dt = new DataTable();
-        dt.Columns.Add("PageIndex");
-        dt.Columns.Add("PageText");
-        firstindex = pagingCurrentPage - 100;
-        if (pagingCurrentPage > 100)
+        if (System.Text.RegularExpressions.Regex.IsMatch(txtpageno.Text, "[^0-9]"))
         {
-            lastindex = pagingCurrentPage + 100;
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "ErrorMssgPopup('Please enter only number')", true);
         }
         else
         {
-            lastindex = 24;
+            int txtpage = Convert.ToInt32(txtpageno.Text) - 1;
+            pagingCurrentPage = Convert.ToInt32(txtpage.ToString());
+            BindCompany();
         }
-        if (lastindex > Convert.ToInt32(ViewState["totpage"]))
-        {
-            lastindex = Convert.ToInt32(ViewState["totpage"]);
-            firstindex = lastindex - 24;
-        }
-        if (firstindex < 0)
-        {
-            firstindex = 0;
-        }
-        for (int i = firstindex; i < lastindex; i++)
-        {
-            DataRow dr = dt.NewRow();
-            dr[0] = i;
-            dr[1] = i + 1;
-            dt.Rows.Add(dr);
-        }
-
-        DataListPaging.DataSource = dt;
-        DataListPaging.DataBind();
     }
     //end page index---------------------------------------//
-}
+}  

@@ -38,7 +38,7 @@
 </asp:Content>
 <asp:Content ID="InnerDesignation" runat="server" ContentPlaceHolderID="ContentPlaceHolder1">
     <div class="content oem-content">
-        <asp:ScriptManager ID="sn" runat="server"></asp:ScriptManager>
+        
         <asp:HiddenField runat="server" ID="hidType" />
         <asp:HiddenField runat="server" ID="hfcomprefno" />
         <div class="sideBg">

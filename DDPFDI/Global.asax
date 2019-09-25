@@ -23,18 +23,18 @@
         var serverError = Server.GetLastError() as HttpException;
         if (null != serverError)
         {
-            int errorCode = serverError.GetHttpCode();
-            if (404 == errorCode)
-            {
-                Server.ClearError();
-                Response.Redirect("~/PageNotFound");
-            }
-            else
-            {
-                Server.ClearError();
-                Response.Redirect("~/Error");
+            //int errorCode = serverError.GetHttpCode();
+            //if (404 == errorCode)
+            //{
+            //    Server.ClearError();
+            //    Response.Redirect("~/PageNotFound");
+            //}
+            //else
+            //{
+            //    Server.ClearError();
+            //    Response.Redirect("~/Error");
 
-            }
+            //}
         }
         // An error has occured on a .Net page.
     }
@@ -96,6 +96,8 @@
         routes.MapPageRoute("View-VendorRegis", "View-VendorRegis", "~/Vendor/ViewVendorRegistrationDetail.aspx", true);
         routes.MapPageRoute("News", "News", "~/Admin/ImportantNews.aspx", true);
         routes.MapPageRoute("AddNews", "AddNews", "~/Admin/AddImpNews.aspx", true);
-
+        routes.MapPageRoute("CatStatus", "CatStatus", "~/Admin/UpdateCatstatus.aspx", true);
+        routes.MapPageRoute("ActiveLogout", "ActiveLogout", "~/Admin/ActiveLogin.aspx", true);
+        routes.MapPageRoute("ProdVerifiUpdate", "ProdVerifiUpdate", "~/Admin/ProductApprovedDisApproved.aspx", true);
     }    
 </script>

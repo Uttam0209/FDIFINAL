@@ -60,7 +60,6 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
                     ddlunit.Visible = false;
                     BindCompany();
                     BindMasterCategory();
-                    //BindNodelEmail();
                     if (objCrypto.DecryptData(Request.QueryString["mrcreaterole"].ToString()) == "Company")
                     {
                         EditCOde(dtViewDefault);
@@ -97,7 +96,7 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
             else
             {
                 ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert",
-                    "alert('Session Expired,Please login again');window.location='Login'", true);
+                    "ErrorMssgPopup('Session Expired,Please login again');window.location='Login'", true);
             }
         }
     }
@@ -658,14 +657,6 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
         }
         HySave["District"] = Co.RSQandSQLInjection(seldistrict.Text.Trim(), "soft");
         HySave["Pincode"] = Co.RSQandSQLInjection(tpincode.Text.Trim(), "soft");
-        //if (ddlNodalOfficerEmail.SelectedItem.Value == "0")
-        //{
-        //    HySave["NodalOfficeRefNo"] = "0";
-        //}
-        //else
-        //{
-        //    HySave["NodalOfficeRefNo"] = ddlNodalOfficerEmail.SelectedItem.Value;
-        //}
         HySave["NodalOfficeRefNo"] = "";
         HySave["ContactPersonEmailID"] = Co.RSQandSQLInjection(txtNEmailId.Text.Trim(), "soft");
         HySave["GSTNo"] = Co.RSQandSQLInjection(tgstno.Text.Trim(), "soft");
@@ -736,14 +727,6 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
         HySave["FactoryFaxNo"] = Co.RSQandSQLInjection(txtFaxNo.Text.Trim(), "soft");
         HySave["FactoryEmailID"] = Co.RSQandSQLInjection(txtEmailID.Text.Trim(), "soft");
         HySave["FactoryWebsite"] = Co.RSQandSQLInjection(txtWebsite.Text.Trim(), "soft");
-        //if (ddlNodalOfficerEmail.SelectedItem.Value == "0")
-        //{
-        //    HySave["NodalOfficeRefNo"] = "0";
-        //}
-        //else
-        //{
-        //    HySave["NodalOfficeRefNo"] = ddlNodalOfficerEmail.SelectedItem.Value;
-        //}
         HySave["NodalOfficeRefNo"] = "";
         HySave["FactoryNodalOfficerEmailId"] = Co.RSQandSQLInjection(txtNEmailId.Text.Trim(), "soft");
         if (selstate.SelectedItem.Text == "Select State")
@@ -785,14 +768,6 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
         }
         HySave["CompanyRefNo"] = Co.RSQandSQLInjection(Session["CompanyRefNo"].ToString(), "soft");
         HySave["UnitAddress"] = Co.RSQandSQLInjection(taddress.Text.Trim(), "soft");
-        //if (ddlNodalOfficerEmail.SelectedItem.Value == "0")
-        //{
-        //    HySave["NodalOfficeRefNo"] = "0";
-        //}
-        //else
-        //{
-        //    HySave["NodalOfficeRefNo"] = ddlNodalOfficerEmail.SelectedItem.Value;
-        //}
         HySave["NodalOfficeRefNo"] = "";
         HySave["UnitNodalOfficerEmailId"] = Co.RSQandSQLInjection(txtNEmailId.Text.Trim(), "soft");
         HySave["UnitPincode"] = Co.RSQandSQLInjection(tpincode.Text.Trim(), "soft");
@@ -829,11 +804,11 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
         string mStrCategory = Lo.SaveMasterCategroyMenu(hyMasterCategory, out _sysMsg, out _msg);
         if (mStrCategory == "Save")
         {
-            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Master Category saved successfully.')", true);
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "SuccessfullPop('Master Category saved successfully.')", true);
         }
         else
         {
-            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not saved')", true);
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "ErrorMssgPopup('Record not saved')", true);
         }
     }
     public string ValidatePreview()
@@ -899,34 +874,24 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
     {
         if (tcompanyname.Text != "")
         {
-            //string msg = this.ValidatePreview();
-            //if (msg != "")
-            //{
-            //    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('" + msg + "');", true);
-            //}
-            //else
-            //{
             if (btndemofirst.Text == "Save")
             {
                 SaveFDI();
                 string StrSaveFDIComp = Lo.SaveMasterCompany(HySave, out _msg, out _sysMsg);
                 if (StrSaveFDIComp != "0" && StrSaveFDIComp != "-1")
                 {
-                    //SaveCompanyMenu();
                     if (hfid.Value != "")
                     {
-                        //cleartext();
-                        ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "alert('Record updated successfully')", true);
+                        ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "SuccessfullPop('Record updated successfully')", true);
                     }
                     else
                     {
-                        //cleartext();
-                        ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "alert('Record save successfully')", true);
+                        ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "SuccessfullPop('Record save successfully')", true);
                     }
                 }
                 else
                 {
-                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not save successfully.')", true);
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "ErrorMssgPopup('Record not save successfully.')", true);
                 }
             }
             else if (btndemofirst.Text == "Save Division")
@@ -935,21 +900,18 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
                 string StrSaveFact = Lo.SaveFactoryComp(HySave, out _msg, out _sysMsg);
                 if (StrSaveFact != "0" && StrSaveFact != "-1")
                 {
-                    //SaveFactoryMenu();
                     if (hfid.Value != "")
                     {
-                        //cleartext();
-                        ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "alert('Record updated successfully')", true);
+                        ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "SuccessfullPop('Record updated successfully')", true);
                     }
                     else
                     {
-                        //cleartext();
-                        ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "alert('Record save successfully')", true);
+                        ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "SuccessfullPop('Record save successfully')", true);
                     }
                 }
                 else
                 {
-                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not save successfully.')", true);
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "ErrorMssgPopup('Record not save successfully.')", true);
                 }
             }
             else if (btndemofirst.Text == "Save Unit")
@@ -958,30 +920,21 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
                 string StrSaveUnit = Lo.SaveUnitComp(HySave, out _msg, out _sysMsg);
                 if (StrSaveUnit != "0" && StrSaveUnit != "-1")
                 {
-                    //SaveFactoryMenu();
                     if (hfid.Value != "")
                     {
-                        //cleartext();
-                        ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "alert('Record updated successfully')", true);
+                        ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "SuccessfullPop('Record updated successfully')", true);
                     }
                     else
                     {
-                        //cleartext();
-                        ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "alert('Record save successfully')", true);
+                        ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "SuccessfullPop('Record save successfully')", true);
                     }
                 }
                 else
                 {
-                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not save successfully.')", true);
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "ErrorMssgPopup('Record not save successfully.')", true);
                 }
 
             }
-            //    }
-            //}
-            //else
-            //{
-            //    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Please fill all mandatory field.');", true);
-            //}
         }
     }
     protected void BindCompany()
@@ -1011,7 +964,6 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
                         Co.FillDropdownlist(ddlcompany, DtCompanyDDL, "CompanyName", "CompanyRefNo");
                         lblSelectCompany.Text = "Company";
                     }
-                    // DtCompanyDDL = Lo.RetriveMasterData(0, objCrypto.DecryptData(Request.QueryString["mcurrentcompRefNo"].ToString()), "Factory", 0, "", "", "CompanyName");
                     DataTable DtDivisionDDL = Lo.RetriveMasterData(0, objCrypto.DecryptData(Request.QueryString["mcurrentcompRefNo"].ToString()), "Factory2", 0, "", "", "CompanyName");
                     if (DtDivisionDDL.Rows.Count > 0)
                     {
@@ -1035,7 +987,6 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
                         Co.FillDropdownlist(ddlcompany, DtCompanyDDL, "CompanyName", "CompanyRefNo");
                         lblSelectCompany.Text = "Company";
                     }
-                    // DtCompanyDDL = Lo.RetriveMasterData(0, objCrypto.DecryptData(Request.QueryString["mcurrentcompRefNo"].ToString()), "Unit", 0, "", "", "CompanyName");
                     DataTable DtDivisionDDL = Lo.RetriveMasterData(0, objCrypto.DecryptData(Request.QueryString["mcurrentcompRefNo"].ToString()), "Factory3", 0, "", "", "CompanyName");
                     if (DtDivisionDDL.Rows.Count > 0)
                     {

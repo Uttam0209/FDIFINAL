@@ -6,15 +6,22 @@ using BusinessLayer;
 using System.Text;
 using System.Data;
 using System.Web.Security;
-using System.Web.Helpers;
-
+using System.Configuration;
+using System.Web.Configuration;
+using System.Collections.Specialized;
+using System.Net;
+using System.IO;
 public partial class Admin_MasterPage : System.Web.UI.MasterPage
 {
     Logic Lo = new Logic();
     Cryptography ObjEnc = new Cryptography();
+    HybridDictionary HyLoginStatus = new HybridDictionary();
+    HybridDictionary hyLog = new HybridDictionary();
     string strInterestedArea = "";
     string strMasterAlloted = "";
     string sType = "";
+    string _msg = string.Empty;
+    string _sysMsg = string.Empty;
     private const string AntiXsrfTokenKey = "__AntiXsrfToken";
     private const string AntiXsrfUserNameKey = "__AntiXsrfUserName";
     private string _antiXsrfTokenValue;
@@ -22,11 +29,17 @@ public partial class Admin_MasterPage : System.Web.UI.MasterPage
     {
         if (Session["User"] != null)
         {
-            if (!IsPostBack)
+            Response.Cache.SetCacheability(HttpCacheability.NoCache);
+            if (!this.IsPostBack)
             {
                 try
                 {
                     MenuLogin();
+                    UserLoginLog();
+                    Configuration config = WebConfigurationManager.OpenWebConfiguration("~/Web.Config");
+                    SessionStateSection section = (SessionStateSection)config.GetSection("system.web/sessionState");
+                    int timeout = (int)section.Timeout.TotalMinutes * 1000 * 60;
+                    Page.ClientScript.RegisterStartupScript(this.GetType(), "SessionAlert", "SessionExpireAlert(" + timeout + ");", true);
                 }
                 catch (Exception exception)
                 {
@@ -36,6 +49,7 @@ public partial class Admin_MasterPage : System.Web.UI.MasterPage
         }
         else
         {
+            Logoutstatus();
             Session.Clear();
             Session.Abandon();
             ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "alert('Session Expired,Please login again');window.location='Login'", true);
@@ -43,12 +57,7 @@ public partial class Admin_MasterPage : System.Web.UI.MasterPage
     }
     protected void lbllogout_Click(object sender, EventArgs e)
     {
-        Session.Clear();
-        Session.Abandon();
-        Response.AppendHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
-        Response.AppendHeader("Pragma", "no-cache"); // HTTP 1.0.
-        Response.AppendHeader("Expires", "0"); // Proxies.
-        Response.RedirectToRoute("Login");
+        Logoutstatus();
     }
     private void bindMenu(string sType)
     {
@@ -258,5 +267,65 @@ public partial class Admin_MasterPage : System.Web.UI.MasterPage
                 throw new InvalidOperationException("Validation of Anti-XSRF token failed.");
             }
         }
+    }
+    protected void Logoutstatus()
+    {
+        try
+        {
+            HyLoginStatus["LoginUser"] = ObjEnc.DecryptData(Session["User"].ToString());
+            HyLoginStatus["IsLogedIn"] = "N";
+            DateTime Date = Convert.ToDateTime(DateTime.Now);
+            string dateformat = Date.ToString("yyyy-MM-dd hh:mm:ss");
+            HyLoginStatus["IsLogedOutTime"] = dateformat.ToString();
+            string InsertLogOutStatus = Lo.SaveLogoutstatus(HyLoginStatus, out  _sysMsg, out  _msg);
+            Session.Clear();
+            Session.Abandon();
+            Session.RemoveAll();
+            Response.AppendHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
+            Response.AppendHeader("Pragma", "no-cache"); // HTTP 1.0.
+            Response.AppendHeader("Expires", "0"); // Proxies.
+            Response.RedirectToRoute("Login");
+        }
+        catch (Exception ex)
+        { Response.RedirectToRoute("Login"); }
+    }
+    protected void btnNo_Click(object sender, EventArgs e)
+    {
+        Logoutstatus();
+    }
+    protected void UserLoginLog()
+    {
+        try
+        {
+            hyLog["UserId"] = ObjEnc.DecryptData(Session["User"].ToString());
+            GetIpAddress();
+            hyLog["Form"] = Path.GetFileName(Request.Url.AbsolutePath);
+            hyLog["Activity"] = Path.GetFileName(Request.Url.AbsolutePath);
+            DateTime Date = Convert.ToDateTime(DateTime.Now.ToString());
+            string mDate = Date.ToString("dd-MM-yyyy");
+            hyLog["LoginDate"] = mDate;
+            DateTime Time = Convert.ToDateTime(DateTime.Now.ToString());
+            string mTime = Time.ToString("hh:mm:ss");
+            hyLog["LoginTime"] = mTime;
+            string InsertLog = Lo.SaveLog(hyLog, out  _sysMsg, out  _msg);
+        }
+        catch (Exception ex)
+        { }
+    }
+    public void GetIpAddress()  // Get IP Address
+    {
+        IPHostEntry ipEntry = Dns.GetHostEntry(GetCompCode());
+        IPAddress[] addr = ipEntry.AddressList;
+        string ip = "";
+        ip = addr[1].ToString();
+        string s = ipEntry.HostName.ToString();
+        hyLog["SystemName"] = s.ToString();
+        hyLog["IPAddress"] = ip.ToString();
+    }
+    public static string GetCompCode()  // Get Computer Name
+    {
+        string strHostName = "";
+        strHostName = Dns.GetHostName();
+        return strHostName;
     }
 }

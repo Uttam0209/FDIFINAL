@@ -2,7 +2,6 @@
 
 <asp:Content ID="head" runat="server" ContentPlaceHolderID="head"></asp:Content>
 <asp:Content ID="inner" runat="server" ContentPlaceHolderID="ContentPlaceHolder1">
-    <asp:ScriptManager runat="server" ID="sc"></asp:ScriptManager>
     <asp:HiddenField ID="hidCompanyRefNo" runat="server" />
     <asp:HiddenField ID="hidType" runat="server" />
     <div class="content oem-content">
