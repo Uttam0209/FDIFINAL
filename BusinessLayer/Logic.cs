@@ -105,6 +105,10 @@ namespace BusinessLayer
         {
             return SqlHelper.Instance.SaveCodeProduct(hyProduct, DtImage, dtProdInfo, dtEstimateQuantity, out _sysMsg, out _msg, Criteria);
         }
+        public string UpdateCodeProduct(HybridDictionary HyUpdateProd, out string _sysMsg, out string _msg)
+        {
+            return SqlHelper.Instance.UpdateCodeProduct(HyUpdateProd, out _sysMsg, out _msg);
+        }
         public string SaveCompDesignation(HybridDictionary hysavecomp, out string _sysMsg, out string _msg)
         {
             return SqlHelper.Instance.SaveCompDesignation(hysavecomp, out _sysMsg, out _msg);
@@ -126,6 +130,10 @@ namespace BusinessLayer
 
         #endregion
         #region retriveCode
+        public DataTable RetriveCount(string compref, string name)
+        {
+            return SqlHelper.Instance.GetExecuteData("select * from fn_Div_UnitWiseProduct('" + compref + "','" + name + "') order by Name");
+        }
         public DataTable RetriveGridView(string ID)
         {
             return SqlHelper.Instance.RetriveGridView(ID);
@@ -138,7 +146,7 @@ namespace BusinessLayer
         {
             return SqlHelper.Instance.RetriveCountry(CountryID, text);
         }
-        public DataTable RetriveCountry(Int64 CountryID, string text,string codefor)
+        public DataTable RetriveCountry(Int64 CountryID, string text, string codefor)
         {
             return SqlHelper.Instance.RetriveCountry(CountryID, text, codefor);
         }
@@ -167,6 +175,45 @@ namespace BusinessLayer
         public DataTable GetDashboardData(string Purpose, string Search)
         {
             return SqlHelper.Instance.GetDashboardData(Purpose, Search);
+        }
+        public DataTable GetProductFilterData(DataTable dtsearchresult, string Purpose, string RefNo, string Search)
+        {
+            string mquery = "SELECT  TOP (100) PERCENT C.CompanyRefNo, C.CompanyName, F.FactoryRefNo, F.FactoryName, FC.CompanyRefNo AS FCompRefNo, FC.CompanyName AS FCompany, U.UnitName, U.UnitRefNo, UF.FactoryName AS UFactory," +
+            "UF.FactoryRefNo AS UFactoryRefNo, UC.CompanyName AS UCompany, UC.CompanyRefNo AS UCompRefNo, P.ProductRefNo, P.ProductLevel1, P.ProductLevel2, P.ProductLevel3, P.NSCCode, P.NIINCode, P.Role," +
+            "P.ProductDescription, P.OEMPartNumber, P.OEMName, P.OEMCountry, P.DPSUPartNumber, P.ItemDescriptionPDFFile, P.EndUserPartNumber, P.HSNCode, P.TechnologyLevel1, P.TechnologyLevel2, P.TechnologyLevel3," +
+            "P.Platform, P.NomenclatureOfMainSystem, P.EndUser, P.PurposeofProcurement, P.ProcurmentCategoryRemark, P.IsIndeginized, P.ManufactureName, P.ManufactureAddress, P.YearofIndiginization, P.SearchKeyword, " +
+            " P.DPSUServices, P.Remarks, P.FinancialSupport, P.FinancialRemark, P.TenderStatus, P.TenderSubmition, P.TenderFillDate, P.TenderUrl, P.NodelDetail, P.Testing, P.TestingRemarks, P.Certification, P.CertificationRemark, " +
+            " P.IsActive, P.LastUpdated,P.IsApproved, dbo.tbl_mst_SubCategory.SCategoryName AS NSNGroup, tbl_mst_SubCategory_1.SCategoryName AS DefencePlatform, tbl_mst_SubCategory_2.SCategoryName AS ProdIndustryDoamin, " +
+            " tbl_mst_SubCategory_3.SCategoryName AS NSNGroupClass,tbl_mst_Country.CountryName as Country,tbl_mst_SubCategory_4.SCategoryName AS ProdIndustrySubDomain " +
+            "FROM  dbo.tbl_mst_Factory AS UF LEFT OUTER JOIN" +
+            " dbo.tbl_mst_Company AS UC ON UF.CompanyRefNo = UC.CompanyRefNo RIGHT OUTER JOIN" +
+            " dbo.tbl_mst_Company AS FC RIGHT OUTER JOIN" +
+            " dbo.tbl_mst_Company AS C RIGHT OUTER JOIN" +
+            " dbo.tbl_mst_Factory AS F RIGHT OUTER JOIN" +
+            " dbo.tbl_mst_MainProduct AS P LEFT OUTER JOIN" +
+            " dbo.tbl_mst_SubCategory ON P.ProductLevel1 = dbo.tbl_mst_SubCategory.SCategoryId LEFT OUTER JOIN" +
+            " dbo.tbl_mst_SubCategory AS tbl_mst_SubCategory_2 ON P.TechnologyLevel1 = tbl_mst_SubCategory_2.SCategoryId LEFT OUTER JOIN" +
+            " dbo.tbl_mst_SubCategory AS tbl_mst_SubCategory_1 ON P.Platform = tbl_mst_SubCategory_1.SCategoryId LEFT OUTER JOIN" +
+            " dbo.tbl_mst_SubCategory AS tbl_mst_SubCategory_3 ON P.ProductLevel2 = tbl_mst_SubCategory_3.SCategoryId LEFT OUTER JOIN" +
+            " dbo.tbl_mst_Country ON P.OEMCountry = dbo.tbl_mst_Country.CountryID LEFT OUTER JOIN" +
+            "  dbo.tbl_mst_SubCategory AS tbl_mst_SubCategory_4 ON P.TechnologyLevel2 = tbl_mst_SubCategory_4.SCategoryId LEFT OUTER JOIN" +
+            " dbo.tbl_mst_Unit AS U ON P.CompanyRefNo = U.UnitRefNo ON F.FactoryRefNo = P.CompanyRefNo ON C.CompanyRefNo = P.CompanyRefNo ON FC.CompanyRefNo = F.CompanyRefNo ON " +
+            " UF.FactoryRefNo = U.FactoryRefNo WHERE '1'='1'";
+            for (int i = 0; i < dtsearchresult.Rows.Count; i++)
+            {
+                mquery = mquery + " and (" + dtsearchresult.Rows[i][0].ToString() + "" + dtsearchresult.Rows[i][1].ToString() + ")";
+            }
+            mquery = mquery + " ORDER BY P.LastUpdated DESC, C.CompanyName, F.FactoryName, U.UnitName";
+            return SqlHelper.Instance.GetDataset(mquery).Tables[0];
+            // return SqlHelper.Instance.GetProductFilterData(Purpose, RefNo, "'Y'" + " " + Search);
+        }
+        public DataTable RetriveFilterCode(string CompRefNo, string SearchValue, string Criteria)
+        {
+            return SqlHelper.Instance.RetriveFilterCode(CompRefNo, SearchValue, Criteria);
+        }
+        public DataTable GetDashboardDataApproveDisapproveItem(string Purpose, string Search, string type)
+        {
+            return SqlHelper.Instance.GetDashboardDataApproveDisapproveItem(Purpose, Search, type);
         }
         public DataTable RetriveProductCode(string CompanyRefNo, string ProductRefNo, string Purpose, string Type)
         {
@@ -239,7 +286,7 @@ namespace BusinessLayer
         {
             return SqlHelper.Instance.TestGrid(Function, ProdRefNo, ProdInfoId, Name, Value, Unit);
         }
-        public DataTable RetriveSaveEstimateGrid(string Function, Int32 ProdInfoId, string ProdRefNo, Int32 Year, string FYear, string EstimateQuantity, string Unit, decimal Price)
+        public DataTable RetriveSaveEstimateGrid(string Function, Int32 ProdInfoId, string ProdRefNo, Int32 Year, string FYear, string EstimateQuantity, string Unit, string Price)
         {
             return SqlHelper.Instance.RetriveSaveEstimateGrid(Function, ProdInfoId, ProdRefNo, Year, FYear, EstimateQuantity, Unit, Price);
         }

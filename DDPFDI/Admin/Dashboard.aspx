@@ -4,7 +4,6 @@
 
 <asp:Content ID="conhead" runat="server" ContentPlaceHolderID="head">
     <%-- Here We need to write some js code for load google chart with database data --%>
-    <%--<script src="assets/js/jquery-1.7.1.js"></script>--%>
     <script src="assets/js/jquery-1.7.1.min.js"></script>
     <script src="assets/js/jsapi.js"></script>
     <script>
@@ -18,26 +17,28 @@
             $.ajax({
                 url: "Admin/Dashboard.aspx/GetChartData",
                 data: "",
-                dataType: "json",S
-                    type: "POST",
-            contentType: "application/json; chartset=utf-8",
-            success: function (data) {
-                chartData = data.d;
-            },
-            error: function () {
-                alert("Error loading data! Please try again.");
-            }
-        }).done(function () {
-            // after complete loading data
-            google.setOnLoadCallback(drawChart);
-            drawChart();
-        });
+                dataType: "json",
+                type: "POST",
+                contentType: "application/json; chartset=utf-8",
+                success: function (data) {
+                    chartData = data.d;
+                },
+                error: function () {
+                    alert("Error loading data! Please try again.");
+                }
+            }).done(function () {
+                // after complete loading data
+                google.setOnLoadCallback(drawChart);
+                drawChart();
+            });
         });
 
         function drawChart() {
             var data = google.visualization.arrayToDataTable(chartData);
 
             var options = {
+                width: 545,
+                height: 300,
                 pointSize: 5,
                 seriesType: "bars",
                 series: { 3: { type: "line" } }
@@ -48,10 +49,11 @@
 
             var lineChart = new google.visualization.ComboChart(document.getElementById('chart_div1'));
             lineChart.draw(data, options);
-
-            var pieChartM2 = new google.visualization.PieChart(document.getElementById('chart_divm2'));
-            pieChart.draw(data, options);
-
+        }
+    </script>
+    <script type="text/javascript">
+        function showPopup() {
+            $('#divCompany').modal('show');
         }
     </script>
 </asp:Content>
@@ -181,7 +183,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-lg-3 col-sm-3 col-xs-12">
+                                        <div class="col-lg-6 col-sm-6 col-xs-12">
                                             <div class="white-box analytics-info last-fdi">
                                                 <ul class="list-inline two-part">
                                                     <li>
@@ -201,7 +203,10 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-lg-3 col-sm-3 col-xs-12">
+
+                                    </div>
+                                    <div class="row" style="margin-top: 10px;">
+                                        <div class="col-lg-6 col-sm-6 col-xs-12">
                                             <div class="white-box analytics-info last-fdi">
                                                 <ul class="list-inline two-part">
                                                     <li>
@@ -222,8 +227,6 @@
                                             </div>
 
                                         </div>
-                                    </div>
-                                    <div class="row" style="margin-top: 10px;">
                                         <div class="col-lg-6 col-sm-6 col-xs-12">
                                             <div class="white-box analytics-info last-fdi">
                                                 <ul class="list-inline two-part">
@@ -244,6 +247,9 @@
                                                 </div>
                                             </div>
                                         </div>
+
+                                    </div>
+                                    <div class="row" style="margin-top: 10px;">
                                         <div class="col-lg-6 col-sm-6 col-xs-12">
                                             <div class="white-box analytics-info last-fdi">
                                                 <ul class="list-inline two-part">
@@ -264,6 +270,23 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class="col-lg-6 col-sm-6 col-xs-12" runat="server" id="divven" visible="false">
+                                            <div class="white-box analytics-info last-fdi">
+                                                <ul class="list-inline two-part">
+                                                    <li>
+                                                        <div class="icon-box">
+                                                            <i class="fa fa-people-carry"></i>
+                                                        </div>
+                                                        <div class="compName">
+                                                            <h3 class="box-title">Vendor</h3>
+                                                            <div class="Number">
+                                                                <asp:LinkButton ID="lblvendor" runat="server" CssClass="comp_number" Text="0" OnClick="lblvendor_Click"></asp:LinkButton>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="row" style="margin-top: 20px;">
                                         <div class="col-lg-12 col-sm-6 col-xs-12">
@@ -276,17 +299,16 @@
                                     <div class="row" style="margin-top: 5px;">
                                         <div class="col-lg-6 col-sm-6 col-xs-12">
                                             <div class="white-box analytics-info last-fdi">
-                                                <div id="chart_div" style="width: 400px; height: 200px">
+                                                <div id="chart_div">
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-lg-6 col-sm-6 col-xs-12">
                                             <div class="white-box analytics-info last-fdi">
-                                                <div id="chart_div1" style="width: 400px; height: 200px">
+                                                <div id="chart_div1">
                                                 </div>
                                             </div>
                                         </div>
-
                                     </div>
                                     <div class="row" style="margin-top: 20px;">
                                         <div class="col-lg-12 col-sm-6 col-xs-12">
@@ -308,8 +330,16 @@
                                                             </asp:TemplateField>
                                                             <asp:BoundField DataField="CompName" HeaderText="ORGANIZATION" NullDisplayText="#" />
                                                             <asp:BoundField DataField="TotCompProd" HeaderText="Company ITEMS" NullDisplayText="#" />
-                                                            <asp:BoundField DataField="TotDivProd" HeaderText="Division ITEMS" NullDisplayText="#" />
-                                                            <asp:BoundField DataField="TotUnitProd" HeaderText="Unit ITEMS" NullDisplayText="#" />
+                                                            <asp:TemplateField HeaderText="Division ITEMS">
+                                                                <ItemTemplate>
+                                                                    <asp:LinkButton ID="lbldivprod" runat="server" Text='<%#Eval("TotDivProd") %>' ToolTip="After click on count you will get company division wise item upload list" NullDisplayText="#" CommandName="divprod" CommandArgument='<%#Eval("CompanyRefNo") %>'></asp:LinkButton>
+                                                                </ItemTemplate>
+                                                            </asp:TemplateField>
+                                                            <asp:TemplateField HeaderText="Unit ITEMS">
+                                                                <ItemTemplate>
+                                                                    <asp:LinkButton ID="lblunitprod" runat="server" Text='<%#Eval("TotUnitProd") %>' ToolTip="After click on count you will get company unit wise item upload list" NullDisplayText="#" CommandArgument='<%#Eval("CompanyRefNo") %>' CommandName="unitprod"></asp:LinkButton>
+                                                                </ItemTemplate>
+                                                            </asp:TemplateField>
                                                             <asp:BoundField DataField="TotalProd" HeaderText="Total ITEMS" NullDisplayText="#" />
                                                             <asp:BoundField DataField="IsIndiginised" HeaderText="ITEMS INDIGENIZED" NullDisplayText="#" />
                                                             <asp:BoundField DataField="IsMake2" HeaderText="MAKE II" NullDisplayText="#" />
@@ -320,17 +350,48 @@
                                         </div>
                                     </div>
                                 </div>
-
-
                             </div>
                         </div>
-                </div>
+                        <div class="modal fade" id="divCompany" role="dialog">
+                            <div class="modal-dialog">
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div class="modal-header modal-header1">
+                                        <button type="button" class="close close1" data-dismiss="modal">&times;</button>
+                                        <h4 class="modal-title">Item Uploded Detail</h4>
+                                    </div>
+                                    <form class="form-horizontal changepassword" role="form">
+                                        <div class="modal-body">
+                                            <div class="tab-pane fade active in" id="add-form">
+                                                <asp:GridView ID="gvcount" runat="server" AutoGenerateColumns="false" Class="commonAjaxTbl dataTable master-company-table ViewProductTable table 
+                                        display responsive no-wrap table-hover manage-user Grid table-responsive"
+                                                    OnRowCreated="gvcount_RowCreated">
+                                                    <Columns>
+                                                        <asp:TemplateField>
+                                                            <ItemTemplate>
+                                                                <%#Container.DataItemIndex+1 %>
+                                                                <asp:HiddenField ID="hfcompref" runat="server" Value='<%#Eval("RefNo") %>' />
+                                                            </ItemTemplate>
+                                                        </asp:TemplateField>
+                                                        <asp:BoundField DataField="Name" HeaderText="Name" NullDisplayText="#" />
+                                                        <asp:BoundField DataField="TotProd" HeaderText="Total Item Uploaded" NullDisplayText="#" />
+                                                    </Columns>
+                                                </asp:GridView>
+                                            </div>
 
-                </form>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </div>
             <div class="footer">© 2019 <a href="#">Department of Defence Production</a> </div>
             </div>
-
         </ContentTemplate>
         <Triggers>
             <asp:PostBackTrigger ControlID="lblComp" />

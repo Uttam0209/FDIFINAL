@@ -76,60 +76,12 @@ public partial class _Default : System.Web.UI.Page
                             string _EmpId = LO.VerifyEmployee(hyLogin, out _msg, out Defaultpage);
                             if (_EmpId != "0" && _EmpId != "1" && _msg != "")
                             {
-                                DataTable DtLastLogoutStatus = LO.GetLogOutStatus(txtUserName.Text);
-                                if (DtLastLogoutStatus.Rows.Count > 0)
-                                {
-                                    if (DtLastLogoutStatus.Rows[0]["IsLogedIn"].ToString() == "N")
-                                    {
-                                        Session["Type"] = objEnc.EncryptData(_msg);
-                                        Session["User"] = objEnc.EncryptData(txtUserName.Text);
-                                        Session["CompanyRefNo"] = _EmpId;
-                                        Logoutstatus();
-                                        UserLoginLog();
-                                        Response.RedirectToRoute(Defaultpage);
-                                    }
-                                    else
-                                    {
-                                        if (txtUserName.Text == "rgera@nic.in" || txtUserName.Text == "shrishkumar.ofb@ofb.gov.in")
-                                        {
-                                            Session["Type"] = objEnc.EncryptData(_msg);
-                                            Session["User"] = objEnc.EncryptData(txtUserName.Text);
-                                            Session["CompanyRefNo"] = _EmpId;
-                                            Logoutstatus();
-                                            UserLoginLog();
-                                            Response.RedirectToRoute(Defaultpage);
-                                        }
-                                        else
-                                        {
-                                            DateTime DT1 = Convert.ToDateTime(DtLastLogoutStatus.Rows[0]["IsLogedOutTime"].ToString()).AddMinutes(5);
-                                            string dtchng = DT1.ToString("hh:mm:ss");
-                                            DateTime DT2 = Convert.ToDateTime(DateTime.Now);
-                                            string dtchng2 = DT2.ToString("hh:mm:ss");
-                                            if (Convert.ToDateTime(dtchng) < Convert.ToDateTime(dtchng2))
-                                            {
-                                                Session["Type"] = objEnc.EncryptData(_msg);
-                                                Session["User"] = objEnc.EncryptData(txtUserName.Text);
-                                                Session["CompanyRefNo"] = _EmpId;
-                                                Logoutstatus();
-                                                UserLoginLog();
-                                                Response.RedirectToRoute(Defaultpage);
-                                            }
-                                            else
-                                            {
-                                                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "popup", "ErrorMssgPopup('It seems that you are not logged out properly it may be either you are logged in from other system or device, please log out from there or wait for sometime then try again.')", true);
-                                            }
-                                        }
-                                    }
-                                }
-                                else
-                                {
-                                    Session["Type"] = objEnc.EncryptData(_msg);
-                                    Session["User"] = objEnc.EncryptData(txtUserName.Text);
-                                    Session["CompanyRefNo"] = _EmpId;
-                                    Logoutstatus();
-                                    UserLoginLog();
-                                    Response.RedirectToRoute(Defaultpage);
-                                }
+                                Session["Type"] = objEnc.EncryptData(_msg);
+                                Session["User"] = objEnc.EncryptData(txtUserName.Text);
+                                Session["CompanyRefNo"] = _EmpId;
+                                Logoutstatus();
+                                UserLoginLog();
+                                Response.RedirectToRoute(Defaultpage);
                             }
                             else
                             {
@@ -161,10 +113,6 @@ public partial class _Default : System.Web.UI.Page
             Response.RedirectToRoute("login");
         }
     }
-    //protected void btnCaptchaNew_Click(object sender, EventArgs e)
-    //{
-    //    Image2.ImageUrl = "~/CaptchaCall.aspx?random=" + DateTime.Now.Ticks.ToString();
-    //}
     #endregion
     protected void lblforgotpass_Click(object sender, EventArgs e)
     {

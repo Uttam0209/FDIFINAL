@@ -170,18 +170,13 @@
                 if (sender._postBackSettings.panelsToUpdate != null)
                 { BindGrid(); }
                 else
-                { }// BindGrid(); }
+                { } // BindGrid();}
             });
     };
     function BindGrid() {
         $('#ContentPlaceHolder1_gvPrdoct').DataTable();
         $('#ContentPlaceHolder1_gvcompanydetailsave').DataTable();
-        //  $('#ContentPlaceHolder1_gvfactory').DataTable();
-        //   $('#ContentPlaceHolder1_gvunit').DataTable();
-        //  $('#ContentPlaceHolder1_gvViewNodalOfficer').DataTable();
         $('#ContentPlaceHolder1_gvViewNodalOfficerAdd').DataTable();
-        // $('#ContentPlaceHolder1_gvproduct').DataTable();
-        //  $('#ContentPlaceHolder1_gvproductItem').DataTable();
         $('#ContentPlaceHolder1_gvViewDesignationSave').DataTable();
         $('#ContentPlaceHolder1_gvCategory').DataTable();
         $('#ContentPlaceHolder1_gvlevel3').DataTable();
@@ -190,6 +185,7 @@
         $('#ContentPlaceHolder1_gvnewsadd').DataTable();
         $('#ContentPlaceHolder1_gvmastercategoryupdate').DataTable();
         $('#ContentPlaceHolder1_gvmastersubcategory').DataTable();
+        $('#ContentPlaceHolder1_gvcount').DataTable();
     }
     $('[data-fancybox="Prodgridviewgellry"]').fancybox({
         // Options will go here
@@ -200,52 +196,40 @@
             includeSelectAllOption: true
         });
     });
-
-
     //ProCurment Category Checkbox 
+    var $checks = $("#ContentPlaceHolder1_gvprocurmentcategory td input[type='checkbox']").change(function () {
+        var allChecked = $checks.filter(':checked').length;
+        console.log(allChecked);
 
-    $("#ContentPlaceHolder1_gvprocurmentcategory td input[type='checkbox']").on('change', function () {
-        $(this).each(function () {
-            var StatusChecked = $(this).is(':checked');
-            var Checkbox1 = $("ContentPlaceHolder1_gvprocurmentcategory_chkprocurmentcategory_0").is(':checked');
-            var Checkbox2 = $("#ContentPlaceHolder1_gvprocurmentcategory_chkprocurmentcategory_1").is(':checked');
-            var Checkbox3 = $("#ContentPlaceHolder1_gvprocurmentcategory_chkprocurmentcategory_2").is(':checked');
-
-            if (StatusChecked == true) {
-                $("#divmake2status").show();
-            }
-            else if (Checkbox1 || Checkbox2 || Checkbox3 == true) {
-                $("#divmake2status").show();
-            }
-
-            else if (Checkbox1 & Checkbox2 & Checkbox3 == false) {
-                $("#divmake2status").hide();
-            }
-        });
-        
-
-    });
-    $("#ContentPlaceHolder1_ddlteneoi td input[type='dropdownlist']").on('change', function () {
-
-        var Statusselect = $(this).is(':changed');
-        console.log(Statusselect)
-        if (Statusselect != 'select') {
-            $("#divtimedateurl").show();
+        if (allChecked > 0) {
+            $("#ContentPlaceHolder1_divmake2status").show();
         }
         else {
-            $("#divtimedateurl").hide();
+            $("#ContentPlaceHolder1_divmake2status").hide();
         }
 
     });
-    $("#ContentPlaceHolder1_ddlstatus td input[type='dropdownlist']").on('change', function () {
 
-        var Statustimeurl = $(this).is(':changed');
-        console.log(Statustimeurl)
-        if (Statustimeurl == 'Live') {
-            $("#extimedatevisible").show();
+    // Hide show  on basis of selectd tender
+
+    $("#ContentPlaceHolder1_ddlteneoi").on('change', function () {
+        var $ValueChecked = $(this).val();
+        if ($ValueChecked == '2' || $ValueChecked == '3' || $ValueChecked == '7') {
+            $("#ContentPlaceHolder1_divtimedateurl").show();
         }
         else {
-            $("#extimedatevisible").hide();
+            $("#ContentPlaceHolder1_divtimedateurl").hide();
+        }
+
+    });
+
+    $("#ContentPlaceHolder1_ddlstatus").on('change', function () {
+        var $ValueChecked = $(this).val();
+        if ($ValueChecked == 'Live') {
+            $("#ContentPlaceHolder1_extimedatevisible").show();
+        }
+        else {
+            $("#ContentPlaceHolder1_extimedatevisible").hide();
         }
 
     });

@@ -130,12 +130,6 @@ namespace DataAccessLayer
                 _mp = "";
                 return "";
             }
-            catch (Exception ex)
-            {
-                _msg = "0";
-                _mp = "";
-                return "";
-            }
         }
         public string VerifyEmployee(HybridDictionary hyLogin, out string _msg, out string Defaultpage)
         {
@@ -153,18 +147,11 @@ namespace DataAccessLayer
                 Defaultpage = db.GetParameterValue(_dbCmd, "@Defaultpage").ToString();
                 _msg = ID;
                 return Comp_ID;
-
             }
             catch (SqlException ex)
             {
                 _msg = "0";
                 Defaultpage = "0";
-                return "";
-            }
-            catch (Exception ex)
-            {
-                Defaultpage = "0";
-                _msg = "0";
                 return "";
             }
         }
@@ -190,12 +177,6 @@ namespace DataAccessLayer
             {
                 _msg = "0";
                 Defaultpage = "0";
-                return "";
-            }
-            catch (Exception ex)
-            {
-                Defaultpage = "0";
-                _msg = "0";
                 return "";
             }
         }
@@ -845,7 +826,7 @@ namespace DataAccessLayer
                         db.AddInParameter(dbcom2, "@ProdInfoId", DbType.Int64, dtProdInfo.Rows[j]["ProdInfoId"]);
                         db.AddInParameter(dbcom2, "@ProductRefNo", DbType.String, mCurrentID);
                         db.AddInParameter(dbcom2, "@NameOfSpec", DbType.String, dtProdInfo.Rows[j]["Length"]);
-                        db.AddInParameter(dbcom2, "@Value", DbType.Decimal, dtProdInfo.Rows[j]["Value"]);
+                        db.AddInParameter(dbcom2, "@Value", DbType.String, dtProdInfo.Rows[j]["Value"]);
                         db.AddInParameter(dbcom2, "@Unit", DbType.String, dtProdInfo.Rows[j]["ProductUnit"]);
                         db.ExecuteNonQuery(dbcom2, dbTran);
                     }
@@ -856,9 +837,9 @@ namespace DataAccessLayer
                         db.AddInParameter(dbcom3, "@ProductRefNo", DbType.String, mCurrentID);
                         db.AddInParameter(dbcom3, "@Year", DbType.Int64, dtEstimateQuantity.Rows[k]["Year"]);
                         db.AddInParameter(dbcom3, "@FYear", DbType.String, dtEstimateQuantity.Rows[k]["FYear"]);
-                        db.AddInParameter(dbcom3, "@EstimatedQty", DbType.Decimal, dtEstimateQuantity.Rows[k]["EstimatedQty"]);
+                        db.AddInParameter(dbcom3, "@EstimatedQty", DbType.String, dtEstimateQuantity.Rows[k]["EstimatedQty"]);
                         db.AddInParameter(dbcom3, "@Unit", DbType.String, dtEstimateQuantity.Rows[k]["Unit"]);
-                        db.AddInParameter(dbcom3, "@EstimatedPrice", DbType.Decimal, dtEstimateQuantity.Rows[k]["EstimatedPrice"]);
+                        db.AddInParameter(dbcom3, "@EstimatedPrice", DbType.String, dtEstimateQuantity.Rows[k]["EstimatedPrice"]);
                         db.ExecuteNonQuery(dbcom3, dbTran);
                     }
                     dbTran.Commit();
@@ -872,6 +853,41 @@ namespace DataAccessLayer
                     _msg = ex.Message;
                     _sysMsg = ex.Message;
                     return "-1";
+                }
+                finally
+                {
+                    dbCon.Close();
+                }
+            }
+        }
+        public string UpdateCodeProduct(HybridDictionary HyUpdateProd, out string _sysMsg, out string _msg)
+        {
+            using (DbConnection dbCon = db.CreateConnection())
+            {
+                dbCon.Open();
+                DbTransaction dbTran = dbCon.BeginTransaction();
+                try
+                {
+                    DbCommand cmd = db.GetStoredProcCommand("sp_mst_updatemainProduct");
+                    db.AddInParameter(cmd, "@ProductRefNo", DbType.String, HyUpdateProd["ProductRefNo"]);
+                    db.AddInParameter(cmd, "@ProductLevel1", DbType.Int64, HyUpdateProd["ProductLevel1"]);
+                    db.AddInParameter(cmd, "@ProductLevel2", DbType.Int64, HyUpdateProd["ProductLevel2"]);
+                    db.AddInParameter(cmd, "@ProductLevel3", DbType.Int64, HyUpdateProd["ProductLevel3"].ToString().Trim());
+                    db.AddInParameter(cmd, "@ProductDescription", DbType.String, HyUpdateProd["ProductDescription"].ToString().Trim());
+                    db.AddInParameter(cmd, "@NSCCode", DbType.String, HyUpdateProd["NSCCode"].ToString().Trim());
+                    db.AddInParameter(cmd, "@NIINCode", DbType.String, HyUpdateProd["NIINCode"].ToString().Trim());
+                    db.ExecuteNonQuery(cmd, dbTran);
+                    dbTran.Commit();
+                    _msg = "Update";
+                    _sysMsg = "Update";
+                    return _sysMsg;
+                }
+                catch (Exception ex)
+                {
+                    dbTran.Rollback();
+                    _msg = ex.Message;
+                    _sysMsg = "";
+                    return _sysMsg;
                 }
                 finally
                 {
@@ -1042,6 +1058,7 @@ namespace DataAccessLayer
         }
         #endregion
         #region retriveCode
+
         public DataTable RetriveGridView(string ID)
         {
             using (DbConnection dbCon = db.CreateConnection())
@@ -1199,7 +1216,7 @@ namespace DataAccessLayer
                 }
             }
         }
-        public DataTable RetriveCountry(Int64 countryid, string text,string forword)
+        public DataTable RetriveCountry(Int64 countryid, string text, string forword)
         {
             using (DbConnection dbCon = db.CreateConnection())
             {
@@ -1334,6 +1351,29 @@ namespace DataAccessLayer
                 {
                     DbCommand cmd = db.GetStoredProcCommand("fn_GetInterestedInValue");
                     db.AddInParameter(cmd, "@CompRefNo", DbType.String, CompRefNo);
+                    IDataReader dr = db.ExecuteReader(cmd);
+                    DataTable dt = new DataTable();
+                    if (dr != null)
+                        dt.Load(dr);
+                    return dt;
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+        }
+        public DataTable RetriveFilterCode(string CompRefNo,string SearchValue,string Criteria)
+        {
+            using (DbConnection dbCon = db.CreateConnection())
+            {
+                dbCon.Open();
+                try
+                {
+                    DbCommand cmd = db.GetStoredProcCommand("sp_FilterRetriveCode");
+                    db.AddInParameter(cmd, "@CompRefNo", DbType.String, CompRefNo);
+                    db.AddInParameter(cmd, "@SearchValue", DbType.String, SearchValue);
+                    db.AddInParameter(cmd, "@Criteria", DbType.String, Criteria);
                     IDataReader dr = db.ExecuteReader(cmd);
                     DataTable dt = new DataTable();
                     if (dr != null)
@@ -1773,6 +1813,52 @@ namespace DataAccessLayer
                 }
             }
         }
+        public DataTable GetProductFilterData(string Purpose, string refno, string Search)
+        {
+            using (DbConnection dbCon = db.CreateConnection())
+            {
+                dbCon.Open();
+                try
+                {
+                    DbCommand cmd = db.GetStoredProcCommand("sp_MultipleKeywordSearchProductFilter");
+                    db.AddInParameter(cmd, "@Purpose", DbType.String, Purpose);
+                    db.AddInParameter(cmd, "@CompRefNo", DbType.String, refno);
+                    db.AddInParameter(cmd, "@SearchText", DbType.String, Search);
+                    IDataReader dr = db.ExecuteReader(cmd);
+                    DataTable dt = new DataTable();
+                    if (dr != null)
+                        dt.Load(dr);
+                    return dt;
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+        }
+        public DataTable GetDashboardDataApproveDisapproveItem(string Purpose, string Search, string Type)
+        {
+            using (DbConnection dbCon = db.CreateConnection())
+            {
+                dbCon.Open();
+                try
+                {
+                    DbCommand cmd = db.GetStoredProcCommand("sp_GetDashboardDataApproveDisapproveItem");
+                    db.AddInParameter(cmd, "@Purpose", DbType.String, Purpose);
+                    db.AddInParameter(cmd, "@SearchText", DbType.String, Search);
+                    db.AddInParameter(cmd, "@SearchText2", DbType.String, Type);
+                    IDataReader dr = db.ExecuteReader(cmd);
+                    DataTable dt = new DataTable();
+                    if (dr != null)
+                        dt.Load(dr);
+                    return dt;
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+        }
         public DataTable TestGrid(string Function, string ProdRefNo, Int32 ProdInfoId, string Name, string Value, string Unit)
         {
             using (DbConnection dbCon = db.CreateConnection())
@@ -1799,7 +1885,7 @@ namespace DataAccessLayer
                 }
             }
         }
-        public DataTable RetriveSaveEstimateGrid(string Function, Int32 ProdInfoId, string ProdRefNo, Int32 Year, string FYear, string EstimateQuantity, string Unit, decimal Price)
+        public DataTable RetriveSaveEstimateGrid(string Function, Int32 ProdInfoId, string ProdRefNo, Int32 Year, string FYear, string EstimateQuantity, string Unit, string Price)
         {
             using (DbConnection dbCon = db.CreateConnection())
             {
@@ -1814,7 +1900,7 @@ namespace DataAccessLayer
                     db.AddInParameter(cmd, "@FYear", DbType.String, FYear);
                     db.AddInParameter(cmd, "@EstimatedQty", DbType.String, EstimateQuantity);
                     db.AddInParameter(cmd, "@Unit", DbType.String, Unit);
-                    db.AddInParameter(cmd, "@EstimatedPrice", DbType.Decimal, Price);
+                    db.AddInParameter(cmd, "@EstimatedPrice", DbType.String, Price);
                     IDataReader dr = db.ExecuteReader(cmd);
                     DataTable dt = new DataTable();
                     if (dr != null)

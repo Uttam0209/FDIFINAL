@@ -11,7 +11,6 @@ using System.Text;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using System.Web.Helpers;
 
 public partial class Admin_AddProduct : System.Web.UI.Page
 {
@@ -28,13 +27,6 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     public string Services = "";
     public string Remarks = "";
     public string ProcurmentCat = "";
-    public string FinancialServices = "";
-    public string FinancialRemarks = "";
-    public string ServicesTesting = "";
-    public string QAAgency = "";
-    public string RemarksTesting = "";
-    public string ServicesCertification = "";
-    public string RemarksCertification = "";
     public string NodalDDL = "";
     private string UserName;
     private string RefNo;
@@ -93,7 +85,6 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                             BindCountry();
                             BindFinancialYear();
                             IsProductImported();
-                            BindQAAgency();
                             if (Request.QueryString["mcurrentcompRefNo"] != null)
                             {
                                 BindMasterCategory();
@@ -321,7 +312,9 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                 // code by gk to select indivisual division for the particular unit
                 DataTable dt = Lo.RetriveMasterData(0, hfcomprefno.Value, "Factory2", 0, "", "", "CompanyName");
                 if (dt.Rows.Count > 0)
+                {
                     ddldivision.SelectedValue = dt.Rows[0]["FactoryRefNo"].ToString();
+                }
                 //end code
                 ddlunit.Items.Insert(0, "Select");
                 BindNodelEmail();
@@ -367,7 +360,9 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                 // code by gk to select indivisual division for the particular unit
                 DataTable dt = Lo.RetriveMasterData(0, hfcomprefno.Value, "Factory3", 0, "", "", "CompanyName");
                 if (dt.Rows.Count > 0)
+                {
                     ddldivision.SelectedValue = dt.Rows[0]["FactoryRefNo"].ToString();
+                }
                 //end code
                 divlblselectdivison.Visible = true;
                 ddldivision.Enabled = false;
@@ -499,7 +494,6 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         }
         else if (ddldivision.SelectedItem.Text == "Select")
         {
-            //ddlcompany.Enabled = false;
             divlblselectunit.Visible = false;
             hfcomprefno.Value = ddlcompany.SelectedItem.Value;
             hidType.Value = "Company";
@@ -514,14 +508,12 @@ public partial class Admin_AddProduct : System.Web.UI.Page
             hidType.Value = "Unit";
             hfcomprefno.Value = "";
             hfcomprefno.Value = ddlunit.SelectedItem.Value;
-            // ddlunit.Items.Insert(0, "Select");
             BindNodelEmail();
         }
         else
         {
             hidCompanyRefNo.Value = ddldivision.SelectedItem.Value;
             hidType.Value = "Division";
-            // ddldivision.Enabled = false;
             hfcomprefno.Value = "";
             hfcomprefno.Value = ddldivision.SelectedItem.Value;
             BindNodelEmail();
@@ -539,7 +531,6 @@ public partial class Admin_AddProduct : System.Web.UI.Page
             if (DtGetNodel.Rows.Count > 0)
             {
                 contactpanel1.Visible = true;
-                // txtNName.Text = DtGetNodel.Rows[0]["NodalOficerName"].ToString();
                 txtNEmailId.Text = DtGetNodel.Rows[0]["NodalOfficerEmail"].ToString();
                 txtNTelephone.Text = DtGetNodel.Rows[0]["NodalOfficerTelephone"].ToString();
                 txtNFaxNo.Text = DtGetNodel.Rows[0]["NodalOfficerFax"].ToString();
@@ -578,7 +569,6 @@ public partial class Admin_AddProduct : System.Web.UI.Page
             if (DtGetNodel.Rows.Count > 0)
             {
                 contactpanel2.Visible = true;
-                // txtNName2.Text = DtGetNodel.Rows[0]["NodalOficerName"].ToString();
                 txtNEmailId2.Text = DtGetNodel.Rows[0]["NodalOfficerEmail"].ToString();
                 txtNTelephone2.Text = DtGetNodel.Rows[0]["NodalOfficerTelephone"].ToString();
                 txtNFaxNo2.Text = DtGetNodel.Rows[0]["NodalOfficerFax"].ToString();
@@ -652,47 +642,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
             ddlnomnclature.Items.Clear();
         }
     }
-    //protected void tendorstatus()
-    //{
-    //    if (ddltendorstatus.SelectedItem.Value == "Live" && rbtendordateyesno.SelectedItem.Value == "Y")
-    //    {
-    //        divtendordate.Visible = true;
-    //        divtdate.Visible = true;
-    //    }
-    //    else
-    //    {
-    //        if (rbtendordateyesno.SelectedItem.Value == "N" && ddltendorstatus.SelectedItem.Value == "Live")
-    //        {
-    //            divtendordate.Visible = true;
-    //            divtdate.Visible = false;
-    //        }
-    //        else if (rbtendordateyesno.SelectedItem.Value == "Y" && ddltendorstatus.SelectedItem.Value == "Live")
-    //        {
-    //            divtendordate.Visible = true;
-    //            divtdate.Visible = true;
-    //        }
-    //        else
-    //        {
-    //            divtendordate.Visible = false;
-    //            divtdate.Visible = false;
-    //        }
-    //    }
-    //}
-    //protected void rbtendordateyesno_CheckedChanged(object sender, EventArgs e)
-    //{
-    //    if (rbtendordateyesno.SelectedItem.Value == "Y")
-    //    {
-    //        divtdate.Visible = true;
-    //    }
-    //    else if (rbtendordateyesno.SelectedItem.Value == "N")
-    //    {
-    //        divtdate.Visible = false;
-    //    }
-    //}
-    //protected void ddltendorstatus_SelectedIndexChanged(object sender, EventArgs e)
-    //{
-    //    tendorstatus();
-    //}
+
     protected void rbproductImported_CheckedChanged(object sender, EventArgs e)
     {
         if (rbproductImported.SelectedItem.Value == "Y")
@@ -708,12 +658,10 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     {
         if (rbproductImported.SelectedItem.Value == "Y")
         {
-            // divyearofimportNo.Visible = false;
             divyearofimportYes.Visible = true;
         }
         else if (rbproductImported.SelectedItem.Value == "N")
         {
-            // divyearofimportNo.Visible = true;
             divyearofimportYes.Visible = false;
         }
     }
@@ -725,7 +673,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
             string b = NSNClassddl.Substring((NSNClassddl.IndexOf("(") + 1), NSNClassddl.IndexOf(")") - (NSNClassddl.IndexOf("(") + 1));
             txtnsccode.Text = a + b;
         }
-        catch (Exception ex)
+        catch (Exception)
         {
             txtnsccode.Text = "";
         }
@@ -737,7 +685,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
             string a = NSNGroupddl.Substring((NSNGroupddl.IndexOf("(") + 1), NSNGroupddl.IndexOf(")") - (NSNGroupddl.IndexOf("(") + 1));
             txthscodereadonly.Text = a;
         }
-        catch (Exception ex)
+        catch (Exception)
         {
             txthscodereadonly.Text = "";
         }
@@ -749,7 +697,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
             string a = NSNGroupddl.Substring((NSNGroupddl.IndexOf("(") + 1), NSNGroupddl.IndexOf(")") - (NSNGroupddl.IndexOf("(") + 1));
             txthsncodereadonly.Text = a;
         }
-        catch (Exception ex)
+        catch (Exception)
         {
             txthsncodereadonly.Text = "";
         }
@@ -770,94 +718,6 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     protected void ddlhsncodelevel3_SelectedIndexChanged(object sender, EventArgs e)
     {
         Nsncode8digit(ddlhsncodelevel3.SelectedItem.Text);
-    }
-    //protected void eoistatusshow()
-    //{
-    //    if (ddleoi.SelectedItem.Value == "Live" && rbeoistatus.SelectedItem.Value == "Y")
-    //    {
-    //        diveoidateurl.Visible = true;
-    //        diveoiyesno.Visible = true;
-    //    }
-    //    else
-    //    {
-    //        if (rbeoistatus.SelectedItem.Value == "N" && ddleoi.SelectedItem.Value == "Live")
-    //        {
-    //            diveoiyesno.Visible = true;
-    //            diveoidateurl.Visible = false;
-    //        }
-    //        else if (rbtendordateyesno.SelectedItem.Value == "Y" && ddleoi.SelectedItem.Value == "Live")
-    //        {
-    //            diveoiyesno.Visible = true;
-    //            diveoidateurl.Visible = true;
-    //        }
-    //        else
-    //        {
-    //            diveoiyesno.Visible = false;
-    //            diveoidateurl.Visible = false;
-    //        }
-    //    }
-    //}
-    //protected void ddleoi_SelectedIndexChanged(object sender, EventArgs e)
-    //{
-    //    eoistatusshow();
-    //}
-    //protected void rbeoistatus_SelectedIndexChanged(object sender, EventArgs e)
-    //{
-    //    if (rbeoistatus.SelectedItem.Value == "Y")
-    //    {
-    //        diveoidateurl.Visible = true;
-    //    }
-    //    else if (rbeoistatus.SelectedItem.Value == "N")
-    //    {
-    //        diveoidateurl.Visible = false;
-    //    }
-    //}
-    #endregion
-    #region BindServices Testing Certification QA Agencty
-    protected void BindServcies()
-    {
-        DataTable Dtservices = Lo.RetriveMasterSubCategoryDate(0, "TECHNICAL SUPPORT", "", "SelectInnerMaster1", hfcomprefno.Value, "");
-        if (Dtservices.Rows.Count > 0)
-        {
-            gvservices.DataSource = Dtservices;
-            gvservices.DataBind();
-        }
-    }
-    protected void BindFinancialSupport()
-    {
-        DataTable DtFinanicialSupp = Lo.RetriveMasterSubCategoryDate(0, "Financial Support", "", "SelectInnerMaster1", hfcomprefno.Value, "");
-        if (DtFinanicialSupp.Rows.Count > 0)
-        {
-            gvfinancialsupp.DataSource = DtFinanicialSupp;
-            gvfinancialsupp.DataBind();
-        }
-    }
-    protected void BindTesting()
-    {
-        DataTable DtTesting = Lo.RetriveMasterSubCategoryDate(0, "Testing", "", "SelectInnerMaster1", hfcomprefno.Value, "");
-        if (DtTesting.Rows.Count > 0)
-        {
-            gvtesting.DataSource = DtTesting;
-            gvtesting.DataBind();
-        }
-    }
-    protected void BindCertification()
-    {
-        DataTable DtCertification = Lo.RetriveMasterSubCategoryDate(0, "Certification", "", "SelectInnerMaster1", hfcomprefno.Value, "");
-        if (DtCertification.Rows.Count > 0)
-        {
-            gvCertification.DataSource = DtCertification;
-            gvCertification.DataBind();
-        }
-    }
-    protected void BindQAAgency()
-    {
-        DataTable dtqaagency = Lo.RetriveMasterSubCategoryDate(0, "QA AGENCY", "", "SelectInnerMaster1", hfcomprefno.Value, "");
-        if (dtqaagency.Rows.Count > 0)
-        {
-            gvqaagency.DataSource = dtqaagency;
-            gvqaagency.DataBind();
-        }
     }
     #endregion
     #region For ProductCode
@@ -1177,7 +1037,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     }
     #endregion
     #region PanelSaveCode
-    string m;
+    private string m;
     protected void SaveProductDescription()
     {
         try
@@ -1320,7 +1180,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
             HyPanel1["OEMName"] = Co.RSQandSQLInjection(txtoemname.Text.Trim(), "soft");
             HyPanel1["OEMCountry"] = Convert.ToInt64(txtcountry.SelectedItem.Value);
             HyPanel1["DPSUPartNumber"] = Co.RSQandSQLInjection(txtdpsupartnumber.Text.Trim(), "soft");
-            if (ddlHSNCode.Text != "")//ddlHSNCode.SelectedItem.Value != "Select" && 
+            if (ddlHSNCode.Text != "")
             {
                 HyPanel1["HSCode"] = Co.RSQandSQLInjection(ddlHSNCode.SelectedItem.Value, "soft");
             }
@@ -1452,122 +1312,44 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                 HyPanel1["PurposeofProcurement"] = "";
             }
             HyPanel1["ProcurmentCategoryRemark"] = Co.RSQandSQLInjection(txtremarksprocurmentCategory.Text.Trim(), "soft");
-            foreach (GridViewRow gvqa in gvqaagency.Rows)
+            if (ProcurmentCat.ToString() != "")
             {
-                CheckBox chkqaagency = (CheckBox)gvqa.FindControl("chkqaagency");
-                HiddenField hfqaagency = (HiddenField)gvqa.FindControl("hfqaagency");
-                if (chkqaagency != null && chkqaagency.Checked)
+                HyPanel1["TenderSubmition"] = Co.RSQandSQLInjection(ddlteneoi.SelectedItem.Text, "soft");
+                HyPanel1["TenderStatus"] = Co.RSQandSQLInjection(ddlstatus.SelectedItem.Value, "soft");
+                if (txtdate.Text != "")
                 {
-                    QAAgency = QAAgency + "," + hfqaagency.Value;
+                    DateTime Datetendor = Convert.ToDateTime(txtdate.Text);
+                    string FinalDate = Datetendor.ToString("dd-MMM-yyyy");
+                    HyPanel1["TenderFillDate"] = Co.RSQandSQLInjection(FinalDate.ToString(), "soft");
                 }
-            }
-            if (QAAgency.ToString() != "")
-            {
-                HyPanel1["QAAgency"] = Co.RSQandSQLInjection(QAAgency.Substring(1).ToString() + ",", "soft");
-            }
-            else
-            {
-                HyPanel1["QAAgency"] = "";
-            }
-            HyPanel1["QAReamrks"] = Co.RSQandSQLInjection(txtqaagencyremarks.Text.Trim(), "soft");
-            foreach (GridViewRow rw in gvtesting.Rows)
-            {
-                CheckBox chktest = (CheckBox)rw.FindControl("chktesting");
-                HiddenField hftestingid = (HiddenField)rw.FindControl("hftestingid");
-                if (chktest != null && chktest.Checked)
+                else
                 {
-                    ServicesTesting = ServicesTesting + "," + hftestingid.Value;
+                    HyPanel1["TenderFillDate"] = null;
                 }
-            }
-            if (ServicesTesting.ToString() != "")
-            {
-                HyPanel1["Testing"] = Co.RSQandSQLInjection(ServicesTesting.Substring(1).ToString() + ",", "soft");
+                HyPanel1["TenderUrl"] = Co.RSQandSQLInjection(txtendorurl.Text, "soft");
+
             }
             else
             {
-                HyPanel1["Testing"] = "";
-            }
-            HyPanel1["TestingRemarks"] = Co.RSQandSQLInjection(txttestingremarks.Text.Trim(), "soft");
-            foreach (GridViewRow rw in gvCertification.Rows)
-            {
-                CheckBox chkcerti = (CheckBox)rw.FindControl("chkcertification");
-                HiddenField hfcertiid = (HiddenField)rw.FindControl("hfcertification");
-                if (chkcerti != null && chkcerti.Checked)
-                {
-                    ServicesCertification = ServicesCertification + "," + hfcertiid.Value;
-                }
-            }
-            if (ServicesCertification.ToString() != "")
-            {
-                HyPanel1["Certification"] = Co.RSQandSQLInjection(ServicesCertification.Substring(1).ToString() + ",", "soft");
-            }
-            else
-            {
-                HyPanel1["Certification"] = "";
-            }
-            HyPanel1["CertificationRemark"] = Co.RSQandSQLInjection(txtcertificationremarks.Text.Trim(), "soft");
-            foreach (GridViewRow rw in gvservices.Rows)
-            {
-                CheckBox chkBx = (CheckBox)rw.FindControl("chk");
-                HiddenField hfservicesid = (HiddenField)rw.FindControl("hfservicesid");
-                if (chkBx != null && chkBx.Checked)
-                {
-                    Services = Services + "," + hfservicesid.Value;
-                }
-            }
-            if (Services.ToString() != "")
-            {
-                HyPanel1["DPSUServices"] = Co.RSQandSQLInjection(Services.Substring(1).ToString() + ",", "soft");
-            }
-            else
-            {
-                HyPanel1["DPSUServices"] = "";
-            }
-            HyPanel1["Remarks"] = Co.RSQandSQLInjection(txtservisesremarks.Text.Trim(), "soft");
-            foreach (GridViewRow rw in gvfinancialsupp.Rows)
-            {
-                CheckBox chkfinanBx = (CheckBox)rw.FindControl("chkfinan");
-                HiddenField hffinanservicesid = (HiddenField)rw.FindControl("hffinanciailserviceid");
-                if (chkfinanBx != null && chkfinanBx.Checked)
-                {
-                    FinancialServices = FinancialServices + "," + hffinanservicesid.Value;
-                }
-            }
-            if (FinancialServices.ToString() != "")
-            {
-                HyPanel1["FinancialSupport"] = Co.RSQandSQLInjection(FinancialServices.Substring(1).ToString() + ",", "soft");
-            }
-            else
-            {
-                HyPanel1["FinancialSupport"] = "";
-            }
-            HyPanel1["FinancialRemark"] = Co.RSQandSQLInjection(txtfinancialsuppRemarks.Text.Trim(), "soft");
-            HyPanel1["TenderSubmition"] = Co.RSQandSQLInjection(ddlteneoi.SelectedItem.Value, "soft");
-            HyPanel1["TenderStatus"] = Co.RSQandSQLInjection(ddlstatus.SelectedItem.Value, "soft");
-            if (txtdate.Text != "")
-            {
-                DateTime Datetendor = Convert.ToDateTime(txtdate.Text);
-                string FinalDate = Datetendor.ToString("dd-MMM-yyyy");
-                HyPanel1["TenderFillDate"] = Co.RSQandSQLInjection(FinalDate.ToString(), "soft");
-            }
-            else
-            {
+                HyPanel1["TenderSubmition"] = "";
+                HyPanel1["TenderStatus"] = "";
                 HyPanel1["TenderFillDate"] = null;
+                HyPanel1["TenderUrl"] = "";
             }
-            HyPanel1["TenderUrl"] = Co.RSQandSQLInjection(txtendorurl.Text, "soft");
-            HyPanel1["EOIStatus"] = null;// Co.RSQandSQLInjection(ddleoi.SelectedItem.Value, "soft");
-            HyPanel1["EOISubmition"] = null;// Co.RSQandSQLInjection(rbeoistatus.SelectedItem.Value, "soft");
-            //if (txtlastdateeoi.Text != "")
-            //{
-            //    DateTime Datetendoreoi = Convert.ToDateTime(txtlastdateeoi.Text);
-            //    string FinalDateeoi = Datetendoreoi.ToString("dd-MMM-yyyy");
-            //    HyPanel1["EOIFillDate"] = null;// Co.RSQandSQLInjection(FinalDateeoi.ToString(), "soft");
-            //}
-            //else
-            //{
+            HyPanel1["EOIStatus"] = "";
+            HyPanel1["EOISubmition"] = "";
             HyPanel1["EOIFillDate"] = null;
-            // }
-            HyPanel1["EOIURL"] = null;// Co.RSQandSQLInjection(txteoiurl.Text, "soft");
+            HyPanel1["EOIURL"] = "";
+            HyPanel1["QAAgency"] = "";
+            HyPanel1["QAReamrks"] = "";
+            HyPanel1["Testing"] = "";
+            HyPanel1["TestingRemarks"] = "";
+            HyPanel1["Certification"] = "";
+            HyPanel1["CertificationRemark"] = "";
+            HyPanel1["DPSUServices"] = "";
+            HyPanel1["Remarks"] = "";
+            HyPanel1["FinancialSupport"] = "";
+            HyPanel1["FinancialRemark"] = "";
             if (ddlNodalOfficerEmail.Text == "" || ddlNodalOfficerEmail.SelectedItem.Text == "Select")
             {
                 HyPanel1["NodelDetail"] = null;
@@ -1591,21 +1373,21 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                 if (btnsubmitpanel1.Text != "Update")
                 {
                     Cleartext();
-                    ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "SuccessfullPop('Record Saved.')", true);
+                    ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "alert('Record Saved.')", true);
                 }
                 else
                 {
                     Cleartext();
                     btnsubmitpanel1.Text = "Save";
-                    ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "ErrorMssgPopup('Record updated successfully.')", true);
+                    ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "alert('Record updated successfully.')", true);
                 }
             }
             else
             {
-                ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "ErrorMssgPopup('Record not saved.')", true);
+                ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "alert('Record not saved.')", true);
             }
         }
-        catch (Exception ex)
+        catch (Exception)
         {
         }
     }
@@ -1626,7 +1408,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                             int iFileSize = fuitemdescriptionfile.PostedFile.ContentLength;
                             if (iFileSize > 5242880) // 5MB
                             {
-                                ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "ErrorMssgPopup('Maximum 5 Mb pdf file can be uploaded')", true);
+                                ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "alert('Maximum 5 Mb pdf file can be uploaded')", true);
                             }
                             else
                             {
@@ -1640,7 +1422,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                                         if (iImageFileSize > 20971520)
                                         {
                                             ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert",
-                                                "ErrorMssgPopup('Maximum 5 Mb each .jpg,.jpeg,.png,.tif images can be uploaded')", true);
+                                                "alert('Maximum 5 Mb each .jpg,.jpeg,.png,.tif images can be uploaded')", true);
                                         }
                                         else
                                         {
@@ -1650,7 +1432,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                                     else
                                     {
                                         ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert",
-                                            "ErrorMssgPopup('Maximum 4 files can be uploaded')", true);
+                                            "alert('Maximum 4 files can be uploaded')", true);
                                     }
                                 }
                                 else
@@ -1671,7 +1453,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                                     if (iImageFileSize > 20971520)
                                     {
                                         ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert",
-                                            "ErrorMssgPopup('Maximum 5 Mb each .jpg,.jpeg,.png,.tif images can be uploaded')", true);
+                                            "alert('Maximum 5 Mb each .jpg,.jpeg,.png,.tif images can be uploaded')", true);
                                     }
                                     else
                                     {
@@ -1681,7 +1463,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                                 else
                                 {
                                     ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert",
-                                        "ErrorMssgPopup('Maximum 4 files can be uploaded')", true);
+                                        "alert('Maximum 4 files can be uploaded')", true);
                                 }
                             }
                             else
@@ -1692,17 +1474,17 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                     }
                     else
                     {
-                        ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "ErrorMssgPopup('Please fill mandatory fields.')", true);
+                        ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "alert('Please fill mandatory fields.')", true);
                     }
                 }
                 else
                 {
-                    ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "ErrorMssgPopup('Please fill mandatory fields.')", true);
+                    ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "alert('Please fill mandatory fields.')", true);
                 }
             }
             else
             {
-                ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "ErrorMssgPopup('Please fill mandatory fields.')", true);
+                ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "alert('Please fill mandatory fields.')", true);
             }
         }
         catch (Exception ex)
@@ -1763,73 +1545,17 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         txtestimateQuantity.Text = "";
         ddlMeasuringUnit.SelectedIndex = 0;
         ddlYearEstimate.SelectedIndex = 0;
-        txttestingremarks.Text = "";
-        txtcertificationremarks.Text = "";
-        txtservisesremarks.Text = "";
-        txtfinancialsuppRemarks.Text = "";
-        // rbtendordateyesno.SelectedValue = "N";
-        // divtdate.Visible = false;
         contactpanel1.Visible = false;
         divnodal2.Visible = false;
         if (ddlNodalOfficerEmail.Text != "")
         {
             ddlNodalOfficerEmail.SelectedIndex = 0;
         }
-        foreach (GridViewRow rw in gvservices.Rows)
-        {
-            CheckBox chkBx = (CheckBox)rw.FindControl("chk");
-            HiddenField hfservicesid = (HiddenField)rw.FindControl("hfservicesid");
-            if (chkBx != null && chkBx.Checked)
-            {
-                chkBx.Checked = false;
-                hfservicesid.Value = "";
-            }
-        }
-        foreach (GridViewRow rw in gvfinancialsupp.Rows)
-        {
-            CheckBox chkfinBx = (CheckBox)rw.FindControl("chkfinan");
-            HiddenField hffinnid = (HiddenField)rw.FindControl("hffinanciailserviceid");
-            if (chkfinBx != null && chkfinBx.Checked)
-            {
-                chkfinBx.Checked = false;
-                hffinnid.Value = "";
-            }
-        }
         foreach (ListItem chk in chklistimportyearfive.Items)
         {
             if (chk.Selected == true)
             {
                 chk.Selected = false;
-            }
-        }
-        foreach (GridViewRow gvqa in gvqaagency.Rows)
-        {
-            CheckBox chkqaagency = (CheckBox)gvqa.FindControl("chkqaagency");
-            HiddenField hfqaagency = (HiddenField)gvqa.FindControl("hfqaagency");
-            if (chkqaagency != null && chkqaagency.Checked)
-            {
-                chkqaagency.Checked = false;
-                hfqaagency.Value = "";
-            }
-        }
-        foreach (GridViewRow rw in gvtesting.Rows)
-        {
-            CheckBox chktesting = (CheckBox)rw.FindControl("chktesting");
-            HiddenField hftestid = (HiddenField)rw.FindControl("hftestingid");
-            if (chktesting != null && chktesting.Checked)
-            {
-                chktesting.Checked = false;
-                hftestid.Value = "";
-            }
-        }
-        foreach (GridViewRow rw in gvCertification.Rows)
-        {
-            CheckBox chkcertification = (CheckBox)rw.FindControl("chkcertification");
-            HiddenField hfcertification = (HiddenField)rw.FindControl("hfcertification");
-            if (chkcertification != null && chkcertification.Checked)
-            {
-                chkcertification.Checked = false;
-                hfcertification.Value = "";
             }
         }
         foreach (GridViewRow gvPofPROCURMENT in gvprocurmentcategory.Rows)
@@ -1954,19 +1680,19 @@ public partial class Admin_AddProduct : System.Web.UI.Page
             {
                 for (int i = 0; i <= gvProductInformation.Rows.Count; i++)
                 {
-                    Int32 txtProdInfoId = Convert.ToInt32(gvProductInformation.DataKeys[i].Value.ToString());
+                    int txtProdInfoId = Convert.ToInt32(gvProductInformation.DataKeys[i].Value.ToString());
                     Label txtlenth = (Label)gvProductInformation.Rows[i].Cells[1].FindControl("lblNameofspec");
                     Label txtvalue = (Label)gvProductInformation.Rows[i].Cells[2].FindControl("lblvalueProd");
                     Label txtProdInfoUnit = (Label)gvProductInformation.Rows[i].Cells[3].FindControl("lblUnitProd");
                     drProdInfoSave = DtNProdInfo.NewRow();
                     drProdInfoSave["ProdInfoId"] = txtProdInfoId.ToString();
                     drProdInfoSave["Length"] = txtlenth.Text.Trim();
-                    drProdInfoSave["Value"] = Convert.ToDecimal(txtvalue.Text.Trim());
+                    drProdInfoSave["Value"] = txtvalue.Text.Trim();
                     drProdInfoSave["ProductUnit"] = txtProdInfoUnit.Text.Trim();
                     DtNProdInfo.Rows.Add(drProdInfoSave);
                 }
             }
-            catch (Exception Ex)
+            catch (Exception)
             { }
             return DtNProdInfo;
         }
@@ -1995,34 +1721,34 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         txtNameOfSpecificationAdd.Text = "";
         TxtValueProdAdd.Text = "";
         txtUnitProdAdd.Text = "";
-        this.BindGrid();
+        BindGrid();
     }
     protected void OnRowEditing(object sender, GridViewEditEventArgs e)
     {
         gvProductInformation.EditIndex = e.NewEditIndex;
-        this.BindGrid();
+        BindGrid();
     }
     protected void OnRowUpdating(object sender, GridViewUpdateEventArgs e)
     {
         GridViewRow row = gvProductInformation.Rows[e.RowIndex];
-        Int32 ProdSpeciId = Convert.ToInt32(gvProductInformation.DataKeys[e.RowIndex].Values[0]);
+        int ProdSpeciId = Convert.ToInt32(gvProductInformation.DataKeys[e.RowIndex].Values[0]);
         string namePro = (row.FindControl("txtNameofspeci") as TextBox).Text;
         string ValuePro = (row.FindControl("txtValueProd") as TextBox).Text;
         string unitPro = (row.FindControl("txtUnitProd") as TextBox).Text;
         Lo.TestGrid("Update", hfprodrefno.Value, ProdSpeciId, namePro, ValuePro, unitPro);
         gvProductInformation.EditIndex = -1;
-        this.BindGrid();
+        BindGrid();
     }
     protected void OnRowCancelingEdit(object sender, EventArgs e)
     {
         gvProductInformation.EditIndex = -1;
-        this.BindGrid();
+        BindGrid();
     }
     protected void OnRowDeleting(object sender, GridViewDeleteEventArgs e)
     {
-        Int32 ProdIdDel = Convert.ToInt32(gvProductInformation.DataKeys[e.RowIndex].Values[0]);
+        int ProdIdDel = Convert.ToInt32(gvProductInformation.DataKeys[e.RowIndex].Values[0]);
         Lo.TestGrid("Delete", "", ProdIdDel, "", "", "");
-        this.BindGrid();
+        BindGrid();
     }
     protected void OnRowDataBound(object sender, GridViewRowEventArgs e)
     {
@@ -2034,7 +1760,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     protected void OnPaging(object sender, GridViewPageEventArgs e)
     {
         gvProductInformation.PageIndex = e.NewPageIndex;
-        this.BindGrid();
+        BindGrid();
     }
     #endregion
     #region Gridview Initial GvEstimateQuanPrice
@@ -2046,7 +1772,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         DNSaveEstimateQuen.Columns.Add(new DataColumn("FYear", typeof(string)));
         DNSaveEstimateQuen.Columns.Add(new DataColumn("EstimatedQty", typeof(string)));
         DNSaveEstimateQuen.Columns.Add(new DataColumn("Unit", typeof(string)));
-        DNSaveEstimateQuen.Columns.Add(new DataColumn("EstimatedPrice", typeof(decimal)));
+        DNSaveEstimateQuen.Columns.Add(new DataColumn("EstimatedPrice", typeof(string)));
         DataRow drEstimateQuantitySave;
         {
             try
@@ -2072,11 +1798,11 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                     drEstimateQuantitySave["FYear"] = ddlestimatequanYear.Text.Trim();
                     drEstimateQuantitySave["EstimatedQty"] = txtEstimateQuantity.Text.Trim();
                     drEstimateQuantitySave["Unit"] = ddlMeasurUnit.Text.Trim();
-                    drEstimateQuantitySave["EstimatedPrice"] = Convert.ToDecimal(txtestimPrice.Text.Trim());
+                    drEstimateQuantitySave["EstimatedPrice"] = txtestimPrice.Text.Trim();
                     DNSaveEstimateQuen.Rows.Add(drEstimateQuantitySave);
                 }
             }
-            catch (Exception Ex)
+            catch (Exception)
             { }
             return DNSaveEstimateQuen;
         }
@@ -2084,7 +1810,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     private void BindGridEstimateQuantity()
     {
         DataTable DtGridEstimate = new DataTable();
-        DtGridEstimate = Lo.RetriveSaveEstimateGrid("Select", 0, hfprodrefno.Value, 0, "", "", "", 0);
+        DtGridEstimate = Lo.RetriveSaveEstimateGrid("Select", 0, hfprodrefno.Value, 0, "", "", "", "");
         if (DtGridEstimate.Rows.Count > 0)
         {
             GvEstimateQuanPrice.DataSource = DtGridEstimate;
@@ -2099,45 +1825,45 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     protected void btnAddEstimate_Click(object sender, EventArgs e)
     {
         string EstimateYear = ddlYearEstimate.SelectedItem.Text;
-        Int32 EsitmateYearId = Convert.ToInt32(ddlYearEstimate.SelectedItem.Value);
+        int EsitmateYearId = Convert.ToInt32(ddlYearEstimate.SelectedItem.Value);
         string EstimateQuantity = txtestimateQuantity.Text;
         string EstimateMeasuring = ddlMeasuringUnit.SelectedItem.Text;
-        decimal UnitProd = Convert.ToDecimal("0.00");
+        string UnitProd = "0";
         Lo.RetriveSaveEstimateGrid("Insert", 0, hfprodrefno.Value, EsitmateYearId, EstimateYear, EstimateQuantity, EstimateMeasuring, UnitProd);
         ddlYearEstimate.SelectedIndex = 0;
         txtestimateQuantity.Text = "";
         ddlMeasuringUnit.SelectedIndex = 0;
         txtestimatePriceLLp.Text = "";
-        this.BindGridEstimateQuantity();
+        BindGridEstimateQuantity();
     }
     protected void GvEstimateQuanPrice_RowEditing(object sender, GridViewEditEventArgs e)
     {
         GvEstimateQuanPrice.EditIndex = e.NewEditIndex;
-        this.BindGridEstimateQuantity();
+        BindGridEstimateQuantity();
     }
     protected void GvEstimateQuanPrice_RowUpdating(object sender, GridViewUpdateEventArgs e)
     {
         GridViewRow row = GvEstimateQuanPrice.Rows[e.RowIndex];
-        Int32 ProdSpeciId = Convert.ToInt32(GvEstimateQuanPrice.DataKeys[e.RowIndex].Values[0]);
+        int ProdSpeciId = Convert.ToInt32(GvEstimateQuanPrice.DataKeys[e.RowIndex].Values[0]);
         string EditEstimateYear = (row.FindControl("ddlYearEstimateGrid") as DropDownList).SelectedItem.Text;
-        Int32 EditEstimateYearId = Convert.ToInt32((row.FindControl("ddlYearEstimateGrid") as DropDownList).SelectedItem.Value);
+        int EditEstimateYearId = Convert.ToInt32((row.FindControl("ddlYearEstimateGrid") as DropDownList).SelectedItem.Value);
         string EditEstimateQuan = (row.FindControl("txtEstimateQuantityGrid") as TextBox).Text;
         string EditEstimateUnit = (row.FindControl("ddlEstimateUnit") as DropDownList).SelectedItem.Text;
-        decimal EditEstimatePrice = Convert.ToDecimal("0.00");//Convert.ToDecimal((row.FindControl("txtEstimatePriceLLpGrid") as TextBox).Text);
+        string EditEstimatePrice = "0";//Convert.ToDecimal((row.FindControl("txtEstimatePriceLLpGrid") as TextBox).Text);
         Lo.RetriveSaveEstimateGrid("Update", ProdSpeciId, hfprodrefno.Value, EditEstimateYearId, EditEstimateYear, EditEstimateQuan, EditEstimateUnit, EditEstimatePrice);
         GvEstimateQuanPrice.EditIndex = -1;
-        this.BindGridEstimateQuantity();
+        BindGridEstimateQuantity();
     }
     protected void GvEstimateQuanPrice_RowCancelingEdit(object sender, EventArgs e)
     {
         GvEstimateQuanPrice.EditIndex = -1;
-        this.BindGridEstimateQuantity();
+        BindGridEstimateQuantity();
     }
     protected void GvEstimateQuanPrice_RowDeleting(object sender, GridViewDeleteEventArgs e)
     {
-        Int32 EstimateIdDel = Convert.ToInt32(GvEstimateQuanPrice.DataKeys[e.RowIndex].Values[0]);
-        Lo.RetriveSaveEstimateGrid("Delete", EstimateIdDel, "", 0, "", "", "", 0);
-        this.BindGridEstimateQuantity();
+        int EstimateIdDel = Convert.ToInt32(GvEstimateQuanPrice.DataKeys[e.RowIndex].Values[0]);
+        Lo.RetriveSaveEstimateGrid("Delete", EstimateIdDel, "", 0, "", "", "", "");
+        BindGridEstimateQuantity();
     }
     protected void GvEstimateQuanPrice_RowDataBound(object sender, GridViewRowEventArgs e)
     {
@@ -2149,7 +1875,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     protected void GvEstimateQuanPrice_Paging(object sender, GridViewPageEventArgs e)
     {
         GvEstimateQuanPrice.PageIndex = e.NewPageIndex;
-        this.BindGridEstimateQuantity();
+        BindGridEstimateQuantity();
     }
     #endregion
     #region EditCodeForProduct
@@ -2317,102 +2043,23 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                             if (hfPOPid.Value == DTporCat.Rows[i]["SCategoryId"].ToString())
                             {
                                 chkBxPOP.Checked = true;
+                                if (chkBxPOP.Checked == true)
+                                {
+                                    divmake2status.Style["display"] = "";
+                                    divmake2status.Visible = true;
+                                    ddlteneoi.SelectedValue = DtView.Rows[0]["TenderSubmition"].ToString();
+                                }
                             }
                         }
                     }
                 }
                 txtremarksprocurmentCategory.Text = DtView.Rows[0]["ProcurmentCategoryRemark"].ToString();
-                DataTable DtQAA = Lo.RetriveProductCode("", hfprodrefno.Value, "ProductQAAgency", hidType.Value);
-                if (DtQAA.Rows.Count > 0)
-                {
-                    for (int i = 0; DtQAA.Rows.Count > i; i++)
-                    {
-                        foreach (GridViewRow rw in gvqaagency.Rows)
-                        {
-                            CheckBox chkBxQA = (CheckBox)rw.FindControl("chkqaagency");
-                            HiddenField hfQAid = (HiddenField)rw.FindControl("hfqaagency");
-                            if (hfQAid.Value == DtQAA.Rows[i]["SCategoryId"].ToString())
-                            {
-                                chkBxQA.Checked = true;
-                            }
-                        }
-                    }
-                }
-                txtqaagencyremarks.Text = DtView.Rows[0]["QAReamrks"].ToString();
-                DataTable dttesting = Lo.RetriveProductCode("", hfprodrefno.Value, "ProductTesting", hidType.Value);
-                if (dttesting.Rows.Count > 0)
-                {
-                    for (int i = 0; dttesting.Rows.Count > i; i++)
-                    {
-                        foreach (GridViewRow rw in gvtesting.Rows)
-                        {
-                            CheckBox chkBxtesting = (CheckBox)rw.FindControl("chktesting");
-                            HiddenField hfservcetesting = (HiddenField)rw.FindControl("hftestingid");
-                            if (hfservcetesting.Value == dttesting.Rows[i]["SCategoryId"].ToString())
-                            {
-                                chkBxtesting.Checked = true;
-                            }
-                        }
-                    }
-                }
-                txttestingremarks.Text = DtView.Rows[0]["TestingRemarks"].ToString();
-                DataTable dtcertifica = Lo.RetriveProductCode("", hfprodrefno.Value, "ProductCertification", hidType.Value);
-                if (dtcertifica.Rows.Count > 0)
-                {
-                    for (int i = 0; dtcertifica.Rows.Count > i; i++)
-                    {
-                        foreach (GridViewRow rw in gvCertification.Rows)
-                        {
-                            CheckBox chkBxCer = (CheckBox)rw.FindControl("chkcertification");
-                            HiddenField hfcer = (HiddenField)rw.FindControl("hfcertification");
-                            if (hfcer.Value == dtcertifica.Rows[i]["SCategoryId"].ToString())
-                            {
-                                chkBxCer.Checked = true;
-                            }
-                        }
-                    }
-                }
-                txtcertificationremarks.Text = DtView.Rows[0]["CertificationRemark"].ToString();
-                DataTable dtpsdq = Lo.RetriveProductCode("", hfprodrefno.Value, "ProductPSDQ", hidType.Value);
-                if (dtpsdq.Rows.Count > 0)
-                {
-                    for (int i = 0; dtpsdq.Rows.Count > i; i++)
-                    {
-                        foreach (GridViewRow rw in gvservices.Rows)
-                        {
-                            CheckBox chkBx = (CheckBox)rw.FindControl("chk");
-                            HiddenField hfservicesid = (HiddenField)rw.FindControl("hfservicesid");
-                            if (hfservicesid.Value == dtpsdq.Rows[i]["SCategoryId"].ToString())
-                            {
-                                chkBx.Checked = true;
-                            }
-                        }
-                    }
-                }
-                txtservisesremarks.Text = DtView.Rows[0]["Remarks"].ToString();
-                DataTable dtTechnicalSupp = Lo.RetriveProductCode("", hfprodrefno.Value, "ProductFinancial", hidType.Value);
-                if (dtTechnicalSupp.Rows.Count > 0)
-                {
-                    for (int i = 0; dtTechnicalSupp.Rows.Count > i; i++)
-                    {
-                        foreach (GridViewRow rw in gvfinancialsupp.Rows)
-                        {
-                            CheckBox chkfinbox = (CheckBox)rw.FindControl("chkfinan");
-                            HiddenField hffinnid = (HiddenField)rw.FindControl("hffinanciailserviceid");
-                            if (hffinnid.Value == dtTechnicalSupp.Rows[i]["SCategoryId"].ToString())
-                            {
-                                chkfinbox.Checked = true;
-                            }
-                        }
-                    }
-                }
-                txtfinancialsuppRemarks.Text = DtView.Rows[0]["FinancialRemark"].ToString();
                 ddlstatus.SelectedValue = DtView.Rows[0]["TenderStatus"].ToString();
-                //  rbtendordateyesno.SelectedValue = DtView.Rows[0]["TenderSubmition"].ToString();
-                if (ddlstatus.SelectedValue == "Live")// && rbtendordateyesno.SelectedValue == "Y")
+                if (ddlstatus.SelectedValue == "Live")
                 {
-                    //  tendate.Style.Clear();
-                    //  divtdate.Style.Clear();
+                    extimedatevisible.Style["display"] = "";
+                    divtimedateurl.Style["display"] = "";
+                    extimedatevisible.Visible = true;
                     if (DtView.Rows[0]["TenderFillDate"].ToString() != "")
                     {
                         DateTime Date = Convert.ToDateTime(DtView.Rows[0]["TenderFillDate"].ToString());
@@ -2421,28 +2068,6 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                     }
                     txtendorurl.Text = DtView.Rows[0]["TenderUrl"].ToString();
                 }
-                else
-                {
-                    // divtdate.Style.Clear();
-                }
-                //ddleoi.SelectedValue = DtView.Rows[0]["EOIStatus"].ToString();
-                //rbeoistatus.SelectedValue = DtView.Rows[0]["EOISubmition"].ToString();
-                //if (ddleoi.SelectedValue == "Live" && rbeoistatus.SelectedValue == "Y")
-                //{
-                //    eoirb.Style.Clear();
-                //    diveoidateurl.Style.Clear();
-                //    if (DtView.Rows[0]["EOIFillDate"].ToString() != "")
-                //    {
-                //        DateTime Dateeoi = Convert.ToDateTime(DtView.Rows[0]["EOIFillDate"].ToString());
-                //        string nDateeoi = Dateeoi.ToString("yy-MMM-dd");
-                //        txtlastdateeoi.Text = nDateeoi.ToString();
-                //    }
-                //    txteoiurl.Text = DtView.Rows[0]["EOIURL"].ToString();
-                //}
-                //else
-                //{
-                //    diveoidateurl.Style.Clear();
-                //}
                 ddlNodalOfficerEmail.SelectedValue = DtView.Rows[0]["NodelDetail"].ToString();
                 if (ddlNodalOfficerEmail.SelectedValue != null)
                 { BindNodelEmail1(); }
@@ -2489,5 +2114,4 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         }
     }
     #endregion
-   
 }

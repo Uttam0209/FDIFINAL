@@ -73,9 +73,9 @@
                     <form method="post" class="addfdi">
                         <div class="row">
                             <div class="col-md-12">
-                                <asp:Label ID="lbltot" runat="server" CssClass="text-center"></asp:Label>
-                                <div class="clearfix mt10"></div>
                                 <div class="table-responsive" style="overflow-x: auto;" id="divproductgridview" runat="server">
+                                    <asp:Label ID="lbltot" runat="server" CssClass="text-center"></asp:Label>
+                                    <div class="clearfix mt10"></div>
                                     <asp:GridView ID="gvproductItem" runat="server" Width="100%" Class="table table-bordered table-wraper table-hover manage-user"
                                         AutoGenerateColumns="false" OnRowCommand="gvproductItem_RowCommand" OnRowCreated="gvproductItem_RowCreated" OnRowDataBound="gvproductItem_RowDataBound">
                                         <Columns>
@@ -106,6 +106,7 @@
                                                     <asp:HiddenField ID="hfcomprefno" runat="server" Value='<%#Eval("CompanyRefNo") %>' />
                                                     <asp:HiddenField ID="hfdivisionrefno" runat="server" Value='<%#Eval("FactoryRefNo") %>' />
                                                     <asp:HiddenField ID="hfunitrefno" runat="server" Value='<%#Eval("UnitRefNo") %>' />
+                                                    <asp:HiddenField ID="hfisaaproved" runat="server" Value='<%#Eval("IsApproved") %>' />
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="DPSUPartNumber">
@@ -235,41 +236,6 @@
                                                                                     <td>End User:</td>
                                                                                     <td>
                                                                                         <asp:Label ID="lblenduser" runat="server" Text=""></asp:Label></td>
-                                                                                </tr>
-                                                                                <tr id="Tr1" runat="server" visible="false">
-                                                                                    <td>HSN Code:</td>
-                                                                                    <td>
-                                                                                        <asp:Label ID="lblhsncode" runat="server" Text=""></asp:Label></td>
-                                                                                </tr>
-                                                                                <tr id="Tr2" runat="server" visible="false">
-                                                                                    <td>HS Chapter:</td>
-                                                                                    <td>
-                                                                                        <asp:Label ID="lblhschapter" runat="server" Text=""></asp:Label></td>
-                                                                                </tr>
-                                                                                <tr id="Tr3" runat="server" visible="false">
-                                                                                    <td>HS Heading No:</td>
-                                                                                    <td>
-                                                                                        <asp:Label ID="lblhsncodelevel1" runat="server" Text=""></asp:Label></td>
-                                                                                </tr>
-                                                                                <tr id="Tr4" runat="server" visible="false">
-                                                                                    <td>Description:</td>
-                                                                                    <td>
-                                                                                        <asp:Label ID="lblhsncodelevel2" runat="server" Text=""></asp:Label></td>
-                                                                                </tr>
-                                                                                <tr id="Tr5" runat="server" visible="false">
-                                                                                    <td>HSN Code:</td>
-                                                                                    <td>
-                                                                                        <asp:Label ID="lblhsncodelevel3" runat="server" Text=""></asp:Label></td>
-                                                                                </tr>
-                                                                                <tr id="Tr6" runat="server" visible="false">
-                                                                                    <td>HS Code (4 digit)</td>
-                                                                                    <td>
-                                                                                        <asp:Label ID="lblhscode4digit" runat="server" Text=""></asp:Label></td>
-                                                                                </tr>
-                                                                                <tr id="Tr7" runat="server" visible="false">
-                                                                                    <td>End User Part Number:</td>
-                                                                                    <td>
-                                                                                        <asp:Label ID="lblenduserpartno" runat="server" Text=""></asp:Label></td>
                                                                                 </tr>
                                                                                 <tr>
                                                                                     <td>NSN GROUP:</td>
@@ -467,7 +433,6 @@
                                                             <div class="row">
                                                                 <div class="col-md-12">
                                                                     <table>
-
                                                                         <tr>
                                                                             <td>PROCURMENT CATEGORY</td>
                                                                             <td>
@@ -478,6 +443,33 @@
                                                                             <td>
                                                                                 <asp:Label ID="lblprocremarks" runat="server" Text=""></asp:Label></td>
                                                                         </tr>
+                                                                        <table>
+                                                                            <tr>
+                                                                                <td>Type:</td>
+                                                                                <td>
+                                                                                    <asp:Label ID="lbltendersubmission" runat="server" Text=""></asp:Label></td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td>Tender Status:</td>
+                                                                                <td>
+                                                                                    <asp:Label ID="lbltenderstatus" runat="server" Text=""></asp:Label></td>
+                                                                            </tr>
+
+
+                                                                            <table runat="server" id="tenderstatus">
+                                                                                <tr>
+                                                                                    <td>Tender Date:</td>
+                                                                                    <td>
+                                                                                        <asp:Label ID="lbltenderdate" runat="server" Text=""></asp:Label></td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>Tender URL:</td>
+                                                                                    <td>
+                                                                                        <asp:Label ID="lbltenderurl" runat="server" Text=""></asp:Label></td>
+                                                                                </tr>
+                                                                            </table>
+                                                                        </table>
+                                                                        <hr />
                                                                         <tr>
                                                                             <td>Estimate Quantity or Price</td>
                                                                             <td>&nbsp;
@@ -496,174 +488,6 @@
                                                                             </td>
                                                                         </tr>
                                                                     </table>
-
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="card" runat="server" visible="false">
-                                                    <div class="card-header">
-                                                        <h2 data-toggle="collapse" data-parent="#accordion" class="collapsed" data-target="#faq4" aria-expanded="false" aria-controls="faq4">Testing & Certification
-                                                            <i class="fa fa-plus pull-right"></i>
-                                                        </h2>
-                                                    </div>
-                                                    <div id="faq4" class="collapse">
-                                                        <div class="card-body">
-                                                            <div class="row">
-                                                                <div class="col-md-12">
-                                                                    <table>
-                                                                        <tr>
-                                                                            <td>QA Agency:</td>
-                                                                            <td>
-                                                                                <asp:Label ID="lblqaagency" runat="server" Text=""></asp:Label></td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td>Remarks:</td>
-                                                                            <td>
-                                                                                <asp:Label ID="lblremarks" runat="server" Text=""></asp:Label></td>
-                                                                        </tr>
-
-                                                                    </table>
-                                                                </div>
-                                                                <div class="col-md-12">
-                                                                    <table>
-                                                                        <tr>
-                                                                            <td>Testing:</td>
-                                                                            <td>
-                                                                                <asp:Label ID="lbltesting" runat="server" Text=""></asp:Label></td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td>Remarks:</td>
-                                                                            <td>
-                                                                                <asp:Label ID="lbltestingremarks" runat="server" Text=""></asp:Label></td>
-                                                                        </tr>
-
-                                                                    </table>
-                                                                </div>
-                                                                <div class="col-md-12">
-                                                                    <table>
-                                                                        <tr>
-                                                                            <td>Certification:</td>
-                                                                            <td>
-                                                                                <asp:Label ID="lblcertification" runat="server" Text=""></asp:Label></td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td>Remarks:</td>
-                                                                            <td>
-                                                                                <asp:Label ID="lblcertificationremarks" runat="server" Text=""></asp:Label></td>
-                                                                        </tr>
-                                                                    </table>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="card" runat="server" visible="false">
-                                                    <div class="card-header">
-                                                        <h2 data-toggle="collapse" data-parent="#accordion" class="collapsed" data-target="#faq6" aria-expanded="false" aria-controls="faq6">Technical & Financial Support
-                                                            <i class="fa fa-plus pull-right"></i>
-                                                        </h2>
-                                                    </div>
-                                                    <div id="faq6" class="collapse">
-                                                        <div class="card-body">
-                                                            <div class="row">
-                                                                <div class="col-md-12">
-                                                                    <table>
-                                                                        <tr>
-                                                                            <td>Technical Support provided by DPSU:</td>
-                                                                            <td>
-                                                                                <asp:Label ID="lblsupportprovidedbydpsu" runat="server" Text=""></asp:Label></td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td>Remarks:</td>
-                                                                            <td>
-                                                                                <asp:Label ID="lblremarksdpsu" runat="server" Text=""></asp:Label></td>
-                                                                        </tr>
-
-                                                                    </table>
-                                                                </div>
-                                                                <div class="col-md-12">
-                                                                    <table>
-                                                                        <tr>
-                                                                            <td>Financial Support provided by DPSU:</td>
-                                                                            <td>
-                                                                                <asp:Label ID="lblfinancial" runat="server" Text=""></asp:Label></td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td>Remarks:</td>
-                                                                            <td>
-                                                                                <asp:Label ID="lblfinancialRemark" runat="server" Text=""></asp:Label></td>
-                                                                        </tr>
-                                                                    </table>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="card">
-                                                    <div class="card-header">
-                                                        <h2 data-toggle="collapse" data-parent="#accordion" class="collapsed" data-target="#faq9" aria-expanded="false" aria-controls="faq9">Tender
-                                                            <i class="fa fa-plus pull-right"></i>
-                                                        </h2>
-                                                    </div>
-
-                                                    <div id="faq9" class="collapse">
-                                                        <div class="card-body">
-                                                            <div class="row">
-                                                                <div class="col-md-6">
-                                                                    <table>
-                                                                        <tr>
-                                                                            <td>Tender Status:</td>
-                                                                            <td>
-                                                                                <asp:Label ID="lbltenderstatus" runat="server" Text=""></asp:Label></td>
-                                                                        </tr>
-
-                                                                        <tr>
-                                                                            <td>Tender Submission:</td>
-                                                                            <td>
-                                                                                <asp:Label ID="lbltendersubmission" runat="server" Text=""></asp:Label></td>
-                                                                        </tr>
-                                                                        <table runat="server" id="tenderstatus">
-                                                                            <tr>
-                                                                                <td>Tender Date:</td>
-                                                                                <td>
-                                                                                    <asp:Label ID="lbltenderdate" runat="server" Text=""></asp:Label></td>
-                                                                            </tr>
-                                                                            <tr>
-                                                                                <td>Tender URL:</td>
-                                                                                <td>
-                                                                                    <asp:Label ID="lbltenderurl" runat="server" Text=""></asp:Label></td>
-                                                                            </tr>
-                                                                        </table>
-                                                                    </table>
-                                                                </div>
-                                                                <div class="col-md-6">
-                                                                    <table>
-                                                                        <tr>
-                                                                            <td>EOI Status:</td>
-                                                                            <td>
-                                                                                <asp:Label ID="lbleoistatus" runat="server" Text=""></asp:Label></td>
-                                                                        </tr>
-
-                                                                        <tr>
-                                                                            <td>EOI Submission:</td>
-                                                                            <td>
-                                                                                <asp:Label ID="lbleoisub" runat="server" Text=""></asp:Label></td>
-                                                                        </tr>
-                                                                        <table runat="server" id="tbleoidate">
-                                                                            <tr>
-                                                                                <td>EOI Date:</td>
-                                                                                <td>
-                                                                                    <asp:Label ID="lbleoidate" runat="server" Text=""></asp:Label></td>
-                                                                            </tr>
-                                                                            <tr>
-                                                                                <td>EOI URL:</td>
-                                                                                <td>
-                                                                                    <asp:Label ID="lbleoiurl" runat="server" Text=""></asp:Label></td>
-                                                                            </tr>
-                                                                        </table>
-                                                                    </table>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -675,7 +499,6 @@
                                                             <i class="fa fa-plus pull-right"></i>
                                                         </h2>
                                                     </div>
-
                                                     <div id="faq10" class="collapse">
                                                         <div class="card-body">
                                                             <div class="row">
@@ -726,7 +549,6 @@
                                                                                 </td>
                                                                             </tr>
                                                                         </tr>
-
                                                                     </table>
                                                                 </div>
                                                                 <div class="col-md-6">
@@ -786,10 +608,10 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-
-                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            </div>
                         </form>
                     </div>
                 </div>

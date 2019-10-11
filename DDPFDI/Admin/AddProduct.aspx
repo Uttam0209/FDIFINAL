@@ -74,7 +74,7 @@
                     <li><a data-toggle="tab" href="#qpt">Estimated Quantity</a></li>
                     <li><a data-toggle="tab" href="#test" runat="server" visible="false">Testing & Certification</a></li>
                     <li><a data-toggle="tab" href="#spd" runat="server" visible="false">Technical & Financial Support</a></li>
-                    <li><a data-toggle="tab" href="#tnd">Tender and EOI</a></li>
+                    <li><a data-toggle="tab" href="#tnd" runat="server" visible="false">Tender and EOI</a></li>
                     <li><a data-toggle="tab" href="#cd">Contact</a></li>
                 </ul>
                 <div class="tab-content">
@@ -826,22 +826,25 @@
                                                 </div>
                                             </div>
                                             <div class="clearfix"></div>
-                                            <div id="divmake2status" class="col-md-12" style="display: none">
-                                                <div>
-                                                    <asp:DropDownList ID="ddlteneoi" runat="server" CssClass="form-control" AutoPostBack="true">
-                                                        <asp:ListItem Value="0" Selected="True">Select</asp:ListItem>
-                                                        <asp:ListItem Value="1">Preparing technical specifications</asp:ListItem>
-                                                        <asp:ListItem Value="2">Tender floated</asp:ListItem>
-                                                        <asp:ListItem Value="3">EOI floated</asp:ListItem>
-                                                        <asp:ListItem Value="4">Capability & capacity asessment of  the vendors</asp:ListItem>
-                                                        <asp:ListItem Value="5">Prototype development</asp:ListItem>
-                                                        <asp:ListItem Value="6">Trial & test of prototype</asp:ListItem>
-                                                        <asp:ListItem Value="7">Price bid opening</asp:ListItem>
-                                                        <asp:ListItem Value="8">Order placement</asp:ListItem>
-                                                    </asp:DropDownList>
+                                            <div id="divmake2status" class="col-md-12 row" runat="server" style="display: none">
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <label>Type</label>
+                                                        <asp:DropDownList ID="ddlteneoi" runat="server" CssClass="form-control">
+                                                            <asp:ListItem Value="0" Selected="True">Select</asp:ListItem>
+                                                            <asp:ListItem Value="1">Preparing technical specifications</asp:ListItem>
+                                                            <asp:ListItem Value="2">Tender floated</asp:ListItem>
+                                                            <asp:ListItem Value="3">EOI floated</asp:ListItem>
+                                                            <asp:ListItem Value="4">Capability & capacity asessment of  the vendors</asp:ListItem>
+                                                            <asp:ListItem Value="5">Prototype development</asp:ListItem>
+                                                            <asp:ListItem Value="6">Trial & test of prototype</asp:ListItem>
+                                                            <asp:ListItem Value="7">Price bid opening</asp:ListItem>
+                                                            <asp:ListItem Value="8">Order placement</asp:ListItem>
+                                                        </asp:DropDownList>
+                                                    </div>
                                                 </div>
                                                 <div runat="server" id="divtimedateurl" style="display: none;">
-                                                    <div class="col-md-4">
+                                                    <div class="col-md-3">
                                                         <div class="form-group ">
                                                             <label>Status</label>
                                                             <asp:DropDownList runat="server" ID="ddlstatus" class="form-control" TabIndex="1">
@@ -853,13 +856,13 @@
                                                         </div>
                                                     </div>
                                                     <div runat="server" id="extimedatevisible" style="display: none;">
-                                                        <div class="col-md-4">
+                                                        <div class="col-md-3">
                                                             <div class="form-group">
                                                                 <label>Last date of submission</label>
                                                                 <asp:TextBox runat="server" ID="txtdate" type="date" TabIndex="3" class="form-control inputbox"></asp:TextBox>
                                                             </div>
                                                         </div>
-                                                        <div class="col-md-4">
+                                                        <div class="col-md-3">
                                                             <div class="form-group">
                                                                 <label>URL</label>
                                                                 <asp:TextBox runat="server" ID="txtendorurl" TabIndex="4" class="form-control"></asp:TextBox>
@@ -868,7 +871,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="clearfix"></div>
+                                            <div class="clearfix mt5"></div>
                                             <div id="Div1" class="col-md-12" runat="server">
                                                 <div class="form-group">
                                                     <asp:Label runat="server" ID="Label1" CssClass="form-label " Text="PROCURMENT CATEGORY REMARK"></asp:Label>
@@ -1014,191 +1017,6 @@
                             </div>
                         </div>
                     </div>
-                    <div id="test" class="tab-pane fade">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="add-profile">
-                                    <div class="section-pannel">
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <asp:GridView runat="server" ID="gvqaagency" AutoGenerateColumns="False" TabIndex="68" class=" table responsive no-wrap table-hover manage-user Grid">
-                                                    <Columns>
-                                                        <asp:TemplateField>
-                                                            <ItemTemplate>
-                                                                <%#Container.DataItemIndex+1 %>
-                                                            </ItemTemplate>
-                                                        </asp:TemplateField>
-                                                        <asp:TemplateField HeaderText="Confirm if QA Agency">
-                                                            <ItemTemplate>
-                                                                <asp:CheckBox runat="server" ID="chkqaagency" TabIndex="1" />
-                                                            </ItemTemplate>
-                                                        </asp:TemplateField>
-                                                        <asp:TemplateField HeaderText="">
-                                                            <ItemTemplate>
-                                                                <asp:Label runat="server" ID="lblqaagency" Text='<%#Eval("SCategoryName") %>'></asp:Label>
-                                                                <asp:HiddenField runat="server" ID="hfqaagency" Value='<%#Eval("SCategoryId") %>' />
-                                                            </ItemTemplate>
-                                                        </asp:TemplateField>
-                                                    </Columns>
-                                                </asp:GridView>
-                                                <div class="clearfix"></div>
-                                                <div class="form-group">
-                                                    <asp:TextBox runat="server" ID="txtqaagencyremarks" MaxLength="50" TextMode="MultiLine" Height="50px" TabIndex="69" class="form-control"></asp:TextBox>
-                                                    <div class="clearfix" style="margin-top: 5px;"></div>
-                                                    <span>(Remarks max length 50 words only)</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="section-pannel">
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <asp:GridView runat="server" ID="gvtesting" AutoGenerateColumns="False" TabIndex="68" class=" table responsive no-wrap table-hover manage-user Grid">
-                                                    <Columns>
-                                                        <asp:TemplateField>
-                                                            <ItemTemplate>
-                                                                <%#Container.DataItemIndex+1 %>
-                                                            </ItemTemplate>
-                                                        </asp:TemplateField>
-                                                        <asp:TemplateField HeaderText="Confirm if testing needed">
-                                                            <ItemTemplate>
-                                                                <asp:CheckBox runat="server" ID="chktesting" TabIndex="1" />
-                                                            </ItemTemplate>
-                                                        </asp:TemplateField>
-                                                        <asp:TemplateField HeaderText="">
-                                                            <ItemTemplate>
-                                                                <asp:Label runat="server" ID="lbltesting" Text='<%#Eval("SCategoryName") %>'></asp:Label>
-                                                                <asp:HiddenField runat="server" ID="hftestingid" Value='<%#Eval("SCategoryId") %>' />
-                                                            </ItemTemplate>
-                                                        </asp:TemplateField>
-
-                                                    </Columns>
-                                                </asp:GridView>
-                                                <div class="clearfix"></div>
-                                                <div class="form-group">
-                                                    <asp:TextBox runat="server" ID="txttestingremarks" MaxLength="50" TextMode="MultiLine" Height="50px" TabIndex="69" class="form-control"></asp:TextBox>
-                                                    <div class="clearfix" style="margin-top: 5px;"></div>
-                                                    <span>(Remarks max length 50 words only)</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="section-pannel">
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <asp:GridView runat="server" ID="gvCertification" AutoGenerateColumns="False" TabIndex="70" class=" table responsive no-wrap table-hover manage-user Grid">
-                                                    <Columns>
-                                                        <asp:TemplateField>
-                                                            <ItemTemplate>
-                                                                <%#Container.DataItemIndex+1 %>
-                                                            </ItemTemplate>
-                                                        </asp:TemplateField>
-                                                        <asp:TemplateField HeaderText="Confirm if certification needed">
-                                                            <ItemTemplate>
-                                                                <asp:CheckBox runat="server" ID="chkcertification" TabIndex="1" />
-                                                            </ItemTemplate>
-                                                        </asp:TemplateField>
-                                                        <asp:TemplateField HeaderText="">
-                                                            <ItemTemplate>
-                                                                <asp:Label runat="server" ID="lblcertification" Text='<%#Eval("SCategoryName") %>'></asp:Label>
-                                                                <asp:HiddenField runat="server" ID="hfcertification" Value='<%#Eval("SCategoryId") %>' />
-                                                            </ItemTemplate>
-                                                        </asp:TemplateField>
-                                                    </Columns>
-                                                </asp:GridView>
-                                                <div class="clearfix"></div>
-                                                <div class="form-group">
-                                                    <asp:TextBox runat="server" ID="txtcertificationremarks" MaxLength="50" Height="50px" TextMode="MultiLine" TabIndex="71" class="form-control"></asp:TextBox>
-                                                    <div class="clearfix" style="margin-top: 5px;"></div>
-                                                    <span>(Remarks max length 50 words only)</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="spd" class="tab-pane fade">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="add-profile">
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="section-pannel">
-                                                <div class="row">
-                                                    <div class="col-md-12">
-                                                        <asp:GridView runat="server" ID="gvservices" AutoGenerateColumns="False" TabIndex="38" class=" table responsive no-wrap table-hover manage-user Grid">
-                                                            <Columns>
-                                                                <asp:TemplateField>
-                                                                    <ItemTemplate>
-                                                                        <%#Container.DataItemIndex+1 %>
-                                                                    </ItemTemplate>
-                                                                </asp:TemplateField>
-                                                                <asp:TemplateField HeaderText="Confirm if technical support provided by DPSU">
-                                                                    <ItemTemplate>
-                                                                        <asp:CheckBox runat="server" ID="chk" TabIndex="1" />
-                                                                    </ItemTemplate>
-                                                                </asp:TemplateField>
-                                                                <asp:TemplateField HeaderText="">
-                                                                    <ItemTemplate>
-                                                                        <asp:Label runat="server" ID="lblservices" Text='<%#Eval("SCategoryName") %>'></asp:Label>
-                                                                        <asp:HiddenField runat="server" ID="hfservicesid" Value='<%#Eval("SCategoryId") %>' />
-                                                                    </ItemTemplate>
-                                                                </asp:TemplateField>
-                                                            </Columns>
-                                                        </asp:GridView>
-                                                        <div class="clearfix"></div>
-                                                        <div class="form-group">
-                                                            <asp:TextBox runat="server" ID="txtservisesremarks" MaxLength="50" Height="50px" TabIndex="39" class="form-control"></asp:TextBox>
-                                                            <div class="clearfix" style="margin-top: 5px;"></div>
-                                                            <span>(Remarks max length 50 words only)</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="section-pannel">
-                                                <div class="row">
-                                                    <div class="col-md-12">
-                                                        <asp:GridView runat="server" ID="gvfinancialsupp" AutoGenerateColumns="False" TabIndex="40" class=" table responsive no-wrap table-hover manage-user Grid">
-                                                            <Columns>
-                                                                <asp:TemplateField>
-                                                                    <ItemTemplate>
-                                                                        <%#Container.DataItemIndex+1 %>
-                                                                    </ItemTemplate>
-                                                                </asp:TemplateField>
-                                                                <asp:TemplateField HeaderText="Confirm if financial support provided by DPSU">
-                                                                    <ItemTemplate>
-                                                                        <asp:CheckBox runat="server" ID="chkfinan" TabIndex="1" />
-                                                                    </ItemTemplate>
-                                                                </asp:TemplateField>
-                                                                <asp:TemplateField HeaderText="">
-                                                                    <ItemTemplate>
-                                                                        <asp:Label runat="server" ID="lblfinancialservices" Text='<%#Eval("SCategoryName") %>'></asp:Label>
-                                                                        <asp:HiddenField runat="server" ID="hffinanciailserviceid" Value='<%#Eval("SCategoryId") %>' />
-                                                                    </ItemTemplate>
-                                                                </asp:TemplateField>
-                                                            </Columns>
-                                                        </asp:GridView>
-                                                        <div class="clearfix"></div>
-                                                        <div class="form-group">
-                                                            <asp:TextBox runat="server" ID="txtfinancialsuppRemarks" MaxLength="50" Height="50px" TabIndex="41" class="form-control"></asp:TextBox>
-                                                            <div class="clearfix" style="margin-top: 5px;"></div>
-                                                            <span>(Remarks max length 50 words only)</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                     <asp:Panel ID="Panel1" runat="server" DefaultButton="btnsubmitpanel1">
                         <div class="row">
                             <div class="col-md-12">
@@ -1235,5 +1053,4 @@
             </div>
         </div>
     </div>
-
 </asp:Content>

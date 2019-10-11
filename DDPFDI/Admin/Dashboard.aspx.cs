@@ -30,6 +30,16 @@ public partial class Admin_Dashboard : System.Web.UI.Page
                 lbitemmake2.Text = dt.Rows[0]["IsMake2"].ToString();
                 lbitemphoto.Text = dt.Rows[0]["TotWithPhoto"].ToString();
                 lbitemwithoutphoto.Text = dt.Rows[0]["TotWithoutPhoto"].ToString();
+                if (objCrypto.DecryptData(Session["Type"].ToString()) == "Admin" || objCrypto.DecryptData(Session["Type"].ToString()) == "SuperAdmin")
+                {
+                    divven.Visible = true;
+                    lblvendor.Text = dt.Rows[0]["TotVendor"].ToString();
+                }
+                else
+                {
+                    divven.Visible = false;
+                    lblvendor.Text = "";
+                }
                 FillProduct();
                 GetChartData();
             }
@@ -88,15 +98,15 @@ public partial class Admin_Dashboard : System.Web.UI.Page
     }
     protected void lnkbtnProduct_Click(object sender, EventArgs e)
     {
-        Response.Redirect("Dashboard-View?id=" + HttpUtility.UrlEncode(objCrypto.EncryptData("P")));
+        Response.Redirect("ViewProductFilterDetail?id=" + HttpUtility.UrlEncode(objCrypto.EncryptData("P")));
     }
     protected void lnkbtnIndigenizedProduct_Click(object sender, EventArgs e)
     {
-        Response.Redirect("Dashboard-View?id=" + HttpUtility.UrlEncode(objCrypto.EncryptData("PI")));
+        Response.Redirect("ViewProductFilterDetail?id=" + HttpUtility.UrlEncode(objCrypto.EncryptData("PI")));
     }
     protected void lbitemmake2_Click(object sender, EventArgs e)
     {
-        Response.Redirect("Dashboard-View?id=" + HttpUtility.UrlEncode(objCrypto.EncryptData("M2")));
+        Response.Redirect("ViewProductFilterDetail?id=" + HttpUtility.UrlEncode(objCrypto.EncryptData("M2")));
     }
     protected void lblComp_Click(object sender, EventArgs e)
     {
@@ -298,6 +308,41 @@ public partial class Admin_Dashboard : System.Web.UI.Page
         {
             Response.Redirect("Dashboard-View?id=" + HttpUtility.UrlEncode(objCrypto.EncryptData("P")) + "&strangone=" + HttpUtility.UrlEncode(objCrypto.EncryptData(e.CommandArgument.ToString())));
         }
+        else if (e.CommandName == "divprod")
+        {
+            DataTable DtDivProd = Lo.RetriveCount(e.CommandArgument.ToString(), "Division");
+            if (DtDivProd.Rows.Count > 0)
+            {
+                gvcount.DataSource = DtDivProd;
+                gvcount.DataBind();
+                ScriptManager.RegisterStartupScript(this, GetType(), "divCompany", "showPopup();", true);
+            }
+        }
+        else if (e.CommandName == "unitprod")
+        {
+            DataTable DtDivProd = Lo.RetriveCount(e.CommandArgument.ToString(), "Unit");
+            if (DtDivProd.Rows.Count > 0)
+            {
+                gvcount.DataSource = DtDivProd;
+                gvcount.DataBind();
+                ScriptManager.RegisterStartupScript(this, GetType(), "divCompany", "showPopup();", true);
+            }
+        }
+    }
+    protected void gvcount_RowCreated(object sender, GridViewRowEventArgs e)
+    {
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            e.Row.TableSection = TableRowSection.TableBody;
+        }
+        else if (e.Row.RowType == DataControlRowType.Header)
+        {
+            e.Row.TableSection = TableRowSection.TableHeader;
+        }
+        else if (e.Row.RowType == DataControlRowType.Footer)
+        {
+            e.Row.TableSection = TableRowSection.TableFooter;
+        }
     }
     protected void LinkButton2_Click(object sender, EventArgs e)
     {
@@ -371,5 +416,9 @@ public partial class Admin_Dashboard : System.Web.UI.Page
             {
             }
         }
+    }
+    protected void lblvendor_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("Vendor-Detail?id=" + HttpUtility.UrlEncode(objCrypto.EncryptData("V")));
     }
 }

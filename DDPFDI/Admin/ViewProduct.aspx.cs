@@ -2,6 +2,7 @@
 using Encryption;
 using System;
 using System.Data;
+using System.Drawing;
 using System.Text;
 using System.Web;
 using System.Web.UI;
@@ -16,8 +17,8 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
     private DataTable DtCompanyDDL = new DataTable();
     private string currentPage = "";
     private string mRefNo = "";
-    PagedDataSource pgsource = new PagedDataSource();
-    int firstindex, lastindex;
+    private PagedDataSource pgsource = new PagedDataSource();
+    private int firstindex, lastindex;
     protected void Page_Load(object sender, EventArgs e)
     {
         if (Session["Type"] != null || Session["User"] != null)
@@ -97,9 +98,11 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
             DtGrid = Lo.GetDashboardData("Product", "");
             if (DtGrid.Rows.Count > 0)
             {
-                this.UpdateDtGridValue();
-                DataView dv = new DataView(DtGrid);
-                dv.RowFilter = "CompanyRefNo='" + ddlcompany.SelectedItem.Value + "'";
+                UpdateDtGridValue();
+                DataView dv = new DataView(DtGrid)
+                {
+                    RowFilter = "CompanyRefNo='" + ddlcompany.SelectedItem.Value + "'"
+                };
                 DataTable dtnew = dv.ToTable();
                 if (dtnew.Rows.Count > 0)
                 {
@@ -116,7 +119,10 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
                         dv.RowFilter = "UnitName='" + ddlunit.SelectedItem.Text + "'";
                     }
                     else
+                    {
                         dv.Sort = "LastUpdated desc,CompanyName asc,FactoryName asc";
+                    }
+
                     DataTable dtads = dv.ToTable();
                     pgsource.DataSource = dtads.DefaultView;
                     pgsource.AllowPaging = true;
@@ -128,17 +134,23 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
                     lnkbtnPgNext.Enabled = !pgsource.IsLastPage;
                     pgsource.DataSource = dtads.DefaultView;
                     gvproductItem.DataSource = pgsource;
-                    gvproductItem.DataBind();                   
+                    gvproductItem.DataBind();
                     gvproductItem.Visible = true;
                     lbltot.Text = "Showing  " + gvproductItem.Rows.Count.ToString() + " result from page " + (pagingCurrentPage + 1) + " out of " + pgsource.PageCount + " pages";
                     divpageindex.Visible = true;
                 }
                 else
-                { gvproductItem.Visible = false; }
+                {
+                    gvproductItem.Visible = false;
+                    divpageindex.Visible = false;
+                    lbltot.Text = "";
+                }
             }
             else
             {
+                lbltot.Text = "";
                 gvproductItem.Visible = false;
+                divpageindex.Visible = false;
             }
         }
         catch (Exception ex)
@@ -150,14 +162,9 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
     }
     #endregion
     #region RowCommand
-    private string stpsdq;
-    private string Financial;
-    private string Testing;
-    private string Certification;
     private string mhiddenRefNo;
-    private string POProc;
-    private string QAAValue;
     private string EndUserValue;
+    private string POProc;
     protected void gvproductItem_RowCommand(object sender, GridViewCommandEventArgs e)
     {
         if (e.CommandName == "EditComp")
@@ -203,14 +210,7 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
                 lbloemname.Text = DtView.Rows[0]["OEMName"].ToString();
                 lbloemcountry.Text = DtView.Rows[0]["CountryName"].ToString();
                 lbldpsupartno.Text = DtView.Rows[0]["DPSUPartNumber"].ToString();
-                lblhsncode.Text = DtView.Rows[0]["HSCodeName"].ToString() + DtView.Rows[0]["HSNCode"].ToString();
-                lblhschapter.Text = DtView.Rows[0]["HsChapterName"].ToString();
-                lblhsncodelevel1.Text = DtView.Rows[0]["HsnCodeLevel1Name"].ToString();
-                lblhsncodelevel2.Text = DtView.Rows[0]["HsnCodeLevel2Name"].ToString();
-                lblhsncodelevel3.Text = DtView.Rows[0]["HsnCodeLevel3Name"].ToString();
-                lblhscode4digit.Text = DtView.Rows[0]["HsCode4digit"].ToString();
                 lblhsncode8digit.Text = DtView.Rows[0]["HsnCode8digit"].ToString();
-                lblenduserpartno.Text = DtView.Rows[0]["EndUserPartNumber"].ToString();
                 DataTable dtenduser = Lo.RetriveProductCode("", e.CommandArgument.ToString(), "EndUser", "");
                 if (dtenduser.Rows.Count > 0)
                 {
@@ -310,76 +310,10 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
                     lblpurposeofprocurement.Text = POProc.Substring(1).ToString();
                 }
                 lblprocremarks.Text = DtView.Rows[0]["ProcurmentCategoryRemark"].ToString();
-                DataTable dtQaAgency = Lo.RetriveProductCode("", e.CommandArgument.ToString(), "ProductQAAgency", "");
-                if (dtQaAgency.Rows.Count > 0)
-                {
-                    for (int i = 0; dtQaAgency.Rows.Count > i; i++)
-                    {
-                        QAAValue = QAAValue + "," + dtQaAgency.Rows[i]["SCategoryName"].ToString();
-                    }
-                }
-                if (QAAValue != null)
-                {
-                    lblqaagency.Text = QAAValue.Substring(1).ToString();
-                }
-                lblremarks.Text = DtView.Rows[0]["Remarks"].ToString();
-                DataTable dttesting = Lo.RetriveProductCode("", e.CommandArgument.ToString(), "ProductTesting", "");
-                if (dttesting.Rows.Count > 0)
-                {
-                    for (int i = 0; dttesting.Rows.Count > i; i++)
-                    {
-                        Testing = Testing + "," + dttesting.Rows[i]["SCategoryName"].ToString();
-                    }
-                }
-                if (Testing != null)
-                {
-                    lbltesting.Text = Testing.Substring(1).ToString();
-                }
-                lbltestingremarks.Text = DtView.Rows[0]["TestingRemarks"].ToString();
-                DataTable dtcertification = Lo.RetriveProductCode("", e.CommandArgument.ToString(), "ProductCertification", "");
-                if (dtcertification.Rows.Count > 0)
-                {
-                    for (int i = 0; dtcertification.Rows.Count > i; i++)
-                    {
-                        Certification = Certification + "," + dtcertification.Rows[i]["SCategoryName"].ToString();
-                    }
-                }
-                if (Certification != null)
-                {
-                    lblcertification.Text = Certification.Substring(1).ToString();
-                }
-                lblcertificationremarks.Text = DtView.Rows[0]["CertificationRemark"].ToString();
-                DataTable dtpsdq = Lo.RetriveProductCode("", e.CommandArgument.ToString(), "ProductPSDQ", "");
-                if (dtpsdq.Rows.Count > 0)
-                {
-                    for (int i = 0; dtpsdq.Rows.Count > i; i++)
-                    {
-                        stpsdq = stpsdq + "," + dtpsdq.Rows[i]["SCategoryName"].ToString();
-                    }
-                }
-                if (stpsdq != null)
-                {
-                    lblsupportprovidedbydpsu.Text = stpsdq.Substring(1).ToString();
-                }
-                lblremarksdpsu.Text = DtView.Rows[0]["Remarks"].ToString();
-                DataTable dtFinn = Lo.RetriveProductCode("", e.CommandArgument.ToString(), "ProductFinancial", "");
-                if (dtFinn.Rows.Count > 0)
-                {
-                    for (int i = 0; dtFinn.Rows.Count > i; i++)
-                    {
-                        Financial = Financial + "," + dtFinn.Rows[i]["SCategoryName"].ToString();
-                    }
-                }
-                if (Financial != null)
-                {
-                    lblfinancial.Text = Financial.Substring(1).ToString();
-                }
-                lblfinancialRemark.Text = DtView.Rows[0]["FinancialRemark"].ToString();
+                lbltendersubmission.Text = DtView.Rows[0]["TenderSubmition"].ToString();
                 lbltenderstatus.Text = DtView.Rows[0]["TenderStatus"].ToString();
-                string tensub = DtView.Rows[0]["TenderSubmition"].ToString();
-                if (tensub.ToString() == "Y")
+                if (lbltenderstatus.Text == "Live")
                 {
-                    lbltendersubmission.Text = "Yes";
                     if (DtView.Rows[0]["TenderFillDate"].ToString() != "")
                     {
                         DateTime tenderdate = Convert.ToDateTime(DtView.Rows[0]["TenderFillDate"].ToString());
@@ -391,28 +325,7 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
                 }
                 else
                 {
-                    lbltendersubmission.Text = "No";
                     tenderstatus.Visible = false;
-                }
-
-                lbleoistatus.Text = DtView.Rows[0]["EOIStatus"].ToString();
-                string eoisub = DtView.Rows[0]["EOISubmition"].ToString();
-                if (eoisub.ToString() == "Y")
-                {
-                    lbleoisub.Text = "Yes";
-                    if (DtView.Rows[0]["TenderFillDate"].ToString() != "")
-                    {
-                        DateTime eoidate = Convert.ToDateTime(DtView.Rows[0]["EOIFillDate"].ToString());
-                        string eDate = eoidate.ToString("dd-MMM-yyyy");
-                        lbleoidate.Text = eDate.ToString();
-                    }
-                    lbleoiurl.Text = DtView.Rows[0]["TenderUrl"].ToString();
-                    tbleoidate.Visible = true;
-                }
-                else
-                {
-                    lbleoisub.Text = "No";
-                    tbleoidate.Visible = false;
                 }
                 string Nodel1Id = DtView.Rows[0]["NodelDetail"].ToString();
                 if (Nodel1Id.ToString() != "")
@@ -554,7 +467,9 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
                 // code by gk to select indivisual division for the particular unit
                 DataTable dt = Lo.RetriveMasterData(0, mRefNo, "Factory2", 0, "", "", "CompanyName");
                 if (dt.Rows.Count > 0)
+                {
                     ddldivision.SelectedValue = dt.Rows[0]["FactoryRefNo"].ToString();
+                }
                 //end code
                 lblselectdivison.Visible = true;
                 ddldivision.Enabled = false;
@@ -595,7 +510,9 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
                 // code by gk to select indivisual division for the particular unit
                 DataTable dt = Lo.RetriveMasterData(0, mRefNo, "Factory3", 0, "", "", "CompanyName");
                 if (dt.Rows.Count > 0)
+                {
                     ddldivision.SelectedValue = dt.Rows[0]["FactoryRefNo"].ToString();
+                }
                 //end code
                 lblselectdivison.Visible = true;
                 ddldivision.Enabled = false;
@@ -748,7 +665,7 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
     {
         pagingCurrentPage += 1;
         BindGridView();
-    }  
+    }
     protected void btngoto_Click(object sender, EventArgs e)
     {
         if (System.Text.RegularExpressions.Regex.IsMatch(txtpageno.Text, "[^0-9]"))
@@ -786,6 +703,15 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
     {
         if (e.Row.RowType == DataControlRowType.DataRow)
         {
+            HiddenField hfisapproved = (e.Row.FindControl("hfisaaproved") as HiddenField);
+            if (hfisapproved.Value == "Y")
+            {
+                gvproductItem.BackColor = Color.Green;
+            }
+            else if (hfisapproved.Value == "N")
+            {
+                gvproductItem.BackColor = Color.Red;
+            }
             if (objEnc.DecryptData(Session["Type"].ToString()) == "SuperAdmin")
             {
                 LinkButton delpro = ((LinkButton)e.Row.FindControl("lbldel"));

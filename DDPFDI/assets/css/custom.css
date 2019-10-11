@@ -1491,7 +1491,7 @@ form label {
     right: 0;
     top: 0;
     bottom: 0;
-    z-index: 999999;
+    z-index: 99999;
     background: rgba(0,0,0,0.5);
 }
 
@@ -1989,7 +1989,7 @@ form label {
     right: 0;
     top: 0;
     bottom: 0;
-    z-index: 9999;
+    z-index: 99999;
     background: rgba(0,0,0,0.5);
 }
 
@@ -2173,7 +2173,7 @@ form label {
     right: 0;
     top: 0;
     bottom: 0;
-    z-index: 9999;
+    z-index: 9999999;
     background: rgba(0,0,0,0.5);
 }
 
@@ -2219,6 +2219,10 @@ form label {
 
 .bg-purple td {
     background-color: #4caf50 !important;
+    color: white;
+}
+.bg-red td {
+    background-color: #f51c04 !important;
     color: white;
 }
 
@@ -2591,4 +2595,25 @@ form label {
 {
 z-index:99999;
 }
+
+.note-editor .btn { min-width: auto !important}
+
+.cat-filter { display:flex; padding: 10px 0; flex-wrap:wrap; z-index:99999;}
+.cat-filter .cat-common-box { margin-right: 10px; position: relative; margin-bottom:10px; z-index:99999;}
+.cat-filter .cat-common-box input[type="checkbox"] ,.cat-filter .cat-common-box input[type="radio"] { margin-top:0; margin-right: 5px !important;}
+.cat-filter .cat-common-box label { margin-bottom: 0; display: inline-block; align-items:center; text-transform: uppercase;}
+.cat-filter .cat-common-box  .custom-checkbox { padding: 0px;}
+.cat-filter .cat-common-box  .custom-checkbox table td { white-space:nowrap;}
+.cat-filter .cat-common-box .custom-checkbox table td { padding: 3px 5px;}
+.cat-filter .cat-common-box .custom-checkbox table tr td { background: #ccc;}
+.cat-filter .cat-common-box .custom-checkbox table tr:nth-child(odd) td {
+    background:#ddd;
+}
+
+.cat-filter .cat-common-box input[type=radio] + label {
+    margin: 0.2em;
+    cursor: pointer;
+    padding: 0.2em;
+}
+
 
