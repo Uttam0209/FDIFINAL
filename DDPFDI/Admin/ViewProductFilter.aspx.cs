@@ -7,6 +7,8 @@ using System.Drawing;
 using System.IO;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Configuration;
+using System.Web.Configuration;
 
 public partial class Admin_ViewProductFilter : System.Web.UI.Page
 {
@@ -18,10 +20,12 @@ public partial class Admin_ViewProductFilter : System.Web.UI.Page
     DataUtility Co = new DataUtility();
     private Cryptography Encrypt = new Cryptography();
     private PagedDataSource pgsource = new PagedDataSource();
+    HybridDictionary HyLoginStatus = new HybridDictionary();
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
         {
+
             if (Session["User"] != null)
             {
                 if (Request.QueryString["id"] != null)
@@ -49,7 +53,6 @@ public partial class Admin_ViewProductFilter : System.Web.UI.Page
                 BindCountry();
                 BindNSC();
                 BindHSN();
-                BindDPSUNO();
                 BindSearchKeyword();
             }
             else
@@ -57,6 +60,28 @@ public partial class Admin_ViewProductFilter : System.Web.UI.Page
                 ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "ErrorMssgPopup('Session Expired,Please login again');window.location='Login'", true);
             }
         }
+    }
+    protected void lbllogout_Click(object sender, EventArgs e)
+    {
+        Logoutstatus();
+    }
+    protected void Logoutstatus()
+    {
+        try
+        {
+            HyLoginStatus["LoginUser"] = Encrypt.DecryptData(Session["User"].ToString());
+            HyLoginStatus["IsLogedIn"] = "N";
+            DateTime Date = Convert.ToDateTime(DateTime.Now);
+            string dateformat = Date.ToString("yyyy-MM-dd hh:mm:ss");
+            HyLoginStatus["IsLogedOutTime"] = dateformat.ToString();
+            string InsertLogOutStatus = Lo.SaveLogoutstatus(HyLoginStatus, out  _sysMsg, out  _msg);
+            Session.Clear();
+            Session.Abandon();
+            Session.RemoveAll();
+            Response.RedirectToRoute("Login");
+        }
+        catch (Exception ex)
+        { Response.RedirectToRoute("Login"); }
     }
     protected void UpdateDtGridValue()
     {
@@ -110,6 +135,8 @@ public partial class Admin_ViewProductFilter : System.Web.UI.Page
             BindProduct(hfmref.Value);
         }
     }
+    int n1 = 1;
+    int n2 = 500;
     protected void BindProduct(string RefNo)
     {
         DtGrid = Lo.GetDashboardData("Product", "");
@@ -118,8 +145,7 @@ public partial class Admin_ViewProductFilter : System.Web.UI.Page
             UpdateDtGridValue();
             if (hfmref.Value != "")
             {
-                DataView dv = new DataView(DtGrid);
-                // code to filter row role wise
+                DataView dv = new DataView(DtGrid, "ROW_NUMBER >'" + n1 + "' And  ROW_NUMBER<='" + n2 + "'", "", DataViewRowState.CurrentRows);
                 if (Request.QueryString["strangone"] != null)
                 {
                     dv.RowFilter = "CompanyRefNo='" + hfmref.Value + "'";
@@ -136,7 +162,6 @@ public partial class Admin_ViewProductFilter : System.Web.UI.Page
                 {
                     dv.RowFilter = "UnitRefNo='" + hfmref.Value + "'";
                 }
-
                 dv.Sort = "LastUpdated desc,CompanyName asc,FactoryName asc";
                 DataTable dtads = dv.ToTable();
                 dtads.Columns.Add("TopImages", typeof(string));
@@ -155,19 +180,18 @@ public partial class Admin_ViewProductFilter : System.Web.UI.Page
                 }
                 pgsource.DataSource = dtads.DefaultView;
                 pgsource.AllowPaging = true;
-                pgsource.PageSize = 100;
+                pgsource.PageSize = 500;
                 pgsource.CurrentPageIndex = pagingCurrentPage;
                 ViewState["totpage"] = pgsource.PageCount;
                 lblpaging.Text = "Page " + (pagingCurrentPage + 1) + " of " + pgsource.PageCount;
+                lbltotal.Text = "Showing  " + gvproduct.Rows.Count.ToString() + " result from page " + (pagingCurrentPage + 1) + " out of " + pgsource.PageCount + " pages";
                 lnkbtnPgPrevious.Enabled = !pgsource.IsFirstPage;
                 lnkbtnPgNext.Enabled = !pgsource.IsLastPage;
                 pgsource.DataSource = dtads.DefaultView;
-                gvproduct.DataSource = pgsource;
+                gvproduct.DataSource = dtads.DefaultView;
                 gvproduct.DataBind();
                 divpageindex.Visible = true;
-                lbltotal.Text = "Showing  " + gvproduct.Rows.Count.ToString() + " result from page " + (pagingCurrentPage + 1) + " out of " + pgsource.PageCount + " pages";
                 divProductGrid.Visible = true;
-
             }
             else
             {
@@ -175,13 +199,8 @@ public partial class Admin_ViewProductFilter : System.Web.UI.Page
                 {
                     if (Encrypt.DecryptData(Request.QueryString["id"].ToString()) == "PI")
                     {
-                        DataView dv = new DataView(DtGrid)
-                        {
-                            RowFilter = "IsIndeginized='Y'",
-                            Sort = "LastUpdated desc,CompanyName asc,FactoryName asc"
-                        };
-
-                        DataTable dtads = dv.ToTable();
+                        DataView dv1 = new DataView(DtGrid, "ROW_NUMBER >='" + n1 + "' And  ROW_NUMBER<='" + n2 + "' or IsIndeginized='Y'", "LastUpdated desc,CompanyName asc,FactoryName asc", DataViewRowState.CurrentRows);
+                        DataTable dtads = dv1.ToTable();
                         dtads.Columns.Add("TopImages", typeof(string));
                         for (int i = 0; dtads.Rows.Count > i; i++)
                         {
@@ -198,24 +217,20 @@ public partial class Admin_ViewProductFilter : System.Web.UI.Page
                         }
                         pgsource.DataSource = dtads.DefaultView;
                         pgsource.AllowPaging = true;
-                        pgsource.PageSize = 100;
+                        pgsource.PageSize = 500;
                         pgsource.CurrentPageIndex = pagingCurrentPage;
                         ViewState["totpage"] = pgsource.PageCount;
                         lblpaging.Text = "Page " + (pagingCurrentPage + 1) + " of " + pgsource.PageCount;
+                        lbltotal.Text = "Showing  " + pgsource.PageSize + " result from page " + (pagingCurrentPage + 1) + " out of " + pgsource.PageCount + " pages";
                         lnkbtnPgPrevious.Enabled = !pgsource.IsFirstPage;
                         lnkbtnPgNext.Enabled = !pgsource.IsLastPage;
                         pgsource.DataSource = dtads.DefaultView;
-                        gvproduct.DataSource = pgsource;
+                        gvproduct.DataSource = dtads.DefaultView;
                     }
                     else if (Encrypt.DecryptData(Request.QueryString["id"].ToString()) == "M2")
                     {
-                        DataView dv = new DataView(DtGrid)
-                        {
-                            RowFilter = "PurposeofProcurement like '%25%'",
-                            Sort = "LastUpdated desc,CompanyName asc,FactoryName asc"
-                        };
-
-                        DataTable dtads = dv.ToTable();
+                        DataView dv2 = new DataView(DtGrid, "ROW_NUMBER >='" + n1 + "' And  ROW_NUMBER<='" + n2 + "' or PurposeofProcurement like '%25%'", "LastUpdated desc,CompanyName asc,FactoryName asc", DataViewRowState.CurrentRows);
+                        DataTable dtads = dv2.ToTable();
                         dtads.Columns.Add("TopImages", typeof(string));
                         for (int i = 0; dtads.Rows.Count > i; i++)
                         {
@@ -232,18 +247,20 @@ public partial class Admin_ViewProductFilter : System.Web.UI.Page
                         }
                         pgsource.DataSource = dtads.DefaultView;
                         pgsource.AllowPaging = true;
-                        pgsource.PageSize = 100;
+                        pgsource.PageSize = 500;
                         pgsource.CurrentPageIndex = pagingCurrentPage;
                         ViewState["totpage"] = pgsource.PageCount;
                         lblpaging.Text = "Page " + (pagingCurrentPage + 1) + " of " + pgsource.PageCount;
+                        lbltotal.Text = "Showing  " + pgsource.PageSize + " result from page " + (pagingCurrentPage + 1) + " out of " + pgsource.PageCount + " pages";
                         lnkbtnPgPrevious.Enabled = !pgsource.IsFirstPage;
                         lnkbtnPgNext.Enabled = !pgsource.IsLastPage;
                         pgsource.DataSource = dtads.DefaultView;
-                        gvproduct.DataSource = pgsource;
+                        gvproduct.DataSource = dtads.DefaultView;
                     }
                     else
                     {
-                        DataTable dtads = DtGrid;
+                        DataView dv3 = new DataView(DtGrid, "ROW_NUMBER >='" + n1 + "' And  ROW_NUMBER<='" + n2 + "'", "", DataViewRowState.CurrentRows);
+                        DataTable dtads = dv3.ToTable();
                         dtads.Columns.Add("TopImages", typeof(string));
                         for (int i = 0; dtads.Rows.Count > i; i++)
                         {
@@ -258,20 +275,20 @@ public partial class Admin_ViewProductFilter : System.Web.UI.Page
                                 dtads.Rows[i]["TopImages"] = "assets/images/Noimage.png";
                             }
                         }
-                        pgsource.DataSource = dtads.DefaultView;
+                        pgsource.DataSource = DtGrid.DefaultView;
                         pgsource.AllowPaging = true;
-                        pgsource.PageSize = 100;
+                        pgsource.PageSize = 500;
                         pgsource.CurrentPageIndex = pagingCurrentPage;
                         ViewState["totpage"] = pgsource.PageCount;
                         lblpaging.Text = "Page " + (pagingCurrentPage + 1) + " of " + pgsource.PageCount;
+                        lbltotal.Text = "Showing  " + pgsource.PageSize + " result from page " + (pagingCurrentPage + 1) + " out of " + pgsource.PageCount + " pages";
                         lnkbtnPgPrevious.Enabled = !pgsource.IsFirstPage;
                         lnkbtnPgNext.Enabled = !pgsource.IsLastPage;
                         pgsource.DataSource = dtads.DefaultView;
-                        gvproduct.DataSource = pgsource;
+                        gvproduct.DataSource = dtads.DefaultView;
                     }
                     gvproduct.DataBind();
                     divpageindex.Visible = true;
-                    lbltotal.Text = "Showing  " + gvproduct.Rows.Count.ToString() + " result from page " + (pagingCurrentPage + 1) + " out of " + pgsource.PageCount + " pages";
                     divProductGrid.Visible = true;
                 }
             }
@@ -471,6 +488,8 @@ public partial class Admin_ViewProductFilter : System.Web.UI.Page
     {
         txtpageno.Text = "";
         pagingCurrentPage -= 1;
+        n2 = Convert.ToInt16(pagingCurrentPage) * Convert.ToInt16(500);
+        n1 = Convert.ToInt16(n2 - 500);
         if (hfmtype.Value == "P")
         { BindProduct(hfmref.Value); }
         else if (hfmtype.Value == "PI")
@@ -483,6 +502,8 @@ public partial class Admin_ViewProductFilter : System.Web.UI.Page
         pagingCurrentPage += 1;
         int txtpage = Convert.ToInt32(pagingCurrentPage) + 1;
         txtpageno.Text = txtpage.ToString();
+        n2 = Convert.ToInt16(txtpage) * Convert.ToInt16(500);
+        n1 = Convert.ToInt16(n2 - 500);
         if (hfmtype.Value == "P")
         { BindProduct(hfmref.Value); }
         else if (hfmtype.Value == "PI")
@@ -518,6 +539,8 @@ public partial class Admin_ViewProductFilter : System.Web.UI.Page
         {
             int txtpage = Convert.ToInt32(txtpageno.Text) - 1;
             pagingCurrentPage = Convert.ToInt32(txtpage.ToString());
+            n2 = Convert.ToInt16(pagingCurrentPage + 1) * Convert.ToInt16(500);
+            n1 = Convert.ToInt16(n2 + 1 - 500);
             if (hfmtype.Value == "P")
             { BindProduct(hfmref.Value); }
             else if (hfmtype.Value == "PI")
@@ -695,14 +718,7 @@ public partial class Admin_ViewProductFilter : System.Web.UI.Page
             Co.FillRadioBoxList(rbhsncode, dthsn, "HsnCode8digit", "HsnCode8digit");
         }
     }
-    protected void BindDPSUNO()
-    {
-        DataTable dtdpsu = Lo.RetriveFilterCode(hfmref.Value, "", "DPSU");
-        if (dtdpsu.Rows.Count > 0)
-        {
-            Co.FillRadioBoxList(rbdpsuno, dtdpsu, "DPSUPartNumber", "DPSUPartNumber");
-        }
-    }
+
     protected void BindSearchKeyword()
     {
         DataTable dtsearchkey = Lo.RetriveFilterCode(hfmref.Value, "", "SearchKeyword");
@@ -853,13 +869,6 @@ public partial class Admin_ViewProductFilter : System.Web.UI.Page
             dr["Value"] = "'" + rbhsncode.SelectedItem.Value + "'";
             insert.Rows.Add(dr);
         }
-        if (rbdpsuno.SelectedIndex != -1)
-        {
-            dr = insert.NewRow();
-            dr["Column"] = "P.DPSUPartNumber" + "="; ;
-            dr["Value"] = "'" + rbdpsuno.SelectedItem.Value + "'";
-            insert.Rows.Add(dr);
-        }
         if (rboemcountry.SelectedIndex != -1)
         {
             dr = insert.NewRow();
@@ -1003,4 +1012,45 @@ public partial class Admin_ViewProductFilter : System.Web.UI.Page
         BindProduct(hfmref.Value);
     }
     #endregion
+    protected void lbldownloadexcel_Click(object sender, EventArgs e)
+    {
+        DtGrid = Lo.GetDashboardData("Product", "");
+        DataView dv = new DataView(DtGrid);
+        if (hfmtype.Value == "PI")
+        {
+            dv.RowFilter = "IsIndeginized='Y'";
+        }
+        else if (hfmtype.Value == "M2")
+        {
+            dv.RowFilter = "PurposeofProcurement like'%25%'";
+        }
+        if (Encrypt.DecryptData(Session["Type"].ToString()) != "Admin" && Encrypt.DecryptData(Session["Type"].ToString()) != "SuperAdmin")
+        {
+            if (DtGrid.Rows.Count > 0)
+            {
+                this.UpdateDtGridValue();
+                // code to filter row role wise
+                if (Encrypt.DecryptData(Session["Type"].ToString()).ToUpper() == "COMPANY")
+                    dv.RowFilter = "CompanyRefNo='" + Session["CompanyRefNo"].ToString() + "'";
+                else if (Encrypt.DecryptData(Session["Type"].ToString()).ToUpper() == "DIVISION")
+                    dv.RowFilter = "FactoryRefNo='" + Session["CompanyRefNo"].ToString() + "'";
+                else
+                    dv.RowFilter = "UnitRefNo='" + Session["CompanyRefNo"].ToString() + "'";
+            }
+        }
+        dv.Sort = "CompanyName asc,FactoryName asc";
+        //renaming colm for user                
+        dv.Table.Columns["FactoryName"].ColumnName = "DivisionName";
+        try
+        {
+            // int[] iColumns = { 10, 9, 4, 14, 18, 19, 20, 21, 22, 24, 25 };
+            int[] iColumns = { 1, 3, 5, 6, 8, 10, 18, 19, 20, 21, 59, 23, 55, 58, 56, 57, 60 };
+            RKLib.ExportData.Export objExport = new RKLib.ExportData.Export("Web");
+            objExport.ExportDetails(dv.ToTable(), iColumns, RKLib.ExportData.Export.ExportFormat.Excel, "Product.xls");
+        }
+        catch (Exception ex)
+        {
+
+        }
+    }
 }

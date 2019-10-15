@@ -1324,7 +1324,7 @@
 
 
     var _intVal = function (s) {
-        var integer = parseInt(s, 100);
+        var integer = parseInt(s, 500);
         return !isNaN(integer) && isFinite(s) ? integer : null;
     };
 
@@ -1852,7 +1852,7 @@
             // IE6/7 will oversize a width 100% element inside a scrolling element, to
             // include the width of the scrollbar, while other browsers ensure the inner
             // element is contained without forcing scrolling
-            browser.bScrollOversize = inner[0].offsetWidth === 100 && outer[0].clientWidth !== 100;
+            browser.bScrollOversize = inner[0].offsetWidth === 500 && outer[0].clientWidth !== 500;
 
             // In rtl text layout, some browsers (most, but not all) will place the
             // scrollbar on the left, rather than the right.
@@ -3903,8 +3903,8 @@
         }
 
         _fnClearTable(settings);
-        settings._iRecordsTotal = parseInt(recordsTotal, 100);
-        settings._iRecordsDisplay = parseInt(recordsFiltered, 100);
+        settings._iRecordsTotal = parseInt(recordsTotal, 500);
+        settings._iRecordsDisplay = parseInt(recordsFiltered, 500);
 
         for (var i = 0, ien = data.length ; i < ien ; i++) {
             _fnAddData(settings, data[i]);
@@ -4551,7 +4551,7 @@
 
 
     function _fnLengthChange(settings, val) {
-        var len = parseInt(val, 100);
+        var len = parseInt(val, 500);
         settings._iDisplayLength = len;
 
         _fnLengthOverflow(settings);
@@ -5462,7 +5462,7 @@
             // IE6/7 will crash if we bind a resize event handler on page load.
             // To be removed in 1.11 which drops IE6/7 support
             if (ie67) {
-                setTimeout(bindResize, 1000);
+                setTimeout(bindResize, 500);
             }
             else {
                 bindResize();
@@ -6070,7 +6070,7 @@
 
             // Reject old data
             var duration = settings.iStateDuration;
-            if (duration > 0 && s.time < +new Date() - (duration * 1000)) {
+            if (duration > 0 && s.time < +new Date() - (duration * 500)) {
                 callback();
                 return;
             }
@@ -8159,7 +8159,7 @@
                 switch (match[2]) {
                     case 'visIdx':
                     case 'visible':
-                        var idx = parseInt(match[1], 100);
+                        var idx = parseInt(match[1], 500);
                         // Visible index given, convert to column index
                         if (idx < 0) {
                             // Counting from the right
@@ -8819,8 +8819,8 @@
         var iThis, iThat;
 
         for (var i = 0, iLen = aThat.length ; i < iLen ; i++) {
-            iThis = parseInt(aThis[i], 100) || 0;
-            iThat = parseInt(aThat[i], 100) || 0;
+            iThis = parseInt(aThis[i], 500) || 0;
+            iThat = parseInt(aThat[i], 500) || 0;
 
             // Parts are the same, keep comparing
             if (iThis === iThat) {
@@ -9863,7 +9863,7 @@
 		 *      } );
 		 *    } );
 		 */
-        "aLengthMenu": [100, 125, 150, 200],
+        "aLengthMenu": [500, 1000, 1500, 2000],
 
 
         /**
@@ -10867,7 +10867,7 @@
 		 *      } );
 		 *    } )
 		 */
-        "iDisplayLength": 100,
+        "iDisplayLength": 500,
 
 
         /**
@@ -13314,7 +13314,7 @@
 		 *  @type int
 		 *  @default 10
 		 */
-        "_iDisplayLength": 100,
+        "_iDisplayLength": 500,
 
         /**
 		 * Paging start point - aiDisplay index
@@ -14621,7 +14621,7 @@
                     flo = flo.toFixed(precision);
                     d = Math.abs(flo);
 
-                    var intPart = parseInt(d, 100);
+                    var intPart = parseInt(d, 500);
                     var floatPart = precision ?
 						decimal + (d - intPart).toFixed(precision).substring(2) :
 						'';

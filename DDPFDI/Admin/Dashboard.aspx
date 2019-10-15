@@ -328,7 +328,11 @@
                                                                     <%#Container.DataItemIndex+1 %>
                                                                 </ItemTemplate>
                                                             </asp:TemplateField>
-                                                            <asp:BoundField DataField="CompName" HeaderText="ORGANIZATION" NullDisplayText="#" />
+                                                            <asp:TemplateField HeaderText="ORGANIZATION">
+                                                                <ItemTemplate>
+                                                                    <asp:LinkButton runat="server" ID="lblorg" Text='<%#Eval("CompName")%>' NullDisplayText="#" CommandName="compgraph" CommandArgument='<%#Eval("CompanyRefNo") %>'></asp:LinkButton>
+                                                                </ItemTemplate>
+                                                            </asp:TemplateField>
                                                             <asp:BoundField DataField="TotCompProd" HeaderText="Company ITEMS" NullDisplayText="#" />
                                                             <asp:TemplateField HeaderText="Division ITEMS">
                                                                 <ItemTemplate>

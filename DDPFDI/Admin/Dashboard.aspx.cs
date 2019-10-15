@@ -260,7 +260,7 @@ public partial class Admin_Dashboard : System.Web.UI.Page
         try
         {
             // int[] iColumns = { 10, 9, 4, 14, 18, 19, 20, 21, 22, 24, 25 };
-            int[] iColumns = { 1, 3, 5, 6, 8, 10, 18, 19, 20, 21, 59, 23, 55, 58, 56, 57, 60 };
+            int[] iColumns = { 1, 3, 5, 6, 8, 10, 17, 18, 19, 20, 21, 24, 57, 60, 58, 59, 62, 61, 55,};
             RKLib.ExportData.Export objExport = new RKLib.ExportData.Export("Web");
             objExport.ExportDetails(dv.ToTable(), iColumns, RKLib.ExportData.Export.ExportFormat.Excel, "Product.xls");
         }
@@ -306,7 +306,7 @@ public partial class Admin_Dashboard : System.Web.UI.Page
     {
         if (e.CommandName == "ViewComp")
         {
-            Response.Redirect("Dashboard-View?id=" + HttpUtility.UrlEncode(objCrypto.EncryptData("P")) + "&strangone=" + HttpUtility.UrlEncode(objCrypto.EncryptData(e.CommandArgument.ToString())));
+            Response.Redirect("ViewProductFilterDetail?id=" + HttpUtility.UrlEncode(objCrypto.EncryptData("P")) + "&strangone=" + HttpUtility.UrlEncode(objCrypto.EncryptData(e.CommandArgument.ToString())));
         }
         else if (e.CommandName == "divprod")
         {
@@ -327,6 +327,10 @@ public partial class Admin_Dashboard : System.Web.UI.Page
                 gvcount.DataBind();
                 ScriptManager.RegisterStartupScript(this, GetType(), "divCompany", "showPopup();", true);
             }
+        }
+        else if (e.CommandName == "compgraph")
+        {
+            Response.Redirect("ProductGraph?id=" + HttpUtility.UrlEncode(objCrypto.EncryptData("G")) + "&strangone=" + HttpUtility.UrlEncode(objCrypto.EncryptData(e.CommandArgument.ToString())));
         }
     }
     protected void gvcount_RowCreated(object sender, GridViewRowEventArgs e)
