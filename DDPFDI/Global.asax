@@ -49,7 +49,6 @@
     }
     static void RegisterRoutes(RouteCollection routes)
     {
-        //routes.MapPageRoute("Faq", "Faq", "~/Admin/website manual.pdf", true);
         routes.MapPageRoute("Login", "Login", "~/Default.aspx", true);
         routes.MapPageRoute("PageNotFound", "PageNotFound", "~/404.aspx", true);
         routes.MapPageRoute("Error", "Error", "~/Error.aspx", true);
@@ -101,5 +100,6 @@
         routes.MapPageRoute("ActiveLogout", "ActiveLogout", "~/Admin/ActiveLogin.aspx", true);
         routes.MapPageRoute("ProdVerifiUpdate", "ProdVerifiUpdate", "~/Admin/ProductApprovedDisApproved.aspx", true);
         routes.MapPageRoute("ViewProductFilterDetail", "ViewProductFilterDetail", "~/Admin/ViewProductFilter.aspx", true);
+        routes.MapPageRoute("ProductGraph", "ProductGraph", "~/Admin/ProductGraph.aspx", true);
     }    
 </script>

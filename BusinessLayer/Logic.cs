@@ -211,6 +211,17 @@ namespace BusinessLayer
         {
             return SqlHelper.Instance.RetriveFilterCode(CompRefNo, SearchValue, Criteria);
         }
+        public DataTable GetGraph(string CompRefNo, string techvalue, string Criteria)
+        {
+            if (Criteria == "ViewGraph")
+            {
+                return SqlHelper.Instance.GetExecuteData("select scategoryname,SUM(total) as Total,Techlevel from fn_ProductGrpah('" + CompRefNo + "') group by scategoryname,techlevel ");
+            }
+            else
+            {
+                return SqlHelper.Instance.GetExecuteData("select scategoryname,SUM(total) as Total,Techlevel from fn_ProductGrpahII('" + CompRefNo + "','" + techvalue + "') group by scategoryname,techlevel ");
+            }
+        }
         public DataTable GetDashboardDataApproveDisapproveItem(string Purpose, string Search, string type)
         {
             return SqlHelper.Instance.GetDashboardDataApproveDisapproveItem(Purpose, Search, type);

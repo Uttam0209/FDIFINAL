@@ -1363,7 +1363,7 @@ namespace DataAccessLayer
                 }
             }
         }
-        public DataTable RetriveFilterCode(string CompRefNo,string SearchValue,string Criteria)
+        public DataTable RetriveFilterCode(string CompRefNo, string SearchValue, string Criteria)
         {
             using (DbConnection dbCon = db.CreateConnection())
             {
