@@ -29,7 +29,10 @@ public partial class _Default : System.Web.UI.Page
     string Getsystem = "";
     #endregion
     protected void Page_Load(object sender, EventArgs e)
-    { }
+    {
+         //string a = objEnc.EncryptData("Data Source=192.168.0.48;Initial Catalog=ddp_fdifinal;User ID=sa;Password=dpsql@123");
+       // string b = objEnc.DecryptData("aL88ocdv5/Ixdr/+Dtk9vguy4XrszcqvQRVrxD/UURYbfxfZoNQ/slH40ZNMn79SQzU69Y+PJE2GhK6b37iKbSavaXlq/Ptl6qjBEDY0BJF2LUCW1YbxmEnDlPlryODw");
+    }
     #region "Login Code"
     public static bool IsValidEmailId(string InputEmail)
     {
