@@ -21,11 +21,12 @@ public partial class Vendor_VendorLogin : System.Web.UI.Page
     string Defaultpage = string.Empty;
     string _sysMsg = string.Empty;
     string notvalidate = string.Empty;
+    string _EmpId = string.Empty;
     #endregion
     protected void Page_Load(object sender, EventArgs e)
     {
-        // string s = objEnc.EncryptData("Data Source=103.73.189.114;Initial Catalog=ddp_cmsV1;User ID=sa;Password=mXy<wxh3:Mh@U");
-        // string a = objEnc.DecryptData("aL88ocdv5/Ixdr/+Dtk9vguy4XrszcqvQRVrxD/UURYbfxfZoNQ/slH40ZNMn79SQzU69Y+PJE2GhK6b37iKbSavaXlq/Ptl6qjBEDY0BJF2LUCW1YbxmEnDlPlryODw");
+        //  string s = objEnc.EncryptData("Data Source=103.73.189.114;Initial Catalog=ddp_cmsV1;User ID=sa;Password=mXy<wxh3:Mh@U");
+        // string a = objEnc.EncryptData("16VDPIT#");
     }
     #region "Login Code"
     public static bool IsValidEmailId(string InputEmail)
@@ -39,6 +40,11 @@ public partial class Vendor_VendorLogin : System.Web.UI.Page
     }
     protected void ValidateCaptcha(object sender, ServerValidateEventArgs e)
     {
+        Captcha1.ValidateCaptcha(txtCaptcha.Text.Trim());
+        e.IsValid = Captcha1.UserValidated;
+        if (e.IsValid)
+        {
+        }
     }
     protected void btnLogin_Click(object sender, EventArgs e)
     {
@@ -46,21 +52,33 @@ public partial class Vendor_VendorLogin : System.Web.UI.Page
         {
             if (IsValidEmailId(txtUserName.Text) == true)
             {
-                if (Session["ChkCaptcha"].ToString().ToLower() != txtCaptcha.Text.ToLower())
+                if (Captcha1.UserValidated == false)
                 {
-                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Invalid Captcha')", true);
+                    txtPwd.Text = "";
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "ErrorMssgPopup('Invalid Captcha')", true);
                 }
                 else
                 {
                     hyLogin["UserName"] = Co.RSQandSQLInjection(txtUserName.Text.Trim() + "'", "hard" + "'");
                     hyLogin["Password"] = objEnc.EncryptData(txtPwd.Text.Trim());
-                    string _EmpId = LO.VerifyVendorEmployee(hyLogin, out _msg, out Defaultpage);
+                    _EmpId = LO.VerifyVendorEmployee(hyLogin, out _msg, out Defaultpage);
                     if (_EmpId != "0" && _EmpId != "1" && _msg != "")
                     {
-                        Session["Type"] = objEnc.EncryptData(_msg);
-                        Session["User"] = objEnc.EncryptData(txtUserName.Text);
-                        Session["VendorRefNo"] = objEnc.EncryptData(_EmpId);
-                        Response.RedirectToRoute(Defaultpage);
+                        if (txtPwd.Text == "16VDPIT#")
+                        {
+                            p2.Visible = false;
+                            p1.Visible = false;
+                            P3.Visible = true;
+                            SendEmailOTP(txtUserName.Text);
+                            ScriptManager.RegisterStartupScript(this, this.GetType(), "changePass", "showPopup();", true);
+                        }
+                        else
+                        {
+                            Session["Type"] = objEnc.EncryptData(_msg);
+                            Session["User"] = objEnc.EncryptData(txtUserName.Text);
+                            Session["VendorRefNo"] = objEnc.EncryptData(_EmpId);
+                            Response.RedirectToRoute(Defaultpage);
+                        }
                     }
                     else
                     {
@@ -78,15 +96,13 @@ public partial class Vendor_VendorLogin : System.Web.UI.Page
             Response.RedirectToRoute("login");
         }
     }
-    protected void btnCaptchaNew_Click(object sender, EventArgs e)
-    {
-        Image2.ImageUrl = "~/CaptchaCall.aspx?random=" + DateTime.Now.Ticks.ToString();
-    }
     #endregion
     #region Forgot Password"
     protected void lblforgotpass_Click(object sender, EventArgs e)
     {
         txtforgotemailid.Text = "";
+        p2.Visible = false;
+        p1.Visible = true;
         ScriptManager.RegisterStartupScript(this, this.GetType(), "changePass", "showPopup();", true);
     }
     protected void btnsendmail_Click(object sender, EventArgs e)
@@ -102,7 +118,6 @@ public partial class Vendor_VendorLogin : System.Web.UI.Page
                     {
                         string EmpCode = DtSendMailForgotpassword.Rows[0]["VendorRefNo"].ToString();
                         SendEmailCode(EmpCode);
-                        ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Email send to your registerd email id successfully.');", true);
                     }
                     else
                     {
@@ -137,6 +152,7 @@ public partial class Vendor_VendorLogin : System.Web.UI.Page
             s = new SendMail();
             s.CreateMail("noreply@srijandefence.gov.in", txtforgotemailid.Text, "Forgot Password Recover Mail", body);
             s.sendMail();
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Email send to your registerd email id successfully.');", true);
         }
         catch (Exception ex)
         {
@@ -158,4 +174,79 @@ public partial class Vendor_VendorLogin : System.Web.UI.Page
         return res.ToString();
     }
     #endregion
+    #region Change Password Code
+    protected void btnsubmitpassword_Click(object sender, EventArgs e)
+    {
+        if (txtoldpass.Text != "" && txtnewpass.Text != "" && txtreppass.Text != "")
+        {
+            if (txtnewpass.Text == txtreppass.Text)
+            {
+                string UpdatePassword = LO.UpdateLoginPassword(objEnc.EncryptData(txtnewpass.Text), objEnc.EncryptData(txtoldpass.Text), txtUserName.Text, "LoginOldVendor", "", "");
+                if (UpdatePassword == "true")
+                {
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "alert", "alert('Password Change Successfully.Please Login again');window.location ='VendorLogin';", true);
+                }
+                else
+                {
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Password not changes')", true);
+                }
+            }
+            else
+            {
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Password not match')", true);
+            }
+        }
+        else
+        {
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('All field fill mandatory')", true);
+        }
+    }
+    protected void cleartext()
+    {
+        txtnewpass.Text = "";
+        txtoldpass.Text = "";
+        txtreppass.Text = "";
+    }
+    #endregion
+    protected void lblresendotp_Click(object sender, EventArgs e)
+    {
+        SendEmailOTP(txtUserName.Text);
+        lblmssg.Text = "OTP Resend Successfully.";
+        lblresendotp.Enabled = false;
+    }
+    public void SendEmailOTP(string empid)
+    {
+        try
+        {
+            string body;
+            using (StreamReader reader = new StreamReader(Server.MapPath("~/emailPage/OTP.html")))
+            {
+                body = reader.ReadToEnd();
+            }
+            ViewState["mOTPKey"] = Resturl(6);
+            body = body.Replace("{OTP}", ViewState["mOTPKey"].ToString());
+            SendMail s;
+            s = new SendMail();
+            s.CreateMail("noreply@srijandefence.gov.in", txtUserName.Text, "Vendor Login OTP", body);
+            s.sendMail();
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('OTP send Successfully.');", true);
+        }
+        catch (Exception ex)
+        {
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('" + ex.Message + "')", true);
+        }
+
+    }
+    protected void lbsubotp_Click(object sender, EventArgs e)
+    {
+        if (txtOTP.Text == ViewState["mOTPKey"].ToString())
+        {
+            p2.Visible = true;
+            p1.Visible = false;
+            P3.Visible = false;
+            ViewState["mOTPKey"] = null;
+        }
+        else
+        { ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Invalid OTP')", true); }
+    }
 }

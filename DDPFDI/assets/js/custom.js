@@ -137,6 +137,7 @@
     //Select 2 Dropwdown
     $("#ContentPlaceHolder1_txtcountry").select2({});
     $("#ContentPlaceHolder1_ddlcountry").select2({});
+    $("#ddlcountry").select2({});
     $(document).ready(function () {
         BindControls();
     });
@@ -156,6 +157,16 @@
         //  $("#ContentPlaceHolder1_ddlenduser").select2({});
         $("#ContentPlaceHolder1_ddlmaster").select2({});
         $("#ContentPlaceHolder1_ddlfacotry").select2({});
+        $("#ddlsearchkeywordsfilter").select2({});
+        $("#ddlcomp").select2({});
+        $("#ddldivision").select2({});
+        $("#ddlunit").select2({});
+        $("#ddlchkenduser").select2({});
+        $("#ddldefplatform").select2({});
+        $("#ddlnameofdefplat").select2({});
+        $("#ddlprodindustrydomain").select2({});
+        $("#ddlprodindussubdomain").select2({});
+
     }
     var req = Sys.WebForms.PageRequestManager.getInstance();
     req.add_endRequest(function () {
@@ -186,6 +197,8 @@
         $('#ContentPlaceHolder1_gvmastercategoryupdate').DataTable();
         $('#ContentPlaceHolder1_gvmastersubcategory').DataTable();
         $('#ContentPlaceHolder1_gvcount').DataTable();
+        $('#ContentPlaceHolder1_gvproduct').DataTable();
+        $('#ContentPlaceHolder1_gvproditemdetail').DataTable();
     }
     $('[data-fancybox="Prodgridviewgellry"]').fancybox({
         // Options will go here

@@ -203,6 +203,14 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
                 lblnsngroup.Text = DtView.Rows[0]["ProdLevel1Name"].ToString();
                 lblnsngroupclass.Text = DtView.Rows[0]["ProdLevel2Name"].ToString();
                 lblclassitem.Text = DtView.Rows[0]["ProdLevel3Name"].ToString();
+                if (lblclassitem.Text != "")
+                {
+                    lblviewitemcode.Visible = true;
+                }
+                else
+                {
+                    lblviewitemcode.Visible = false;
+                }
                 lblnsccode.Text = DtView.Rows[0]["NSCCode"].ToString();
                 lblniincode.Text = DtView.Rows[0]["NIINCode"].ToString();
                 lblproductdescription.Text = DtView.Rows[0]["ProductDescription"].ToString();
@@ -357,6 +365,8 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
                         lblfax2.Text = dtNodal2.Rows[0]["NodalOfficerFax"].ToString();
                     }
                 }
+                Panel1.Visible = true;
+                pan.Visible = false;
                 ScriptManager.RegisterStartupScript(this, GetType(), "changePass", "showPopup();", true);
             }
         }
@@ -723,5 +733,27 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
                 delpro.Visible = false;
             }
         }
+    }
+    protected void lblviewitemcode_Click(object sender, EventArgs e)
+    {
+        DataTable DtViewNewCode = Lo.RetrivenewcategortFIIG_No(lblclassitem.Text, "Found");
+        if (DtViewNewCode.Rows.Count > 0)
+        {
+            gvproditemdetail.DataSource = DtViewNewCode;
+            gvproditemdetail.DataBind();
+            gvproditemdetail.Visible = true;
+            Panel1.Visible = false;
+            pan.Visible = true;
+            ScriptManager.RegisterStartupScript(this, GetType(), "divmodel2", "showPopup3();", true);
+        }
+        else
+        {
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "ErrorMssgPopup('No Record Found')", true);
+        }
+    }
+    protected void btnback_Click(object sender, EventArgs e)
+    {
+        pan.Visible = false;
+        Panel1.Visible = true;
     }
 }

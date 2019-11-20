@@ -1653,8 +1653,7 @@ namespace DataAccessLayer
                       "'" + dtMaster.Rows[k]["UNIT"].ToString() + "','" + dtMaster.Rows[k]["NSN GROUP"].ToString() + "', '" + dtMaster.Rows[k]["NSN GROUP CLASS"].ToString() + "'," +
                       "'" + dtMaster.Rows[k]["ITEM CODE"].ToString() + "','" + dtMaster.Rows[k]["OEM COUNTRY"].ToString() + "','" + dtMaster.Rows[k]["END USER"].ToString() + "'," +
                       "'" + dtMaster.Rows[k]["DEFENCE PLATFORM"].ToString() + "','" + dtMaster.Rows[k]["NAME OF DEFENCE PLATFORM"].ToString() + "','" + dtMaster.Rows[k]["PRODUCT (INDUSTRY DOMAIN)"].ToString() + "'," +
-                      "'" + dtMaster.Rows[k]["PRODUCT (INDUSTRY SUB DOMAIN)"].ToString() + "', '" + dtMaster.Rows[k]["PRODUCT (INDUSTRY 2ND SUB DOMAIN)"].ToString() + "'," +
-                      "'" + dtMaster.Rows[k]["YEAR OF INDIGINISATION"].ToString() + "')");
+                      "'" + dtMaster.Rows[k]["PRODUCT (INDUSTRY SUB DOMAIN)"].ToString() + "', '" + dtMaster.Rows[k]["PRODUCT (INDUSTRY 2ND SUB DOMAIN)"].ToString() + "'," + "'" + dtMaster.Rows[k]["YEAR OF INDIGINISATION"].ToString() + "')");
 
                         dtIds = db.ExecuteDataSet(ids).Tables[0].Copy();
 
@@ -1901,6 +1900,28 @@ namespace DataAccessLayer
                     db.AddInParameter(cmd, "@EstimatedQty", DbType.String, EstimateQuantity);
                     db.AddInParameter(cmd, "@Unit", DbType.String, Unit);
                     db.AddInParameter(cmd, "@EstimatedPrice", DbType.String, Price);
+                    IDataReader dr = db.ExecuteReader(cmd);
+                    DataTable dt = new DataTable();
+                    if (dr != null)
+                        dt.Load(dr);
+                    return dt;
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+        }
+        public DataTable RetrivenewcategortFIIG_No(string Value, string Criteria)
+        {
+            using (DbConnection dbCon = db.CreateConnection())
+            {
+                dbCon.Open();
+                try
+                {
+                    DbCommand cmd = db.GetStoredProcCommand("sp_RetriveFGI");
+                    db.AddInParameter(cmd, "@SCategoryName", DbType.String, Value);
+                    db.AddInParameter(cmd, "@Criteria", DbType.String, Criteria);
                     IDataReader dr = db.ExecuteReader(cmd);
                     DataTable dt = new DataTable();
                     if (dr != null)

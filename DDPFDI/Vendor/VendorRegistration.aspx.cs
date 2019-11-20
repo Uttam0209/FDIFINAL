@@ -57,9 +57,15 @@ public partial class Vendor_VendorRegistration : System.Web.UI.Page
                 if (DtGetRegisVendor.Rows.Count > 0)
                 {
                     txtbusinessname.Text = DtGetRegisVendor.Rows[0]["BusinessName"].ToString();
-                    ddltypeofbusiness.Items.FindByValue(DtGetRegisVendor.Rows[0]["TypeOfBuisness"].ToString()).Selected = true;
+                    if (DtGetRegisVendor.Rows[0]["TypeOfBuisness"].ToString() != "")
+                    {
+                        ddltypeofbusiness.Items.FindByValue(DtGetRegisVendor.Rows[0]["TypeOfBuisness"].ToString()).Selected = true;
+                    }
                     ddltypeofbusiness.SelectedItem.Enabled = false;
-                    ddlbusinesssector.Items.FindByValue(DtGetRegisVendor.Rows[0]["BusinessSector"].ToString()).Selected = true;
+                    if (DtGetRegisVendor.Rows[0]["BusinessSector"].ToString() != "")
+                    {
+                        ddlbusinesssector.Items.FindByValue(DtGetRegisVendor.Rows[0]["BusinessSector"].ToString()).Selected = true;
+                    }
                     txtstreetaddress.Text = DtGetRegisVendor.Rows[0]["StreetAddress"].ToString();
                     txtstreetaddressline2.Text = DtGetRegisVendor.Rows[0]["StreetAddressLine2"].ToString();
                     txtcity.Text = DtGetRegisVendor.Rows[0]["City"].ToString();
@@ -70,10 +76,16 @@ public partial class Vendor_VendorRegistration : System.Web.UI.Page
                     string a = DtGetRegisVendor.Rows[0]["ContactNo"].ToString();
                     var result = a.Substring(a.IndexOf('-') + 1);
                     txtphoneno.Text = result.ToString();
-                    txtfaxstdcode.Text = DtGetRegisVendor.Rows[0]["FaxNo"].ToString().Substring(0, 3);
+                    if (txtfaxstdcode.Text != "")
+                    {
+                        txtfaxstdcode.Text = DtGetRegisVendor.Rows[0]["FaxNo"].ToString().Substring(0, 3);
+                    }
                     string b = DtGetRegisVendor.Rows[0]["FaxNo"].ToString();
                     var result1 = b.Substring(b.IndexOf('-') + 1);
-                    txtfaxphoneno.Text = result1.ToString();
+                    if (txtfaxphoneno.Text != "")
+                    {
+                        txtfaxphoneno.Text = result1.ToString();
+                    }
                     txtgstin.Text = DtGetRegisVendor.Rows[0]["GSTNo"].ToString();
                     txtfirstname.Text = DtGetRegisVendor.Rows[0]["NodalOfficerFirstName"].ToString();
                     txtmiddlename.Text = DtGetRegisVendor.Rows[0]["NodalOfficerMiddleName"].ToString();
@@ -196,7 +208,11 @@ public partial class Vendor_VendorRegistration : System.Web.UI.Page
         {
             testcompinfo.Visible = false;
             othercate.Visible = false;
-
+        }
+        ddltypeofchk.SelectedValue = ddlregiscategory.SelectedValue;
+        if (ddltypeofchk.SelectedItem.Text != "Select")
+        {
+             chklist.Visible = true; 
         }
     }
     protected void chkcertificate_SelectedIndexChanged(object sender, EventArgs e)
@@ -281,8 +297,15 @@ public partial class Vendor_VendorRegistration : System.Web.UI.Page
         {
             lblcin.Text = "Startup Registration No";
         }
+        else if (ddltypeofbusiness.SelectedItem.Value == "10")
+        {
+            divothersdetails.Visible = true;
+        }
         else
+        {
+            divothersdetails.Visible = false;
             divmsmetypeofbuisness.Visible = false;
+        }
 
     }
     protected void chkownership_SelectedIndexChanged(object sender, EventArgs e)
@@ -1890,11 +1913,12 @@ public partial class Vendor_VendorRegistration : System.Web.UI.Page
         {
             DataTable dtCurrentTableTuOver = (DataTable)ViewState["TurnOver"];
             DataRow drCurrentRowNameTuOver = null;
-            if (dtCurrentTableTuOver.Rows.Count > 0)
+            if (dtCurrentTableTuOver.Rows.Count > 0 && dtCurrentTableTuOver.Rows.Count <= 2)
             {
                 for (int i = 1; i <= dtCurrentTableTuOver.Rows.Count; i++)
                 {
                     //extract the TextBox values
+
                     TextBox TextBox1TO = (TextBox)gvTURNOVERDURINGLAST3YEARS.Rows[TOrowIndex].Cells[1].FindControl("txtfinyear");
                     TextBox TextBox2TO = (TextBox)gvTURNOVERDURINGLAST3YEARS.Rows[TOrowIndex].Cells[2].FindControl("txtcurrentasset");
                     TextBox TextBox3TO = (TextBox)gvTURNOVERDURINGLAST3YEARS.Rows[TOrowIndex].Cells[3].FindControl("txtcurrentlibilites");
@@ -1915,6 +1939,10 @@ public partial class Vendor_VendorRegistration : System.Web.UI.Page
                 ViewState["TurnOver"] = dtCurrentTableTuOver;
                 gvTURNOVERDURINGLAST3YEARS.DataSource = dtCurrentTableTuOver;
                 gvTURNOVERDURINGLAST3YEARS.DataBind();
+            }
+            else
+            {
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Max three record add.')", true);
             }
         }
         else

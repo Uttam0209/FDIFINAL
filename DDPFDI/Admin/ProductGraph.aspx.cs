@@ -9,6 +9,7 @@ using System.Web.UI.WebControls;
 using System.Configuration;
 using System.Web.UI.DataVisualization.Charting;
 using BusinessLayer;
+using System.Drawing;
 using Encryption;
 
 public partial class Admin_ProductGraph : System.Web.UI.Page
@@ -17,6 +18,9 @@ public partial class Admin_ProductGraph : System.Web.UI.Page
     DataTable DtGrid = new DataTable();
     DataUtility Co = new DataUtility();
     private Cryptography objEnc = new Cryptography();
+    private PagedDataSource pgsource = new PagedDataSource();
+    string subdomain = "";
+    string RefNo = "";
     protected void Page_Load(object sender, EventArgs e)
     {
         if (Session["Type"] != null || Session["User"] != null)
@@ -56,6 +60,7 @@ public partial class Admin_ProductGraph : System.Web.UI.Page
                 crtCompGraph.Series[0].Points.DataBindXY(x, y);
                 crtCompGraph.Series[0].ChartType = SeriesChartType.StackedColumn;
                 crtCompGraph.ChartAreas["ChartArea1"].Area3DStyle.Enable3D = true;
+                crtCompGraph.ChartAreas["ChartArea1"].AxisX.LabelStyle.Interval = 1;
                 crtCompGraph.Legends[0].Enabled = true;
                 lblmsg.Text = "Total Record Found:- " + DtGrid.Rows.Count.ToString();
                 foreach (DataPoint dp in this.crtCompGraph.Series["Default"].Points)
@@ -103,8 +108,13 @@ public partial class Admin_ProductGraph : System.Web.UI.Page
                 crtSubdomain.Series[0].Points.DataBindXY(x, y);
                 crtSubdomain.Series[0].ChartType = SeriesChartType.StackedColumn;
                 crtSubdomain.ChartAreas["crtsub"].Area3DStyle.Enable3D = true;
+                crtSubdomain.ChartAreas["crtsub"].AxisX.LabelStyle.Interval = 1;
                 crtSubdomain.Legends[0].Enabled = true;
                 lblmsg.Text = "Total Record Found:- " + DtSubGraph.Rows.Count.ToString();
+                foreach (DataPoint dp in this.crtSubdomain.Series["SubDomian"].Points)
+                {
+                    dp.PostBackValue = "#VALX,#VALY";
+                }
                 pan2.Visible = true;
                 pan1.Visible = false;
             }
@@ -120,6 +130,26 @@ public partial class Admin_ProductGraph : System.Web.UI.Page
             lblmsg.Text = "No record found";
             pan2.Visible = false;
             pan1.Visible = false;
+        }
+    }  
+    protected void crtSubdomain_Click(object sender, ImageMapEventArgs e)
+    {
+        string[] pointData = e.PostBackValue.Split(',');
+        subdomain = pointData[0];
+        RefNo = subdomain.ToString();
+        DtGrid = Lo.GetDashboardData("ProdSearchNor", RefNo);
+        if (DtGrid.Rows.Count > 0)
+        {
+            try
+            {
+                int[] iColumns = { 2, 4, 6, 7, 9, 11, 18, 19, 20, 21, 22, 24, 25, 57, 60, 58, 59, 62, 61 };
+                RKLib.ExportData.Export objExport = new RKLib.ExportData.Export("Web");
+                objExport.ExportDetails(DtGrid, iColumns, RKLib.ExportData.Export.ExportFormat.Excel, "ProductIndustryDomian.xls");
+            }
+            catch (Exception ex)
+            {
+
+            }
         }
     }
 }

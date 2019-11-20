@@ -4505,4 +4505,121 @@ div#filter_schedule {
     float: right;
 }
 
-.select2-container { width: 100% !important}
+.select2-container {
+    width: 100% !important;
+}
+
+/*-------16th Oct 2019----------*/
+.contentWithFilter {
+    display: flex;
+}
+
+.filter-sidebar {
+    width: 16%;
+}
+
+.contentWithFilter .box-holder {
+    width: 84%;
+}
+
+.contentWithFilter .oem-content {
+    margin-left: 0;
+}
+
+.contentWithFilter .cat-common-box .btn {
+    width: 100%;
+}
+
+.contentWithFilter .cat-filter .cat-common-box {
+    width: 100%;
+    margin-right: 0;
+}
+
+.filter-sidebar > ul {
+    padding-left: 0;
+}
+
+    .filter-sidebar > ul li {
+        padding: 4px 5px;
+    }
+
+        .filter-sidebar > ul li:nth-child(odd) {
+            background: #ddd;
+        }
+
+.filter-sidebar .card {
+    padding: 8px 10px;
+}
+
+    .filter-sidebar .card:nth-child(odd) {
+        background: #eee;
+    }
+
+    .filter-sidebar .card h5 {
+        margin: 2px 0;
+    }
+
+    .filter-sidebar .card a {
+        text-decoration: none;
+    }
+
+    .filter-sidebar .card i {
+        float: right;
+        color: #285e8e !important;
+    }
+
+.filter-sidebar h2 {
+    padding: 10px 10px;
+    background: #d95459 !important;
+    color: #fff !important;
+    margin: 0;
+}
+
+.filter-sidebar .card label {
+    font-size: 13px;
+    margin-bottom: 0;
+}
+
+.filter-sidebar .card input[type="radio"] {
+    margin-right: 5px;
+}
+
+.filter-sidebar .card table {
+    width: 100%;
+    margin-top: 8px;
+    background: #fff;
+    margin-left: -5px;
+    border-left: 4px solid #5c7399;
+}
+
+    .filter-sidebar .card table td {
+        padding: 5px 0 5px 10px;
+    }
+
+.filter-sidebar .card:nth-child(even) #rbismake2 {
+    background: #e7e7e7 !important;
+}
+
+.filter-sidebar .card:nth-child(even) #rbistender {
+    background: #e7e7e7 !important;
+}
+
+.filter-sidebar .card:nth-child(even) #ddldivision {
+    background: #e7e7e7 !important;
+}
+
+.filter-sidebar .card:nth-child(even) #ddlchkenduser {
+    background: #e7e7e7 !important;
+}
+
+.filter-sidebar .card:nth-child(even) #ddlnameofdefplat {
+    background: #e7e7e7 !important;
+}
+
+.filter-sidebar .card:nth-child(even) #ddlprodindustrydomain {
+    background: #e7e7e7 !important;
+}
+
+.filter-sidebar .card:nth-child(odd) #ddlsearchkeywordsfilter {
+    background: #e7e7e7 !important;
+}

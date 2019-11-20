@@ -39,7 +39,6 @@
             font: normal 14px/18px Arial, Helvetica, sans-serif;
         }
     </style>
-
     <script src="assets/js/jquery-3.4.1.js"></script>
     <script>
         function ErrorMssgPopup(data) {

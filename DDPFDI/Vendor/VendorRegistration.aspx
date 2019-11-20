@@ -2,7 +2,7 @@
 
 <asp:Content ID="ConHead" runat="server" ContentPlaceHolderID="head"></asp:Content>
 <asp:Content ID="Innercontent" runat="server" ContentPlaceHolderID="ContentPlaceHolder1">
-    <asp:ScriptManager ID="sc" runat="server"></asp:ScriptManager>
+    <asp:scriptmanager id="sc" runat="server"></asp:scriptmanager>
     <div class="content oem-content">
         <div class="sideBg">
             <div class="row">
@@ -16,9 +16,9 @@
                     <div class="tabing-section">
                         <ul class="nav nav-tabs">
                             <li class="active"><a data-toggle="tab" href="#pd">General Information</a></li>
-                            <li><a data-toggle="tab" href="#pimg">Details of Defence Stores</a></li>
                             <li><a data-toggle="tab" href="#pcd" runat="server" id="testcompinfo" visible="false">Company Information</a></li>
                             <li><a data-toggle="tab" href="#ocd" runat="server" id="othercate" visible="false">Company Information</a></li>
+                            <li><a data-toggle="tab" href="#pimg">Details of Defence Stores</a></li>
                             <li><a data-toggle="tab" href="#qpt">Registration no. Details</a></li>
                             <li><a data-toggle="tab" href="#test">Financial Information</a></li>
                             <li><a data-toggle="tab" href="#chkList">CheckList</a></li>
@@ -26,7 +26,7 @@
                         </ul>
                         <div class="tab-content">
                             <div id="pd" class="tab-pane fade in active">
-                                <asp:UpdatePanel ID="uppanel1" runat="server" UpdateMode="Conditional">
+                                <asp:updatepanel id="uppanel1" runat="server" updatemode="Conditional">
                                     <ContentTemplate>
                                         <asp:Panel ID="panstep1" runat="server">
                                             <p>Please provide all required details to register your business with us</p>
@@ -36,7 +36,8 @@
                                                     REGISTRATION CATEGORY <span class="mandatory">*</span>
                                                 </div>
                                                 <div class="col-sm-7">
-                                                    <asp:DropDownList ID="ddlregiscategory" runat="server" CssClass="form-control" AutoPostBack="true" required="required" OnSelectedIndexChanged="ddlregiscategory_SelectedIndexChanged">
+                                                    <asp:DropDownList ID="ddlregiscategory" runat="server" CssClass="form-control" AutoPostBack="true" 
+                                                        required="required" OnSelectedIndexChanged="ddlregiscategory_SelectedIndexChanged">
                                                         <asp:ListItem Selected="True" Value="0">Select</asp:ListItem>
                                                         <asp:ListItem Value="1">MANUFACTURER</asp:ListItem>
                                                         <asp:ListItem Value="2">SERVICE SUB CONTRACTOR</asp:ListItem>
@@ -66,6 +67,9 @@
                                                     <asp:DropDownList ID="ddltypeofbusiness" runat="server" CssClass="form-control" AutoPostBack="true" OnSelectedIndexChanged="ddltypeofbusiness_SelectedIndexChanged">
                                                     </asp:DropDownList>
                                                     <div class="clearfix mt10"></div>
+                                                   <div runat="server" id="divothersdetails" visible="false">
+                                                        <asp:TextBox ID="txtothersdetails" runat="server" CssClass="form-control" placeholder="Please sepcifiy"></asp:TextBox>
+                                                       </div>
                                                     <div runat="server" id="divmsmetypeofbuisness" visible="false">
                                                         <p>Scale of buisness</p>
                                                         <asp:DropDownList ID="ddlscaleofbuisness" runat="server" AutoPostBack="true" OnSelectedIndexChanged="ddlscaleofbuisness_SelectedIndexChanged" CssClass="form-control">
@@ -104,7 +108,6 @@
                                                     </div>
                                                 </div>
                                             </div>
-
                                             <div class="form-group">
                                                 <div class="col-sm-5">
                                                     Business Sector
@@ -116,7 +119,7 @@
                                             </div>
                                             <div class="form-group">
                                                 <div class="col-sm-5">
-                                                    Date of Incorportaion of the Company
+                                                    Date of Incorporation of the Company
                                                 </div>
                                                 <div class="col-sm-7">
                                                     <asp:TextBox ID="txtdateofincorofthecompany" runat="server" type="date" CssClass="form-control"></asp:TextBox>
@@ -151,7 +154,7 @@
                                             </div>
                                             <div class="form-group">
                                                 <div class="col-sm-5">
-                                                    Name
+                                                    Name of contact person
                                                 </div>
                                                 <div class="col-sm-3">
                                                     <asp:TextBox ID="txtfirstname" runat="server" CssClass="form-control"></asp:TextBox>
@@ -203,6 +206,7 @@
                                                 </div>
                                             </div>
                                             <div class="form-group">
+                                                <p>Details of company officials</p>
                                                 <asp:GridView ID="gridNameof" runat="server" AutoGenerateColumns="false" class="table table-responsive" ShowFooter="true" OnRowCreated="gridNameof_RowCreated">
                                                     <Columns>
                                                         <asp:BoundField DataField="RowNumber" HeaderText="Row Number" />
@@ -260,10 +264,10 @@
                                         <asp:PostBackTrigger ControlID="ddlregiscategory" />
                                         <asp:PostBackTrigger ControlID="ddltypeofbusiness" />
                                     </Triggers>
-                                </asp:UpdatePanel>
+                                </asp:updatepanel>
                             </div>
                             <div id="pimg" class="tab-pane">
-                                <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
+                                <asp:updatepanel id="UpdatePanel1" runat="server" updatemode="Conditional">
                                     <ContentTemplate>
                                         <asp:Panel ID="panstep2" runat="server">
                                             <p>Enter details of Regular Products being Manufactured</p>
@@ -582,10 +586,10 @@
                                             <div class="clearfix mt10"></div>
                                         </asp:Panel>
                                     </ContentTemplate>
-                                </asp:UpdatePanel>
+                                </asp:updatepanel>
                             </div>
                             <div id="pcd" class="tab-pane">
-                                <asp:UpdatePanel ID="UpdatePanel5" runat="server" UpdateMode="Conditional">
+                                <asp:updatepanel id="UpdatePanel5" runat="server" updatemode="Conditional">
                                     <ContentTemplate>
                                         <asp:Panel ID="testcompinfo1" runat="server">
                                             <p>List of Manufacturing Facilities</p>
@@ -1282,10 +1286,10 @@
 
                                         </asp:Panel>
                                     </ContentTemplate>
-                                </asp:UpdatePanel>
+                                </asp:updatepanel>
                             </div>
                             <div id="ocd" class="tab-pane">
-                                <asp:UpdatePanel ID="UpdatePanel7" runat="server" UpdateMode="Conditional">
+                                <asp:updatepanel id="UpdatePanel7" runat="server" updatemode="Conditional">
                                     <ContentTemplate>
                                         <asp:Panel ID="Panel1" runat="server">
                                             <p>Name and Address of Product OEM</p>
@@ -1676,10 +1680,10 @@
                                             <div class="clearfix mt10"></div>
                                         </asp:Panel>
                                     </ContentTemplate>
-                                </asp:UpdatePanel>
+                                </asp:updatepanel>
                             </div>
                             <div id="qpt" class="tab-pane">
-                                <asp:UpdatePanel ID="UpdatePanel2" runat="server" UpdateMode="Conditional">
+                                <asp:updatepanel id="UpdatePanel2" runat="server" updatemode="Conditional">
                                     <ContentTemplate>
                                         <asp:Panel ID="panstep3" runat="server">
                                             <div class="form-group">
@@ -1799,10 +1803,10 @@
                                             <div class="clearfix mt10"></div>
                                         </asp:Panel>
                                     </ContentTemplate>
-                                </asp:UpdatePanel>
+                                </asp:updatepanel>
                             </div>
                             <div id="test" class="tab-pane">
-                                <asp:UpdatePanel ID="UpdatePanel3" runat="server" UpdateMode="Conditional">
+                                <asp:updatepanel id="UpdatePanel3" runat="server" updatemode="Conditional">
                                     <ContentTemplate>
                                         <asp:Panel ID="panstep4" runat="server">
                                             <div class="form-group" runat="server" visible="false">
@@ -1945,10 +1949,10 @@
                                             <div class="clearfix mt10"></div>
                                         </asp:Panel>
                                     </ContentTemplate>
-                                </asp:UpdatePanel>
+                                </asp:updatepanel>
                             </div>
                             <div id="chkList" class="tab-pane">
-                                <asp:UpdatePanel ID="UpdatePanel6" runat="server" UpdateMode="Conditional">
+                                <asp:updatepanel id="UpdatePanel6" runat="server" updatemode="Conditional">
                                     <ContentTemplate>
                                         <asp:Panel ID="panchklist" runat="server">
                                             <asp:DropDownList ID="ddltypeofchk" runat="server" AutoPostBack="true" CssClass="form-control" OnSelectedIndexChanged="ddltypeofchk_SelectedIndexChanged">
@@ -1963,7 +1967,7 @@
                                                 <asp:ListItem Value="8">Distributor</asp:ListItem>
                                                 <asp:ListItem Value="9">Consertium</asp:ListItem>
                                                 <asp:ListItem Value="10">MSME</asp:ListItem>
-                                                <asp:ListItem Value="11">start ups</asp:ListItem>
+                                                <asp:ListItem Value="11">Start Ups</asp:ListItem>
                                                 <asp:ListItem Value="12">Individual</asp:ListItem>
                                                 <asp:ListItem Value="13">Partnership</asp:ListItem>
                                                 <asp:ListItem Value="14">Public Limited Company</asp:ListItem>
@@ -1984,7 +1988,6 @@
                                                 <asp:ListItem Value="6">Partnership Deed</asp:ListItem>
                                                 <asp:ListItem Value="7">ISO Certificate</asp:ListItem>
                                                 <asp:ListItem Value="8">IMS	QMS	ENMS</asp:ListItem>
-                                                <asp:ListItem Value="9">Column24</asp:ListItem>
                                                 <asp:ListItem Value="10">ITR of 3 Years</asp:ListItem>
                                                 <asp:ListItem Value="11">Balance Sheet of Three years</asp:ListItem>
                                                 <asp:ListItem Value="12">Bank Solvency Certificate</asp:ListItem>
@@ -1998,10 +2001,10 @@
                                         </asp:Panel>
 
                                     </ContentTemplate>
-                                </asp:UpdatePanel>
+                                </asp:updatepanel>
                             </div>
                             <div id="spd" class="tab-pane">
-                                <asp:UpdatePanel ID="UpdatePanel4" runat="server" UpdateMode="Conditional">
+                                <asp:updatepanel id="UpdatePanel4" runat="server" updatemode="Conditional">
                                     <ContentTemplate>
                                         <asp:Panel ID="panstep5" runat="server">
                                             <p>1.Has the firm declared insolvent in Receivership ,Bankrupt or being wounded up.</p>
@@ -2087,9 +2090,9 @@
 
                                         </asp:Panel>
                                     </ContentTemplate>
-                                </asp:UpdatePanel>
+                                </asp:updatepanel>
                             </div>
-                            <asp:Panel ID="Panel2" runat="server" DefaultButton="btnsubmit">
+                            <asp:panel id="Panel2" runat="server" defaultbutton="btnsubmit">
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
@@ -2116,11 +2119,10 @@
                                         </div>
                                     </div>
                                 </div>
-                            </asp:Panel>
+                            </asp:panel>
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
