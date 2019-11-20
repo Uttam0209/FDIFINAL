@@ -51,8 +51,6 @@ public partial class Admin_ViewProductFilter : System.Web.UI.Page
                 BindDefencePlatform();
                 BindIndusrtyDomain();
                 BindCountry();
-                BindNSC();
-                BindHSN();
                 BindSearchKeyword();
             }
             else
@@ -83,7 +81,7 @@ public partial class Admin_ViewProductFilter : System.Web.UI.Page
         catch (Exception ex)
         { Response.RedirectToRoute("Login"); }
     }
-    protected void UpdateDtGridValue()
+    protected void UpdateDtGridValue(DataTable DtGrid)
     {
         for (int a = 0; a < DtGrid.Rows.Count; a++)
         {
@@ -136,29 +134,30 @@ public partial class Admin_ViewProductFilter : System.Web.UI.Page
         }
     }
     int n1 = 1;
-    int n2 = 500;
+    int n2 = 300;
     protected void BindProduct(string RefNo)
     {
         DtGrid = Lo.GetDashboardData("Product", "");
         if (DtGrid.Rows.Count > 0)
         {
-            UpdateDtGridValue();
+            divclearfilorexceldown.Visible = true;
+            UpdateDtGridValue(DtGrid);
             if (hfmref.Value != "")
             {
-                DataView dv = new DataView(DtGrid, "ROW_NUMBER >'" + n1 + "' And  ROW_NUMBER<='" + n2 + "'", "", DataViewRowState.CurrentRows);
+                DataView dv = new DataView(DtGrid, "ROW_NUMBER >='" + n1 + "' And  ROW_NUMBER<='" + n2 + "'", "", DataViewRowState.CurrentRows);
                 if (Request.QueryString["strangone"] != null)
                 {
                     dv.RowFilter = "CompanyRefNo='" + hfmref.Value + "'";
                 }
-                else if (Encrypt.DecryptData(Session["Type"].ToString()).ToUpper() == "COMPANY" || chkcomp.SelectedItem.Selected == true)
+                else if (Encrypt.DecryptData(Session["Type"].ToString()).ToUpper() == "COMPANY" || ddlcomp.SelectedItem.Selected == true)
                 {
                     dv.RowFilter = "CompanyRefNo='" + hfmref.Value + "'";
                 }
-                else if (Encrypt.DecryptData(Session["Type"].ToString()).ToUpper() == "DIVISION" || chkdivision.SelectedItem.Selected == true)
+                else if (Encrypt.DecryptData(Session["Type"].ToString()).ToUpper() == "DIVISION" || ddldivision.SelectedItem.Selected == true)
                 {
                     dv.RowFilter = "FactoryRefNo='" + hfmref.Value + "'";
                 }
-                else if (Encrypt.DecryptData(Session["Type"].ToString()).ToUpper() == "UNIT" || chkunit.SelectedItem.Selected == true)
+                else if (Encrypt.DecryptData(Session["Type"].ToString()).ToUpper() == "UNIT" || ddlunit.SelectedItem.Selected == true)
                 {
                     dv.RowFilter = "UnitRefNo='" + hfmref.Value + "'";
                 }
@@ -180,16 +179,17 @@ public partial class Admin_ViewProductFilter : System.Web.UI.Page
                 }
                 pgsource.DataSource = dtads.DefaultView;
                 pgsource.AllowPaging = true;
-                pgsource.PageSize = 500;
+                pgsource.PageSize = 300;
                 pgsource.CurrentPageIndex = pagingCurrentPage;
                 ViewState["totpage"] = pgsource.PageCount;
                 lblpaging.Text = "Page " + (pagingCurrentPage + 1) + " of " + pgsource.PageCount;
-                lbltotal.Text = "Showing  " + gvproduct.Rows.Count.ToString() + " result from page " + (pagingCurrentPage + 1) + " out of " + pgsource.PageCount + " pages";
+                lbltotal.Text = "Total " + DtGrid.Rows.Count.ToString() + ", Showing  " + gvproduct.Rows.Count.ToString() + " result from page " + (pagingCurrentPage + 1) + " out of " + pgsource.PageCount + " pages";
                 lnkbtnPgPrevious.Enabled = !pgsource.IsFirstPage;
                 lnkbtnPgNext.Enabled = !pgsource.IsLastPage;
                 pgsource.DataSource = dtads.DefaultView;
                 gvproduct.DataSource = dtads.DefaultView;
                 gvproduct.DataBind();
+                gvproduct.Visible = true;
                 divpageindex.Visible = true;
                 divProductGrid.Visible = true;
             }
@@ -217,11 +217,11 @@ public partial class Admin_ViewProductFilter : System.Web.UI.Page
                         }
                         pgsource.DataSource = dtads.DefaultView;
                         pgsource.AllowPaging = true;
-                        pgsource.PageSize = 500;
+                        pgsource.PageSize = 300;
                         pgsource.CurrentPageIndex = pagingCurrentPage;
                         ViewState["totpage"] = pgsource.PageCount;
                         lblpaging.Text = "Page " + (pagingCurrentPage + 1) + " of " + pgsource.PageCount;
-                        lbltotal.Text = "Showing  " + pgsource.PageSize + " result from page " + (pagingCurrentPage + 1) + " out of " + pgsource.PageCount + " pages";
+                        lbltotal.Text = "Total " + DtGrid.Rows.Count.ToString() + ", Showing  " + pgsource.PageSize + " result from page " + (pagingCurrentPage + 1) + " out of " + pgsource.PageCount + " pages";
                         lnkbtnPgPrevious.Enabled = !pgsource.IsFirstPage;
                         lnkbtnPgNext.Enabled = !pgsource.IsLastPage;
                         pgsource.DataSource = dtads.DefaultView;
@@ -247,11 +247,11 @@ public partial class Admin_ViewProductFilter : System.Web.UI.Page
                         }
                         pgsource.DataSource = dtads.DefaultView;
                         pgsource.AllowPaging = true;
-                        pgsource.PageSize = 500;
+                        pgsource.PageSize = 300;
                         pgsource.CurrentPageIndex = pagingCurrentPage;
                         ViewState["totpage"] = pgsource.PageCount;
                         lblpaging.Text = "Page " + (pagingCurrentPage + 1) + " of " + pgsource.PageCount;
-                        lbltotal.Text = "Showing  " + pgsource.PageSize + " result from page " + (pagingCurrentPage + 1) + " out of " + pgsource.PageCount + " pages";
+                        lbltotal.Text = "Total " + DtGrid.Rows.Count.ToString() + ", Showing  " + pgsource.PageSize + " result from page " + (pagingCurrentPage + 1) + " out of " + pgsource.PageCount + " pages";
                         lnkbtnPgPrevious.Enabled = !pgsource.IsFirstPage;
                         lnkbtnPgNext.Enabled = !pgsource.IsLastPage;
                         pgsource.DataSource = dtads.DefaultView;
@@ -277,21 +277,27 @@ public partial class Admin_ViewProductFilter : System.Web.UI.Page
                         }
                         pgsource.DataSource = DtGrid.DefaultView;
                         pgsource.AllowPaging = true;
-                        pgsource.PageSize = 500;
+                        pgsource.PageSize = 300;
                         pgsource.CurrentPageIndex = pagingCurrentPage;
                         ViewState["totpage"] = pgsource.PageCount;
                         lblpaging.Text = "Page " + (pagingCurrentPage + 1) + " of " + pgsource.PageCount;
-                        lbltotal.Text = "Showing  " + pgsource.PageSize + " result from page " + (pagingCurrentPage + 1) + " out of " + pgsource.PageCount + " pages";
+                        lbltotal.Text = "Total " + DtGrid.Rows.Count.ToString() + ", Showing  " + pgsource.PageSize + " result from page " + (pagingCurrentPage + 1) + " out of " + pgsource.PageCount + " pages";
                         lnkbtnPgPrevious.Enabled = !pgsource.IsFirstPage;
                         lnkbtnPgNext.Enabled = !pgsource.IsLastPage;
                         pgsource.DataSource = dtads.DefaultView;
                         gvproduct.DataSource = dtads.DefaultView;
                     }
                     gvproduct.DataBind();
+                    gvproduct.Visible = true;
                     divpageindex.Visible = true;
                     divProductGrid.Visible = true;
                 }
             }
+        }
+        else
+        {
+            divclearfilorexceldown.Visible = false;
+            divpageindex.Visible = false;
         }
     }
     private string POProc;
@@ -488,28 +494,38 @@ public partial class Admin_ViewProductFilter : System.Web.UI.Page
     {
         txtpageno.Text = "";
         pagingCurrentPage -= 1;
-        n2 = Convert.ToInt16(pagingCurrentPage) * Convert.ToInt16(500);
-        n1 = Convert.ToInt16(n2 - 500);
-        if (hfmtype.Value == "P")
-        { BindProduct(hfmref.Value); }
-        else if (hfmtype.Value == "PI")
-        { BindProduct(hfmref.Value); }
-        else if (hfmtype.Value == "M2")
-        { BindProduct(hfmref.Value); }
+        n2 = Convert.ToInt16(pagingCurrentPage) * Convert.ToInt16(300);
+        n1 = Convert.ToInt16(n2 - 300);
+        if (lbclearfilter.Visible == true)
+        { SeachResult(); }
+        else
+        {
+            if (hfmtype.Value == "P")
+            { BindProduct(hfmref.Value); }
+            else if (hfmtype.Value == "PI")
+            { BindProduct(hfmref.Value); }
+            else if (hfmtype.Value == "M2")
+            { BindProduct(hfmref.Value); }
+        }
     }
     protected void lnkbtnPgNext_Click(object sender, EventArgs e)
     {
         pagingCurrentPage += 1;
         int txtpage = Convert.ToInt32(pagingCurrentPage) + 1;
         txtpageno.Text = txtpage.ToString();
-        n2 = Convert.ToInt16(txtpage) * Convert.ToInt16(500);
-        n1 = Convert.ToInt16(n2 - 500);
-        if (hfmtype.Value == "P")
-        { BindProduct(hfmref.Value); }
-        else if (hfmtype.Value == "PI")
-        { BindProduct(hfmref.Value); }
-        else if (hfmtype.Value == "M2")
-        { BindProduct(hfmref.Value); }
+        n2 = Convert.ToInt16(txtpage) * Convert.ToInt16(300);
+        n1 = Convert.ToInt16(n2 - 300);
+        if (lbclearfilter.Visible == true)
+        { SeachResult(); }
+        else
+        {
+            if (hfmtype.Value == "P")
+            { BindProduct(hfmref.Value); }
+            else if (hfmtype.Value == "PI")
+            { BindProduct(hfmref.Value); }
+            else if (hfmtype.Value == "M2")
+            { BindProduct(hfmref.Value); }
+        }
     }
     private int pagingCurrentPage
     {
@@ -539,14 +555,19 @@ public partial class Admin_ViewProductFilter : System.Web.UI.Page
         {
             int txtpage = Convert.ToInt32(txtpageno.Text) - 1;
             pagingCurrentPage = Convert.ToInt32(txtpage.ToString());
-            n2 = Convert.ToInt16(pagingCurrentPage + 1) * Convert.ToInt16(500);
-            n1 = Convert.ToInt16(n2 + 1 - 500);
-            if (hfmtype.Value == "P")
-            { BindProduct(hfmref.Value); }
-            else if (hfmtype.Value == "PI")
-            { BindProduct(hfmref.Value); }
-            else if (hfmtype.Value == "M2")
-            { BindProduct(hfmref.Value); }
+            n2 = Convert.ToInt16(pagingCurrentPage + 1) * Convert.ToInt16(300);
+            n1 = Convert.ToInt16(n2 + 1 - 300);
+            if (lbclearfilter.Visible == true)
+            { SeachResult(); }
+            else
+            {
+                if (hfmtype.Value == "P")
+                { BindProduct(hfmref.Value); }
+                else if (hfmtype.Value == "PI")
+                { BindProduct(hfmref.Value); }
+                else if (hfmtype.Value == "M2")
+                { BindProduct(hfmref.Value); }
+            }
         }
     }
     //end page index---------------------------------------//
@@ -580,13 +601,15 @@ public partial class Admin_ViewProductFilter : System.Web.UI.Page
     #region Filtor or CheckBoxCode
     protected void BindComapnyCheckbox()
     {
+
         DataTable DtCompany = new DataTable();
         if (Encrypt.DecryptData(Session["Type"].ToString()) == "Admin" || Encrypt.DecryptData(Session["Type"].ToString()) == "SuperAdmin")
         {
-            DtCompany = Lo.GetDashboardData("CompanyByname", "");
+            DtCompany = Lo.GetDashboardData("CompOnProdtbl", "");
             if (DtCompany.Rows.Count > 0)
             {
-                Co.FillRadioBoxList(chkcomp, DtCompany, "CompanyName", "CompanyRefNo");
+                Co.FillDropdownlist(ddlcomp, DtCompany, "CompanyName", "CompanyRefNo");
+                ddlcomp.Items.Insert(0, "Select");
             }
         }
         else
@@ -594,8 +617,8 @@ public partial class Admin_ViewProductFilter : System.Web.UI.Page
             DtCompany = Lo.GetDashboardData("CompByrefno", Session["CompanyRefNo"].ToString());
             if (DtCompany.Rows.Count > 0)
             {
-                Co.FillRadioBoxList(chkcomp, DtCompany, "CompanyName", "CompanyRefNo");
-                chkcomp.SelectedIndex = 0;
+                Co.FillDropdownlist(ddlcomp, DtCompany, "CompanyName", "CompanyRefNo");
+                ddlcomp.Items.Insert(0, "Select");
                 BindComapnyDivisionCheckbox();
             }
         }
@@ -605,10 +628,12 @@ public partial class Admin_ViewProductFilter : System.Web.UI.Page
     {
         try
         {
-            DataTable dtFactory = Lo.GetDashboardData("DivisionByname", chkcomp.SelectedItem.Value);
+            DataTable dtFactory = Lo.GetDashboardData("DivisionByname", ddlcomp.SelectedItem.Value);
             if (dtFactory.Rows.Count > 0)
             {
-                Co.FillRadioBoxList(chkdivision, dtFactory, "FactoryName", "FactoryRefNo");
+                Co.FillDropdownlist(ddldivision, dtFactory, "FactoryName", "FactoryRefNo");
+                ddldivision.Items.Insert(0, "Select");
+                divfilterdivision.Visible = true;
             }
         }
         catch (Exception ex)
@@ -618,10 +643,12 @@ public partial class Admin_ViewProductFilter : System.Web.UI.Page
     {
         try
         {
-            DataTable dtUnit = Lo.GetDashboardData("UnitByname", chkdivision.SelectedItem.Value);
+            DataTable dtUnit = Lo.GetDashboardData("UnitByname", ddldivision.SelectedItem.Value);
             if (dtUnit.Rows.Count > 0)
             {
-                Co.FillRadioBoxList(chkunit, dtUnit, "UnitName", "UnitRefNo"); chkunit.Visible = true;
+                Co.FillDropdownlist(ddlunit, dtUnit, "UnitName", "UnitRefNo");
+                ddlunit.Items.Insert(0, "Select");
+                divfilterunit.Visible = true;
             }
         }
         catch (Exception ex)
@@ -634,7 +661,8 @@ public partial class Admin_ViewProductFilter : System.Web.UI.Page
             DataTable DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, "End User", "", "SelectInnerMaster1", "", "");
             if (DtMasterCategroy.Rows.Count > 0)
             {
-                Co.FillCheckBox(chkenduser, DtMasterCategroy, "SCategoryName", "SCategoryID");
+                Co.FillDropdownlist(ddlchkenduser, DtMasterCategroy, "SCategoryName", "SCategoryID");
+                ddlchkenduser.Items.Insert(0, "Select");
             }
         }
         catch (Exception ex)
@@ -645,10 +673,11 @@ public partial class Admin_ViewProductFilter : System.Web.UI.Page
         try
         {
             DataTable DtMasterCategroy = new DataTable();
-            DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, "DEFENCE PLATFORM", "", "SelectProductCat", "", "");
+            DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, "", "", "DefPlatProd", "", "");
             if (DtMasterCategroy.Rows.Count > 0)
             {
-                Co.FillRadioBoxList(chkdefenceplatform, DtMasterCategroy, "SCategoryName", "SCategoryID");
+                Co.FillDropdownlist(ddldefplatform, DtMasterCategroy, "SCategoryName", "SCategoryID");
+                ddldefplatform.Items.Insert(0, "Select");
             }
         }
         catch (Exception ex)
@@ -658,10 +687,11 @@ public partial class Admin_ViewProductFilter : System.Web.UI.Page
     {
         try
         {
-            DataTable DtNAMEOFDEFENCEPLATFORM = Lo.RetriveMasterSubCategoryDate(Convert.ToInt32(chkdefenceplatform.SelectedItem.Value), "", "", "SubSelectID", "", "");
+            DataTable DtNAMEOFDEFENCEPLATFORM = Lo.RetriveMasterSubCategoryDate(Convert.ToInt32(ddldefplatform.SelectedItem.Value), "", "", "SubSelectID", "", "");
             if (DtNAMEOFDEFENCEPLATFORM.Rows.Count > 0)
             {
-                Co.FillRadioBoxList(chknameofdefenceplatform, DtNAMEOFDEFENCEPLATFORM, "SCategoryName", "SCategoryId");
+                Co.FillDropdownlist(ddlnameofdefplat, DtNAMEOFDEFENCEPLATFORM, "SCategoryName", "SCategoryId");
+                ddlnameofdefplat.Items.Insert(0, "Select");
             }
         }
         catch (Exception ex)
@@ -672,10 +702,15 @@ public partial class Admin_ViewProductFilter : System.Web.UI.Page
         try
         {
             DataTable DtMasterCategroy = new DataTable();
-            DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, "PRODUCT (INDUSTRY DOMAIN)", "", "SelectProductCat", "", "");
+            DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, "", "", "DefPlatIndus", "", "");
             if (DtMasterCategroy.Rows.Count > 0)
             {
-                Co.FillRadioBoxList(chkprodindustrydomain, DtMasterCategroy, "SCategoryName", "SCategoryID");
+                Co.FillDropdownlist(ddlprodindustrydomain, DtMasterCategroy, "SCategoryName", "SCategoryID");
+                ddlprodindustrydomain.Items.Insert(0, "Select");
+            }
+            else
+            {
+                divfilterpisd.Visible = false;
             }
         }
         catch (Exception ex)
@@ -685,10 +720,16 @@ public partial class Admin_ViewProductFilter : System.Web.UI.Page
     {
         try
         {
-            DataTable DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(Convert.ToInt32(chkprodindustrydomain.SelectedItem.Value), "", "", "SubSelectID", "", "");
+            DataTable DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(Convert.ToInt32(ddlprodindustrydomain.SelectedItem.Value), "", "", "DefPlatIndusSub", "", "");
             if (DtMasterCategroy.Rows.Count > 0)
             {
-                Co.FillRadioBoxList(chkprodindustrysubdomain, DtMasterCategroy, "SCategoryName", "SCategoryId");
+                Co.FillDropdownlist(ddlprodindussubdomain, DtMasterCategroy, "SCategoryName", "SCategoryId");
+                ddlprodindussubdomain.Items.Insert(0, "Select");
+                divfilterpisd.Visible = true;
+            }
+            else
+            {
+                divfilterpisd.Visible = false;
             }
         }
         catch (Exception ex)
@@ -696,78 +737,24 @@ public partial class Admin_ViewProductFilter : System.Web.UI.Page
     }
     protected void BindCountry()
     {
-        DataTable DtCountry = Lo.RetriveCountry(0, "Select");
+        DataTable DtCountry = Lo.RetriveCountry(0, "CntryByMProd");
         if (DtCountry.Rows.Count > 0)
         {
-            Co.FillRadioBoxList(rboemcountry, DtCountry, "CountryName", "CountryID");
+            Co.FillDropdownlist(ddlcountry, DtCountry, "CountryName", "CountryID");
+            ddlcountry.Items.Insert(0, "Select");
         }
     }
-    protected void BindNSC()
-    {
-        DataTable dtnsc = Lo.RetriveFilterCode(hfmref.Value, "", "NSC");
-        if (dtnsc.Rows.Count > 0)
-        {
-            Co.FillRadioBoxList(rbnsccode, dtnsc, "NSCCode", "NSCCode");
-        }
-    }
-    protected void BindHSN()
-    {
-        DataTable dthsn = Lo.RetriveFilterCode(hfmref.Value, "", "HSN");
-        if (dthsn.Rows.Count > 0)
-        {
-            Co.FillRadioBoxList(rbhsncode, dthsn, "HsnCode8digit", "HsnCode8digit");
-        }
-    }
-
     protected void BindSearchKeyword()
     {
         DataTable dtsearchkey = Lo.RetriveFilterCode(hfmref.Value, "", "SearchKeyword");
         if (dtsearchkey.Rows.Count > 0)
         {
-            Co.FillRadioBoxList(rbsearchkeywords, dtsearchkey, "SearchKeyword", "SearchKeyword");
+            Co.FillDropdownlist(ddlsearchkeywordsfilter, dtsearchkey, "SearchKeyword", "SearchKeyword");
+            ddlsearchkeywordsfilter.Items.Insert(0, "Select");
         }
     }
     #endregion
     #region Filter CheckBox Code
-    protected void chkcomp_SelectedIndexChanged(object sender, EventArgs e)
-    {
-        BindComapnyDivisionCheckbox();
-        hfmref.Value = chkcomp.SelectedItem.Value;
-        BindProduct(hfmref.Value);
-    }
-    protected void chkdivision_SelectedIndexChanged(object sender, EventArgs e)
-    {
-        BindComapnyDivisionUnitCheckbox();
-        hfmref.Value = chkdivision.SelectedItem.Value;
-        BindProduct(hfmref.Value);
-    }
-    protected void chkunit_SelectedIndexChanged(object sender, EventArgs e)
-    {
-        hfmref.Value = chkdivision.SelectedItem.Value;
-        BindProduct(hfmref.Value);
-    }
-    protected void chkenduser_SelectedIndexChanged(object sender, EventArgs e)
-    {
-        SeachResult();
-    }
-    protected void chkdefenceplatform_SelectedIndexChanged(object sender, EventArgs e)
-    {
-        BindNameofDefencePlatform();
-        SeachResult();
-    }
-    protected void chknameofdefenceplatform_SelectedIndexChanged(object sender, EventArgs e)
-    {
-        SeachResult();
-    }
-    protected void chkprodindustrydomain_SelectedIndexChanged(object sender, EventArgs e)
-    {
-        BindIndustrySubDomain();
-        SeachResult();
-    }
-    protected void chkprodindustrysubdomain_SelectedIndexChanged(object sender, EventArgs e)
-    {
-        SeachResult();
-    }
     protected void rbistender_SelectedIndexChanged(object sender, EventArgs e)
     {
         SeachResult();
@@ -784,23 +771,48 @@ public partial class Admin_ViewProductFilter : System.Web.UI.Page
     {
         SeachResult();
     }
-    protected void rbsearchkeywords_SelectedIndexChanged(object sender, EventArgs e)
+    protected void ddlcountry_SelectedIndexChanged(object sender, EventArgs e)
     {
         SeachResult();
     }
-    protected void rboemcountry_SelectedIndexChanged(object sender, EventArgs e)
+    protected void ddlsearchkeywordsfilter_SelectedIndexChanged(object sender, EventArgs e)
     {
         SeachResult();
     }
-    protected void rbnsccode_SelectedIndexChanged(object sender, EventArgs e)
+    protected void ddlcomp_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        BindComapnyDivisionCheckbox();
+        SeachResult();
+    }
+    protected void ddldivision_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        BindComapnyDivisionUnitCheckbox();
+        SeachResult();
+
+    }
+    protected void ddlunit_SelectedIndexChanged(object sender, EventArgs e)
     {
         SeachResult();
     }
-    protected void rbhsncode_SelectedIndexChanged(object sender, EventArgs e)
+    protected void ddlchkenduser_SelectedIndexChanged(object sender, EventArgs e)
     {
         SeachResult();
     }
-    protected void rbdpsuno_SelectedIndexChanged(object sender, EventArgs e)
+    protected void ddldefplatform_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        BindNameofDefencePlatform();
+        SeachResult();
+    }
+    protected void ddlnameofdefplat_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        SeachResult();
+    }
+    protected void ddlprodindustrydomain_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        BindIndustrySubDomain();
+        SeachResult();
+    }
+    protected void ddlprodindussubdomain_SelectedIndexChanged(object sender, EventArgs e)
     {
         SeachResult();
     }
@@ -812,112 +824,111 @@ public partial class Admin_ViewProductFilter : System.Web.UI.Page
         insert.Columns.Add(new DataColumn("Column", typeof(string)));
         insert.Columns.Add(new DataColumn("Value", typeof(string)));
         DataRow dr;
-        if (chkenduser.SelectedIndex != -1)
+        if (ddlcomp.SelectedItem.Text != "Select")
         {
-            string enduserchek = "";
-            for (int i = 0; i < chkenduser.Items.Count; i++)
-            {
-                if (chkenduser.Items[i].Selected)
-                {
-                    enduserchek = enduserchek + chkenduser.Items[i].Value + ",";
-                }
-            }
             dr = insert.NewRow();
-            dr["Column"] = "P.EndUser" + " like ";
-            dr["Value"] = "'%" + enduserchek + "%'";
+            dr["Column"] = "C.CompanyRefNo" + "=";
+            dr["Value"] = "'" + ddlcomp.SelectedItem.Value + "'";
+            if (ddldivision.Visible == true && ddldivision.SelectedItem.Text != "Select")
+            {
+                dr = insert.NewRow();
+                dr["Column"] = "F.FactoryRefNo" + " =";
+                dr["Value"] = "'" + ddldivision.SelectedItem.Value + "' or FC.CompanyRefNo='" + ddlcomp.SelectedItem.Value + "'";
+            }
+            if (ddlunit.Visible == true && ddlunit.SelectedItem.Text != "Select")
+            {
+                dr = insert.NewRow();
+                dr["Column"] = "U.UnitRefNo" + " =";
+                dr["Value"] = "'" + ddlunit.SelectedItem.Value + "' or UF.FactoryRefNo='" + ddldivision.SelectedItem.Value + "' or UC.CompanyRefNo='" + ddlcomp.SelectedItem.Value + "'";
+            }
             insert.Rows.Add(dr);
         }
-        if (chkdefenceplatform.SelectedIndex != -1)
+        if (ddlchkenduser.SelectedItem.Text != "Select")
+        {
+            dr = insert.NewRow();
+            dr["Column"] = "P.EndUser" + " like ";
+            dr["Value"] = "'%" + ddlchkenduser.SelectedItem.Value + "%'";
+            insert.Rows.Add(dr);
+        }
+        if (ddldefplatform.SelectedItem.Text != "Select")
         {
             dr = insert.NewRow();
             dr["Column"] = "P.Platform" + "=";
-            dr["Value"] = "'" + chkdefenceplatform.SelectedItem.Value + "'";
+            dr["Value"] = "'" + ddldefplatform.SelectedItem.Value + "'";
             insert.Rows.Add(dr);
+            if (ddlnameofdefplat.Visible = true && ddlnameofdefplat.SelectedItem.Text != "Select")
+            {
+                dr = insert.NewRow();
+                dr["Column"] = "P.NomenclatureOfMainSystem" + "="; ;
+                dr["Value"] = "'" + ddlnameofdefplat.SelectedItem.Value + "'";
+                insert.Rows.Add(dr);
+            }
         }
-        if (chknameofdefenceplatform.SelectedIndex != -1)
-        {
-            dr = insert.NewRow();
-            dr["Column"] = "P.NomenclatureOfMainSystem" + "="; ;
-            dr["Value"] = "'" + chknameofdefenceplatform.SelectedItem.Value + "'";
-            insert.Rows.Add(dr);
-        }
-        if (chkprodindustrydomain.SelectedIndex != -1)
+
+        if (ddlprodindustrydomain.SelectedItem.Text != "Select")
         {
             dr = insert.NewRow();
             dr["Column"] = "P.TechnologyLevel1" + "="; ;
-            dr["Value"] = "'" + chkprodindustrydomain.SelectedItem.Value + "'";
+            dr["Value"] = "'" + ddlprodindustrydomain.SelectedItem.Value + "'";
             insert.Rows.Add(dr);
+            if (ddlprodindussubdomain.Visible = true && ddlprodindussubdomain.SelectedItem.Text != "Select")
+            {
+                dr = insert.NewRow();
+                dr["Column"] = "P.TechnologyLevel2" + "="; ;
+                dr["Value"] = "'" + ddlprodindussubdomain.SelectedItem.Value + "'";
+                insert.Rows.Add(dr);
+            }
         }
-        if (chkprodindustrysubdomain.SelectedIndex != -1)
-        {
-            dr = insert.NewRow();
-            dr["Column"] = "P.TechnologyLevel2" + "="; ;
-            dr["Value"] = "'" + chkprodindustrysubdomain.SelectedItem.Value + "'";
-            insert.Rows.Add(dr);
-        }
-        if (rbnsccode.SelectedIndex != -1)
-        {
-            dr = insert.NewRow();
-            dr["Column"] = "P.NSCCode" + "="; ;
-            dr["Value"] = "'" + rbnsccode.SelectedItem.Value + "'";
-            insert.Rows.Add(dr);
-        }
-        if (rbhsncode.SelectedIndex != -1)
-        {
-            dr = insert.NewRow();
-            dr["Column"] = "P.HsnCode8digit" + "="; ;
-            dr["Value"] = "'" + rbhsncode.SelectedItem.Value + "'";
-            insert.Rows.Add(dr);
-        }
-        if (rboemcountry.SelectedIndex != -1)
+
+        if (ddlcountry.SelectedItem.Text != "Select")
         {
             dr = insert.NewRow();
             dr["Column"] = "P.OEMCountry" + "="; ;
-            dr["Value"] = "'" + rboemcountry.SelectedItem.Value + "'";
+            dr["Value"] = "'" + ddlcountry.SelectedItem.Value + "'";
             insert.Rows.Add(dr);
         }
-        if (rbsearchkeywords.SelectedIndex != -1)
+        if (ddlsearchkeywordsfilter.SelectedItem.Text != "Select")
         {
             dr = insert.NewRow();
             dr["Column"] = "P.SearchKeyword" + "="; ;
-            dr["Value"] = "'" + rbsearchkeywords.SelectedItem.Value + "'";
+            dr["Value"] = "'" + ddlsearchkeywordsfilter.SelectedItem.Text + "'";
             insert.Rows.Add(dr);
         }
 
-        if (rbisindezinized.SelectedIndex != -1)
+        if (rbisindezinized.SelectedIndex != -1 && rbisindezinized.SelectedItem.Value != "C")
         {
             dr = insert.NewRow();
             dr["Column"] = "P.IsIndeginized" + "="; ;
             dr["Value"] = "'" + rbisindezinized.SelectedItem.Value + "'";
             insert.Rows.Add(dr);
         }
-        if (rbismake2.SelectedIndex != -1)
+        if (rbismake2.SelectedIndex != -1 && rbismake2.SelectedItem.Value != "C")
         {
             dr = insert.NewRow();
             dr["Column"] = "P.PurposeofProcurement" + " like";
             dr["Value"] = "'%" + 25 + "%'";
             insert.Rows.Add(dr);
         }
-        if (rbiscontact.SelectedIndex != -1)
+        if (rbiscontact.SelectedIndex != -1 && rbiscontact.SelectedItem.Value != "C")
         {
             if (rbiscontact.SelectedItem.Value == "Y")
             {
                 dr = insert.NewRow();
-                dr["Column"] = "P.NodelDetail" + " =";
-                dr["Value"] = "'" + rbiscontact.SelectedItem.Value + "'";
+                dr["Column"] = "P.NodelDetail" + " is not";
+                dr["Value"] = " NULL or P.NodelDetail!=''";
                 insert.Rows.Add(dr);
             }
             else
             {
             }
         }
-        if (rbistender.SelectedIndex != -1)
+        if (rbistender.SelectedIndex != -1 && rbistender.SelectedItem.Value != "C")
         {
             if (rbistender.SelectedItem.Value == "Y")
             {
                 dr = insert.NewRow();
-                dr["Column"] = "P.TenderSubmition" + " =";
-                dr["Value"] = "'" + rbiscontact.SelectedItem.Value + "'";
+                dr["Column"] = "P.TenderStatus" + " =";
+                dr["Value"] = "'Live'";
                 insert.Rows.Add(dr);
             }
             else
@@ -927,7 +938,7 @@ public partial class Admin_ViewProductFilter : System.Web.UI.Page
         if (hfmtype.Value == "PI")
         {
             dr = insert.NewRow();
-            dr["Column"] = "P.IsIndeginized" + "="; ;
+            dr["Column"] = "P.IsIndeginized" + "=";
             dr["Value"] = "'Y'";
             insert.Rows.Add(dr);
         }
@@ -941,7 +952,7 @@ public partial class Admin_ViewProductFilter : System.Web.UI.Page
         if (hfmref.Value != "")
         {
             dr = insert.NewRow();
-            dr["Column"] = "P.CompanyRefNo" + "="; ;
+            dr["Column"] = "P.CompanyRefNo" + "=";
             dr["Value"] = "'" + hfmref.Value + "'";
             insert.Rows.Add(dr);
         }
@@ -959,6 +970,7 @@ public partial class Admin_ViewProductFilter : System.Web.UI.Page
             DtGridFilter = this.BindInsert();
             if (DtGridFilter.Rows.Count > 0)
             {
+                UpdateDtGridValue(DtGridFilter);
                 DtGridFilter.Columns.Add("TopImages", typeof(string));
                 for (int i = 0; DtGridFilter.Rows.Count > i; i++)
                 {
@@ -975,7 +987,7 @@ public partial class Admin_ViewProductFilter : System.Web.UI.Page
                 }
                 pgsource.DataSource = DtGridFilter.DefaultView;
                 pgsource.AllowPaging = true;
-                pgsource.PageSize = 100;
+                pgsource.PageSize = 300;
                 pgsource.CurrentPageIndex = pagingCurrentPage;
                 ViewState["totpage"] = pgsource.PageCount;
                 lblpaging.Text = "Page " + (pagingCurrentPage + 1) + " of " + pgsource.PageCount;
@@ -984,14 +996,18 @@ public partial class Admin_ViewProductFilter : System.Web.UI.Page
                 pgsource.DataSource = DtGridFilter.DefaultView;
                 gvproduct.DataSource = pgsource;
                 gvproduct.DataBind();
+                lbltotal.Text = "Total " + DtGridFilter.Rows.Count.ToString() + ", Showing  " + gvproduct.Rows.Count.ToString() + " result from page " + (pagingCurrentPage + 1) + " out of " + pgsource.PageCount + " pages";
                 divpageindex.Visible = true;
-                lbltotal.Text = "Showing  " + gvproduct.Rows.Count.ToString() + " result from page " + (pagingCurrentPage + 1) + " out of " + pgsource.PageCount + " pages";
                 divProductGrid.Visible = true;
+                divpageindex.Visible = true;
+                FilterSelectName();
             }
             else
             {
+                FilterSelectName();
+                divpageindex.Visible = false;
                 gvproduct.Visible = false;
-                lbltotal.Text = "No Record Found,Case status updated or please select valid keyword";
+                lbltotal.Text = "No Record Found. Please select valid keyword";
             }
         }
         catch (Exception ex)
@@ -1001,19 +1017,30 @@ public partial class Admin_ViewProductFilter : System.Web.UI.Page
     }
     protected void lbclearfilter_Click(object sender, EventArgs e)
     {
-        chkcomp.SelectedIndex = -1;
-        chkdefenceplatform.SelectedIndex = -1;
-        chkdivision.SelectedIndex = -1;
-        chkenduser.SelectedIndex = -1;
-        chknameofdefenceplatform.SelectedIndex = -1;
-        chkprodindustrydomain.SelectedIndex = -1;
-        chkprodindustrysubdomain.SelectedIndex = -1;
-        chkunit.SelectedIndex = -1;
+        ddlcomp.SelectedValue = "Select";
+        ddldivision.SelectedValue = "Select";
+        ddlunit.SelectedValue = "Select";
+        ddlchkenduser.SelectedValue = "Select";
+        ddldefplatform.SelectedValue = "Select";
+        ddlnameofdefplat.SelectedValue = "Select";
+        ddlprodindustrydomain.SelectedValue = "Select";
+        ddlprodindussubdomain.SelectedValue = "Select";
+        ddlcountry.SelectedValue = "Select";
+        ddlsearchkeywordsfilter.SelectedValue = "Select";
+        rbiscontact.SelectedIndex = -1;
+        rbisindezinized.SelectedIndex = -1;
+        rbismake2.SelectedIndex = -1;
+        rbistender.SelectedIndex = -1;
+        lblfilter1.Visible = false; lblfilter2.Visible = false; lblfilter3.Visible = false; lblfilter4.Visible = false; lblfilter5.Visible = false; lblfilter6.Visible = false;
+        lblfilter12.Visible = false; lblfilter11.Visible = false; lblfilter10.Visible = false; lblfilter9.Visible = false; lblfilter8.Visible = false; lblfilter7.Visible = false;
+        lblfilter13.Visible = false; lblfilter14.Visible = false;
+        lbclearfilter.Visible = false;
         BindProduct(hfmref.Value);
     }
     #endregion
     protected void lbldownloadexcel_Click(object sender, EventArgs e)
     {
+
         DtGrid = Lo.GetDashboardData("Product", "");
         DataView dv = new DataView(DtGrid);
         if (hfmtype.Value == "PI")
@@ -1024,12 +1051,31 @@ public partial class Admin_ViewProductFilter : System.Web.UI.Page
         {
             dv.RowFilter = "PurposeofProcurement like'%25%'";
         }
+        if (ddlcomp.SelectedItem.Value != "")
+        { dv.RowFilter = "CompanyRefNo='" + ddlcomp.SelectedItem.Value + "'"; }
+        if (ddldivision.SelectedIndex != -1)
+        { dv.RowFilter = "CompanyRefNo='" + ddldivision.SelectedItem.Value + "'"; }
+        if (ddlunit.SelectedIndex != -1)
+        { dv.RowFilter = "CompanyRefNo='" + ddldivision.SelectedItem.Value + "'"; }
+        if (ddlchkenduser.SelectedItem.Value != "")
+        { dv.RowFilter = "EndUser='" + ddlchkenduser.SelectedItem.Value + "'"; }
+        if (ddldefplatform.SelectedItem.Value != "")
+        { dv.RowFilter = "Platform='" + ddldefplatform.SelectedItem.Value + "'"; }
+        if (ddlnameofdefplat.SelectedIndex != -1)
+        { dv.RowFilter = "NomenclatureOfMainSystem='" + ddlnameofdefplat.SelectedItem.Value + "'"; }
+        if (ddlprodindustrydomain.SelectedItem.Value != "")
+        { dv.RowFilter = "TechnologyLevel1='" + ddlprodindustrydomain.SelectedItem.Value + "'"; }
+        if (ddlprodindussubdomain.SelectedIndex != -1)
+        { dv.RowFilter = "TechnologyLevel2='" + ddlprodindussubdomain.SelectedItem.Value + "'"; }
+        if (ddlcountry.SelectedItem.Value != "")
+        { dv.RowFilter = "OEMCountry='" + ddlcountry.SelectedItem.Value + "'"; }
+        if (ddlsearchkeywordsfilter.SelectedItem.Value != "")
+        { dv.RowFilter = "SearchKeyword='" + ddlsearchkeywordsfilter.SelectedItem.Value + "'"; }
         if (Encrypt.DecryptData(Session["Type"].ToString()) != "Admin" && Encrypt.DecryptData(Session["Type"].ToString()) != "SuperAdmin")
         {
             if (DtGrid.Rows.Count > 0)
             {
-                this.UpdateDtGridValue();
-                // code to filter row role wise
+                this.UpdateDtGridValue(DtGrid);
                 if (Encrypt.DecryptData(Session["Type"].ToString()).ToUpper() == "COMPANY")
                     dv.RowFilter = "CompanyRefNo='" + Session["CompanyRefNo"].ToString() + "'";
                 else if (Encrypt.DecryptData(Session["Type"].ToString()).ToUpper() == "DIVISION")
@@ -1039,12 +1085,10 @@ public partial class Admin_ViewProductFilter : System.Web.UI.Page
             }
         }
         dv.Sort = "CompanyName asc,FactoryName asc";
-        //renaming colm for user                
         dv.Table.Columns["FactoryName"].ColumnName = "DivisionName";
         try
         {
-            // int[] iColumns = { 10, 9, 4, 14, 18, 19, 20, 21, 22, 24, 25 };
-            int[] iColumns = { 1, 3, 5, 6, 8, 10, 18, 19, 20, 21, 59, 23, 55, 58, 56, 57, 60 };
+            int[] iColumns = { 2, 4, 6, 7, 9, 11, 18, 19, 20, 21, 22, 24, 25, 57, 60, 58, 59, 62, 61 };
             RKLib.ExportData.Export objExport = new RKLib.ExportData.Export("Web");
             objExport.ExportDetails(dv.ToTable(), iColumns, RKLib.ExportData.Export.ExportFormat.Excel, "Product.xls");
         }
@@ -1053,4 +1097,160 @@ public partial class Admin_ViewProductFilter : System.Web.UI.Page
 
         }
     }
+    #region Clear Filter Select Result
+    protected void FilterSelectName()
+    {
+        if (ddlcomp.SelectedItem.Text != "Select")
+        {
+            lblfilter5.Text = ddlcomp.SelectedItem.Text;
+            lblfilter5.Visible = true;
+            lbclearfilter.Visible = true;
+        }
+        if (ddldivision.Visible == true && ddldivision.SelectedItem.Text != "Select")
+        {
+            lblfilter6.Text = ddldivision.SelectedItem.Text;
+            lblfilter6.Visible = true; lbclearfilter.Visible = true;
+        }
+        if (ddlunit.Visible == true && ddlunit.SelectedItem.Text != "Select")
+        {
+            lblfilter7.Text = ddlunit.SelectedItem.Text;
+            lblfilter7.Visible = true; lbclearfilter.Visible = true;
+        }
+        if (ddlchkenduser.SelectedItem.Text != "Select")
+        {
+            lblfilter8.Text = ddlchkenduser.SelectedItem.Text;
+            lblfilter8.Visible = true; lbclearfilter.Visible = true;
+        }
+        if (ddldefplatform.SelectedItem.Text != "Select")
+        {
+            lblfilter9.Text = ddldefplatform.SelectedItem.Text;
+            lblfilter9.Visible = true; lbclearfilter.Visible = true;
+        }
+        if (ddlnameofdefplat.Visible = true && ddlnameofdefplat.SelectedIndex != -1)
+        {
+            lblfilter10.Text = ddlnameofdefplat.SelectedItem.Text;
+            lblfilter10.Visible = true; lbclearfilter.Visible = true;
+        }
+        if (ddlprodindustrydomain.SelectedItem.Text != "Select")
+        {
+            lblfilter11.Text = ddlprodindustrydomain.SelectedItem.Text;
+            lblfilter11.Visible = true; lbclearfilter.Visible = true;
+        }
+        if (ddlprodindussubdomain.Visible = true && ddlprodindussubdomain.SelectedIndex != -1)
+        {
+            lblfilter12.Text = ddlprodindussubdomain.SelectedItem.Text;
+            lblfilter12.Visible = true; lbclearfilter.Visible = true;
+        }
+        if (ddlcountry.SelectedItem.Text != "Select")
+        {
+            lblfilter13.Text = ddlcountry.SelectedItem.Text;
+            lblfilter13.Visible = true; lbclearfilter.Visible = true;
+        }
+        if (ddlsearchkeywordsfilter.SelectedItem.Text != "Select")
+        {
+            lblfilter14.Text = ddlsearchkeywordsfilter.SelectedItem.Text;
+            lblfilter14.Visible = true; lbclearfilter.Visible = true;
+        }
+        if (rbisindezinized.SelectedIndex != -1 && rbisindezinized.SelectedItem.Value != "C")
+        {
+            lblfilter1.Text = "Is Indigenized -" + rbisindezinized.SelectedItem.Text;
+            lblfilter1.Visible = true; lbclearfilter.Visible = true;
+        }
+        if (rbismake2.SelectedIndex != -1 && rbismake2.SelectedItem.Value != "C")
+        {
+            lblfilter2.Text = "Is Make II -" + rbismake2.SelectedItem.Text;
+            lblfilter2.Visible = true; lbclearfilter.Visible = true;
+        }
+        if (rbiscontact.SelectedIndex != -1 && rbiscontact.SelectedItem.Value != "C")
+        {
+            lblfilter3.Text = "Is Contact -" + rbiscontact.SelectedItem.Text;
+            lblfilter3.Visible = true; lbclearfilter.Visible = true;
+        }
+        if (rbistender.SelectedIndex != -1 && rbistender.SelectedItem.Value != "C")
+        {
+            lblfilter4.Text = "Is Tender -" + rbistender.SelectedItem.Text;
+            lblfilter4.Visible = true; lbclearfilter.Visible = true;
+        }
+
+    }
+    protected void lblfilter1_Click(object sender, EventArgs e)
+    {
+        rbisindezinized.SelectedIndex = -1;
+        SeachResult();
+        lblfilter1.Visible = false;
+    }
+    protected void lblfilter2_Click(object sender, EventArgs e)
+    {
+        rbismake2.SelectedIndex = -1;
+        SeachResult();
+        lblfilter2.Visible = false;
+    }
+    protected void lblfilter3_Click(object sender, EventArgs e)
+    {
+        rbiscontact.SelectedIndex = -1;
+        SeachResult();
+        lblfilter3.Visible = false;
+    }
+    protected void lblfilter4_Click(object sender, EventArgs e)
+    {
+        rbistender.SelectedIndex = -1;
+        SeachResult();
+        lblfilter4.Visible = false;
+    }
+    protected void lblfilter5_Click(object sender, EventArgs e)
+    {
+        ddlcomp.SelectedIndex = -1;
+        SeachResult();
+        lblfilter5.Visible = false;
+    }
+    protected void lblfilter6_Click(object sender, EventArgs e)
+    {
+        ddldivision.SelectedIndex = -1;
+        SeachResult();
+        lblfilter6.Visible = false;
+    }
+    protected void lblfilter7_Click(object sender, EventArgs e)
+    {
+        ddlunit.SelectedIndex = -1;
+        SeachResult();
+        lblfilter7.Visible = false;
+    }
+    protected void lblfilter8_Click(object sender, EventArgs e)
+    {
+        ddlchkenduser.SelectedIndex = -1;
+        SeachResult();
+        lblfilter8.Visible = false;
+    }
+    protected void lblfilter9_Click(object sender, EventArgs e)
+    {
+        ddldefplatform.SelectedIndex = -1;
+        SeachResult();
+        lblfilter9.Visible = false;
+    }
+    protected void lblfilter10_Click(object sender, EventArgs e)
+    {
+        ddlnameofdefplat.SelectedIndex = -1;
+        SeachResult(); lblfilter10.Visible = false;
+    }
+    protected void lblfilter11_Click(object sender, EventArgs e)
+    {
+        ddlprodindustrydomain.SelectedIndex = -1;
+        SeachResult(); lblfilter11.Visible = false;
+    }
+    protected void lblfilter12_Click(object sender, EventArgs e)
+    {
+        ddlprodindussubdomain.SelectedIndex = -1;
+        SeachResult(); lblfilter12.Visible = false;
+    }
+    protected void lblfilter13_Click(object sender, EventArgs e)
+    {
+        ddlcountry.SelectedIndex = -1;
+        SeachResult(); lblfilter13.Visible = false;
+    }
+    protected void lblfilter14_Click(object sender, EventArgs e)
+    {
+        ddlsearchkeywordsfilter.SelectedIndex = -1;
+        SeachResult(); lblfilter14.Visible = false;
+    }
+    #endregion
 }

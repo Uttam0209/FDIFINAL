@@ -259,8 +259,7 @@ public partial class Admin_Dashboard : System.Web.UI.Page
         dv.Table.Columns["FactoryName"].ColumnName = "DivisionName";
         try
         {
-            // int[] iColumns = { 10, 9, 4, 14, 18, 19, 20, 21, 22, 24, 25 };
-            int[] iColumns = { 1, 3, 5, 6, 8, 10, 17, 18, 19, 20, 21, 24, 57, 60, 58, 59, 62, 61, 55,};
+            int[] iColumns = { 2, 4, 6, 7, 9, 11, 18, 19, 20, 21, 22, 24,25,57,60,58,59,62,61};
             RKLib.ExportData.Export objExport = new RKLib.ExportData.Export("Web");
             objExport.ExportDetails(dv.ToTable(), iColumns, RKLib.ExportData.Export.ExportFormat.Excel, "Product.xls");
         }

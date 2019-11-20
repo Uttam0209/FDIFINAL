@@ -26,7 +26,7 @@
             <nav class="navbar" role="navigation">
                 <div class="navbar-header">
                     <a class="navbar-brand" href="javascript:void(0)"><i class="fa fa-list btn-nav-toggle-responsive text-white"></i>
-                        <span class="main-logo" title="Department of Defense Product">DDP</span>
+                        <span class="main-logo" title="Department of Defense Product">MOD</span>
                     </a>
                 </div>
             </nav>
@@ -45,7 +45,7 @@
                             <asp:UpdatePanel ID="up" runat="server" UpdateMode="Always">
                                 <ContentTemplate>
                                     <asp:Panel ID="panstep1" runat="server">
-                                        <h3>DDP Vendor Registration</h3>
+                                        <h3>MOD Vendor Registration</h3>
                                         <p>Please provide all required details to register your business with us</p>
                                         <div class="clearfix mt10"></div>
 

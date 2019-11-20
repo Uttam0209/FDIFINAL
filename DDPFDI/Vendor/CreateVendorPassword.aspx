@@ -34,7 +34,7 @@
             <div class="container col-lg-offset-4">
                 <div class="col-sm-6 col-lg-6">
                     <asp:Panel ID="panstep1" runat="server">
-                        <h3>DDP Vendor Create Password</h3>
+                        <h3>MOD Vendor Create Password</h3>
                         <p>Please provide all required details to create your password</p>
                         <div class="clearfix mt10"></div>
                         <hr />

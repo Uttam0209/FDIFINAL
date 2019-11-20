@@ -5,11 +5,10 @@
 <asp:Content ID="head" runat="server" ContentPlaceHolderID="head">
 </asp:Content>
 <asp:Content ID="inner" runat="server" ContentPlaceHolderID="ContentPlaceHolder1">
-    <%--<asp:UpdatePanel ID="up" runat="server" UpdateMode="Conditional" ChildrenAsTriggers="false">
-        <ContentTemplate>--%>
+
     <asp:HiddenField runat="server" ID="hidType" />
     <asp:HiddenField runat="server" ID="mRefNo" />
-    <asp:HiddenField runat="server" ID="hidCompanyRefNo" />
+    <asp:HiddenField runat="server" ID="sundomaintype" />
     <div class="content oem-content">
         <div class="sideBg">
             <div class="row">
@@ -37,8 +36,8 @@
                         </div>
                         <div class="clearfix mt10"></div>
                         <asp:Panel ID="pan1" runat="server">
-                            <div class="text-center">
-                                <asp:Chart ID="crtCompGraph" runat="server" Height="500px" Width="900px" OnClick="crtCompGraph_Click">
+                            <div class="text-center" style="overflow-x: auto;">
+                                <asp:Chart ID="crtCompGraph" runat="server" Height="500px" Width="1100px" OnClick="crtCompGraph_Click">
                                     <Titles>
                                         <asp:Title ShadowOffset="3" Name="Company Items Product Industry domain" />
                                     </Titles>
@@ -46,7 +45,7 @@
                                         <asp:Legend Alignment="Center" Docking="Bottom" IsTextAutoFit="true" Title="PRODUCT (INDUSTRY DOMAIN) WISE VALUE" Name="Default" LegendStyle="Row" />
                                     </Legends>
                                     <Series>
-                                        <asp:Series Name="Default" IsValueShownAsLabel="true" ChartType="StackedColumn" YValuesPerPoint="2"></asp:Series>
+                                        <asp:Series Name="Default" IsValueShownAsLabel="true" Color="#669999" ChartType="StackedColumn" YValuesPerPoint="2"></asp:Series>
                                     </Series>
                                     <ChartAreas>
                                         <asp:ChartArea Name="ChartArea1" BorderWidth="0"></asp:ChartArea>
@@ -57,7 +56,7 @@
                         <div class="clearfix mt10"></div>
                         <asp:Panel ID="pan2" runat="server" Visible="false">
                             <div class="text-center">
-                                <asp:Chart ID="crtSubdomain" runat="server" Height="500px" Width="900px">
+                                <asp:Chart ID="crtSubdomain" runat="server" Height="500px" Width="1100px" OnClick="crtSubdomain_Click">
                                     <Titles>
                                         <asp:Title ShadowOffset="3" Name="Company Items Product Industry domain" />
                                     </Titles>
@@ -73,11 +72,11 @@
                                 </asp:Chart>
                             </div>
                         </asp:Panel>
+                      <div class="clearfix"></div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <%-- </ContentTemplate>
-    </asp:UpdatePanel>--%>
+
 </asp:Content>

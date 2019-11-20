@@ -205,11 +205,14 @@ namespace BusinessLayer
             }
             mquery = mquery + " ORDER BY P.LastUpdated DESC, C.CompanyName, F.FactoryName, U.UnitName";
             return SqlHelper.Instance.GetDataset(mquery).Tables[0];
-            // return SqlHelper.Instance.GetProductFilterData(Purpose, RefNo, "'Y'" + " " + Search);
         }
         public DataTable RetriveFilterCode(string CompRefNo, string SearchValue, string Criteria)
         {
             return SqlHelper.Instance.RetriveFilterCode(CompRefNo, SearchValue, Criteria);
+        }
+        public DataTable RetrivenewcategortFIIG_No(string Value,string Criteria)
+        {
+            return SqlHelper.Instance.RetrivenewcategortFIIG_No(Value, Criteria);
         }
         public DataTable GetGraph(string CompRefNo, string techvalue, string Criteria)
         {
