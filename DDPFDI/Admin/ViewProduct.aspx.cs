@@ -736,7 +736,7 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
     }
     protected void lblviewitemcode_Click(object sender, EventArgs e)
     {
-        DataTable DtViewNewCode = Lo.RetrivenewcategortFIIG_No(lblclassitem.Text, "Found");
+        DataTable DtViewNewCode = new DataTable();//Lo.RetrivenewcategortFIIG_No(lblclassitem.Text, "Found");
         if (DtViewNewCode.Rows.Count > 0)
         {
             gvproditemdetail.DataSource = DtViewNewCode;

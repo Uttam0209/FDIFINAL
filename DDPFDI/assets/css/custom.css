@@ -616,9 +616,9 @@ form .form-group {
     color: #494ca2;
 }
 
-.user.dropdown-toggle:focus {
+/*.user.dropdown-toggle:focus {
     color: #fff !important;
-}
+}*/
 
 .user-login-dropdown {
     margin: 0;
@@ -2616,4 +2616,34 @@ z-index:99999;
     padding: 0.2em;
 }
 
+
+
+/*-----New Design Template --------*/
+.navbar .navbar-brand { line-height: 53px;}
+.navbar { background:#fff; box-shadow: 0 0 4px rgba(105,21,207,0.5)}
+.navbar .navbar-brand span.logo,
+.navbar .navbar-nav > li > a,
+.navbar .navbar-nav > li > a:hover,
+.navbar .navbar-nav > li > a:focus,
+.navbar .user-menu .open > a, 
+.navbar .user-menu .open > a:hover, 
+.navbar .user-menu .open > a:focus,
+.user.dropdown-toggle:focus{
+    color: #6915cf !important;
+    font-weight: bold;
+}
+
+.header-user-box { display: flex; align-items:center; font-size: 17px;}
+.header-user-box .fa-user-circle { color: #6915cf !important; font-size: 22px;}
+.header-user-box #lblusername { margin-right: 10px;}
+.sideBg .table tr th { background:#fff !important; color: #380e7f !important}
+.sideBg table.dataTable thead th:after { opacity: 1 !important }
+.sideBg .table tr th, .sideBg .table tr td { padding: 13px 8px;}
+.dataTables_wrapper { overflow-x: auto;}
+.shadow-box { padding: 2%;}
+.manage-user tbody tr:nth-child(2n+2) td,
+.manage-user tbody tr:nth-child(2n+1) td {
+    background: #fff;
+}
+.sideBg .table tr  { box-shadow:0 0 4px rgba(121,21,105,0.2) }
 

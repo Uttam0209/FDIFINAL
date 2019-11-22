@@ -61,7 +61,7 @@
         <nav class="navbar" role="navigation">
             <div class="navbar-header">
                 <a class="navbar-brand" href="#">
-                    <span class="main-logo" title="Department of Defense Product">MOD</span>
+                    <span class="logo" title="Department of Defense Product">MOD</span>
                 </a>
             </div>
         </nav>

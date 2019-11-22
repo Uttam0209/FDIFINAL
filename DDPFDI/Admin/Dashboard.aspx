@@ -37,7 +37,7 @@
             var data = google.visualization.arrayToDataTable(chartData);
 
             var options = {
-                width: 545,
+                width: 460,
                 height: 300,
                 pointSize: 5,
                 seriesType: "bars",
