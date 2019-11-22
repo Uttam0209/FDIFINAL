@@ -905,7 +905,6 @@ public partial class Admin_ProductApprovedDisApproved : System.Web.UI.Page
     }
     protected void rbliststatus_SelectedIndexChanged(object sender, EventArgs e)
     {
-        //BindCompany();
         BindGridView();
     }
     #endregion

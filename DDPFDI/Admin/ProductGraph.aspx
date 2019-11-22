@@ -72,7 +72,7 @@
                                 </asp:Chart>
                             </div>
                         </asp:Panel>
-                      <div class="clearfix"></div>
+                        <div class="clearfix"></div>
                     </div>
                 </div>
             </div>

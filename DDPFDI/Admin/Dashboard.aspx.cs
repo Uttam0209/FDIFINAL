@@ -259,7 +259,7 @@ public partial class Admin_Dashboard : System.Web.UI.Page
         dv.Table.Columns["FactoryName"].ColumnName = "DivisionName";
         try
         {
-            int[] iColumns = { 2, 4, 6, 7, 9, 11, 18, 19, 20, 21, 22, 24,25,57,60,58,59,62,61};
+            int[] iColumns = { 2, 4, 6, 7, 9, 11, 18, 19, 20, 21, 22, 24, 25, 57, 60, 58, 59, 62, 61 };
             RKLib.ExportData.Export objExport = new RKLib.ExportData.Export("Web");
             objExport.ExportDetails(dv.ToTable(), iColumns, RKLib.ExportData.Export.ExportFormat.Excel, "Product.xls");
         }
@@ -329,7 +329,8 @@ public partial class Admin_Dashboard : System.Web.UI.Page
         }
         else if (e.CommandName == "compgraph")
         {
-            Response.Redirect("ProductGraph?id=" + HttpUtility.UrlEncode(objCrypto.EncryptData("G")) + "&strangone=" + HttpUtility.UrlEncode(objCrypto.EncryptData(e.CommandArgument.ToString())));
+            // Response.Redirect("ProductGraph?id=" + HttpUtility.UrlEncode(objCrypto.EncryptData("G")) + "&strangone=" + HttpUtility.UrlEncode(objCrypto.EncryptData(e.CommandArgument.ToString())));
+            Response.Redirect("ProductGraphNSN?id=" + HttpUtility.UrlEncode(objCrypto.EncryptData("G")) + "&strangone=" + HttpUtility.UrlEncode(objCrypto.EncryptData(e.CommandArgument.ToString())));
         }
     }
     protected void gvcount_RowCreated(object sender, GridViewRowEventArgs e)
