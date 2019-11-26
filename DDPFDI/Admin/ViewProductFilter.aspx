@@ -73,7 +73,7 @@
             <nav class="navbar" role="navigation">
                 <div class="navbar-header">
                     <a class="navbar-brand" href="javascript:void(0)"><i class="fa fa-list btn-nav-toggle-responsive text-white"></i>
-                        <span class="main-logo" title="Department of Defense Product">MOD</span>
+                        <span class="logo" title="Department of Defense Product">MOD</span>
                     </a>
                 </div>
                 <div class="collapse navbar-collapse">
@@ -100,8 +100,118 @@
                         <div class="filter-sidebar">
                             <!--Accordion wrapper-->
                             <h2>Filters</h2>
+                            <div class="common-filter-box">
+                                <h3>Indigenized</h3>
+                                    <div class="custom-control custom-checkbox">
+                                        <asp:RadioButtonList ID="rbisindezinized" runat="server" AutoPostBack="true" OnSelectedIndexChanged="rbisindezinized_SelectedIndexChanged" RepeatColumns="1" RepeatDirection="Vertical" RepeatLayout="UnorderedList">
+                                            <asp:ListItem Value="Y">YES</asp:ListItem>
+                                            <asp:ListItem Value="N">NO</asp:ListItem>
+                                            <asp:ListItem Value="C">CLEAR</asp:ListItem>
+                                        </asp:RadioButtonList>
+                                    </div>
+                            </div>
+                             <div class="common-filter-box">
+                                 <h3>Make II</h3>
+                                <div class="custom-control custom-checkbox">
+                                    <asp:RadioButtonList ID="rbismake2" runat="server" AutoPostBack="true" OnSelectedIndexChanged="rbismake2_SelectedIndexChanged" RepeatColumns="1" RepeatDirection="Vertical" RepeatLayout="UnorderedList">
+                                        <asp:ListItem Value="25">YES</asp:ListItem>
+                                        <asp:ListItem Value="N">NO</asp:ListItem>
+                                        <asp:ListItem Value="C">CLEAR</asp:ListItem>
+                                    </asp:RadioButtonList>
+                                </div>
+                             </div>
+                            <div class="common-filter-box">
+                                 <h3>Contact</h3>
+                                <div class="custom-control custom-checkbox">
+                                    <asp:RadioButtonList ID="rbiscontact" runat="server" AutoPostBack="true" OnSelectedIndexChanged="rbiscontact_SelectedIndexChanged" RepeatColumns="1" RepeatDirection="Vertical" RepeatLayout="UnorderedList">
+                                        <asp:ListItem Value="Y">AVAILABLE</asp:ListItem>
+                                        <asp:ListItem Value="N">NOT AVAILABLE</asp:ListItem>
+                                        <asp:ListItem Value="C">CLEAR</asp:ListItem>
+                                    </asp:RadioButtonList>
+                                </div>
+                             </div>
+                            <div class="common-filter-box">
+                                 <h3>Tender</h3>
+                                <div class="custom-control custom-checkbox">
+                                    <asp:RadioButtonList ID="rbistender" runat="server" AutoPostBack="true" OnSelectedIndexChanged="rbistender_SelectedIndexChanged" RepeatColumns="1" RepeatDirection="Vertical" RepeatLayout="UnorderedList">
+                                        <asp:ListItem Value="Y">LIVE</asp:ListItem>
+                                        <asp:ListItem Value="N">NOT LIVE</asp:ListItem>
+                                        <asp:ListItem Value="C">CLEAR </asp:ListItem>
+                                    </asp:RadioButtonList>
+                                </div>
+                             </div>
+                            <div class="common-filter-box" runat="server" id="divfiltercompany">
+                                 <h3>Company</h3>
+                                <div class="custom-control custom-checkbox">
+                                    <asp:DropDownList ID="ddlcomp" runat="server" CssClass="form-control" Style="margin-top: 5px;" AutoPostBack="true" OnSelectedIndexChanged="ddlcomp_SelectedIndexChanged"></asp:DropDownList>
+                                </div>
+                             </div>
+
+                            <div class="common-filter-box" runat="server" id="divfilterdivision" visible="false">
+                                 <h3>Division</h3>
+                               <div class="custom-control custom-checkbox">
+                                        <asp:DropDownList ID="ddldivision" runat="server" CssClass="form-control" Style="margin-top: 5px;" AutoPostBack="true" OnSelectedIndexChanged="ddldivision_SelectedIndexChanged"></asp:DropDownList>
+                                </div>
+                             </div>
+
+                            <div class="common-filter-box" runat="server" id="divfilterunit" visible="false">
+                                 <h3>Unit</h3>
+                               <div class="custom-control custom-checkbox">
+                                         <asp:DropDownList ID="ddlunit" runat="server" CssClass="form-control" Style="margin-top: 5px;" AutoPostBack="true" OnSelectedIndexChanged="ddlunit_SelectedIndexChanged"></asp:DropDownList>
+                                </div>
+                             </div>
+                            <div class="common-filter-box">
+                                 <h3>End User</h3>
+                               <div class="custom-control custom-checkbox">
+                                         <asp:DropDownList ID="ddlchkenduser" runat="server" CssClass="form-control" Style="margin-top: 5px;" AutoPostBack="true" OnSelectedIndexChanged="ddlchkenduser_SelectedIndexChanged"></asp:DropDownList>
+                                </div>
+                             </div>
+                            <div class="common-filter-box">
+                                 <h3>DEFENCE PLATFORM</h3>
+                               <div class="custom-control custom-checkbox">
+                                         <asp:DropDownList ID="ddldefplatform" runat="server" CssClass="form-control" Style="margin-top: 5px;" AutoPostBack="true" OnSelectedIndexChanged="ddldefplatform_SelectedIndexChanged"></asp:DropDownList>
+                                </div>
+                             </div>
+
+                            <div class="common-filter-box" runat="server" id="divfilternodp" visible="false">
+                                 <h3>NAME OF DEFENCE PLATFORM</h3>
+                               <div class="custom-control custom-checkbox">
+                                         <asp:DropDownList ID="ddlnameofdefplat" runat="server" CssClass="form-control" Style="margin-top: 5px;" AutoPostBack="true" OnSelectedIndexChanged="ddlnameofdefplat_SelectedIndexChanged"></asp:DropDownList>
+                                </div>
+                             </div>
+
+                            <div class="common-filter-box">
+                                 <h3>INDUSTRY DOMAIN</h3>
+                               <div class="custom-control custom-checkbox">
+                                         <asp:DropDownList ID="ddlprodindustrydomain" runat="server" CssClass="form-control" Style="margin-top: 5px;" AutoPostBack="true" OnSelectedIndexChanged="ddlprodindustrydomain_SelectedIndexChanged"></asp:DropDownList>
+                                </div>
+                             </div>
+
+                            <div class="common-filter-box" runat="server" id="divfilterpisd" visible="false">
+                                 <h3>INDUSTRY SUB DOMAIN</h3>
+                               <div class="custom-control custom-checkbox">
+                                         <asp:DropDownList ID="ddlprodindussubdomain" runat="server" CssClass="form-control" Style="margin-top: 5px;" AutoPostBack="true" OnSelectedIndexChanged="ddlprodindussubdomain_SelectedIndexChanged"></asp:DropDownList>
+                                </div>
+                             </div>
+                            <div class="common-filter-box">
+                                 <h3>OEM Country</h3>
+                               <div class="custom-control custom-checkbox">
+                                         <asp:DropDownList ID="ddlcountry" runat="server" AutoPostBack="true" Style="margin-top: 5px;" CssClass="form-control"
+                                                    OnSelectedIndexChanged="ddlcountry_SelectedIndexChanged">
+                                                </asp:DropDownList>
+                                </div>
+                             </div>
+                            <div class="common-filter-box">
+                                 <h3>Search keywords</h3>
+                               <div class="custom-control custom-checkbox">
+                                        <asp:DropDownList ID="ddlsearchkeywordsfilter" runat="server" AutoPostBack="true" Style="margin-top: 5px;" CssClass="form-control"
+                                                    OnSelectedIndexChanged="ddlsearchkeywordsfilter_SelectedIndexChanged">
+                                                </asp:DropDownList>
+                                </div>
+                             </div>
+
                             <div class="accordion md-accordion" id="accordionEx" role="tablist" aria-multiselectable="true">
-                                <!-- Accordion card -->
+<%--                                <!-- Accordion card -->
                                 <div class="card">
                                     <!-- Card header -->
                                     <div class="card-header" role="tab" id="headingThree1">
@@ -265,8 +375,10 @@
                                         </div>
                                     </div>
                                 </div>
-                                <!-- Accordion card -->
-                                <!-- Accordion card -->
+                                <!-- Accordion card -->--%>
+
+
+                              <%--  <!-- Accordion card -->
                                 <div class="card">
                                     <!-- Card header -->
                                     <div class="card-header" role="tab" id="headingThree8">
@@ -281,7 +393,7 @@
                                         data-parent="#accordionEx">
                                         <div class="card-body">
                                             <div class="custom-control custom-checkbox">
-                                                <asp:DropDownList ID="ddlchkenduser" runat="server" CssClass="form-control" Style="margin-top: 5px;" AutoPostBack="true" OnSelectedIndexChanged="ddlchkenduser_SelectedIndexChanged"></asp:DropDownList>
+                                                
                                             </div>
                                         </div>
                                     </div>
@@ -302,7 +414,7 @@
                                         data-parent="#accordionEx">
                                         <div class="card-body">
                                             <div class="custom-control custom-checkbox">
-                                                <asp:DropDownList ID="ddldefplatform" runat="server" CssClass="form-control" Style="margin-top: 5px;" AutoPostBack="true" OnSelectedIndexChanged="ddldefplatform_SelectedIndexChanged"></asp:DropDownList>
+                                                
                                             </div>
                                         </div>
                                     </div>
@@ -323,7 +435,7 @@
                                         data-parent="#accordionEx">
                                         <div class="card-body">
                                             <div class="custom-control custom-checkbox">
-                                                <asp:DropDownList ID="ddlnameofdefplat" runat="server" CssClass="form-control" Style="margin-top: 5px;" AutoPostBack="true" OnSelectedIndexChanged="ddlnameofdefplat_SelectedIndexChanged"></asp:DropDownList>
+                                                
                                             </div>
                                         </div>
                                     </div>
@@ -344,7 +456,7 @@
                                         data-parent="#accordionEx">
                                         <div class="card-body">
                                             <div class="custom-control custom-checkbox">
-                                                <asp:DropDownList ID="ddlprodindustrydomain" runat="server" CssClass="form-control" Style="margin-top: 5px;" AutoPostBack="true" OnSelectedIndexChanged="ddlprodindustrydomain_SelectedIndexChanged"></asp:DropDownList>
+                                                
                                             </div>
                                         </div>
                                     </div>
@@ -409,14 +521,12 @@
                                         data-parent="#accordionEx">
                                         <div class="card-body">
                                             <div class="custom-control custom-checkbox">
-                                                <asp:DropDownList ID="ddlsearchkeywordsfilter" runat="server" AutoPostBack="true" Style="margin-top: 5px;" CssClass="form-control"
-                                                    OnSelectedIndexChanged="ddlsearchkeywordsfilter_SelectedIndexChanged">
-                                                </asp:DropDownList>
+                                                
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <!-- Accordion card -->
+                                <!-- Accordion card -->--%>
                             </div>
                             <!-- Accordion wrapper -->
                         </div>
@@ -424,7 +534,10 @@
                             <div class="content oem-content">
                                 <div class="sideBg">
                                     <div class="row">
-                                        <asp:LinkButton ID="lblback" runat="server" class="fa fa-arrow-circle-left pull-right" OnClick="lblback_Click">Back</asp:LinkButton>
+                                        <div class="col-md-12">
+                                            <asp:LinkButton ID="lblback" runat="server" class="fa fa-arrow-circle-left pull-right" OnClick="lblback_Click">Back</asp:LinkButton>
+                                        </div>
+                                        
                                     </div>
                                     <div class="clearfix" style="margin-bottom: 10px;"></div>
                                     <div class="addfdi">

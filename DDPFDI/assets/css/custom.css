@@ -2636,14 +2636,31 @@ z-index:99999;
 .header-user-box { display: flex; align-items:center; font-size: 17px;}
 .header-user-box .fa-user-circle { color: #6915cf !important; font-size: 22px;}
 .header-user-box #lblusername { margin-right: 10px;}
-.sideBg .table tr th { background:#fff !important; color: #380e7f !important}
+.sideBg .table tr th { background:rgba(105,21,207,0.8) !important; color: #fff !important}
 .sideBg table.dataTable thead th:after { opacity: 1 !important }
 .sideBg .table tr th, .sideBg .table tr td { padding: 13px 8px;}
 .dataTables_wrapper { overflow-x: auto;}
 .shadow-box { padding: 2%;}
-.manage-user tbody tr:nth-child(2n+2) td,
-.manage-user tbody tr:nth-child(2n+1) td {
-    background: #fff;
+.manage-user tbody tr:nth-child(odd) td { background: #c299fc) !important;}
+.manage-user tbody tr:nth-child(even) td {
+    background: rgba(105,21,207,0.1) !important;
 }
 .sideBg .table tr  { box-shadow:0 0 4px rgba(121,21,105,0.2) }
+
+#lbltotal { background: #6915cf; color: #fff;}
+#lblback { margin-top: 10px;}
+#divclearfilorexceldown { text-align:right;}
+
+.filter-sidebar h2 { font-size: 18px; background: none !important; color:#d62196 !important; border-bottom: 1px solid #d62196}
+.filter-sidebar { width: 20%;}
+.contentWithFilter .box-holder { width: 80%;}
+.common-filter-box { padding:5px 10px; border-bottom: 1px solid #6915cf}
+.common-filter-box h3 {margin: 0; font-size: 16px; padding: 8px 0;}
+.common-filter-box ul { display: flex; justify-content:space-between; padding-left: 0;}
+.common-filter-box ul li { display: flex; align-items:center;}
+.common-filter-box ul li input[type='radio'] { margin: 0 5px 0 0;}
+.common-filter-box ul li label { margin-bottom: 0; font-size: 12px !important;}
+.filter-sidebar .select2-container--default .select2-selection--single .select2-selection__rendered {
+    line-height: 34px;
+}
 
