@@ -131,13 +131,20 @@
                                                                 </label>
                                                                 <asp:TextBox runat="server" ID="txtniincode" TabIndex="4" MaxLength="9" class="form-control"></asp:TextBox>
                                                             </div>
+                                                            <div class="clearfix mt10"></div>
+                                                            <div class="form-group">
+                                                                <label>Search keywords (To add more than one search keyword please use comma(,)) <span class="mandatory">*</span></label>
+                                                                <asp:TextBox runat="server" ID="txtsearchkeyword" MaxLength="50" required="" TabIndex="18" class="form-control"></asp:TextBox>
+                                                                <div class="clearfix" style="margin-top: 5px;"></div>
+                                                                <span>(Max length 50 words only)</span>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-4">
                                                         <div class="form-group">
                                                             <label>Item brief description</label>
                                                             <span class="mandatory">* (Editable)</span>  <span data-toggle="tooltip" class="fa fa-question" title="If item description is not relevant, edit the item description."></span>
-                                                            <asp:TextBox runat="server" ID="txtproductdescription" required="" Height="70px" MaxLength="250" TabIndex="5" class="form-control"></asp:TextBox>
+                                                            <asp:TextBox runat="server" ID="txtproductdescription" required="" Height="100px" MaxLength="250" TabIndex="5" class="form-control"></asp:TextBox>
                                                             <div class="clearfix" style="margin-top: 5px;"></div>
                                                             <span>(Max length 250 words only)</span>
                                                         </div>
@@ -410,19 +417,11 @@
                                     </div>
                                     <div class="section-pannel">
                                         <div class="row">
-                                            <asp:UpdatePanel runat="server" ID="upindwginized">
-                                                <ContentTemplate>
-                                                    <div class="col-md-12">
-                                                        <div class="form-group">
-                                                            <div class="col-sm-6">
-                                                                <div class="form-group">
-                                                                    <label>Search keywords (To add more than one search keyword please use comma(,))</label>
-                                                                    <asp:TextBox runat="server" ID="txtsearchkeyword" MaxLength="50" TabIndex="18" class="form-control"></asp:TextBox>
-                                                                    <div class="clearfix" style="margin-top: 5px;"></div>
-                                                                    <span>(Max length 50 words only)</span>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-sm-6">
+                                            <div class="col-md-12">
+                                                <asp:UpdatePanel runat="server" ID="UpdatePanel4">
+                                                    <ContentTemplate>
+                                                        <div class="col-md-12">
+                                                            <div class="form-group">
                                                                 <label class="mlive-status-box productalreadylabel">
                                                                     Item already indigenized :                                                               
                                                                 <asp:RadioButtonList runat="server" ID="rbisindinised" RepeatColumns="2" TabIndex="19" RepeatLayout="Flow"
@@ -431,47 +430,27 @@
                                                                     <asp:ListItem Value="Y" class="yes">Yes</asp:ListItem>
                                                                 </asp:RadioButtonList>
                                                                 </label>
-                                                            </div>
-                                                            <div class="clearfix" style="margin-top: 10px;"></div>
-                                                            <div runat="server" class="row" id="divisIndigenized" visible="false">
-                                                                <div class="col-sm-4">
-                                                                    <label>Enter Manufacturer name</label>
-                                                                    <asp:TextBox runat="server" ID="txtmanufacturename" TabIndex="20" class="form-control"></asp:TextBox>
-                                                                </div>
-                                                                <div class="col-sm-4">
-                                                                    <label>Address</label>
-                                                                    <asp:TextBox runat="server" ID="txtmanifacaddress" MaxLength="250" TabIndex="21" class="form-control"></asp:TextBox>
-                                                                    <div class="clearfix" style="margin-top: 5px;"></div>
-                                                                    <span>(Max length 250 words only)</span>
-                                                                </div>
-                                                                <div class="col-sm-4">
-                                                                    <label>Year of Indiginization</label>
-                                                                    <asp:DropDownList runat="server" ID="ddlyearofindiginization" Height="35px" TabIndex="22" class="form-control"></asp:DropDownList>
+
+                                                                <div class="clearfix" style="margin-top: 10px;"></div>
+                                                                <div runat="server" class="row" id="divisIndigenized" visible="false">
+                                                                    <div class="col-sm-4">
+                                                                        <label>Enter Manufacturer name</label>
+                                                                        <asp:TextBox runat="server" ID="txtmanufacturename" TabIndex="20" class="form-control"></asp:TextBox>
+                                                                    </div>
+                                                                    <div class="col-sm-4">
+                                                                        <label>Address</label>
+                                                                        <asp:TextBox runat="server" ID="txtmanifacaddress" MaxLength="250" TabIndex="21" class="form-control"></asp:TextBox>
+                                                                        <div class="clearfix" style="margin-top: 5px;"></div>
+                                                                        <span>(Max length 250 words only)</span>
+                                                                    </div>
+                                                                    <div class="col-sm-4">
+                                                                        <label>Year of Indiginization</label>
+                                                                        <asp:DropDownList runat="server" ID="ddlyearofindiginization" Height="35px" TabIndex="22" class="form-control"></asp:DropDownList>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                </ContentTemplate>
-                                            </asp:UpdatePanel>
-                                            <asp:UpdateProgress ID="UpdateProgress5" runat="server" AssociatedUpdatePanelID="upindwginized">
-                                                <ProgressTemplate>
-                                                    <!---Progress Bar ---->
-                                                    <div class="overlay-progress">
-                                                        <div class="custom-progress-bar blue stripes">
-                                                            <span></span>
-                                                            <p>Processing</p>
-                                                        </div>
-                                                    </div>
-                                                    <!---Progress Bar ---->
-                                                </ProgressTemplate>
-                                            </asp:UpdateProgress>
-                                        </div>
-                                    </div>
-                                    <div class="section-pannel">
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <asp:UpdatePanel runat="server" ID="UpdatePanel4">
-                                                    <ContentTemplate>
+                                                        <div class="clearfix mt10"></div>
                                                         <div class="col-sm-6">
                                                             <div class="form-group">
                                                                 <label class="checkbox-box productalreadylabel">

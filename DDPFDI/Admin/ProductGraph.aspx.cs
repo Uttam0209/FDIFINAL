@@ -29,7 +29,7 @@ public partial class Admin_ProductGraph : System.Web.UI.Page
             {
                 if (Request.QueryString["id"] != null)
                 {
-                    lblPageName.Text = "Item Industry Domain Graph";
+                    lblPageName.Text = "Product Industry wise domain";
                     hidType.Value = objEnc.DecryptData(Session["Type"].ToString());
                     mRefNo.Value = objEnc.DecryptData(Request.QueryString["strangone"].ToString());
                     BindGridView();
@@ -43,6 +43,7 @@ public partial class Admin_ProductGraph : System.Web.UI.Page
             ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "ErrorMssgPopup('Session Expired,Please login again');window.location='Login'", true);
         }
     }
+    #region Graph
     protected void BindGridView()
     {
         try
@@ -131,7 +132,7 @@ public partial class Admin_ProductGraph : System.Web.UI.Page
             pan2.Visible = false;
             pan1.Visible = false;
         }
-    }  
+    }
     protected void crtSubdomain_Click(object sender, ImageMapEventArgs e)
     {
         string[] pointData = e.PostBackValue.Split(',');
@@ -152,4 +153,5 @@ public partial class Admin_ProductGraph : System.Web.UI.Page
             }
         }
     }
+    #endregion
 }

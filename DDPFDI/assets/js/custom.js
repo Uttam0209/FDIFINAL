@@ -199,6 +199,8 @@
         $('#ContentPlaceHolder1_gvcount').DataTable();
         $('#ContentPlaceHolder1_gvproduct').DataTable();
         $('#ContentPlaceHolder1_gvproditemdetail').DataTable();
+        $('#ContentPlaceHolder1_gvnsngroup').DataTable();
+        $('#ContentPlaceHolder1_gvnsngroupclass').DataTable();
     }
     $('[data-fancybox="Prodgridviewgellry"]').fancybox({
         // Options will go here

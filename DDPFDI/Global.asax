@@ -101,5 +101,6 @@
         routes.MapPageRoute("ProdVerifiUpdate", "ProdVerifiUpdate", "~/Admin/ProductApprovedDisApproved.aspx", true);
         routes.MapPageRoute("ViewProductFilterDetail", "ViewProductFilterDetail", "~/Admin/ViewProductFilter.aspx", true);
         routes.MapPageRoute("ProductGraph", "ProductGraph", "~/Admin/ProductGraph.aspx", true);
+        routes.MapPageRoute("ProductGraphNSN", "ProductGraphNSN", "~/Admin/ProductNSNWise.aspx", true);
     }    
 </script>
