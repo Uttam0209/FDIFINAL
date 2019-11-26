@@ -21,19 +21,14 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     private DataTable dtImage = new DataTable();
     public DataTable dtSaveProdInfo = new DataTable();
     public DataTable dtSaveEstimateQuantity = new DataTable();
-    private string DisplayPanel = "";
+    DataTable DtNSFIIG = new DataTable();
     private string _msg = string.Empty;
     private string _sysMsg = string.Empty;
     public string Services = "";
     public string Remarks = "";
     public string ProcurmentCat = "";
     public string NodalDDL = "";
-    private string UserName;
-    private string RefNo;
-    private string UserEmail;
-    private string currentPage = "";
     public string IsImportedyesYear = "";
-    private short Mid = 0;
     private DataTable DtCompanyDDL = new DataTable();
     private HybridDictionary HyPanel1 = new HybridDictionary();
     #endregion
@@ -767,9 +762,11 @@ public partial class Admin_AddProduct : System.Web.UI.Page
             {
                 Co.FillDropdownlist(ddllevel3product, DtMasterCategroyLevel3, "SCategoryName", "SCategoryId");
                 ddllevel3product.Items.Insert(0, "Select");
+                lblviewitemcode.Visible = true;
             }
             else
             {
+                lblviewitemcode.Visible = false;
                 ddllevel3product.Items.Clear();
                 ddllevel3product.Items.Insert(0, "Select");
                 ddllevel3product.Items.Insert(1, "NA");
@@ -1118,6 +1115,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
             if (ddllevel3product.SelectedItem.Value != "Select")
             {
                 HyPanel1["ProductLevel3"] = Co.RSQandSQLInjection(ddllevel3product.SelectedItem.Value, "soft");
+                DtNSFIIG = SaveFiigNo();
             }
             else
             {
@@ -1367,7 +1365,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                 HyPanel1["NodalDetail2"] = Convert.ToInt32(ddlNodalOfficerEmail2.SelectedItem.Value);
             }
             HyPanel1["CreatedBy"] = ViewState["UserLoginEmail"].ToString();
-            string StrProductDescription = Lo.SaveCodeProduct(HyPanel1, dtImage, dtSaveProdInfo, dtSaveEstimateQuantity, out _sysMsg, out _msg, "Product");
+            string StrProductDescription = Lo.SaveCodeProduct(HyPanel1, dtImage, dtSaveProdInfo, dtSaveEstimateQuantity, DtNSFIIG, out _sysMsg, out _msg, "Product");
             if (StrProductDescription != "-1")
             {
                 if (btnsubmitpanel1.Text != "Update")
@@ -1397,7 +1395,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     {
         try
         {
-            if (txtproductdescription.Text != "" && ddlmastercategory.SelectedItem.Text != "Select" && ddlsubcategory.SelectedItem.Text != "Select" && ddltechnologycat.SelectedItem.Text != "Select" && txtsearchkeyword.Text != "")
+            if (txtproductdescription.Text != "" && ddlmastercategory.SelectedItem.Text != "Select" && ddlsubcategory.SelectedItem.Text != "Select" && ddltechnologycat.SelectedItem.Text != "Select" && txtsearchkeyword.Text != "" && ddlcompany.SelectedItem.Text != "Select")
             {
                 if (ddlsubtech.SelectedItem.Text != "Select" && ddlnomnclature.SelectedItem.Text != "Select" && ddlenduser.SelectedItem.Text != "Select" && ddlplatform.SelectedItem.Text != "Select")
                 {
@@ -1568,6 +1566,8 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                 hfProcCatId.Value = "";
             }
         }
+        txtfiigno.Text = "";
+        txtfiigtype.Text="";
     }
     #endregion
     #region Image Code
@@ -2111,6 +2111,95 @@ public partial class Admin_AddProduct : System.Web.UI.Page
             {
                 ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "ErrorMssgPopup('Record not deleted.')", true);
             }
+        }
+    }
+    #endregion
+    #region Show NSNGroup GRID TO Add
+    protected void lblviewitemcode_Click(object sender, EventArgs e)
+    {
+        DataTable DtViewNewCode = Lo.RetrivenewcategortFIIG_No(ddllevel3product.SelectedItem.Text, "Found");
+        if (DtViewNewCode.Rows.Count > 0)
+        {
+            DataView Dv = new DataView(DtViewNewCode);
+            Dv.RowFilter = "L2Code='Y'";
+            DataTable DtVY = Dv.ToTable();
+            gvproditemdetail.DataSource = DtVY.DefaultView;
+            gvproditemdetail.DataBind();
+            gvproditemdetail.Visible = true;
+            pan.Visible = true;
+            Panel2.Visible = true;
+            Dv.RowFilter = "L2Code='N'";
+            DataTable DTVN = Dv.ToTable();
+            GridView1.DataSource = DTVN.DefaultView;
+            GridView1.DataBind();
+            GridView1.Visible = true;
+            ScriptManager.RegisterStartupScript(this, GetType(), "changePass", "showPopup();", true);
+        }
+        else
+        {
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "ErrorMssgPopup('No Record Found')", true);
+        }
+    }
+    protected void gvproductItem_RowCreated(object sender, GridViewRowEventArgs e)
+    {
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            e.Row.TableSection = TableRowSection.TableBody;
+        }
+        else if (e.Row.RowType == DataControlRowType.Header)
+        {
+            e.Row.TableSection = TableRowSection.TableHeader;
+        }
+        else if (e.Row.RowType == DataControlRowType.Footer)
+        {
+            e.Row.TableSection = TableRowSection.TableFooter;
+        }
+    }
+    protected DataTable SaveFiigNo()
+    {
+        DataTable dt = new DataTable();
+        dt.Columns.Add(new DataColumn("FiigID", typeof(long)));
+        dt.Columns.Add(new DataColumn("ProductRefNo", typeof(string)));
+        dt.Columns.Add(new DataColumn("SCategoryName", typeof(string)));
+        dt.Columns.Add(new DataColumn("Remarks", typeof(string)));
+        dt.Columns.Add(new DataColumn("Remarks2", typeof(string)));
+        dt.Columns.Add(new DataColumn("Remarks3", typeof(string)));
+        DataRow dr;
+        {
+            try
+            {
+                foreach (GridViewRow row in gvproditemdetail.Rows)
+                {
+                    string scatfig = row.Cells[1].Text;
+                    TextBox tb = (TextBox)row.FindControl("txtinfonsnfig");
+                    dr = dt.NewRow();
+                    dr["FiigID"] = "-1";
+                    dr["ProductRefNo"] = "";
+                    dr["SCategoryName"] = scatfig.ToString();
+                    dr["Remarks"] = tb.Text;
+                    dr["Remarks2"] = txtfiigtype.Text;
+                    dr["Remarks3"] = "Y";
+                    dt.Rows.Add(dr);
+                }
+                foreach (GridViewRow row1 in GridView1.Rows)
+                {
+                    string scatfig1 = row1.Cells[1].Text;
+                    TextBox tb1 = (TextBox)row1.FindControl("txtremNoFiig");
+                    dr = dt.NewRow();
+                    dr["FiigID"] = "-1";
+                    dr["ProductRefNo"] = "";
+                    dr["SCategoryName"] = scatfig1.ToString();
+                    dr["Remarks"] = tb1.Text;
+                    dr["Remarks2"] = txtfiigno.Text; ;
+                    dr["Remarks3"] = "N";
+                    dt.Rows.Add(dr);
+                }
+            }
+            catch (Exception ex)
+            {
+                ex.Message.ToString();
+            }
+            return dt;
         }
     }
     #endregion

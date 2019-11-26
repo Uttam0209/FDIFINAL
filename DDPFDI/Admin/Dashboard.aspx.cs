@@ -30,6 +30,9 @@ public partial class Admin_Dashboard : System.Web.UI.Page
                 lbitemmake2.Text = dt.Rows[0]["IsMake2"].ToString();
                 lbitemphoto.Text = dt.Rows[0]["TotWithPhoto"].ToString();
                 lbitemwithoutphoto.Text = dt.Rows[0]["TotWithoutPhoto"].ToString();
+                lbapproveditem.Text = dt.Rows[0]["TotApproved"].ToString();
+                lbitemdisapproved.Text = dt.Rows[0]["TotDisApproved"].ToString();
+
                 if (objCrypto.DecryptData(Session["Type"].ToString()) == "Admin" || objCrypto.DecryptData(Session["Type"].ToString()) == "SuperAdmin")
                 {
                     divven.Visible = true;
@@ -424,5 +427,71 @@ public partial class Admin_Dashboard : System.Web.UI.Page
     protected void lblvendor_Click(object sender, EventArgs e)
     {
         Response.Redirect("Vendor-Detail?id=" + HttpUtility.UrlEncode(objCrypto.EncryptData("V")));
+    }
+    protected void lbdownloadapproved_Click(object sender, EventArgs e)
+    {
+        DtGrid = Lo.GetDashboardData("Product", "");
+        DataView dv = new DataView(DtGrid);
+        dv.RowFilter = "IsApproved='Y'";
+        if (objCrypto.DecryptData(Session["Type"].ToString()) != "Admin" && objCrypto.DecryptData(Session["Type"].ToString()) != "SuperAdmin")
+        {
+            if (DtGrid.Rows.Count > 0)
+            {               
+                this.UpdateDtGridValue();
+                // code to filter row role wise
+                if (objCrypto.DecryptData(Session["Type"].ToString()).ToUpper() == "COMPANY")
+                    dv.RowFilter = "CompanyRefNo='" + Session["CompanyRefNo"].ToString() + "'";
+                else if (objCrypto.DecryptData(Session["Type"].ToString()).ToUpper() == "DIVISION")
+                    dv.RowFilter = "FactoryRefNo='" + Session["CompanyRefNo"].ToString() + "'";
+                else
+                    dv.RowFilter = "UnitRefNo='" + Session["CompanyRefNo"].ToString() + "'";
+            }
+        }
+        dv.Sort = "CompanyName asc,FactoryName asc";
+        //renaming colm for user                
+        dv.Table.Columns["FactoryName"].ColumnName = "DivisionName";
+        try
+        {
+            int[] iColumns = { 2, 4, 6, 7, 9, 11, 18, 19, 20, 21, 22, 24, 25, 57, 60, 58, 59, 62, 61 };
+            RKLib.ExportData.Export objExport = new RKLib.ExportData.Export("Web");
+            objExport.ExportDetails(dv.ToTable(), iColumns, RKLib.ExportData.Export.ExportFormat.Excel, "Product.xls");
+        }
+        catch (Exception ex)
+        {
+
+        }
+    }
+    protected void lbitemdisapproveddown_Click(object sender, EventArgs e)
+    {
+        DtGrid = Lo.GetDashboardData("Product", "");
+        DataView dv = new DataView(DtGrid);
+        dv.RowFilter = "IsApproved='N'";
+        if (objCrypto.DecryptData(Session["Type"].ToString()) != "Admin" && objCrypto.DecryptData(Session["Type"].ToString()) != "SuperAdmin")
+        {
+            if (DtGrid.Rows.Count > 0)
+            {
+                this.UpdateDtGridValue();
+                // code to filter row role wise
+                if (objCrypto.DecryptData(Session["Type"].ToString()).ToUpper() == "COMPANY")
+                    dv.RowFilter = "CompanyRefNo='" + Session["CompanyRefNo"].ToString() + "'";
+                else if (objCrypto.DecryptData(Session["Type"].ToString()).ToUpper() == "DIVISION")
+                    dv.RowFilter = "FactoryRefNo='" + Session["CompanyRefNo"].ToString() + "'";
+                else
+                    dv.RowFilter = "UnitRefNo='" + Session["CompanyRefNo"].ToString() + "'";
+            }
+        }
+        dv.Sort = "CompanyName asc,FactoryName asc";
+        //renaming colm for user                
+        dv.Table.Columns["FactoryName"].ColumnName = "DivisionName";
+        try
+        {
+            int[] iColumns = { 2, 4, 6, 7, 9, 11, 18, 19, 20, 21, 22, 24, 25, 57, 60, 58, 59, 62, 61 };
+            RKLib.ExportData.Export objExport = new RKLib.ExportData.Export("Web");
+            objExport.ExportDetails(dv.ToTable(), iColumns, RKLib.ExportData.Export.ExportFormat.Excel, "Product.xls");
+        }
+        catch (Exception ex)
+        {
+
+        }
     }
 }

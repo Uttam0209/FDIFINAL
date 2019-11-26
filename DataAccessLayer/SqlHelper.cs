@@ -730,7 +730,7 @@ namespace DataAccessLayer
                 }
             }
         }
-        public string SaveCodeProduct(HybridDictionary hyProduct, DataTable dt, DataTable dtProdInfo, DataTable dtEstimateQuantity, out string _sysMsg, out string _msg, string Criteria)
+        public string SaveCodeProduct(HybridDictionary hyProduct, DataTable dt, DataTable dtProdInfo, DataTable dtEstimateQuantity, DataTable dtFIIGNo, out string _sysMsg, out string _msg, string Criteria)
         {
             using (DbConnection dbCon = db.CreateConnection())
             {
@@ -841,6 +841,17 @@ namespace DataAccessLayer
                         db.AddInParameter(dbcom3, "@Unit", DbType.String, dtEstimateQuantity.Rows[k]["Unit"]);
                         db.AddInParameter(dbcom3, "@EstimatedPrice", DbType.String, dtEstimateQuantity.Rows[k]["EstimatedPrice"]);
                         db.ExecuteNonQuery(dbcom3, dbTran);
+                    }
+                    for (int L = 0; L < dtFIIGNo.Rows.Count; L++)
+                    {
+                        DbCommand dbcom4 = db.GetStoredProcCommand("sp_trn_FiiGSave");
+                        db.AddInParameter(dbcom4, "@FiigID", DbType.Int64, dtFIIGNo.Rows[L]["FiigID"]);
+                        db.AddInParameter(dbcom4, "@ProductRefNo", DbType.String, mCurrentID);
+                        db.AddInParameter(dbcom4, "@SCategoryName", DbType.String, dtFIIGNo.Rows[L]["SCategoryName"]);
+                        db.AddInParameter(dbcom4, "@Remarks", DbType.String, dtFIIGNo.Rows[L]["Remarks"]);
+                        db.AddInParameter(dbcom4, "@Remarks2", DbType.String, dtFIIGNo.Rows[L]["Remarks2"]);
+                        db.AddInParameter(dbcom4, "@Remarks3", DbType.String, dtFIIGNo.Rows[L]["Remarks3"]);
+                        db.ExecuteNonQuery(dbcom4, dbTran);
                     }
                     dbTran.Commit();
                     _msg = "Save";

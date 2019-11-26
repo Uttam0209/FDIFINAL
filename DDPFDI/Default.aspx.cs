@@ -29,7 +29,8 @@ public partial class _Default : System.Web.UI.Page
     string Getsystem = "";
     #endregion
     protected void Page_Load(object sender, EventArgs e)
-    { }
+    {
+    }
     #region "Login Code"
     public static bool IsValidEmailId(string InputEmail)
     {

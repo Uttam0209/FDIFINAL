@@ -101,9 +101,9 @@ namespace BusinessLayer
         {
             return SqlHelper.Instance.SaveMasterNodal(hySaveNodal, out _sysMsg, out _msg);
         }
-        public string SaveCodeProduct(HybridDictionary hyProduct, DataTable DtImage, DataTable dtProdInfo, DataTable dtEstimateQuantity, out string _sysMsg, out string _msg, string Criteria)
+        public string SaveCodeProduct(HybridDictionary hyProduct, DataTable DtImage, DataTable dtProdInfo, DataTable dtEstimateQuantity, DataTable DtNSFIIG, out string _sysMsg, out string _msg, string Criteria)
         {
-            return SqlHelper.Instance.SaveCodeProduct(hyProduct, DtImage, dtProdInfo, dtEstimateQuantity, out _sysMsg, out _msg, Criteria);
+            return SqlHelper.Instance.SaveCodeProduct(hyProduct, DtImage, dtProdInfo, dtEstimateQuantity, DtNSFIIG, out _sysMsg, out _msg, Criteria);
         }
         public string UpdateCodeProduct(HybridDictionary HyUpdateProd, out string _sysMsg, out string _msg)
         {
@@ -210,7 +210,7 @@ namespace BusinessLayer
         {
             return SqlHelper.Instance.RetriveFilterCode(CompRefNo, SearchValue, Criteria);
         }
-        public DataTable RetrivenewcategortFIIG_No(string Value,string Criteria)
+        public DataTable RetrivenewcategortFIIG_No(string Value, string Criteria)
         {
             return SqlHelper.Instance.RetrivenewcategortFIIG_No(Value, Criteria);
         }

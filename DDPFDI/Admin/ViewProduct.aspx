@@ -256,8 +256,7 @@
                                                                                                 <td>CLASS ITEM:</td>
                                                                                                 <td>
                                                                                                     <asp:Label ID="lblclassitem" runat="server" Text=""></asp:Label>
-                                                                                                    <asp:LinkButton ID="lblviewitemcode" runat="server" class="fa fa-eye" OnClick="lblviewitemcode_Click"></asp:LinkButton>
-                                                                                                </td>
+                                                                                                  </td>
                                                                                             </tr>
                                                                                         </table>
                                                                                     </div>
@@ -611,32 +610,6 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </asp:Panel>
-                                        <asp:Panel ID="pan" runat="server" Visible="false">
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <div class="table-wraper table-responsive">
-                                                        <asp:GridView ID="gvproditemdetail" runat="server" Width="100%" Class="commonAjaxTbl master-company-table table display 
-                                responsive no-wrap table-hover manage-user Grid"
-                                                            OnRowCreated="gvproductItem_RowCreated" AutoGenerateColumns="false">
-                                                            <Columns>
-                                                                <asp:TemplateField HeaderText="Sr.No">
-                                                                    <ItemTemplate>
-                                                                        <%#Container.DataItemIndex+1 %>
-                                                                    </ItemTemplate>
-                                                                </asp:TemplateField>
-                                                                <asp:BoundField DataField="L1Code" HeaderText="MRC" />
-                                                                <asp:BoundField DataField="FIIG_No" HeaderText="IIG" />
-                                                                <asp:BoundField DataField="SCategoryName" HeaderText="MRC Title" />
-                                                            </Columns>
-                                                        </asp:GridView>
-                                                        <div class="clearfix mt10"></div>
-                                                        <div>
-                                                            <asp:Button ID="btnback" runat="server" CssClass="brn btn-danger pull-right mr10" Text="Back to detail" OnClick="btnback_Click" />
                                                         </div>
                                                     </div>
                                                 </div>
