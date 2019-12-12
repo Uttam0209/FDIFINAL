@@ -256,7 +256,8 @@
                                                                                                 <td>CLASS ITEM:</td>
                                                                                                 <td>
                                                                                                     <asp:Label ID="lblclassitem" runat="server" Text=""></asp:Label>
-                                                                                                  </td>
+                                                                                                    <asp:LinkButton ID="lblviwitem" runat="server" Visible="false" CssClass="fa fa-eye" Text="View" OnClick="lblviwitem_Click"></asp:LinkButton>
+                                                                                                </td>
                                                                                             </tr>
                                                                                         </table>
                                                                                     </div>
@@ -350,6 +351,30 @@
                                                                                                     <asp:Label ID="lblremarksproductimported" runat="server" Text=""></asp:Label></td>
                                                                                             </tr>
                                                                                         </table>
+                                                                                    </div>
+                                                                                    <div class="clearfix" style="margin-top: 10px;"></div>
+                                                                                    <div class="row" runat="server" id="Panel2" visible="false">
+                                                                                        <div class="col-md-12">
+                                                                                            <div class="table-wraper table-responsive">
+                                                                                                <asp:GridView ID="gvproditemdetail" runat="server" Width="100%" Class="commonAjaxTbl master-company-table table display 
+           responsive no-wrap table-hover manage-user Grid"
+                                                                                                    OnRowCreated="gvproditemdetail_RowCreated" AutoGenerateColumns="false">
+                                                                                                    <Columns>
+                                                                                                        <asp:TemplateField HeaderText="Sr.No">
+                                                                                                            <ItemTemplate>
+                                                                                                                <%#Container.DataItemIndex+1 %>
+                                                                                                            </ItemTemplate>
+                                                                                                        </asp:TemplateField>
+                                                                                                        <asp:BoundField runat="server" DataField="ProductRefNo" HeaderText="Reference No" />
+                                                                                                        <asp:BoundField runat="server" DataField="MRC_TITLE" HeaderText="MRC Title" />
+                                                                                                        <asp:BoundField runat="server" DataField="Remarks" HeaderText="Remarks" />
+                                                                                                        <asp:BoundField runat="server" DataField="Remarks2" HeaderText="Detail Remarks" />
+                                                                                                        <asp:BoundField runat="server" DataField="Remarks3" HeaderText="Mandatory" />
+                                                                                                    </Columns>
+                                                                                                </asp:GridView>
+                                                                                                <div class="clearfix mt10"></div>
+                                                                                            </div>
+                                                                                        </div>
                                                                                     </div>
                                                                                 </div>
                                                                             </li>
@@ -615,6 +640,7 @@
                                                 </div>
                                             </div>
                                         </asp:Panel>
+
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -635,14 +661,12 @@
     </asp:UpdatePanel>
     <asp:UpdateProgress ID="UpdateProgress1" runat="server" AssociatedUpdatePanelID="up">
         <ProgressTemplate>
-            <!---Progress Bar ---->
             <div class="overlay-progress">
                 <div class="custom-progress-bar blue stripes">
                     <span></span>
                     <p>Processing</p>
                 </div>
             </div>
-            <!---Progress Bar ---->
         </ProgressTemplate>
     </asp:UpdateProgress>
 

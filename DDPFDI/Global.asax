@@ -86,7 +86,8 @@
         routes.MapPageRoute("Test1", "Test1", "~/Admin/EditHeadDropdown.aspx", true);
         routes.MapPageRoute("Test", "Test", "~/Admin/Test.aspx", true);
         routes.MapPageRoute("UExcel", "UExcel", "~/frmUploadExcel.aspx", true);
-        routes.MapPageRoute("VendorRegistration", "VendorRegistration", "~/Vendor/VendorRegistration.aspx", true);
+        //routes.MapPageRoute("VendorRegistration", "VendorRegistration", "~/Vendor/VendorRegistration.aspx", true);
+        routes.MapPageRoute("VendorRegistration", "VendorRegistration", "~/Vendor/VendorDetailRegistration.aspx", true);
         routes.MapPageRoute("VendorRegistrationStep", "VendorRegistrationStep", "~/Vendor/VendorRegistrationStep1.aspx", true);
         routes.MapPageRoute("CreateVenPass", "CreateVenPass", "~/Vendor/CreateVendorPassword.aspx", true);
         routes.MapPageRoute("ForgotPassVendor", "ForgotPassVendor", "~/Vendor/VendorForgotPassword.aspx", true);

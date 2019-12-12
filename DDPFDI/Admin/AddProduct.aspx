@@ -28,8 +28,8 @@
     <!-------------------------------------------image show end------------------------------->
 </asp:Content>
 <asp:Content ID="inner" runat="server" ContentPlaceHolderID="ContentPlaceHolder1">
-    <asp:hiddenfield id="hidCompanyRefNo" runat="server" />
-    <asp:hiddenfield id="hidType" runat="server" />
+    <asp:HiddenField ID="hidCompanyRefNo" runat="server" />
+    <asp:HiddenField ID="hidType" runat="server" />
     <div class="content oem-content">
         <div class="sideBg">
             <div class="row">
@@ -48,7 +48,7 @@
             </div>
             <div class="row">
                 <p style="position: absolute; right: 35px;">Mark with <span class="mandatory">*</span> is manadatory field.</p>
-                <asp:updatepanel runat="server" id="updrop">
+                <asp:UpdatePanel runat="server" ID="updrop">
                     <ContentTemplate>
                         <div class="col-md-4">
                             <div class="form-group">
@@ -69,7 +69,7 @@
                             </div>
                         </div>
                     </ContentTemplate>
-                </asp:updatepanel>
+                </asp:UpdatePanel>
             </div>
             <div class="tabing-section">
                 <ul class="nav nav-tabs">
@@ -87,7 +87,7 @@
                             <div class="col-md-12">
                                 <div class="add-profile">
                                     <div class="section-pannel">
-                                        <asp:updatepanel runat="server" id="upproduct" updatemode="Conditional">
+                                        <asp:UpdatePanel runat="server" ID="upproduct" UpdateMode="Conditional">
                                             <ContentTemplate>
                                                 <div class="row">
                                                     <div class="col-md-4">
@@ -200,8 +200,8 @@
                                                     </div>
                                                 </div>
                                             </ContentTemplate>
-                                        </asp:updatepanel>
-                                        <asp:updateprogress id="UpdateProgress3" runat="server" associatedupdatepanelid="upproduct">
+                                        </asp:UpdatePanel>
+                                        <asp:UpdateProgress ID="UpdateProgress3" runat="server" AssociatedUpdatePanelID="upproduct">
                                             <ProgressTemplate>
                                                 <!---Progress Bar ---->
                                                 <div class="overlay-progress">
@@ -212,7 +212,7 @@
                                                 </div>
                                                 <!---Progress Bar ---->
                                             </ProgressTemplate>
-                                        </asp:updateprogress>
+                                        </asp:UpdateProgress>
                                     </div>
                                     <div class="section-pannel">
                                         <div class="row">
@@ -221,13 +221,13 @@
                                                     <label>
                                                         HSN Code (4-8 digit) <%--<span class="mandatory">*</span>--%> <a href="https://www.cbic-gst.gov.in/gst-goods-services-rates.html" target="_blank">(For finding hsn code please click here to get redirected to gst website.)<span data-toggle="tooltip" class="fa fa-question" title="HSN Code (4-8 digit ) and Link for find hsn code"></span></a>
                                                     </label>
-                                                    <asp:textbox runat="server" id="txthsncodereadonly" tabindex="8" maxlength="8" class="form-control"></asp:textbox>
+                                                    <asp:TextBox runat="server" ID="txthsncodereadonly" TabIndex="8" MaxLength="8" class="form-control"></asp:TextBox>
                                                 </div>
                                             </div>
                                             <div class="col-sm-4">
                                                 <div class="form-group">
                                                     <label>DPSU Part Number</label>
-                                                    <asp:textbox runat="server" id="txtdpsupartnumber" tabindex="9" class="form-control"></asp:textbox>
+                                                    <asp:TextBox runat="server" ID="txtdpsupartnumber" TabIndex="9" class="form-control"></asp:TextBox>
                                                 </div>
                                             </div>
 
@@ -241,10 +241,10 @@
                                                         Sub heading No.(HSN) (digit) (Hidden)
                                                      <span data-toggle="tooltip" class="fa fa-question" title="Please enter if HSN code is available"></span>
                                                     </label>
-                                                    <asp:textbox runat="server" id="txthsncode" maxlength="9" class="form-control"></asp:textbox>
+                                                    <asp:TextBox runat="server" ID="txthsncode" MaxLength="9" class="form-control"></asp:TextBox>
                                                 </div>
                                             </div>
-                                            <asp:updatepanel runat="server" id="UpdatePanel7">
+                                            <asp:UpdatePanel runat="server" ID="UpdatePanel7">
                                                 <ContentTemplate>
                                                     <div class="col-md-3" runat="server" visible="false">
                                                         <div class="form-group">
@@ -295,8 +295,8 @@
                                                     </div>
 
                                                 </ContentTemplate>
-                                            </asp:updatepanel>
-                                            <asp:updateprogress id="UpdateProgress10" runat="server" associatedupdatepanelid="upproduct">
+                                            </asp:UpdatePanel>
+                                            <asp:UpdateProgress ID="UpdateProgress10" runat="server" AssociatedUpdatePanelID="upproduct">
                                                 <ProgressTemplate>
                                                     <!---Progress Bar ---->
                                                     <div class="overlay-progress">
@@ -307,7 +307,7 @@
                                                     </div>
                                                     <!---Progress Bar ---->
                                                 </ProgressTemplate>
-                                            </asp:updateprogress>
+                                            </asp:UpdateProgress>
                                         </div>
                                     </div>
                                     <div class="section-pannel">
@@ -315,21 +315,21 @@
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label>OEM Part Number</label>
-                                                    <asp:textbox runat="server" id="txtoempartnumber" tabindex="9" class="form-control"></asp:textbox>
+                                                    <asp:TextBox runat="server" ID="txtoempartnumber" TabIndex="9" class="form-control"></asp:TextBox>
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label>OEM Name</label>
-                                                    <asp:textbox runat="server" id="txtoemname" tabindex="10" class="form-control"></asp:textbox>
+                                                    <asp:TextBox runat="server" ID="txtoemname" TabIndex="10" class="form-control"></asp:TextBox>
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label>OEM Country</label>
                                                     <span class="mandatory">*</span>
-                                                    <asp:dropdownlist id="txtcountry" runat="server" height="35px" tabindex="11" class="form-control">
-                                                    </asp:dropdownlist>
+                                                    <asp:DropDownList ID="txtcountry" runat="server" Height="35px" TabIndex="11" class="form-control">
+                                                    </asp:DropDownList>
                                                 </div>
                                             </div>
 
@@ -338,19 +338,19 @@
                                             <div class="col-md-4" runat="server" visible="false">
                                                 <div class="form-group">
                                                     <label>End User Part Number</label>
-                                                    <asp:textbox runat="server" id="txtenduserpartnumber" class="form-control"></asp:textbox>
+                                                    <asp:TextBox runat="server" ID="txtenduserpartnumber" class="form-control"></asp:TextBox>
                                                 </div>
                                             </div>
                                             <div class="clearfix"></div>
                                             <div class="col-md-4">
                                                 <div class="form-group">
-                                                    <asp:label runat="server" id="lblenduser" text="End User"></asp:label>
+                                                    <asp:Label runat="server" ID="lblenduser" Text="End User"></asp:Label>
                                                     <span class="mandatory">*</span>
                                                     <div class="clearfix"></div>
-                                                    <asp:listbox runat="server" id="ddlenduser" selectionmode="Multiple" style="text-transform: uppercase !important;" class="form-control ui fluid dropdown" tabindex="12"></asp:listbox>
+                                                    <asp:ListBox runat="server" ID="ddlenduser" SelectionMode="Multiple" Style="text-transform: uppercase !important;" class="form-control ui fluid dropdown" TabIndex="12"></asp:ListBox>
                                                 </div>
                                             </div>
-                                            <asp:updatepanel runat="server" id="UpdatePanel6">
+                                            <asp:UpdatePanel runat="server" ID="UpdatePanel6">
                                                 <ContentTemplate>
                                                     <div class="col-md-4">
                                                         <div class="form-group">
@@ -365,8 +365,8 @@
                                                         </div>
                                                     </div>
                                                 </ContentTemplate>
-                                            </asp:updatepanel>
-                                            <asp:updateprogress id="UpdateProgress9" runat="server" associatedupdatepanelid="UpdatePanel6">
+                                            </asp:UpdatePanel>
+                                            <asp:UpdateProgress ID="UpdateProgress9" runat="server" AssociatedUpdatePanelID="UpdatePanel6">
                                                 <ProgressTemplate>
                                                     <!---Progress Bar ---->
                                                     <div class="overlay-progress">
@@ -377,12 +377,12 @@
                                                     </div>
                                                     <!---Progress Bar ---->
                                                 </ProgressTemplate>
-                                            </asp:updateprogress>
+                                            </asp:UpdateProgress>
                                         </div>
                                     </div>
                                     <div class="section-pannel">
                                         <div class="row">
-                                            <asp:updatepanel runat="server" id="uptechnology">
+                                            <asp:UpdatePanel runat="server" ID="uptechnology">
                                                 <ContentTemplate>
                                                     <div class="col-md-4">
                                                         <div class="form-group">
@@ -410,8 +410,8 @@
                                                 </ContentTemplate>
                                                 <Triggers>
                                                 </Triggers>
-                                            </asp:updatepanel>
-                                            <asp:updateprogress id="UpdateProgress4" runat="server" associatedupdatepanelid="uptechnology">
+                                            </asp:UpdatePanel>
+                                            <asp:UpdateProgress ID="UpdateProgress4" runat="server" AssociatedUpdatePanelID="uptechnology">
                                                 <ProgressTemplate>
                                                     <!---Progress Bar ---->
                                                     <div class="overlay-progress">
@@ -422,13 +422,13 @@
                                                     </div>
                                                     <!---Progress Bar ---->
                                                 </ProgressTemplate>
-                                            </asp:updateprogress>
+                                            </asp:UpdateProgress>
                                         </div>
                                     </div>
                                     <div class="section-pannel">
                                         <div class="row">
                                             <div class="col-md-12">
-                                                <asp:updatepanel runat="server" id="UpdatePanel4">
+                                                <asp:UpdatePanel runat="server" ID="UpdatePanel4">
                                                     <ContentTemplate>
                                                         <div class="col-md-12">
                                                             <div class="form-group">
@@ -500,8 +500,8 @@
                                                             </div>
                                                         </div>
                                                     </ContentTemplate>
-                                                </asp:updatepanel>
-                                                <asp:updateprogress id="UpdateProgress7" runat="server" associatedupdatepanelid="UpdatePanel4">
+                                                </asp:UpdatePanel>
+                                                <asp:UpdateProgress ID="UpdateProgress7" runat="server" AssociatedUpdatePanelID="UpdatePanel4">
                                                     <ProgressTemplate>
                                                         <!---Progress Bar ---->
                                                         <div class="overlay-progress">
@@ -512,7 +512,7 @@
                                                         </div>
                                                         <!---Progress Bar ---->
                                                     </ProgressTemplate>
-                                                </asp:updateprogress>
+                                                </asp:UpdateProgress>
                                             </div>
                                         </div>
                                     </div>
@@ -529,10 +529,10 @@
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <label>Features & Details</label><span class="mandatory"> (Editable)</span>
-                                                    <asp:textbox runat="server" id="txtfeaturesanddetails" style="background-color: #fff !important;" tabindex="1"
-                                                        width="1000" height="70px" placeholder="Ductile,Tensile,Lusture" maxlength="250"></asp:textbox>
-                                                    <asp:htmleditorextender id="HtmlEditorExtender1" runat="server" targetcontrolid="txtfeaturesanddetails">
-                                                    </asp:htmleditorextender>
+                                                    <asp:TextBox runat="server" ID="txtfeaturesanddetails" Style="background-color: #fff !important;" TabIndex="1"
+                                                        Width="1000" Height="70px" placeholder="Ductile,Tensile,Lusture" MaxLength="250"></asp:TextBox>
+                                                    <asp:HtmlEditorExtender ID="HtmlEditorExtender1" runat="server" TargetControlID="txtfeaturesanddetails">
+                                                    </asp:HtmlEditorExtender>
                                                     <div class="clearfix" style="margin-top: 35px;"></div>
                                                     <span>(Max length 250)</span>
                                                 </div>
@@ -545,11 +545,11 @@
                                                 <div class="form-group">
                                                     <label><strong>Type of item specification</strong></label>
                                                     <div class="clearfix mt5"></div>
-                                                    <asp:radiobuttonlist id="rbitemspecification" runat="server" repeatcolumns="1" tabindex="2" repeatdirection="Horizontal" repeatlayout="Flow">
+                                                    <asp:RadioButtonList ID="rbitemspecification" runat="server" RepeatColumns="1" TabIndex="2" RepeatDirection="Horizontal" RepeatLayout="Flow">
                                                         <asp:ListItem Value="Specification are available in open source/DPSU spec">Specification are available in open source/DPSU spec</asp:ListItem>
                                                         <asp:ListItem Value="Items with OEM specification">Items with OEM specification</asp:ListItem>
                                                         <asp:ListItem Value="Items where no specification are available">Items where no specification are available</asp:ListItem>
-                                                    </asp:radiobuttonlist>
+                                                    </asp:RadioButtonList>
                                                 </div>
                                             </div>
                                         </div>
@@ -557,7 +557,7 @@
                                     <div class="section-pannel">
                                         <div class="row">
                                             <div class="col-md-12">
-                                                <asp:updatepanel runat="server" id="UpdatePanel5">
+                                                <asp:UpdatePanel runat="server" ID="UpdatePanel5">
                                                     <ContentTemplate>
                                                         <div class="form-group">
                                                             <label>Item Information</label>
@@ -623,8 +623,8 @@
                                                             </div>
                                                         </div>
                                                     </ContentTemplate>
-                                                </asp:updatepanel>
-                                                <asp:updateprogress id="UpdateProgress8" runat="server" associatedupdatepanelid="UpdatePanel5">
+                                                </asp:UpdatePanel>
+                                                <asp:UpdateProgress ID="UpdateProgress8" runat="server" AssociatedUpdatePanelID="UpdatePanel5">
                                                     <ProgressTemplate>
                                                         <!---Progress Bar ---->
                                                         <div class="overlay-progress">
@@ -635,7 +635,7 @@
                                                         </div>
                                                         <!---Progress Bar ---->
                                                     </ProgressTemplate>
-                                                </asp:updateprogress>
+                                                </asp:UpdateProgress>
                                             </div>
                                         </div>
                                     </div>
@@ -644,7 +644,7 @@
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <label>Additional Information</label><span class="mandatory"> (Editable)</span>
-                                                    <asp:textbox runat="server" id="txtadditionalinfo" height="70px" tabindex="4" class="form-control" placeholder="Warranty,Guarantee"></asp:textbox>
+                                                    <asp:TextBox runat="server" ID="txtadditionalinfo" Height="70px" TabIndex="4" class="form-control" placeholder="Warranty,Guarantee"></asp:TextBox>
                                                     <div class="clearfix" style="margin-top: 5px;"></div>
                                                     <span>(Max length 250)</span>
                                                 </div>
@@ -661,7 +661,7 @@
                             <div class="col-md-12">
                                 <div class="add-profile">
                                     <div class="section-pannel">
-                                        <asp:updatepanel runat="server" id="UpdatePanel1">
+                                        <asp:UpdatePanel runat="server" ID="UpdatePanel1">
                                             <ContentTemplate>
                                                 <div class="table table-responsive">
                                                     <table border="0" cellpadding="0" class="gridFormTable EstimateGridview" tabindex="1" cellspacing="0" style="border-collapse: collapse; width: 100%">
@@ -776,8 +776,8 @@
                                                     </asp:GridView>
                                                 </div>
                                             </ContentTemplate>
-                                        </asp:updatepanel>
-                                        <asp:updateprogress id="UpdateProgress2" runat="server" associatedupdatepanelid="UpdatePanel1">
+                                        </asp:UpdatePanel>
+                                        <asp:UpdateProgress ID="UpdateProgress2" runat="server" AssociatedUpdatePanelID="UpdatePanel1">
                                             <ProgressTemplate>
                                                 <!---Progress Bar ---->
                                                 <div class="overlay-progress">
@@ -788,7 +788,7 @@
                                                 </div>
                                                 <!---Progress Bar ---->
                                             </ProgressTemplate>
-                                        </asp:updateprogress>
+                                        </asp:UpdateProgress>
                                     </div>
                                     <div class="section-pannel">
                                         <div class="row">
@@ -796,7 +796,7 @@
                                                 <div class="form-group">
                                                     <label>PROCURMENT CATEGORY</label>
                                                     <div class="clearfix"></div>
-                                                    <asp:gridview runat="server" id="gvprocurmentcategory" tabindex="2" class="table-responsive table" autogeneratecolumns="False">
+                                                    <asp:GridView runat="server" ID="gvprocurmentcategory" TabIndex="2" class="table-responsive table" AutoGenerateColumns="False">
                                                         <Columns>
                                                             <asp:TemplateField HeaderText="Sr.No">
                                                                 <ItemTemplate>
@@ -811,7 +811,7 @@
                                                             </asp:TemplateField>
                                                             <asp:BoundField runat="server" DataField="SCategoryName" />
                                                         </Columns>
-                                                    </asp:gridview>
+                                                    </asp:GridView>
                                                 </div>
                                             </div>
                                             <div class="clearfix"></div>
@@ -819,7 +819,7 @@
                                                 <div class="col-md-3">
                                                     <div class="form-group">
                                                         <label>Type</label>
-                                                        <asp:dropdownlist id="ddlteneoi" runat="server" cssclass="form-control">
+                                                        <asp:DropDownList ID="ddlteneoi" runat="server" CssClass="form-control">
                                                             <asp:ListItem Value="0" Selected="True">Select</asp:ListItem>
                                                             <asp:ListItem Value="1">Preparing technical specifications</asp:ListItem>
                                                             <asp:ListItem Value="2">Tender floated</asp:ListItem>
@@ -829,32 +829,32 @@
                                                             <asp:ListItem Value="6">Trial & test of prototype</asp:ListItem>
                                                             <asp:ListItem Value="7">Price bid opening</asp:ListItem>
                                                             <asp:ListItem Value="8">Order placement</asp:ListItem>
-                                                        </asp:dropdownlist>
+                                                        </asp:DropDownList>
                                                     </div>
                                                 </div>
                                                 <div runat="server" id="divtimedateurl" style="display: none;">
                                                     <div class="col-md-3">
                                                         <div class="form-group ">
                                                             <label>Status</label>
-                                                            <asp:dropdownlist runat="server" id="ddlstatus" class="form-control" tabindex="1">
+                                                            <asp:DropDownList runat="server" ID="ddlstatus" class="form-control" TabIndex="1">
                                                                 <asp:ListItem Value="Not Floated" Selected="True">Not Floated</asp:ListItem>
                                                                 <asp:ListItem Value="Archive">Archive</asp:ListItem>
                                                                 <asp:ListItem Value="Live">Live</asp:ListItem>
                                                                 <asp:ListItem Value="To be Floated shortly">To be Floated shortly</asp:ListItem>
-                                                            </asp:dropdownlist>
+                                                            </asp:DropDownList>
                                                         </div>
                                                     </div>
                                                     <div runat="server" id="extimedatevisible" style="display: none;">
                                                         <div class="col-md-3">
                                                             <div class="form-group">
                                                                 <label>Last date of submission</label>
-                                                                <asp:textbox runat="server" id="txtdate" type="date" tabindex="3" class="form-control inputbox"></asp:textbox>
+                                                                <asp:TextBox runat="server" ID="txtdate" type="date" TabIndex="3" class="form-control inputbox"></asp:TextBox>
                                                             </div>
                                                         </div>
                                                         <div class="col-md-3">
                                                             <div class="form-group">
                                                                 <label>URL</label>
-                                                                <asp:textbox runat="server" id="txtendorurl" tabindex="4" class="form-control"></asp:textbox>
+                                                                <asp:TextBox runat="server" ID="txtendorurl" TabIndex="4" class="form-control"></asp:TextBox>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -863,8 +863,8 @@
                                             <div class="clearfix mt5"></div>
                                             <div id="Div1" class="col-md-12" runat="server">
                                                 <div class="form-group">
-                                                    <asp:label runat="server" id="Label1" cssclass="form-label " text="PROCURMENT CATEGORY REMARK"></asp:label>
-                                                    <asp:textbox runat="server" id="txtremarksprocurmentCategory" tabindex="3" maxlength="250" height="70px" class="form-control"></asp:textbox>
+                                                    <asp:Label runat="server" ID="Label1" CssClass="form-label " Text="PROCURMENT CATEGORY REMARK"></asp:Label>
+                                                    <asp:TextBox runat="server" ID="txtremarksprocurmentCategory" TabIndex="3" MaxLength="250" Height="70px" class="form-control"></asp:TextBox>
                                                     <div class="clearfix" style="margin-top: 5px;"></div>
                                                     <span>(Max length 250 words only)</span>
                                                 </div>
@@ -879,7 +879,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="add-profile">
-                                    <asp:updatepanel runat="server" id="UpdatePanel2">
+                                    <asp:UpdatePanel runat="server" ID="UpdatePanel2">
                                         <ContentTemplate>
                                             <div class="section-pannel" runat="server" id="divnodal">
                                                 <div class="row">
@@ -989,8 +989,8 @@
                                                 </div>
                                             </div>
                                         </ContentTemplate>
-                                    </asp:updatepanel>
-                                    <asp:updateprogress id="UpdateProgress" runat="server" associatedupdatepanelid="UpdatePanel2">
+                                    </asp:UpdatePanel>
+                                    <asp:UpdateProgress ID="UpdateProgress" runat="server" AssociatedUpdatePanelID="UpdatePanel2">
                                         <ProgressTemplate>
                                             <!---Progress Bar ---->
                                             <div class="overlay-progress">
@@ -1001,12 +1001,12 @@
                                             </div>
                                             <!---Progress Bar ---->
                                         </ProgressTemplate>
-                                    </asp:updateprogress>
+                                    </asp:UpdateProgress>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <asp:panel id="Panel1" runat="server" defaultbutton="btnsubmitpanel1">
+                    <asp:Panel ID="Panel1" runat="server" DefaultButton="btnsubmitpanel1">
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
@@ -1034,13 +1034,13 @@
                                 </div>
                             </div>
                         </div>
-                    </asp:panel>
-                    <asp:hiddenfield runat="server" id="hfprodid" />
-                    <asp:hiddenfield runat="server" id="hfprodrefno" />
-                    <asp:hiddenfield runat="server" id="hfcomprefno" />
+                    </asp:Panel>
+                    <asp:HiddenField runat="server" ID="hfprodid" />
+                    <asp:HiddenField runat="server" ID="hfprodrefno" />
+                    <asp:HiddenField runat="server" ID="hfcomprefno" />
                     <div class="modal fade" id="changePass" role="dialog">
                         <div class="modal-dialog" style="width: 1200px; z-index: 9999999999;">
-                            <asp:updatepanel id="upn" runat="server" childrenastriggers="true">
+                            <asp:UpdatePanel ID="upn" runat="server" ChildrenAsTriggers="true">
                                 <ContentTemplate>
                                     <div class="modal-content">
                                         <div class="modal-header modal-header1">
@@ -1051,8 +1051,8 @@
                                             <div class="modal-body">
                                                 <div class="tabing-section">
                                                     <ul class="nav nav-tabs">
-                                                        <li class="active"><a data-toggle="tab" href="#LGY">FIIG - Yes</a></li>
-                                                        <li><a data-toggle="tab" href="#LGN">FIIG - NO</a></li>
+                                                        <li class="active"><a data-toggle="tab" href="#LGY">FIIG - Mandatory</a></li>
+                                                        <li><a data-toggle="tab" href="#LGN">FIIG - Optional</a></li>
                                                     </ul>
                                                     <div class="tab-content">
                                                         <div id="LGY" class="tab-pane fade in active">
@@ -1069,11 +1069,10 @@
                                                                                             <%#Container.DataItemIndex+1 %>
                                                                                         </ItemTemplate>
                                                                                     </asp:TemplateField>
-                                                                                            <asp:BoundField runat="server" DataField="SCategoryName" HeaderText="MRC Title" />
-                                                                                    
+                                                                                    <asp:BoundField runat="server" DataField="MRC_TITLE" HeaderText="MRC Title" />
                                                                                     <asp:TemplateField HeaderText="Remarks">
                                                                                         <ItemTemplate>
-                                                                                            <asp:TextBox ID="txtinfonsnfig" runat="server"  required="" MaxLength="250" Placeholder="Remarks (Max Length 250)" CssClass="form-control"></asp:TextBox>
+                                                                                            <asp:TextBox ID="txtinfonsnfig" runat="server" required="" MaxLength="250" Placeholder="Remarks (Max Length 250)" CssClass="form-control"></asp:TextBox>
                                                                                         </ItemTemplate>
                                                                                     </asp:TemplateField>
                                                                                 </Columns>
@@ -1100,22 +1099,22 @@
                                                                                             <%#Container.DataItemIndex+1 %>
                                                                                         </ItemTemplate>
                                                                                     </asp:TemplateField>
-                                                                                        <asp:BoundField runat="server" DataField="SCategoryName" HeaderText="MRC Title" />
+                                                                                    <asp:BoundField runat="server" DataField="MRC_TITLE" HeaderText="MRC Title" />
                                                                                     <asp:TemplateField HeaderText="Remarks">
                                                                                         <ItemTemplate>
-                                                                                            <asp:TextBox ID="txtremNoFiig" runat="server"  required="" MaxLength="250" Placeholder="Remarks (Max Length 250)" CssClass="form-control"></asp:TextBox>
+                                                                                            <asp:TextBox ID="txtremNoFiig" runat="server" MaxLength="250" Placeholder="Remarks (Max Length 250)" CssClass="form-control"></asp:TextBox>
                                                                                         </ItemTemplate>
                                                                                     </asp:TemplateField>
                                                                                 </Columns>
                                                                             </asp:GridView>
-                                                                        <div class="clearfix mt10"></div>
+                                                                            <div class="clearfix mt10"></div>
                                                                             <asp:TextBox ID="txtfiigno" runat="server" CssClass="form-control" required="" TextMode="MultiLine" MaxLength="500" Height="100px" placeholder="Enter brief remarks here (Max Length 500)"></asp:TextBox>
                                                                             <div class="clearfix mt10"></div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                             </asp:Panel>
-                                                        </div>                                                      
+                                                        </div>
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -1125,8 +1124,8 @@
                                         </form>
                                     </div>
                                 </ContentTemplate>
-                            </asp:updatepanel>
-                            <asp:updateprogress id="UpdateProgress1" runat="server" associatedupdatepanelid="upn">
+                            </asp:UpdatePanel>
+                            <asp:UpdateProgress ID="UpdateProgress1" runat="server" AssociatedUpdatePanelID="upn">
                                 <ProgressTemplate>
                                     <!---Progress Bar ---->
                                     <div class="overlay-progress">
@@ -1137,7 +1136,7 @@
                                     </div>
                                     <!---Progress Bar ---->
                                 </ProgressTemplate>
-                            </asp:updateprogress>
+                            </asp:UpdateProgress>
                         </div>
                     </div>
                 </div>

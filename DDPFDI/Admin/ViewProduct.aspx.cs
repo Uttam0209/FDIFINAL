@@ -202,7 +202,15 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
                 lblprodrefno.Text = DtView.Rows[0]["ProductRefNo"].ToString();
                 lblnsngroup.Text = DtView.Rows[0]["ProdLevel1Name"].ToString();
                 lblnsngroupclass.Text = DtView.Rows[0]["ProdLevel2Name"].ToString();
-                lblclassitem.Text = DtView.Rows[0]["ProdLevel3Name"].ToString();               
+                lblclassitem.Text = DtView.Rows[0]["ProdLevel3Name"].ToString();
+                if (lblclassitem.Text != "")
+                {
+                    lblviwitem.Visible = true;
+                }
+                else
+                {
+                    lblviwitem.Visible = false;
+                }
                 lblnsccode.Text = DtView.Rows[0]["NSCCode"].ToString();
                 lblniincode.Text = DtView.Rows[0]["NIINCode"].ToString();
                 lblproductdescription.Text = DtView.Rows[0]["ProductDescription"].ToString();
@@ -725,5 +733,34 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
             }
         }
     }
-  
+    protected void lblviwitem_Click(object sender, EventArgs e)
+    {
+        DataTable DtViewNewCodeup = Lo.RetrivenewcategortFIIG_No(lblprodrefno.Text, "UFound");
+        if (DtViewNewCodeup.Rows.Count > 0)
+        {
+            gvproditemdetail.DataSource = DtViewNewCodeup;
+            gvproditemdetail.DataBind();
+            gvproditemdetail.Visible = true;
+            Panel2.Visible = true;
+        }
+        else
+        {
+            Panel2.Visible = false;
+        }
+    }
+    protected void gvproditemdetail_RowCreated(object sender, GridViewRowEventArgs e)
+    {
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            e.Row.TableSection = TableRowSection.TableBody;
+        }
+        else if (e.Row.RowType == DataControlRowType.Header)
+        {
+            e.Row.TableSection = TableRowSection.TableHeader;
+        }
+        else if (e.Row.RowType == DataControlRowType.Footer)
+        {
+            e.Row.TableSection = TableRowSection.TableFooter;
+        }
+    }
 }

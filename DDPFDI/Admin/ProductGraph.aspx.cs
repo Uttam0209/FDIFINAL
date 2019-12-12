@@ -48,7 +48,7 @@ public partial class Admin_ProductGraph : System.Web.UI.Page
     {
         try
         {
-            DtGrid = Lo.GetGraph(mRefNo.Value, "", "ViewGraph");
+            DtGrid = new DataTable();//Lo.GetGraph(mRefNo.Value, "", "ViewGraph");
             if (DtGrid.Rows.Count > 0)
             {
                 string[] x = new string[DtGrid.Rows.Count];
@@ -96,7 +96,7 @@ public partial class Admin_ProductGraph : System.Web.UI.Page
     {
         try
         {
-            DataTable DtSubGraph = Lo.GetGraph(mRefNo.Value, a, "ViewSubGraph");
+            DataTable DtSubGraph = new DataTable();// Lo.GetGraph(mRefNo.Value, a, "ViewSubGraph");
             if (DtSubGraph.Rows.Count > 0)
             {
                 string[] x = new string[DtSubGraph.Rows.Count];

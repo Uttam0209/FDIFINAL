@@ -73,7 +73,7 @@
             <nav class="navbar" role="navigation">
                 <div class="navbar-header">
                     <a class="navbar-brand" href="javascript:void(0)"><i class="fa fa-list btn-nav-toggle-responsive text-white"></i>
-                        <span class="main-logo" title="Department of Defense Product">MOD</span>
+                        <span class="logo" title="Department of Defense Product">MOD</span>
                     </a>
                 </div>
                 <div class="collapse navbar-collapse">
@@ -100,331 +100,126 @@
                         <div class="filter-sidebar">
                             <!--Accordion wrapper-->
                             <h2>Filters</h2>
-                            <div class="accordion md-accordion" id="accordionEx" role="tablist" aria-multiselectable="true">
-                                <!-- Accordion card -->
-                                <div class="card">
-                                    <!-- Card header -->
-                                    <div class="card-header" role="tab" id="headingThree1">
-                                        <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx" href="#collapseThree1"
-                                            aria-expanded="false" aria-controls="collapseThree3">
-                                            <h5 class="mb-0">Indigenized<i class="fas fa-angle-down rotate-icon"></i>
-                                            </h5>
-                                        </a>
-                                    </div>
-                                    <!-- Card body -->
-                                    <div id="collapseThree1" class="collapse" role="tabpanel" aria-labelledby="headingThree1"
-                                        data-parent="#accordionEx">
-                                        <div class="card-body">
-                                            <div class="custom-control custom-checkbox">
-                                                <asp:RadioButtonList ID="rbisindezinized" runat="server" AutoPostBack="true" OnSelectedIndexChanged="rbisindezinized_SelectedIndexChanged" RepeatColumns="1" RepeatDirection="Vertical" RepeatLayout="Table">
-                                                    <asp:ListItem Value="Y">YES</asp:ListItem>
-                                                    <asp:ListItem Value="N">NO</asp:ListItem>
-                                                    <asp:ListItem Value="C">CLEAR FILTER</asp:ListItem>
-                                                </asp:RadioButtonList>
-                                            </div>
-                                        </div>
-                                    </div>
-
+                            <div class="common-filter-box">
+                                <h3>Indigenized</h3>
+                                <div class="custom-control custom-checkbox">
+                                    <asp:RadioButtonList ID="rbisindezinized" runat="server" AutoPostBack="true" OnSelectedIndexChanged="rbisindezinized_SelectedIndexChanged" RepeatColumns="1" RepeatDirection="Vertical" RepeatLayout="UnorderedList">
+                                        <asp:ListItem Value="Y">YES</asp:ListItem>
+                                        <asp:ListItem Value="N">NO</asp:ListItem>
+                                        <asp:ListItem Value="C">CLEAR</asp:ListItem>
+                                    </asp:RadioButtonList>
                                 </div>
-                                <!-- Accordion card -->
-                                <!-- Accordion card -->
-                                <div class="card">
-                                    <!-- Card header -->
-                                    <div class="card-header" role="tab" id="headingThree2">
-                                        <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx" href="#collapseThree2"
-                                            aria-expanded="false" aria-controls="collapseThree2">
-                                            <h5 class="mb-0">Make II   <i class="fas fa-angle-down rotate-icon"></i>
-                                            </h5>
-                                        </a>
-                                    </div>
-                                    <!-- Card body -->
-                                    <div id="collapseThree2" class="collapse" role="tabpanel" aria-labelledby="headingThree2"
-                                        data-parent="#accordionEx">
-                                        <div class="card-body">
-                                            <div class="custom-control custom-checkbox">
-                                                <asp:RadioButtonList ID="rbismake2" runat="server" AutoPostBack="true" OnSelectedIndexChanged="rbismake2_SelectedIndexChanged" RepeatColumns="1" RepeatDirection="Vertical" RepeatLayout="Table">
-                                                    <asp:ListItem Value="25">YES</asp:ListItem>
-                                                    <asp:ListItem Value="N">NO</asp:ListItem>
-                                                    <asp:ListItem Value="C">CLEAR FILTER</asp:ListItem>
-                                                </asp:RadioButtonList>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Accordion card -->
-                                <!-- Accordion card -->
-                                <div class="card">
-                                    <!-- Card header -->
-                                    <div class="card-header" role="tab" id="headingThree3">
-                                        <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx" href="#collapseThree3"
-                                            aria-expanded="false" aria-controls="collapseThree2">
-                                            <h5 class="mb-0">Contact<i class="fas fa-angle-down rotate-icon"></i>
-                                            </h5>
-                                        </a>
-                                    </div>
-                                    <!-- Card body -->
-                                    <div id="collapseThree3" class="collapse" role="tabpanel" aria-labelledby="headingThree3"
-                                        data-parent="#accordionEx">
-                                        <div class="card-body">
-                                            <div class="custom-control custom-checkbox">
-                                                <asp:RadioButtonList ID="rbiscontact" runat="server" AutoPostBack="true" OnSelectedIndexChanged="rbiscontact_SelectedIndexChanged" RepeatColumns="1" RepeatDirection="Vertical" RepeatLayout="Table">
-                                                    <asp:ListItem Value="Y">AVAILABLE</asp:ListItem>
-                                                    <asp:ListItem Value="N">NOT AVAILABLE</asp:ListItem>
-                                                    <asp:ListItem Value="C">CLEAR FILTER</asp:ListItem>
-                                                </asp:RadioButtonList>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Accordion card -->
-                                <!-- Accordion card -->
-                                <div class="card">
-                                    <!-- Card header -->
-                                    <div class="card-header" role="tab" id="headingThree4">
-                                        <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx" href="#collapseThree4"
-                                            aria-expanded="false" aria-controls="collapseThree2">
-                                            <h5 class="mb-0">Tender<i class="fas fa-angle-down rotate-icon"></i>
-                                            </h5>
-                                        </a>
-                                    </div>
-                                    <!-- Card body -->
-                                    <div id="collapseThree4" class="collapse" role="tabpanel" aria-labelledby="headingThree4"
-                                        data-parent="#accordionEx">
-                                        <div class="card-body">
-                                            <div class="custom-control custom-checkbox">
-                                                <asp:RadioButtonList ID="rbistender" runat="server" AutoPostBack="true" OnSelectedIndexChanged="rbistender_SelectedIndexChanged" RepeatColumns="1" RepeatDirection="Vertical" RepeatLayout="Table">
-                                                    <asp:ListItem Value="Y">LIVE</asp:ListItem>
-                                                    <asp:ListItem Value="N">NOT LIVE</asp:ListItem>
-                                                    <asp:ListItem Value="C">CLEAR FILTER</asp:ListItem>
-                                                </asp:RadioButtonList>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Accordion card -->
-                                <!-- Accordion card -->
-                                <div class="card" runat="server" id="divfiltercompany">
-                                    <!-- Card header -->
-                                    <div class="card-header" role="tab" id="headingThree5">
-                                        <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx" href="#collapseThree5"
-                                            aria-expanded="false" aria-controls="collapseThree2">
-                                            <h5 class="mb-0">Company<i class="fas fa-angle-down rotate-icon"></i>
-                                            </h5>
-                                        </a>
-                                    </div>
-                                    <!-- Card body -->
-                                    <div id="collapseThree5" class="collapse" role="tabpanel" aria-labelledby="headingThree5"
-                                        data-parent="#accordionEx">
-                                        <div class="card-body">
-                                            <div class="custom-control custom-checkbox">
-
-                                                <asp:DropDownList ID="ddlcomp" runat="server" CssClass="form-control" Style="margin-top: 5px;" AutoPostBack="true" OnSelectedIndexChanged="ddlcomp_SelectedIndexChanged"></asp:DropDownList>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Accordion card -->
-                                <!-- Accordion card -->
-                                <div class="card" runat="server" id="divfilterdivision" visible="false">
-                                    <!-- Card header -->
-                                    <div class="card-header" role="tab" id="headingThree6">
-                                        <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx" href="#collapseThree6"
-                                            aria-expanded="false" aria-controls="collapseThree2">
-                                            <h5 class="mb-0">Division<i class="fas fa-angle-down rotate-icon"></i>
-                                            </h5>
-                                        </a>
-                                    </div>
-                                    <!-- Card body -->
-                                    <div id="collapseThree6" class="collapse" role="tabpanel" aria-labelledby="headingThree6"
-                                        data-parent="#accordionEx">
-                                        <div class="card-body">
-                                            <div class="custom-control custom-checkbox">
-                                                <asp:DropDownList ID="ddldivision" runat="server" CssClass="form-control" Style="margin-top: 5px;" AutoPostBack="true" OnSelectedIndexChanged="ddldivision_SelectedIndexChanged"></asp:DropDownList>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Accordion card -->
-                                <!-- Accordion card -->
-                                <div class="card" runat="server" id="divfilterunit" visible="false">
-                                    <!-- Card header -->
-                                    <div class="card-header" role="tab" id="headingThree7">
-                                        <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx" href="#collapseThree7"
-                                            aria-expanded="false" aria-controls="collapseThree2">
-                                            <h5 class="mb-0">Unit<i class="fas fa-angle-down rotate-icon"></i>
-                                            </h5>
-                                        </a>
-                                    </div>
-                                    <!-- Card body -->
-                                    <div id="collapseThree7" class="collapse" role="tabpanel" aria-labelledby="headingThree7"
-                                        data-parent="#accordionEx">
-                                        <div class="card-body">
-                                            <div class="custom-control custom-checkbox">
-                                                <asp:DropDownList ID="ddlunit" runat="server" CssClass="form-control" Style="margin-top: 5px;" AutoPostBack="true" OnSelectedIndexChanged="ddlunit_SelectedIndexChanged"></asp:DropDownList>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Accordion card -->
-                                <!-- Accordion card -->
-                                <div class="card">
-                                    <!-- Card header -->
-                                    <div class="card-header" role="tab" id="headingThree8">
-                                        <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx" href="#collapseThree8"
-                                            aria-expanded="false" aria-controls="collapseThree2">
-                                            <h5 class="mb-0">End User<i class="fas fa-angle-down rotate-icon"></i>
-                                            </h5>
-                                        </a>
-                                    </div>
-                                    <!-- Card body -->
-                                    <div id="collapseThree8" class="collapse" role="tabpanel" aria-labelledby="headingThree8"
-                                        data-parent="#accordionEx">
-                                        <div class="card-body">
-                                            <div class="custom-control custom-checkbox">
-                                                <asp:DropDownList ID="ddlchkenduser" runat="server" CssClass="form-control" Style="margin-top: 5px;" AutoPostBack="true" OnSelectedIndexChanged="ddlchkenduser_SelectedIndexChanged"></asp:DropDownList>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Accordion card -->
-                                <!-- Accordion card -->
-                                <div class="card">
-                                    <!-- Card header -->
-                                    <div class="card-header" role="tab" id="headingThree9">
-                                        <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx" href="#collapseThree9"
-                                            aria-expanded="false" aria-controls="collapseThree2">
-                                            <h5 class="mb-0">DEFENCE PLATFORM<i class="fas fa-angle-down rotate-icon"></i>
-                                            </h5>
-                                        </a>
-                                    </div>
-                                    <!-- Card body -->
-                                    <div id="collapseThree9" class="collapse" role="tabpanel" aria-labelledby="headingThree9"
-                                        data-parent="#accordionEx">
-                                        <div class="card-body">
-                                            <div class="custom-control custom-checkbox">
-                                                <asp:DropDownList ID="ddldefplatform" runat="server" CssClass="form-control" Style="margin-top: 5px;" AutoPostBack="true" OnSelectedIndexChanged="ddldefplatform_SelectedIndexChanged"></asp:DropDownList>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Accordion card -->
-                                <!-- Accordion card -->
-                                <div class="card" runat="server" id="divfilternodp" visible="false">
-                                    <!-- Card header -->
-                                    <div class="card-header" role="tab" id="headingThree10">
-                                        <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx" href="#collapseThree10"
-                                            aria-expanded="false" aria-controls="collapseThree2">
-                                            <h5 class="mb-0">NAME OF DEFENCE PLATFORM<i class="fas fa-angle-down rotate-icon"></i>
-                                            </h5>
-                                        </a>
-                                    </div>
-                                    <!-- Card body -->
-                                    <div id="collapseThree10" class="collapse" role="tabpanel" aria-labelledby="headingThree10"
-                                        data-parent="#accordionEx">
-                                        <div class="card-body">
-                                            <div class="custom-control custom-checkbox">
-                                                <asp:DropDownList ID="ddlnameofdefplat" runat="server" CssClass="form-control" Style="margin-top: 5px;" AutoPostBack="true" OnSelectedIndexChanged="ddlnameofdefplat_SelectedIndexChanged"></asp:DropDownList>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Accordion card -->
-                                <!-- Accordion card -->
-                                <div class="card">
-                                    <!-- Card header -->
-                                    <div class="card-header" role="tab" id="headingThree11">
-                                        <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx" href="#collapseThree11"
-                                            aria-expanded="false" aria-controls="collapseThree2">
-                                            <h5 class="mb-0">INDUSTRY DOMAIN<i class="fas fa-angle-down rotate-icon"></i>
-                                            </h5>
-                                        </a>
-                                    </div>
-                                    <!-- Card body -->
-                                    <div id="collapseThree11" class="collapse" role="tabpanel" aria-labelledby="headingThree11"
-                                        data-parent="#accordionEx">
-                                        <div class="card-body">
-                                            <div class="custom-control custom-checkbox">
-                                                <asp:DropDownList ID="ddlprodindustrydomain" runat="server" CssClass="form-control" Style="margin-top: 5px;" AutoPostBack="true" OnSelectedIndexChanged="ddlprodindustrydomain_SelectedIndexChanged"></asp:DropDownList>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Accordion card -->
-                                <!-- Accordion card -->
-                                <div class="card" runat="server" id="divfilterpisd" visible="false">
-                                    <!-- Card header -->
-                                    <div class="card-header" role="tab" id="headingThree12">
-                                        <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx" href="#collapseThree12"
-                                            aria-expanded="false" aria-controls="collapseThree2">
-                                            <h5 class="mb-0">INDUSTRY SUB DOMAIN<i class="fas fa-angle-down rotate-icon"></i>
-                                            </h5>
-                                        </a>
-                                    </div>
-                                    <!-- Card body -->
-                                    <div id="collapseThree12" class="collapse" role="tabpanel" aria-labelledby="headingThree12"
-                                        data-parent="#accordionEx">
-                                        <div class="card-body">
-                                            <div class="custom-control custom-checkbox">
-                                                <asp:DropDownList ID="ddlprodindussubdomain" runat="server" CssClass="form-control" Style="margin-top: 5px;" AutoPostBack="true" OnSelectedIndexChanged="ddlprodindussubdomain_SelectedIndexChanged"></asp:DropDownList>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Accordion card -->
-                                <!-- Accordion card -->
-                                <div class="card">
-                                    <!-- Card header -->
-                                    <div class="card-header" role="tab" id="headingThree13">
-                                        <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx" href="#collapseThree13"
-                                            aria-expanded="false" aria-controls="collapseThree2">
-                                            <h5 class="mb-0">OEM Country<i class="fas fa-angle-down rotate-icon"></i>
-                                            </h5>
-                                        </a>
-                                    </div>
-                                    <!-- Card body -->
-                                    <div id="collapseThree13" class="collapse" role="tabpanel" aria-labelledby="headingThree13"
-                                        data-parent="#accordionEx">
-                                        <div class="card-body">
-                                            <div class="custom-control custom-checkbox">
-                                                <asp:DropDownList ID="ddlcountry" runat="server" AutoPostBack="true" Style="margin-top: 5px;" CssClass="form-control"
-                                                    OnSelectedIndexChanged="ddlcountry_SelectedIndexChanged">
-                                                </asp:DropDownList>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Accordion card -->
-                                <!-- Accordion card -->
-                                <div class="card">
-                                    <!-- Card header -->
-                                    <div class="card-header" role="tab" id="headingThree14">
-                                        <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx" href="#collapseThree14"
-                                            aria-expanded="false" aria-controls="collapseThree2">
-                                            <h5 class="mb-0">Search keywords<i class="fas fa-angle-down rotate-icon"></i>
-                                            </h5>
-                                        </a>
-                                    </div>
-                                    <!-- Card body -->
-                                    <div id="collapseThree14" class="collapse" role="tabpanel" aria-labelledby="headingThree14"
-                                        data-parent="#accordionEx">
-                                        <div class="card-body">
-                                            <div class="custom-control custom-checkbox">
-                                                <asp:DropDownList ID="ddlsearchkeywordsfilter" runat="server" AutoPostBack="true" Style="margin-top: 5px;" CssClass="form-control"
-                                                    OnSelectedIndexChanged="ddlsearchkeywordsfilter_SelectedIndexChanged">
-                                                </asp:DropDownList>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Accordion card -->
                             </div>
-                            <!-- Accordion wrapper -->
+                            <div class="common-filter-box">
+                                <h3>Make II</h3>
+                                <div class="custom-control custom-checkbox">
+                                    <asp:RadioButtonList ID="rbismake2" runat="server" AutoPostBack="true" OnSelectedIndexChanged="rbismake2_SelectedIndexChanged" RepeatColumns="1" RepeatDirection="Vertical" RepeatLayout="UnorderedList">
+                                        <asp:ListItem Value="25">YES</asp:ListItem>
+                                        <asp:ListItem Value="N">NO</asp:ListItem>
+                                        <asp:ListItem Value="C">CLEAR</asp:ListItem>
+                                    </asp:RadioButtonList>
+                                </div>
+                            </div>
+                            <div class="common-filter-box">
+                                <h3>Contact</h3>
+                                <div class="custom-control custom-checkbox">
+                                    <asp:RadioButtonList ID="rbiscontact" runat="server" AutoPostBack="true" OnSelectedIndexChanged="rbiscontact_SelectedIndexChanged" RepeatColumns="1" RepeatDirection="Vertical" RepeatLayout="UnorderedList">
+                                        <asp:ListItem Value="Y">AVAILABLE</asp:ListItem>
+                                        <asp:ListItem Value="N">NOT AVAILABLE</asp:ListItem>
+                                        <asp:ListItem Value="C">CLEAR</asp:ListItem>
+                                    </asp:RadioButtonList>
+                                </div>
+                            </div>
+                            <div class="common-filter-box">
+                                <h3>Tender</h3>
+                                <div class="custom-control custom-checkbox">
+                                    <asp:RadioButtonList ID="rbistender" runat="server" AutoPostBack="true" OnSelectedIndexChanged="rbistender_SelectedIndexChanged" RepeatColumns="1" RepeatDirection="Vertical" RepeatLayout="UnorderedList">
+                                        <asp:ListItem Value="Y">LIVE</asp:ListItem>
+                                        <asp:ListItem Value="N">NOT LIVE</asp:ListItem>
+                                        <asp:ListItem Value="C">CLEAR </asp:ListItem>
+                                    </asp:RadioButtonList>
+                                </div>
+                            </div>
+                            <div class="common-filter-box" runat="server" id="divfiltercompany">
+                                <h3>Company</h3>
+                                <div class="custom-control custom-checkbox">
+                                    <asp:DropDownList ID="ddlcomp" runat="server" CssClass="form-control" Style="margin-top: 5px;" AutoPostBack="true" OnSelectedIndexChanged="ddlcomp_SelectedIndexChanged"></asp:DropDownList>
+                                </div>
+                            </div>
+
+                            <div class="common-filter-box" runat="server" id="divfilterdivision" visible="false">
+                                <h3>Division</h3>
+                                <div class="custom-control custom-checkbox">
+                                    <asp:DropDownList ID="ddldivision" runat="server" CssClass="form-control" Style="margin-top: 5px;" AutoPostBack="true" OnSelectedIndexChanged="ddldivision_SelectedIndexChanged"></asp:DropDownList>
+                                </div>
+                            </div>
+
+                            <div class="common-filter-box" runat="server" id="divfilterunit" visible="false">
+                                <h3>Unit</h3>
+                                <div class="custom-control custom-checkbox">
+                                    <asp:DropDownList ID="ddlunit" runat="server" CssClass="form-control" Style="margin-top: 5px;" AutoPostBack="true" OnSelectedIndexChanged="ddlunit_SelectedIndexChanged"></asp:DropDownList>
+                                </div>
+                            </div>
+                            <div class="common-filter-box">
+                                <h3>End User</h3>
+                                <div class="custom-control custom-checkbox">
+                                    <asp:DropDownList ID="ddlchkenduser" runat="server" CssClass="form-control" Style="margin-top: 5px;" AutoPostBack="true" OnSelectedIndexChanged="ddlchkenduser_SelectedIndexChanged"></asp:DropDownList>
+                                </div>
+                            </div>
+                            <div class="common-filter-box">
+                                <h3>DEFENCE PLATFORM</h3>
+                                <div class="custom-control custom-checkbox">
+                                    <asp:DropDownList ID="ddldefplatform" runat="server" CssClass="form-control" Style="margin-top: 5px;" AutoPostBack="true" OnSelectedIndexChanged="ddldefplatform_SelectedIndexChanged"></asp:DropDownList>
+                                </div>
+                            </div>
+
+                            <div class="common-filter-box" runat="server" id="divfilternodp" visible="false">
+                                <h3>NAME OF DEFENCE PLATFORM</h3>
+                                <div class="custom-control custom-checkbox">
+                                    <asp:DropDownList ID="ddlnameofdefplat" runat="server" CssClass="form-control" Style="margin-top: 5px;" AutoPostBack="true" OnSelectedIndexChanged="ddlnameofdefplat_SelectedIndexChanged"></asp:DropDownList>
+                                </div>
+                            </div>
+
+                            <div class="common-filter-box">
+                                <h3>INDUSTRY DOMAIN</h3>
+                                <div class="custom-control custom-checkbox">
+                                    <asp:DropDownList ID="ddlprodindustrydomain" runat="server" CssClass="form-control" Style="margin-top: 5px;" AutoPostBack="true" OnSelectedIndexChanged="ddlprodindustrydomain_SelectedIndexChanged"></asp:DropDownList>
+                                </div>
+                            </div>
+
+                            <div class="common-filter-box" runat="server" id="divfilterpisd" visible="false">
+                                <h3>INDUSTRY SUB DOMAIN</h3>
+                                <div class="custom-control custom-checkbox">
+                                    <asp:DropDownList ID="ddlprodindussubdomain" runat="server" CssClass="form-control" Style="margin-top: 5px;" AutoPostBack="true" OnSelectedIndexChanged="ddlprodindussubdomain_SelectedIndexChanged"></asp:DropDownList>
+                                </div>
+                            </div>
+                            <div class="common-filter-box">
+                                <h3>OEM Country</h3>
+                                <div class="custom-control custom-checkbox">
+                                    <asp:DropDownList ID="ddlcountry" runat="server" AutoPostBack="true" Style="margin-top: 5px;" CssClass="form-control"
+                                        OnSelectedIndexChanged="ddlcountry_SelectedIndexChanged">
+                                    </asp:DropDownList>
+                                </div>
+                            </div>
+                            <div class="common-filter-box">
+                                <h3>Search keywords</h3>
+                                <div class="custom-control custom-checkbox">
+                                    <asp:DropDownList ID="ddlsearchkeywordsfilter" runat="server" AutoPostBack="true" Style="margin-top: 5px;" CssClass="form-control"
+                                        OnSelectedIndexChanged="ddlsearchkeywordsfilter_SelectedIndexChanged">
+                                    </asp:DropDownList>
+                                </div>
+                            </div>
+                            <div class="accordion md-accordion" id="accordionEx" role="tablist" aria-multiselectable="true">
+                            </div>
                         </div>
                         <div class="box-holder">
                             <div class="content oem-content">
                                 <div class="sideBg">
                                     <div class="row">
-                                        <asp:LinkButton ID="lblback" runat="server" class="fa fa-arrow-circle-left pull-right" OnClick="lblback_Click">Back</asp:LinkButton>
+                                        <div class="col-md-12">
+                                            <asp:LinkButton ID="lblback" runat="server" class="fa fa-arrow-circle-left pull-right" OnClick="lblback_Click">Back</asp:LinkButton>
+                                        </div>
+
                                     </div>
                                     <div class="clearfix" style="margin-bottom: 10px;"></div>
                                     <div class="addfdi">
@@ -662,9 +457,9 @@
                                                                                                         <tr>
                                                                                                             <td>CLASS ITEM:</td>
                                                                                                             <td>
-                                                                                                                <asp:Label ID="lblclassitem" runat="server" Text=""></asp:Label></td>
+                                                                                                                <asp:Label ID="lblclassitem" runat="server" Text=""></asp:Label>
+                                                                                                            </td>
                                                                                                         </tr>
-
                                                                                                     </table>
                                                                                                 </div>
                                                                                                 <div class="col-md-6">
@@ -753,6 +548,30 @@
                                                                                                                 <asp:Label ID="lblremarksproductimported" runat="server" Text=""></asp:Label></td>
                                                                                                         </tr>
                                                                                                     </table>
+                                                                                                </div>
+                                                                                                <div class="clearfix" style="margin-top: 10px;"></div>
+                                                                                                <div class="row" runat="server" id="Panel2" visible="false">
+                                                                                                    <div class="col-md-12">
+                                                                                                        <div class="table-wraper table-responsive">
+                                                                                                            <asp:GridView ID="gvproditemdetail" runat="server" Width="100%" Class="commonAjaxTbl master-company-table table display 
+           responsive no-wrap table-hover manage-user Grid"
+                                                                                                                OnRowCreated="gvproditemdetail_RowCreated" AutoGenerateColumns="false">
+                                                                                                                <Columns>
+                                                                                                                    <asp:TemplateField HeaderText="Sr.No">
+                                                                                                                        <ItemTemplate>
+                                                                                                                            <%#Container.DataItemIndex+1 %>
+                                                                                                                        </ItemTemplate>
+                                                                                                                    </asp:TemplateField>
+                                                                                                                    <asp:BoundField runat="server" DataField="ProductRefNo" HeaderText="Reference No" />
+                                                                                                                    <asp:BoundField runat="server" DataField="MRC_TITLE" HeaderText="MRC Title" />
+                                                                                                                    <asp:BoundField runat="server" DataField="Remarks" HeaderText="Remarks" />
+                                                                                                                    <asp:BoundField runat="server" DataField="Remarks2" HeaderText="Detail Remarks" />
+                                                                                                                    <asp:BoundField runat="server" DataField="Remarks3" HeaderText="Mandatory" />
+                                                                                                                </Columns>
+                                                                                                            </asp:GridView>
+                                                                                                            <div class="clearfix mt10"></div>
+                                                                                                        </div>
+                                                                                                    </div>
                                                                                                 </div>
                                                                                             </div>
                                                                                         </li>

@@ -37,7 +37,7 @@
             var data = google.visualization.arrayToDataTable(chartData);
 
             var options = {
-                width: 545,
+                width: 460,
                 height: 300,
                 pointSize: 5,
                 seriesType: "bars",
@@ -110,7 +110,7 @@
     </style>
 </asp:Content>
 <asp:Content ID="coninner" runat="server" ContentPlaceHolderID="ContentPlaceHolder1">
-    <asp:updatepanel id="up" runat="server">
+    <asp:UpdatePanel ID="up" runat="server">
         <ContentTemplate>
             <div class="content oem-content">
                 <div class="sideBg">
@@ -219,62 +219,62 @@
                                             <div class="white-box analytics-info last-fdi" style="padding: 2%">
                                                 <ul class="list-inline two-part">
                                                     <li class="uploadedItem">
-                                                        <div class="row" style="width:100%;">
+                                                        <div class="row" style="width: 100%;">
                                                             <div class="col-md-6">
                                                                 <div class="allItem">
-                                                                <div class="incombox">
-                                                            <div class="icon-box">
-                                                                <i class="fab fa-product-hunt"></i>
-                                                            </div>
-                                                            <div class="compName">
-                                                                <h3 class="box-title">Items Uploaded</h3>
-                                                                <div class="Number">
-                                                                    <asp:LinkButton ID="lnkbtnProduct" runat="server" CssClass="comp_number" Text="0" OnClick="lnkbtnProduct_Click"></asp:LinkButton>
+                                                                    <div class="incombox">
+                                                                        <div class="icon-box">
+                                                                            <i class="fab fa-product-hunt"></i>
+                                                                        </div>
+                                                                        <div class="compName">
+                                                                            <h3 class="box-title">Items Uploaded</h3>
+                                                                            <div class="Number">
+                                                                                <asp:LinkButton ID="lnkbtnProduct" runat="server" CssClass="comp_number" Text="0" OnClick="lnkbtnProduct_Click"></asp:LinkButton>
+                                                                            </div>
+                                                                            <div class="file-export">
+                                                                                <asp:LinkButton ID="lnkProduct" runat="server" Visible="true" class="fas fa-cloud-download-alt" data-toggle="tooltip" ToolTip="Export to Excel" OnClick="lnkProduct_Click"></asp:LinkButton>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
                                                                 </div>
-                                                                <div class="file-export">
-                                                                    <asp:LinkButton ID="lnkProduct" runat="server" Visible="true" class="fas fa-cloud-download-alt" data-toggle="tooltip" ToolTip="Export to Excel" OnClick="lnkProduct_Click"></asp:LinkButton>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                          </div>
                                                             </div>
                                                             <div class="col-md-6">
                                                                 <div class="ItemDivided">
-                                                            <div class="incombox">
-                                                                <div class="icon-box" style="width:25px; height:25px; line-height:25px">
-                                                                    <i class="fab fa-product-hunt"></i>
-                                                                </div>
-                                                                <div class="compName">
-                                                                    <h3 class="box-title">Items Approved</h3>
-                                                                </div>
-                                                                <div class="Number">
-                                                                        <asp:LinkButton ID="lbapproveditem" runat="server" CssClass="" Text="0" OnClick="lnkbtnProduct_Click"></asp:LinkButton>
+                                                                    <div class="incombox">
+                                                                        <div class="icon-box" style="width: 25px; height: 25px; line-height: 25px">
+                                                                            <i class="fab fa-product-hunt"></i>
+                                                                        </div>
+                                                                        <div class="compName">
+                                                                            <h3 class="box-title">Items Approved</h3>
+                                                                        </div>
+                                                                        <div class="Number">
+                                                                            <asp:LinkButton ID="lbapproveditem" runat="server" CssClass="" Text="0" OnClick="lnkbtnProduct_Click"></asp:LinkButton>
+                                                                        </div>
+                                                                        <div class="file-export">
+                                                                            <asp:LinkButton ID="lbdownloadapproved" runat="server" Visible="true" class="fas fa-cloud-download-alt" data-toggle="tooltip" ToolTip="Export to Excel" OnClick="lbdownloadapproved_Click"></asp:LinkButton>
+                                                                        </div>
                                                                     </div>
-                                                                    <div class="file-export">
-                                                                        <asp:LinkButton ID="lbdownloadapproved" runat="server" Visible="true" class="fas fa-cloud-download-alt" data-toggle="tooltip" ToolTip="Export to Excel" OnClick="lbdownloadapproved_Click"></asp:LinkButton>
+                                                                    <div class="incombox">
+                                                                        <div class="icon-box" style="width: 25px; height: 25px; line-height: 25px">
+                                                                            <i class="fab fa-product-hunt"></i>
+                                                                        </div>
+                                                                        <div class="compName">
+                                                                            <h3 class="box-title">Items Disapproved</h3>
+
+                                                                        </div>
+                                                                        <div class="Number">
+                                                                            <asp:LinkButton ID="lbitemdisapproved" runat="server" CssClass="" Text="0" OnClick="lnkbtnProduct_Click"></asp:LinkButton>
+                                                                        </div>
+                                                                        <div class="file-export">
+                                                                            <asp:LinkButton ID="lbitemdisapproveddown" runat="server" Visible="true" class="fas fa-cloud-download-alt" data-toggle="tooltip" ToolTip="Export to Excel" OnClick="lbitemdisapproveddown_Click"></asp:LinkButton>
+                                                                        </div>
                                                                     </div>
-                                                            </div>                                                   
-                                                            <div class="incombox">
-                                                                <div class="icon-box" style="width:25px; height:25px; line-height:25px">
-                                                                    <i class="fab fa-product-hunt"></i>
                                                                 </div>
-                                                                <div class="compName">
-                                                                    <h3 class="box-title">Items Disapproved</h3>
-                                                                    
-                                                                </div>
-                                                                <div class="Number">
-                                                                        <asp:LinkButton ID="lbitemdisapproved" runat="server" CssClass="" Text="0" OnClick="lnkbtnProduct_Click"></asp:LinkButton>
-                                                                    </div>
-                                                                    <div class="file-export">
-                                                                        <asp:LinkButton ID="lbitemdisapproveddown" runat="server" Visible="true" class="fas fa-cloud-download-alt" data-toggle="tooltip" ToolTip="Export to Excel" OnClick="lbitemdisapproveddown_Click"></asp:LinkButton>
-                                                                    </div>
                                                             </div>
                                                         </div>
-                                                            </div>
-                                                        </div>
-                                                        
-                                                        
-                                                      
+
+
+
                                                     </li>
                                                 </ul>
 
@@ -502,9 +502,11 @@
             <asp:PostBackTrigger ControlID="lnkProduct" />
             <asp:PostBackTrigger ControlID="lbexportmake2" />
             <asp:PostBackTrigger ControlID="LinkButton2" />
+            <asp:PostBackTrigger ControlID="lbdownloadapproved" />
+            <asp:PostBackTrigger ControlID="lbitemdisapproveddown" />
         </Triggers>
-    </asp:updatepanel>
-    <asp:updateprogress id="UpdateProgress1" runat="server" associatedupdatepanelid="up">
+    </asp:UpdatePanel>
+    <asp:UpdateProgress ID="UpdateProgress1" runat="server" AssociatedUpdatePanelID="up">
         <ProgressTemplate>
 
             <div class="overlay-progress">
@@ -514,5 +516,5 @@
                 </div>
             </div>
         </ProgressTemplate>
-    </asp:updateprogress>
+    </asp:UpdateProgress>
 </asp:Content>

@@ -436,7 +436,7 @@ public partial class Admin_Dashboard : System.Web.UI.Page
         if (objCrypto.DecryptData(Session["Type"].ToString()) != "Admin" && objCrypto.DecryptData(Session["Type"].ToString()) != "SuperAdmin")
         {
             if (DtGrid.Rows.Count > 0)
-            {               
+            {
                 this.UpdateDtGridValue();
                 // code to filter row role wise
                 if (objCrypto.DecryptData(Session["Type"].ToString()).ToUpper() == "COMPANY")

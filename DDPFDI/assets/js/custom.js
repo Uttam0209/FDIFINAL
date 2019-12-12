@@ -201,6 +201,7 @@
         $('#ContentPlaceHolder1_gvproditemdetail').DataTable();
         $('#ContentPlaceHolder1_gvnsngroup').DataTable();
         $('#ContentPlaceHolder1_gvnsngroupclass').DataTable();
+        $('#ContentPlaceHolder1_GridView1').DataTable();
     }
     $('[data-fancybox="Prodgridviewgellry"]').fancybox({
         // Options will go here

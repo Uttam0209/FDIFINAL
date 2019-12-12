@@ -1567,7 +1567,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
             }
         }
         txtfiigno.Text = "";
-        txtfiigtype.Text="";
+        txtfiigtype.Text = "";
     }
     #endregion
     #region Image Code
@@ -1900,6 +1900,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                     if (DtView.Rows[0]["ProductLevel3"].ToString() != "")
                     {
                         ddllevel3product.SelectedValue = DtView.Rows[0]["ProductLevel3"].ToString();
+                        lblviewitemcode.Visible = true;
                     }
                 }
                 txtnsccode.Text = DtView.Rows[0]["NSCCode"].ToString();
@@ -2117,27 +2118,88 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     #region Show NSNGroup GRID TO Add
     protected void lblviewitemcode_Click(object sender, EventArgs e)
     {
-        DataTable DtViewNewCode = Lo.RetrivenewcategortFIIG_No(ddllevel3product.SelectedItem.Text, "Found");
-        if (DtViewNewCode.Rows.Count > 0)
+        if (btnsubmitpanel1.Text == "Update")
         {
-            DataView Dv = new DataView(DtViewNewCode);
-            Dv.RowFilter = "L2Code='Y'";
-            DataTable DtVY = Dv.ToTable();
-            gvproditemdetail.DataSource = DtVY.DefaultView;
-            gvproditemdetail.DataBind();
-            gvproditemdetail.Visible = true;
-            pan.Visible = true;
-            Panel2.Visible = true;
-            Dv.RowFilter = "L2Code='N'";
-            DataTable DTVN = Dv.ToTable();
-            GridView1.DataSource = DTVN.DefaultView;
-            GridView1.DataBind();
-            GridView1.Visible = true;
-            ScriptManager.RegisterStartupScript(this, GetType(), "changePass", "showPopup();", true);
+            DataTable DtViewNewCodeup = Lo.RetrivenewcategortFIIG_No(hfprodrefno.Value, "UFound");
+            if (DtViewNewCodeup.Rows.Count > 0)
+            {
+                DataView Dv = new DataView(DtViewNewCodeup);
+                Dv.RowFilter = "Remarks3='Y'";
+                DataTable DtVY = Dv.ToTable();
+                gvproditemdetail.DataSource = DtVY.DefaultView;
+                gvproditemdetail.DataBind();
+                gvproditemdetail.Visible = true;
+                for (int i = 0; DtVY.Rows.Count > i; i++)
+                {
+                    txtfiigtype.Text = DtVY.Rows[i]["Remarks2"].ToString();
+                    TextBox box = (TextBox)gvproditemdetail.Rows[i].Cells[2].FindControl("txtinfonsnfig");
+                    box.Text = DtVY.Rows[i]["Remarks"].ToString();
+                }
+                pan.Visible = true;
+                Panel2.Visible = true;
+                Dv.RowFilter = "Remarks3='N'";
+                DataTable DTVN = Dv.ToTable();
+                GridView1.DataSource = DTVN.DefaultView;
+                GridView1.DataBind();
+                for (int i = 0; DTVN.Rows.Count > i; i++)
+                {
+                    txtfiigno.Text = DTVN.Rows[i]["Remarks2"].ToString();
+                    TextBox box1 = (TextBox)GridView1.Rows[i].Cells[2].FindControl("txtremNoFiig");
+                    box1.Text = DTVN.Rows[i]["Remarks"].ToString();
+                }
+                GridView1.Visible = true;
+                ScriptManager.RegisterStartupScript(this, GetType(), "changePass", "showPopup();", true);
+            }
+            else
+            {
+                DataTable DtViewNewCode = Lo.RetrivenewcategortFIIG_No(ddllevel3product.SelectedItem.Text, "Found");
+                if (DtViewNewCode.Rows.Count > 0)
+                {
+                    DataView Dv = new DataView(DtViewNewCode);
+                    Dv.RowFilter = "Type='Y'";
+                    DataTable DtVY = Dv.ToTable();
+                    gvproditemdetail.DataSource = DtVY.DefaultView;
+                    gvproditemdetail.DataBind();
+                    gvproditemdetail.Visible = true;
+                    pan.Visible = true;
+                    Panel2.Visible = true;
+                    Dv.RowFilter = "Type='N'";
+                    DataTable DTVN = Dv.ToTable();
+                    GridView1.DataSource = DTVN.DefaultView;
+                    GridView1.DataBind();
+                    GridView1.Visible = true;
+                    ScriptManager.RegisterStartupScript(this, GetType(), "changePass", "showPopup();", true);
+                }
+                else
+                {
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "ErrorMssgPopup('No Record Found')", true);
+                }
+            }
         }
         else
         {
-            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "ErrorMssgPopup('No Record Found')", true);
+            DataTable DtViewNewCode = Lo.RetrivenewcategortFIIG_No(ddllevel3product.SelectedItem.Text, "Found");
+            if (DtViewNewCode.Rows.Count > 0)
+            {
+                DataView Dv = new DataView(DtViewNewCode);
+                Dv.RowFilter = "Type='Y'";
+                DataTable DtVY = Dv.ToTable();
+                gvproditemdetail.DataSource = DtVY.DefaultView;
+                gvproditemdetail.DataBind();
+                gvproditemdetail.Visible = true;
+                pan.Visible = true;
+                Panel2.Visible = true;
+                Dv.RowFilter = "Type='N'";
+                DataTable DTVN = Dv.ToTable();
+                GridView1.DataSource = DTVN.DefaultView;
+                GridView1.DataBind();
+                GridView1.Visible = true;
+                ScriptManager.RegisterStartupScript(this, GetType(), "changePass", "showPopup();", true);
+            }
+            else
+            {
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "ErrorMssgPopup('No Record Found')", true);
+            }
         }
     }
     protected void gvproductItem_RowCreated(object sender, GridViewRowEventArgs e)

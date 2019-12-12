@@ -128,7 +128,7 @@
             <nav class="navbar" role="navigation">
                 <div class="navbar-header">
                     <a class="navbar-brand" href="javascript:void(0)"><i class="fa fa-list btn-nav-toggle-responsive text-white"></i>
-                        <span class="main-logo" title="Department of Defense Product">MOD</span>
+                        <span class="logo" title="Department of Defense Product">MOD</span>
                     </a>
                 </div>
                 <div class="collapse navbar-collapse">
@@ -145,8 +145,9 @@
 
                                 </span>
                             </div>
-                            <span>
+                            <span class="header-user-box">
                                 <asp:Label ID="lblusername" runat="server"></asp:Label>
+                                <i class="fas fa-user-circle"></i>
                                 &nbsp;&nbsp;<i class="fa fa-sort-down"></i></span> &nbsp;</a>
                             <ul class="dropdown-menu user-login-dropdown">
                                 <li><a href='<%=ResolveUrl("~/ChangePassword") %>'><i class="fa fa-key" aria-hidden="true"></i>Change Password</a></li>
