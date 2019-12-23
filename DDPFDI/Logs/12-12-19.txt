@@ -1,0 +1,48 @@
+Log Entry : 12/12/2019 16:06:42 | Message : Application Started
+Log Entry : 12/12/2019 16:06:42 | Message : 'C:/Users/HP/Desktop/RAJESHGERA.pfx' is a physical path, but a virtual path was expected.
+Log Entry : 12/12/2019 16:06:42 | Message : Application Ended
+Log Entry : 12/12/2019 16:07:03 | Message : Application Started
+Log Entry : 12/12/2019 16:08:13 | Message : Application Started
+Log Entry : 12/12/2019 16:11:52 | Message : 'C:/Users/HP/Desktop/RAJESHGERA.pfx' is a physical path, but a virtual path was expected.
+Log Entry : 12/12/2019 16:11:52 | Message : Application Ended
+Log Entry : 12/12/2019 16:12:24 | Message : Application Started
+Log Entry : 12/12/2019 16:13:17 | Message : Application Started
+Log Entry : 12/12/2019 16:13:54 | Message : Application Started
+Log Entry : 12/12/2019 16:13:55 | Message : 'C:/Users/HP/Desktop/RAJESHGERA.pfx' is a physical path, but a virtual path was expected.
+Log Entry : 12/12/2019 16:23:04 | Message : Application Started
+Log Entry : 12/12/2019 16:23:20 | Message : The given path's format is not supported.
+Log Entry : 12/12/2019 16:23:20 | Message : Application Ended
+Log Entry : 12/12/2019 16:23:26 | Message : Application Started
+Log Entry : 12/12/2019 16:26:05 | Message : Application Started
+Log Entry : 12/12/2019 16:27:26 | Message : Application Started
+Log Entry : 12/12/2019 16:29:22 | Message : Application Started
+Log Entry : 12/12/2019 16:29:56 | Message : Application Started
+Log Entry : 12/12/2019 16:31:15 | Message : Application Started
+Log Entry : 12/12/2019 16:38:54 | Message : Application Started
+Log Entry : 12/12/2019 16:38:54 | Message : The system cannot find the file specified.
+
+Log Entry : 12/12/2019 16:38:54 | Message : Application Ended
+Log Entry : 12/12/2019 16:39:17 | Message : Application Started
+Log Entry : 12/12/2019 16:39:53 | Message : The system cannot find the file specified.
+
+Log Entry : 12/12/2019 16:39:53 | Message : Application Ended
+Log Entry : 12/12/2019 16:42:02 | Message : Application Started
+Log Entry : 12/12/2019 16:49:28 | Message : Application Started
+Log Entry : 12/12/2019 16:50:12 | Message : Application Started
+Log Entry : 12/12/2019 16:50:18 | Message : Application Ended
+Log Entry : 12/12/2019 16:59:19 | Message : Application Started
+Log Entry : 12/12/2019 16:59:21 | Message : Application Ended
+Log Entry : 12/12/2019 17:02:21 | Message : Application Started
+Log Entry : 12/12/2019 17:02:23 | Message : Application Ended
+Log Entry : 12/12/2019 17:02:46 | Message : Application Started
+Log Entry : 12/12/2019 17:02:50 | Message : Application Ended
+Log Entry : 12/12/2019 17:02:57 | Message : Application Started
+Log Entry : 12/12/2019 17:03:04 | Message : Application Ended
+Log Entry : 12/12/2019 17:04:29 | Message : Application Started
+Log Entry : 12/12/2019 17:06:10 | Message : Application Started
+Log Entry : 12/12/2019 17:06:14 | Message : Application Ended
+Log Entry : 12/12/2019 17:12:45 | Message : Application Started
+Log Entry : 12/12/2019 17:12:48 | Message : Application Ended
+Log Entry : 12/12/2019 17:12:50 | Message : Application Started
+Log Entry : 12/12/2019 17:18:26 | Message : Application Started
+Log Entry : 12/12/2019 17:19:38 | Message : Application Ended

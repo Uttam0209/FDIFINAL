@@ -1,16 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Collections.Specialized;
+using System.Configuration;
+using System.Data;
+using System.Globalization;
+using System.IO;
+using System.Net;
+using System.Security.Cryptography.Pkcs;
+using System.Security.Cryptography.X509Certificates;
+using System.Text;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using BusinessLayer;
-using System.Data;
-using System.Collections.Specialized;
 using Encryption;
-using System.IO;
-using System.Text;
-using System.Text.RegularExpressions;
 
 public partial class Vendor_VendorRegistrationStep1 : System.Web.UI.Page
 {
@@ -30,12 +33,19 @@ public partial class Vendor_VendorRegistrationStep1 : System.Web.UI.Page
             BindCountry();
         }
     }
-    protected void ddlregisterdgst_SelectedIndexChanged(object sender, EventArgs e)
+    //protected void ddlregisterdgst_SelectedIndexChanged(object sender, EventArgs e)
+    //{
+    //    if (ddlregisterdgst.SelectedItem.Text == "YES")
+    //    { divgst.Visible = true; }
+    //    else
+    //    { divgst.Visible = false; }
+    //}
+    protected void ddlpan_SelectedIndexChanged(object sender, EventArgs e)
     {
-        if (ddlregisterdgst.SelectedItem.Text == "YES")
-        { divgst.Visible = true; }
+        if (ddlpan.SelectedItem.Text == "YES")
+        { divpan.Visible = true; }
         else
-        { divgst.Visible = false; }
+        { divpan.Visible = false; }
     }
     protected void cleartext()
     {
@@ -46,7 +56,8 @@ public partial class Vendor_VendorRegistrationStep1 : System.Web.UI.Page
         txtfaxphoneno.Text = "";
         txtfaxstdcode.Text = "";
         txtfirstname.Text = "";
-        txtgstno.Text = "";
+        //  txtgstno.Text = "";
+        txtpanno.Text = "";
         txtlastname.Text = "";
         txtmiddlename.Text = "";
         txtphoneno.Text = "";
@@ -56,14 +67,17 @@ public partial class Vendor_VendorRegistrationStep1 : System.Web.UI.Page
         txtstreetaddress.Text = "";
         txtstreetaddressline2.Text = "";
         ddlbusinesssector.SelectedIndex = 0;
-        ddlregisterdgst.SelectedIndex = 0;
+        // ddlregisterdgst.SelectedIndex = 0;
+        ddlpan.SelectedIndex = 0;
         ddltypeofbusiness.SelectedIndex = 0;
     }
     protected void SaveCode()
     {
         HySaveVendor["VendorID"] = MId;
-        HySaveVendor["IsGST"] = ddlregisterdgst.SelectedItem.Value;
-        HySaveVendor["GSTNo"] = txtgstno.Text.Trim();
+        HySaveVendor["IsPan"] = ddlpan.SelectedItem.Value;
+        HySaveVendor["PanNo"] = txtpanno.Text;
+        HySaveVendor["IsGST"] = "";// ddlregisterdgst.SelectedItem.Value;
+        HySaveVendor["GSTNo"] = "";// txtgstno.Text.Trim();
         HySaveVendor["BusinessName"] = txtbusinessname.Text.Trim();
         HySaveVendor["NodalOfficerPrefix"] = ddltittle.SelectedItem.Text;
         HySaveVendor["NodalOfficerFirstName"] = txtfirstname.Text.Trim();
@@ -94,7 +108,7 @@ public partial class Vendor_VendorRegistrationStep1 : System.Web.UI.Page
     }
     protected void btnsubmit_Click(object sender, EventArgs e)
     {
-        if (txtfirstname.Text != "" && txtemail.Text != "")
+        if (txtfirstname.Text != "" && txtemail.Text != "" && lblmsgpan.Text != "Invalid Pan" && lblbusinessname.Text == "")
         {
             if (IsValidEmailId(txtemail.Text))
             {
@@ -159,7 +173,7 @@ public partial class Vendor_VendorRegistrationStep1 : System.Web.UI.Page
             body = body.Replace("{mcurid}", Resturl(56));
             SendMail s;
             s = new SendMail();
-            s.CreateMail("noreply@srijandefence.gov.in", txtemail.Text, "Create Password Email", body);
+            s.CreateMail("noreply-srijandefence@gov.in", txtemail.Text, "Create Password Email", body);
             s.sendMail();
         }
         catch (Exception ex)
@@ -182,4 +196,141 @@ public partial class Vendor_VendorRegistrationStep1 : System.Web.UI.Page
         return res.ToString();
     }
     #endregion
+    #region PanCard Verification Code
+    protected void PanVerification()
+    {
+        string URL = ConfigurationManager.AppSettings["URL"];
+        string PFXPassword = ConfigurationManager.AppSettings["PFXPassword"];
+        string Certificatename = ConfigurationManager.AppSettings["Certificatename"];
+        System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();
+        WriteTextFileLog("Application Started");
+        try
+        {
+            X509Certificate2 m = new X509Certificate2(HttpContext.Current.Server.MapPath("/PFX/") + Certificatename, PFXPassword);
+            byte[] bytes = encoding.GetBytes("V0224301^" + txtpanno.Text);
+            byte[] sig = Sign(bytes, m);
+            String sigi = Convert.ToBase64String(sig);
+            try
+            {
+                StringBuilder postData = new StringBuilder();
+                postData.Append("data=V0224301^" + txtpanno.Text);
+                postData.Append("&signature=" + System.Web.HttpUtility.UrlEncode(sigi));
+                postData.Append("&version=" + 2);
+                byte[] data = encoding.GetBytes(postData.ToString());
+                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls
+                                                    | SecurityProtocolType.Tls11
+                                                    | SecurityProtocolType.Tls12
+                                                    | SecurityProtocolType.Ssl3;
+                HttpWebRequest myRequest = (HttpWebRequest)WebRequest.Create(URL);
+                myRequest.Method = "POST";
+                myRequest.ContentType = "application/x-www-form-urlencoded";
+                myRequest.ContentLength = data.Length;
+                ServicePointManager.ServerCertificateValidationCallback = new System.Net.Security.RemoteCertificateValidationCallback(AcceptAllCertifications);
+                ServicePointManager.Expect100Continue = true;
+                Stream newStream = myRequest.GetRequestStream();
+                newStream.Write(data, 0, data.Length);
+                Console.WriteLine("Send");
+                HttpWebResponse WebResp = (HttpWebResponse)myRequest.GetResponse();
+                Stream Answer = WebResp.GetResponseStream();
+                StreamReader _Answer = new StreamReader(Answer);
+                Console.WriteLine("Received");
+                string Response = _Answer.ReadToEnd();
+                string[] splitString = Response.ToString().Split('^');
+                hfpanname.Value = splitString[8];
+                if (txtpanno.Text == splitString[1] && splitString[2] == "E")
+                {
+                    panverifi.Attributes.Add("Class", "fa fa-check");
+                    lblmsgpan.ForeColor = System.Drawing.Color.Green;                   
+                    lblmsgpan.Text = "Valid Pan";
+                    lblmsgpan.Visible = true;
+                }
+                else
+                {
+                    panverifi.Attributes.Add("Class", "fa fa-cross");
+                    lblmsgpan.ForeColor = System.Drawing.Color.Red;
+                    lblmsgpan.Text = "Invalid Pan";
+                    lblmsgpan.Visible = true;
+                }
+                newStream.Close();
+            }
+            catch (Exception ex)
+            {
+                WriteTextFileLog(ex.Message);
+            }
+        }
+        catch (Exception ex)
+        {
+            WriteTextFileLog(ex.Message);
+        }
+        WriteTextFileLog("Application Ended");
+    }
+    public static byte[] Sign(byte[] data, X509Certificate2 certificate)
+    {
+        if (data == null)
+            throw new ArgumentNullException("data");
+        if (certificate == null)
+            throw new ArgumentNullException("certificate");
+        ContentInfo content = new ContentInfo(data);
+        SignedCms signedCms = new SignedCms(content, false);
+        CmsSigner signer = new CmsSigner(SubjectIdentifierType.IssuerAndSerialNumber, certificate);
+        signedCms.ComputeSignature(signer);
+        return signedCms.Encode();
+    }
+    public bool AcceptAllCertifications(object sender, System.Security.Cryptography.X509Certificates.X509Certificate certification, System.Security.Cryptography.X509Certificates.X509Chain chain, System.Net.Security.SslPolicyErrors sslPolicyErrors)
+    {
+        return true;
+    }
+    public static void WriteTextFileLog(string errorMessage, string type = "")
+    {
+        try
+        {
+
+            string path = HttpContext.Current.Server.MapPath("/Logs/") + DateTime.Today.ToString("dd-MM-yy") + ".txt";
+            if (!File.Exists(path))
+            {
+                File.Create(path).Close();
+            }
+            using (StreamWriter w = File.AppendText(path))
+            {
+                string err = "Message : " + errorMessage;
+                if (string.IsNullOrEmpty(type))
+                {
+                    w.WriteLine("Log Entry : " + DateTime.Now.ToString(CultureInfo.InvariantCulture) + " | " + err);
+                    //w.WriteLine(err)
+                    if (errorMessage.Contains("Requested item not found."))
+                    {
+                        //HttpContext.Current.Session["Error"] = "Access Denied"
+                    }
+                }
+                else if (type == "E")
+                {
+                    w.WriteLine("______________________________________________________________________________");
+                }
+                w.Flush();
+                w.Close();
+            }
+        }
+        catch (System.Exception ex)
+        {
+        }
+    }
+    protected void txtpanno_TextChanged(object sender, EventArgs e)
+    {
+        PanVerification();
+    }
+    #endregion
+    protected void txtbusinessname_TextChanged(object sender, EventArgs e)
+    {
+        if (hfpanname.Value == txtbusinessname.Text)
+        {
+            lblbusinessname.Text = "";
+            check.Attributes.Add("Class", "fa fa-check");
+        }
+        else
+        {
+            check.Attributes.Add("Class", "fa fa-cross");
+            lblbusinessname.Text = "Invalid Company name as per pan-card";
+
+        }
+    }
 }

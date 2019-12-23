@@ -165,7 +165,7 @@ public partial class _Default : System.Web.UI.Page
             body = body.Replace("{mcurid}", Resturl(56));
             SendMail s;
             s = new SendMail();
-            s.CreateMail("noreply@srijandefence.gov.in", txtforgotemailid.Text, "Reset Password Email", body);
+            s.CreateMail("noreply-srijandefence@gov.in", txtforgotemailid.Text, "Reset Password Email", body);
             s.sendMail();
         }
         catch (Exception ex)

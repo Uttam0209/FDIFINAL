@@ -370,7 +370,7 @@ public partial class Admin_ViewNodalOfficer : System.Web.UI.Page
                 body = body.Replace("{curid}", Resturl(56));
                 SendMail s;
                 s = new SendMail();
-                s.CreateMail("noreply@srijandefence.gov.in", nodelemail.Text, "Create Password Email", body);
+                s.CreateMail("noreply-srijandefence@gov.in", nodelemail.Text, "Create Password Email", body);
                 s.sendMail();
                 ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "SuccessfullPop('Create password email send successfully.')", true);
             }

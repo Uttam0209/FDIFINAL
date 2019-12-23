@@ -790,7 +790,7 @@ public partial class Admin_ProductApprovedDisApproved : System.Web.UI.Page
             s = new SendMail();
             if (lblemailid.Text != "")
             {
-                s.CreateMail("noreply@srijandefence.gov.in", lblemailid.Text, "Amendment in product", body);
+                s.CreateMail("noreply-srijandefence@gov.in", lblemailid.Text, "Amendment in product", body);
                 s.sendMail();
                 hySaveProdInfo["Mailsend"] = "Y";
             }
@@ -799,7 +799,7 @@ public partial class Admin_ProductApprovedDisApproved : System.Web.UI.Page
                 DataTable DtNodalEmail = Lo.RetriveAllNodalOfficer(lblcomprefno.Text, "NodalForEmail");
                 if (DtNodalEmail.Rows.Count > 0)
                 {
-                    s.CreateMail("noreply@srijandefence.gov.in", DtNodalEmail.Rows[0]["NodalOfficerEmail"].ToString(), "Approved amendment in product", body);
+                    s.CreateMail("noreply-srijandefence@gov.in", DtNodalEmail.Rows[0]["NodalOfficerEmail"].ToString(), "Approved amendment in product", body);
                     s.sendMail();
                     hySaveProdInfo["Mailsend"] = "Y";
                 }
@@ -829,7 +829,7 @@ public partial class Admin_ProductApprovedDisApproved : System.Web.UI.Page
             s = new SendMail();
             if (lblemailid.Text != "")
             {
-                s.CreateMail("noreply@srijandefence.gov.in", lblemailid.Text, "Amendment in product", body);
+                s.CreateMail("noreply-srijandefence@gov.in", lblemailid.Text, "Amendment in product", body);
                 s.sendMail();
                 hySaveProdInfo["Mailsend"] = "Y";
             }
@@ -838,7 +838,7 @@ public partial class Admin_ProductApprovedDisApproved : System.Web.UI.Page
                 DataTable DtNodalEmail = Lo.RetriveAllNodalOfficer(lblcomprefno.Text, "NodalForEmail");
                 if (DtNodalEmail.Rows.Count > 0)
                 {
-                    s.CreateMail("noreply@srijandefence.gov.in", DtNodalEmail.Rows[0]["NodalOfficerEmail"].ToString(), "Disapproved amendment in product", body);
+                    s.CreateMail("noreply-srijandefence@gov.in", DtNodalEmail.Rows[0]["NodalOfficerEmail"].ToString(), "Disapproved amendment in product", body);
                     s.sendMail();
                     hySaveProdInfo["Mailsend"] = "Y";
                 }
@@ -868,7 +868,7 @@ public partial class Admin_ProductApprovedDisApproved : System.Web.UI.Page
             DataTable DtNodalEmail = Lo.RetriveAllNodalOfficer(hfcomprefno.Value, "NodalForEmail");
             if (DtNodalEmail.Rows.Count > 0)
             {
-                s.CreateMail("noreply@srijandefence.gov.in", DtNodalEmail.Rows[0]["NodalOfficerEmail"].ToString(), "Amendment in product", body);
+                s.CreateMail("noreply-srijandefence@gov.in", DtNodalEmail.Rows[0]["NodalOfficerEmail"].ToString(), "Amendment in product", body);
                 s.sendMail();
                 hySaveProdInfo["Mailsend"] = "Y";
             }

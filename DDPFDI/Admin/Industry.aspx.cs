@@ -194,7 +194,7 @@ public partial class Admin_Industry : System.Web.UI.Page
             body = body.Replace("{mcurid}", Resturl(56));
             SendMail s;
             s = new SendMail();
-            s.CreateMail("noreply@srijandefence.gov.in", txtemail.Text, "Create Password Email", body);
+            s.CreateMail("noreply-srijandefence@gov.in", txtemail.Text, "Create Password Email", body);
             s.sendMail();
         }
         catch (Exception ex)

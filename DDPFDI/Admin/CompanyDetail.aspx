@@ -153,7 +153,9 @@
                                                     <div class="col-md-6">
                                                         <div class="form-group" id="DivPAN" runat="server">
                                                             <label for="tpanno" class="control-label">PAN </label>
-                                                            <asp:TextBox runat="server" ID="tpanno" name="tpanno" class="form-control form-cascade-control" placeholder=""></asp:TextBox>
+                                                            <asp:TextBox runat="server" ID="tpanno" name="tpanno" MaxLength="10" AutoPostBack="true" OnTextChanged="tpanno_TextChanged" class="form-control form-cascade-control" placeholder=""></asp:TextBox>
+                                                            <span id="msgpan" runat="server"></span>
+                                                            <asp:Label ID="lblmsgpan" runat="server" ForeColor="Green" Visible="false"></asp:Label>
                                                         </div>
                                                     </div>
                                                 </div>

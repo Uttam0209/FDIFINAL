@@ -1,14 +1,19 @@
-﻿using BusinessLayer;
-using Encryption;
-using System;
+﻿using System;
 using System.Collections.Specialized;
+using System.Configuration;
 using System.Data;
+using System.Globalization;
+using System.IO;
+using System.Net;
+using System.Security.Cryptography.Pkcs;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using System.Web.Helpers;
+using BusinessLayer;
+using Encryption;
 
 public partial class Admin_CompanyDetail : System.Web.UI.Page
 {
@@ -872,68 +877,75 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
     }
     protected void btndemofirst_Click(object sender, EventArgs e)
     {
-        if (tcompanyname.Text != "")
+        if (tcompanyname.Text != "" && tpanno.Text != "")
         {
-            if (btndemofirst.Text == "Save")
+            if (lblmsgpan.Text=="Valid Pan")
             {
-                SaveFDI();
-                string StrSaveFDIComp = Lo.SaveMasterCompany(HySave, out _msg, out _sysMsg);
-                if (StrSaveFDIComp != "0" && StrSaveFDIComp != "-1")
+                if (btndemofirst.Text == "Save")
                 {
-                    if (hfid.Value != "")
+                    SaveFDI();
+                    string StrSaveFDIComp = Lo.SaveMasterCompany(HySave, out _msg, out _sysMsg);
+                    if (StrSaveFDIComp != "0" && StrSaveFDIComp != "-1")
                     {
-                        ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "SuccessfullPop('Record updated successfully')", true);
+                        if (hfid.Value != "")
+                        {
+                            ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "SuccessfullPop('Record updated successfully')", true);
+                        }
+                        else
+                        {
+                            ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "SuccessfullPop('Record save successfully')", true);
+                        }
                     }
                     else
                     {
-                        ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "SuccessfullPop('Record save successfully')", true);
+                        ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "ErrorMssgPopup('Record not save successfully.')", true);
                     }
                 }
-                else
+                else if (btndemofirst.Text == "Save Division")
                 {
-                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "ErrorMssgPopup('Record not save successfully.')", true);
-                }
-            }
-            else if (btndemofirst.Text == "Save Division")
-            {
-                SaveFactoryComp();
-                string StrSaveFact = Lo.SaveFactoryComp(HySave, out _msg, out _sysMsg);
-                if (StrSaveFact != "0" && StrSaveFact != "-1")
-                {
-                    if (hfid.Value != "")
+                    SaveFactoryComp();
+                    string StrSaveFact = Lo.SaveFactoryComp(HySave, out _msg, out _sysMsg);
+                    if (StrSaveFact != "0" && StrSaveFact != "-1")
                     {
-                        ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "SuccessfullPop('Record updated successfully')", true);
+                        if (hfid.Value != "")
+                        {
+                            ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "SuccessfullPop('Record updated successfully')", true);
+                        }
+                        else
+                        {
+                            ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "SuccessfullPop('Record save successfully')", true);
+                        }
                     }
                     else
                     {
-                        ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "SuccessfullPop('Record save successfully')", true);
+                        ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "ErrorMssgPopup('Record not save successfully.')", true);
                     }
                 }
-                else
+                else if (btndemofirst.Text == "Save Unit")
                 {
-                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "ErrorMssgPopup('Record not save successfully.')", true);
-                }
-            }
-            else if (btndemofirst.Text == "Save Unit")
-            {
-                SaveUnitComp();
-                string StrSaveUnit = Lo.SaveUnitComp(HySave, out _msg, out _sysMsg);
-                if (StrSaveUnit != "0" && StrSaveUnit != "-1")
-                {
-                    if (hfid.Value != "")
+                    SaveUnitComp();
+                    string StrSaveUnit = Lo.SaveUnitComp(HySave, out _msg, out _sysMsg);
+                    if (StrSaveUnit != "0" && StrSaveUnit != "-1")
                     {
-                        ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "SuccessfullPop('Record updated successfully')", true);
+                        if (hfid.Value != "")
+                        {
+                            ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "SuccessfullPop('Record updated successfully')", true);
+                        }
+                        else
+                        {
+                            ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "SuccessfullPop('Record save successfully')", true);
+                        }
                     }
                     else
                     {
-                        ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "SuccessfullPop('Record save successfully')", true);
+                        ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "ErrorMssgPopup('Record not save successfully.')", true);
                     }
-                }
-                else
-                {
-                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "ErrorMssgPopup('Record not save successfully.')", true);
-                }
 
+                }
+            }
+            else
+            {
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "ErrorMssgPopup('Invalid PanCard.')", true);
             }
         }
     }
@@ -1452,4 +1464,139 @@ public partial class Admin_CompanyDetail : System.Web.UI.Page
             divStartup.Visible = true;
         }
     }
+    #region PanCard Verification Code
+    protected void PanVerification()
+    {
+        string URL = ConfigurationManager.AppSettings["URL"];
+        string PFXPassword = ConfigurationManager.AppSettings["PFXPassword"];
+        string Certificatename = ConfigurationManager.AppSettings["Certificatename"];
+        System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();
+        WriteTextFileLog("Application Started");
+        try
+        {
+            X509Certificate2 m = new X509Certificate2(HttpContext.Current.Server.MapPath("/PFX/") + Certificatename, PFXPassword);
+            byte[] bytes = encoding.GetBytes("V0224301^" + tpanno.Text);
+            byte[] sig = Sign(bytes, m);
+            String sigi = Convert.ToBase64String(sig);
+            try
+            {
+                StringBuilder postData = new StringBuilder();
+                postData.Append("data=V0224301^" + tpanno.Text);
+                postData.Append("&signature=" + System.Web.HttpUtility.UrlEncode(sigi));
+                postData.Append("&version=" + 2);
+                byte[] data = encoding.GetBytes(postData.ToString());
+                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls
+                                                    | SecurityProtocolType.Tls11
+                                                    | SecurityProtocolType.Tls12
+                                                    | SecurityProtocolType.Ssl3;
+                HttpWebRequest myRequest = (HttpWebRequest)WebRequest.Create(URL);
+                myRequest.Method = "POST";
+                myRequest.ContentType = "application/x-www-form-urlencoded";
+                myRequest.ContentLength = data.Length;
+                ServicePointManager.ServerCertificateValidationCallback = new System.Net.Security.RemoteCertificateValidationCallback(AcceptAllCertifications);
+                ServicePointManager.Expect100Continue = true;
+                Stream newStream = myRequest.GetRequestStream();
+                newStream.Write(data, 0, data.Length);
+                Console.WriteLine("Send");
+                HttpWebResponse WebResp = (HttpWebResponse)myRequest.GetResponse();
+                Stream Answer = WebResp.GetResponseStream();
+                StreamReader _Answer = new StreamReader(Answer);
+                Console.WriteLine("Received");
+                string Response = _Answer.ReadToEnd();
+                string[] splitString = Response.ToString().Split('^');
+                string PName = splitString[8];
+                if (tpanno.Text == splitString[1] && splitString[2] == "E")
+                {
+                    lblmsgpan.Visible = false;
+                    if (PName == tcompanyname.Text)
+                    {
+                        msgpan.Attributes.Add("Class", "fa fa-check");
+                        lblmsgpan.ForeColor = System.Drawing.Color.Green;
+                        lblmsgpan.Text = "Valid Pan";
+                        lblmsgpan.Visible = true;
+                    }
+                    else
+                    {
+                        msgpan.Attributes.Add("Class", "fa fa-cross");
+                        lblmsgpan.ForeColor = System.Drawing.Color.Yellow;
+                        lblmsgpan.Text = "Invalid Pan";
+                        lblmsgpan.Visible = true;
+                    }
+                }
+                else
+                {
+                    msgpan.Attributes.Add("Class", "fa fa-cross");
+                    lblmsgpan.ForeColor = System.Drawing.Color.Red;
+                    lblmsgpan.Text = "Invalid Pan";
+                    lblmsgpan.Visible = true;
+                }
+                newStream.Close();
+            }
+            catch (Exception ex)
+            {
+                WriteTextFileLog(ex.Message);
+            }
+        }
+        catch (Exception ex)
+        {
+            WriteTextFileLog(ex.Message);
+        }
+        WriteTextFileLog("Application Ended");
+    }
+    public static byte[] Sign(byte[] data, X509Certificate2 certificate)
+    {
+        if (data == null)
+            throw new ArgumentNullException("data");
+        if (certificate == null)
+            throw new ArgumentNullException("certificate");
+        ContentInfo content = new ContentInfo(data);
+        SignedCms signedCms = new SignedCms(content, false);
+        CmsSigner signer = new CmsSigner(SubjectIdentifierType.IssuerAndSerialNumber, certificate);
+        signedCms.ComputeSignature(signer);
+        return signedCms.Encode();
+    }
+    public bool AcceptAllCertifications(object sender, System.Security.Cryptography.X509Certificates.X509Certificate certification, System.Security.Cryptography.X509Certificates.X509Chain chain, System.Net.Security.SslPolicyErrors sslPolicyErrors)
+    {
+        return true;
+    }
+    public static void WriteTextFileLog(string errorMessage, string type = "")
+    {
+        try
+        {
+
+            string path = HttpContext.Current.Server.MapPath("/Logs/") + DateTime.Today.ToString("dd-MM-yy") + ".txt";
+            if (!File.Exists(path))
+            {
+                File.Create(path).Close();
+            }
+            using (StreamWriter w = File.AppendText(path))
+            {
+                string err = "Message : " + errorMessage;
+                if (string.IsNullOrEmpty(type))
+                {
+                    w.WriteLine("Log Entry : " + DateTime.Now.ToString(CultureInfo.InvariantCulture) + " | " + err);
+                    //w.WriteLine(err)
+                    if (errorMessage.Contains("Requested item not found."))
+                    {
+                        //HttpContext.Current.Session["Error"] = "Access Denied"
+                    }
+                }
+                else if (type == "E")
+                {
+                    w.WriteLine("______________________________________________________________________________");
+                }
+                w.Flush();
+                w.Close();
+            }
+        }
+        catch (System.Exception ex)
+        {
+        }
+    }
+    protected void tpanno_TextChanged(object sender, EventArgs e)
+    {
+        PanVerification();
+    }
+    #endregion
+
 }

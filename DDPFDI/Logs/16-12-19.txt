@@ -1,0 +1,16 @@
+Log Entry : 12/16/2019 12:56:57 | Message : Application Started
+Log Entry : 12/16/2019 13:03:48 | Message : Application Ended
+Log Entry : 12/16/2019 13:03:52 | Message : Application Started
+Log Entry : 12/16/2019 13:03:56 | Message : Application Ended
+Log Entry : 12/16/2019 13:04:12 | Message : Application Started
+Log Entry : 12/16/2019 13:06:21 | Message : Application Ended
+Log Entry : 12/16/2019 13:06:32 | Message : Application Started
+Log Entry : 12/16/2019 13:06:56 | Message : Application Ended
+Log Entry : 12/16/2019 13:06:57 | Message : Application Started
+Log Entry : 12/16/2019 13:07:03 | Message : Application Ended
+Log Entry : 12/16/2019 13:18:51 | Message : Application Started
+Log Entry : 12/16/2019 13:19:24 | Message : Application Ended
+Log Entry : 12/16/2019 13:19:41 | Message : Application Started
+Log Entry : 12/16/2019 13:19:48 | Message : Application Ended
+Log Entry : 12/16/2019 13:19:49 | Message : Application Started
+Log Entry : 12/16/2019 13:19:51 | Message : Application Ended

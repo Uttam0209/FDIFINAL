@@ -737,7 +737,7 @@ public partial class Admin_DetailofMasterCompany : System.Web.UI.Page
             body = body.Replace("{mcurid}", Resturl(56));
             SendMail s;
             s = new SendMail();
-            s.CreateMail("noreply@srijandefence.gov.in", UserEmail, "Create Password", body);
+            s.CreateMail("noreply-srijandefence@gov.in", UserEmail, "Create Password", body);
             s.sendMail();
             ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "SuccessfullPop('Password change mail send successfully.')", true);
         }

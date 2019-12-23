@@ -21,6 +21,32 @@
             $('#divmodel2').modal('show');
         }
     </script>
+    <style>
+        .dot {
+            height: 20px;
+            width: 20px;
+            background-color: #eee;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .dot1 {
+            height: 20px;
+            width: 20px;
+            background-color: #f00;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .dot2 {
+            height: 20px;
+            width: 20px;
+            background-color: #106419;
+            border-radius: 50%;
+            display: inline-block;
+        }
+    </style>
+
 </asp:Content>
 <asp:Content ID="inner" runat="server" ContentPlaceHolderID="ContentPlaceHolder1">
     <asp:UpdatePanel ID="up" runat="server" UpdateMode="Conditional">
@@ -78,6 +104,24 @@
                             <div class="col-md-12">
                                 <div class="table-responsive" style="overflow-x: auto;" id="divproductgridview" runat="server">
                                     <asp:Label ID="lbltot" runat="server" CssClass="text-center"></asp:Label>
+                                    <div class="clearfix mt10"></div>
+                                    <div class="row">
+                                        <div class="col-sm-1 text-center">
+                                            <span class="dot text-center">
+                                                <p style="margin-left: 30px;">Pending</p>
+                                            </span>
+                                        </div>
+                                        <div class="col-sm-1 text-center">
+                                            <span class="dot2 text-center">
+                                                <p style="margin-left: 30px;">Approved</p>
+                                            </span>
+                                        </div>
+                                        <div class="col-sm-1 text-center">
+                                            <span class="dot1 text-center">
+                                                <p style="margin-left: 30px;">Disapproved</p>
+                                            </span>
+                                        </div>
+                                    </div>
                                     <div class="clearfix mt10"></div>
                                     <asp:GridView ID="gvproductItem" runat="server" Width="100%" Class="table table-bordered table-wraper table-hover manage-user"
                                         AutoGenerateColumns="false" OnRowCommand="gvproductItem_RowCommand" OnRowCreated="gvproductItem_RowCreated" OnRowDataBound="gvproductItem_RowDataBound">

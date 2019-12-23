@@ -72,8 +72,6 @@ namespace DataAccessLayer
         {
             DbCommand dbCommand = db.GetSqlStringCommand(mQuery);
             return Convert.ToInt32(db.ExecuteNonQuery(dbCommand));
-
-
         }
         public String NoExecuteQuery(string mQuery)
         {
@@ -1983,6 +1981,8 @@ namespace DataAccessLayer
                 {
                     DbCommand cmd = db.GetStoredProcCommand("sp_VendorRegistration");
                     db.AddInParameter(cmd, "@VendorID", DbType.Int64, hysavecomp["VendorID"]);
+                    db.AddInParameter(cmd, "@IsPan", DbType.String, hysavecomp["IsPan"]);
+                    db.AddInParameter(cmd, "@PanNo", DbType.String, hysavecomp["PanNo"]);
                     db.AddInParameter(cmd, "@IsGST", DbType.String, hysavecomp["IsGST"]);
                     db.AddInParameter(cmd, "@GSTNo", DbType.String, hysavecomp["GSTNo"]);
                     db.AddInParameter(cmd, "@BusinessName", DbType.String, hysavecomp["BusinessName"]);

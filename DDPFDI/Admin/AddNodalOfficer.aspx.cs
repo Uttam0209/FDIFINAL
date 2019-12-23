@@ -658,7 +658,7 @@ public partial class Admin_AddNodalOfficer : System.Web.UI.Page
             body = body.Replace("{mcurid}", Resturl(56));
             SendMail s;
             s = new SendMail();
-            s.CreateMail("noreply@srijandefence.gov.in", txtemailid.Text, "Create Password Email", body);
+            s.CreateMail("noreply-srijandefence@gov.in", txtemailid.Text, "Create Password Email", body);
             s.sendMail();
         }
         catch (Exception ex)

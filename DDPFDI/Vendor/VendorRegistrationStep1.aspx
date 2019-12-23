@@ -51,6 +51,31 @@
 
                                         <div class="form-group">
                                             <div class="col-sm-5">
+                                                Are you Registered with Pan 
+                                            </div>
+                                            <div class="col-sm-7">
+                                                <asp:DropDownList ID="ddlpan" runat="server" AutoPostBack="true" CssClass="form-control" OnSelectedIndexChanged="ddlpan_SelectedIndexChanged">
+                                                    <asp:ListItem Selected="True" Value="0">Select</asp:ListItem>
+                                                    <asp:ListItem Value="Y">YES</asp:ListItem>
+                                                    <asp:ListItem Value="N">NO</asp:ListItem>
+                                                </asp:DropDownList>
+                                            </div>
+                                        </div>
+                                        <div class="form-group" runat="server" id="divpan" visible="false">
+                                            <div class="col-sm-5">
+                                                PAN No 
+                                            </div>
+                                            <div class="col-sm-7">
+
+                                                <asp:TextBox ID="txtpanno" runat="server" MaxLength="10" AutoPostBack="true" OnTextChanged="txtpanno_TextChanged" CssClass="form-control"></asp:TextBox>
+                                                <span runat="server" id="panverifi"></span>
+                                                <asp:Label ID="lblmsgpan" runat="server" ForeColor="Green" Visible="false"></asp:Label>
+                                                <asp:HiddenField ID="hfpanname" runat="server" />
+                                            </div>
+                                        </div>
+
+                                        <%--  <div class="form-group">
+                                            <div class="col-sm-5">
                                                 Are you Registered with GST 
                                             </div>
                                             <div class="col-sm-7">
@@ -68,14 +93,16 @@
                                             <div class="col-sm-7">
                                                 <asp:TextBox ID="txtgstno" runat="server" CssClass="form-control"></asp:TextBox>
                                             </div>
-                                        </div>
+                                        </div>--%>
 
                                         <div class="form-group">
                                             <div class="col-sm-5">
                                                 Name of firm/company 
                                             </div>
                                             <div class="col-sm-7">
-                                                <asp:TextBox ID="txtbusinessname" runat="server" CssClass="form-control"></asp:TextBox>
+                                                <asp:TextBox ID="txtbusinessname" runat="server" AutoPostBack="true" OnTextChanged="txtbusinessname_TextChanged" CssClass="form-control"></asp:TextBox>
+                                                <span runat="server" id="check"></span>
+                                                <asp:Label ID="lblbusinessname" runat="server" ForeColor="Red"></asp:Label>
                                             </div>
                                         </div>
                                         <div class="form-group">
