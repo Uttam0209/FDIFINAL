@@ -18,11 +18,7 @@
     <link href="~/assets/css/custom.css" rel="stylesheet" type="text/css">
     <link href="~/assets/css/responsive.css" rel="stylesheet" type="text/css">
     <link href="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.9.2/themes/blitzer/jquery-ui.css" rel="Stylesheet" type="text/css" />
-
-
     <link href="~/assets/css/aaryan.css" rel="stylesheet" />
-
-
 </head>
 <body>
     <form id="form1" runat="server" enctype="multipart/form-data" method="post" asp-antiforgery="false">

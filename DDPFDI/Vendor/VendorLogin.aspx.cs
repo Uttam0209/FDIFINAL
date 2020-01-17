@@ -22,11 +22,13 @@ public partial class Vendor_VendorLogin : System.Web.UI.Page
     DataUtility Co = new DataUtility();
     Cryptography objEnc = new Cryptography();
     HybridDictionary hyLogin = new HybridDictionary();
+    HybridDictionary HySaveVendor = new HybridDictionary();
     string _msg = string.Empty;
     string Defaultpage = string.Empty;
     string _sysMsg = string.Empty;
     string notvalidate = string.Empty;
     string _EmpId = string.Empty;
+    Int64 MId = 0;
     #endregion
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -42,6 +44,30 @@ public partial class Vendor_VendorLogin : System.Web.UI.Page
             return true;
         else
             return false;
+    }
+    public bool IsValidEmailRegister(string InputEmail)
+    {
+        string DtEmailValidate = LO.VerifyEmailandCompany(InputEmail, "VEmail", out _msg);
+        if (_msg.ToString() == InputEmail.ToString())
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
+    public bool IsValidMobile(string InputMobile)
+    {
+        string DtEmailValidate = LO.VerifyEmailandCompany(InputMobile, "VPhone", out _msg);
+        if (_msg.ToString() == InputMobile.ToString())
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
     }
     protected void ValidateCaptcha(object sender, ServerValidateEventArgs e)
     {
@@ -167,6 +193,29 @@ public partial class Vendor_VendorLogin : System.Web.UI.Page
         }
 
     }
+    public void SendEmailCodeRegis(string empid)
+    {
+        try
+        {
+            string body;
+            using (StreamReader reader = new StreamReader(Server.MapPath("~/emailPage/VenRegisOrPassGenerateLink.html")))
+            {
+                body = reader.ReadToEnd();
+            }
+            body = body.Replace("{UserName}", txtnodelemail.Text);
+            body = body.Replace("{refno}", HttpUtility.UrlEncode(objEnc.EncryptData(empid)));
+            body = body.Replace("{mcurid}", Resturl(56));
+            SendMail s;
+            s = new SendMail();
+            s.CreateMail("noreply-srijandefence@gov.in", txtnodelemail.Text, "Create Password Email", body);
+            s.sendMail();
+        }
+        catch (Exception ex)
+        {
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('" + ex.Message + "')", true);
+        }
+
+    }
     #endregion
     #region ReturnUrl Long"
     public string Resturl(int length)
@@ -215,89 +264,6 @@ public partial class Vendor_VendorLogin : System.Web.UI.Page
         txtreppass.Text = "";
     }
     #endregion
-    protected void lblresendotp_Click(object sender, EventArgs e)
-    {
-        SendEmailOTP(txtUserName.Text);
-        lblmssg.Text = "OTP Resend Successfully.";
-        lblresendotp.Enabled = false;
-    }
-    public void SendEmailOTP(string empid)
-    {
-        try
-        {
-            string body;
-            using (StreamReader reader = new StreamReader(Server.MapPath("~/emailPage/OTP.html")))
-            {
-                body = reader.ReadToEnd();
-            }
-            ViewState["mOTPKey"] = Resturl(6);
-            body = body.Replace("{OTP}", ViewState["mOTPKey"].ToString());
-            SendMail s;
-            s = new SendMail();
-            s.CreateMail("noreply-srijandefence@gov.in", txtUserName.Text, "Vendor Login OTP", body);
-            s.sendMail();
-            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('OTP send Successfully.');", true);
-        }
-        catch (Exception ex)
-        {
-            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('" + ex.Message + "')", true);
-        }
-
-    }
-    protected void lbsubotp_Click(object sender, EventArgs e)
-    {
-        if (txtOTP.Text == ViewState["mOTPKey"].ToString())
-        {
-            p2.Visible = true;
-            p1.Visible = false;
-            P3.Visible = false;
-            divregistration.Visible = false;
-            ViewState["mOTPKey"] = null;
-        }
-        else
-        { ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Invalid OTP')", true); }
-    }
-    protected void lbvenregis_Click(object sender, EventArgs e)
-    {
-        p2.Visible = false;
-        p1.Visible = false;
-        divregistration.Visible = true;
-        P3.Visible = false;
-        BindTypeOfBusiness();
-        Bindbusinesssector();
-        ScriptManager.RegisterStartupScript(this, this.GetType(), "changePass", "showPopup();", true);
-    }
-    protected void BindTypeOfBusiness()
-    {
-        DataTable DtMasterCategroyBusiness = LO.RetriveMasterData(1, "", "", 0, "", "", "TypeofBusiness");
-        if (DtMasterCategroyBusiness.Rows.Count > 0)
-        {
-            Co.FillDropdownlist(ddltypeofbusiness, DtMasterCategroyBusiness, "VendorSubCatName", "VendorSubCatID");
-            ddltypeofbusiness.Items.Insert(0, "Select");
-        }
-    }
-    protected void Bindbusinesssector()
-    {
-        DataTable DtMasterCategroyBusiness = LO.RetriveMasterData(2, "", "", 0, "", "", "BuisnessSector");
-        if (DtMasterCategroyBusiness.Rows.Count > 0)
-        {
-            Co.FillDropdownlist(ddlbusinesssector, DtMasterCategroyBusiness, "VendorSubCatName", "VendorSubCatID");
-            ddlbusinesssector.Items.Insert(0, "Select");
-        }
-    }
-    protected void txtbusinessname_TextChanged(object sender, EventArgs e)
-    {
-        if (hfpanname.Value == txtbusinessname.Text)
-        {
-            lblbusinessname.Text = "";
-            check.Attributes.Add("Class", "fa fa-check");
-        }
-        else
-        {
-            check.Attributes.Add("Class", "fa fa-cross");
-            lblbusinessname.Text = "Invalid Company name as per pan-card";
-        }
-    }    
     #region PanCard Verification Code
     protected void ddlpan_SelectedIndexChanged(object sender, EventArgs e)
     {
@@ -355,7 +321,7 @@ public partial class Vendor_VendorLogin : System.Web.UI.Page
                 }
                 else
                 {
-                    panverifi.Attributes.Add("Class", "fa fa-cross");
+                    panverifi.Attributes.Add("Class", "fa fa-times");
                     lblmsgpan.ForeColor = System.Drawing.Color.Red;
                     lblmsgpan.Text = "Invalid Pan";
                     lblmsgpan.Visible = true;
@@ -365,11 +331,13 @@ public partial class Vendor_VendorLogin : System.Web.UI.Page
             catch (Exception ex)
             {
                 WriteTextFileLog(ex.Message);
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('" + ex.Message.ToString() + "')", true);             
             }
         }
         catch (Exception ex)
         {
             WriteTextFileLog(ex.Message);
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('" + ex.Message.ToString() + "')", true);          
         }
         WriteTextFileLog("Application Ended");
     }
@@ -425,47 +393,251 @@ public partial class Vendor_VendorLogin : System.Web.UI.Page
     }
     protected void txtpanno_TextChanged(object sender, EventArgs e)
     {
-        PanVerification();
-    }
-    protected void ddldebarredgovtcont_SelectedIndexChanged(object sender, EventArgs e)
-    {
-        if (ddldebarredgovtcont.SelectedItem.Text == "Yes")
-        { chkcontracts.Visible = true; }
-        else
-        { chkcontracts.Visible = false; }
-    }
-    protected void chkcontracts_SelectedIndexChanged(object sender, EventArgs e)
-    {
-        for (int i = 0; i < chkcontracts.Items.Count; i++)
+        try
         {
-            if (chkcontracts.Items[i].Value == "1" && chkcontracts.Items[i].Selected == true)
+            PanVerification();
+        }
+        catch (Exception ex)
+        {
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('" + ex.Message.ToString() + "')", true);
+        }
+    }
+    #endregion
+    #region Registration Code
+    protected void binddpsu()
+    {
+        DataTable DtCompanyDDL = LO.RetriveMasterData(0, "", "Company", 0, "", "", "Select");
+        if (DtCompanyDDL.Rows.Count > 0)
+        {
+            Co.FillCheckBox(chkdpsu, DtCompanyDDL, "CompanyName", "CompanyName");
+        }
+    }
+    protected void lblresendotp_Click(object sender, EventArgs e)
+    {
+        SendEmailOTP(txtUserName.Text);
+        lblmssg.Text = "OTP Resend Successfully.";
+        lblresendotp.Enabled = false;
+    }
+    public void SendEmailOTP(string empid)
+    {
+        try
+        {
+            string body;
+            using (StreamReader reader = new StreamReader(Server.MapPath("~/emailPage/OTP.html")))
             {
-                divfin.Visible = true;
+                body = reader.ReadToEnd();
             }
-            else if (chkcontracts.Items[i].Value == "2" && chkcontracts.Items[i].Selected == true)
+            ViewState["mOTPKey"] = Resturl(6);
+            body = body.Replace("{OTP}", ViewState["mOTPKey"].ToString());
+            SendMail s;
+            s = new SendMail();
+            s.CreateMail("noreply-srijandefence@gov.in", txtUserName.Text, "Vendor Login OTP", body);
+            s.sendMail();
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('OTP send Successfully.');", true);
+        }
+        catch (Exception ex)
+        {
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('" + ex.Message + "')", true);
+        }
+
+    }
+    protected void lbsubotp_Click(object sender, EventArgs e)
+    {
+        if (txtOTP.Text == ViewState["mOTPKey"].ToString())
+        {
+            p2.Visible = true;
+            p1.Visible = false;
+            P3.Visible = false;
+            divregistration.Visible = false;
+            ViewState["mOTPKey"] = null;
+        }
+        else
+        { ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Invalid OTP')", true); }
+    }
+    protected void lbvenregis_Click(object sender, EventArgs e)
+    {
+        p2.Visible = false;
+        p1.Visible = false;
+        divregistration.Visible = true;
+        P3.Visible = false;
+        binddpsu();
+        BindTypeOfBusiness();
+        Bindbusinesssector();
+        ScriptManager.RegisterStartupScript(this, this.GetType(), "changePass", "showPopup();", true);
+    }
+    protected void BindTypeOfBusiness()
+    {
+        DataTable DtMasterCategroyBusiness = LO.RetriveMasterData(1, "", "", 0, "", "", "TypeofBusiness");
+        if (DtMasterCategroyBusiness.Rows.Count > 0)
+        {
+            Co.FillDropdownlist(ddltypeofbusiness, DtMasterCategroyBusiness, "VendorSubCatName", "VendorSubCatID");
+            ddltypeofbusiness.Items.Insert(0, "Select");
+        }
+    }
+    protected void Bindbusinesssector()
+    {
+        DataTable DtMasterCategroyBusiness = LO.RetriveMasterData(2, "", "", 0, "", "", "BuisnessSector");
+        if (DtMasterCategroyBusiness.Rows.Count > 0)
+        {
+            Co.FillDropdownlist(ddlbusinesssector, DtMasterCategroyBusiness, "VendorSubCatName", "VendorSubCatID");
+            ddlbusinesssector.Items.Insert(0, "Select");
+        }
+    }
+    protected void txtbusinessname_TextChanged(object sender, EventArgs e)
+    {
+        if (hfpanname.Value == txtbusinessname.Text && lblmsgpan.Text == "Valid Pan")
+        {
+            lblbusinessname.Text = "";
+            check.Attributes.Add("Class", "fa fa-check");
+            lblbusinessname.Text = "Valid Company.";
+            lblbusinessname.Visible = true;
+        }
+        else
+        {
+            if (lblmsgpan.Text == "Valid Pan")
             {
-                div12.Visible = true;
-            }
-            else if (chkcontracts.Items[i].Value == "3" && chkcontracts.Items[i].Selected == true)
-            {
-                div13.Visible = true;
-            }
-            else if (chkcontracts.Items[i].Value == "4" && chkcontracts.Items[i].Selected == true)
-            {
-                div14.Visible = true;
+                txtbusinessname.Text = hfpanname.Value;
+                check.Attributes.Add("Class", "fa fa-check");
+                lblbusinessname.Text = "Valid Company.";
+                lblbusinessname.Visible = true;
             }
             else
             {
-                if (chkcontracts.Items[i].Value == "1" && chkcontracts.Items[i].Selected == false)
-                { divfin.Visible = false; }
-                else if (chkcontracts.Items[i].Value == "2" && chkcontracts.Items[i].Selected == false)
-                { div12.Visible = false; }
-                else if (chkcontracts.Items[i].Value == "3" && chkcontracts.Items[i].Selected == false)
-                { div13.Visible = false; }
-                else if (chkcontracts.Items[i].Value == "4" && chkcontracts.Items[i].Selected == false)
-                { div14.Visible = false; }
+                lblbusinessname.Text = "Invalid Company.";
+                check.Attributes.Add("Class", "fa fa-times");
+                lblbusinessname.ForeColor = System.Drawing.Color.Red;
             }
         }
+    }
+    protected void clearregistrationtext()
+    {
+        ddlpan.SelectedIndex = -1;
+        ddlregiscategory.SelectedIndex = -1;
+        txtpanno.Text = "";
+        txtbusinessname.Text = "";
+        ddltypeofbusiness.SelectedIndex = -1;
+        ddlbusinesssector.SelectedIndex = -1;
+        txtnodalname.Text = "";
+        txtnodelemail.Text = "";
+        txtMobileNodal.Text = "";
+        txtstreetaddress.Text = "";
+        txtstreetaddressline2.Text = "";
+        txtcity.Text = "";
+        txtstateprovince.Text = "";
+        txtpostalzipcode.Text = "";
+        // ddlcountry.SelectedIndex = -1;
+        ddlwoundedup.SelectedIndex = -1;
+        ddljudicialofficer.SelectedIndex = -1;
+        ddlbusinesssuspended.SelectedIndex = -1;
+        ddlforgingreasone.SelectedIndex = -1;
+        ddldebarredgovtcont.SelectedIndex = -1;
+        chkbuisness.SelectedIndex = -1;
+        lblbusinessname.Text = "";
+        lblmsgpan.Text = "";
+        hfpanname.Value = "";
+    }
+    string mdpsuid;
+    protected void SaveCode()
+    {
+        HySaveVendor["VendorID"] = MId;
+        HySaveVendor["PanNo"] = txtpanno.Text;
+        HySaveVendor["GSTNo"] = "";// txtgstno.Text.Trim();
+        HySaveVendor["V_CompName"] = txtbusinessname.Text.Trim();
+        foreach (ListItem lie in chkdpsu.Items)
+        {
+            if (lie.Selected == true)
+            {
+                mdpsuid = mdpsuid + lie.Value + ",";
+            }
+        }
+        HySaveVendor["V_RegisterdDPSU"] = mdpsuid.ToString().TrimEnd(',');
+        HySaveVendor["RegistrationCategory"] = ddlregiscategory.SelectedItem.Text;
+        HySaveVendor["TypeOfBuisness"] = ddltypeofbusiness.SelectedItem.Value;
+        HySaveVendor["BusinessSector"] = ddlbusinesssector.SelectedItem.Value;
+        HySaveVendor["NodalOfficerName"] = txtnodalname.Text.Trim();
+        HySaveVendor["NodalOfficerEmail"] = txtnodelemail.Text.Trim();
+        HySaveVendor["ContactNo"] = txtMobileNodal.Text.Trim();
+        HySaveVendor["StreetAddress"] = txtstreetaddress.Text.Trim();
+        HySaveVendor["StreetAddressLine2"] = txtstreetaddressline2.Text.Trim();
+        HySaveVendor["City"] = txtcity.Text.Trim();
+        HySaveVendor["State"] = txtstateprovince.Text.Trim();
+        HySaveVendor["ZipCode"] = txtpostalzipcode.Text.Trim();
+        //HySaveVendor["Country"] = ddlcountry.SelectedItem.Value;
+        HySaveVendor["CheckStatus"] = ddlwoundedup.SelectedItem.Text + "," + ddljudicialofficer.SelectedItem.Text + "," + ddlbusinesssuspended.SelectedItem.Text + "," + ddlforgingreasone.SelectedItem.Text + "," + ddldebarredgovtcont.SelectedItem.Text;
+        string str = LO.SaveVendorRegis(HySaveVendor, out _sysMsg, out _msg);
+        if (str != "")
+        {
+            SendEmailCodeRegis(str);
+            clearregistrationtext();
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record save successfully.Password releted mail send to your registerd email id.')", true);
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "HidePopup", "$('#changePass').modal('hide')", true);
+        }
+        else
+        {
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not save successfully.')", true);
+        }
+    }
+    protected void btnsubmit_Click(object sender, EventArgs e)
+    {
+        try
+        {
+            if (txtnodalname.Text != "" && txtnodelemail.Text != "")
+            {
+                if (lblmsgpan.Text != "Invalid Pan" && lblbusinessname.Text == "Valid Company.")
+                {
+                    if (ddlwoundedup.SelectedValue != "0" && ddljudicialofficer.SelectedValue != "0" && ddlbusinesssuspended.SelectedValue != "0" && ddlforgingreasone.SelectedValue != "0" && ddldebarredgovtcont.SelectedValue != "0")
+                    {
+                        if (IsValidEmailId(txtnodelemail.Text))
+                        {
+                            if (IsValidEmailRegister(txtnodelemail.Text))
+                            {
+                                if (IsValidEmailRegister(txtnodelemail.Text))
+                                {
+                                    foreach (ListItem lie in chkdpsu.Items)
+                                    {
+                                        if (lie.Selected == true)
+                                        {
+                                            mdpsuid = mdpsuid + lie.Value + ",";
+                                        }
+                                    }
+                                    if (mdpsuid.ToString() != "")
+                                    {
+                                        SaveCode();
+                                    }
+                                    else
+                                    {
+                                        ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Check alteast one dpsu.')", true);
+                                    }
+                                }
+                                else
+                                {
+                                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Mobile already registerd.')", true);
+                                }
+                            }
+                            else
+                            {
+                                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('email already registerd')", true);
+                            }
+                        }
+                        else
+                        { ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('email format not valid')", true); }
+                    }
+                    else { ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Please select term and condition')", true); }
+                }
+                else
+                { ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Invalid pan or company name')", true); }
+            }
+            else
+            { ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Please fill mandatory field')", true); }
+        }
+        catch (Exception ex)
+        {
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('" + ex.Message.ToString() + "')", true);
+        }
+    }
+    protected void btnclear_Click(object sender, EventArgs e)
+    {
+        clearregistrationtext();
     }
     #endregion
 }

@@ -1,0 +1,12 @@
+Log Entry : 01/03/2020 17:08:57 | Message : Application Started
+Log Entry : 01/03/2020 17:09:16 | Message : Application Ended
+Log Entry : 01/03/2020 17:09:17 | Message : Application Started
+Log Entry : 01/03/2020 17:09:18 | Message : Application Ended
+Log Entry : 01/03/2020 17:09:19 | Message : Application Started
+Log Entry : 01/03/2020 17:09:20 | Message : Application Ended
+Log Entry : 01/03/2020 17:09:21 | Message : Application Started
+Log Entry : 01/03/2020 17:09:22 | Message : Application Ended
+Log Entry : 01/03/2020 17:23:21 | Message : Application Started
+Log Entry : 01/03/2020 17:23:23 | Message : Application Ended
+Log Entry : 01/03/2020 17:23:49 | Message : Application Started
+Log Entry : 01/03/2020 17:23:51 | Message : Application Ended

@@ -81,8 +81,8 @@
                                                     <%#Container.DataItemIndex+1 %>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
-                                            <asp:BoundField DataField="NSNGroup" HeaderText="NSN Group" NullDisplayText="#" />
-                                            <asp:BoundField DataField="NSNGroupClass" HeaderText="NSN Group Class" NullDisplayText="#" />
+                                            <asp:BoundField DataField="NSNGroup" HeaderText="NATO Supply Group" NullDisplayText="#" />
+                                            <asp:BoundField DataField="NSNGroupClass" HeaderText="NATO Supply Class" NullDisplayText="#" />
                                             <asp:BoundField DataField="ProdIndustryDoamin" HeaderText="Prod Indus Doamin" NullDisplayText="#" />
                                             <asp:BoundField DataField="ProdIndustrySubDomain" HeaderText="Prod Indus Sub Doamin" NullDisplayText="#" />
                                             <asp:BoundField DataField="ProductDescription" HeaderText="Item Description" ItemStyle-Wrap="true" ItemStyle-Width="150" NullDisplayText="#" />

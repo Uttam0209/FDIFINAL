@@ -28,6 +28,7 @@ public partial class Vendor_VendorRegistrationStep1 : System.Web.UI.Page
     {
         if (!IsPostBack)
         {
+            binddpsu();
             BindTypeOfBusiness();
             Bindbusinesssector();
             BindCountry();
@@ -40,6 +41,15 @@ public partial class Vendor_VendorRegistrationStep1 : System.Web.UI.Page
     //    else
     //    { divgst.Visible = false; }
     //}
+    protected void binddpsu()
+    {
+        DataTable DtCompanyDDL = Lo.RetriveMasterData(0, "", "Company", 0, "", "", "CompanyName");
+        if (DtCompanyDDL.Rows.Count > 0)
+        {
+            Co.FillCheckBox(chkdpsu, DtCompanyDDL, "CompanyName", "CompanyName");
+            chkdpsu.Items.Add("All");
+        }
+    }
     protected void ddlpan_SelectedIndexChanged(object sender, EventArgs e)
     {
         if (ddlpan.SelectedItem.Text == "YES")
@@ -240,7 +250,7 @@ public partial class Vendor_VendorRegistrationStep1 : System.Web.UI.Page
                 if (txtpanno.Text == splitString[1] && splitString[2] == "E")
                 {
                     panverifi.Attributes.Add("Class", "fa fa-check");
-                    lblmsgpan.ForeColor = System.Drawing.Color.Green;                   
+                    lblmsgpan.ForeColor = System.Drawing.Color.Green;
                     lblmsgpan.Text = "Valid Pan";
                     lblmsgpan.Visible = true;
                 }

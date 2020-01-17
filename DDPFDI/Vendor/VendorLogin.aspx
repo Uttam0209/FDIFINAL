@@ -15,6 +15,7 @@
     <link href="~/assets/css/style.css" rel="stylesheet" type="text/css">
     <link href="~/assets/css/custom.css" rel="stylesheet" type="text/css">
     <link href="~/assets/css/responsive.css" rel="stylesheet" type="text/css">
+    <link href="~/assets/css/jquery.bxslider.css" rel="stylesheet" type="text/css">
     <style>
         .swal2-container.swal2-center.swal2-shown {
             z-index: 22222;
@@ -40,6 +41,7 @@
             font: normal 14px/18px Arial, Helvetica, sans-serif;
         }
     </style>
+
 </head>
 <body>
     <form id="form1" runat="server">
@@ -198,251 +200,226 @@
                                         </div>
                                     </form>
                                 </div>
-                                <div class="modal-content" runat="server" style="width: 800px; margin-left: -200px; z-index:99999;" id="divregistration" visible="false">
+                                <div class="modal-content" runat="server" style="width: 800px; margin-left: -200px; z-index: 99999;" id="divregistration" visible="false">
                                     <div class="modal-header modal-header1">
                                         <button type="button" class="close close1" data-dismiss="modal">&times;</button>
-                                        <h4 class="modal-title">Vendor Registration</h4>
+                                        <h4 class="modal-title"><b>Vendor Registration</b></h4>
+                                        <hr />
                                         <p>Please provide all required details to register your business with us</p>
+                                        <p>Fill all details and submit your request after submit you will get e-mail of your login credential request.</p>
                                         <div class="clearfix mt10"></div>
                                     </div>
-                                    <form class="form-horizontal changepassword" role="form">
-                                        <div class="modal-body clearfix" style="padding: 0 20px;">
-                                            <div class="tabing-section">
-                                                <ul class="nav nav-tabs">
-                                                    <li class="active"><a data-toggle="tab" href="#pd">Company Information</a></li>
-                                                    <li><a data-toggle="tab" href="#pcd" runat="server" id="testcompinfo">Nodal Officer Details</a></li>
-                                                    <li><a data-toggle="tab" href="#ocd" runat="server" id="othercate">Declaration</a></li>
-                                                </ul>
-                                                <div class="tab-content" id="formSlider">
-                                                    <div class="formWraper">
-                                                    <div id="pd" class="tab-pane fade in active">
-                                                        <div class="form-group">
-                                                            <div class="col-sm-5">
-                                                                Are you Registered with Pan 
-                                                            </div>
-                                                            <div class="col-sm-7">
-                                                                <asp:DropDownList ID="ddlpan" runat="server" AutoPostBack="true" CssClass="form-control" OnSelectedIndexChanged="ddlpan_SelectedIndexChanged">
-                                                                    <asp:ListItem Selected="True" Value="0">Select</asp:ListItem>
-                                                                    <asp:ListItem Value="Y">YES</asp:ListItem>
-                                                                    <asp:ListItem Value="N">NO</asp:ListItem>
-                                                                </asp:DropDownList>
-                                                            </div>
+                                    <div id="carouselExampleControls" class="carousel slide" style="padding-bottom: 37px;" data-ride="carousel" data-interval="false">
+                                        <div class="carousel-inner">
+                                            <div class="item active">
+                                                <div>
+                                                    <div class="form-group">
+                                                        <div class="col-sm-5">
+                                                            DPSU you want to apply 
                                                         </div>
-                                                        <div class="form-group" runat="server" id="divpan" visible="false">
-                                                            <div class="col-sm-5">
-                                                                PAN No 
-                                                            </div>
-                                                            <div class="col-sm-7">
+                                                        <div class="col-sm-7">
+                                                            <asp:CheckBoxList ID="chkdpsu" runat="server" RepeatColumns="5" RepeatDirection="Horizontal" RepeatLayout="Flow">
+                                                            </asp:CheckBoxList>
+                                                        </div>
+                                                    </div>
 
-                                                                <asp:TextBox ID="txtpanno" runat="server" MaxLength="10" AutoPostBack="true" OnTextChanged="txtpanno_TextChanged" CssClass="form-control"></asp:TextBox>
-                                                                <span runat="server" id="panverifi"></span>
-                                                                <asp:Label ID="lblmsgpan" runat="server" ForeColor="Green" Visible="false"></asp:Label>
-                                                                <asp:HiddenField ID="hfpanname" runat="server" />
-                                                            </div>
+                                                    <div class="form-group">
+                                                        <div class="col-sm-5">
+                                                            Are you Registered with Pan 
                                                         </div>
-                                                        <%-- <div class="form-group">
-                                                            <div class="col-sm-5">
-                                                                Are you Registered with GST 
-                                                            </div>
-                                                            <div class="col-sm-7">
-                                                                <asp:DropDownList ID="ddlregisterdgst" runat="server" AutoPostBack="true" CssClass="form-control" OnSelectedIndexChanged="ddlregisterdgst_SelectedIndexChanged">
-                                                                    <asp:ListItem Selected="True" Value="0">Select</asp:ListItem>
-                                                                    <asp:ListItem Value="Y">YES</asp:ListItem>
-                                                                    <asp:ListItem Value="N">NO</asp:ListItem>
-                                                                </asp:DropDownList>
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group" runat="server" id="divgst" visible="false">
-                                                            <div class="col-sm-5">
-                                                                GSTIN No 
-                                                            </div>
-                                                            <div class="col-sm-7">
-                                                                <asp:TextBox ID="txtgstno" runat="server" CssClass="form-control"></asp:TextBox>
-                                                            </div>
-                                                        </div>--%>
-                                                        <div class="form-group">
-                                                            <div class="col-sm-5">
-                                                                Name of firm/company 
-                                                            </div>
-                                                            <div class="col-sm-7">
-                                                                <asp:TextBox ID="txtbusinessname" runat="server" AutoPostBack="true" OnTextChanged="txtbusinessname_TextChanged" CssClass="form-control"></asp:TextBox>
-                                                                <span runat="server" id="check"></span>
-                                                                <asp:Label ID="lblbusinessname" runat="server" ForeColor="Red"></asp:Label>
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <div class="col-sm-5">
-                                                                Type of Ownership
-                                                            </div>
-                                                            <div class="col-sm-7">
-                                                                <asp:DropDownList ID="ddltypeofbusiness" runat="server" CssClass="form-control">
-                                                                </asp:DropDownList>
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <div class="col-sm-5">
-                                                                Business Sector
-                                                            </div>
-                                                            <div class="col-sm-7">
-                                                                <asp:DropDownList ID="ddlbusinesssector" runat="server" CssClass="form-control">
-                                                                </asp:DropDownList>
-                                                            </div>
+                                                        <div class="col-sm-7">
+                                                            <asp:DropDownList ID="ddlpan" runat="server" AutoPostBack="true" CssClass="form-control"
+                                                                OnSelectedIndexChanged="ddlpan_SelectedIndexChanged">
+                                                                <asp:ListItem Selected="True" Value="0">Select</asp:ListItem>
+                                                                <asp:ListItem Value="Y">YES</asp:ListItem>
+                                                                <asp:ListItem Value="N">NO</asp:ListItem>
+                                                            </asp:DropDownList>
                                                         </div>
                                                     </div>
-                                                    <div id="pcd" class="tab-pane">
-                                                        <div class="form-group">
-                                                            <div class="col-sm-5">
-                                                                Nodal officer email (treated as username) <span class="mandatory">*</span>
-                                                            </div>
-                                                            <div class="col-sm-7">
-                                                                <asp:TextBox ID="txtemail" runat="server" TextMode="Email" placeholder="ex: myemail@example.com" required="" AutoCompleteType="Email" CssClass="form-control"></asp:TextBox>
-                                                                <p>ex: myemail@example.com</p>
-                                                            </div>
+                                                    <div class="form-group" runat="server" id="divpan" visible="false">
+                                                        <div class="col-sm-5">
+                                                            PAN No 
                                                         </div>
-                                                        <div class="form-group">
-                                                            <div class="col-sm-5">
-                                                                Nodal office Contact No
-                                                            </div>
-                                                            <div class="col-sm-7">
-                                                                <asp:TextBox ID="txtMobileNodal" runat="server" CssClass="form-control"></asp:TextBox>
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <div class="col-sm-5">
-                                                                Registered Office Address
-                                                            </div>
-                                                            <div class="col-sm-7">
-                                                                <asp:TextBox ID="txtstreetaddress" runat="server" CssClass="form-control"></asp:TextBox>
-                                                                <p>Street Address</p>
-                                                                <div class="clearfix mt10"></div>
-                                                                <asp:TextBox ID="txtstreetaddressline2" runat="server" CssClass="form-control"></asp:TextBox>
-                                                                Street Address Line 2   
-                                                                <div class="clearfix mt10"></div>
-                                                                <div class="row">
-                                                                    <div class="col-sm-6">
-                                                                        <asp:TextBox ID="txtcity" runat="server" CssClass="form-control"></asp:TextBox>
-                                                                        <p>City</p>
-                                                                    </div>
-                                                                    <div class="col-sm-6">
-                                                                        <asp:TextBox ID="txtstateprovince" runat="server" CssClass="form-control"></asp:TextBox>
-                                                                        <p>State</p>
-                                                                    </div>
-                                                                    <div class="clearfix mt10"></div>
-                                                                    <div class="col-sm-6">
-                                                                        <asp:TextBox ID="txtpostalzipcode" runat="server" CssClass="form-control"></asp:TextBox>
-                                                                        <p>Pin Code</p>
-                                                                    </div>
-                                                                    <div class="col-sm-6">
-                                                                        <asp:DropDownList ID="ddlcountry" runat="server" CssClass="form-control">
-                                                                            <asp:ListItem Selected="True" Value="India">India</asp:ListItem>
-                                                                        </asp:DropDownList>
-                                                                        <p>Country</p>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
+                                                        <div class="col-sm-7">
+                                                            <asp:TextBox ID="txtpanno" runat="server" MaxLength="10" AutoPostBack="true" OnTextChanged="txtpanno_TextChanged" CssClass="form-control"></asp:TextBox>
+                                                            <span runat="server" id="panverifi"></span>
+                                                            <asp:Label ID="lblmsgpan" runat="server" ForeColor="Green" Visible="false"></asp:Label>
+                                                            <asp:HiddenField ID="hfpanname" runat="server" />
                                                         </div>
                                                     </div>
-                                                    <div id="ocd" class="tab-pane">
-                                                        <asp:UpdatePanel ID="UpdatePanel4" runat="server" UpdateMode="Conditional">
-                                                            <ContentTemplate>
-                                                                <asp:Panel ID="panstep5" runat="server">
-                                                                    <p>1.Has the firm declared insolvent in Receivership ,Bankrupt or being wounded up.</p>
-                                                                    <asp:DropDownList ID="ddlwoundedup" runat="server" CssClass="form-control">
-                                                                        <asp:ListItem Selected="True" Value="0">Select</asp:ListItem>
-                                                                        <asp:ListItem Value="1">Yes</asp:ListItem>
-                                                                        <asp:ListItem Value="2">No</asp:ListItem>
-                                                                    </asp:DropDownList>
-                                                                    <div class="clearfix mt10"></div>
-                                                                    <p>2.Have firm affairs administered by a court or a judicial officer.</p>
-                                                                    <asp:DropDownList ID="ddljudicialofficer" runat="server" CssClass="form-control">
-                                                                        <asp:ListItem Selected="True" Value="0">Select</asp:ListItem>
-                                                                        <asp:ListItem Value="1">Yes</asp:ListItem>
-                                                                        <asp:ListItem Value="2">No</asp:ListItem>
-                                                                    </asp:DropDownList>
-                                                                    <div class="clearfix mt10"></div>
-                                                                    <p>3.Is business activities suspended.</p>
-                                                                    <asp:DropDownList ID="ddlbusinesssuspended" runat="server" CssClass="form-control">
-                                                                        <asp:ListItem Selected="True" Value="0">Select</asp:ListItem>
-                                                                        <asp:ListItem Value="1">Yes</asp:ListItem>
-                                                                        <asp:ListItem Value="2">No</asp:ListItem>
-                                                                    </asp:DropDownList>
-                                                                    <div class="clearfix mt10"></div>
-                                                                    <p>4.Is the firm subject of legal proceedings for any of the forging reasons.</p>
-                                                                    <asp:DropDownList ID="ddlforgingreasone" runat="server" CssClass="form-control">
-                                                                        <asp:ListItem Selected="True" Value="0">Select</asp:ListItem>
-                                                                        <asp:ListItem Value="1">Yes</asp:ListItem>
-                                                                        <asp:ListItem Value="2">No</asp:ListItem>
-                                                                    </asp:DropDownList>
-                                                                    <div class="clearfix mt10"></div>
-                                                                    <p>5.Has the firm been debarred from Govt. Contracts</p>
-                                                                    <asp:DropDownList ID="ddldebarredgovtcont" runat="server" AutoPostBack="true" OnSelectedIndexChanged="ddldebarredgovtcont_SelectedIndexChanged" CssClass="form-control">
-                                                                        <asp:ListItem Selected="True" Value="0">Select</asp:ListItem>
-                                                                        <asp:ListItem Value="1">Yes</asp:ListItem>
-                                                                        <asp:ListItem Value="2">No</asp:ListItem>
-                                                                    </asp:DropDownList>
-                                                                    <div class="clearfix mt10"></div>
-                                                                    <div class="col-sm-5">
-                                                                        <asp:CheckBoxList ID="chkcontracts" runat="server" AutoPostBack="true" Visible="false" OnSelectedIndexChanged="chkcontracts_SelectedIndexChanged" RepeatColumns="1" RepeatDirection="Horizontal" RepeatLayout="Flow">
-                                                                            <asp:ListItem Value="1">Financial</asp:ListItem>
-                                                                            <asp:ListItem Value="2">Banning</asp:ListItem>
-                                                                            <asp:ListItem Value="3">Suspension</asp:ListItem>
-                                                                            <asp:ListItem Value="4">Tender holiday</asp:ListItem>
-                                                                        </asp:CheckBoxList>
-                                                                    </div>
-                                                                    <div class="col-sm-7">
-                                                                        <div runat="server" id="divfin" visible="false">
-                                                                            <div class="">
-                                                                                <p>Applicable upto</p>
-                                                                                <asp:TextBox ID="txtdatestsrt" type="date" runat="server" CssClass="form-control"></asp:TextBox>
-                                                                            </div>
-
-                                                                        </div>
-                                                                        <div class="clearfix mt10"></div>
-                                                                        <div runat="server" id="div12" visible="false">
-                                                                            <div class="">
-                                                                                <p>Applicable upto</p>
-                                                                                <asp:TextBox ID="TextBox12" type="date" runat="server" CssClass="form-control"></asp:TextBox>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="clearfix mt10"></div>
-                                                                        <div runat="server" id="div13" visible="false">
-                                                                            <div class="">
-                                                                                <p>Applicable upto</p>
-                                                                                <asp:TextBox ID="TextBox24" type="date" runat="server" CssClass="form-control"></asp:TextBox>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="clearfix mt10"></div>
-                                                                        <div runat="server" id="div14" visible="false">
-                                                                            <div class="">
-                                                                                <p>Applicable upto</p>
-                                                                                <asp:TextBox ID="TextBox26" type="date" runat="server" CssClass="form-control"></asp:TextBox>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="clearfix mt10"></div>
-                                                                    <asp:CheckBoxList ID="chkbuisness" runat="server" RepeatColumns="1" RepeatDirection="Horizontal" RepeatLayout="Flow" CssClass="checkbox">
-                                                                        <asp:ListItem>I/We note that registration ,does not carry with it the right to business with DPSUs/OFB, I/We hereby declare that the information pertaining to my/our firm/Company including all enclosures is correct and true to the best of
-                                                   my/our knowledge and belief as on date</asp:ListItem>
-                                                                    </asp:CheckBoxList>
-                                                                    <div class="clearfix mt10"></div>
-                                                                </asp:Panel>
-                                                            </ContentTemplate>
-                                                        </asp:UpdatePanel>
+                                                    <div class="form-group">
+                                                        <div class="col-sm-5">
+                                                            Name of firm/company 
+                                                        </div>
+                                                        <div class="col-sm-7">
+                                                            <asp:TextBox ID="txtbusinessname" runat="server" AutoPostBack="true" OnTextChanged="txtbusinessname_TextChanged" CssClass="form-control"></asp:TextBox>
+                                                            <span runat="server" id="check"></span>
+                                                            <asp:Label ID="lblbusinessname" runat="server" ForeColor="Green"></asp:Label>
+                                                        </div>
                                                     </div>
+                                                    <div class="form-group">
+                                                        <div class="col-sm-5">
+                                                            REGISTRATION CATEGORY <span class="mandatory">*</span>
+                                                        </div>
+                                                        <div class="col-sm-7">
+                                                            <asp:DropDownList ID="ddlregiscategory" runat="server" CssClass="form-control"
+                                                                required="required">
+                                                                <asp:ListItem Selected="True" Value="0">Select</asp:ListItem>
+                                                                <asp:ListItem Value="MANUFACTURER">MANUFACTURER</asp:ListItem>
+                                                                <asp:ListItem Value="SERVICE SUB CONTRACTOR">SERVICE SUB CONTRACTOR</asp:ListItem>
+                                                                <asp:ListItem Value="AUTHORISED AGENT">AUTHORISED AGENT</asp:ListItem>
+                                                                <asp:ListItem Value="TRADER">TRADER</asp:ListItem>
+                                                                <asp:ListItem Value="OEM">OEM</asp:ListItem>
+                                                                <asp:ListItem Value="Stockist">Stockist</asp:ListItem>
+                                                                <asp:ListItem Value="Contractor">Contractor</asp:ListItem>
+                                                                <asp:ListItem Value="Distributor">Distributor</asp:ListItem>
+                                                                <asp:ListItem Value="Consortium">Consortium</asp:ListItem>
+                                                            </asp:DropDownList>
+                                                        </div>
                                                     </div>
-                                                    
-
-                                                    <div class="nex-pre-box">
-                                                        <button class="next">Next</button>
-                                                        <button class="pre">Prev</button>
+                                                    <div class="form-group">
+                                                        <div class="col-sm-5">
+                                                            Type of Ownership
+                                                        </div>
+                                                        <div class="col-sm-7">
+                                                            <asp:DropDownList ID="ddltypeofbusiness" runat="server" CssClass="form-control">
+                                                            </asp:DropDownList>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <div class="col-sm-5">
+                                                            Business Sector
+                                                        </div>
+                                                        <div class="col-sm-7">
+                                                            <asp:DropDownList ID="ddlbusinesssector" runat="server" CssClass="form-control">
+                                                            </asp:DropDownList>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
+                                            <div class="item">
+                                                <div>
+
+                                                    <div class="form-group">
+                                                        <div class="col-sm-5">
+                                                            Nodal officer Name<span class="mandatory">*</span>
+                                                        </div>
+                                                        <div class="col-sm-7">
+                                                            <asp:TextBox ID="txtnodalname" runat="server" MaxLength="100" required="" CssClass="form-control"></asp:TextBox>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <div class="col-sm-5">
+                                                            Nodal officer email (treated as username) <span class="mandatory">*</span>
+                                                        </div>
+                                                        <div class="col-sm-7">
+                                                            <asp:TextBox ID="txtnodelemail" runat="server" MaxLength="70" TextMode="Email" placeholder="ex: myemail@example.com" required="" AutoCompleteType="Email" CssClass="form-control"></asp:TextBox>
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <div class="col-sm-5">
+                                                            Nodal office Contact No
+                                                        </div>
+                                                        <div class="col-sm-7">
+                                                            <asp:TextBox ID="txtMobileNodal" runat="server" MaxLength="10" required="" onkeypress="return isNumberKey(event)" CssClass="form-control"></asp:TextBox>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <div class="col-sm-5">
+                                                            Registered Office Address
+                                                        </div>
+                                                        <div class="col-sm-7">
+                                                            <asp:TextBox ID="txtstreetaddress" runat="server" MaxLength="300" required="" CssClass="form-control"></asp:TextBox>
+                                                            <p>Street Address</p>
+                                                            <div class="clearfix mt10"></div>
+                                                            <asp:TextBox ID="txtstreetaddressline2" MaxLength="300" runat="server" CssClass="form-control"></asp:TextBox>
+                                                            Street Address Line 2   
+                                                                <div class="clearfix mt10"></div>
+                                                            <div class="row">
+                                                                <div class="col-sm-4">
+                                                                    <asp:TextBox ID="txtcity" runat="server" MaxLength="35" required="" CssClass="form-control"></asp:TextBox>
+                                                                    <p>City</p>
+                                                                </div>
+                                                                <div class="col-sm-4">
+                                                                    <asp:TextBox ID="txtstateprovince" runat="server" MaxLength="35" required="" CssClass="form-control"></asp:TextBox>
+                                                                    <p>State</p>
+                                                                </div>
+                                                                <div class="col-sm-4">
+                                                                    <asp:TextBox ID="txtpostalzipcode" runat="server" MaxLength="7" required="" CssClass="form-control" onkeypress="return isNumberKey(event)"></asp:TextBox>
+                                                                    <p>Pin Code</p>
+                                                                </div>
+                                                                <%-- <div class="col-sm-6">
+                                                                    <asp:DropDownList ID="ddlcountry" runat="server" CssClass="form-control">
+                                                                        <asp:ListItem Selected="True" Value="India">India</asp:ListItem>
+                                                                    </asp:DropDownList>
+                                                                    <p>Country</p>
+                                                                </div>--%>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <div class="item">
+                                                <div>
+                                                    <asp:UpdatePanel ID="UpdatePanel4" runat="server" UpdateMode="Conditional">
+                                                        <ContentTemplate>
+                                                            <div class="clearfix mt10"></div>
+                                                            <p>1.Has the firm declared insolvent in Receivership ,Bankrupt or being wounded up.</p>
+                                                            <asp:DropDownList ID="ddlwoundedup" runat="server" CssClass="form-control">
+                                                                <asp:ListItem Selected="True" Value="0">Select</asp:ListItem>
+                                                                <asp:ListItem Value="1">Yes</asp:ListItem>
+                                                                <asp:ListItem Value="2">No</asp:ListItem>
+                                                            </asp:DropDownList>
+                                                            <div class="clearfix mt10"></div>
+                                                            <p>2.Have firm affairs administered by a court or a judicial officer.</p>
+                                                            <asp:DropDownList ID="ddljudicialofficer" runat="server" CssClass="form-control">
+                                                                <asp:ListItem Selected="True" Value="0">Select</asp:ListItem>
+                                                                <asp:ListItem Value="1">Yes</asp:ListItem>
+                                                                <asp:ListItem Value="2">No</asp:ListItem>
+                                                            </asp:DropDownList>
+                                                            <div class="clearfix mt10"></div>
+                                                            <p>3.Is business activities suspended.</p>
+                                                            <asp:DropDownList ID="ddlbusinesssuspended" runat="server" CssClass="form-control">
+                                                                <asp:ListItem Selected="True" Value="0">Select</asp:ListItem>
+                                                                <asp:ListItem Value="1">Yes</asp:ListItem>
+                                                                <asp:ListItem Value="2">No</asp:ListItem>
+                                                            </asp:DropDownList>
+                                                            <div class="clearfix mt10"></div>
+                                                            <p>4.Is the firm subject of legal proceedings for any of the forging reasons.</p>
+                                                            <asp:DropDownList ID="ddlforgingreasone" runat="server" CssClass="form-control">
+                                                                <asp:ListItem Selected="True" Value="0">Select</asp:ListItem>
+                                                                <asp:ListItem Value="1">Yes</asp:ListItem>
+                                                                <asp:ListItem Value="2">No</asp:ListItem>
+                                                            </asp:DropDownList>
+                                                            <div class="clearfix mt10"></div>
+                                                            <p>5.Has the firm been debarred from Govt. Contracts</p>
+                                                            <asp:DropDownList ID="ddldebarredgovtcont" runat="server" CssClass="form-control">
+                                                                <asp:ListItem Selected="True" Value="0">Select</asp:ListItem>
+                                                                <asp:ListItem Value="1">Yes</asp:ListItem>
+                                                                <asp:ListItem Value="2">No</asp:ListItem>
+                                                            </asp:DropDownList>
+                                                            <div class="clearfix mt10"></div>
+                                                            <asp:CheckBoxList ID="chkbuisness" runat="server" RepeatColumns="1" RepeatDirection="Horizontal" RepeatLayout="Flow" CssClass="checkbox">
+                                                                <asp:ListItem>I/We note that registration ,does not carry with it the right to business with DPSUs/OFB, I/We hereby declare that the information pertaining to my/our firm/Company including all enclosures is correct and true to the best of
+                                                                     my/our knowledge and belief as on date</asp:ListItem>
+                                                            </asp:CheckBoxList>
+                                                            <div class="clearfix mt10"></div>
+                                                            <asp:Button ID="btnsubmit" runat="server" CssClass="btn btn-primary pull-right" Text="Submit" UseSubmitBehavior="false" OnClick="btnsubmit_Click" OnClientClick="if (!confirm('Are you sure you want to save this record?')) return false;" />
+                                                            <asp:Button ID="btnclear" runat="server" CssClass="btn btn-warning pull-right" UseSubmitBehavior="false" Style="margin-right: 10px;" Text="Clear" OnClick="btnclear_Click" OnClientClick="if (!confirm('Are you sure you want clear textfield?')) return false;" />
+                                                            <div class="clearfix"></div>
+                                                        </ContentTemplate>
+                                                    </asp:UpdatePanel>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                        </div>
-                                    </form>
+                                        <hr />
+                                        <a class="carousel-control-prev btn btn-primary " href="#carouselExampleControls" role="button" data-slide="prev">Previous
+                                        </a>
+                                        <a class="carousel-control-next btn btn-primary" href="#carouselExampleControls" role="button" data-slide="next">Next
+                                        </a>
+                                    </div>
                                 </div>
                             </ContentTemplate>
                         </asp:UpdatePanel>
@@ -450,29 +427,118 @@
                 </div>
             </ContentTemplate>
         </asp:UpdatePanel>
-    </form>
-    <script src="assets/js/jquery-1.12.4.js">
-    </script>
-    <script src="assets/js/bootstrap.min.js"></script>
+        <div class="modal fade" id="Div1" role="dialog" data-keyboard="false" data-backdrop="static">
+            <div class="modal-dialog" style="width: 400px;">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header modal-header1">
+                        <button type="button" class="close close1" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Alert</h4>
+                    </div>
+                    <form class="form-horizontal changepassword" role="form">
+                        <div class="modal-body clearfix" style="padding: 0 20px;">
+                            <asp:Panel ID="pansuccess" runat="server">
+                                <div style="text-align: center;">
+                                    <div class="clearfix pb15"></div>
+                                    <img src="/assets/images/right.jpg" alt="" height="150px" width="150px" />
+                                    <div class="clearfix pb15"></div>
+                                    <h4>Registration succssfully done.A login releted mail send to your registerd mail id.</h4>
+                                </div>
+                            </asp:Panel>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="modelfail" role="dialog" data-keyboard="false" data-backdrop="static">
+            <div class="modal-dialog" style="width: 400px;">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header modal-header1">
+                        <button type="button" class="close close1" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Alert</h4>
+                    </div>
+                    <form class="form-horizontal changepassword" role="form">
+                        <div class="modal-body clearfix" style="padding: 0 20px;">
 
+                            <asp:Panel ID="panfail" runat="server">
+                                <div style="text-align: center;">
+                                    <div class="clearfix pb15"></div>
+                                    <img src="/assets/images/Wrong.png" alt="" height="100px" width="100px" />
+                                    <div class="clearfix pb15"></div>
+                                    <h4>Record not save, Please try again, or mail us on defence production</h4>
+                                </div>
+                            </asp:Panel>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </form>
+    <script src="assets/js/jquery-1.12.4.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+    <script src="assets/js/jquery.bxslider.min.js"></script>
     <script type="text/javascript">
         function showPopup() {
-            $('#changePass').modal('show');
+            $('#changePass').modal('show', function () {
+            });
         }
     </script>
     <script type="text/javascript">
-        $(document).ready(function () {
-            var formBoxSize = $('#pd').width();
-            var totalformBoxSize = formBoxSize * 3;
-            console.log(formBoxSize);
-            $('#formSlider .formWraper').css('width', totalformBoxSize + 'px');
-            $('.next').on('click', function () {
-
-            });
-        });
+        function showPopup1() {
+            $('#modelfail').modal('show');
+        }
     </script>
-<style>
-    #formSlider { overflow:hidden}
-</style>
+    <style>
+        .modal.and.carousel {
+            position: fixed;
+        }
+
+        .carousel-control-prev {
+            position: absolute;
+            left: 0;
+            bottom: 0;
+        }
+
+            .carousel-control-prev i {
+                font-size: 30px;
+                font-weight: bold;
+            }
+
+        .carousel-control-next {
+            position: absolute;
+            right: 0;
+            bottom: 0;
+        }
+
+            .carousel-control-next i {
+                font-size: 30px;
+                font-weight: bold;
+            }
+
+        .carousel-inner {
+            padding: 0 20px;
+        }
+
+        .mt10 {
+            padding-top: 10px;
+        }
+    </style>
+    <script type="text/javascript">
+        function isNumberKey(evt) {
+            var charCode = (evt.which) ? evt.which : event.keyCode;
+            if (charCode != 46 && charCode > 31
+              && (charCode < 48 || charCode > 57))
+                return false;
+
+            return true;
+        }
+    </script>
 </body>
 </html>

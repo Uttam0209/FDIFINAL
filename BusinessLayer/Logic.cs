@@ -127,6 +127,21 @@ namespace BusinessLayer
         {
             return SqlHelper.Instance.UpdateStatus(ID, Value1, Value2);
         }
+        public Int32 InsertStatusEdit(string ID, string Value1, string Value2, string Value3, string Value4, string Value5, string Value6)
+        {
+            string mquery = "insert into tbl_trn_VendorDetailMultiGrid (VendorRefNo,EnterNameof,Name,Designation,DIN_No,MobileNo)Values('" + ID + "','" + Value1 + "','" + Value2 + "','" + Value3 + "','" + Value4 + "','" + Value5 + "','" + Value6 + "')";
+            return SqlHelper.Instance.ExecuteQuery(mquery);
+        }
+        public Int32 UpdateStatusEdit(Int64 ID, string Value1, string Value2, string Value3, string Value4, string Value5, string Value6)
+        {
+            string mquery = "update tbl_trn_VendorDetailMultiGrid set VendorRefNo='" + Value1 + "',EnterNameof='" + Value2 + "',Name='" + Value3 + "',Designation='" + Value4 + "',DIN_No='" + Value5 + "',MobileNo='" + Value6 + "' where MasterId='" + ID + "'";
+            return SqlHelper.Instance.ExecuteQuery(mquery);
+        }
+        public Int32 DeleteEditGrid(Int32 Id)
+        {
+            string mquery = "delete from tbl_trn_VendorDetailMultiGrid  where MasterId='" + Id + "'";
+            return SqlHelper.Instance.ExecuteQuery(mquery);
+        }
 
         #endregion
         #region retriveCode
@@ -323,10 +338,38 @@ namespace BusinessLayer
         {
             return SqlHelper.Instance.SaveVendorRegis(hysavecomp, out _sysMsg, out _msg);
         }
+        public string SaveVendorGeneralInfo(HybridDictionary HySaveVendorRegisdetail, DataTable DtFristGrid, out string _sysMsg, out string _msg)
+        {
+            return SqlHelper.Instance.SaveVendorGeneralInfo(HySaveVendorRegisdetail, DtFristGrid, out _sysMsg, out _msg);
+        }
+        public string SaveVendorCompanyInfo(HybridDictionary HySaveVendorRegisdetail, DataTable Dt1, DataTable Dt2, DataTable Dt3, DataTable Dt4, DataTable Dt5, DataTable Dt6, DataTable Dt7, DataTable Dt8, DataTable DtCer1, DataTable DtCer2, out string _sysMsg, out string _msg)
+        {
+            return SqlHelper.Instance.SaveVendorCompanyInfo(HySaveVendorRegisdetail, Dt1, Dt2, Dt3, Dt4, Dt5, Dt6, Dt7, Dt8, DtCer1, DtCer2, out _sysMsg, out _msg);
+        }
+        public string SaveVendorCompanyInfo2(DataTable Dt1, string mCurrentID,  out string _sysMsg, out string _msg)
+        {
+            return SqlHelper.Instance.SaveVendorCompanyInfo2(Dt1, mCurrentID, out _sysMsg, out _msg);
+        }
         public string SaveVendorRegistrationDetails(HybridDictionary HySaveVendorRegisdetail, DataTable DtFristGrid, DataTable dt2, DataTable dt3, DataTable dt4, DataTable dt5, DataTable dt6, out string _sysMsg, out string _msg)
         {
             return SqlHelper.Instance.SaveVendorRegistrationDetails(HySaveVendorRegisdetail, DtFristGrid, dt2, dt3, dt4, dt5, dt6, out _sysMsg, out _msg);
         }
+
+        public string SaveVendorRegisNoDetails(HybridDictionary HySaveVendorRegisdetail, DataTable Dt1, out string _sysMsg, out string _msg)
+        {
+            return SqlHelper.Instance.SaveVendorRegisNoDetails(HySaveVendorRegisdetail, Dt1, out _sysMsg, out _msg);
+        }
+        public string SaveVendorAccountInfo(DataTable Dt1,DataTable Dt2, string mCurrentID, out string _sysMsg, out string _msg)
+        {
+            return SqlHelper.Instance.SaveVendorAccountInfo(Dt1, Dt2, mCurrentID, out _sysMsg, out _msg);
+        }
+
+        public string SaveVendorDefence(DataTable Dt1, DataTable Dt2, DataTable Dt3, DataTable Dt4, DataTable Dt5, string mCurrentID, out string _sysMsg, out string _msg)
+        {
+            return SqlHelper.Instance.SaveVendorDefence(Dt1, Dt2, Dt3, Dt4, Dt5, mCurrentID, out _sysMsg, out _msg);
+        }
+
+
         #endregion
         #region Code for vendor  Delete
         #endregion

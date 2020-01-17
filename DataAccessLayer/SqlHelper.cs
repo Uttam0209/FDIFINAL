@@ -1981,26 +1981,23 @@ namespace DataAccessLayer
                 {
                     DbCommand cmd = db.GetStoredProcCommand("sp_VendorRegistration");
                     db.AddInParameter(cmd, "@VendorID", DbType.Int64, hysavecomp["VendorID"]);
-                    db.AddInParameter(cmd, "@IsPan", DbType.String, hysavecomp["IsPan"]);
                     db.AddInParameter(cmd, "@PanNo", DbType.String, hysavecomp["PanNo"]);
-                    db.AddInParameter(cmd, "@IsGST", DbType.String, hysavecomp["IsGST"]);
                     db.AddInParameter(cmd, "@GSTNo", DbType.String, hysavecomp["GSTNo"]);
-                    db.AddInParameter(cmd, "@BusinessName", DbType.String, hysavecomp["BusinessName"]);
-                    db.AddInParameter(cmd, "@NodalOfficerPrefix", DbType.String, hysavecomp["NodalOfficerPrefix"].ToString().Trim());
-                    db.AddInParameter(cmd, "@NodalOfficerFirstName", DbType.String, hysavecomp["NodalOfficerFirstName"].ToString().Trim());
-                    db.AddInParameter(cmd, "@NodalOfficerMiddleName", DbType.String, hysavecomp["NodalOfficerMiddleName"]);
-                    db.AddInParameter(cmd, "@NodalOfficerLastName", DbType.String, hysavecomp["NodalOfficerLastName"]);
-                    db.AddInParameter(cmd, "@NodalOfficerEmail", DbType.String, hysavecomp["NodalOfficerEmail"]);
+                    db.AddInParameter(cmd, "@V_CompName", DbType.String, hysavecomp["V_CompName"]);
+                    db.AddInParameter(cmd, "@RegistrationCategory", DbType.String, hysavecomp["RegistrationCategory"]);
+                    db.AddInParameter(cmd, "@V_RegisterdDPSU", DbType.String, hysavecomp["V_RegisterdDPSU"]);
                     db.AddInParameter(cmd, "@TypeOfBuisness", DbType.Int64, hysavecomp["TypeOfBuisness"].ToString().Trim());
                     db.AddInParameter(cmd, "@BusinessSector", DbType.Int64, hysavecomp["BusinessSector"].ToString().Trim());
+                    db.AddInParameter(cmd, "@NodalOfficerName", DbType.String, hysavecomp["NodalOfficerName"].ToString().Trim());
+                    db.AddInParameter(cmd, "@NodalOfficerEmail", DbType.String, hysavecomp["NodalOfficerEmail"]);
+                    db.AddInParameter(cmd, "@ContactNo", DbType.String, hysavecomp["ContactNo"]);
                     db.AddInParameter(cmd, "@StreetAddress", DbType.String, hysavecomp["StreetAddress"]);
                     db.AddInParameter(cmd, "@StreetAddressLine2", DbType.String, hysavecomp["StreetAddressLine2"]);
                     db.AddInParameter(cmd, "@City", DbType.String, hysavecomp["City"]);
                     db.AddInParameter(cmd, "@State", DbType.String, hysavecomp["State"].ToString().Trim());
                     db.AddInParameter(cmd, "@ZipCode", DbType.String, hysavecomp["ZipCode"].ToString().Trim());
-                    db.AddInParameter(cmd, "@Country", DbType.Int64, hysavecomp["Country"]);
-                    db.AddInParameter(cmd, "@ContactNo", DbType.String, hysavecomp["ContactNo"]);
-                    db.AddInParameter(cmd, "@FaxNo", DbType.String, hysavecomp["FaxNo"]);
+                    //db.AddInParameter(cmd, "@Country", DbType.Int64, hysavecomp["Country"]);
+                    db.AddInParameter(cmd, "@CheckStatus", DbType.String, hysavecomp["CheckStatus"]);
                     db.AddOutParameter(cmd, "@ReturnID", DbType.String, 20);
                     db.ExecuteNonQuery(cmd, dbTran);
                     mCurrentID = db.GetParameterValue(cmd, "@ReturnID").ToString();
@@ -2136,6 +2133,461 @@ namespace DataAccessLayer
                         db.AddInParameter(dbcom6, "@SuppliedQuantity1", DbType.String, dt6.Rows[i]["ValueQtySupp1"]);
                         db.AddInParameter(dbcom6, "@Date21", DbType.Date, dt6.Rows[i]["DateofLastSupp1"]);
                         db.ExecuteNonQuery(dbcom6, dbTran);
+                    }
+                    dbTran.Commit();
+                    _msg = "Save";
+                    _sysMsg = "Save";
+                    return "Save";
+                }
+                catch (Exception ex)
+                {
+                    dbTran.Rollback();
+                    _msg = ex.Message;
+                    _sysMsg = "";
+                    return _sysMsg;
+                }
+                finally
+                {
+                    dbCon.Close();
+                }
+            }
+        }
+        public string SaveVendorGeneralInfo(HybridDictionary HySaveVendorRegisdetail, DataTable dtEnterNameOf, out string _sysMsg, out string _msg)
+        {
+            using (DbConnection dbCon = db.CreateConnection())
+            {
+                string mCurrentID = "";
+                dbCon.Open();
+                DbTransaction dbTran = dbCon.BeginTransaction();
+                try
+                {
+                    DbCommand cmd = db.GetStoredProcCommand("sp_VendorGeneralInfo");
+                    db.AddInParameter(cmd, "@VendorDetailID", DbType.Int64, HySaveVendorRegisdetail["VendorDetailID"]);
+                    db.AddInParameter(cmd, "@VendorRefNo", DbType.String, HySaveVendorRegisdetail["VendorRefNo"]);
+                    db.AddInParameter(cmd, "@RegistrationCategory", DbType.String, HySaveVendorRegisdetail["RegistrationCategory"]);
+                    db.AddInParameter(cmd, "@TypeOfOwnership", DbType.Int64, HySaveVendorRegisdetail["TypeOfOwnership"].ToString().Trim());
+                    db.AddInParameter(cmd, "@ScaleofBuisness", DbType.String, HySaveVendorRegisdetail["ScaleofBuisness"].ToString().Trim());
+                    db.AddInParameter(cmd, "@Ownership", DbType.String, HySaveVendorRegisdetail["Ownership"]);
+                    db.AddInParameter(cmd, "@PercentofOwnership", DbType.String, HySaveVendorRegisdetail["PercentofOwnership"]);
+                    db.AddInParameter(cmd, "@FileofOwnership", DbType.String, HySaveVendorRegisdetail["FileofOwnership"]);
+                    db.AddInParameter(cmd, "@BuisnessSector", DbType.Int64, HySaveVendorRegisdetail["BuisnessSector"].ToString().Trim());
+                    db.AddInParameter(cmd, "@Date_Incorportaion_Company", DbType.Date, HySaveVendorRegisdetail["Date_Incorportaion_Company"].ToString());
+                    db.AddInParameter(cmd, "@ContactNo", DbType.String, HySaveVendorRegisdetail["ContactNo"]);
+                    db.AddInParameter(cmd, "@FaxNo", DbType.String, HySaveVendorRegisdetail["FaxNo"]);
+                    db.AddInParameter(cmd, "@Type", DbType.String, HySaveVendorRegisdetail["Type"]);
+                    db.AddOutParameter(cmd, "@ReturnID", DbType.String, 20);
+                    db.ExecuteNonQuery(cmd, dbTran);
+                    mCurrentID = db.GetParameterValue(cmd, "@ReturnID").ToString();
+                    for (int i = 0; i < dtEnterNameOf.Rows.Count; i++)
+                    {
+                        DbCommand dbcom1 = db.GetStoredProcCommand("sp_VendorRegistrationMultiGrid");
+                        db.AddInParameter(dbcom1, "@Type", DbType.String, "EnterNameof");
+                        db.AddInParameter(dbcom1, "@MasterId", DbType.Int64, dtEnterNameOf.Rows[i]["RowNumber"]);
+                        db.AddInParameter(dbcom1, "@VendorRefNo", DbType.String, mCurrentID);
+                        db.AddInParameter(dbcom1, "@EnterNameof", DbType.String, dtEnterNameOf.Rows[i]["EnterName"]);
+                        db.AddInParameter(dbcom1, "@Name", DbType.String, dtEnterNameOf.Rows[i]["Name"]);
+                        db.AddInParameter(dbcom1, "@Designation", DbType.String, dtEnterNameOf.Rows[i]["Designation"]);
+                        db.AddInParameter(dbcom1, "@DIN_No", DbType.String, dtEnterNameOf.Rows[i]["DinNo"]);
+                        db.AddInParameter(dbcom1, "@MobileNo", DbType.Int64, dtEnterNameOf.Rows[i]["MobileNo"]);
+                        db.ExecuteNonQuery(dbcom1, dbTran);
+                    }
+                    dbTran.Commit();
+                    _msg = "Save";
+                    _sysMsg = "Save";
+                    return "Save";
+                }
+                catch (Exception ex)
+                {
+                    dbTran.Rollback();
+                    _msg = ex.Message;
+                    _sysMsg = "";
+                    return _sysMsg;
+                }
+                finally
+                {
+                    dbCon.Close();
+                }
+            }
+        }
+        public string SaveVendorCompanyInfo(HybridDictionary HySaveVendorRegisdetailComp, DataTable dt1, DataTable dt2, DataTable dt3, DataTable dt4, DataTable dt5, DataTable dt6, DataTable dt7, DataTable dt8, DataTable dt9, DataTable dt10, out string _sysMsg, out string _msg)
+        {
+            using (DbConnection dbCon = db.CreateConnection())
+            {
+                string mCurrentID = "";
+                dbCon.Open();
+                DbTransaction dbTran = dbCon.BeginTransaction();
+                try
+                {
+                    DbCommand cmd = db.GetStoredProcCommand("sp_VendorCompInfo");
+                    db.AddInParameter(cmd, "@VendorDetailID", DbType.Int64, HySaveVendorRegisdetailComp["VendorDetailID"]);
+                    db.AddInParameter(cmd, "@VendorRefNo", DbType.String, HySaveVendorRegisdetailComp["VendorRefNo"]);
+                    db.AddInParameter(cmd, "@Is_Lab_accredited_by_NABL", DbType.String, HySaveVendorRegisdetailComp["Is_Lab_accredited_by_NABL"].ToString().Trim());
+                    db.AddInParameter(cmd, "@CertifictionValid", DbType.Date, HySaveVendorRegisdetailComp["CertifictionValid"].ToString().Trim());
+                    db.AddInParameter(cmd, "@Details_of_R_D_Facilities", DbType.String, HySaveVendorRegisdetailComp["Details_of_R_D_Facilities"]);
+                    db.AddInParameter(cmd, "@IsSalesOrMarketOffice", DbType.String, HySaveVendorRegisdetailComp["IsSalesOrMarketOffice"].ToString().Trim());
+                    db.AddInParameter(cmd, "@NodelName", DbType.String, HySaveVendorRegisdetailComp["NodelName"]);
+                    db.AddInParameter(cmd, "@MarketingOfficeAddress", DbType.String, HySaveVendorRegisdetailComp["MarketingOfficeAddress"]);
+                    db.AddInParameter(cmd, "@Line2", DbType.String, HySaveVendorRegisdetailComp["Line2"].ToString().Trim());
+                    db.AddInParameter(cmd, "@OfficerCity", DbType.String, HySaveVendorRegisdetailComp["OfficerCity"].ToString());
+                    db.AddInParameter(cmd, "@OfficeState", DbType.String, HySaveVendorRegisdetailComp["OfficeState"]);
+                    db.AddInParameter(cmd, "@OfficePincode", DbType.String, HySaveVendorRegisdetailComp["OfficePincode"]);
+                    db.AddInParameter(cmd, "@PhoneNo", DbType.String, HySaveVendorRegisdetailComp["PhoneNo"].ToString().Trim());
+                    db.AddInParameter(cmd, "@OfficeFaxNo", DbType.String, HySaveVendorRegisdetailComp["OfficeFaxNo"].ToString());
+                    db.AddInParameter(cmd, "@OfficeEmail", DbType.String, HySaveVendorRegisdetailComp["OfficeEmail"]);
+                    db.AddInParameter(cmd, "@IsAuthorisedDealer", DbType.String, HySaveVendorRegisdetailComp["IsAuthorisedDealer"]);
+                    db.AddInParameter(cmd, "@FuturePlan", DbType.String, HySaveVendorRegisdetailComp["FuturePlan"]);
+                    db.AddOutParameter(cmd, "@ReturnID", DbType.String, 20);
+                    db.ExecuteNonQuery(cmd, dbTran);
+                    mCurrentID = db.GetParameterValue(cmd, "@ReturnID").ToString();
+                    for (int i = 0; i < dt1.Rows.Count; i++)
+                    {
+                        DbCommand dbcom1 = db.GetStoredProcCommand("sp_VendorRegistrationMultiGridManuFac");
+                        db.AddInParameter(dbcom1, "@Type", DbType.String, "CompInfo");
+                        db.AddInParameter(dbcom1, "@MasterId", DbType.Int16, 0);
+                        db.AddInParameter(dbcom1, "@VendorRefNo", DbType.String, mCurrentID);
+                        db.AddInParameter(dbcom1, "@Name_of_Factory", DbType.String, dt1.Rows[i]["FactoryName"]);
+                        db.AddInParameter(dbcom1, "@Factory_GSTNo", DbType.String, dt1.Rows[i]["FACGSTNO"]);
+                        db.AddInParameter(dbcom1, "@Comp_Postal_Address", DbType.String, dt1.Rows[i]["CAddress"]);
+                        db.AddInParameter(dbcom1, "@Contact_Official_Name", DbType.String, dt1.Rows[i]["COfficialName"]);
+                        db.AddInParameter(dbcom1, "@Telephone_No", DbType.String, dt1.Rows[i]["TeleNo"]);
+                        db.AddInParameter(dbcom1, "@Fax_No", DbType.String, dt1.Rows[i]["FaxNo"]);
+                        db.AddInParameter(dbcom1, "@Email_Id", DbType.String, dt1.Rows[i]["EmailId"]);
+                        db.ExecuteNonQuery(dbcom1, dbTran);
+                    }
+                    for (int i = 0; i < dt2.Rows.Count; i++)
+                    {
+                        DbCommand dbcom2 = db.GetStoredProcCommand("sp_VendorRegistrationMultiGridAreaDetail");
+                        db.AddInParameter(dbcom2, "@Type", DbType.String, "AreaDetail");
+                        db.AddInParameter(dbcom2, "@MasterId", DbType.Int16, 0);
+                        db.AddInParameter(dbcom2, "@VendorRefNo", DbType.String, mCurrentID);
+                        db.AddInParameter(dbcom2, "@Area_Factory_Name", DbType.String, dt2.Rows[i]["AreaFactoryName"]);
+                        db.AddInParameter(dbcom2, "@PRODUCTION_AREA", DbType.String, dt2.Rows[i]["PArea"]);
+                        db.AddInParameter(dbcom2, "@INSPECTION_AREA", DbType.String, dt2.Rows[i]["InsArea"]);
+                        db.AddInParameter(dbcom2, "@TOTAL_COVERED_AREA", DbType.String, dt2.Rows[i]["CoverArea"]);
+                        db.AddInParameter(dbcom2, "@Total_Area", DbType.String, dt2.Rows[i]["TotalArea"]);
+                        db.ExecuteNonQuery(dbcom2, dbTran);
+                    }
+                    for (int i = 0; i < dt3.Rows.Count; i++)
+                    {
+                        DbCommand dbcom3 = db.GetStoredProcCommand("sp_VendorRegistrationMultiGridAllPlantandMachines");
+                        db.AddInParameter(dbcom3, "@Type", DbType.String, "AllPlantOrMachine");
+                        db.AddInParameter(dbcom3, "@MasterId", DbType.Int16, 0);
+                        db.AddInParameter(dbcom3, "@VendorRefNo", DbType.String, mCurrentID);
+                        db.AddInParameter(dbcom3, "@Description_Machine_Model_Specs", DbType.String, dt3.Rows[i]["MachineModelSpec"]);
+                        db.AddInParameter(dbcom3, "@Make", DbType.String, dt3.Rows[i]["MakePlant"]);
+                        db.AddInParameter(dbcom3, "@Quantity", DbType.String, dt3.Rows[i]["QuanPlant"]);
+                        db.AddInParameter(dbcom3, "@Date_of_Purchase", DbType.String, dt3.Rows[i]["DOPPlant"]);
+                        db.AddInParameter(dbcom3, "@Usage", DbType.String, dt3.Rows[i]["UsagePlant"]);
+                        db.ExecuteNonQuery(dbcom3, dbTran);
+                    }
+                    for (int i = 0; i < dt4.Rows.Count; i++)
+                    {
+                        DbCommand dbcom4 = db.GetStoredProcCommand("sp_VendorRegistrationMultiGridEmpDetail");
+                        db.AddInParameter(dbcom4, "@Type", DbType.String, "Employeedetail");
+                        db.AddInParameter(dbcom4, "@MasterId", DbType.Int16, 0);
+                        db.AddInParameter(dbcom4, "@VendorRefNo", DbType.String, mCurrentID);
+                        db.AddInParameter(dbcom4, "@TOTAL_Employees", DbType.String, dt4.Rows[i]["TEmp"]);
+                        db.AddInParameter(dbcom4, "@ADMINISTRATIVE", DbType.String, dt4.Rows[i]["Admins"]);
+                        db.AddInParameter(dbcom4, "@TECHNICAL", DbType.String, dt4.Rows[i]["Tech"]);
+                        db.AddInParameter(dbcom4, "@NON_TECHNICAL", DbType.String, dt4.Rows[i]["NonTech"]);
+                        db.AddInParameter(dbcom4, "@QC_INSPECTION", DbType.String, dt4.Rows[i]["QCIns"]);
+                        db.AddInParameter(dbcom4, "@SKILLED_LABOUR", DbType.String, dt4.Rows[i]["SkLab"]);
+                        db.AddInParameter(dbcom4, "@UNSKILLED_LABOUR", DbType.String, dt4.Rows[i]["USKLab"]);
+                        db.ExecuteNonQuery(dbcom4, dbTran);
+                    }
+                    for (int i = 0; i < dt5.Rows.Count; i++)
+                    {
+                        DbCommand dbcom5 = db.GetStoredProcCommand("sp_VendorRegistrationMultiGridTestEquipment");
+                        db.AddInParameter(dbcom5, "@Type", DbType.String, "TestEquipment");
+                        db.AddInParameter(dbcom5, "@MasterId", DbType.Int16, 0);
+                        db.AddInParameter(dbcom5, "@VendorRefNo", DbType.String, mCurrentID);
+                        db.AddInParameter(dbcom5, "@Type_of_GAUGE_Test_Equipment", DbType.String, dt5.Rows[i]["TestEqip"]);
+                        db.AddInParameter(dbcom5, "@Test_Make", DbType.String, dt5.Rows[i]["TestEqipMake"]);
+                        db.AddInParameter(dbcom5, "@Least_Count", DbType.String, dt5.Rows[i]["TestLeastCount"]);
+                        db.AddInParameter(dbcom5, "@Range_of_MEASURMENT", DbType.String, dt5.Rows[i]["Rangeofmeasur"]);
+                        db.AddInParameter(dbcom5, "@CERTIFICATION_YEAR", DbType.String, dt5.Rows[i]["CertificationYear"]);
+                        db.AddInParameter(dbcom5, "@Year_of_purchase", DbType.String, dt5.Rows[i]["YearofPurchase"]);
+                        db.ExecuteNonQuery(dbcom5, dbTran);
+                    }
+                    for (int i = 0; i < dt6.Rows.Count; i++)
+                    {
+                        DbCommand dbcom6 = db.GetStoredProcCommand("sp_VendorRegistrationMultiGridAuthdistri");
+                        db.AddInParameter(dbcom6, "@Type", DbType.String, "Distributer");
+                        db.AddInParameter(dbcom6, "@VendorRefNo", DbType.String, mCurrentID);
+                        db.AddInParameter(dbcom6, "@MasterId", DbType.Int16, 0);
+                        db.AddInParameter(dbcom6, "@DistributorStreetAddress", DbType.String, dt6.Rows[i]["DAddress"]);
+                        db.AddInParameter(dbcom6, "@DistributorState", DbType.String, dt6.Rows[i]["DState"]);
+                        db.AddInParameter(dbcom6, "@DistributorPincode", DbType.String, dt6.Rows[i]["DPincode"]);
+                        db.AddInParameter(dbcom6, "@DistributorPhone", DbType.String, dt6.Rows[i]["DPhone"]);
+                        db.AddInParameter(dbcom6, "@DistributorFax", DbType.String, dt6.Rows[i]["DFax"]);
+                        db.AddInParameter(dbcom6, "@DistributorEmail", DbType.String, dt6.Rows[i]["DEmail"]);
+                        db.ExecuteNonQuery(dbcom6, dbTran);
+                    }
+                    for (int i = 0; i < dt7.Rows.Count; i++)
+                    {
+                        DbCommand dbcom7 = db.GetStoredProcCommand("sp_VendorRegistrationMultiGridJointVentureFacility");
+                        db.AddInParameter(dbcom7, "@Type", DbType.String, "JointVentureFacility");
+                        db.AddInParameter(dbcom7, "@VendorRefNo", DbType.String, mCurrentID);
+                        db.AddInParameter(dbcom7, "@MasterId", DbType.Int16, 0);
+                        db.AddInParameter(dbcom7, "@JointVentureName", DbType.String, dt7.Rows[i]["JVFName"]);
+                        db.AddInParameter(dbcom7, "@IsJointVentureCountry", DbType.String, dt7.Rows[i]["JVFIs"]);
+                        db.AddInParameter(dbcom7, "@CompleteAddress", DbType.String, dt7.Rows[i]["JVFAddress"]);
+                        db.AddInParameter(dbcom7, "@ContOfficialName", DbType.String, dt7.Rows[i]["JVFOffName"]);
+                        db.AddInParameter(dbcom7, "@TelephoneNo", DbType.String, dt7.Rows[i]["JVFTel"]);
+                        db.AddInParameter(dbcom7, "@FaxNo", DbType.String, dt7.Rows[i]["JVFFAX"]);
+                        db.AddInParameter(dbcom7, "@EmailId", DbType.String, dt7.Rows[i]["JVFEmail"]);
+                        db.ExecuteNonQuery(dbcom7, dbTran);
+                    }
+                    for (int i = 0; i < dt8.Rows.Count; i++)
+                    {
+                        DbCommand dbcom8 = db.GetStoredProcCommand("sp_VendorRegistrationMultiGridOutsourcing");
+                        db.AddInParameter(dbcom8, "@Type", DbType.String, "Outsourcing");
+                        db.AddInParameter(dbcom8, "@VendorRefNo", DbType.String, mCurrentID);
+                        db.AddInParameter(dbcom8, "@MasterId", DbType.Int16, 0);
+                        db.AddInParameter(dbcom8, "@OutsourcingMainEquipment", DbType.String, dt8.Rows[i]["MEquipment"]);
+                        db.AddInParameter(dbcom8, "@OutsourcingTestEquip", DbType.String, dt8.Rows[i]["TEquipment"]);
+                        db.AddInParameter(dbcom8, "@OutsourcingProcessfacility", DbType.String, dt8.Rows[i]["PFacility"]);
+                        db.AddInParameter(dbcom8, "@OutsoursingNameAddressofSubContractor", DbType.String, dt8.Rows[i]["NASub"]);
+                        db.ExecuteNonQuery(dbcom8, dbTran);
+                    }
+                    for (int i = 0; i < dt9.Rows.Count; i++)
+                    {
+                        DbCommand dbcom9 = db.GetStoredProcCommand("sp_VendorRegistrationMultiGridImage");
+                        db.AddInParameter(dbcom9, "@Type", DbType.String, "FCertificate");
+                        db.AddInParameter(dbcom9, "@VendorRefNo", DbType.String, mCurrentID);
+                        db.AddInParameter(dbcom9, "@ImageID", DbType.Int16, dt9.Rows[i]["ImageID"]);
+                        db.AddInParameter(dbcom9, "@Name", DbType.String, dt9.Rows[i]["CertificateName"]);
+                        db.AddInParameter(dbcom9, "@Path", DbType.String, dt9.Rows[i]["CertificateImage"]);
+                        db.ExecuteNonQuery(dbcom9, dbTran);
+                    }
+                    for (int i = 0; i < dt10.Rows.Count; i++)
+                    {
+                        DbCommand dbcom10 = db.GetStoredProcCommand("sp_VendorRegistrationMultiGridImage");
+                        db.AddInParameter(dbcom10, "@Type", DbType.String, "QCertificate");
+                        db.AddInParameter(dbcom10, "@VendorRefNo", DbType.String, mCurrentID);
+                        db.AddInParameter(dbcom10, "@ImageID", DbType.Int16, dt10.Rows[i]["ImageID"]);
+                        db.AddInParameter(dbcom10, "@Name", DbType.String, dt10.Rows[i]["CertificateName"]);
+                        db.AddInParameter(dbcom10, "@Path", DbType.String, dt10.Rows[i]["CertificateImage"]);
+                        db.ExecuteNonQuery(dbcom10, dbTran);
+                    }
+                    dbTran.Commit();
+                    _msg = "Save";
+                    _sysMsg = "Save";
+                    return "Save";
+                }
+                catch (Exception ex)
+                {
+                    dbTran.Rollback();
+                    _msg = ex.Message;
+                    _sysMsg = "";
+                    return _sysMsg;
+                }
+                finally
+                {
+                    dbCon.Close();
+                }
+            }
+        }
+        public string SaveVendorCompanyInfo2(DataTable dt1, string mCurrentID, out string _sysMsg, out string _msg)
+        {
+            using (DbConnection dbCon = db.CreateConnection())
+            {
+                dbCon.Open();
+                DbTransaction dbTran = dbCon.BeginTransaction();
+                try
+                {
+                    for (int i = 0; i < dt1.Rows.Count; i++)
+                    {
+                        DbCommand dbcom1 = db.GetStoredProcCommand("sp_VendorRegistrationMultiGridOEM");
+                        db.AddInParameter(dbcom1, "@MasterId", DbType.Int16, 0);
+                        db.AddInParameter(dbcom1, "@VendorRefNo", DbType.String, mCurrentID);
+                        db.AddInParameter(dbcom1, "@OEMName", DbType.String, dt1.Rows[i]["FactoryName1"]);
+                        db.AddInParameter(dbcom1, "@OEMAddress", DbType.String, dt1.Rows[i]["CAddress1"]);
+                        db.AddInParameter(dbcom1, "@OEMCountry", DbType.String, dt1.Rows[i]["OEM1"]);
+                        db.AddInParameter(dbcom1, "@OEMOfficialName", DbType.String, dt1.Rows[i]["COfficialName1"]);
+                        db.AddInParameter(dbcom1, "@OEMTelephoneNo", DbType.String, dt1.Rows[i]["TeleNo1"]);
+                        db.AddInParameter(dbcom1, "@OEMFaxNo", DbType.String, dt1.Rows[i]["FaxNo1"]);
+                        db.AddInParameter(dbcom1, "@OEMEmailId", DbType.String, dt1.Rows[i]["EmailId1"]);
+                        db.AddInParameter(dbcom1, "@FileAuthorization", DbType.String, dt1.Rows[i]["AUTHRIZATION1"]);
+                        db.ExecuteNonQuery(dbcom1, dbTran);
+                    }
+                    dbTran.Commit();
+                    _msg = "Save";
+                    _sysMsg = "Save";
+                    return "Save";
+                }
+                catch (Exception ex)
+                {
+                    dbTran.Rollback();
+                    _msg = ex.Message;
+                    _sysMsg = "";
+                    return _sysMsg;
+                }
+                finally
+                {
+                    dbCon.Close();
+                }
+            }
+        }
+        public string SaveVendorRegisNoDetails(HybridDictionary HySaveVendorRegisdetail, DataTable dtRegisDetails, out string _sysMsg, out string _msg)
+        {
+            using (DbConnection dbCon = db.CreateConnection())
+            {
+                string mCurrentID = "";
+                dbCon.Open();
+                DbTransaction dbTran = dbCon.BeginTransaction();
+                try
+                {
+                    DbCommand cmd = db.GetStoredProcCommand("sp_VendorRegisNoDetails");
+                    db.AddInParameter(cmd, "@VendorRefNo", DbType.String, HySaveVendorRegisdetail["VendorRefNo"]);
+                    db.AddInParameter(cmd, "@Is_PANTAN", DbType.String, HySaveVendorRegisdetail["Is_PANTAN"]);
+                    db.AddInParameter(cmd, "@PanTan_No", DbType.String, HySaveVendorRegisdetail["PanTan_No"].ToString().Trim());
+                    db.AddInParameter(cmd, "@GSTNo", DbType.String, HySaveVendorRegisdetail["GSTNo"].ToString().Trim());
+                    db.AddInParameter(cmd, "@UAM", DbType.String, HySaveVendorRegisdetail["UAM"]);
+                    db.AddInParameter(cmd, "@CIN", DbType.String, HySaveVendorRegisdetail["CIN"]);
+                    db.AddInParameter(cmd, "@IsRegisterdwithgovt", DbType.String, HySaveVendorRegisdetail["IsRegisterdwithgovt"]);
+                    db.AddOutParameter(cmd, "@ReturnID", DbType.String, 20);
+                    db.ExecuteNonQuery(cmd, dbTran);
+                    mCurrentID = db.GetParameterValue(cmd, "@ReturnID").ToString();
+                    for (int i = 0; i < dtRegisDetails.Rows.Count; i++)
+                    {
+                        DbCommand dbcom1 = db.GetStoredProcCommand("sp_VendorRegistrationMultiGridRegisNoDetails");
+                        db.AddInParameter(dbcom1, "@VendorRefNo", DbType.String, mCurrentID);
+                        db.AddInParameter(dbcom1, "@Name_PSU_UnderGovt", DbType.String, dtRegisDetails.Rows[i]["GName"]);
+                        db.AddInParameter(dbcom1, "@RegistrationNo", DbType.String, dtRegisDetails.Rows[i]["GRegNo"]);
+                        db.AddInParameter(dbcom1, "@Certificate_valid_upto", DbType.String, dtRegisDetails.Rows[i]["GcertifiValid"]);
+                        db.AddInParameter(dbcom1, "@Upload_Registration_Certificate", DbType.String, dtRegisDetails.Rows[i]["UCertificate"]);
+                        db.ExecuteNonQuery(dbcom1, dbTran);
+                    }
+                    dbTran.Commit();
+                    _msg = "Save";
+                    _sysMsg = "Save";
+                    return "Save";
+                }
+                catch (Exception ex)
+                {
+                    dbTran.Rollback();
+                    _msg = ex.Message;
+                    _sysMsg = "";
+                    return _sysMsg;
+                }
+                finally
+                {
+                    dbCon.Close();
+                }
+            }
+        }
+        public string SaveVendorAccountInfo(DataTable dt1, DataTable dt2, string mCurrentID, out string _sysMsg, out string _msg)
+        {
+            using (DbConnection dbCon = db.CreateConnection())
+            {
+                dbCon.Open();
+                DbTransaction dbTran = dbCon.BeginTransaction();
+                try
+                {
+                    for (int i = 0; i < dt1.Rows.Count; i++)
+                    {
+                        DbCommand dbcom1 = db.GetStoredProcCommand("sp_VendorRegistrationMultiTurnOver");
+                        db.AddInParameter(dbcom1, "@VendorRefNo", DbType.String, mCurrentID);
+                        db.AddInParameter(dbcom1, "@FinancialYear", DbType.String, dt1.Rows[i]["FinancialYear"]);
+                        db.AddInParameter(dbcom1, "@CurrentAsset", DbType.String, dt1.Rows[i]["CurrentAsset"]);
+                        db.AddInParameter(dbcom1, "@CurrentLiblities", DbType.String, dt1.Rows[i]["CurrentLiblities"]);
+                        db.AddInParameter(dbcom1, "@ProfitLoss", DbType.String, dt1.Rows[i]["ProfitLoss"]);
+                        db.AddInParameter(dbcom1, "@BalanceSheet", DbType.String, dt1.Rows[i]["BalanceSheet"]);
+                        db.ExecuteNonQuery(dbcom1, dbTran);
+                    }
+                    for (int i = 0; i < dt1.Rows.Count; i++)
+                    {
+                        DbCommand dbcom2 = db.GetStoredProcCommand("sp_VendorRegistrationMultiAccount");
+                        db.AddInParameter(dbcom2, "@VendorRefNo", DbType.String, mCurrentID);
+                        db.AddInParameter(dbcom2, "@NameofBank", DbType.String, dt2.Rows[i]["NameofBank"]);
+                        db.AddInParameter(dbcom2, "@TypeofAccount", DbType.String, dt2.Rows[i]["TypeofAccount"]);
+                        db.AddInParameter(dbcom2, "@AccountNo", DbType.String, dt2.Rows[i]["AccountNo"]);
+                        db.AddInParameter(dbcom2, "@MICRCode", DbType.String, dt2.Rows[i]["MICRCode"]);
+                        db.AddInParameter(dbcom2, "@IFSCCode", DbType.String, dt2.Rows[i]["IFSCCode"]);
+                        db.AddInParameter(dbcom2, "@Certificate", DbType.String, dt2.Rows[i]["Certificate"]);
+                        db.ExecuteNonQuery(dbcom2, dbTran);
+                    }
+                    dbTran.Commit();
+                    _msg = "Save";
+                    _sysMsg = "Save";
+                    return "Save";
+                }
+                catch (Exception ex)
+                {
+                    dbTran.Rollback();
+                    _msg = ex.Message;
+                    _sysMsg = "";
+                    return _sysMsg;
+                }
+                finally
+                {
+                    dbCon.Close();
+                }
+            }
+        }
+        public string SaveVendorDefence(DataTable dt1, DataTable dt2, DataTable dt3, DataTable dt4, DataTable dt5, string mCurrentID, out string _sysMsg, out string _msg)
+        {
+            using (DbConnection dbCon = db.CreateConnection())
+            {
+                dbCon.Open();
+                DbTransaction dbTran = dbCon.BeginTransaction();
+                try
+                {
+                    for (int i = 0; i < dt1.Rows.Count; i++)
+                    {
+                        DbCommand dbcom1 = db.GetStoredProcCommand("sp_VendorRegistrationMultiGridProductDetails");
+                        db.AddInParameter(dbcom1, "@VendorRefNo", DbType.String, mCurrentID);
+                        db.AddInParameter(dbcom1, "@ProductNomenClature", DbType.String, dt1.Rows[i]["Nomenclature"]);
+                        db.AddInParameter(dbcom1, "@NatoGroup", DbType.Int64, dt1.Rows[i]["NatoGroup"]);
+                        db.AddInParameter(dbcom1, "@NatoClass", DbType.Int64, dt1.Rows[i]["NatoClass"]);
+                        db.AddInParameter(dbcom1, "@ItemCode", DbType.Int64, dt1.Rows[i]["ItemCode"]);
+                        db.AddInParameter(dbcom1, "@HSNCode", DbType.String, dt1.Rows[i]["HSNCode"]);
+                        db.ExecuteNonQuery(dbcom1, dbTran);
+                    }
+                    for (int i = 0; i < dt2.Rows.Count; i++)
+                    {
+                        DbCommand dbcom2 = db.GetStoredProcCommand("sp_VendorRegistrationMultiGridTechnologyDetails");
+                        db.AddInParameter(dbcom2, "@VendorRefNo", DbType.String, mCurrentID);
+                        db.AddInParameter(dbcom2, "@ProductNomenClature1", DbType.String, dt2.Rows[i]["TechNomenclature"]);
+                        db.AddInParameter(dbcom2, "@TechnologyLevel1", DbType.Int64, dt2.Rows[i]["Technology1"]);
+                        db.AddInParameter(dbcom2, "@TechnologyLevel2", DbType.Int64, dt2.Rows[i]["Technology2"]);
+                        db.AddInParameter(dbcom2, "@TechnologyLevel3", DbType.Int64, dt2.Rows[i]["Technology3"]);
+                        db.ExecuteNonQuery(dbcom2, dbTran);
+                    }
+                    for (int i = 0; i < dt3.Rows.Count; i++)
+                    {
+                        DbCommand dbcom3 = db.GetStoredProcCommand("sp_VendorRegistrationMultiGridSourceRawMaterial");
+                        db.AddInParameter(dbcom3, "@VendorRefNo", DbType.String, mCurrentID);
+                        db.AddInParameter(dbcom3, "@Items", DbType.String, dt3.Rows[i]["Items"]);
+                        db.AddInParameter(dbcom3, "@BasicRawMeterial", DbType.String, dt3.Rows[i]["RawMeterial"]);
+                        db.AddInParameter(dbcom3, "@SourceofMaterial", DbType.Int64, dt3.Rows[i]["SourceMeterial"]);
+                        db.AddInParameter(dbcom3, "@Major_Raw_Material_Suppliers", DbType.String, dt3.Rows[i]["MeterailSupplier"]);
+                        db.ExecuteNonQuery(dbcom3, dbTran);
+                    }
+                    for (int i = 0; i < dt4.Rows.Count; i++)
+                    {
+                        DbCommand dbcom4 = db.GetStoredProcCommand("sp_VendorRegistrationMultiGridIteProducedSupplied");
+                        db.AddInParameter(dbcom4, "@VendorRefNo", DbType.String, mCurrentID);
+                        db.AddInParameter(dbcom4, "@Reputed_Customer", DbType.String, dt4.Rows[i]["NameCust"]);
+                        db.AddInParameter(dbcom4, "@Description", DbType.String, dt4.Rows[i]["DesStoreSupp"]);
+                        db.AddInParameter(dbcom4, "@SupplyNoDate", DbType.String, dt4.Rows[i]["OderNoorDate"]);
+                        db.AddInParameter(dbcom4, "@OrderQuantity", DbType.String, dt4.Rows[i]["OrderQty"]);
+                        db.AddInParameter(dbcom4, "@SuppliedQuantity", DbType.String, dt4.Rows[i]["ValueQtySupp"]);
+                        db.AddInParameter(dbcom4, "@Date2", DbType.Date, dt4.Rows[i]["DateofLastSupp"]);
+                        db.ExecuteNonQuery(dbcom4, dbTran);
+                    }
+                    for (int i = 0; i < dt5.Rows.Count; i++)
+                    {
+                        DbCommand dbcom5 = db.GetStoredProcCommand("sp_VendorRegistrationMultiGridIteProducedNotSupplied");
+                        db.AddInParameter(dbcom5, "@VendorRefNo", DbType.String, mCurrentID);
+                        db.AddInParameter(dbcom5, "@Reputed_Customer1", DbType.String, dt5.Rows[i]["NameCust1"]);
+                        db.AddInParameter(dbcom5, "@Description1", DbType.String, dt5.Rows[i]["DesStoreSupp1"]);
+                        db.AddInParameter(dbcom5, "@SupplyNoDate1", DbType.String, dt5.Rows[i]["OderNoorDate1"]);
+                        db.AddInParameter(dbcom5, "@OrderQuantity1", DbType.String, dt5.Rows[i]["OrderQty1"]);
+                        db.AddInParameter(dbcom5, "@SuppliedQuantity1", DbType.String, dt5.Rows[i]["ValueQtySupp1"]);
+                        db.AddInParameter(dbcom5, "@Date21", DbType.Date, dt5.Rows[i]["DateofLastSupp1"]);
+                        db.ExecuteNonQuery(dbcom5, dbTran);
                     }
                     dbTran.Commit();
                     _msg = "Save";

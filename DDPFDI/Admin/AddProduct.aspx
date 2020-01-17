@@ -198,6 +198,20 @@
                                                             </div>
                                                         </div>
                                                     </div>
+                                                    <div class="clearfix mt5"></div>
+                                                    <div class="col-sm-12">
+                                                        <div class="form-group">
+                                                            <label>While uploading drawing and specification of the item on indinization portal , please ensure that there is</label>
+                                                            <span class="mandatory">*</span>
+                                                            <div class="fr">
+                                                                <asp:CheckBoxList ID="chklistdeclarationimage" runat="server" RepeatColumns="3" RepeatDirection="Horizontal" RepeatLayout="Table">
+                                                                    <asp:ListItem Selected="True" Value="No IPR issue" Enabled="false">1. No IPR issue</asp:ListItem>
+                                                                    <asp:ListItem Selected="True" Value="No violation of TOT agreement" Enabled="false">2. No violation of TOT agreement</asp:ListItem>
+                                                                    <asp:ListItem Selected="True" Value="No violation of Security Concern" Enabled="false">3. No violation of Security Concern</asp:ListItem>
+                                                                </asp:CheckBoxList>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </ContentTemplate>
                                         </asp:UpdatePanel>

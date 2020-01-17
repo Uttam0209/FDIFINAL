@@ -1,5 +1,6 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="ProductNSNWise.aspx.cs" Inherits="Admin_ProductNSNWise" MasterPageFile="~/Admin/MasterPage.master" %>
 
+<%@ Register Assembly="System.Web.DataVisualization, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" Namespace="System.Web.UI.DataVisualization.Charting" TagPrefix="asp" %>
 <asp:Content ID="head" runat="server" ContentPlaceHolderID="head">
 </asp:Content>
 <asp:Content ID="inner" runat="server" ContentPlaceHolderID="ContentPlaceHolder1">
@@ -29,11 +30,36 @@
             <div class="addfdi">
                 <div class="row">
                     <div class="col-md-12">
+
+
+                        <div class="white-box analytics-info last-fdi">
+                            <div id="chart_div1">
+                            </div>
+                        </div>
+
+
+
                         <div class="text-center">
                             <asp:Label ID="lblmsg" runat="server" CssClass="label label-default text-center"></asp:Label>
                         </div>
                         <div class="clearfix mt10"></div>
                         <asp:Panel ID="pan1" runat="server">
+                            <div class="text-center" style="overflow-x: auto;">
+                                <asp:Chart ID="crtCompGraph" runat="server" Height="500px" Width="1100px" OnClick="crtCompGraph_Click">
+                                    <Titles>
+                                        <asp:Title ShadowOffset="3" Name="Company Items Product Industry domain" />
+                                    </Titles>
+                                    <Legends>
+                                        <asp:Legend Alignment="Center" Docking="Bottom" IsTextAutoFit="true" Title="PRODUCT (INDUSTRY DOMAIN) WISE VALUE" Name="Default" LegendStyle="Row" />
+                                    </Legends>
+                                    <Series>
+                                        <asp:Series Name="Default" IsValueShownAsLabel="true" Color="#ccccff" ChartType="Column" YValuesPerPoint="2"></asp:Series>
+                                    </Series>
+                                    <ChartAreas>
+                                        <asp:ChartArea Name="ChartArea1" BorderWidth="0"></asp:ChartArea>
+                                    </ChartAreas>
+                                </asp:Chart>
+                            </div>
                             <div class="text-center" style="overflow-x: auto;">
                                 <asp:GridView ID="gvnsngroup" runat="server" Class="commonAjaxTbl dataTable master-company-table ViewProductTable table 
                                   display responsive no-wrap table-hover manage-user Grid table-responsive"
@@ -61,6 +87,23 @@
                         </asp:Panel>
                         <div class="clearfix mt10"></div>
                         <asp:Panel ID="pan2" runat="server" Visible="false">
+                            <div class="text-center">
+                                <asp:Chart ID="crtSubdomain" runat="server" Height="500px" Width="1100px" OnClick="crtSubdomain_Click">
+                                    <Titles>
+                                        <asp:Title ShadowOffset="3" Name="Company Items Product Industry domain" />
+                                    </Titles>
+                                    <Legends>
+                                        <asp:Legend Alignment="Center" Docking="Bottom" IsTextAutoFit="true" Title="PRODUCT (INDUSTRY SUB DOMAIN) WISE VALUE" Name="SubDomian" LegendStyle="Row" />
+                                    </Legends>
+                                    <Series>
+                                        <asp:Series Name="SubDomian" IsValueShownAsLabel="true" Color="#ffff99" ChartType="StackedColumn"></asp:Series>
+                                    </Series>
+                                    <ChartAreas>
+                                        <asp:ChartArea Name="crtsub" BorderWidth="0"></asp:ChartArea>
+                                    </ChartAreas>
+                                </asp:Chart>
+                            </div>
+                            <div class="clearfix mt10"></div>
                             <div class="text-center">
                                 <asp:GridView ID="gvnsngroupclass" runat="server" AutoGenerateColumns="false"
                                     Class="commonAjaxTbl dataTable master-company-table ViewProductTable table 
@@ -93,5 +136,4 @@
             </div>
         </div>
     </div>
-
 </asp:Content>

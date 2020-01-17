@@ -48,6 +48,15 @@
                                         <h3>MOD Vendor Registration</h3>
                                         <p>Please provide all required details to register your business with us</p>
                                         <div class="clearfix mt10"></div>
+                                        <div class="form-group">
+                                            <div class="col-sm-5">
+                                                DPSU you want to apply 
+                                            </div>
+                                            <div class="col-sm-7">
+                                                <asp:CheckBoxList ID="chkdpsu" runat="server" RepeatColumns="5" RepeatDirection="Horizontal" RepeatLayout="Flow">
+                                                </asp:CheckBoxList>
+                                            </div>
+                                        </div>
 
                                         <div class="form-group">
                                             <div class="col-sm-5">

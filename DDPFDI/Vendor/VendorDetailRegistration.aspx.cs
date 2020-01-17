@@ -56,7 +56,7 @@ public partial class Vendor_VendorDetailRegistration : System.Web.UI.Page
                 DataTable DtGetRegisVendor = Lo.RetriveVendor(0, Enc.DecryptData(Session["VendorRefNo"].ToString()), "", "RetriveData");
                 if (DtGetRegisVendor.Rows.Count > 0)
                 {
-                    txtbusinessname.Text = DtGetRegisVendor.Rows[0]["BusinessName"].ToString();
+                    txtbusinessname.Text = DtGetRegisVendor.Rows[0]["V_CompName"].ToString();
                     if (DtGetRegisVendor.Rows[0]["TypeOfBuisness"].ToString() != "")
                     {
                         ddltypeofbusiness.Items.FindByValue(DtGetRegisVendor.Rows[0]["TypeOfBuisness"].ToString()).Selected = true;
@@ -80,16 +80,16 @@ public partial class Vendor_VendorDetailRegistration : System.Web.UI.Page
                     {
                         txtfaxstdcode.Text = DtGetRegisVendor.Rows[0]["FaxNo"].ToString().Substring(0, 3);
                     }
-                    string b = DtGetRegisVendor.Rows[0]["FaxNo"].ToString();
-                    var result1 = b.Substring(b.IndexOf('-') + 1);
-                    if (txtfaxphoneno.Text != "")
-                    {
-                        txtfaxphoneno.Text = result1.ToString();
-                    }
+                    //string b = DtGetRegisVendor.Rows[0]["FaxNo"].ToString();
+                    //var result1 = b.Substring(b.IndexOf('-') + 1);
+                    //if (txtfaxphoneno.Text != "")
+                    //{
+                    //    txtfaxphoneno.Text = result1.ToString();
+                    //}
                     txtgstin.Text = DtGetRegisVendor.Rows[0]["GSTNo"].ToString();
-                    txtfirstname.Text = DtGetRegisVendor.Rows[0]["NodalOfficerFirstName"].ToString();
-                    txtmiddlename.Text = DtGetRegisVendor.Rows[0]["NodalOfficerMiddleName"].ToString();
-                    txtlastname.Text = DtGetRegisVendor.Rows[0]["NodalOfficerLastName"].ToString();
+                   // txtfirstname.Text = DtGetRegisVendor.Rows[0]["NodalOfficerFirstName"].ToString();
+                   // txtmiddlename.Text = DtGetRegisVendor.Rows[0]["NodalOfficerMiddleName"].ToString();
+                    txtlastname.Text = DtGetRegisVendor.Rows[0]["NodalOfficerName"].ToString();
                 }
                 #endregion
             }

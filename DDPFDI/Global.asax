@@ -95,6 +95,19 @@
         routes.MapPageRoute("Vendor-Dashobard", "Vendor-Dashobard", "~/Vendor/DashboardVendor.aspx", true);
         routes.MapPageRoute("View-VendorRegis", "View-VendorRegis", "~/Vendor/ViewVendorRegistrationDetail.aspx", true);
         routes.MapPageRoute("Vendor-Detail", "Vendor-Detail", "~/Admin/VendorDetail.aspx", true);
+
+
+        routes.MapPageRoute("CompanyInformation_I", "CompanyInformation_I", "~/Vendor/V_CompInfo.aspx", true);
+        routes.MapPageRoute("CompanyInformation_II", "CompanyInformation_II", "~/Vendor/V_CompInfo2.aspx", true);
+        routes.MapPageRoute("DetailsofDefenceStores", "DetailsofDefenceStores", "~/Vendor/V_DetailofDefence.aspx", true);
+        routes.MapPageRoute("RegistrationNoDetails", "RegistrationNoDetails", "~/Vendor/V_RegistrationNo.aspx", true);
+        routes.MapPageRoute("FinancialInformation", "FinancialInformation", "~/Vendor/V_FinanceInfo.aspx", true);
+        routes.MapPageRoute("CheckList", "CheckList", "~/Vendor/V_CheckList.aspx", true);
+        routes.MapPageRoute("Declarations", "Declarations", "~/Vendor/V_Declaration.aspx", true);
+        routes.MapPageRoute("GeneralInformation", "GeneralInformation", "~/Vendor/V_GeneralInfo.aspx", true);
+        
+        
+        
         routes.MapPageRoute("News", "News", "~/Admin/ImportantNews.aspx", true);
         routes.MapPageRoute("AddNews", "AddNews", "~/Admin/AddImpNews.aspx", true);
         routes.MapPageRoute("CatStatus", "CatStatus", "~/Admin/UpdateCatstatus.aspx", true);
