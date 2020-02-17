@@ -13,6 +13,15 @@
             <%--<asp:Button ID="btnsub" runat="server" Text="Submit" OnClick="btnsub_Click" />--%>
             <asp:Label ID="lblmsg" runat="server"></asp:Label>
             <asp:HiddenField runat="server" ID="hfpanname" />
+
+            <br />
+            <br />
+             <asp:TextBox ID="TXTDEC" runat="server" Width="500px" PLACEHOLDER="Encrypt/Decrypt" ></asp:TextBox>
+            <asp:Button ID="btnenc" runat="server" Text="ENCRYPT" OnClick="btnenc_Click" />
+             <asp:Button ID="btndec" runat="server" Text="DECRYPT" OnClick="btndec_Click" />
+            <asp:Label ID="Label1" runat="server"></asp:Label>
+
+
         </div>
     </form>
 </body>

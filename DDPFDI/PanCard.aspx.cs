@@ -8,9 +8,11 @@ using System.Net.Security;
 using System.Security.Cryptography;
 using System.Text;
 using System.Web.UI;
+using Encryption;
 
 public partial class PanCard : System.Web.UI.Page
 {
+    Cryptography Enc = new Cryptography();
     protected void Page_Load(object sender, EventArgs e)
     {
 
@@ -45,5 +47,17 @@ public partial class PanCard : System.Web.UI.Page
         {
             ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('" + ex.Message.ToString() + "')", true);
         }
+    }
+
+    protected void btnenc_Click(object sender, EventArgs e)
+    {
+        if (TXTDEC.Text != "")
+            lblmsg.Text= Enc.EncryptData(TXTDEC.Text);
+    }
+
+    protected void btndec_Click(object sender, EventArgs e)
+    {
+        if(TXTDEC.Text!="")
+        lblmsg.Text = Enc.DecryptData(TXTDEC.Text);
     }
 }
