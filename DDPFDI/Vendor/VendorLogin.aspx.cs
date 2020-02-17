@@ -1,12 +1,8 @@
 ﻿using System;
 using System.Collections.Specialized;
-using System.Configuration;
 using System.Data;
-using System.Globalization;
 using System.IO;
 using System.Net;
-using System.Security.Cryptography.Pkcs;
-using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Web;
@@ -14,6 +10,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using BusinessLayer;
 using Encryption;
+using System.Net.Security;
 
 public partial class Vendor_VendorLogin : System.Web.UI.Page
 {
@@ -272,123 +269,57 @@ public partial class Vendor_VendorLogin : System.Web.UI.Page
         else
         { divpan.Visible = false; }
     }
+    public Boolean AcceptAllCertifications(Object sender, System.Security.Cryptography.X509Certificates.X509Certificate certification, System.Security.Cryptography.X509Certificates.X509Chain chain, System.Net.Security.SslPolicyErrors sslPolicyErrors)
+    {
+        return true;
+    }
     protected void PanVerification()
     {
-        string URL = ConfigurationManager.AppSettings["URL"];
-        string PFXPassword = ConfigurationManager.AppSettings["PFXPassword"];
-        string Certificatename = ConfigurationManager.AppSettings["Certificatename"];
-        System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();
-        WriteTextFileLog("Application Started");
         try
         {
-            X509Certificate2 m = new X509Certificate2(HttpContext.Current.Server.MapPath("/PFX/") + Certificatename, PFXPassword);
-            byte[] bytes = encoding.GetBytes("V0224301^" + txtpanno.Text);
-            byte[] sig = Sign(bytes, m);
-            String sigi = Convert.ToBase64String(sig);
-            try
+            string requestUristring = string.Format("http://maketheindia.in/Pan-Verification?pancardNO=V0224301^" + txtpanno.Text);
+            ServicePointManager.ServerCertificateValidationCallback = new RemoteCertificateValidationCallback(AcceptAllCertifications);
+            HttpWebRequest myReq = (HttpWebRequest)WebRequest.Create(requestUristring);
+            HttpWebResponse myResp = (HttpWebResponse)myReq.GetResponse();
+            System.IO.StreamReader respStreamReader = new System.IO.StreamReader(myResp.GetResponseStream());
+            string responseString = respStreamReader.ReadToEnd();
+            string str = responseString.ToString();
+            char[] deli = { '^' };
+            string[] split = str.Split(deli);
+            string A = split[0];
+            if (A.Substring(13) == "1")
             {
-                StringBuilder postData = new StringBuilder();
-                postData.Append("data=V0224301^" + txtpanno.Text);
-                postData.Append("&signature=" + System.Web.HttpUtility.UrlEncode(sigi));
-                postData.Append("&version=" + 2);
-                byte[] data = encoding.GetBytes(postData.ToString());
-                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls
-                                                    | SecurityProtocolType.Tls11
-                                                    | SecurityProtocolType.Tls12
-                                                    | SecurityProtocolType.Ssl3;
-                HttpWebRequest myRequest = (HttpWebRequest)WebRequest.Create(URL);
-                myRequest.Method = "POST";
-                myRequest.ContentType = "application/x-www-form-urlencoded";
-                myRequest.ContentLength = data.Length;
-                ServicePointManager.ServerCertificateValidationCallback = new System.Net.Security.RemoteCertificateValidationCallback(AcceptAllCertifications);
-                ServicePointManager.Expect100Continue = true;
-                Stream newStream = myRequest.GetRequestStream();
-                newStream.Write(data, 0, data.Length);
-                Console.WriteLine("Send");
-                HttpWebResponse WebResp = (HttpWebResponse)myRequest.GetResponse();
-                Stream Answer = WebResp.GetResponseStream();
-                StreamReader _Answer = new StreamReader(Answer);
-                Console.WriteLine("Received");
-                string Response = _Answer.ReadToEnd();
-                string[] splitString = Response.ToString().Split('^');
-                hfpanname.Value = splitString[8];
-                if (txtpanno.Text == splitString[1] && splitString[2] == "E")
+                string B = split[1];
+                string C = split[3];
+                string D = split[4];
+                string E = split[6];
+                string F = split[7];
+                string G = split[8];
+                string H = split[10];
+                if (split[4].ToString() == "")
                 {
-                    panverifi.Attributes.Add("Class", "fa fa-check");
-                    lblmsgpan.ForeColor = System.Drawing.Color.Green;
-                    lblmsgpan.Text = "Valid Pan";
-                    lblmsgpan.Visible = true;
+                    hfpanname.Value = split[3].ToString();
                 }
                 else
                 {
-                    panverifi.Attributes.Add("Class", "fa fa-times");
-                    lblmsgpan.ForeColor = System.Drawing.Color.Red;
-                    lblmsgpan.Text = "Invalid Pan";
-                    lblmsgpan.Visible = true;
+                    hfpanname.Value = split[4] + " " + split[3].ToString();
                 }
-                newStream.Close();
+                panverifi.Attributes.Add("Class", "fa fa-check");
+                lblmsgpan.ForeColor = System.Drawing.Color.Green;
+                lblmsgpan.Text = "Valid Pan";
+                lblmsgpan.Visible = true;
             }
-            catch (Exception ex)
+            else
             {
-                WriteTextFileLog(ex.Message);
-                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('" + ex.Message.ToString() + "')", true);             
+                panverifi.Attributes.Add("Class", "fa fa-times");
+                lblmsgpan.ForeColor = System.Drawing.Color.Red;
+                lblmsgpan.Text = "Invalid Pan";
+                lblmsgpan.Visible = true;
             }
         }
         catch (Exception ex)
         {
-            WriteTextFileLog(ex.Message);
-            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('" + ex.Message.ToString() + "')", true);          
-        }
-        WriteTextFileLog("Application Ended");
-    }
-    public static byte[] Sign(byte[] data, X509Certificate2 certificate)
-    {
-        if (data == null)
-            throw new ArgumentNullException("data");
-        if (certificate == null)
-            throw new ArgumentNullException("certificate");
-        ContentInfo content = new ContentInfo(data);
-        SignedCms signedCms = new SignedCms(content, false);
-        CmsSigner signer = new CmsSigner(SubjectIdentifierType.IssuerAndSerialNumber, certificate);
-        signedCms.ComputeSignature(signer);
-        return signedCms.Encode();
-    }
-    public bool AcceptAllCertifications(object sender, System.Security.Cryptography.X509Certificates.X509Certificate certification, System.Security.Cryptography.X509Certificates.X509Chain chain, System.Net.Security.SslPolicyErrors sslPolicyErrors)
-    {
-        return true;
-    }
-    public static void WriteTextFileLog(string errorMessage, string type = "")
-    {
-        try
-        {
-
-            string path = HttpContext.Current.Server.MapPath("/Logs/") + DateTime.Today.ToString("dd-MM-yy") + ".txt";
-            if (!File.Exists(path))
-            {
-                File.Create(path).Close();
-            }
-            using (StreamWriter w = File.AppendText(path))
-            {
-                string err = "Message : " + errorMessage;
-                if (string.IsNullOrEmpty(type))
-                {
-                    w.WriteLine("Log Entry : " + DateTime.Now.ToString(CultureInfo.InvariantCulture) + " | " + err);
-                    //w.WriteLine(err)
-                    if (errorMessage.Contains("Requested item not found."))
-                    {
-                        //HttpContext.Current.Session["Error"] = "Access Denied"
-                    }
-                }
-                else if (type == "E")
-                {
-                    w.WriteLine("______________________________________________________________________________");
-                }
-                w.Flush();
-                w.Close();
-            }
-        }
-        catch (System.Exception ex)
-        {
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('" + ex.Message.ToString() + "')", true);
         }
     }
     protected void txtpanno_TextChanged(object sender, EventArgs e)

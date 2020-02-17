@@ -10,6 +10,10 @@ using Encryption;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls.WebParts;
 using System.Collections.Specialized;
+using System.Net.Security;
+using System.Net;
+using System.IO;
+using System.Text;
 
 public partial class Vendor_V_RegistrationNo : System.Web.UI.Page
 {
@@ -28,43 +32,77 @@ public partial class Vendor_V_RegistrationNo : System.Web.UI.Page
         {
             if (!IsPostBack)
             {
-                DataTable DtCheckSavedetails = Lo.RetriveVendor(0, Enc.DecryptData(Session["VendorRefNo"].ToString()), "", "CheckRegis");
-                if (DtCheckSavedetails.Rows.Count > 0)
-                {
-                    btnsubmit.Text = "Update";
-                    ViewState["Mid"] = Convert.ToInt64(DtCheckSavedetails.Rows[0]["VendorDetailID"].ToString());
-                    DataTable dtcheckmultigriddata = Lo.RetriveVendor(0, Enc.DecryptData(Session["VendorRefNo"].ToString()), "", "RetriveMultigrid");
-                    if (dtcheckmultigriddata.Rows.Count > 0)
-                    {
-                        DataView dv = new DataView(dtcheckmultigriddata);
-                        dv.RowFilter = "Type='RGovt'";
-                        if (dv.Count > 0)
-                        {
-                            gvgovtundertakingedit.DataSource = dv;
-                            gvgovtundertakingedit.DataBind();
-                            gvgovtundertaking.Visible = false;
-                            gvgovtundertakingedit.Visible = true;
-                        }
-                        else
-                        {
-                            SetInitialRowGovt();
-                            gvgovtundertaking.Visible = true;
-                            gvgovtundertakingedit.Visible = false;
-                        }
-                    }
-                    else
-                    {
-
-                    }
-                }
-                else
-                { }
+                PL();
             }
         }
         else
             ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert",
                    "alert('Session Expired,Please login again');window.location='VendorLogin'", true);
 
+    }
+    protected void PL()
+    {
+        DataTable DtCheckSavedetails = Lo.RetriveVendor(0, Enc.DecryptData(Session["VendorRefNo"].ToString()), "", "CheckRegis");
+        if (DtCheckSavedetails.Rows.Count > 0)
+        {
+            btnsubmit.Text = "Update";
+            ViewState["Mid"] = Convert.ToInt64(DtCheckSavedetails.Rows[0]["VendorDetailID"].ToString());
+            DataTable dtcheckmultigriddata = Lo.RetriveVendor(0, Enc.DecryptData(Session["VendorRefNo"].ToString()), "", "RetriveMultigrid");
+            if (dtcheckmultigriddata.Rows.Count > 0)
+            {
+                DataView dv = new DataView(dtcheckmultigriddata);
+                dv.RowFilter = "Type='RGovt'";
+                if (dv.Count > 0)
+                {
+                    gvgovtundertakingedit.DataSource = dv;
+                    gvgovtundertakingedit.DataBind();
+                    gvgovtundertaking.Visible = false;
+                    gvgovtundertakingedit.Visible = true;
+                }
+                else
+                {
+                    SetInitialRowGovt();
+                    gvgovtundertaking.Visible = true;
+                    gvgovtundertakingedit.Visible = false;
+                }
+            }
+            else
+            {
+
+            }
+            DataTable DtCheckSavedetails1 = Lo.RetriveVendor(0, Enc.DecryptData(Session["VendorRefNo"].ToString()), "", "CheckRegis2");
+            if (DtCheckSavedetails1.Rows.Count > 0)
+            {
+                ddldetailofpantan.SelectedValue = DtCheckSavedetails1.Rows[0]["Is_PANTAN"].ToString();
+                if (DtCheckSavedetails1.Rows[0]["Is_PANTAN"].ToString().Trim() == "2")
+                {
+                    divpantan.Visible = true;
+                    lblpantan.Text = "TAN NO";
+                }
+                else
+                {
+                    lblpantan.Text = "";
+                    divpantan.Visible = false;
+                }
+                txtpantan.Text = DtCheckSavedetails1.Rows[0]["PanTan_No"].ToString();
+                txtgstin.Text = DtCheckSavedetails1.Rows[0]["GSTNo"].ToString();
+                txtUAM.Text = DtCheckSavedetails1.Rows[0]["UAM"].ToString();
+                txtCIN.Text = DtCheckSavedetails1.Rows[0]["CIN"].ToString();
+                ddlDepartmentUndertakingPSU.SelectedValue = DtCheckSavedetails1.Rows[0]["IsRegisterdwithgovt"].ToString();
+                if (DtCheckSavedetails1.Rows[0]["IsRegisterdwithgovt"].ToString().Trim() == "1")
+                {
+                    divgovtundertaking.Visible = true;
+                    gvgovtundertaking.Visible = false;
+                    gvgovtundertakingedit.Visible = true;
+                }
+                else
+                {
+                    gvgovtundertaking.Visible = true;
+                    gvgovtundertakingedit.Visible = false;
+                    divgovtundertaking.Visible = true;
+                }
+            }
+        }
     }
     #endregion
     protected void ddldetailofpantan_SelectedIndexChanged(object sender, EventArgs e)
@@ -286,7 +324,7 @@ public partial class Vendor_V_RegistrationNo : System.Web.UI.Page
             SaveCodeForRegisNo();
             DtGOVTPSU = (DataTable)ViewState["GovtPsu"];
         }
-        string str = Lo.SaveVendorRegisNoDetails(HySaveVendorRegisdetail,DtGOVTPSU, out _sysMsg, out _msg);
+        string str = Lo.SaveVendorRegisNoDetails(HySaveVendorRegisdetail, DtGOVTPSU, out _sysMsg, out _msg);
         if (str != "")
         {
             if (btnsubmit.Text == "Update")
@@ -300,5 +338,142 @@ public partial class Vendor_V_RegistrationNo : System.Web.UI.Page
         }
         else
         { ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not saved.')", true); }
+    }
+    protected void lbsub_Click(object sender, EventArgs e)
+    {
+        try
+        {
+            if (lbsub.Text == "Edit & Update")
+            {
+                if (txtname.Text != "")
+                {
+                    Int32 ESaveID = Lo.UpdateGovt(Convert.ToInt64(ViewState["editGovtPsu"]), Enc.DecryptData(Session["VendorRefNo"].ToString()), txtname.Text, txtregno.Text, txtdatevalid.Text, hffile.Value);
+                    if (ESaveID != 0)
+                    {
+                        txtname.Text = "";
+                        txtregno.Text = "";
+                        txtdatevalid.Text = "";
+                        hffile.Value = "";
+                        ViewState["editGovtPsu"] = null;
+                        PL();
+                        ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record update successfully')", true);
+                    }
+                    else
+                    {
+                        ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not update successfully')", true);
+                    }
+                }
+            }
+            else if (lbsub.Text == "Submit")
+            {
+                Int32 ESaveID = Lo.InsertGovt(Enc.DecryptData(Session["VendorRefNo"].ToString()), "RGovt", txtname.Text, txtregno.Text, txtdatevalid.Text, hffile.Value);
+                if (ESaveID != 0)
+                {
+                    txtname.Text = "";
+                    txtregno.Text = "";
+                    txtdatevalid.Text = "";
+                    hffile.Value = "";
+                    ViewState["editGovtPsu"] = null;
+                    PL();
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record save successfully')", true);
+                }
+                else
+                {
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not save successfully')", true);
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('" + ex.Message + "')", true);
+        }
+    }
+    protected void gvgovtundertakingedit_RowCommand(object sender, GridViewCommandEventArgs e)
+    {
+        if (e.CommandName == "newsave")
+        {
+            btnsubmit.Text = "Submit";
+            txtname.Text = "";
+            txtregno.Text = "";
+            txtdatevalid.Text = "";
+            hffile.Value = "";
+            ViewState["editGovtPsu"] = null;
+            PL();
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "divoem", "showPopup();", true);
+        }
+        else if (e.CommandName == "newedit")
+        {
+            btnsubmit.Text = "Edit & Update";
+            int rowIndex = Convert.ToInt32(e.CommandArgument);
+            GridViewRow row = gvgovtundertakingedit.Rows[rowIndex];
+            HiddenField hfn = (HiddenField)gvgovtundertakingedit.Rows[rowIndex].FindControl("hfeditgovt");
+            txtname.Text = row.Cells[1].Text;
+            txtname.Text = row.Cells[2].Text;
+            txtregno.Text = row.Cells[3].Text;
+            txtdatevalid.Text = row.Cells[4].Text;
+            hffile.Value = row.Cells[5].Text;
+            ViewState["editGovtPsu"] = hfn.Value;
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "divgovt", "showPopup();", true);
+        }
+        else if (e.CommandName == "newdel")
+        {
+            Int32 Delid = Lo.DeleteEditGrid(Convert.ToInt32(e.CommandArgument.ToString()));
+            if (Delid != 0)
+            {
+                PL();
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record deleted successfull.')", true);
+            }
+            else
+            {
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not deleted.')", true);
+            }
+        }
+    }
+    public Boolean AcceptAllCertifications(Object sender, System.Security.Cryptography.X509Certificates.X509Certificate certification, System.Security.Cryptography.X509Certificates.X509Chain chain, System.Net.Security.SslPolicyErrors sslPolicyErrors)
+    {
+        return true;
+    }
+    protected void txtgstin_TextChanged(object sender, EventArgs e)
+    {
+        if (txtgstin.Text != "")
+        {
+
+            try
+            {
+                string strUrl = String.Format("https://betaows.digitallocker.gov.in/api/v1/web/utility/default/gstnverification.json");
+                WebRequest requestObjPost = WebRequest.Create(strUrl);
+                requestObjPost.Method = "POST";
+                requestObjPost.ContentType = "application/json"; 
+                requestObjPost.Headers.Add("ContentType", "application/json");
+                requestObjPost.Headers.Add("x-require-whisk-auth", "DigiLocker#2020");
+                //StringBuilder postData = new StringBuilder();
+                //postData.Append("GSTN_NO=" + txtgstin.Text);
+                string postData = "{\"GSTN_NO \":\"09AAAJD0880H1ZC\"}";
+                var result2 = "";
+                using (var streamWriter = new StreamWriter(requestObjPost.GetRequestStream()))
+                {
+                    streamWriter.Write(postData);
+                    streamWriter.Flush();
+                    streamWriter.Close();
+                    var httpResponse = (HttpWebResponse)requestObjPost.GetResponse();
+                    using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                    {
+                        result2 = streamReader.ReadToEnd();
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('" + ex.Message.ToString() + "')", true);
+            }
+
+
+
+
+
+        }
+        else
+        { }
     }
 }

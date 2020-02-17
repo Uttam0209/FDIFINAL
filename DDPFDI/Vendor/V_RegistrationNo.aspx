@@ -14,7 +14,7 @@
                 <div class="cacade-forms">
                     <div class="clearfix mt10"></div>
                     <div id="qpt" class="tab-pane">
-                        <asp:UpdatePanel ID="UpdatePanel2" runat="server" UpdateMode="Conditional">
+                        <asp:UpdatePanel ID="UpdatePanel2" runat="server">
                             <ContentTemplate>
                                 <asp:Panel ID="panstep3" runat="server">
                                     <div class="form-group">
@@ -43,7 +43,7 @@
                                             GSTIN
                                         </div>
                                         <div class="col-sm-7">
-                                            <asp:TextBox ID="txtgstin" runat="server" CssClass="form-control">
+                                            <asp:TextBox ID="txtgstin" runat="server" CssClass="form-control" OnTextChanged="txtgstin_TextChanged">
                                             </asp:TextBox>
                                         </div>
                                     </div>
@@ -131,7 +131,7 @@
                                         </asp:GridView>
                                         <asp:GridView runat="server" ID="gvgovtundertakingedit" CssClass="table table-hover" AutoGenerateColumns="false"
                                             ShowFooter="true" OnRowCreated="gvgovtundertaking_RowCreated"
-                                            CellPadding="4" ForeColor="#333333" GridLines="None">
+                                            CellPadding="4" ForeColor="#333333" GridLines="None" OnRowCommand="gvgovtundertakingedit_RowCommand">
                                             <AlternatingRowStyle BackColor="White" />
                                             <Columns>
                                                 <asp:TemplateField HeaderText="Sr.No">
@@ -149,8 +149,9 @@
                                                 </asp:TemplateField>
                                                 <asp:TemplateField HeaderText="Action">
                                                     <ItemTemplate>
+                                                        <asp:HiddenField runat="server" ID="hfeditgovt" Value='<%#Eval("MasterId") %>' />
                                                         <asp:LinkButton ID="lblsave" runat="server" CssClass="fa fa-save" CommandName="newsave" CommandArgument='<%#Eval("MasterId") %>'></asp:LinkButton>
-                                                        <asp:LinkButton ID="lblupdate" runat="server" CssClass="fa fa-edit" CommandName="newedit" CommandArgument='<%#Eval("MasterId") %>'></asp:LinkButton>
+                                                        <asp:LinkButton ID="lblupdate" runat="server" CssClass="fa fa-edit" CommandName="newedit" CommandArgument='<%#((GridViewRow) Container).RowIndex %>'></asp:LinkButton>
                                                         <asp:LinkButton ID="lbldelete" runat="server" CssClass="fa fa-trash" CommandName="newdel" CommandArgument='<%#Eval("MasterId") %>'></asp:LinkButton>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
@@ -176,9 +177,88 @@
                                 <asp:PostBackTrigger ControlID="btnsubmit" />
                             </Triggers>
                         </asp:UpdatePanel>
+                        <asp:UpdateProgress ID="UpdateProgress1" runat="server" AssociatedUpdatePanelID="UpdatePanel2">
+                            <ProgressTemplate>
+                                <div class="overlay-progress">
+                                    <div class="custom-progress-bar blue stripes">
+                                        <span></span>
+                                        <p>Processing</p>
+                                    </div>
+                                </div>
+                            </ProgressTemplate>
+                        </asp:UpdateProgress>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <%--Modal Popup End--%>
+    <div class="modal fade" id="divgovt" role="dialog" data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog" style="width: 400px;">
+            <asp:UpdatePanel ID="UpdatePanel10" runat="server">
+                <ContentTemplate>
+                    <div class="modal-content" runat="server" id="Div10">
+                        <div class="modal-header modal-header1">
+                            <button type="button" class="close close1" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Govt. Department/Undertaking/PSU under Ministry of Defence/Gem</h4>
+                        </div>
+                        <form class="form-horizontal changepassword" role="form">
+                            <div class="modal-body clearfix" style="padding: 0 20px;">
+                                <div class="form-group" style="margin: 0">
+                                    <label for="uname" class=" tetLable">
+                                        Name
+                                    </label>
+                                    <asp:TextBox runat="server" ID="txtname" placeholder="Name" Class="form-control"></asp:TextBox>
+                                </div>
+                                <div class="form-group" style="margin: 0">
+                                    <label for="uname" class=" tetLable">
+                                        Registration No	
+                                    </label>
+                                    <asp:TextBox runat="server" ID="txtregno" placeholder="Complete Address" TextMode="MultiLine" Class="form-control"></asp:TextBox>
+                                </div>
+                                <div class="form-group" style="margin: 0">
+                                    <label for="uname" class=" tetLable">
+                                        Certificate Valid Upto
+                                    </label>
+                                    <div class="input-append date" id="datePicker" data-date="12-02-2012" data-date-format="dd-mm-yyyy">
+                                        <span class="add-on"><i class="icon-th"></i></span>
+                                        <asp:TextBox ID="txtdatevalid" runat="server" CssClass="form-control datePicker"></asp:TextBox>
+                                    </div>
+                                </div>
+                                <div class="form-group" style="margin: 0">
+                                    <label for="uname" class=" tetLable">
+                                        File Authorization
+                                    </label>
+                                    <asp:HiddenField ID="hffile" runat="server" />
+                                    <asp:FileUpload runat="server" ID="fufile" Class="form-control" />
+                                </div>
+                                <div class="clearfix mt10"></div>
+                                <div class="form-group" style="margin: 0">
+                                    <asp:LinkButton ID="lbsub" runat="server" Text="Edit & Update" CssClass="btn btn-primary pull-right mr10" OnClick="lbsub_Click"></asp:LinkButton>
+                                </div>
+                                <div class="clearfix mt10"></div>
+                            </div>
+                        </form>
+                    </div>
+                </ContentTemplate>
+            </asp:UpdatePanel>
+        </div>
+    </div>
+    <script type="text/javascript">
+        function showPopup() {
+            $('#divgovt').modal('show', function () {
+            });
+        }
+    </script>
+    <script type="text/javascript">
+        function isNumberKey(evt) {
+            var charCode = (evt.which) ? evt.which : event.keyCode;
+            if (charCode != 46 && charCode > 31
+              && (charCode < 48 || charCode > 57))
+                return false;
+
+            return true;
+        }
+    </script>
+
 </asp:Content>

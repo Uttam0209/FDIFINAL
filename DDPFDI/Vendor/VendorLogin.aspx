@@ -119,7 +119,8 @@
                                     <p>Login using your username and password to :-</p>
                                     <p>
                                         If not registered, register as a Buyer for
-                                        <asp:LinkButton ID="lbvenregis" runat="server" Text="Free" OnClick="lbvenregis_Click"></asp:LinkButton>
+                                       <b>
+                                           <asp:LinkButton ID="lbvenregis" runat="server" Text="Free" OnClick="lbvenregis_Click"></asp:LinkButton></b>
                                 </div>
                             </div>
                         </div>
@@ -252,7 +253,7 @@
                                                             Name of firm/company 
                                                         </div>
                                                         <div class="col-sm-7">
-                                                            <asp:TextBox ID="txtbusinessname" runat="server" AutoPostBack="true" OnTextChanged="txtbusinessname_TextChanged" CssClass="form-control"></asp:TextBox>
+                                                            <asp:TextBox ID="txtbusinessname" runat="server" AutoPostBack="true" Style="text-transform: uppercase;" OnTextChanged="txtbusinessname_TextChanged" CssClass="form-control"></asp:TextBox>
                                                             <span runat="server" id="check"></span>
                                                             <asp:Label ID="lblbusinessname" runat="server" ForeColor="Green"></asp:Label>
                                                         </div>
@@ -299,7 +300,6 @@
                                             </div>
                                             <div class="item">
                                                 <div>
-
                                                     <div class="form-group">
                                                         <div class="col-sm-5">
                                                             Nodal officer Name<span class="mandatory">*</span>

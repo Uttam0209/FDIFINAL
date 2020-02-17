@@ -105,6 +105,7 @@
         routes.MapPageRoute("CheckList", "CheckList", "~/Vendor/V_CheckList.aspx", true);
         routes.MapPageRoute("Declarations", "Declarations", "~/Vendor/V_Declaration.aspx", true);
         routes.MapPageRoute("GeneralInformation", "GeneralInformation", "~/Vendor/V_GeneralInfo.aspx", true);
+        routes.MapPageRoute("VendorDetails", "VendorDetails", "~/Vendor/View_V_AllDetails.aspx", true);
         
         
         

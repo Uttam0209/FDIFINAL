@@ -19,7 +19,7 @@ public partial class Vendor_V_CompInfo2 : System.Web.UI.Page
     DataUtility Co = new DataUtility();
     HybridDictionary HySaveVendorRegisdetail = new HybridDictionary();
     private string _msg = string.Empty;
-    private string _sysMsg = string.Empty;  
+    private string _sysMsg = string.Empty;
     #endregion
     #region PageLoad
     protected void Page_Load(object sender, EventArgs e)
@@ -28,44 +28,48 @@ public partial class Vendor_V_CompInfo2 : System.Web.UI.Page
         {
             if (!IsPostBack)
             {
-                DataTable DtCheckSavedetails = Lo.RetriveVendor(0, Enc.DecryptData(Session["VendorRefNo"].ToString()), "", "CheckRegis");
-                if (DtCheckSavedetails.Rows.Count > 0)
-                {
-                    btnsubmit.Text = "Update";
-                    ViewState["Mid"] = Convert.ToInt64(DtCheckSavedetails.Rows[0]["VendorDetailID"].ToString());
-                    DataTable dtcheckmultigriddata = Lo.RetriveVendor(0, Enc.DecryptData(Session["VendorRefNo"].ToString()), "", "RetriveMultigrid");
-                    if (dtcheckmultigriddata.Rows.Count > 0)
-                    {
-                        DataView dv = new DataView(dtcheckmultigriddata);
-                        dv.RowFilter = "Type='OEM'";
-                        if (dv.Count > 0)
-                        {
-                            gveditoemnameadd.DataSource = dv;
-                            gveditoemnameadd.DataBind();
-                            gvOEMNameadd.Visible = false;
-                            gveditoemnameadd.Visible = true;
-                        }
-                        else
-                        {
-                            SetInitialRowOEMNameAddress();
-                            gvOEMNameadd.Visible = true;
-                            gveditoemnameadd.Visible = false;
-                        }
-                    }
-                    else
-                    {
-
-                    }
-                }
-                else
-                {
-                    SetInitialRowOEMNameAddress();
-                }
+                PageLoadM();
             }
         }
         else
             ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert",
                    "alert('Session Expired,Please login again');window.location='VendorLogin'", true);
+    }
+    protected void PageLoadM()
+    {
+        DataTable DtCheckSavedetails = Lo.RetriveVendor(0, Enc.DecryptData(Session["VendorRefNo"].ToString()), "", "CheckRegis");
+        if (DtCheckSavedetails.Rows.Count > 0)
+        {
+            btnsubmit.Text = "Update";
+            ViewState["Mid"] = Convert.ToInt64(DtCheckSavedetails.Rows[0]["VendorDetailID"].ToString());
+            DataTable dtcheckmultigriddata = Lo.RetriveVendor(0, Enc.DecryptData(Session["VendorRefNo"].ToString()), "", "RetriveMultigrid");
+            if (dtcheckmultigriddata.Rows.Count > 0)
+            {
+                DataView dv = new DataView(dtcheckmultigriddata);
+                dv.RowFilter = "Type='OEM'";
+                if (dv.Count > 0)
+                {
+                    gveditoemnameadd.DataSource = dv;
+                    gveditoemnameadd.DataBind();
+                    gvOEMNameadd.Visible = false;
+                    gveditoemnameadd.Visible = true;
+                }
+                else
+                {
+                    SetInitialRowOEMNameAddress();
+                    gvOEMNameadd.Visible = true;
+                    gveditoemnameadd.Visible = false;
+                }
+            }
+            else
+            {
+
+            }
+        }
+        else
+        {
+            SetInitialRowOEMNameAddress();
+        }
     }
     #endregion
     #region Name and Address of Product OEM
@@ -261,7 +265,7 @@ public partial class Vendor_V_CompInfo2 : System.Web.UI.Page
             TextBox TextBox_5 = (TextBox)gvOEMNameadd.Rows[i].Cells[5].FindControl("txttelephonenoMF1");
             TextBox TextBox_6 = (TextBox)gvOEMNameadd.Rows[i].Cells[6].FindControl("txtfaxnoMF1");
             TextBox TextBox_7 = (TextBox)gvOEMNameadd.Rows[i].Cells[7].FindControl("txtemailidMF1");
-            FileUpload fu1 = (FileUpload)gvOEMNameadd.Rows[i].Cells[8].FindControl("fuAUTHRIZATION1");          
+            FileUpload fu1 = (FileUpload)gvOEMNameadd.Rows[i].Cells[8].FindControl("fuAUTHRIZATION1");
             if (TextBox_1.Text != "" && TextBox_3.Text != "")
             {
                 drOEMS = dtOEMS.NewRow();
@@ -280,7 +284,7 @@ public partial class Vendor_V_CompInfo2 : System.Web.UI.Page
     }
     #endregion
     protected void SaveRegistration()
-    {  
+    {
         DataTable DtOEM = new DataTable();
         if (btnsubmit.Text == "Update")
         {
@@ -288,6 +292,7 @@ public partial class Vendor_V_CompInfo2 : System.Web.UI.Page
             {
                 SaveCodeForOEMProduct();
                 DtOEM = (DataTable)ViewState["OMF"];
+                PageLoadM();
             }
             else
             {
@@ -303,6 +308,7 @@ public partial class Vendor_V_CompInfo2 : System.Web.UI.Page
         {
             if (btnsubmit.Text == "Update")
             {
+                PageLoadM();
                 ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Successfully update company information')", true);
             }
             else
@@ -316,5 +322,107 @@ public partial class Vendor_V_CompInfo2 : System.Web.UI.Page
     protected void btnsubmit_Click(object sender, EventArgs e)
     {
         SaveRegistration();
-    }    
+    }
+    protected void gveditoemnameadd_RowCommand(object sender, GridViewCommandEventArgs e)
+    {
+        if (e.CommandName == "newsave")
+        {
+            btnsubmit.Text = "Submit";
+            txtname.Text = "";
+            txtcompadd.Text = "";
+            ddlcountry.SelectedIndex = -1;
+            txtofficialname.Text = "";
+            txttelephoneno.Text = "";
+            txtfaxno.Text = "";
+            txtemailid.Text = "";
+            hffile.Value = "";
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "divoem", "showPopup();", true);
+        }
+        else if (e.CommandName == "newedit")
+        {
+            btnsubmit.Text = "Edit & Update";
+            int rowIndex = Convert.ToInt32(e.CommandArgument);
+            GridViewRow row = gveditoemnameadd.Rows[rowIndex];
+            HiddenField hfn = (HiddenField)gveditoemnameadd.Rows[rowIndex].FindControl("hfeditoemname");
+            txtname.Text = row.Cells[1].Text;
+            txtcompadd.Text = row.Cells[2].Text;
+            ddlcountry.Text = row.Cells[3].Text;
+            txtofficialname.Text = row.Cells[4].Text;
+            txttelephoneno.Text = row.Cells[5].Text;
+            txtfaxno.Text = row.Cells[6].Text;
+            txtemailid.Text = row.Cells[7].Text;
+            hffile.Value = row.Cells[8].Text;
+            ViewState["editoem"] = hfn.Value;
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "divoem", "showPopup();", true);
+        }
+        else if (e.CommandName == "newdel")
+        {
+            Int32 Delid = Lo.DeleteEditGrid(Convert.ToInt32(e.CommandArgument.ToString()));
+            if (Delid != 0)
+            {
+                PageLoadM();
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record deleted successfull.')", true);
+            }
+            else
+            {
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not deleted.')", true);
+            }
+        }
+    }
+    protected void lbsub_Click(object sender, EventArgs e)
+    {
+        try
+        {
+            if (lbsub.Text == "Edit & Update")
+            {
+                if (txtname.Text != "")
+                {
+                    Int32 ESaveID = Lo.UpdateOEM(Convert.ToInt64(ViewState["editoem"]), Enc.DecryptData(Session["VendorRefNo"].ToString()), txtname.Text, txtcompadd.Text, ddlcountry.Text, txtofficialname.Text, txttelephoneno.Text, txtfaxno.Text, txtemailid.Text, hffile.Value);
+                    if (ESaveID != 0)
+                    {
+                        txtname.Text = "";
+                        txtcompadd.Text = "";
+                        ddlcountry.SelectedIndex = -1;
+                        txtofficialname.Text = "";
+                        txttelephoneno.Text = "";
+                        txtfaxno.Text = "";
+                        txtemailid.Text = "";
+                        hffile.Value = "";
+                        ViewState["editoem"] = null;
+                        PageLoadM();
+                        ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record update successfully')", true);
+                    }
+                    else
+                    {
+                        ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not update successfully')", true);
+                    }
+                }
+            }
+            else if (lbsub.Text == "Submit")
+            {
+                Int32 ESaveID = Lo.InsertOEM(Enc.DecryptData(Session["VendorRefNo"].ToString()), "OEM", txtname.Text, txtcompadd.Text, ddlcountry.Text, txtofficialname.Text, txttelephoneno.Text, txtfaxno.Text, txtemailid.Text, fufile.FileName);
+                if (ESaveID != 0)
+                {
+                    txtname.Text = "";
+                    txtcompadd.Text = "";
+                    ddlcountry.SelectedIndex = -1;
+                    txtofficialname.Text = "";
+                    txttelephoneno.Text = "";
+                    txtfaxno.Text = "";
+                    txtemailid.Text = "";
+                    hffile.Value = "";
+                    PageLoadM();
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record save successfully')", true);
+                }
+                else
+                {
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not save successfully')", true);
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('" + ex.Message + "')", true);
+        }
+    }
 }

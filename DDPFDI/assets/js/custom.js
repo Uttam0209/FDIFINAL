@@ -203,9 +203,9 @@
         $('#ContentPlaceHolder1_gvnsngroupclass').DataTable();
         $('#ContentPlaceHolder1_GridView1').DataTable();
     }
-    $('[data-fancybox="Prodgridviewgellry"]').fancybox({
-        // Options will go here
-    });
+    //$('[data-fancybox="Prodgridviewgellry"]').fancybox({
+    //    // Options will go here
+    //});
     // document.multiselect('#ddlenduser');
     $(function () {
         $('[id*=ddlenduser]').multiselect({

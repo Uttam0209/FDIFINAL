@@ -1401,12 +1401,53 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                 {
                     if (txtcountry.SelectedItem.Text != "Select")
                     {
-                        if (fuitemdescriptionfile.HasFile != false)
+                        string checklistdeclaration = "";
+                        foreach (ListItem chkd in chklistdeclarationimage.Items)
                         {
-                            int iFileSize = fuitemdescriptionfile.PostedFile.ContentLength;
-                            if (iFileSize > 5242880) // 5MB
+                            if (chkd.Selected == true)
                             {
-                                ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "alert('Maximum 5 Mb pdf file can be uploaded')", true);
+                                checklistdeclaration = checklistdeclaration + chkd;
+                            }
+                        }
+                        if (checklistdeclaration != "")
+                        {
+                            if (fuitemdescriptionfile.HasFile != false)
+                            {
+                                int iFileSize = fuitemdescriptionfile.PostedFile.ContentLength;
+                                if (iFileSize > 5242880) // 5MB
+                                {
+                                    ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "alert('Maximum 5 Mb pdf file can be uploaded')", true);
+                                }
+                                else
+                                {
+                                    if (fuimages.HasFile != false)
+                                    {
+                                        int filecount = 0;
+                                        filecount = Convert.ToInt32(fuimages.PostedFiles.Count.ToString());
+                                        if (filecount <= 4)
+                                        {
+                                            int iImageFileSize = fuimages.PostedFile.ContentLength;
+                                            if (iImageFileSize > 20971520)
+                                            {
+                                                ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert",
+                                                    "alert('Maximum 5 Mb each .jpg,.jpeg,.png,.tif images can be uploaded')", true);
+                                            }
+                                            else
+                                            {
+                                                SaveProductDescription();
+                                            }
+                                        }
+                                        else
+                                        {
+                                            ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert",
+                                                "alert('Maximum 4 files can be uploaded')", true);
+                                        }
+                                    }
+                                    else
+                                    {
+                                        SaveProductDescription();
+                                    }
+                                }
                             }
                             else
                             {
@@ -1441,33 +1482,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                         }
                         else
                         {
-                            if (fuimages.HasFile != false)
-                            {
-                                int filecount = 0;
-                                filecount = Convert.ToInt32(fuimages.PostedFiles.Count.ToString());
-                                if (filecount <= 4)
-                                {
-                                    int iImageFileSize = fuimages.PostedFile.ContentLength;
-                                    if (iImageFileSize > 20971520)
-                                    {
-                                        ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert",
-                                            "alert('Maximum 5 Mb each .jpg,.jpeg,.png,.tif images can be uploaded')", true);
-                                    }
-                                    else
-                                    {
-                                        SaveProductDescription();
-                                    }
-                                }
-                                else
-                                {
-                                    ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert",
-                                        "alert('Maximum 4 files can be uploaded')", true);
-                                }
-                            }
-                            else
-                            {
-                                SaveProductDescription();
-                            }
+                            ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "alert('Please select declaration tab and select all checkbox before submit.')", true);
                         }
                     }
                     else

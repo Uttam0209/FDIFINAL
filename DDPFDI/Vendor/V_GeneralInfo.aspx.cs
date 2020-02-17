@@ -20,7 +20,6 @@ public partial class Vendor_V_GeneralInfo : System.Web.UI.Page
     HybridDictionary HySaveVendorRegisdetail = new HybridDictionary();
     private string _msg = string.Empty;
     private string _sysMsg = string.Empty;
-    Int64 Mid = 0;
     #endregion
     #region PageLoad
     protected void Page_Load(object sender, EventArgs e)
@@ -33,62 +32,80 @@ public partial class Vendor_V_GeneralInfo : System.Web.UI.Page
                 SetInitialRow();
                 BindTypeOfBusiness();
                 Bindbusinesssector();
-                #endregion
-                #region Registration Date Retrive
-                DataTable DtGetRegisVendor = Lo.RetriveVendor(0, Enc.DecryptData(Session["VendorRefNo"].ToString()), "", "RetriveData");
-                if (DtGetRegisVendor.Rows.Count > 0)
-                {
-                    if (DtGetRegisVendor.Rows[0]["TypeOfBuisness"].ToString() != "")
-                    {
-                        ddltypeofbusiness.Items.FindByValue(DtGetRegisVendor.Rows[0]["TypeOfBuisness"].ToString()).Selected = true;
-                    }
-                    //ddltypeofbusiness.SelectedItem.Enabled = false;
-                    if (DtGetRegisVendor.Rows[0]["BusinessSector"].ToString() != "")
-                    {
-                        ddlbusinesssector.Items.FindByValue(DtGetRegisVendor.Rows[0]["BusinessSector"].ToString()).Selected = true;
-                    }
-                    if (DtGetRegisVendor.Rows[0]["RegistrationCategory"].ToString() != "")
-                    {
-                        ddlregiscategory.Items.FindByText(DtGetRegisVendor.Rows[0]["RegistrationCategory"].ToString()).Selected = true;
-                    }
-                    if (DtGetRegisVendor.Rows[0]["LandlineNo"].ToString() != "" && DtGetRegisVendor.Rows[0]["FaxNo"].ToString() != "")
-                    {
-                        ddlregiscategory.SelectedValue = DtGetRegisVendor.Rows[0]["RegistrationCategory"].ToString();
-                        txtstdcode.Text = DtGetRegisVendor.Rows[0]["LandlineNo"].ToString().Substring(0, 3);
-                        txtphoneno.Text = DtGetRegisVendor.Rows[0]["LandlineNo"].ToString().Substring(4);
-                        txtfaxstdcode.Text = DtGetRegisVendor.Rows[0]["FaxNo"].ToString().Substring(0, 3);
-                        txtfaxphoneno.Text = DtGetRegisVendor.Rows[0]["FaxNo"].ToString().Substring(4);
-                        DataTable DtMultigrid1 = Lo.RetriveVendor(0, Enc.DecryptData(Session["VendorRefNo"].ToString()), "", "MulGrid1");
-                        if (DtMultigrid1.Rows.Count > 0)
-                        {
-                            ViewState["EnterNameof"] = DtMultigrid1;
-                            gvgridNameof.DataSource = DtMultigrid1;
-                            gvgridNameof.DataBind();
-                            gvgridNameof.Visible = true;
-                            gridNameof.Visible = false;
-
-                        }
-                        else
-                        {
-                            gvgridNameof.Visible = false;
-                            gridNameof.Visible = true;
-                        }
-                        Mid = Convert.ToInt64(DtGetRegisVendor.Rows[0]["VendorID"].ToString());
-                        btnsubmit.Text = "Update";
-                        btncancel.Visible = false;
-                    }
-                    else
-                    {
-                        btnsubmit.Text = "Submit";
-                        btncancel.Visible = true;
-                    }
-                }
+                LoadCheckStatus();
                 #endregion
             }
         }
         else
             ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert",
                    "alert('Session Expired,Please login again');window.location='VendorLogin'", true);
+    }
+    protected void LoadCheckStatus()
+    {
+        #region Registration Date Retrive
+        DataTable DtGetRegisVendor1 = Lo.RetriveVendor(0, Enc.DecryptData(Session["VendorRefNo"].ToString()), "", "RVendGInfo");
+        if (DtGetRegisVendor1.Rows.Count > 0)
+        {
+            if (DtGetRegisVendor1.Rows[0]["RegistrationCategory"].ToString() != "")
+            {
+                ddlregiscategory.Text = DtGetRegisVendor1.Rows[0]["RegistrationCategory"].ToString();
+                ddlregiscategory.Enabled = false;
+            }
+            if (DtGetRegisVendor1.Rows[0]["TypeOfBuisness"].ToString() != "")
+            {
+                ddltypeofbusiness.Items.FindByValue(DtGetRegisVendor1.Rows[0]["TypeOfBuisness"].ToString()).Selected = true;
+                ddltypeofbusiness.Enabled = false;
+            }
+            if (DtGetRegisVendor1.Rows[0]["BusinessSector"].ToString() != "")
+            {
+                ddlbusinesssector.Items.FindByValue(DtGetRegisVendor1.Rows[0]["BusinessSector"].ToString()).Selected = true;
+                ddlbusinesssector.Enabled = false;
+            }
+        }
+        DataTable DtGetRegisVendor = Lo.RetriveVendor(0, Enc.DecryptData(Session["VendorRefNo"].ToString()), "", "RetriveData");
+        if (DtGetRegisVendor.Rows.Count > 0)
+        {
+            if (DtGetRegisVendor.Rows[0]["LandlineNo"].ToString() != "" && DtGetRegisVendor.Rows[0]["FaxNo"].ToString() != "")
+            {
+                if (DtGetRegisVendor.Rows[0]["Date_Incorportaion_Company"].ToString() != "")
+                {
+                    DateTime DtInc = Convert.ToDateTime(DtGetRegisVendor.Rows[0]["Date_Incorportaion_Company"].ToString());
+                    string DTIncString = DtInc.ToString("MM/dd/yyyy");
+                    txtdateofincorofthecompany.Text = DTIncString.ToString();
+                }
+                else
+                {
+                    txtdateofincorofthecompany.Text = "";
+                }
+                txtstdcode.Text = DtGetRegisVendor.Rows[0]["LandlineNo"].ToString().Substring(0, 3);
+                txtphoneno.Text = DtGetRegisVendor.Rows[0]["LandlineNo"].ToString().Substring(4);
+                txtfaxstdcode.Text = DtGetRegisVendor.Rows[0]["FaxNo"].ToString().Substring(0, 3);
+                txtfaxphoneno.Text = DtGetRegisVendor.Rows[0]["FaxNo"].ToString().Substring(4);
+                DataTable DtMultigrid1 = Lo.RetriveVendor(0, Enc.DecryptData(Session["VendorRefNo"].ToString()), "", "MulGrid1");
+                if (DtMultigrid1.Rows.Count > 0)
+                {
+                    ViewState["EnterNameof"] = DtMultigrid1;
+                    gvgridNameof.DataSource = DtMultigrid1;
+                    gvgridNameof.DataBind();
+                    gvgridNameof.Visible = true;
+                    gridNameof.Visible = false;
+                }
+                else
+                {
+                    gvgridNameof.Visible = false;
+                    gridNameof.Visible = true;
+                }
+                hfGenInfoID.Value = DtGetRegisVendor.Rows[0]["VendorID"].ToString();
+                btnsubmit.Text = "Update";
+                btncancel.Visible = false;
+            }
+            else
+            {
+                btnsubmit.Text = "Submit";
+                btncancel.Visible = true;
+            }
+        }
+        #endregion
     }
     #endregion
     protected void BindTypeOfBusiness()
@@ -162,91 +179,112 @@ public partial class Vendor_V_GeneralInfo : System.Web.UI.Page
     #region Grid of Please Enter Name of Code
     private void SetInitialRow()
     {
-        //Create false table
-        DataTable dtenternameof = new DataTable();
-        DataRow drenternameof = null;
-        dtenternameof.Columns.Add(new DataColumn("RowNumber", typeof(string)));
-        dtenternameof.Columns.Add(new DataColumn("EnterName", typeof(string)));
-        dtenternameof.Columns.Add(new DataColumn("Name", typeof(string)));
-        dtenternameof.Columns.Add(new DataColumn("Designation", typeof(string)));
-        dtenternameof.Columns.Add(new DataColumn("DinNo", typeof(string)));
-        dtenternameof.Columns.Add(new DataColumn("MobileNo", typeof(long)));
-        drenternameof = dtenternameof.NewRow();
-        drenternameof["RowNumber"] = 1;
-        drenternameof["EnterName"] = string.Empty;
-        drenternameof["Name"] = string.Empty;
-        drenternameof["Designation"] = string.Empty;
-        drenternameof["DinNo"] = string.Empty;
-        drenternameof["MobileNo"] = 0;
-        dtenternameof.Rows.Add(drenternameof);
-        ViewState["EnterNameof"] = dtenternameof;
-        gridNameof.DataSource = dtenternameof;
-        gridNameof.DataBind();
+        try
+        {
+            //Create false table
+            DataTable dtenternameof = new DataTable();
+            DataRow drenternameof = null;
+            dtenternameof.Columns.Add(new DataColumn("RowNumber", typeof(string)));
+            dtenternameof.Columns.Add(new DataColumn("EnterName", typeof(string)));
+            dtenternameof.Columns.Add(new DataColumn("Name", typeof(string)));
+            dtenternameof.Columns.Add(new DataColumn("Designation", typeof(string)));
+            dtenternameof.Columns.Add(new DataColumn("DinNo", typeof(string)));
+            dtenternameof.Columns.Add(new DataColumn("MobileNo", typeof(long)));
+            drenternameof = dtenternameof.NewRow();
+            drenternameof["RowNumber"] = 1;
+            drenternameof["EnterName"] = string.Empty;
+            drenternameof["Name"] = string.Empty;
+            drenternameof["Designation"] = string.Empty;
+            drenternameof["DinNo"] = string.Empty;
+            drenternameof["MobileNo"] = 0;
+            dtenternameof.Rows.Add(drenternameof);
+            ViewState["EnterNameof"] = dtenternameof;
+            gridNameof.DataSource = dtenternameof;
+            gridNameof.DataBind();
+        }
+        catch (Exception ex)
+        {
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('" + ex.Message + "')", true);
+        }
     }
     private void AddNewRowToGrid()
     {
-        //int rowIndex = 0;
-        if (ViewState["EnterNameof"] != null)
+        try
         {
-            DataTable dtCurrentTableNameCode = (DataTable)ViewState["EnterNameof"];
-            DataRow drCurrentRowNameCode = null;
-            if (dtCurrentTableNameCode.Rows.Count > 0)
+            //int rowIndex = 0;
+            if (ViewState["EnterNameof"] != null)
             {
-                drCurrentRowNameCode = dtCurrentTableNameCode.NewRow();
-                drCurrentRowNameCode["RowNumber"] = dtCurrentTableNameCode.Rows.Count + 1;
-                dtCurrentTableNameCode.Rows.Add(drCurrentRowNameCode);
-                ViewState["EnterNameof"] = dtCurrentTableNameCode;
-                for (int i = 0; i < dtCurrentTableNameCode.Rows.Count - 1; i++)
+                DataTable dtCurrentTableNameCode = (DataTable)ViewState["EnterNameof"];
+                DataRow drCurrentRowNameCode = null;
+                if (dtCurrentTableNameCode.Rows.Count > 0)
                 {
-                    DropDownList ddlenternameof = (DropDownList)gridNameof.Rows[i].Cells[1].FindControl("ddlenternameof");
-                    TextBox TextBox1 = (TextBox)gridNameof.Rows[i].Cells[2].FindControl("txtEnterNameof");
-                    TextBox TextBox2 = (TextBox)gridNameof.Rows[i].Cells[3].FindControl("txtdesignation");
-                    TextBox TextBox3 = (TextBox)gridNameof.Rows[i].Cells[4].FindControl("txtdinno");
-                    TextBox TextBox4 = (TextBox)gridNameof.Rows[i].Cells[5].FindControl("txtmobno");
+                    drCurrentRowNameCode = dtCurrentTableNameCode.NewRow();
+                    drCurrentRowNameCode["RowNumber"] = dtCurrentTableNameCode.Rows.Count + 1;
+                    dtCurrentTableNameCode.Rows.Add(drCurrentRowNameCode);
+                    ViewState["EnterNameof"] = dtCurrentTableNameCode;
+                    for (int i = 0; i < dtCurrentTableNameCode.Rows.Count - 1; i++)
+                    {
+                        DropDownList ddlenternameof = (DropDownList)gridNameof.Rows[i].Cells[1].FindControl("ddlenternameof");
+                        TextBox TextBox1 = (TextBox)gridNameof.Rows[i].Cells[2].FindControl("txtEnterNameof");
+                        TextBox TextBox2 = (TextBox)gridNameof.Rows[i].Cells[3].FindControl("txtdesignation");
+                        TextBox TextBox3 = (TextBox)gridNameof.Rows[i].Cells[4].FindControl("txtdinno");
+                        TextBox TextBox4 = (TextBox)gridNameof.Rows[i].Cells[5].FindControl("txtmobno");
 
-                    dtCurrentTableNameCode.Rows[i]["EnterName"] = ddlenternameof.Text;
-                    dtCurrentTableNameCode.Rows[i]["Name"] = TextBox1.Text;
-                    dtCurrentTableNameCode.Rows[i]["Designation"] = TextBox2.Text;
-                    dtCurrentTableNameCode.Rows[i]["DinNo"] = TextBox3.Text;
-                    dtCurrentTableNameCode.Rows[i]["MobileNo"] = Convert.ToInt64(TextBox4.Text);
+                        dtCurrentTableNameCode.Rows[i]["EnterName"] = ddlenternameof.Text;
+                        dtCurrentTableNameCode.Rows[i]["Name"] = TextBox1.Text;
+                        dtCurrentTableNameCode.Rows[i]["Designation"] = TextBox2.Text;
+                        dtCurrentTableNameCode.Rows[i]["DinNo"] = TextBox3.Text;
+                        dtCurrentTableNameCode.Rows[i]["MobileNo"] = Convert.ToInt64(TextBox4.Text);
+                    }
+                    gridNameof.DataSource = dtCurrentTableNameCode;
+                    gridNameof.DataBind();
                 }
-                gridNameof.DataSource = dtCurrentTableNameCode;
-                gridNameof.DataBind();
             }
+            else
+            {
+                Response.Write("ViewState is null");
+            }
+            SetPreviousData();
         }
-        else
+        catch (Exception ex)
         {
-            Response.Write("ViewState is null");
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('" + ex.Message + "')", true);
         }
-        SetPreviousData();
     }
     private void SetPreviousData()
     {
-        int rowIndex = 0;
-        if (ViewState["EnterNameof"] != null)
+        try
         {
-            DataTable dtEnterNameof = (DataTable)ViewState["EnterNameof"];
-            if (dtEnterNameof.Rows.Count > 0)
+            int rowIndex = 0;
+            if (ViewState["EnterNameof"] != null)
             {
-                for (int i = 0; i < dtEnterNameof.Rows.Count; i++)
+                DataTable dtEnterNameof = (DataTable)ViewState["EnterNameof"];
+                if (dtEnterNameof.Rows.Count > 0)
                 {
-                    DropDownList ddlNameof_1 = (DropDownList)gridNameof.Rows[rowIndex].Cells[1].FindControl("ddlenternameof");
-                    TextBox TextBox_1 = (TextBox)gridNameof.Rows[rowIndex].Cells[2].FindControl("txtEnterNameof");
-                    TextBox TextBox_2 = (TextBox)gridNameof.Rows[rowIndex].Cells[3].FindControl("txtdesignation");
-                    TextBox TextBox_3 = (TextBox)gridNameof.Rows[rowIndex].Cells[4].FindControl("txtdinno");
-                    TextBox TextBox_4 = (TextBox)gridNameof.Rows[rowIndex].Cells[5].FindControl("txtmobno");
-                    if (i < dtEnterNameof.Rows.Count - 1)
+                    for (int i = 0; i < dtEnterNameof.Rows.Count; i++)
                     {
-                        ddlNameof_1.ClearSelection();
-                        ddlNameof_1.Items.FindByValue(dtEnterNameof.Rows[i]["EnterName"].ToString()).Selected = true;
-                        TextBox_1.Text = dtEnterNameof.Rows[i]["Name"].ToString();
-                        TextBox_2.Text = dtEnterNameof.Rows[i]["Designation"].ToString();
-                        TextBox_3.Text = dtEnterNameof.Rows[i]["DinNo"].ToString();
-                        TextBox_4.Text = dtEnterNameof.Rows[i]["MobileNo"].ToString();
+                        DropDownList ddlNameof_1 = (DropDownList)gridNameof.Rows[rowIndex].Cells[1].FindControl("ddlenternameof");
+                        TextBox TextBox_1 = (TextBox)gridNameof.Rows[rowIndex].Cells[2].FindControl("txtEnterNameof");
+                        TextBox TextBox_2 = (TextBox)gridNameof.Rows[rowIndex].Cells[3].FindControl("txtdesignation");
+                        TextBox TextBox_3 = (TextBox)gridNameof.Rows[rowIndex].Cells[4].FindControl("txtdinno");
+                        TextBox TextBox_4 = (TextBox)gridNameof.Rows[rowIndex].Cells[5].FindControl("txtmobno");
+                        if (i < dtEnterNameof.Rows.Count - 1)
+                        {
+                            ddlNameof_1.ClearSelection();
+                            ddlNameof_1.Items.FindByValue(dtEnterNameof.Rows[i]["EnterName"].ToString()).Selected = true;
+                            TextBox_1.Text = dtEnterNameof.Rows[i]["Name"].ToString();
+                            TextBox_2.Text = dtEnterNameof.Rows[i]["Designation"].ToString();
+                            TextBox_3.Text = dtEnterNameof.Rows[i]["DinNo"].ToString();
+                            TextBox_4.Text = dtEnterNameof.Rows[i]["MobileNo"].ToString();
+                        }
+                        rowIndex++;
                     }
-                    rowIndex++;
                 }
             }
+        }
+        catch (Exception ex)
+        {
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('" + ex.Message + "')", true);
         }
     }
     protected void ButtonAddEnterNameof_Click(object sender, EventArgs e)
@@ -255,58 +293,79 @@ public partial class Vendor_V_GeneralInfo : System.Web.UI.Page
     }
     protected void gridNameof_RowCreated(object sender, GridViewRowEventArgs e)
     {
-        if (e.Row.RowType == DataControlRowType.DataRow)
+        try
         {
-            DataTable dtgridNameofrowcreated = (DataTable)ViewState["EnterNameof"];
-            LinkButton lb = (LinkButton)e.Row.FindControl("LinkButton1");
-            if (lb != null)
+            if (e.Row.RowType == DataControlRowType.DataRow)
             {
-                if (dtgridNameofrowcreated.Rows.Count > 1)
+                DataTable dtgridNameofrowcreated = (DataTable)ViewState["EnterNameof"];
+                LinkButton lb = (LinkButton)e.Row.FindControl("LinkButton1");
+                if (lb != null)
                 {
-                    if (e.Row.RowIndex == dtgridNameofrowcreated.Rows.Count - 1)
+                    if (dtgridNameofrowcreated.Rows.Count > 1)
+                    {
+                        if (e.Row.RowIndex == dtgridNameofrowcreated.Rows.Count - 1)
+                        {
+                            lb.Visible = false;
+                        }
+                    }
+                    else
                     {
                         lb.Visible = false;
                     }
                 }
-                else
-                {
-                    lb.Visible = false;
-                }
             }
+        }
+        catch (Exception ex)
+        {
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('" + ex.Message + "')", true);
         }
     }
     protected void LinkButton1_Click(object sender, EventArgs e)
     {
-        LinkButton lb = (LinkButton)sender;
-        GridViewRow gvRow = (GridViewRow)lb.NamingContainer;
-        int rowID = gvRow.RowIndex;
-        if (ViewState["EnterNameof"] != null)
+        try
         {
-            DataTable dtremovegridNameof = (DataTable)ViewState["EnterNameof"];
-            if (dtremovegridNameof.Rows.Count > 1)
+            LinkButton lb = (LinkButton)sender;
+            GridViewRow gvRow = (GridViewRow)lb.NamingContainer;
+            int rowID = gvRow.RowIndex;
+            if (ViewState["EnterNameof"] != null)
             {
-                if (gvRow.RowIndex < dtremovegridNameof.Rows.Count - 1)
+                DataTable dtremovegridNameof = (DataTable)ViewState["EnterNameof"];
+                if (dtremovegridNameof.Rows.Count > 1)
                 {
-                    dtremovegridNameof.Rows.Remove(dtremovegridNameof.Rows[rowID]);
-                    ResetRowID(dtremovegridNameof);
+                    if (gvRow.RowIndex < dtremovegridNameof.Rows.Count - 1)
+                    {
+                        dtremovegridNameof.Rows.Remove(dtremovegridNameof.Rows[rowID]);
+                        ResetRowID(dtremovegridNameof);
+                    }
                 }
+                ViewState["EnterNameof"] = dtremovegridNameof;
+                gridNameof.DataSource = dtremovegridNameof;
+                gridNameof.DataBind();
             }
-            ViewState["EnterNameof"] = dtremovegridNameof;
-            gridNameof.DataSource = dtremovegridNameof;
-            gridNameof.DataBind();
+            SetPreviousData();
         }
-        SetPreviousData();
+        catch (Exception ex)
+        {
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('" + ex.Message + "')", true);
+        }
     }
     private void ResetRowID(DataTable dtremovecount)
     {
-        int rowNumber = 1;
-        if (dtremovecount.Rows.Count > 0)
+        try
         {
-            foreach (DataRow row in dtremovecount.Rows)
+            int rowNumber = 1;
+            if (dtremovecount.Rows.Count > 0)
             {
-                row[0] = rowNumber;
-                rowNumber++;
+                foreach (DataRow row in dtremovecount.Rows)
+                {
+                    row[0] = rowNumber;
+                    rowNumber++;
+                }
             }
+        }
+        catch (Exception ex)
+        {
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('" + ex.Message + "')", true);
         }
     }
     DataTable dtSaveNameof = new DataTable();
@@ -345,13 +404,20 @@ public partial class Vendor_V_GeneralInfo : System.Web.UI.Page
     #endregion
     protected void btnsubmit_Click(object sender, EventArgs e)
     {
-        if (ddlbusinesssector.SelectedItem.Text != "Select")
+        try
         {
-            SaveRegistration();
+            if (ddlbusinesssector.SelectedItem.Text != "Select")
+            {
+                SaveRegistration();
+            }
+            else
+            {
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Fill all details mandatory.')", true);
+            }
         }
-        else
+        catch (Exception ex)
         {
-            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Fill all details mandatory.')", true);
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('" + ex.Message + "')", true);
         }
     }
     protected void btncancel_Click(object sender, EventArgs e)
@@ -360,11 +426,11 @@ public partial class Vendor_V_GeneralInfo : System.Web.UI.Page
     }
     protected void SaveRegistration()
     {
-        if (Mid != 0)
-        { HySaveVendorRegisdetail["VendorDetailID"] = Mid; }
+        if (hfGenInfoID.Value != "")
+        { HySaveVendorRegisdetail["VendorDetailID"] = hfGenInfoID.Value; }
         else
         {
-            HySaveVendorRegisdetail["VendorDetailID"] = Mid;
+            HySaveVendorRegisdetail["VendorDetailID"] = 0;
         }
         HySaveVendorRegisdetail["VendorRefNo"] = Enc.DecryptData(Session["VendorRefNo"].ToString());
         HySaveVendorRegisdetail["RegistrationCategory"] = Co.RSQandSQLInjection(ddlregiscategory.SelectedItem.Text, "soft");
@@ -374,7 +440,9 @@ public partial class Vendor_V_GeneralInfo : System.Web.UI.Page
             HySaveVendorRegisdetail["ScaleofBuisness"] = Co.RSQandSQLInjection(ddlscaleofbuisness.SelectedItem.Text, "soft");
             HySaveVendorRegisdetail["Ownership"] = Co.RSQandSQLInjection(chkownership.SelectedItem.Value, "soft");
             HySaveVendorRegisdetail["PercentofOwnership"] = Co.RSQandSQLInjection(txtpercent1.Text + "_" + txtpercent2.Text, "soft");
-            HySaveVendorRegisdetail["FileofOwnership"] = Co.RSQandSQLInjection(fun.FileName, "soft");
+            string FilePathName = Enc.DecryptData(Session["VendorRefNo"].ToString()) + "_" + DateTime.Now.ToString("hh_mm_ss") + fun.FileName;
+            fun.SaveAs(HttpContext.Current.Server.MapPath("/Upload/VendorImage") + "\\" + FilePathName);
+            HySaveVendorRegisdetail["FileofOwnership"] = Co.RSQandSQLInjection(FilePathName, "soft");
         }
         else
         {
@@ -401,7 +469,7 @@ public partial class Vendor_V_GeneralInfo : System.Web.UI.Page
         string str = Lo.SaveVendorGeneralInfo(HySaveVendorRegisdetail, DtFIrstGrid, out _sysMsg, out _msg);
         if (str != "")
         {
-            cleartext();
+            LoadCheckStatus();
             ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Successfully save general information')", true);
         }
         else
@@ -409,14 +477,10 @@ public partial class Vendor_V_GeneralInfo : System.Web.UI.Page
     }
     protected void cleartext()
     {
-        ddlregiscategory.SelectedIndex = -1;
-        ddltypeofbusiness.SelectedIndex = -1;
-        ddlscaleofbuisness.SelectedIndex = -1;
         chkownership.ClearSelection();
         txtpercent1.Text = "";
         txtpercent2.Text = "";
         fun.Attributes.Clear();
-        ddlbusinesssector.SelectedIndex = -1;
         txtdateofincorofthecompany.Text = "";
         txtstdcode.Text = "";
         txtphoneno.Text = "";
@@ -427,13 +491,52 @@ public partial class Vendor_V_GeneralInfo : System.Web.UI.Page
         gridNameof.DataBind();
         SetInitialRow();
     }
+    protected void BindUpdatePopupCode()
+    {
+        DataTable DtMultigrid1 = Lo.RetriveVendor(0, Enc.DecryptData(Session["VendorRefNo"].ToString()), "", "MulGrid1");
+        if (DtMultigrid1.Rows.Count > 0)
+        {
+            ViewState["EnterNameof"] = DtMultigrid1;
+            gvgridNameof.DataSource = DtMultigrid1;
+            gvgridNameof.DataBind();
+            gvgridNameof.Visible = true;
+            gridNameof.Visible = false;
+        }
+        else
+        {
+            gvgridNameof.Visible = false;
+            gridNameof.Visible = true;
+        }
+    }
     protected void btnupdate_Click(object sender, EventArgs e)
     {
-        if (btnupdate.Text == "Edit & Update")
+        try
         {
-            if (txtdinnoedit.Text != "")
+            if (btnupdate.Text == "Edit & Update")
             {
-                Int32 ESaveID = Lo.UpdateStatusEdit(Convert.ToInt64(ViewState["editidgrid"]), Session["VendorRefNo"].ToString(), ddlenternameedit.SelectedItem.Text, txtnameedit.Text, txtdesignationedit.Text, txtdinnoedit.Text, txtmobnoedit.Text);
+                if (txtdinnoedit.Text != "")
+                {
+                    Int32 ESaveID = Lo.UpdateStatusEdit(Convert.ToInt64(ViewState["editidgrid"]), Enc.DecryptData(Session["VendorRefNo"].ToString()), ddlenternameedit.SelectedItem.Text, txtnameedit.Text, txtdesignationedit.Text, txtdinnoedit.Text, txtmobnoedit.Text);
+                    if (ESaveID != 0)
+                    {
+                        ddlenternameedit.SelectedIndex = -1;
+                        txtnameedit.Text = "";
+                        txtdesignationedit.Text = "";
+                        txtdinnoedit.Text = "";
+                        txtmobnoedit.Text = "";
+                        ViewState["editidgrid"] = null;
+                        BindUpdatePopupCode();
+                        ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record update successfully')", true);
+                    }
+                    else
+                    {
+                        ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not update successfully')", true);
+                    }
+                }
+            }
+            else if (btnupdate.Text == "Submit")
+            {
+                Int32 ESaveID = Lo.InsertStatusEdit(Enc.DecryptData(Session["VendorRefNo"].ToString()), "EnterNameof", ddlenternameedit.SelectedItem.Text, txtnameedit.Text, txtdesignationedit.Text, txtdinnoedit.Text, txtmobnoedit.Text);
                 if (ESaveID != 0)
                 {
                     ddlenternameedit.SelectedIndex = -1;
@@ -441,31 +544,18 @@ public partial class Vendor_V_GeneralInfo : System.Web.UI.Page
                     txtdesignationedit.Text = "";
                     txtdinnoedit.Text = "";
                     txtmobnoedit.Text = "";
-                    ViewState["editidgrid"] = null;
-                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record update successfully')", true);
+                    BindUpdatePopupCode();
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record save successfully')", true);
                 }
                 else
                 {
-                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not update successfully')", true);
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not save successfully')", true);
                 }
             }
         }
-        else if (btnupdate.Text == "Submit")
+        catch (Exception ex)
         {
-            Int32 ESaveID = Lo.InsertStatusEdit(Session["VendorRefNo"].ToString(), "EnterNameof", ddlenternameedit.SelectedItem.Text, txtnameedit.Text, txtdesignationedit.Text, txtdinnoedit.Text, txtmobnoedit.Text);
-            if (ESaveID != 0)
-            {
-                ddlenternameedit.SelectedIndex = -1;
-                txtnameedit.Text = "";
-                txtdesignationedit.Text = "";
-                txtdinnoedit.Text = "";
-                txtmobnoedit.Text = "";
-                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record save successfully')", true);
-            }
-            else
-            {
-                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not save successfully')", true);
-            }
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('" + ex.Message + "')", true);
         }
     }
     protected void gvgridNameof_RowCommand(object sender, GridViewCommandEventArgs e)
@@ -486,12 +576,13 @@ public partial class Vendor_V_GeneralInfo : System.Web.UI.Page
                 btnupdate.Text = "Edit & Update";
                 int rowIndex = Convert.ToInt32(e.CommandArgument);
                 GridViewRow row = gvgridNameof.Rows[rowIndex];
+                HiddenField hfn = (HiddenField)gvgridNameof.Rows[rowIndex].FindControl("hfmid");
                 ddlenternameedit.SelectedValue = row.Cells[0].Text;
                 txtnameedit.Text = row.Cells[1].Text;
                 txtdesignationedit.Text = row.Cells[2].Text;
                 txtdinnoedit.Text = row.Cells[3].Text;
                 txtmobnoedit.Text = row.Cells[4].Text;
-                ViewState["editidgrid"] = rowIndex;
+                ViewState["editidgrid"] = hfn.Value;
                 ScriptManager.RegisterStartupScript(this, this.GetType(), "changePass", "showPopup();", true);
             }
             else if (e.CommandName == "Del")
@@ -499,20 +590,7 @@ public partial class Vendor_V_GeneralInfo : System.Web.UI.Page
                 Int32 Delid = Lo.DeleteEditGrid(Convert.ToInt32(e.CommandArgument.ToString()));
                 if (Delid != 0)
                 {
-                    DataTable DtMultigrid1 = Lo.RetriveVendor(0, Enc.DecryptData(Session["VendorRefNo"].ToString()), "", "MulGrid1");
-                    if (DtMultigrid1.Rows.Count > 0)
-                    {
-                        ViewState["EnterNameof"] = DtMultigrid1;
-                        gvgridNameof.DataSource = DtMultigrid1;
-                        gvgridNameof.DataBind();
-                        gvgridNameof.Visible = true;
-                        gridNameof.Visible = false;
-                    }
-                    else
-                    {
-                        gvgridNameof.Visible = false;
-                        gridNameof.Visible = true;
-                    }
+                    BindUpdatePopupCode();
                     ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record deleted successfull.')", true);
                 }
                 else

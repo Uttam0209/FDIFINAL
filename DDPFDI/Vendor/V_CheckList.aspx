@@ -1,6 +1,9 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="V_CheckList.aspx.cs" Inherits="Vendor_V_CheckList" MasterPageFile="~/Vendor/VendorMaster.master" %>
 
-<asp:Content ID="ConHead" runat="server" ContentPlaceHolderID="head"></asp:Content>
+<asp:Content ID="ConHead" runat="server" ContentPlaceHolderID="head">
+  
+</asp:Content>
+
 <asp:Content ID="Innercontent" runat="server" ContentPlaceHolderID="ContentPlaceHolder1">
     <asp:ScriptManager ID="sc" runat="server"></asp:ScriptManager>
     <div class="content oem-content">

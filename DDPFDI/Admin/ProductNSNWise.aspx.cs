@@ -199,7 +199,7 @@ public partial class Admin_ProductNSNWise : System.Web.UI.Page
             {
                 try
                 {
-                    int[] iColumns = { 2, 4, 6, 7, 9, 11, 18, 19, 20, 21, 22, 24, 25, 57, 60, 58, 59, 62, 61 };
+                    int[] iColumns = { 2, 4, 6, 7, 9, 11, 18, 19, 20, 21, 22, 24, 25, 57, 60, 58, 59, 62,63,61 };
                     RKLib.ExportData.Export objExport = new RKLib.ExportData.Export("Web");
                     objExport.ExportDetails(DtGrid, iColumns, RKLib.ExportData.Export.ExportFormat.Excel, "ProductNSNGROUPorClass.xls");
                 }

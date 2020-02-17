@@ -1,6 +1,7 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="V_GeneralInfo.aspx.cs" Inherits="Vendor_V_GeneralInfo" MasterPageFile="~/Vendor/VendorMaster.master" %>
 
-<asp:Content ID="ConHead" runat="server" ContentPlaceHolderID="head"></asp:Content>
+<asp:Content ID="ConHead" runat="server" ContentPlaceHolderID="head">
+</asp:Content>
 <asp:Content ID="Innercontent" runat="server" ContentPlaceHolderID="ContentPlaceHolder1">
     <asp:ScriptManager ID="sc" runat="server"></asp:ScriptManager>
     <div class="content oem-content">
@@ -14,7 +15,7 @@
                 <div class="cacade-forms">
                     <div class="clearfix mt10"></div>
                     <div id="pd" class="tab-pane fade in active">
-                        <asp:UpdatePanel ID="uppanel1" runat="server" UpdateMode="Conditional">
+                        <asp:UpdatePanel ID="UpOne" runat="server">
                             <ContentTemplate>
                                 <asp:Panel ID="panstep1" runat="server">
                                     <p>Please provide all required details to register your business with us</p>
@@ -102,7 +103,11 @@
                                             Date of Incorporation of the Company
                                         </div>
                                         <div class="col-sm-7">
-                                            <asp:TextBox ID="txtdateofincorofthecompany" runat="server" type="date" CssClass="form-control"></asp:TextBox>
+
+                                            <div class="input-append date" id="datePicker" data-date="12-02-2012" data-date-format="dd-mm-yyyy">
+                                                <span class="add-on"><i class="icon-th"></i></span>
+                                                <asp:TextBox ID="txtdateofincorofthecompany" runat="server" CssClass="form-control datePicker"></asp:TextBox>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -110,12 +115,12 @@
                                             Landline No
                                         </div>
                                         <div class="col-sm-2">
-                                            <asp:TextBox ID="txtstdcode" runat="server" MaxLength="3" CssClass="form-control"></asp:TextBox>
+                                            <asp:TextBox ID="txtstdcode" runat="server" required="" MaxLength="5" CssClass="form-control"></asp:TextBox>
 
                                             <p>STD Code</p>
                                         </div>
                                         <div class="col-sm-5">
-                                            <asp:TextBox ID="txtphoneno" runat="server" MaxLength="7" CssClass="form-control"></asp:TextBox>
+                                            <asp:TextBox ID="txtphoneno" runat="server" required="" MaxLength="10" CssClass="form-control"></asp:TextBox>
                                             <p>Phone Number</p>
                                         </div>
                                     </div>
@@ -124,11 +129,11 @@
                                             Fax No
                                         </div>
                                         <div class="col-sm-2">
-                                            <asp:TextBox ID="txtfaxstdcode" runat="server" MaxLength="3" CssClass="form-control"></asp:TextBox>
+                                            <asp:TextBox ID="txtfaxstdcode" runat="server" required="" MaxLength="5" CssClass="form-control"></asp:TextBox>
                                             <p>STD Code</p>
                                         </div>
                                         <div class="col-sm-5">
-                                            <asp:TextBox ID="txtfaxphoneno" runat="server" MaxLength="7" CssClass="form-control"></asp:TextBox>
+                                            <asp:TextBox ID="txtfaxphoneno" runat="server" required="" MaxLength="10" CssClass="form-control"></asp:TextBox>
                                             <p>Phone Number</p>
                                         </div>
                                     </div>
@@ -169,11 +174,11 @@
                                                 </asp:TemplateField>
                                                 <asp:TemplateField HeaderText="Mobile No">
                                                     <ItemTemplate>
-                                                        <asp:TextBox ID="txtmobno" runat="server" CssClass="form-control" Text="123456789"></asp:TextBox>
+                                                        <asp:TextBox ID="txtmobno" runat="server" CssClass="form-control" Text="01"></asp:TextBox>
                                                     </ItemTemplate>
                                                     <FooterStyle HorizontalAlign="Right" />
                                                     <FooterTemplate>
-                                                        <asp:Button ID="ButtonAddEnterNameof" runat="server" Text="Add New Row" CssClass="btn btn-primary pull-right" OnClick="ButtonAddEnterNameof_Click" />
+                                                        <asp:LinkButton ID="ButtonAddEnterNameof" runat="server" Text="Add New Row" CssClass="btn btn-primary pull-right" OnClick="ButtonAddEnterNameof_Click"></asp:LinkButton>
                                                     </FooterTemplate>
                                                 </asp:TemplateField>
                                                 <asp:TemplateField>
@@ -191,11 +196,12 @@
                                                 <asp:BoundField DataField="Designation" HeaderText="Designation" />
                                                 <asp:BoundField DataField="DinNo" HeaderText="DIN No" />
                                                 <asp:BoundField DataField="MobileNo" HeaderText="Mobile No" />
-                                                <asp:TemplateField HeaderText="Add/Update/Delete">
+                                                <asp:TemplateField HeaderText="Action">
                                                     <ItemTemplate>
                                                         <asp:LinkButton ID="lbAdd" runat="server" Class="fa fa-plus ml5" CommandName="Add" CommandArgument='<%#Eval("RowNumber") %>'></asp:LinkButton>
                                                         <asp:LinkButton ID="lbUpdate" runat="server" Class="fa fa-edit ml5"
                                                             CommandName="Upda" CommandArgument='<%# ((GridViewRow) Container).RowIndex %>'></asp:LinkButton>
+                                                        <asp:HiddenField ID="hfmid" runat="server" Value='<%#Eval("RowNumber") %>' />
                                                         <asp:LinkButton ID="lbDelete" runat="server" Class="fa fa-trash ml5"
                                                             CommandName="Del" CommandArgument='<%#Eval("RowNumber") %>'></asp:LinkButton>
                                                     </ItemTemplate>
@@ -211,8 +217,19 @@
                             </ContentTemplate>
                             <Triggers>
                                 <asp:PostBackTrigger ControlID="btnsubmit" />
+                                <%--<asp:PostBackTrigger ControlID="gridNameof" />--%>
                             </Triggers>
                         </asp:UpdatePanel>
+                        <asp:UpdateProgress ID="up" runat="server" AssociatedUpdatePanelID="UpOne">
+                            <ProgressTemplate>
+                                <div class="overlay-progress">
+                                    <div class="custom-progress-bar blue stripes">
+                                        <span></span>
+                                        <p>Processing</p>
+                                    </div>
+                                </div>
+                            </ProgressTemplate>
+                        </asp:UpdateProgress>
                     </div>
                 </div>
             </div>
@@ -229,6 +246,7 @@
                         </div>
                         <form class="form-horizontal changepassword" role="form">
                             <div class="modal-body clearfix" style="padding: 0 20px;">
+                                <asp:HiddenField ID="hfGenInfoID" runat="server" />
                                 <div class="form-group" style="margin: 0">
                                     <label for="uname" class=" tetLable">
                                         Enter Name of
@@ -272,7 +290,7 @@
                                 </div>
                                 <div class="clearfix mt10"></div>
                                 <div class="form-group" style="margin: 0">
-                                    <asp:Button ID="btnupdate" runat="server" Text="Edit & Update" CssClass="btn btn-primary pull-right mr10" OnClick="btnupdate_Click" />
+                                    <asp:LinkButton ID="btnupdate" runat="server" Text="Edit & Update" CssClass="btn btn-primary pull-right mr10" OnClick="btnupdate_Click"></asp:LinkButton>
                                 </div>
                                 <div class="clearfix mt10"></div>
                             </div>

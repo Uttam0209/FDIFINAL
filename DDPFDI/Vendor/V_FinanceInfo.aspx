@@ -14,7 +14,7 @@
                 <div class="cacade-forms">
                     <div class="clearfix mt10"></div>
                     <div id="test" class="tab-pane">
-                        <asp:UpdatePanel ID="UpdatePanel3" runat="server" UpdateMode="Conditional">
+                        <asp:UpdatePanel ID="UpdatePanel3" runat="server">
                             <ContentTemplate>
                                 <asp:Panel ID="panstep4" runat="server">
                                     <p>
@@ -76,7 +76,7 @@
                                     </asp:GridView>
                                     <asp:GridView runat="server" ID="gvturnoveredit" CssClass="table table-hover" AutoGenerateColumns="false"
                                         ShowFooter="true"
-                                        CellPadding="4" ForeColor="#333333" GridLines="None">
+                                        CellPadding="4" ForeColor="#333333" GridLines="None" OnRowCommand="gvturnoveredit_RowCommand">
                                         <AlternatingRowStyle BackColor="White" />
                                         <Columns>
                                             <asp:TemplateField HeaderText="Sr.No">
@@ -91,8 +91,9 @@
                                             <asp:BoundField DataField="File_Audited_Balance_account_sheet" HeaderText="Upload Audited Balance account sheet" />
                                             <asp:TemplateField HeaderText="Action">
                                                 <ItemTemplate>
+                                                    <asp:HiddenField runat="server" ID="hfturnedit" Value='<%#Eval("MasterId") %>' />
                                                     <asp:LinkButton ID="lblsave" runat="server" CssClass="fa fa-save" CommandName="newsave" CommandArgument='<%#Eval("MasterId") %>'></asp:LinkButton>
-                                                    <asp:LinkButton ID="lblupdate" runat="server" CssClass="fa fa-edit" CommandName="newedit" CommandArgument='<%#Eval("MasterId") %>'></asp:LinkButton>
+                                                    <asp:LinkButton ID="lblupdate" runat="server" CssClass="fa fa-edit" CommandName="newedit" CommandArgument='<%#((GridViewRow) Container).RowIndex %>'></asp:LinkButton>
                                                     <asp:LinkButton ID="lbldelete" runat="server" CssClass="fa fa-trash" CommandName="newdel" CommandArgument='<%#Eval("MasterId") %>'></asp:LinkButton>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
@@ -112,7 +113,6 @@
                                     <hr />
                                     <h3>Bank Details</h3>
                                     <div class="clearfix mt10"></div>
-
                                     <asp:GridView runat="server" ID="gvaccount" CssClass="table table-hover" ShowFooter="true"
                                         AutoGenerateColumns="false" CellPadding="4" ForeColor="#333333" GridLines="None" OnRowCreated="gvaccount_RowCreated">
                                         <AlternatingRowStyle BackColor="White" />
@@ -180,7 +180,7 @@
                                     </asp:GridView>
                                     <asp:GridView runat="server" ID="gvaccountedit" CssClass="table table-hover" AutoGenerateColumns="false"
                                         ShowFooter="true"
-                                        CellPadding="4" ForeColor="#333333" GridLines="None">
+                                        CellPadding="4" ForeColor="#333333" GridLines="None" OnRowCommand="gvaccountedit_RowCommand">
                                         <AlternatingRowStyle BackColor="White" />
                                         <Columns>
                                             <asp:TemplateField HeaderText="Sr.No">
@@ -196,8 +196,9 @@
                                             <asp:BoundField DataField="File_Bank_Solvency_Certificate" HeaderText="Copy of Valid Bank Solvency Certificate" />
                                             <asp:TemplateField HeaderText="Action">
                                                 <ItemTemplate>
+                                                    <asp:HiddenField runat="server" ID="hfaccountedit" Value='<%#Eval("MasterId") %>' />
                                                     <asp:LinkButton ID="lblsave" runat="server" CssClass="fa fa-save" CommandName="newsave" CommandArgument='<%#Eval("MasterId") %>'></asp:LinkButton>
-                                                    <asp:LinkButton ID="lblupdate" runat="server" CssClass="fa fa-edit" CommandName="newedit" CommandArgument='<%#Eval("MasterId") %>'></asp:LinkButton>
+                                                    <asp:LinkButton ID="lblupdate" runat="server" CssClass="fa fa-edit" CommandName="newedit" CommandArgument='<%#((GridViewRow) Container).RowIndex %>'></asp:LinkButton>
                                                     <asp:LinkButton ID="lbldelete" runat="server" CssClass="fa fa-trash" CommandName="newdel" CommandArgument='<%#Eval("MasterId") %>'></asp:LinkButton>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
@@ -250,16 +251,163 @@
                                     </div>
                                     <div class="clearfix mt10"></div>
                                     <asp:Button ID="btnsubmit" runat="server" Text="Submit" CssClass="btn btn-primary pull-right mr10" OnClick="btnsubmit_Click" />
-
                                 </asp:Panel>
                             </ContentTemplate>
                             <Triggers>
                                 <asp:PostBackTrigger ControlID="btnsubmit" />
                             </Triggers>
                         </asp:UpdatePanel>
+                        <asp:UpdateProgress ID="UpdateProgress1" runat="server" AssociatedUpdatePanelID="UpdatePanel3">
+                            <ProgressTemplate>
+                                <div class="overlay-progress">
+                                    <div class="custom-progress-bar blue stripes">
+                                        <span></span>
+                                        <p>Processing</p>
+                                    </div>
+                                </div>
+                            </ProgressTemplate>
+                        </asp:UpdateProgress>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <%--Modal Popup End--%>
+    <div class="modal fade" id="divturnover" role="dialog" data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog" style="width: 400px;">
+            <asp:UpdatePanel ID="UpdatePanel10" runat="server">
+                <ContentTemplate>
+                    <div class="modal-content" runat="server" id="Div10">
+                        <div class="modal-header modal-header1">
+                            <button type="button" class="close close1" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">TURN OVER DURING LAST 3 YEARS</h4>
+                        </div>
+                        <form class="form-horizontal changepassword" role="form">
+                            <div class="modal-body clearfix" style="padding: 0 20px;">
+                                <div class="form-group" style="margin: 0">
+                                    <label for="uname" class=" tetLable">
+                                        Financial Year
+                                    </label>
+                                    <asp:TextBox runat="server" ID="txtfinancialyear" placeholder="Financial Year" Class="form-control"></asp:TextBox>
+                                </div>
+                                <div class="form-group" style="margin: 0">
+                                    <label for="uname" class=" tetLable">
+                                        Value of Current Assets
+                                    </label>
+                                    <asp:TextBox runat="server" ID="txtcurrasst" placeholder=" Value of Current Assets" Class="form-control"></asp:TextBox>
+                                </div>
+                                <div class="form-group" style="margin: 0">
+                                    <label for="uname" class=" tetLable">
+                                        Value of Current Liabilites
+                                    </label>
+                                    <asp:TextBox runat="server" ID="txtcurrliablities" placeholder=" Value of Current Liabilites" Class="form-control"></asp:TextBox>
+                                </div>
+                                <div class="form-group" style="margin: 0">
+                                    <label for="uname" class=" tetLable">
+                                        Total Profit/Loss
+                                    </label>
+                                    <asp:TextBox runat="server" ID="txtprofitloss" placeholder="Total Profit/Loss" Class="form-control"></asp:TextBox>
+                                </div>
+                                <div class="form-group" style="margin: 0">
+                                    <label for="uname" class=" tetLable">
+                                        Upload Audited Balance account sheet
+                                    </label>
+                                    <asp:HiddenField ID="hffileaudit" runat="server" />
+                                    <asp:FileUpload runat="server" ID="fufileaudit" Class="form-control" />
+                                </div>
+                                <div class="clearfix mt10"></div>
+                                <div class="form-group" style="margin: 0">
+                                    <asp:LinkButton ID="lbsub" runat="server" Text="Edit & Update" CssClass="btn btn-primary pull-right mr10" OnClick="lbsub_Click"></asp:LinkButton>
+                                </div>
+                                <div class="clearfix mt10"></div>
+                            </div>
+                        </form>
+                    </div>
+                </ContentTemplate>
+            </asp:UpdatePanel>
+        </div>
+    </div>
+    <div class="modal fade" id="divbank" role="dialog" data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog" style="width: 400px;">
+            <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+                <ContentTemplate>
+                    <div class="modal-content" runat="server" id="Div2">
+                        <div class="modal-header modal-header1">
+                            <button type="button" class="close close1" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Bank Details</h4>
+                        </div>
+                        <form class="form-horizontal changepassword" role="form">
+                            <div class="modal-body clearfix" style="padding: 0 20px;">
+                                <div class="form-group" style="margin: 0">
+                                    <label for="uname" class=" tetLable">
+                                        Name of Bank
+                                    </label>
+                                    <asp:TextBox runat="server" ID="txtnameofbank" placeholder="Name of Bank" Class="form-control"></asp:TextBox>
+                                </div>
+                                <div class="form-group" style="margin: 0">
+                                    <label for="uname" class=" tetLable">
+                                        Type of Account
+                                    </label>
+                                    <asp:TextBox runat="server" ID="txttypeofaccount" placeholder=" Type of Account" Class="form-control"></asp:TextBox>
+                                </div>
+                                <div class="form-group" style="margin: 0">
+                                    <label for="uname" class=" tetLable">
+                                        Account No
+                                    </label>
+                                    <asp:TextBox ID="txtaccountno" runat="server" palceholder="Account No" CssClass="form-control"></asp:TextBox>
+                                </div>
+                                <div class="form-group" style="margin: 0">
+                                    <label for="uname" class=" tetLable">
+                                        MICR Code
+                                    </label>
+                                    <asp:TextBox ID="txtmicrcode" runat="server" palceholder="MICR Code" CssClass="form-control"></asp:TextBox>
+                                </div>
+                                <div class="form-group" style="margin: 0">
+                                    <label for="uname" class=" tetLable">
+                                        IFSC Code
+                                    </label>
+                                    <asp:TextBox ID="txtifsc" runat="server" palceholder=" IFSC Code" CssClass="form-control"></asp:TextBox>
+                                </div>
+                                <div class="form-group" style="margin: 0">
+                                    <label for="uname" class=" tetLable">
+                                        Copy of Valid Bank Solvency Certificate	
+                                    </label>
+                                    <asp:HiddenField ID="hfsolencycertificate" runat="server" />
+                                    <asp:FileUpload runat="server" ID="fusolvencycerti" Class="form-control" />
+                                </div>
+                                <div class="clearfix mt10"></div>
+                                <div class="form-group" style="margin: 0">
+                                    <asp:LinkButton ID="lblsub2" runat="server" Text="Edit & Update" CssClass="btn btn-primary pull-right mr10" OnClick="lblsub2_Click"></asp:LinkButton>
+                                </div>
+                                <div class="clearfix mt10"></div>
+                            </div>
+                        </form>
+                    </div>
+                </ContentTemplate>
+            </asp:UpdatePanel>
+
+        </div>
+    </div>
+    <script type="text/javascript">
+        function showPopup() {
+            $('#divturnover').modal('show', function () {
+            });
+        }
+    </script>
+    <script type="text/javascript">
+        function showPopup1() {
+            $('#divbank').modal('show', function () {
+            });
+        }
+    </script>
+    <script type="text/javascript">
+        function isNumberKey(evt) {
+            var charCode = (evt.which) ? evt.which : event.keyCode;
+            if (charCode != 46 && charCode > 31
+              && (charCode < 48 || charCode > 57))
+                return false;
+
+            return true;
+        }
+    </script>
 </asp:Content>

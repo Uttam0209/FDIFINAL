@@ -35,6 +35,7 @@ namespace BusinessLayer
             return SqlHelper.Instance.VerifyEmailandCompany(strEmail, strCompany, out _msg);
         }
         #endregion
+        #region SaveCdoe Or Excel
         public DataTable CreateExcelConnection(string FilePath, string SheetName, out string text)
         {
             DataTable dt = SqlHelper.Instance.CreateExcelConnection(FilePath, SheetName, out text);
@@ -52,6 +53,7 @@ namespace BusinessLayer
         {
             return SqlHelper.Instance.SaveExcelProduct(dtMaster);
         }
+        #endregion
         #region SaveCode
         public string SaveLog(HybridDictionary hyLog, out string _sysMsg, out string _msg)
         {
@@ -127,22 +129,6 @@ namespace BusinessLayer
         {
             return SqlHelper.Instance.UpdateStatus(ID, Value1, Value2);
         }
-        public Int32 InsertStatusEdit(string ID, string Value1, string Value2, string Value3, string Value4, string Value5, string Value6)
-        {
-            string mquery = "insert into tbl_trn_VendorDetailMultiGrid (VendorRefNo,EnterNameof,Name,Designation,DIN_No,MobileNo)Values('" + ID + "','" + Value1 + "','" + Value2 + "','" + Value3 + "','" + Value4 + "','" + Value5 + "','" + Value6 + "')";
-            return SqlHelper.Instance.ExecuteQuery(mquery);
-        }
-        public Int32 UpdateStatusEdit(Int64 ID, string Value1, string Value2, string Value3, string Value4, string Value5, string Value6)
-        {
-            string mquery = "update tbl_trn_VendorDetailMultiGrid set VendorRefNo='" + Value1 + "',EnterNameof='" + Value2 + "',Name='" + Value3 + "',Designation='" + Value4 + "',DIN_No='" + Value5 + "',MobileNo='" + Value6 + "' where MasterId='" + ID + "'";
-            return SqlHelper.Instance.ExecuteQuery(mquery);
-        }
-        public Int32 DeleteEditGrid(Int32 Id)
-        {
-            string mquery = "delete from tbl_trn_VendorDetailMultiGrid  where MasterId='" + Id + "'";
-            return SqlHelper.Instance.ExecuteQuery(mquery);
-        }
-
         #endregion
         #region retriveCode
         public DataTable RetriveCount(string compref, string name)
@@ -346,7 +332,7 @@ namespace BusinessLayer
         {
             return SqlHelper.Instance.SaveVendorCompanyInfo(HySaveVendorRegisdetail, Dt1, Dt2, Dt3, Dt4, Dt5, Dt6, Dt7, Dt8, DtCer1, DtCer2, out _sysMsg, out _msg);
         }
-        public string SaveVendorCompanyInfo2(DataTable Dt1, string mCurrentID,  out string _sysMsg, out string _msg)
+        public string SaveVendorCompanyInfo2(DataTable Dt1, string mCurrentID, out string _sysMsg, out string _msg)
         {
             return SqlHelper.Instance.SaveVendorCompanyInfo2(Dt1, mCurrentID, out _sysMsg, out _msg);
         }
@@ -359,7 +345,7 @@ namespace BusinessLayer
         {
             return SqlHelper.Instance.SaveVendorRegisNoDetails(HySaveVendorRegisdetail, Dt1, out _sysMsg, out _msg);
         }
-        public string SaveVendorAccountInfo(DataTable Dt1,DataTable Dt2, string mCurrentID, out string _sysMsg, out string _msg)
+        public string SaveVendorAccountInfo(DataTable Dt1, DataTable Dt2, string mCurrentID, out string _sysMsg, out string _msg)
         {
             return SqlHelper.Instance.SaveVendorAccountInfo(Dt1, Dt2, mCurrentID, out _sysMsg, out _msg);
         }
@@ -374,12 +360,222 @@ namespace BusinessLayer
         #region Code for vendor  Delete
         #endregion
         #region Code for vendor  Update
+        public Int32 InsertStatusEdit(string ID, string Value1, string Value2, string Value3, string Value4, string Value5, string Value6)
+        {
+            string mquery = "insert into tbl_trn_VendorDetailMultiGrid (VendorRefNo,Type,EnterNameof,Name,Designation,DIN_No,MobileNo)Values('" + ID + "','" + Value1 + "','" + Value2 + "','" + Value3 + "','" + Value4 + "','" + Value5 + "','" + Value6 + "')";
+            return SqlHelper.Instance.ExecuteQuery(mquery);
+        }
+        public Int32 UpdateStatusEdit(Int64 ID, string Value1, string Value2, string Value3, string Value4, string Value5, string Value6)
+        {
+            string mquery = "update tbl_trn_VendorDetailMultiGrid set VendorRefNo='" + Value1 + "',EnterNameof='" + Value2 + "',Name='" + Value3 + "',Designation='" + Value4 + "',DIN_No='" + Value5 + "',MobileNo='" + Value6 + "' where MasterId='" + ID + "'";
+            return SqlHelper.Instance.ExecuteQuery(mquery);
+        }
+        public Int32 DeleteEditGrid(Int32 Id)
+        {
+            string mquery = "delete from tbl_trn_VendorDetailMultiGrid  where MasterId='" + Id + "'";
+            return SqlHelper.Instance.ExecuteQuery(mquery);
+        }
+        public Int32 DeleteEditGrid1(Int32 Id)
+        {
+            string mquery = "delete from VendorRegistrationMultiImage  where ImageID='" + Id + "'";
+            return SqlHelper.Instance.ExecuteQuery(mquery);
+        }
+        #region Multigrid edit insert code
+        public Int32 InsertMaufacfacility(string ID, string Value1, string Value2, string Value3, string Value4, string Value5, string Value6, string Value7, string Value8)
+        {
+            string mquery = "insert into tbl_trn_VendorDetailMultiGrid (VendorRefNo,Type,Name_of_Factory,Factory_GstNo,Comp_Postal_Address,Contact_Official_Name,Telephone_No,Fax_No,Email_Id)Values('" + ID + "','" + Value1 + "','" + Value2 + "','" + Value3 + "','" + Value4 + "','" + Value5 + "','" + Value6 + "','" + Value7 + "','" + Value8 + "')";
+            return SqlHelper.Instance.ExecuteQuery(mquery);
+        }
+        public Int32 UpdateMaufacfacility(Int64 ID, string Value1, string Value2, string Value3, string Value4, string Value5, string Value6, string Value7, string Value8)
+        {
+            string mquery = "update tbl_trn_VendorDetailMultiGrid set VendorRefNo='" + Value1 + "',Name_of_Factory='" + Value2 + "',Factory_GstNo='" + Value3 + "',Comp_Postal_Address='" + Value4 + "',Contact_Official_Name='" + Value5 + "',Telephone_No='" + Value6 + "',Fax_No='" + Value7 + "',Email_Id='" + Value8 + "' where MasterId='" + ID + "'";
+            return SqlHelper.Instance.ExecuteQuery(mquery);
+        }
+        public Int32 InsertArea(string ID, string Value1, string Value2, string Value3, string Value4, string Value5, string Value6)
+        {
+            string mquery = "insert into tbl_trn_VendorDetailMultiGrid (VendorRefNo,Type,Area_Factory_Name,Production_Area,Inspection_Area,Total_Covered_Area,Total_Area)Values('" + ID + "','" + Value1 + "','" + Value2 + "','" + Value3 + "','" + Value4 + "','" + Value5 + "','" + Value6 + "')";
+            return SqlHelper.Instance.ExecuteQuery(mquery);
+        }
+        public Int32 UpdateArea(Int64 ID, string Value1, string Value2, string Value3, string Value4, string Value5, string Value6)
+        {
+            string mquery = "update tbl_trn_VendorDetailMultiGrid set VendorRefNo='" + Value1 + "',Area_Factory_Name='" + Value2 + "',Production_Area='" + Value3 + "',Inspection_Area='" + Value4 + "',Total_Covered_Area='" + Value5 + "',Total_Area='" + Value6 + "' where MasterId='" + ID + "'";
+            return SqlHelper.Instance.ExecuteQuery(mquery);
+        }
+        public Int32 InsertPlantMachine(string ID, string Value1, string Value2, string Value3, string Value4, string Value5, string Value6)
+        {
+            string mquery = "insert into tbl_trn_VendorDetailMultiGrid (VendorRefNo,Type,Description_Machine_Model_Specs,Make,Quantity,Date_of_Purchase,Usage)Values('" + ID + "','" + Value1 + "','" + Value2 + "','" + Value3 + "','" + Value4 + "','" + Value5 + "','" + Value6 + "')";
+            return SqlHelper.Instance.ExecuteQuery(mquery);
+        }
+        public Int32 UpdatePlantMachine(Int64 ID, string Value1, string Value2, string Value3, string Value4, string Value5, string Value6)
+        {
+            string mquery = "update tbl_trn_VendorDetailMultiGrid set VendorRefNo='" + Value1 + "',Description_Machine_Model_Specs='" + Value2 + "',Make='" + Value3 + "',Quantity='" + Value4 + "',Date_of_Purchase='" + Value5 + "',Usage='" + Value6 + "' where MasterId='" + ID + "'";
+            return SqlHelper.Instance.ExecuteQuery(mquery);
+        }
+        public Int32 UpdateCust(Int64 ID, string Value1, string Value2, string Value3, string Value4, string Value5, string Value6, string Value7, string Value8)
+        {
+            string mquery = "update tbl_trn_VendorDetailMultiGrid set VendorRefNo='" + Value1 + "',TOTAL_Employees='" + Value2 + "',ADMINISTRATIVE='" + Value3 + "',TECHNICAL='" + Value4 + "',NON_TECHNICAL='" + Value5 + "',QC_INSPECTION='" + Value6 + "',SKILLED_LABOUR='" + Value7 + "',UNSKILLED_LABOUR='" + Value8 + "' where MasterId='" + ID + "'";
+            return SqlHelper.Instance.ExecuteQuery(mquery);
+        }
+        public Int32 InsertCust(string ID, string Value1, string Value2, string Value3, string Value4, string Value5, string Value6, string Value7, string Value8)
+        {
+            string mquery = "insert into tbl_trn_VendorDetailMultiGrid (VendorRefNo,Type,TOTAL_Employees,ADMINISTRATIVE,TECHNICAL,NON_TECHNICAL,QC_INSPECTION,SKILLED_LABOUR,UNSKILLED_LABOUR)Values('" + ID + "','" + Value1 + "','" + Value2 + "','" + Value3 + "','" + Value4 + "','" + Value5 + "','" + Value6 + "','" + Value7 + "','" + Value8 + "')";
+            return SqlHelper.Instance.ExecuteQuery(mquery);
+        }
+        public Int32 Updatetestfacilities(Int64 ID, string Value1, string Value2, string Value3, string Value4, string Value5, string Value6, string Value7)
+        {
+            string mquery = "update tbl_trn_VendorDetailMultiGrid set VendorRefNo='" + Value1 + "',Type_of_GAUGE_Test_Equipment='" + Value2 + "',Test_Make='" + Value3 + "',Least_Count='" + Value4 + "',Range_of_MEASURMENT='" + Value5 + "',CERTIFICATION_YEAR='" + Value6 + "',Year_of_purchase='" + Value7 + "' where MasterId='" + ID + "'";
+            return SqlHelper.Instance.ExecuteQuery(mquery);
+        }
+        public Int32 Inserttestfacilities(string ID, string Value1, string Value2, string Value3, string Value4, string Value5, string Value6, string Value7)
+        {
+            string mquery = "insert into tbl_trn_VendorDetailMultiGrid (VendorRefNo,Type,Type_of_GAUGE_Test_Equipment,Test_Make,Least_Count,Range_of_MEASURMENT,CERTIFICATION_YEAR,Year_of_purchase)Values('" + ID + "','" + Value1 + "','" + Value2 + "','" + Value3 + "','" + Value4 + "','" + Value5 + "','" + Value6 + "','" + Value7 + "')";
+            return SqlHelper.Instance.ExecuteQuery(mquery);
+        }
+        public Int32 Updateauthdealaddress(Int64 ID, string Value1, string Value2, string Value3, string Value4, string Value5, string Value6, string Value7, string Value8)
+        {
+            string mquery = "update tbl_trn_VendorDetailMultiGrid set VendorRefNo='" + Value1 + "',DistributorStreetAddress='" + Value2 + "',DistributorState='" + Value3 + "',DistributorPincode='" + Value4 + "',DistributorPhone='" + Value5 + "',DistributorFax='" + Value6 + "',DistributorEmail='" + Value7 + "',DistriutorName='" + Value8 + "' where MasterId='" + ID + "'";
+            return SqlHelper.Instance.ExecuteQuery(mquery);
+        }
+        public Int32 Insertauthdealaddress(string ID, string Value1, string Value2, string Value3, string Value4, string Value5, string Value6, string Value7, string Value8)
+        {
+            string mquery = "insert into tbl_trn_VendorDetailMultiGrid (VendorRefNo,Type,DistributorStreetAddress,DistributorState,DistributorPincode,DistributorPhone,DistributorFax,DistributorEmail,DistributorName)Values('" + ID + "','" + Value1 + "','" + Value2 + "','" + Value3 + "','" + Value4 + "','" + Value5 + "','" + Value6 + "','" + Value7 + "','" + Value8 + "')";
+            return SqlHelper.Instance.ExecuteQuery(mquery);
+        }
+        public Int32 Updateoutsourcefacility(Int64 ID, string Value1, string Value2, string Value3, string Value4, string Value5)
+        {
+            string mquery = "update tbl_trn_VendorDetailMultiGrid set VendorRefNo='" + Value1 + "',OutsourcingMainEquipment='" + Value2 + "',OutsourcingTestEquip='" + Value3 + "',OutsourcingProcessfacility='" + Value4 + "',OutsoursingNameAddressofSubContractor='" + Value5 + "' where MasterId='" + ID + "'";
+            return SqlHelper.Instance.ExecuteQuery(mquery);
+        }
+        public Int32 Insertoutsourcefacility(string ID, string Value1, string Value2, string Value3, string Value4, string Value5)
+        {
+            string mquery = "insert into tbl_trn_VendorDetailMultiGrid (VendorRefNo,Type,OutsourcingMainEquipment,OutsourcingTestEquip,OutsourcingProcessfacility,OutsoursingNameAddressofSubContractor)Values('" + ID + "','" + Value1 + "','" + Value2 + "','" + Value3 + "','" + Value4 + "','" + Value5 + "')";
+            return SqlHelper.Instance.ExecuteQuery(mquery);
+        }
+        public Int32 Updatejointventure(Int64 ID, string Value1, string Value2, string Value3, string Value4, string Value5, string Value6, string Value7, string Value8)
+        {
+            string mquery = "update tbl_trn_VendorDetailMultiGrid set VendorRefNo='" + Value1 + "',JointVentureName='" + Value2 + "',IsJointVentureCountry='" + Value3 + "',CompleteAddress='" + Value4 + "',ContOfficialName='" + Value5 + "',TelephoneNo='" + Value6 + "',FaxNo='" + Value7 + "',EmailId='" + Value8 + "' where MasterId='" + ID + "'";
+            return SqlHelper.Instance.ExecuteQuery(mquery);
+        }
+        public Int32 Insertjointventure(string ID, string Value1, string Value2, string Value3, string Value4, string Value5, string Value6, string Value7, string Value8)
+        {
+            string mquery = "insert into tbl_trn_VendorDetailMultiGrid (VendorRefNo,Type,JointVentureName,IsJointVentureCountry,CompleteAddress,ContOfficialName,TelephoneNo,FaxNo,EmailId)Values('" + ID + "','" + Value1 + "','" + Value2 + "','" + Value3 + "','" + Value4 + "','" + Value5 + "','" + Value6 + "','" + Value7 + "','" + Value8 + "')";
+            return SqlHelper.Instance.ExecuteQuery(mquery);
+        }
+
+
+        public Int32 Insertcerti1(string ID, string Value1, string Value2, string Value3)
+        {
+            string mquery = "insert into VendorRegistrationMultiImage (VendorRefNo,Type,Name,Path)Values('" + ID + "','" + Value1 + "','" + Value2 + "','" + Value3 + "')";
+            return SqlHelper.Instance.ExecuteQuery(mquery);
+        }
+        public Int32 Insertcerti2(string ID, string Value1, string Value2, string Value3)
+        {
+            string mquery = "insert into VendorRegistrationMultiImage (VendorRefNo,Type,Name,Path)Values('" + ID + "','" + Value1 + "','" + Value2 + "','" + Value3 + "')";
+            return SqlHelper.Instance.ExecuteQuery(mquery);
+        }
+
+        public Int32 UpdateOEM(Int64 ID, string Value1, string Value2, string Value3, string Value4, string Value5, string Value6, string Value7, string Value8, string value9)
+        {
+            string mquery = "update tbl_trn_VendorDetailMultiGrid set VendorRefNo='" + Value1 + "',OEMName='" + Value2 + "',OEMAddress='" + Value3 + "',OEMCountry='" + Value4 + "',OEMOfficialName='" + Value5 + "',OEMTelephoneNo='" + Value6 + "',OEMFaxNo='" + Value7 + "',OEMEmailId='" + Value8 + "',FileAuthorization='" + value9 + "' where MasterId='" + ID + "'";
+            return SqlHelper.Instance.ExecuteQuery(mquery);
+        }
+        public Int32 InsertOEM(string ID, string Value1, string Value2, string Value3, string Value4, string Value5, string Value6, string Value7, string Value8, string value9)
+        {
+            string mquery = "insert into tbl_trn_VendorDetailMultiGrid (VendorRefNo,Type,OEMName,OEMAddress,OEMCountry,OEMOfficialName,OEMTelephoneNo,OEMFaxNo,OEMEmailId,FileAuthorization)Values('" + ID + "','" + Value1 + "','" + Value2 + "','" + Value3 + "','" + Value4 + "','" + Value5 + "','" + Value6 + "','" + Value7 + "','" + Value8 + "','" + value9 + "')";
+            return SqlHelper.Instance.ExecuteQuery(mquery);
+        }
+
+        public Int32 UpdateGovt(Int64 ID, string Value1, string Value2, string Value3, string Value4, string Value5)
+        {
+            string mquery = "update tbl_trn_VendorDetailMultiGrid set VendorRefNo='" + Value1 + "',Name_PSU_UnderGovt='" + Value2 + "',RegistrationNo='" + Value3 + "',Certificate_valid_upto='" + Value4 + "',Upload_Registration_Certificate='" + Value5 + "' where MasterId='" + ID + "'";
+            return SqlHelper.Instance.ExecuteQuery(mquery);
+        }
+        public Int32 InsertGovt(string ID, string Value1, string Value2, string Value3, string Value4, string Value5)
+        {
+            string mquery = "insert into tbl_trn_VendorDetailMultiGrid (VendorRefNo,Type,Name_PSU_UnderGovt,RegistrationNo,Certificate_valid_upto,Upload_Registration_Certificate)Values('" + ID + "','" + Value1 + "','" + Value2 + "','" + Value3 + "','" + Value4 + "','" + Value5 + "')";
+            return SqlHelper.Instance.ExecuteQuery(mquery);
+        }
+        public Int32 UpdateTurnOver(Int64 ID, string Value1, string Value2, string Value3, string Value4, string Value5, string Value6)
+        {
+            string mquery = "update tbl_trn_VendorDetailMultiGrid set VendorRefNo='" + Value1 + "',FinancialYear='" + Value2 + "',Value_of_Current_Assets='" + Value3 + "',Value_of_Current_Liabilites='" + Value4 + "',Total_Profit_Loss='" + Value5 + "',File_Audited_Balance_account_sheet='" + Value6 + "' where MasterId='" + ID + "'";
+            return SqlHelper.Instance.ExecuteQuery(mquery);
+        }
+        public Int32 InsertTurnOver(string ID, string Value1, string Value2, string Value3, string Value4, string Value5, string Value6)
+        {
+            string mquery = "insert into tbl_trn_VendorDetailMultiGrid (VendorRefNo,Type,FinancialYear,Value_of_Current_Assets,Value_of_Current_Liabilites,Total_Profit_Loss,File_Audited_Balance_account_sheet)Values('" + ID + "','" + Value1 + "','" + Value2 + "','" + Value3 + "','" + Value4 + "','" + Value5 + "','" + Value6 + "')";
+            return SqlHelper.Instance.ExecuteQuery(mquery);
+        }
+
+
+        public Int32 UpdateAccount(Int64 ID, string Value1, string Value2, string Value3, string Value4, string Value5, string Value6, string Value7)
+        {
+            string mquery = "update tbl_trn_VendorDetailMultiGrid set VendorRefNo='" + Value1 + "',NameofBank='" + Value2 + "',TypeOfAccount='" + Value3 + "',AccountNo='" + Value4 + "',MICRNo='" + Value5 + "',IFSCCode='" + Value6 + "',File_Bank_Solvency_Certificate='" + Value7 + "' where MasterId='" + ID + "'";
+            return SqlHelper.Instance.ExecuteQuery(mquery);
+        }
+        public Int32 InsertAccount(string ID, string Value1, string Value2, string Value3, string Value4, string Value5, string Value6, string Value7)
+        {
+            string mquery = "insert into tbl_trn_VendorDetailMultiGrid (VendorRefNo,Type,NameofBank,TypeOfAccount,AccountNo,MICRNo,IFSCCode,File_Bank_Solvency_Certificate)Values('" + ID + "','" + Value1 + "','" + Value2 + "','" + Value3 + "','" + Value4 + "','" + Value5 + "','" + Value6 + "','" + Value7 + "')";
+            return SqlHelper.Instance.ExecuteQuery(mquery);
+        }
+
+
+
+        public Int32 UpdateProducts(Int64 ID, string Value1, string Value2, string Value3, string Value4, string Value5, string Value6)
+        {
+            string mquery = "update tbl_trn_VendorDetailMultiGrid set VendorRefNo='" + Value1 + "',ProductNomenClature='" + Value2 + "',NatoGroup='" + Value3 + "',NatoClass='" + Value4 + "',ItemCode='" + Value5 + "',HSNCode='" + Value6 + "' where MasterId='" + ID + "'";
+            return SqlHelper.Instance.ExecuteQuery(mquery);
+        }
+        public Int32 InsertProducts(string ID, string Value1, string Value2, string Value3, string Value4, string Value5, string Value6)
+        {
+            string mquery = "insert into tbl_trn_VendorDetailMultiGrid (VendorRefNo,Type,ProductNomenClature,NatoGroup,NatoClass,ItemCode,HSNCode)Values('" + ID + "','" + Value1 + "','" + Value2 + "','" + Value3 + "','" + Value4 + "','" + Value5 + "','" + Value6 + "')";
+            return SqlHelper.Instance.ExecuteQuery(mquery);
+        }
+
+        public Int32 UpdateTechnology(Int64 ID, string Value1, string Value2, string Value3, string Value4, string Value5)
+        {
+            string mquery = "update tbl_trn_VendorDetailMultiGrid set VendorRefNo='" + Value1 + "',ProductNomenClature1='" + Value2 + "',TechnologyLevel1='" + Value3 + "',TechnologyLevel2='" + Value4 + "',TechnologyLevel3='" + Value5 + "' where MasterId='" + ID + "'";
+            return SqlHelper.Instance.ExecuteQuery(mquery);
+        }
+        public Int32 InsertTechnology(string ID, string Value1, string Value2, string Value3, string Value4, string Value5)
+        {
+            string mquery = "insert into tbl_trn_VendorDetailMultiGrid (VendorRefNo,Type,ProductNomenClature1,TechnologyLevel1,TechnologyLevel2,TechnologyLevel3)Values('" + ID + "','" + Value1 + "','" + Value2 + "','" + Value3 + "','" + Value4 + "','" + Value5 + "')";
+            return SqlHelper.Instance.ExecuteQuery(mquery);
+        }
+
+        public Int32 UpdateRaw(Int64 ID, string Value1, string Value2, string Value3, string Value4, string Value5)
+        {
+            string mquery = "update tbl_trn_VendorDetailMultiGrid set VendorRefNo='" + Value1 + "',Items='" + Value2 + "',BasicRawMeterial='" + Value3 + "',SourceofMaterial='" + Value4 + "',Major_Raw_Material_Suppliers='" + Value5 + "' where MasterId='" + ID + "'";
+            return SqlHelper.Instance.ExecuteQuery(mquery);
+        }
+        public Int32 InsertRaw(string ID, string Value1, string Value2, string Value3, string Value4, string Value5)
+        {
+            string mquery = "insert into tbl_trn_VendorDetailMultiGrid (VendorRefNo,Type,Items,BasicRawMeterial,SourceofMaterial,Major_Raw_Material_Suppliers)Values('" + ID + "','" + Value1 + "','" + Value2 + "','" + Value3 + "','" + Value4 + "','" + Value5 + "')";
+            return SqlHelper.Instance.ExecuteQuery(mquery);
+        }
+
+        public Int32 Updateproducedprod(Int64 ID, string Value1, string Value2, string Value3, string Value4, string Value5, string Value6, string value7)
+        {
+            string mquery = "update tbl_trn_VendorDetailMultiGrid set VendorRefNo='" + Value1 + "',Reputed_Customer='" + Value2 + "',Description='" + Value3 + "',SupplyNoDate='" + Value4 + "',OrderQuantity='" + Value5 + "'SuppliedQuantity='" + Value6 + "',Date2='" + value7 + "' where MasterId='" + ID + "'";
+            return SqlHelper.Instance.ExecuteQuery(mquery);
+        }
+        public Int32 Insertproducedprod(string ID, string Value1, string Value2, string Value3, string Value4, string Value5, string Value6, string value7)
+        {
+            string mquery = "insert into tbl_trn_VendorDetailMultiGrid (VendorRefNo,Type,Reputed_Customer,Description,SupplyNoDate,OrderQuantity,SuppliedQuantity,Date2)Values('" + ID + "','" + Value1 + "','" + Value2 + "','" + Value3 + "','" + Value4 + "','" + Value5 + "','" + Value6 + "','" + value7 + "')";
+            return SqlHelper.Instance.ExecuteQuery(mquery);
+        }
+
+
+
+
+
+        #endregion
         #endregion
         #region Code for vendor  Retrive
         public DataTable RetriveVendor(Int64 Vid, string VRefNo, string VEmail, string RetFor)
         {
             return SqlHelper.Instance.RetriveVendor(Vid, VRefNo, VEmail, RetFor);
         }
+
         #endregion
     }
 }

@@ -11,7 +11,7 @@
                 </div>
             </div>
             <div class="container">
-                <asp:UpdatePanel ID="up" runat="server" UpdateMode="Conditional">
+                <asp:UpdatePanel ID="up" runat="server">
                     <ContentTemplate>
                         <div class="cacade-forms">
                             <div class="clearfix mt10"></div>
@@ -58,7 +58,7 @@
                                             </ItemTemplate>
                                             <FooterStyle HorizontalAlign="Right" />
                                             <FooterTemplate>
-                                                <asp:Button ID="btnAddManufac" runat="server" Text="Add New Row" CssClass="btn btn-primary pull-right" OnClick="btnAddManufac_Click" />
+                                                <asp:LinkButton ID="btnAddManufac" runat="server" Text="Add New Row" CssClass="btn btn-primary pull-right" OnClick="btnAddManufac_Click"></asp:LinkButton>
                                             </FooterTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField>
@@ -79,7 +79,7 @@
                                     <SortedDescendingHeaderStyle BackColor="#4870BE" />
                                 </asp:GridView>
                                 <asp:GridView ID="gvmanufacilityedit" runat="server" CssClass="table table-hover" CellPadding="4" ShowFooter="true"
-                                    ForeColor="#333333" GridLines="None" AutoGenerateColumns="false">
+                                    ForeColor="#333333" GridLines="None" AutoGenerateColumns="false" OnRowCommand="gvmanufacilityedit_RowCommand">
                                     <AlternatingRowStyle BackColor="White" />
                                     <Columns>
                                         <asp:TemplateField HeaderText="Sr.No">
@@ -96,8 +96,9 @@
                                         <asp:BoundField DataField="Email_Id" HeaderText="Email Id" />
                                         <asp:TemplateField HeaderText="Action">
                                             <ItemTemplate>
+                                                <asp:HiddenField ID="hfmanuid" runat="server" Value='<%#Eval("MasterId") %>' />
                                                 <asp:LinkButton ID="lbladdnewmanufacilityedit" runat="server" Class="fa fa-plus-circle" CommandArgument='<%#Eval("MasterId") %>' CommandName="addnewmfe"></asp:LinkButton>
-                                                <asp:LinkButton ID="lblupdatenewmanufacilityedit" runat="server" Class="fa fa-edit" CommandArgument='<%#Eval("MasterId") %>' CommandName="updatenewmfe"></asp:LinkButton>
+                                                <asp:LinkButton ID="lblupdatenewmanufacilityedit" runat="server" Class="fa fa-edit" CommandArgument='<%# ((GridViewRow) Container).RowIndex %>' CommandName="updatenewmfe"></asp:LinkButton>
                                                 <asp:LinkButton ID="lbldeletenewmanufacilityedit" runat="server" Class="fa fa-trash" CommandArgument='<%#Eval("MasterId") %>' CommandName="deletenewmfe"></asp:LinkButton>
                                             </ItemTemplate>
                                         </asp:TemplateField>
@@ -146,7 +147,7 @@
                                             </ItemTemplate>
                                             <FooterStyle HorizontalAlign="Right" />
                                             <FooterTemplate>
-                                                <asp:Button ID="btnAddArea" runat="server" Text="Add New Row" CssClass="btn btn-primary pull-right" OnClick="btnAddArea_Click1" />
+                                                <asp:LinkButton ID="btnAddArea" runat="server" Text="Add New Row" CssClass="btn btn-primary pull-right" OnClick="btnAddArea_Click1"></asp:LinkButton>
                                             </FooterTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField>
@@ -167,7 +168,7 @@
                                     <SortedDescendingHeaderStyle BackColor="#4870BE" />
                                 </asp:GridView>
                                 <asp:GridView ID="gvareadetailedit" runat="server" CssClass="table table-hover" CellPadding="4" ShowFooter="true"
-                                    ForeColor="#333333" GridLines="None" AutoGenerateColumns="false">
+                                    ForeColor="#333333" GridLines="None" AutoGenerateColumns="false" OnRowCommand="gvareadetailedit_RowCommand">
                                     <AlternatingRowStyle BackColor="White" />
                                     <Columns>
                                         <asp:TemplateField HeaderText="Sr.No">
@@ -182,8 +183,9 @@
                                         <asp:BoundField DataField="Total_Area" HeaderText="Total Area" />
                                         <asp:TemplateField HeaderText="Action">
                                             <ItemTemplate>
+                                                <asp:HiddenField ID="hfareadetailedit" runat="server" Value='<%#Eval("MasterId")%>' />
                                                 <asp:LinkButton ID="lbladdnewareadetailedit" runat="server" Class="fa fa-plus-circle" CommandArgument='<%#Eval("MasterId") %>' CommandName="addnewad"></asp:LinkButton>
-                                                <asp:LinkButton ID="lblupdatenewareadetailedit" runat="server" Class="fa fa-edit" CommandArgument='<%#Eval("MasterId") %>' CommandName="updatenewad"></asp:LinkButton>
+                                                <asp:LinkButton ID="lblupdatenewareadetailedit" runat="server" Class="fa fa-edit" CommandArgument='<%#((GridViewRow) Container).RowIndex %>' CommandName="updatenewad"></asp:LinkButton>
                                                 <asp:LinkButton ID="lbldeletenewareadetailedit" runat="server" Class="fa fa-trash" CommandArgument='<%#Eval("MasterId") %>' CommandName="deletenewad"></asp:LinkButton>
                                             </ItemTemplate>
                                         </asp:TemplateField>
@@ -232,7 +234,7 @@
                                             </ItemTemplate>
                                             <FooterStyle HorizontalAlign="Right" />
                                             <FooterTemplate>
-                                                <asp:Button ID="btnAddPlantorMachine" runat="server" Text="Add New Row" CssClass="btn btn-primary pull-right" OnClick="btnAddPlantorMachine_Click" />
+                                                <asp:LinkButton ID="btnAddPlantorMachine" runat="server" Text="Add New Row" CssClass="btn btn-primary pull-right" OnClick="btnAddPlantorMachine_Click"></asp:LinkButton>
                                             </FooterTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField>
@@ -253,7 +255,7 @@
                                     <SortedDescendingHeaderStyle BackColor="#4870BE" />
                                 </asp:GridView>
                                 <asp:GridView ID="gvplantandmachinesedit" runat="server" CssClass="table table-hover" CellPadding="4" ShowFooter="true"
-                                    ForeColor="#333333" GridLines="None" AutoGenerateColumns="false">
+                                    ForeColor="#333333" GridLines="None" AutoGenerateColumns="false" OnRowCommand="gvplantandmachinesedit_RowCommand">
                                     <AlternatingRowStyle BackColor="White" />
                                     <Columns>
                                         <asp:TemplateField HeaderText="Sr.No">
@@ -268,8 +270,9 @@
                                         <asp:BoundField DataField="Usage" HeaderText="Usage" />
                                         <asp:TemplateField HeaderText="Action">
                                             <ItemTemplate>
+                                                <asp:HiddenField ID="hfplantmachineedit" runat="server" Value='<%#Eval("MasterId")%>' />
                                                 <asp:LinkButton ID="lbladdnewplantandmachinesedit" runat="server" Class="fa fa-plus-circle" CommandArgument='<%#Eval("MasterId") %>' CommandName="addnewplantandmachinesedit"></asp:LinkButton>
-                                                <asp:LinkButton ID="lblupdatenewplantandmachinesedit" runat="server" Class="fa fa-edit" CommandArgument='<%#Eval("MasterId") %>' CommandName="updatenewplantandmachinesedit"></asp:LinkButton>
+                                                <asp:LinkButton ID="lblupdatenewplantandmachinesedit" runat="server" Class="fa fa-edit" CommandArgument='<%((GridViewRow) Container).RowIndex %>' CommandName="updatenewplantandmachinesedit"></asp:LinkButton>
                                                 <asp:LinkButton ID="lbldeletenewplantandmachinesedit" runat="server" Class="fa fa-trash" CommandArgument='<%#Eval("MasterId") %>' CommandName="deletenewplantandmachinesedit"></asp:LinkButton>
                                             </ItemTemplate>
                                         </asp:TemplateField>
@@ -328,7 +331,7 @@
                                             </ItemTemplate>
                                             <FooterStyle HorizontalAlign="Right" />
                                             <FooterTemplate>
-                                                <asp:Button ID="btnEmpInfo" runat="server" Text="Add New Row" CssClass="btn btn-primary pull-right" OnClick="btnEmpInfo_Click" />
+                                                <asp:LinkButton ID="btnEmpInfo" runat="server" Text="Add New Row" CssClass="btn btn-primary pull-right" OnClick="btnEmpInfo_Click"></asp:LinkButton>
                                             </FooterTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField>
@@ -349,7 +352,7 @@
                                     <SortedDescendingHeaderStyle BackColor="#4870BE" />
                                 </asp:GridView>
                                 <asp:GridView ID="gvempCompInfoedit" runat="server" CssClass="table table-hover" CellPadding="4" ShowFooter="true"
-                                    ForeColor="#333333" GridLines="None" AutoGenerateColumns="false">
+                                    ForeColor="#333333" GridLines="None" AutoGenerateColumns="false" OnRowCommand="gvempCompInfoedit_RowCommand">
                                     <AlternatingRowStyle BackColor="White" />
                                     <Columns>
                                         <asp:TemplateField HeaderText="Sr.No">
@@ -366,8 +369,9 @@
                                         <asp:BoundField DataField="UNSKILLED_LABOUR" HeaderText="UNSKILLED LABOUR" />
                                         <asp:TemplateField HeaderText="Action">
                                             <ItemTemplate>
+                                                <asp:HiddenField ID="hfcompinfo" runat="server" Value='<%#Eval("MasterId")%>' />
                                                 <asp:LinkButton ID="lbladdnewempCompInfoedit" runat="server" Class="fa fa-plus-circle" CommandArgument='<%#Eval("MasterId") %>' CommandName="addnewempCompInfoedit"></asp:LinkButton>
-                                                <asp:LinkButton ID="lblupdatenewempCompInfoedit" runat="server" Class="fa fa-edit" CommandArgument='<%#Eval("MasterId") %>' CommandName="updatenewempCompInfoedit"></asp:LinkButton>
+                                                <asp:LinkButton ID="lblupdatenewempCompInfoedit" runat="server" Class="fa fa-edit" CommandArgument='<%#((GridViewRow) Container).RowIndex %>' CommandName="updatenewempCompInfoedit"></asp:LinkButton>
                                                 <asp:LinkButton ID="lbldeletenewempCompInfoedit" runat="server" Class="fa fa-trash" CommandArgument='<%#Eval("MasterId") %>' CommandName="deletenewempCompInfoedit"></asp:LinkButton>
                                             </ItemTemplate>
                                         </asp:TemplateField>
@@ -418,7 +422,7 @@
                                     <SortedDescendingHeaderStyle BackColor="#4870BE" />
                                 </asp:GridView>
                                 <asp:GridView ID="gvcertificateedit" runat="server" CssClass="table table-hover" CellPadding="4" ShowFooter="true"
-                                    ForeColor="#333333" GridLines="None" AutoGenerateColumns="false">
+                                    ForeColor="#333333" GridLines="None" AutoGenerateColumns="false" OnRowCommand="gvcertificateedit_RowCommand">
                                     <AlternatingRowStyle BackColor="White" />
                                     <Columns>
                                         <asp:TemplateField HeaderText="Sr.No">
@@ -429,14 +433,14 @@
                                         <asp:BoundField DataField="Name" HeaderText="Name" />
                                         <asp:TemplateField HeaderText="Uploaded Certificate">
                                             <ItemTemplate>
-                                                <asp:Image runat="server" ID="imgeditcerti" ImageUrl='<%#Eval("Path") %>' Height="80px" Width="80px" />
+                                                <asp:Image runat="server" ID="imgeditcerti" ImageUrl='<%#Eval("Path","Upload/VendorImage/{0}") %>' Height="80px" Width="80px" />
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="Action">
                                             <ItemTemplate>
-                                                <asp:LinkButton ID="lbladdnewcertificateedit" runat="server" Class="fa fa-plus-circle" CommandArgument='<%#Eval("MasterId") %>' CommandName="addnewecertificateedit"></asp:LinkButton>
-                                                <asp:LinkButton ID="lblupdatenewcertificateedit" runat="server" Class="fa fa-edit" CommandArgument='<%#Eval("MasterId") %>' CommandName="updatenewcertificateedit"></asp:LinkButton>
-                                                <asp:LinkButton ID="lbldeletenewcertificateedit" runat="server" Class="fa fa-trash" CommandArgument='<%#Eval("MasterId") %>' CommandName="deletenewcertificateedit"></asp:LinkButton>
+                                                <asp:LinkButton ID="lbladdnewcertificateedit" runat="server" Class="fa fa-plus-circle" CommandArgument='<%#Eval("ImageID") %>' CommandName="addnewecertificateedit"></asp:LinkButton>
+                                                <%--<asp:LinkButton ID="lblupdatenewcertificateedit" runat="server" Class="fa fa-edit" CommandArgument='<%#((GridViewRow) Container).RowIndex %>' CommandName="updatenewcertificateedit"></asp:LinkButton>--%>
+                                                <asp:LinkButton ID="lbldeletenewcertificateedit" runat="server" Class="fa fa-trash" CommandArgument='<%#Eval("ImageID") %>' CommandName="deletenewcertificateedit"></asp:LinkButton>
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                     </Columns>
@@ -493,7 +497,7 @@
                                             </ItemTemplate>
                                             <FooterStyle HorizontalAlign="Right" />
                                             <FooterTemplate>
-                                                <asp:Button ID="btntestfacilities" runat="server" Text="Add New Row" CssClass="btn btn-primary pull-right" OnClick="btntestfacilities_Click" />
+                                                <asp:LinkButton ID="btntestfacilities" runat="server" Text="Add New Row" CssClass="btn btn-primary pull-right" OnClick="btntestfacilities_Click"></asp:LinkButton>
                                             </FooterTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField>
@@ -514,7 +518,7 @@
                                     <SortedDescendingHeaderStyle BackColor="#4870BE" />
                                 </asp:GridView>
                                 <asp:GridView ID="gvtestfacilitiesedit" runat="server" CssClass="table table-hover" CellPadding="4" ShowFooter="true"
-                                    ForeColor="#333333" GridLines="None" AutoGenerateColumns="false">
+                                    ForeColor="#333333" GridLines="None" AutoGenerateColumns="false" OnRowCommand="gvtestfacilitiesedit_RowCommand">
                                     <AlternatingRowStyle BackColor="White" />
                                     <Columns>
                                         <asp:TemplateField HeaderText="Sr.No">
@@ -530,8 +534,9 @@
                                         <asp:BoundField DataField="Year_of_purchase" HeaderText="Year of purchase" />
                                         <asp:TemplateField HeaderText="Action">
                                             <ItemTemplate>
+                                                <asp:HiddenField ID="hftestfacilities" runat="server" Value='<%#Eval("MasterId")%>' />
                                                 <asp:LinkButton ID="lbladdnewtestfacilitiesedit" runat="server" Class="fa fa-plus-circle" CommandArgument='<%#Eval("MasterId") %>' CommandName="addnewtestfacilitiesedit"></asp:LinkButton>
-                                                <asp:LinkButton ID="lblupdatenewtestfacilitiesedit" runat="server" Class="fa fa-edit" CommandArgument='<%#Eval("MasterId") %>' CommandName="updatenewtestfacilitiesedit"></asp:LinkButton>
+                                                <asp:LinkButton ID="lblupdatenewtestfacilitiesedit" runat="server" Class="fa fa-edit" CommandArgument='<%#((GridViewRow) Container).RowIndex %>' CommandName="updatenewtestfacilitiesedit"></asp:LinkButton>
                                                 <asp:LinkButton ID="lbldeletenewtestfacilitiesedit" runat="server" Class="fa fa-trash" CommandArgument='<%#Eval("MasterId") %>' CommandName="deletenewtestfacilitiesedit"></asp:LinkButton>
                                             </ItemTemplate>
                                         </asp:TemplateField>
@@ -565,7 +570,10 @@
                                         If yes Certifiction is valid upto
                                     </div>
                                     <div class="col-sm-7">
-                                        <asp:TextBox ID="txtdate" runat="server" Type="date" CssClass="form-control"></asp:TextBox>
+                                        <div class="input-append date" id="datePicker" data-date="12-02-2012" data-date-format="dd-mm-yyyy">
+                                            <span class="add-on"><i class="icon-th"></i></span>
+                                            <asp:TextBox ID="txtdate" runat="server" CssClass="form-control datePicker"></asp:TextBox>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="clearfix mt10"></div>
@@ -602,7 +610,7 @@
                                     <SortedDescendingHeaderStyle BackColor="#4870BE" />
                                 </asp:GridView>
                                 <asp:GridView ID="gvchkqualitycertificateedit" runat="server" CssClass="table table-hover" CellPadding="4" ShowFooter="true"
-                                    ForeColor="#333333" GridLines="None" AutoGenerateColumns="false">
+                                    ForeColor="#333333" GridLines="None" AutoGenerateColumns="false" OnRowCommand="gvchkqualitycertificateedit_RowCommand">
                                     <AlternatingRowStyle BackColor="White" />
                                     <Columns>
                                         <asp:TemplateField HeaderText="Sr.No">
@@ -613,14 +621,14 @@
                                         <asp:BoundField DataField="Name" HeaderText="Name" />
                                         <asp:TemplateField HeaderText="Uploaded Certificate">
                                             <ItemTemplate>
-                                                <asp:Image runat="server" ID="imgeditqcerti" ImageUrl='<%#Eval("Path") %>' Height="80px" Width="80px" />
+                                                <asp:Image runat="server" ID="imgeditqcerti" ImageUrl='<%#Eval("Path","Upload/VendorImage{0}") %>' Height="80px" Width="80px" />
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="Action">
                                             <ItemTemplate>
-                                                <asp:LinkButton ID="lbladdnewchkqualitycertificateedit" runat="server" Class="fa fa-plus-circle" CommandArgument='<%#Eval("MasterId") %>' CommandName="addnewechkqualitycertificateedit"></asp:LinkButton>
-                                                <asp:LinkButton ID="lblupdatenewchkqualitycertificateedit" runat="server" Class="fa fa-edit" CommandArgument='<%#Eval("MasterId") %>' CommandName="updatenewchkqualitycertificateedit"></asp:LinkButton>
-                                                <asp:LinkButton ID="lbldeletenewchkqualitycertificateedit" runat="server" Class="fa fa-trash" CommandArgument='<%#Eval("MasterId") %>' CommandName="deletenewchkqualitycertificateedit"></asp:LinkButton>
+                                                <asp:LinkButton ID="lbladdnewchkqualitycertificateedit" runat="server" Class="fa fa-plus-circle" CommandArgument='<%#Eval("ImageID") %>' CommandName="addnewechkqualitycertificateedit"></asp:LinkButton>
+                                                <%--<asp:LinkButton ID="lblupdatenewchkqualitycertificateedit" runat="server" Class="fa fa-edit" CommandArgument='<%#((GridViewRow) Container).RowIndex %>' CommandName="updatenewchkqualitycertificateedit"></asp:LinkButton>--%>
+                                                <asp:LinkButton ID="lbldeletenewchkqualitycertificateedit" runat="server" Class="fa fa-trash" CommandArgument='<%#Eval("ImageID") %>' CommandName="deletenewchkqualitycertificateedit"></asp:LinkButton>
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                     </Columns>
@@ -693,13 +701,13 @@
                                                 <div class="col-sm-4">
                                                     <asp:TextBox ID="txtstate" runat="server" CssClass="form-control"></asp:TextBox>
                                                     <p>
-                                                        State / Province
+                                                        State
                                                     </p>
                                                 </div>
                                                 <div class="col-sm-4">
                                                     <asp:TextBox ID="txtpincode" runat="server" CssClass="form-control"></asp:TextBox>
                                                     <p>
-                                                        Postal / Zip Code
+                                                        Postal
                                                     </p>
                                                 </div>
                                             </div>
@@ -755,6 +763,11 @@
                                         <AlternatingRowStyle BackColor="White" />
                                         <Columns>
                                             <asp:BoundField DataField="SNo" HeaderText="Raw Number" />
+                                             <asp:TemplateField HeaderText="Name">
+                                                <ItemTemplate>
+                                                    <asp:TextBox ID="txtDName" runat="server" CssClass="form-control"></asp:TextBox>
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
                                             <asp:TemplateField HeaderText="StreetAddress">
                                                 <ItemTemplate>
                                                     <asp:TextBox ID="txtDstreetaddress" runat="server" CssClass="form-control"></asp:TextBox>
@@ -786,7 +799,7 @@
                                                 </ItemTemplate>
                                                 <FooterStyle HorizontalAlign="Right" />
                                                 <FooterTemplate>
-                                                    <asp:Button ID="btnautdeal" runat="server" Text="Add New Row" CssClass="btn btn-primary pull-right" OnClick="btnautdeal_Click" />
+                                                    <asp:LinkButton ID="btnautdeal" runat="server" Text="Add New Row" CssClass="btn btn-primary pull-right" OnClick="btnautdeal_Click"></asp:LinkButton>
                                                 </FooterTemplate>
                                             </asp:TemplateField>
                                             <asp:TemplateField>
@@ -807,7 +820,7 @@
                                         <SortedDescendingHeaderStyle BackColor="#4870BE" />
                                     </asp:GridView>
                                     <asp:GridView ID="gvauthdealaddressedit" runat="server" CssClass="table table-hover" CellPadding="4" ShowFooter="true"
-                                        ForeColor="#333333" GridLines="None" AutoGenerateColumns="false">
+                                        ForeColor="#333333" GridLines="None" AutoGenerateColumns="false" OnRowCommand="gvauthdealaddressedit_RowCommand">
                                         <AlternatingRowStyle BackColor="White" />
                                         <Columns>
                                             <asp:TemplateField HeaderText="Sr.No">
@@ -815,6 +828,7 @@
                                                     <%#Container.DataItemIndex+1 %>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
+                                            <asp:BoundField DataField="DistributorName" HeaderText="Distributor Name" />
                                             <asp:BoundField DataField="DistributorStreetAddress" HeaderText="StreetAddress" />
                                             <asp:BoundField DataField="DistributorState" HeaderText="State" />
                                             <asp:BoundField DataField="DistributorPincode" HeaderText="PinCode" />
@@ -823,8 +837,9 @@
                                             <asp:BoundField DataField="DistributorEmail" HeaderText="Email" />
                                             <asp:TemplateField HeaderText="Action">
                                                 <ItemTemplate>
+                                                    <asp:HiddenField runat="server" ID="hfauth" Value='<%#Eval("MasterId") %>' />
                                                     <asp:LinkButton ID="lbladdnewauthdealaddressedit" runat="server" Class="fa fa-plus-circle" CommandArgument='<%#Eval("MasterId") %>' CommandName="addnewauthdealaddressedit"></asp:LinkButton>
-                                                    <asp:LinkButton ID="lblupdatenewauthdealaddressedit" runat="server" Class="fa fa-edit" CommandArgument='<%#Eval("MasterId") %>' CommandName="updatenewauthdealaddressedit"></asp:LinkButton>
+                                                    <asp:LinkButton ID="lblupdatenewauthdealaddressedit" runat="server" Class="fa fa-edit" CommandArgument='<%#((GridViewRow) Container).RowIndex %>' CommandName="updatenewauthdealaddressedit"></asp:LinkButton>
                                                     <asp:LinkButton ID="lbldeletenewauthdealaddressedit" runat="server" Class="fa fa-trash" CommandArgument='<%#Eval("MasterId") %>' CommandName="deletenewauthdealaddressedit"></asp:LinkButton>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
@@ -872,7 +887,7 @@
                                                 </ItemTemplate>
                                                 <FooterStyle HorizontalAlign="Right" />
                                                 <FooterTemplate>
-                                                    <asp:Button ID="btnoutsourcefac" runat="server" Text="Add New Row" CssClass="btn btn-primary pull-right" OnClick="btnoutsourcefac_Click" />
+                                                    <asp:LinkButton ID="btnoutsourcefac" runat="server" Text="Add New Row" CssClass="btn btn-primary pull-right" OnClick="btnoutsourcefac_Click"></asp:LinkButton>
                                                 </FooterTemplate>
                                             </asp:TemplateField>
                                             <asp:TemplateField>
@@ -893,7 +908,7 @@
                                         <SortedDescendingHeaderStyle BackColor="#4870BE" />
                                     </asp:GridView>
                                     <asp:GridView ID="gvoutsourcefacilityedit" runat="server" CssClass="table table-hover" CellPadding="4" ShowFooter="true"
-                                        ForeColor="#333333" GridLines="None" AutoGenerateColumns="false">
+                                        ForeColor="#333333" GridLines="None" AutoGenerateColumns="false" OnRowCommand="gvoutsourcefacilityedit_RowCommand">
                                         <AlternatingRowStyle BackColor="White" />
                                         <Columns>
                                             <asp:TemplateField HeaderText="Sr.No">
@@ -907,8 +922,9 @@
                                             <asp:BoundField DataField="OutsoursingNameAddressofSubContractor" HeaderText="Name & Address of Sub Contractor" />
                                             <asp:TemplateField HeaderText="Action">
                                                 <ItemTemplate>
+                                                    <asp:HiddenField runat="server" ID="hfoutscr" Value='<%#Eval("MasterId") %>' />
                                                     <asp:LinkButton ID="lbladdnewoutsourcefacilityedit" runat="server" Class="fa fa-plus-circle" CommandArgument='<%#Eval("MasterId") %>' CommandName="addnewoutsourcefacilityedit"></asp:LinkButton>
-                                                    <asp:LinkButton ID="lblupdatenewoutsourcefacilityedit" runat="server" Class="fa fa-edit" CommandArgument='<%#Eval("MasterId") %>' CommandName="updatenewoutsourcefacilityedit"></asp:LinkButton>
+                                                    <asp:LinkButton ID="lblupdatenewoutsourcefacilityedit" runat="server" Class="fa fa-edit" CommandArgument='<%#((GridViewRow) Container).RowIndex %>' CommandName="updatenewoutsourcefacilityedit"></asp:LinkButton>
                                                     <asp:LinkButton ID="lbldeletenewoutsourcefacilityedit" runat="server" Class="fa fa-trash" CommandArgument='<%#Eval("MasterId") %>' CommandName="deletenewoutsourcefacilityedit"></asp:LinkButton>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
@@ -972,7 +988,7 @@
                                             </ItemTemplate>
                                             <FooterStyle HorizontalAlign="Right" />
                                             <FooterTemplate>
-                                                <asp:Button ID="btnjointven" runat="server" Text="Add New Row" CssClass="btn btn-primary pull-right" OnClick="btnjointven_Click" />
+                                                <asp:LinkButton ID="btnjointven" runat="server" Text="Add New Row" CssClass="btn btn-primary pull-right" OnClick="btnjointven_Click"></asp:LinkButton>
                                             </FooterTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField>
@@ -993,7 +1009,7 @@
                                     <SortedDescendingHeaderStyle BackColor="#4870BE" />
                                 </asp:GridView>
                                 <asp:GridView ID="gvjointventureedit" runat="server" CssClass="table table-hover" CellPadding="4" ShowFooter="true"
-                                    ForeColor="#333333" GridLines="None" AutoGenerateColumns="false">
+                                    ForeColor="#333333" GridLines="None" AutoGenerateColumns="false" OnRowCommand="gvjointventureedit_RowCommand">
                                     <AlternatingRowStyle BackColor="White" />
                                     <Columns>
                                         <asp:TemplateField HeaderText="Sr.No">
@@ -1010,8 +1026,9 @@
                                         <asp:BoundField DataField="EmailId" HeaderText="Email Id" />
                                         <asp:TemplateField HeaderText="Action">
                                             <ItemTemplate>
+                                                <asp:HiddenField runat="server" ID="hfjoint" Value='<%#Eval("MasterId") %>' />
                                                 <asp:LinkButton ID="lbladdnewjointventureedit" runat="server" Class="fa fa-plus-circle" CommandArgument='<%#Eval("MasterId") %>' CommandName="addnewjointventureedit"></asp:LinkButton>
-                                                <asp:LinkButton ID="lblupdatenewjointventureedit" runat="server" Class="fa fa-edit" CommandArgument='<%#Eval("MasterId") %>' CommandName="updatenewjointventureedit"></asp:LinkButton>
+                                                <asp:LinkButton ID="lblupdatenewjointventureedit" runat="server" Class="fa fa-edit" CommandArgument='<%#((GridViewRow) Container).RowIndex %>' CommandName="updatenewjointventureedit"></asp:LinkButton>
                                                 <asp:LinkButton ID="lbldeletenewjointventureedit" runat="server" Class="fa fa-trash" CommandArgument='<%#Eval("MasterId") %>' CommandName="deletenewjointventureedit"></asp:LinkButton>
                                             </ItemTemplate>
                                         </asp:TemplateField>
@@ -1041,15 +1058,664 @@
                                 </div>
                             </asp:Panel>
                             <div class="clearfix pb15"></div>
-                            <asp:Button ID="btnsubmit" runat="server" Text="Submit" CssClass="btn btn-primary pull-right mr10" OnClick="btnsubmit_Click" />
-                            <asp:Button ID="btncancel" runat="server" Text="Cancel" CssClass="btn btn-primary pull-right mr10" OnClick="btncancel_Click" />
+                            <asp:LinkButton ID="btnsubmit" runat="server" Text="Submit" CssClass="btn btn-primary pull-right mr10" OnClick="btnsubmit_Click"></asp:LinkButton>
+                            <asp:LinkButton ID="btncancel" runat="server" Text="Cancel" CssClass="btn btn-primary pull-right mr10" OnClick="btncancel_Click"></asp:LinkButton>
                         </div>
                     </ContentTemplate>
                     <Triggers>
                         <asp:PostBackTrigger ControlID="btnsubmit" />
                     </Triggers>
                 </asp:UpdatePanel>
+                <asp:UpdateProgress ID="UpdateProgress1" runat="server" AssociatedUpdatePanelID="up">
+                    <ProgressTemplate>
+                        <div class="overlay-progress">
+                            <div class="custom-progress-bar blue stripes">
+                                <span></span>
+                                <p>Processing</p>
+                            </div>
+                        </div>
+                    </ProgressTemplate>
+                </asp:UpdateProgress>
             </div>
         </div>
     </div>
+    <%---Modal Popup Starts of All type GridView--%>
+    <div class="modal fade" id="changePass" role="dialog" data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog" style="width: 400px;">
+            <asp:UpdatePanel ID="UpdatePanel2" runat="server">
+                <ContentTemplate>
+                    <div class="modal-content" runat="server" id="p1">
+                        <div class="modal-header modal-header1">
+                            <button type="button" class="close close1" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">List of Manufacturing Facilities</h4>
+                        </div>
+                        <form class="form-horizontal changepassword" role="form">
+                            <div class="modal-body clearfix" style="padding: 0 20px;">
+                                <asp:HiddenField ID="hfGenInfoID" runat="server" />
+                                <div class="form-group" style="margin: 0">
+                                    <label for="uname" class=" tetLable">
+                                        Name of factory
+                                    </label>
+                                    <asp:TextBox ID="txtnameoffactorypopup" runat="server" CssClass="form-control" placeholder="Name of factory"></asp:TextBox>
+                                </div>
+                                <div class="form-group" style="margin: 0">
+                                    <label for="uname" class=" tetLable">
+                                        Factory GST No
+                                    </label>
+                                    <asp:TextBox runat="server" ID="txtfactorygstnopopup" class="form-control" required="" TabIndex="2" ToolTip="Factory GST No"></asp:TextBox>
+                                </div>
+                                <div class="form-group" style="margin: 0">
+                                    <label for="uname" class=" tetLable">
+                                        Complete postal Address
+                                    </label>
+                                    <asp:TextBox runat="server" ID="txtcompletepostaladdresspopup" class="form-control" required="" TextMode="MultiLine" TabIndex="3" ToolTip="Complete postal Address"></asp:TextBox>
+                                </div>
+                                <div class="form-group" style="margin: 0">
+                                    <label for="uname" class=" tetLable">
+                                        Contact Official Name
+                                    </label>
+                                    <asp:TextBox runat="server" ID="txtcontactofficialnamepopup" class="form-control" required="" TabIndex="4" ToolTip="Contact Official Name"></asp:TextBox>
+                                </div>
+                                <div class="form-group" style="margin: 0">
+                                    <label for="uname" class=" tetLable">
+                                        Telephone No
+                                    </label>
+                                    <asp:TextBox runat="server" ID="txttelephonepopup" class="form-control" required="" onkeypress="return isNumberKey(event)" TabIndex="5" ToolTip="Mobile No (123456789) Only Number"></asp:TextBox>
+                                </div>
+                                <div class="form-group" style="margin: 0">
+                                    <label for="uname" class=" tetLable">
+                                        Fax No
+                                    </label>
+                                    <asp:TextBox runat="server" ID="txtfaxnopopup" class="form-control" required="" onkeypress="return isNumberKey(event)" TabIndex="5" ToolTip="Mobile No (123456789) Only Number"></asp:TextBox>
+                                </div>
+                                <div class="form-group" style="margin: 0">
+                                    <label for="uname" class=" tetLable">
+                                        Email Id
+                                    </label>
+                                    <asp:TextBox runat="server" ID="txtemailidpopup" class="form-control" required="" TabIndex="5" ToolTip="Email Id"></asp:TextBox>
+                                </div>
+                                <div class="clearfix mt10"></div>
+                                <div class="form-group" style="margin: 0">
+                                    <asp:LinkButton ID="btnupdate" runat="server" Text="Edit & Update" CssClass="btn btn-primary pull-right mr10" OnClick="btnupdate_Click"></asp:LinkButton>
+                                </div>
+                                <div class="clearfix mt10"></div>
+                            </div>
+                        </form>
+                    </div>
+                </ContentTemplate>
+            </asp:UpdatePanel>
+        </div>
+    </div>
+    <div class="modal fade" id="divareadetail" role="dialog" data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog" style="width: 400px;">
+            <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+                <ContentTemplate>
+                    <div class="modal-content" runat="server" id="Div2">
+                        <div class="modal-header modal-header1">
+                            <button type="button" class="close close1" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Area Details</h4>
+                        </div>
+                        <form class="form-horizontal changepassword" role="form">
+                            <div class="modal-body clearfix" style="padding: 0 20px;">
+                                <asp:HiddenField ID="HiddenField1" runat="server" />
+                                <div class="form-group" style="margin: 0">
+                                    <label for="uname" class=" tetLable">
+                                        Name of factory
+                                    </label>
+                                    <asp:TextBox ID="txtnameoffactoryareadetailpopup" runat="server" CssClass="form-control" placeholder="Name of factory"></asp:TextBox>
+                                </div>
+                                <div class="form-group" style="margin: 0">
+                                    <label for="uname" class=" tetLable">
+                                        PRODUCTION AREA
+                                    </label>
+                                    <asp:TextBox runat="server" ID="txtproductionareapopup" class="form-control" required="" TabIndex="2" ToolTip="PRODUCTION AREA"></asp:TextBox>
+                                </div>
+                                <div class="form-group" style="margin: 0">
+                                    <label for="uname" class=" tetLable">
+                                        INSPECTION AREA
+                                    </label>
+                                    <asp:TextBox runat="server" ID="txtinspectionarea" class="form-control" required="" TabIndex="3" ToolTip=" INSPECTION AREA"></asp:TextBox>
+                                </div>
+                                <div class="form-group" style="margin: 0">
+                                    <label for="uname" class=" tetLable">
+                                        TOTAL COVERED AREA
+                                    </label>
+                                    <asp:TextBox runat="server" ID="txttotalcoverdareapopup" class="form-control" required="" TabIndex="4" ToolTip="TOTAL COVERED AREA"></asp:TextBox>
+                                </div>
+                                <div class="form-group" style="margin: 0">
+                                    <label for="uname" class=" tetLable">
+                                        Total Area
+                                    </label>
+                                    <asp:TextBox runat="server" ID="txttotalarea" class="form-control" required="" TabIndex="5" ToolTip="Total Area"></asp:TextBox>
+                                </div>
+                                <div class="clearfix mt10"></div>
+                                <div class="form-group" style="margin: 0">
+                                    <asp:LinkButton ID="btnareadetails" runat="server" Text="Edit & Update" CssClass="btn btn-primary pull-right mr10" OnClick="btnareadetails_Click"></asp:LinkButton>
+                                </div>
+                                <div class="clearfix mt10"></div>
+                            </div>
+                        </form>
+                    </div>
+                </ContentTemplate>
+            </asp:UpdatePanel>
+        </div>
+    </div>
+    <div class="modal fade" id="allplantormachine" role="dialog" data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog" style="width: 400px;">
+            <asp:UpdatePanel ID="UpdatePanel3" runat="server">
+                <ContentTemplate>
+                    <div class="modal-content" runat="server" id="Div3">
+                        <div class="modal-header modal-header1">
+                            <button type="button" class="close close1" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">List of All Plant and Machines</h4>
+                        </div>
+                        <form class="form-horizontal changepassword" role="form">
+                            <div class="modal-body clearfix" style="padding: 0 20px;">
+                                <asp:HiddenField ID="HiddenField2" runat="server" />
+                                <div class="form-group" style="margin: 0">
+                                    <label for="uname" class=" tetLable">
+                                        Description of Machine & Model Specs
+                                    </label>
+                                    <asp:TextBox ID="txtmachineormodalpopup" runat="server" CssClass="form-control" placeholder="Description of Machine & Model Specs"></asp:TextBox>
+                                </div>
+                                <div class="form-group" style="margin: 0">
+                                    <label for="uname" class=" tetLable">
+                                        Make
+                                    </label>
+                                    <asp:TextBox runat="server" ID="txtMakepopup" class="form-control" required="" TabIndex="2" ToolTip="Make"></asp:TextBox>
+                                </div>
+                                <div class="form-group" style="margin: 0">
+                                    <label for="uname" class=" tetLable">
+                                        Quantity
+                                    </label>
+                                    <asp:TextBox runat="server" ID="txtQuantitypopup" class="form-control" required="" TabIndex="3" ToolTip="Quantity"></asp:TextBox>
+                                </div>
+                                <div class="form-group" style="margin: 0">
+                                    <label for="uname" class=" tetLable">
+                                        Date of Purchase
+                                    </label>
+                                    <asp:TextBox runat="server" ID="txtdateofpurchasepopup" class="form-control" required="" TabIndex="4" ToolTip="Date of Purchase"></asp:TextBox>
+                                </div>
+                                <div class="form-group" style="margin: 0">
+                                    <label for="uname" class=" tetLable">
+                                        Usage
+                                    </label>
+                                    <asp:TextBox runat="server" ID="txtUsagepopup" class="form-control" required="" TabIndex="5" ToolTip="Usage"></asp:TextBox>
+                                </div>
+                                <div class="clearfix mt10"></div>
+                                <div class="form-group" style="margin: 0">
+                                    <asp:LinkButton ID="lballpalntormachine" runat="server" Text="Edit & Update" CssClass="btn btn-primary pull-right mr10" OnClick="lballpalntormachine_Click"></asp:LinkButton>
+                                </div>
+                                <div class="clearfix mt10"></div>
+                            </div>
+                        </form>
+                    </div>
+                </ContentTemplate>
+            </asp:UpdatePanel>
+        </div>
+    </div>
+    <div class="modal fade" id="divemployee" role="dialog" data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog" style="width: 400px;">
+            <asp:UpdatePanel ID="UpdatePanel4" runat="server">
+                <ContentTemplate>
+                    <div class="modal-content" runat="server" id="Div4">
+                        <div class="modal-header modal-header1">
+                            <button type="button" class="close close1" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Employees Details</h4>
+                        </div>
+                        <form class="form-horizontal changepassword" role="form">
+                            <div class="modal-body clearfix" style="padding: 0 20px;">
+                                <asp:HiddenField ID="HiddenField3" runat="server" />
+                                <div class="form-group" style="margin: 0">
+                                    <label for="uname" class=" tetLable">
+                                        TOTAL Employees
+                                    </label>
+                                    <asp:TextBox ID="txttotalemployeepopup" runat="server" CssClass="form-control" placeholder="TOTAL Employees"></asp:TextBox>
+                                </div>
+                                <div class="form-group" style="margin: 0">
+                                    <label for="uname" class=" tetLable">
+                                        ADMINISTRATIVE
+                                    </label>
+                                    <asp:TextBox runat="server" ID="txtADMINISTRATIVEpopup" class="form-control" required="" TabIndex="2" ToolTip="ADMINISTRATIVE"></asp:TextBox>
+                                </div>
+                                <div class="form-group" style="margin: 0">
+                                    <label for="uname" class=" tetLable">
+                                        TECHNICAL
+                                    </label>
+                                    <asp:TextBox runat="server" ID="txtTECHNICALpopup" class="form-control" required="" TabIndex="3" ToolTip="TECHNICAL"></asp:TextBox>
+                                </div>
+                                <div class="form-group" style="margin: 0">
+                                    <label for="uname" class=" tetLable">
+                                        NON TECHNICAL
+                                    </label>
+                                    <asp:TextBox runat="server" ID="txtnontechpopup" class="form-control" required="" TabIndex="4" ToolTip="NON TECHNICAL"></asp:TextBox>
+                                </div>
+                                <div class="form-group" style="margin: 0">
+                                    <label for="uname" class=" tetLable">
+                                        QC/INSPECTION
+                                    </label>
+                                    <asp:TextBox runat="server" ID="Textxtqcinspopup" class="form-control" required="" TabIndex="5" ToolTip="QC/INSPECTION"></asp:TextBox>
+                                </div>
+                                <div class="form-group" style="margin: 0">
+                                    <label for="uname" class=" tetLable">
+                                        SKILLED LABOUR
+                                    </label>
+                                    <asp:TextBox runat="server" ID="txtskilledlabour" class="form-control" required="" TabIndex="5" ToolTip="SKILLED LABOUR"></asp:TextBox>
+                                </div>
+                                <div class="form-group" style="margin: 0">
+                                    <label for="uname" class=" tetLable">
+                                        UNSKILLED LABOUR
+                                    </label>
+                                    <asp:TextBox runat="server" ID="txtUNSKILLEDLABOURpopup" class="form-control" required="" TabIndex="5" ToolTip="UNSKILLED LABOUR"></asp:TextBox>
+                                </div>
+                                <div class="clearfix mt10"></div>
+                                <div class="form-group" style="margin: 0">
+                                    <asp:LinkButton ID="lbemployee" runat="server" Text="Edit & Update" CssClass="btn btn-primary pull-right mr10" OnClick="lbemployee_Click"></asp:LinkButton>
+                                </div>
+                                <div class="clearfix mt10"></div>
+                            </div>
+                        </form>
+                    </div>
+                </ContentTemplate>
+            </asp:UpdatePanel>
+        </div>
+    </div>
+    <div class="modal fade" id="divqcfm" role="dialog" data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog" style="width: 400px;">
+            <asp:UpdatePanel ID="UpdatePanel5" runat="server">
+                <ContentTemplate>
+                    <div class="modal-content" runat="server" id="Div5">
+                        <div class="modal-header modal-header1">
+                            <button type="button" class="close close1" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">List of Test Facilities</h4>
+                        </div>
+                        <form class="form-horizontal changepassword" role="form">
+                            <div class="modal-body clearfix" style="padding: 0 20px;">
+                                <asp:HiddenField ID="HiddenField4" runat="server" />
+                                <div class="form-group" style="margin: 0">
+                                    <label for="uname" class=" tetLable">
+                                        Type of GAUGE / Test Equipment
+                                    </label>
+                                    <asp:TextBox ID="txttestequippopup" runat="server" CssClass="form-control" placeholder="Type of GAUGE / Test Equipment"></asp:TextBox>
+                                </div>
+                                <div class="form-group" style="margin: 0">
+                                    <label for="uname" class=" tetLable">
+                                        Make
+                                    </label>
+                                    <asp:TextBox runat="server" ID="txtmakefacpopup" class="form-control" required="" TabIndex="2" ToolTip="Make"></asp:TextBox>
+                                </div>
+                                <div class="form-group" style="margin: 0">
+                                    <label for="uname" class=" tetLable">
+                                        Least Count
+                                    </label>
+                                    <asp:TextBox runat="server" ID="txtlcountpopup" class="form-control" required="" TabIndex="3" ToolTip="Least Count"></asp:TextBox>
+                                </div>
+                                <div class="form-group" style="margin: 0">
+                                    <label for="uname" class=" tetLable">
+                                        Range of MEASURMENT
+                                    </label>
+                                    <asp:TextBox runat="server" ID="txtrngmeasurpopup" class="form-control" required="" TabIndex="4" ToolTip="Range of MEASURMENT"></asp:TextBox>
+                                </div>
+                                <div class="form-group" style="margin: 0">
+                                    <label for="uname" class=" tetLable">
+                                        CERTIFICATION YEAR
+                                    </label>
+                                    <asp:TextBox runat="server" ID="txtcertiyearpopup" class="form-control" required="" TabIndex="5" ToolTip="CERTIFICATION YEAR"></asp:TextBox>
+                                </div>
+                                <div class="form-group" style="margin: 0">
+                                    <label for="uname" class=" tetLable">
+                                        Year of purchase
+                                    </label>
+                                    <asp:TextBox runat="server" ID="txtyrofpurpopup" class="form-control" required="" TabIndex="5" ToolTip="Year of purchase"></asp:TextBox>
+                                </div>
+                                <div class="clearfix mt10"></div>
+                                <div class="form-group" style="margin: 0">
+                                    <asp:LinkButton ID="lbQCF" runat="server" Text="Edit & Update" CssClass="btn btn-primary pull-right mr10" OnClick="lbQCF_Click"></asp:LinkButton>
+                                </div>
+                                <div class="clearfix mt10"></div>
+                            </div>
+                        </form>
+                    </div>
+                </ContentTemplate>
+            </asp:UpdatePanel>
+        </div>
+    </div>
+    <div class="modal fade" id="divautdisdeal" role="dialog" data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog" style="width: 400px;">
+            <asp:UpdatePanel ID="UpdatePanel6" runat="server">
+                <ContentTemplate>
+                    <div class="modal-content" runat="server" id="Div6">
+                        <div class="modal-header modal-header1">
+                            <button type="button" class="close close1" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Authorised distributor/dealer</h4>
+                        </div>
+                        <form class="form-horizontal changepassword" role="form">
+                            <div class="modal-body clearfix" style="padding: 0 20px;">
+                                <asp:HiddenField ID="HiddenField5" runat="server" />
+                                 <div class="form-group" style="margin: 0">
+                                    <label for="uname" class=" tetLable">
+                                       Distributor Name
+                                    </label>
+                                    <asp:TextBox ID="txtdisname" runat="server" CssClass="form-control" placeholder="Distributor Name"></asp:TextBox>
+                                </div>
+                                <div class="form-group" style="margin: 0">
+                                    <label for="uname" class=" tetLable">
+                                        Street Addresss
+                                    </label>
+                                    <asp:TextBox ID="txtstreetaddpopup" runat="server" CssClass="form-control" placeholder="Street Addresss"></asp:TextBox>
+                                </div>
+                                <div class="form-group" style="margin: 0">
+                                    <label for="uname" class=" tetLable">
+                                        State
+                                    </label>
+                                    <asp:TextBox runat="server" ID="txtstatepopup" class="form-control" required="" TabIndex="2" ToolTip="State"></asp:TextBox>
+                                </div>
+                                <div class="form-group" style="margin: 0">
+                                    <label for="uname" class=" tetLable">
+                                        PinCode
+                                    </label>
+                                    <asp:TextBox runat="server" ID="txtPinCodepopup" class="form-control" required="" TabIndex="3" ToolTip="PinCode"></asp:TextBox>
+                                </div>
+                                <div class="form-group" style="margin: 0">
+                                    <label for="uname" class=" tetLable">
+                                        Phone
+                                    </label>
+                                    <asp:TextBox runat="server" ID="txtphonepopup" class="form-control" required="" TabIndex="4" ToolTip="Phone"></asp:TextBox>
+                                </div>
+                                <div class="form-group" style="margin: 0">
+                                    <label for="uname" class=" tetLable">
+                                        Fax
+                                    </label>
+                                    <asp:TextBox runat="server" ID="txtFaxpopup" class="form-control" required="" TabIndex="5" ToolTip="Fax"></asp:TextBox>
+                                </div>
+                                <div class="form-group" style="margin: 0">
+                                    <label for="uname" class=" tetLable">
+                                        Email
+                                    </label>
+                                    <asp:TextBox runat="server" ID="txtemailpopup" class="form-control" required="" TabIndex="5" ToolTip="Email"></asp:TextBox>
+                                </div>
+                                <div class="clearfix mt10"></div>
+                                <div class="form-group" style="margin: 0">
+                                    <asp:LinkButton ID="lbldistri" runat="server" Text="Edit & Update" CssClass="btn btn-primary pull-right mr10" OnClick="lbldistri_Click"></asp:LinkButton>
+                                </div>
+                                <div class="clearfix mt10"></div>
+                            </div>
+                        </form>
+                    </div>
+                </ContentTemplate>
+            </asp:UpdatePanel>
+        </div>
+    </div>
+    <div class="modal fade" id="divof" role="dialog" data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog" style="width: 400px;">
+            <asp:UpdatePanel ID="UpdatePanel7" runat="server">
+                <ContentTemplate>
+                    <div class="modal-content" runat="server" id="Div7">
+                        <div class="modal-header modal-header1">
+                            <button type="button" class="close close1" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Details of Outsourcing Facilites</h4>
+                        </div>
+                        <form class="form-horizontal changepassword" role="form">
+                            <div class="modal-body clearfix" style="padding: 0 20px;">
+                                <asp:HiddenField ID="HiddenField6" runat="server" />
+                                <div class="form-group" style="margin: 0">
+                                    <label for="uname" class=" tetLable">
+                                        Main Equipment
+                                    </label>
+                                    <asp:TextBox ID="txtmainequippopup" runat="server" CssClass="form-control" placeholder="Main Equipment"></asp:TextBox>
+                                </div>
+                                <div class="form-group" style="margin: 0">
+                                    <label for="uname" class=" tetLable">
+                                        Test Equipments
+                                    </label>
+                                    <asp:TextBox runat="server" ID="txttestpopup" class="form-control" required="" TabIndex="2" ToolTip="Test Equipments"></asp:TextBox>
+                                </div>
+                                <div class="form-group" style="margin: 0">
+                                    <label for="uname" class=" tetLable">
+                                        Process/facility
+                                    </label>
+                                    <asp:TextBox runat="server" ID="txtprocfacli" class="form-control" required="" TabIndex="3" ToolTip="Process/facility"></asp:TextBox>
+                                </div>
+                                <div class="form-group" style="margin: 0">
+                                    <label for="uname" class=" tetLable">
+                                        Name & Address of Sub Contractor
+                                    </label>
+                                    <asp:TextBox runat="server" ID="txtnameaddpopup" class="form-control" required="" TabIndex="4" ToolTip="Name & Address of Sub Contractor"></asp:TextBox>
+                                </div>
+                                <div class="clearfix mt10"></div>
+                                <div class="form-group" style="margin: 0">
+                                    <asp:LinkButton ID="lboutfac" runat="server" Text="Edit & Update" CssClass="btn btn-primary pull-right mr10" OnClick="lboutfac_Click"></asp:LinkButton>
+                                </div>
+                                <div class="clearfix mt10"></div>
+                            </div>
+                        </form>
+                    </div>
+                </ContentTemplate>
+            </asp:UpdatePanel>
+        </div>
+    </div>
+    <div class="modal fade" id="divjvfaci" role="dialog" data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog" style="width: 400px;">
+            <asp:UpdatePanel ID="UpdatePanel8" runat="server">
+                <ContentTemplate>
+                    <div class="modal-content" runat="server" id="Div9">
+                        <div class="modal-header modal-header1">
+                            <button type="button" class="close close1" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">List of Joint-Venture Facility</h4>
+                        </div>
+                        <form class="form-horizontal changepassword" role="form">
+                            <div class="modal-body clearfix" style="padding: 0 20px;">
+                                <asp:HiddenField ID="HiddenField7" runat="server" />
+                                <div class="form-group" style="margin: 0">
+                                    <label for="uname" class=" tetLable">
+                                        Name
+                                    </label>
+                                    <asp:TextBox ID="txtnamejvpop" runat="server" CssClass="form-control" placeholder="Name"></asp:TextBox>
+                                </div>
+                                <div class="form-group" style="margin: 0">
+                                    <label for="uname" class=" tetLable">
+                                        Is Joint Venture Nature
+                                    </label>
+                                    <asp:DropDownList runat="server" ID="ddljointvennature" class="form-control" required="" TabIndex="2">
+                                        <asp:ListItem>Indian</asp:ListItem>
+                                        <asp:ListItem>Foreign</asp:ListItem>
+                                    </asp:DropDownList>
+                                </div>
+                                <div class="form-group" style="margin: 0">
+                                    <label for="uname" class=" tetLable">
+                                        Complete Address
+                                    </label>
+                                    <asp:TextBox runat="server" ID="txtcomaddpopup" class="form-control" required="" TabIndex="3" ToolTip="Complete Address"></asp:TextBox>
+                                </div>
+                                <div class="form-group" style="margin: 0">
+                                    <label for="uname" class=" tetLable">
+                                        Contact Official Name
+                                    </label>
+                                    <asp:TextBox runat="server" ID="txtconoffnamepopup" class="form-control" required="" TabIndex="4" ToolTip="Contact Official Name"></asp:TextBox>
+                                </div>
+                                <div class="form-group" style="margin: 0">
+                                    <label for="uname" class=" tetLable">
+                                        Telephone No
+                                    </label>
+                                    <asp:TextBox runat="server" ID="txttelenopopup" class="form-control" required="" TabIndex="5" ToolTip="Telephone No"></asp:TextBox>
+                                </div>
+                                <div class="form-group" style="margin: 0">
+                                    <label for="uname" class=" tetLable">
+                                        Fax No
+                                    </label>
+                                    <asp:TextBox runat="server" ID="txtfaxjvpopup" class="form-control" required="" TabIndex="5" ToolTip="Fax No"></asp:TextBox>
+                                </div>
+                                <div class="form-group" style="margin: 0">
+                                    <label for="uname" class=" tetLable">
+                                        Email Id
+                                    </label>
+                                    <asp:TextBox runat="server" ID="txtemailpopupjv" class="form-control" required="" TabIndex="5" ToolTip="Email Id"></asp:TextBox>
+                                </div>
+                                <div class="clearfix mt10"></div>
+                                <div class="form-group" style="margin: 0">
+                                    <asp:LinkButton ID="lbkjoinven" runat="server" Text="Edit & Update" CssClass="btn btn-primary pull-right mr10" OnClick="lbkjoinven_Click"></asp:LinkButton>
+                                </div>
+                                <div class="clearfix mt10"></div>
+                            </div>
+                        </form>
+                    </div>
+                </ContentTemplate>
+            </asp:UpdatePanel>
+        </div>
+    </div>
+    <div class="modal fade" id="divCertificate1" role="dialog" data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog" style="width: 400px;">
+            <asp:UpdatePanel ID="UpdatePanel9" runat="server">
+                <ContentTemplate>
+                    <div class="modal-content" runat="server" id="Div8">
+                        <div class="modal-header modal-header1">
+                            <button type="button" class="close close1" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Certificate</h4>
+                        </div>
+                        <form class="form-horizontal changepassword" role="form">
+                            <div class="modal-body clearfix" style="padding: 0 20px;">
+                                <asp:HiddenField ID="HiddenField8" runat="server" />
+                                <div class="form-group" style="margin: 0">
+                                    <label for="uname" class=" tetLable">
+                                        Select Certificate to Upload
+                                    </label>
+                                    <div class="clearfix"></div>
+                                    <asp:RadioButtonList runat="server" ID="rbcer" RepeatColumns="1" RepeatDirection="Horizontal" RepeatLayout="Flow">
+                                        <asp:ListItem>Factory Licence /Municipal Shop's & Establishment</asp:ListItem>
+                                        <asp:ListItem>Registration Certificate from Labor Commissioner</asp:ListItem>
+                                        <asp:ListItem>VAT Registration Certificate</asp:ListItem>
+                                        <asp:ListItem>Excise Registration Certificate</asp:ListItem>
+                                        <asp:ListItem>Any other Certificate</asp:ListItem>
+                                    </asp:RadioButtonList>
+                                </div>
+                                <div class="form-group" style="margin: 0">
+                                    <label for="uname" class=" tetLable">
+                                        Upload Certificate file
+                                    </label>
+                                    <asp:FileUpload ID="fucer" runat="server" CssClass="form-control" />
+                                </div>
+                                <div class="clearfix mt10"></div>
+                                <div class="form-group" style="margin: 0">
+                                    <asp:LinkButton ID="lbcertificateadd" runat="server" Text="Edit & Update" CssClass="btn btn-primary pull-right mr10" OnClick="lbcertificateadd_Click"></asp:LinkButton>
+                                </div>
+                                <div class="clearfix mt10"></div>
+                            </div>
+                        </form>
+                    </div>
+                </ContentTemplate>
+            </asp:UpdatePanel>
+        </div>
+    </div>
+    <div class="modal fade" id="divcertificate2" role="dialog" data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog" style="width: 400px;">
+            <asp:UpdatePanel ID="UpdatePanel10" runat="server">
+                <ContentTemplate>
+                    <div class="modal-content" runat="server" id="Div10">
+                        <div class="modal-header modal-header1">
+                            <button type="button" class="close close1" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Certificate</h4>
+                        </div>
+                        <form class="form-horizontal changepassword" role="form">
+                            <div class="modal-body clearfix" style="padding: 0 20px;">
+                                <asp:HiddenField ID="HiddenField9" runat="server" />
+                                <div class="form-group" style="margin: 0">
+                                    <label for="uname" class=" tetLable">
+                                        Select Certificate to Upload
+                                    </label>
+                                    <asp:RadioButtonList runat="server" ID="rb1" RepeatColumns="1" RepeatDirection="Horizontal" RepeatLayout="Flow">
+                                        <asp:ListItem>IMS</asp:ListItem>
+                                        <asp:ListItem>EnMS</asp:ListItem>
+                                        <asp:ListItem>QMS</asp:ListItem>
+                                        <asp:ListItem>Any other Certificate</asp:ListItem>
+                                    </asp:RadioButtonList>
+                                </div>
+                                <div class="form-group" style="margin: 0">
+                                    <label for="uname" class=" tetLable">
+                                        Upload Certificate file
+                                    </label>
+                                    <asp:FileUpload ID="fucertificate1" runat="server" CssClass="form-control" />
+                                </div>
+                                <div class="clearfix mt10"></div>
+                                <div class="form-group" style="margin: 0">
+                                    <asp:LinkButton ID="lbcertificate1" runat="server" Text="Edit & Update" CssClass="btn btn-primary pull-right mr10" OnClick="lbcertificate1_Click"></asp:LinkButton>
+                                </div>
+                                <div class="clearfix mt10"></div>
+                            </div>
+                        </form>
+                    </div>
+                </ContentTemplate>
+            </asp:UpdatePanel>
+        </div>
+    </div>
+    <%----Java Script Of ConfigurationAll Modal Popup--%>
+    <script type="text/javascript">
+        function showPopup0() {
+            $('#changePass').modal('show', function () {
+            });
+        }
+    </script>
+    <script type="text/javascript">
+        function showPopup1() {
+            $('#divareadetail').modal('show', function () {
+            });
+        }
+    </script>
+    <script type="text/javascript">
+        function showPopup2() {
+            $('#allplantormachine').modal('show', function () {
+            });
+        }
+    </script>
+    <script type="text/javascript">
+        function showPopup3() {
+            $('#divemployee').modal('show', function () {
+            });
+        }
+    </script>
+    <script type="text/javascript">
+        function showPopup4() {
+            $('#divqcfm').modal('show', function () {
+            });
+        }
+    </script>
+    <script type="text/javascript">
+        function showPopup5() {
+            $('#divautdisdeal').modal('show', function () {
+            });
+        }
+    </script>
+    <script type="text/javascript">
+        function showPopup6() {
+            $('#divof').modal('show', function () {
+            });
+        }
+    </script>
+    <script type="text/javascript">
+        function showPopup7() {
+            $('#divjvfaci').modal('show', function () {
+            });
+        }
+    </script>
+    <script type="text/javascript">
+        function showPopup8() {
+            $('#divCertificate1').modal('show', function () {
+            });
+        }
+    </script>
+    <script type="text/javascript">
+        function showPopup9() {
+            $('#divcertificate2').modal('show', function () {
+            });
+        }
+    </script>
+    <script type="text/javascript">
+        function isNumberKey(evt) {
+            var charCode = (evt.which) ? evt.which : event.keyCode;
+            if (charCode != 46 && charCode > 31
+              && (charCode < 48 || charCode > 57))
+                return false;
+
+            return true;
+        }
+    </script>
 </asp:Content>

@@ -1,0 +1,26 @@
+Log Entry : 01/20/2020 14:45:36 | Message : Application Started
+Log Entry : 01/20/2020 14:45:39 | Message : Application Ended
+Log Entry : 01/20/2020 14:45:45 | Message : Application Started
+Log Entry : 01/20/2020 14:45:46 | Message : Index was outside the bounds of the array.
+Log Entry : 01/20/2020 14:45:46 | Message : Application Ended
+Log Entry : 01/20/2020 14:46:12 | Message : Application Started
+Log Entry : 01/20/2020 14:46:13 | Message : Application Ended
+Log Entry : 01/20/2020 14:47:08 | Message : Application Started
+Log Entry : 01/20/2020 14:47:12 | Message : Application Ended
+Log Entry : 01/20/2020 14:47:39 | Message : Application Started
+Log Entry : 01/20/2020 14:47:41 | Message : Application Ended
+Log Entry : 01/20/2020 14:54:32 | Message : Application Started
+Log Entry : 01/20/2020 14:54:35 | Message : Application Ended
+Log Entry : 01/20/2020 14:57:12 | Message : Application Started
+Log Entry : 01/20/2020 14:57:14 | Message : Application Ended
+Log Entry : 01/20/2020 14:58:44 | Message : Application Started
+Log Entry : 01/20/2020 14:59:29 | Message : Application Ended
+Log Entry : 01/20/2020 14:59:35 | Message : Application Started
+Log Entry : 01/20/2020 14:59:37 | Message : Index was outside the bounds of the array.
+Log Entry : 01/20/2020 14:59:37 | Message : Application Ended
+Log Entry : 01/20/2020 14:59:46 | Message : Application Started
+Log Entry : 01/20/2020 15:00:22 | Message : Application Ended
+Log Entry : 01/20/2020 15:01:27 | Message : Application Started
+Log Entry : 01/20/2020 15:01:45 | Message : Application Ended
+Log Entry : 01/20/2020 15:04:45 | Message : Application Started
+Log Entry : 01/20/2020 15:04:45 | Message : Application Ended

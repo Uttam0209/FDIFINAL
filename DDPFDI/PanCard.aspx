@@ -9,8 +9,8 @@
 <body>
     <form id="form1" runat="server">
         <div>
-            <asp:TextBox ID="txtpanno" runat="server"></asp:TextBox>
-            <asp:Button ID="btnsub" runat="server" Text="Submit" OnClick="btnsub_Click" />
+            <asp:TextBox ID="txtpanno" runat="server" AutoPostBack="true" OnTextChanged="txtpanno_TextChanged"></asp:TextBox>
+            <%--<asp:Button ID="btnsub" runat="server" Text="Submit" OnClick="btnsub_Click" />--%>
             <asp:Label ID="lblmsg" runat="server"></asp:Label>
             <asp:HiddenField runat="server" ID="hfpanname" />
         </div>

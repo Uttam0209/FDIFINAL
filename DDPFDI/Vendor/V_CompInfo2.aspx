@@ -14,10 +14,13 @@
                 <div class="cacade-forms">
                     <div class="clearfix mt10"></div>
                     <div id="ocd" class="tab-pane">
-                        <asp:UpdatePanel ID="UpdatePanel7" runat="server" UpdateMode="Conditional">
+                        <asp:UpdatePanel ID="UpdatePanel7" runat="server">
                             <ContentTemplate>
                                 <asp:Panel ID="Panel1" runat="server">
-                                    <p>Name and Address of Product OEM</p>
+                                    <p>
+                                        Name and Address of Product OEM
+                                    </p>
+                                    <p style="float: right; margin-right: 5px;"><span>Check upload file is selected or not before update/submit.</span></p>
                                     <asp:GridView ID="gvOEMNameadd" runat="server" CssClass="table table-hover" ShowFooter="true" CellPadding="4"
                                         ForeColor="#333333" GridLines="None" AutoGenerateColumns="false" OnRowCreated="gvOEMNameadd_RowCreated">
                                         <AlternatingRowStyle BackColor="White" />
@@ -64,6 +67,7 @@
                                             <asp:TemplateField HeaderText="Authrization">
                                                 <ItemTemplate>
                                                     <asp:FileUpload ID="fuAUTHRIZATION1" runat="server" CssClass="form-control" />
+                                                    <asp:HiddenField ID="hfauth1" runat="server" />
                                                 </ItemTemplate>
                                                 <FooterStyle HorizontalAlign="Right" />
                                                 <FooterTemplate>
@@ -89,7 +93,7 @@
                                         <SortedDescendingHeaderStyle BackColor="#4870BE" />
                                     </asp:GridView>
                                     <asp:GridView ID="gveditoemnameadd" runat="server" CssClass="table table-hover" ShowFooter="true" CellPadding="4"
-                                        ForeColor="#333333" GridLines="None" AutoGenerateColumns="false">
+                                        ForeColor="#333333" GridLines="None" AutoGenerateColumns="false" OnRowCommand="gveditoemnameadd_RowCommand">
                                         <AlternatingRowStyle BackColor="White" />
                                         <Columns>
                                             <asp:TemplateField HeaderText="Sr.No">
@@ -111,8 +115,9 @@
                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="Action">
                                                 <ItemTemplate>
+                                                    <asp:HiddenField runat="server" ID="hfeditoemname" Value='<%#Eval("MasterId") %>' />
                                                     <asp:LinkButton ID="lblsave" runat="server" CssClass="fa fa-save" CommandName="newsave" CommandArgument='<%#Eval("MasterId") %>'></asp:LinkButton>
-                                                    <asp:LinkButton ID="lblupdate" runat="server" CssClass="fa fa-edit" CommandName="newedit" CommandArgument='<%#Eval("MasterId") %>'></asp:LinkButton>
+                                                    <asp:LinkButton ID="lblupdate" runat="server" CssClass="fa fa-edit" CommandName="newedit" CommandArgument='<%#((GridViewRow) Container).RowIndex %>'></asp:LinkButton>
                                                     <asp:LinkButton ID="lbldelete" runat="server" CssClass="fa fa-trash" CommandName="newdel" CommandArgument='<%#Eval("MasterId") %>'></asp:LinkButton>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
@@ -141,4 +146,96 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="divoem" role="dialog" data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog" style="width: 400px;">
+            <asp:UpdatePanel ID="UpdatePanel10" runat="server">
+                <ContentTemplate>
+                    <div class="modal-content" runat="server" id="Div10">
+                        <div class="modal-header modal-header1">
+                            <button type="button" class="close close1" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Product OEM</h4>
+                        </div>
+                        <form class="form-horizontal changepassword" role="form">
+                            <div class="modal-body clearfix" style="padding: 0 20px;">
+                                <asp:HiddenField ID="HiddenField9" runat="server" />
+                                <div class="form-group" style="margin: 0">
+                                    <label for="uname" class=" tetLable">
+                                        Name
+                                    </label>
+                                    <asp:TextBox runat="server" ID="txtname" placeholder="Name" Class="form-control"></asp:TextBox>
+                                </div>
+                                <div class="form-group" style="margin: 0">
+                                    <label for="uname" class=" tetLable">
+                                        Complete Address	
+                                    </label>
+                                    <asp:TextBox runat="server" ID="txtcompadd" placeholder="Complete Address" TextMode="MultiLine" Class="form-control"></asp:TextBox>
+                                </div>
+                                <div class="form-group" style="margin: 0">
+                                    <label for="uname" class=" tetLable">
+                                        OEM Country
+                                    </label>
+                                    <asp:DropDownList runat="server" ID="ddlcountry" TextMode="MultiLine" Class="form-control">
+                                        <asp:ListItem>Indian</asp:ListItem>
+                                        <asp:ListItem>Foreign</asp:ListItem>
+                                    </asp:DropDownList>
+                                </div>
+                                <div class="form-group" style="margin: 0">
+                                    <label for="uname" class=" tetLable">
+                                        Contact Official Name
+                                    </label>
+                                    <asp:TextBox runat="server" ID="txtofficialname" placeholder="Contact Official Name" Class="form-control"></asp:TextBox>
+                                </div>
+                                <div class="form-group" style="margin: 0">
+                                    <label for="uname" class=" tetLable">
+                                        Telephone No
+                                    </label>
+                                    <asp:TextBox runat="server" ID="txttelephoneno" placeholder="Telephone No" onkeypress="return isNumberKey(event)" Class="form-control"></asp:TextBox>
+                                </div>
+                                <div class="form-group" style="margin: 0">
+                                    <label for="uname" class=" tetLable">
+                                        Fax No
+                                    </label>
+                                    <asp:TextBox runat="server" ID="txtfaxno" placeholder="Fax No" onkeypress="return isNumberKey(event)" Class="form-control"></asp:TextBox>
+                                </div>
+                                <div class="form-group" style="margin: 0">
+                                    <label for="uname" class=" tetLable">
+                                        Email Id
+                                    </label>
+                                    <asp:TextBox runat="server" ID="txtemailid" placeholder="Email Id" TextMode="Email" Class="form-control"></asp:TextBox>
+                                </div>
+                                <div class="form-group" style="margin: 0">
+                                    <label for="uname" class=" tetLable">
+                                        File Authorization
+                                    </label>
+                                    <asp:HiddenField ID="hffile" runat="server" />
+                                    <asp:FileUpload runat="server" ID="fufile" Class="form-control" />
+                                </div>
+                                <div class="clearfix mt10"></div>
+                                <div class="form-group" style="margin: 0">
+                                    <asp:LinkButton ID="lbsub" runat="server" Text="Edit & Update" CssClass="btn btn-primary pull-right mr10" OnClick="lbsub_Click"></asp:LinkButton>
+                                </div>
+                                <div class="clearfix mt10"></div>
+                            </div>
+                        </form>
+                    </div>
+                </ContentTemplate>
+            </asp:UpdatePanel>
+        </div>
+    </div>
+    <script type="text/javascript">
+        function showPopup() {
+            $('#divoem').modal('show', function () {
+            });
+        }
+    </script>
+    <script type="text/javascript">
+        function isNumberKey(evt) {
+            var charCode = (evt.which) ? evt.which : event.keyCode;
+            if (charCode != 46 && charCode > 31
+              && (charCode < 48 || charCode > 57))
+                return false;
+
+            return true;
+        }
+    </script>
 </asp:Content>

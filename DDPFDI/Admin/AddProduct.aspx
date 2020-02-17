@@ -80,6 +80,7 @@
                     <li><a data-toggle="tab" href="#spd" runat="server" visible="false">Technical & Financial Support</a></li>
                     <li><a data-toggle="tab" href="#tnd" runat="server" visible="false">Tender and EOI</a></li>
                     <li><a data-toggle="tab" href="#cd">Contact</a></li>
+                    <li><a data-toggle="tab" href="#decla">Declaration</a></li>
                 </ul>
                 <div class="tab-content">
                     <div id="pd" class="tab-pane fade in active">
@@ -199,19 +200,6 @@
                                                         </div>
                                                     </div>
                                                     <div class="clearfix mt5"></div>
-                                                    <div class="col-sm-12">
-                                                        <div class="form-group">
-                                                            <label>While uploading drawing and specification of the item on indinization portal , please ensure that there is</label>
-                                                            <span class="mandatory">*</span>
-                                                            <div class="fr">
-                                                                <asp:CheckBoxList ID="chklistdeclarationimage" runat="server" RepeatColumns="3" RepeatDirection="Horizontal" RepeatLayout="Table">
-                                                                    <asp:ListItem Selected="True" Value="No IPR issue" Enabled="false">1. No IPR issue</asp:ListItem>
-                                                                    <asp:ListItem Selected="True" Value="No violation of TOT agreement" Enabled="false">2. No violation of TOT agreement</asp:ListItem>
-                                                                    <asp:ListItem Selected="True" Value="No violation of Security Concern" Enabled="false">3. No violation of Security Concern</asp:ListItem>
-                                                                </asp:CheckBoxList>
-                                                            </div>
-                                                        </div>
-                                                    </div>
                                                 </div>
                                             </ContentTemplate>
                                         </asp:UpdatePanel>
@@ -1016,6 +1004,38 @@
                                             <!---Progress Bar ---->
                                         </ProgressTemplate>
                                     </asp:UpdateProgress>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="decla" class="tab-pane fade">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="add-profile">
+                                    <asp:UpdatePanel runat="server" ID="UpdatePanel3">
+                                        <ContentTemplate>
+                                            <div class="section-pannel">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <h4 class="page-header secondary">Declaration</h4>
+                                                        <div class="col-sm-12">
+                                                            <div class="form-group">
+                                                                <label>While uploading drawing and specification of the item on indinization portal , please ensure that there is</label>
+                                                                <span class="mandatory">*</span>
+                                                                <div class="fr">
+                                                                    <asp:CheckBoxList ID="chklistdeclarationimage" runat="server" RepeatColumns="3" RepeatDirection="Horizontal" RepeatLayout="Table">
+                                                                        <asp:ListItem Value="No IPR issue">1. No IPR issue</asp:ListItem>
+                                                                        <asp:ListItem Value="No violation of TOT agreement">2. No violation of TOT agreement</asp:ListItem>
+                                                                        <asp:ListItem Value="No violation of Security Concern">3. No violation of Security Concern</asp:ListItem>
+                                                                    </asp:CheckBoxList>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </ContentTemplate>
+                                    </asp:UpdatePanel>
                                 </div>
                             </div>
                         </div>

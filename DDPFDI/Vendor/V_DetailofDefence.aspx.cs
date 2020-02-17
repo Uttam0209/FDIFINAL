@@ -25,111 +25,113 @@ public partial class Vendor_V_DetailofDefence : System.Web.UI.Page
     #region PageLoad
     protected void Page_Load(object sender, EventArgs e)
     {
-
         if (Session["User"] != null)
         {
             if (!IsPostBack)
             {
-
-                DataTable DtCheckSavedetails = Lo.RetriveVendor(0, Enc.DecryptData(Session["VendorRefNo"].ToString()), "", "CheckRegis");
-                if (DtCheckSavedetails.Rows.Count > 0)
-                {
-
-                    btnsubmit.Text = "Update";
-                    ViewState["Mid"] = Convert.ToInt64(DtCheckSavedetails.Rows[0]["VendorDetailID"].ToString());
-                    DataTable dtcheckmultigriddata = Lo.RetriveVendor(0, Enc.DecryptData(Session["VendorRefNo"].ToString()), "", "RetriveMultigrid");
-                    if (dtcheckmultigriddata.Rows.Count > 0)
-                    {
-                        DataView dv = new DataView(dtcheckmultigriddata);
-                        dv.RowFilter = "Type='ProductsDetails'";
-                        if (dv.Count > 0)
-                        {
-                            gvproddetailedit.DataSource = dv;
-                            gvproddetailedit.DataBind();
-                            gvproddetail.Visible = false;
-                            gvproddetailedit.Visible = true;
-                        }
-                        else
-                        {
-                            SetInitialRowProductDetails();
-                            gvproddetail.Visible = true;
-                            gvproddetailedit.Visible = false;
-                        }
-                        dv.RowFilter = "Type='TechnologyDetails'";
-                        if (dv.Count > 0)
-                        {
-                            gvtechnologyedit.DataSource = dv;
-                            gvtechnologyedit.DataBind();
-                            gvtechnology.Visible = false;
-                            gvtechnologyedit.Visible = true;
-                        }
-                        else
-                        {
-                            SetInitialRowTechnologyDetails();
-                            gvtechnology.Visible = true;
-                            gvtechnologyedit.Visible = false;
-                        }
-                        dv.RowFilter = "Type='SourceRawMaterial'";
-                        if (dv.Count > 0)
-                        {
-                            gvSourceofRawMaterialedit.DataSource = dv;
-                            gvSourceofRawMaterialedit.DataBind();
-                            gvSourceofRawMaterial.Visible = false;
-                            gvSourceofRawMaterialedit.Visible = true;
-                        }
-                        else
-                        {
-                            SetRawmeterialDetails();
-                            gvSourceofRawMaterial.Visible = true;
-                            gvSourceofRawMaterialedit.Visible = false;
-                        }
-                        dv.RowFilter = "Type='ItemProducedSupplied'";
-                        if (dv.Count > 0)
-                        {
-                            gvItemProducedandSuppliededit.DataSource = dv;
-                            gvItemProducedandSuppliededit.DataBind();
-                            gvItemProducedandSupplied.Visible = false;
-                            gvItemProducedandSuppliededit.Visible = true;
-                        }
-                        else
-                        {
-                            SetInitialRowItemProductorSupplied();
-                            gvItemProducedandSupplied.Visible = true;
-                            gvItemProducedandSuppliededit.Visible = false;
-                        }
-                        dv.RowFilter = "Type='ItemProducedNotSupplied'";
-                        if (dv.Count > 0)
-                        {
-                            gvItemSuppliedbutnotproducededit.DataSource = dv;
-                            gvItemSuppliedbutnotproducededit.DataBind();
-                            gvItemSuppliedbutnotproduced.Visible = false;
-                            gvItemSuppliedbutnotproducededit.Visible = true;
-                        }
-                        else
-                        {
-                            SetInitialRowItemProductorSupplied1();
-                            gvItemSuppliedbutnotproduced.Visible = true;
-                            gvItemSuppliedbutnotproducededit.Visible = false;
-                        }
-                    }
-                }
-                else
-                {
-                    btnsubmit.Text = "Save";
-
-                    SetInitialRowProductDetails();
-                    SetInitialRowTechnologyDetails();
-                    SetRawmeterialDetails();
-                    SetInitialRowItemProductorSupplied();
-                    SetInitialRowItemProductorSupplied1();
-
-                }
+                LoadP();
             }
 
         }
         else
             ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert",
                    "alert('Session Expired,Please login again');window.location='VendorLogin'", true);
+    }
+    protected void LoadP()
+    {
+        DataTable DtCheckSavedetails = Lo.RetriveVendor(0, Enc.DecryptData(Session["VendorRefNo"].ToString()), "", "CheckRegis");
+        if (DtCheckSavedetails.Rows.Count > 0)
+        {
+
+            btnsubmit.Text = "Update";
+            ViewState["Mid"] = Convert.ToInt64(DtCheckSavedetails.Rows[0]["VendorDetailID"].ToString());
+            DataTable dtcheckmultigriddata = Lo.RetriveVendor(0, Enc.DecryptData(Session["VendorRefNo"].ToString()), "", "RetriveMultigrid");
+            if (dtcheckmultigriddata.Rows.Count > 0)
+            {
+                DataView dv = new DataView(dtcheckmultigriddata);
+                dv.RowFilter = "Type='ProductsDetails'";
+                if (dv.Count > 0)
+                {
+                    gvproddetailedit.DataSource = dv;
+                    gvproddetailedit.DataBind();
+                    gvproddetail.Visible = false;
+                    gvproddetailedit.Visible = true;
+                }
+                else
+                {
+                    SetInitialRowProductDetails();
+                    gvproddetail.Visible = true;
+                    gvproddetailedit.Visible = false;
+                }
+                dv.RowFilter = "Type='TechnologyDetails'";
+                if (dv.Count > 0)
+                {
+                    gvtechnologyedit.DataSource = dv;
+                    gvtechnologyedit.DataBind();
+                    gvtechnology.Visible = false;
+                    gvtechnologyedit.Visible = true;
+                }
+                else
+                {
+                    SetInitialRowTechnologyDetails();
+                    gvtechnology.Visible = true;
+                    gvtechnologyedit.Visible = false;
+                }
+                dv.RowFilter = "Type='SourceRawMaterial'";
+                if (dv.Count > 0)
+                {
+                    gvSourceofRawMaterialedit.DataSource = dv;
+                    gvSourceofRawMaterialedit.DataBind();
+                    gvSourceofRawMaterial.Visible = false;
+                    gvSourceofRawMaterialedit.Visible = true;
+                }
+                else
+                {
+                    SetRawmeterialDetails();
+                    gvSourceofRawMaterial.Visible = true;
+                    gvSourceofRawMaterialedit.Visible = false;
+                }
+                dv.RowFilter = "Type='ItemProducedSupplied'";
+                if (dv.Count > 0)
+                {
+                    gvItemProducedandSuppliededit.DataSource = dv;
+                    gvItemProducedandSuppliededit.DataBind();
+                    gvItemProducedandSupplied.Visible = false;
+                    gvItemProducedandSuppliededit.Visible = true;
+                }
+                else
+                {
+                    SetInitialRowItemProductorSupplied();
+                    gvItemProducedandSupplied.Visible = true;
+                    gvItemProducedandSuppliededit.Visible = false;
+                }
+                dv.RowFilter = "Type='ItemProducedNotSupplied'";
+                if (dv.Count > 0)
+                {
+                    gvItemSuppliedbutnotproducededit.DataSource = dv;
+                    gvItemSuppliedbutnotproducededit.DataBind();
+                    gvItemSuppliedbutnotproduced.Visible = false;
+                    gvItemSuppliedbutnotproducededit.Visible = true;
+                }
+                else
+                {
+                    SetInitialRowItemProductorSupplied1();
+                    gvItemSuppliedbutnotproduced.Visible = true;
+                    gvItemSuppliedbutnotproducededit.Visible = false;
+                }
+            }
+        }
+        else
+        {
+            btnsubmit.Text = "Save";
+
+            SetInitialRowProductDetails();
+            SetInitialRowTechnologyDetails();
+            SetRawmeterialDetails();
+            SetInitialRowItemProductorSupplied();
+            SetInitialRowItemProductorSupplied1();
+
+        }
     }
     #endregion
     #region other
@@ -162,7 +164,6 @@ public partial class Vendor_V_DetailofDefence : System.Web.UI.Page
     #region  Grid of Products Details
     private void SetInitialRowProductDetails()
     {
-        //Create false table
         DataTable dtProdDetail = new DataTable();
         DataRow drProdDetail = null;
         dtProdDetail.Columns.Add(new DataColumn("RowNumberProd", typeof(string)));
@@ -179,11 +180,9 @@ public partial class Vendor_V_DetailofDefence : System.Web.UI.Page
         drProdDetail["ItemCode"] = string.Empty;
         drProdDetail["HSNCode"] = string.Empty;
         dtProdDetail.Rows.Add(drProdDetail);
-        //Store the DataTable in ViewState or bind or show false grid
         ViewState["ProductsDetails"] = dtProdDetail;
         gvproddetail.DataSource = dtProdDetail;
         gvproddetail.DataBind();
-        //After binding the gridview, we can then extract and fill the DropDownList with Data 
         DropDownList ddlnatogroup = (DropDownList)gvproddetail.Rows[0].Cells[2].FindControl("ddlnatogroup");
         BindNatoGroup(ddlnatogroup);
     }
@@ -253,6 +252,8 @@ public partial class Vendor_V_DetailofDefence : System.Web.UI.Page
                 ViewState["ProductsDetails"] = dtCurrentTableProd;
                 gvproddetail.DataSource = dtCurrentTableProd;
                 gvproddetail.DataBind();
+                DropDownList ddl_12 = (DropDownList)gvproddetail.Rows[rowIndexProd].Cells[2].FindControl("ddlnatogroup");
+                BindNatoGroup(ddl_12);
             }
         }
         else
@@ -278,22 +279,39 @@ public partial class Vendor_V_DetailofDefence : System.Web.UI.Page
                     TextBox TB_2 = (TextBox)gvproddetail.Rows[rowIndexProd].Cells[5].FindControl("txthsnno");
                     TB_1.Text = dtProdPrevious.Rows[i]["Nomenclature"].ToString();
                     TB_2.Text = dtProdPrevious.Rows[i]["HSNCode"].ToString();
-                    BindNatoGroup(DDL_1);
                     if (i < dtProdPrevious.Rows.Count - 1)
                     {
-                        DDL_1.ClearSelection();
-                        DDL_1.Items.FindByValue(dtProdPrevious.Rows[i]["NatoGroup"].ToString()).Selected = true;
-                        DDL_2.ClearSelection();
-                        BindNatoClassSubCategoryofNatoGroup(DDL_1, DDL_2);
-                        if (DDL_2.Text != "")
+                        DataTable DtDropDownNatoGroup1 = new DataTable();
+                        DtDropDownNatoGroup1 = Lo.RetriveMasterSubCategoryDate(0, "NSN GROUP", "", "SelectProductCat", "", "");
+                        if (DtDropDownNatoGroup1.Rows.Count > 0)
                         {
-                            DDL_2.Items.FindByValue(dtProdPrevious.Rows[i]["NatoClass"].ToString()).Selected = true;
+                            Co.FillDropdownlist(DDL_1, DtDropDownNatoGroup1, "SCategoryName", "SCategoryID");
+                            DDL_1.Items.Insert(0, "Select");
+                            DDL_1.Items.FindByValue(dtProdPrevious.Rows[i]["NatoGroup"].ToString()).Selected = true;
                         }
-                        DDL_3.ClearSelection();
-                        BindItemClassSubCategoryofNatoClass(DDL_2, DDL_3);
-                        if (DDL_3.Text != "")
+                        if (DDL_1.SelectedItem.Text != "Select")
                         {
-                            DDL_3.Items.FindByValue(dtProdPrevious.Rows[i]["ItemCode"].ToString()).Selected = true;
+                            DataTable DtNatoclass = Lo.RetriveMasterSubCategoryDate(Convert.ToInt32(DDL_1.SelectedItem.Value), "", "", "SubSelectID", "", "");
+                            if (DtNatoclass.Rows.Count > 0)
+                            {
+                                Co.FillDropdownlist(DDL_2, DtNatoclass, "SCategoryName", "SCategoryId");
+                                DDL_2.Items.Insert(0, "Select");
+                                DDL_2.Items.FindByValue(dtProdPrevious.Rows[i]["NatoClass"].ToString()).Selected = true;
+                            }
+                        }
+                        if (DDL_2.Text != "" && DDL_2.SelectedItem.Text != "Select")
+                        {
+                            DataTable dtItemCode = Lo.RetriveMasterSubCategoryDate(Convert.ToInt32(DDL_2.SelectedItem.Value), "", "", "SubSelectID", "", "");
+                            if (dtItemCode.Rows.Count > 0)
+                            {
+                                Co.FillDropdownlist(DDL_3, dtItemCode, "SCategoryName", "SCategoryId");
+                                DDL_3.Items.Insert(0, "Select");
+                                DDL_3.Items.FindByValue(dtProdPrevious.Rows[i]["ItemCode"].ToString()).Selected = true;
+                            }
+                            else
+                            {
+                                DDL_3.Items.Insert(0, "NA");
+                            }
                         }
                     }
                     rowIndexProd++;
@@ -509,6 +527,8 @@ public partial class Vendor_V_DetailofDefence : System.Web.UI.Page
                 ViewState["TechnologyDetails"] = dtCurrentTableTech;
                 gvtechnology.DataSource = dtCurrentTableTech;
                 gvtechnology.DataBind();
+                DropDownList ddl_13 = (DropDownList)gvtechnology.Rows[0].Cells[2].FindControl("ddltech1");
+                BindMasterTechnologyCategory(ddl_13);
             }
         }
         else
@@ -529,25 +549,43 @@ public partial class Vendor_V_DetailofDefence : System.Web.UI.Page
                 {
                     TextBox TBtech_1 = (TextBox)gvtechnology.Rows[rowIndexTech].Cells[1].FindControl("txttechnomen");
                     DropDownList DDLtech_1 = (DropDownList)gvtechnology.Rows[rowIndexTech].Cells[2].FindControl("ddltech1");
-                    DropDownList DDLtech_2 = (DropDownList)gvtechnology.Rows[rowIndexTech].Cells[3].FindControl("ddltech1");
-                    DropDownList DDLtech_3 = (DropDownList)gvtechnology.Rows[rowIndexTech].Cells[4].FindControl("ddltech1");
+                    DropDownList DDLtech_2 = (DropDownList)gvtechnology.Rows[rowIndexTech].Cells[3].FindControl("ddltech2");
+                    DropDownList DDLtech_3 = (DropDownList)gvtechnology.Rows[rowIndexTech].Cells[4].FindControl("ddltech3");
                     TBtech_1.Text = dtTechPrevious.Rows[i]["TechNomenclature"].ToString();
                     BindMasterTechnologyCategory(DDLtech_1);
                     if (i < dtTechPrevious.Rows.Count - 1)
                     {
-                        DDLtech_1.ClearSelection();
+                        //DataTable DtTechDrop = new DataTable();
+                        //DtTechDrop = Lo.RetriveMasterSubCategoryDate(0, "PRODUCT (INDUSTRY DOMAIN)", "", "SelectProductCat", "", "");
+                        //if (DtTechDrop.Rows.Count > 0)
+                        //{
+                        //    Co.FillDropdownlist(DDLtech_1, DtTechDrop, "SCategoryName", "SCategoryID");
+                        //    DDLtech_1.Items.Insert(0, "Select");
                         DDLtech_1.Items.FindByValue(dtTechPrevious.Rows[i]["Technology1"].ToString()).Selected = true;
-                        DDLtech_2.ClearSelection();
-                        BindMasterTechnologySubCat(DDLtech_1, DDLtech_2);
-                        if (DDLtech_2.Text != "Select" && DDLtech_2.Text != "")
+                        // }
+                        if (DDLtech_1.SelectedItem.Text != "Select")
                         {
-                            DDLtech_2.Items.FindByValue(dtTechPrevious.Rows[i]["Technology2"].ToString()).Selected = true;
+                            DataTable DtTech2 = Lo.RetriveMasterSubCategoryDate(Convert.ToInt32(DDLtech_1.SelectedItem.Value), "", "", "SubSelectID", "", "");
+                            if (DtTech2.Rows.Count > 0)
+                            {
+                                Co.FillDropdownlist(DDLtech_2, DtTech2, "SCategoryName", "SCategoryId");
+                                DDLtech_2.Items.Insert(0, "Select");
+                                DDLtech_2.Items.FindByValue(dtTechPrevious.Rows[i]["Technology2"].ToString()).Selected = true;
+                            }
                         }
-                        DDLtech_3.ClearSelection();
-                        BindMasterSubTech3(DDLtech_2, DDLtech_3);
-                        if (DDLtech_3.Text != "Select" && DDLtech_3.Text != "")
+                        if (DDLtech_2.Text != "" && DDLtech_2.SelectedItem.Text != "Select")
                         {
-                            DDLtech_3.Items.FindByValue(dtTechPrevious.Rows[i]["Technology3"].ToString()).Selected = true;
+                            DataTable DtMasterCatTech3 = Lo.RetriveMasterSubCategoryDate(Convert.ToInt32(DDLtech_2.SelectedItem.Value), "", "", "SubSelectID", "", "");
+                            if (DtMasterCatTech3.Rows.Count > 0)
+                            {
+                                Co.FillDropdownlist(DDLtech_3, DtMasterCatTech3, "SCategoryName", "SCategoryId");
+                                DDLtech_3.Items.Insert(0, "Select");
+                                DDLtech_3.Items.FindByValue(dtTechPrevious.Rows[i]["Technology3"].ToString()).Selected = true;
+                            }
+                            else
+                            {
+                                DDLtech_3.Items.Insert(0, "NA");
+                            }
                         }
                     }
                     rowIndexTech++;
@@ -684,10 +722,10 @@ public partial class Vendor_V_DetailofDefence : System.Web.UI.Page
                     TextBox TextBox4_Raw = (TextBox)gvSourceofRawMaterial.Rows[rowIndexRawmeterial].Cells[4].FindControl("txtmaterialsupplier");
                     drCurrentRawMeterialDetails = dtCurrentRawMeterialDetails.NewRow();
                     drCurrentRawMeterialDetails["SrNoRawMeterail"] = i + 1;
-                    //    dtCurrentRawMeterialDetails.Rows[i - 1]["Items"] = TextBox1.Text;
-                    //    dtCurrentRawMeterialDetails.Rows[i - 1]["RawMeterial"] = TextBox2.Text;
-                    //    dtCurrentRawMeterialDetails.Rows[i - 1]["SourceMeterial"] = ddl3_Raw.Text;
-                    //    dtCurrentRawMeterialDetails.Rows[i - 1]["MeterailSupplier"] = TextBox4.Text;
+                    dtCurrentRawMeterialDetails.Rows[i - 1]["Items"] = TextBox1_Raw.Text;
+                    dtCurrentRawMeterialDetails.Rows[i - 1]["RawMeterial"] = TextBox2_Raw.Text;
+                    dtCurrentRawMeterialDetails.Rows[i - 1]["SourceMeterial"] = ddl3_Raw.Text;
+                    dtCurrentRawMeterialDetails.Rows[i - 1]["MeterailSupplier"] = TextBox4_Raw.Text;
                     rowIndexRawmeterial++;
                 }
                 dtCurrentRawMeterialDetails.Rows.Add(drCurrentRawMeterialDetails);
@@ -1243,10 +1281,12 @@ public partial class Vendor_V_DetailofDefence : System.Web.UI.Page
         {
             if (btnsubmit.Text == "Update")
             {
+                LoadP();
                 ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Successfully update company information')", true);
             }
             else
             {
+                LoadP();
                 ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Successfully save company information')", true);
             }
         }
@@ -1258,4 +1298,514 @@ public partial class Vendor_V_DetailofDefence : System.Web.UI.Page
         SaveRegistration();
     }
     #endregion
+    protected void gvproddetailedit_RowCommand(object sender, GridViewCommandEventArgs e)
+    {
+        if (e.CommandName == "addnewmfe")
+        {
+            lbsub.Text = "Submit";
+            DataTable DtDropDownNatoGroup = new DataTable();
+            DtDropDownNatoGroup = Lo.RetriveMasterSubCategoryDate(0, "NSN GROUP", "", "SelectProductCat", "", "");
+            if (DtDropDownNatoGroup.Rows.Count > 0)
+            {
+                Co.FillDropdownlist(ddlnatogroup, DtDropDownNatoGroup, "SCategoryName", "SCategoryID");
+                ddlnatogroup.Items.Insert(0, "Select");
+            }
+            txtname.Text = "";
+            ddlnatogroup.SelectedIndex = -1;
+            txthsnedit.Text = "";
+            ViewState["edit1"] = e.CommandArgument.ToString();
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "divmodal1", "showPopup();", true);
+        }
+        else if (e.CommandName == "updatenewmfe")
+        {
+            lbsub.Text = "Edit & Update";
+            int rowIndex = Convert.ToInt32(e.CommandArgument);
+            GridViewRow row = gvproddetailedit.Rows[rowIndex];
+            HiddenField hfn = (HiddenField)gvproddetailedit.Rows[rowIndex].FindControl("hf1");
+            txtname.Text = row.Cells[1].Text;
+            DataTable DtDropDownNatoGroup = new DataTable();
+            DtDropDownNatoGroup = Lo.RetriveMasterSubCategoryDate(0, "NSN GROUP", "", "SelectProductCat", "", "");
+            if (DtDropDownNatoGroup.Rows.Count > 0)
+            {
+                Co.FillDropdownlist(ddlnatogroup, DtDropDownNatoGroup, "SCategoryName", "SCategoryID");
+                ddlnatogroup.Items.Insert(0, "Select");
+            }
+            ddlnatogroup.SelectedValue = row.Cells[2].Text;
+            ddlnatoclassedit.SelectedValue = row.Cells[3].Text;
+            ddlitemcodeedit.SelectedValue = row.Cells[4].Text;
+            txthsnedit.Text = row.Cells[5].Text;
+            ViewState["edit1"] = hfn.Value;
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "divmodal1", "showPopup();", true);
+        }
+        else if (e.CommandName == "deletenewmfe")
+        {
+            Int32 Delid = Lo.DeleteEditGrid(Convert.ToInt32(e.CommandArgument.ToString()));
+            if (Delid != 0)
+            {
+                LoadP();
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record deleted successfull.')", true);
+            }
+            else
+            {
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not deleted.')", true);
+            }
+        }
+    }
+    protected void gvtechnologyedit_RowCommand(object sender, GridViewCommandEventArgs e)
+    {
+        if (e.CommandName == "addtechedit")
+        {
+            lbsub2.Text = "Submit";
+            txtnomentech.Text = "";
+            DataTable DtTechDrop = new DataTable();
+            DtTechDrop = Lo.RetriveMasterSubCategoryDate(0, "PRODUCT (INDUSTRY DOMAIN)", "", "SelectProductCat", "", "");
+            if (DtTechDrop.Rows.Count > 0)
+            {
+                Co.FillDropdownlist(ddltech1edit, DtTechDrop, "SCategoryName", "SCategoryID");
+                ddltech1edit.Items.Insert(0, "Select");
+            }
+            ddltech1edit.SelectedIndex = -1;
+            ViewState["edit2"] = e.CommandArgument.ToString();
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "divmodal2", "showPopup1();", true);
+        }
+        else if (e.CommandName == "updttechedit")
+        {
+            lbsub2.Text = "Edit & Update";
+            int rowIndex = Convert.ToInt32(e.CommandArgument);
+            GridViewRow row = gvtechnologyedit.Rows[rowIndex];
+            HiddenField hfn = (HiddenField)gvtechnologyedit.Rows[rowIndex].FindControl("hf2");
+            txtnomentech.Text = row.Cells[1].Text;
+            DataTable DtTechDrop = new DataTable();
+            DtTechDrop = Lo.RetriveMasterSubCategoryDate(0, "PRODUCT (INDUSTRY DOMAIN)", "", "SelectProductCat", "", "");
+            if (DtTechDrop.Rows.Count > 0)
+            {
+                Co.FillDropdownlist(ddltech1edit, DtTechDrop, "SCategoryName", "SCategoryID");
+                ddltech1edit.Items.Insert(0, "Select");
+            }
+            ddltech1edit.SelectedValue = row.Cells[2].Text;
+            ddltech2edit.SelectedValue = row.Cells[3].Text;
+            ddltech3edit.SelectedValue = row.Cells[4].Text;
+            ViewState["edit2"] = hfn.Value;
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "divmodal2", "showPopup1();", true);
+        }
+        else if (e.CommandName == "deleedittech")
+        {
+            Int32 Delid = Lo.DeleteEditGrid(Convert.ToInt32(e.CommandArgument.ToString()));
+            if (Delid != 0)
+            {
+                LoadP();
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record deleted successfull.')", true);
+            }
+            else
+            {
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not deleted.')", true);
+            }
+        }
+    }
+    protected void gvSourceofRawMaterialedit_RowCommand(object sender, GridViewCommandEventArgs e)
+    {
+        if (e.CommandName == "addsrmedit")
+        {
+            lb3.Text = "Submit";
+            txtitemsedit.Text = "";
+            txtbasicedit.Text = "";
+            ddlsourceedit.SelectedIndex = -1;
+            txtmajorname.Text = "";
+            ViewState["edit3"] = e.CommandArgument.ToString();
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "divmodal3", "showPopup2();", true);
+        }
+        else if (e.CommandName == "updateaddsrmedit")
+        {
+            lb3.Text = "Edit & Update";
+            int rowIndex = Convert.ToInt32(e.CommandArgument);
+            GridViewRow row = gvSourceofRawMaterialedit.Rows[rowIndex];
+            HiddenField hfn = (HiddenField)gvSourceofRawMaterialedit.Rows[rowIndex].FindControl("hf3");
+            txtitemsedit.Text = row.Cells[1].Text;
+            txtbasicedit.Text = row.Cells[2].Text;
+            ddlsourceedit.Text = row.Cells[3].Text;
+            txtmajorname.Text = row.Cells[4].Text;
+            ViewState["edit3"] = hfn.Value;
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "divmodal3", "showPopup2();", true);
+        }
+        else if (e.CommandName == "deleaddsrmedit")
+        {
+            Int32 Delid = Lo.DeleteEditGrid(Convert.ToInt32(e.CommandArgument.ToString()));
+            if (Delid != 0)
+            {
+                LoadP();
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record deleted successfull.')", true);
+            }
+            else
+            {
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not deleted.')", true);
+            }
+        }
+
+    }
+    protected void gvItemProducedandSuppliededit_RowCommand(object sender, GridViewCommandEventArgs e)
+    {
+        if (e.CommandName == "additemnew")
+        {
+            lb4.Text = "Submit";
+            txtrepcustedit.Text = "";
+            txtstoreedit.Text = "";
+            txtsnoedit.Text = "";
+            txtorderqtyedit.Text = "";
+            txtvalueqtyedit.Text = "";
+            txtlastsuppedit.Text = "";
+            ViewState["edit4"] = e.CommandArgument.ToString();
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "divmodal4", "showPopup3();", true);
+        }
+        else if (e.CommandName == "updateitemedit")
+        {
+            lb4.Text = "Edit & Update";
+            int rowIndex = Convert.ToInt32(e.CommandArgument);
+            GridViewRow row = gvItemProducedandSuppliededit.Rows[rowIndex];
+            HiddenField hfn = (HiddenField)gvItemProducedandSuppliededit.Rows[rowIndex].FindControl("hf4");
+            txtrepcustedit.Text = row.Cells[1].Text;
+            txtstoreedit.Text = row.Cells[2].Text;
+            txtsnoedit.Text = row.Cells[3].Text;
+            txtorderqtyedit.Text = row.Cells[4].Text;
+            txtvalueqtyedit.Text = row.Cells[5].Text;
+            txtlastsuppedit.Text = row.Cells[6].Text;
+            ViewState["edit4"] = hfn.Value;
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "divmodal4", "showPopup3();", true);
+        }
+        else if (e.CommandName == "deleitemedit")
+        {
+            Int32 Delid = Lo.DeleteEditGrid(Convert.ToInt32(e.CommandArgument.ToString()));
+            if (Delid != 0)
+            {
+                LoadP();
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record deleted successfull.')", true);
+            }
+            else
+            {
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not deleted.')", true);
+            }
+        }
+    }
+    protected void gvItemSuppliedbutnotproducededit_RowCommand(object sender, GridViewCommandEventArgs e)
+    {
+        if (e.CommandName == "editsuppprodedit")
+        {
+            lb5.Text = "Submit";
+            txtrepcustedit1.Text = "";
+            txtstoredit1.Text = "";
+            txtdateedit1.Text = "";
+            txtirderedit1.Text = "";
+            txtqtysubedit1.Text = "";
+            txtdatesupedit1.Text = "";
+            ViewState["edit5"] = e.CommandArgument.ToString();
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "divmodal5", "showPopup4();", true);
+        }
+        else if (e.CommandName == "updtsuppedit")
+        {
+            lb5.Text = "Edit & Update";
+            int rowIndex = Convert.ToInt32(e.CommandArgument);
+            GridViewRow row = gvItemSuppliedbutnotproducededit.Rows[rowIndex];
+            HiddenField hfn = (HiddenField)gvItemSuppliedbutnotproducededit.Rows[rowIndex].FindControl("hf5");
+            txtrepcustedit1.Text = row.Cells[1].Text;
+            txtstoredit1.Text = row.Cells[2].Text;
+            txtdateedit1.Text = row.Cells[3].Text;
+            txtirderedit1.Text = row.Cells[4].Text;
+            txtqtysubedit1.Text = row.Cells[5].Text;
+            txtdatesupedit1.Text = row.Cells[6].Text;
+            ViewState["edit5"] = hfn.Value;
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "divmodal5", "showPopup4();", true);
+        }
+        else if (e.CommandName == "deleedit")
+        {
+            Int32 Delid = Lo.DeleteEditGrid(Convert.ToInt32(e.CommandArgument.ToString()));
+            if (Delid != 0)
+            {
+                LoadP();
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record deleted successfull.')", true);
+            }
+            else
+            {
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not deleted.')", true);
+            }
+        }
+    }
+    protected void lbsub_Click(object sender, EventArgs e)
+    {
+        try
+        {
+            if (lbsub.Text == "Edit & Update")
+            {
+                if (txtname.Text != "")
+                {
+                    Int32 ESaveID = Lo.UpdateProducts(Convert.ToInt64(ViewState["edit1"]), Enc.DecryptData(Session["VendorRefNo"].ToString()), txtname.Text, ddlnatogroup.Text, ddlnatoclassedit.Text, ddlitemcodeedit.Text, txthsnedit.Text);
+                    if (ESaveID != 0)
+                    {
+                        txtname.Text = "";
+                        ViewState["edit1"] = null;
+                        LoadP();
+                        ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record update successfully')", true);
+                    }
+                    else
+                    {
+                        ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not update successfully')", true);
+                    }
+                }
+            }
+            else if (lbsub.Text == "Submit")
+            {
+                Int32 ESaveID = Lo.InsertProducts(Enc.DecryptData(Session["VendorRefNo"].ToString()), "ProductsDetails", txtname.Text, ddlnatogroup.Text, ddlnatoclassedit.Text, ddlitemcodeedit.Text, txthsnedit.Text);
+                if (ESaveID != 0)
+                {
+                    txtname.Text = "";
+                    LoadP();
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record save successfully')", true);
+                }
+                else
+                {
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not save successfully')", true);
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('" + ex.Message + "')", true);
+        }
+    }
+    protected void lbsub2_Click(object sender, EventArgs e)
+    {
+        try
+        {
+            if (lbsub.Text == "Edit & Update")
+            {
+                if (txtname.Text != "")
+                {
+                    Int32 ESaveID = Lo.UpdateTechnology(Convert.ToInt64(ViewState["edit2"]), Enc.DecryptData(Session["VendorRefNo"].ToString()), txtnomentech.Text, ddltech1edit.Text, ddltech2edit.Text, ddltech3edit.Text);
+                    if (ESaveID != 0)
+                    {
+                        txtname.Text = "";
+                        ViewState["edit2"] = null;
+                        LoadP();
+                        ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record update successfully')", true);
+                    }
+                    else
+                    {
+                        ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not update successfully')", true);
+                    }
+                }
+            }
+            else if (lbsub.Text == "Submit")
+            {
+                Int32 ESaveID = Lo.InsertTechnology(Enc.DecryptData(Session["VendorRefNo"].ToString()), "TechnologyDetails", txtnomentech.Text, ddltech1edit.Text, ddltech2edit.Text, ddltech3edit.Text);
+                if (ESaveID != 0)
+                {
+                    txtname.Text = "";
+                    LoadP();
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record save successfully')", true);
+                }
+                else
+                {
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not save successfully')", true);
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('" + ex.Message + "')", true);
+        }
+    }
+    protected void lb3_Click(object sender, EventArgs e)
+    {
+        try
+        {
+            if (lbsub.Text == "Edit & Update")
+            {
+                if (txtname.Text != "")
+                {
+                    Int32 ESaveID = Lo.UpdateRaw(Convert.ToInt64(ViewState["edit3"]), Enc.DecryptData(Session["VendorRefNo"].ToString()), txtitemsedit.Text, txtbasicedit.Text, ddlsourceedit.Text, txtmajorname.Text);
+                    if (ESaveID != 0)
+                    {
+                        txtname.Text = "";
+                        ViewState["edit3"] = null;
+                        LoadP();
+                        ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record update successfully')", true);
+                    }
+                    else
+                    {
+                        ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not update successfully')", true);
+                    }
+                }
+            }
+            else if (lbsub.Text == "Submit")
+            {
+                Int32 ESaveID = Lo.InsertRaw(Enc.DecryptData(Session["VendorRefNo"].ToString()), "SourceRawMaterial", txtitemsedit.Text, txtbasicedit.Text, ddlsourceedit.Text, txtmajorname.Text);
+                if (ESaveID != 0)
+                {
+                    txtname.Text = "";
+                    LoadP();
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record save successfully')", true);
+                }
+                else
+                {
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not save successfully')", true);
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('" + ex.Message + "')", true);
+        }
+    }
+    protected void lb4_Click(object sender, EventArgs e)
+    {
+        try
+        {
+            if (lbsub.Text == "Edit & Update")
+            {
+                if (txtname.Text != "")
+                {
+                    Int32 ESaveID = Lo.Updateproducedprod(Convert.ToInt64(ViewState["edit4"]), Enc.DecryptData(Session["VendorRefNo"].ToString()), txtrepcustedit.Text, txtstoreedit.Text, txtsnoedit.Text, txtorderqtyedit.Text, txtvalueqtyedit.Text, txtlastsuppedit.Text);
+                    if (ESaveID != 0)
+                    {
+                        txtname.Text = "";
+                        ViewState["edit4"] = null;
+                        LoadP();
+                        ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record update successfully')", true);
+                    }
+                    else
+                    {
+                        ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not update successfully')", true);
+                    }
+                }
+            }
+            else if (lbsub.Text == "Submit")
+            {
+                Int32 ESaveID = Lo.Insertproducedprod(Enc.DecryptData(Session["VendorRefNo"].ToString()), "ItemProducedSupplied", txtrepcustedit.Text, txtstoreedit.Text, txtsnoedit.Text, txtorderqtyedit.Text, txtvalueqtyedit.Text, txtlastsuppedit.Text);
+                if (ESaveID != 0)
+                {
+                    txtname.Text = "";
+                    LoadP();
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record save successfully')", true);
+                }
+                else
+                {
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not save successfully')", true);
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('" + ex.Message + "')", true);
+        }
+    }
+    protected void lb5_Click(object sender, EventArgs e)
+    {
+        try
+        {
+            if (lbsub.Text == "Edit & Update")
+            {
+                if (txtname.Text != "")
+                {
+                    Int32 ESaveID = Lo.Updateproducedprod(Convert.ToInt64(ViewState["edit5"]), Enc.DecryptData(Session["VendorRefNo"].ToString()), txtrepcustedit1.Text, txtstoredit1.Text, txtdateedit1.Text, txtirderedit1.Text, txtqtysubedit1.Text, txtdatesupedit1.Text);
+                    if (ESaveID != 0)
+                    {
+                        txtname.Text = "";
+                        ViewState["edit5"] = null;
+                        LoadP();
+                        ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record update successfully')", true);
+                    }
+                    else
+                    {
+                        ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not update successfully')", true);
+                    }
+                }
+            }
+            else if (lbsub.Text == "Submit")
+            {
+                Int32 ESaveID = Lo.Insertproducedprod(Enc.DecryptData(Session["VendorRefNo"].ToString()), "ItemProducedNotSupplied", txtrepcustedit1.Text, txtstoredit1.Text, txtdateedit1.Text, txtirderedit1.Text, txtqtysubedit1.Text, txtdatesupedit1.Text);
+                if (ESaveID != 0)
+                {
+                    txtname.Text = "";
+                    LoadP();
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record save successfully')", true);
+                }
+                else
+                {
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not save successfully')", true);
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('" + ex.Message + "')", true);
+        }
+    }
+    protected void ddlnatogroup_SelectedIndexChanged1(object sender, EventArgs e)
+    {
+        if (ddlnatogroup.SelectedItem.Text != "Select")
+        {
+            DataTable DtNatoclass = Lo.RetriveMasterSubCategoryDate(Convert.ToInt32(ddlnatogroup.SelectedItem.Value), "", "", "SubSelectID", "", "");
+            if (DtNatoclass.Rows.Count > 0)
+            {
+                Co.FillDropdownlist(ddlnatoclassedit, DtNatoclass, "SCategoryName", "SCategoryId");
+                ddlnatoclassedit.Items.Insert(0, "Select");
+            }
+            else
+            {
+                ddlnatoclassedit.Items.Clear();
+                ddlnatoclassedit.Items.Insert(0, "Select");
+            }
+        }
+    }
+    protected void ddlnatoclassedit_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        if (ddlnatogroup.Text != "" && ddlnatoclassedit.SelectedItem.Text != "Select")
+        {
+            DataTable dtItemCode = Lo.RetriveMasterSubCategoryDate(Convert.ToInt32(ddlnatoclassedit.SelectedItem.Value), "", "", "SubSelectID", "", "");
+            if (dtItemCode.Rows.Count > 0)
+            {
+                Co.FillDropdownlist(ddlitemcodeedit, dtItemCode, "SCategoryName", "SCategoryId");
+                ddlitemcodeedit.Items.Insert(0, "Select");
+            }
+            else
+            {
+                ddlitemcodeedit.Items.Clear();
+                ddlitemcodeedit.Items.Insert(0, "Select");
+                ddlitemcodeedit.Items.Insert(1, "NA");
+            }
+        }
+    }
+    protected void ddltech1edit_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        if (ddltech1edit.SelectedItem.Text != "Select")
+        {
+            DataTable DtTech2 = Lo.RetriveMasterSubCategoryDate(Convert.ToInt32(ddltech1edit.SelectedItem.Value), "", "", "SubSelectID", "", "");
+            if (DtTech2.Rows.Count > 0)
+            {
+                Co.FillDropdownlist(ddltech2edit, DtTech2, "SCategoryName", "SCategoryId");
+                ddltech2edit.Items.Insert(0, "Select");
+            }
+            else
+            {
+                ddltech2edit.Items.Clear();
+                ddltech2edit.Items.Insert(0, "Select");
+            }
+        }
+    }
+    protected void ddltech2edit_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        if (ddltech2edit.Text != "" && ddltech2edit.SelectedItem.Text != "Select")
+        {
+            DataTable DtMasterCatTech3 = Lo.RetriveMasterSubCategoryDate(Convert.ToInt32(ddltech2edit.SelectedItem.Value), "", "", "SubSelectID", "", "");
+            if (DtMasterCatTech3.Rows.Count > 0)
+            {
+                Co.FillDropdownlist(ddltech3edit, DtMasterCatTech3, "SCategoryName", "SCategoryId");
+                ddltech3edit.Items.Insert(0, "Select");
+            }
+            else
+            {
+                ddltech3edit.Items.Clear();
+                ddltech3edit.Items.Insert(0, "Select");
+                ddltech3edit.Items.Insert(1, "NA");
+            }
+        }
+    }
 }

@@ -23,12 +23,12 @@ public partial class Vendor_VendorMaster : System.Web.UI.MasterPage
             }
             catch (Exception exception)
             {
-                ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "alert('Session Expired,Please login again');window.location='Login'", true);
+                ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "alert('Session Expired,Please login again');window.location='VendorLogin'", true);
             }
         }
         else
         {
-            ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "alert('Session Expired,Please login again');window.location='Login'", true);
+            ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "alert('Session Expired,Please login again');window.location='VendorLogin'", true);
         }
     }
     protected void lbllogout_Click(object sender, EventArgs e)
