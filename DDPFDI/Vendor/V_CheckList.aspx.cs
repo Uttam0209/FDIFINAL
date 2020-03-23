@@ -52,6 +52,11 @@ public partial class Vendor_V_CheckList : System.Web.UI.Page
         if (Dtchk.Rows.Count > 0)
         {
             Co.FillCheckBox(CheckBoxList3, Dtchk, "Name", "mID");
+            CheckBoxList3.Visible = true;
+        }
+        else
+        {
+            CheckBoxList3.Visible = false;
         }
     }
     protected void ddltypeofchk_SelectedIndexChanged(object sender, EventArgs e)
@@ -67,8 +72,10 @@ public partial class Vendor_V_CheckList : System.Web.UI.Page
     protected void btnsubmit_Click(object sender, EventArgs e)
     {
         if (ddltypeofchk.SelectedItem.Text != "Select")
-        { }
+        {
+            
+        }
         else
-        { }
+        { ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Please select dropdown list to check checkbox file uploaded')", true); }
     }
 }

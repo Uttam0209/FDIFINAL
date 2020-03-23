@@ -509,7 +509,14 @@ public partial class Vendor_V_FinanceInfo : System.Web.UI.Page
     #endregion
     protected void btnsubmit_Click(object sender, EventArgs e)
     {
-        SaveRegistration();
+        try
+        {
+            SaveRegistration();
+        }
+        catch (Exception ex)
+        {
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('" + ex.Message.ToString() + "')", true);
+        }
     }
     protected void SaveRegistration()
     {
@@ -551,7 +558,7 @@ public partial class Vendor_V_FinanceInfo : System.Web.UI.Page
         }
         else
         { ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not saved.')", true); }
-    }   
+    }
     protected void gvturnoveredit_RowCommand(object sender, GridViewCommandEventArgs e)
     {
         if (e.CommandName == "newsave")

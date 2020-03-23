@@ -239,6 +239,7 @@
 
     });
 
+   
     $("#ContentPlaceHolder1_ddlstatus").on('change', function () {
         var $ValueChecked = $(this).val();
         if ($ValueChecked == 'Live') {
@@ -247,7 +248,19 @@
         else {
             $("#ContentPlaceHolder1_extimedatevisible").hide();
         }
+    });
 
+
+    //Hide Next in Login Crousel 
+    $("#carouselExampleControls .carousel-control-next ").on('click',function () {
+        var lastSlideActive = $("#carouselExampleControls .item").last().hasClass("active");
+        console.log(lastSlideActive);
+        if (lastSlideActive == true) {
+            $(this).hide();
+        }
+        else {
+            $(this).show();
+        }
     });
 
 });

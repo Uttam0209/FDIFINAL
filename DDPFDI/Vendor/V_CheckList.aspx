@@ -20,6 +20,8 @@
                         <asp:UpdatePanel ID="UpdatePanel6" runat="server" UpdateMode="Conditional">
                             <ContentTemplate>
                                 <asp:Panel ID="panchklist" runat="server">
+                                    <p>Please select and check (checkbox) that file you uploaded in this form.</p>
+                                     <div class="clearfix mt10"></div>
                                     <asp:DropDownList ID="ddltypeofchk" runat="server" AutoPostBack="true" CssClass="form-control" OnSelectedIndexChanged="ddltypeofchk_SelectedIndexChanged">
                                     </asp:DropDownList>
                                     <div class="clearfix mt10"></div>
@@ -27,7 +29,7 @@
                                     </asp:CheckBoxList>
                                 </asp:Panel>
                                 <div class="clearfix"></div>
-                                <asp:Button ID="btnsubmit" runat="server" CssClass="btn btn-primary" OnClick="btnsubmit_Click" />
+                                <asp:Button ID="btnsubmit" runat="server" CssClass="btn btn-primary pull-right mr10" Text="Save" OnClick="btnsubmit_Click" />
                             </ContentTemplate>
                         </asp:UpdatePanel>
                     </div>

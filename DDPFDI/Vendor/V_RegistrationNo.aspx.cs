@@ -91,13 +91,22 @@ public partial class Vendor_V_RegistrationNo : System.Web.UI.Page
                 ddlDepartmentUndertakingPSU.SelectedValue = DtCheckSavedetails1.Rows[0]["IsRegisterdwithgovt"].ToString();
                 if (DtCheckSavedetails1.Rows[0]["IsRegisterdwithgovt"].ToString().Trim() == "1")
                 {
-                    divgovtundertaking.Visible = true;
-                    gvgovtundertaking.Visible = false;
-                    gvgovtundertakingedit.Visible = true;
+                    if (gvgovtundertakingedit.Rows.Count > 0)
+                    {
+                        divgovtundertaking.Visible = true;
+                        gvgovtundertaking.Visible = false;
+                        gvgovtundertakingedit.Visible = true;
+                    }
+                    else
+                    {
+                        gvgovtundertaking.Visible = true;
+                        gvgovtundertakingedit.Visible = false;
+                        divgovtundertaking.Visible = true;
+                    }
                 }
                 else
                 {
-                    gvgovtundertaking.Visible = true;
+                    gvgovtundertaking.Visible = false;
                     gvgovtundertakingedit.Visible = false;
                     divgovtundertaking.Visible = true;
                 }
@@ -117,9 +126,13 @@ public partial class Vendor_V_RegistrationNo : System.Web.UI.Page
     protected void ddlDepartmentUndertakingPSU_SelectedIndexChanged(object sender, EventArgs e)
     {
         if (ddlDepartmentUndertakingPSU.SelectedItem.Text == "YES")
-        { divgovtundertaking.Visible = true; }
+        { divgovtundertaking.Visible = true;
+            gvgovtundertaking.Visible = true;
+        }
         else
-        { divgovtundertaking.Visible = false; }
+        { divgovtundertaking.Visible = false;
+            gvgovtundertaking.Visible = false;
+        }
     }
     #region Grid of Please Govt Under PSU
     private void SetInitialRowGovt()
@@ -296,7 +309,14 @@ public partial class Vendor_V_RegistrationNo : System.Web.UI.Page
     #endregion
     protected void btnsubmit_Click(object sender, EventArgs e)
     {
-        SaveRegistration();
+        try
+        {
+            SaveRegistration();
+        }
+        catch (Exception ex)
+        {
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('" + ex.Message.ToString() + "')", true);
+        }
     }
     protected void SaveRegistration()
     {
@@ -329,10 +349,12 @@ public partial class Vendor_V_RegistrationNo : System.Web.UI.Page
         {
             if (btnsubmit.Text == "Update")
             {
+                PL();
                 ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Successfully update company information')", true);
             }
             else
             {
+                PL();
                 ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Successfully save company information')", true);
             }
         }
@@ -443,7 +465,7 @@ public partial class Vendor_V_RegistrationNo : System.Web.UI.Page
                 string strUrl = String.Format("https://betaows.digitallocker.gov.in/api/v1/web/utility/default/gstnverification.json");
                 WebRequest requestObjPost = WebRequest.Create(strUrl);
                 requestObjPost.Method = "POST";
-                requestObjPost.ContentType = "application/json"; 
+                requestObjPost.ContentType = "application/json";
                 requestObjPost.Headers.Add("ContentType", "application/json");
                 requestObjPost.Headers.Add("x-require-whisk-auth", "DigiLocker#2020");
                 //StringBuilder postData = new StringBuilder();
@@ -467,11 +489,6 @@ public partial class Vendor_V_RegistrationNo : System.Web.UI.Page
             {
                 ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('" + ex.Message.ToString() + "')", true);
             }
-
-
-
-
-
         }
         else
         { }

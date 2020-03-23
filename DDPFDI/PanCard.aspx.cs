@@ -8,18 +8,61 @@ using System.Net.Security;
 using System.Security.Cryptography;
 using System.Text;
 using System.Web.UI;
+using Encryption;
+using System.Text.RegularExpressions;
 
 public partial class PanCard : System.Web.UI.Page
 {
+    Cryptography Enc = new Cryptography();
     protected void Page_Load(object sender, EventArgs e)
     {
-
+        if (!IsPostBack)
+        {
+            if (rbcheck.SelectedValue == "1")
+            {
+                panelpan.Visible = true;
+                panelgst.Visible = false;
+                paneltinother.Visible = false;
+                panelenc.Visible = false;
+            }
+            else if (rbcheck.SelectedValue == "2")
+            {
+                panelpan.Visible = false;
+                panelgst.Visible = true;
+                paneltinother.Visible = false;
+                panelenc.Visible = false;
+            }
+            else if (rbcheck.SelectedValue == "3")
+            {
+                panelpan.Visible = false;
+                panelgst.Visible = false;
+                paneltinother.Visible = true;
+                panelenc.Visible = false;
+            }
+            else if (rbcheck.SelectedValue == "4")
+            {
+                panelpan.Visible = false;
+                panelgst.Visible = false;
+                paneltinother.Visible = false;
+                panelenc.Visible = true;
+            }
+        }
     }
     public Boolean AcceptAllCertifications(Object sender, System.Security.Cryptography.X509Certificates.X509Certificate certification, System.Security.Cryptography.X509Certificates.X509Chain chain, System.Net.Security.SslPolicyErrors sslPolicyErrors)
     {
         return true;
     }
-    protected void txtpanno_TextChanged(object sender, EventArgs e)
+    protected void btnenc_Click(object sender, EventArgs e)
+    {
+        if (TXTDEC.Text != "")
+            lblmsg.Text = Enc.EncryptData(TXTDEC.Text);
+    }
+    protected void btndec_Click(object sender, EventArgs e)
+    {
+         if (TXTDEC.Text != "")
+            lblmsg.Text = Enc.DecryptData(TXTDEC.Text);
+    }
+    protected void btnpanno_Click(object sender, EventArgs e)
     {
         try
         {
@@ -30,20 +73,107 @@ public partial class PanCard : System.Web.UI.Page
             System.IO.StreamReader respStreamReader = new System.IO.StreamReader(myResp.GetResponseStream());
             string responseString = respStreamReader.ReadToEnd();
             string str = responseString.ToString();
-            char[] deli = { '^'};
+            char[] deli = { '^' };
             string[] split = str.Split(deli);
-            string a = split[0];
-            string b = split[1];
-            string d = split[3];
-            string E = split[4];    
-            string g = split[6];
-            string h = split[7];
-            string i = split[8];         
-            string k = split[10]; 
+            lblmsg.Text = split[0];
+            Label15.Text = split[1];
+            Label16.Text = split[2];
+            Label17.Text = split[3];
+            Label18.Text = split[4];
+            Label19.Text = split[5];
+            Label20.Text = split[6];
+            Label21.Text = split[7];
+            Label22.Text = split[8];
+            Label23.Text = split[9];
+            Label24.Text = split[10];
         }
         catch (Exception ex)
         {
             ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('" + ex.Message.ToString() + "')", true);
+        }
+    }
+    string m;
+    protected void btngst_Click(object sender, EventArgs e)
+    {
+        try
+        {
+            string requestUristring = string.Format("http://maketheindia.in/GST-Verification?GSTNNO=" + txtgst.Text);
+            ServicePointManager.ServerCertificateValidationCallback = new RemoteCertificateValidationCallback(AcceptAllCertifications);
+            HttpWebRequest myReq = (HttpWebRequest)WebRequest.Create(requestUristring);
+            HttpWebResponse myResp = (HttpWebResponse)myReq.GetResponse();
+            System.IO.StreamReader respStreamReader = new System.IO.StreamReader(myResp.GetResponseStream());
+            string responseString = respStreamReader.ReadToEnd();
+            string str = responseString.ToString();
+            string[] Lines = str.Split(',');
+            lblGstmsg.Text = Lines[0];
+            Label1.Text = Lines[1];
+            Label2.Text = Lines[2];
+            Label3.Text = Lines[3];
+            Label4.Text = Lines[4];
+            Label5.Text = Lines[5];
+            Label6.Text = Lines[6];
+        }
+        catch (Exception ex)
+        {
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('" + ex.Message.ToString() + "')", true);
+        }
+    }
+    protected void btntinother_Click(object sender, EventArgs e)
+    {
+        try
+        {
+            string requestUristring = string.Format("http://maketheindia.in/MCA21-Verification?CIN=" + txtTinOther.Text + "&type=" + "company_details");
+            ServicePointManager.ServerCertificateValidationCallback = new RemoteCertificateValidationCallback(AcceptAllCertifications);
+            HttpWebRequest myReq = (HttpWebRequest)WebRequest.Create(requestUristring);
+            HttpWebResponse myResp = (HttpWebResponse)myReq.GetResponse();
+            System.IO.StreamReader respStreamReader = new System.IO.StreamReader(myResp.GetResponseStream());
+            string responseString = respStreamReader.ReadToEnd();
+            string str = responseString.ToString();
+            string[] split = str.Split(',');
+            lblTinother.Text = split[0];
+            Label7.Text = split[1];
+            Label8.Text = split[2];
+            Label9.Text = split[3];
+            Label10.Text = split[4];
+            Label11.Text = split[5];
+            Label12.Text = split[6];
+            Label13.Text = split[7];
+            Label14.Text = split[8];
+        }
+        catch (Exception ex)
+        {
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('" + ex.Message.ToString() + "')", true);
+        }
+    }
+    protected void rbcheck_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        if (rbcheck.SelectedValue == "1")
+        {
+            panelpan.Visible = true;
+            panelgst.Visible = false;
+            paneltinother.Visible = false;
+            panelenc.Visible = false;
+        }
+        else if (rbcheck.SelectedValue == "2")
+        {
+            panelpan.Visible = false;
+            panelgst.Visible = true;
+            paneltinother.Visible = false;
+            panelenc.Visible = false;
+        }
+        else if (rbcheck.SelectedValue == "3")
+        {
+            panelpan.Visible = false;
+            panelgst.Visible = false;
+            paneltinother.Visible = true;
+            panelenc.Visible = false;
+        }
+        else if (rbcheck.SelectedValue == "4")
+        {
+            panelpan.Visible = false;
+            panelgst.Visible = false;
+            paneltinother.Visible = false;
+            panelenc.Visible = true;
         }
     }
 }

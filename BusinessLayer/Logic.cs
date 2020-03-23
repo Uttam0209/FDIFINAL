@@ -18,7 +18,7 @@ namespace BusinessLayer
         #region Login"
         public string VerifyEmail(HybridDictionary hyLogin, out string _msg, out string mp)
         {
-            return SqlHelper.Instance.VerifyEmail(hyLogin, out _msg, out  mp);
+            return SqlHelper.Instance.VerifyEmail(hyLogin, out _msg, out mp);
         }
         public string VerifyEmployee(HybridDictionary hyLogin, out string _msg, out string Defaultpage)
         {
@@ -421,14 +421,14 @@ namespace BusinessLayer
             string mquery = "insert into tbl_trn_VendorDetailMultiGrid (VendorRefNo,Type,TOTAL_Employees,ADMINISTRATIVE,TECHNICAL,NON_TECHNICAL,QC_INSPECTION,SKILLED_LABOUR,UNSKILLED_LABOUR)Values('" + ID + "','" + Value1 + "','" + Value2 + "','" + Value3 + "','" + Value4 + "','" + Value5 + "','" + Value6 + "','" + Value7 + "','" + Value8 + "')";
             return SqlHelper.Instance.ExecuteQuery(mquery);
         }
-        public Int32 Updatetestfacilities(Int64 ID, string Value1, string Value2, string Value3, string Value4, string Value5, string Value6, string Value7)
+        public Int32 Updatetestfacilities(Int64 ID, string Value1, string Value2, string Value3, string Value4, string Value5, string Value6, string Value7, string Value8)
         {
-            string mquery = "update tbl_trn_VendorDetailMultiGrid set VendorRefNo='" + Value1 + "',Type_of_GAUGE_Test_Equipment='" + Value2 + "',Test_Make='" + Value3 + "',Least_Count='" + Value4 + "',Range_of_MEASURMENT='" + Value5 + "',CERTIFICATION_YEAR='" + Value6 + "',Year_of_purchase='" + Value7 + "' where MasterId='" + ID + "'";
+            string mquery = "update tbl_trn_VendorDetailMultiGrid set VendorRefNo='" + Value1 + "',Type_of_GAUGE_Test_Equipment='" + Value2 + "',Test_Make='" + Value3 + "',Least_Count='" + Value4 + "',Range_of_MEASURMENT='" + Value5 + "',Unit_of_MEASURMENT='" + Value8 + "',CERTIFICATION_YEAR='" + Value6 + "',Year_of_purchase='" + Value7 + "' where MasterId='" + ID + "'";
             return SqlHelper.Instance.ExecuteQuery(mquery);
         }
-        public Int32 Inserttestfacilities(string ID, string Value1, string Value2, string Value3, string Value4, string Value5, string Value6, string Value7)
+        public Int32 Inserttestfacilities(string ID, string Value1, string Value2, string Value3, string Value4, string Value5, string Value6, string Value7, string Value8)
         {
-            string mquery = "insert into tbl_trn_VendorDetailMultiGrid (VendorRefNo,Type,Type_of_GAUGE_Test_Equipment,Test_Make,Least_Count,Range_of_MEASURMENT,CERTIFICATION_YEAR,Year_of_purchase)Values('" + ID + "','" + Value1 + "','" + Value2 + "','" + Value3 + "','" + Value4 + "','" + Value5 + "','" + Value6 + "','" + Value7 + "')";
+            string mquery = "insert into tbl_trn_VendorDetailMultiGrid (VendorRefNo,Type,Type_of_GAUGE_Test_Equipment,Test_Make,Least_Count,Range_of_MEASURMENT,Unit_of_MEASURMENT,CERTIFICATION_YEAR,Year_of_purchase)Values('" + ID + "','" + Value1 + "','" + Value2 + "','" + Value3 + "','" + Value4 + "','" + Value5 + "','" + Value8 + "','" + Value6 + "','" + Value7 + "')";
             return SqlHelper.Instance.ExecuteQuery(mquery);
         }
         public Int32 Updateauthdealaddress(Int64 ID, string Value1, string Value2, string Value3, string Value4, string Value5, string Value6, string Value7, string Value8)

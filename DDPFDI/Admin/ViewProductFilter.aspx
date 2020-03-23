@@ -100,13 +100,13 @@
                         <div class="filter-sidebar">
                             <!--Accordion wrapper-->
                             <h2>Filters</h2>
-                            <div class="common-filter-box">
+                            <%--<div class="common-filter-box">
                                 <h3>Indigenized</h3>
                                 <div class="custom-control custom-checkbox">
                                     <asp:RadioButtonList ID="rbisindezinized" runat="server" AutoPostBack="true" OnSelectedIndexChanged="rbisindezinized_SelectedIndexChanged" RepeatColumns="1" RepeatDirection="Vertical" RepeatLayout="UnorderedList">
                                         <asp:ListItem Value="Y">YES</asp:ListItem>
                                         <asp:ListItem Value="N">NO</asp:ListItem>
-                                        <asp:ListItem Value="C">CLEAR</asp:ListItem>
+                                       <%-- <asp:ListItem Value="C">CLEAR</asp:ListItem>
                                     </asp:RadioButtonList>
                                 </div>
                             </div>
@@ -116,7 +116,7 @@
                                     <asp:RadioButtonList ID="rbismake2" runat="server" AutoPostBack="true" OnSelectedIndexChanged="rbismake2_SelectedIndexChanged" RepeatColumns="1" RepeatDirection="Vertical" RepeatLayout="UnorderedList">
                                         <asp:ListItem Value="25">YES</asp:ListItem>
                                         <asp:ListItem Value="N">NO</asp:ListItem>
-                                        <asp:ListItem Value="C">CLEAR</asp:ListItem>
+                                       <%-- <asp:ListItem Value="C">CLEAR</asp:ListItem>
                                     </asp:RadioButtonList>
                                 </div>
                             </div>
@@ -126,7 +126,7 @@
                                     <asp:RadioButtonList ID="rbiscontact" runat="server" AutoPostBack="true" OnSelectedIndexChanged="rbiscontact_SelectedIndexChanged" RepeatColumns="1" RepeatDirection="Vertical" RepeatLayout="UnorderedList">
                                         <asp:ListItem Value="Y">AVAILABLE</asp:ListItem>
                                         <asp:ListItem Value="N">NOT AVAILABLE</asp:ListItem>
-                                        <asp:ListItem Value="C">CLEAR</asp:ListItem>
+                                        <%--<asp:ListItem Value="C">CLEAR</asp:ListItem>
                                     </asp:RadioButtonList>
                                 </div>
                             </div>
@@ -136,10 +136,10 @@
                                     <asp:RadioButtonList ID="rbistender" runat="server" AutoPostBack="true" OnSelectedIndexChanged="rbistender_SelectedIndexChanged" RepeatColumns="1" RepeatDirection="Vertical" RepeatLayout="UnorderedList">
                                         <asp:ListItem Value="Y">LIVE</asp:ListItem>
                                         <asp:ListItem Value="N">NOT LIVE</asp:ListItem>
-                                        <asp:ListItem Value="C">CLEAR </asp:ListItem>
+                                       <%-- <asp:ListItem Value="C">CLEAR </asp:ListItem>
                                     </asp:RadioButtonList>
                                 </div>
-                            </div>
+                            </div>--%>
                             <div class="common-filter-box" runat="server" id="divfiltercompany">
                                 <h3>Company</h3>
                                 <div class="custom-control custom-checkbox">
@@ -240,11 +240,11 @@
                                                     <div class="clearfix mt10"></div>
                                                     <div class="row">
                                                         <div class="col-md-12">
-                                                            <asp:LinkButton ID="lblfilter1" runat="server" OnClick="lblfilter1_Click" Visible="false" CssClass="label label-seagreen ml10 fa fa-times"></asp:LinkButton>
+                                                           <%-- <asp:LinkButton ID="lblfilter1" runat="server" OnClick="lblfilter1_Click" Visible="false" CssClass="label label-seagreen ml10 fa fa-times"></asp:LinkButton>
                                                             <asp:LinkButton ID="lblfilter2" runat="server" OnClick="lblfilter2_Click" Visible="false" CssClass="label label-seagreen ml10 fa fa-times"></asp:LinkButton>
                                                             <asp:LinkButton ID="lblfilter3" runat="server" OnClick="lblfilter3_Click" Visible="false" CssClass="label label-seagreen ml10 fa fa-times"></asp:LinkButton>
                                                             <asp:LinkButton ID="lblfilter4" runat="server" OnClick="lblfilter4_Click" Visible="false" CssClass="label label-seagreen ml10 fa fa-times"></asp:LinkButton>
-                                                            <asp:LinkButton ID="lblfilter5" runat="server" OnClick="lblfilter5_Click" Visible="false" CssClass="label label-seagreen ml10 fa fa-times"></asp:LinkButton>
+                                                            --%><asp:LinkButton ID="lblfilter5" runat="server" OnClick="lblfilter5_Click" Visible="false" CssClass="label label-seagreen ml10 fa fa-times"></asp:LinkButton>
                                                             <asp:LinkButton ID="lblfilter6" runat="server" OnClick="lblfilter6_Click" Visible="false" CssClass="label label-seagreen ml10 fa fa-times"></asp:LinkButton>
                                                             <asp:LinkButton ID="lblfilter7" runat="server" OnClick="lblfilter7_Click" Visible="false" CssClass="label label-seagreen ml10 fa fa-times"></asp:LinkButton>
                                                             <asp:LinkButton ID="lblfilter8" runat="server" OnClick="lblfilter8_Click" Visible="false" CssClass="label label-seagreen ml10 fa fa-times"></asp:LinkButton>
@@ -275,7 +275,7 @@
                                                                             <asp:HiddenField ID="hfcomprefno" runat="server" Value='<%#Eval("CompanyRefNo") %>' />
                                                                         </ItemTemplate>
                                                                     </asp:TemplateField>
-                                                                    <asp:TemplateField HeaderText="PDF">
+                                                                    <asp:TemplateField HeaderText="PDF" Visible="False">
                                                                         <ItemTemplate>
                                                                             <asp:HyperLink runat="server" ID="lbpdffile" Target="_blank" NavigateUrl='<%#Eval("ItemDescriptionPDFFile","~/Upload/{0}") %>' CssClass="fa fa-file-pdf"></asp:HyperLink>
                                                                         </ItemTemplate>
@@ -296,12 +296,12 @@
                                                                             <asp:Label ID="lblrefno" runat="server" Text='<%#Eval("ProductRefNo") %>' NullDisplayText="#" SortExpression="ProductRefNo"></asp:Label>
                                                                         </ItemTemplate>
                                                                     </asp:TemplateField>
-                                                                    <asp:BoundField DataField="ProductDescription" HeaderText="Item Description" NullDisplayText="#" ItemStyle-Wrap="true" ItemStyle-Width="100" SortExpression="ProductDescription" />
-                                                                    <asp:BoundField DataField="ProdIndustryDoamin" HeaderText="Product (Industry Domain)" NullDisplayText="#" ItemStyle-Wrap="true" ItemStyle-Width="100" SortExpression="ProdIndustryDoamin" />
-                                                                    <asp:BoundField DataField="NSNGroup" HeaderText="NSN Group" NullDisplayText="#" ItemStyle-Wrap="true" ItemStyle-Width="100" SortExpression="NameDefencePlatform" />
-                                                                    <asp:BoundField DataField="NSNGroupClass" HeaderText="NSN GROUP CLASS" NullDisplayText="#" ItemStyle-Wrap="true" ItemStyle-Width="100" SortExpression="NameDefencePlatform" />
+                                                                    <asp:BoundField DataField="ProductDescription"  HeaderText="Item Description" NullDisplayText="" ItemStyle-Wrap="true" ItemStyle-Width="100" SortExpression="ProductDescription" />
+                                                                    <asp:BoundField DataField="ProdIndustryDoamin" HeaderText="Product (Industry Domain)" NullDisplayText="" ItemStyle-Wrap="true" ItemStyle-Width="100" SortExpression="ProdIndustryDoamin" />
+                                                                    <asp:BoundField DataField="NSNGroup" HeaderText="NSN Group" NullDisplayText="" ItemStyle-Wrap="true" ItemStyle-Width="100" SortExpression="NameDefencePlatform" Visible="false" />
+                                                                    <asp:BoundField DataField="NSNGroupClass" HeaderText="NSN GROUP CLASS" NullDisplayText="" ItemStyle-Wrap="true" ItemStyle-Width="100" SortExpression="NameDefencePlatform" Visible="false" />
 
-                                                                    <asp:BoundField DataField="DefencePlatform" HeaderText="Defence Platform" NullDisplayText="#" ItemStyle-Wrap="true" ItemStyle-Width="100" SortExpression="DefencePlatform" />
+                                                                    <asp:BoundField DataField="DefencePlatform" HeaderText="Defence Platform" NullDisplayText="" ItemStyle-Wrap="true" ItemStyle-Width="100" SortExpression="DefencePlatform" Visible="false" />
                                                                     <asp:TemplateField HeaderText="OEM PartNumber" Visible="false">
                                                                         <ItemTemplate>
                                                                             <asp:Label runat="server" ID="lblcompanyrole" Text='<%#Eval("OEMPartNumber") %>'></asp:Label>
@@ -309,12 +309,15 @@
                                                                     </asp:TemplateField>
                                                                     <asp:TemplateField HeaderText="DPSUPartNumber">
                                                                         <ItemTemplate>
-                                                                            <asp:Label ID="lblnodelname" runat="server" Text='<%#Eval("DPSUPartNumber") %>' NullDisplayText="#" SortExpression="DPSUPartNumber"></asp:Label>
+                                                                            <asp:Label ID="lblnodelname" runat="server" Text='<%#Eval("DPSUPartNumber") %>' NullDisplayText="" SortExpression="DPSUPartNumber"></asp:Label>
                                                                             <asp:HiddenField ID="hfisaaproved" runat="server" Value='<%#Eval("IsApproved") %>' />
                                                                         </ItemTemplate>
                                                                     </asp:TemplateField>
-                                                                    <asp:BoundField DataField="IsIndeginized" HeaderText="Item Indeginized" NullDisplayText="#" ItemStyle-Wrap="true" ItemStyle-Width="100" SortExpression="IsIndeginized" />
-                                                                    <asp:TemplateField HeaderText="Last Updated" Visible="false">
+                                                                    <asp:BoundField DataField="IsIndeginized" HeaderText="Item Indeginized" NullDisplayText="#" ItemStyle-Wrap="true" ItemStyle-Width="100" SortExpression="IsIndeginized" Visible="false" />
+                                                                    <asp:BoundField DataField="NodalOfficerEmail" HeaderText="Email" NullDisplayText="" ItemStyle-Wrap="true" ItemStyle-Width="100" SortExpression="IsIndeginized" />
+                                                                    <asp:BoundField DataField="NodalOfficerTelephone" HeaderText="Phone" NullDisplayText="" ItemStyle-Wrap="true" ItemStyle-Width="100" SortExpression="IsIndeginized" />
+
+                                                                    <asp:TemplateField HeaderText="Last Updated">
                                                                         <ItemTemplate>
                                                                             <asp:Label runat="server" ID="lblLastUpdated" Text='<%#Eval("LastUpdated") %>'></asp:Label>
                                                                         </ItemTemplate>
@@ -395,7 +398,7 @@
                                                                                                         </tr>
 
                                                                                                         <tr>
-                                                                                                            <td>Division/Palnt:</td>
+                                                                                                            <td>Division/Plant:</td>
                                                                                                             <td>
                                                                                                                 <asp:Label ID="lbldiviname" runat="server" Text=""></asp:Label></td>
                                                                                                         </tr>

@@ -1800,7 +1800,7 @@ namespace DataAccessLayer
             }
         }
         public DataTable GetDashboardData(string Purpose, string Search)
-        {
+         {
             using (DbConnection dbCon = db.CreateConnection())
             {
                 dbCon.Open();
@@ -2189,6 +2189,7 @@ namespace DataAccessLayer
                         db.AddInParameter(dbcom1, "@Designation", DbType.String, dtEnterNameOf.Rows[i]["Designation"]);
                         db.AddInParameter(dbcom1, "@DIN_No", DbType.String, dtEnterNameOf.Rows[i]["DinNo"]);
                         db.AddInParameter(dbcom1, "@MobileNo", DbType.Int64, dtEnterNameOf.Rows[i]["MobileNo"]);
+                        db.AddInParameter(dbcom1, "@mProcess", DbType.String, dtEnterNameOf.Rows[i]["mProcess"]);
                         db.ExecuteNonQuery(dbcom1, dbTran);
                     }
                     dbTran.Commit();
@@ -2305,6 +2306,7 @@ namespace DataAccessLayer
                         db.AddInParameter(dbcom5, "@Test_Make", DbType.String, dt5.Rows[i]["TestEqipMake"]);
                         db.AddInParameter(dbcom5, "@Least_Count", DbType.String, dt5.Rows[i]["TestLeastCount"]);
                         db.AddInParameter(dbcom5, "@Range_of_MEASURMENT", DbType.String, dt5.Rows[i]["Rangeofmeasur"]);
+                        db.AddInParameter(dbcom5, "@Unit_of_MEASURMENT", DbType.String, dt5.Rows[i]["Unitofmeasur"]);
                         db.AddInParameter(dbcom5, "@CERTIFICATION_YEAR", DbType.String, dt5.Rows[i]["CertificationYear"]);
                         db.AddInParameter(dbcom5, "@Year_of_purchase", DbType.String, dt5.Rows[i]["YearofPurchase"]);
                         db.ExecuteNonQuery(dbcom5, dbTran);
@@ -2315,6 +2317,7 @@ namespace DataAccessLayer
                         db.AddInParameter(dbcom6, "@Type", DbType.String, "Distributer");
                         db.AddInParameter(dbcom6, "@VendorRefNo", DbType.String, mCurrentID);
                         db.AddInParameter(dbcom6, "@MasterId", DbType.Int16, 0);
+                        db.AddInParameter(dbcom6, "@DistributorName", DbType.String, dt6.Rows[i]["DName"]);
                         db.AddInParameter(dbcom6, "@DistributorStreetAddress", DbType.String, dt6.Rows[i]["DAddress"]);
                         db.AddInParameter(dbcom6, "@DistributorState", DbType.String, dt6.Rows[i]["DState"]);
                         db.AddInParameter(dbcom6, "@DistributorPincode", DbType.String, dt6.Rows[i]["DPincode"]);
@@ -2540,8 +2543,18 @@ namespace DataAccessLayer
                         db.AddInParameter(dbcom1, "@VendorRefNo", DbType.String, mCurrentID);
                         db.AddInParameter(dbcom1, "@ProductNomenClature", DbType.String, dt1.Rows[i]["Nomenclature"]);
                         db.AddInParameter(dbcom1, "@NatoGroup", DbType.Int64, dt1.Rows[i]["NatoGroup"]);
-                        db.AddInParameter(dbcom1, "@NatoClass", DbType.Int64, dt1.Rows[i]["NatoClass"]);
-                        db.AddInParameter(dbcom1, "@ItemCode", DbType.Int64, dt1.Rows[i]["ItemCode"]);
+                        if (dt1.Rows[i]["NatoClass"].ToString() == "NA")
+                        { db.AddInParameter(dbcom1, "@NatoClass", DbType.Int64, 1); }
+                        else
+                        {
+                            db.AddInParameter(dbcom1, "@NatoClass", DbType.Int64, dt1.Rows[i]["NatoClass"]);
+                        }
+                        if (dt1.Rows[i]["ItemCode"].ToString() == "NA")
+                        { db.AddInParameter(dbcom1, "@ItemCode", DbType.Int64, 1); }
+                        else
+                        {
+                            db.AddInParameter(dbcom1, "@ItemCode", DbType.Int64, dt1.Rows[i]["ItemCode"]);
+                        }
                         db.AddInParameter(dbcom1, "@HSNCode", DbType.String, dt1.Rows[i]["HSNCode"]);
                         db.ExecuteNonQuery(dbcom1, dbTran);
                     }
@@ -2551,8 +2564,22 @@ namespace DataAccessLayer
                         db.AddInParameter(dbcom2, "@VendorRefNo", DbType.String, mCurrentID);
                         db.AddInParameter(dbcom2, "@ProductNomenClature1", DbType.String, dt2.Rows[i]["TechNomenclature"]);
                         db.AddInParameter(dbcom2, "@TechnologyLevel1", DbType.Int64, dt2.Rows[i]["Technology1"]);
-                        db.AddInParameter(dbcom2, "@TechnologyLevel2", DbType.Int64, dt2.Rows[i]["Technology2"]);
-                        db.AddInParameter(dbcom2, "@TechnologyLevel3", DbType.Int64, dt2.Rows[i]["Technology3"]);
+                        if (dt2.Rows[i]["Technology2"].ToString() == "NA")
+                        {
+                            db.AddInParameter(dbcom2, "@Technology2", DbType.Int64, 1);
+                        }
+                        else
+                        {
+                            db.AddInParameter(dbcom2, "@TechnologyLevel2", DbType.Int64, dt2.Rows[i]["Technology2"]);
+                        }
+                        if (dt2.Rows[i]["Technology3"].ToString() == "NA")
+                        {
+                            db.AddInParameter(dbcom2, "@TechnologyLevel3", DbType.Int64, 1);
+                        }
+                        else
+                        {
+                            db.AddInParameter(dbcom2, "@TechnologyLevel3", DbType.Int64, dt2.Rows[i]["Technology3"]);
+                        }
                         db.ExecuteNonQuery(dbcom2, dbTran);
                     }
                     for (int i = 0; i < dt3.Rows.Count; i++)
@@ -2633,7 +2660,7 @@ namespace DataAccessLayer
                 }
             }
         }
-      
+
         #endregion
     }
 }

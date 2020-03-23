@@ -96,7 +96,10 @@
                                                 </asp:TemplateField>
                                                 <asp:TemplateField HeaderText="Certificate valid upto">
                                                     <ItemTemplate>
-                                                        <asp:TextBox ID="txtcertificatevalidupto" runat="server" CssClass="form-control"></asp:TextBox>
+                                                        <div class="input-append date" id="datePickerall" data-date="12-02-2012" data-date-format="dd-mm-yyyy" style="margin-top: -15px;">
+                                                            <span class="add-on"><i class="icon-th"></i></span>
+                                                            <asp:TextBox ID="txtcertificatevalidupto" runat="server" CssClass="form-control datePickerall" data-date-format="dd/mm/yyyy"></asp:TextBox>
+                                                        </div>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                                 <asp:TemplateField HeaderText="Please Upload Registration Certificate">
@@ -144,7 +147,7 @@
                                                 <asp:BoundField DataField="Certificate_valid_upto" HeaderText="Certificate Valid Upto" />
                                                 <asp:TemplateField HeaderText="Uploaded Registration Certificate">
                                                     <ItemTemplate>
-                                                        <asp:Image runat="server" ID="img" src='<%#Eval("Upload_Registration_Certificate") %>' />
+                                                         <a href='<%#Eval("Upload_Registration_Certificate","https://srijandefence.gov.in/Upload/VendorImage/{0}") %>' runat="server" id="img" target="_blank"><%#Eval("Upload_Registration_Certificate") %></a>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                                 <asp:TemplateField HeaderText="Action">
@@ -254,7 +257,7 @@
         function isNumberKey(evt) {
             var charCode = (evt.which) ? evt.which : event.keyCode;
             if (charCode != 46 && charCode > 31
-              && (charCode < 48 || charCode > 57))
+                && (charCode < 48 || charCode > 57))
                 return false;
 
             return true;

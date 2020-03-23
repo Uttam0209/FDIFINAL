@@ -276,7 +276,9 @@ public partial class Vendor_V_CompInfo2 : System.Web.UI.Page
                 drOEMS["TeleNo1"] = TextBox_5.Text;
                 drOEMS["FaxNo1"] = TextBox_6.Text;
                 drOEMS["EmailId1"] = TextBox_7.Text;
-                drOEMS["AUTHRIZATION1"] = fu1.PostedFile.FileName;
+                string FilePathName = Enc.DecryptData(Session["VendorRefNo"].ToString()) + "_" + DateTime.Now.ToString("hh_mm_ss") + fu1.FileName;
+                fu1.SaveAs(HttpContext.Current.Server.MapPath("Upload/VendorImage") + "\\" + FilePathName);
+                drOEMS["AUTHRIZATION1"] = FilePathName.ToString();
                 dtOEMS.Rows.Add(drOEMS);
             }
         }
@@ -321,13 +323,20 @@ public partial class Vendor_V_CompInfo2 : System.Web.UI.Page
     }
     protected void btnsubmit_Click(object sender, EventArgs e)
     {
-        SaveRegistration();
+        try
+        {
+            SaveRegistration();
+        }
+        catch (Exception ex)
+        {
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('" + ex.Message.ToString() + "')", true);
+        }
     }
     protected void gveditoemnameadd_RowCommand(object sender, GridViewCommandEventArgs e)
     {
         if (e.CommandName == "newsave")
         {
-            btnsubmit.Text = "Submit";
+            lbsub.Text = "Submit";
             txtname.Text = "";
             txtcompadd.Text = "";
             ddlcountry.SelectedIndex = -1;
@@ -340,7 +349,7 @@ public partial class Vendor_V_CompInfo2 : System.Web.UI.Page
         }
         else if (e.CommandName == "newedit")
         {
-            btnsubmit.Text = "Edit & Update";
+            lbsub.Text = "Edit & Update";
             int rowIndex = Convert.ToInt32(e.CommandArgument);
             GridViewRow row = gveditoemnameadd.Rows[rowIndex];
             HiddenField hfn = (HiddenField)gveditoemnameadd.Rows[rowIndex].FindControl("hfeditoemname");
@@ -377,6 +386,12 @@ public partial class Vendor_V_CompInfo2 : System.Web.UI.Page
             {
                 if (txtname.Text != "")
                 {
+                    if (fufile.HasFile != false)
+                    {
+                        string FilePathName = Enc.DecryptData(Session["VendorRefNo"].ToString()) + "_" + DateTime.Now.ToString("hh_mm_ss") + fufile.FileName;
+                        fufile.SaveAs(HttpContext.Current.Server.MapPath("Upload/VendorImage") + "\\" + FilePathName);
+                        hffile.Value = FilePathName.ToString();
+                    }
                     Int32 ESaveID = Lo.UpdateOEM(Convert.ToInt64(ViewState["editoem"]), Enc.DecryptData(Session["VendorRefNo"].ToString()), txtname.Text, txtcompadd.Text, ddlcountry.Text, txtofficialname.Text, txttelephoneno.Text, txtfaxno.Text, txtemailid.Text, hffile.Value);
                     if (ESaveID != 0)
                     {
@@ -400,7 +415,9 @@ public partial class Vendor_V_CompInfo2 : System.Web.UI.Page
             }
             else if (lbsub.Text == "Submit")
             {
-                Int32 ESaveID = Lo.InsertOEM(Enc.DecryptData(Session["VendorRefNo"].ToString()), "OEM", txtname.Text, txtcompadd.Text, ddlcountry.Text, txtofficialname.Text, txttelephoneno.Text, txtfaxno.Text, txtemailid.Text, fufile.FileName);
+                string FilePathName = Enc.DecryptData(Session["VendorRefNo"].ToString()) + "_" + DateTime.Now.ToString("hh_mm_ss") + fufile.FileName;
+                fufile.SaveAs(HttpContext.Current.Server.MapPath("Upload/VendorImage") + "\\" + FilePathName);
+                Int32 ESaveID = Lo.InsertOEM(Enc.DecryptData(Session["VendorRefNo"].ToString()), "OEM", txtname.Text, txtcompadd.Text, ddlcountry.Text, txtofficialname.Text, txttelephoneno.Text, txtfaxno.Text, txtemailid.Text, FilePathName.ToString());
                 if (ESaveID != 0)
                 {
                     txtname.Text = "";

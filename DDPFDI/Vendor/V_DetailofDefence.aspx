@@ -52,7 +52,7 @@
                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="HSN Code">
                                                 <ItemTemplate>
-                                                    <asp:TextBox ID="txthsnno" runat="server" CssClass="form-control"></asp:TextBox>
+                                                    <asp:TextBox ID="txthsnno" runat="server" CssClass="form-control" AutoPostBack="true" OnTextChanged="txthsnno_TextChanged"></asp:TextBox>
                                                 </ItemTemplate>
                                                 <FooterStyle HorizontalAlign="Right" />
                                                 <FooterTemplate>
@@ -87,9 +87,10 @@
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                             <asp:BoundField DataField="ProductNomenClature" HeaderText="Product Nomenclature" />
-                                            <asp:BoundField DataField="NatoGroup" HeaderText="Nato Group" />
-                                            <asp:BoundField DataField="NatoClass" HeaderText="Nato Class" />
-                                            <asp:BoundField DataField="ItemCode" HeaderText="Item Code" />
+                                            
+                                            <asp:BoundField DataField="NaGr" HeaderText="Nato Group" />
+                                            <asp:BoundField DataField="NaCl" HeaderText="Nato Class" />
+                                            <asp:BoundField DataField="ItCo" HeaderText="Item Code" />
                                             <asp:BoundField DataField="HSNCode" HeaderText="HSN Code" />
                                             <asp:TemplateField HeaderText="Action">
                                                 <ItemTemplate>
@@ -142,12 +143,12 @@
                                                     <asp:DropDownList ID="ddltech3" runat="server" CssClass="form-control">
                                                     </asp:DropDownList>
                                                 </ItemTemplate>
-                                                <FooterStyle HorizontalAlign="Right" />
+                                               <%-- <FooterStyle HorizontalAlign="Right" />
                                                 <FooterTemplate>
                                                     <asp:LinkButton ID="btnAddTech" runat="server" CssClass="btn btn-primary pull-right"
                                                         Text="Add New Row"
                                                         OnClick="btnAddTech_Click"></asp:LinkButton>
-                                                </FooterTemplate>
+                                                </FooterTemplate>--%>
                                             </asp:TemplateField>
                                             <asp:TemplateField>
                                                 <ItemTemplate>
@@ -177,9 +178,9 @@
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                             <asp:BoundField DataField="ProductNomenClature1" HeaderText="Product Nomenclature" />
-                                            <asp:BoundField DataField="TechnologyLevel1" HeaderText="Technology 1" />
-                                            <asp:BoundField DataField="TechnologyLevel2" HeaderText="Technology 2" />
-                                            <asp:BoundField DataField="TechnologyLevel3" HeaderText="Technology 3" />
+                                            <asp:BoundField DataField="Tech1" HeaderText="Technology 1" />
+                                            <asp:BoundField DataField="Tech2" HeaderText="Technology 2" />
+                                            <asp:BoundField DataField="Tech3" HeaderText="Technology 3" />
                                             <asp:TemplateField HeaderText="Action">
                                                 <ItemTemplate>
                                                     <asp:HiddenField runat="server" ID="hf2" Value='<%#Eval("MasterId") %>' />
@@ -334,8 +335,10 @@
                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="Date of Last Supply">
                                                 <ItemTemplate>
-                                                    <asp:TextBox ID="txtdateoflastsupplie" runat="server" CssClass="form-control">                                           
-                                                    </asp:TextBox>
+                                                    <div class="input-append date" id="datePicker" data-date="12-02-2012" data-date-format="dd-mm-yyyy" style="margin-top: -15px;">
+                                                        <span class="add-on"><i class="icon-th"></i></span>
+                                                        <asp:TextBox ID="txtdateoflastsupplie" runat="server" CssClass="form-control datePicker" data-date-format="dd/mm/yyyy"></asp:TextBox>
+                                                    </div>
                                                 </ItemTemplate>
                                                 <FooterStyle HorizontalAlign="Right" />
                                                 <FooterTemplate>
@@ -376,7 +379,7 @@
                                             <asp:BoundField DataField="SupplyNoDate" HeaderText="S.O. No.and Date" />
                                             <asp:BoundField DataField="OrderQuantity" HeaderText="Order Qty." />
                                             <asp:BoundField DataField="SuppliedQuantity" HeaderText="Value Qty Supplied" />
-                                            <asp:BoundField DataField="Date2" HeaderText="Date of Last Supply" />
+                                            <asp:BoundField DataField="Date2" HeaderText="Date of Last Supply" DataFormatString="{0:dd-MMM-yyyy}" />
                                             <asp:TemplateField HeaderText="Action">
                                                 <ItemTemplate>
                                                     <asp:HiddenField runat="server" ID="hf4" Value='<%#Eval("MasterId") %>' />
@@ -437,8 +440,10 @@
                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="Date of Last Supply">
                                                 <ItemTemplate>
-                                                    <asp:TextBox ID="txtdateoflastsupplie1" runat="server" CssClass="form-control">                                           
-                                                    </asp:TextBox>
+                                                    <div class="input-append date" id="datePicker" data-date="12-02-2012" data-date-format="dd-mm-yyyy" style="margin-top: -15px;">
+                                                        <span class="add-on"><i class="icon-th"></i></span>
+                                                        <asp:TextBox ID="txtdateoflastsupplie1" runat="server" CssClass="form-control datePicker" data-date-format="dd/mm/yyyy"></asp:TextBox>
+                                                    </div>
                                                 </ItemTemplate>
                                                 <FooterStyle HorizontalAlign="Right" />
                                                 <FooterTemplate>
@@ -479,7 +484,7 @@
                                             <asp:BoundField DataField="SupplyNoDate" HeaderText="S.O. No.and Date" />
                                             <asp:BoundField DataField="OrderQuantity" HeaderText="Order Qty." />
                                             <asp:BoundField DataField="SuppliedQuantity" HeaderText="Value Qty Supplied" />
-                                            <asp:BoundField DataField="Date2" HeaderText="Date of Last Supply" />
+                                            <asp:BoundField DataField="Date2" HeaderText="Date of Last Supply" DataFormatString="{0:dd-MMM-yyyy}" />
                                             <asp:TemplateField HeaderText="Action">
                                                 <ItemTemplate>
                                                     <asp:HiddenField runat="server" ID="hf5" Value='<%#Eval("MasterId") %>' />
@@ -837,7 +842,7 @@
         function isNumberKey(evt) {
             var charCode = (evt.which) ? evt.which : event.keyCode;
             if (charCode != 46 && charCode > 31
-              && (charCode < 48 || charCode > 57))
+                && (charCode < 48 || charCode > 57))
                 return false;
 
             return true;

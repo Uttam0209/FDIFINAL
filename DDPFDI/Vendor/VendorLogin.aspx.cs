@@ -28,9 +28,8 @@ public partial class Vendor_VendorLogin : System.Web.UI.Page
     Int64 MId = 0;
     #endregion
     protected void Page_Load(object sender, EventArgs e)
-    {
-        //  string s = objEnc.EncryptData("Data Source=103.73.189.114;Initial Catalog=ddp_cmsV1;User ID=sa;Password=mXy<wxh3:Mh@U");
-        // string a = objEnc.EncryptData("16VDPIT#");
+    { 
+        
     }
     #region "Login Code"
     public static bool IsValidEmailId(string InputEmail)
@@ -422,6 +421,7 @@ public partial class Vendor_VendorLogin : System.Web.UI.Page
             check.Attributes.Add("Class", "fa fa-check");
             lblbusinessname.Text = "Valid Company.";
             lblbusinessname.Visible = true;
+            lblbusinessname.ForeColor = System.Drawing.Color.Green;
         }
         else
         {
@@ -431,6 +431,7 @@ public partial class Vendor_VendorLogin : System.Web.UI.Page
                 check.Attributes.Add("Class", "fa fa-check");
                 lblbusinessname.Text = "Valid Company.";
                 lblbusinessname.Visible = true;
+                lblbusinessname.ForeColor = System.Drawing.Color.Green;
             }
             else
             {
@@ -515,51 +516,60 @@ public partial class Vendor_VendorLogin : System.Web.UI.Page
             if (txtnodalname.Text != "" && txtnodelemail.Text != "")
             {
                 if (lblmsgpan.Text != "Invalid Pan" && lblbusinessname.Text == "Valid Company.")
+                 {
+                if (ddlwoundedup.SelectedValue != "0" && ddljudicialofficer.SelectedValue != "0" && ddlbusinesssuspended.SelectedValue != "0" && ddlforgingreasone.SelectedValue != "0" && ddldebarredgovtcont.SelectedValue != "0")
                 {
-                    if (ddlwoundedup.SelectedValue != "0" && ddljudicialofficer.SelectedValue != "0" && ddlbusinesssuspended.SelectedValue != "0" && ddlforgingreasone.SelectedValue != "0" && ddldebarredgovtcont.SelectedValue != "0")
+                    if (IsValidEmailId(txtnodelemail.Text))
                     {
-                        if (IsValidEmailId(txtnodelemail.Text))
+                        if (IsValidEmailRegister(txtnodelemail.Text))
                         {
                             if (IsValidEmailRegister(txtnodelemail.Text))
                             {
-                                if (IsValidEmailRegister(txtnodelemail.Text))
+                                foreach (ListItem lie in chkdpsu.Items)
                                 {
-                                    foreach (ListItem lie in chkdpsu.Items)
+                                    if (lie.Selected == true)
                                     {
-                                        if (lie.Selected == true)
-                                        {
-                                            mdpsuid = mdpsuid + lie.Value + ",";
-                                        }
+                                        mdpsuid = mdpsuid + lie.Value + ",";
                                     }
-                                    if (mdpsuid.ToString() != "")
-                                    {
-                                        SaveCode();
-                                    }
-                                    else
-                                    {
-                                        ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Check alteast one dpsu.')", true);
-                                    }
+                                }
+                                if (mdpsuid.ToString() != "")
+                                {
+                                    SaveCode();
                                 }
                                 else
                                 {
-                                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Mobile already registerd.')", true);
+                                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Check alteast one dpsu.')", true);
                                 }
                             }
                             else
                             {
-                                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('email already registerd')", true);
+                                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Mobile already registerd.')", true);
                             }
                         }
                         else
-                        { ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('email format not valid')", true); }
+                        {
+                            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Email already registerd')", true);
+                        }
                     }
-                    else { ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Please select term and condition')", true); }
+                    else
+                    {
+                        ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Email format not valid')", true);
+                    }
                 }
                 else
-                { ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Invalid pan or company name')", true); }
+                {
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Please select term and condition')", true);
+                }
+                }
+                else
+                {
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "ErrorMssgPopup('Invalid pan or company name')", true);
+                }
             }
             else
-            { ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Please fill mandatory field')", true); }
+            {
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Please fill mandatory field')", true);
+            }
         }
         catch (Exception ex)
         {

@@ -20,6 +20,7 @@ public partial class Vendor_V_CompInfo : System.Web.UI.Page
     HybridDictionary HySaveVendorRegisdetail = new HybridDictionary();
     private string _msg = string.Empty;
     private string _sysMsg = string.Empty;
+    private TextBox TextBox1MFq;
     #endregion
     #region PageLoad
     protected void Page_Load(object sender, EventArgs e)
@@ -43,49 +44,53 @@ public partial class Vendor_V_CompInfo : System.Web.UI.Page
         {
             btnsubmit.Text = "Update";
             ViewState["Mid"] = Convert.ToInt64(DtCheckSavedetails.Rows[0]["VendorDetailID"].ToString());
-             DataTable DtCheckSavedetails1 = Lo.RetriveVendor(0, Enc.DecryptData(Session["VendorRefNo"].ToString()), "", "CheckRegis1");
-             if (DtCheckSavedetails1.Rows.Count > 0)
-             {
-                 if (DtCheckSavedetails1.Rows[0]["Is_Lab_accredited_by_NABL"].ToString().Trim() == "1")
-                 {
-                     ddlnabl.Text = DtCheckSavedetails1.Rows[0]["Is_Lab_accredited_by_NABL"].ToString().Trim();
-                     divcertificatevalid.Visible = true;
-                 }
-                 else
-                 {
-                     divcertificatevalid.Visible = false;
-                 }
-                 txtdate.Text = DtCheckSavedetails1.Rows[0]["CertifictionValid"].ToString();
-                 txtmss.Text = DtCheckSavedetails1.Rows[0]["Details_of_R_D_Facilities"].ToString();
-                 if (DtCheckSavedetails1.Rows[0]["IsSalesOrMarketOffice"].ToString().Trim() == "1")
-                 {
-                     ddloffice.Text = DtCheckSavedetails1.Rows[0]["IsSalesOrMarketOffice"].ToString().Trim();
-                     detailofoffcie.Visible = true;
-                 }
-                 else
-                 {
-                     detailofoffcie.Visible = false;
-                 }
-                 txtlname.Text = DtCheckSavedetails1.Rows[0]["NodelName"].ToString();
-                 txtstreetaddress.Text = DtCheckSavedetails1.Rows[0]["MarketingOfficeAddress"].ToString();
-                 txtstreetaddressline2.Text = DtCheckSavedetails1.Rows[0]["Line2"].ToString();
-                 txtcity.Text = DtCheckSavedetails1.Rows[0]["OfficerCity"].ToString();
-                 txtstate.Text = DtCheckSavedetails1.Rows[0]["OfficeState"].ToString();
-                 txtpincode.Text = DtCheckSavedetails1.Rows[0]["OfficePincode"].ToString();
-                 txtcontactno.Text = DtCheckSavedetails1.Rows[0]["PhoneNo"].ToString();
-                 txtfaxno.Text = DtCheckSavedetails1.Rows[0]["OfficeFaxNo"].ToString();
-                 txtemail.Text = DtCheckSavedetails1.Rows[0]["OfficeEmail"].ToString();
-                 if (DtCheckSavedetails1.Rows[0]["IsAuthorisedDealer"].ToString().Trim() == "1")
-                 {
-                     ddldistributoraddress.Text = DtCheckSavedetails1.Rows[0]["IsAuthorisedDealer"].ToString().Trim();
-                     gv3.Visible = true;
-                 }
-                 else
-                 {
-                     gv3.Visible = false;
-                 }
-                 txtfuture.Text = DtCheckSavedetails1.Rows[0]["FuturePlan"].ToString();
-             }             
+            DataTable DtCheckSavedetails1 = Lo.RetriveVendor(0, Enc.DecryptData(Session["VendorRefNo"].ToString()), "", "CheckRegis1");
+            if (DtCheckSavedetails1.Rows.Count > 0)
+            {
+                if (DtCheckSavedetails1.Rows[0]["Is_Lab_accredited_by_NABL"].ToString().Trim() == "1")
+                {
+                    ddlnabl.Text = DtCheckSavedetails1.Rows[0]["Is_Lab_accredited_by_NABL"].ToString().Trim();
+                    divcertificatevalid.Visible = true;
+                }
+                else
+                {
+                    divcertificatevalid.Visible = false;
+                }
+                if (DtCheckSavedetails1.Rows[0]["CertifictionValid"].ToString() != "")
+                {
+                    DateTime stringdate = Convert.ToDateTime(DtCheckSavedetails1.Rows[0]["CertifictionValid"]);
+                    txtdate.Text = stringdate.ToString("dd/MM/yyyy");
+                }
+                txtmss.Text = DtCheckSavedetails1.Rows[0]["Details_of_R_D_Facilities"].ToString();
+                if (DtCheckSavedetails1.Rows[0]["IsSalesOrMarketOffice"].ToString().Trim() == "1")
+                {
+                    ddloffice.Text = DtCheckSavedetails1.Rows[0]["IsSalesOrMarketOffice"].ToString().Trim();
+                    detailofoffcie.Visible = true;
+                }
+                else
+                {
+                    detailofoffcie.Visible = false;
+                }
+                txtlname.Text = DtCheckSavedetails1.Rows[0]["NodelName"].ToString();
+                txtstreetaddress.Text = DtCheckSavedetails1.Rows[0]["MarketingOfficeAddress"].ToString();
+                txtstreetaddressline2.Text = DtCheckSavedetails1.Rows[0]["Line2"].ToString();
+                txtcity.Text = DtCheckSavedetails1.Rows[0]["OfficerCity"].ToString();
+                txtstate.Text = DtCheckSavedetails1.Rows[0]["OfficeState"].ToString();
+                txtpincode.Text = DtCheckSavedetails1.Rows[0]["OfficePincode"].ToString();
+                txtcontactno.Text = DtCheckSavedetails1.Rows[0]["PhoneNo"].ToString();
+                txtfaxno.Text = DtCheckSavedetails1.Rows[0]["OfficeFaxNo"].ToString();
+                txtemail.Text = DtCheckSavedetails1.Rows[0]["OfficeEmail"].ToString();
+                if (DtCheckSavedetails1.Rows[0]["IsAuthorisedDealer"].ToString().Trim() == "1")
+                {
+                    ddldistributoraddress.Text = DtCheckSavedetails1.Rows[0]["IsAuthorisedDealer"].ToString().Trim();
+                    gv3.Visible = true;
+                }
+                else
+                {
+                    gv3.Visible = false;
+                }
+                txtfuture.Text = DtCheckSavedetails1.Rows[0]["FuturePlan"].ToString();
+            }
             DataTable dtcheckmultigriddata = Lo.RetriveVendor(0, Enc.DecryptData(Session["VendorRefNo"].ToString()), "", "RetriveMultigrid");
             if (dtcheckmultigriddata.Rows.Count > 0)
             {
@@ -358,6 +363,7 @@ public partial class Vendor_V_CompInfo : System.Web.UI.Page
                     for (int i = 0; i < dtMF.Rows.Count; i++)
                     {
                         TextBox TextBox_1 = (TextBox)gvmanufacility.Rows[rowIndexMF].Cells[1].FindControl("txtmanofficename");
+                        TextBox1MFq = (TextBox)gvareadetail.Rows[rowIndexMF].Cells[1].FindControl("txtAreaFactoryName");
                         TextBox TextBox_7 = (TextBox)gvmanufacility.Rows[rowIndexMF].Cells[2].FindControl("TXTFACGSTNO");
                         TextBox TextBox_2 = (TextBox)gvmanufacility.Rows[rowIndexMF].Cells[3].FindControl("txtCAddrssMF");
                         TextBox TextBox_3 = (TextBox)gvmanufacility.Rows[rowIndexMF].Cells[4].FindControl("txtofficialNameMF");
@@ -365,6 +371,7 @@ public partial class Vendor_V_CompInfo : System.Web.UI.Page
                         TextBox TextBox_5 = (TextBox)gvmanufacility.Rows[rowIndexMF].Cells[6].FindControl("txtfaxnoMF");
                         TextBox TextBox_6 = (TextBox)gvmanufacility.Rows[rowIndexMF].Cells[7].FindControl("txtemailidMF");
                         TextBox_1.Text = dtMF.Rows[i]["FactoryName"].ToString();
+                        TextBox1MFq.Text = dtMF.Rows[i]["FactoryName"].ToString();
                         TextBox_7.Text = dtMF.Rows[i]["FACGSTNO"].ToString();
                         TextBox_2.Text = dtMF.Rows[i]["CAddress"].ToString();
                         TextBox_3.Text = dtMF.Rows[i]["COfficialName"].ToString();
@@ -384,6 +391,40 @@ public partial class Vendor_V_CompInfo : System.Web.UI.Page
     protected void btnAddManufac_Click(object sender, EventArgs e)
     {
         AddNewRowToGridManufacFacilities();
+        AddNewRowToGridArea();
+    }
+    protected void txtemailidMF_TextChanged(object sender, EventArgs e)
+    {
+        if (gvmanufacility.Rows.Count == 1)
+        {
+            TextBox TextBox_1 = (TextBox)gvmanufacility.Rows[0].Cells[1].FindControl("txtmanofficename");
+            TextBox TextBox1M2 = (TextBox)gvareadetail.Rows[0].Cells[1].FindControl("txtAreaFactoryName");
+            TextBox1M2.Text = TextBox_1.Text;
+        }
+        if (gvmanufacility.Rows.Count == 2)
+        {
+            TextBox TextBox_1 = (TextBox)gvmanufacility.Rows[1].Cells[1].FindControl("txtmanofficename");
+            TextBox TextBox1M2 = (TextBox)gvareadetail.Rows[1].Cells[1].FindControl("txtAreaFactoryName");
+            TextBox1M2.Text = TextBox_1.Text;
+        }
+        if (gvmanufacility.Rows.Count == 3)
+        {
+            TextBox TextBox_1 = (TextBox)gvmanufacility.Rows[2].Cells[1].FindControl("txtmanofficename");
+            TextBox TextBox1M2 = (TextBox)gvareadetail.Rows[2].Cells[1].FindControl("txtAreaFactoryName");
+            TextBox1M2.Text = TextBox_1.Text;
+        }
+        if (gvmanufacility.Rows.Count == 4)
+        {
+            TextBox TextBox_1 = (TextBox)gvmanufacility.Rows[3].Cells[1].FindControl("txtmanofficename");
+            TextBox TextBox1M2 = (TextBox)gvareadetail.Rows[3].Cells[1].FindControl("txtAreaFactoryName");
+            TextBox1M2.Text = TextBox_1.Text;
+        }
+        if (gvmanufacility.Rows.Count == 5)
+        {
+            TextBox TextBox_1 = (TextBox)gvmanufacility.Rows[4].Cells[1].FindControl("txtmanofficename");
+            TextBox TextBox1M2 = (TextBox)gvareadetail.Rows[4].Cells[1].FindControl("txtAreaFactoryName");
+            TextBox1M2.Text = TextBox_1.Text;
+        }
     }
     protected void gvmanufacility_RowCreated(object sender, GridViewRowEventArgs e)
     {
@@ -437,6 +478,32 @@ public partial class Vendor_V_CompInfo : System.Web.UI.Page
                 gvmanufacility.DataBind();
             }
             SetPreviousDataGovtManuFacilities();
+        }
+        catch (Exception ex)
+        {
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('" + ex.Message + "')", true);
+        }
+        try
+        {
+            LinkButton lbArea = (LinkButton)sender;
+            GridViewRow gvRowArea = (GridViewRow)lbArea.NamingContainer;
+            int rowID = gvRowArea.RowIndex;
+            if (ViewState["Area"] != null)
+            {
+                DataTable dtremovegridArea = (DataTable)ViewState["Area"];
+                if (dtremovegridArea.Rows.Count > 1)
+                {
+                    if (gvRowArea.RowIndex < dtremovegridArea.Rows.Count - 1)
+                    {
+                        dtremovegridArea.Rows.Remove(dtremovegridArea.Rows[rowID]);
+                        ResetRowIDArea(dtremovegridArea);
+                    }
+                }
+                ViewState["Area"] = dtremovegridArea;
+                gvareadetail.DataSource = dtremovegridArea;
+                gvareadetail.DataBind();
+            }
+            SetPreviousDataArea();
         }
         catch (Exception ex)
         {
@@ -567,10 +634,12 @@ public partial class Vendor_V_CompInfo : System.Web.UI.Page
                         dtCurrentTableArea.Rows[i - 1]["TotalArea"] = TextBox5A.Text;
                         ArowIndex++;
                     }
+
                     dtCurrentTableArea.Rows.Add(drCurrentRowArea);
                     ViewState["Area"] = dtCurrentTableArea;
                     gvareadetail.DataSource = dtCurrentTableArea;
                     gvareadetail.DataBind();
+                    ViewState["hffactoryname"] = null;
                 }
             }
             else
@@ -1225,6 +1294,7 @@ public partial class Vendor_V_CompInfo : System.Web.UI.Page
             dtTFacili.Columns.Add(new DataColumn("TestEqipMake", typeof(string)));
             dtTFacili.Columns.Add(new DataColumn("TestLeastCount", typeof(string)));
             dtTFacili.Columns.Add(new DataColumn("Rangeofmeasur", typeof(string)));
+            dtTFacili.Columns.Add(new DataColumn("Unitofmeasur", typeof(string)));
             dtTFacili.Columns.Add(new DataColumn("CertificationYear", typeof(string)));
             dtTFacili.Columns.Add(new DataColumn("YearofPurchase", typeof(string)));
             drTFacili = dtTFacili.NewRow();
@@ -1233,6 +1303,7 @@ public partial class Vendor_V_CompInfo : System.Web.UI.Page
             drTFacili["TestEqipMake"] = string.Empty;
             drTFacili["TestLeastCount"] = string.Empty;
             drTFacili["Rangeofmeasur"] = string.Empty;
+            drTFacili["Unitofmeasur"] = string.Empty;
             drTFacili["CertificationYear"] = string.Empty;
             drTFacili["YearofPurchase"] = string.Empty;
             dtTFacili.Rows.Add(drTFacili);
@@ -1264,14 +1335,16 @@ public partial class Vendor_V_CompInfo : System.Web.UI.Page
                         TextBox TextBox2TF = (TextBox)gvtestfacilities.Rows[TFrowIndex].Cells[2].FindControl("txtmaketf");
                         TextBox TextBox3TF = (TextBox)gvtestfacilities.Rows[TFrowIndex].Cells[3].FindControl("txtcounttf");
                         TextBox TextBox4TF = (TextBox)gvtestfacilities.Rows[TFrowIndex].Cells[4].FindControl("txtrangetf");
-                        TextBox TextBox5TF = (TextBox)gvtestfacilities.Rows[TFrowIndex].Cells[5].FindControl("txtcertiyeartf");
-                        TextBox TextBox6TF = (TextBox)gvtestfacilities.Rows[TFrowIndex].Cells[6].FindControl("txtyearofpurtf");
+                        TextBox TextBox7TF = (TextBox)gvtestfacilities.Rows[TFrowIndex].Cells[5].FindControl("txtunitofmeas");
+                        TextBox TextBox5TF = (TextBox)gvtestfacilities.Rows[TFrowIndex].Cells[6].FindControl("txtcertiyeartf");
+                        TextBox TextBox6TF = (TextBox)gvtestfacilities.Rows[TFrowIndex].Cells[7].FindControl("txtyearofpurtf");
                         drCurrentTFI = dtCurrentTFI.NewRow();
                         drCurrentTFI["SNo"] = i + 1;
                         dtCurrentTFI.Rows[i - 1]["TestEqip"] = TextBox1TF.Text;
                         dtCurrentTFI.Rows[i - 1]["TestEqipMake"] = TextBox2TF.Text;
                         dtCurrentTFI.Rows[i - 1]["TestLeastCount"] = TextBox3TF.Text;
                         dtCurrentTFI.Rows[i - 1]["Rangeofmeasur"] = TextBox4TF.Text;
+                        dtCurrentTFI.Rows[i - 1]["Unitofmeasur"] = TextBox7TF.Text;
                         dtCurrentTFI.Rows[i - 1]["CertificationYear"] = TextBox5TF.Text;
                         dtCurrentTFI.Rows[i - 1]["YearofPurchase"] = TextBox6TF.Text;
                         TFrowIndex++;
@@ -1309,12 +1382,14 @@ public partial class Vendor_V_CompInfo : System.Web.UI.Page
                         TextBox TextBox_2 = (TextBox)gvtestfacilities.Rows[rowIndexTF].Cells[2].FindControl("txtmaketf");
                         TextBox TextBox_3 = (TextBox)gvtestfacilities.Rows[rowIndexTF].Cells[3].FindControl("txtcounttf");
                         TextBox TextBox_4 = (TextBox)gvtestfacilities.Rows[rowIndexTF].Cells[4].FindControl("txtrangetf");
+                        TextBox TextBox_7 = (TextBox)gvtestfacilities.Rows[rowIndexTF].Cells[4].FindControl("txtunitofmeas");
                         TextBox TextBox_5 = (TextBox)gvtestfacilities.Rows[rowIndexTF].Cells[5].FindControl("txtcertiyeartf");
                         TextBox TextBox_6 = (TextBox)gvtestfacilities.Rows[rowIndexTF].Cells[6].FindControl("txtyearofpurtf");
                         TextBox_1.Text = dtPTF.Rows[i]["TestEqip"].ToString();
                         TextBox_2.Text = dtPTF.Rows[i]["TestEqipMake"].ToString();
                         TextBox_3.Text = dtPTF.Rows[i]["TestLeastCount"].ToString();
                         TextBox_4.Text = dtPTF.Rows[i]["Rangeofmeasur"].ToString();
+                        TextBox_7.Text = dtPTF.Rows[i]["Unitofmeasur"].ToString();
                         TextBox_5.Text = dtPTF.Rows[i]["CertificationYear"].ToString();
                         TextBox_6.Text = dtPTF.Rows[i]["YearofPurchase"].ToString();
                         rowIndexTF++;
@@ -1419,6 +1494,7 @@ public partial class Vendor_V_CompInfo : System.Web.UI.Page
             dtTestFaciliSave.Columns.Add(new DataColumn("TestEqipMake", typeof(string)));
             dtTestFaciliSave.Columns.Add(new DataColumn("TestLeastCount", typeof(string)));
             dtTestFaciliSave.Columns.Add(new DataColumn("Rangeofmeasur", typeof(string)));
+            dtTestFaciliSave.Columns.Add(new DataColumn("Unitofmeasur", typeof(string)));
             dtTestFaciliSave.Columns.Add(new DataColumn("CertificationYear", typeof(string)));
             dtTestFaciliSave.Columns.Add(new DataColumn("YearofPurchase", typeof(string)));
             DataRow drTestFaciliSave = null;
@@ -1428,6 +1504,7 @@ public partial class Vendor_V_CompInfo : System.Web.UI.Page
                 TextBox TextBox2TF = (TextBox)gvtestfacilities.Rows[i].Cells[2].FindControl("txtmaketf");
                 TextBox TextBox3TF = (TextBox)gvtestfacilities.Rows[i].Cells[3].FindControl("txtcounttf");
                 TextBox TextBox4TF = (TextBox)gvtestfacilities.Rows[i].Cells[4].FindControl("txtrangetf");
+                TextBox TextBox7TF = (TextBox)gvtestfacilities.Rows[i].Cells[4].FindControl("txtunitofmeas");
                 TextBox TextBox5TF = (TextBox)gvtestfacilities.Rows[i].Cells[5].FindControl("txtcertiyeartf");
                 TextBox TextBox6TF = (TextBox)gvtestfacilities.Rows[i].Cells[6].FindControl("txtyearofpurtf");
                 if (TextBox1TF.Text != "" && TextBox2TF.Text != "")
@@ -1438,6 +1515,7 @@ public partial class Vendor_V_CompInfo : System.Web.UI.Page
                     drTestFaciliSave["TestEqipMake"] = TextBox2TF.Text;
                     drTestFaciliSave["TestLeastCount"] = TextBox3TF.Text;
                     drTestFaciliSave["Rangeofmeasur"] = TextBox4TF.Text;
+                    drTestFaciliSave["Unitofmeasur"] = TextBox7TF.Text;
                     drTestFaciliSave["CertificationYear"] = TextBox5TF.Text;
                     drTestFaciliSave["YearofPurchase"] = TextBox6TF.Text;
                     dtTestFaciliSave.Rows.Add(drTestFaciliSave);
@@ -1666,6 +1744,7 @@ public partial class Vendor_V_CompInfo : System.Web.UI.Page
         {
             int rowIndex = 0;
             dtAuSave.Columns.Add(new DataColumn("SNo", typeof(string)));
+            dtAuSave.Columns.Add(new DataColumn("DName", typeof(string)));
             dtAuSave.Columns.Add(new DataColumn("DAddress", typeof(string)));
             dtAuSave.Columns.Add(new DataColumn("DState", typeof(string)));
             dtAuSave.Columns.Add(new DataColumn("DPincode", typeof(string)));
@@ -1675,21 +1754,24 @@ public partial class Vendor_V_CompInfo : System.Web.UI.Page
             DataRow drAUSave = null;
             for (int i = 0; gvauthdealaddress.Rows.Count > i; i++)
             {
-                TextBox TextBox1DA = (TextBox)gvauthdealaddress.Rows[i].Cells[1].FindControl("txtDstreetaddress");
-                TextBox TextBox2DA = (TextBox)gvauthdealaddress.Rows[i].Cells[2].FindControl("txtdState");
-                TextBox TextBox3DA = (TextBox)gvauthdealaddress.Rows[i].Cells[3].FindControl("txtDPincode");
-                TextBox TextBox4DA = (TextBox)gvauthdealaddress.Rows[i].Cells[4].FindControl("txtDPhone");
-                TextBox TextBox5DA = (TextBox)gvauthdealaddress.Rows[i].Cells[5].FindControl("txtDFax");
-                TextBox TextBox6DA = (TextBox)gvauthdealaddress.Rows[i].Cells[6].FindControl("txtDEmail");
+                TextBox TextBox1DN = (TextBox)gvauthdealaddress.Rows[i].Cells[1].FindControl("txtDName");
+                TextBox TextBox1DA = (TextBox)gvauthdealaddress.Rows[i].Cells[2].FindControl("txtDstreetaddress");
+                TextBox TextBox2DA = (TextBox)gvauthdealaddress.Rows[i].Cells[3].FindControl("txtdState");
+                TextBox TextBox3DA = (TextBox)gvauthdealaddress.Rows[i].Cells[4].FindControl("txtDPincode");
+                TextBox TextBox4DA = (TextBox)gvauthdealaddress.Rows[i].Cells[5].FindControl("txtDPhone");
+                TextBox TextBox5DA = (TextBox)gvauthdealaddress.Rows[i].Cells[6].FindControl("txtDFax");
+                TextBox TextBox6DA = (TextBox)gvauthdealaddress.Rows[i].Cells[7].FindControl("txtDEmail");
                 if (TextBox1DA.Text != "" && TextBox2DA.Text != "")
                 {
                     drAUSave = dtAuSave.NewRow();
                     drAUSave["SNo"] = i + 1;
+                    drAUSave["DName"] = TextBox1DN.Text;
                     drAUSave["DAddress"] = TextBox1DA.Text;
-                    drAUSave["DPincode"] = TextBox2DA.Text;
-                    drAUSave["DPhone"] = TextBox3DA.Text;
-                    drAUSave["DFax"] = TextBox4DA.Text;
-                    drAUSave["DEmail"] = TextBox5DA.Text;
+                    drAUSave["DState"] = TextBox2DA.Text;
+                    drAUSave["DPincode"] = TextBox3DA.Text;
+                    drAUSave["DPhone"] = TextBox4DA.Text;
+                    drAUSave["DFax"] = TextBox5DA.Text;
+                    drAUSave["DEmail"] = TextBox6DA.Text;
                     dtAuSave.Rows.Add(drAUSave);
                 }
             }
@@ -2327,6 +2409,7 @@ public partial class Vendor_V_CompInfo : System.Web.UI.Page
         }
     }
     #endregion
+    #region other code
     protected void ddlnabl_SelectedIndexChanged(object sender, EventArgs e)
     {
         if (ddlnabl.SelectedItem.Value == "1")
@@ -2350,7 +2433,14 @@ public partial class Vendor_V_CompInfo : System.Web.UI.Page
     }
     protected void btnsubmit_Click(object sender, EventArgs e)
     {
-        SaveRegistration();
+        try
+        {
+            SaveRegistration();
+        }
+        catch (Exception ex)
+        {
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('" + ex.Message.ToString() + "')", true);
+        }
     }
     protected void btncancel_Click(object sender, EventArgs e)
     {
@@ -2416,31 +2506,43 @@ public partial class Vendor_V_CompInfo : System.Web.UI.Page
         DataTable DtManufacFacility = new DataTable();
         if (btnsubmit.Text == "Update")
         {
-            if (gvmanufacility.Visible == true && gvareadetail.Visible == true && gvmanufacilityedit.Visible == false)
+            if (gvmanufacility.Visible == true && gvareadetail.Visible == true)
             {
                 SaveCodeForManufacturingFacilities();
                 DtManufacFacility = (DataTable)ViewState["MF"];
                 SaveCodeForPArea();
                 DtAreDetails = (DataTable)ViewState["Area"];
+            }
+            if (gvplantandmachines.Visible == true && gvempCompInfo.Visible == true)
+            {
                 SaveCodeForPlantM();
                 DtPlantorMachine = (DataTable)ViewState["PlantM"];
                 SaveCodeForEMPCISave();
                 DtEmpDetails = (DataTable)ViewState["EMP"];
+            }
+            if (gvtestfacilities.Visible == true && gvauthdealaddress.Visible == true)
+            {
                 SaveCodeForAUSave();
                 DtDistrubutedealer = (DataTable)ViewState["DAuth"];
                 SaveCodeForTestFaciliSave();
                 DtTestFacility = (DataTable)ViewState["TestFaci"];
+            }
+            if (gvoutsourcefacility.Visible == true && gvjointventure.Visible == true)
+            {
                 SaveCodeForJVSave();
                 dtOutsourcingFacilites = (DataTable)ViewState["JVF"];
                 SaveCodeForof1Save();
                 dtJointVentureFacility = (DataTable)ViewState["OF"];
+            }
+            if (gvcertificate.Visible == true)
+            {
                 SaveCodeCertificate();
                 DtCer1 = (DataTable)ViewState["SCertificate"];
+            }
+            if (gvchkqualitycertificate.Visible == true)
+            {
                 SaveCodeCertificate2();
                 DtCer2 = (DataTable)ViewState["SQCertificate"];
-            }
-            else
-            {
             }
         }
         else
@@ -2929,7 +3031,7 @@ public partial class Vendor_V_CompInfo : System.Web.UI.Page
                     txttelephonepopup.Text = "";
                     txtfaxnopopup.Text = "";
                     txtemailidpopup.Text = "";
-                    LoadCode();           
+                    LoadCode();
                     ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record save successfully')", true);
                 }
                 else
@@ -2979,7 +3081,7 @@ public partial class Vendor_V_CompInfo : System.Web.UI.Page
                     txtinspectionarea.Text = "";
                     txttotalcoverdareapopup.Text = "";
                     txttotalarea.Text = "";
-                    LoadCode();            
+                    LoadCode();
                     ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record save successfully')", true);
                 }
                 else
@@ -3033,7 +3135,7 @@ public partial class Vendor_V_CompInfo : System.Web.UI.Page
                     txttelephonepopup.Text = "";
                     txtfaxnopopup.Text = "";
                     txtemailidpopup.Text = "";
-                    LoadCode();              
+                    LoadCode();
                     ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record save successfully')", true);
                 }
                 else
@@ -3087,7 +3189,7 @@ public partial class Vendor_V_CompInfo : System.Web.UI.Page
                     txttelephonepopup.Text = "";
                     txtfaxnopopup.Text = "";
                     txtemailidpopup.Text = "";
-                    LoadCode();             
+                    LoadCode();
                     ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record save successfully')", true);
                 }
                 else
@@ -3109,7 +3211,7 @@ public partial class Vendor_V_CompInfo : System.Web.UI.Page
             {
                 if (txttestequippopup.Text != "")
                 {
-                    Int32 ESaveID = Lo.Updatetestfacilities(Convert.ToInt64(ViewState["editcerti"]), Enc.DecryptData(Session["VendorRefNo"].ToString()), txttestequippopup.Text, txtmakefacpopup.Text, txtlcountpopup.Text, txtrngmeasurpopup.Text, txtcertiyearpopup.Text, txtyrofpurpopup.Text);
+                    Int32 ESaveID = Lo.Updatetestfacilities(Convert.ToInt64(ViewState["editcerti"]), Enc.DecryptData(Session["VendorRefNo"].ToString()), txttestequippopup.Text, txtmakefacpopup.Text, txtlcountpopup.Text, txtrngmeasurpopup.Text, txtunitofmeasuredit.Text, txtcertiyearpopup.Text, txtyrofpurpopup.Text);
                     if (ESaveID != 0)
                     {
                         txtnameoffactorypopup.Text = "";
@@ -3131,7 +3233,7 @@ public partial class Vendor_V_CompInfo : System.Web.UI.Page
             }
             else if (lbQCF.Text == "Submit")
             {
-                Int32 ESaveID = Lo.Inserttestfacilities(Enc.DecryptData(Session["VendorRefNo"].ToString()), "TestEquipment", txttestequippopup.Text, txtmakefacpopup.Text, txtlcountpopup.Text, txtrngmeasurpopup.Text, txtcertiyearpopup.Text, txtyrofpurpopup.Text);
+                Int32 ESaveID = Lo.Inserttestfacilities(Enc.DecryptData(Session["VendorRefNo"].ToString()), "TestEquipment", txttestequippopup.Text, txtmakefacpopup.Text, txtlcountpopup.Text, txtrngmeasurpopup.Text, txtunitofmeasuredit.Text, txtcertiyearpopup.Text, txtyrofpurpopup.Text);
                 if (ESaveID != 0)
                 {
                     txtnameoffactorypopup.Text = "";
@@ -3141,7 +3243,7 @@ public partial class Vendor_V_CompInfo : System.Web.UI.Page
                     txttelephonepopup.Text = "";
                     txtfaxnopopup.Text = "";
                     txtemailidpopup.Text = "";
-                    LoadCode();         
+                    LoadCode();
                     ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record save successfully')", true);
                 }
                 else
@@ -3163,7 +3265,7 @@ public partial class Vendor_V_CompInfo : System.Web.UI.Page
             {
                 if (txtstreetaddpopup.Text != "")
                 {
-                    Int32 ESaveID = Lo.Updateauthdealaddress(Convert.ToInt64(ViewState["editauthdeal"]), Enc.DecryptData(Session["VendorRefNo"].ToString()), txtstreetaddpopup.Text, txtstatepopup.Text, txtPinCodepopup.Text, txtphonepopup.Text, txtFaxpopup.Text, txtemailpopup.Text,txtdisname.Text);
+                    Int32 ESaveID = Lo.Updateauthdealaddress(Convert.ToInt64(ViewState["editauthdeal"]), Enc.DecryptData(Session["VendorRefNo"].ToString()), txtstreetaddpopup.Text, txtstatepopup.Text, txtPinCodepopup.Text, txtphonepopup.Text, txtFaxpopup.Text, txtemailpopup.Text, txtdisname.Text);
                     if (ESaveID != 0)
                     {
                         txtnameoffactorypopup.Text = "";
@@ -3249,7 +3351,7 @@ public partial class Vendor_V_CompInfo : System.Web.UI.Page
                     txttelephonepopup.Text = "";
                     txtfaxnopopup.Text = "";
                     txtemailidpopup.Text = "";
-                    LoadCode();            
+                    LoadCode();
                     ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record save successfully')", true);
                 }
                 else
@@ -3303,7 +3405,7 @@ public partial class Vendor_V_CompInfo : System.Web.UI.Page
                     txttelephonepopup.Text = "";
                     txtfaxnopopup.Text = "";
                     txtemailidpopup.Text = "";
-                    LoadCode();  
+                    LoadCode();
                     ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record save successfully')", true);
                 }
                 else
@@ -3319,14 +3421,14 @@ public partial class Vendor_V_CompInfo : System.Web.UI.Page
     }
     protected void lbcertificateadd_Click(object sender, EventArgs e)
     {
-        if (lbkjoinven.Text == "Submit")
+        if (lbcertificateadd.Text == "Submit")
         {
             string FilePathName = Enc.DecryptData(Session["VendorRefNo"].ToString()) + "_" + DateTime.Now.ToString("hh_mm_ss") + fucer.FileName;
             fucer.SaveAs(HttpContext.Current.Server.MapPath("Upload/VendorImage") + "\\" + FilePathName);
             Int32 ESaveID = Lo.Insertcerti1(Enc.DecryptData(Session["VendorRefNo"].ToString()), "FCertificate", rbcer.SelectedItem.Text, FilePathName.ToString());
             if (ESaveID != 0)
             {
-                LoadCode();   
+                LoadCode();
                 ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Certificate save successfully')", true);
             }
             else
@@ -3337,14 +3439,14 @@ public partial class Vendor_V_CompInfo : System.Web.UI.Page
     }
     protected void lbcertificate1_Click(object sender, EventArgs e)
     {
-        if (lbkjoinven.Text == "Submit")
+        if (lbcertificate1.Text == "Submit")
         {
             string FilePathName = Enc.DecryptData(Session["VendorRefNo"].ToString()) + "_" + DateTime.Now.ToString("hh_mm_ss") + fucertificate1.FileName;
             fucertificate1.SaveAs(HttpContext.Current.Server.MapPath("Upload/VendorImage") + "\\" + FilePathName);
             Int32 ESaveID = Lo.Insertcerti2(Enc.DecryptData(Session["VendorRefNo"].ToString()), "QCertificate", rb1.SelectedItem.Text, FilePathName.ToString());
             if (ESaveID != 0)
             {
-                LoadCode();          
+                LoadCode();
                 ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Certificate save successfully')", true);
             }
             else
@@ -3353,4 +3455,5 @@ public partial class Vendor_V_CompInfo : System.Web.UI.Page
             }
         }
     }
+    #endregion
 }

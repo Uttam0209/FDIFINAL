@@ -20,6 +20,8 @@ public partial class Vendor_V_DetailofDefence : System.Web.UI.Page
     HybridDictionary HySaveVendorRegisdetail = new HybridDictionary();
     private string _msg = string.Empty;
     private string _sysMsg = string.Empty;
+    private TextBox textboxtechNomenclature;
+
     Int64 Mid = 0;
     #endregion
     #region PageLoad
@@ -231,97 +233,134 @@ public partial class Vendor_V_DetailofDefence : System.Web.UI.Page
             DataRow drCurrentRowNameProd = null;
             if (dtCurrentTableProd.Rows.Count > 0)
             {
-                for (int i = 1; i <= dtCurrentTableProd.Rows.Count; i++)
+                if (dtCurrentTableProd.Rows.Count < 3)
                 {
-                    //extract the TextBox values
-                    TextBox TextBox1 = (TextBox)gvproddetail.Rows[rowIndexProd].Cells[1].FindControl("txtproductnomen");
-                    DropDownList ddl_1 = (DropDownList)gvproddetail.Rows[rowIndexProd].Cells[2].FindControl("ddlnatogroup");
-                    DropDownList ddl_2 = (DropDownList)gvproddetail.Rows[rowIndexProd].Cells[3].FindControl("ddlnatoclass");
-                    DropDownList ddl_3 = (DropDownList)gvproddetail.Rows[rowIndexProd].Cells[4].FindControl("ddlitemcode");
-                    TextBox TextBox2 = (TextBox)gvproddetail.Rows[rowIndexProd].Cells[5].FindControl("txthsnno");
-                    drCurrentRowNameProd = dtCurrentTableProd.NewRow();
-                    drCurrentRowNameProd["RowNumberProd"] = i + 1;
-                    dtCurrentTableProd.Rows[i - 1]["Nomenclature"] = TextBox1.Text;
-                    dtCurrentTableProd.Rows[i - 1]["NatoGroup"] = ddl_1.Text;
-                    dtCurrentTableProd.Rows[i - 1]["NatoClass"] = ddl_2.Text;
-                    dtCurrentTableProd.Rows[i - 1]["ItemCode"] = ddl_3.Text;
-                    dtCurrentTableProd.Rows[i - 1]["HSNCode"] = TextBox2.Text;
-                    rowIndexProd++;
+                    for (int i = 1; i <= dtCurrentTableProd.Rows.Count; i++)
+                    {
+                        //extract the TextBox values
+                        TextBox TextBox1 = (TextBox)gvproddetail.Rows[rowIndexProd].Cells[1].FindControl("txtproductnomen");
+                        DropDownList ddl_1 = (DropDownList)gvproddetail.Rows[rowIndexProd].Cells[2].FindControl("ddlnatogroup");
+                        DropDownList ddl_2 = (DropDownList)gvproddetail.Rows[rowIndexProd].Cells[3].FindControl("ddlnatoclass");
+                        DropDownList ddl_3 = (DropDownList)gvproddetail.Rows[rowIndexProd].Cells[4].FindControl("ddlitemcode");
+                        TextBox TextBox2 = (TextBox)gvproddetail.Rows[rowIndexProd].Cells[5].FindControl("txthsnno");
+                        drCurrentRowNameProd = dtCurrentTableProd.NewRow();
+                        drCurrentRowNameProd["RowNumberProd"] = i + 1;
+                        dtCurrentTableProd.Rows[i - 1]["Nomenclature"] = TextBox1.Text;
+                        dtCurrentTableProd.Rows[i - 1]["NatoGroup"] = ddl_1.Text;
+                        dtCurrentTableProd.Rows[i - 1]["NatoClass"] = ddl_2.Text;
+                        dtCurrentTableProd.Rows[i - 1]["ItemCode"] = ddl_3.Text;
+                        dtCurrentTableProd.Rows[i - 1]["HSNCode"] = TextBox2.Text;
+                        rowIndexProd++;
+                    }
+                    dtCurrentTableProd.Rows.Add(drCurrentRowNameProd);
+                    ViewState["count1"] = Convert.ToInt32(dtCurrentTableProd.Rows.Count);
+                    ViewState["ProductsDetails"] = dtCurrentTableProd;
+                    gvproddetail.DataSource = dtCurrentTableProd;
+                    gvproddetail.DataBind();
+                    DropDownList ddl_12 = (DropDownList)gvproddetail.Rows[rowIndexProd].Cells[2].FindControl("ddlnatogroup");
+                    BindNatoGroup(ddl_12);
+                    SetPreviousDataProductDetail();
                 }
-                dtCurrentTableProd.Rows.Add(drCurrentRowNameProd);
-                ViewState["ProductsDetails"] = dtCurrentTableProd;
-                gvproddetail.DataSource = dtCurrentTableProd;
-                gvproddetail.DataBind();
-                DropDownList ddl_12 = (DropDownList)gvproddetail.Rows[rowIndexProd].Cells[2].FindControl("ddlnatogroup");
-                BindNatoGroup(ddl_12);
+                else
+                {
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Could not add more then row Products Details.')", true);
+                }
             }
         }
         else
         {
             Response.Write("ViewState is null");
         }
-        SetPreviousDataProductDetail();
     }
     private void SetPreviousDataProductDetail()
     {
-        int rowIndexProd = 0;
-        if (ViewState["ProductsDetails"] != null)
+        try
         {
-            DataTable dtProdPrevious = (DataTable)ViewState["ProductsDetails"];
-            if (dtProdPrevious.Rows.Count > 0)
+            int rowIndexProd = 0;
+            if (ViewState["ProductsDetails"] != null)
             {
-                for (int i = 0; i < dtProdPrevious.Rows.Count; i++)
+                DataTable dtProdPrevious = (DataTable)ViewState["ProductsDetails"];
+                if (dtProdPrevious.Rows.Count > 0)
                 {
-                    TextBox TB_1 = (TextBox)gvproddetail.Rows[rowIndexProd].Cells[1].FindControl("txtproductnomen");
-                    DropDownList DDL_1 = (DropDownList)gvproddetail.Rows[rowIndexProd].Cells[2].FindControl("ddlnatogroup");
-                    DropDownList DDL_2 = (DropDownList)gvproddetail.Rows[rowIndexProd].Cells[3].FindControl("ddlnatoclass");
-                    DropDownList DDL_3 = (DropDownList)gvproddetail.Rows[rowIndexProd].Cells[4].FindControl("ddlitemcode");
-                    TextBox TB_2 = (TextBox)gvproddetail.Rows[rowIndexProd].Cells[5].FindControl("txthsnno");
-                    TB_1.Text = dtProdPrevious.Rows[i]["Nomenclature"].ToString();
-                    TB_2.Text = dtProdPrevious.Rows[i]["HSNCode"].ToString();
-                    if (i < dtProdPrevious.Rows.Count - 1)
+                    for (int i = 0; i < dtProdPrevious.Rows.Count; i++)
                     {
-                        DataTable DtDropDownNatoGroup1 = new DataTable();
-                        DtDropDownNatoGroup1 = Lo.RetriveMasterSubCategoryDate(0, "NSN GROUP", "", "SelectProductCat", "", "");
-                        if (DtDropDownNatoGroup1.Rows.Count > 0)
+                        TextBox TB_1 = (TextBox)gvproddetail.Rows[rowIndexProd].Cells[1].FindControl("txtproductnomen");
+                        textboxtechNomenclature = (TextBox)gvtechnology.Rows[rowIndexProd].Cells[1].FindControl("txttechnomen");
+                        DropDownList DDL_1 = (DropDownList)gvproddetail.Rows[rowIndexProd].Cells[2].FindControl("ddlnatogroup");
+                        DropDownList DDL_2 = (DropDownList)gvproddetail.Rows[rowIndexProd].Cells[3].FindControl("ddlnatoclass");
+                        DropDownList DDL_3 = (DropDownList)gvproddetail.Rows[rowIndexProd].Cells[4].FindControl("ddlitemcode");
+                        TextBox TB_2 = (TextBox)gvproddetail.Rows[rowIndexProd].Cells[5].FindControl("txthsnno");
+                        TB_1.Text = dtProdPrevious.Rows[i]["Nomenclature"].ToString();
+                        textboxtechNomenclature.Text = dtProdPrevious.Rows[i]["Nomenclature"].ToString();
+                        TB_2.Text = dtProdPrevious.Rows[i]["HSNCode"].ToString();
+                        if (i < dtProdPrevious.Rows.Count - 1)
                         {
-                            Co.FillDropdownlist(DDL_1, DtDropDownNatoGroup1, "SCategoryName", "SCategoryID");
-                            DDL_1.Items.Insert(0, "Select");
-                            DDL_1.Items.FindByValue(dtProdPrevious.Rows[i]["NatoGroup"].ToString()).Selected = true;
-                        }
-                        if (DDL_1.SelectedItem.Text != "Select")
-                        {
-                            DataTable DtNatoclass = Lo.RetriveMasterSubCategoryDate(Convert.ToInt32(DDL_1.SelectedItem.Value), "", "", "SubSelectID", "", "");
-                            if (DtNatoclass.Rows.Count > 0)
+                            DataTable DtDropDownNatoGroup1 = new DataTable();
+                            DtDropDownNatoGroup1 = Lo.RetriveMasterSubCategoryDate(0, "NSN GROUP", "", "SelectProductCat", "", "");
+                            if (DtDropDownNatoGroup1.Rows.Count > 0)
                             {
-                                Co.FillDropdownlist(DDL_2, DtNatoclass, "SCategoryName", "SCategoryId");
-                                DDL_2.Items.Insert(0, "Select");
-                                DDL_2.Items.FindByValue(dtProdPrevious.Rows[i]["NatoClass"].ToString()).Selected = true;
+                                Co.FillDropdownlist(DDL_1, DtDropDownNatoGroup1, "SCategoryName", "SCategoryID");
+                                DDL_1.Items.Insert(0, "Select");
+                                DDL_1.Items.FindByValue(dtProdPrevious.Rows[i]["NatoGroup"].ToString()).Selected = true;
+                            }
+                            if (DDL_1.SelectedItem.Text != "Select")
+                            {
+                                DataTable DtNatoclass = Lo.RetriveMasterSubCategoryDate(Convert.ToInt32(DDL_1.SelectedItem.Value), "", "", "SubSelectID", "", "");
+                                if (DtNatoclass.Rows.Count > 0)
+                                {
+                                    Co.FillDropdownlist(DDL_2, DtNatoclass, "SCategoryName", "SCategoryId");
+                                    DDL_2.Items.Insert(0, "Select");
+                                    DDL_2.Items.FindByValue(dtProdPrevious.Rows[i]["NatoClass"].ToString()).Selected = true;
+                                }
+                            }
+                            if (DDL_2.Text != "" && DDL_2.SelectedItem.Text != "Select")
+                            {
+                                DataTable dtItemCode = Lo.RetriveMasterSubCategoryDate(Convert.ToInt32(DDL_2.SelectedItem.Value), "", "", "SubSelectID", "", "");
+                                if (dtItemCode.Rows.Count > 0)
+                                {
+                                    Co.FillDropdownlist(DDL_3, dtItemCode, "SCategoryName", "SCategoryId");
+                                    DDL_3.Items.Insert(0, "Select");
+                                    DDL_3.Items.FindByValue(dtProdPrevious.Rows[i]["ItemCode"].ToString()).Selected = true;
+                                }
+                                else
+                                {
+                                    DDL_3.Items.Insert(0, "NA");
+                                }
                             }
                         }
-                        if (DDL_2.Text != "" && DDL_2.SelectedItem.Text != "Select")
-                        {
-                            DataTable dtItemCode = Lo.RetriveMasterSubCategoryDate(Convert.ToInt32(DDL_2.SelectedItem.Value), "", "", "SubSelectID", "", "");
-                            if (dtItemCode.Rows.Count > 0)
-                            {
-                                Co.FillDropdownlist(DDL_3, dtItemCode, "SCategoryName", "SCategoryId");
-                                DDL_3.Items.Insert(0, "Select");
-                                DDL_3.Items.FindByValue(dtProdPrevious.Rows[i]["ItemCode"].ToString()).Selected = true;
-                            }
-                            else
-                            {
-                                DDL_3.Items.Insert(0, "NA");
-                            }
-                        }
+                        rowIndexProd++;
                     }
-                    rowIndexProd++;
                 }
             }
         }
+        catch (Exception ex)
+        { ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('" + ex.Message+ "')", true); }
     }
     protected void btnProductDetailAddMore_Click(object sender, EventArgs e)
     {
         AddNewProductDetailGrid();
+        AddNewTechnologyDetailGrid();
+    }
+    protected void txthsnno_TextChanged(object sender, EventArgs e)
+    {
+        if (gvproddetail.Rows.Count == 1)
+        {
+            TextBox TextBox_1 = (TextBox)gvproddetail.Rows[0].Cells[1].FindControl("txtproductnomen");
+            TextBox TextBox1M2 = (TextBox)gvtechnology.Rows[0].Cells[1].FindControl("txttechnomen");
+            TextBox1M2.Text = TextBox_1.Text;
+        }
+        if (gvproddetail.Rows.Count == 2)
+        {
+            TextBox TextBox_1 = (TextBox)gvproddetail.Rows[1].Cells[1].FindControl("txtproductnomen");
+            TextBox TextBox1M2 = (TextBox)gvtechnology.Rows[1].Cells[1].FindControl("txttechnomen");
+            TextBox1M2.Text = TextBox_1.Text;
+        }
+        if (gvproddetail.Rows.Count == 3)
+        {
+            TextBox TextBox_1 = (TextBox)gvproddetail.Rows[2].Cells[1].FindControl("txtproductnomen");
+            TextBox TextBox1M2 = (TextBox)gvtechnology.Rows[2].Cells[1].FindControl("txttechnomen");
+            TextBox1M2.Text = TextBox_1.Text;
+        }
     }
     protected void gvproddetail_RowCreated(object sender, GridViewRowEventArgs e)
     {
@@ -508,34 +547,41 @@ public partial class Vendor_V_DetailofDefence : System.Web.UI.Page
             DataRow drCurrentRowNameTech = null;
             if (dtCurrentTableTech.Rows.Count > 0)
             {
-                for (int i = 1; i <= dtCurrentTableTech.Rows.Count; i++)
+                if (dtCurrentTableTech.Rows.Count < 3)
                 {
-                    //extract the TextBox values
-                    TextBox TextBox1 = (TextBox)gvtechnology.Rows[rowIndexTech].Cells[1].FindControl("txttechnomen");
-                    DropDownList ddltech_1 = (DropDownList)gvtechnology.Rows[rowIndexTech].Cells[2].FindControl("ddltech1");
-                    DropDownList ddlsubtech_2 = (DropDownList)gvtechnology.Rows[rowIndexTech].Cells[3].FindControl("ddltech2");
-                    DropDownList ddlInnertech_3 = (DropDownList)gvtechnology.Rows[rowIndexTech].Cells[4].FindControl("ddltech3");
-                    drCurrentRowNameTech = dtCurrentTableTech.NewRow();
-                    drCurrentRowNameTech["RowNumberTech"] = i + 1;
-                    dtCurrentTableTech.Rows[i - 1]["TechNomenclature"] = TextBox1.Text;
-                    dtCurrentTableTech.Rows[i - 1]["Technology1"] = ddltech_1.Text;
-                    dtCurrentTableTech.Rows[i - 1]["Technology2"] = ddlsubtech_2.Text;
-                    dtCurrentTableTech.Rows[i - 1]["Technology3"] = ddlInnertech_3.Text;
-                    rowIndexTech++;
+                    for (int i = 1; i <= dtCurrentTableTech.Rows.Count; i++)
+                    {
+                        //extract the TextBox values
+                        TextBox TextBox1 = (TextBox)gvtechnology.Rows[rowIndexTech].Cells[1].FindControl("txttechnomen");
+                        DropDownList ddltech_1 = (DropDownList)gvtechnology.Rows[rowIndexTech].Cells[2].FindControl("ddltech1");
+                        DropDownList ddlsubtech_2 = (DropDownList)gvtechnology.Rows[rowIndexTech].Cells[3].FindControl("ddltech2");
+                        DropDownList ddlInnertech_3 = (DropDownList)gvtechnology.Rows[rowIndexTech].Cells[4].FindControl("ddltech3");
+                        drCurrentRowNameTech = dtCurrentTableTech.NewRow();
+                        drCurrentRowNameTech["RowNumberTech"] = i + 1;
+                        dtCurrentTableTech.Rows[i - 1]["TechNomenclature"] = TextBox1.Text;
+                        dtCurrentTableTech.Rows[i - 1]["Technology1"] = ddltech_1.Text;
+                        dtCurrentTableTech.Rows[i - 1]["Technology2"] = ddlsubtech_2.Text;
+                        dtCurrentTableTech.Rows[i - 1]["Technology3"] = ddlInnertech_3.Text;
+                        rowIndexTech++;
+                    }
+                    dtCurrentTableTech.Rows.Add(drCurrentRowNameTech);
+                    ViewState["TechnologyDetails"] = dtCurrentTableTech;
+                    gvtechnology.DataSource = dtCurrentTableTech;
+                    gvtechnology.DataBind();
+                    DropDownList ddl_13 = (DropDownList)gvtechnology.Rows[0].Cells[2].FindControl("ddltech1");
+                    BindMasterTechnologyCategory(ddl_13);
+                    SetPreviousDataTechnologyDetail();
                 }
-                dtCurrentTableTech.Rows.Add(drCurrentRowNameTech);
-                ViewState["TechnologyDetails"] = dtCurrentTableTech;
-                gvtechnology.DataSource = dtCurrentTableTech;
-                gvtechnology.DataBind();
-                DropDownList ddl_13 = (DropDownList)gvtechnology.Rows[0].Cells[2].FindControl("ddltech1");
-                BindMasterTechnologyCategory(ddl_13);
+                else
+                {
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Could not add more then row Technology Details')", true);
+                }
             }
         }
         else
         {
             Response.Write("ViewState is null");
         }
-        SetPreviousDataTechnologyDetail();
     }
     private void SetPreviousDataTechnologyDetail()
     {
@@ -666,8 +712,8 @@ public partial class Vendor_V_DetailofDefence : System.Web.UI.Page
         {
             TextBox TBtech_1 = (TextBox)gvtechnology.Rows[i].Cells[1].FindControl("txttechnomen");
             DropDownList DDLtech_1 = (DropDownList)gvtechnology.Rows[i].Cells[2].FindControl("ddltech1");
-            DropDownList DDLtech_2 = (DropDownList)gvtechnology.Rows[i].Cells[3].FindControl("ddltech1");
-            DropDownList DDLtech_3 = (DropDownList)gvtechnology.Rows[i].Cells[4].FindControl("ddltech1");
+            DropDownList DDLtech_2 = (DropDownList)gvtechnology.Rows[i].Cells[3].FindControl("ddltech2");
+            DropDownList DDLtech_3 = (DropDownList)gvtechnology.Rows[i].Cells[4].FindControl("ddltech3");
             if (DDLtech_1.SelectedItem.Text != "Select" && TBtech_1.Text != "")
             {
                 drCurrentRowSaveCode = DtSaveTech.NewRow();
@@ -893,36 +939,42 @@ public partial class Vendor_V_DetailofDefence : System.Web.UI.Page
             DataRow drCurrentRowProd = null;
             if (dtCurrentTableProd.Rows.Count > 0)
             {
-                for (int i = 1; i <= dtCurrentTableProd.Rows.Count; i++)
+                if (dtCurrentTableProd.Rows.Count > 2)
+                { ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Could not add more then 3 years row supply orders.')", true); }
+                else
                 {
-                    //extract the TextBox values
-                    TextBox TextBox1_Prod = (TextBox)gvItemProducedandSupplied.Rows[rowIndexProd].Cells[1].FindControl("txtnameofrepcustomer");
-                    TextBox TextBox2_Prod = (TextBox)gvItemProducedandSupplied.Rows[rowIndexProd].Cells[2].FindControl("txtdescofstoresupp");
-                    TextBox TextBox3_Prod = (TextBox)gvItemProducedandSupplied.Rows[rowIndexProd].Cells[3].FindControl("txtsonoanddate");
-                    TextBox TextBox4_Prod = (TextBox)gvItemProducedandSupplied.Rows[rowIndexProd].Cells[4].FindControl("txtorderqty");
-                    TextBox TextBox5_Prod = (TextBox)gvItemProducedandSupplied.Rows[rowIndexProd].Cells[5].FindControl("txtvalueqtysupplied");
-                    TextBox TextBox6_Prod = (TextBox)gvItemProducedandSupplied.Rows[rowIndexProd].Cells[6].FindControl("txtdateoflastsupplie");
-                    drCurrentRowProd = dtCurrentTableProd.NewRow();
-                    drCurrentRowProd["SrNoSpplied"] = i + 1;
-                    dtCurrentTableProd.Rows[i - 1]["NameCust"] = TextBox1_Prod.Text;
-                    dtCurrentTableProd.Rows[i - 1]["DesStoreSupp"] = TextBox2_Prod.Text;
-                    dtCurrentTableProd.Rows[i - 1]["OderNoorDate"] = TextBox3_Prod.Text;
-                    dtCurrentTableProd.Rows[i - 1]["OrderQty"] = TextBox4_Prod.Text;
-                    dtCurrentTableProd.Rows[i - 1]["ValueQtySupp"] = TextBox5_Prod.Text;
-                    dtCurrentTableProd.Rows[i - 1]["DateofLastSupp"] = TextBox6_Prod.Text;
-                    rowIndexProd++;
+                    for (int i = 1; i <= dtCurrentTableProd.Rows.Count; i++)
+                    {
+                        //extract the TextBox values
+                        TextBox TextBox1_Prod = (TextBox)gvItemProducedandSupplied.Rows[rowIndexProd].Cells[1].FindControl("txtnameofrepcustomer");
+                        TextBox TextBox2_Prod = (TextBox)gvItemProducedandSupplied.Rows[rowIndexProd].Cells[2].FindControl("txtdescofstoresupp");
+                        TextBox TextBox3_Prod = (TextBox)gvItemProducedandSupplied.Rows[rowIndexProd].Cells[3].FindControl("txtsonoanddate");
+                        TextBox TextBox4_Prod = (TextBox)gvItemProducedandSupplied.Rows[rowIndexProd].Cells[4].FindControl("txtorderqty");
+                        TextBox TextBox5_Prod = (TextBox)gvItemProducedandSupplied.Rows[rowIndexProd].Cells[5].FindControl("txtvalueqtysupplied");
+                        TextBox TextBox6_Prod = (TextBox)gvItemProducedandSupplied.Rows[rowIndexProd].Cells[6].FindControl("txtdateoflastsupplie");
+                        drCurrentRowProd = dtCurrentTableProd.NewRow();
+                        drCurrentRowProd["SrNoSpplied"] = i + 1;
+                        dtCurrentTableProd.Rows[i - 1]["NameCust"] = TextBox1_Prod.Text;
+                        dtCurrentTableProd.Rows[i - 1]["DesStoreSupp"] = TextBox2_Prod.Text;
+                        dtCurrentTableProd.Rows[i - 1]["OderNoorDate"] = TextBox3_Prod.Text;
+                        dtCurrentTableProd.Rows[i - 1]["OrderQty"] = TextBox4_Prod.Text;
+                        dtCurrentTableProd.Rows[i - 1]["ValueQtySupp"] = TextBox5_Prod.Text;
+                        dtCurrentTableProd.Rows[i - 1]["DateofLastSupp"] = TextBox6_Prod.Text;
+                        rowIndexProd++;
+                    }
+                    dtCurrentTableProd.Rows.Add(drCurrentRowProd);
+                    ViewState["ProdSupp"] = dtCurrentTableProd;
+                    gvItemProducedandSupplied.DataSource = dtCurrentTableProd;
+                    gvItemProducedandSupplied.DataBind();
+                    SetPreviousDataItemProductorSupplied();
                 }
-                dtCurrentTableProd.Rows.Add(drCurrentRowProd);
-                ViewState["ProdSupp"] = dtCurrentTableProd;
-                gvItemProducedandSupplied.DataSource = dtCurrentTableProd;
-                gvItemProducedandSupplied.DataBind();
             }
         }
         else
         {
             Response.Write("ViewState is null");
         }
-        SetPreviousDataItemProductorSupplied();
+
     }
     private void SetPreviousDataItemProductorSupplied()
     {
@@ -1083,36 +1135,42 @@ public partial class Vendor_V_DetailofDefence : System.Web.UI.Page
             DataRow drCurrentRowProd1 = null;
             if (dtCurrentTableProd1.Rows.Count > 0)
             {
-                for (int i = 1; i <= dtCurrentTableProd1.Rows.Count; i++)
+                if (dtCurrentTableProd1.Rows.Count > 2)
+                { ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Could not add more then 3 years row supply orders.')", true); }
+                else
                 {
-                    //extract the TextBox values
-                    TextBox TextBox1_Prod = (TextBox)gvItemSuppliedbutnotproduced.Rows[rowIndexProd1].Cells[1].FindControl("txtnameofrepcustomer1");
-                    TextBox TextBox2_Prod = (TextBox)gvItemSuppliedbutnotproduced.Rows[rowIndexProd1].Cells[2].FindControl("txtdescofstoresupp1");
-                    TextBox TextBox3_Prod = (TextBox)gvItemSuppliedbutnotproduced.Rows[rowIndexProd1].Cells[3].FindControl("txtsonoanddate1");
-                    TextBox TextBox4_Prod = (TextBox)gvItemSuppliedbutnotproduced.Rows[rowIndexProd1].Cells[4].FindControl("txtorderqty1");
-                    TextBox TextBox5_Prod = (TextBox)gvItemSuppliedbutnotproduced.Rows[rowIndexProd1].Cells[5].FindControl("txtvalueqtysupplied1");
-                    TextBox TextBox6_Prod = (TextBox)gvItemSuppliedbutnotproduced.Rows[rowIndexProd1].Cells[6].FindControl("txtdateoflastsupplie1");
-                    drCurrentRowProd1 = dtCurrentTableProd1.NewRow();
-                    drCurrentRowProd1["SrNoSpplied1"] = i + 1;
-                    dtCurrentTableProd1.Rows[i - 1]["NameCust1"] = TextBox1_Prod.Text;
-                    dtCurrentTableProd1.Rows[i - 1]["DesStoreSupp1"] = TextBox2_Prod.Text;
-                    dtCurrentTableProd1.Rows[i - 1]["OderNoorDate1"] = TextBox3_Prod.Text;
-                    dtCurrentTableProd1.Rows[i - 1]["OrderQty1"] = TextBox4_Prod.Text;
-                    dtCurrentTableProd1.Rows[i - 1]["ValueQtySupp1"] = TextBox5_Prod.Text;
-                    dtCurrentTableProd1.Rows[i - 1]["DateofLastSupp1"] = TextBox6_Prod.Text;
-                    rowIndexProd1++;
+                    for (int i = 1; i <= dtCurrentTableProd1.Rows.Count; i++)
+                    {
+                        //extract the TextBox values
+                        TextBox TextBox1_Prod = (TextBox)gvItemSuppliedbutnotproduced.Rows[rowIndexProd1].Cells[1].FindControl("txtnameofrepcustomer1");
+                        TextBox TextBox2_Prod = (TextBox)gvItemSuppliedbutnotproduced.Rows[rowIndexProd1].Cells[2].FindControl("txtdescofstoresupp1");
+                        TextBox TextBox3_Prod = (TextBox)gvItemSuppliedbutnotproduced.Rows[rowIndexProd1].Cells[3].FindControl("txtsonoanddate1");
+                        TextBox TextBox4_Prod = (TextBox)gvItemSuppliedbutnotproduced.Rows[rowIndexProd1].Cells[4].FindControl("txtorderqty1");
+                        TextBox TextBox5_Prod = (TextBox)gvItemSuppliedbutnotproduced.Rows[rowIndexProd1].Cells[5].FindControl("txtvalueqtysupplied1");
+                        TextBox TextBox6_Prod = (TextBox)gvItemSuppliedbutnotproduced.Rows[rowIndexProd1].Cells[6].FindControl("txtdateoflastsupplie1");
+                        drCurrentRowProd1 = dtCurrentTableProd1.NewRow();
+                        drCurrentRowProd1["SrNoSpplied1"] = i + 1;
+                        dtCurrentTableProd1.Rows[i - 1]["NameCust1"] = TextBox1_Prod.Text;
+                        dtCurrentTableProd1.Rows[i - 1]["DesStoreSupp1"] = TextBox2_Prod.Text;
+                        dtCurrentTableProd1.Rows[i - 1]["OderNoorDate1"] = TextBox3_Prod.Text;
+                        dtCurrentTableProd1.Rows[i - 1]["OrderQty1"] = TextBox4_Prod.Text;
+                        dtCurrentTableProd1.Rows[i - 1]["ValueQtySupp1"] = TextBox5_Prod.Text;
+                        dtCurrentTableProd1.Rows[i - 1]["DateofLastSupp1"] = TextBox6_Prod.Text;
+                        rowIndexProd1++;
+                    }
+                    dtCurrentTableProd1.Rows.Add(drCurrentRowProd1);
+                    ViewState["ProdSupp1"] = dtCurrentTableProd1;
+                    gvItemSuppliedbutnotproduced.DataSource = dtCurrentTableProd1;
+                    gvItemSuppliedbutnotproduced.DataBind();
+                    SetPreviousDataItemProductorSupplied1();
                 }
-                dtCurrentTableProd1.Rows.Add(drCurrentRowProd1);
-                ViewState["ProdSupp1"] = dtCurrentTableProd1;
-                gvItemSuppliedbutnotproduced.DataSource = dtCurrentTableProd1;
-                gvItemSuppliedbutnotproduced.DataBind();
             }
         }
         else
         {
             Response.Write("ViewState is null");
         }
-        SetPreviousDataItemProductorSupplied1();
+
     }
     private void SetPreviousDataItemProductorSupplied1()
     {
@@ -1295,7 +1353,14 @@ public partial class Vendor_V_DetailofDefence : System.Web.UI.Page
     }
     protected void btnsubmit_Click(object sender, EventArgs e)
     {
-        SaveRegistration();
+        try
+        {
+            SaveRegistration();
+        }
+        catch (Exception ex)
+        {
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('" + ex.Message.ToString() + "')", true);
+        }
     }
     #endregion
     protected void gvproddetailedit_RowCommand(object sender, GridViewCommandEventArgs e)
@@ -1808,4 +1873,5 @@ public partial class Vendor_V_DetailofDefence : System.Web.UI.Page
             }
         }
     }
+
 }

@@ -27,7 +27,10 @@
                                             <asp:BoundField DataField="SNo" HeaderText="Raw Number" />
                                             <asp:TemplateField HeaderText="Financial Year">
                                                 <ItemTemplate>
-                                                    <asp:TextBox ID="txtfinyear" runat="server" CssClass="form-control"></asp:TextBox>
+                                                     <div class="input-append date" id="datePicker" data-date="12-02-2012" data-date-format="yyyy" style="margin-top: -15px;">
+                                                        <span class="add-on"><i class="icon-th"></i></span>
+                                                        <asp:TextBox ID="txtfinyear" runat="server" CssClass="form-control datePicker" data-date-format="yyyy"></asp:TextBox>
+                                                    </div>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="Value of Current Assets">
@@ -88,7 +91,11 @@
                                             <asp:BoundField DataField="Value_of_Current_Assets" HeaderText="Value of Current Assets" />
                                             <asp:BoundField DataField="Value_of_Current_Liabilites" HeaderText="Value of Current Liabilites" />
                                             <asp:BoundField DataField="Total_Profit_Loss" HeaderText="Total Profit/Loss" />
-                                            <asp:BoundField DataField="File_Audited_Balance_account_sheet" HeaderText="Upload Audited Balance account sheet" />
+                                             <asp:TemplateField HeaderText="Upload Audited Balance account sheet">
+                                                <ItemTemplate>
+                                                    <a href='<%#Eval("File_Audited_Balance_account_sheet","https://srijandefence.gov.in/Upload/VendorImage/{0}") %>' runat="server" id="img" target="_blank"><%#Eval("File_Audited_Balance_account_sheet") %></a>
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
                                             <asp:TemplateField HeaderText="Action">
                                                 <ItemTemplate>
                                                     <asp:HiddenField runat="server" ID="hfturnedit" Value='<%#Eval("MasterId") %>' />
@@ -193,7 +200,11 @@
                                             <asp:BoundField DataField="AccountNo" HeaderText="Account No" />
                                             <asp:BoundField DataField="MICRNo" HeaderText="MICR Code" />
                                             <asp:BoundField DataField="IFSCCode" HeaderText="IFSC Code" />
-                                            <asp:BoundField DataField="File_Bank_Solvency_Certificate" HeaderText="Copy of Valid Bank Solvency Certificate" />
+                                            <asp:TemplateField HeaderText="Copy of Valid Bank Solvency Certificate">
+                                                <ItemTemplate>
+                                                    <a href='<%#Eval("File_Bank_Solvency_Certificate","https://srijandefence.gov.in/Upload/VendorImage/{0}") %>' runat="server" id="img1" target="_blank"><%#Eval("File_Bank_Solvency_Certificate") %></a>
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
                                             <asp:TemplateField HeaderText="Action">
                                                 <ItemTemplate>
                                                     <asp:HiddenField runat="server" ID="hfaccountedit" Value='<%#Eval("MasterId") %>' />

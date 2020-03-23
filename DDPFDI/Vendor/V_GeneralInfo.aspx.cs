@@ -70,7 +70,7 @@ public partial class Vendor_V_GeneralInfo : System.Web.UI.Page
                 if (DtGetRegisVendor.Rows[0]["Date_Incorportaion_Company"].ToString() != "")
                 {
                     DateTime DtInc = Convert.ToDateTime(DtGetRegisVendor.Rows[0]["Date_Incorportaion_Company"].ToString());
-                    string DTIncString = DtInc.ToString("MM/dd/yyyy");
+                    string DTIncString = DtInc.ToString("dd/MM/yyyy");
                     txtdateofincorofthecompany.Text = DTIncString.ToString();
                 }
                 else
@@ -196,7 +196,7 @@ public partial class Vendor_V_GeneralInfo : System.Web.UI.Page
             drenternameof["Name"] = string.Empty;
             drenternameof["Designation"] = string.Empty;
             drenternameof["DinNo"] = string.Empty;
-            drenternameof["MobileNo"] = 0;
+            drenternameof["MobileNo"] = 91;
             dtenternameof.Rows.Add(drenternameof);
             ViewState["EnterNameof"] = dtenternameof;
             gridNameof.DataSource = dtenternameof;
@@ -379,6 +379,7 @@ public partial class Vendor_V_GeneralInfo : System.Web.UI.Page
         dtSaveNameof.Columns.Add(new DataColumn("Designation", typeof(string)));
         dtSaveNameof.Columns.Add(new DataColumn("DinNo", typeof(string)));
         dtSaveNameof.Columns.Add(new DataColumn("MobileNo", typeof(string)));
+        dtSaveNameof.Columns.Add(new DataColumn("mProcess", typeof(string)));
         DataRow drCurrentRowNameCode = null;
         for (int i = 0; gridNameof.Rows.Count > i; i++)
         {
@@ -396,10 +397,13 @@ public partial class Vendor_V_GeneralInfo : System.Web.UI.Page
                 drCurrentRowNameCode["Designation"] = txtsavenameof2.Text;
                 drCurrentRowNameCode["DinNo"] = txtsavenameof3.Text;
                 drCurrentRowNameCode["MobileNo"] = txtsavenameof4.Text;
+                drCurrentRowNameCode["mProcess"] = "Insert";
                 dtSaveNameof.Rows.Add(drCurrentRowNameCode);
             }
         }
-        ViewState["EnterNameof"] = dtSaveNameof;
+        if (gridNameof.Visible == false) { }
+        else
+            ViewState["EnterNameof"] = dtSaveNameof;
     }
     #endregion
     protected void btnsubmit_Click(object sender, EventArgs e)
@@ -470,6 +474,7 @@ public partial class Vendor_V_GeneralInfo : System.Web.UI.Page
         if (str != "")
         {
             LoadCheckStatus();
+            ViewState["EnterNameof"] = null;
             ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Successfully save general information')", true);
         }
         else

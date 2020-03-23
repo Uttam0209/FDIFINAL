@@ -104,9 +104,9 @@
                                         </div>
                                         <div class="col-sm-7">
 
-                                            <div class="input-append date" id="datePicker" data-date="12-02-2012" data-date-format="dd-mm-yyyy">
+                                            <div class="input-append date" id="datePicker" data-date="12-02-2012" data-date-format="dd/mm/yyyy">
                                                 <span class="add-on"><i class="icon-th"></i></span>
-                                                <asp:TextBox ID="txtdateofincorofthecompany" runat="server" CssClass="form-control datePicker"></asp:TextBox>
+                                                <asp:TextBox ID="txtdateofincorofthecompany" runat="server" CssClass="form-control datePicker"  data-date-format="dd/mm/yyyy"></asp:TextBox>
                                             </div>
                                         </div>
                                     </div>
@@ -115,12 +115,12 @@
                                             Landline No
                                         </div>
                                         <div class="col-sm-2">
-                                            <asp:TextBox ID="txtstdcode" runat="server" required="" MaxLength="5" CssClass="form-control"></asp:TextBox>
+                                            <asp:TextBox ID="txtstdcode" runat="server" required="" onkeypress="return isNumberKey(event)" MaxLength="5" CssClass="form-control"></asp:TextBox>
 
                                             <p>STD Code</p>
                                         </div>
                                         <div class="col-sm-5">
-                                            <asp:TextBox ID="txtphoneno" runat="server" required="" MaxLength="10" CssClass="form-control"></asp:TextBox>
+                                            <asp:TextBox ID="txtphoneno" runat="server" required="" onkeypress="return isNumberKey(event)" MaxLength="10" CssClass="form-control"></asp:TextBox>
                                             <p>Phone Number</p>
                                         </div>
                                     </div>
@@ -129,11 +129,11 @@
                                             Fax No
                                         </div>
                                         <div class="col-sm-2">
-                                            <asp:TextBox ID="txtfaxstdcode" runat="server" required="" MaxLength="5" CssClass="form-control"></asp:TextBox>
+                                            <asp:TextBox ID="txtfaxstdcode" runat="server" required="" onkeypress="return isNumberKey(event)" MaxLength="5" CssClass="form-control"></asp:TextBox>
                                             <p>STD Code</p>
                                         </div>
                                         <div class="col-sm-5">
-                                            <asp:TextBox ID="txtfaxphoneno" runat="server" required="" MaxLength="10" CssClass="form-control"></asp:TextBox>
+                                            <asp:TextBox ID="txtfaxphoneno" runat="server" required="" onkeypress="return isNumberKey(event)" MaxLength="10" CssClass="form-control"></asp:TextBox>
                                             <p>Phone Number</p>
                                         </div>
                                     </div>
@@ -174,7 +174,7 @@
                                                 </asp:TemplateField>
                                                 <asp:TemplateField HeaderText="Mobile No">
                                                     <ItemTemplate>
-                                                        <asp:TextBox ID="txtmobno" runat="server" CssClass="form-control" Text="01"></asp:TextBox>
+                                                        <asp:TextBox ID="txtmobno" runat="server" onkeypress="return isNumberKey(event)"  CssClass="form-control"></asp:TextBox>
                                                     </ItemTemplate>
                                                     <FooterStyle HorizontalAlign="Right" />
                                                     <FooterTemplate>

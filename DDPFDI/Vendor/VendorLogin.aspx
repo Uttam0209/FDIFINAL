@@ -427,6 +427,16 @@
                 </div>
             </ContentTemplate>
         </asp:UpdatePanel>
+        <asp:UpdateProgress ID="UpdateProgress1" runat="server" AssociatedUpdatePanelID="UpdatePanel1">
+            <ProgressTemplate>
+                <div class="overlay-progress" style="z-index:99999;">
+                    <div class="custom-progress-bar blue stripes">
+                        <span></span>
+                        <p>Processing</p>
+                    </div>
+                </div>
+            </ProgressTemplate>
+        </asp:UpdateProgress>
         <div class="modal fade" id="Div1" role="dialog" data-keyboard="false" data-backdrop="static">
             <div class="modal-dialog" style="width: 400px;">
                 <!-- Modal content-->
@@ -484,6 +494,7 @@
     <script src="assets/js/jquery-1.12.4.js"></script>
     <script src="assets/js/bootstrap.min.js"></script>
     <script src="assets/js/jquery.bxslider.min.js"></script>
+      <script src="assets/js/custom.js"></script>
     <script type="text/javascript">
         function showPopup() {
             $('#changePass').modal('show', function () {
@@ -534,7 +545,7 @@
         function isNumberKey(evt) {
             var charCode = (evt.which) ? evt.which : event.keyCode;
             if (charCode != 46 && charCode > 31
-              && (charCode < 48 || charCode > 57))
+                && (charCode < 48 || charCode > 57))
                 return false;
 
             return true;

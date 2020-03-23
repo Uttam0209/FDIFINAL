@@ -804,6 +804,21 @@ public partial class Admin_ViewProductFilter : System.Web.UI.Page
             }
         }
     }
+    protected void BindComapnyCompanyCheckbox()
+    {
+        try
+        {
+            DataTable dtFactory = Lo.GetDashboardData("CompanyByname", ddlcomp.SelectedItem.Value);
+            if (dtFactory.Rows.Count > 0)
+            {
+                Co.FillDropdownlist(ddldivision, dtFactory, "FactoryName", "FactoryRefNo");
+                ddldivision.Items.Insert(0, "Select");
+                divfilterdivision.Visible = true;
+            }
+        }
+        catch (Exception ex)
+        { }
+    }
     protected void BindComapnyDivisionCheckbox()
     {
         try
@@ -935,22 +950,22 @@ public partial class Admin_ViewProductFilter : System.Web.UI.Page
     }
     #endregion
     #region Filter CheckBox Code
-    protected void rbistender_SelectedIndexChanged(object sender, EventArgs e)
-    {
-        SeachResult();
-    }
-    protected void rbiscontact_SelectedIndexChanged(object sender, EventArgs e)
-    {
-        SeachResult();
-    }
-    protected void rbismake2_SelectedIndexChanged(object sender, EventArgs e)
-    {
-        SeachResult();
-    }
-    protected void rbisindezinized_SelectedIndexChanged(object sender, EventArgs e)
-    {
-        SeachResult();
-    }
+    //protected void rbistender_SelectedIndexChanged(object sender, EventArgs e)
+    //{
+    //    SeachResult();
+    //}
+    //protected void rbiscontact_SelectedIndexChanged(object sender, EventArgs e)
+    //{
+    //    SeachResult();
+    //}
+    //protected void rbismake2_SelectedIndexChanged(object sender, EventArgs e)
+    //{
+    //    SeachResult();
+    //}
+    //protected void rbisindezinized_SelectedIndexChanged(object sender, EventArgs e)
+    //{
+    //    SeachResult();
+    //}
     protected void ddlcountry_SelectedIndexChanged(object sender, EventArgs e)
     {
         SeachResult();
@@ -961,7 +976,7 @@ public partial class Admin_ViewProductFilter : System.Web.UI.Page
     }
     protected void ddlcomp_SelectedIndexChanged(object sender, EventArgs e)
     {
-        BindComapnyDivisionCheckbox();
+        BindComapnyCompanyCheckbox();
         SeachResult();
     }
     protected void ddldivision_SelectedIndexChanged(object sender, EventArgs e)
@@ -1075,46 +1090,46 @@ public partial class Admin_ViewProductFilter : System.Web.UI.Page
             insert.Rows.Add(dr);
         }
 
-        if (rbisindezinized.SelectedIndex != -1 && rbisindezinized.SelectedItem.Value != "C")
-        {
-            dr = insert.NewRow();
-            dr["Column"] = "P.IsIndeginized" + "="; ;
-            dr["Value"] = "'" + rbisindezinized.SelectedItem.Value + "'";
-            insert.Rows.Add(dr);
-        }
-        if (rbismake2.SelectedIndex != -1 && rbismake2.SelectedItem.Value != "C")
-        {
-            dr = insert.NewRow();
-            dr["Column"] = "P.PurposeofProcurement" + " like";
-            dr["Value"] = "'%" + 25 + "%'";
-            insert.Rows.Add(dr);
-        }
-        if (rbiscontact.SelectedIndex != -1 && rbiscontact.SelectedItem.Value != "C")
-        {
-            if (rbiscontact.SelectedItem.Value == "Y")
-            {
-                dr = insert.NewRow();
-                dr["Column"] = "P.NodelDetail" + " is not";
-                dr["Value"] = " NULL or P.NodelDetail!=''";
-                insert.Rows.Add(dr);
-            }
-            else
-            {
-            }
-        }
-        if (rbistender.SelectedIndex != -1 && rbistender.SelectedItem.Value != "C")
-        {
-            if (rbistender.SelectedItem.Value == "Y")
-            {
-                dr = insert.NewRow();
-                dr["Column"] = "P.TenderStatus" + " =";
-                dr["Value"] = "'Live'";
-                insert.Rows.Add(dr);
-            }
-            else
-            {
-            }
-        }
+        //if (rbisindezinized.SelectedIndex != -1 && rbisindezinized.SelectedItem.Value != "C")
+        //{
+        //    dr = insert.NewRow();
+        //    dr["Column"] = "P.IsIndeginized" + "="; ;
+        //    dr["Value"] = "'" + rbisindezinized.SelectedItem.Value + "'";
+        //    insert.Rows.Add(dr);
+        //}
+        //if (rbismake2.SelectedIndex != -1 && rbismake2.SelectedItem.Value != "C")
+        //{
+        //    dr = insert.NewRow();
+        //    dr["Column"] = "P.PurposeofProcurement" + " like";
+        //    dr["Value"] = "'%" + 25 + "%'";
+        //    insert.Rows.Add(dr);
+        //}
+        //if (rbiscontact.SelectedIndex != -1 && rbiscontact.SelectedItem.Value != "C")
+        //{
+        //    if (rbiscontact.SelectedItem.Value == "Y")
+        //    {
+        //        dr = insert.NewRow();
+        //        dr["Column"] = "P.NodelDetail" + " is not";
+        //        dr["Value"] = " NULL or P.NodelDetail!=''";
+        //        insert.Rows.Add(dr);
+        //    }
+        //    else
+        //    {
+        //    }
+        //}
+        //if (rbistender.SelectedIndex != -1 && rbistender.SelectedItem.Value != "C")
+        //{
+        //    if (rbistender.SelectedItem.Value == "Y")
+        //    {
+        //        dr = insert.NewRow();
+        //        dr["Column"] = "P.TenderStatus" + " =";
+        //        dr["Value"] = "'Live'";
+        //        insert.Rows.Add(dr);
+        //    }
+        //    else
+        //    {
+        //    }
+        //}
         if (hfmtype.Value == "PI")
         {
             dr = insert.NewRow();
@@ -1207,13 +1222,13 @@ public partial class Admin_ViewProductFilter : System.Web.UI.Page
         ddlprodindussubdomain.SelectedValue = "Select";
         ddlcountry.SelectedValue = "Select";
         ddlsearchkeywordsfilter.SelectedValue = "Select";
-        rbiscontact.SelectedIndex = -1;
-        rbisindezinized.SelectedIndex = -1;
-        rbismake2.SelectedIndex = -1;
-        rbistender.SelectedIndex = -1;
+        //rbiscontact.SelectedIndex = -1;
+        //rbisindezinized.SelectedIndex = -1;
+        //rbismake2.SelectedIndex = -1;
+        //rbistender.SelectedIndex = -1;
         divfilterdivision.Visible = false;
         divfilterunit.Visible = false;        
-        lblfilter1.Visible = false; lblfilter2.Visible = false; lblfilter3.Visible = false; lblfilter4.Visible = false; lblfilter5.Visible = false; lblfilter6.Visible = false;
+        //lblfilter1.Visible = false; lblfilter2.Visible = false; lblfilter3.Visible = false; lblfilter4.Visible = false; lblfilter5.Visible = false; lblfilter6.Visible = false;
         lblfilter12.Visible = false; lblfilter11.Visible = false; lblfilter10.Visible = false; lblfilter9.Visible = false; lblfilter8.Visible = false; lblfilter7.Visible = false;
         lblfilter13.Visible = false; lblfilter14.Visible = false;
         lbclearfilter.Visible = false;
@@ -1333,52 +1348,52 @@ public partial class Admin_ViewProductFilter : System.Web.UI.Page
             lblfilter14.Text = ddlsearchkeywordsfilter.SelectedItem.Text;
             lblfilter14.Visible = true; lbclearfilter.Visible = true;
         }
-        if (rbisindezinized.SelectedIndex != -1 && rbisindezinized.SelectedItem.Value != "C")
-        {
-            lblfilter1.Text = "Is Indigenized -" + rbisindezinized.SelectedItem.Text;
-            lblfilter1.Visible = true; lbclearfilter.Visible = true;
-        }
-        if (rbismake2.SelectedIndex != -1 && rbismake2.SelectedItem.Value != "C")
-        {
-            lblfilter2.Text = "Is Make II -" + rbismake2.SelectedItem.Text;
-            lblfilter2.Visible = true; lbclearfilter.Visible = true;
-        }
-        if (rbiscontact.SelectedIndex != -1 && rbiscontact.SelectedItem.Value != "C")
-        {
-            lblfilter3.Text = "Is Contact -" + rbiscontact.SelectedItem.Text;
-            lblfilter3.Visible = true; lbclearfilter.Visible = true;
-        }
-        if (rbistender.SelectedIndex != -1 && rbistender.SelectedItem.Value != "C")
-        {
-            lblfilter4.Text = "Is Tender -" + rbistender.SelectedItem.Text;
-            lblfilter4.Visible = true; lbclearfilter.Visible = true;
-        }
+        //if (rbisindezinized.SelectedIndex != -1 && rbisindezinized.SelectedItem.Value != "C")
+        //{
+        //    lblfilter1.Text = "Is Indigenized -" + rbisindezinized.SelectedItem.Text;
+        //    lblfilter1.Visible = true; lbclearfilter.Visible = true;
+        //}
+        //if (rbismake2.SelectedIndex != -1 && rbismake2.SelectedItem.Value != "C")
+        //{
+        //    lblfilter2.Text = "Is Make II -" + rbismake2.SelectedItem.Text;
+        //    lblfilter2.Visible = true; lbclearfilter.Visible = true;
+        //}
+        //if (rbiscontact.SelectedIndex != -1 && rbiscontact.SelectedItem.Value != "C")
+        //{
+        //    lblfilter3.Text = "Is Contact -" + rbiscontact.SelectedItem.Text;
+        //    lblfilter3.Visible = true; lbclearfilter.Visible = true;
+        //}
+        //if (rbistender.SelectedIndex != -1 && rbistender.SelectedItem.Value != "C")
+        //{
+        //    lblfilter4.Text = "Is Tender -" + rbistender.SelectedItem.Text;
+        //    lblfilter4.Visible = true; lbclearfilter.Visible = true;
+        //}
 
     }
-    protected void lblfilter1_Click(object sender, EventArgs e)
-    {
-        rbisindezinized.SelectedIndex = -1;
-        SeachResult();
-        lblfilter1.Visible = false;
-    }
-    protected void lblfilter2_Click(object sender, EventArgs e)
-    {
-        rbismake2.SelectedIndex = -1;
-        SeachResult();
-        lblfilter2.Visible = false;
-    }
-    protected void lblfilter3_Click(object sender, EventArgs e)
-    {
-        rbiscontact.SelectedIndex = -1;
-        SeachResult();
-        lblfilter3.Visible = false;
-    }
-    protected void lblfilter4_Click(object sender, EventArgs e)
-    {
-        rbistender.SelectedIndex = -1;
-        SeachResult();
-        lblfilter4.Visible = false;
-    }
+    //protected void lblfilter1_Click(object sender, EventArgs e)
+    //{
+    //    rbisindezinized.SelectedIndex = -1;
+    //    SeachResult();
+    //    lblfilter1.Visible = false;
+    //}
+    //protected void lblfilter2_Click(object sender, EventArgs e)
+    //{
+    //    rbismake2.SelectedIndex = -1;
+    //    SeachResult();
+    //    lblfilter2.Visible = false;
+    //}
+    //protected void lblfilter3_Click(object sender, EventArgs e)
+    //{
+    //    rbiscontact.SelectedIndex = -1;
+    //    SeachResult();
+    //    lblfilter3.Visible = false;
+    //}
+    //protected void lblfilter4_Click(object sender, EventArgs e)
+    //{
+    //    rbistender.SelectedIndex = -1;
+    //    SeachResult();
+    //    lblfilter4.Visible = false;
+    //}
     protected void lblfilter5_Click(object sender, EventArgs e)
     {
         ddlcomp.SelectedIndex = -1;

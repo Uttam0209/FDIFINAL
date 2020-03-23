@@ -165,13 +165,121 @@
     <script type='text/javascript' src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.min.js"></script>
     <script>
         $(function () {
+            $('.datePicker').datepicker({                
+                calendarWeeks: true,
+                todayHighlight: true,
+                autoclose: true,                 
+                endDate: '+0d',
+                
+            });
+            $('.datePicker1').datepicker({
+                calendarWeeks: true,
+                todayHighlight: true,
+                autoclose: true,
+                endDate: '+0d',
+
+            });
+            $('.datePicker2').datepicker({
+                calendarWeeks: true,
+                todayHighlight: true,
+                autoclose: true,
+                endDate: '+0d',
+
+            });
+            $('.datePicker3').datepicker({
+                calendarWeeks: true,
+                todayHighlight: true,
+                autoclose: true,
+                endDate: '+0d',
+
+            });
+            $('.datePicker4').datepicker({
+                calendarWeeks: true,
+                todayHighlight: true,
+                autoclose: true,
+                endDate: '+0d',
+
+            });
+            $('.datePicker5').datepicker({
+                calendarWeeks: true,
+                todayHighlight: true,
+                autoclose: true,
+                endDate: '+0d',
+
+            });
+            $('.datePicker6').datepicker({
+                calendarWeeks: true,
+                todayHighlight: true,
+                autoclose: true,
+                endDate: '+0d',
+
+            });
+            $('.datePickerall').datepicker({
+                calendarWeeks: true,
+                todayHighlight: true,
+                autoclose: true,
+
+            });
+        });
+        var prm = Sys.WebForms.PageRequestManager.getInstance();
+        prm.add_endRequest(function () {
             $('.datePicker').datepicker({
                 calendarWeeks: true,
                 todayHighlight: true,
                 autoclose: true,
                 endDate: '+0d',
+                
             });
-        });
+
+            $('.datePicker1').datepicker({
+                calendarWeeks: true,
+                todayHighlight: true,
+                autoclose: true,
+                endDate: '+0d',
+
+            });
+            $('.datePicker2').datepicker({
+                calendarWeeks: true,
+                todayHighlight: true,
+                autoclose: true,
+                endDate: '+0d',
+
+            });
+            $('.datePicker3').datepicker({
+                calendarWeeks: true,
+                todayHighlight: true,
+                autoclose: true,
+                endDate: '+0d',
+
+            });
+            $('.datePicker4').datepicker({
+                calendarWeeks: true,
+                todayHighlight: true,
+                autoclose: true,
+                endDate: '+0d',
+
+            });
+            $('.datePicker5').datepicker({
+                calendarWeeks: true,
+                todayHighlight: true,
+                autoclose: true,
+                endDate: '+0d',
+
+            });
+            $('.datePicker6').datepicker({
+                calendarWeeks: true,
+                todayHighlight: true,
+                autoclose: true,
+                endDate: '+0d',
+
+            });
+            $('.datePickerall').datepicker({
+                calendarWeeks: true,
+                todayHighlight: true,
+                autoclose: true,
+
+            });
+        })
     </script>
     <!--------------------------Only number----------------------->
     <script type="text/javascript">
@@ -195,6 +303,7 @@
             }
         }
     </script>
+
     <!--------------------------End Only Number----------------------->
     <!-----Alert Box ------>
     <div class="alert-overlay alert-overlay-error" style="display: none">
