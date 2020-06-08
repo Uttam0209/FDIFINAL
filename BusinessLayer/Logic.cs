@@ -103,9 +103,9 @@ namespace BusinessLayer
         {
             return SqlHelper.Instance.SaveMasterNodal(hySaveNodal, out _sysMsg, out _msg);
         }
-        public string SaveCodeProduct(HybridDictionary hyProduct, DataTable DtImage, DataTable dtProdInfo, DataTable dtEstimateQuantity, DataTable DtNSFIIG, out string _sysMsg, out string _msg, string Criteria)
+        public string SaveCodeProduct(HybridDictionary hyProduct, DataTable DtImage, DataTable DtPdf, DataTable dtProdInfo, DataTable dtEstimateQuantity, DataTable dtEstimateQuantity1, DataTable DtNSFIIG, out string _sysMsg, out string _msg, string Criteria)
         {
-            return SqlHelper.Instance.SaveCodeProduct(hyProduct, DtImage, dtProdInfo, dtEstimateQuantity, DtNSFIIG, out _sysMsg, out _msg, Criteria);
+            return SqlHelper.Instance.SaveCodeProduct(hyProduct, DtImage, DtPdf, dtProdInfo, dtEstimateQuantity, dtEstimateQuantity1, DtNSFIIG, out _sysMsg, out _msg, Criteria);
         }
         public string UpdateCodeProduct(HybridDictionary HyUpdateProd, out string _sysMsg, out string _msg)
         {
@@ -185,19 +185,20 @@ namespace BusinessLayer
             "P.Platform, P.NomenclatureOfMainSystem, P.EndUser, P.PurposeofProcurement, P.ProcurmentCategoryRemark, P.IsIndeginized, P.ManufactureName, P.ManufactureAddress, P.YearofIndiginization, P.SearchKeyword, " +
             " P.DPSUServices, P.Remarks, P.FinancialSupport, P.FinancialRemark, P.TenderStatus, P.TenderSubmition, P.TenderFillDate, P.TenderUrl, P.NodelDetail, P.Testing, P.TestingRemarks, P.Certification, P.CertificationRemark, " +
             " P.IsActive, P.LastUpdated,P.IsApproved, dbo.tbl_mst_SubCategory.SCategoryName AS NSNGroup, tbl_mst_SubCategory_1.SCategoryName AS DefencePlatform, tbl_mst_SubCategory_2.SCategoryName AS ProdIndustryDoamin, " +
-            " tbl_mst_SubCategory_3.SCategoryName AS NSNGroupClass,tbl_mst_Country.CountryName as Country,tbl_mst_SubCategory_4.SCategoryName AS ProdIndustrySubDomain " +
-            "FROM  dbo.tbl_mst_Factory AS UF LEFT OUTER JOIN" +
-            " dbo.tbl_mst_Company AS UC ON UF.CompanyRefNo = UC.CompanyRefNo RIGHT OUTER JOIN" +
-            " dbo.tbl_mst_Company AS FC RIGHT OUTER JOIN" +
-            " dbo.tbl_mst_Company AS C RIGHT OUTER JOIN" +
-            " dbo.tbl_mst_Factory AS F RIGHT OUTER JOIN" +
+            " tbl_mst_SubCategory_3.SCategoryName AS NSNGroupClass,tbl_mst_Country.CountryName as Country,tbl_mst_SubCategory_4.SCategoryName AS ProdIndustrySubDomain,tbl_mst_NodalOfficer.NodalOfficerEmail AS NodalOfficerEmail,tbl_mst_NodalOfficer.NodalOfficerTelephone AS NodalOfficerTelephone " +
+            "FROM  dbo.tbl_mst_Factory AS UF LEFT OUTER JOIN " +
+            " dbo.tbl_mst_Company AS UC ON UF.CompanyRefNo = UC.CompanyRefNo RIGHT OUTER JOIN " +
+            " dbo.tbl_mst_Company AS FC RIGHT OUTER JOIN " +
+            " dbo.tbl_mst_Company AS C RIGHT OUTER JOIN " +
+            " dbo.tbl_mst_Factory AS F RIGHT OUTER JOIN " +
             " dbo.tbl_mst_MainProduct AS P LEFT OUTER JOIN" +
-            " dbo.tbl_mst_SubCategory ON P.ProductLevel1 = dbo.tbl_mst_SubCategory.SCategoryId LEFT OUTER JOIN" +
-            " dbo.tbl_mst_SubCategory AS tbl_mst_SubCategory_2 ON P.TechnologyLevel1 = tbl_mst_SubCategory_2.SCategoryId LEFT OUTER JOIN" +
-            " dbo.tbl_mst_SubCategory AS tbl_mst_SubCategory_1 ON P.Platform = tbl_mst_SubCategory_1.SCategoryId LEFT OUTER JOIN" +
-            " dbo.tbl_mst_SubCategory AS tbl_mst_SubCategory_3 ON P.ProductLevel2 = tbl_mst_SubCategory_3.SCategoryId LEFT OUTER JOIN" +
-            " dbo.tbl_mst_Country ON P.OEMCountry = dbo.tbl_mst_Country.CountryID LEFT OUTER JOIN" +
-            "  dbo.tbl_mst_SubCategory AS tbl_mst_SubCategory_4 ON P.TechnologyLevel2 = tbl_mst_SubCategory_4.SCategoryId LEFT OUTER JOIN" +
+            " tbl_mst_NodalOfficer ON P.NodelDetail=tbl_mst_NodalOfficer.NodalOfficerID Left Outer Join " +
+            " dbo.tbl_mst_SubCategory ON P.ProductLevel1 = dbo.tbl_mst_SubCategory.SCategoryId LEFT OUTER JOIN " +
+            " dbo.tbl_mst_SubCategory AS tbl_mst_SubCategory_2 ON P.TechnologyLevel1 = tbl_mst_SubCategory_2.SCategoryId LEFT OUTER JOIN " +
+            " dbo.tbl_mst_SubCategory AS tbl_mst_SubCategory_1 ON P.Platform = tbl_mst_SubCategory_1.SCategoryId LEFT OUTER JOIN " +
+            " dbo.tbl_mst_SubCategory AS tbl_mst_SubCategory_3 ON P.ProductLevel2 = tbl_mst_SubCategory_3.SCategoryId LEFT OUTER JOIN " +
+            " dbo.tbl_mst_Country ON P.OEMCountry = dbo.tbl_mst_Country.CountryID LEFT OUTER JOIN " +
+            "  dbo.tbl_mst_SubCategory AS tbl_mst_SubCategory_4 ON P.TechnologyLevel2 = tbl_mst_SubCategory_4.SCategoryId LEFT OUTER JOIN " +
             " dbo.tbl_mst_Unit AS U ON P.CompanyRefNo = U.UnitRefNo ON F.FactoryRefNo = P.CompanyRefNo ON C.CompanyRefNo = P.CompanyRefNo ON FC.CompanyRefNo = F.CompanyRefNo ON " +
             " UF.FactoryRefNo = U.FactoryRefNo WHERE '1'='1'";
             for (int i = 0; i < dtsearchresult.Rows.Count; i++)
@@ -230,11 +231,11 @@ namespace BusinessLayer
         {
             if (Criteria == "ViewGraph")
             {
-                return SqlHelper.Instance.GetExecuteData("select scategoryname,SUM(total) as Total,NSNGroup from fn_ProductGrpahNSNGroup('" + CompRefNo + "') group by scategoryname,NSNGroup order by scategoryname asc");
+                return SqlHelper.Instance.GetExecuteData("select scategoryname,SUM(total) as Total,NSNGroup from fn_ProductGrpahNSNGroup('" + CompRefNo + "') group by scategoryname,NSNGroup order by Total desc");
             }
             else
             {
-                return SqlHelper.Instance.GetExecuteData("select scategoryname,SUM(total) as Total,NSNGROUPCLASS from fn_ProductNSNClassGrpahII('" + CompRefNo + "','" + techvalue + "') group by scategoryname,NSNGROUPCLASS order by scategoryname asc");
+                return SqlHelper.Instance.GetExecuteData("select scategoryname,SUM(total) as Total,NSNGROUPCLASS from fn_ProductNSNClassGrpahII('" + CompRefNo + "','" + techvalue + "') group by scategoryname,NSNGROUPCLASS order by Total desc");
             }
         }
         public DataTable GetDashboardDataApproveDisapproveItem(string Purpose, string Search, string type)
@@ -267,7 +268,43 @@ namespace BusinessLayer
         {
             return SqlHelper.Instance.RetriveForgotPasswordEmail(Email, Type);
         }
+        public DataTable RetriveCart(string value)
+        {
+            string mquery = "SELECT  TOP (100) PERCENT ROW_NUMBER() OVER( ORDER BY P.ProductId) AS [ROW_NUMBER],  C.CompanyRefNo, C.CompanyName, F.FactoryRefNo, F.FactoryName, FC.CompanyRefNo AS FCompRefNo, FC.CompanyName AS FCompany, U.UnitName, U.UnitRefNo, UF.FactoryName AS UFactory,"
+                             + "UF.FactoryRefNo AS UFactoryRefNo, UC.CompanyName AS UCompany, UC.CompanyRefNo AS UCompRefNo, P.ProductRefNo, P.ProductLevel1, P.ProductLevel2, P.ProductLevel3, P.NSCCode, P.NIINCode, P.Role, "
+                             + "P.ProductDescription, P.OEMPartNumber, P.OEMName, P.OEMCountry, P.DPSUPartNumber, P.ItemDescriptionPDFFile, P.EndUserPartNumber, P.HSNCode, P.TechnologyLevel1, P.TechnologyLevel2, P.TechnologyLevel3, "
+                             + "P.Platform, P.NomenclatureOfMainSystem, P.EndUser, P.PurposeofProcurement, P.ProcurmentCategoryRemark, P.IsIndeginized, P.ManufactureName, P.ManufactureAddress, P.YearofIndiginization, P.SearchKeyword, "
+                             + "P.DPSUServices, P.Remarks, P.FinancialSupport, P.FinancialRemark, P.TenderStatus, P.TenderSubmition, P.TenderFillDate, P.TenderUrl, P.NodelDetail, P.Testing, P.TestingRemarks, P.Certification, P.CertificationRemark,P.IsShowGeneral, "
+                             + "P.IsActive, P.LastUpdated,P.IsApproved, tbl_mst_SubCategory.SCategoryName AS NSNGroup, tbl_mst_SubCategory_1.SCategoryName AS DefencePlatform, tbl_mst_SubCategory_2.SCategoryName AS ProdIndustryDoamin, "
+                             + "tbl_mst_SubCategory_3.SCategoryName AS NSNGroupClass,tbl_mst_Country.CountryName as Country,tbl_mst_SubCategory_4.SCategoryName AS ProdIndustrySubDomain,tbl_mst_NodalOfficer.NodalOfficerEmail AS NodalOfficerEmail,tbl_mst_NodalOfficer.NodalOfficerTelephone AS NodalOfficerTelephone"
+                            + ",IsProductImported,tbl_mst_SubCategory_5.SCategoryName as ItemCode  FROM            tbl_mst_Factory AS UF LEFT OUTER JOIN "
+                             + "tbl_mst_Company AS UC ON UF.CompanyRefNo = UC.CompanyRefNo RIGHT OUTER JOIN "
+                             + "tbl_mst_Company AS FC RIGHT OUTER JOIN "
+                             + "tbl_mst_Company AS C RIGHT OUTER JOIN "
+                             + "tbl_mst_Factory AS F RIGHT OUTER JOIN "
+                             + "tbl_mst_MainProduct AS P LEFT OUTER JOIN "
+                             + " tbl_mst_NodalOfficer ON P.NodelDetail=tbl_mst_NodalOfficer.NodalOfficerID Left Outer Join "
+                             + "tbl_mst_SubCategory ON P.ProductLevel1 = tbl_mst_SubCategory.SCategoryId LEFT OUTER JOIN "
+                             + "tbl_mst_SubCategory AS tbl_mst_SubCategory_2 ON P.TechnologyLevel1 = tbl_mst_SubCategory_2.SCategoryId LEFT OUTER JOIN "
+                             + "tbl_mst_SubCategory AS tbl_mst_SubCategory_1 ON P.Platform = tbl_mst_SubCategory_1.SCategoryId LEFT OUTER JOIN "
+                             + "tbl_mst_SubCategory AS tbl_mst_SubCategory_3 ON P.ProductLevel2 = tbl_mst_SubCategory_3.SCategoryId LEFT OUTER JOIN "
+                             + " tbl_mst_SubCategory AS tbl_mst_SubCategory_5 ON P.ProductLevel3 = tbl_mst_SubCategory_5.SCategoryId LEFT OUTER JOIN "
+                             + "tbl_mst_Country ON P.OEMCountry = tbl_mst_Country.CountryID LEFT OUTER JOIN "
+                             + " tbl_mst_SubCategory AS tbl_mst_SubCategory_4 ON P.TechnologyLevel2 = tbl_mst_SubCategory_4.SCategoryId LEFT OUTER JOIN "
+                             + "tbl_mst_Unit AS U ON P.CompanyRefNo = U.UnitRefNo ON F.FactoryRefNo = P.CompanyRefNo ON C.CompanyRefNo = P.CompanyRefNo ON FC.CompanyRefNo = F.CompanyRefNo ON "
+                             + "UF.FactoryRefNo = U.FactoryRefNo WHERE  (P.IsActive = 'Y') and P.ProductRefNo in (" + value + ")"
+                             + "ORDER BY P.LastUpdated DESC, C.CompanyName, F.FactoryName, U.UnitName";
+            return SqlHelper.Instance.GetDataset(mquery).Tables[0];
 
+        }
+        public DataTable RetriveMailCart(string value)
+        {
+            string mquery = "SELECT P.ProductDescription, P.DPSUPartNumber, s1.SCategoryName AS NSNGroup,s2.SCategoryName AS NSNGroupClass,s3.SCategoryName as ItemCode,n.NodalOfficerEmail AS NodalOfficerEmail " +
+                         " FROM  tbl_mst_MainProduct AS P LEFT OUTER JOIN tbl_mst_NodalOfficer as n ON P.NodelDetail=n.NodalOfficerID Left Outer Join tbl_mst_SubCategory as s1 ON   P.ProductLevel1 = s1.SCategoryId LEFT OUTER JOIN " +
+                        " tbl_mst_SubCategory AS  s2 ON P.ProductLevel2 = s2.SCategoryId LEFT OUTER JOIN tbl_mst_SubCategory AS s3 ON P.ProductLevel3 = s3.SCategoryId LEFT OUTER JOIN " +
+                            " tbl_mst_MainProduct AS o ON s1.SCategoryName='' WHERE  (P.IsActive = 'Y') and P.ProductRefNo in (" + value + ")";
+            return SqlHelper.Instance.GetDataset(mquery).Tables[0];
+        }
         #endregion
         #region DeleteCode
         public string DeleteRecord(string CompRefNo, string Criteria)
@@ -312,10 +349,11 @@ namespace BusinessLayer
         {
             return SqlHelper.Instance.TestGrid(Function, ProdRefNo, ProdInfoId, Name, Value, Unit);
         }
-        public DataTable RetriveSaveEstimateGrid(string Function, Int32 ProdInfoId, string ProdRefNo, Int32 Year, string FYear, string EstimateQuantity, string Unit, string Price)
+        public DataTable RetriveSaveEstimateGrid(string Function, Int32 ProdInfoId, string ProdRefNo, Int32 Year, string FYear, string EstimateQuantity, string Unit, string Price, string type)
         {
-            return SqlHelper.Instance.RetriveSaveEstimateGrid(Function, ProdInfoId, ProdRefNo, Year, FYear, EstimateQuantity, Unit, Price);
+            return SqlHelper.Instance.RetriveSaveEstimateGrid(Function, ProdInfoId, ProdRefNo, Year, FYear, EstimateQuantity, Unit, Price, type);
         }
+
 
         #endregion
         ////////////////////////////////////////================================ Vendor Code=======================================//////////////////////////////////////

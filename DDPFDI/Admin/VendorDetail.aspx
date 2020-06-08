@@ -17,7 +17,8 @@
                 <div class="col-md-12">
                     <div class="clearfix"></div>
                     <div style="margin-top: 5px;">
-                        <a class="fa fa-arrow-circle-left pull-right" href="javascript: history.go(-1)">&nbsp; &nbsp;Back</a>
+                        <%--<a class="fa fa-arrow-circle-left pull-right" href="javascript: history.go(-1)">&nbsp; &nbsp;Back</a>--%>
+                        <asp:LinkButton ID="lblback" runat="server" class="fa fa-arrow-circle-left pull-right" OnClick="lblback_Click">&nbsp; &nbsp;Back</asp:LinkButton>
                     </div>
                     <div class="clearfix"></div>
                 </div>
@@ -48,7 +49,7 @@
                                                         <asp:Label ID="lblrefno" runat="server" Text='<%#Eval("V_CompName") %>' NullDisplayText="#"></asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
-                                                <asp:TemplateField HeaderText="GST No">
+                                                <asp:TemplateField HeaderText="GST No" Visible="false">
                                                     <ItemTemplate>
                                                         <asp:Label runat="server" ID="lblcompanyrole" Text='<%#Eval("GSTNo") %>'></asp:Label>
                                                     </ItemTemplate>
@@ -59,6 +60,12 @@
                                                         <asp:Label ID="lblnodelname" runat="server" Text='<%#Eval("NodalOfficerEmail") %>' NullDisplayText="#"></asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="Contact number">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="lblcontactno" runat="server" Text='<%#Eval("ContactNo") %>' NullDisplayText="#"></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:BoundField ItemStyle-Width="150px" DataField="MSME" HeaderText="Is MSME" />
                                                 <asp:TemplateField HeaderText="Action">
                                                     <ItemTemplate>
                                                         <asp:LinkButton ID="lblview" runat="server" CssClass="fa fa-eye" ToolTip="View detail of Vendor company" CommandArgument='<%#Eval("VendorRefNo") %>'></asp:LinkButton>
@@ -104,7 +111,7 @@
                                                     <div class="row">
                                                         <div class="col-sm-6">
                                                             <div class="col-sm-12">
-                                                                <tr>
+                                                                <tr class="hidden" runat="server" visible="false">
                                                                     <td>Refrence No:</td>
                                                                     <td>
                                                                         <asp:Label ID="lblcomprefno" runat="server" Text=""></asp:Label>
@@ -123,7 +130,7 @@
                                                                         <asp:Label ID="lbladdress" runat="server" Text=""></asp:Label></td>
                                                                 </tr>
                                                                 <div class="clearfix" style="margin-bottom: 10px;"></div>
-                                                                <tr>
+                                                                <tr class="hidden" runat="server" visible="false">
                                                                     <td>GST No:</td>
                                                                     <td>
                                                                         <asp:Label ID="lblgst" runat="server" Text=""></asp:Label></td>
@@ -164,7 +171,7 @@
                                                                         <asp:Label ID="lblmsme" runat="server" Text=""></asp:Label></td>
                                                                 </tr>
                                                                 <div class="clearfix" style="margin-bottom: 10px;"></div>
-                                                                <tr>
+                                                                <tr class="hidden" runat="server" visible="false">
                                                                     <td>DPSU Name:</td>
                                                                     <td>
                                                                         <asp:GridView ID="gvdpsu" runat="server" Class="table table-responsive" AutoGenerateColumns="false">

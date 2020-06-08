@@ -55,12 +55,12 @@ public partial class PanCard : System.Web.UI.Page
     protected void btnenc_Click(object sender, EventArgs e)
     {
         if (TXTDEC.Text != "")
-            lblmsg.Text = Enc.EncryptData(TXTDEC.Text);
+            Label1.Text = Enc.EncryptData(TXTDEC.Text);
     }
     protected void btndec_Click(object sender, EventArgs e)
     {
          if (TXTDEC.Text != "")
-            lblmsg.Text = Enc.DecryptData(TXTDEC.Text);
+            Label1.Text = Enc.DecryptData(TXTDEC.Text);
     }
     protected void btnpanno_Click(object sender, EventArgs e)
     {

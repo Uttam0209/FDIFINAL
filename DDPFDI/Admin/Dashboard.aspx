@@ -248,7 +248,7 @@
                                                                             <h3 class="box-title">Items Approved</h3>
                                                                         </div>
                                                                         <div class="Number">
-                                                                            <asp:LinkButton ID="lbapproveditem" runat="server" CssClass="" Text="0" OnClick="lnkbtnProduct_Click"></asp:LinkButton>
+                                                                            <asp:LinkButton ID="lbapproveditem" runat="server" CssClass="" Text="0" OnClick="lbapproveditem_Click"></asp:LinkButton>
                                                                         </div>
                                                                         <div class="file-export">
                                                                             <asp:LinkButton ID="lbdownloadapproved" runat="server" Visible="true" class="fas fa-cloud-download-alt" data-toggle="tooltip" ToolTip="Export to Excel" OnClick="lbdownloadapproved_Click"></asp:LinkButton>
@@ -263,7 +263,7 @@
 
                                                                         </div>
                                                                         <div class="Number">
-                                                                            <asp:LinkButton ID="lbitemdisapproved" runat="server" CssClass="" Text="0" OnClick="lnkbtnProduct_Click"></asp:LinkButton>
+                                                                            <asp:LinkButton ID="lbitemdisapproved" runat="server" CssClass="" Text="0" OnClick="lbitemdisapproved_Click"></asp:LinkButton>
                                                                         </div>
                                                                         <div class="file-export">
                                                                             <asp:LinkButton ID="lbitemdisapproveddown" runat="server" Visible="true" class="fas fa-cloud-download-alt" data-toggle="tooltip" ToolTip="Export to Excel" OnClick="lbitemdisapproveddown_Click"></asp:LinkButton>
@@ -324,6 +324,27 @@
                                             </div>
 
                                         </div>
+                                        <div class="col-lg-6 col-sm-6 col-xs-12" runat="server" id="divven" visible="false">
+                                            <div class="white-box analytics-info last-fdi">
+                                                <ul class="list-inline two-part">
+                                                    <li>
+                                                        <div class="icon-box">
+                                                            <i class="fa fa-people-carry"></i>
+                                                        </div>
+                                                        <div class="compName">
+                                                            <h3 class="box-title">Vendor</h3>
+                                                            <div class="Number">
+                                                                <asp:LinkButton ID="lblvendor" runat="server" CssClass="comp_number" Text="0" OnClick="lblvendor_Click"></asp:LinkButton>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                    <div class="row" style="margin-top: 10px;" runat="server" visible="false">
                                         <div class="col-lg-6 col-sm-6 col-xs-12">
                                             <div class="white-box analytics-info last-fdi">
                                                 <ul class="list-inline two-part">
@@ -344,9 +365,6 @@
                                                 </div>
                                             </div>
                                         </div>
-
-                                    </div>
-                                    <div class="row" style="margin-top: 10px;">
                                         <div class="col-lg-6 col-sm-6 col-xs-12">
                                             <div class="white-box analytics-info last-fdi">
                                                 <ul class="list-inline two-part">
@@ -367,23 +385,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-lg-6 col-sm-6 col-xs-12" runat="server" id="divven" visible="false">
-                                            <div class="white-box analytics-info last-fdi">
-                                                <ul class="list-inline two-part">
-                                                    <li>
-                                                        <div class="icon-box">
-                                                            <i class="fa fa-people-carry"></i>
-                                                        </div>
-                                                        <div class="compName">
-                                                            <h3 class="box-title">Vendor</h3>
-                                                            <div class="Number">
-                                                                <asp:LinkButton ID="lblvendor" runat="server" CssClass="comp_number" Text="0" OnClick="lblvendor_Click"></asp:LinkButton>
-                                                            </div>
-                                                        </div>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
+
                                     </div>
                                     <div class="row" style="margin-top: 20px;">
                                         <div class="col-lg-12 col-sm-6 col-xs-12">

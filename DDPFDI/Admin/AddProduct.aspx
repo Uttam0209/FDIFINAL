@@ -24,7 +24,6 @@
             $('#changePass').modal('show');
         }
     </script>
-
     <!-------------------------------------------image show end------------------------------->
 </asp:Content>
 <asp:Content ID="inner" runat="server" ContentPlaceHolderID="ContentPlaceHolder1">
@@ -44,8 +43,7 @@
                     <div class="clearfix"></div>
                 </div>
             </div>
-            <div class="clearfix" style="margin-bottom: 10px;">
-            </div>
+            <div class="clearfix" style="margin-bottom: 10px;"></div>
             <div class="row">
                 <p style="position: absolute; right: 35px;">Mark with <span class="mandatory">*</span> is manadatory field.</p>
                 <asp:UpdatePanel runat="server" ID="updrop">
@@ -76,9 +74,6 @@
                     <li class="active"><a data-toggle="tab" href="#pd">Item description</a></li>
                     <li><a data-toggle="tab" href="#pimg">Item Specification</a></li>
                     <li><a data-toggle="tab" href="#qpt">Estimated Quantity</a></li>
-                    <li><a data-toggle="tab" href="#test" runat="server" visible="false">Testing & Certification</a></li>
-                    <li><a data-toggle="tab" href="#spd" runat="server" visible="false">Technical & Financial Support</a></li>
-                    <li><a data-toggle="tab" href="#tnd" runat="server" visible="false">Tender and EOI</a></li>
                     <li><a data-toggle="tab" href="#cd">Contact</a></li>
                     <li><a data-toggle="tab" href="#decla">Declaration</a></li>
                 </ul>
@@ -94,23 +89,23 @@
                                                     <div class="col-md-4">
                                                         <div class="form-group">
                                                             <label>
-                                                                NSN GROUP <span class="mandatory">*</span>
-                                                                <span data-toggle="tooltip" class="fa fa-question" title="Number in bracket indicates NSN Group"></span>
+                                                                NATO SUPPLY GROUP <span class="mandatory">*</span>
+                                                                <span data-toggle="tooltip" class="fa fa-question" title="Number in bracket indicates NATO SUPPLY GROUP"></span>
                                                             </label>
                                                             <asp:DropDownList runat="server" ID="ddlmastercategory" class="form-control" Style="text-transform: uppercase !important;" TabIndex="1" AutoPostBack="True" OnSelectedIndexChanged="ddlmastercategory_SelectedIndexChanged"></asp:DropDownList>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-4">
                                                         <div class="form-group">
-                                                            <label>NSN GROUP CLASS<span class="mandatory">*</span></label>
-                                                            <span data-toggle="tooltip" class="fa fa-question" title="Number in bracket indicates NSN Group class"></span>
+                                                            <label>NATO SUPPLY CLASS<span class="mandatory">*</span></label>
+                                                            <span data-toggle="tooltip" class="fa fa-question" title="Number in bracket indicates NATO SUPPLY CLASS"></span>
                                                             <asp:DropDownList runat="server" ID="ddlsubcategory" AutoPostBack="True" TabIndex="2" class="form-control" Style="text-transform: uppercase !important;" OnSelectedIndexChanged="ddlsubcategory_SelectedIndexChanged"></asp:DropDownList>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-4">
                                                         <div class="form-group">
                                                             <label>
-                                                                Item Code</label>
+                                                                Item Code<span class="mandatory">*</span></label>
                                                             <span data-toggle="tooltip" class="fa fa-question" title="Item code indicate item name code in NSN"></span>
                                                             <div class="col-md-11 row">
                                                                 <asp:DropDownList runat="server" ID="ddllevel3product" AutoPostBack="True" TabIndex="3" Style="text-transform: uppercase !important;" class="form-control" OnSelectedIndexChanged="ddllevel3product_SelectedIndexChanged"></asp:DropDownList>
@@ -130,7 +125,7 @@
                                                             <div class="col-sm-3 padding_0">
                                                                 <label style="font-size: 14px !important;">
                                                                     NSC Code (4 digit)
-                                                                        <span data-toggle="tooltip" class="fa fa-question" title="NSC Code = NSN Group (2 digit) + NSN Group Class (2 digit)"></span>
+                                                                        <span data-toggle="tooltip" class="fa fa-question" title="NSC Code = NATO SUPPLY GROUP (2 digit) + NATO SUPPLY CLASS (2 digit)"></span>
                                                                 </label>
                                                                 <asp:TextBox runat="server" ID="txtnsccode" ReadOnly="True" MaxLength="4" CssClass="form-cascade-control form-control"></asp:TextBox>
                                                             </div>
@@ -142,8 +137,8 @@
                                                                 <asp:TextBox runat="server" ID="txtniincode" TabIndex="4" MaxLength="9" class="form-control"></asp:TextBox>
                                                             </div>
                                                             <div class="clearfix mt10"></div>
-                                                            <div class="form-group">
-                                                                <label>Search keywords (To add more than one search keyword please use comma(,)) <span class="mandatory">*</span></label>
+                                                            <div class="form-group" runat="server" visible="false">
+                                                                <label>Search keywords (Item Name)<span class="mandatory">*</span></label>
                                                                 <asp:TextBox runat="server" ID="txtsearchkeyword" MaxLength="50" required="" TabIndex="18" class="form-control"></asp:TextBox>
                                                                 <div class="clearfix" style="margin-top: 5px;"></div>
                                                                 <span>(Max length 50 words only)</span>
@@ -152,8 +147,8 @@
                                                     </div>
                                                     <div class="col-md-4">
                                                         <div class="form-group">
-                                                            <label>Item brief description</label>
-                                                            <span class="mandatory">* (Editable)</span>  <span data-toggle="tooltip" class="fa fa-question" title="If item description is not relevant, edit the item description."></span>
+                                                            <label>Item Name</label>
+                                                            <span class="mandatory">* (Editable)</span>  <span data-toggle="tooltip" class="fa fa-question" title="If item name is not relevant, edit the item name."></span>
                                                             <asp:TextBox runat="server" ID="txtproductdescription" required="" Height="100px" MaxLength="250" TabIndex="5" class="form-control"></asp:TextBox>
                                                             <div class="clearfix" style="margin-top: 5px;"></div>
                                                             <span>(Max length 250 words only)</span>
@@ -164,10 +159,8 @@
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label>Upload document related to item </label>
-                                                            <span class="mandatory">(only pdf file of maximum 5 Mb can be uploaded.)</span>
-                                                            <asp:FileUpload runat="server" ID="fuitemdescriptionfile" CssClass="form-control" TabIndex="6" />
-                                                            <div class="clearfix mt5"></div>
-                                                            <asp:Label runat="server" ID="lblfuitemdescriptionfile" Visible="False"></asp:Label>
+                                                            <span class="mandatory">(pdf of maximum 5 Mb can be uploaded.(max 4 files))</span>
+                                                            <asp:FileUpload runat="server" ID="fuitemdescriptionfile" AllowMultiple="true" CssClass="form-control" TabIndex="6" />
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6">
@@ -183,20 +176,31 @@
                                                         <br />
                                                     </div>
                                                     <div class="clearfix mt5"></div>
-                                                    <div class="col-sm-6"></div>
+                                                    <div class="col-sm-6">
+                                                        <div runat="server" id="divPdf" visible="False">
+                                                            <asp:GridView runat="server" ID="dlpdf" OnRowCommand="dlpdf_OnRowCommand" AutoGenerateColumns="false" Class="table table-responsive">
+                                                                <Columns>
+                                                                    <asp:BoundField HeaderText="File Name" DataField="ImageName" />
+                                                                    <asp:TemplateField>
+                                                                        <ItemTemplate>
+                                                                            <asp:LinkButton runat="server" ID="lblremovepdf" class="fa fa-trash text-center imgdel" CommandName="removepdf" CommandArgument='<%#Eval("ImageId") %>'></asp:LinkButton>
+                                                                        </ItemTemplate>
+                                                                    </asp:TemplateField>
+                                                                </Columns>
+                                                            </asp:GridView>
+                                                        </div>
+                                                    </div>
                                                     <div class="col-sm-6">
                                                         <div runat="server" id="divimgdel" visible="False">
-                                                            <div class="row">
-                                                                <asp:DataList runat="server" ID="dlimage" RepeatColumns="4" RepeatDirection="Horizontal" RepeatLayout="Flow" OnItemCommand="dlimage_ItemCommand">
-                                                                    <ItemTemplate>
-                                                                        <div class="col-sm-3" style="border: 1px solid #ccc">
-                                                                            <asp:Image runat="server" ID="imgprodimage" class="image img-responsive img-rounded" Height="90px" Width="90" src='<%#Eval("ImageName") %>' />
-                                                                            <div class="clearfix"></div>
-                                                                            <asp:LinkButton runat="server" ID="lblremoveimg" class="fa fa-trash text-center imgdel" CommandName="removeimg" CommandArgument='<%#Eval("ImageId") %>'></asp:LinkButton>
-                                                                        </div>
-                                                                    </ItemTemplate>
-                                                                </asp:DataList>
-                                                            </div>
+                                                            <asp:DataList runat="server" ID="dlimage" RepeatColumns="4" RepeatDirection="Horizontal" RepeatLayout="Flow" OnItemCommand="dlimage_ItemCommand">
+                                                                <ItemTemplate>
+                                                                    <div class="col-sm-3" style="border: 1px solid #ccc">
+                                                                        <asp:Image runat="server" ID="imgprodimage" class="image img-responsive img-rounded" Height="90px" Width="90" src='<%#Eval("ImageName") %>' />
+                                                                        <div class="clearfix"></div>
+                                                                        <asp:LinkButton runat="server" ID="lblremoveimg" class="fa fa-trash text-center imgdel" CommandName="removeimg" CommandArgument='<%#Eval("ImageId") %>'></asp:LinkButton>
+                                                                    </div>
+                                                                </ItemTemplate>
+                                                            </asp:DataList>
                                                         </div>
                                                     </div>
                                                     <div class="clearfix mt5"></div>
@@ -221,7 +225,8 @@
                                             <div class="col-sm-8">
                                                 <div class="form-group">
                                                     <label>
-                                                        HSN Code (4-8 digit) <%--<span class="mandatory">*</span>--%> <a href="https://www.cbic-gst.gov.in/gst-goods-services-rates.html" target="_blank">(For finding hsn code please click here to get redirected to gst website.)<span data-toggle="tooltip" class="fa fa-question" title="HSN Code (4-8 digit ) and Link for find hsn code"></span></a>
+                                                        HSN Code (4-8 digit) <%--<span class="mandatory">*</span>--%>
+                                                        <%--<a href="https://www.cbic-gst.gov.in/gst-goods-services-rates.html" target="_blank">(For finding hsn code please click here to get redirected to gst website.)<span data-toggle="tooltip" class="fa fa-question" title="HSN Code (4-8 digit ) and Link for find hsn code"></span></a>--%>
                                                     </label>
                                                     <asp:TextBox runat="server" ID="txthsncodereadonly" TabIndex="8" MaxLength="8" class="form-control"></asp:TextBox>
                                                 </div>
@@ -233,83 +238,6 @@
                                                 </div>
                                             </div>
 
-                                        </div>
-                                    </div>
-                                    <div class="section-pannel" runat="server" visible="false">
-                                        <div class="row">
-                                            <div class="col-md-4" runat="server" visible="false">
-                                                <div class="form-group">
-                                                    <label>
-                                                        Sub heading No.(HSN) (digit) (Hidden)
-                                                     <span data-toggle="tooltip" class="fa fa-question" title="Please enter if HSN code is available"></span>
-                                                    </label>
-                                                    <asp:TextBox runat="server" ID="txthsncode" MaxLength="9" class="form-control"></asp:TextBox>
-                                                </div>
-                                            </div>
-                                            <asp:UpdatePanel runat="server" ID="UpdatePanel7">
-                                                <ContentTemplate>
-                                                    <div class="col-md-3" runat="server" visible="false">
-                                                        <div class="form-group">
-                                                            <label>HS Code (Hidden)</label>
-                                                            <span class="mandatory">*</span>
-                                                            <asp:DropDownList runat="server" ID="ddlHSNCode" class="form-control" Height="35px" Style="text-transform: uppercase !important;"></asp:DropDownList>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-3" runat="server" visible="false">
-                                                        <div class="form-group">
-                                                            <label>HS Chapter</label>
-                                                            <span class="mandatory">*</span>
-                                                            <asp:DropDownList runat="server" ID="ddlhschapter" AutoPostBack="true" OnSelectedIndexChanged="ddlhschapter_SelectedIndexChanged" class="form-control" Height="35px" Style="text-transform: uppercase !important;"></asp:DropDownList>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-3" runat="server" visible="false">
-                                                        <div class="form-group">
-                                                            <label>HS Heading No</label>
-                                                            <span class="mandatory">*</span>
-                                                            <asp:DropDownList runat="server" ID="ddlhsncodelev1" AutoPostBack="true" OnSelectedIndexChanged="ddlhsncodelev1_SelectedIndexChanged" class="form-control" Height="35px" Style="text-transform: uppercase !important;"></asp:DropDownList>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-3" runat="server" visible="false">
-                                                        <div class="form-group">
-                                                            <label>Description</label>
-                                                            <span class="mandatory">*</span>
-                                                            <asp:DropDownList runat="server" ID="ddlhsncodelevel2" AutoPostBack="true" OnSelectedIndexChanged="ddlhsncodelevel2_SelectedIndexChanged" class="form-control" Height="35px" Style="text-transform: uppercase !important;"></asp:DropDownList>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-3" runat="server" visible="false">
-                                                        <div class="form-group">
-                                                            <label>HSN Code</label>
-                                                            <span class="mandatory">*</span>
-                                                            <asp:DropDownList runat="server" ID="ddlhsncodelevel3" AutoPostBack="true" OnSelectedIndexChanged="ddlhsncodelevel3_SelectedIndexChanged" class="form-control" Height="35px" Style="text-transform: uppercase !important;"></asp:DropDownList>
-                                                        </div>
-                                                    </div>
-                                                    <div class="clearfix"></div>
-
-
-                                                    <div class="col-sm-3" runat="server" visible="false">
-                                                        <label style="font-size: 14px !important;">
-                                                            HS Code (4 digit)
-                                                                        <span data-toggle="tooltip" class="fa fa-question" title="HS Code 4 digit"></span>
-                                                        </label>
-                                                        <asp:TextBox runat="server" ID="txthscodereadonly" ReadOnly="True" MaxLength="4" CssClass="form-cascade-control form-control"></asp:TextBox>
-                                                    </div>
-                                                    <div class="col-sm-3" runat="server" visible="false">
-                                                    </div>
-
-                                                </ContentTemplate>
-                                            </asp:UpdatePanel>
-                                            <asp:UpdateProgress ID="UpdateProgress10" runat="server" AssociatedUpdatePanelID="upproduct">
-                                                <ProgressTemplate>
-                                                    <!---Progress Bar ---->
-                                                    <div class="overlay-progress">
-                                                        <div class="custom-progress-bar blue stripes">
-                                                            <span></span>
-                                                            <p>Processing</p>
-                                                        </div>
-                                                    </div>
-                                                    <!---Progress Bar ---->
-                                                </ProgressTemplate>
-                                            </asp:UpdateProgress>
                                         </div>
                                     </div>
                                     <div class="section-pannel">
@@ -337,13 +265,6 @@
 
                                         </div>
                                         <div class="row">
-                                            <div class="col-md-4" runat="server" visible="false">
-                                                <div class="form-group">
-                                                    <label>End User Part Number</label>
-                                                    <asp:TextBox runat="server" ID="txtenduserpartnumber" class="form-control"></asp:TextBox>
-                                                </div>
-                                            </div>
-                                            <div class="clearfix"></div>
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <asp:Label runat="server" ID="lblenduser" Text="End User"></asp:Label>
@@ -386,21 +307,21 @@
                                         <div class="row">
                                             <asp:UpdatePanel runat="server" ID="uptechnology">
                                                 <ContentTemplate>
-                                                    <div class="col-md-4">
+                                                    <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label>PRODUCT (INDUSTRY DOMAIN)<span class="mandatory">*</span></label>
                                                             <span data-toggle="tooltip" class="fa fa-question" title="If you not display your category in this section, please add in Category Master >> Category Dropdown"></span>
                                                             <asp:DropDownList runat="server" ID="ddltechnologycat" class="form-control" TabIndex="15" Style="text-transform: uppercase !important;" AutoPostBack="True" OnSelectedIndexChanged="ddltechnologycat_SelectedIndexChanged"></asp:DropDownList>
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-4">
+                                                    <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label>PRODUCT (INDUSTRY SUB DOMAIN)<span class="mandatory">*</span></label>
                                                             <span data-toggle="tooltip" class="fa fa-question" title="It is a subcategory of Item Level 1, if you not see product level 2 please add in Category master >> level 2 "></span>
-                                                            <asp:DropDownList runat="server" ID="ddlsubtech" class="form-control" TabIndex="16" Style="text-transform: uppercase !important;" AutoPostBack="True" OnSelectedIndexChanged="ddlsubtech_SelectedIndexChanged"></asp:DropDownList>
+                                                            <asp:DropDownList runat="server" ID="ddlsubtech" class="form-control" TabIndex="16" Style="text-transform: uppercase !important;" AutoPostBack="false" OnSelectedIndexChanged="ddlsubtech_SelectedIndexChanged"></asp:DropDownList>
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-4">
+                                                    <div class="col-md-4" runat="server" visible="false">
                                                         <div class="form-group">
                                                             <label>PRODUCT (INDUSTRY 2nd SUB DOMAIN)</label>
                                                             <span data-toggle="tooltip" class="fa fa-question" title="It is a subcategory of Item Level 2, if you not see product level 3 please add in Category master >> level 3 "></span>
@@ -408,7 +329,6 @@
                                                         </div>
                                                     </div>
                                                     <div class="clearfix"></div>
-
                                                 </ContentTemplate>
                                                 <Triggers>
                                                 </Triggers>
@@ -442,7 +362,6 @@
                                                                     <asp:ListItem Value="Y" class="yes">Yes</asp:ListItem>
                                                                 </asp:RadioButtonList>
                                                                 </label>
-
                                                                 <div class="clearfix" style="margin-top: 10px;"></div>
                                                                 <div runat="server" class="row" id="divisIndigenized" visible="false">
                                                                     <div class="col-sm-4">
@@ -463,10 +382,10 @@
                                                             </div>
                                                         </div>
                                                         <div class="clearfix mt10"></div>
-                                                        <div class="col-sm-6">
+                                                        <div class="col-sm-12">
                                                             <div class="form-group">
                                                                 <label class="checkbox-box productalreadylabel">
-                                                                    Is Item imported in last 5 years?
+                                                                    Is Item imported in last 3 years?
                                                                 </label>
                                                                 <asp:RadioButtonList runat="server" ID="rbproductImported" RepeatColumns="2" TabIndex="23" RepeatLayout="Flow"
                                                                     RepeatDirection="Horizontal" AutoPostBack="True" OnSelectedIndexChanged="rbproductImported_CheckedChanged ">
@@ -476,24 +395,156 @@
                                                             </div>
                                                             <div class="clearfix mt5"></div>
                                                             <div runat="server" id="divyearofimportYes" visible="False">
-                                                                <div class="row">
-                                                                    <div class="col-sm-12">
-                                                                        <div class="form-group">
-                                                                            <label>Year of import</label>
-                                                                            <div class="clearfix"></div>
-                                                                            <asp:CheckBoxList runat="server" class="mr-3 ProddisplayInline" ID="chklistimportyearfive" RepeatDirection="Horizontal" TabIndex="24" RepeatLayout="Flow" RepeatColumns="5">
-                                                                                <asp:ListItem Value="2019-20" Text="2019-20"></asp:ListItem>
-                                                                                <asp:ListItem Value="2018-19" Text="2018-19"></asp:ListItem>
-                                                                                <asp:ListItem Value="2017-18" Text="2017-18"></asp:ListItem>
-                                                                                <asp:ListItem Value="2016-17" Text="2016-17"></asp:ListItem>
-                                                                                <asp:ListItem Value="2015-16" Text="2015-16"></asp:ListItem>
-                                                                            </asp:CheckBoxList>
-                                                                        </div>
-                                                                    </div>
+                                                                <div class="section-pannel">
+                                                                    <asp:UpdatePanel runat="server" ID="UpdatePanel8">
+                                                                        <ContentTemplate>
+                                                                            <div class="table table-responsive">
+                                                                                <table class="table table-responsive" runat="server" id="xxesti">
+                                                                                    <tr>
+                                                                                        <th>Year</th>
+                                                                                        <th>Estimated Quantity</th>
+                                                                                        <th>Unit</th>
+                                                                                        <th>Estimated Price/Last Purchase Price (in Rs)</th>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td>
+                                                                                            <asp:DropDownList ID="ddlyearestimate1" runat="server" CssClass="form-control">
+                                                                                                <asp:ListItem Value="-1">Select</asp:ListItem>
+                                                                                                <asp:ListItem Value="1">2017-18</asp:ListItem>
+                                                                                                <asp:ListItem Value="2">2018-19</asp:ListItem>
+                                                                                                <asp:ListItem Value="3">2019-20</asp:ListItem>
+                                                                                            </asp:DropDownList></td>
+                                                                                        <td>
+                                                                                            <asp:TextBox runat="server" CssClass="form-control" ID="txtestquan1" onkeypress="return isNumberKey(event)" Placeholder="Estimated Quantity"></asp:TextBox></td>
+                                                                                        <td>
+                                                                                            <asp:DropDownList ID="ddlunit1" runat="server" CssClass="form-control">
+                                                                                                <asp:ListItem Value="-1">Select</asp:ListItem>
+                                                                                                <asp:ListItem Value="Centimeter">Centimeter</asp:ListItem>
+                                                                                                <asp:ListItem Value="Gram">Gram</asp:ListItem>
+                                                                                                <asp:ListItem Value="Inch">Inch</asp:ListItem>
+                                                                                                <asp:ListItem Value="Kg">Kg</asp:ListItem>
+                                                                                                <asp:ListItem Value="Mtr">Mtr</asp:ListItem>
+                                                                                                <asp:ListItem Value="Inch">Inch</asp:ListItem>
+                                                                                                <asp:ListItem Value="Number">Number</asp:ListItem>
+                                                                                                <asp:ListItem Value="Ounce">Ounce</asp:ListItem>
+                                                                                                <asp:ListItem Value="Other">Other</asp:ListItem>
+                                                                                                <asp:ListItem Value="Pound">Pound</asp:ListItem>
+                                                                                                <asp:ListItem Value="Ton">Ton</asp:ListItem>
+                                                                                            </asp:DropDownList></td>
+                                                                                        <td>
+                                                                                            <asp:TextBox runat="server" CssClass="form-control" ID="txtpriceestimate1" onkeypress="return isNumberKey(event)" Placeholder="Estimated Price/Last Purchase Price (in Rs)"></asp:TextBox></td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td>
+                                                                                            <asp:DropDownList ID="ddlyearestimate2" runat="server" CssClass="form-control">
+                                                                                                <asp:ListItem Value="-1">Select</asp:ListItem>
+                                                                                                <asp:ListItem Value="1">2017-18</asp:ListItem>
+                                                                                                <asp:ListItem Value="2">2018-19</asp:ListItem>
+                                                                                                <asp:ListItem Value="3">2019-20</asp:ListItem>
+                                                                                            </asp:DropDownList></td>
+                                                                                        <td>
+                                                                                            <asp:TextBox runat="server" CssClass="form-control" ID="txtestquan2" onkeypress="return isNumberKey(event)" Placeholder="Estimated Quantity"></asp:TextBox></td>
+                                                                                        <td>
+                                                                                            <asp:DropDownList ID="ddlunit2" runat="server" CssClass="form-control">
+                                                                                                <asp:ListItem Value="-1">Select</asp:ListItem>
+                                                                                                <asp:ListItem Value="Centimeter">Centimeter</asp:ListItem>
+                                                                                                <asp:ListItem Value="Gram">Gram</asp:ListItem>
+                                                                                                <asp:ListItem Value="Inch">Inch</asp:ListItem>
+                                                                                                <asp:ListItem Value="Kg">Kg</asp:ListItem>
+                                                                                                <asp:ListItem Value="Mtr">Mtr</asp:ListItem>
+                                                                                                <asp:ListItem Value="Inch">Inch</asp:ListItem>
+                                                                                                <asp:ListItem Value="Number">Number</asp:ListItem>
+                                                                                                <asp:ListItem Value="Ounce">Ounce</asp:ListItem>
+                                                                                                <asp:ListItem Value="Other">Other</asp:ListItem>
+                                                                                                <asp:ListItem Value="Pound">Pound</asp:ListItem>
+                                                                                                <asp:ListItem Value="Ton">Ton</asp:ListItem>
+                                                                                            </asp:DropDownList></td>
+                                                                                        <td>
+                                                                                            <asp:TextBox runat="server" CssClass="form-control" ID="txtpriceestimate2" onkeypress="return isNumberKey(event)" Placeholder="Estimated Price/Last Purchase Price (in Rs)"></asp:TextBox></td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td>
+                                                                                            <asp:DropDownList ID="ddlyearestimate3" runat="server" CssClass="form-control">
+                                                                                                <asp:ListItem Value="-1">Select</asp:ListItem>
+                                                                                                <asp:ListItem Value="1">2017-18</asp:ListItem>
+                                                                                                <asp:ListItem Value="2">2018-19</asp:ListItem>
+                                                                                                <asp:ListItem Value="3">2019-20</asp:ListItem>
+                                                                                            </asp:DropDownList></td>
+                                                                                        <td>
+                                                                                            <asp:TextBox runat="server" CssClass="form-control" ID="txtestquan3" onkeypress="return isNumberKey(event)" Placeholder="Estimated Quantity"></asp:TextBox></td>
+                                                                                        <td>
+                                                                                            <asp:DropDownList ID="ddlunit3" runat="server" CssClass="form-control">
+                                                                                                <asp:ListItem Value="-1">Select</asp:ListItem>
+                                                                                                <asp:ListItem Value="Centimeter">Centimeter</asp:ListItem>
+                                                                                                <asp:ListItem Value="Gram">Gram</asp:ListItem>
+                                                                                                <asp:ListItem Value="Inch">Inch</asp:ListItem>
+                                                                                                <asp:ListItem Value="Kg">Kg</asp:ListItem>
+                                                                                                <asp:ListItem Value="Mtr">Mtr</asp:ListItem>
+                                                                                                <asp:ListItem Value="Inch">Inch</asp:ListItem>
+                                                                                                <asp:ListItem Value="Number">Number</asp:ListItem>
+                                                                                                <asp:ListItem Value="Ounce">Ounce</asp:ListItem>
+                                                                                                <asp:ListItem Value="Other">Other</asp:ListItem>
+                                                                                                <asp:ListItem Value="Pound">Pound</asp:ListItem>
+                                                                                                <asp:ListItem Value="Ton">Ton</asp:ListItem>
+                                                                                            </asp:DropDownList></td>
+                                                                                        <td>
+                                                                                            <asp:TextBox runat="server" CssClass="form-control" ID="txtpriceestimate3" onkeypress="return isNumberKey(event)" Placeholder="Estimated Price/Last Purchase Price (in Rs)"></asp:TextBox></td>
+                                                                                    </tr>
+                                                                                </table>
+                                                                                <asp:GridView ID="GridView3" runat="server" CssClass="table table-hover" CellPadding="4" ShowFooter="true"
+                                                                                    ForeColor="#333333" GridLines="None" AutoGenerateColumns="false" OnRowCommand="GridView3_RowCommand">
+                                                                                    <AlternatingRowStyle BackColor="White" />
+                                                                                    <Columns>
+                                                                                        <asp:TemplateField HeaderText="Sr.No">
+                                                                                            <ItemTemplate>
+                                                                                                <%#Container.DataItemIndex+1 %>
+                                                                                            </ItemTemplate>
+                                                                                        </asp:TemplateField>
+                                                                                        <asp:BoundField DataField="FYear" HeaderText="Year" />
+                                                                                        <asp:BoundField DataField="EstimatedQty" HeaderText="Estimated Quantity" />
+                                                                                        <asp:BoundField DataField="Unit" HeaderText="Unit" />
+                                                                                        <asp:BoundField DataField="EstimatedPrice" HeaderText="Estimated Price/Last Purchase Price (in Rs)" />
+                                                                                        <asp:TemplateField HeaderText="Action">
+                                                                                            <ItemTemplate>
+                                                                                                <asp:HiddenField ID="HiddenField2" runat="server" Value='<%#Eval("Year") %>' />
+                                                                                                <asp:HiddenField ID="HiddenField3" runat="server" Value='<%#Eval("ProdQtyPriceId") %>' />
+                                                                                                <asp:LinkButton ID="LinkButton3" runat="server" Class="fa fa-plus-circle" CommandArgument='<%#Eval("ProdQtyPriceId") %>' CommandName="addnewmfe1"></asp:LinkButton>
+                                                                                                <asp:LinkButton ID="LinkButton4" runat="server" Class="fa fa-edit" CommandArgument='<%# ((GridViewRow) Container).RowIndex %>' CommandName="updatenewmfe1"></asp:LinkButton>
+                                                                                                <asp:LinkButton ID="LinkButton5" runat="server" Class="fa fa-trash" CommandArgument='<%#Eval("ProdQtyPriceId") %>' CommandName="deletenewmfe1"></asp:LinkButton>
+                                                                                            </ItemTemplate>
+                                                                                        </asp:TemplateField>
+                                                                                    </Columns>
+                                                                                    <EditRowStyle BackColor="#2461BF" />
+                                                                                    <FooterStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
+                                                                                    <HeaderStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
+                                                                                    <PagerStyle BackColor="#2461BF" ForeColor="White" HorizontalAlign="Center" />
+                                                                                    <RowStyle BackColor="#EFF3FB" />
+                                                                                    <SelectedRowStyle BackColor="#D1DDF1" Font-Bold="True" ForeColor="#333333" />
+                                                                                    <SortedAscendingCellStyle BackColor="#F5F7FB" />
+                                                                                    <SortedAscendingHeaderStyle BackColor="#6D95E1" />
+                                                                                    <SortedDescendingCellStyle BackColor="#E9EBEF" />
+                                                                                    <SortedDescendingHeaderStyle BackColor="#4870BE" />
+                                                                                </asp:GridView>
+                                                                            </div>
+                                                                        </ContentTemplate>
+                                                                    </asp:UpdatePanel>
+                                                                    <asp:UpdateProgress ID="UpdateProgress5" runat="server" AssociatedUpdatePanelID="UpdatePanel1">
+                                                                        <ProgressTemplate>
+                                                                            <!---Progress Bar ---->
+                                                                            <div class="overlay-progress">
+                                                                                <div class="custom-progress-bar blue stripes">
+                                                                                    <span></span>
+                                                                                    <p>Processing</p>
+                                                                                </div>
+                                                                            </div>
+                                                                            <!---Progress Bar ---->
+                                                                        </ProgressTemplate>
+                                                                    </asp:UpdateProgress>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="col-sm-6">
+                                                        <div class="clearfix mt5"></div>
+                                                        <div class="col-sm-12" runat="server" visible="false">
                                                             <div class="form-group">
                                                                 <label>Remarks</label>
                                                                 <asp:TextBox runat="server" ID="txtremarksyearofimportyes" Height="70px" TabIndex="25" MaxLength="250" class="form-control"></asp:TextBox>
@@ -530,13 +581,14 @@
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <div class="form-group">
-                                                    <label>Features & Details</label><span class="mandatory"> (Editable)</span>
-                                                    <asp:TextBox runat="server" ID="txtfeaturesanddetails" Style="background-color: #fff !important;" TabIndex="1"
-                                                        Width="1000" Height="70px" placeholder="Ductile,Tensile,Lusture" MaxLength="250"></asp:TextBox>
-                                                    <asp:HtmlEditorExtender ID="HtmlEditorExtender1" runat="server" TargetControlID="txtfeaturesanddetails">
-                                                    </asp:HtmlEditorExtender>
-                                                    <div class="clearfix" style="margin-top: 35px;"></div>
-                                                    <span>(Max length 250)</span>
+                                                    <label><strong>Type of item specification</strong></label>
+                                                    <div class="clearfix mt5"></div>
+                                                    <asp:RadioButtonList ID="rbitemspecification" runat="server" RepeatColumns="1" TabIndex="2" RepeatDirection="Horizontal" RepeatLayout="Flow">
+                                                        <asp:ListItem Value="Item Specification are available in open source">Item Specification are available in open source</asp:ListItem>
+                                                        <asp:ListItem Value="Items with DPSU specifications">Items with DPSU specifications</asp:ListItem>
+                                                        <asp:ListItem Value="Items with OEM specification">Items with OEM specification</asp:ListItem>
+                                                        <asp:ListItem Value="Items where no specification are available">Items where no specification are available</asp:ListItem>
+                                                    </asp:RadioButtonList>
                                                 </div>
                                             </div>
                                         </div>
@@ -545,13 +597,13 @@
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <div class="form-group">
-                                                    <label><strong>Type of item specification</strong></label>
-                                                    <div class="clearfix mt5"></div>
-                                                    <asp:RadioButtonList ID="rbitemspecification" runat="server" RepeatColumns="1" TabIndex="2" RepeatDirection="Horizontal" RepeatLayout="Flow">
-                                                        <asp:ListItem Value="Specification are available in open source/DPSU spec">Specification are available in open source/DPSU spec</asp:ListItem>
-                                                        <asp:ListItem Value="Items with OEM specification">Items with OEM specification</asp:ListItem>
-                                                        <asp:ListItem Value="Items where no specification are available">Items where no specification are available</asp:ListItem>
-                                                    </asp:RadioButtonList>
+                                                    <label>Features & Details</label><span class="mandatory"> (Editable)</span>
+                                                    <asp:TextBox runat="server" ID="txtfeaturesanddetails" Style="background-color: #fff !important;" TabIndex="1"
+                                                        Width="1000" Height="70px" placeholder="Ductile,Tensile,Lusture" MaxLength="250"></asp:TextBox>
+                                                    <asp:HtmlEditorExtender ID="HtmlEditorExtender1" runat="server" TargetControlID="txtfeaturesanddetails">
+                                                    </asp:HtmlEditorExtender>
+                                                    <div class="clearfix" style="margin-top: 35px;"></div>
+                                                    <span>(Max length 250)</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -621,7 +673,6 @@
                                                                         <asp:CommandField ButtonType="Link" ShowEditButton="true" HeaderText="Action" ShowDeleteButton="true" />
                                                                     </Columns>
                                                                 </asp:GridView>
-
                                                             </div>
                                                         </div>
                                                     </ContentTemplate>
@@ -666,89 +717,31 @@
                                         <asp:UpdatePanel runat="server" ID="UpdatePanel1">
                                             <ContentTemplate>
                                                 <div class="table table-responsive">
-                                                    <table border="0" cellpadding="0" class="gridFormTable EstimateGridview" tabindex="1" cellspacing="0" style="border-collapse: collapse; width: 100%">
-                                                        <tr>
-                                                            <td>
-                                                                <label>Year:</label>
-                                                                <asp:DropDownList ID="ddlYearEstimate" runat="server" CssClass="form-control">
-                                                                    <asp:ListItem Value="-1">Select</asp:ListItem>
-                                                                    <asp:ListItem Value="1">2019-20</asp:ListItem>
-                                                                    <asp:ListItem Value="2">2020-21</asp:ListItem>
-                                                                    <asp:ListItem Value="3">2021-22</asp:ListItem>
-                                                                    <asp:ListItem Value="4">2022-23</asp:ListItem>
-                                                                    <asp:ListItem Value="5">2023-24</asp:ListItem>
-                                                                </asp:DropDownList>
-                                                            </td>
-                                                            <td>
-                                                                <label>Estimated Quantity</label>
-                                                                <asp:TextBox ID="txtestimateQuantity" runat="server" CssClass="form-control" />
-                                                            </td>
-                                                            <td>
-                                                                <label>Measuring Unit</label>
-                                                                <asp:DropDownList ID="ddlMeasuringUnit" runat="server" CssClass="form-control">
-                                                                    <asp:ListItem Value="-1">Select</asp:ListItem>
-                                                                    <asp:ListItem Value="Centimeter">Centimeter</asp:ListItem>
-                                                                    <asp:ListItem Value="Gram">Gram</asp:ListItem>
-                                                                    <asp:ListItem Value="Inch">Inch</asp:ListItem>
-                                                                    <asp:ListItem Value="Kg">Kg</asp:ListItem>
-                                                                    <asp:ListItem Value="Mtr">Mtr</asp:ListItem>
-                                                                    <asp:ListItem Value="Inch">Inch</asp:ListItem>
-                                                                    <asp:ListItem Value="Number">Number</asp:ListItem>
-                                                                    <asp:ListItem Value="Ounce">Ounce</asp:ListItem>
-                                                                    <asp:ListItem Value="Other">Other</asp:ListItem>
-                                                                    <asp:ListItem Value="Pound">Pound</asp:ListItem>
-                                                                    <asp:ListItem Value="Ton">Ton</asp:ListItem>
-                                                                </asp:DropDownList>
-                                                            </td>
-                                                            <td runat="server" visible="false">
-                                                                <label>Estimated Price / LPP (Only Numbers)</label>
-                                                                <asp:TextBox ID="txtestimatePriceLLp" runat="server" CssClass="form-control" />
-                                                            </td>
-                                                            <td>
-                                                                <asp:LinkButton ID="btnAddEstimate" runat="server" Style="margin-top: 18px;" CssClass="btn btn-primary" Text="Add" OnClick="btnAddEstimate_Click"></asp:LinkButton>
-                                                            </td>
-                                                        </tr>
-                                                    </table>
-                                                    <asp:GridView ID="GvEstimateQuanPrice" runat="server" CssClass="table table-hover EstimateGridviewResult manage-user" Style="width: 100%" AutoGenerateColumns="false" OnRowDataBound="GvEstimateQuanPrice_RowDataBound"
-                                                        DataKeyNames="ProdQtyPriceId" OnRowEditing="GvEstimateQuanPrice_RowEditing" OnRowCancelingEdit="GvEstimateQuanPrice_RowCancelingEdit" PageSize="8" AllowPaging="true" OnPageIndexChanging="GvEstimateQuanPrice_Paging"
-                                                        OnRowUpdating="GvEstimateQuanPrice_RowUpdating" OnRowDeleting="GvEstimateQuanPrice_RowDeleting" EmptyDataText="No records has been added."
-                                                        Width="450">
+                                                    <asp:GridView ID="GvEstiateQuanPrice" runat="server" CssClass="table table-hover" CellPadding="4" ShowFooter="true"
+                                                        ForeColor="#333333" GridLines="None" AutoGenerateColumns="false" OnRowCreated="GvEstiateQuanPrice_RowCreated">
+                                                        <AlternatingRowStyle BackColor="White" />
                                                         <Columns>
-                                                            <asp:TemplateField HeaderText="Sr.No" ItemStyle-Width="10%">
+                                                            <asp:BoundField DataField="SNo" HeaderText="Raw Number" />
+                                                            <asp:TemplateField HeaderText="Year">
                                                                 <ItemTemplate>
-                                                                    <%#Container.DataItemIndex+1 %>
-                                                                </ItemTemplate>
-                                                            </asp:TemplateField>
-                                                            <asp:TemplateField HeaderText="Year (Editable)" ItemStyle-Width="25%">
-                                                                <ItemTemplate>
-                                                                    <asp:Label ID="lblYear" runat="server" Text='<%# Eval("FYear") %>'></asp:Label>
-                                                                </ItemTemplate>
-                                                                <EditItemTemplate>
-                                                                    <asp:DropDownList ID="ddlYearEstimateGrid" runat="server" CssClass="form-control">
+                                                                    <asp:DropDownList ID="ddlYearEstimate" runat="server" CssClass="form-control">
                                                                         <asp:ListItem Value="-1">Select</asp:ListItem>
-                                                                        <asp:ListItem Value="1">2019-20</asp:ListItem>
-                                                                        <asp:ListItem Value="2">2019-21</asp:ListItem>
-                                                                        <asp:ListItem Value="3">2019-22</asp:ListItem>
-                                                                        <asp:ListItem Value="4">2019-23</asp:ListItem>
-                                                                        <asp:ListItem Value="5">2019-24</asp:ListItem>
+                                                                        <asp:ListItem Value="1">2020-21</asp:ListItem>
+                                                                        <asp:ListItem Value="2">2021-22</asp:ListItem>
+                                                                        <asp:ListItem Value="3">2022-23</asp:ListItem>
+                                                                        <asp:ListItem Value="4">2023-24</asp:ListItem>
+                                                                        <asp:ListItem Value="5">2024-25</asp:ListItem>
                                                                     </asp:DropDownList>
-                                                                </EditItemTemplate>
-                                                            </asp:TemplateField>
-                                                            <asp:TemplateField HeaderText="Estimated Quantity (Editable)" ItemStyle-Width="25%">
-                                                                <ItemTemplate>
-                                                                    <asp:Label ID="lblestimateQuantityGrid" runat="server" Text='<%# Eval("EstimatedQty") %>'></asp:Label>
                                                                 </ItemTemplate>
-                                                                <EditItemTemplate>
-                                                                    <asp:TextBox ID="txtEstimateQuantityGrid" runat="server" CssClass="form-control">                                                                        
-                                                                    </asp:TextBox>
-                                                                </EditItemTemplate>
                                                             </asp:TemplateField>
-                                                            <asp:TemplateField HeaderText="Measuring Unit (Editable)" ItemStyle-Width="25%">
+                                                            <asp:TemplateField HeaderText="Estimated Quantity">
                                                                 <ItemTemplate>
-                                                                    <asp:Label ID="lblMeasuringUnitGrid" runat="server" Text='<%# Eval("Unit") %>'></asp:Label>
+                                                                    <asp:TextBox ID="txtestimateQuantity" onkeypress="return isNumberKey(event)" runat="server" CssClass="form-control" />
                                                                 </ItemTemplate>
-                                                                <EditItemTemplate>
-                                                                    <asp:DropDownList ID="ddlEstimateUnit" runat="server" CssClass="form-control">
+                                                            </asp:TemplateField>
+                                                            <asp:TemplateField HeaderText="Unit">
+                                                                <ItemTemplate>
+                                                                    <asp:DropDownList ID="ddlMeasuringUnit" runat="server" CssClass="form-control">
                                                                         <asp:ListItem Value="-1">Select</asp:ListItem>
                                                                         <asp:ListItem Value="Centimeter">Centimeter</asp:ListItem>
                                                                         <asp:ListItem Value="Gram">Gram</asp:ListItem>
@@ -762,19 +755,67 @@
                                                                         <asp:ListItem Value="Pound">Pound</asp:ListItem>
                                                                         <asp:ListItem Value="Ton">Ton</asp:ListItem>
                                                                     </asp:DropDownList>
-                                                                </EditItemTemplate>
-                                                            </asp:TemplateField>
-                                                            <asp:TemplateField HeaderText="Estimated Price / LPP (Only Numbers) (Editable)" Visible="false">
-                                                                <ItemTemplate>
-                                                                    <asp:Label ID="lblestimatePriceLLpGrid" runat="server" Text='<%# Eval("EstimatedQty") %>'></asp:Label>
                                                                 </ItemTemplate>
-                                                                <EditItemTemplate>
-                                                                    <asp:TextBox ID="txtEstimatePriceLLpGrid" runat="server" CssClass="form-control">                                                                        
-                                                                    </asp:TextBox>
-                                                                </EditItemTemplate>
                                                             </asp:TemplateField>
-                                                            <asp:CommandField ButtonType="Link" ShowEditButton="true" ItemStyle-Width="15%" ShowDeleteButton="true" />
+                                                            <asp:TemplateField HeaderText="Estimated Price/Last Purchase Price (in Rs)">
+                                                                <ItemTemplate>
+                                                                    <asp:TextBox ID="txtestimatePriceLLp" runat="server" onkeypress="return isNumberKey(event)" CssClass="form-control" />
+                                                                </ItemTemplate>
+                                                                <FooterStyle HorizontalAlign="Right" />
+                                                                <FooterTemplate>
+                                                                    <asp:LinkButton ID="btnAddEstimate" runat="server" Text="Add New Row" CssClass="btn btn-primary pull-right" OnClick="btnAddEstimate_Click"></asp:LinkButton>
+                                                                </FooterTemplate>
+                                                            </asp:TemplateField>
+                                                            <asp:TemplateField>
+                                                                <ItemTemplate>
+                                                                    <asp:LinkButton ID="lbRemoveestimate" runat="server" CssClass="fa fa-times" OnClick="lbRemoveestimate_Click"></asp:LinkButton>
+                                                                </ItemTemplate>
+                                                            </asp:TemplateField>
                                                         </Columns>
+                                                        <EditRowStyle BackColor="#2461BF" />
+                                                        <FooterStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
+                                                        <HeaderStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
+                                                        <PagerStyle BackColor="#2461BF" ForeColor="White" HorizontalAlign="Center" />
+                                                        <RowStyle BackColor="#EFF3FB" />
+                                                        <SelectedRowStyle BackColor="#D1DDF1" Font-Bold="True" ForeColor="#333333" />
+                                                        <SortedAscendingCellStyle BackColor="#F5F7FB" />
+                                                        <SortedAscendingHeaderStyle BackColor="#6D95E1" />
+                                                        <SortedDescendingCellStyle BackColor="#E9EBEF" />
+                                                        <SortedDescendingHeaderStyle BackColor="#4870BE" />
+                                                    </asp:GridView>
+                                                    <asp:GridView ID="GvEstimateQuanPriceEdit" runat="server" CssClass="table table-hover" CellPadding="4" ShowFooter="true"
+                                                        ForeColor="#333333" GridLines="None" AutoGenerateColumns="false" OnRowCommand="GvEstimateQuanPriceEdit_RowCommand">
+                                                        <AlternatingRowStyle BackColor="White" />
+                                                        <Columns>
+                                                            <asp:TemplateField HeaderText="Sr.No">
+                                                                <ItemTemplate>
+                                                                    <%#Container.DataItemIndex+1 %>
+                                                                </ItemTemplate>
+                                                            </asp:TemplateField>
+                                                            <asp:BoundField DataField="FYear" HeaderText="Year" />
+                                                            <asp:BoundField DataField="EstimatedQty" HeaderText="Estimated Quantity" />
+                                                            <asp:BoundField DataField="Unit" HeaderText="Unit" />
+                                                            <asp:BoundField DataField="EstimatedPrice" HeaderText="Estimated Price/Last Purchase Price (in Rs)" />
+                                                            <asp:TemplateField HeaderText="Action">
+                                                                <ItemTemplate>
+                                                                    <asp:HiddenField ID="hfyearid" runat="server" Value='<%#Eval("Year") %>' />
+                                                                    <asp:HiddenField ID="HiddenField1" runat="server" Value='<%#Eval("ProdQtyPriceId") %>' />
+                                                                    <asp:LinkButton ID="lbladdnewmanufacilityedit" runat="server" Class="fa fa-plus-circle" CommandArgument='<%#Eval("ProdQtyPriceId") %>' CommandName="addnewmfe"></asp:LinkButton>
+                                                                    <asp:LinkButton ID="lblupdatenewmanufacilityedit" runat="server" Class="fa fa-edit" CommandArgument='<%# ((GridViewRow) Container).RowIndex %>' CommandName="updatenewmfe"></asp:LinkButton>
+                                                                    <asp:LinkButton ID="lbldeletenewmanufacilityedit" runat="server" Class="fa fa-trash" CommandArgument='<%#Eval("ProdQtyPriceId") %>' CommandName="deletenewmfe"></asp:LinkButton>
+                                                                </ItemTemplate>
+                                                            </asp:TemplateField>
+                                                        </Columns>
+                                                        <EditRowStyle BackColor="#2461BF" />
+                                                        <FooterStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
+                                                        <HeaderStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
+                                                        <PagerStyle BackColor="#2461BF" ForeColor="White" HorizontalAlign="Center" />
+                                                        <RowStyle BackColor="#EFF3FB" />
+                                                        <SelectedRowStyle BackColor="#D1DDF1" Font-Bold="True" ForeColor="#333333" />
+                                                        <SortedAscendingCellStyle BackColor="#F5F7FB" />
+                                                        <SortedAscendingHeaderStyle BackColor="#6D95E1" />
+                                                        <SortedDescendingCellStyle BackColor="#E9EBEF" />
+                                                        <SortedDescendingHeaderStyle BackColor="#4870BE" />
                                                     </asp:GridView>
                                                 </div>
                                             </ContentTemplate>
@@ -794,79 +835,37 @@
                                     </div>
                                     <div class="section-pannel">
                                         <div class="row">
-                                            <div class="col-md-12">
+                                            <div class="col-md-4">
                                                 <div class="form-group">
-                                                    <label>PROCURMENT CATEGORY</label>
-                                                    <div class="clearfix"></div>
-                                                    <asp:GridView runat="server" ID="gvprocurmentcategory" TabIndex="2" class="table-responsive table" AutoGenerateColumns="False">
-                                                        <Columns>
-                                                            <asp:TemplateField HeaderText="Sr.No">
-                                                                <ItemTemplate>
-                                                                    <%#Container.DataItemIndex+1 %>
-                                                                </ItemTemplate>
-                                                            </asp:TemplateField>
-                                                            <asp:TemplateField>
-                                                                <ItemTemplate>
-                                                                    <asp:CheckBox runat="server" ID="chkprocurmentcategory" />
-                                                                    <asp:HiddenField runat="server" ID="hfproccateid" Value='<%#Eval("SCategoryId") %>' />
-                                                                </ItemTemplate>
-                                                            </asp:TemplateField>
-                                                            <asp:BoundField runat="server" DataField="SCategoryName" />
-                                                        </Columns>
-                                                    </asp:GridView>
+                                                    <h5>Indigenization Category</h5>
+                                                    <asp:CheckBoxList ID="rbIgCategory" runat="server" RepeatColumns="1" RepeatDirection="Horizontal" RepeatLayout="Flow">
+                                                        <asp:ListItem Value="23">Item Under Extant Procedure</asp:ListItem>
+                                                        <asp:ListItem Value="25">Item Under Make-II</asp:ListItem>
+                                                        <asp:ListItem Value="24">Item Under IGA</asp:ListItem>
+                                                        <asp:ListItem Value="26">Item Under iDEx/AI/Innovation/R&D</asp:ListItem>
+                                                    </asp:CheckBoxList>
                                                 </div>
                                             </div>
-                                            <div class="clearfix"></div>
-                                            <div id="divmake2status" class="col-md-12 row" runat="server" style="display: none">
-                                                <div class="col-md-3">
-                                                    <div class="form-group">
-                                                        <label>Type</label>
-                                                        <asp:DropDownList ID="ddlteneoi" runat="server" CssClass="form-control">
-                                                            <asp:ListItem Value="0" Selected="True">Select</asp:ListItem>
-                                                            <asp:ListItem Value="1">Preparing technical specifications</asp:ListItem>
-                                                            <asp:ListItem Value="2">Tender floated</asp:ListItem>
-                                                            <asp:ListItem Value="3">EOI floated</asp:ListItem>
-                                                            <asp:ListItem Value="4">Capability & capacity asessment of  the vendors</asp:ListItem>
-                                                            <asp:ListItem Value="5">Prototype development</asp:ListItem>
-                                                            <asp:ListItem Value="6">Trial & test of prototype</asp:ListItem>
-                                                            <asp:ListItem Value="7">Price bid opening</asp:ListItem>
-                                                            <asp:ListItem Value="8">Order placement</asp:ListItem>
-                                                        </asp:DropDownList>
-                                                    </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <h5>Status of Indigenization</h5>
+                                                    <label>EoI/RFP</label>
+                                                    <asp:RadioButtonList ID="rbeoimake2" runat="server" RepeatColumns="2" RepeatDirection="Horizontal" RepeatLayout="Flow">
+                                                        <asp:ListItem Value="25" style="margin-left: 10px;">Yes</asp:ListItem>
+                                                        <asp:ListItem Value="0" style="margin-left: 10px;">No</asp:ListItem>
+                                                    </asp:RadioButtonList>
                                                 </div>
-                                                <div runat="server" id="divtimedateurl" style="display: none;">
-                                                    <div class="col-md-3">
-                                                        <div class="form-group ">
-                                                            <label>Status</label>
-                                                            <asp:DropDownList runat="server" ID="ddlstatus" class="form-control" TabIndex="1">
-                                                                <asp:ListItem Value="Not Floated" Selected="True">Not Floated</asp:ListItem>
-                                                                <asp:ListItem Value="Archive">Archive</asp:ListItem>
-                                                                <asp:ListItem Value="Live">Live</asp:ListItem>
-                                                                <asp:ListItem Value="To be Floated shortly">To be Floated shortly</asp:ListItem>
-                                                            </asp:DropDownList>
-                                                        </div>
-                                                    </div>
-                                                    <div runat="server" id="extimedatevisible" style="display: none;">
-                                                        <div class="col-md-3">
-                                                            <div class="form-group">
-                                                                <label>Last date of submission</label>
-                                                                <asp:TextBox runat="server" ID="txtdate" type="date" TabIndex="3" class="form-control inputbox"></asp:TextBox>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-3">
-                                                            <div class="form-group">
-                                                                <label>URL</label>
-                                                                <asp:TextBox runat="server" ID="txtendorurl" TabIndex="4" class="form-control"></asp:TextBox>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                                <div class="clearfix"></div>
+                                                <div class="form-group">
+                                                    <label>Link</label>
+                                                    <asp:TextBox ID="txteoilink" runat="server" CssClass="form-control" placeholder="Link of Tendor"></asp:TextBox>
                                                 </div>
                                             </div>
-                                            <div class="clearfix mt5"></div>
-                                            <div id="Div1" class="col-md-12" runat="server">
+
+                                            <div class="col-md-4" runat="server">
                                                 <div class="form-group">
-                                                    <asp:Label runat="server" ID="Label1" CssClass="form-label " Text="PROCURMENT CATEGORY REMARK"></asp:Label>
-                                                    <asp:TextBox runat="server" ID="txtremarksprocurmentCategory" TabIndex="3" MaxLength="250" Height="70px" class="form-control"></asp:TextBox>
+                                                    <asp:Label runat="server" ID="Label1" CssClass="form-label " Text="Quality Assurance"></asp:Label>
+                                                    <asp:TextBox runat="server" ID="txtremarksprocurmentCategory" TabIndex="3" MaxLength="250" Height="115px" class="form-control"></asp:TextBox>
                                                     <div class="clearfix" style="margin-top: 5px;"></div>
                                                     <span>(Max length 250 words only)</span>
                                                 </div>
@@ -1030,6 +1029,18 @@
                                                                     </asp:CheckBoxList>
                                                                 </div>
                                                             </div>
+                                                            <div class="form-group">
+                                                                <label>
+                                                                    Product is eligible to be displayed for general viewing (without registration) and hereby respective DPSU/OFB/SHQ provide consent to Srijandefence Portal for onward display of the relevant information at list of Product available for indigenization
+                                                                     <span class="mandatory">*</span>
+                                                                </label>
+                                                                <div class="fr">
+                                                                    <asp:RadioButtonList ID="rbeligible" runat="server" RepeatColumns="2" RepeatDirection="Horizontal" RepeatLayout="Table">
+                                                                        <asp:ListItem Value="Y">Yes</asp:ListItem>
+                                                                        <asp:ListItem Value="N" style="margin-left: 10px;">No</asp:ListItem>
+                                                                    </asp:RadioButtonList>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1040,35 +1051,37 @@
                             </div>
                         </div>
                     </div>
-                    <asp:Panel ID="Panel1" runat="server" DefaultButton="btnsubmitpanel1">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <asp:UpdatePanel runat="server" ID="UPSUBMIT">
-                                        <ContentTemplate>
-                                            <div runat="server" id="myhtmldiv"></div>
-                                            <asp:Button runat="server" ID="btnsubmitpanel1" CssClass="btn btn-primary pull-right" TabIndex="72" Text="Save" OnClick="btnsubmitpanel1_Click" OnClientClick="return confirm('Are you sure you want to save this product?');" />
-                                        </ContentTemplate>
-                                        <Triggers>
-                                            <asp:PostBackTrigger runat="server" ControlID="btnsubmitpanel1" />
-                                        </Triggers>
-                                    </asp:UpdatePanel>
-                                    <asp:UpdateProgress ID="UpdateProgress6" runat="server" AssociatedUpdatePanelID="UPSUBMIT">
-                                        <ProgressTemplate>
-                                            <!---Progress Bar ---->
-                                            <div class="overlay-progress">
-                                                <div class="custom-progress-bar blue stripes">
-                                                    <span></span>
-                                                    <p>Processing</p>
+                    <div>
+                        <asp:Panel ID="Panel1" runat="server" DefaultButton="btnsubmitpanel1">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <asp:UpdatePanel runat="server" ID="UPSUBMIT">
+                                            <ContentTemplate>
+                                                <div runat="server" id="myhtmldiv"></div>
+                                                <asp:Button runat="server" ID="btnsubmitpanel1" CssClass="btn btn-primary pull-right" TabIndex="72" Text="Save" OnClick="btnsubmitpanel1_Click" OnClientClick="return confirm('Are you sure you want to save this product?');" />
+                                            </ContentTemplate>
+                                            <Triggers>
+                                                <asp:PostBackTrigger runat="server" ControlID="btnsubmitpanel1" />
+                                            </Triggers>
+                                        </asp:UpdatePanel>
+                                        <asp:UpdateProgress ID="UpdateProgress6" runat="server" AssociatedUpdatePanelID="UPSUBMIT">
+                                            <ProgressTemplate>
+                                                <!---Progress Bar ---->
+                                                <div class="overlay-progress">
+                                                    <div class="custom-progress-bar blue stripes">
+                                                        <span></span>
+                                                        <p>Processing</p>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <!---Progress Bar ---->
-                                        </ProgressTemplate>
-                                    </asp:UpdateProgress>
+                                                <!---Progress Bar ---->
+                                            </ProgressTemplate>
+                                        </asp:UpdateProgress>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </asp:Panel>
+                        </asp:Panel>
+                    </div>
                     <asp:HiddenField runat="server" ID="hfprodid" />
                     <asp:HiddenField runat="server" ID="hfprodrefno" />
                     <asp:HiddenField runat="server" ID="hfcomprefno" />
@@ -1173,8 +1186,159 @@
                             </asp:UpdateProgress>
                         </div>
                     </div>
+                    <div class="modal fade" id="divbank" role="dialog" data-keyboard="false" data-backdrop="static">
+                        <div class="modal-dialog" style="width: 400px;">
+                            <asp:UpdatePanel ID="UpdatePanel7" runat="server">
+                                <ContentTemplate>
+                                    <div class="modal-content">
+                                        <div class="modal-header modal-header1">
+                                            <button type="button" class="close close1" data-dismiss="modal">&times;</button>
+                                            <h4 class="modal-title">Estimated Quantity</h4>
+                                        </div>
+                                        <div class="modal-body clearfix" style="padding: 0 20px;">
+                                            <div class="form-group" style="margin: 0">
+                                                <label for="uname" class=" tetLable">
+                                                    Year
+                                                </label>
+                                                <asp:DropDownList runat="server" ID="txtestimateyearu" Class="form-control">
+                                                    <asp:ListItem Value="-1">Select</asp:ListItem>
+                                                    <asp:ListItem Value="1">2019-20</asp:ListItem>
+                                                    <asp:ListItem Value="2">2020-21</asp:ListItem>
+                                                    <asp:ListItem Value="3">2021-22</asp:ListItem>
+                                                    <asp:ListItem Value="4">2022-23</asp:ListItem>
+                                                    <asp:ListItem Value="5">2023-24</asp:ListItem>
+                                                </asp:DropDownList>
+                                            </div>
+                                            <div class="form-group" style="margin: 0">
+                                                <label for="uname" class=" tetLable">
+                                                    Estimated Quantity
+                                                </label>
+                                                <asp:TextBox runat="server" ID="txtestimatequanu" placeholder="Estimated Quantity" onkeypress="return isNumberKey(event)" Class="form-control"></asp:TextBox>
+                                            </div>
+                                            <div class="form-group" style="margin: 0">
+                                                <label for="uname" class=" tetLable">
+                                                    Unit
+                                                </label>
+                                                <asp:DropDownList ID="ddlestimateunitu" runat="server" CssClass="form-control">
+                                                    <asp:ListItem Value="-1">Select</asp:ListItem>
+                                                    <asp:ListItem Value="Centimeter">Centimeter</asp:ListItem>
+                                                    <asp:ListItem Value="Gram">Gram</asp:ListItem>
+                                                    <asp:ListItem Value="Inch">Inch</asp:ListItem>
+                                                    <asp:ListItem Value="Kg">Kg</asp:ListItem>
+                                                    <asp:ListItem Value="Mtr">Mtr</asp:ListItem>
+                                                    <asp:ListItem Value="Inch">Inch</asp:ListItem>
+                                                    <asp:ListItem Value="Number">Number</asp:ListItem>
+                                                    <asp:ListItem Value="Ounce">Ounce</asp:ListItem>
+                                                    <asp:ListItem Value="Other">Other</asp:ListItem>
+                                                    <asp:ListItem Value="Pound">Pound</asp:ListItem>
+                                                    <asp:ListItem Value="Ton">Ton</asp:ListItem>
+                                                </asp:DropDownList>
+                                            </div>
+                                            <div class="form-group" style="margin: 0">
+                                                <label for="uname" class=" tetLable">
+                                                    Estimated Price/Last Purchase Price (in Rs)
+                                                </label>
+                                                <asp:TextBox ID="txtestimatepriceu" runat="server" palceholder="Estimated Price/Last Purchase Price (in Rs)" onkeypress="return isNumberKey(event)" CssClass="form-control"></asp:TextBox>
+                                            </div>
+                                            <div class="clearfix mt10"></div>
+                                            <div class="form-group" style="margin: 0">
+                                                <asp:LinkButton ID="lblsub2" runat="server" Text="Edit & Update" CssClass="btn btn-primary pull-right mr10" OnClick="lblsub2_Click"></asp:LinkButton>
+                                            </div>
+                                            <div class="clearfix mt10"></div>
+                                        </div>
+                                    </div>
+                                </ContentTemplate>
+                            </asp:UpdatePanel>
+                        </div>
+                    </div>
+                    <div class="modal fade" id="divbank2" role="dialog" data-keyboard="false" data-backdrop="static">
+                        <div class="modal-dialog" style="width: 400px;">
+                            <asp:UpdatePanel ID="UpdatePanel9" runat="server">
+                                <ContentTemplate>
+                                    <div class="modal-content">
+                                        <div class="modal-header modal-header1">
+                                            <button type="button" class="close close1" data-dismiss="modal">&times;</button>
+                                            <h4 class="modal-title">Estimated Quantity</h4>
+                                        </div>
+                                        <div class="modal-body clearfix" style="padding: 0 20px;">
+                                            <div class="form-group" style="margin: 0">
+                                                <label for="uname" class=" tetLable">
+                                                    Year
+                                                </label>
+                                                <asp:DropDownList runat="server" ID="DropDownList3" Class="form-control">
+                                                    <asp:ListItem Value="-1">Select</asp:ListItem>
+                                                    <asp:ListItem Value="1">2019-20</asp:ListItem>
+                                                    <asp:ListItem Value="2">2020-21</asp:ListItem>
+                                                    <asp:ListItem Value="3">2021-22</asp:ListItem>
+                                                    <asp:ListItem Value="4">2022-23</asp:ListItem>
+                                                    <asp:ListItem Value="5">2023-24</asp:ListItem>
+                                                </asp:DropDownList>
+                                            </div>
+                                            <div class="form-group" style="margin: 0">
+                                                <label for="uname" class=" tetLable">
+                                                    Estimated Quantity
+                                                </label>
+                                                <asp:TextBox runat="server" ID="TextBox3" placeholder="Estimated Quantity" onkeypress="return isNumberKey(event)" Class="form-control"></asp:TextBox>
+                                            </div>
+                                            <div class="form-group" style="margin: 0">
+                                                <label for="uname" class=" tetLable">
+                                                    Unit
+                                                </label>
+                                                <asp:DropDownList ID="DropDownList4" runat="server" CssClass="form-control">
+                                                    <asp:ListItem Value="-1">Select</asp:ListItem>
+                                                    <asp:ListItem Value="Centimeter">Centimeter</asp:ListItem>
+                                                    <asp:ListItem Value="Gram">Gram</asp:ListItem>
+                                                    <asp:ListItem Value="Inch">Inch</asp:ListItem>
+                                                    <asp:ListItem Value="Kg">Kg</asp:ListItem>
+                                                    <asp:ListItem Value="Mtr">Mtr</asp:ListItem>
+                                                    <asp:ListItem Value="Inch">Inch</asp:ListItem>
+                                                    <asp:ListItem Value="Number">Number</asp:ListItem>
+                                                    <asp:ListItem Value="Ounce">Ounce</asp:ListItem>
+                                                    <asp:ListItem Value="Other">Other</asp:ListItem>
+                                                    <asp:ListItem Value="Pound">Pound</asp:ListItem>
+                                                    <asp:ListItem Value="Ton">Ton</asp:ListItem>
+                                                </asp:DropDownList>
+                                            </div>
+                                            <div class="form-group" style="margin: 0">
+                                                <label for="uname" class=" tetLable">
+                                                    Estimated Price/Last Purchase Price (in Rs)
+                                                </label>
+                                                <asp:TextBox ID="TextBox4" runat="server" palceholder="Estimated Price/Last Purchase Price (in Rs)" onkeypress="return isNumberKey(event)" CssClass="form-control"></asp:TextBox>
+                                            </div>
+                                            <div class="clearfix mt10"></div>
+                                            <div class="form-group" style="margin: 0">
+                                                <asp:LinkButton ID="lblsub3" runat="server" Text="Edit & Update" CssClass="btn btn-primary pull-right mr10" OnClick="lblsub3_Click"></asp:LinkButton>
+                                            </div>
+                                            <div class="clearfix mt10"></div>
+                                        </div>
+                                    </div>
+                                </ContentTemplate>
+                            </asp:UpdatePanel>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+    <script type="text/javascript">
+        function showPopup1() {
+            $('#divbank').modal('show', function () {
+            });
+        }
+    </script>
+    <script type="text/javascript">
+        function showPopup2() {
+            $('#divbank2').modal('show', function () {
+            });
+        }
+    </script>
+    <script type="text/javascript">
+        function isNumberKey(evt) {
+            var charCode = (evt.which) ? evt.which : event.keyCode;
+            if (charCode != 46 && charCode > 31
+                && (charCode < 48 || charCode > 57))
+                return false;
+            return true;
+        }
+    </script>
 </asp:Content>

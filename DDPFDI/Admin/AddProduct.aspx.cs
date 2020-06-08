@@ -19,8 +19,10 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     private DataUtility Co = new DataUtility();
     private Logic Lo = new Logic();
     private DataTable dtImage = new DataTable();
+    private DataTable dtPdf = new DataTable();
     public DataTable dtSaveProdInfo = new DataTable();
     public DataTable dtSaveEstimateQuantity = new DataTable();
+    public DataTable dtSaveEstimateQuantity1 = new DataTable();
     DataTable DtNSFIIG = new DataTable();
     private string _msg = string.Empty;
     private string _sysMsg = string.Empty;
@@ -72,7 +74,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                             hidType.Value = objEnc.DecryptData(Session["Type"].ToString().Trim());
                             hfcomprefno.Value = Session["CompanyRefNo"].ToString().Trim();
                             BindGrid();
-                            BindGridEstimateQuantity();
+                            SetInitialRowEstimateQuanPrice();
                         }
                         if (hidType.Value.ToString() != "SuperAdmin" || hidType.Value.ToString() != "Admin")
                         {
@@ -83,21 +85,21 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                             if (Request.QueryString["mcurrentcompRefNo"] != null)
                             {
                                 BindMasterCategory();
+                                //  BindMasterSubCategory();
+                                // BindMaster3levelSubCategory();
                                 BindMasterTechnologyCategory();
                                 BindMasterPlatCategory();
-                                BindPurposeProcuremnt();
                                 BindEndUser();
                                 BindNodelEmail();
-                                HSNCodeLevel();
                             }
                             else
                             {
                                 BindMasterCategory();
+                                //  BindMasterSubCategory();
+                                //   BindMaster3levelSubCategory();
                                 BindMasterTechnologyCategory();
                                 BindMasterPlatCategory();
-                                BindPurposeProcuremnt();
                                 BindEndUser();
-                                HSNCodeLevel();
                             }
                         }
                         else
@@ -106,7 +108,6 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                             BindCountry();
                             BindFinancialYear();
                             IsProductImported();
-                            HSNCodeLevel();
                         }
                     }
                     if (hidType.Value == "Company")
@@ -600,12 +601,55 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     }
     protected void ddlsubcategory_SelectedIndexChanged(object sender, EventArgs e)
     {
-        BindMaster3levelSubCategory();
+        string m = ddlsubcategory.SelectedItem.Value;
+        DataTable dt2 = Lo.RetriveMasterSubCategoryDate(Convert.ToInt32(ddlsubcategory.SelectedItem.Value), "", "", "2to2", "", "");
+        if (dt2.Rows.Count > 0)
+        {
+            DataTable dt1sr = Lo.RetriveMasterSubCategoryDate(Convert.ToInt32(ddlsubcategory.SelectedItem.Value), "", "", "3to21", "", "");
+            ddlmastercategory.SelectedValue = dt1sr.Rows[0]["SCategoryId"].ToString();
+            Co.FillDropdownlist(ddlsubcategory, dt2, "SCategoryName", "SCategoryId");
+            ddlsubcategory.Items.Insert(0, "Select");
+            ddlsubcategory.SelectedValue = m;
+            DataTable dtbindvalue = Lo.RetriveMasterSubCategoryDate(Convert.ToInt32(ddlsubcategory.SelectedItem.Value), "", "", "SubSelectID", "", "");
+            if (dtbindvalue.Rows.Count > 0)
+            {
+                Co.FillDropdownlist(ddllevel3product, dtbindvalue, "SCategoryName", "SCategoryId");
+                ddllevel3product.Items.Insert(0, "Select");
+            }
+            else
+            {
+                ddllevel3product.Items.Clear();
+                ddllevel3product.Items.Insert(0, "Select");
+                ddllevel3product.Items.Insert(1, "NA");
+            }
+        }
         NSCCode(ddlmastercategory.SelectedItem.Text, ddlsubcategory.SelectedItem.Text);
     }
     protected void ddllevel3product_SelectedIndexChanged(object sender, EventArgs e)
     {
-        BindItemDescription();
+        if (ddllevel3product.SelectedItem.Text != "Select" && ddllevel3product.SelectedItem.Text != "NA")
+        {
+            lblviewitemcode.Visible = true;
+            //DataTable dt1 = Lo.RetriveMasterSubCategoryDate(Convert.ToInt32(ddllevel3product.SelectedItem.Value), "", "", "3to2", "", "");
+            //if (dt1.Rows.Count > 0)
+            //{
+            //    Co.FillDropdownlist(ddlsubcategory, dt1, "SCategoryName", "SCategoryId");
+            //    ddlsubcategory.Items.Insert(0, "Select");
+            //    DataTable dtbindvalue = Lo.RetriveMasterSubCategoryDate(Convert.ToInt32(ddllevel3product.SelectedItem.Value), "", "", "3to21", "", "");
+            //    ddlsubcategory.SelectedValue = dtbindvalue.Rows[0]["SCategoryId"].ToString();
+            //    DataTable dt1sr = Lo.RetriveMasterSubCategoryDate(Convert.ToInt32(ddlsubcategory.SelectedItem.Value), "", "", "3to21", "", "");
+            //    ddlmastercategory.SelectedValue = dt1sr.Rows[0]["SCategoryId"].ToString();
+            //}
+            //else
+            //{
+            //    ddllevel3product.SelectedValue = "Select";
+            //}
+            //NSCCode(ddlmastercategory.SelectedItem.Text, ddlsubcategory.SelectedItem.Text);
+        }
+        else
+        {
+            lblviewitemcode.Visible = false;
+        }
     }
     protected void ddltechnologycat_SelectedIndexChanged(object sender, EventArgs e)
     {
@@ -637,7 +681,6 @@ public partial class Admin_AddProduct : System.Web.UI.Page
             ddlnomnclature.Items.Clear();
         }
     }
-
     protected void rbproductImported_CheckedChanged(object sender, EventArgs e)
     {
         if (rbproductImported.SelectedItem.Value == "Y")
@@ -673,18 +716,6 @@ public partial class Admin_AddProduct : System.Web.UI.Page
             txtnsccode.Text = "";
         }
     }
-    private void HsHeadingNo(string NSNGroupddl)
-    {
-        try
-        {
-            string a = NSNGroupddl.Substring((NSNGroupddl.IndexOf("(") + 1), NSNGroupddl.IndexOf(")") - (NSNGroupddl.IndexOf("(") + 1));
-            txthscodereadonly.Text = a;
-        }
-        catch (Exception)
-        {
-            txthscodereadonly.Text = "";
-        }
-    }
     private void Nsncode8digit(string NSNGroupddl)
     {
         try
@@ -696,23 +727,6 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         {
             txthsncodereadonly.Text = "";
         }
-    }
-    protected void ddlhschapter_SelectedIndexChanged(object sender, EventArgs e)
-    {
-        HSNCodeLevel1();
-    }
-    protected void ddlhsncodelev1_SelectedIndexChanged(object sender, EventArgs e)
-    {
-        BindMasterHSNLevel2();
-        HsHeadingNo(ddlhsncodelev1.SelectedItem.Text);
-    }
-    protected void ddlhsncodelevel2_SelectedIndexChanged(object sender, EventArgs e)
-    {
-        BindMasterHSNLevel3();
-    }
-    protected void ddlhsncodelevel3_SelectedIndexChanged(object sender, EventArgs e)
-    {
-        Nsncode8digit(ddlhsncodelevel3.SelectedItem.Text);
     }
     #endregion
     #region For ProductCode
@@ -731,21 +745,34 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         {
             Co.FillDropdownlist(ddlmastercategory, DtMasterCategroy, "SCategoryName", "SCategoryID");
             ddlmastercategory.Items.Insert(0, "Select");
+            ddlsubcategory.SelectedIndex = -1;
+            ddllevel3product.SelectedIndex = -1;
         }
         else
         {
             DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, "NSN GROUP", "", "SelectProductCat", "", "");
             Co.FillDropdownlist(ddlmastercategory, DtMasterCategroy, "SCategoryName", "SCategoryID");
             ddlmastercategory.Items.Insert(0, "Select");
+            ddlsubcategory.SelectedIndex = -1;
+            ddllevel3product.SelectedIndex = -1;
         }
     }
     protected void BindMasterSubCategory()
     {
-        DataTable DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(Convert.ToInt32(ddlmastercategory.SelectedItem.Value), "", "", "SubSelectID", "", "");
+        DataTable DtMasterCategroy = new DataTable();
+        if (ddlmastercategory.SelectedItem.Text != "Select")
+        {
+            DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(Convert.ToInt32(ddlmastercategory.SelectedItem.Value), "", "", "SubSelectID", "", "");
+        }
+        else
+        {
+            DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, "", "", "SubSelectSec", "", "");
+        }
         if (DtMasterCategroy.Rows.Count > 0)
         {
             Co.FillDropdownlist(ddlsubcategory, DtMasterCategroy, "SCategoryName", "SCategoryId");
             ddlsubcategory.Items.Insert(0, "Select");
+            ddllevel3product.SelectedIndex = -1;
         }
         else
         {
@@ -755,23 +782,27 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     }
     protected void BindMaster3levelSubCategory()
     {
-        if (ddlsubcategory.SelectedItem.Value != null || ddlsubcategory.SelectedItem.Text != "Select")
+        DataTable DtMasterCategroyLevel3 = new DataTable();
+        //if (ddlsubcategory.SelectedItem.Value != null || ddlsubcategory.SelectedItem.Text != "Select")
+        //{
+        if (ddlsubcategory.SelectedIndex != -1)
+        { DtMasterCategroyLevel3 = Lo.RetriveMasterSubCategoryDate(Convert.ToInt32(ddlsubcategory.SelectedItem.Value), "", "", "SubSelectID", "", ""); }
+        else
+        { DtMasterCategroyLevel3 = Lo.RetriveMasterSubCategoryDate(0, "", "", "SubSelectthr", "", ""); }
+        if (DtMasterCategroyLevel3.Rows.Count > 0)
         {
-            DataTable DtMasterCategroyLevel3 = Lo.RetriveMasterSubCategoryDate(Convert.ToInt32(ddlsubcategory.SelectedItem.Value), "", "", "SubSelectID", "", "");
-            if (DtMasterCategroyLevel3.Rows.Count > 0)
-            {
-                Co.FillDropdownlist(ddllevel3product, DtMasterCategroyLevel3, "SCategoryName", "SCategoryId");
-                ddllevel3product.Items.Insert(0, "Select");
-                lblviewitemcode.Visible = true;
-            }
-            else
-            {
-                lblviewitemcode.Visible = false;
-                ddllevel3product.Items.Clear();
-                ddllevel3product.Items.Insert(0, "Select");
-                ddllevel3product.Items.Insert(1, "NA");
-            }
+            Co.FillDropdownlist(ddllevel3product, DtMasterCategroyLevel3, "SCategoryName", "SCategoryId");
+            ddllevel3product.Items.Insert(0, "Select");
+            lblviewitemcode.Visible = true;
         }
+        else
+        {
+            lblviewitemcode.Visible = false;
+            ddllevel3product.Items.Clear();
+            ddllevel3product.Items.Insert(0, "Select");
+            ddllevel3product.Items.Insert(1, "NA");
+        }
+        //}
     }
     protected void BindItemDescription()
     {
@@ -873,37 +904,8 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         else
         {
             DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, "DEFENCE PLATFORM", "", "SelectProductCat", "", "");
-
-
             Co.FillDropdownlist(ddlplatform, DtMasterCategroy, "SCategoryName", "SCategoryID");
-
             ddlplatform.Items.Insert(0, "Select");
-
-        }
-    }
-    #endregion
-    #region For PROCURMENT CATEGORY
-    protected void BindPurposeProcuremnt()
-    {
-        DataTable DtPurposeProcuremnt = new DataTable();
-        if (ddlcompany.SelectedItem.Text != "Select")
-        {
-            DtPurposeProcuremnt = Lo.RetriveMasterSubCategoryDate(0, "PROCURMENT CATEGORY", "", "SelectProductCat", ddlcompany.SelectedItem.Value, "");
-        }
-        else
-        {
-            DtPurposeProcuremnt = Lo.RetriveMasterSubCategoryDate(0, "PROCURMENT CATEGORY", "", "SelectProductCat", "", "");
-        }
-        if (DtPurposeProcuremnt.Rows.Count > 0)
-        {
-            gvprocurmentcategory.DataSource = DtPurposeProcuremnt;
-            gvprocurmentcategory.DataBind();
-        }
-        else
-        {
-            DtPurposeProcuremnt = Lo.RetriveMasterSubCategoryDate(0, "PROCURMENT CATEGORY", "", "SelectProductCat", "", "");
-            gvprocurmentcategory.DataSource = DtPurposeProcuremnt;
-            gvprocurmentcategory.DataBind();
         }
     }
     #endregion
@@ -946,71 +948,6 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         }
     }
     #endregion
-    #region for HS Code
-    public void HSCode()
-    {
-        DataTable DtMasterHS = Lo.RetriveMasterSubCategoryDate(0, "HS Code", "", "SelectInnerHSMaster", "", "");
-
-        if (DtMasterHS.Rows.Count > 0)
-        {
-            Co.FillDropdownlist(ddlHSNCode, DtMasterHS, "SCategoryName", "SCategoryID");
-            ddlHSNCode.Items.Insert(0, "Select");
-        }
-    }
-    #endregion
-    #region for HSN Code
-    public void HSNCodeLevel()
-    {
-        DataTable DtMasterHSN = Lo.RetriveMasterSubCategoryDate(0, "HSN CODE", "", "SelectInnerHSMaster", "", "");
-        if (DtMasterHSN.Rows.Count > 0)
-        {
-            Co.FillDropdownlist(ddlhschapter, DtMasterHSN, "SCategoryName", "SCategoryID");
-            ddlhschapter.Items.Insert(0, "Select");
-        }
-    }
-    public void HSNCodeLevel1()
-    {
-        DataTable DtMasterHSN = Lo.RetriveMasterSubCategoryDate(Convert.ToInt32(ddlhschapter.SelectedItem.Value), "", "", "SubSelectID", "", "");
-        if (DtMasterHSN.Rows.Count > 0)
-        {
-            Co.FillDropdownlist(ddlhsncodelev1, DtMasterHSN, "SCategoryName", "SCategoryID");
-            ddlhsncodelev1.Items.Insert(0, "Select");
-        }
-    }
-    protected void BindMasterHSNLevel2()
-    {
-        DataTable DtMasterHSNLev2 = Lo.RetriveMasterSubCategoryDate(Convert.ToInt32(ddlhsncodelev1.SelectedItem.Value), "", "", "SubSelectID", "", "");
-        if (DtMasterHSNLev2.Rows.Count > 0)
-        {
-            Co.FillDropdownlist(ddlhsncodelevel2, DtMasterHSNLev2, "SCategoryName", "SCategoryId");
-            ddlhsncodelevel2.Items.Insert(0, "Select");
-        }
-        else
-        {
-            ddlhsncodelevel2.Items.Clear();
-            ddlhsncodelevel2.Items.Insert(0, "Select");
-            txthscodereadonly.Text = "";
-        }
-    }
-    protected void BindMasterHSNLevel3()
-    {
-        if (ddlhsncodelevel2.SelectedItem.Value != null || ddlhsncodelevel2.SelectedItem.Text != "Select")
-        {
-            DataTable DtMasterHSNLevel3 = Lo.RetriveMasterSubCategoryDate(Convert.ToInt32(ddlhsncodelevel2.SelectedItem.Value), "", "", "SubSelectID", "", "");
-            if (DtMasterHSNLevel3.Rows.Count > 0)
-            {
-                Co.FillDropdownlist(ddlhsncodelevel3, DtMasterHSNLevel3, "SCategoryName", "SCategoryId");
-                ddlhsncodelevel3.Items.Insert(0, "Select");
-            }
-            else
-            {
-                ddlhsncodelevel3.Items.Clear();
-                ddlhsncodelevel3.Items.Insert(0, "Select");
-                ddlhsncodelevel3.Items.Insert(1, "NA");
-            }
-        }
-    }
-    #endregion
     #region For FinancialYear
     protected void BindFinancialYear()
     {
@@ -1035,6 +972,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     #endregion
     #region PanelSaveCode
     private string m;
+    string a, b = string.Empty;
     protected void SaveProductDescription()
     {
         try
@@ -1124,24 +1062,35 @@ public partial class Admin_AddProduct : System.Web.UI.Page
             HyPanel1["ProductDescription"] = Co.RSQandSQLInjection(txtproductdescription.Text.Trim(), "soft");
             HyPanel1["NSCCode"] = Co.RSQandSQLInjection(txtnsccode.Text.Trim(), "soft");
             HyPanel1["NIINCode"] = Co.RSQandSQLInjection(txtniincode.Text.Trim(), "soft");
-            if (fuitemdescriptionfile.HasFile != false)
+            HyPanel1["ItemDescriptionPDFFile"] = null;
+            if (fuitemdescriptionfile.HasFiles != false)
             {
-                PDFFileItemDescription();
-            }
-            else
-            {
-                if (hfprodid.Value == "")
+                if (hfprodid.Value != "")
                 {
-                    HyPanel1["ItemDescriptionPDFFile"] = "";
+                    DataTable dtPdfBind = Lo.RetriveProductCode("", hfprodrefno.Value, "RetrivePdf", hidType.Value);
+                    if (dtPdfBind.Rows.Count > 0)
+                    {
+                        short CountPdfTotal = Convert.ToInt16(fuitemdescriptionfile.PostedFiles.Count);
+                        short AlreadyUploadpdf = Convert.ToInt16(dtPdfBind.Rows.Count);
+                        PdfMaxCount = (CountPdfTotal + AlreadyUploadpdf);
+                        if (PdfMaxCount <= 4)
+                        {
+                            dtPdf = Pdfdb();
+                        }
+                    }
+                    else
+                    {
+                        if (fuitemdescriptionfile.HasFiles != false)
+                        {
+                            PdfMaxCount = 4;
+                            dtPdf = Pdfdb();
+                        }
+                    }
                 }
                 else
                 {
-                    if (lblfuitemdescriptionfile.Text != "")
-                    { HyPanel1["ItemDescriptionPDFFile"] = lblfuitemdescriptionfile.Text; }
-                    else
-                    {
-                        HyPanel1["ItemDescriptionPDFFile"] = "";
-                    }
+                    PdfMaxCount = 4;
+                    dtPdf = Pdfdb();
                 }
             }
             if (fuimages.HasFiles != false)
@@ -1178,15 +1127,8 @@ public partial class Admin_AddProduct : System.Web.UI.Page
             HyPanel1["OEMName"] = Co.RSQandSQLInjection(txtoemname.Text.Trim(), "soft");
             HyPanel1["OEMCountry"] = Convert.ToInt64(txtcountry.SelectedItem.Value);
             HyPanel1["DPSUPartNumber"] = Co.RSQandSQLInjection(txtdpsupartnumber.Text.Trim(), "soft");
-            if (ddlHSNCode.Text != "")
-            {
-                HyPanel1["HSCode"] = Co.RSQandSQLInjection(ddlHSNCode.SelectedItem.Value, "soft");
-            }
-            else
-            {
-                HyPanel1["HSCode"] = null;
-            }
-            HyPanel1["HSNCode"] = Co.RSQandSQLInjection(txthsncode.Text.Trim(), "soft");
+            HyPanel1["HSCode"] = null;
+            HyPanel1["HSNCode"] = null;
             HyPanel1["HSChapter"] = null;
             HyPanel1["HSNCodeLevel1"] = null;
             HyPanel1["HSNCodeLevel2"] = null;
@@ -1242,14 +1184,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
             {
                 HyPanel1["TechnologyLevel2"] = null;
             }
-            if (ddltechlevel3.SelectedItem.Value != "Select")
-            {
-                HyPanel1["TechnologyLevel3"] = Co.RSQandSQLInjection(ddltechlevel3.SelectedItem.Value, "soft");
-            }
-            else
-            {
-                HyPanel1["TechnologyLevel3"] = null;
-            }
+            HyPanel1["TechnologyLevel3"] = null;
             HyPanel1["SearchKeyword"] = Co.RSQandSQLInjection(txtsearchkeyword.Text.Trim(), "soft");
             HyPanel1["IsIndeginized"] = Co.RSQandSQLInjection(rbisindinised.SelectedItem.Value, "soft");
             HyPanel1["ManufactureName"] = Co.RSQandSQLInjection(txtmanufacturename.Text.Trim(), "soft");
@@ -1265,20 +1200,17 @@ public partial class Admin_AddProduct : System.Web.UI.Page
             if (rbproductImported.SelectedItem.Value == "N")
             {
                 HyPanel1["IsProductImported"] = Co.RSQandSQLInjection(rbproductImported.SelectedItem.Value.Trim(), "soft");
-                HyPanel1["YearofImport"] = Co.RSQandSQLInjection("All (Expect Last Five Year)", "soft");
+                HyPanel1["YearofImport"] = null;
                 HyPanel1["YearofImportRemarks"] = Co.RSQandSQLInjection(txtremarksyearofimportyes.Text.Trim(), "soft");
             }
             else
             {
                 HyPanel1["IsProductImported"] = Co.RSQandSQLInjection(rbproductImported.SelectedItem.Value.Trim(), "soft");
-                foreach (ListItem chk in chklistimportyearfive.Items)
-                {
-                    if (chk.Selected == true)
-                    {
-                        IsImportedyesYear = IsImportedyesYear + "," + chk.Value;
-                    }
-                }
-                HyPanel1["YearofImport"] = Co.RSQandSQLInjection(IsImportedyesYear.Substring(1).ToString(), "soft");
+                dtSaveEstimateQuantity1 = Dvinsert();
+                HyPanel1["YearofImport"] = null;
+                HyPanel1["NEstimateQuantity"] = null;
+                HyPanel1["NEstimateUnit"] = null;
+                HyPanel1["NEstimatePrice"] = null;
                 HyPanel1["YearofImportRemarks"] = Co.RSQandSQLInjection(txtremarksyearofimportyes.Text.Trim(), "soft");
             }
             HyPanel1["FeatursandDetail"] = Co.RSQandSQLInjection(txtfeaturesanddetails.Text.Trim(), "soft");
@@ -1288,56 +1220,28 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                 dtSaveProdInfo = SaveCodeProdInfo();
             }
             HyPanel1["AdditionalDetail"] = Co.RSQandSQLInjection(txtadditionalinfo.Text.Trim(), "soft");
-            if (GvEstimateQuanPrice.Rows.Count != 0)
+            if (ViewState["MF"] != null)
             {
-                dtSaveEstimateQuantity = SaveCodeEstimateQuantity();
+                SaveCodeEstimateQuantity();
+                dtSaveEstimateQuantity = (DataTable)ViewState["MF"];
             }
-            foreach (GridViewRow gvPofPROCURMENT in gvprocurmentcategory.Rows)
+            foreach (ListItem li in rbIgCategory.Items)
             {
-                CheckBox chkBxProc = (CheckBox)gvPofPROCURMENT.FindControl("chkprocurmentcategory");
-                HiddenField hfProcCatId = (HiddenField)gvPofPROCURMENT.FindControl("hfproccateid");
-                if (chkBxProc != null && chkBxProc.Checked)
+                if (li.Selected == true)
                 {
-                    ProcurmentCat = ProcurmentCat + "," + hfProcCatId.Value;
+                    a = a + rbIgCategory.SelectedItem.Value + ",";
                 }
             }
-            if (ProcurmentCat.ToString() != "")
-            {
-                HyPanel1["PurposeofProcurement"] = Co.RSQandSQLInjection(ProcurmentCat.Substring(1).ToString() + ",", "soft");
-            }
-            else
-            {
-                HyPanel1["PurposeofProcurement"] = "";
-            }
+            HyPanel1["PurposeofProcurement"] = a.ToString();
             HyPanel1["ProcurmentCategoryRemark"] = Co.RSQandSQLInjection(txtremarksprocurmentCategory.Text.Trim(), "soft");
-            if (ProcurmentCat.ToString() != "")
-            {
-                HyPanel1["TenderSubmition"] = Co.RSQandSQLInjection(ddlteneoi.SelectedItem.Text, "soft");
-                HyPanel1["TenderStatus"] = Co.RSQandSQLInjection(ddlstatus.SelectedItem.Value, "soft");
-                if (txtdate.Text != "")
-                {
-                    DateTime Datetendor = Convert.ToDateTime(txtdate.Text);
-                    string FinalDate = Datetendor.ToString("dd-MMM-yyyy");
-                    HyPanel1["TenderFillDate"] = Co.RSQandSQLInjection(FinalDate.ToString(), "soft");
-                }
-                else
-                {
-                    HyPanel1["TenderFillDate"] = null;
-                }
-                HyPanel1["TenderUrl"] = Co.RSQandSQLInjection(txtendorurl.Text, "soft");
-
-            }
-            else
-            {
-                HyPanel1["TenderSubmition"] = "";
-                HyPanel1["TenderStatus"] = "";
-                HyPanel1["TenderFillDate"] = null;
-                HyPanel1["TenderUrl"] = "";
-            }
-            HyPanel1["EOIStatus"] = "";
+            HyPanel1["TenderSubmition"] = "";
+            HyPanel1["TenderStatus"] = "";
+            HyPanel1["TenderFillDate"] = null;
+            HyPanel1["TenderUrl"] = "";
+            HyPanel1["EOIStatus"] = Co.RSQandSQLInjection(rbeoimake2.SelectedValue, "soft");
             HyPanel1["EOISubmition"] = "";
             HyPanel1["EOIFillDate"] = null;
-            HyPanel1["EOIURL"] = "";
+            HyPanel1["EOIURL"] = txteoilink.Text;
             HyPanel1["QAAgency"] = "";
             HyPanel1["QAReamrks"] = "";
             HyPanel1["Testing"] = "";
@@ -1364,8 +1268,9 @@ public partial class Admin_AddProduct : System.Web.UI.Page
             {
                 HyPanel1["NodalDetail2"] = Convert.ToInt32(ddlNodalOfficerEmail2.SelectedItem.Value);
             }
+            HyPanel1["ShowGeneralDec"] = rbeligible.SelectedItem.Value;
             HyPanel1["CreatedBy"] = ViewState["UserLoginEmail"].ToString();
-            string StrProductDescription = Lo.SaveCodeProduct(HyPanel1, dtImage, dtSaveProdInfo, dtSaveEstimateQuantity, DtNSFIIG, out _sysMsg, out _msg, "Product");
+            string StrProductDescription = Lo.SaveCodeProduct(HyPanel1, dtImage, dtPdf, dtSaveProdInfo, dtSaveEstimateQuantity, dtSaveEstimateQuantity1, DtNSFIIG, out _sysMsg, out _msg, "Product");
             if (StrProductDescription != "-1")
             {
                 if (btnsubmitpanel1.Text != "Update")
@@ -1395,28 +1300,61 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     {
         try
         {
-            if (txtproductdescription.Text != "" && ddlmastercategory.SelectedItem.Text != "Select" && ddlsubcategory.SelectedItem.Text != "Select" && ddltechnologycat.SelectedItem.Text != "Select" && txtsearchkeyword.Text != "" && ddlcompany.SelectedItem.Text != "Select")
+            if (ddlcompany.SelectedItem.Text != "Select" && txtproductdescription.Text != "" && ddlmastercategory.SelectedItem.Text != "Select" && ddlsubcategory.SelectedItem.Text != "Select" && ddllevel3product.SelectedItem.Text != "Select" && ddltechnologycat.SelectedItem.Text != "Select" && ddlcompany.SelectedItem.Text != "Select")
             {
                 if (ddlsubtech.SelectedItem.Text != "Select" && ddlnomnclature.SelectedItem.Text != "Select" && ddlenduser.SelectedItem.Text != "Select" && ddlplatform.SelectedItem.Text != "Select")
                 {
                     if (txtcountry.SelectedItem.Text != "Select")
                     {
-                        string checklistdeclaration = "";
-                        foreach (ListItem chkd in chklistdeclarationimage.Items)
+                        if (rbeligible.SelectedIndex != -1)
                         {
-                            if (chkd.Selected == true)
+                            string checklistdeclaration = "";
+                            foreach (ListItem chkd in chklistdeclarationimage.Items)
                             {
-                                checklistdeclaration = checklistdeclaration + chkd;
-                            }
-                        }
-                        if (checklistdeclaration != "")
-                        {
-                            if (fuitemdescriptionfile.HasFile != false)
-                            {
-                                int iFileSize = fuitemdescriptionfile.PostedFile.ContentLength;
-                                if (iFileSize > 5242880) // 5MB
+                                if (chkd.Selected == true)
                                 {
-                                    ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "alert('Maximum 5 Mb pdf file can be uploaded')", true);
+                                    checklistdeclaration = checklistdeclaration + chkd;
+                                }
+                            }
+                            if (checklistdeclaration != "")
+                            {
+                                if (fuitemdescriptionfile.HasFile != false)
+                                {
+                                    int iFileSize = fuitemdescriptionfile.PostedFile.ContentLength;
+                                    if (iFileSize > 5242880) // 5MB
+                                    {
+                                        ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "alert('Maximum 5 Mb pdf file can be uploaded')", true);
+                                    }
+                                    else
+                                    {
+                                        if (fuimages.HasFile != false)
+                                        {
+                                            int filecount = 0;
+                                            filecount = Convert.ToInt32(fuimages.PostedFiles.Count.ToString());
+                                            if (filecount <= 4)
+                                            {
+                                                int iImageFileSize = fuimages.PostedFile.ContentLength;
+                                                if (iImageFileSize > 20971520)
+                                                {
+                                                    ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert",
+                                                        "alert('Maximum 5 Mb each .jpg,.jpeg,.png,.tif images can be uploaded')", true);
+                                                }
+                                                else
+                                                {
+                                                    SaveProductDescription();
+                                                }
+                                            }
+                                            else
+                                            {
+                                                ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert",
+                                                    "alert('Maximum 4 files can be uploaded')", true);
+                                            }
+                                        }
+                                        else
+                                        {
+                                            SaveProductDescription();
+                                        }
+                                    }
                                 }
                                 else
                                 {
@@ -1451,38 +1389,12 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                             }
                             else
                             {
-                                if (fuimages.HasFile != false)
-                                {
-                                    int filecount = 0;
-                                    filecount = Convert.ToInt32(fuimages.PostedFiles.Count.ToString());
-                                    if (filecount <= 4)
-                                    {
-                                        int iImageFileSize = fuimages.PostedFile.ContentLength;
-                                        if (iImageFileSize > 20971520)
-                                        {
-                                            ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert",
-                                                "alert('Maximum 5 Mb each .jpg,.jpeg,.png,.tif images can be uploaded')", true);
-                                        }
-                                        else
-                                        {
-                                            SaveProductDescription();
-                                        }
-                                    }
-                                    else
-                                    {
-                                        ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert",
-                                            "alert('Maximum 4 files can be uploaded')", true);
-                                    }
-                                }
-                                else
-                                {
-                                    SaveProductDescription();
-                                }
+                                ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "alert('Please select declaration tab and select all checkbox before submit.')", true);
                             }
                         }
                         else
                         {
-                            ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "alert('Please select declaration tab and select all checkbox before submit.')", true);
+                            ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "alert('Please select and check declaration section at last tab.')", true);
                         }
                     }
                     else
@@ -1522,14 +1434,10 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         txtnsccode.Text = "";
         txtniincode.Text = "";
         txtdpsupartnumber.Text = "";
-        txtenduserpartnumber.Text = "";
-        txthsncode.Text = "";
-        lblfuitemdescriptionfile.Text = "";
         dlimage.DataSource = null;
         dlimage.DataBind();
         divimgdel.Visible = false;
         ddlnomnclature.SelectedIndex = 0;
-        txthscodereadonly.Text = "";
         txthsncodereadonly.Text = "";
         ddlmastercategory.SelectedIndex = 0;
         ddlsubcategory.SelectedIndex = 0;
@@ -1554,35 +1462,16 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         txtNameOfSpecificationAdd.Text = "";
         TxtValueProdAdd.Text = "";
         txtUnitProdAdd.Text = "";
-        txtestimatePriceLLp.Text = "";
-        txtestimateQuantity.Text = "";
-        ddlMeasuringUnit.SelectedIndex = 0;
-        ddlYearEstimate.SelectedIndex = 0;
         contactpanel1.Visible = false;
         divnodal2.Visible = false;
         if (ddlNodalOfficerEmail.Text != "")
         {
             ddlNodalOfficerEmail.SelectedIndex = 0;
         }
-        foreach (ListItem chk in chklistimportyearfive.Items)
-        {
-            if (chk.Selected == true)
-            {
-                chk.Selected = false;
-            }
-        }
-        foreach (GridViewRow gvPofPROCURMENT in gvprocurmentcategory.Rows)
-        {
-            CheckBox chkBxProc = (CheckBox)gvPofPROCURMENT.FindControl("chkprocurmentcategory");
-            HiddenField hfProcCatId = (HiddenField)gvPofPROCURMENT.FindControl("hfproccateid");
-            if (chkBxProc != null && chkBxProc.Checked)
-            {
-                chkBxProc.Checked = false;
-                hfProcCatId.Value = "";
-            }
-        }
         txtfiigno.Text = "";
         txtfiigtype.Text = "";
+        ViewState["MF"] = null;
+        ViewState["MF1"] = null;
     }
     #endregion
     #region Image Code
@@ -1633,6 +1522,54 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         }
     }
     #endregion
+    #region PDF File Upload
+    private int PdfMaxCount;
+    protected DataTable Pdfdb()
+    {
+        DataTable dtPdf = new DataTable();
+        dtPdf.Columns.Add(new DataColumn("PdfID", typeof(long)));
+        dtPdf.Columns.Add(new DataColumn("PdfName", typeof(string)));
+        dtPdf.Columns.Add(new DataColumn("PdfType", typeof(string)));
+        dtPdf.Columns.Add(new DataColumn("PdfActualSize", typeof(long)));
+        dtPdf.Columns.Add(new DataColumn("PCompanyRefNo", typeof(string)));
+        dtPdf.Columns.Add(new DataColumn("Priority", typeof(int)));
+        DataRow drPdf;
+        {
+            try
+            {
+                if (PdfMaxCount <= 4)
+                {
+                    foreach (HttpPostedFile postfilespdf in fuitemdescriptionfile.PostedFiles)
+                    {
+                        string FileTypePdf = Path.GetExtension(postfilespdf.FileName);
+                        int FileSizePdf = postfilespdf.ContentLength;
+                        if (DataUtility.Instance.GetFileFilter(postfilespdf.FileName) != false)
+                        {
+                            string FilePathNamePdf = hfcomprefno.Value + "_" + DateTime.Now.ToString("hh_mm_ss") + postfilespdf.FileName;
+                            postfilespdf.SaveAs(HttpContext.Current.Server.MapPath("/Upload") + "\\" + FilePathNamePdf);
+                            drPdf = dtPdf.NewRow();
+                            drPdf["PdfID"] = "-1";
+                            drPdf["PdfName"] = "Upload/" + FilePathNamePdf;
+                            drPdf["PdfType"] = FileTypePdf.ToString();
+                            drPdf["PdfActualSize"] = FileSizePdf.ToString();
+                            drPdf["PCompanyRefNo"] = hfcomprefno.Value;
+                            drPdf["Priority"] = PdfMaxCount++ + 1;
+                            dtPdf.Rows.Add(drPdf);
+                        }
+                        else
+                        {
+                            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "ErrorMssgPopup('Invalid file format " + postfilespdf.FileName + "')", true);
+                        }
+                    }
+                }
+            }
+            catch (Exception)
+            {
+            }
+            return dtPdf;
+        }
+    }
+    #endregion
     #region AutoComplete OEM Name
     [System.Web.Services.WebMethod]
     [System.Web.Script.Services.ScriptMethod()]
@@ -1660,25 +1597,6 @@ public partial class Admin_AddProduct : System.Web.UI.Page
             }
         }
         return customers.ToArray();
-    }
-    #endregion
-    #region PDF File itemDescription
-    protected void PDFFileItemDescription()
-    {
-        if (fuitemdescriptionfile.HasFile != false)
-        {
-            if (DataUtility.Instance.GetFileFilter(fuitemdescriptionfile.PostedFile.FileName) != false)
-            {
-                string File = fuitemdescriptionfile.FileName.Trim();
-                string FileName = hfcomprefno.Value + "_" + DateTime.Now.ToString("hh_mm_ss") + "_" + txtnsccode.Text + "_" + File.ToString();
-                fuitemdescriptionfile.SaveAs(HttpContext.Current.Server.MapPath("/Upload") + "\\" + FileName);
-                HyPanel1["ItemDescriptionPDFFile"] = FileName.Trim().ToString();
-            }
-            else
-            {
-                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "ErrorMssgPopup('Invalid file format only pdf allowd.')", true);
-            }
-        }
     }
     #endregion
     #region SetGridView Initial ProductInformaTION
@@ -1778,355 +1696,502 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         BindGrid();
     }
     #endregion
-    #region Gridview Initial GvEstimateQuanPrice
-    protected DataTable SaveCodeEstimateQuantity()
+    #region Add Grid of EstimateQuanPrice
+    private void SetInitialRowEstimateQuanPrice()
     {
-        DataTable DNSaveEstimateQuen = new DataTable();
-        DNSaveEstimateQuen.Columns.Add(new DataColumn("ProdQtyPriceId", typeof(int)));
-        DNSaveEstimateQuen.Columns.Add(new DataColumn("Year", typeof(int)));
-        DNSaveEstimateQuen.Columns.Add(new DataColumn("FYear", typeof(string)));
-        DNSaveEstimateQuen.Columns.Add(new DataColumn("EstimatedQty", typeof(string)));
-        DNSaveEstimateQuen.Columns.Add(new DataColumn("Unit", typeof(string)));
-        DNSaveEstimateQuen.Columns.Add(new DataColumn("EstimatedPrice", typeof(string)));
-        DataRow drEstimateQuantitySave;
+        try
         {
-            try
+            DataTable dtMF = new DataTable();
+            DataRow drMF = null;
+            dtMF.Columns.Add(new DataColumn("SNo", typeof(string)));
+            dtMF.Columns.Add(new DataColumn("FYear", typeof(string)));
+            dtMF.Columns.Add(new DataColumn("EstimatedQty", typeof(string)));
+            dtMF.Columns.Add(new DataColumn("Unit", typeof(string)));
+            dtMF.Columns.Add(new DataColumn("EstimatedPrice", typeof(string)));
+            drMF = dtMF.NewRow();
+            drMF["SNo"] = 1;
+            drMF["FYear"] = string.Empty;
+            drMF["EstimatedQty"] = string.Empty;
+            drMF["Unit"] = string.Empty;
+            drMF["EstimatedPrice"] = string.Empty;
+            dtMF.Rows.Add(drMF);
+            //Store the DataTable in ViewState or bind or show false grid
+            ViewState["MF"] = dtMF;
+            GvEstiateQuanPrice.DataSource = dtMF;
+            GvEstiateQuanPrice.DataBind();
+        }
+        catch (Exception ex)
+        {
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('" + ex.Message + "')", true);
+        }
+    }
+    private void AddNewRowToGridEstimateQuanPrice()
+    {
+        try
+        {
+            int MFrowIndex = 0;
+            if (ViewState["MF"] != null)
             {
-                for (int i = 0; i <= GvEstimateQuanPrice.Rows.Count; i++)
+                DataTable dtCurrentTableMF = (DataTable)ViewState["MF"];
+                DataRow drCurrentRowMF = null;
+                if (dtCurrentTableMF.Rows.Count > 0 && dtCurrentTableMF.Rows.Count < 5)
                 {
-                    Label ddlestimatequanYear = (Label)GvEstimateQuanPrice.Rows[i].Cells[1].FindControl("lblYear");
-                    Label txtEstimateQuantity = (Label)GvEstimateQuanPrice.Rows[i].Cells[2].FindControl("lblestimateQuantityGrid");
-                    Label ddlMeasurUnit = (Label)GvEstimateQuanPrice.Rows[i].Cells[3].FindControl("lblMeasuringUnitGrid");
-                    Label txtestimPrice = (Label)GvEstimateQuanPrice.Rows[i].Cells[4].FindControl("lblestimatePriceLLpGrid");
-                    drEstimateQuantitySave = DNSaveEstimateQuen.NewRow();
-                    drEstimateQuantitySave["ProdQtyPriceId"] = GvEstimateQuanPrice.DataKeys[i].Value.ToString();
-                    if (ddlestimatequanYear.Text == "2019-20")
-                    { drEstimateQuantitySave["Year"] = "1"; }
-                    if (ddlestimatequanYear.Text == "2019-21")
-                    { drEstimateQuantitySave["Year"] = "2"; }
-                    if (ddlestimatequanYear.Text == "2019-22")
-                    { drEstimateQuantitySave["Year"] = "3"; }
-                    if (ddlestimatequanYear.Text == "2019-23")
-                    { drEstimateQuantitySave["Year"] = "4"; }
-                    if (ddlestimatequanYear.Text == "2019-24")
-                    { drEstimateQuantitySave["Year"] = "5"; }
-                    drEstimateQuantitySave["FYear"] = ddlestimatequanYear.Text.Trim();
-                    drEstimateQuantitySave["EstimatedQty"] = txtEstimateQuantity.Text.Trim();
-                    drEstimateQuantitySave["Unit"] = ddlMeasurUnit.Text.Trim();
-                    drEstimateQuantitySave["EstimatedPrice"] = txtestimPrice.Text.Trim();
-                    DNSaveEstimateQuen.Rows.Add(drEstimateQuantitySave);
+                    for (int i = 1; i <= dtCurrentTableMF.Rows.Count; i++)
+                    {
+                        //extract the TextBox values
+                        DropDownList ddl1 = (DropDownList)GvEstiateQuanPrice.Rows[MFrowIndex].Cells[1].FindControl("ddlYearEstimate");
+                        TextBox TextBox1 = (TextBox)GvEstiateQuanPrice.Rows[MFrowIndex].Cells[2].FindControl("txtestimateQuantity");
+                        DropDownList ddl2 = (DropDownList)GvEstiateQuanPrice.Rows[MFrowIndex].Cells[3].FindControl("ddlMeasuringUnit");
+                        TextBox TextBox2 = (TextBox)GvEstiateQuanPrice.Rows[MFrowIndex].Cells[4].FindControl("txtestimatePriceLLp");
+                        drCurrentRowMF = dtCurrentTableMF.NewRow();
+                        drCurrentRowMF["SNo"] = i + 1;
+                        dtCurrentTableMF.Rows[i - 1]["FYear"] = ddl1.Text;
+                        dtCurrentTableMF.Rows[i - 1]["EstimatedQty"] = TextBox1.Text;
+                        dtCurrentTableMF.Rows[i - 1]["Unit"] = ddl2.Text;
+                        dtCurrentTableMF.Rows[i - 1]["EstimatedPrice"] = TextBox2.Text;
+                        MFrowIndex++;
+                    }
+                    dtCurrentTableMF.Rows.Add(drCurrentRowMF);
+                    ViewState["MF"] = dtCurrentTableMF;
+                    GvEstiateQuanPrice.DataSource = dtCurrentTableMF;
+                    GvEstiateQuanPrice.DataBind();
+                }
+                else
+                {
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Max five row add')", true);
                 }
             }
-            catch (Exception)
-            { }
-            return DNSaveEstimateQuen;
+            else
+            {
+                Response.Write("ViewState is null");
+            }
+            SetPreviousDataGovtEstimateQuanPrice();
+        }
+        catch (Exception ex)
+        {
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('" + ex.Message + "')", true);
+        }
+    }
+    private void SetPreviousDataGovtEstimateQuanPrice()
+    {
+        try
+        {
+            int rowIndexMF = 0;
+            if (ViewState["MF"] != null)
+            {
+                DataTable dtMF = (DataTable)ViewState["MF"];
+                if (dtMF.Rows.Count > 0)
+                {
+                    for (int i = 0; i < dtMF.Rows.Count; i++)
+                    {
+                        DropDownList DropDwon_1 = (DropDownList)GvEstiateQuanPrice.Rows[rowIndexMF].Cells[1].FindControl("ddlYearEstimate");
+                        TextBox TextBox_1 = (TextBox)GvEstiateQuanPrice.Rows[rowIndexMF].Cells[2].FindControl("txtestimateQuantity");
+                        DropDownList DropDwon_2 = (DropDownList)GvEstiateQuanPrice.Rows[rowIndexMF].Cells[3].FindControl("ddlMeasuringUnit");
+                        TextBox TextBox_2 = (TextBox)GvEstiateQuanPrice.Rows[rowIndexMF].Cells[4].FindControl("txtestimatePriceLLp");
+                        DropDwon_1.Text = dtMF.Rows[i]["FYear"].ToString();
+                        TextBox_1.Text = dtMF.Rows[i]["EstimatedQty"].ToString();
+                        DropDwon_2.Text = dtMF.Rows[i]["Unit"].ToString();
+                        TextBox_2.Text = dtMF.Rows[i]["EstimatedPrice"].ToString();
+                        rowIndexMF++;
+                    }
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('" + ex.Message + "')", true);
+        }
+    }
+    protected void btnAddEstimate_Click(object sender, EventArgs e)
+    {
+        AddNewRowToGridEstimateQuanPrice();
+    }
+    protected void GvEstiateQuanPrice_RowCreated(object sender, GridViewRowEventArgs e)
+    {
+        try
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                DataTable dtgridMFacili = (DataTable)ViewState["MF"];
+                LinkButton lbRMF = (LinkButton)e.Row.FindControl("lbRemoveestimate");
+                if (lbRMF != null)
+                {
+                    if (dtgridMFacili.Rows.Count > 1)
+                    {
+                        if (e.Row.RowIndex == dtgridMFacili.Rows.Count - 1)
+                        {
+                            lbRMF.Visible = false;
+                        }
+                    }
+                    else
+                    {
+                        lbRMF.Visible = false;
+                    }
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('" + ex.Message + "')", true);
+        }
+    }
+    protected void lbRemoveestimate_Click(object sender, EventArgs e)
+    {
+        try
+        {
+            LinkButton lbMF = (LinkButton)sender;
+            GridViewRow gvRowMF = (GridViewRow)lbMF.NamingContainer;
+            int rowID = gvRowMF.RowIndex;
+            if (ViewState["MF"] != null)
+            {
+                DataTable dtremovegridMF = (DataTable)ViewState["MF"];
+                if (dtremovegridMF.Rows.Count > 1)
+                {
+                    if (gvRowMF.RowIndex < dtremovegridMF.Rows.Count - 1)
+                    {
+                        dtremovegridMF.Rows.Remove(dtremovegridMF.Rows[rowID]);
+                        ResetRowIDMFacilities(dtremovegridMF);
+                    }
+                }
+                ViewState["MF"] = dtremovegridMF;
+                GvEstiateQuanPrice.DataSource = dtremovegridMF;
+                GvEstiateQuanPrice.DataBind();
+            }
+            SetPreviousDataGovtEstimateQuanPrice();
+        }
+        catch (Exception ex)
+        {
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('" + ex.Message + "')", true);
+        }
+    }
+    private void ResetRowIDMFacilities(DataTable dtMfaci)
+    {
+        try
+        {
+            int rowNumberMfaci = 1;
+            if (dtMfaci.Rows.Count > 0)
+            {
+                foreach (DataRow row in dtMfaci.Rows)
+                {
+                    row[0] = rowNumberMfaci;
+                    rowNumberMfaci++;
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('" + ex.Message + "')", true);
+        }
+    }
+    DataTable dtManufacturingFacilities = new DataTable();
+    protected void SaveCodeEstimateQuantity()
+    {
+        try
+        {
+            int rowIndex = 0;
+            DataTable dtManufacturingFacilities = new DataTable();
+            dtManufacturingFacilities.Columns.Add(new DataColumn("SNo", typeof(string)));
+            dtManufacturingFacilities.Columns.Add(new DataColumn("Year", typeof(string)));
+            dtManufacturingFacilities.Columns.Add(new DataColumn("FYear", typeof(string)));
+            dtManufacturingFacilities.Columns.Add(new DataColumn("EstimatedQty", typeof(string)));
+            dtManufacturingFacilities.Columns.Add(new DataColumn("Unit", typeof(string)));
+            dtManufacturingFacilities.Columns.Add(new DataColumn("EstimatedPrice", typeof(string)));
+            dtManufacturingFacilities.Columns.Add(new DataColumn("Type", typeof(string)));
+            DataRow drManufacturingFacilities = null;
+            for (int i = 0; GvEstiateQuanPrice.Rows.Count > i; i++)
+            {
+                DropDownList TextBox1MF = (DropDownList)GvEstiateQuanPrice.Rows[i].Cells[1].FindControl("ddlYearEstimate");
+                TextBox TextBox7MF = (TextBox)GvEstiateQuanPrice.Rows[i].Cells[2].FindControl("txtestimateQuantity");
+                DropDownList TextBox2MF = (DropDownList)GvEstiateQuanPrice.Rows[i].Cells[3].FindControl("ddlMeasuringUnit");
+                TextBox TextBox3MF = (TextBox)GvEstiateQuanPrice.Rows[i].Cells[4].FindControl("txtestimatePriceLLp");
+                if (TextBox7MF.Text != "" && TextBox1MF.Text != "" && TextBox1MF.Text != "Select" && TextBox2MF.Text != "Select")
+                {
+                    drManufacturingFacilities = dtManufacturingFacilities.NewRow();
+                    drManufacturingFacilities["Year"] = TextBox1MF.SelectedItem.Value;
+                    drManufacturingFacilities["FYear"] = TextBox1MF.SelectedItem.Text;
+                    drManufacturingFacilities["EstimatedQty"] = TextBox7MF.Text;
+                    drManufacturingFacilities["Unit"] = TextBox2MF.Text;
+                    drManufacturingFacilities["EstimatedPrice"] = TextBox3MF.Text;
+                    drManufacturingFacilities["Type"] = "F";
+                    dtManufacturingFacilities.Rows.Add(drManufacturingFacilities);
+                }
+            }
+            ViewState["MF"] = dtManufacturingFacilities;
+        }
+        catch (Exception ex)
+        {
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('" + ex.Message + "')", true);
         }
     }
     private void BindGridEstimateQuantity()
     {
         DataTable DtGridEstimate = new DataTable();
-        DtGridEstimate = Lo.RetriveSaveEstimateGrid("Select", 0, hfprodrefno.Value, 0, "", "", "", "");
+        DtGridEstimate = Lo.RetriveSaveEstimateGrid("Select", 0, hfprodrefno.Value, 0, "", "", "", "", "F");
         if (DtGridEstimate.Rows.Count > 0)
         {
-            GvEstimateQuanPrice.DataSource = DtGridEstimate;
-            GvEstimateQuanPrice.DataBind();
-            GvEstimateQuanPrice.Visible = true;
+            GvEstimateQuanPriceEdit.DataSource = DtGridEstimate;
+            GvEstimateQuanPriceEdit.DataBind();
+            GvEstimateQuanPriceEdit.Visible = true;
+            GvEstiateQuanPrice.Visible = false;
         }
         else
         {
-            GvEstimateQuanPrice.Visible = false;
+            GvEstimateQuanPriceEdit.Visible = false;
+            if (btnsubmitpanel1.Text == "Update")
+            {
+                GvEstiateQuanPrice.Visible = true;
+                SetInitialRowEstimateQuanPrice();
+            }
         }
     }
-    protected void btnAddEstimate_Click(object sender, EventArgs e)
+    protected void GvEstimateQuanPriceEdit_RowCommand(object sender, GridViewCommandEventArgs e)
     {
-        string EstimateYear = ddlYearEstimate.SelectedItem.Text;
-        int EsitmateYearId = Convert.ToInt32(ddlYearEstimate.SelectedItem.Value);
-        string EstimateQuantity = txtestimateQuantity.Text;
-        string EstimateMeasuring = ddlMeasuringUnit.SelectedItem.Text;
-        string UnitProd = "0";
-        Lo.RetriveSaveEstimateGrid("Insert", 0, hfprodrefno.Value, EsitmateYearId, EstimateYear, EstimateQuantity, EstimateMeasuring, UnitProd);
-        ddlYearEstimate.SelectedIndex = 0;
-        txtestimateQuantity.Text = "";
-        ddlMeasuringUnit.SelectedIndex = 0;
-        txtestimatePriceLLp.Text = "";
-        BindGridEstimateQuantity();
-    }
-    protected void GvEstimateQuanPrice_RowEditing(object sender, GridViewEditEventArgs e)
-    {
-        GvEstimateQuanPrice.EditIndex = e.NewEditIndex;
-        BindGridEstimateQuantity();
-    }
-    protected void GvEstimateQuanPrice_RowUpdating(object sender, GridViewUpdateEventArgs e)
-    {
-        GridViewRow row = GvEstimateQuanPrice.Rows[e.RowIndex];
-        int ProdSpeciId = Convert.ToInt32(GvEstimateQuanPrice.DataKeys[e.RowIndex].Values[0]);
-        string EditEstimateYear = (row.FindControl("ddlYearEstimateGrid") as DropDownList).SelectedItem.Text;
-        int EditEstimateYearId = Convert.ToInt32((row.FindControl("ddlYearEstimateGrid") as DropDownList).SelectedItem.Value);
-        string EditEstimateQuan = (row.FindControl("txtEstimateQuantityGrid") as TextBox).Text;
-        string EditEstimateUnit = (row.FindControl("ddlEstimateUnit") as DropDownList).SelectedItem.Text;
-        string EditEstimatePrice = "0";//Convert.ToDecimal((row.FindControl("txtEstimatePriceLLpGrid") as TextBox).Text);
-        Lo.RetriveSaveEstimateGrid("Update", ProdSpeciId, hfprodrefno.Value, EditEstimateYearId, EditEstimateYear, EditEstimateQuan, EditEstimateUnit, EditEstimatePrice);
-        GvEstimateQuanPrice.EditIndex = -1;
-        BindGridEstimateQuantity();
-    }
-    protected void GvEstimateQuanPrice_RowCancelingEdit(object sender, EventArgs e)
-    {
-        GvEstimateQuanPrice.EditIndex = -1;
-        BindGridEstimateQuantity();
-    }
-    protected void GvEstimateQuanPrice_RowDeleting(object sender, GridViewDeleteEventArgs e)
-    {
-        int EstimateIdDel = Convert.ToInt32(GvEstimateQuanPrice.DataKeys[e.RowIndex].Values[0]);
-        Lo.RetriveSaveEstimateGrid("Delete", EstimateIdDel, "", 0, "", "", "", "");
-        BindGridEstimateQuantity();
-    }
-    protected void GvEstimateQuanPrice_RowDataBound(object sender, GridViewRowEventArgs e)
-    {
-        if (e.Row.RowType == DataControlRowType.DataRow && e.Row.RowIndex != GvEstimateQuanPrice.EditIndex)
+        if (e.CommandName == "addnewmfe")
         {
-            (e.Row.Cells[5].Controls[2] as LinkButton).Attributes["onclick"] = "return confirm('Do you want to delete this row?');";
+            lblsub2.Text = "Submit";
+            txtestimateyearu.SelectedIndex = -1;
+            txtestimatequanu.Text = "";
+            ddlestimateunitu.SelectedIndex = -1;
+            txtestimatepriceu.Text = "";
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "divbank", "showPopup1();", true);
+        }
+        else if (e.CommandName == "updatenewmfe")
+        {
+            lblsub2.Text = "Edit & Update";
+            int rowIndex = Convert.ToInt32(e.CommandArgument);
+            GridViewRow row = GvEstimateQuanPriceEdit.Rows[rowIndex];
+            HiddenField hfn = (HiddenField)GvEstimateQuanPriceEdit.Rows[rowIndex].FindControl("HiddenField1");
+            txtestimateyearu.SelectedValue = row.Cells[1].Text;
+            txtestimatequanu.Text = row.Cells[2].Text;
+            ddlestimateunitu.SelectedValue = row.Cells[3].Text;
+            txtestimatepriceu.Text = row.Cells[4].Text;
+            ViewState["editaccount"] = hfn.Value;
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "divbank", "showPopup1();", true);
+        }
+        else if (e.CommandName == "deletenewmfe")
+        {
+            int EstimateIdDel = Convert.ToInt32(e.CommandArgument.ToString());
+            Lo.RetriveSaveEstimateGrid("Delete", EstimateIdDel, "", 0, "", "", "", "", "");
+            if (EstimateIdDel != 0)
+            {
+                BindGridEstimateQuantity();
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record deleted successfull.')", true);
+            }
+            else
+            {
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not deleted.')", true);
+            }
         }
     }
-    protected void GvEstimateQuanPrice_Paging(object sender, GridViewPageEventArgs e)
+    protected void lblsub2_Click(object sender, EventArgs e)
     {
-        GvEstimateQuanPrice.PageIndex = e.NewPageIndex;
-        BindGridEstimateQuantity();
+        try
+        {
+            if (lblsub2.Text == "Edit & Update")
+            {
+                if (txtestimateyearu.SelectedValue != "-1" && ddlestimateunitu.SelectedItem.Text != "Select")
+                {
+                    Lo.RetriveSaveEstimateGrid("Update", Convert.ToInt32(ViewState["editaccount"]), hfprodrefno.Value, Convert.ToInt32(txtestimateyearu.SelectedItem.Value), txtestimateyearu.SelectedItem.Text, txtestimatequanu.Text, ddlestimateunitu.SelectedItem.Text, txtestimatepriceu.Text, "F");
+                    txtestimateyearu.SelectedValue = "Select";
+                    txtestimatepriceu.Text = "";
+                    ddlestimateunitu.SelectedValue = "Select";
+                    txtestimatequanu.Text = "";
+                    ViewState["editaccount"] = null;
+                    BindGridEstimateQuantity();
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record update successfully')", true);
+                }
+                else
+                {
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not update successfully')", true);
+                }
+            }
+            else if (lblsub2.Text == "Submit")
+            {
+                string EstimateYear = txtestimateyearu.SelectedItem.Text;
+                string EsitmateYearId = txtestimateyearu.SelectedItem.Value;
+                string EstimateQuantity = txtestimatequanu.Text;
+                string EstimateMeasuring = ddlestimateunitu.SelectedItem.Text;
+                string UnitProd = txtestimatepriceu.Text;
+                if (EstimateYear.ToString() != "Select" && EstimateMeasuring.ToString() != "Select")
+                {
+                    Lo.RetriveSaveEstimateGrid("Insert", 0, hfprodrefno.Value, Convert.ToInt16(EsitmateYearId), EstimateYear, EstimateQuantity, EstimateMeasuring, UnitProd, "F");
+                    txtestimateyearu.SelectedIndex = 0;
+                    txtestimatequanu.Text = "";
+                    ddlestimateunitu.SelectedIndex = 0;
+                    txtestimatepriceu.Text = "";
+                    BindGridEstimateQuantity();
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record save successfully')", true);
+                }
+                else
+                {
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not save successfully')", true);
+                }
+            }
+            else
+            {
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not save successfully')", true);
+            }
+        }
+        catch (Exception ex)
+        {
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('" + ex.Message + "')", true);
+        }
     }
     #endregion
-    #region EditCodeForProduct
-    protected void EditCode()
+    #region Add Grid of EstimateQuanPriceOld
+    protected DataTable Dvinsert()
     {
-        if (Request.QueryString["MProductRefNo"] != null && Request.QueryString["mcurrentcompRefNo"] != null && Request.QueryString["mrcreaterole"] != null)
+        DataTable insert = new DataTable();
+        insert.Columns.Add(new DataColumn("Year", typeof(string)));
+        insert.Columns.Add(new DataColumn("FYear", typeof(string)));
+        insert.Columns.Add(new DataColumn("EstimatedQty", typeof(string)));
+        insert.Columns.Add(new DataColumn("Unit", typeof(string)));
+        insert.Columns.Add(new DataColumn("EstimatedPrice", typeof(string)));
+        insert.Columns.Add(new DataColumn("Type", typeof(string)));
+        DataRow dr;
+        if (ddlyearestimate1.SelectedItem.Text != "Select")
         {
-            hfprodrefno.Value = objEnc.DecryptData(Request.QueryString["MProductRefNo"].ToString());
-            hidType.Value = objEnc.DecryptData(Request.QueryString["mrcreaterole"].ToString());
-            DataTable DtView = Lo.RetriveProductCode("", hfprodrefno.Value, "ProductMasterID", hidType.Value);
-            if (DtView.Rows.Count > 0)
+            dr = insert.NewRow();
+            dr["Year"] = ddlyearestimate1.SelectedItem.Value;
+            dr["FYear"] = ddlyearestimate1.SelectedItem.Text;
+            dr["EstimatedQty"] = txtestquan1.Text;
+            dr["Unit"] = ddlunit1.SelectedItem.Text;
+            dr["EstimatedPrice"] = txtpriceestimate1.Text;
+            dr["Type"] = "O";
+            insert.Rows.Add(dr);
+        }
+        if (ddlyearestimate2.SelectedItem.Text != "Select")
+        {
+            dr = insert.NewRow();
+            dr["Year"] = ddlyearestimate2.SelectedItem.Value;
+            dr["FYear"] = ddlyearestimate2.SelectedItem.Text;
+            dr["EstimatedQty"] = txtestquan2.Text;
+            dr["Unit"] = ddlunit2.SelectedItem.Text;
+            dr["EstimatedPrice"] = txtpriceestimate2.Text;
+            dr["Type"] = "O";
+            insert.Rows.Add(dr);
+        }
+        if (ddlyearestimate3.Text != "Select")
+        {
+            dr = insert.NewRow();
+            dr["Year"] = ddlyearestimate3.SelectedItem.Value;
+            dr["FYear"] = ddlyearestimate3.SelectedItem.Text;
+            dr["EstimatedQty"] = txtestquan3.Text;
+            dr["Unit"] = ddlunit3.SelectedItem.Text;
+            dr["EstimatedPrice"] = txtpriceestimate3.Text;
+            dr["Type"] = "O";
+            insert.Rows.Add(dr);
+        }
+        return insert;
+    }
+    private void BindGridEstimateQuantity1()
+    {
+        DataTable DtGridEstimate1 = new DataTable();
+        DtGridEstimate1 = Lo.RetriveSaveEstimateGrid("Select", 0, hfprodrefno.Value, 0, "", "", "", "", "O");
+        if (DtGridEstimate1.Rows.Count > 0)
+        {
+            GridView3.DataSource = DtGridEstimate1;
+            GridView3.DataBind();
+            GridView3.Visible = true;
+            xxesti.Visible = false;
+        }
+        else
+        {
+            GridView3.Visible = false;
+            xxesti.Visible = true;
+        }
+    }
+    protected void GridView3_RowCommand(object sender, GridViewCommandEventArgs e)
+    {
+        if (e.CommandName == "addnewmfe1")
+        {
+            lblsub3.Text = "Submit";
+            DropDownList3.SelectedIndex = -1;
+            TextBox3.Text = "";
+            DropDownList4.SelectedIndex = -1;
+            TextBox4.Text = "";
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "divbank2", "showPopup2();", true);
+        }
+        else if (e.CommandName == "updatenewmfe1")
+        {
+            lblsub3.Text = "Edit & Update";
+            int rowIndex = Convert.ToInt32(e.CommandArgument);
+            GridViewRow row = GridView3.Rows[rowIndex];
+            HiddenField hfn = (HiddenField)GridView3.Rows[rowIndex].FindControl("HiddenField3");
+            txtestimateyearu.SelectedValue = row.Cells[1].Text;
+            txtestimatequanu.Text = row.Cells[2].Text;
+            ddlestimateunitu.SelectedValue = row.Cells[3].Text;
+            txtestimatepriceu.Text = row.Cells[4].Text;
+            ViewState["editaccount1"] = hfn.Value;
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "divbank2", "showPopup2();", true);
+        }
+        else if (e.CommandName == "deletenewmfe1")
+        {
+            int EstimateIdDel = Convert.ToInt32(e.CommandArgument.ToString());
+            Lo.RetriveSaveEstimateGrid("Delete", EstimateIdDel, "", 0, "", "", "", "", "");
+            if (EstimateIdDel != 0)
             {
-                btnsubmitpanel1.Text = "Update";
-                hfprodid.Value = DtView.Rows[0]["ProductID"].ToString();
-                hfcomprefno.Value = DtView.Rows[0]["CompanyRefNo"].ToString();
-                if (DtView.Rows[0]["ProductLevel1"].ToString() != "")
-                {
-                    ddlmastercategory.Items.FindByValue(DtView.Rows[0]["ProductLevel1"].ToString()).Selected = true;
-                    BindMasterSubCategory();
-                    ddlsubcategory.Items.FindByValue(DtView.Rows[0]["ProductLevel2"].ToString()).Selected = true;
-                    BindMaster3levelSubCategory();
-                    if (DtView.Rows[0]["ProductLevel3"].ToString() != "")
-                    {
-                        ddllevel3product.SelectedValue = DtView.Rows[0]["ProductLevel3"].ToString();
-                        lblviewitemcode.Visible = true;
-                    }
-                }
-                txtnsccode.Text = DtView.Rows[0]["NSCCode"].ToString();
-                txtniincode.Text = DtView.Rows[0]["NIINCode"].ToString();
-                txtproductdescription.Text = DtView.Rows[0]["ProductDescription"].ToString();
-                txtoempartnumber.Text = DtView.Rows[0]["OEMPartNumber"].ToString();
-                txtoemname.Text = DtView.Rows[0]["OEMName"].ToString();
-                if (DtView.Rows[0]["OEMCountry"].ToString() != "")
-                {
-                    txtcountry.SelectedValue = DtView.Rows[0]["OEMCountry"].ToString();
-                }
-                txtdpsupartnumber.Text = DtView.Rows[0]["DPSUPartNumber"].ToString();
-                if (DtView.Rows[0]["HSCode"].ToString() != "")
-                {
-                    ddlHSNCode.SelectedValue = DtView.Rows[0]["HSCode"].ToString();
-                }
-                txthsncode.Text = DtView.Rows[0]["HSNCode"].ToString();
-                txthsncodereadonly.Text = DtView.Rows[0]["HsnCode8digit"].ToString();
-
-                if (DtView.Rows[0]["EndUser"].ToString() != "")
-                {
-                    DataTable dtEndUseredit = Lo.RetriveProductCode("", hfprodrefno.Value, "EndUser", hidType.Value);
-                    if (dtEndUseredit.Rows.Count > 0)
-                    {
-                        for (int i = 0; dtEndUseredit.Rows.Count > i; i++)
-                        {
-                            foreach (ListItem lie in ddlenduser.Items)
-                            {
-                                if (lie.Value == dtEndUseredit.Rows[i]["SCategoryId"].ToString())
-                                {
-                                    lie.Selected = true;
-                                }
-                            }
-                        }
-
-                    }
-                }
-                if (DtView.Rows[0]["Platform"].ToString() != "")
-                {
-                    ddlplatform.Items.FindByValue(DtView.Rows[0]["Platform"].ToString()).Selected = true;
-                    if (DtView.Rows[0]["NomenclatureOfMainSystem"].ToString() != "")
-                    {
-                        BindMasterProductNoenCletureCategory();
-                        ddlnomnclature.SelectedValue = DtView.Rows[0]["NomenclatureOfMainSystem"].ToString();
-                    }
-                }
-                if (DtView.Rows[0]["TechnologyLevel1"].ToString() != "")
-                {
-                    ddltechnologycat.Items.FindByValue(DtView.Rows[0]["TechnologyLevel1"].ToString()).Selected = true;
-                    BindMasterSubCategoryTech();
-                    if (DtView.Rows[0]["TechnologyLevel2"].ToString() != "")
-                    {
-                        ddlsubtech.Items.FindByValue(DtView.Rows[0]["TechnologyLevel2"].ToString()).Selected = true;
-                    }
-                    if (DtView.Rows[0]["TechnologyLevel2"].ToString() != "")
-                    {
-                        BindMasterSubCategoryTechLevel3();
-                        if (DtView.Rows[0]["TechnologyLevel3"].ToString() != "")
-                        {
-                            ddltechlevel3.SelectedValue = DtView.Rows[0]["TechnologyLevel3"].ToString();
-                        }
-                    }
-                    else
-                    {
-                        ddltechlevel3.Items.Clear();
-                        ddltechlevel3.Items.Insert(0, "Select");
-                    }
-                }
-                txtsearchkeyword.Text = DtView.Rows[0]["SearchKeyword"].ToString();
-                rbisindinised.SelectedValue = DtView.Rows[0]["IsIndeginized"].ToString();
-                if (rbisindinised.SelectedItem.Value == "Y")
-                {
-
-                    txtmanufacturename.Text = DtView.Rows[0]["ManufactureName"].ToString();
-                    txtmanifacaddress.Text = DtView.Rows[0]["ManufactureAddress"].ToString();
-                    ddlyearofindiginization.SelectedValue = DtView.Rows[0]["YearofIndiginization"].ToString();
-                    divisIndigenized.Visible = true;
-                }
-                else
-                {
-                    divisIndigenized.Visible = false;
-                }
-                rbproductImported.SelectedValue = DtView.Rows[0]["IsProductImported"].ToString();
-                if (rbproductImported.SelectedItem.Value == "N")
-                {
-                    txtremarksyearofimportyes.Text = DtView.Rows[0]["YearofImportRemarks"].ToString();
-                    divyearofimportYes.Visible = false;
-                }
-                else
-                {
-                    foreach (ListItem chk in chklistimportyearfive.Items)
-                    {
-                        chk.Selected = true;
-                    }
-                    txtremarksyearofimportyes.Text = DtView.Rows[0]["YearofImportRemarks"].ToString();
-                    divyearofimportYes.Visible = true;
-                }
-                HyPanel1["ItemDescriptionPDFFile"] = DtView.Rows[0]["ItemDescriptionPDFFile"].ToString();
-
-                if (DtView.Rows[0]["ItemDescriptionPDFFile"].ToString() != "")
-                {
-                    lblfuitemdescriptionfile.Text = DtView.Rows[0]["ItemDescriptionPDFFile"].ToString();
-                    lblfuitemdescriptionfile.Visible = true;
-                }
-                else
-                {
-                    lblfuitemdescriptionfile.Text = "";
-                    lblfuitemdescriptionfile.Visible = false;
-                }
-                DataTable dtImageBind = Lo.RetriveProductCode("", hfprodrefno.Value, "ProductImage", hidType.Value);
-                if (dtImageBind.Rows.Count > 0)
-                {
-                    dlimage.DataSource = dtImageBind;
-                    dlimage.DataBind();
-                    divimgdel.Visible = true;
-                }
-                else
-                {
-                    divimgdel.Visible = false;
-                }
-                txtfeaturesanddetails.Text = DtView.Rows[0]["FeatursandDetail"].ToString();
-                rbitemspecification.SelectedValue = DtView.Rows[0]["ItemSpecification"].ToString();
-                BindGrid();
-                DataTable DtPInfoEditBind = Lo.RetriveProductCode("", hfprodrefno.Value, "ProdInfoBindEdit", "");
-                if (DtPInfoEditBind.Rows.Count > 0)
-                {
-                    gvProductInformation.DataSource = DtPInfoEditBind;
-                    gvProductInformation.DataBind();
-                }
-                txtadditionalinfo.Text = DtView.Rows[0]["AdditionalDetail"].ToString();
-                BindGridEstimateQuantity();
-                DataTable DTporCat = Lo.RetriveProductCode("", hfprodrefno.Value, "ProductPOP", hidType.Value);
-                if (DTporCat.Rows.Count > 0)
-                {
-                    for (int i = 0; DTporCat.Rows.Count > i; i++)
-                    {
-                        foreach (GridViewRow rw in gvprocurmentcategory.Rows)
-                        {
-                            CheckBox chkBxPOP = (CheckBox)rw.FindControl("chkprocurmentcategory");
-                            HiddenField hfPOPid = (HiddenField)rw.FindControl("hfproccateid");
-                            if (hfPOPid.Value == DTporCat.Rows[i]["SCategoryId"].ToString())
-                            {
-                                chkBxPOP.Checked = true;
-                                if (chkBxPOP.Checked == true)
-                                {
-                                    divmake2status.Style["display"] = "";
-                                    divmake2status.Visible = true;
-                                    ddlteneoi.SelectedValue = DtView.Rows[0]["TenderSubmition"].ToString();
-                                }
-                            }
-                        }
-                    }
-                }
-                txtremarksprocurmentCategory.Text = DtView.Rows[0]["ProcurmentCategoryRemark"].ToString();
-                ddlstatus.SelectedValue = DtView.Rows[0]["TenderStatus"].ToString();
-                if (ddlstatus.SelectedValue == "Live")
-                {
-                    extimedatevisible.Style["display"] = "";
-                    divtimedateurl.Style["display"] = "";
-                    extimedatevisible.Visible = true;
-                    if (DtView.Rows[0]["TenderFillDate"].ToString() != "")
-                    {
-                        DateTime Date = Convert.ToDateTime(DtView.Rows[0]["TenderFillDate"].ToString());
-                        string nDate = Date.ToString("yy-MMM-dd");
-                        txtdate.Text = nDate.ToString();
-                    }
-                    txtendorurl.Text = DtView.Rows[0]["TenderUrl"].ToString();
-                }
-                ddlNodalOfficerEmail.SelectedValue = DtView.Rows[0]["NodelDetail"].ToString();
-                if (ddlNodalOfficerEmail.SelectedValue != null)
-                { BindNodelEmail1(); }
-                else
-                { contactpanel1.Visible = false; }
-                ddlNodalOfficerEmail2.SelectedValue = DtView.Rows[0]["NodalDetail2"].ToString();
-                if (ddlNodalOfficerEmail2.SelectedValue != null)
-                { BindNodal2(); }
-                else
-                { contactpanel2.Visible = false; }
+                BindGridEstimateQuantity1();
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record deleted successfull.')", true);
+            }
+            else
+            {
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not deleted.')", true);
             }
         }
     }
-    protected void dlimage_ItemCommand(object source, DataListCommandEventArgs e)
+    protected void lblsub3_Click(object sender, EventArgs e)
     {
-        if (e.CommandName == "removeimg")
+        try
         {
-            try
+            if (lblsub3.Text == "Edit & Update")
             {
-                string DeleteRec = Lo.DeleteRecord(e.CommandArgument.ToString(), "InActiveImage");
-                if (DeleteRec == "true")
+                if (DropDownList3.SelectedItem.Text != "Select" && DropDownList4.SelectedItem.Text != "Select")
                 {
-                    DataTable dtImageBind = Lo.RetriveProductCode("", hfprodrefno.Value, "ProductImage", hidType.Value);
-                    if (dtImageBind.Rows.Count > 0)
-                    {
-                        dlimage.DataSource = dtImageBind;
-                        dlimage.DataBind();
-                        divimgdel.Visible = true;
-                    }
-                    else
-                    {
-                        divimgdel.Visible = false;
-                    }
+                    Lo.RetriveSaveEstimateGrid("Update", Convert.ToInt32(ViewState["editaccount1"]), hfprodrefno.Value, Convert.ToInt32(DropDownList3.SelectedItem.Value), DropDownList3.SelectedItem.Text, TextBox3.Text, DropDownList4.SelectedItem.Text, TextBox4.Text, "O");
+                    DropDownList3.SelectedValue = "Select";
+                    TextBox3.Text = "";
+                    DropDownList4.SelectedValue = "Select";
+                    TextBox4.Text = "";
+                    ViewState["editaccount1"] = null;
+                    BindGridEstimateQuantity1();
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record update successfully')", true);
                 }
                 else
                 {
-                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "ErrorMssgPopup('Record not deleted.')", true);
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not update successfully,All field fill mandatory')", true);
                 }
             }
-            catch (Exception)
+            else if (lblsub3.Text == "Submit")
             {
-                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "ErrorMssgPopup('Record not deleted.')", true);
+                string EstimateYear = DropDownList3.SelectedItem.Text;
+                string EsitmateYearId = DropDownList3.SelectedItem.Value;
+                string EstimateQuantity = TextBox3.Text;
+                string EstimateMeasuring = DropDownList4.SelectedItem.Text;
+                string UnitProd = TextBox4.Text;
+                if (EstimateYear.ToString() != "Select" && EstimateMeasuring.ToString() != "Select")
+                {
+                    Lo.RetriveSaveEstimateGrid("Insert", 0, hfprodrefno.Value, Convert.ToInt16(EsitmateYearId), EstimateYear, EstimateQuantity, EstimateMeasuring, UnitProd, "O");
+                    DropDownList3.SelectedIndex = 0;
+                    TextBox3.Text = "";
+                    DropDownList4.SelectedIndex = 0;
+                    TextBox4.Text = "";
+                    BindGridEstimateQuantity1();
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record save successfully')", true);
+                }
+                else
+                {
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not save,All field fill mandatory')", true);
+                }
             }
+            else
+            {
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not save successfully')", true);
+            }
+        }
+        catch (Exception ex)
+        {
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('" + ex.Message + "')", true);
         }
     }
     #endregion
@@ -2277,6 +2342,237 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                 ex.Message.ToString();
             }
             return dt;
+        }
+    }
+    #endregion
+    #region EditCodeForProduct
+    protected void EditCode()
+    {
+        if (Request.QueryString["MProductRefNo"] != null && Request.QueryString["mcurrentcompRefNo"] != null && Request.QueryString["mrcreaterole"] != null)
+        {
+            hfprodrefno.Value = objEnc.DecryptData(Request.QueryString["MProductRefNo"].ToString());
+            hidType.Value = objEnc.DecryptData(Request.QueryString["mrcreaterole"].ToString());
+            DataTable DtView = Lo.RetriveProductCode("", hfprodrefno.Value, "ProductMasterID", hidType.Value);
+            if (DtView.Rows.Count > 0)
+            {
+                btnsubmitpanel1.Text = "Update";
+                hfprodid.Value = DtView.Rows[0]["ProductID"].ToString();
+                hfcomprefno.Value = DtView.Rows[0]["CompanyRefNo"].ToString();
+                ddlmastercategory.SelectedValue = DtView.Rows[0]["ProductLevel1"].ToString();
+                BindMasterSubCategory();
+                ddlsubcategory.SelectedValue = DtView.Rows[0]["ProductLevel2"].ToString();
+                if (DtView.Rows[0]["ProductLevel3"].ToString() != "")
+                {
+                    BindMaster3levelSubCategory();
+                    ddllevel3product.SelectedValue = DtView.Rows[0]["ProductLevel3"].ToString();
+                }
+                lblviewitemcode.Visible = true;
+                txtnsccode.Text = DtView.Rows[0]["NSCCode"].ToString();
+                txtniincode.Text = DtView.Rows[0]["NIINCode"].ToString();
+                txtproductdescription.Text = DtView.Rows[0]["ProductDescription"].ToString();
+                txtoempartnumber.Text = DtView.Rows[0]["OEMPartNumber"].ToString();
+                txtoemname.Text = DtView.Rows[0]["OEMName"].ToString();
+                if (DtView.Rows[0]["OEMCountry"].ToString() != "")
+                {
+                    txtcountry.SelectedValue = DtView.Rows[0]["OEMCountry"].ToString();
+                }
+                txtdpsupartnumber.Text = DtView.Rows[0]["DPSUPartNumber"].ToString();
+                txthsncodereadonly.Text = DtView.Rows[0]["HsnCode8digit"].ToString();
+
+                if (DtView.Rows[0]["EndUser"].ToString() != "")
+                {
+                    DataTable dtEndUseredit = Lo.RetriveProductCode("", hfprodrefno.Value, "EndUser", hidType.Value);
+                    if (dtEndUseredit.Rows.Count > 0)
+                    {
+                        for (int i = 0; dtEndUseredit.Rows.Count > i; i++)
+                        {
+                            foreach (ListItem lie in ddlenduser.Items)
+                            {
+                                if (lie.Value == dtEndUseredit.Rows[i]["SCategoryId"].ToString())
+                                {
+                                    lie.Selected = true;
+                                }
+                            }
+                        }
+
+                    }
+                }
+                if (DtView.Rows[0]["Platform"].ToString() != "")
+                {
+                    ddlplatform.Items.FindByValue(DtView.Rows[0]["Platform"].ToString()).Selected = true;
+                    if (DtView.Rows[0]["NomenclatureOfMainSystem"].ToString() != "")
+                    {
+                        BindMasterProductNoenCletureCategory();
+                        ddlnomnclature.SelectedValue = DtView.Rows[0]["NomenclatureOfMainSystem"].ToString();
+                    }
+                }
+                if (DtView.Rows[0]["TechnologyLevel1"].ToString() != "")
+                {
+                    ddltechnologycat.Items.FindByValue(DtView.Rows[0]["TechnologyLevel1"].ToString()).Selected = true;
+                    BindMasterSubCategoryTech();
+                    if (DtView.Rows[0]["TechnologyLevel2"].ToString() != "")
+                    {
+                        ddlsubtech.Items.FindByValue(DtView.Rows[0]["TechnologyLevel2"].ToString()).Selected = true;
+                    }
+                }
+                txtsearchkeyword.Text = DtView.Rows[0]["SearchKeyword"].ToString();
+                rbisindinised.SelectedValue = DtView.Rows[0]["IsIndeginized"].ToString();
+                if (rbisindinised.SelectedItem.Value == "Y")
+                {
+
+                    txtmanufacturename.Text = DtView.Rows[0]["ManufactureName"].ToString();
+                    txtmanifacaddress.Text = DtView.Rows[0]["ManufactureAddress"].ToString();
+                    ddlyearofindiginization.SelectedValue = DtView.Rows[0]["YearofIndiginization"].ToString();
+                    divisIndigenized.Visible = true;
+                }
+                else
+                {
+                    divisIndigenized.Visible = false;
+                }
+                rbproductImported.SelectedValue = DtView.Rows[0]["IsProductImported"].ToString();
+                if (rbproductImported.SelectedItem.Value == "N")
+                {
+                    txtremarksyearofimportyes.Text = DtView.Rows[0]["YearofImportRemarks"].ToString();
+                    divyearofimportYes.Visible = false;
+                }
+                else
+                {
+                    BindGridEstimateQuantity1();
+                    divyearofimportYes.Visible = true;
+                }
+                DataTable dtPdfBind = Lo.RetriveProductCode("", hfprodrefno.Value, "ProductImage", "PDF");
+                if (dtPdfBind.Rows.Count > 0)
+                {
+                    dlpdf.DataSource = dtPdfBind;
+                    dlpdf.DataBind();
+                    divPdf.Visible = true;
+                }
+                else
+                {
+                    divPdf.Visible = false;
+                }
+                DataTable dtImageBind = Lo.RetriveProductCode("", hfprodrefno.Value, "ProductImage", "Image");
+                if (dtImageBind.Rows.Count > 0)
+                {
+                    dlimage.DataSource = dtImageBind;
+                    dlimage.DataBind();
+                    divimgdel.Visible = true;
+                }
+                else
+                {
+                    divimgdel.Visible = false;
+                }
+                txtfeaturesanddetails.Text = DtView.Rows[0]["FeatursandDetail"].ToString();
+                rbitemspecification.SelectedValue = DtView.Rows[0]["ItemSpecification"].ToString();
+                BindGrid();
+                DataTable DtPInfoEditBind = Lo.RetriveProductCode("", hfprodrefno.Value, "ProdInfoBindEdit", "");
+                if (DtPInfoEditBind.Rows.Count > 0)
+                {
+                    gvProductInformation.DataSource = DtPInfoEditBind;
+                    gvProductInformation.DataBind();
+                }
+                txtadditionalinfo.Text = DtView.Rows[0]["AdditionalDetail"].ToString();
+                BindGridEstimateQuantity();
+                if (DtView.Rows[0]["PurposeofProcurement"].ToString() != "")
+                {
+                    DataTable DTporCat = Lo.RetriveProductCode("", hfprodrefno.Value, "ProductPOP", hidType.Value);
+                    if (DTporCat.Rows.Count > 0)
+                    {
+                        for (int i = 0; DTporCat.Rows.Count > i; i++)
+                        {
+                            foreach (ListItem rw in rbIgCategory.Items)
+                            {
+                                if (rw.Value == DTporCat.Rows[i]["SCategoryId"].ToString())
+                                {
+                                    rbIgCategory.SelectedValue = DTporCat.Rows[i]["SCategoryId"].ToString();
+                                }
+                            }
+                        }
+                    }
+                }
+                txtremarksprocurmentCategory.Text = DtView.Rows[0]["ProcurmentCategoryRemark"].ToString();
+                rbeoimake2.SelectedValue = DtView.Rows[0]["EOIStatus"].ToString();
+                txteoilink.Text = DtView.Rows[0]["EOIURL"].ToString();
+                ddlNodalOfficerEmail.SelectedValue = DtView.Rows[0]["NodelDetail"].ToString();
+                if (ddlNodalOfficerEmail.SelectedValue != null)
+                { BindNodelEmail1(); }
+                else
+                { contactpanel1.Visible = false; }
+                ddlNodalOfficerEmail2.SelectedValue = DtView.Rows[0]["NodalDetail2"].ToString();
+                if (ddlNodalOfficerEmail2.SelectedValue != null)
+                { BindNodal2(); }
+                else
+                { contactpanel2.Visible = false; }
+                rbeligible.SelectedValue = DtView.Rows[0]["IsShowGeneral"].ToString();
+                foreach (ListItem chki in chklistdeclarationimage.Items)
+                {
+                    chki.Selected = true;
+                }
+            }
+        }
+    }
+    protected void dlimage_ItemCommand(object source, DataListCommandEventArgs e)
+    {
+        if (e.CommandName == "removeimg")
+        {
+            try
+            {
+                string DeleteRec = Lo.DeleteRecord(e.CommandArgument.ToString(), "InActiveImage");
+                if (DeleteRec == "true")
+                {
+                    DataTable dtImageBind = Lo.RetriveProductCode("", hfprodrefno.Value, "ProductImage", hidType.Value);
+                    if (dtImageBind.Rows.Count > 0)
+                    {
+                        dlimage.DataSource = dtImageBind;
+                        dlimage.DataBind();
+                        divimgdel.Visible = true;
+                    }
+                    else
+                    {
+                        divimgdel.Visible = false;
+                    }
+                }
+                else
+                {
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "ErrorMssgPopup('Record not deleted.')", true);
+                }
+            }
+            catch (Exception)
+            {
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "ErrorMssgPopup('Record not deleted.')", true);
+            }
+        }
+    }
+    protected void dlpdf_OnRowCommand(object source, GridViewCommandEventArgs e)
+    {
+        if (e.CommandName == "removepdf")
+        {
+            try
+            {
+                string DeleteRec = Lo.DeleteRecord(e.CommandArgument.ToString(), "InActivePdf");
+                if (DeleteRec == "true")
+                {
+                    DataTable dtImageBind = Lo.RetriveProductCode("", hfprodrefno.Value, "ProductImage", hidType.Value);
+                    if (dtImageBind.Rows.Count > 0)
+                    {
+                        dlpdf.DataSource = dtImageBind;
+                        dlpdf.DataBind();
+                        divPdf.Visible = true;
+                    }
+                    else
+                    {
+                        divPdf.Visible = false;
+                    }
+                }
+                else
+                {
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "ErrorMssgPopup('Record not deleted.')", true);
+                }
+            }
+            catch (Exception)
+            {
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "ErrorMssgPopup('Record not deleted.')", true);
+            }
         }
     }
     #endregion

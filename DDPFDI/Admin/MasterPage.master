@@ -169,7 +169,7 @@
                         <div runat="server" id="menu"></div>
                         <asp:ToolkitScriptManager ID="ToolkitScriptManager1" runat="server" EnablePageMethods="true">
                         </asp:ToolkitScriptManager>
-                        <h4 style="text-align: center;">Session ends in:-<span id="secondsIdle"></span>&nbsp;sec.</h4>
+                        <h4 style="text-align: center;" runat="server" visible="false">Session ends in:-<span id="secondsIdle"></span>&nbsp;sec.</h4>
                         <asp:LinkButton ID="lnkFake" runat="server" />
                         <asp:ModalPopupExtender ID="mpeTimeout" BehaviorID="mpeTimeout" runat="server" PopupControlID="pnlPopup"
                             TargetControlID="lnkFake" OkControlID="btnYes" BackgroundCssClass="modalBackground"

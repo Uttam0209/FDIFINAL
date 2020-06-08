@@ -494,4 +494,12 @@ public partial class Admin_Dashboard : System.Web.UI.Page
 
         }
     }
+    protected void lbitemdisapproved_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("ViewProductFilterDetail?id=" + HttpUtility.UrlEncode(objCrypto.EncryptData("ID")));
+    }
+    protected void lbapproveditem_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("ViewProductFilterDetail?id=" + HttpUtility.UrlEncode(objCrypto.EncryptData("IA")));
+    }
 }

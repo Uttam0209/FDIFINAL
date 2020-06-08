@@ -186,13 +186,14 @@ public partial class Admin_ProductApprovedDisApproved : System.Web.UI.Page
     public string mhiddenProdRefNo;
     public string POProc;
     public string EndUserValue;
+    string crfno;
     protected void gvproductItem_RowCommand(object sender, GridViewCommandEventArgs e)
     {
         if (e.CommandName == "EditComp")
         {
             GridViewRow gvr = (GridViewRow)((Control)e.CommandSource).NamingContainer;
             int rowIndex = gvr.RowIndex;
-            lblprodrefno.Text = e.CommandArgument.ToString();
+            lblrefnoview.Text = e.CommandArgument.ToString();
             string CRefNo = (gvproductItem.Rows[rowIndex].FindControl("hfcomprefno") as HiddenField).Value;
             string FRefNo = (gvproductItem.Rows[rowIndex].FindControl("hfdivisionrefno") as HiddenField).Value;
             string URefNo = (gvproductItem.Rows[rowIndex].FindControl("hfunitrefno") as HiddenField).Value;
@@ -221,79 +222,53 @@ public partial class Admin_ProductApprovedDisApproved : System.Web.UI.Page
                     { pancheck.Visible = true; }
                     else
                     { pancheck.Visible = false; }
-                    lblcomprefno.Text = DtView.Rows[0]["CompanyRefNo"].ToString();
+                    crfno = DtView.Rows[0]["CompanyRefNo"].ToString();
                     lblcompname.Text = DtView.Rows[0]["CompanyName"].ToString();
                     lbldiviname.Text = DtView.Rows[0]["FactoryName"].ToString();
-                    lblunitname.Text = DtView.Rows[0]["UnitName"].ToString();
-                    lblprodrefno.Text = DtView.Rows[0]["ProductRefNo"].ToString();
+                    lblunitnamepro.Text = DtView.Rows[0]["UnitName"].ToString();
+                    lblrefnoview.Text = DtView.Rows[0]["ProductRefNo"].ToString();
                     lblnsngroup.Text = DtView.Rows[0]["ProdLevel1Name"].ToString();
                     lblnsngroupclass.Text = DtView.Rows[0]["ProdLevel2Name"].ToString();
                     lblclassitem.Text = DtView.Rows[0]["ProdLevel3Name"].ToString();
                     lblnsccode.Text = DtView.Rows[0]["NSCCode"].ToString();
                     lblniincode.Text = DtView.Rows[0]["NIINCode"].ToString();
                     lblproductdescription.Text = DtView.Rows[0]["ProductDescription"].ToString();
-                    lbloempartnumber.Text = DtView.Rows[0]["OEMPartNumber"].ToString();
-                    lbloemname.Text = DtView.Rows[0]["OEMName"].ToString();
-                    lbloemcountry.Text = DtView.Rows[0]["CountryName"].ToString();
                     lbldpsupartno.Text = DtView.Rows[0]["DPSUPartNumber"].ToString();
-                    lblhsncode.Text = DtView.Rows[0]["HSCodeName"].ToString() + DtView.Rows[0]["HSNCode"].ToString();
-                    lblhschapter.Text = DtView.Rows[0]["HsChapterName"].ToString();
-                    lblhsncodelevel1.Text = DtView.Rows[0]["HsnCodeLevel1Name"].ToString();
-                    lblhsncodelevel2.Text = DtView.Rows[0]["HsnCodeLevel2Name"].ToString();
-                    lblhsncodelevel3.Text = DtView.Rows[0]["HsnCodeLevel3Name"].ToString();
-                    lblhscode4digit.Text = DtView.Rows[0]["HsCode4digit"].ToString();
                     lblhsncode8digit.Text = DtView.Rows[0]["HsnCode8digit"].ToString();
-                    lblenduserpartno.Text = DtView.Rows[0]["EndUserPartNumber"].ToString();
-                    DataTable dtenduser = Lo.RetriveProductCode("", e.CommandArgument.ToString(), "EndUser", "");
-                    if (dtenduser.Rows.Count > 0)
-                    {
-                        for (int i = 0; dtenduser.Rows.Count > i; i++)
-                        {
-                            EndUserValue = EndUserValue + ", " + dtenduser.Rows[i]["EndUser"].ToString();
-                        }
-                    }
-                    if (EndUserValue != null)
-                    {
-                        lblenduser.Text = EndUserValue.Substring(1).ToString();
-                    }
-                    lbldefenceplatform.Text = DtView.Rows[0]["PlatName"].ToString();
-                    lblnameofdefenceplatform.Text = DtView.Rows[0]["Nomenclature"].ToString();
+                    string de = DtView.Rows[0]["PlatName"].ToString();
+                    string nameofdef = DtView.Rows[0]["Nomenclature"].ToString();
                     prodIndustryDomain.Text = DtView.Rows[0]["TechLevel1Name"].ToString();
                     ProdIndusSubDomain.Text = DtView.Rows[0]["Techlevel2Name"].ToString();
-                    ProdIndus2SubDomain.Text = DtView.Rows[0]["Techlevel3Name"].ToString();
-                    lblsearchkeyword.Text = DtView.Rows[0]["SearchKeyword"].ToString();
-                    lblprodalredyindeginized.Text = DtView.Rows[0]["IsIndeginized"].ToString();
-                    if (lblprodalredyindeginized.Text == "Y")
-                    {
-                        lblprodalredyindeginized.Text = "Yes";
-                        tableIsIndiginized.Visible = true;
-                        lblmanufacturename.Text = DtView.Rows[0]["ManufactureName"].ToString();
-                        lblmanaddress.Text = DtView.Rows[0]["ManufactureAddress"].ToString();
-                        lblyearofindiginization.Text = DtView.Rows[0]["FY"].ToString();
-                    }
-                    else
-                    {
-                        lblprodalredyindeginized.Text = "No";
-                        tableIsIndiginized.Visible = false;
-                    }
                     lblisproductimported.Text = DtView.Rows[0]["IsProductImported"].ToString();
                     if (lblisproductimported.Text == "Y")
                     {
                         lblisproductimported.Text = "Yes";
                     }
                     else { lblisproductimported.Text = "No"; }
-                    lblyearofimport.Text = DtView.Rows[0]["YearofImport"].ToString();
-                    lblremarksproductimported.Text = DtView.Rows[0]["YearofImportRemarks"].ToString();
-                    if (DtView.Rows[0]["ItemDescriptionPDFFile"].ToString() == "")
+                    DataTable DtGridEstimate1 = new DataTable();
+                    DtGridEstimate1 = Lo.RetriveSaveEstimateGrid("Select", 0, e.CommandArgument.ToString(), 0, "", "", "", "", "O");
+                    if (DtGridEstimate1.Rows.Count > 0)
                     {
-                        itemdocument.Visible = false;
+                        gvestimatequanold.DataSource = DtGridEstimate1;
+                        gvestimatequanold.DataBind();
+                        gvestimatequanold.Visible = true;
                     }
                     else
                     {
-                        itemdocument.Visible = true;
-                        a_downitem.HRef = "http://srijandefence.gov.in/Upload/" + DtView.Rows[0]["ItemDescriptionPDFFile"].ToString();
+                        gvestimatequanold.Visible = false;
                     }
-                    DataTable dtImageBind = Lo.RetriveProductCode("", e.CommandArgument.ToString(), "ProductImage", "");
+                    DataTable dtPdfBind = Lo.RetriveProductCode("", e.CommandArgument.ToString(), "ProductImage", "PDF");
+                    if (dtPdfBind.Rows.Count > 0)
+                    {
+                        gvpdf.DataSource = dtPdfBind;
+                        gvpdf.DataBind();
+                        gvpdf.Visible = true;
+                    }
+                    else
+                    {
+                        gvpdf.Visible = false;
+                    }
+                    DataTable dtImageBind = Lo.RetriveProductCode("", e.CommandArgument.ToString(), "ProductImage", "Image");
                     if (dtImageBind.Rows.Count > 0)
                     {
                         dlimage.DataSource = dtImageBind;
@@ -318,7 +293,7 @@ public partial class Admin_ProductApprovedDisApproved : System.Web.UI.Page
                         gvProdInfo.Visible = false;
                     }
                     lbladditionalinfo.Text = DtView.Rows[0]["AdditionalDetail"].ToString();
-                    DataTable dtestimatequanorprice = Lo.RetriveProductCode("", e.CommandArgument.ToString(), "EstimateQuanPrice", "");
+                    DataTable dtestimatequanorprice = Lo.RetriveSaveEstimateGrid("Select", 0, e.CommandArgument.ToString(), 0, "", "", "", "", "F");
                     if (dtestimatequanorprice.Rows.Count > 0)
                     {
                         gvestimatequanorprice.DataSource = dtestimatequanorprice;
@@ -329,67 +304,34 @@ public partial class Admin_ProductApprovedDisApproved : System.Web.UI.Page
                     {
                         gvestimatequanorprice.Visible = false;
                     }
-                    DataTable dtPurposeofProcurement = Lo.RetriveProductCode("", e.CommandArgument.ToString(), "ProductPOP", "");
-                    if (dtPurposeofProcurement.Rows.Count > 0)
+                    if (DtView.Rows[0]["PurposeofProcurement"].ToString() != "")
                     {
-                        for (int i = 0; dtPurposeofProcurement.Rows.Count > i; i++)
+                        DataTable DTporCat = Lo.RetriveProductCode("", e.CommandArgument.ToString(), "ProductPOP", "Company");
+                        if (DTporCat.Rows.Count > 0)
                         {
-                            POProc = POProc + "," + dtPurposeofProcurement.Rows[i]["SCategoryName"].ToString();
+                            for (int i = 0; DTporCat.Rows.Count > i; i++)
+                            {
+                                lblindicate.Text = lblindicate.Text + DTporCat.Rows[i]["SCategoryName"].ToString();
+                            }
                         }
-                    }
-                    if (POProc != null)
-                    {
-                        lblpurposeofprocurement.Text = POProc.Substring(1).ToString();
                     }
                     lblprocremarks.Text = DtView.Rows[0]["ProcurmentCategoryRemark"].ToString();
-                    lbltendersubmission.Text = DtView.Rows[0]["TenderSubmition"].ToString();
-                    lbltenderstatus.Text = DtView.Rows[0]["TenderStatus"].ToString();
-                    if (lbltenderstatus.Text == "Live")
-                    {
-                        if (DtView.Rows[0]["TenderFillDate"].ToString() != "")
-                        {
-                            DateTime tenderdate = Convert.ToDateTime(DtView.Rows[0]["TenderFillDate"].ToString());
-                            string tDate = tenderdate.ToString("dd-MMM-yyyy");
-                            lbltenderdate.Text = tDate.ToString();
-                        }
-                        lbltenderurl.Text = DtView.Rows[0]["TenderUrl"].ToString();
-                        tenderstatus.Visible = true;
-                    }
-                    else
-                    {
-                        tenderstatus.Visible = false;
-                    }
+                    lbleoist.Text = DtView.Rows[0]["EOIStatus"].ToString();
+                    lbleoiurl.Text = DtView.Rows[0]["EOIURL"].ToString();
                     string Nodel1Id = DtView.Rows[0]["NodelDetail"].ToString();
                     if (Nodel1Id.ToString() != "")
                     {
                         DataTable dtNodal = Lo.RetriveProductCode(Nodel1Id.ToString(), "", "ProdNodal", "");
                         if (dtNodal.Rows.Count > 0)
                         {
-                            lblempcode.Text = dtNodal.Rows[0]["NodalOfficerRefNo"].ToString();
                             lblempname.Text = dtNodal.Rows[0]["NodalOficerName"].ToString();
                             lbldesignation.Text = dtNodal.Rows[0]["Designation"].ToString();
-                            lblemailid.Text = dtNodal.Rows[0]["NodalOfficerEmail"].ToString();
+                            lblemailidpro.Text = dtNodal.Rows[0]["NodalOfficerEmail"].ToString();
                             lblmobilenumber.Text = dtNodal.Rows[0]["NodalOfficerMobile"].ToString();
                             lblphonenumber.Text = dtNodal.Rows[0]["NodalOfficerTelephone"].ToString();
-                            lblfax.Text = dtNodal.Rows[0]["NodalOfficerFax"].ToString();
+                            lblfaxpro.Text = dtNodal.Rows[0]["NodalOfficerFax"].ToString();
                         }
                     }
-                    string Nodel2Id = DtView.Rows[0]["NodalDetail2"].ToString();
-                    if (Nodel2Id.ToString() != "")
-                    {
-                        DataTable dtNodal2 = Lo.RetriveProductCode(Nodel2Id.ToString(), "", "ProdNodal", "");
-                        if (dtNodal2.Rows.Count > 0)
-                        {
-                            lblempcode2.Text = dtNodal2.Rows[0]["NodalOfficerRefNo"].ToString();
-                            lblempname2.Text = dtNodal2.Rows[0]["NodalOficerName"].ToString();
-                            lbldesignation2.Text = dtNodal2.Rows[0]["Designation"].ToString();
-                            lblemailid2.Text = dtNodal2.Rows[0]["NodalOfficerEmail"].ToString();
-                            lblmobilenumber2.Text = dtNodal2.Rows[0]["NodalOfficerMobile"].ToString();
-                            lblphonenumber2.Text = dtNodal2.Rows[0]["NodalOfficerTelephone"].ToString();
-                            lblfax2.Text = dtNodal2.Rows[0]["NodalOfficerFax"].ToString();
-                        }
-                    }
-
                     ScriptManager.RegisterStartupScript(this, GetType(), "changePass", "showPopup();", true);
                 }
             }
@@ -719,7 +661,7 @@ public partial class Admin_ProductApprovedDisApproved : System.Web.UI.Page
         {
             if (txtappdisappmssg.Text != "")
             {
-                string DeleteRec = Lo.DeleteRecord(lblprodrefno.Text, "ActiveProd");
+                string DeleteRec = Lo.DeleteRecord(lblrefnoview.Text, "ActiveProd");
                 if (DeleteRec == "true")
                 {
                     hySaveProdInfo["Status"] = "Y";
@@ -750,7 +692,7 @@ public partial class Admin_ProductApprovedDisApproved : System.Web.UI.Page
         {
             if (txtappdisappmssg.Text != "")
             {
-                string DeleteRec = Lo.DeleteRecord(lblprodrefno.Text, "InActiveProd");
+                string DeleteRec = Lo.DeleteRecord(lblrefnoview.Text, "InActiveProd");
                 if (DeleteRec == "true")
                 {
                     hySaveProdInfo["Status"] = "N";
@@ -785,18 +727,18 @@ public partial class Admin_ProductApprovedDisApproved : System.Web.UI.Page
                 body = reader.ReadToEnd();
             }
             body = body.Replace("{MESSAGE}", txtappdisappmssg.Text.Trim());
-            body = body.Replace("{refno}", lblprodrefno.Text);
+            body = body.Replace("{refno}", lblrefnoview.Text);
             SendMail s;
             s = new SendMail();
-            if (lblemailid.Text != "")
+            if (lblemailidpro.Text != "")
             {
-                s.CreateMail("noreply-srijandefence@gov.in", lblemailid.Text, "Amendment in product", body);
+                s.CreateMail("noreply-srijandefence@gov.in", lblemailidpro.Text, "Amendment in product", body);
                 s.sendMail();
                 hySaveProdInfo["Mailsend"] = "Y";
             }
             else
             {
-                DataTable DtNodalEmail = Lo.RetriveAllNodalOfficer(lblcomprefno.Text, "NodalForEmail");
+                DataTable DtNodalEmail = Lo.RetriveAllNodalOfficer(lblemailidpro.Text, "NodalForEmail");
                 if (DtNodalEmail.Rows.Count > 0)
                 {
                     s.CreateMail("noreply-srijandefence@gov.in", DtNodalEmail.Rows[0]["NodalOfficerEmail"].ToString(), "Approved amendment in product", body);
@@ -824,18 +766,18 @@ public partial class Admin_ProductApprovedDisApproved : System.Web.UI.Page
                 body = reader.ReadToEnd();
             }
             body = body.Replace("{MESSAGE}", txtappdisappmssg.Text.Trim());
-            body = body.Replace("{refno}", lblprodrefno.Text);
+            body = body.Replace("{refno}", lblrefnoview.Text);
             SendMail s;
             s = new SendMail();
-            if (lblemailid.Text != "")
+            if (lblemailidpro.Text != "")
             {
-                s.CreateMail("noreply-srijandefence@gov.in", lblemailid.Text, "Amendment in product", body);
+                s.CreateMail("noreply-srijandefence@gov.in", lblemailidpro.Text, "Amendment in product", body);
                 s.sendMail();
                 hySaveProdInfo["Mailsend"] = "Y";
             }
             else
             {
-                DataTable DtNodalEmail = Lo.RetriveAllNodalOfficer(lblcomprefno.Text, "NodalForEmail");
+                DataTable DtNodalEmail = Lo.RetriveAllNodalOfficer(crfno.ToString(), "NodalForEmail");
                 if (DtNodalEmail.Rows.Count > 0)
                 {
                     s.CreateMail("noreply-srijandefence@gov.in", DtNodalEmail.Rows[0]["NodalOfficerEmail"].ToString(), "Disapproved amendment in product", body);
@@ -862,7 +804,7 @@ public partial class Admin_ProductApprovedDisApproved : System.Web.UI.Page
                 body = reader.ReadToEnd();
             }
             body = body.Replace("{MESSAGE}", "We just changed your NSC Class,Nsc Group Class and Item Code.Please review and revert back if any crediential are wrong.");
-            body = body.Replace("{refno}", lblprodrefno.Text);
+            body = body.Replace("{refno}", lblrefnoview.Text);
             SendMail s;
             s = new SendMail();
             DataTable DtNodalEmail = Lo.RetriveAllNodalOfficer(hfcomprefno.Value, "NodalForEmail");
@@ -883,7 +825,7 @@ public partial class Admin_ProductApprovedDisApproved : System.Web.UI.Page
     }
     public void SaveUpdateInfoProduct()
     {
-        hySaveProdInfo["ProdRefNo"] = lblprodrefno.Text;
+        hySaveProdInfo["ProdRefNo"] = lblrefnoview.Text;
         hySaveProdInfo["ProductChanges"] = txtappdisappmssg.Text;
         hySaveProdInfo["ChangesBy"] = objEnc.DecryptData(Session["User"].ToString());
         string InsertLogProdSave = Lo.InsertLogProd(hySaveProdInfo, out  _sysMsg, out  _msg);
@@ -892,14 +834,22 @@ public partial class Admin_ProductApprovedDisApproved : System.Web.UI.Page
     {
         if (e.Row.RowType == DataControlRowType.DataRow)
         {
-            HiddenField hfisapproved = (e.Row.FindControl("hfisaaproved") as HiddenField);
-            if (hfisapproved.Value == "Y")
+            //HiddenField hfisapproved = (e.Row.FindControl("hfisaaproved") as HiddenField);
+            Label lblisapproved = e.Row.FindControl("lblisapproved") as Label;
+            if (lblisapproved.Text == "Y")
             {
-                e.Row.Attributes.Add("Class", "bg-purple");
+                lblisapproved.Text = "Yes";
+                // e.Row.Attributes.Add("Class", "bg-purple");
             }
-            else if (hfisapproved.Value == "N")
+            else if (lblisapproved.Text == "N")
             {
-                e.Row.Attributes.Add("Class", "bg-red");
+                lblisapproved.Text = "No";
+                // e.Row.Attributes.Add("Class", "bg-red");
+            }
+            else if (lblisapproved.Text == "A")
+            {
+                lblisapproved.Text = "Available";
+                // e.Row.Attributes.Add("Class", "bg-red");
             }
         }
     }
@@ -1017,7 +967,7 @@ public partial class Admin_ProductApprovedDisApproved : System.Web.UI.Page
     #endregion
     protected void lblupdate_Click(object sender, EventArgs e)
     {
-        HyUpdateProd["ProductRefNo"] = lblprodrefno.Text;
+        HyUpdateProd["ProductRefNo"] = lblrefnoview.Text;
         if (ddlnsn.SelectedItem.Value != "Select")
         {
             HyUpdateProd["ProductLevel1"] = Co.RSQandSQLInjection(ddlnsn.SelectedItem.Value, "soft");

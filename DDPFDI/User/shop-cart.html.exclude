@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Linked file</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <link rel="icon" href="media/fevi.png">
+    <!-- External CSS libraries -->
+    <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/theme.min.css">
+    <link rel="stylesheet" type="text/css" href="assets\css\font-awesome-4.5.0\css\font-awesome.min.css">
+    <!-- Custom stylesheet -->
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+</head>
+<body>
+    <!-- Sign in / sign up modal-->
+    <div class="modal fade" id="signin-modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <ul class="nav nav-tabs card-header-tabs" role="tablist">
+                        <li class="nav-item"><a class="nav-link active" href="#signin-tab" data-toggle="tab" role="tab" aria-selected="true">Sign in</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#signup-tab" data-toggle="tab" role="tab" aria-selected="false">Sign up</a></li>
+                    </ul>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body tab-content py-4">
+                    <form class="needs-validation tab-pane fade show active" autocomplete="off" novalidate id="signin-tab">
+                        <div class="form-group">
+                            <label for="si-email">Email address</label>
+                            <input class="form-control" type="email" id="si-email" placeholder="johndoe@example.com" required>
+                            <div class="invalid-feedback">Please provide a valid email address.</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="si-password">Password</label>
+                            <div class="password-toggle">
+                                <input class="form-control" type="password" id="si-password" required>
+                                <label class="password-toggle-btn">
+                                    <input class="custom-control-input" type="checkbox"><i class="fas fa-eye password-toggle-indicator"></i><span class="sr-only">Show password</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group d-flex flex-wrap justify-content-between">
+                            <div class="custom-control custom-checkbox mb-2">
+                                <input class="custom-control-input" type="checkbox" id="si-remember">
+                                <label class="custom-control-label" for="si-remember">Remember me</label>
+                            </div>
+                            <a class="font-size-sm" href="#">Forgot password?</a>
+                        </div>
+                        <button class="btn btn-primary btn-block btn-shadow" type="submit">Sign in</button>
+                    </form>
+                    <form class="needs-validation tab-pane fade" autocomplete="off" novalidate id="signup-tab">
+                        <div class="form-group">
+                            <label for="su-name">Full name</label>
+                            <input class="form-control" type="text" id="su-name" placeholder="John Doe" required>
+                            <div class="invalid-feedback">Please fill in your name.</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="su-email">Email address</label>
+                            <input class="form-control" type="email" id="su-email" placeholder="johndoe@example.com" required>
+                            <div class="invalid-feedback">Please provide a valid email address.</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="su-password">Password</label>
+                            <div class="password-toggle">
+                                <input class="form-control" type="password" id="su-password" required>
+                                <label class="password-toggle-btn">
+                                    <input class="custom-control-input" type="checkbox"><i class="fas fa-eye password-toggle-indicator"></i><span class="sr-only">Show password</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="su-password-confirm">Confirm password</label>
+                            <div class="password-toggle">
+                                <input class="form-control" type="password" id="su-password-confirm" required>
+                                <label class="password-toggle-btn">
+                                    <input class="custom-control-input" type="checkbox"><i class="fas fa-eye password-toggle-indicator"></i><span class="sr-only">Show password</span>
+                                </label>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary btn-block btn-shadow" type="submit">Sign up</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Page Title (Shop)-->
+    <div class="page-title-overlap bg-dark pt-4">
+        <div class="container d-lg-flex justify-content-between">
+            <div class="order-lg-2 mb-3 mb-lg-0 pt-lg-2">
+                <a class="navbar-tool float-left ml-1 ml-lg-0 mr-n1 mr-lg-2" style="color: white; color: white; border-right: 1px solid white; padding-right: 16px; margin-right: 20px!important;"
+                    href="#signin-modal" data-toggle="modal">
+                    <div class="navbar-tool-icon-box"><i class="navbar-tool-icon mr-3 fas fa-user" style="font-size: 17px;"></i></div>
+                    <div class="ml-n3">Login</div>
+                </a>
+                <div class="navbar-tool dropdown ml-5">
+                    <a class="navbar-tool-icon-box bg-secondary dropdown-toggle" href="shop-cart.html">
+                        <span class="navbar-tool-label">4</span>
+                        <i class="navbar-tool-icon fas fa-cart-plus" style="margin-top: 13px;"></i>
+                    </a>
+                    <a href="shop-cart.html" style="color: white; margin-left: 10px;">Cart </a>
+                </div>
+            </div>
+            <div class="order-lg-1 pr-lg-4 text-center text-lg-left">
+                <h1 class="h3 text-light mb-0">Carts</h1>
+            </div>
+        </div>
+    </div>
+
+    <div class="container mb-5 pb-3">
+        <div class="bg-light box-shadow-lg rounded-lg overflow-hidden">
+            <div class="row">
+                <!-- Content-->
+                <section class="col-lg-8 pt-2 pt-lg-4 pb-4 mb-3">
+                    <div class="pt-2 px-4 pr-lg-0 pl-xl-5">
+                        <!-- Header-->
+                        <div class="d-flex flex-wrap justify-content-between align-items-center border-bottom pb-3">
+                            <div class="py-1">
+                                <a class="btn btn-outline-accent btn-sm" href="index.html">
+                                    <i class="fas fa-chevron-left mr-1 ml-n1"></i>Back to shopping</a>
+                            </div>
+                            <div class="d-none d-sm-block py-1 font-size-ms">You have 3 products in your cart</div>
+                            <div class="py-1">
+                                <a class="btn btn-outline-danger btn-sm" href="marketplace-category.html">
+                                    <i class="fas fa-trash-alt font-size-xs mr-1 ml-n1"></i>Clear cart</a>
+                            </div>
+                        </div>
+                        <!-- Product-->
+                        <div class="media d-block d-sm-flex align-items-center py-4 border-bottom">
+                            <a class="d-block position-relative mb-3 mb-sm-0 mr-sm-4 mx-auto" href="#" style="width: 12.5rem;">
+                                <img class="rounded-lg" src="ttt.jpg" alt="Product">
+                                <span class="close-floating" data-toggle="tooltip" title="" data-original-title="Remove from Cart">
+                                    <i class="fas fa-times mt-1" style="font-size: 14px;"></i>
+                                </span>
+                            </a>
+                            <div class="media-body text-center text-sm-left">
+                                <h3 class="h6 product-title mb-2">
+                                    <a href="#">HP Pavallion 7Gen
+                                    </a>
+                                </h3>
+                                <div class="d-inline-block text-accent">₹23000</div>
+                                <a class="d-inline-block text-accent font-size-ms border-left ml-2 pl-2" href="#">by MOD</a>
+                                <div class="form-inline pt-2">
+                                    <select class="custom-select custom-select-sm my-1 mr-2">
+                                        <option>Standard Quantity</option>
+                                        <option>1</option>
+                                        <option>2</option>
+                                        <option>3</option>
+                                        <option>4</option>
+                                        <option>5</option>
+                                        <option>6</option>
+                                        <option>7</option>
+                                    </select>
+                                </div>
+                                <div class="row w-1000" style="justify-content: flex-end;">
+                                    <button type="button" class="cart-btns btn mr-3 btn-outline-primary"><i class="fas fa-shopping-cart mr-2"></i>Checkout</button>
+                                    <button type="button" class="cart-btns btn btn-outline-dark"><i class="fas fa-trash-alt mr-2"></i>Remove Cart</button>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Product-->
+                        <div class="media d-block d-sm-flex align-items-center py-4 border-bottom">
+                            <a class="d-block position-relative mb-3 mb-sm-0 mr-sm-4 mx-auto" href="#" style="width: 12.5rem;">
+                                <img class="rounded-lg" src="ttt.jpg" alt="Product">
+                                <span class="close-floating" data-toggle="tooltip" title="" data-original-title="Remove from Cart">
+                                    <i class="fas fa-times mt-1" style="font-size: 14px;"></i>
+                                </span>
+                            </a>
+                            <div class="media-body text-center text-sm-left">
+                                <h3 class="h6 product-title mb-2">
+                                    <a href="#">HP Pavallion 7Gen
+                                    </a>
+                                </h3>
+                                <div class="d-inline-block text-accent">₹23000</div>
+                                <a class="d-inline-block text-accent font-size-ms border-left ml-2 pl-2" href="#">by MOD</a>
+                                <div class="form-inline pt-2">
+                                    <select class="custom-select custom-select-sm my-1 mr-2">
+                                        <option>Standard Quantity</option>
+                                        <option>1</option>
+                                        <option>2</option>
+                                        <option>3</option>
+                                        <option>4</option>
+                                        <option>5</option>
+                                        <option>6</option>
+                                        <option>7</option>
+                                    </select>
+                                </div>
+                                <div class="row w-1000" style="justify-content: flex-end;">
+                                    <button type="button" class="cart-btns btn mr-3 btn-outline-primary"><i class="fas fa-shopping-cart mr-2"></i>Checkout</button>
+                                    <button type="button" class="cart-btns btn btn-outline-dark"><i class="fas fa-trash-alt mr-2"></i>Remove Cart</button>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Product-->
+                        <div class="media d-block d-sm-flex align-items-center py-4 border-bottom">
+                            <a class="d-block position-relative mb-3 mb-sm-0 mr-sm-4 mx-auto" href="#" style="width: 12.5rem;">
+                                <img class="rounded-lg" src="ttt.jpg" alt="Product">
+                                <span class="close-floating" data-toggle="tooltip" title="" data-original-title="Remove from Cart">
+                                    <i class="fas fa-times mt-1" style="font-size: 14px;"></i>
+                                </span>
+                            </a>
+                            <div class="media-body text-center text-sm-left">
+                                <h3 class="h6 product-title mb-2">
+                                    <a href="#">HP Pavallion 7Gen
+                                    </a>
+                                </h3>
+                                <div class="d-inline-block text-accent">₹23000</div>
+                                <a class="d-inline-block text-accent font-size-ms border-left ml-2 pl-2" href="#">by MOD</a>
+                                <div class="form-inline pt-2">
+                                    <select class="custom-select custom-select-sm my-1 mr-2">
+                                        <option>Standard Quantity</option>
+                                        <option>1</option>
+                                        <option>2</option>
+                                        <option>3</option>
+                                        <option>4</option>
+                                        <option>5</option>
+                                        <option>6</option>
+                                        <option>7</option>
+                                    </select>
+                                </div>
+                                <div class="row w-1000" style="justify-content: flex-end;">
+                                    <button type="button" class="cart-btns btn mr-3 btn-outline-primary"><i class="fas fa-shopping-cart mr-2"></i>Checkout</button>
+                                    <button type="button" class="cart-btns btn btn-outline-dark"><i class="fas fa-trash-alt mr-2"></i>Remove Cart</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <!-- Sidebar-->
+                <aside class="col-lg-4">
+                    <hr class="d-lg-none">
+                    <div class="cz-sidebar-static h-100 ml-auto border-left">
+                        <h1 class="text-center mt-4 mb-2"><i class="fas fa-cart-plus"></i></h1>
+                        <div class="text-center mb-4 pb-3 border-bottom">
+                            <h2 class="h6 mb-3 pb-1">Cart total</h2>
+                            <h3 class="font-weight-normal">₹56000/-</h3>
+                        </div>
+                        <a class="btn btn-primary btn-shadow btn-block mt-4" href="#">Secure Checkout
+                        </a>
+                        <div class="text-center pt-2"><small class="text-form text-muted">100% money back guarantee</small></div>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </div>
+
+    <script src="assets/js/jquery-3.4.1.min.js"></script>
+    <script src="assets/js/all.min.js"></script>
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/theme.min.js"></script>
+
+
+
+</body>
+
+</html>

@@ -728,7 +728,7 @@ namespace DataAccessLayer
                 }
             }
         }
-        public string SaveCodeProduct(HybridDictionary hyProduct, DataTable dt, DataTable dtProdInfo, DataTable dtEstimateQuantity, DataTable dtFIIGNo, out string _sysMsg, out string _msg, string Criteria)
+        public string SaveCodeProduct(HybridDictionary hyProduct, DataTable dt, DataTable dtPdf, DataTable dtProdInfo, DataTable dtEstimateQuantity, DataTable dtEstimateQuantity1, DataTable dtFIIGNo, out string _sysMsg, out string _msg, string Criteria)
         {
             using (DbConnection dbCon = db.CreateConnection())
             {
@@ -773,6 +773,9 @@ namespace DataAccessLayer
                     db.AddInParameter(cmd, "@YearofIndiginization", DbType.Int64, hyProduct["YearofIndiginization"]);
                     db.AddInParameter(cmd, "@IsProductImported", DbType.String, hyProduct["IsProductImported"]);
                     db.AddInParameter(cmd, "@YearofImport", DbType.String, hyProduct["YearofImport"]);
+                    db.AddInParameter(cmd, "@NEstimateQuantity", DbType.String, hyProduct["NEstimateQuantity"]);
+                    db.AddInParameter(cmd, "@NEstimateUnit", DbType.String, hyProduct["NEstimateUnit"]);
+                    db.AddInParameter(cmd, "@NEstimatePrice", DbType.String, hyProduct["NEstimatePrice"]);
                     db.AddInParameter(cmd, "@YearofImportRemarks", DbType.String, hyProduct["YearofImportRemarks"]);
                     db.AddInParameter(cmd, "@ItemDescriptionPDFFile", DbType.String, hyProduct["ItemDescriptionPDFFile"]);
                     db.AddInParameter(cmd, "@FeatursandDetail", DbType.String, hyProduct["FeatursandDetail"]);
@@ -800,6 +803,7 @@ namespace DataAccessLayer
                     db.AddInParameter(cmd, "@EOIURL", DbType.String, hyProduct["EOIURL"]);
                     db.AddInParameter(cmd, "@NodelDetail", DbType.Int16, hyProduct["NodelDetail"]);
                     db.AddInParameter(cmd, "@NodalDetail2", DbType.Int16, hyProduct["NodalDetail2"]);
+                    db.AddInParameter(cmd, "@IsShowGeneral", DbType.String, hyProduct["ShowGeneralDec"]);
                     db.AddInParameter(cmd, "@Role", DbType.String, hyProduct["Role"]);
                     db.AddInParameter(cmd, "@CreatedBy", DbType.String, hyProduct["CreatedBy"]);
                     db.AddInParameter(cmd, "@Criteria", DbType.String, Criteria);
@@ -816,7 +820,21 @@ namespace DataAccessLayer
                         db.AddInParameter(dbcom1, "@ImageActualSize", DbType.Int64, dt.Rows[i]["ImageActualSize"]);
                         db.AddInParameter(dbcom1, "@Priority", DbType.String, dt.Rows[i]["Priority"]);
                         db.AddInParameter(dbcom1, "@CompanyRefNo", DbType.String, dt.Rows[i]["CompanyRefNo"]);
+                        db.AddInParameter(dbcom1, "@FType", DbType.String, "Image");
                         db.ExecuteNonQuery(dbcom1, dbTran);
+                    }
+                    for (int i = 0; i < dtPdf.Rows.Count; i++)
+                    {
+                        DbCommand dbcom6 = db.GetStoredProcCommand("sp_trn_Image");
+                        db.AddInParameter(dbcom6, "@ImageID", DbType.Int64, dtPdf.Rows[i]["PdfID"]);
+                        db.AddInParameter(dbcom6, "@ProductRefNo", DbType.String, mCurrentID);
+                        db.AddInParameter(dbcom6, "@ImageName", DbType.String, dtPdf.Rows[i]["PdfName"]);
+                        db.AddInParameter(dbcom6, "@ImageType", DbType.String, dtPdf.Rows[i]["PdfType"]);
+                        db.AddInParameter(dbcom6, "@ImageActualSize", DbType.Int64, dtPdf.Rows[i]["PdfActualSize"]);
+                        db.AddInParameter(dbcom6, "@Priority", DbType.String, dtPdf.Rows[i]["Priority"]);
+                        db.AddInParameter(dbcom6, "@CompanyRefNo", DbType.String, dtPdf.Rows[i]["PCompanyRefNo"]);
+                        db.AddInParameter(dbcom6, "@FType", DbType.String, "PDF");
+                        db.ExecuteNonQuery(dbcom6, dbTran);
                     }
                     for (int j = 0; j < dtProdInfo.Rows.Count; j++)
                     {
@@ -831,14 +849,28 @@ namespace DataAccessLayer
                     for (int k = 0; k < dtEstimateQuantity.Rows.Count; k++)
                     {
                         DbCommand dbcom3 = db.GetStoredProcCommand("sp_trn_ProdQtyPrice");
-                        db.AddInParameter(dbcom3, "@ProdQtyPriceId", DbType.Int64, dtEstimateQuantity.Rows[k]["ProdQtyPriceId"]);
+                        db.AddInParameter(dbcom3, "@ProdQtyPriceId", DbType.Int64, k);
                         db.AddInParameter(dbcom3, "@ProductRefNo", DbType.String, mCurrentID);
                         db.AddInParameter(dbcom3, "@Year", DbType.Int64, dtEstimateQuantity.Rows[k]["Year"]);
                         db.AddInParameter(dbcom3, "@FYear", DbType.String, dtEstimateQuantity.Rows[k]["FYear"]);
                         db.AddInParameter(dbcom3, "@EstimatedQty", DbType.String, dtEstimateQuantity.Rows[k]["EstimatedQty"]);
                         db.AddInParameter(dbcom3, "@Unit", DbType.String, dtEstimateQuantity.Rows[k]["Unit"]);
                         db.AddInParameter(dbcom3, "@EstimatedPrice", DbType.String, dtEstimateQuantity.Rows[k]["EstimatedPrice"]);
+                        db.AddInParameter(dbcom3, "@Type", DbType.String, dtEstimateQuantity.Rows[k]["Type"]);
                         db.ExecuteNonQuery(dbcom3, dbTran);
+                    }
+                    for (int x = 0; x < dtEstimateQuantity1.Rows.Count; x++)
+                    {
+                        DbCommand dbcom5 = db.GetStoredProcCommand("sp_trn_ProdQtyPrice");
+                        db.AddInParameter(dbcom5, "@ProdQtyPriceId", DbType.Int64, x);
+                        db.AddInParameter(dbcom5, "@ProductRefNo", DbType.String, mCurrentID);
+                        db.AddInParameter(dbcom5, "@Year", DbType.Int64, dtEstimateQuantity1.Rows[x]["Year"]);
+                        db.AddInParameter(dbcom5, "@FYear", DbType.String, dtEstimateQuantity1.Rows[x]["FYear"]);
+                        db.AddInParameter(dbcom5, "@EstimatedQty", DbType.String, dtEstimateQuantity1.Rows[x]["EstimatedQty"]);
+                        db.AddInParameter(dbcom5, "@Unit", DbType.String, dtEstimateQuantity1.Rows[x]["Unit"]);
+                        db.AddInParameter(dbcom5, "@EstimatedPrice", DbType.String, dtEstimateQuantity1.Rows[x]["EstimatedPrice"]);
+                        db.AddInParameter(dbcom5, "@Type", DbType.String, dtEstimateQuantity1.Rows[x]["Type"]);
+                        db.ExecuteNonQuery(dbcom5, dbTran);
                     }
                     for (int L = 0; L < dtFIIGNo.Rows.Count; L++)
                     {
@@ -1820,7 +1852,7 @@ namespace DataAccessLayer
                     throw ex;
                 }
             }
-        }
+        }       
         public DataTable GetProductFilterData(string Purpose, string refno, string Search)
         {
             using (DbConnection dbCon = db.CreateConnection())
@@ -1893,7 +1925,7 @@ namespace DataAccessLayer
                 }
             }
         }
-        public DataTable RetriveSaveEstimateGrid(string Function, Int32 ProdInfoId, string ProdRefNo, Int32 Year, string FYear, string EstimateQuantity, string Unit, string Price)
+        public DataTable RetriveSaveEstimateGrid(string Function, Int32 ProdInfoId, string ProdRefNo, Int32 Year, string FYear, string EstimateQuantity, string Unit, string Price,string type)
         {
             using (DbConnection dbCon = db.CreateConnection())
             {
@@ -1909,6 +1941,7 @@ namespace DataAccessLayer
                     db.AddInParameter(cmd, "@EstimatedQty", DbType.String, EstimateQuantity);
                     db.AddInParameter(cmd, "@Unit", DbType.String, Unit);
                     db.AddInParameter(cmd, "@EstimatedPrice", DbType.String, Price);
+                    db.AddInParameter(cmd, "@Type", DbType.String, type);
                     IDataReader dr = db.ExecuteReader(cmd);
                     DataTable dt = new DataTable();
                     if (dr != null)

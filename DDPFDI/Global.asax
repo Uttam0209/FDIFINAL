@@ -117,5 +117,9 @@
         routes.MapPageRoute("ViewProductFilterDetail", "ViewProductFilterDetail", "~/Admin/ViewProductFilter.aspx", true);
         routes.MapPageRoute("ProductGraph", "ProductGraph", "~/Admin/ProductGraph.aspx", true);
         routes.MapPageRoute("ProductGraphNSN", "ProductGraphNSN", "~/Admin/ProductNSNWise.aspx", true);
+        routes.MapPageRoute("NatoCodeSearch", "NatoCodeSearch", "~/Admin/NatoCodeSearch.aspx", true);
+        routes.MapPageRoute("SearchProductFilter", "SearchProductFilter", "~/Admin/SearchProductFilter.aspx", true);
+        routes.MapPageRoute("UProductList", "UProductList", "~/User/U_ProductList.aspx", true);
+        routes.MapPageRoute("UCart", "U_Cart", "~/User/U_Cart.aspx", true);
     }    
 </script>

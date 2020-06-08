@@ -149,7 +149,7 @@ public class DataUtility
             return false;
         }
         string fileType = fileName.Substring(fileName.LastIndexOf("."), fileName.Length - fileName.LastIndexOf("."));
-        if (fileType.ToUpper() == ".PDF")
+        if (fileType.ToUpper() == ".PDF" || fileType.ToString() == ".pdf")
             return true;
         //    else if (fileType.ToUpper() == ".txt")
         //      return true;

@@ -112,6 +112,10 @@ public partial class Admin_VendorDetail : System.Web.UI.Page
             e.Row.TableSection = TableRowSection.TableFooter;
         }
     }
+    protected void lblback_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("Dashboard?mu=" + Encrypt.EncryptData(Session["Type"].ToString()) + "&id=" + Encrypt.EncryptData(Session["CompanyRefNo"].ToString()));
+    }
     #region //------------------------pageindex code--------------//
     protected void lnkbtnPgPrevious_Click(object sender, EventArgs e)
     {

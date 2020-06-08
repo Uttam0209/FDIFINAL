@@ -136,20 +136,18 @@ public partial class Admin_MasterPage : System.Web.UI.MasterPage
         lblusername.Text = ObjEnc.DecryptData(Session["User"].ToString());
         if (Session["CompanyRefNo"] != null)
         {
-            if (Session["CompanyRefNo"].ToString().Substring(0, 1) == "F")
+            if (Session["CompanyRefNo"].ToString().Substring(0, 1) == "F" || Session["CompanyRefNo"].ToString().Substring(0, 1) == "D")
             {
                 DataTable dtFactory = Lo.RetriveMasterData(0, Session["CompanyRefNo"].ToString(), "", 0, "", "", "FactoryName");
                 if (dtFactory.Rows.Count > 0)
                 {
-
                     lblfactory.Text = "Division/Plant - " + dtFactory.Rows[0]["FactoryName"].ToString();
-
                     sType = dtFactory.Rows[0]["CompanyRefNo"].ToString();
                 }
             }
             else if (Session["CompanyRefNo"].ToString().Substring(0, 1) == "U")
             {
-                DataTable dtUnit = Lo.RetriveMasterData(0, Session["CompanyRefNo"].ToString(), "", 0, "", "", "UnitName");
+                DataTable dtUnit = Lo.RetriveMasterData(0, Session["CompanyRefNo"].ToString(), "", 0, "", "", "UnitJoin");
                 if (dtUnit.Rows.Count > 0)
                 {
                     lblfactory.Text = "Division/Plant - " + dtUnit.Rows[0]["FactoryName"].ToString();
