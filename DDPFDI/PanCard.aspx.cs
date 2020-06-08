@@ -9,7 +9,6 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Web.UI;
 using Encryption;
-using System.Text.RegularExpressions;
 
 public partial class PanCard : System.Web.UI.Page
 {
@@ -59,7 +58,7 @@ public partial class PanCard : System.Web.UI.Page
     }
     protected void btndec_Click(object sender, EventArgs e)
     {
-         if (TXTDEC.Text != "")
+        if (TXTDEC.Text != "")
             Label1.Text = Enc.DecryptData(TXTDEC.Text);
     }
     protected void btnpanno_Click(object sender, EventArgs e)
@@ -145,6 +144,7 @@ public partial class PanCard : System.Web.UI.Page
             ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('" + ex.Message.ToString() + "')", true);
         }
     }
+
     protected void rbcheck_SelectedIndexChanged(object sender, EventArgs e)
     {
         if (rbcheck.SelectedValue == "1")
