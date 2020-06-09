@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="U_ProductList.aspx.cs" Inherits="User_U_ProductList" ViewStateEncryptionMode="Always" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" Inherits="User_U_ProductList" CodeFile="U_ProductList.aspx.cs" ViewStateEncryptionMode="Always" %>
 
 <!DOCTYPE html>
 
@@ -259,6 +259,12 @@
                                                                 </asp:DropDownList>
                                                             </div>
                                                         </div>
+
+                                                        <div id="Div1" class="widget widget-categories mb-3" runat="server" visible="false">
+                                                            <div class="input-group">
+                                                                <asp:Button runat="server" ID="btnreset" CssClass="btn btn-info pull-right col-sm-4" Text="Reset" OnClick="btnreset_Click" />
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -289,7 +295,12 @@
                             <div class="clearfix"></div>
                             <div>
                                 <b>
-                                    <asp:LinkButton ID="totoalmore" runat="server" CssClass="pull-right" OnClick="totoalmore_Click"></asp:LinkButton></b>
+                                    <asp:Label ID="lbltotalleft" runat="server" CssClass="pull-left"></asp:Label>
+                                    <b>
+                                        <asp:Label ID="lbltotal" runat="server" CssClass="pull-right"></asp:Label></b>
+                                </b>
+                                <div class="clearfix"></div>
+                                <asp:LinkButton ID="totoalmore" runat="server" CssClass="pull-left" OnClick="totoalmore_Click">  <span class="fa fa-eye"></span>  More detail</asp:LinkButton>
                             </div>
                             <div class="clearfix">
                             </div>
@@ -316,14 +327,12 @@
                                                                 </td>
                                                             </tr>
                                                             <tr>
-                                                                <td colspan="2" style="padding: 8px; font-size: 12px;">Nato Supply Code/Group/Class :-</td>
+                                                                <td colspan="2" style="padding: 8px; font-size: 12px;">Nato Supply Group Class :-</td>
 
                                                             </tr>
                                                             <tr>
                                                                 <td colspan="2" style="padding: 8px; font-size: 12px; font-weight: 900; border-top: 0px;"
-                                                                    title='<%#Eval("NSNGroup") %> / <%#Eval("NSNGroupClass") %>'>
-
-                                                                    <%#Eval("NSCCode") %> / <%# Eval("NSNGroup").ToString().Length > 15? (Eval("NSNGroup") as string).Substring(0,15) + ".." : Eval("NSNGroup")  %> / <%# Eval("NSNGroupClass")  %> 
+                                                                    title='<%#Eval("NSNGroup") %> / <%#Eval("NSNGroupClass") %>'>(<%#Eval("NSCCode") %>) - <%# Eval("NSNGroup").ToString().Length > 15? (Eval("NSNGroup") as string).Substring(0,15) + ".." : Eval("NSNGroup")  %> / <%# Eval("NSNGroupClass")  %> 
                                                                 </td>
                                                             </tr>
                                                             <tr runat="server" visible="false">
@@ -349,8 +358,8 @@
                                                     More Detail
                                                     </asp:LinkButton>
                                                 </div>
-                                                <asp:Button runat="server" ID="lbaddcart" class="btn btn-sm btn-block" Text="Add to show intrest"
-                                                    CommandArgument='<%#Eval("ProductRefNo") %>' CommandName="addcart"></asp:Button>
+                                                <asp:LinkButton runat="server" ID="lbaddcart" class="btn btn-sm btn-block"
+                                                    CommandArgument='<%#Eval("ProductRefNo") %>' CommandName="addcart">Add to Cart <i class="navbar-tool-icon fas fa-cart-plus"></i> Show Intrest</asp:LinkButton>
                                                 <asp:HiddenField ID="hfr" runat="server" Value='<%#Eval("ProductRefNo") %>' />
                                             </div>
                                         </div>
@@ -377,8 +386,6 @@
                             </nav>
                             <div style="margin-top: 10px;">
                                 <asp:Label ID="lblpaging" runat="server"></asp:Label>
-                                <b>
-                                    <asp:Label ID="lbltotal" runat="server" CssClass="pull-right"></asp:Label></b>
                             </div>
                         </div>
                     </div>
@@ -430,7 +437,7 @@
                                                             <table class="table mb-2">
                                                                 <tbody>
                                                                     <tr>
-                                                                        <th scope="row">Item Id</th>
+                                                                        <th scope="row">Item Id (Portal)</th>
                                                                         <td>
                                                                             <asp:Label ID="lblrefnoview" runat="server" Text=""></asp:Label></td>
                                                                     </tr>
@@ -460,16 +467,16 @@
                                                                             <asp:Label ID="lblnsngroupclass" runat="server" Text=""></asp:Label></td>
                                                                     </tr>
                                                                     <tr>
-                                                                        <th scope="row">CLASS CODE</th>
+                                                                        <th scope="row">ITEM CODE</th>
                                                                         <td>
                                                                             <asp:Label ID="lblclassitem" runat="server" Text=""></asp:Label></td>
                                                                     </tr>
-                                                                    <tr>
+                                                                    <tr class="hide" style="visibility: hidden;">
                                                                         <th scope="row">INDUSTRY DOMAIN</th>
                                                                         <td>
-                                                                            <asp:Label ID="prodIndustryDomain" runat="server" Text=""></asp:Label>
+                                                                            <asp:Label ID="prodIndustryDomain" Visible="false" runat="server" Text=""></asp:Label>
                                                                             /
-                                                                            <asp:Label ID="ProdIndusSubDomain" runat="server" Text=""></asp:Label></td>
+                                                                            <asp:Label ID="ProdIndusSubDomain" Visible="false" runat="server" Text=""></asp:Label></td>
                                                                     </tr>
                                                                 </tbody>
                                                             </table>
@@ -477,7 +484,7 @@
                                                             <table class="table mb-2">
                                                                 <tbody>
                                                                     <tr>
-                                                                        <th scope="row">Imported During Last 3 Years</th>
+                                                                        <th scope="row">Imported, Last 3 Years</th>
                                                                         <td>
                                                                             <asp:Label ID="lblisproductimported" runat="server" Text=""></asp:Label></td>
                                                                     </tr>
@@ -512,7 +519,7 @@
                                                                 <tbody>
 
                                                                     <tr>
-                                                                        <th scope="row">Document related to item</th>
+                                                                        <th scope="row">Item Document</th>
                                                                         <td>
                                                                             <asp:GridView runat="server" ID="gvpdf" AutoGenerateColumns="false" Class="table table-responsive table-bordered">
                                                                                 <Columns>
@@ -523,8 +530,7 @@
                                                                                     </asp:TemplateField>
                                                                                     <asp:TemplateField HeaderText="View or Download">
                                                                                         <ItemTemplate>
-                                                                                            <a href='<%#Eval("ImageName","0:http://srijandefence.gov.in/Upload/") %>' target="_blank" class="fa fa-download"></a>
-                                                                                            <span data-toggle="tooltip" class="fa fa-question" title="Click on icon for downloaf"></span>
+                                                                                            <a href='<%#Eval("ImageName") %>' target="_blank" title="Click on icon for download pdf">View or downlaod</a>
                                                                                         </ItemTemplate>
                                                                                     </asp:TemplateField>
                                                                                 </Columns>
@@ -537,7 +543,7 @@
                                                                             <asp:DataList ID="dlimage" runat="server" RepeatColumns="4" Visible="true" RepeatDirection="Horizontal" RepeatLayout="Flow">
                                                                                 <ItemTemplate>
                                                                                     <div class="col-sm-3">
-                                                                                        <a data-fancybox="Prodgridviewgellry" href='<%#Eval("[ImageName]") %>'>
+                                                                                        <a data-fancybox="Prodgridviewgellry" target="_blank" href='<%#Eval("[ImageName]") %>'>
                                                                                             <asp:Image ID="imgprodimage" runat="server" CssClass="img-responsive img-container" Height="90px" Width="110px" src='<%#Eval("[ImageName]") %>' />
                                                                                         </a>
                                                                                     </div>
@@ -748,7 +754,6 @@
             }
         </script>
         <script type="text/javascript">
-
             function PrintDiv() {
                 var divToPrint = document.getElementById('printarea');
                 var popupWin = window.open('', '_blank', 'width=300,height=400,location=no,left=200px');
@@ -758,6 +763,5 @@
             }
         </script>
     </form>
-
 </body>
 </html>

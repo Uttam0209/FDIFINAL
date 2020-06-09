@@ -130,8 +130,8 @@ public partial class User_U_ProductList : System.Web.UI.Page
             pgsource.CurrentPageIndex = pagingCurrentPage;
             ViewState["totpage"] = pgsource.PageCount;
             lblpaging.Text = "Page " + (pagingCurrentPage + 1) + " of " + pgsource.PageCount;
-            lbltotal.Text = " Total Record " + DtGrid.Rows.Count.ToString();
-            totoalmore.Text = "More detail click on total record:-  " + DtGrid.Rows.Count.ToString();
+            lbltotal.Text = " Total Record Search :-  " + DtGrid.Rows.Count.ToString();
+            lbltotalleft.Text = "Total Record :-  " + DtGrid.Rows.Count.ToString();
             lnkbtnPgPrevious.Enabled = !pgsource.IsFirstPage;
             lnkbtnPgNext.Enabled = !pgsource.IsLastPage;
             dlproduct.DataSource = dtads4.DefaultView;
@@ -145,7 +145,15 @@ public partial class User_U_ProductList : System.Web.UI.Page
         txtpageno.Text = "";
         pagingCurrentPage -= 1;
         n2 = Convert.ToInt16(pagingCurrentPage) * Convert.ToInt16(24);
-        n1 = Convert.ToInt16(n2 - 24);
+
+        if (ddlcomp.SelectedItem.Text != "Select" || ddlnsg.SelectedItem.Text != "Select" || ddlprodindustrydomain.SelectedItem.Text != "Select" || ddlprocurmentcatgory.SelectedItem.Text != "Select" || ddlsearchkeywordsfilter.Text != "")
+        {
+            n1 = 1;
+        }
+        else
+        {
+            n1 = Convert.ToInt16(n2 - 24);
+        }
         if (ddlcomp.SelectedItem.Text != "Select" || ddlnsg.SelectedItem.Text != "Select" || ddlprodindustrydomain.SelectedItem.Text != "Select" || ddlprocurmentcatgory.SelectedItem.Text != "Select" || ddlsearchkeywordsfilter.Text != "")
         { SeachResult(); }
         else
@@ -166,7 +174,15 @@ public partial class User_U_ProductList : System.Web.UI.Page
         }
 
         n2 = Convert.ToInt16(mcount) * Convert.ToInt16(24);
-        n1 = Convert.ToInt16(n2 - 23);
+        // n1 = Convert.ToInt16(n2 - 23);
+        if (ddlcomp.SelectedItem.Text != "Select" || ddlnsg.SelectedItem.Text != "Select" || ddlprodindustrydomain.SelectedItem.Text != "Select" || ddlprocurmentcatgory.SelectedItem.Text != "Select" || ddlsearchkeywordsfilter.Text != "")
+        {
+            n1 = 1;
+        }
+        else
+        {
+            n1 = Convert.ToInt16(n2 - 23);
+        }
         if (ddlcomp.SelectedItem.Text != "Select" || ddlnsg.SelectedItem.Text != "Select" || ddlprodindustrydomain.SelectedItem.Text != "Select" || ddlprocurmentcatgory.SelectedItem.Text != "Select" || ddlsearchkeywordsfilter.Text != "")
         { SeachResult(); }
         else
@@ -205,8 +221,15 @@ public partial class User_U_ProductList : System.Web.UI.Page
                 int txtpage = Convert.ToInt32(txtpageno.Text) - 1;
                 pagingCurrentPage = Convert.ToInt32(txtpage.ToString());
             }
-            n2 = Convert.ToInt16(pagingCurrentPage + 1) * Convert.ToInt16(30);
-            n1 = Convert.ToInt16(n2 + 1 - 30);
+            n2 = Convert.ToInt16(pagingCurrentPage + 1) * Convert.ToInt16(24);
+            if (ddlcomp.SelectedItem.Text != "Select" || ddlnsg.SelectedItem.Text != "Select" || ddlprodindustrydomain.SelectedItem.Text != "Select" || ddlprocurmentcatgory.SelectedItem.Text != "Select" || ddlsearchkeywordsfilter.Text != "")
+            {
+                n1 = 1;
+            }
+            else
+            {
+                n1 = Convert.ToInt16(n2 + 1 - 24);
+            }
             if (ddlcomp.SelectedItem.Text != "Select" || ddlnsg.SelectedItem.Text != "Select" || ddlprodindustrydomain.SelectedItem.Text != "Select" || ddlprocurmentcatgory.SelectedItem.Text != "Select" || ddlsearchkeywordsfilter.Text != "")
             { SeachResult(); }
             else
@@ -651,6 +674,7 @@ public partial class User_U_ProductList : System.Web.UI.Page
         for (int i = 0; insert.Rows.Count > i; i++)
         {
             insert1 = insert1 + insert.Rows[i]["Column"].ToString() + " " + insert.Rows[i]["Value"].ToString() + " " + " and ";
+            Div1.Visible = true;
         }
         insert1 = insert1.Substring(0, insert1.Length - 5);
         return insert1;
@@ -666,14 +690,23 @@ public partial class User_U_ProductList : System.Web.UI.Page
             DtFilterView = (DataTable)Session["TempData"];
             if (DtFilterView.Rows.Count > 0)
             {
-                UpdateDtGridValue(DtFilterView);
                 DataView dv = new DataView(DtFilterView);
                 DataTable dtnew = dv.ToTable();
                 if (dtnew.Rows.Count > 0)
                 {
                     dv.RowFilter = BindInsertfilter();
                     dv.Sort = "LastUpdated desc";
+                    DataTable dtinner = dv.ToTable();
+                    lbltotal.Text = " Total Record Search :-  " + dtinner.Rows.Count.ToString();
                     DataTable dtads = dv.ToTable();
+                    dtads.Columns.Add("RCount", typeof(Int64));
+                    for (int n = 0; dtads.Rows.Count > n; n++)
+                    {
+                        dtads.Rows[n]["RCount"] = n + 1;
+                    }
+                    DataView dv4 = new DataView(dtads, "RCount >='" + n1 + "' And  RCount<='" + n2 + "'", "", DataViewRowState.CurrentRows);
+                    dtads = dv4.ToTable();
+                    UpdateDtGridValue(dtads);
                     if (dtads.Rows.Count > 0)
                     {
                         dtads.Columns.Add("TopPdf", typeof(string));
@@ -727,7 +760,7 @@ public partial class User_U_ProductList : System.Web.UI.Page
                             {
                             }
                         }
-                        pgsource.DataSource = dtads.DefaultView;
+                        pgsource.DataSource = dtinner.DefaultView;
                         pgsource.AllowPaging = true;
                         pgsource.PageSize = 24;
                         pgsource.CurrentPageIndex = pagingCurrentPage;
@@ -738,13 +771,11 @@ public partial class User_U_ProductList : System.Web.UI.Page
                         pgsource.DataSource = dtads.DefaultView;
                         dlproduct.DataSource = pgsource;
                         dlproduct.DataBind();
-                        lbltotal.Text = " Total Record " + dtads.Rows.Count;
-                        dtads = null;
+                        lbltotalleft.Text = "Total Record :-  " + DtFilterView.Rows.Count.ToString();
                     }
                     else
                     {
                         ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('No Record Found')", true);
-
                     }
                 }
                 else
@@ -1029,5 +1060,10 @@ public partial class User_U_ProductList : System.Web.UI.Page
             gvPrdoct.DataBind();
             ScriptManager.RegisterStartupScript(this, GetType(), "divCompany", "showPopup1();", true);
         }
+    }
+    protected void btnreset_Click(object sender, EventArgs e)
+    {
+        Div1.Visible = false;
+        Response.RedirectToRoute("uproductlist");
     }
 }
