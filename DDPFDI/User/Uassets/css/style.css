@@ -3,7 +3,12 @@ body {
     padding: 0px;
 }
 
-
+.menu_{
+    border-right: 1.5px solid white;
+    padding-right: 12px;
+    color: white!important;
+    margin-right: 14px!important;
+}
 
 .cart-btns {
     padding: 4px 20px;

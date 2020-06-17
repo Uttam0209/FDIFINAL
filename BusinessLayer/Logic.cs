@@ -305,6 +305,11 @@ namespace BusinessLayer
                             " tbl_mst_MainProduct AS o ON s1.SCategoryName='' WHERE  (P.IsActive = 'Y') and P.ProductRefNo in (" + value + ")";
             return SqlHelper.Instance.GetDataset(mquery).Tables[0];
         }
+        public DataTable RetriveProductUser()
+        {
+            return SqlHelper.Instance.GetExecuteData("select * from fn_ProductFilterSearch() order by LastUpdated desc");
+        }
+
         #endregion
         #region DeleteCode
         public string DeleteRecord(string CompRefNo, string Criteria)

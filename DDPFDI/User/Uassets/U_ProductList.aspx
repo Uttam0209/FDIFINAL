@@ -226,7 +226,7 @@
                     <div class="container d-lg-flex justify-content-between">
                         <div class="order-lg-2 mb-3 mb-lg-0 pt-lg-2">
                             <div class="navbar-tool dropdown ml-5">
-                                <b><a href="#aboutus-modal" class="menu_" data-toggle="modal">About us
+                               <b> <a href="#aboutus-modal" class="menu_" data-toggle="modal">About us
                                 </a></b>
                                 <a href="#contact_us_modal" class="menu_" data-toggle="modal" id="a" runat="server" visible="false">Contact us
                                 </a>
@@ -264,12 +264,10 @@
                                                 <div class="simplebar-content-wrapper" style="height: auto; padding-right: 20px; padding-bottom: 0px; overflow: hidden;">
                                                     <div class="simplebar-content" style="padding: 30px 16px 30px 30px;">
                                                         <div class="widget widget-categories mb-3 ">
-                                                            <h3 class="widget-title">Filters</h3>
-                                                            <div runat="server" visible="false">
-                                                                <label>Company</label>
-                                                                <div class="input-group">
-                                                                    <asp:DropDownList ID="ddlcomp" runat="server" CssClass="custom-select" AutoPostBack="true" OnSelectedIndexChanged="ddlcomp_SelectedIndexChanged"></asp:DropDownList>
-                                                                </div>
+                                                            <h3 class="widget-title">Search</h3>
+                                                            <label>Company</label>
+                                                            <div class="input-group">
+                                                                <asp:DropDownList ID="ddlcomp" runat="server" CssClass="custom-select" AutoPostBack="true" OnSelectedIndexChanged="ddlcomp_SelectedIndexChanged"></asp:DropDownList>
                                                             </div>
                                                         </div>
                                                         <div class="widget widget-categories mb-3 " runat="server" id="divfilterdivision" visible="false">
@@ -284,7 +282,7 @@
                                                                 <asp:DropDownList ID="ddlunit" runat="server" CssClass="custom-select" AutoPostBack="true" OnSelectedIndexChanged="ddlunit_SelectedIndexChanged"></asp:DropDownList>
                                                             </div>
                                                         </div>
-                                                        <div class="widget widget-categories mb-3" runat="server" visible="false">
+                                                        <div class="widget widget-categories mb-3">
                                                             <label>Nato Supply Group</label>
                                                             <div class="input-group">
                                                                 <asp:DropDownList ID="ddlnsg" runat="server" CssClass="custom-select" Style="margin-top: 5px;" AutoPostBack="true" OnSelectedIndexChanged="ddlnsg_SelectedIndexChanged"></asp:DropDownList>
@@ -302,19 +300,19 @@
                                                                 <asp:DropDownList ID="ddlic" runat="server" CssClass="custom-select" Style="margin-top: 5px;" AutoPostBack="true" OnSelectedIndexChanged="ddlic_SelectedIndexChanged"></asp:DropDownList>
                                                             </div>
                                                         </div>
-                                                        <div class="widget widget-categories mb-3" runat="server" visible="false">
+                                                        <div class="widget widget-categories mb-3">
                                                             <label>Industry Domain</label>
                                                             <div class="input-group">
                                                                 <asp:DropDownList ID="ddlprodindustrydomain" runat="server" CssClass="custom-select" AutoPostBack="true" OnSelectedIndexChanged="ddlprodindustrydomain_SelectedIndexChanged"></asp:DropDownList>
                                                             </div>
                                                         </div>
-                                                        <div class="widget widget-categories mb-3" runat="server" id="divisd" visible="false">
+                                                         <div class="widget widget-categories mb-3" runat="server" id="divisd" visible="false">
                                                             <label>Industry Sub-Domain</label>
                                                             <div class="input-group">
                                                                 <asp:DropDownList ID="ddlindustrysubdoamin" runat="server" CssClass="custom-select" AutoPostBack="true" OnSelectedIndexChanged="ddlindustrysubdoamin_SelectedIndexChanged"></asp:DropDownList>
                                                             </div>
                                                         </div>
-                                                        <div class="widget widget-categories mb-3" runat="server" visible="false">
+                                                        <div class="widget widget-categories mb-3">
                                                             <label>Indigenization Category</label>
                                                             <div class="input-group">
                                                                 <asp:DropDownList ID="ddlprocurmentcatgory" runat="server" AutoPostBack="true" CssClass="custom-select"
@@ -352,24 +350,7 @@
                                                                 </asp:DropDownList>
                                                             </div>
                                                         </div>
-                                                        <div id="Div2" class="widget widget-categories mb-3">
-                                                            <label><b>Imported During last 5 years </b></label>
-                                                            <div class="input-group">
-                                                                <asp:RadioButtonList ID="chklast5year" runat="server" AutoPostBack="true" CssClass="custom-checkbox" OnSelectedIndexChanged="chklast5year_SelectedIndexChanged">
-                                                                    <asp:ListItem Value="Y" style="margin-left: 5px !important;">&nbsp; YES</asp:ListItem>
-                                                                    <asp:ListItem Value="N" style="margin-left: 5px !important;">&nbsp; NO</asp:ListItem>
-                                                                </asp:RadioButtonList>
-                                                            </div>
-                                                        </div>
-                                                        <div id="Div3" class="widget widget-categories mb-3">
-                                                            <label><b>Tendor Upload </b></label>
-                                                            <div class="input-group">
-                                                                <asp:RadioButtonList ID="chktendor" runat="server" AutoPostBack="true" CssClass="custom-checkbox" OnSelectedIndexChanged="chktendor_SelectedIndexChanged">
-                                                                    <asp:ListItem Value="Live" style="margin-left: 5px !important;">&nbsp; YES</asp:ListItem>
-                                                                    <asp:ListItem Value="N" style="margin-left: 5px !important;">&nbsp; NO</asp:ListItem>
-                                                                </asp:RadioButtonList>
-                                                            </div>
-                                                        </div>
+
                                                         <div id="Div1" class="widget widget-categories mb-3" runat="server" visible="false">
                                                             <div class="input-group">
                                                                 <asp:Button runat="server" ID="btnreset" CssClass="btn btn-info pull-right col-sm-6" Text="Reset Search" OnClick="btnreset_Click" />
@@ -394,8 +375,8 @@
                             <div class="d-flex justify-content-center justify-content-sm-between align-items-center pt-2 pb-4 pb-sm-5">
                                 <div class="col-md-9">
                                     <div class="input-group-overlay d-none d-lg-flex mx-4">
-                                        <asp:TextBox ID="txtsearch" runat="server" AutoPostBack="true" Style="max-height: 40px;" ToolTip="search tab with all criteria using words." CssClass="form-control appended-form-control"
-                                            OnTextChanged="txtsearch_TextChanged" Placeholder="Search (type min three character)"></asp:TextBox>
+                                        <asp:TextBox ID="ddlsearchkeywordsfilter" runat="server" AutoPostBack="true" Style="max-height: 40px;" ToolTip="For search please type minimum three character and press enter or tab" CssClass="form-control appended-form-control"
+                                            OnTextChanged="ddlsearchkeywordsfilter_TextChanged" Placeholder="Description (type min three character)"></asp:TextBox>
                                         <div class="input-group-append-overlay">
                                             <span class="input-group-text"><i class="fas fa-search"></i></span>
                                         </div>
@@ -411,8 +392,6 @@
                                 </b>
                                 <div class="clearfix"></div>
                                 <asp:LinkButton ID="totoalmore" runat="server" CssClass="pull-left" OnClick="totoalmore_Click">  <span class="fa fa-eye"></span>  More details</asp:LinkButton>
-                                <b>
-                                    <asp:Label ID="lblestimateprice" runat="server" CssClass="pull-right"></asp:Label></b>
                             </div>
                             <div class="clearfix">
                             </div>
@@ -841,7 +820,7 @@
                 <div class="overlay-progress">
                     <div class="custom-progress-bar blue stripes">
                         <span></span>
-                        <p style="margin-left: 200px; padding-bottom: 10px;"><b>Processing...</b></p>
+                        <p style="margin-left: 200px;">Processing</p>
                     </div>
                 </div>
             </ProgressTemplate>
