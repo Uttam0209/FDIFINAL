@@ -1,4 +1,4 @@
-﻿<%@ page language="C#" autoeventwireup="true" CodeFile="U_Cart.aspx.cs" inherits="User_U_Cart" viewStateEncryptionMode="Always" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" Inherits="User_U_Cart" CodeFile="U_Cart.aspx.cs" ViewStateEncryptionMode="Always" %>
 
 <!DOCTYPE html>
 
@@ -37,7 +37,7 @@
                                     <i class="navbar-tool-icon fas fa-cart-plus" style="margin-top: 13px;"></i>
                                 </asp:LinkButton>
                                 <asp:LinkButton ID="lbcart" runat="server" Style="color: white; margin-left: 10px;">
-                                     Cart
+                                     Show interest
                                 </asp:LinkButton>
                             </div>
                         </div>
@@ -90,7 +90,7 @@
                                                     </div>
                                                     <div class="row w-1000" style="justify-content: flex-end;">
                                                         <asp:LinkButton ID="ddlremovecart" runat="server" class="cart-btns btn btn-outline-dark" CommandArgument='<%#Eval("ProductRefNo") %>' CommandName="removecart">
-                                                    <i class="fas fa-trash-alt mr-2"></i>Remove Cart</asp:LinkButton>
+                                                    <i class="fas fa-trash-alt mr-2"></i>Remove from cart</asp:LinkButton>
                                                     </div>
                                                 </div>
                                             </div>
@@ -104,7 +104,7 @@
                                 <div class="cz-sidebar-static h-100 ml-auto border-left">
                                     <h1 class="text-center mt-4 mb-2"><i class="fas fa fa-industry"></i></h1>
                                     <div class="text-center mb-4 pb-3 border-bottom">
-                                        <h2 class="h6 mb-3 pb-1">Show intrest section</h2>
+                                        <h2 class="h6 mb-3 pb-1">Show interest section</h2>
                                         <div class="widget widget-categories mb-3">
                                             <label>Your Name</label>
                                             <div class="input-group">
@@ -124,7 +124,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="text-center pt-2"><small class="text-form text-muted">Mail will send to site admin.</small></div>
+                                    <div class="text-center pt-2"><small class="text-form text-muted">Email will be sent to the site administrator.</small></div>
                                 </div>
                             </aside>
                         </div>

@@ -73,7 +73,17 @@ public partial class User_U_ProductList : System.Web.UI.Page
         if (DtGrid.Rows.Count > 0)
         {
             object sumObject = DtGrid.Compute("Sum(EstimatePrice)", string.Empty);
-            lblestimateprice.Text = "Total Estimate Price:- " + sumObject.ToString() + " (in lakhs)";
+            decimal mvalue = Convert.ToDecimal(sumObject) / Convert.ToDecimal(100000);
+            if (mvalue.ToString() == "")
+            { lblestimateprice.Text = "0"; }
+            else
+            { lblestimateprice.Text = mvalue.ToString("N5"); }
+            object sumObject1 = DtGrid.Compute("Sum(EstimatePricefuture)", string.Empty);
+            decimal mvalue1 = Math.Round(Convert.ToDecimal(sumObject1) / Convert.ToDecimal(100000));
+            if (mvalue1.ToString() == "")
+            { lblfuturepurchase.Text = "0"; }
+            else
+            { lblfuturepurchase.Text = mvalue1.ToString("F2"); }
             Session["TempData"] = DtGrid;
             DtFilterView = (DataTable)Session["TempData"];
             UpdateDtGridValue(DtGrid);
@@ -581,84 +591,87 @@ public partial class User_U_ProductList : System.Web.UI.Page
         insert.Columns.Add(new DataColumn("Column", typeof(string)));
         insert.Columns.Add(new DataColumn("Value", typeof(string)));
         DataRow dr;
-        //if (ddlcomp.SelectedItem.Text != "Select")
-        //{
-        //    dr = insert.NewRow();
-        //    dr["Column"] = "CompanyRefNo" + "=";
-        //    dr["Value"] = "'" + ddlcomp.SelectedItem.Value + "'";
-        //    insert.Rows.Add(dr);
-        //    if (ddldivision.Visible == true && ddldivision.SelectedItem.Text != "Select")
-        //    {
-        //        dr = insert.NewRow();
-        //        dr["Column"] = "FactoryRefNo" + "=";
-        //        dr["Value"] = "'" + ddldivision.SelectedItem.Value + "'";
-        //        insert.Rows.Add(dr);
-        //        if (ddlunit.Visible == true && ddlunit.SelectedItem.Text != "Select")
-        //        {
-        //            dr = insert.NewRow();
-        //            dr["Column"] = "UnitRefNo" + "=";
-        //            dr["Value"] = "'" + ddlunit.SelectedItem.Value + "'";
-        //            insert.Rows.Add(dr);
-        //        }
-        //    }
-        //}
-        //if (ddlnsg.SelectedItem.Text != "Select")
-        //{
-        //    dr = insert.NewRow();
-        //    dr["Column"] = "ProductLevel1" + "=";
-        //    dr["Value"] = "'" + ddlnsg.SelectedItem.Value + "'";
-        //    insert.Rows.Add(dr);
-        //    if (divnsc.Visible != false)
-        //    {
-        //        if (ddlnsc.SelectedItem.Text != "Select")
-        //        {
-        //            dr = insert.NewRow();
-        //            dr["Column"] = "ProductLevel2" + "=";
-        //            dr["Value"] = "'" + ddlnsc.SelectedItem.Value + "'";
-        //            insert.Rows.Add(dr);
-        //        }
-        //    }
-        //    if (divic.Visible != false)
-        //    {
-        //        if (ddlic.SelectedItem.Text != "Select")
-        //        {
-        //            dr = insert.NewRow();
-        //            dr["Column"] = "ProductLevel3" + "=";
-        //            dr["Value"] = "'" + ddlic.SelectedItem.Value + "'";
-        //            insert.Rows.Add(dr);
-        //        }
-        //    }
-        //}
-        //if (ddlprodindustrydomain.SelectedItem.Text != "Select")
-        //{
-        //    dr = insert.NewRow();
-        //    dr["Column"] = "TechnologyLevel1" + "=";
-        //    dr["Value"] = "'" + ddlprodindustrydomain.SelectedItem.Value + "'";
-        //    insert.Rows.Add(dr);
-        //    if (divisd.Visible != false)
-        //    {
-        //        if (ddlindustrysubdoamin.SelectedItem.Text != "Select")
-        //        {
-        //            dr = insert.NewRow();
-        //            dr["Column"] = "TechnologyLevel2" + "=";
-        //            dr["Value"] = "'" + ddlindustrysubdoamin.SelectedItem.Value + "'";
-        //            insert.Rows.Add(dr);
-        //        }
-        //    }
-        //}
-        //if (ddlsearchkeywordsfilter.Text != "Select" && ddlsearchkeywordsfilter.Text.Length >= 3)
-        //{
-        //    dr = insert.NewRow();
-        //    dr["Column"] = "ProductDescription" + " like";
-        //    dr["Value"] = "'%" + ddlsearchkeywordsfilter.Text + "%'";
-        //    insert.Rows.Add(dr);
-        //}
-        if (chklast5year.SelectedIndex != -1)
+        if (ddlcomp.SelectedItem.Text != "Select")
         {
             dr = insert.NewRow();
-            dr["Column"] = "IsProductImported" + "="; ;
-            dr["Value"] = "'" + chklast5year.SelectedItem.Value + "'";
+            dr["Column"] = "CompanyRefNo" + "=";
+            dr["Value"] = "'" + ddlcomp.SelectedItem.Value + "'";
             insert.Rows.Add(dr);
+            if (ddldivision.Visible == true && ddldivision.SelectedItem.Text != "Select")
+            {
+                dr = insert.NewRow();
+                dr["Column"] = "FactoryRefNo" + "=";
+                dr["Value"] = "'" + ddldivision.SelectedItem.Value + "'";
+                insert.Rows.Add(dr);
+                if (ddlunit.Visible == true && ddlunit.SelectedItem.Text != "Select")
+                {
+                    dr = insert.NewRow();
+                    dr["Column"] = "UnitRefNo" + "=";
+                    dr["Value"] = "'" + ddlunit.SelectedItem.Value + "'";
+                    insert.Rows.Add(dr);
+                }
+            }
+        }
+        if (ddlnsg.SelectedItem.Text != "Select")
+        {
+            dr = insert.NewRow();
+            dr["Column"] = "ProductLevel1" + "=";
+            dr["Value"] = "'" + ddlnsg.SelectedItem.Value + "'";
+            insert.Rows.Add(dr);
+            if (divnsc.Visible != false)
+            {
+                if (ddlnsc.SelectedItem.Text != "Select")
+                {
+                    dr = insert.NewRow();
+                    dr["Column"] = "ProductLevel2" + "=";
+                    dr["Value"] = "'" + ddlnsc.SelectedItem.Value + "'";
+                    insert.Rows.Add(dr);
+                }
+            }
+            if (divic.Visible != false)
+            {
+                if (ddlic.SelectedItem.Text != "Select")
+                {
+                    dr = insert.NewRow();
+                    dr["Column"] = "ProductLevel3" + "=";
+                    dr["Value"] = "'" + ddlic.SelectedItem.Value + "'";
+                    insert.Rows.Add(dr);
+                }
+            }
+        }
+        if (ddlprodindustrydomain.SelectedItem.Text != "Select")
+        {
+            dr = insert.NewRow();
+            dr["Column"] = "TechnologyLevel1" + "=";
+            dr["Value"] = "'" + ddlprodindustrydomain.SelectedItem.Value + "'";
+            insert.Rows.Add(dr);
+            if (divisd.Visible != false)
+            {
+                if (ddlindustrysubdoamin.SelectedItem.Text != "Select")
+                {
+                    dr = insert.NewRow();
+                    dr["Column"] = "TechnologyLevel2" + "=";
+                    dr["Value"] = "'" + ddlindustrysubdoamin.SelectedItem.Value + "'";
+                    insert.Rows.Add(dr);
+                }
+            }
+        }
+        if (chklast5year.SelectedIndex != -1)
+        {
+            if (chklast5year.SelectedItem.Value == "Y")
+            {
+                dr = insert.NewRow();
+                dr["Column"] = "EstimatePrice" + "> ";
+                dr["Value"] = "0";
+                insert.Rows.Add(dr);
+            }
+            else
+            {
+                dr = insert.NewRow();
+                dr["Column"] = "EstimatePrice" + "=";
+                dr["Value"] = "'0'";
+                insert.Rows.Add(dr);
+            }
         }
         if (chktendor.SelectedIndex != -1)
         {
@@ -666,45 +679,69 @@ public partial class User_U_ProductList : System.Web.UI.Page
             {
                 dr = insert.NewRow();
                 dr["Column"] = "TenderStatus" + "=";
-                dr["Value"] = "'" + chktendor.SelectedItem.Value + "'";
+                dr["Value"] = "'" + chktendor.SelectedItem.Value + "' and EOIStatus='" + chktendor.SelectedItem.Value + "'";
                 insert.Rows.Add(dr);
             }
             else
             {
                 dr = insert.NewRow();
-                dr["Column"] = "TenderStatus " + "like ";
-                dr["Value"] = "'%Not Floated%' or TenderStatus like '%To be Floated shortly%' or TenderStatus like '%Archive%'";
+                dr["Column"] = "(TenderStatus " + "=";
+                dr["Value"] = "'Archive' and EOIStatus ='Archive') or (TenderStatus='Not Floated' and  EOIStatus='Not Floated') or (TenderStatus='To be Floated shortly' and  EOIStatus='To be Floated shortly')";
                 insert.Rows.Add(dr);
             }
         }
-        //if (ddlprocurmentcatgory.SelectedItem.Text != "Select")
-        //{
-        //    dr = insert.NewRow();
-        //    dr["Column"] = "PurposeofProcurement" + " like";
-        //    dr["Value"] = "'%" + ddlprocurmentcatgory.SelectedItem.Value + "%'";
-        //    insert.Rows.Add(dr);
-        //}
-        //if (ddlisindezinized.SelectedItem.Text != "Select")
-        //{
-        //    dr = insert.NewRow();
-        //    dr["Column"] = "IsIndeginized" + "="; ;
-        //    dr["Value"] = "'" + ddlisindezinized.SelectedItem.Value + "'";
-        //    insert.Rows.Add(dr);
-        //}
-        //if (ddldeclaration.SelectedItem.Text != "Select")
-        //{
-        //    dr = insert.NewRow();
-        //    dr["Column"] = "IsShowGeneral" + "="; ;
-        //    dr["Value"] = "'" + ddldeclaration.SelectedItem.Value + "'";
-        //    insert.Rows.Add(dr);
-        //}
+        if (rberffpurchase.SelectedIndex != -1)
+        {
+            if (rberffpurchase.SelectedItem.Value != "0")
+            {
+                dr = insert.NewRow();
+                dr["Column"] = "EstimatePricefuture" + ">";
+                dr["Value"] = "'0'";
+                insert.Rows.Add(dr);
+            }
+            else
+            {
+                dr = insert.NewRow();
+                dr["Column"] = "EstimatePricefuture" + "=";
+                dr["Value"] = "'0'";
+                insert.Rows.Add(dr);
+            }
+        }
+        if (ddlprocurmentcatgory.SelectedItem.Text != "Select")
+        {
+            dr = insert.NewRow();
+            dr["Column"] = "PurposeofProcurement" + " like";
+            dr["Value"] = "'%" + ddlprocurmentcatgory.SelectedItem.Value + "%'";
+            insert.Rows.Add(dr);
+        }
+        if (ddldeclaration.SelectedItem.Text != "Select")
+        {
+            dr = insert.NewRow();
+            dr["Column"] = "IsShowGeneral" + "="; ;
+            dr["Value"] = "'" + ddldeclaration.SelectedItem.Value + "'";
+            insert.Rows.Add(dr);
+        }
         if (txtsearch.Text != "" && txtsearch.Text.Length >= 3)
         {
             dr = insert.NewRow();
-            dr["Column"] = "CompanyName like";
-            dr["Value"] = "'%" + txtsearch.Text + "%' or (FactoryName like '%" + txtsearch.Text + "%') or (UnitName like '%" + txtsearch.Text + "%') or (NSNGroup like '%" + txtsearch.Text + "%') or (DefencePlatform like '%" + txtsearch.Text + "%') or (ProdIndustryDoamin  like '%" + txtsearch.Text + "%') or (NSNGroupClass like '%" + txtsearch.Text + "%')  or (ItemCode like '%" + txtsearch.Text + "%')  or (ProdIndustrySubDomain  like '%" + txtsearch.Text + "%') or (ProductDescription  like '%" + txtsearch.Text + "%') or (NSCCode like '%" + txtsearch.Text + "%')";
+            dr["Column"] = "(CompanyName like";
+            dr["Value"] = "'%" + txtsearch.Text + "%' or (FactoryName like '%" + txtsearch.Text + "%') or (UnitName like '%" + txtsearch.Text + "%') or (NSNGroup like '%" + txtsearch.Text + "%') or (DefencePlatform like '%" + txtsearch.Text + "%') or (ProdIndustryDoamin  like '%" + txtsearch.Text + "%') or (NSNGroupClass like '%" + txtsearch.Text + "%')  or (ItemCode like '%" + txtsearch.Text + "%')  or (ProdIndustrySubDomain  like '%" + txtsearch.Text + "%') or (ProductDescription  like '%" + txtsearch.Text + "%') or (NSCCode like '%" + txtsearch.Text + "%') or SearchKeyword like '%" + txtsearch.Text + "%' or IsIndeginized like '%" + txtsearch.Text + "%')";
             insert.Rows.Add(dr);
         }
+        if (ddlisindezinized.SelectedItem.Text != "Select")
+        {
+            dr = insert.NewRow();
+            dr["Column"] = "IsIndeginized" + "="; ;
+            dr["Value"] = "'" + ddlisindezinized.SelectedItem.Value + "'";
+            insert.Rows.Add(dr);
+        }
+        //if (ddlsearchkeywordsfilter.Text != "Select" && ddlsearchkeywordsfilter.Text.Length >= 3)
+        //{
+        //    dr = insert.NewRow();
+        //    dr["Column"] = "ProductDescription" + " like";
+        //    dr["Value"] = "'%" + ddlsearchkeywordsfilter.Text + "%'";
+        //    insert.Rows.Add(dr);
+        //}
         for (int i = 0; insert.Rows.Count > i; i++)
         {
             insert1 = insert1 + insert.Rows[i]["Column"].ToString() + " " + insert.Rows[i]["Value"].ToString() + " " + " and ";
@@ -729,10 +766,20 @@ public partial class User_U_ProductList : System.Web.UI.Page
                 if (dtnew.Rows.Count > 0)
                 {
                     dv.RowFilter = BindInsertfilter();
-                    dv.Sort = "LastUpdated desc";
+                    dv.Sort = "EstimatePrice,EstimatePricefuture desc";
                     DataTable dtinner = dv.ToTable();
                     object sumObject = dtinner.Compute("Sum(EstimatePrice)", string.Empty);
-                    lblestimateprice.Text = "Total Estimate Price:- " + sumObject.ToString() + " (in lakhs)";
+                    decimal mvalue = Convert.ToDecimal(sumObject) / Convert.ToDecimal(100000);
+                    if (mvalue.ToString() == "")
+                    { lblestimateprice.Text = "0"; }
+                    else
+                    { lblestimateprice.Text = mvalue.ToString("N5"); }
+                    object sumObject1 = dtinner.Compute("Sum(EstimatePricefuture)", string.Empty);
+                    decimal mvalue1 = Math.Round(Convert.ToDecimal(sumObject1) / Convert.ToDecimal(100000));
+                    if (mvalue1.ToString() == "")
+                    { lblfuturepurchase.Text = "0"; }
+                    else
+                    { lblfuturepurchase.Text = mvalue1.ToString("F2"); }
                     lbltotal.Text = " Search Results " + dtinner.Rows.Count.ToString() + " items";
                     DataTable dtads = dv.ToTable();
                     dtads.Columns.Add("RCount", typeof(Int64));
@@ -799,6 +846,7 @@ public partial class User_U_ProductList : System.Web.UI.Page
                 lblnsngroupclass.Text = DtView.Rows[0]["ProdLevel2Name"].ToString();
                 // lblnsccode.Text = DtView.Rows[0]["NSCCode"].ToString();
                 // lblniincode.Text = DtView.Rows[0]["NIINCode"].ToString();
+                lblsearchkeywords.Text = DtView.Rows[0]["Searchkeyword"].ToString();
                 lblproductdescription.Text = DtView.Rows[0]["ProductDescription"].ToString();
                 lbldpsupartno.Text = DtView.Rows[0]["DPSUPartNumber"].ToString();
                 lblhsncode8digit.Text = DtView.Rows[0]["HsnCode8digit"].ToString();
@@ -828,13 +876,21 @@ public partial class User_U_ProductList : System.Web.UI.Page
                 DtGridEstimate1 = Lo.RetriveSaveEstimateGrid("Select", 0, e.CommandArgument.ToString(), 0, "", "", "", "", "O");
                 if (DtGridEstimate1.Rows.Count > 0)
                 {
+                    int tot = 0;
+                    for (int i = 0; DtGridEstimate1.Rows.Count > i; i++)
+                    {
+                        tot = tot + Convert.ToInt32(DtGridEstimate1.Rows[i]["EstimatedPrice"]);
+                    }
                     gvestimatequanold.DataSource = DtGridEstimate1;
                     gvestimatequanold.DataBind();
                     gvestimatequanold.Visible = true;
+                    decimal msumobject = Convert.ToDecimal(tot) / Convert.ToDecimal(100000);
+                    lblvalueimport.Text = msumobject.ToString("N5");
                 }
                 else
                 {
                     gvestimatequanold.Visible = false;
+                    lblvalueimport.Text = "0.00";
                 }
                 DataTable dtPdfBind = Lo.RetriveProductCode("", e.CommandArgument.ToString(), "ProductImage", "PDF");
                 if (dtPdfBind.Rows.Count > 0)
@@ -897,6 +953,18 @@ public partial class User_U_ProductList : System.Web.UI.Page
                 lblprocremarks.Text = DtView.Rows[0]["ProcurmentCategoryRemark"].ToString();
                 lbleoirep.Text = DtView.Rows[0]["EOIStatus"].ToString();
                 lbleoilink.Text = DtView.Rows[0]["EOIURL"].ToString();
+                if (DtView.Rows[0]["TenderStatus"].ToString() == "Live")
+                {
+                    lbltendor.Text = "Live";
+                }
+                else if (DtView.Rows[0]["TenderStatus"].ToString() == "Archive" || DtView.Rows[0]["TenderStatus"].ToString() == "Not Floated")
+                {
+                    lbltendor.Text = DtView.Rows[0]["TenderStatus"].ToString();
+                }
+                else
+                {
+                    lbltendor.Text = "No";
+                }
                 string Nodel1Id = DtView.Rows[0]["NodelDetail"].ToString();
                 if (Nodel1Id.ToString() != "")
                 {
@@ -1017,7 +1085,6 @@ public partial class User_U_ProductList : System.Web.UI.Page
     {
         if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
         {
-
             if (dtCart.Rows.Count > 0)
             {
                 LinkButton lnkId = (LinkButton)e.Item.FindControl("lbaddcart");
@@ -1030,6 +1097,9 @@ public partial class User_U_ProductList : System.Web.UI.Page
                     lnkId.Attributes.Add("Class", "btn btn-success btn-sm btn-block");
                 }
             }
+            Label lblep = (Label)e.Item.FindControl("lblep");
+            decimal mlblep = Math.Round(Convert.ToDecimal(lblep.Text) / Convert.ToDecimal(100000));
+            lblep.Text = mlblep.ToString("F2");
         }
     }
     protected void totoalmore_Click(object sender, EventArgs e)
@@ -1061,6 +1131,10 @@ public partial class User_U_ProductList : System.Web.UI.Page
         SeachResult();
     }
     protected void txtsearch_TextChanged(object sender, EventArgs e)
+    {
+        SeachResult();
+    }
+    protected void rberffpurchase_SelectedIndexChanged(object sender, EventArgs e)
     {
         SeachResult();
     }

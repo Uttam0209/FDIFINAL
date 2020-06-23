@@ -14,6 +14,10 @@
     <link rel="stylesheet" type="text/css" href="~/User/Uassets/css/style.css">
 
     <style>
+        .adnce_box {
+            display: none;
+        }
+
         .btn.dropdown-toggle::after {
             float: right;
             margin-top: 8px;
@@ -143,20 +147,21 @@
                 </div>
                 <div class="modal-body tab-content py-4">
                     <p class="text-justify">
-                        Indigenization Portal (srijandefence.gov.in) is on online market place platform(non-transactional) with an objective to connect
-               product and technology requirement of DPSUs & OFB, to be indigenized, with manufacturing capabilities of Indian Industry.
+                        Indigenization Portal (srijandefence.gov.in) is on online market place platform(non-transactional). 
+                        DPSUs & OFB will share their list of items <b>to be indigenized </b>with the Indian Industry. 
+                        The Indian Industry will show their interest in those items for which they have capability to manufacture. 
+                        The interaction, thereafter, will be offline between DPSUs & OFB and the Indian Industry.
                     </p>
-                    <b>Process</b>
+                    <b>Steps to show interest by the Indian Industry</b>
                     <ul>
+
+                        <li>Search items</li>
                         <li>Enroll to create login ID & Password</li>
                         <li>Login</li>
-                        <li>Search items</li>
                         <li>Add to cart, items of interest</li>
-                        <li>Send request</li>
+                        <li>Show Interest</li>
                     </ul>
-                    <p>
-                        *Thereafter, the interaction will be offline between DPSUs & OFB and Indian Industry
-                    </p>
+
                 </div>
             </div>
         </div>
@@ -263,97 +268,9 @@
                                             <div class="simplebar-offset" style="right: 0px; bottom: 0px;">
                                                 <div class="simplebar-content-wrapper" style="height: auto; padding-right: 20px; padding-bottom: 0px; overflow: hidden;">
                                                     <div class="simplebar-content" style="padding: 30px 16px 30px 30px;">
-                                                        <div class="widget widget-categories mb-3 ">
-                                                            <h3 class="widget-title">Filters</h3>
-                                                            <div runat="server" visible="false">
-                                                                <label>Company</label>
-                                                                <div class="input-group">
-                                                                    <asp:DropDownList ID="ddlcomp" runat="server" CssClass="custom-select" AutoPostBack="true" OnSelectedIndexChanged="ddlcomp_SelectedIndexChanged"></asp:DropDownList>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="widget widget-categories mb-3 " runat="server" id="divfilterdivision" visible="false">
-                                                            <label>Division</label>
-                                                            <div class="input-group">
-                                                                <asp:DropDownList ID="ddldivision" runat="server" CssClass="custom-select" AutoPostBack="true" OnSelectedIndexChanged="ddldivision_SelectedIndexChanged"></asp:DropDownList>
-                                                            </div>
-                                                        </div>
-                                                        <div class="widget widget-categories mb-3 " runat="server" id="divfilterunit" visible="false">
-                                                            <label>Unit</label>
-                                                            <div class="input-group">
-                                                                <asp:DropDownList ID="ddlunit" runat="server" CssClass="custom-select" AutoPostBack="true" OnSelectedIndexChanged="ddlunit_SelectedIndexChanged"></asp:DropDownList>
-                                                            </div>
-                                                        </div>
-                                                        <div class="widget widget-categories mb-3" runat="server" visible="false">
-                                                            <label>Nato Supply Group</label>
-                                                            <div class="input-group">
-                                                                <asp:DropDownList ID="ddlnsg" runat="server" CssClass="custom-select" Style="margin-top: 5px;" AutoPostBack="true" OnSelectedIndexChanged="ddlnsg_SelectedIndexChanged"></asp:DropDownList>
-                                                            </div>
-                                                        </div>
-                                                        <div class="widget widget-categories mb-3" runat="server" id="divnsc" visible="false">
-                                                            <label>Nato Supply Class</label>
-                                                            <div class="input-group">
-                                                                <asp:DropDownList ID="ddlnsc" runat="server" CssClass="custom-select" Style="margin-top: 5px;" AutoPostBack="true" OnSelectedIndexChanged="ddlnsc_SelectedIndexChanged"></asp:DropDownList>
-                                                            </div>
-                                                        </div>
-                                                        <div class="widget widget-categories mb-3" runat="server" id="divic" visible="false">
-                                                            <label>Item Code</label>
-                                                            <div class="input-group">
-                                                                <asp:DropDownList ID="ddlic" runat="server" CssClass="custom-select" Style="margin-top: 5px;" AutoPostBack="true" OnSelectedIndexChanged="ddlic_SelectedIndexChanged"></asp:DropDownList>
-                                                            </div>
-                                                        </div>
-                                                        <div class="widget widget-categories mb-3" runat="server" visible="false">
-                                                            <label>Industry Domain</label>
-                                                            <div class="input-group">
-                                                                <asp:DropDownList ID="ddlprodindustrydomain" runat="server" CssClass="custom-select" AutoPostBack="true" OnSelectedIndexChanged="ddlprodindustrydomain_SelectedIndexChanged"></asp:DropDownList>
-                                                            </div>
-                                                        </div>
-                                                        <div class="widget widget-categories mb-3" runat="server" id="divisd" visible="false">
-                                                            <label>Industry Sub-Domain</label>
-                                                            <div class="input-group">
-                                                                <asp:DropDownList ID="ddlindustrysubdoamin" runat="server" CssClass="custom-select" AutoPostBack="true" OnSelectedIndexChanged="ddlindustrysubdoamin_SelectedIndexChanged"></asp:DropDownList>
-                                                            </div>
-                                                        </div>
-                                                        <div class="widget widget-categories mb-3" runat="server" visible="false">
-                                                            <label>Indigenization Category</label>
-                                                            <div class="input-group">
-                                                                <asp:DropDownList ID="ddlprocurmentcatgory" runat="server" AutoPostBack="true" CssClass="custom-select"
-                                                                    OnSelectedIndexChanged="ddlprocurmentcatgory_SelectedIndexChanged">
-                                                                </asp:DropDownList>
-                                                            </div>
-                                                        </div>
-                                                        <div class="widget widget-categories mb-3" runat="server" visible="false">
-                                                            <label>Indigenized </label>
-                                                            <div class="input-group">
-                                                                <asp:DropDownList ID="ddlisindezinized" runat="server" AutoPostBack="true" CssClass="custom-select" OnSelectedIndexChanged="ddlisindezinized_SelectedIndexChanged">
-                                                                    <asp:ListItem Value="">Select</asp:ListItem>
-                                                                    <asp:ListItem Value="Y">YES</asp:ListItem>
-                                                                    <asp:ListItem Value="N">NO</asp:ListItem>
-                                                                </asp:DropDownList>
-                                                            </div>
-                                                        </div>
-                                                        <div class="widget widget-categories mb-3" runat="server" visible="false">
-                                                            <label>Declaration </label>
-                                                            <div class="input-group">
-                                                                <asp:DropDownList ID="ddldeclaration" runat="server" AutoPostBack="true" CssClass="custom-select" OnSelectedIndexChanged="ddldeclaration_SelectedIndexChanged">
-                                                                    <asp:ListItem Value="">Select</asp:ListItem>
-                                                                    <asp:ListItem Value="Y">YES</asp:ListItem>
-                                                                    <asp:ListItem Value="N">NO</asp:ListItem>
-                                                                </asp:DropDownList>
-                                                            </div>
-                                                        </div>
-                                                        <div class="widget widget-categories mb-3" runat="server" visible="false">
-                                                            <label>Imported During last 5 years </label>
-                                                            <div class="input-group">
-                                                                <asp:DropDownList ID="ddlimported" runat="server" AutoPostBack="true" CssClass="custom-select" OnSelectedIndexChanged="ddlimported_SelectedIndexChanged">
-                                                                    <asp:ListItem Value="">Select</asp:ListItem>
-                                                                    <asp:ListItem Value="Y">YES</asp:ListItem>
-                                                                    <asp:ListItem Value="N">NO</asp:ListItem>
-                                                                </asp:DropDownList>
-                                                            </div>
-                                                        </div>
+                                                        <h3>Filters</h3>
                                                         <div id="Div2" class="widget widget-categories mb-3">
-                                                            <label><b>Imported During last 5 years </b></label>
+                                                            <label><b>Imported During last 3 years</b></label>
                                                             <div class="input-group">
                                                                 <asp:RadioButtonList ID="chklast5year" runat="server" AutoPostBack="true" CssClass="custom-checkbox" OnSelectedIndexChanged="chklast5year_SelectedIndexChanged">
                                                                     <asp:ListItem Value="Y" style="margin-left: 5px !important;">&nbsp; YES</asp:ListItem>
@@ -361,13 +278,105 @@
                                                                 </asp:RadioButtonList>
                                                             </div>
                                                         </div>
+                                                        <div id="Div4" class="widget widget-categories mb-3">
+                                                            <label><b>Future requirements</b></label>
+                                                            <div class="input-group">
+                                                                <asp:RadioButtonList ID="rberffpurchase" runat="server" AutoPostBack="true" CssClass="custom-checkbox" OnSelectedIndexChanged="rberffpurchase_SelectedIndexChanged">
+                                                                    <asp:ListItem Value="" style="margin-left: 5px !important;">&nbsp; YES</asp:ListItem>
+                                                                    <asp:ListItem Value="0" style="margin-left: 5px !important;">&nbsp; NO</asp:ListItem>
+                                                                </asp:RadioButtonList>
+                                                            </div>
+                                                        </div>
                                                         <div id="Div3" class="widget widget-categories mb-3">
-                                                            <label><b>Tendor Upload </b></label>
+                                                            <label><b>Tender/EOI/RFP Status</b></label>
                                                             <div class="input-group">
                                                                 <asp:RadioButtonList ID="chktendor" runat="server" AutoPostBack="true" CssClass="custom-checkbox" OnSelectedIndexChanged="chktendor_SelectedIndexChanged">
                                                                     <asp:ListItem Value="Live" style="margin-left: 5px !important;">&nbsp; YES</asp:ListItem>
                                                                     <asp:ListItem Value="N" style="margin-left: 5px !important;">&nbsp; NO</asp:ListItem>
                                                                 </asp:RadioButtonList>
+                                                            </div>
+                                                        </div>
+                                                        <h3>
+                                                            <a id="adnce_search" class="widget-title" style="cursor: pointer; color: #6915cf;">Advanced Search</a>
+                                                        </h3>
+                                                        <div id="adnce_search_box" class="adnce_box">
+                                                            <div class="widget widget-categories mb-3 ">
+                                                                <div id="Div5" runat="server">
+                                                                    <label><b>Company</b></label>
+                                                                    <div class="input-group">
+                                                                        <asp:DropDownList ID="ddlcomp" runat="server" CssClass="custom-select" AutoPostBack="true" OnSelectedIndexChanged="ddlcomp_SelectedIndexChanged"></asp:DropDownList>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="widget widget-categories mb-3 " runat="server" id="divfilterdivision" visible="false">
+                                                                <label><b>Division</b></label>
+                                                                <div class="input-group">
+                                                                    <asp:DropDownList ID="ddldivision" runat="server" CssClass="custom-select" AutoPostBack="true" OnSelectedIndexChanged="ddldivision_SelectedIndexChanged"></asp:DropDownList>
+                                                                </div>
+                                                            </div>
+                                                            <div class="widget widget-categories mb-3 " runat="server" id="divfilterunit" visible="false">
+                                                                <label><b>Unit</b></label>
+                                                                <div class="input-group">
+                                                                    <asp:DropDownList ID="ddlunit" runat="server" CssClass="custom-select" AutoPostBack="true" OnSelectedIndexChanged="ddlunit_SelectedIndexChanged"></asp:DropDownList>
+                                                                </div>
+                                                            </div>
+                                                            <div id="Div6" class="widget widget-categories mb-3" runat="server">
+                                                                <label><b>Nato Supply Group</b></label>
+                                                                <div class="input-group">
+                                                                    <asp:DropDownList ID="ddlnsg" runat="server" CssClass="custom-select" Style="margin-top: 5px;" AutoPostBack="true" OnSelectedIndexChanged="ddlnsg_SelectedIndexChanged"></asp:DropDownList>
+                                                                </div>
+                                                            </div>
+                                                            <div class="widget widget-categories mb-3" runat="server" id="divnsc" visible="false">
+                                                                <label><b>Nato Supply Class</b></label>
+                                                                <div class="input-group">
+                                                                    <asp:DropDownList ID="ddlnsc" runat="server" CssClass="custom-select" Style="margin-top: 5px;" AutoPostBack="true" OnSelectedIndexChanged="ddlnsc_SelectedIndexChanged"></asp:DropDownList>
+                                                                </div>
+                                                            </div>
+                                                            <div class="widget widget-categories mb-3" runat="server" id="divic" visible="false">
+                                                                <label><b>Item Code</b></label>
+                                                                <div class="input-group">
+                                                                    <asp:DropDownList ID="ddlic" runat="server" CssClass="custom-select" Style="margin-top: 5px;" AutoPostBack="true" OnSelectedIndexChanged="ddlic_SelectedIndexChanged"></asp:DropDownList>
+                                                                </div>
+                                                            </div>
+                                                            <div id="Div7" class="widget widget-categories mb-3" runat="server">
+                                                                <label><b>Industry Domain</b></label>
+                                                                <div class="input-group">
+                                                                    <asp:DropDownList ID="ddlprodindustrydomain" runat="server" CssClass="custom-select" AutoPostBack="true" OnSelectedIndexChanged="ddlprodindustrydomain_SelectedIndexChanged"></asp:DropDownList>
+                                                                </div>
+                                                            </div>
+                                                            <div class="widget widget-categories mb-3" runat="server" id="divisd" visible="false">
+                                                                <label><b>Industry Sub-Domain</b></label>
+                                                                <div class="input-group">
+                                                                    <asp:DropDownList ID="ddlindustrysubdoamin" runat="server" CssClass="custom-select" AutoPostBack="true" OnSelectedIndexChanged="ddlindustrysubdoamin_SelectedIndexChanged"></asp:DropDownList>
+                                                                </div>
+                                                            </div>
+                                                            <div id="Div8" class="widget widget-categories mb-3" runat="server">
+                                                                <label><b>Indigenization Category</b></label>
+                                                                <div class="input-group">
+                                                                    <asp:DropDownList ID="ddlprocurmentcatgory" runat="server" AutoPostBack="true" CssClass="custom-select"
+                                                                        OnSelectedIndexChanged="ddlprocurmentcatgory_SelectedIndexChanged">
+                                                                    </asp:DropDownList>
+                                                                </div>
+                                                            </div>
+                                                            <div id="Div9" class="widget widget-categories mb-3" runat="server">
+                                                                <label><b>Indigenized</b></label>
+                                                                <div class="input-group">
+                                                                    <asp:DropDownList ID="ddlisindezinized" runat="server" AutoPostBack="true" CssClass="custom-select" OnSelectedIndexChanged="ddlisindezinized_SelectedIndexChanged">
+                                                                        <asp:ListItem Value="">Select</asp:ListItem>
+                                                                        <asp:ListItem Value="Y">YES</asp:ListItem>
+                                                                        <asp:ListItem Value="N">NO</asp:ListItem>
+                                                                    </asp:DropDownList>
+                                                                </div>
+                                                            </div>
+                                                            <div id="Div10" class="widget widget-categories mb-3" runat="server">
+                                                                <label><b>Declaration</b></label>
+                                                                <div class="input-group">
+                                                                    <asp:DropDownList ID="ddldeclaration" runat="server" AutoPostBack="true" CssClass="custom-select" OnSelectedIndexChanged="ddldeclaration_SelectedIndexChanged">
+                                                                        <asp:ListItem Value="">Select</asp:ListItem>
+                                                                        <asp:ListItem Value="Y">YES</asp:ListItem>
+                                                                        <asp:ListItem Value="N">NO</asp:ListItem>
+                                                                    </asp:DropDownList>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                         <div id="Div1" class="widget widget-categories mb-3" runat="server" visible="false">
@@ -405,17 +414,31 @@
                             <div class="clearfix"></div>
                             <div>
                                 <b>
-                                    <asp:Label ID="lbltotalleft" runat="server" CssClass="pull-left"></asp:Label>
+                                    <asp:Label ID="lbltotal" runat="server" CssClass="pull-left"></asp:Label>
                                     <b>
-                                        <asp:Label ID="lbltotal" runat="server" CssClass="pull-right"></asp:Label></b>
+                                        <asp:Label ID="lbltotalleft" runat="server" CssClass="pull-right"></asp:Label></b>
                                 </b>
                                 <div class="clearfix"></div>
-                                <asp:LinkButton ID="totoalmore" runat="server" CssClass="pull-left" OnClick="totoalmore_Click">  <span class="fa fa-eye"></span>  More details</asp:LinkButton>
-                                <b>
-                                    <asp:Label ID="lblestimateprice" runat="server" CssClass="pull-right"></asp:Label></b>
+                                <asp:LinkButton ID="totoalmore" runat="server" CssClass="pull-right" OnClick="totoalmore_Click">  <span class="fa fa-eye"></span>  More details</asp:LinkButton>
+
                             </div>
                             <div class="clearfix">
                             </div>
+                            <div style="float: left;">
+                                <p style="float: left;">
+                                    Import during last 3 years in lakhs -
+                                    <asp:Label ID="lblestimateprice" runat="server"></asp:Label>
+                                </p>
+                                <div class="clearfix">
+                                </div>
+                                <p style="float: left;">
+                                    Future requirements in lakhs - 
+                                <asp:Label ID="lblfuturepurchase" runat="server" Text="0"></asp:Label>
+                                </p>
+                            </div>
+                            <div class="clearfix">
+                            </div>
+
                             <br />
                             <div id="divcontentproduct" runat="server">
                                 <div class="row mx-n2">
@@ -426,7 +449,7 @@
                                                     <a class="card-img-top d-block overflow-hidden" href="#" style="text-align: center;">
                                                         <img src='<%#Eval("TopImages") %>' alt="Product" style="max-width: 100%; width: 50%; height: 90px;">
                                                     </a>
-                                                    <div class="card-body py-2" style="height: 160px;">
+                                                    <div class="card-body py-2" style="height: 200px;">
                                                         <b>
                                                             <p class="product-meta d-block font-size-xs pb-1" style="color: #6915cf; font-size: 16px!important;"><%#Eval("CompanyName") %></p>
                                                         </b>
@@ -443,21 +466,34 @@
                                                                         <asp:HiddenField ID="hfrole" runat="server" Value='<%#Eval("Role") %>' />
                                                                     </td>
                                                                 </tr>
-                                                                <tr>
+                                                                <tr runat="server" visible="false">
                                                                     <td colspan="2" style="padding: 8px; font-size: 12px;">Nato Supply Group Class :-</td>
 
                                                                 </tr>
+                                                                <tr runat="server" visible="false">
+                                                                    <td colspan="2" style="padding: 8px; font-size: 12px; font-weight: 900; border-top: 0px;" title="NSN GROUP OR CLASS">
+                                                                        <%# Eval("NSNGroup").ToString().Length > 25? (Eval("NSNGroup") as string).Substring(0,25) + ".." : Eval("NSNGroup")  %> / <%# Eval("NSNGroupClass").ToString().Length > 25? (Eval("NSNGroupClass") as string).Substring(0,25) + ".." : Eval("NSNGroupClass")  %> 
+                                                                    </td>
+                                                                </tr>
                                                                 <tr>
-                                                                    <td colspan="2" style="padding: 8px; font-size: 12px; font-weight: 900; border-top: 0px;"
-                                                                        title='<%#Eval("NSNGroup") %> / <%#Eval("NSNGroupClass") %>'>(<%#Eval("NSCCode") %>) - <%# Eval("NSNGroup").ToString().Length > 15? (Eval("NSNGroup") as string).Substring(0,15) + ".." : Eval("NSNGroup")  %> / <%# Eval("NSNGroupClass")  %> 
+                                                                    <td colspan="2" style="padding: 8px; font-size: 12px;">Imported value in lakhs <b><%# Eval("EstimatePrice","{0:0.00}") %></b>
+
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td colspan="2" style="padding: 8px; font-size: 12px;">Future requirements in lakhs <b>
+                                                                        <asp:Label ID="lblep" runat="server" Text='<%# Eval("EstimatePricefuture") %>'></asp:Label>
+                                                                    </b>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr runat="server" visible="false">
+                                                                    <td colspan="2" style="padding: 8px; font-size: 12px;">Tender Status :- <b><%#Eval("TenderStatus") %></b>
                                                                     </td>
                                                                 </tr>
                                                                 <tr runat="server" visible="false">
                                                                     <td colspan="2" style="padding: 8px; font-size: 12px;">Industry Domain :-</td>
-
                                                                 </tr>
                                                                 <tr runat="server" visible="false">
-
                                                                     <td colspan="2" style="padding: 8px; font-size: 12px; font-weight: 900; border-top: 0px;"
                                                                         title='<%#Eval("ProdIndustryDoamin") %>'><%# Eval("ProdIndustryDoamin")  %> / <%#Eval("ProdIndustrySubDomain") %>
                                                                     </td>
@@ -476,7 +512,7 @@
                                                         </asp:LinkButton>
                                                     </div>
                                                     <asp:LinkButton runat="server" ID="lbaddcart" class="btn btn-sm btn-block"
-                                                        CommandArgument='<%#Eval("ProductRefNo") %>' CommandName="addcart"><i class="navbar-tool-icon fas fa-cart-plus"></i> Add to show intrest </asp:LinkButton>
+                                                        CommandArgument='<%#Eval("ProductRefNo") %>' CommandName="addcart"><i class="navbar-tool-icon fas fa-cart-plus"></i> Add to show interest </asp:LinkButton>
                                                     <asp:HiddenField ID="hfr" runat="server" Value='<%#Eval("ProductRefNo") %>' />
                                                 </div>
                                             </div>
@@ -575,6 +611,11 @@
                                                                             <asp:Label ID="lblhsncode8digit" runat="server" Text=""></asp:Label></td>
                                                                     </tr>
                                                                     <tr>
+                                                                        <th scope="row">Search keywords</th>
+                                                                        <td>
+                                                                            <asp:Label ID="lblsearchkeywords" runat="server" Text=""></asp:Label></td>
+                                                                    </tr>
+                                                                    <tr>
                                                                         <th scope="row">NATO SUPPLY GROUP</th>
                                                                         <td>
                                                                             <asp:Label ID="lblnsngroup" runat="server" Text=""></asp:Label></td>
@@ -604,7 +645,9 @@
                                                                     <tr>
                                                                         <th scope="row">Imported, Last 3 Years</th>
                                                                         <td>
-                                                                            <asp:Label ID="lblisproductimported" runat="server" Text=""></asp:Label></td>
+                                                                            <asp:Label ID="lblisproductimported" runat="server" Text=""></asp:Label>&nbsp;&nbsp;
+                                                                            (import value during last 3 year &nbsp;<asp:Label ID="lblvalueimport" runat="server" Text="0"></asp:Label>&nbsp;lakhs )
+                                                                        </td>
                                                                     </tr>
                                                                     <tr>
 
@@ -727,10 +770,16 @@
                                                                             <asp:Label ID="lbleoilink" runat="server" Text=""></asp:Label></td>
                                                                     </tr>
                                                                     <tr>
+                                                                        <th scope="row">Tendor Uploaded</th>
+                                                                        <td>
+                                                                            <asp:Label ID="lbltendor" runat="server" Text=""></asp:Label></td>
+                                                                    </tr>
+                                                                    <tr>
                                                                         <th scope="row">PROCURMENT CATEGORY REMARK</th>
                                                                         <td>
                                                                             <asp:Label ID="lblprocremarks" runat="server" Text=""></asp:Label></td>
                                                                     </tr>
+
 
                                                                     <tr>
                                                                         <th scope="row">Estimated Quantity</th>
@@ -861,7 +910,14 @@
         <script src="User/Uassets/js/all.min.js"></script>
         <script src="User/Uassets/js/bootstrap.bundle.min.js"></script>
         <script src="User/Uassets/js/theme.min.js"></script>
+
         <script type="text/javascript">
+            $(document).ready(function () {
+                $("#adnce_search").click(function () {
+                    $("#adnce_search_box").toggle(400);
+                });
+            });
+
             function showPopup() {
                 $('#ProductCompany').modal('show');
             }
@@ -883,3 +939,4 @@
     </form>
 </body>
 </html>
+/html>

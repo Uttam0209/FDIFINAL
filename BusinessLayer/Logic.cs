@@ -307,9 +307,8 @@ namespace BusinessLayer
         }
         public DataTable RetriveProductUser()
         {
-            return SqlHelper.Instance.GetExecuteData("select * from fn_ProductFilterSearch() order by LastUpdated desc");
+            return SqlHelper.Instance.GetExecuteData("select * from fn_ProductFilterSearch() order by EstimatePrice,EstimatePricefuture desc");
         }
-
         #endregion
         #region DeleteCode
         public string DeleteRecord(string CompRefNo, string Criteria)
