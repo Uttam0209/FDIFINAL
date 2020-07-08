@@ -1,4 +1,5 @@
-﻿$(document).ready(function () {
+﻿
+$(document).ready(function () {
 
     //Sidebar Toggle
     $('.btn-nav-toggle').click(function () {

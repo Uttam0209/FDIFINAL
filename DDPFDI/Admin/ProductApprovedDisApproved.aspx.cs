@@ -126,6 +126,10 @@ public partial class Admin_ProductApprovedDisApproved : System.Web.UI.Page
                         {
                             dv.RowFilter = "UnitName='" + ddlunit.SelectedItem.Text + "'";
                         }
+                        if (txtserachitemidprotal.Text != "")
+                        {
+                            dv.RowFilter = "ProductRefNo='" + txtserachitemidprotal.Text + "'";
+                        }
                         else
                             dv.Sort = "LastUpdated desc,CompanyName asc,FactoryName asc";
                         DataTable dtads = dv.ToTable();
@@ -222,21 +226,18 @@ public partial class Admin_ProductApprovedDisApproved : System.Web.UI.Page
                     { pancheck.Visible = true; }
                     else
                     { pancheck.Visible = false; }
-                    crfno = DtView.Rows[0]["CompanyRefNo"].ToString();
+                    string crfno = DtView.Rows[0]["CompanyRefNo"].ToString();
+                    lblrefnoview.Text = e.CommandArgument.ToString();
                     lblcompname.Text = DtView.Rows[0]["CompanyName"].ToString();
                     lbldiviname.Text = DtView.Rows[0]["FactoryName"].ToString();
                     lblunitnamepro.Text = DtView.Rows[0]["UnitName"].ToString();
-                    lblrefnoview.Text = DtView.Rows[0]["ProductRefNo"].ToString();
                     lblnsngroup.Text = DtView.Rows[0]["ProdLevel1Name"].ToString();
                     lblnsngroupclass.Text = DtView.Rows[0]["ProdLevel2Name"].ToString();
                     lblclassitem.Text = DtView.Rows[0]["ProdLevel3Name"].ToString();
-                    lblnsccode.Text = DtView.Rows[0]["NSCCode"].ToString();
-                    lblniincode.Text = DtView.Rows[0]["NIINCode"].ToString();
+                    lblsearchkeywords.Text = DtView.Rows[0]["Searchkeyword"].ToString();
                     lblproductdescription.Text = DtView.Rows[0]["ProductDescription"].ToString();
                     lbldpsupartno.Text = DtView.Rows[0]["DPSUPartNumber"].ToString();
                     lblhsncode8digit.Text = DtView.Rows[0]["HsnCode8digit"].ToString();
-                    string de = DtView.Rows[0]["PlatName"].ToString();
-                    string nameofdef = DtView.Rows[0]["Nomenclature"].ToString();
                     prodIndustryDomain.Text = DtView.Rows[0]["TechLevel1Name"].ToString();
                     ProdIndusSubDomain.Text = DtView.Rows[0]["Techlevel2Name"].ToString();
                     lblisproductimported.Text = DtView.Rows[0]["IsProductImported"].ToString();
@@ -249,13 +250,21 @@ public partial class Admin_ProductApprovedDisApproved : System.Web.UI.Page
                     DtGridEstimate1 = Lo.RetriveSaveEstimateGrid("Select", 0, e.CommandArgument.ToString(), 0, "", "", "", "", "O");
                     if (DtGridEstimate1.Rows.Count > 0)
                     {
+                        int tot = 0;
+                        for (int i = 0; DtGridEstimate1.Rows.Count > i; i++)
+                        {
+                            tot = tot + Convert.ToInt32(DtGridEstimate1.Rows[i]["EstimatedPrice"]);
+                        }
                         gvestimatequanold.DataSource = DtGridEstimate1;
                         gvestimatequanold.DataBind();
                         gvestimatequanold.Visible = true;
+                        decimal msumobject = Convert.ToDecimal(tot); /// Convert.ToDecimal(100000);
+                        lblvalueimport.Text = msumobject.ToString("F2");
                     }
                     else
                     {
                         gvestimatequanold.Visible = false;
+                        lblvalueimport.Text = "0.00";
                     }
                     DataTable dtPdfBind = Lo.RetriveProductCode("", e.CommandArgument.ToString(), "ProductImage", "PDF");
                     if (dtPdfBind.Rows.Count > 0)
@@ -268,10 +277,10 @@ public partial class Admin_ProductApprovedDisApproved : System.Web.UI.Page
                     {
                         gvpdf.Visible = false;
                     }
-                    DataTable dtImageBind = Lo.RetriveProductCode("", e.CommandArgument.ToString(), "ProductImage", "Image");
-                    if (dtImageBind.Rows.Count > 0)
+                    DataTable dtImageBindfinal = Lo.RetriveProductCode("", e.CommandArgument.ToString(), "ProductImage", "Image");
+                    if (dtImageBindfinal.Rows.Count > 0)
                     {
-                        dlimage.DataSource = dtImageBind;
+                        dlimage.DataSource = dtImageBindfinal;
                         dlimage.DataBind();
                         dlimage.Visible = true;
                     }
@@ -315,9 +324,8 @@ public partial class Admin_ProductApprovedDisApproved : System.Web.UI.Page
                             }
                         }
                     }
-                    lblprocremarks.Text = DtView.Rows[0]["ProcurmentCategoryRemark"].ToString();
-                    lbleoist.Text = DtView.Rows[0]["EOIStatus"].ToString();
-                    lbleoiurl.Text = DtView.Rows[0]["EOIURL"].ToString();
+                    lbleoirep.Text = DtView.Rows[0]["EOIStatus"].ToString();
+                    lbleoilink.Text = DtView.Rows[0]["EOIURL"].ToString();
                     string Nodel1Id = DtView.Rows[0]["NodelDetail"].ToString();
                     if (Nodel1Id.ToString() != "")
                     {
@@ -1016,6 +1024,13 @@ public partial class Admin_ProductApprovedDisApproved : System.Web.UI.Page
             txtnsccode.Text = "";
             txtproductdescription.Text = "";
             ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "ErrorMssgPopup('Some error occur, Item not updated')", true);
+        }
+    }
+    protected void txtserachitemidprotal_TextChanged(object sender, EventArgs e)
+    {
+        if (txtserachitemidprotal.Text != "")
+        {
+            BindGridView();
         }
     }
 }

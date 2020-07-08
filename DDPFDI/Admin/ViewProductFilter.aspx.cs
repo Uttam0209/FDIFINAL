@@ -736,33 +736,19 @@ public partial class Admin_ViewProductFilter : System.Web.UI.Page
             DataTable DtView = Lo.RetriveProductCode("", e.CommandArgument.ToString(), "ProductMasterID", Role.ToString());
             if (DtView.Rows.Count > 0)
             {
-                lblrefnoview.Text = DtView.Rows[0]["ProductRefNo"].ToString();
+                lblrefnoview.Text = e.CommandArgument.ToString();
                 lblcompname.Text = DtView.Rows[0]["CompanyName"].ToString();
                 lbldiviname.Text = DtView.Rows[0]["FactoryName"].ToString();
                 lblunitnamepro.Text = DtView.Rows[0]["UnitName"].ToString();
                 lblnsngroup.Text = DtView.Rows[0]["ProdLevel1Name"].ToString();
                 lblnsngroupclass.Text = DtView.Rows[0]["ProdLevel2Name"].ToString();
-                lblnsccode.Text = DtView.Rows[0]["NSCCode"].ToString();
-                lblniincode.Text = DtView.Rows[0]["NIINCode"].ToString();
+                lblclassitem.Text = DtView.Rows[0]["ProdLevel3Name"].ToString();
+                lblsearchkeywords.Text = DtView.Rows[0]["Searchkeyword"].ToString();
                 lblproductdescription.Text = DtView.Rows[0]["ProductDescription"].ToString();
                 lbldpsupartno.Text = DtView.Rows[0]["DPSUPartNumber"].ToString();
                 lblhsncode8digit.Text = DtView.Rows[0]["HsnCode8digit"].ToString();
                 prodIndustryDomain.Text = DtView.Rows[0]["TechLevel1Name"].ToString();
                 ProdIndusSubDomain.Text = DtView.Rows[0]["Techlevel2Name"].ToString();
-                //lblprodalredyindeginized.Text = DtView.Rows[0]["IsIndeginized"].ToString();
-                //if (lblprodalredyindeginized.Text == "Y")
-                //{
-                //    lblprodalredyindeginized.Text = "Yes";
-                //    tableIsIndiginized.Visible = true;
-                //    lblmanufacturename.Text = DtView.Rows[0]["ManufactureName"].ToString();
-                //    lblmanaddress.Text = DtView.Rows[0]["ManufactureAddress"].ToString();
-                //    lblyearofindiginization.Text = DtView.Rows[0]["FY"].ToString();
-                //}
-                //else
-                //{
-                //    lblprodalredyindeginized.Text = "No";
-                //    tableIsIndiginized.Visible = false;
-                //}
                 lblisproductimported.Text = DtView.Rows[0]["IsProductImported"].ToString();
                 if (lblisproductimported.Text == "Y")
                 {
@@ -773,13 +759,21 @@ public partial class Admin_ViewProductFilter : System.Web.UI.Page
                 DtGridEstimate1 = Lo.RetriveSaveEstimateGrid("Select", 0, e.CommandArgument.ToString(), 0, "", "", "", "", "O");
                 if (DtGridEstimate1.Rows.Count > 0)
                 {
+                    int tot = 0;
+                    for (int i = 0; DtGridEstimate1.Rows.Count > i; i++)
+                    {
+                        tot = tot + Convert.ToInt32(DtGridEstimate1.Rows[i]["EstimatedPrice"]);
+                    }
                     gvestimatequanold.DataSource = DtGridEstimate1;
                     gvestimatequanold.DataBind();
                     gvestimatequanold.Visible = true;
+                    decimal msumobject = Convert.ToDecimal(tot); /// Convert.ToDecimal(100000);
+                    lblvalueimport.Text = msumobject.ToString("F2");
                 }
                 else
                 {
                     gvestimatequanold.Visible = false;
+                    lblvalueimport.Text = "0.00";
                 }
                 DataTable dtPdfBind = Lo.RetriveProductCode("", e.CommandArgument.ToString(), "ProductImage", "PDF");
                 if (dtPdfBind.Rows.Count > 0)
@@ -830,7 +824,7 @@ public partial class Admin_ViewProductFilter : System.Web.UI.Page
                 }
                 if (DtView.Rows[0]["PurposeofProcurement"].ToString() != "")
                 {
-                    DataTable DTporCat = Lo.RetriveProductCode("", hfmref.Value, "ProductPOP", hfmtype.Value);
+                    DataTable DTporCat = Lo.RetriveProductCode("", e.CommandArgument.ToString(), "ProductPOP", "Company");
                     if (DTporCat.Rows.Count > 0)
                     {
                         for (int i = 0; DTporCat.Rows.Count > i; i++)
@@ -839,16 +833,14 @@ public partial class Admin_ViewProductFilter : System.Web.UI.Page
                         }
                     }
                 }
-                lblprocremarks.Text = DtView.Rows[0]["ProcurmentCategoryRemark"].ToString();
-                lbleoist.Text = DtView.Rows[0]["EOIStatus"].ToString();
-                lbleoiurl.Text = DtView.Rows[0]["EOIURL"].ToString();
+                lbleoirep.Text = DtView.Rows[0]["EOIStatus"].ToString();
+                lbleoilink.Text = DtView.Rows[0]["EOIURL"].ToString();               
                 string Nodel1Id = DtView.Rows[0]["NodelDetail"].ToString();
                 if (Nodel1Id.ToString() != "")
                 {
                     DataTable dtNodal = Lo.RetriveProductCode(Nodel1Id.ToString(), "", "ProdNodal", "");
                     if (dtNodal.Rows.Count > 0)
                     {
-                       // lblempcode.Text = dtNodal.Rows[0]["NodalOfficerRefNo"].ToString();
                         lblempname.Text = dtNodal.Rows[0]["NodalOficerName"].ToString();
                         lbldesignation.Text = dtNodal.Rows[0]["Designation"].ToString();
                         lblemailidpro.Text = dtNodal.Rows[0]["NodalOfficerEmail"].ToString();
@@ -857,26 +849,11 @@ public partial class Admin_ViewProductFilter : System.Web.UI.Page
                         lblfaxpro.Text = dtNodal.Rows[0]["NodalOfficerFax"].ToString();
                     }
                 }
-                //string Nodel2Id = DtView.Rows[0]["NodalDetail2"].ToString();
-                //if (Nodel2Id.ToString() != "")
-                //{
-                //    DataTable dtNodal2 = Lo.RetriveProductCode(Nodel2Id.ToString(), "", "ProdNodal", "");
-                //    if (dtNodal2.Rows.Count == 2)
-                //    {
-                //        lblempcode2.Text = dtNodal2.Rows[0]["NodalOfficerRefNo"].ToString();
-                //        lblempname2.Text = dtNodal2.Rows[0]["NodalOficerName"].ToString();
-                //        lbldesignation2.Text = dtNodal2.Rows[0]["Designation"].ToString();
-                //        lblemailid2.Text = dtNodal2.Rows[0]["NodalOfficerEmail"].ToString();
-                //        lblmobilenumber2.Text = dtNodal2.Rows[0]["NodalOfficerMobile"].ToString();
-                //        lblphonenumber2.Text = dtNodal2.Rows[0]["NodalOfficerTelephone"].ToString();
-                //        lblfax2.Text = dtNodal2.Rows[0]["NodalOfficerFax"].ToString();
-                //    }
-                //}
                 ScriptManager.RegisterStartupScript(this, GetType(), "ProductCompany", "showPopup4();", true);
             }
         }
 
-        #endregion        
+        #endregion
     }
     protected void gvproduct_RowCreated(object sender, GridViewRowEventArgs e)
     {
@@ -1012,7 +989,7 @@ public partial class Admin_ViewProductFilter : System.Web.UI.Page
             HiddenField hfisapproved = (e.Row.FindControl("hfisaaproved") as HiddenField);
             if (hy.NavigateUrl.Trim() == "" || hy.NavigateUrl.Trim() == "~/Upload/" || hy.NavigateUrl.Trim() == null)
             {
-                e.Row.Cells[2].Text = "NA";
+                e.Row.Cells[3].Text = "NA";
             }
             HiddenField hfimagehide = (e.Row.FindControl("hfimagehide") as HiddenField);
             System.Web.UI.WebControls.Image img = (e.Row.FindControl("imgtop") as System.Web.UI.WebControls.Image);
@@ -1029,11 +1006,11 @@ public partial class Admin_ViewProductFilter : System.Web.UI.Page
             }
             if (hfisapproved.Value == "Y")
             {
-                gvproduct.BackColor = Color.Green;
+                //    gvproduct.BackColor = Color.Green;
             }
             else if (hfisapproved.Value == "N")
             {
-                gvproduct.BackColor = Color.Red;
+                //  gvproduct.BackColor = Color.Red;
             }
         }
     }
@@ -1613,6 +1590,13 @@ public partial class Admin_ViewProductFilter : System.Web.UI.Page
             dr["Value"] = "'" + hfmref.Value + "'";
             insert.Rows.Add(dr);
         }
+        if (txtitemportalid.Text != "")
+        {
+            dr = insert.NewRow();
+            dr["Column"] = "ProductRefNo" + "=";
+            dr["Value"] = "'" + txtitemportalid.Text + "'";
+            insert.Rows.Add(dr);
+        }
         for (int i = 0; insert.Rows.Count > i; i++)
         {
             insert1 = insert1 + insert.Rows[i]["Column"].ToString() + " " + insert.Rows[i]["Value"].ToString() + " " + " and ";
@@ -1956,5 +1940,9 @@ public partial class Admin_ViewProductFilter : System.Web.UI.Page
         {
             SeachResult();
         }
+    }
+    protected void txtitemportalid_TextChanged(object sender, EventArgs e)
+    {
+        SeachResult();
     }
 }

@@ -65,6 +65,7 @@ namespace DataAccessLayer
         public DataTable GetExecuteData(string Query)
         {
             DbCommand dbCommand = db.GetSqlStringCommand(Query);
+            dbCommand.CommandTimeout = 0;
             dt = db.ExecuteDataSet(dbCommand).Tables[0];
             return dt;
         }

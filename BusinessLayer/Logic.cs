@@ -305,9 +305,16 @@ namespace BusinessLayer
                             " tbl_mst_MainProduct AS o ON s1.SCategoryName='' WHERE  (P.IsActive = 'Y') and P.ProductRefNo in (" + value + ")";
             return SqlHelper.Instance.GetDataset(mquery).Tables[0];
         }
-        public DataTable RetriveProductUser()
+        public DataTable RetriveProductUser(string sortvalue)
         {
-            return SqlHelper.Instance.GetExecuteData("select * from fn_ProductFilterSearch() order by EstimatePrice,EstimatePricefuture desc");
+            // if (sortvalue == "")
+            // {
+            return SqlHelper.Instance.GetExecuteData("select * from fn_ProductFilterSearch() where (EstimatePrice > 1 or EstimatePricefuture > 1) order by  ISNULL(EstimatePrice * 0,1), EstimatePrice desc;");
+            // }
+            ////    else
+            ////    {
+            //return SqlHelper.Instance.GetExecuteData("select * from fn_ProductFilterSearch() where (" + sortvalue + " > 50) order by  ISNULL(" + sortvalue + "*0,1), " + sortvalue + " desc;");
+            ////  }
         }
         #endregion
         #region DeleteCode

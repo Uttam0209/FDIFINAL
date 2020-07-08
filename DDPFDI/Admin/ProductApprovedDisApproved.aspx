@@ -54,6 +54,12 @@
                                         <asp:DropDownList runat="server" ID="ddlunit" CssClass="form-control form-cascade-control" AutoPostBack="True" OnSelectedIndexChanged="ddlunit_OnSelectedIndexChanged"></asp:DropDownList>
                                     </div>
                                 </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Item Id (Portal)</label>
+                                        <asp:TextBox runat="server" ID="txtserachitemidprotal" CssClass="form-control form-cascade-control" AutoPostBack="True" OnTextChanged="txtserachitemidprotal_TextChanged"></asp:TextBox>
+                                    </div>
+                                </div>
 
                             </ContentTemplate>
                         </asp:UpdatePanel>
@@ -81,6 +87,7 @@
                                                     <%#Container.DataItemIndex+1 %>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
+                                            <asp:BoundField DataField="ProductRefNo" HeaderText="Item Id (Portal)" NullDisplayText="#" />
                                             <asp:BoundField DataField="NSNGroup" HeaderText="NATO Supply Group" NullDisplayText="#" />
                                             <asp:BoundField DataField="NSNGroupClass" HeaderText="NATO Supply Class" NullDisplayText="#" />
                                             <asp:BoundField DataField="ProdIndustryDoamin" HeaderText="Prod Indus Doamin" NullDisplayText="#" />
@@ -187,11 +194,11 @@
                                                                                                 <td colspan="2" style="background-color: beige; font-weight: 900;">Item Description</td>
                                                                                             </tr>
                                                                                             <tr>
-                                                                                                <td>Item Id</td>
+                                                                                                <td>Item Id (Portal)</td>
                                                                                                 <td>
                                                                                                     <asp:Label ID="lblrefnoview" runat="server" Text=""></asp:Label></td>
                                                                                             </tr>
-                                                                                            <tr>
+                                                                                            <tr runat="server">
                                                                                                 <td>Item Name</td>
                                                                                                 <td>
                                                                                                     <asp:Label ID="lblproductdescription" runat="server" Text=""></asp:Label></td>
@@ -206,6 +213,11 @@
                                                                                                 <td>
                                                                                                     <asp:Label ID="lblhsncode8digit" runat="server" Text=""></asp:Label></td>
                                                                                             </tr>
+                                                                                            <tr runat="server" visible="false">
+                                                                                                <td>Search keywords</td>
+                                                                                                <td>
+                                                                                                    <asp:Label ID="lblsearchkeywords" runat="server" Text=""></asp:Label></td>
+                                                                                            </tr>
                                                                                             <tr>
                                                                                                 <td>NATO SUPPLY GROUP:</td>
                                                                                                 <td>
@@ -217,20 +229,10 @@
                                                                                                     <asp:Label ID="lblnsngroupclass" runat="server" Text=""></asp:Label></td>
                                                                                             </tr>
                                                                                             <tr>
-                                                                                                <td>CLASS ITEM:</td>
+                                                                                                <td>ITEM CODE:</td>
                                                                                                 <td>
                                                                                                     <asp:Label ID="lblclassitem" runat="server" Text=""></asp:Label>
                                                                                                 </td>
-                                                                                            </tr>
-                                                                                            <tr>
-                                                                                                <td>NSC Code (4 digit):</td>
-                                                                                                <td>
-                                                                                                    <asp:Label ID="lblnsccode" runat="server" Text=""></asp:Label></td>
-                                                                                            </tr>
-                                                                                            <tr>
-                                                                                                <td>NIIN Code (9-digit):</td>
-                                                                                                <td>
-                                                                                                    <asp:Label ID="lblniincode" runat="server" Text=""></asp:Label></td>
                                                                                             </tr>
                                                                                             <tr>
                                                                                                 <td>INDUSTRY DOMAIN:</td>
@@ -241,18 +243,20 @@
                                                                                                 </td>
                                                                                             </tr>
                                                                                             <tr>
-                                                                                                <td>Imported During Last 3 years</td>
+                                                                                                <td>Imported, Last 3 years</td>
                                                                                                 <td>
-                                                                                                    <asp:Label ID="lblisproductimported" runat="server" Text=""></asp:Label></td>
+                                                                                                    <asp:Label ID="lblisproductimported" runat="server" Text=""></asp:Label>&nbsp;&nbsp;
+                                                                                                                (import value during last 3 year &nbsp;<asp:Label ID="lblvalueimport" runat="server" Text="0"></asp:Label>&nbsp;lakhs )
+                                                                                                </td>
                                                                                             </tr>
                                                                                             <tr>
                                                                                                 <td colspan="2">
                                                                                                     <asp:GridView ID="gvestimatequanold" runat="server" AutoGenerateColumns="false" Class="table table-responsive table-hover table-bordered">
                                                                                                         <Columns>
                                                                                                             <asp:BoundField HeaderText="Year" DataField="FYear" />
-                                                                                                            <asp:BoundField HeaderText="Estimated Quantity" DataField="EstimatedQty" />
+                                                                                                            <asp:BoundField HeaderText="Imported Quantity" DataField="EstimatedQty" />
                                                                                                             <asp:BoundField HeaderText="Unit" DataField="Unit" />
-                                                                                                            <asp:BoundField HeaderText="Estimated/Last Purchase Price(In Rs)" DataField="EstimatedPrice" />
+                                                                                                            <asp:BoundField HeaderText="Imported Purchase Price per unit (in Rs)" DataField="EstimatedPrice" />
                                                                                                         </Columns>
                                                                                                     </asp:GridView>
                                                                                                 </td>
@@ -277,7 +281,7 @@
                                                                             <div class="col-md-12">
                                                                                 <table>
                                                                                     <tr>
-                                                                                        <td>Document related to item</td>
+                                                                                        <td>Item Document</td>
                                                                                         <td>
                                                                                             <asp:GridView runat="server" ID="gvpdf" AutoGenerateColumns="false" Class="table table-responsive table-hover">
                                                                                                 <Columns>
@@ -310,7 +314,7 @@
                                                                                             </asp:DataList>
                                                                                         </td>
                                                                                     </tr>
-                                                                                    <tr>
+                                                                                    <tr runat="server" visible="false">
                                                                                         <td>Item Specification</td>
                                                                                         <td>
                                                                                             <asp:Label ID="lblitemspecification" runat="server" Text=""></asp:Label></td>
@@ -320,7 +324,7 @@
                                                                                         <td>
                                                                                             <asp:Label ID="lblfeaturesanddetail" runat="server" Text=""></asp:Label></td>
                                                                                     </tr>
-                                                                                    <tr>
+                                                                                    <tr runat="server" visible="false">
                                                                                         <td>Item Information
                                                                                         </td>
                                                                                         <td>
@@ -333,7 +337,7 @@
                                                                                             </asp:GridView>
                                                                                         </td>
                                                                                     </tr>
-                                                                                    <tr>
+                                                                                    <tr runat="server" visible="false">
                                                                                         <td>Additional Information</td>
                                                                                         <td>
                                                                                             <asp:Label ID="lbladditionalinfo" runat="server" Text=""></asp:Label></td>
@@ -363,30 +367,26 @@
                                                                                         <td>
                                                                                             <asp:Label ID="lblindicate" runat="server" Text=""></asp:Label></td>
                                                                                     </tr>
+
                                                                                     <tr>
                                                                                         <td>EoI/RFP Status</td>
                                                                                         <td>
-                                                                                            <asp:Label ID="lbleoist" runat="server" Text=""></asp:Label></td>
+                                                                                            <asp:Label ID="lbleoirep" runat="server" Text=""></asp:Label></td>
                                                                                     </tr>
                                                                                     <tr>
                                                                                         <td>Link</td>
                                                                                         <td>
-                                                                                            <asp:Label ID="lbleoiurl" runat="server" Text=""></asp:Label></td>
+                                                                                            <asp:Label ID="lbleoilink" runat="server" Text=""></asp:Label></td>
                                                                                     </tr>
                                                                                     <tr>
-                                                                                        <td>PROCURMENT CATEGORY REMARK</td>
-                                                                                        <td>
-                                                                                            <asp:Label ID="lblprocremarks" runat="server" Text=""></asp:Label></td>
-                                                                                    </tr>
-                                                                                    <tr>
-                                                                                        <td>Estimate Quantity</td>
+                                                                                        <td>Estimated price per unit (Rs)</td>
                                                                                         <td>
                                                                                             <asp:GridView ID="gvestimatequanorprice" runat="server" AutoGenerateColumns="false" CssClass="table table-hover">
                                                                                                 <Columns>
-                                                                                                    <asp:BoundField DataField="Year" HeaderText="FYear" />
+                                                                                                    <asp:BoundField DataField="FYear" HeaderText="Year" />
                                                                                                     <asp:BoundField DataField="EstimatedQty" HeaderText="Estimated Quantity" />
                                                                                                     <asp:BoundField DataField="Unit" HeaderText="Unit" />
-                                                                                                    <asp:BoundField DataField="EstimatedPrice" HeaderText="Estimated Price/Last Purchase Price (in Rs)" />
+                                                                                                    <asp:BoundField DataField="EstimatedPrice" HeaderText="Estimated Purchase Price per unit (in Rs)" />
                                                                                                 </Columns>
                                                                                             </asp:GridView>
                                                                                         </td>

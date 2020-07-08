@@ -1300,7 +1300,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     {
         try
         {
-            if (ddlcompany.SelectedItem.Text != "Select" && txtproductdescription.Text != "" && ddlmastercategory.SelectedItem.Text != "Select" && ddlsubcategory.SelectedItem.Text != "Select" && ddllevel3product.SelectedItem.Text != "Select" && ddltechnologycat.SelectedItem.Text != "Select" && ddlcompany.SelectedItem.Text != "Select")
+            if (ddlcompany.SelectedItem.Text != "Select" && ddlmastercategory.SelectedItem.Text != "Select" && ddlsubcategory.SelectedItem.Text != "Select" && ddllevel3product.SelectedItem.Text != "Select" && ddltechnologycat.SelectedItem.Text != "Select" && ddlcompany.SelectedItem.Text != "Select")
             {
                 if (ddlsubtech.SelectedItem.Text != "Select" && ddlnomnclature.SelectedItem.Text != "Select" && ddlenduser.SelectedItem.Text != "Select" && ddlplatform.SelectedItem.Text != "Select")
                 {
@@ -1793,7 +1793,9 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                         DropDwon_2.Text = dtMF.Rows[i]["Unit"].ToString();
                         TextBox_2.Text = dtMF.Rows[i]["EstimatedPrice"].ToString();
                         rowIndexMF++;
+
                     }
+
                 }
             }
         }
@@ -1904,7 +1906,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                 TextBox TextBox7MF = (TextBox)GvEstiateQuanPrice.Rows[i].Cells[2].FindControl("txtestimateQuantity");
                 DropDownList TextBox2MF = (DropDownList)GvEstiateQuanPrice.Rows[i].Cells[3].FindControl("ddlMeasuringUnit");
                 TextBox TextBox3MF = (TextBox)GvEstiateQuanPrice.Rows[i].Cells[4].FindControl("txtestimatePriceLLp");
-                if (TextBox7MF.Text != "" && TextBox1MF.Text != "" && TextBox1MF.Text != "Select" && TextBox2MF.Text != "Select")
+                if (TextBox7MF.Text != "" && TextBox1MF.Text != "-1" && TextBox3MF.Text != "" && TextBox2MF.Text != "-1")
                 {
                     drManufacturingFacilities = dtManufacturingFacilities.NewRow();
                     drManufacturingFacilities["Year"] = TextBox1MF.SelectedItem.Value;
@@ -1961,12 +1963,15 @@ public partial class Admin_AddProduct : System.Web.UI.Page
             int rowIndex = Convert.ToInt32(e.CommandArgument);
             GridViewRow row = GvEstimateQuanPriceEdit.Rows[rowIndex];
             HiddenField hfn = (HiddenField)GvEstimateQuanPriceEdit.Rows[rowIndex].FindControl("HiddenField1");
-            txtestimateyearu.SelectedValue = row.Cells[1].Text;
-            txtestimatequanu.Text = row.Cells[2].Text;
-            ddlestimateunitu.SelectedValue = row.Cells[3].Text;
-            txtestimatepriceu.Text = row.Cells[4].Text;
-            ViewState["editaccount"] = hfn.Value;
-            ScriptManager.RegisterStartupScript(this, this.GetType(), "divbank", "showPopup1();", true);
+            if (row.Cells[1].Text != "" && row.Cells[2].Text != "" && row.Cells[3].Text != "" && row.Cells[4].Text != "")
+            {
+                txtestimateyearu.Text = row.Cells[1].Text;
+                txtestimatequanu.Text = row.Cells[2].Text;
+                ddlestimateunitu.Text = row.Cells[3].Text;
+                txtestimatepriceu.Text = row.Cells[4].Text;
+                ViewState["editaccount"] = hfn.Value;
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "divbank", "showPopup1();", true);
+            }
         }
         else if (e.CommandName == "deletenewmfe")
         {
@@ -1989,7 +1994,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         {
             if (lblsub2.Text == "Edit & Update")
             {
-                if (txtestimateyearu.SelectedValue != "-1" && ddlestimateunitu.SelectedItem.Text != "Select")
+                if (txtestimateyearu.SelectedValue != "-1" && ddlestimateunitu.SelectedItem.Text != "Select" && txtestimatepriceu.Text != "" && txtestimatequanu.Text != "")
                 {
                     Lo.RetriveSaveEstimateGrid("Update", Convert.ToInt32(ViewState["editaccount"]), hfprodrefno.Value, Convert.ToInt32(txtestimateyearu.SelectedItem.Value), txtestimateyearu.SelectedItem.Text, txtestimatequanu.Text, ddlestimateunitu.SelectedItem.Text, txtestimatepriceu.Text, "F");
                     txtestimateyearu.SelectedValue = "Select";
@@ -2049,7 +2054,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         insert.Columns.Add(new DataColumn("EstimatedPrice", typeof(string)));
         insert.Columns.Add(new DataColumn("Type", typeof(string)));
         DataRow dr;
-        if (ddlyearestimate1.SelectedItem.Text != "Select")
+        if (ddlyearestimate1.SelectedItem.Text != "Select" && ddlunit1.SelectedItem.Text != "Select")
         {
             dr = insert.NewRow();
             dr["Year"] = ddlyearestimate1.SelectedItem.Value;
@@ -2060,7 +2065,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
             dr["Type"] = "O";
             insert.Rows.Add(dr);
         }
-        if (ddlyearestimate2.SelectedItem.Text != "Select")
+        if (ddlyearestimate2.SelectedItem.Text != "Select" && ddlunit1.SelectedItem.Text != "Select")
         {
             dr = insert.NewRow();
             dr["Year"] = ddlyearestimate2.SelectedItem.Value;
@@ -2071,7 +2076,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
             dr["Type"] = "O";
             insert.Rows.Add(dr);
         }
-        if (ddlyearestimate3.Text != "Select")
+        if (ddlyearestimate3.Text != "Select" && ddlunit1.SelectedItem.Text != "Select")
         {
             dr = insert.NewRow();
             dr["Year"] = ddlyearestimate3.SelectedItem.Value;
@@ -2146,7 +2151,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         {
             if (lblsub3.Text == "Edit & Update")
             {
-                if (DropDownList3.SelectedItem.Text != "Select" && DropDownList4.SelectedItem.Text != "Select")
+                if (DropDownList3.SelectedItem.Text != "Select" && DropDownList4.SelectedItem.Text != "Select" && TextBox3.Text != "" && TextBox4.Text != "")
                 {
                     Lo.RetriveSaveEstimateGrid("Update", Convert.ToInt32(ViewState["editaccount1"]), hfprodrefno.Value, Convert.ToInt32(DropDownList3.SelectedItem.Value), DropDownList3.SelectedItem.Text, TextBox3.Text, DropDownList4.SelectedItem.Text, TextBox4.Text, "O");
                     DropDownList3.SelectedValue = "Select";
@@ -2169,7 +2174,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                 string EstimateQuantity = TextBox3.Text;
                 string EstimateMeasuring = DropDownList4.SelectedItem.Text;
                 string UnitProd = TextBox4.Text;
-                if (EstimateYear.ToString() != "Select" && EstimateMeasuring.ToString() != "Select")
+                if (EstimateYear.ToString() != "Select" && EstimateMeasuring.ToString() != "Select" && TextBox3.Text != "" && TextBox4.Text != "")
                 {
                     Lo.RetriveSaveEstimateGrid("Insert", 0, hfprodrefno.Value, Convert.ToInt16(EsitmateYearId), EstimateYear, EstimateQuantity, EstimateMeasuring, UnitProd, "O");
                     DropDownList3.SelectedIndex = 0;
@@ -2356,6 +2361,8 @@ public partial class Admin_AddProduct : System.Web.UI.Page
             if (DtView.Rows.Count > 0)
             {
                 btnsubmitpanel1.Text = "Update";
+                lblrefnoforinfo.Text = hfprodrefno.Value;
+                portalid.Visible = true;
                 hfprodid.Value = DtView.Rows[0]["ProductID"].ToString();
                 hfcomprefno.Value = DtView.Rows[0]["CompanyRefNo"].ToString();
                 ddlmastercategory.SelectedValue = DtView.Rows[0]["ProductLevel1"].ToString();
