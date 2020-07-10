@@ -751,6 +751,7 @@ namespace DataAccessLayer
                     db.AddInParameter(cmd, "@OEMPartNumber", DbType.String, hyProduct["OEMPartNumber"].ToString().Trim());
                     db.AddInParameter(cmd, "@OEMName", DbType.String, hyProduct["OEMName"].ToString().Trim());
                     db.AddInParameter(cmd, "@OEMCountry", DbType.Int64, hyProduct["OEMCountry"].ToString().Trim());
+                    db.AddInParameter(cmd, "@OEMAddress", DbType.String, hyProduct["OEMAddress"].ToString().Trim());
                     db.AddInParameter(cmd, "@DPSUPartNumber", DbType.String, hyProduct["DPSUPartNumber"]);
                     db.AddInParameter(cmd, "@HSCode", DbType.Int64, hyProduct["HSCode"]);
                     db.AddInParameter(cmd, "@HSNCode", DbType.String, hyProduct["HSNCode"]);

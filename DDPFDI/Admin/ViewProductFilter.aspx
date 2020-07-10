@@ -228,7 +228,7 @@
                                                                         <asp:HiddenField ID="hfisaaproved" runat="server" Value='<%#Eval("IsApproved") %>' />
                                                                     </ItemTemplate>
                                                                 </asp:TemplateField>
-                                                                <asp:BoundField DataField="ProductRefNo" HeaderText="Item Id (Portal)" NullDisplayText="#" />
+                                                                <asp:BoundField DataField="ProductRefNo" HeaderText="Item Id (Portal)" NullDisplayText="#" SortExpression="ItemDescriptionPDFFile" />
                                                                 <asp:TemplateField HeaderText="PDF" SortExpression="ItemDescriptionPDFFile">
                                                                     <ItemTemplate>
                                                                         <asp:HyperLink runat="server" ID="lbpdffile" Target="_blank" NavigateUrl='<%#Eval("TopPdf") %>' CssClass="fa fa-file-pdf"></asp:HyperLink>
@@ -253,6 +253,7 @@
                                                                 <asp:BoundField DataField="EstimatePrice" HeaderText="Estimated Price" Visible="false" NullDisplayText="" ItemStyle-Wrap="true" ItemStyle-Width="100" SortExpression="EstimatePrice" />
                                                                 <asp:BoundField DataField="DPSUPartNumber" HeaderText="Part Number" Visible="false" NullDisplayText="" ItemStyle-Wrap="true" ItemStyle-Width="100" SortExpression="DPSUPartNumber" />
                                                                 <asp:BoundField DataField="NodalOfficerEmail" HeaderText="Email" Visible="false" NullDisplayText="" ItemStyle-Wrap="true" ItemStyle-Width="100" SortExpression="NodalOfficerEmail" />
+                                                                 <asp:BoundField DataField="LastUpdated" HeaderText="Last Updated" NullDisplayText="" ItemStyle-Wrap="true" ItemStyle-Width="100" SortExpression="LastUpdated" />
                                                             </Columns>
                                                         </asp:GridView>
                                                     </div>

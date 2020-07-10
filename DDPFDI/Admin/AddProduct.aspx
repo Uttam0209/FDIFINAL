@@ -143,7 +143,7 @@
                                                                 <asp:TextBox runat="server" ID="txtniincode" TabIndex="4" MaxLength="9" class="form-control"></asp:TextBox>
                                                             </div>
                                                             <div class="clearfix mt10"></div>
-                                                            <div class="row" style="margin-top: 45px; margin-left: 5px;">
+                                                            <div class="row" style="margin-top: 10px;">
                                                                 <div class="col-sm-6">
                                                                     <div class="form-group">
                                                                         <label>
@@ -277,6 +277,12 @@
                                                     </asp:DropDownList>
                                                 </div>
                                             </div>
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label>OEM Address</label>
+                                                    <asp:TextBox runat="server" ID="txtoemaddress" Height="70px" TextMode="MultiLine" class="form-control"></asp:TextBox>
+                                                </div>
+                                            </div>
 
                                         </div>
                                         <div class="row">
@@ -400,7 +406,7 @@
                                                         <div class="col-sm-12">
                                                             <div class="form-group">
                                                                 <label class="checkbox-box productalreadylabel">
-                                                                    Imported During last 3 years
+                                                                    Imported During last 3 years 
                                                                 </label>
                                                                 <asp:RadioButtonList runat="server" ID="rbproductImported" RepeatColumns="2" TabIndex="23" RepeatLayout="Flow"
                                                                     RepeatDirection="Horizontal" AutoPostBack="True" OnSelectedIndexChanged="rbproductImported_CheckedChanged ">
@@ -749,7 +755,7 @@
                                     <div class="section-pannel">
                                         <asp:UpdatePanel runat="server" ID="UpdatePanel1">
                                             <ContentTemplate>
-                                                <h5>Import Quantity</h5>
+                                                <h5>Future requirement next 5 years</h5>
                                                 <div class="table table-responsive">
                                                     <asp:GridView ID="GvEstiateQuanPrice" runat="server" CssClass="table table-hover" CellPadding="4" ShowFooter="true"
                                                         ForeColor="#333333" GridLines="None" AutoGenerateColumns="false" OnRowCreated="GvEstiateQuanPrice_RowCreated">
@@ -760,10 +766,10 @@
                                                                 <ItemTemplate>
                                                                     <asp:DropDownList ID="ddlYearEstimate" runat="server" CssClass="form-control">
                                                                         <asp:ListItem Value="1">2020-21</asp:ListItem>
-                                                                        <%--<asp:ListItem Value="2">2021-22</asp:ListItem>
+                                                                        <asp:ListItem Value="2">2021-22</asp:ListItem>
                                                                         <asp:ListItem Value="3">2022-23</asp:ListItem>
                                                                         <asp:ListItem Value="4">2023-24</asp:ListItem>
-                                                                        <asp:ListItem Value="5">2024-25</asp:ListItem>--%>
+                                                                        <asp:ListItem Value="5">2024-25</asp:ListItem>
                                                                     </asp:DropDownList>
                                                                 </ItemTemplate>
                                                             </asp:TemplateField>
@@ -810,7 +816,7 @@
                                                                 </ItemTemplate>
                                                                 <FooterStyle HorizontalAlign="Right" />
                                                                 <FooterTemplate>
-                                                                    <asp:LinkButton ID="btnAddEstimate" runat="server" Text="Add New Row" Visible="false" CssClass="btn btn-primary pull-right" OnClick="btnAddEstimate_Click"></asp:LinkButton>
+                                                                    <asp:LinkButton ID="btnAddEstimate" runat="server" Text="Add New Row" CssClass="btn btn-primary pull-right" OnClick="btnAddEstimate_Click"></asp:LinkButton>
                                                                 </FooterTemplate>
                                                             </asp:TemplateField>
                                                             <asp:TemplateField Visible="false">
@@ -884,32 +890,51 @@
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <h5>Indigenization Category</h5>
+                                                    <h5>Indigenization Category <span class="mandatory">*</span></h5>
                                                     <asp:CheckBoxList ID="rbIgCategory" runat="server" RepeatColumns="1" RepeatDirection="Horizontal" RepeatLayout="Flow">
-                                                        <asp:ListItem Value="23">Item Under Extant Procedure</asp:ListItem>
-                                                        <asp:ListItem Value="25">Item Under Make-II</asp:ListItem>
-                                                        <asp:ListItem Value="24">Item Under IGA</asp:ListItem>
-                                                        <asp:ListItem Value="26">Item Under iDEx/AI/Innovation/R&D</asp:ListItem>
                                                     </asp:CheckBoxList>
                                                 </div>
                                             </div>
+                                            <asp:UpdatePanel runat="server" ID="UpdatePanel3">
+                                                <ContentTemplate>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <h5>Status of Indigenization <span class="mandatory">*</span></h5>
+                                                            <label>EoI/RFP</label>
+                                                            <asp:RadioButtonList ID="rbeoimake2" runat="server" RepeatColumns="3" RepeatDirection="Horizontal" AutoPostBack="true" RepeatLayout="Flow" OnSelectedIndexChanged="rbeoimake2_SelectedIndexChanged">
+                                                                <asp:ListItem Value="Yes" style="margin-left: 10px;">Yes</asp:ListItem>
+                                                                <asp:ListItem Value="No" style="margin-left: 10px;">No</asp:ListItem>
+                                                                <asp:ListItem Value="Archive" style="margin-left: 10px;">Archive</asp:ListItem>
+                                                            </asp:RadioButtonList>
+                                                        </div>
+                                                        <div class="clearfix"></div>
+                                                        <div class="form-group" runat="server" id="eoi" visible="false">
+                                                            <label>Link</label>
+                                                            (if yes) <span class="mandatory">*</span>
+                                                            <asp:TextBox ID="txteoilink" runat="server" CssClass="form-control" placeholder="Link of Tendor"></asp:TextBox>
+                                                        </div>
+                                                    </div>
+                                                </ContentTemplate>
+                                            </asp:UpdatePanel>
+                                            <asp:UpdateProgress ID="UpdateProgress10" runat="server" AssociatedUpdatePanelID="UpdatePanel1">
+                                                <ProgressTemplate>
+                                                    <!---Progress Bar ---->
+                                                    <div class="overlay-progress">
+                                                        <div class="custom-progress-bar blue stripes">
+                                                            <span></span>
+                                                            <p>Processing</p>
+                                                        </div>
+                                                    </div>
+                                                    <!---Progress Bar ---->
+                                                </ProgressTemplate>
+                                            </asp:UpdateProgress>
                                             <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <h5>Status of Indigenization</h5>
-                                                    <label>EoI/RFP</label>
-                                                    <asp:RadioButtonList ID="rbeoimake2" runat="server" RepeatColumns="2" RepeatDirection="Horizontal" RepeatLayout="Flow">
-                                                        <asp:ListItem Value="Yes" style="margin-left: 10px;">Yes</asp:ListItem>
-                                                        <asp:ListItem Value="No" style="margin-left: 10px;">No</asp:ListItem>
-                                                    </asp:RadioButtonList>
-                                                </div>
-                                                <div class="clearfix"></div>
-                                                <div class="form-group">
-                                                    <label>Link</label>
-                                                    (if yes) <span class="mandatory">*</span>
-                                                    <asp:TextBox ID="txteoilink" runat="server" CssClass="form-control" placeholder="Link of Tendor"></asp:TextBox>
+                                                    <h5>Quality Assurance Agency <span class="mandatory">*</span></h5>
+                                                    <asp:CheckBoxList ID="chkQAA" runat="server" RepeatColumns="5" RepeatDirection="Horizontal" RepeatLayout="Flow">
+                                                    </asp:CheckBoxList>
                                                 </div>
                                             </div>
-
                                             <div class="col-md-4" runat="server" visible="false">
                                                 <div class="form-group">
                                                     <asp:Label runat="server" ID="Label1" CssClass="form-label " Text="Quality Assurance"></asp:Label>
@@ -1230,7 +1255,7 @@
                                     <div class="modal-content">
                                         <div class="modal-header modal-header1">
                                             <button type="button" class="close close1" data-dismiss="modal">&times;</button>
-                                            <h4 class="modal-title">Estimated Quantity</h4>
+                                            <h4 class="modal-title">Future requirement next five years</h4>
                                         </div>
                                         <div class="modal-body clearfix" style="padding: 0 20px;">
                                             <div class="form-group" style="margin: 0">
@@ -1239,6 +1264,10 @@
                                                 </label>
                                                 <asp:DropDownList runat="server" ID="txtestimateyearu" Class="form-control">
                                                     <asp:ListItem Value="1">2020-21</asp:ListItem>
+                                                    <asp:ListItem Value="2">2021-22</asp:ListItem>
+                                                    <asp:ListItem Value="3">2022-23</asp:ListItem>
+                                                    <asp:ListItem Value="4">2023-24</asp:ListItem>
+                                                    <asp:ListItem Value="5">2024-25</asp:ListItem>
                                                 </asp:DropDownList>
                                             </div>
                                             <div class="form-group" style="margin: 0">
@@ -1304,7 +1333,7 @@
                                     <div class="modal-content">
                                         <div class="modal-header modal-header1">
                                             <button type="button" class="close close1" data-dismiss="modal">&times;</button>
-                                            <h4 class="modal-title">Estimated Quantity</h4>
+                                            <h4 class="modal-title">Imported During last 3 years</h4>
                                         </div>
                                         <div class="modal-body clearfix" style="padding: 0 20px;">
                                             <div class="form-group" style="margin: 0">
@@ -1429,4 +1458,5 @@
             });
         });
     </script>
+
 </asp:Content>

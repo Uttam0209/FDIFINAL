@@ -82,24 +82,26 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                             BindCountry();
                             BindFinancialYear();
                             IsProductImported();
+                            BindQualityAssurance();
+                            PROCURMENTCATEGORYIndigenization();
                             if (Request.QueryString["mcurrentcompRefNo"] != null)
                             {
                                 BindMasterCategory();
-                                //  BindMasterSubCategory();
-                                // BindMaster3levelSubCategory();
                                 BindMasterTechnologyCategory();
                                 BindMasterPlatCategory();
                                 BindEndUser();
                                 BindNodelEmail();
+                                BindQualityAssurance();
+                                PROCURMENTCATEGORYIndigenization();
                             }
                             else
                             {
                                 BindMasterCategory();
-                                //  BindMasterSubCategory();
-                                //   BindMaster3levelSubCategory();
                                 BindMasterTechnologyCategory();
                                 BindMasterPlatCategory();
                                 BindEndUser();
+                                BindQualityAssurance();
+                                PROCURMENTCATEGORYIndigenization();
                             }
                         }
                         else
@@ -222,7 +224,6 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                             divlblselectunit.Visible = true;
                             ddlunit.Visible = true;
                             ddlunit.Enabled = false;
-                            // EditCode();
                         }
                         else
                         {
@@ -630,21 +631,6 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         if (ddllevel3product.SelectedItem.Text != "Select" && ddllevel3product.SelectedItem.Text != "NA")
         {
             lblviewitemcode.Visible = true;
-            //DataTable dt1 = Lo.RetriveMasterSubCategoryDate(Convert.ToInt32(ddllevel3product.SelectedItem.Value), "", "", "3to2", "", "");
-            //if (dt1.Rows.Count > 0)
-            //{
-            //    Co.FillDropdownlist(ddlsubcategory, dt1, "SCategoryName", "SCategoryId");
-            //    ddlsubcategory.Items.Insert(0, "Select");
-            //    DataTable dtbindvalue = Lo.RetriveMasterSubCategoryDate(Convert.ToInt32(ddllevel3product.SelectedItem.Value), "", "", "3to21", "", "");
-            //    ddlsubcategory.SelectedValue = dtbindvalue.Rows[0]["SCategoryId"].ToString();
-            //    DataTable dt1sr = Lo.RetriveMasterSubCategoryDate(Convert.ToInt32(ddlsubcategory.SelectedItem.Value), "", "", "3to21", "", "");
-            //    ddlmastercategory.SelectedValue = dt1sr.Rows[0]["SCategoryId"].ToString();
-            //}
-            //else
-            //{
-            //    ddllevel3product.SelectedValue = "Select";
-            //}
-            //NSCCode(ddlmastercategory.SelectedItem.Text, ddlsubcategory.SelectedItem.Text);
         }
         else
         {
@@ -728,6 +714,13 @@ public partial class Admin_AddProduct : System.Web.UI.Page
             txthsncodereadonly.Text = "";
         }
     }
+    protected void rbeoimake2_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        if (rbeoimake2.SelectedValue == "Yes")
+        { eoi.Visible = true; }
+        else
+        { eoi.Visible = false; }
+    }
     #endregion
     #region For ProductCode
     protected void BindMasterCategory()
@@ -782,9 +775,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     }
     protected void BindMaster3levelSubCategory()
     {
-        DataTable DtMasterCategroyLevel3 = new DataTable();
-        //if (ddlsubcategory.SelectedItem.Value != null || ddlsubcategory.SelectedItem.Text != "Select")
-        //{
+        DataTable DtMasterCategroyLevel3 = new DataTable();       
         if (ddlsubcategory.SelectedIndex != -1)
         { DtMasterCategroyLevel3 = Lo.RetriveMasterSubCategoryDate(Convert.ToInt32(ddlsubcategory.SelectedItem.Value), "", "", "SubSelectID", "", ""); }
         else
@@ -802,7 +793,6 @@ public partial class Admin_AddProduct : System.Web.UI.Page
             ddllevel3product.Items.Insert(0, "Select");
             ddllevel3product.Items.Insert(1, "NA");
         }
-        //}
     }
     protected void BindItemDescription()
     {
@@ -970,9 +960,29 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         }
     }
     #endregion
+    #region For Quality Assurance
+    protected void BindQualityAssurance()
+    {
+        DataTable DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, "QA AGENCY", "", "SelectProductCat", "", "");
+        if (DtMasterCategroy.Rows.Count > 0)
+        {
+            Co.FillCheckBox(chkQAA, DtMasterCategroy, "SCategoryName", "SCategoryID");
+        }
+    }
+    #endregion
+    #region For Indinization category proc cat
+    protected void PROCURMENTCATEGORYIndigenization()
+    {
+        DataTable DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, "PROCURMENT CATEGORY", "", "SelectProductCat", "", "");
+        if (DtMasterCategroy.Rows.Count > 0)
+        {
+            Co.FillCheckBox(rbIgCategory, DtMasterCategroy, "SCategoryName", "SCategoryID");
+        }
+    }
+    #endregion
     #region PanelSaveCode
     private string m;
-    string a, b = string.Empty;
+    string a, b, qa = string.Empty;
     protected void SaveProductDescription()
     {
         try
@@ -1126,6 +1136,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
             HyPanel1["OEMPartNumber"] = Co.RSQandSQLInjection(txtoempartnumber.Text.Trim(), "soft");
             HyPanel1["OEMName"] = Co.RSQandSQLInjection(txtoemname.Text.Trim(), "soft");
             HyPanel1["OEMCountry"] = Convert.ToInt64(txtcountry.SelectedItem.Value);
+            HyPanel1["OEMAddress"] = Co.RSQandSQLInjection(txtoemaddress.Text.Trim(), "soft");
             HyPanel1["DPSUPartNumber"] = Co.RSQandSQLInjection(txtdpsupartnumber.Text.Trim(), "soft");
             HyPanel1["HSCode"] = null;
             HyPanel1["HSNCode"] = null;
@@ -1139,11 +1150,11 @@ public partial class Admin_AddProduct : System.Web.UI.Page
             HyPanel1["EndUserPartNumber"] = "";
             if (ddlenduser.SelectedItem.Value != "Select")
             {
-                foreach (ListItem li in ddlenduser.Items)
+                for (int o = 0; o < ddlenduser.Items.Count; o++)
                 {
-                    if (li.Selected)
+                    if (ddlenduser.Items[o].Selected == true)
                     {
-                        m = m + li.Value + ",";
+                        m = m + ddlenduser.Items[o].Value + ",";
                     }
                 }
                 HyPanel1["EndUser"] = m;
@@ -1225,14 +1236,21 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                 SaveCodeEstimateQuantity();
                 dtSaveEstimateQuantity = (DataTable)ViewState["MF"];
             }
-            foreach (ListItem li in rbIgCategory.Items)
+            for (int j = 0; j < rbIgCategory.Items.Count; j++)
             {
-                if (li.Selected == true)
+                if (rbIgCategory.Items[j].Selected == true)
                 {
-                    a = a + rbIgCategory.SelectedItem.Value + ",";
+                    a = a + rbIgCategory.Items[j].Value + ",";
                 }
             }
-            HyPanel1["PurposeofProcurement"] = a.ToString();
+            if (a.ToString() != "")
+            {
+                HyPanel1["PurposeofProcurement"] = a.ToString();
+            }
+            else
+            {
+                HyPanel1["PurposeofProcurement"] = "";
+            }
             HyPanel1["ProcurmentCategoryRemark"] = Co.RSQandSQLInjection(txtremarksprocurmentCategory.Text.Trim(), "soft");
             HyPanel1["TenderSubmition"] = "";
             HyPanel1["TenderStatus"] = "";
@@ -1242,7 +1260,21 @@ public partial class Admin_AddProduct : System.Web.UI.Page
             HyPanel1["EOISubmition"] = "";
             HyPanel1["EOIFillDate"] = null;
             HyPanel1["EOIURL"] = txteoilink.Text;
-            HyPanel1["QAAgency"] = "";
+            for (int i = 0; i < chkQAA.Items.Count; i++)
+            {
+                if (chkQAA.Items[i].Selected == true)
+                {
+                    qa = qa + chkQAA.Items[i].Value + ",";
+                }
+            }
+            if (qa.ToString() != "")
+            {
+                HyPanel1["QAAgency"] = qa.ToString();
+            }
+            else
+            {
+                HyPanel1["QAAgency"] = "";
+            }
             HyPanel1["QAReamrks"] = "";
             HyPanel1["Testing"] = "";
             HyPanel1["TestingRemarks"] = "";
@@ -1318,74 +1350,109 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                             }
                             if (checklistdeclaration != "")
                             {
-                                if (fuitemdescriptionfile.HasFile != false)
+                                string mIgCat = "";
+                                foreach (ListItem chkIg in rbIgCategory.Items)
                                 {
-                                    int iFileSize = fuitemdescriptionfile.PostedFile.ContentLength;
-                                    if (iFileSize > 5242880) // 5MB
+                                    if (chkIg.Selected == true)
                                     {
-                                        ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "alert('Maximum 5 Mb pdf file can be uploaded')", true);
+                                        mIgCat = mIgCat + chkIg;
                                     }
-                                    else
+                                }
+                                if (mIgCat != "")
+                                {
+                                    if (rbeligible.SelectedIndex != -1)
                                     {
-                                        if (fuimages.HasFile != false)
+                                        string mchkqua = "";
+                                        foreach (ListItem chkQa in chkQAA.Items)
                                         {
-                                            int filecount = 0;
-                                            filecount = Convert.ToInt32(fuimages.PostedFiles.Count.ToString());
-                                            if (filecount <= 4)
+                                            if (chkQa.Selected == true)
                                             {
-                                                int iImageFileSize = fuimages.PostedFile.ContentLength;
-                                                if (iImageFileSize > 20971520)
+                                                mchkqua = mchkqua + chkQa;
+                                            }
+                                        }
+                                        if (mchkqua != "")
+                                        {
+                                            if (fuitemdescriptionfile.HasFile != false)
+                                            {
+                                                int iFileSize = fuitemdescriptionfile.PostedFile.ContentLength;
+                                                if (iFileSize > 5242880) // 5MB
                                                 {
-                                                    ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert",
-                                                        "alert('Maximum 5 Mb each .jpg,.jpeg,.png,.tif images can be uploaded')", true);
+                                                    ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "alert('Maximum 5 Mb pdf file can be uploaded')", true);
+                                                }
+                                                else
+                                                {
+                                                    if (fuimages.HasFile != false)
+                                                    {
+                                                        int filecount = 0;
+                                                        filecount = Convert.ToInt32(fuimages.PostedFiles.Count.ToString());
+                                                        if (filecount <= 4)
+                                                        {
+                                                            int iImageFileSize = fuimages.PostedFile.ContentLength;
+                                                            if (iImageFileSize > 20971520)
+                                                            {
+                                                                ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert",
+                                                                    "alert('Maximum 5 Mb each .jpg,.jpeg,.png,.tif images can be uploaded')", true);
+                                                            }
+                                                            else
+                                                            {
+                                                                SaveProductDescription();
+                                                            }
+                                                        }
+                                                        else
+                                                        {
+                                                            ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert",
+                                                                "alert('Maximum 4 files can be uploaded')", true);
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        SaveProductDescription();
+                                                    }
+                                                }
+                                            }
+                                            else
+                                            {
+                                                if (fuimages.HasFile != false)
+                                                {
+                                                    int filecount = 0;
+                                                    filecount = Convert.ToInt32(fuimages.PostedFiles.Count.ToString());
+                                                    if (filecount <= 4)
+                                                    {
+                                                        int iImageFileSize = fuimages.PostedFile.ContentLength;
+                                                        if (iImageFileSize > 20971520)
+                                                        {
+                                                            ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert",
+                                                                "alert('Maximum 5 Mb each .jpg,.jpeg,.png,.tif images can be uploaded')", true);
+                                                        }
+                                                        else
+                                                        {
+                                                            SaveProductDescription();
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert",
+                                                            "alert('Maximum 4 files can be uploaded')", true);
+                                                    }
                                                 }
                                                 else
                                                 {
                                                     SaveProductDescription();
                                                 }
                                             }
-                                            else
-                                            {
-                                                ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert",
-                                                    "alert('Maximum 4 files can be uploaded')", true);
-                                            }
                                         }
                                         else
                                         {
-                                            SaveProductDescription();
-                                        }
-                                    }
-                                }
-                                else
-                                {
-                                    if (fuimages.HasFile != false)
-                                    {
-                                        int filecount = 0;
-                                        filecount = Convert.ToInt32(fuimages.PostedFiles.Count.ToString());
-                                        if (filecount <= 4)
-                                        {
-                                            int iImageFileSize = fuimages.PostedFile.ContentLength;
-                                            if (iImageFileSize > 20971520)
-                                            {
-                                                ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert",
-                                                    "alert('Maximum 5 Mb each .jpg,.jpeg,.png,.tif images can be uploaded')", true);
-                                            }
-                                            else
-                                            {
-                                                SaveProductDescription();
-                                            }
-                                        }
-                                        else
-                                        {
-                                            ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert",
-                                                "alert('Maximum 4 files can be uploaded')", true);
+                                            ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "alert('Please select Quality Assurance Agency category tab and select checkbox before submit.')", true);
                                         }
                                     }
                                     else
                                     {
-                                        SaveProductDescription();
+                                        ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "alert('Please select EoI/RFP before submit.')", true);
                                     }
                                 }
+                                else
+                                { ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "alert('Please select indigenization category tab and select checkbox before submit.')", true); }
                             }
                             else
                             {
@@ -2065,7 +2132,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
             dr["Type"] = "O";
             insert.Rows.Add(dr);
         }
-        if (ddlyearestimate2.SelectedItem.Text != "Select" && ddlunit1.SelectedItem.Text != "Select")
+        if (ddlyearestimate2.SelectedItem.Text != "Select" && ddlunit2.SelectedItem.Text != "Select")
         {
             dr = insert.NewRow();
             dr["Year"] = ddlyearestimate2.SelectedItem.Value;
@@ -2076,7 +2143,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
             dr["Type"] = "O";
             insert.Rows.Add(dr);
         }
-        if (ddlyearestimate3.Text != "Select" && ddlunit1.SelectedItem.Text != "Select")
+        if (ddlyearestimate3.Text != "Select" && ddlunit3.SelectedItem.Text != "Select")
         {
             dr = insert.NewRow();
             dr["Year"] = ddlyearestimate3.SelectedItem.Value;
@@ -2383,6 +2450,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                 {
                     txtcountry.SelectedValue = DtView.Rows[0]["OEMCountry"].ToString();
                 }
+                txtoemaddress.Text = DtView.Rows[0]["OEMAddress"].ToString();
                 txtdpsupartnumber.Text = DtView.Rows[0]["DPSUPartNumber"].ToString();
                 txthsncodereadonly.Text = DtView.Rows[0]["HsnCode8digit"].ToString();
 
