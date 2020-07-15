@@ -104,29 +104,83 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
                     RowFilter = "CompanyRefNo='" + ddlcompany.SelectedItem.Value + "'"
                 };
                 DataTable dtnew = dv.ToTable();
+                string mProdRefesti = "";
                 if (dtnew.Rows.Count > 0)
                 {
                     if (ddlcompany.SelectedItem.Text != "Select" && ddldivision.Visible == false || ddldivision.SelectedItem.Text == "Select")
                     {
-                        dv.RowFilter = "CompanyName='" + ddlcompany.SelectedItem.Text + "'";
+                        if (txtsearchbyrefid.Text != "")
+                        {
+                            dv.RowFilter = "ProductRefNo='" + txtsearchbyrefid.Text + "' and CompanyName='" + ddlcompany.SelectedItem.Text + "'";
+                            mProdRefesti = ddlcompany.SelectedItem.Value;
+                        }
+                        else
+                        {
+                            dv.RowFilter = "CompanyName='" + ddlcompany.SelectedItem.Text + "'";
+                            mProdRefesti = ddlcompany.SelectedItem.Value;
+                        }
                     }
                     else if (ddlcompany.SelectedItem.Text != "Select" && ddldivision.SelectedItem.Text != "Select" && ddlunit.Visible == false || ddlunit.SelectedItem.Text == "Select")
                     {
-                        dv.RowFilter = "FactoryName='" + ddldivision.SelectedItem.Text + "'";
+                        if (txtsearchbyrefid.Text != "")
+                        {
+                            dv.RowFilter = "ProductRefNo='" + txtsearchbyrefid.Text + "' and FactoryName='" + ddldivision.SelectedItem.Text + "'";
+                            mProdRefesti = ddldivision.SelectedItem.Value;
+                        }
+                        else
+                        {
+                            dv.RowFilter = "FactoryName='" + ddldivision.SelectedItem.Text + "'";
+                            mProdRefesti = ddldivision.SelectedItem.Value;
+                        }
                     }
                     else if (ddlcompany.SelectedItem.Text != "Select" && ddldivision.SelectedItem.Text != "Select" && ddlunit.SelectedItem.Text != "Select")
                     {
-                        dv.RowFilter = "UnitName='" + ddlunit.SelectedItem.Text + "'";
-                    }
-                    if (txtsearchbyrefid.Text != "")
-                    {
-                        dv.RowFilter = "ProductRefNo='" + txtsearchbyrefid.Text + "'";
+                        if (txtsearchbyrefid.Text != "")
+                        {
+                            dv.RowFilter = "ProductRefNo='" + txtsearchbyrefid.Text + "' and UnitName='" + ddlunit.SelectedItem.Text + "'";
+                            mProdRefesti = ddlunit.SelectedItem.Value;
+                        }
+                        else
+                        {
+                            dv.RowFilter = "UnitName='" + ddlunit.SelectedItem.Text + "'";
+                            mProdRefesti = ddlunit.SelectedItem.Value;
+                        }
                     }
                     else
                     {
                         dv.Sort = "LastUpdated desc,CompanyName asc,FactoryName asc";
                     }
                     DataTable dtads = dv.ToTable();
+                    dtads.Columns.Add("1718", typeof(decimal));
+                    dtads.Columns.Add("1819", typeof(decimal));
+                    dtads.Columns.Add("1920", typeof(decimal));
+                    dtads.Columns.Add("2021", typeof(decimal));
+                    for (int i = 0; dtads.Rows.Count > i; i++)
+                    {
+                        DataTable dtEstimate1 = Lo.RetriveProductCode("", dtads.Rows[i]["ProductRefNo"].ToString(), "estimate", "");
+                        if (dtEstimate1.Rows.Count > 0)
+                        {
+                            for (int es = 0; dtEstimate1.Rows.Count > es; es++)
+                            {
+                                if (dtEstimate1.Rows[es]["FYear"].ToString() == "2017-18" && dtEstimate1.Rows[es]["Type"].ToString() == "O")
+                                {
+                                    dtads.Rows[i]["1718"] = dtEstimate1.Rows[es]["EstimatedPrice"].ToString();
+                                }
+                                if (dtEstimate1.Rows[es]["FYear"].ToString() == "2018-19" && dtEstimate1.Rows[es]["Type"].ToString() == "O")
+                                {
+                                    dtads.Rows[i]["1819"] = dtEstimate1.Rows[es]["EstimatedPrice"].ToString();
+                                }
+                                if (dtEstimate1.Rows[es]["FYear"].ToString() == "2019-20" && dtEstimate1.Rows[es]["Type"].ToString() == "O")
+                                {
+                                    dtads.Rows[i]["1920"] = dtEstimate1.Rows[es]["EstimatedPrice"].ToString();
+                                }
+                                if (dtEstimate1.Rows[es]["FYear"].ToString() == "2020-21" && dtEstimate1.Rows[es]["Type"].ToString() == "F")
+                                {
+                                    dtads.Rows[i]["2021"] = dtEstimate1.Rows[es]["EstimatedPrice"].ToString();
+                                }
+                            }
+                        }
+                    }
                     pgsource.DataSource = dtads.DefaultView;
                     pgsource.AllowPaging = true;
                     pgsource.PageSize = 100;

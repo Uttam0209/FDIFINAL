@@ -142,6 +142,15 @@
             }
         }
     </script>
+    <style>
+        #chktendor input {
+            margin-right: 10px;
+        }
+
+        #chktendor label {
+            font-size: 13px;
+        }
+    </style>
 </head>
 <body>
     <div class="modal fade" id="aboutus-modal" tabindex="-1" role="dialog">
@@ -292,6 +301,8 @@
                                                                 <asp:RadioButtonList ID="rbsort" runat="server" AutoPostBack="true" CssClass="custom-checkbox" OnSelectedIndexChanged="rbsort_SelectedIndexChanged">
                                                                     <asp:ListItem Value="EstimatePricefuture" style="margin-left: 5px !important;">&nbsp;2020-21</asp:ListItem>
                                                                     <asp:ListItem Value="EstimatePrice" Selected="True" style="margin-left: 5px !important;">&nbsp;2019-20</asp:ListItem>
+                                                                    <asp:ListItem Value="EstimatePrice18" style="margin-left: 5px !important;">&nbsp;2018-19</asp:ListItem>
+                                                                    <asp:ListItem Value="EstimatePrice17" style="margin-left: 5px !important;">&nbsp;2017-18</asp:ListItem>
                                                                 </asp:RadioButtonList>
                                                             </div>
                                                         </div>
@@ -309,7 +320,7 @@
                                                             <div class="input-group">
                                                                 <asp:RadioButtonList ID="chkimportvalue" runat="server" AutoPostBack="true" CssClass="custom-checkbox" OnSelectedIndexChanged="chkimportvalue_SelectedIndexChanged">
                                                                     <asp:ListItem Value="4" style="margin-left: 5px !important;" onClick="MutExChkList(this);">&nbsp; 1 - 5 Million</asp:ListItem>
-                                                                    <asp:ListItem Value="1" style="margin-left: 5px !important;" onClick="MutExChkList(this);" Selected="True">&nbsp; 5 - 10 Million</asp:ListItem>
+                                                                    <asp:ListItem Value="1" style="margin-left: 5px !important;" onClick="MutExChkList(this);">&nbsp; 5 - 10 Million</asp:ListItem>
                                                                     <asp:ListItem Value="2" style="margin-left: 5px !important;" onClick="MutExChkList(this);">&nbsp; 10 - 50 Million</asp:ListItem>
                                                                     <asp:ListItem Value="3" style="margin-left: 5px !important;" onClick="MutExChkList(this);">&nbsp; 50 Million and above</asp:ListItem>
                                                                 </asp:RadioButtonList>
@@ -456,7 +467,7 @@
                             <div style="float: left;">
                                 <p style="float: left;">
                                     Import value during<asp:Label ID="lblyearvalue" runat="server"></asp:Label>
-                                    (in million) -
+                                    (in million Rs) -
                                     <asp:Label ID="lblestimateprice" runat="server"></asp:Label>
                                 </p>
                                 <div class="clearfix">
@@ -478,7 +489,7 @@
                                                 <div class="card product-card" style="box-shadow: 0 0.3rem 1.525rem -0.375rem rgba(0, 0, 0, 0.1);">
                                                     <a class="card-img-top d-block overflow-hidden" href="#" style="text-align: center;">
                                                         <img src='<%#Eval("TopImages") %>' alt="Product" style="max-width: 100%; width: 50%; height: 90px;">
-                                                    </a>&nbsp;&nbsp;&nbsp;<div class="card-body py-2" style="height: 250px;">
+                                                    </a>&nbsp;&nbsp;&nbsp;<div class="card-body py-2" style="height: 180px;">
                                                         <b>
                                                             <p class="product-meta d-block font-size-xs pb-1" style="color: #6915cf; font-size: 16px!important;">
                                                                 <%#Eval("CompanyName") %>
@@ -500,9 +511,11 @@
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
-                                                                    <td colspan="2" style="padding: 8px; font-size: 12px; color: #6915cf;">Annual Import Value (in million) <b>
+                                                                    <td colspan="2" style="padding: 8px; font-size: 11px; color: #6915cf;">Annual Import Value (in million Rs) <b>
                                                                         <asp:Label ID="lblepold" Visible="false" runat="server" Text='<%# Eval("EstimatePrice") %>'></asp:Label>
                                                                         <asp:Label ID="lblepfu" Visible="false" runat="server" Text='<%# Eval("EstimatePricefuture") %>'></asp:Label>
+                                                                        <asp:Label ID="lblepold17" Visible="false" runat="server" Text='<%# Eval("EstimatePrice17") %>'></asp:Label>
+                                                                        <asp:Label ID="lblepold18" Visible="false" runat="server" Text='<%# Eval("EstimatePrice18") %>'></asp:Label>
                                                                     </b>
                                                                     </td>
                                                                 </tr>
@@ -516,6 +529,8 @@
                                                                     <td colspan="2" style="padding: 8px; font-size: 12px;">Annual Import Quantity                                                                       
                                                                             <b>
                                                                                 <asp:Label ID="Label2" runat="server" Style="margin-right: 0px;" Visible="false" Text='<%# Eval("EstimateQu") %>' />
+                                                                                <asp:Label ID="Label7" runat="server" Style="margin-right: 0px;" Visible="false" Text='<%# Eval("EstimateQu17") %>' />
+                                                                                <asp:Label ID="Label8" runat="server" Style="margin-right: 0px;" Visible="false" Text='<%# Eval("EstimateQu18") %>' />
                                                                                 <asp:Label ID="lblestunitold" runat="server" Style="margin-right: 0px;" Visible="false" Text='<%# Eval("EstUnitOld") %>' />
                                                                                 <asp:Label ID="Label3" runat="server" Visible="false" Style="margin-right: 0px;" Text='<%# Eval("EstimateQufuture")%>' />
                                                                                 <asp:Label ID="lblestunitfut" runat="server" Style="margin-right: 0px;" Visible="false" Text='<%# Eval("EstUnitfuture") %>' />
@@ -537,8 +552,8 @@
                                                                         <%#Eval("OEMCountry") %></b>
                                                                     </td>
                                                                 </tr>
-                                                                <tr id="Tr2" runat="server">
-                                                                    <td colspan="2" style="padding: 8px; font-size: 12px;">Nato Supply Group Class :-
+                                                                <tr id="Tr2" runat="server" visible="false">
+                                                                    <td colspan="2" style="padding: 5px; font-size: 12px;">Nato Supply Group Class :-
                                                                        <p><b>[<%#Eval("NSCCode") %>] -  <%# Eval("NSNGroupClass").ToString().Length > 35? (Eval("NSNGroupClass") as string).Substring(0,35) + ".." : Eval("NSNGroupClass")  %></b></p>
                                                                     </td>
                                                                 </tr>
@@ -564,6 +579,11 @@
                                                                     </td>
                                                                     <td style="padding: 8px;" class="text-right">
                                                                         <%#Eval("EstimateQu") %>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr id="Tr233" runat="server">
+                                                                    <td class="text-right" colspan="2" style="padding: 8px; font-size: 11px;">Last Updated :- 
+                                                                        <%#Eval("LastUpdated","{0:dd-MMM-yyyy}") %>
                                                                     </td>
                                                                 </tr>
                                                             </tbody>
@@ -626,155 +646,6 @@
                                     <div class="widget widget-categories mb-4">
                                         <div class="accordion mt-n1" id="shop-categories">
                                             <div id="printarea">
-                                                <div class="card" style="border-bottom: solid 1.4px #e5e5e5!important;">
-                                                    <div class="card-header">
-                                                        <h3 class="accordion-heading mb-2">
-                                                            <a class="collapsed" href="#shoes" role="button" data-toggle="collapse" aria-expanded="false"
-                                                                aria-controls="shoes">Item Description <span class="accordion-indicator iconupanddown">
-                                                                    <i class="fas fa-chevron-up"></i></span></a>
-                                                        </h3>
-                                                    </div>
-                                                    <div class="collapse" id="shoes" data-parent="#shop-categories">
-                                                        <div class="card-body card-custom ">
-                                                            <h6 class="tablemidhead">DPSUs,OFB & SHQs Details</h6>
-                                                            <table class="table mb-2">
-                                                                <tbody>
-                                                                    <tr>
-                                                                        <th scope="row">DPSU's & OFB:
-                                                                        </th>
-                                                                        <td>
-                                                                            <asp:Label ID="lblcompname" runat="server" Text=""></asp:Label>
-                                                                        </td>
-                                                                    </tr>
-                                                                    <tr runat="server" id="one">
-                                                                        <th scope="row">Division/Plant:
-                                                                        </th>
-                                                                        <td>
-                                                                            <asp:Label ID="lbldiviname" runat="server" Text=""></asp:Label>
-                                                                        </td>
-                                                                    </tr>
-                                                                    <tr runat="server" id="two">
-                                                                        <th scope="row">Unit:
-                                                                        </th>
-                                                                        <td>
-                                                                            <asp:Label ID="lblunitnamepro" runat="server" Text=""></asp:Label>
-                                                                        </td>
-                                                                    </tr>
-                                                                </tbody>
-                                                            </table>
-                                                            <h6 class="tablemidhead">Item Description</h6>
-                                                            <table class="table mb-2">
-                                                                <tbody>
-                                                                    <tr>
-                                                                        <th scope="row">Item Id (Portal)
-                                                                        </th>
-                                                                        <td>
-                                                                            <asp:Label ID="lblrefnoview" runat="server" Text=""></asp:Label>
-                                                                        </td>
-                                                                    </tr>
-                                                                    <tr runat="server" id="three">
-                                                                        <th scope="row">Part Number
-                                                                        </th>
-                                                                        <td>
-                                                                            <asp:Label ID="lbldpsupartno" runat="server" Text=""></asp:Label>
-                                                                        </td>
-                                                                    </tr>
-                                                                    <tr runat="server" id="four">
-                                                                        <th scope="row">HSN Code (8-digit)
-                                                                        </th>
-                                                                        <td>
-                                                                            <asp:Label ID="lblhsncode8digit" runat="server" Text=""></asp:Label>
-                                                                        </td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <th scope="row">Industry Domain
-                                                                        </th>
-                                                                        <td>
-                                                                            <asp:Label ID="prodIndustryDomain" runat="server" Text=""></asp:Label>
-                                                                            /
-                                                                        <asp:Label ID="ProdIndusSubDomain" runat="server" Text=""></asp:Label>
-                                                                        </td>
-                                                                    </tr>
-                                                                    <tr id="Tr9" runat="server" visible="false">
-                                                                        <th scope="row">Search keywords
-                                                                        </th>
-                                                                        <td>
-                                                                            <asp:Label ID="lblsearchkeywords" runat="server" Text=""></asp:Label>
-                                                                        </td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td colspan="2">
-                                                                            <h6 class="tablemidhead">OEM Details</h6>
-                                                                        </td>
-                                                                    </tr>
-                                                                    <tr runat="server" id="seven">
-                                                                        <th scope="row">OEM Name
-                                                                        </th>
-                                                                        <td>
-                                                                            <asp:Label ID="lbloemname" runat="server" Text=""></asp:Label>
-                                                                        </td>
-                                                                    </tr>
-                                                                    <tr runat="server" id="eight">
-                                                                        <th scope="row">OEM Part Number
-                                                                        </th>
-                                                                        <td>
-                                                                            <asp:Label ID="lbloempartno" runat="server" Text=""></asp:Label>
-                                                                        </td>
-                                                                    </tr>
-                                                                    <tr runat="server" id="nine">
-                                                                        <th scope="row">OEM Country
-                                                                        </th>
-                                                                        <td>
-                                                                            <asp:Label ID="lbloemcountry" runat="server" Text=""></asp:Label>
-                                                                        </td>
-                                                                    </tr>
-                                                                     <tr runat="server" id="twentyfive">
-                                                                        <th scope="row">OEM Address
-                                                                        </th>
-                                                                        <td>
-                                                                            <asp:Label ID="lbloemaddress" runat="server" Text=""></asp:Label>
-                                                                        </td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td colspan="2">
-                                                                            <h6 class="tablemidhead">Item Classification (NATO Group & Class)</h6>
-                                                                        </td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <th scope="row">NATO Supply Group:
-                                                                        </th>
-                                                                        <td>
-                                                                            <asp:Label ID="lblnsngroup" runat="server" Text=""></asp:Label>
-                                                                        </td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <th scope="row">NATO Supply Class:
-                                                                        </th>
-                                                                        <td>
-                                                                            <asp:Label ID="lblnsngroupclass" runat="server" Text=""></asp:Label>
-                                                                        </td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <th scope="row">Item Name Code:
-                                                                        </th>
-                                                                        <td>
-                                                                            <asp:Label ID="lblclassitem" runat="server" Text=""></asp:Label>
-                                                                        </td>
-                                                                    </tr>
-                                                                    <tr runat="server" id="six">
-                                                                        <th scope="row">NSC Code (4 digit):
-                                                                        </th>
-                                                                        <td>
-                                                                            <asp:Label ID="lblnsccode4digit" runat="server" Text=""></asp:Label>
-                                                                        </td>
-                                                                    </tr>
-                                                                </tbody>
-                                                            </table>
-
-                                                            <%--<h6 class="tablemidhead">Imported During Last 3 years</h6>--%>
-                                                        </div>
-                                                    </div>
-                                                </div>
                                                 <div class="card border-btm" style="border-bottom: solid 1.4px #e5e5e5!important;">
                                                     <div class="card-header">
                                                         <h3 class="accordion-heading mb-2">
@@ -830,6 +701,13 @@
                                                                             </asp:DataList>
                                                                         </td>
                                                                     </tr>
+                                                                    <tr runat="server" id="twentysix">
+                                                                        <th scope="row">Quality Assurance Agency 
+                                                                        </th>
+                                                                        <td>
+                                                                            <asp:Label ID="lbqa" runat="server" Text=""></asp:Label>
+                                                                        </td>
+                                                                    </tr>
                                                                     <tr id="Tr10" runat="server" visible="false">
                                                                         <th scope="row">Specification
                                                                         </th>
@@ -869,11 +747,168 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <div class="card" style="border-bottom: solid 1.4px #e5e5e5!important;">
+                                                    <div class="card-header">
+                                                        <h3 class="accordion-heading mb-2">
+                                                            <a class="collapsed" href="#shoes" role="button" data-toggle="collapse" aria-expanded="false"
+                                                                aria-controls="shoes">Item Description <span class="accordion-indicator iconupanddown">
+                                                                    <i class="fas fa-chevron-up"></i></span></a>
+                                                        </h3>
+                                                    </div>
+                                                    <div class="collapse" id="shoes" data-parent="#shop-categories">
+                                                        <div class="card-body card-custom ">
+                                                            <h6 class="tablemidhead">DPSUs,OFB & SHQs Details</h6>
+                                                            <table class="table mb-2">
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <th scope="row">DPSU/OFB/SHQ:
+                                                                        </th>
+                                                                        <td>
+                                                                            <asp:Label ID="lblcompname" runat="server" Text=""></asp:Label>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr runat="server" id="one">
+                                                                        <th scope="row">Division/Plant:
+                                                                        </th>
+                                                                        <td>
+                                                                            <asp:Label ID="lbldiviname" runat="server" Text=""></asp:Label>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr runat="server" id="two">
+                                                                        <th scope="row">Unit:
+                                                                        </th>
+                                                                        <td>
+                                                                            <asp:Label ID="lblunitnamepro" runat="server" Text=""></asp:Label>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                            <h6 class="tablemidhead">Item Description</h6>
+                                                            <table class="table mb-2">
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <th scope="row">Item Id (Portal)
+                                                                        </th>
+                                                                        <td>
+                                                                            <asp:Label ID="lblrefnoview" runat="server" Text=""></asp:Label>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr runat="server" id="three">
+                                                                        <th scope="row">DPSU Part Number
+                                                                        </th>
+                                                                        <td>
+                                                                            <asp:Label ID="lbldpsupartno" runat="server" Text=""></asp:Label>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr runat="server" id="Tr8">
+                                                                        <th scope="row">NIN Code
+                                                                        </th>
+                                                                        <td>
+                                                                            <asp:Label ID="lblnincode" runat="server" Text=""></asp:Label>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr runat="server" id="four">
+                                                                        <th scope="row">HSN Code
+                                                                        </th>
+                                                                        <td>
+                                                                            <asp:Label ID="lblhsncode8digit" runat="server" Text=""></asp:Label>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th scope="row">Industry Domain
+                                                                        </th>
+                                                                        <td>
+                                                                            <asp:Label ID="prodIndustryDomain" runat="server" Text=""></asp:Label>
+                                                                            /
+                                                                        <asp:Label ID="ProdIndusSubDomain" runat="server" Text=""></asp:Label>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr id="Tr9" runat="server" visible="false">
+                                                                        <th scope="row">Search keywords
+                                                                        </th>
+                                                                        <td>
+                                                                            <asp:Label ID="lblsearchkeywords" runat="server" Text=""></asp:Label>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td colspan="2">
+                                                                            <h6 class="tablemidhead">OEM Details</h6>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr runat="server" id="seven">
+                                                                        <th scope="row">OEM Name
+                                                                        </th>
+                                                                        <td>
+                                                                            <asp:Label ID="lbloemname" runat="server" Text=""></asp:Label>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr runat="server" id="eight">
+                                                                        <th scope="row">OEM Part Number
+                                                                        </th>
+                                                                        <td>
+                                                                            <asp:Label ID="lbloempartno" runat="server" Text=""></asp:Label>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr runat="server" id="nine">
+                                                                        <th scope="row">OEM Country
+                                                                        </th>
+                                                                        <td>
+                                                                            <asp:Label ID="lbloemcountry" runat="server" Text=""></asp:Label>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr runat="server" id="twentyfive">
+                                                                        <th scope="row">OEM Address
+                                                                        </th>
+                                                                        <td>
+                                                                            <asp:Label ID="lbloemaddress" runat="server" Text=""></asp:Label>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td colspan="2">
+                                                                            <h6 class="tablemidhead">Item Classification (NATO Group & Class)</h6>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th scope="row">NATO Supply Group:
+                                                                        </th>
+                                                                        <td>
+                                                                            <asp:Label ID="lblnsngroup" runat="server" Text=""></asp:Label>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th scope="row">NATO Supply Class:
+                                                                        </th>
+                                                                        <td>
+                                                                            <asp:Label ID="lblnsngroupclass" runat="server" Text=""></asp:Label>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th scope="row">Item Name Code:
+                                                                        </th>
+                                                                        <td>
+                                                                            <asp:Label ID="lblclassitem" runat="server" Text=""></asp:Label>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr runat="server" id="six">
+                                                                        <th scope="row">NSC Code (4 digit):
+                                                                        </th>
+                                                                        <td>
+                                                                            <asp:Label ID="lblnsccode4digit" runat="server" Text=""></asp:Label>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+
+                                                            <%--<h6 class="tablemidhead">Imported During Last 3 years</h6>--%>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
                                                 <div class="card border-btm" style="border-bottom: solid 1.4px #e5e5e5!important;">
                                                     <div class="card-header">
                                                         <h3 class="accordion-heading mb-2">
                                                             <a class="collapsed" href="#Estimated" role="button" data-toggle="collapse" aria-expanded="false"
-                                                                aria-controls="shoes">Improt Value ,Quantity <span class="accordion-indicator iconupanddown">
+                                                                aria-controls="shoes">Import Value, Quantity <span class="accordion-indicator iconupanddown">
                                                                     <i class="fas fa-chevron-up"></i></span></a>
                                                         </h3>
                                                     </div>
@@ -1018,7 +1053,7 @@
                                                     <div class="card-header">
                                                         <h3 class="accordion-heading mb-2">
                                                             <a class="collapsed" href="#AdditionalValue" role="button" data-toggle="collapse" aria-expanded="false"
-                                                                aria-controls="shoes">Additional Value <span class="accordion-indicator iconupanddown">
+                                                                aria-controls="shoes">Additional Details <span class="accordion-indicator iconupanddown">
                                                                     <i class="fas fa-chevron-up"></i></span></a>
                                                         </h3>
                                                     </div>
@@ -1027,17 +1062,10 @@
                                                             <table class="table mb-2">
                                                                 <tbody>
                                                                     <tr runat="server" id="twenty">
-                                                                        <th scope="row">EndUser 
+                                                                        <th scope="row">End User 
                                                                         </th>
                                                                         <td>
                                                                             <asp:Label ID="lblenduser" runat="server" Text=""></asp:Label>
-                                                                        </td>
-                                                                    </tr>
-                                                                     <tr runat="server" id="twentysix">
-                                                                        <th scope="row">Quality Assurance Agency 
-                                                                        </th>
-                                                                        <td>
-                                                                            <asp:Label ID="lbqa" runat="server" Text=""></asp:Label>
                                                                         </td>
                                                                     </tr>
                                                                     <tr runat="server" id="twentyone">
@@ -1054,20 +1082,47 @@
                                                                             <asp:Label ID="lblnameofdefplat" runat="server" Text=""></asp:Label>
                                                                         </td>
                                                                     </tr>
-                                                                    <tr runat="server" id="twentythree"> 
-                                                                        <th scope="row">DECLARATION 
-                                                                        </th>
-                                                                        <td>
+                                                                    <tr runat="server" id="twentythree" visible="false">
+                                                                        <th scope="row"></th>
+                                                                        <td runat="server" visible="false">
                                                                             <asp:Label ID="lbldeclaration" runat="server" Text="No IPR issue, No violation of TOT agreement, No violation of Security Concern"></asp:Label>
                                                                         </td>
                                                                     </tr>
-                                                                    <tr runat="server" id="twentyfour">
-                                                                        <th scope="row">Show on Portal 
-                                                                        </th>
-                                                                        <td>
+                                                                    <tr runat="server" id="twentyfour" visible="false">
+                                                                        <th scope="row"></th>
+                                                                        <td runat="server" visible="false">
                                                                             <asp:Label ID="lblisshowgeneral" runat="server" Text=""></asp:Label>
                                                                         </td>
                                                                     </tr>
+                                                                    <tr runat="server" id="Tr19" visible="false">
+                                                                        <th scope="row" runat="server" visible="false">Is Indigenised 
+                                                                        </th>
+                                                                        <td runat="server" visible="false">
+                                                                            <asp:Label ID="lblisindigenised" runat="server" Text=""></asp:Label>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr runat="server" id="Tr20" visible="false">
+                                                                        <th scope="row">Manufacture Name
+                                                                        </th>
+                                                                        <td>
+                                                                            <asp:Label ID="lblmanuname" runat="server" Text=""></asp:Label>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr runat="server" id="Tr21" visible="false">
+                                                                        <th scope="row">Manufacture Address
+                                                                        </th>
+                                                                        <td>
+                                                                            <asp:Label ID="lblmanuaddress" runat="server" Text=""></asp:Label>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr runat="server" id="Tr22" visible="false">
+                                                                        <th scope="row">Year of Indiginization
+                                                                        </th>
+                                                                        <td>
+                                                                            <asp:Label ID="lblyearofindi" runat="server" Text=""></asp:Label>
+                                                                        </td>
+                                                                    </tr>
+
                                                                 </tbody>
                                                             </table>
                                                         </div>
@@ -1088,7 +1143,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="modal fade" id="divCompany" role="dialog">
                     <div class="modal-dialog">
                         <!-- Modal content-->

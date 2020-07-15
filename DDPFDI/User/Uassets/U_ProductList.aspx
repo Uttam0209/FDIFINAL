@@ -226,7 +226,7 @@
                     <div class="container d-lg-flex justify-content-between">
                         <div class="order-lg-2 mb-3 mb-lg-0 pt-lg-2">
                             <div class="navbar-tool dropdown ml-5">
-                               <b> <a href="#aboutus-modal" class="menu_" data-toggle="modal">About us
+                                <b><a href="#aboutus-modal" class="menu_" data-toggle="modal">About us
                                 </a></b>
                                 <a href="#contact_us_modal" class="menu_" data-toggle="modal" id="a" runat="server" visible="false">Contact us
                                 </a>
@@ -306,7 +306,7 @@
                                                                 <asp:DropDownList ID="ddlprodindustrydomain" runat="server" CssClass="custom-select" AutoPostBack="true" OnSelectedIndexChanged="ddlprodindustrydomain_SelectedIndexChanged"></asp:DropDownList>
                                                             </div>
                                                         </div>
-                                                         <div class="widget widget-categories mb-3" runat="server" id="divisd" visible="false">
+                                                        <div class="widget widget-categories mb-3" runat="server" id="divisd" visible="false">
                                                             <label>Industry Sub-Domain</label>
                                                             <div class="input-group">
                                                                 <asp:DropDownList ID="ddlindustrysubdoamin" runat="server" CssClass="custom-select" AutoPostBack="true" OnSelectedIndexChanged="ddlindustrysubdoamin_SelectedIndexChanged"></asp:DropDownList>
@@ -381,10 +381,12 @@
                                             <span class="input-group-text"><i class="fas fa-search"></i></span>
                                         </div>
                                     </div>
+
                                 </div>
                             </div>
                             <div class="clearfix"></div>
                             <div>
+
                                 <b>
                                     <asp:Label ID="lbltotalleft" runat="server" CssClass="pull-left"></asp:Label>
                                     <b>
@@ -394,7 +396,7 @@
                                 <asp:LinkButton ID="totoalmore" runat="server" CssClass="pull-left" OnClick="totoalmore_Click">  <span class="fa fa-eye"></span>  More details</asp:LinkButton>
                             </div>
                             <div class="clearfix">
-                            </div>
+                            </div>                           
                             <br />
                             <div id="divcontentproduct" runat="server">
                                 <div class="row mx-n2">
@@ -840,6 +842,40 @@
         <script src="User/Uassets/js/all.min.js"></script>
         <script src="User/Uassets/js/bootstrap.bundle.min.js"></script>
         <script src="User/Uassets/js/theme.min.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+        <script>
+            $(function () {
+                var availableTags = [
+                  "ActionScript",
+                  "AppleScript",
+                  "Asp",
+                  "BASIC",
+                  "C",
+                  "C++",
+                  "Clojure",
+                  "COBOL",
+                  "ColdFusion",
+                  "Erlang",
+                  "Fortran",
+                  "Groovy",
+                  "Haskell",
+                  "Java",
+                  "JavaScript",
+                  "Lisp",
+                  "Perl",
+                  "PHP",
+                  "Python",
+                  "Ruby",
+                  "Scala",
+                  "Scheme"
+                ];
+                $("#tags").autocomplete({
+                    source: availableTags
+                });
+            });
+        </script>
+
         <script type="text/javascript">
             function showPopup() {
                 $('#ProductCompany').modal('show');

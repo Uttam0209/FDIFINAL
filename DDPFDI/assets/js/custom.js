@@ -210,7 +210,7 @@ $(document).ready(function () {
     // document.multiselect('#ddlenduser');
     $(function () {
         $('[id*=ddlenduser]').multiselect({
-            includeSelectAllOption: true
+            includeSelectAllOption: false
         });
     });
     //ProCurment Category Checkbox 

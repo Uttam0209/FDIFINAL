@@ -277,32 +277,34 @@
                                                     </asp:DropDownList>
                                                 </div>
                                             </div>
-                                            <div class="col-md-12">
+                                            <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>OEM Address</label>
-                                                    <asp:TextBox runat="server" ID="txtoemaddress" Height="70px" TextMode="MultiLine" class="form-control"></asp:TextBox>
+                                                    <asp:TextBox runat="server" ID="txtoemaddress" Height="75px" TextMode="MultiLine" class="form-control"></asp:TextBox>
                                                 </div>
                                             </div>
-
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-4">
+                                            <div class="col-md-6">
                                                 <div class="form-group">
                                                     <asp:Label runat="server" ID="lblenduser" Text="End User"></asp:Label>
                                                     <span class="mandatory">*</span>
                                                     <div class="clearfix"></div>
-                                                    <asp:ListBox runat="server" ID="ddlenduser" SelectionMode="Multiple" Style="text-transform: uppercase !important;" class="form-control ui fluid dropdown" TabIndex="12"></asp:ListBox>
+                                                    <%--     <asp:ListBox runat="server" ID="ddlenduser" SelectionMode="Multiple" selected="false" Style="text-transform: uppercase !important;"
+                                                         class="form-control ui fluid dropdown" TabIndex="12"></asp:ListBox>--%>
+                                                    <asp:CheckBoxList ID="ddlenduser" runat="server" RepeatColumns="4" RepeatDirection="Horizontal" RepeatLayout="Flow"></asp:CheckBoxList>
                                                 </div>
                                             </div>
+                                        </div>
+                                        <div class="row">
+
                                             <asp:UpdatePanel runat="server" ID="UpdatePanel6">
                                                 <ContentTemplate>
-                                                    <div class="col-md-4">
+                                                    <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label>DEFENCE PLATFORM<span class="mandatory">*</span></label>
                                                             <asp:DropDownList runat="server" ID="ddlplatform" AutoPostBack="True" TabIndex="13" Style="text-transform: uppercase !important;" class="form-control" OnSelectedIndexChanged="ddlplatform_SelectedIndexChanged"></asp:DropDownList>
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-4" style="margin-top: 8px;">
+                                                    <div class="col-md-6" style="margin-top: 8px;">
                                                         <div class="form-group">
                                                             <asp:Label runat="server" ID="lblNomenclature" Text="NAME OF DEFENCE PLATFORM"></asp:Label><span class="mandatory"> *</span>
                                                             <asp:DropDownList runat="server" ID="ddlnomnclature" class="form-control" Style="text-transform: uppercase !important;" TabIndex="14" />
@@ -406,16 +408,16 @@
                                                         <div class="col-sm-12">
                                                             <div class="form-group">
                                                                 <label class="checkbox-box productalreadylabel">
-                                                                    Imported During last 3 years 
+                                                                    Imported During last 3 years  <span class="mandatory">*</span>
                                                                 </label>
                                                                 <asp:RadioButtonList runat="server" ID="rbproductImported" RepeatColumns="2" TabIndex="23" RepeatLayout="Flow"
                                                                     RepeatDirection="Horizontal" AutoPostBack="True" OnSelectedIndexChanged="rbproductImported_CheckedChanged ">
-                                                                    <asp:ListItem Value="N" Selected="True" style="margin-left: 5px;">No</asp:ListItem>
-                                                                    <asp:ListItem Value="Y" class="yes" style="margin-left: 10px;">Yes</asp:ListItem>
+                                                                    <%-- <asp:ListItem Value="N" style="margin-left: 5px;">No</asp:ListItem>--%>
+                                                                    <asp:ListItem Value="Y" Selected="True" class="yes" style="margin-left: 10px;">Yes</asp:ListItem>
                                                                 </asp:RadioButtonList>
                                                             </div>
                                                             <div class="clearfix mt5"></div>
-                                                            <div runat="server" id="divyearofimportYes" visible="False">
+                                                            <div runat="server" id="divyearofimportYes">
                                                                 <div class="section-pannel">
                                                                     <asp:UpdatePanel runat="server" ID="UpdatePanel8">
                                                                         <ContentTemplate>
@@ -423,9 +425,9 @@
                                                                                 <table class="table table-responsive" runat="server" id="xxesti">
                                                                                     <tr>
                                                                                         <th>Year</th>
-                                                                                        <th>Imported Quantity</th>
+                                                                                        <th>Imported Quantity <span class="mandatory">*</span></th>
                                                                                         <th>Unit</th>
-                                                                                        <th>Imported value in Rs Lakh (Qty*Price)</th>
+                                                                                        <th>Imported value in Rs Lakh (Qty*Price) <span class="mandatory">*</span></th>
                                                                                     </tr>
                                                                                     <tr>
                                                                                         <td>
@@ -433,10 +435,9 @@
                                                                                                 <asp:ListItem Value="1">2017-18</asp:ListItem>
                                                                                             </asp:DropDownList></td>
                                                                                         <td>
-                                                                                            <asp:TextBox runat="server" CssClass="form-control" ID="txtestquan1" onkeypress="return isNumberKey(event)" Placeholder="Imported Quantity"></asp:TextBox></td>
+                                                                                            <asp:TextBox runat="server" CssClass="form-control" ID="txtestquan1" onkeypress="return isNumberKeyOutDecimal(event)" Placeholder="Imported Quantity (Only number allowed)"></asp:TextBox></td>
                                                                                         <td>
                                                                                             <asp:DropDownList ID="ddlunit1" runat="server" CssClass="form-control">
-                                                                                                <asp:ListItem Value="-1">Select</asp:ListItem>
                                                                                                 <asp:ListItem Value="number">number</asp:ListItem>
                                                                                                 <asp:ListItem Value="sets">sets</asp:ListItem>
                                                                                                 <asp:ListItem Value="milligrams(mg)">milligrams(mg)</asp:ListItem>
@@ -472,10 +473,9 @@
                                                                                                 <asp:ListItem Value="2">2018-19</asp:ListItem>
                                                                                             </asp:DropDownList></td>
                                                                                         <td>
-                                                                                            <asp:TextBox runat="server" CssClass="form-control" ID="txtestquan2" onkeypress="return isNumberKey(event)" Placeholder="Imported Quantity"></asp:TextBox></td>
+                                                                                            <asp:TextBox runat="server" CssClass="form-control" ID="txtestquan2" onkeypress="return isNumberKeyOutDecimal(event)" Placeholder="Imported Quantity (Only number allowed)"></asp:TextBox></td>
                                                                                         <td>
                                                                                             <asp:DropDownList ID="ddlunit2" runat="server" CssClass="form-control">
-                                                                                                <asp:ListItem Value="-1">Select</asp:ListItem>
                                                                                                 <asp:ListItem Value="number">number</asp:ListItem>
                                                                                                 <asp:ListItem Value="sets">sets</asp:ListItem>
                                                                                                 <asp:ListItem Value="milligrams(mg)">milligrams(mg)</asp:ListItem>
@@ -511,10 +511,9 @@
                                                                                                 <asp:ListItem Value="3">2019-20</asp:ListItem>
                                                                                             </asp:DropDownList></td>
                                                                                         <td>
-                                                                                            <asp:TextBox runat="server" CssClass="form-control" ID="txtestquan3" onkeypress="return isNumberKey(event)" Placeholder="Imported Quantity"></asp:TextBox></td>
+                                                                                            <asp:TextBox runat="server" CssClass="form-control" ID="txtestquan3" onkeypress="return isNumberKeyOutDecimal(event)" Placeholder="Imported Quantity (Only number allowed)"></asp:TextBox></td>
                                                                                         <td>
                                                                                             <asp:DropDownList ID="ddlunit3" runat="server" CssClass="form-control">
-                                                                                                <asp:ListItem Value="-1">Select</asp:ListItem>
                                                                                                 <asp:ListItem Value="number">number</asp:ListItem>
                                                                                                 <asp:ListItem Value="sets">sets</asp:ListItem>
                                                                                                 <asp:ListItem Value="milligrams(mg)">milligrams(mg)</asp:ListItem>
@@ -545,40 +544,8 @@
                                                                                             <asp:TextBox runat="server" CssClass="form-control" ID="txtpriceestimate3" onkeypress="return isNumberKey(event)" Placeholder="Imported value in Rs lakh (Qty*Price)"></asp:TextBox></td>
                                                                                     </tr>
                                                                                 </table>
-                                                                                <asp:GridView ID="GridView3" runat="server" CssClass="table table-hover" CellPadding="4" ShowFooter="true"
-                                                                                    ForeColor="#333333" GridLines="None" AutoGenerateColumns="false" OnRowCommand="GridView3_RowCommand">
-                                                                                    <AlternatingRowStyle BackColor="White" />
-                                                                                    <Columns>
-                                                                                        <asp:TemplateField HeaderText="Sr.No" Visible="false">
-                                                                                            <ItemTemplate>
-                                                                                                <%#Container.DataItemIndex+1 %>
-                                                                                            </ItemTemplate>
-                                                                                        </asp:TemplateField>
-                                                                                        <asp:BoundField DataField="FYear" HeaderText="Year" />
-                                                                                        <asp:BoundField DataField="EstimatedQty" HeaderText="Quantity" />
-                                                                                        <asp:BoundField DataField="Unit" HeaderText="Unit" />
-                                                                                        <asp:BoundField DataField="EstimatedPrice" HeaderText="Imported value in Rs Lakh (Qty*Price)" />
-                                                                                        <asp:TemplateField HeaderText="Action">
-                                                                                            <ItemTemplate>
-                                                                                                <asp:HiddenField ID="HiddenField2" runat="server" Value='<%#Eval("Year") %>' />
-                                                                                                <asp:HiddenField ID="HiddenField3" runat="server" Value='<%#Eval("ProdQtyPriceId") %>' />
-                                                                                                <asp:LinkButton ID="LinkButton3" runat="server" Class="fa fa-plus-circle" CommandArgument='<%#Eval("ProdQtyPriceId") %>' CommandName="addnewmfe1"></asp:LinkButton>
-                                                                                                <asp:LinkButton ID="LinkButton4" runat="server" Class="fa fa-edit" CommandArgument='<%# ((GridViewRow) Container).RowIndex %>' CommandName="updatenewmfe1"></asp:LinkButton>
-                                                                                                <asp:LinkButton ID="LinkButton5" runat="server" Class="fa fa-trash" CommandArgument='<%#Eval("ProdQtyPriceId") %>' CommandName="deletenewmfe1"></asp:LinkButton>
-                                                                                            </ItemTemplate>
-                                                                                        </asp:TemplateField>
-                                                                                    </Columns>
-                                                                                    <EditRowStyle BackColor="#2461BF" />
-                                                                                    <FooterStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
-                                                                                    <HeaderStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
-                                                                                    <PagerStyle BackColor="#2461BF" ForeColor="White" HorizontalAlign="Center" />
-                                                                                    <RowStyle BackColor="#EFF3FB" />
-                                                                                    <SelectedRowStyle BackColor="#D1DDF1" Font-Bold="True" ForeColor="#333333" />
-                                                                                    <SortedAscendingCellStyle BackColor="#F5F7FB" />
-                                                                                    <SortedAscendingHeaderStyle BackColor="#6D95E1" />
-                                                                                    <SortedDescendingCellStyle BackColor="#E9EBEF" />
-                                                                                    <SortedDescendingHeaderStyle BackColor="#4870BE" />
-                                                                                </asp:GridView>
+                                                                                <p class="pull-right mr10"><span class="mandatory">Imported During last 3 years field fill mandatory</span></p>
+                                                                                <div class="clearfix mt5"></div>
                                                                             </div>
                                                                         </ContentTemplate>
                                                                     </asp:UpdatePanel>
@@ -757,119 +724,204 @@
                                             <ContentTemplate>
                                                 <h5>Future requirement next 5 years</h5>
                                                 <div class="table table-responsive">
-                                                    <asp:GridView ID="GvEstiateQuanPrice" runat="server" CssClass="table table-hover" CellPadding="4" ShowFooter="true"
-                                                        ForeColor="#333333" GridLines="None" AutoGenerateColumns="false" OnRowCreated="GvEstiateQuanPrice_RowCreated">
-                                                        <AlternatingRowStyle BackColor="White" />
-                                                        <Columns>
-                                                            <asp:BoundField DataField="SNo" HeaderText="Raw Number" Visible="false" />
-                                                            <asp:TemplateField HeaderText="Year">
-                                                                <ItemTemplate>
-                                                                    <asp:DropDownList ID="ddlYearEstimate" runat="server" CssClass="form-control">
-                                                                        <asp:ListItem Value="1">2020-21</asp:ListItem>
-                                                                        <asp:ListItem Value="2">2021-22</asp:ListItem>
-                                                                        <asp:ListItem Value="3">2022-23</asp:ListItem>
-                                                                        <asp:ListItem Value="4">2023-24</asp:ListItem>
-                                                                        <asp:ListItem Value="5">2024-25</asp:ListItem>
-                                                                    </asp:DropDownList>
-                                                                </ItemTemplate>
-                                                            </asp:TemplateField>
-                                                            <asp:TemplateField HeaderText="Quantity">
-                                                                <ItemTemplate>
-                                                                    <asp:TextBox ID="txtestimateQuantity" onkeypress="return isNumberKey(event)" runat="server" CssClass="form-control" />
-                                                                </ItemTemplate>
-                                                            </asp:TemplateField>
-                                                            <asp:TemplateField HeaderText="Unit">
-                                                                <ItemTemplate>
-                                                                    <asp:DropDownList ID="ddlMeasuringUnit" runat="server" CssClass="form-control">
-                                                                        <asp:ListItem Value="-1">Select</asp:ListItem>
-                                                                        <asp:ListItem Value="number">number</asp:ListItem>
-                                                                        <asp:ListItem Value="sets">sets</asp:ListItem>
-                                                                        <asp:ListItem Value="milligrams(mg)">milligrams(mg)</asp:ListItem>
-                                                                        <asp:ListItem Value="grams(g)">grams(g)</asp:ListItem>
-                                                                        <asp:ListItem Value="kilograms(kg)">kilograms(kg),</asp:ListItem>
-                                                                        <asp:ListItem Value="tons(t)">tons(t)</asp:ListItem>
-                                                                        <asp:ListItem Value="metric tons (mt)">metric tons (mt)</asp:ListItem>
-                                                                        <asp:ListItem Value="pounds(lb)">pounds(lb)</asp:ListItem>
-                                                                        <asp:ListItem Value="ounces(oz)">ounces(oz)</asp:ListItem>
-                                                                        <asp:ListItem Value="centimeters(cm)">centimeters(cm)</asp:ListItem>
-                                                                        <asp:ListItem Value="meters(m)">meters(m)</asp:ListItem>
-                                                                        <asp:ListItem Value="kilometers(km)">kilometers(km)</asp:ListItem>
-                                                                        <asp:ListItem Value="inches(in)">inches(in)</asp:ListItem>
-                                                                        <asp:ListItem Value="feet(ft)">feet(ft)</asp:ListItem>
-                                                                        <asp:ListItem Value="yard(yd)">yard(yd)</asp:ListItem>
-                                                                        <asp:ListItem Value="miles(mi)">miles(mi)</asp:ListItem>
-                                                                        <asp:ListItem Value="square meters">square meters</asp:ListItem>
-                                                                        <asp:ListItem Value="square inches">square inches</asp:ListItem>
-                                                                        <asp:ListItem Value="square feets">square feets</asp:ListItem>
-                                                                        <asp:ListItem Value="cubic">cubic</asp:ListItem>
-                                                                        <asp:ListItem Value="cubic centimeters">cubic centimeters</asp:ListItem>
-                                                                        <asp:ListItem Value="cubic meters">cubic meters</asp:ListItem>
-                                                                        <asp:ListItem Value="cubic inches">cubic inches</asp:ListItem>
-                                                                        <asp:ListItem Value="cubic feets">cubic feets</asp:ListItem>
-                                                                        <asp:ListItem Value="cubic yards">cubic yards</asp:ListItem>
-                                                                    </asp:DropDownList>
-                                                                </ItemTemplate>
-                                                            </asp:TemplateField>
-                                                            <asp:TemplateField HeaderText="Import value in Rs lakh (Qty*Price)">
-                                                                <ItemTemplate>
-                                                                    <asp:TextBox ID="txtestimatePriceLLp" runat="server" onkeypress="return isNumberKey(event)" CssClass="form-control" />
-                                                                </ItemTemplate>
-                                                                <FooterStyle HorizontalAlign="Right" />
-                                                                <FooterTemplate>
-                                                                    <asp:LinkButton ID="btnAddEstimate" runat="server" Text="Add New Row" CssClass="btn btn-primary pull-right" OnClick="btnAddEstimate_Click"></asp:LinkButton>
-                                                                </FooterTemplate>
-                                                            </asp:TemplateField>
-                                                            <asp:TemplateField Visible="false">
-                                                                <ItemTemplate>
-                                                                    <asp:LinkButton ID="lbRemoveestimate" runat="server" CssClass="fa fa-times" OnClick="lbRemoveestimate_Click"></asp:LinkButton>
-                                                                </ItemTemplate>
-                                                            </asp:TemplateField>
-                                                        </Columns>
-                                                        <EditRowStyle BackColor="#2461BF" />
-                                                        <FooterStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
-                                                        <HeaderStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
-                                                        <PagerStyle BackColor="#2461BF" ForeColor="White" HorizontalAlign="Center" />
-                                                        <RowStyle BackColor="#EFF3FB" />
-                                                        <SelectedRowStyle BackColor="#D1DDF1" Font-Bold="True" ForeColor="#333333" />
-                                                        <SortedAscendingCellStyle BackColor="#F5F7FB" />
-                                                        <SortedAscendingHeaderStyle BackColor="#6D95E1" />
-                                                        <SortedDescendingCellStyle BackColor="#E9EBEF" />
-                                                        <SortedDescendingHeaderStyle BackColor="#4870BE" />
-                                                    </asp:GridView>
-                                                    <asp:GridView ID="GvEstimateQuanPriceEdit" runat="server" CssClass="table table-hover" CellPadding="4" ShowFooter="true"
-                                                        ForeColor="#333333" GridLines="None" AutoGenerateColumns="false" OnRowCommand="GvEstimateQuanPriceEdit_RowCommand">
-                                                        <AlternatingRowStyle BackColor="White" />
-                                                        <Columns>
-                                                            <asp:TemplateField HeaderText="Sr.No" Visible="false">
-                                                                <ItemTemplate>
-                                                                    <%#Container.DataItemIndex+1 %>
-                                                                </ItemTemplate>
-                                                            </asp:TemplateField>
-                                                            <asp:BoundField DataField="FYear" HeaderText="Year" />
-                                                            <asp:BoundField DataField="EstimatedQty" HeaderText="Quantity" />
-                                                            <asp:BoundField DataField="Unit" HeaderText="Unit" />
-                                                            <asp:BoundField DataField="EstimatedPrice" HeaderText="Imported value in Rs Lakh (Qty*Price)" />
-                                                            <asp:TemplateField HeaderText="Action">
-                                                                <ItemTemplate>
-                                                                    <asp:HiddenField ID="hfyearid" runat="server" Value='<%#Eval("Year") %>' />
-                                                                    <asp:HiddenField ID="HiddenField1" runat="server" Value='<%#Eval("ProdQtyPriceId") %>' />
-                                                                    <asp:LinkButton ID="lbladdnewmanufacilityedit" runat="server" Class="fa fa-plus-circle" Visible="false" CommandArgument='<%#Eval("ProdQtyPriceId") %>' CommandName="addnewmfe"></asp:LinkButton>
-                                                                    <asp:LinkButton ID="lblupdatenewmanufacilityedit" runat="server" Class="fa fa-edit" CommandArgument='<%# ((GridViewRow) Container).RowIndex %>' CommandName="updatenewmfe"></asp:LinkButton>
-                                                                    <asp:LinkButton ID="lbldeletenewmanufacilityedit" runat="server" Class="fa fa-trash" CommandArgument='<%#Eval("ProdQtyPriceId") %>' CommandName="deletenewmfe"></asp:LinkButton>
-                                                                </ItemTemplate>
-                                                            </asp:TemplateField>
-                                                        </Columns>
-                                                        <EditRowStyle BackColor="#2461BF" />
-                                                        <FooterStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
-                                                        <HeaderStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
-                                                        <PagerStyle BackColor="#2461BF" ForeColor="White" HorizontalAlign="Center" />
-                                                        <RowStyle BackColor="#EFF3FB" />
-                                                        <SelectedRowStyle BackColor="#D1DDF1" Font-Bold="True" ForeColor="#333333" />
-                                                        <SortedAscendingCellStyle BackColor="#F5F7FB" />
-                                                        <SortedAscendingHeaderStyle BackColor="#6D95E1" />
-                                                        <SortedDescendingCellStyle BackColor="#E9EBEF" />
-                                                        <SortedDescendingHeaderStyle BackColor="#4870BE" />
-                                                    </asp:GridView>
+                                                    <table class="table table-responsive" runat="server" id="tblfuturequanimport">
+                                                        <tr>
+                                                            <th>Year</th>
+                                                            <th>Quantity <span class="mandatory">*</span></th>
+                                                            <th>Unit</th>
+                                                            <th>Import Value as these are future values in Rs Lakh (Qty*Price) <span class="mandatory">*</span></th>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <asp:DropDownList ID="ddlfutyear1" runat="server" CssClass="form-control">
+                                                                    <asp:ListItem Value="1">2020-21</asp:ListItem>
+                                                                </asp:DropDownList></td>
+                                                            <td>
+                                                                <asp:TextBox runat="server" CssClass="form-control" ID="txtfutQuantity1" onkeypress="return isNumberKeyOutDecimal(event)" Placeholder="Quantity (Only number allowed)"></asp:TextBox></td>
+                                                            <td>
+                                                                <asp:DropDownList ID="ddlfutunit1" runat="server" CssClass="form-control">
+                                                                    <asp:ListItem Value="number">number</asp:ListItem>
+                                                                    <asp:ListItem Value="sets">sets</asp:ListItem>
+                                                                    <asp:ListItem Value="milligrams(mg)">milligrams(mg)</asp:ListItem>
+                                                                    <asp:ListItem Value="grams(g)">grams(g)</asp:ListItem>
+                                                                    <asp:ListItem Value="kilograms(kg)">kilograms(kg),</asp:ListItem>
+                                                                    <asp:ListItem Value="tons(t)">tons(t)</asp:ListItem>
+                                                                    <asp:ListItem Value="metric tons (mt)">metric tons (mt)</asp:ListItem>
+                                                                    <asp:ListItem Value="pounds(lb)">pounds(lb)</asp:ListItem>
+                                                                    <asp:ListItem Value="ounces(oz)">ounces(oz)</asp:ListItem>
+                                                                    <asp:ListItem Value="centimeters(cm)">centimeters(cm)</asp:ListItem>
+                                                                    <asp:ListItem Value="meters(m)">meters(m)</asp:ListItem>
+                                                                    <asp:ListItem Value="kilometers(km)">kilometers(km)</asp:ListItem>
+                                                                    <asp:ListItem Value="inches(in)">inches(in)</asp:ListItem>
+                                                                    <asp:ListItem Value="feet(ft)">feet(ft)</asp:ListItem>
+                                                                    <asp:ListItem Value="yard(yd)">yard(yd)</asp:ListItem>
+                                                                    <asp:ListItem Value="miles(mi)">miles(mi)</asp:ListItem>
+                                                                    <asp:ListItem Value="square meters">square meters</asp:ListItem>
+                                                                    <asp:ListItem Value="square inches">square inches</asp:ListItem>
+                                                                    <asp:ListItem Value="square feets">square feets</asp:ListItem>
+                                                                    <asp:ListItem Value="cubic">cubic</asp:ListItem>
+                                                                    <asp:ListItem Value="cubic centimeters">cubic centimeters</asp:ListItem>
+                                                                    <asp:ListItem Value="cubic meters">cubic meters</asp:ListItem>
+                                                                    <asp:ListItem Value="cubic inches">cubic inches</asp:ListItem>
+                                                                    <asp:ListItem Value="cubic feets">cubic feets</asp:ListItem>
+                                                                    <asp:ListItem Value="cubic yards">cubic yards</asp:ListItem>
+                                                                </asp:DropDownList></td>
+                                                            <td>
+                                                                <asp:TextBox runat="server" CssClass="form-control" ID="txtfutvalue1" onkeypress="return isNumberKey(event)" Placeholder="Import Value as these are future values in Rs lakh (Qty*Price)"></asp:TextBox></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <asp:DropDownList ID="ddlfutyear2" runat="server" CssClass="form-control">
+                                                                    <asp:ListItem Value="2">2021-22</asp:ListItem>
+                                                                </asp:DropDownList></td>
+                                                            <td>
+                                                                <asp:TextBox runat="server" CssClass="form-control" ID="txtfutQuantity2" onkeypress="return isNumberKeyOutDecimal(event)" Placeholder="Quantity (Only number allowed)"></asp:TextBox></td>
+                                                            <td>
+                                                                <asp:DropDownList ID="ddlfutunit2" runat="server" CssClass="form-control">
+                                                                    <asp:ListItem Value="number">number</asp:ListItem>
+                                                                    <asp:ListItem Value="sets">sets</asp:ListItem>
+                                                                    <asp:ListItem Value="milligrams(mg)">milligrams(mg)</asp:ListItem>
+                                                                    <asp:ListItem Value="grams(g)">grams(g)</asp:ListItem>
+                                                                    <asp:ListItem Value="kilograms(kg)">kilograms(kg),</asp:ListItem>
+                                                                    <asp:ListItem Value="tons(t)">tons(t)</asp:ListItem>
+                                                                    <asp:ListItem Value="metric tons (mt)">metric tons (mt)</asp:ListItem>
+                                                                    <asp:ListItem Value="pounds(lb)">pounds(lb)</asp:ListItem>
+                                                                    <asp:ListItem Value="ounces(oz)">ounces(oz)</asp:ListItem>
+                                                                    <asp:ListItem Value="centimeters(cm)">centimeters(cm)</asp:ListItem>
+                                                                    <asp:ListItem Value="meters(m)">meters(m)</asp:ListItem>
+                                                                    <asp:ListItem Value="kilometers(km)">kilometers(km)</asp:ListItem>
+                                                                    <asp:ListItem Value="inches(in)">inches(in)</asp:ListItem>
+                                                                    <asp:ListItem Value="feet(ft)">feet(ft)</asp:ListItem>
+                                                                    <asp:ListItem Value="yard(yd)">yard(yd)</asp:ListItem>
+                                                                    <asp:ListItem Value="miles(mi)">miles(mi)</asp:ListItem>
+                                                                    <asp:ListItem Value="square meters">square meters</asp:ListItem>
+                                                                    <asp:ListItem Value="square inches">square inches</asp:ListItem>
+                                                                    <asp:ListItem Value="square feets">square feets</asp:ListItem>
+                                                                    <asp:ListItem Value="cubic">cubic</asp:ListItem>
+                                                                    <asp:ListItem Value="cubic centimeters">cubic centimeters</asp:ListItem>
+                                                                    <asp:ListItem Value="cubic meters">cubic meters</asp:ListItem>
+                                                                    <asp:ListItem Value="cubic inches">cubic inches</asp:ListItem>
+                                                                    <asp:ListItem Value="cubic feets">cubic feets</asp:ListItem>
+                                                                    <asp:ListItem Value="cubic yards">cubic yards</asp:ListItem>
+                                                                </asp:DropDownList></td>
+                                                            <td>
+                                                                <asp:TextBox runat="server" CssClass="form-control" ID="txtfutvalue2" onkeypress="return isNumberKey(event)" Placeholder="Import Value as these are future values in Rs lakh (Qty*Price)"></asp:TextBox></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <asp:DropDownList ID="ddlfutyear3" runat="server" CssClass="form-control">
+                                                                    <asp:ListItem Value="3">2022-23</asp:ListItem>
+                                                                </asp:DropDownList></td>
+                                                            <td>
+                                                                <asp:TextBox runat="server" CssClass="form-control" ID="txtfutQuantity3" onkeypress="return isNumberKeyOutDecimal(event)" Placeholder="Quantity (Only number allowed)"></asp:TextBox></td>
+                                                            <td>
+                                                                <asp:DropDownList ID="ddlfutunit3" runat="server" CssClass="form-control">
+                                                                    <asp:ListItem Value="number">number</asp:ListItem>
+                                                                    <asp:ListItem Value="sets">sets</asp:ListItem>
+                                                                    <asp:ListItem Value="milligrams(mg)">milligrams(mg)</asp:ListItem>
+                                                                    <asp:ListItem Value="grams(g)">grams(g)</asp:ListItem>
+                                                                    <asp:ListItem Value="kilograms(kg)">kilograms(kg),</asp:ListItem>
+                                                                    <asp:ListItem Value="tons(t)">tons(t)</asp:ListItem>
+                                                                    <asp:ListItem Value="metric tons (mt)">metric tons (mt)</asp:ListItem>
+                                                                    <asp:ListItem Value="pounds(lb)">pounds(lb)</asp:ListItem>
+                                                                    <asp:ListItem Value="ounces(oz)">ounces(oz)</asp:ListItem>
+                                                                    <asp:ListItem Value="centimeters(cm)">centimeters(cm)</asp:ListItem>
+                                                                    <asp:ListItem Value="meters(m)">meters(m)</asp:ListItem>
+                                                                    <asp:ListItem Value="kilometers(km)">kilometers(km)</asp:ListItem>
+                                                                    <asp:ListItem Value="inches(in)">inches(in)</asp:ListItem>
+                                                                    <asp:ListItem Value="feet(ft)">feet(ft)</asp:ListItem>
+                                                                    <asp:ListItem Value="yard(yd)">yard(yd)</asp:ListItem>
+                                                                    <asp:ListItem Value="miles(mi)">miles(mi)</asp:ListItem>
+                                                                    <asp:ListItem Value="square meters">square meters</asp:ListItem>
+                                                                    <asp:ListItem Value="square inches">square inches</asp:ListItem>
+                                                                    <asp:ListItem Value="square feets">square feets</asp:ListItem>
+                                                                    <asp:ListItem Value="cubic">cubic</asp:ListItem>
+                                                                    <asp:ListItem Value="cubic centimeters">cubic centimeters</asp:ListItem>
+                                                                    <asp:ListItem Value="cubic meters">cubic meters</asp:ListItem>
+                                                                    <asp:ListItem Value="cubic inches">cubic inches</asp:ListItem>
+                                                                    <asp:ListItem Value="cubic feets">cubic feets</asp:ListItem>
+                                                                    <asp:ListItem Value="cubic yards">cubic yards</asp:ListItem>
+                                                                </asp:DropDownList></td>
+                                                            <td>
+                                                                <asp:TextBox runat="server" CssClass="form-control" ID="txtfutvalue3" onkeypress="return isNumberKey(event)" Placeholder="Import Value as these are future values in Rs lakh (Qty*Price)"></asp:TextBox></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <asp:DropDownList ID="ddlfutyear4" runat="server" CssClass="form-control">
+                                                                    <asp:ListItem Value="4">2023-24</asp:ListItem>
+                                                                </asp:DropDownList></td>
+                                                            <td>
+                                                                <asp:TextBox runat="server" CssClass="form-control" ID="txtfutQuantity4" onkeypress="return isNumberKeyOutDecimal(event)" Placeholder="Quantity (Only number allowed)"></asp:TextBox></td>
+                                                            <td>
+                                                                <asp:DropDownList ID="ddlfutunit4" runat="server" CssClass="form-control">
+                                                                    <asp:ListItem Value="number">number</asp:ListItem>
+                                                                    <asp:ListItem Value="sets">sets</asp:ListItem>
+                                                                    <asp:ListItem Value="milligrams(mg)">milligrams(mg)</asp:ListItem>
+                                                                    <asp:ListItem Value="grams(g)">grams(g)</asp:ListItem>
+                                                                    <asp:ListItem Value="kilograms(kg)">kilograms(kg),</asp:ListItem>
+                                                                    <asp:ListItem Value="tons(t)">tons(t)</asp:ListItem>
+                                                                    <asp:ListItem Value="metric tons (mt)">metric tons (mt)</asp:ListItem>
+                                                                    <asp:ListItem Value="pounds(lb)">pounds(lb)</asp:ListItem>
+                                                                    <asp:ListItem Value="ounces(oz)">ounces(oz)</asp:ListItem>
+                                                                    <asp:ListItem Value="centimeters(cm)">centimeters(cm)</asp:ListItem>
+                                                                    <asp:ListItem Value="meters(m)">meters(m)</asp:ListItem>
+                                                                    <asp:ListItem Value="kilometers(km)">kilometers(km)</asp:ListItem>
+                                                                    <asp:ListItem Value="inches(in)">inches(in)</asp:ListItem>
+                                                                    <asp:ListItem Value="feet(ft)">feet(ft)</asp:ListItem>
+                                                                    <asp:ListItem Value="yard(yd)">yard(yd)</asp:ListItem>
+                                                                    <asp:ListItem Value="miles(mi)">miles(mi)</asp:ListItem>
+                                                                    <asp:ListItem Value="square meters">square meters</asp:ListItem>
+                                                                    <asp:ListItem Value="square inches">square inches</asp:ListItem>
+                                                                    <asp:ListItem Value="square feets">square feets</asp:ListItem>
+                                                                    <asp:ListItem Value="cubic">cubic</asp:ListItem>
+                                                                    <asp:ListItem Value="cubic centimeters">cubic centimeters</asp:ListItem>
+                                                                    <asp:ListItem Value="cubic meters">cubic meters</asp:ListItem>
+                                                                    <asp:ListItem Value="cubic inches">cubic inches</asp:ListItem>
+                                                                    <asp:ListItem Value="cubic feets">cubic feets</asp:ListItem>
+                                                                    <asp:ListItem Value="cubic yards">cubic yards</asp:ListItem>
+                                                                </asp:DropDownList></td>
+                                                            <td>
+                                                                <asp:TextBox runat="server" CssClass="form-control" ID="txtfutvalue4" onkeypress="return isNumberKey(event)" Placeholder="Import Value as these are future values in Rs lakh (Qty*Price)"></asp:TextBox></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <asp:DropDownList ID="ddlfutyear5" runat="server" CssClass="form-control">
+                                                                    <asp:ListItem Value="5">2024-25</asp:ListItem>
+                                                                </asp:DropDownList></td>
+                                                            <td>
+                                                                <asp:TextBox runat="server" CssClass="form-control" ID="txtfutQuantity5" onkeypress="return isNumberKeyOutDecimal(event)" Placeholder="Quantity (Only number allowed)"></asp:TextBox></td>
+                                                            <td>
+                                                                <asp:DropDownList ID="ddlfutunit5" runat="server" CssClass="form-control">
+                                                                    <asp:ListItem Value="number">number</asp:ListItem>
+                                                                    <asp:ListItem Value="sets">sets</asp:ListItem>
+                                                                    <asp:ListItem Value="milligrams(mg)">milligrams(mg)</asp:ListItem>
+                                                                    <asp:ListItem Value="grams(g)">grams(g)</asp:ListItem>
+                                                                    <asp:ListItem Value="kilograms(kg)">kilograms(kg),</asp:ListItem>
+                                                                    <asp:ListItem Value="tons(t)">tons(t)</asp:ListItem>
+                                                                    <asp:ListItem Value="metric tons (mt)">metric tons (mt)</asp:ListItem>
+                                                                    <asp:ListItem Value="pounds(lb)">pounds(lb)</asp:ListItem>
+                                                                    <asp:ListItem Value="ounces(oz)">ounces(oz)</asp:ListItem>
+                                                                    <asp:ListItem Value="centimeters(cm)">centimeters(cm)</asp:ListItem>
+                                                                    <asp:ListItem Value="meters(m)">meters(m)</asp:ListItem>
+                                                                    <asp:ListItem Value="kilometers(km)">kilometers(km)</asp:ListItem>
+                                                                    <asp:ListItem Value="inches(in)">inches(in)</asp:ListItem>
+                                                                    <asp:ListItem Value="feet(ft)">feet(ft)</asp:ListItem>
+                                                                    <asp:ListItem Value="yard(yd)">yard(yd)</asp:ListItem>
+                                                                    <asp:ListItem Value="miles(mi)">miles(mi)</asp:ListItem>
+                                                                    <asp:ListItem Value="square meters">square meters</asp:ListItem>
+                                                                    <asp:ListItem Value="square inches">square inches</asp:ListItem>
+                                                                    <asp:ListItem Value="square feets">square feets</asp:ListItem>
+                                                                    <asp:ListItem Value="cubic">cubic</asp:ListItem>
+                                                                    <asp:ListItem Value="cubic centimeters">cubic centimeters</asp:ListItem>
+                                                                    <asp:ListItem Value="cubic meters">cubic meters</asp:ListItem>
+                                                                    <asp:ListItem Value="cubic inches">cubic inches</asp:ListItem>
+                                                                    <asp:ListItem Value="cubic feets">cubic feets</asp:ListItem>
+                                                                    <asp:ListItem Value="cubic yards">cubic yards</asp:ListItem>
+                                                                </asp:DropDownList></td>
+                                                            <td>
+                                                                <asp:TextBox runat="server" CssClass="form-control" ID="txtfutvalue5" onkeypress="return isNumberKey(event)" Placeholder="Import Value as these are future values in Rs lakh (Qty*Price)"></asp:TextBox></td>
+                                                        </tr>
+                                                    </table>
                                                 </div>
                                             </ContentTemplate>
                                         </asp:UpdatePanel>
@@ -903,7 +955,7 @@
                                                             <label>EoI/RFP</label>
                                                             <asp:RadioButtonList ID="rbeoimake2" runat="server" RepeatColumns="3" RepeatDirection="Horizontal" AutoPostBack="true" RepeatLayout="Flow" OnSelectedIndexChanged="rbeoimake2_SelectedIndexChanged">
                                                                 <asp:ListItem Value="Yes" style="margin-left: 10px;">Yes</asp:ListItem>
-                                                                <asp:ListItem Value="No" style="margin-left: 10px;">No</asp:ListItem>
+                                                                <asp:ListItem Value="No" Selected="True" style="margin-left: 10px;">No</asp:ListItem>
                                                                 <asp:ListItem Value="Archive" style="margin-left: 10px;">Archive</asp:ListItem>
                                                             </asp:RadioButtonList>
                                                         </div>
@@ -1248,161 +1300,6 @@
                             </asp:UpdateProgress>
                         </div>
                     </div>
-                    <div class="modal fade" id="divbank" role="dialog" data-keyboard="false" data-backdrop="static">
-                        <div class="modal-dialog" style="width: 400px;">
-                            <asp:UpdatePanel ID="UpdatePanel7" runat="server">
-                                <ContentTemplate>
-                                    <div class="modal-content">
-                                        <div class="modal-header modal-header1">
-                                            <button type="button" class="close close1" data-dismiss="modal">&times;</button>
-                                            <h4 class="modal-title">Future requirement next five years</h4>
-                                        </div>
-                                        <div class="modal-body clearfix" style="padding: 0 20px;">
-                                            <div class="form-group" style="margin: 0">
-                                                <label for="uname" class=" tetLable">
-                                                    Year
-                                                </label>
-                                                <asp:DropDownList runat="server" ID="txtestimateyearu" Class="form-control">
-                                                    <asp:ListItem Value="1">2020-21</asp:ListItem>
-                                                    <asp:ListItem Value="2">2021-22</asp:ListItem>
-                                                    <asp:ListItem Value="3">2022-23</asp:ListItem>
-                                                    <asp:ListItem Value="4">2023-24</asp:ListItem>
-                                                    <asp:ListItem Value="5">2024-25</asp:ListItem>
-                                                </asp:DropDownList>
-                                            </div>
-                                            <div class="form-group" style="margin: 0">
-                                                <label for="uname" class=" tetLable">
-                                                    Estimated Quantity
-                                                </label>
-                                                <asp:TextBox runat="server" ID="txtestimatequanu" placeholder="Estimated Quantity" onkeypress="return isNumberKey(event)" Class="form-control"></asp:TextBox>
-                                            </div>
-                                            <div class="form-group" style="margin: 0">
-                                                <label for="uname" class=" tetLable">
-                                                    Unit
-                                                </label>
-                                                <asp:DropDownList ID="ddlestimateunitu" runat="server" CssClass="form-control">
-                                                    <asp:ListItem Value="-1">Select</asp:ListItem>
-                                                    <asp:ListItem Value="number">number</asp:ListItem>
-                                                    <asp:ListItem Value="sets">sets</asp:ListItem>
-                                                    <asp:ListItem Value="milligrams(mg)">milligrams(mg)</asp:ListItem>
-                                                    <asp:ListItem Value="grams(g)">grams(g)</asp:ListItem>
-                                                    <asp:ListItem Value="kilograms(kg)">kilograms(kg),</asp:ListItem>
-                                                    <asp:ListItem Value="tons(t)">tons(t)</asp:ListItem>
-                                                    <asp:ListItem Value="metric tons (mt)">metric tons (mt)</asp:ListItem>
-                                                    <asp:ListItem Value="pounds(lb)">pounds(lb)</asp:ListItem>
-                                                    <asp:ListItem Value="ounces(oz)">ounces(oz)</asp:ListItem>
-                                                    <asp:ListItem Value="centimeters(cm)">centimeters(cm)</asp:ListItem>
-                                                    <asp:ListItem Value="meters(m)">meters(m)</asp:ListItem>
-                                                    <asp:ListItem Value="kilometers(km)">kilometers(km)</asp:ListItem>
-                                                    <asp:ListItem Value="inches(in)">inches(in)</asp:ListItem>
-                                                    <asp:ListItem Value="feet(ft)">feet(ft)</asp:ListItem>
-                                                    <asp:ListItem Value="yard(yd)">yard(yd)</asp:ListItem>
-                                                    <asp:ListItem Value="miles(mi)">miles(mi)</asp:ListItem>
-                                                    <asp:ListItem Value="square meters">square meters</asp:ListItem>
-                                                    <asp:ListItem Value="square inches">square inches</asp:ListItem>
-                                                    <asp:ListItem Value="square feets">square feets</asp:ListItem>
-                                                    <asp:ListItem Value="cubic">cubic</asp:ListItem>
-                                                    <asp:ListItem Value="cubic centimeters">cubic centimeters</asp:ListItem>
-                                                    <asp:ListItem Value="cubic meters">cubic meters</asp:ListItem>
-                                                    <asp:ListItem Value="cubic inches">cubic inches</asp:ListItem>
-                                                    <asp:ListItem Value="cubic feets">cubic feets</asp:ListItem>
-                                                    <asp:ListItem Value="cubic yards">cubic yards</asp:ListItem>
-                                                </asp:DropDownList>
-                                            </div>
-                                            <div class="form-group" style="margin: 0">
-                                                <label for="uname" class=" tetLable">
-                                                    Estimated Price/Last Purchase Price (in Rs)
-                                                </label>
-                                                <asp:TextBox ID="txtestimatepriceu" runat="server" palceholder="Estimated Price/Last Purchase Price (in Rs)" onkeypress="return isNumberKey(event)" CssClass="form-control"></asp:TextBox>
-                                            </div>
-                                            <div class="clearfix mt10"></div>
-                                            <div class="form-group" style="margin: 0">
-                                                <asp:LinkButton ID="lblsub2" runat="server" Text="Edit & Update" CssClass="btn btn-primary pull-right mr10" OnClick="lblsub2_Click"></asp:LinkButton>
-                                            </div>
-                                            <div class="clearfix mt10"></div>
-                                        </div>
-                                    </div>
-                                </ContentTemplate>
-                            </asp:UpdatePanel>
-                        </div>
-                    </div>
-                    <div class="modal fade" id="divbank2" role="dialog" data-keyboard="false" data-backdrop="static">
-                        <div class="modal-dialog" style="width: 400px;">
-                            <asp:UpdatePanel ID="UpdatePanel9" runat="server">
-                                <ContentTemplate>
-                                    <div class="modal-content">
-                                        <div class="modal-header modal-header1">
-                                            <button type="button" class="close close1" data-dismiss="modal">&times;</button>
-                                            <h4 class="modal-title">Imported During last 3 years</h4>
-                                        </div>
-                                        <div class="modal-body clearfix" style="padding: 0 20px;">
-                                            <div class="form-group" style="margin: 0">
-                                                <label for="uname" class=" tetLable">
-                                                    Year
-                                                </label>
-                                                <asp:DropDownList runat="server" ID="DropDownList3" Class="form-control">
-                                                    <asp:ListItem Value="-1">Select</asp:ListItem>
-                                                    <asp:ListItem Value="1">2017-18</asp:ListItem>
-                                                    <asp:ListItem Value="2">2018-19</asp:ListItem>
-                                                    <asp:ListItem Value="3">2019-20</asp:ListItem>
-                                                </asp:DropDownList>
-                                            </div>
-                                            <div class="form-group" style="margin: 0">
-                                                <label for="uname" class=" tetLable">
-                                                    Estimated Quantity
-                                                </label>
-                                                <asp:TextBox runat="server" ID="TextBox3" placeholder="Estimated Quantity" onkeypress="return isNumberKey(event)" Class="form-control"></asp:TextBox>
-                                            </div>
-                                            <div class="form-group" style="margin: 0">
-                                                <label for="uname" class=" tetLable">
-                                                    Unit
-                                                </label>
-                                                <asp:DropDownList ID="DropDownList4" runat="server" CssClass="form-control">
-                                                    <asp:ListItem Value="-1">Select</asp:ListItem>
-                                                    <asp:ListItem Value="number">number</asp:ListItem>
-                                                    <asp:ListItem Value="sets">sets</asp:ListItem>
-                                                    <asp:ListItem Value="milligrams(mg)">milligrams(mg)</asp:ListItem>
-                                                    <asp:ListItem Value="grams(g)">grams(g)</asp:ListItem>
-                                                    <asp:ListItem Value="kilograms(kg)">kilograms(kg),</asp:ListItem>
-                                                    <asp:ListItem Value="tons(t)">tons(t)</asp:ListItem>
-                                                    <asp:ListItem Value="metric tons (mt)">metric tons (mt)</asp:ListItem>
-                                                    <asp:ListItem Value="pounds(lb)">pounds(lb)</asp:ListItem>
-                                                    <asp:ListItem Value="ounces(oz)">ounces(oz)</asp:ListItem>
-                                                    <asp:ListItem Value="centimeters(cm)">centimeters(cm)</asp:ListItem>
-                                                    <asp:ListItem Value="meters(m)">meters(m)</asp:ListItem>
-                                                    <asp:ListItem Value="kilometers(km)">kilometers(km)</asp:ListItem>
-                                                    <asp:ListItem Value="inches(in)">inches(in)</asp:ListItem>
-                                                    <asp:ListItem Value="feet(ft)">feet(ft)</asp:ListItem>
-                                                    <asp:ListItem Value="yard(yd)">yard(yd)</asp:ListItem>
-                                                    <asp:ListItem Value="miles(mi)">miles(mi)</asp:ListItem>
-                                                    <asp:ListItem Value="square meters">square meters</asp:ListItem>
-                                                    <asp:ListItem Value="square inches">square inches</asp:ListItem>
-                                                    <asp:ListItem Value="square feets">square feets</asp:ListItem>
-                                                    <asp:ListItem Value="cubic">cubic</asp:ListItem>
-                                                    <asp:ListItem Value="cubic centimeters">cubic centimeters</asp:ListItem>
-                                                    <asp:ListItem Value="cubic meters">cubic meters</asp:ListItem>
-                                                    <asp:ListItem Value="cubic inches">cubic inches</asp:ListItem>
-                                                    <asp:ListItem Value="cubic feets">cubic feets</asp:ListItem>
-                                                    <asp:ListItem Value="cubic yards">cubic yards</asp:ListItem>
-                                                </asp:DropDownList>
-                                            </div>
-                                            <div class="form-group" style="margin: 0">
-                                                <label for="uname" class=" tetLable">
-                                                    Estimated Price/Last Purchase Price (in Rs)
-                                                </label>
-                                                <asp:TextBox ID="TextBox4" runat="server" palceholder="Estimated Price/Last Purchase Price (in Rs)" onkeypress="return isNumberKey(event)" CssClass="form-control"></asp:TextBox>
-                                            </div>
-                                            <div class="clearfix mt10"></div>
-                                            <div class="form-group" style="margin: 0">
-                                                <asp:LinkButton ID="lblsub3" runat="server" Text="Edit & Update" CssClass="btn btn-primary pull-right mr10" OnClick="lblsub3_Click"></asp:LinkButton>
-                                            </div>
-                                            <div class="clearfix mt10"></div>
-                                        </div>
-                                    </div>
-                                </ContentTemplate>
-                            </asp:UpdatePanel>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -1428,6 +1325,16 @@
             return true;
         }
     </script>
+    <script type="text/javascript">
+        function isNumberKeyOutDecimal(evt) {
+            var charCode = (evt.which) ? evt.which : event.keyCode;
+            if (charCode > 31
+                && (charCode < 48 || charCode > 57))
+                return false;
+            return true;
+        }
+    </script>
+
     <script type="text/javascript">
         $(function () {
             $("[id$=txtoemname]").autocomplete({

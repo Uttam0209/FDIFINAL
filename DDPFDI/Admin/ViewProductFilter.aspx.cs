@@ -173,8 +173,10 @@ public partial class Admin_ViewProductFilter : System.Web.UI.Page
                 DataTable dtads1 = dv1.ToTable();
                 dtads1.Columns.Add("TopPdf", typeof(string));
                 dtads1.Columns.Add("TopImages", typeof(string));
-                dtads1.Columns.Add("EstimateQu", typeof(int));
-                dtads1.Columns.Add("EstimatePrice", typeof(int));
+                dtads1.Columns.Add("1718", typeof(decimal));
+                dtads1.Columns.Add("1819", typeof(decimal));
+                dtads1.Columns.Add("1920", typeof(decimal));
+                dtads1.Columns.Add("2021", typeof(decimal));
                 for (int i = 0; dtads1.Rows.Count > i; i++)
                 {
                     string mProdRefTime = dtads1.Rows[i]["ProductRefNo"].ToString();
@@ -197,22 +199,25 @@ public partial class Admin_ViewProductFilter : System.Web.UI.Page
                         // dtads.Rows[i]["TopImages"] = "assets/images/Noimage.png";
                     }
                     string mProdRefesti = dtads1.Rows[i]["ProductRefNo"].ToString();
-                    DataTable dtEstimate1 = Lo.RetriveProductCode("", mProdRefesti, "EstimateQuanTotal", "");
-                    if (dtEstimate1.Rows[0]["EstQe"].ToString() == "")
+                    DataTable dtEstimate1 = Lo.RetriveProductCode("", mProdRefesti, "estimate", "");
+                    for (int es = 0; dtEstimate1.Rows.Count > es; es++)
                     {
-                        dtads1.Rows[i]["EstimateQu"] = 0;
-                    }
-                    else
-                    {
-                        dtads1.Rows[i]["EstimateQu"] = dtEstimate1.Rows[0]["EstQe"].ToString();
-                    }
-                    if (dtEstimate1.Rows[0]["estpri"].ToString() == "")
-                    {
-                        dtads1.Rows[i]["EstimatePrice"] = 0;
-                    }
-                    else
-                    {
-                        dtads1.Rows[i]["EstimatePrice"] = dtEstimate1.Rows[0]["estpri"].ToString();
+                        if (dtEstimate1.Rows[es]["FYear"].ToString() == "2017-18" && dtEstimate1.Rows[es]["Type"].ToString() == "O")
+                        {
+                            dtads1.Rows[i]["1718"] = dtEstimate1.Rows[es]["EstimatedPrice"].ToString();
+                        }
+                        if (dtEstimate1.Rows[es]["FYear"].ToString() == "2018-19" && dtEstimate1.Rows[es]["Type"].ToString() == "O")
+                        {
+                            dtads1.Rows[i]["1819"] = dtEstimate1.Rows[es]["EstimatedPrice"].ToString();
+                        }
+                        if (dtEstimate1.Rows[es]["FYear"].ToString() == "2019-20" && dtEstimate1.Rows[es]["Type"].ToString() == "O")
+                        {
+                            dtads1.Rows[i]["1920"] = dtEstimate1.Rows[es]["EstimatedPrice"].ToString();
+                        }
+                        if (dtEstimate1.Rows[es]["FYear"].ToString() == "2020-21" && dtEstimate1.Rows[es]["Type"].ToString() == "F")
+                        {
+                            dtads1.Rows[i]["2021"] = dtEstimate1.Rows[es]["EstimatedPrice"].ToString();
+                        }
                     }
                 }
                 pgsource.DataSource = dtads1.DefaultView;
@@ -272,8 +277,10 @@ public partial class Admin_ViewProductFilter : System.Web.UI.Page
                         DataTable dtads2 = dv2.ToTable();
                         dtads2.Columns.Add("TopPdf", typeof(string));
                         dtads2.Columns.Add("TopImages", typeof(string));
-                        dtads2.Columns.Add("EstimateQu", typeof(int));
-                        dtads2.Columns.Add("EstimatePrice", typeof(int));
+                        dtads2.Columns.Add("1718", typeof(decimal));
+                        dtads2.Columns.Add("1819", typeof(decimal));
+                        dtads2.Columns.Add("1920", typeof(decimal));
+                        dtads2.Columns.Add("2021", typeof(decimal));
                         for (int i = 0; dtads2.Rows.Count > i; i++)
                         {
                             string mProdRefTime = dtads2.Rows[i]["ProductRefNo"].ToString();
@@ -296,22 +303,25 @@ public partial class Admin_ViewProductFilter : System.Web.UI.Page
                                 // dtads.Rows[i]["TopImages"] = "assets/images/Noimage.png";
                             }
                             string mProdRefesti = dtads2.Rows[i]["ProductRefNo"].ToString();
-                            DataTable dtEstimate2 = Lo.RetriveProductCode("", mProdRefesti, "EstimateQuanTotal", "");
-                            if (dtEstimate2.Rows[0]["EstQe"].ToString() == "")
+                            DataTable dtEstimate1 = Lo.RetriveProductCode("", mProdRefesti, "estimate", "");
+                            for (int es = 0; dtEstimate1.Rows.Count > es; es++)
                             {
-                                dtads2.Rows[i]["EstimateQu"] = 0;
-                            }
-                            else
-                            {
-                                dtads2.Rows[i]["EstimateQu"] = dtEstimate2.Rows[0]["EstQe"].ToString();
-                            }
-                            if (dtEstimate2.Rows[0]["estpri"].ToString() == "")
-                            {
-                                dtads2.Rows[i]["EstimatePrice"] = 0;
-                            }
-                            else
-                            {
-                                dtads2.Rows[i]["EstimatePrice"] = dtEstimate2.Rows[0]["estpri"].ToString();
+                                if (dtEstimate1.Rows[es]["FYear"].ToString() == "2017-18" && dtEstimate1.Rows[es]["Type"].ToString() == "O")
+                                {
+                                    dtads2.Rows[i]["1718"] = dtEstimate1.Rows[es]["EstimatedPrice"].ToString();
+                                }
+                                if (dtEstimate1.Rows[es]["FYear"].ToString() == "2018-19" && dtEstimate1.Rows[es]["Type"].ToString() == "O")
+                                {
+                                    dtads2.Rows[i]["1819"] = dtEstimate1.Rows[es]["EstimatedPrice"].ToString();
+                                }
+                                if (dtEstimate1.Rows[es]["FYear"].ToString() == "2019-20" && dtEstimate1.Rows[es]["Type"].ToString() == "O")
+                                {
+                                    dtads2.Rows[i]["1920"] = dtEstimate1.Rows[es]["EstimatedPrice"].ToString();
+                                }
+                                if (dtEstimate1.Rows[es]["FYear"].ToString() == "2020-21" && dtEstimate1.Rows[es]["Type"].ToString() == "F")
+                                {
+                                    dtads2.Rows[i]["2021"] = dtEstimate1.Rows[es]["EstimatedPrice"].ToString();
+                                }
                             }
                         }
                         pgsource.DataSource = dtads2.DefaultView;
@@ -361,8 +371,10 @@ public partial class Admin_ViewProductFilter : System.Web.UI.Page
                         DataTable dtads3 = dv3.ToTable();
                         dtads3.Columns.Add("TopPdf", typeof(string));
                         dtads3.Columns.Add("TopImages", typeof(string));
-                        dtads3.Columns.Add("EstimateQu", typeof(int));
-                        dtads3.Columns.Add("EstimatePrice", typeof(int));
+                        dtads3.Columns.Add("1718", typeof(decimal));
+                        dtads3.Columns.Add("1819", typeof(decimal));
+                        dtads3.Columns.Add("1920", typeof(decimal));
+                        dtads3.Columns.Add("2021", typeof(decimal));
                         for (int i = 0; dtads3.Rows.Count > i; i++)
                         {
                             string mProdRefTime = dtads3.Rows[i]["ProductRefNo"].ToString();
@@ -385,22 +397,25 @@ public partial class Admin_ViewProductFilter : System.Web.UI.Page
                                 // dtads.Rows[i]["TopImages"] = "assets/images/Noimage.png";
                             }
                             string mProdRefesti = dtads3.Rows[i]["ProductRefNo"].ToString();
-                            DataTable dtEstimate3 = Lo.RetriveProductCode("", mProdRefesti, "EstimateQuanTotal", "");
-                            if (dtEstimate3.Rows[0]["EstQe"].ToString() == "")
+                            DataTable dtEstimate1 = Lo.RetriveProductCode("", mProdRefesti, "estimate", "");
+                            for (int es = 0; dtEstimate1.Rows.Count > es; es++)
                             {
-                                dtads3.Rows[i]["EstimateQu"] = 0;
-                            }
-                            else
-                            {
-                                dtads3.Rows[i]["EstimateQu"] = dtEstimate3.Rows[0]["EstQe"].ToString();
-                            }
-                            if (dtEstimate3.Rows[0]["estpri"].ToString() == "")
-                            {
-                                dtads3.Rows[i]["EstimatePrice"] = 0;
-                            }
-                            else
-                            {
-                                dtads3.Rows[i]["EstimatePrice"] = dtEstimate3.Rows[0]["estpri"].ToString();
+                                if (dtEstimate1.Rows[es]["FYear"].ToString() == "2017-18" && dtEstimate1.Rows[es]["Type"].ToString() == "O")
+                                {
+                                    dtads3.Rows[i]["1718"] = dtEstimate1.Rows[es]["EstimatedPrice"].ToString();
+                                }
+                                if (dtEstimate1.Rows[es]["FYear"].ToString() == "2018-19" && dtEstimate1.Rows[es]["Type"].ToString() == "O")
+                                {
+                                    dtads3.Rows[i]["1819"] = dtEstimate1.Rows[es]["EstimatedPrice"].ToString();
+                                }
+                                if (dtEstimate1.Rows[es]["FYear"].ToString() == "2019-20" && dtEstimate1.Rows[es]["Type"].ToString() == "O")
+                                {
+                                    dtads3.Rows[i]["1920"] = dtEstimate1.Rows[es]["EstimatedPrice"].ToString();
+                                }
+                                if (dtEstimate1.Rows[es]["FYear"].ToString() == "2020-21" && dtEstimate1.Rows[es]["Type"].ToString() == "F")
+                                {
+                                    dtads3.Rows[i]["2021"] = dtEstimate1.Rows[es]["EstimatedPrice"].ToString();
+                                }
                             }
                         }
                         pgsource.DataSource = dtads3.DefaultView;
@@ -450,8 +465,10 @@ public partial class Admin_ViewProductFilter : System.Web.UI.Page
                         DataTable dtads5 = dv5.ToTable();
                         dtads5.Columns.Add("TopPdf", typeof(string));
                         dtads5.Columns.Add("TopImages", typeof(string));
-                        dtads5.Columns.Add("EstimateQu", typeof(int));
-                        dtads5.Columns.Add("EstimatePrice", typeof(int));
+                        dtads5.Columns.Add("1718", typeof(decimal));
+                        dtads5.Columns.Add("1819", typeof(decimal));
+                        dtads5.Columns.Add("1920", typeof(decimal));
+                        dtads5.Columns.Add("2021", typeof(decimal));
                         for (int i = 0; dtads5.Rows.Count > i; i++)
                         {
                             string mProdRefTime = dtads5.Rows[i]["ProductRefNo"].ToString();
@@ -474,22 +491,25 @@ public partial class Admin_ViewProductFilter : System.Web.UI.Page
                                 // dtads.Rows[i]["TopImages"] = "assets/images/Noimage.png";
                             }
                             string mProdRefesti = dtads5.Rows[i]["ProductRefNo"].ToString();
-                            DataTable dtEstimate5 = Lo.RetriveProductCode("", mProdRefesti, "EstimateQuanTotal", "");
-                            if (dtEstimate5.Rows[0]["EstQe"].ToString() == "")
+                            DataTable dtEstimate1 = Lo.RetriveProductCode("", mProdRefesti, "estimate", "");
+                            for (int es = 0; dtEstimate1.Rows.Count > es; es++)
                             {
-                                dtads5.Rows[i]["EstimateQu"] = 0;
-                            }
-                            else
-                            {
-                                dtads5.Rows[i]["EstimateQu"] = dtEstimate5.Rows[0]["EstQe"].ToString();
-                            }
-                            if (dtEstimate5.Rows[0]["estpri"].ToString() == "")
-                            {
-                                dtads5.Rows[i]["EstimatePrice"] = 0;
-                            }
-                            else
-                            {
-                                dtads5.Rows[i]["EstimatePrice"] = dtEstimate5.Rows[0]["estpri"].ToString();
+                                if (dtEstimate1.Rows[es]["FYear"].ToString() == "2017-18" && dtEstimate1.Rows[es]["Type"].ToString() == "O")
+                                {
+                                    dtads5.Rows[i]["1718"] = dtEstimate1.Rows[es]["EstimatedPrice"].ToString();
+                                }
+                                if (dtEstimate1.Rows[es]["FYear"].ToString() == "2018-19" && dtEstimate1.Rows[es]["Type"].ToString() == "O")
+                                {
+                                    dtads5.Rows[i]["1819"] = dtEstimate1.Rows[es]["EstimatedPrice"].ToString();
+                                }
+                                if (dtEstimate1.Rows[es]["FYear"].ToString() == "2019-20" && dtEstimate1.Rows[es]["Type"].ToString() == "O")
+                                {
+                                    dtads5.Rows[i]["1920"] = dtEstimate1.Rows[es]["EstimatedPrice"].ToString();
+                                }
+                                if (dtEstimate1.Rows[es]["FYear"].ToString() == "2020-21" && dtEstimate1.Rows[es]["Type"].ToString() == "F")
+                                {
+                                    dtads5.Rows[i]["2021"] = dtEstimate1.Rows[es]["EstimatedPrice"].ToString();
+                                }
                             }
                         }
                         pgsource.DataSource = dtads5.DefaultView;
@@ -539,8 +559,10 @@ public partial class Admin_ViewProductFilter : System.Web.UI.Page
                         DataTable dtads2 = dv2.ToTable();
                         dtads2.Columns.Add("TopPdf", typeof(string));
                         dtads2.Columns.Add("TopImages", typeof(string));
-                        dtads2.Columns.Add("EstimateQu", typeof(int));
-                        dtads2.Columns.Add("EstimatePrice", typeof(int));
+                        dtads2.Columns.Add("1718", typeof(decimal));
+                        dtads2.Columns.Add("1819", typeof(decimal));
+                        dtads2.Columns.Add("1920", typeof(decimal));
+                        dtads2.Columns.Add("2021", typeof(decimal));
                         for (int i = 0; dtads2.Rows.Count > i; i++)
                         {
                             string mProdRefTime = dtads2.Rows[i]["ProductRefNo"].ToString();
@@ -563,22 +585,25 @@ public partial class Admin_ViewProductFilter : System.Web.UI.Page
                                 // dtads.Rows[i]["TopImages"] = "assets/images/Noimage.png";
                             }
                             string mProdRefesti = dtads2.Rows[i]["ProductRefNo"].ToString();
-                            DataTable dtEstimate2 = Lo.RetriveProductCode("", mProdRefesti, "EstimateQuanTotal", "");
-                            if (dtEstimate2.Rows[0]["EstQe"].ToString() == "")
+                            DataTable dtEstimate1 = Lo.RetriveProductCode("", mProdRefesti, "estimate", "");
+                            for (int es = 0; dtEstimate1.Rows.Count > es; es++)
                             {
-                                dtads2.Rows[i]["EstimateQu"] = 0;
-                            }
-                            else
-                            {
-                                dtads2.Rows[i]["EstimateQu"] = dtEstimate2.Rows[0]["EstQe"].ToString();
-                            }
-                            if (dtEstimate2.Rows[0]["estpri"].ToString() == "")
-                            {
-                                dtads2.Rows[i]["EstimatePrice"] = 0;
-                            }
-                            else
-                            {
-                                dtads2.Rows[i]["EstimatePrice"] = dtEstimate2.Rows[0]["estpri"].ToString();
+                                if (dtEstimate1.Rows[es]["FYear"].ToString() == "2017-18" && dtEstimate1.Rows[es]["Type"].ToString() == "O")
+                                {
+                                    dtads2.Rows[i]["1718"] = dtEstimate1.Rows[es]["EstimatedPrice"].ToString();
+                                }
+                                if (dtEstimate1.Rows[es]["FYear"].ToString() == "2018-19" && dtEstimate1.Rows[es]["Type"].ToString() == "O")
+                                {
+                                    dtads2.Rows[i]["1819"] = dtEstimate1.Rows[es]["EstimatedPrice"].ToString();
+                                }
+                                if (dtEstimate1.Rows[es]["FYear"].ToString() == "2019-20" && dtEstimate1.Rows[es]["Type"].ToString() == "O")
+                                {
+                                    dtads2.Rows[i]["1920"] = dtEstimate1.Rows[es]["EstimatedPrice"].ToString();
+                                }
+                                if (dtEstimate1.Rows[es]["FYear"].ToString() == "2020-21" && dtEstimate1.Rows[es]["Type"].ToString() == "F")
+                                {
+                                    dtads2.Rows[i]["2021"] = dtEstimate1.Rows[es]["EstimatedPrice"].ToString();
+                                }
                             }
                         }
                         pgsource.DataSource = dtads2.DefaultView;
@@ -626,8 +651,10 @@ public partial class Admin_ViewProductFilter : System.Web.UI.Page
                         DataTable dtads4 = dv4.ToTable();
                         dtads4.Columns.Add("TopPdf", typeof(string));
                         dtads4.Columns.Add("TopImages", typeof(string));
-                        dtads4.Columns.Add("EstimateQu", typeof(int));
-                        dtads4.Columns.Add("EstimatePrice", typeof(int));
+                        dtads4.Columns.Add("1718", typeof(decimal));
+                        dtads4.Columns.Add("1819", typeof(decimal));
+                        dtads4.Columns.Add("1920", typeof(decimal));
+                        dtads4.Columns.Add("2021", typeof(decimal));
                         for (int i = 0; dtads4.Rows.Count > i; i++)
                         {
                             string mProdRefTime = dtads4.Rows[i]["ProductRefNo"].ToString();
@@ -650,24 +677,24 @@ public partial class Admin_ViewProductFilter : System.Web.UI.Page
                                 // dtads.Rows[i]["TopImages"] = "assets/images/Noimage.png";
                             }
                             string mProdRefesti = dtads4.Rows[i]["ProductRefNo"].ToString();
-                            DataTable dtEstimate4 = Lo.RetriveProductCode("", mProdRefesti, "EstimateQuanTotal", "");
-                            if (dtEstimate4.Rows.Count > 0)
+                            DataTable dtEstimate1 = Lo.RetriveProductCode("", mProdRefesti, "estimate", "");
+                            for (int es = 0; dtEstimate1.Rows.Count > es; es++)
                             {
-                                if (dtEstimate4.Rows[0]["EstQe"].ToString() == "")
+                                if (dtEstimate1.Rows[es]["FYear"].ToString() == "2017-18" && dtEstimate1.Rows[es]["Type"].ToString() == "O")
                                 {
-                                    dtads4.Rows[i]["EstimateQu"] = 0;
+                                    dtads4.Rows[i]["1718"] = dtEstimate1.Rows[es]["EstimatedPrice"].ToString();
                                 }
-                                else
+                                if (dtEstimate1.Rows[es]["FYear"].ToString() == "2018-19" && dtEstimate1.Rows[es]["Type"].ToString() == "O")
                                 {
-                                    dtads4.Rows[i]["EstimateQu"] = dtEstimate4.Rows[0]["EstQe"].ToString();
+                                    dtads4.Rows[i]["1819"] = dtEstimate1.Rows[es]["EstimatedPrice"].ToString();
                                 }
-                                if (dtEstimate4.Rows[0]["estpri"].ToString() == "")
+                                if (dtEstimate1.Rows[es]["FYear"].ToString() == "2019-20" && dtEstimate1.Rows[es]["Type"].ToString() == "O")
                                 {
-                                    dtads4.Rows[i]["EstimatePrice"] = 0;
+                                    dtads4.Rows[i]["1920"] = dtEstimate1.Rows[es]["EstimatedPrice"].ToString();
                                 }
-                                else
+                                if (dtEstimate1.Rows[es]["FYear"].ToString() == "2020-21" && dtEstimate1.Rows[es]["Type"].ToString() == "F")
                                 {
-                                    dtads4.Rows[i]["EstimatePrice"] = dtEstimate4.Rows[0]["estpri"].ToString();
+                                    dtads4.Rows[i]["2021"] = dtEstimate1.Rows[es]["EstimatedPrice"].ToString();
                                 }
                             }
                         }
@@ -834,7 +861,7 @@ public partial class Admin_ViewProductFilter : System.Web.UI.Page
                     }
                 }
                 lbleoirep.Text = DtView.Rows[0]["EOIStatus"].ToString();
-                lbleoilink.Text = DtView.Rows[0]["EOIURL"].ToString();               
+                lbleoilink.Text = DtView.Rows[0]["EOIURL"].ToString();
                 string Nodel1Id = DtView.Rows[0]["NodelDetail"].ToString();
                 if (Nodel1Id.ToString() != "")
                 {
@@ -1627,8 +1654,10 @@ public partial class Admin_ViewProductFilter : System.Web.UI.Page
                     {
                         dtads.Columns.Add("TopPdf", typeof(string));
                         dtads.Columns.Add("TopImages", typeof(string));
-                        dtads.Columns.Add("EstimateQu", typeof(int));
-                        dtads.Columns.Add("EstimatePrice", typeof(int));
+                        dtads.Columns.Add("1718", typeof(decimal));
+                        dtads.Columns.Add("1819", typeof(decimal));
+                        dtads.Columns.Add("1920", typeof(decimal));
+                        dtads.Columns.Add("2021", typeof(decimal));
                         for (int i = 0; dtads.Rows.Count > i; i++)
                         {
                             try
@@ -1654,22 +1683,25 @@ public partial class Admin_ViewProductFilter : System.Web.UI.Page
                                 }
 
                                 string mProdRefesti = dtads.Rows[i]["ProductRefNo"].ToString();
-                                DataTable dtEstimate = Lo.RetriveProductCode("", mProdRefesti, "EstimateQuanTotal", "");
-                                if (dtEstimate.Rows[0]["EstQe"].ToString() == "" || dtEstimate.Rows[0]["EstQe"].ToString() == null)
+                                DataTable dtEstimate1 = Lo.RetriveProductCode("", mProdRefesti, "estimate", "");
+                                for (int es = 0; dtEstimate1.Rows.Count > es; es++)
                                 {
-                                    dtads.Rows[i]["EstimateQu"] = 0;
-                                }
-                                else
-                                {
-                                    dtads.Rows[i]["EstimateQu"] = dtEstimate.Rows[0]["EstQe"].ToString();
-                                }
-                                if (dtEstimate.Rows[0]["estpri"].ToString() == "")
-                                {
-                                    dtads.Rows[i]["EstimatePrice"] = 0;
-                                }
-                                else
-                                {
-                                    dtads.Rows[i]["EstimatePrice"] = dtEstimate.Rows[0]["estpri"].ToString();
+                                    if (dtEstimate1.Rows[es]["FYear"].ToString() == "2017-18" && dtEstimate1.Rows[es]["Type"].ToString() == "O")
+                                    {
+                                        dtads.Rows[i]["1718"] = dtEstimate1.Rows[es]["EstimatedPrice"].ToString();
+                                    }
+                                    if (dtEstimate1.Rows[es]["FYear"].ToString() == "2018-19" && dtEstimate1.Rows[es]["Type"].ToString() == "O")
+                                    {
+                                        dtads.Rows[i]["1819"] = dtEstimate1.Rows[es]["EstimatedPrice"].ToString();
+                                    }
+                                    if (dtEstimate1.Rows[es]["FYear"].ToString() == "2019-20" && dtEstimate1.Rows[es]["Type"].ToString() == "O")
+                                    {
+                                        dtads.Rows[i]["1920"] = dtEstimate1.Rows[es]["EstimatedPrice"].ToString();
+                                    }
+                                    if (dtEstimate1.Rows[es]["FYear"].ToString() == "2020-21" && dtEstimate1.Rows[es]["Type"].ToString() == "F")
+                                    {
+                                        dtads.Rows[i]["2021"] = dtEstimate1.Rows[es]["EstimatedPrice"].ToString();
+                                    }
                                 }
                             }
                             catch (Exception ex)

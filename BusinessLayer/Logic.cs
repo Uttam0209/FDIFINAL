@@ -305,11 +305,11 @@ namespace BusinessLayer
                             " tbl_mst_MainProduct AS o ON s1.SCategoryName='' WHERE  (P.IsActive = 'Y') and P.ProductRefNo in (" + value + ")";
             return SqlHelper.Instance.GetDataset(mquery).Tables[0];
         }
-        public DataTable RetriveProductUser(string sortvalue)
+        public DataTable RetriveProductUser()
         {
             // if (sortvalue == "")
             // {
-            return SqlHelper.Instance.GetExecuteData("select * from fn_ProductFilterSearch() where (EstimatePrice > 1 or EstimatePricefuture > 1) order by  ISNULL(EstimatePrice * 0,1), EstimatePrice desc;");
+            return SqlHelper.Instance.GetExecuteData("select * from fn_ProductFilterSearch() where (EstimatePrice > 1  or EstimatePrice17 > 1  or EstimatePrice18 > 1 or EstimatePricefuture > 1) order by  ISNULL(EstimatePrice * 0,1), EstimatePrice desc;");
             // }
             ////    else
             ////    {

@@ -168,8 +168,8 @@
                         <div runat="server" id="MasterMenu"></div>
                         <div runat="server" id="menu"></div>
                         <asp:ToolkitScriptManager ID="ToolkitScriptManager1" runat="server" EnablePageMethods="true">
-                        </asp:ToolkitScriptManager>
-                        <h4 style="text-align: center;" runat="server" visible="false">Session ends in:-<span id="secondsIdle"></span>&nbsp;sec.</h4>
+                        </asp:ToolkitScriptManager>                        
+                       <%-- <h4 style="text-align: center;" runat="server" visible="false">Session ends in:-<span id="secondsIdle"></span>&nbsp;sec.</h4>
                         <asp:LinkButton ID="lnkFake" runat="server" />
                         <asp:ModalPopupExtender ID="mpeTimeout" BehaviorID="mpeTimeout" runat="server" PopupControlID="pnlPopup"
                             TargetControlID="lnkFake" OkControlID="btnYes" BackgroundCssClass="modalBackground"
@@ -189,14 +189,14 @@
                                 <asp:LinkButton ID="btnNo" runat="server" Text="No" OnClick="btnNo_Click" CssClass="btn btn-danger btn-sm" Style="margin-right: 5px;"></asp:LinkButton>
                             </div>
                             <div class="clearfix pb15"></div>
-                        </asp:Panel>
+                        </asp:Panel>--%>
                     </div>
                 </div>
                 <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
                 </asp:ContentPlaceHolder>
             </div>
         </div>
-        <script type="text/javascript">
+        <%--<script type="text/javascript">
             function SessionExpireAlert(timeout) {
                 var seconds = timeout / 1000;
                 document.getElementsByName("secondsIdle").innerHTML = seconds;
@@ -217,7 +217,7 @@
             function ResetSession() {
                 window.location = window.location.href;
             }
-        </script>
+        </script>--%>
         <!-----Alert Box Success Fail Massage Popup ------>
         <div id="alertPopup" class="alert-overlay alert-overlay-error" style="display: none">
             <div class="alert-box">

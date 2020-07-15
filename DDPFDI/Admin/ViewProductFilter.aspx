@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true"  CodeFile="ViewProductFilter.aspx.cs" Inherits="Admin_ViewProductFilter" ViewStateEncryptionMode="Always" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="ViewProductFilter.aspx.cs" Inherits="Admin_ViewProductFilter" ViewStateEncryptionMode="Always" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -222,7 +222,6 @@
                                                                 <asp:TemplateField HeaderText="View">
                                                                     <ItemTemplate>
                                                                         <asp:LinkButton ID="lblview" runat="server" CssClass="fa fa-eye" CommandName="ViewComp" CommandArgument='<%#Eval("ProductRefNo") %>'></asp:LinkButton>
-                                                                        <%--<asp:LinkButton ID="lbPrintView" runat="server" CssClass="fa fa-print" CommandName="Viewmprint" CommandArgument='<%#Eval("ProductRefNo") %>'></asp:LinkButton>--%>
                                                                         <asp:HiddenField ID="hfroleProd" runat="server" Value='<%#Eval("Role") %>' />
                                                                         <asp:HiddenField ID="hfcomprefno" runat="server" Value='<%#Eval("CompanyRefNo") %>' />
                                                                         <asp:HiddenField ID="hfisaaproved" runat="server" Value='<%#Eval("IsApproved") %>' />
@@ -247,13 +246,22 @@
                                                                 <asp:BoundField DataField="ProductDescription" HeaderText="Description" NullDisplayText="" ItemStyle-Wrap="true" ItemStyle-Width="100" SortExpression="ProductDescription" />
                                                                 <asp:BoundField DataField="NSNGroup" HeaderText="Nato Supply Group" NullDisplayText="-" SortExpression="NSNGroup" />
                                                                 <asp:BoundField DataField="NSNGroupClass" HeaderText="Nato Supply Class" NullDisplayText="-" SortExpression="NSNGroupClass" />
-                                                                <asp:BoundField DataField="ItemCode" HeaderText="Item Code" NullDisplayText="-" SortExpression="ItemCode" />
+                                                                <asp:BoundField DataField="ItemCode" HeaderText="Item Code" Visible="false" NullDisplayText="-" SortExpression="ItemCode" />
                                                                 <asp:BoundField DataField="ProdIndustryDoamin" HeaderText="Industry" Visible="false" NullDisplayText="" ItemStyle-Wrap="true" ItemStyle-Width="100" SortExpression="ProdIndustryDoamin" />
-                                                                <asp:BoundField DataField="EstimateQu" HeaderText="Estimated Quantity" NullDisplayText="" ItemStyle-Wrap="true" ItemStyle-Width="100" SortExpression="EstimateQu" />
-                                                                <asp:BoundField DataField="EstimatePrice" HeaderText="Estimated Price" Visible="false" NullDisplayText="" ItemStyle-Wrap="true" ItemStyle-Width="100" SortExpression="EstimatePrice" />
+
+
+                                                                <asp:BoundField DataField="1718" HeaderText="2017-18" NullDisplayText="-" SortExpression="1718" />
+                                                                <asp:BoundField DataField="1819" HeaderText="2018-19" NullDisplayText="-" SortExpression="1819" />
+                                                                <asp:BoundField DataField="1920" HeaderText="2019-20" NullDisplayText="-" SortExpression="1920" />
+                                                                <asp:BoundField DataField="2021" HeaderText="2020-21" NullDisplayText="-" SortExpression="2021" />
+
+
+                                                                <%-- <asp:BoundField DataField="EstimateQu" HeaderText="Estimated Quantity" NullDisplayText="" ItemStyle-Wrap="true" ItemStyle-Width="100" SortExpression="EstimateQu" />
+                                                                <asp:BoundField DataField="EstimatePrice" HeaderText="Estimated Price" NullDisplayText="" ItemStyle-Wrap="true" ItemStyle-Width="100" SortExpression="EstimatePrice" />
+                                                                --%>
                                                                 <asp:BoundField DataField="DPSUPartNumber" HeaderText="Part Number" Visible="false" NullDisplayText="" ItemStyle-Wrap="true" ItemStyle-Width="100" SortExpression="DPSUPartNumber" />
                                                                 <asp:BoundField DataField="NodalOfficerEmail" HeaderText="Email" Visible="false" NullDisplayText="" ItemStyle-Wrap="true" ItemStyle-Width="100" SortExpression="NodalOfficerEmail" />
-                                                                 <asp:BoundField DataField="LastUpdated" HeaderText="Last Updated" NullDisplayText="" ItemStyle-Wrap="true" ItemStyle-Width="100" SortExpression="LastUpdated" />
+                                                                <asp:BoundField DataField="LastUpdated" HeaderText="Last Updated" NullDisplayText="" ItemStyle-Wrap="true" ItemStyle-Width="100" SortExpression="LastUpdated" />
                                                             </Columns>
                                                         </asp:GridView>
                                                     </div>
@@ -373,7 +381,7 @@
                                                                                                             <td colspan="2" style="background-color: beige; font-weight: 900;">Iteam Classification (NATO Group & Class)</td>
                                                                                                         </tr>
                                                                                                         <tr>
-                                                                                                           <td>NATO Supply Group:</td>
+                                                                                                            <td>NATO Supply Group:</td>
                                                                                                             <td>
                                                                                                                 <asp:Label ID="lblnsngroup" runat="server" Text=""></asp:Label></td>
                                                                                                         </tr>
@@ -383,7 +391,7 @@
                                                                                                                 <asp:Label ID="lblnsngroupclass" runat="server" Text=""></asp:Label></td>
                                                                                                         </tr>
                                                                                                         <tr>
-                                                                                                           <td>Iteam Code:</td>
+                                                                                                            <td>Iteam Code:</td>
                                                                                                             <td>
                                                                                                                 <asp:Label ID="lblclassitem" runat="server" Text=""></asp:Label>
                                                                                                             </td>
@@ -526,7 +534,7 @@
                                                                                                         <asp:Label ID="lbleoilink" runat="server" Text=""></asp:Label></td>
                                                                                                 </tr>
                                                                                                 <tr>
-                                                                                                     <td>Import Quantity</td>
+                                                                                                    <td>Import Quantity</td>
                                                                                                     <td>
                                                                                                         <asp:GridView ID="gvestimatequanorprice" runat="server" AutoGenerateColumns="false" CssClass="table table-hover">
                                                                                                             <Columns>

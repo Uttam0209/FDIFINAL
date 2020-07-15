@@ -82,7 +82,7 @@ public partial class User_U_ProductList : System.Web.UI.Page
     protected void BindProduct()
     {
         lblyearvalue.Text = rbsort.SelectedItem.Text;
-        DtGrid = Lo.RetriveProductUser("");
+        DtGrid = Lo.RetriveProductUser();
         if (DtGrid.Rows.Count > 0)
         {
             DtGrid.Columns.Add("RCount", typeof(Int64));
@@ -806,14 +806,56 @@ public partial class User_U_ProductList : System.Web.UI.Page
             {
                 dr = insert.NewRow();
                 dr["Column"] = "ImportYear " + "= ";
-                dr["Value"] = "'2019-20'";
+                if (chkimportvalue.SelectedIndex == -1)
+                {
+                    dr["Value"] = "'2019-20' and EstimatePrice >= 1 ";
+                }
+                else
+                {
+                    dr["Value"] = "'2019-20'";
+                }
                 insert.Rows.Add(dr);
             }
-            else
+            else if (rbsort.SelectedValue == "EstimatePrice18")
             {
                 dr = insert.NewRow();
-                dr["Column"] = "ImportFutureYear" + " = "; ;
-                dr["Value"] = "'2020-21'";
+                dr["Column"] = "ImportYear18 " + "= ";
+                if (chkimportvalue.SelectedIndex == -1)
+                {
+                    dr["Value"] = "'2018-19' and EstimatePrice18 >= 1 ";
+                }
+                else
+                {
+                    dr["Value"] = "'2018-19'";
+                }
+                insert.Rows.Add(dr);
+            }
+            else if (rbsort.SelectedValue == "EstimatePrice17")
+            {
+                dr = insert.NewRow();
+                dr["Column"] = "ImportYear17 " + "= ";
+                if (chkimportvalue.SelectedIndex == -1)
+                {
+                    dr["Value"] = "'2017-18' and EstimatePrice17 >= 1 ";
+                }
+                else
+                {
+                    dr["Value"] = "'2017-18'";
+                }
+                insert.Rows.Add(dr);
+            }
+            else if (rbsort.SelectedValue == "EstimatePricefuture")
+            {
+                dr = insert.NewRow();
+                dr["Column"] = "ImportFutureYear" + " = ";
+                if (chkimportvalue.SelectedIndex == -1)
+                {
+                    dr["Value"] = "'2020-21' and EstimatePricefuture >= 1 ";
+                }
+                else
+                {
+                    dr["Value"] = "'2020-21'";
+                }
                 insert.Rows.Add(dr);
             }
         }
@@ -865,6 +907,34 @@ public partial class User_U_ProductList : System.Web.UI.Page
                         if (rbsort.SelectedItem.Text.Trim() == "2019-20")
                         {
                             object sumObject = dtinner.Compute("Sum(EstimatePrice)", string.Empty);
+                            if (sumObject.ToString() == "")
+                            {
+                                lblyearvalue.Text = rbsort.SelectedItem.Text;
+                                lblestimateprice.Text = "0";
+                            }
+                            else
+                            {
+                                lblyearvalue.Text = rbsort.SelectedItem.Text;
+                                lblestimateprice.Text = sumObject.ToString();
+                            }
+                        }
+                        else if (rbsort.SelectedItem.Text.Trim() == "2018-19")
+                        {
+                            object sumObject = dtinner.Compute("Sum(EstimatePrice18)", string.Empty);
+                            if (sumObject.ToString() == "")
+                            {
+                                lblyearvalue.Text = rbsort.SelectedItem.Text;
+                                lblestimateprice.Text = "0";
+                            }
+                            else
+                            {
+                                lblyearvalue.Text = rbsort.SelectedItem.Text;
+                                lblestimateprice.Text = sumObject.ToString();
+                            }
+                        }
+                        else if (rbsort.SelectedItem.Text.Trim() == "2017-18")
+                        {
+                            object sumObject = dtinner.Compute("Sum(EstimatePrice17)", string.Empty);
                             if (sumObject.ToString() == "")
                             {
                                 lblyearvalue.Text = rbsort.SelectedItem.Text;
@@ -1138,10 +1208,12 @@ public partial class User_U_ProductList : System.Web.UI.Page
                         DataTable DTporCat = Lo.RetriveProductCode("", e.CommandArgument.ToString(), "ProductPOP", "Company");
                         if (DTporCat.Rows.Count > 0)
                         {
+                            lblindicate.Text = "";
                             for (int i = 0; DTporCat.Rows.Count > i; i++)
                             {
-                                lblindicate.Text = lblindicate.Text + DTporCat.Rows[i]["SCategoryName"].ToString();
+                                lblindicate.Text = lblindicate.Text + DTporCat.Rows[i]["SCategoryName"].ToString() + ", ";
                             }
+                            lblindicate.Text = lblindicate.Text.Substring(0, lblindicate.Text.Length - 2);
                             sixteen.Visible = true;
                         }
                         else
@@ -1205,10 +1277,12 @@ public partial class User_U_ProductList : System.Web.UI.Page
                         DataTable DTporCat = Lo.RetriveProductCode("", e.CommandArgument.ToString(), "EndUser", "Company");
                         if (DTporCat.Rows.Count > 0)
                         {
+                            lblenduser.Text = "";
                             for (int i = 0; DTporCat.Rows.Count > i; i++)
                             {
-                                lblenduser.Text = lblenduser.Text + DTporCat.Rows[i]["EndUser"].ToString() + " ,";
+                                lblenduser.Text = lblenduser.Text + DTporCat.Rows[i]["EndUser"].ToString() + ", ";
                             }
+                            lblenduser.Text = lblenduser.Text.Substring(0, lblenduser.Text.Length - 2);
                             twenty.Visible = true;
                         }
                         else
@@ -1261,10 +1335,12 @@ public partial class User_U_ProductList : System.Web.UI.Page
                         DataTable DTporCat = Lo.RetriveProductCode("", e.CommandArgument.ToString(), "ProductQAAgency", "Company");
                         if (DTporCat.Rows.Count > 0)
                         {
+                            lbqa.Text = "";
                             for (int i = 0; DTporCat.Rows.Count > i; i++)
                             {
-                                lbqa.Text = lbqa.Text + DTporCat.Rows[i]["SCategoryName"].ToString() + " ,";
+                                lbqa.Text = lbqa.Text + DTporCat.Rows[i]["SCategoryName"].ToString() + ", ";
                             }
+                            lbqa.Text = lbqa.Text.Substring(0, lbqa.Text.Length - 2);
                             twentysix.Visible = true;
                         }
                         else
@@ -1273,6 +1349,44 @@ public partial class User_U_ProductList : System.Web.UI.Page
                     else
                     {
                         twentysix.Visible = false;
+                    }
+                    if (DtView.Rows[0]["NIINCode"].ToString() != "")
+                    {
+                        Tr8.Visible = true;
+                        lblnincode.Text = DtView.Rows[0]["NIINCode"].ToString();
+                    }
+                    else
+                    {
+                        Tr8.Visible = false;
+                    }
+                    if (DtView.Rows[0]["IsIndeginized"].ToString() != "")
+                    {
+
+                        if (DtView.Rows[0]["IsIndeginized"].ToString() == "Y")
+                        {
+                            Tr19.Visible = true;
+                            lblisindigenised.Text = "Yes";
+                            Tr20.Visible = true;
+                            Tr21.Visible = true;
+                            Tr22.Visible = true;
+                            lblmanuname.Text = DtView.Rows[0]["ManufactureName"].ToString();
+                            lblmanuaddress.Text = DtView.Rows[0]["ManufactureAddress"].ToString();
+                            lblyearofindi.Text = DtView.Rows[0]["YearofIndiginization"].ToString();
+                        }
+                        else
+                        {
+                            lblisindigenised.Text = "No";
+                            Tr20.Visible = false;
+                            Tr21.Visible = false;
+                            Tr22.Visible = false;
+                        }
+                    }
+                    else
+                    {
+                        Tr19.Visible = false;
+                        Tr20.Visible = false;
+                        Tr21.Visible = false;
+                        Tr22.Visible = false;
                     }
 
                     ScriptManager.RegisterStartupScript(this, GetType(), "ProductCompany", "showPopup();", true);
@@ -1365,6 +1479,7 @@ public partial class User_U_ProductList : System.Web.UI.Page
         }
     }
     #endregion
+    #region oterscode
     protected void dlproduct_ItemDataBound(object sender, DataListItemEventArgs e)
     {
         if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
@@ -1382,8 +1497,12 @@ public partial class User_U_ProductList : System.Web.UI.Page
                 }
             }
             Label lblepold = (Label)e.Item.FindControl("lblepold");
+            Label lblepold17 = (Label)e.Item.FindControl("lblepold17");
+            Label lblepold18 = (Label)e.Item.FindControl("lblepold18");
             Label lblepfu = (Label)e.Item.FindControl("lblepfu");
             Label lbleq = (Label)e.Item.FindControl("Label2");
+            Label lbleq17 = (Label)e.Item.FindControl("Label7");
+            Label lbleq18 = (Label)e.Item.FindControl("Label8");
             Label lbleqf = (Label)e.Item.FindControl("Label3");
             Label lbleuold = (Label)e.Item.FindControl("lblestunitold");
             Label lbleufutu = (Label)e.Item.FindControl("lblestunitfut");
@@ -1394,6 +1513,34 @@ public partial class User_U_ProductList : System.Web.UI.Page
                 lbleq.Visible = true;
                 lblepfu.Visible = false;
                 lbleqf.Visible = false;
+                lblepold17.Visible = false;
+                lblepold18.Visible = false;
+                lbleq17.Visible = false;
+                lbleq18.Visible = false;
+
+            }
+            else if (rbsort.SelectedItem.Text.Trim() == "2018-19")
+            {
+                lblepold.Visible = false;
+                lbleq.Visible = false;
+                lblepfu.Visible = false;
+                lbleqf.Visible = false;
+                lblepold17.Visible = false;
+                lblepold18.Visible = true;
+                lbleq17.Visible = false;
+                lbleq18.Visible = true;
+
+            }
+            else if (rbsort.SelectedItem.Text.Trim() == "2017-18")
+            {
+                lblepold.Visible = false;
+                lbleq.Visible = false;
+                lblepfu.Visible = false;
+                lbleqf.Visible = false;
+                lblepold17.Visible = true;
+                lblepold18.Visible = false;
+                lbleq17.Visible = true;
+                lbleq18.Visible = false;
 
             }
             else if (rbsort.SelectedItem.Text.Trim() == "2020-21")
@@ -1402,6 +1549,8 @@ public partial class User_U_ProductList : System.Web.UI.Page
                 lbleq.Visible = false;
                 lblepfu.Visible = true;
                 lbleqf.Visible = true;
+                lblepold17.Visible = false;
+                lblepold18.Visible = false;
             }
         }
     }
@@ -1613,7 +1762,8 @@ public partial class User_U_ProductList : System.Web.UI.Page
         chktendor.SelectedIndex = -1;
         ddlnsg.SelectedIndex = -1;
         ddlprodindustrydomain.SelectedIndex = -1;
-        chkimportvalue.SelectedValue = "1";
+        chkimportvalue.SelectedIndex = -1;
         rbsort.SelectedValue = "EstimatePrice";
     }
+    #endregion
 }

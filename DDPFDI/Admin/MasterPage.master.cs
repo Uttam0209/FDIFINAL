@@ -164,7 +164,6 @@ public partial class Admin_MasterPage : System.Web.UI.MasterPage
             {
 
                 lblmastercompany.Text = "Company - " + dtCompany.Rows[0]["CompanyName"].ToString();
-
                 strInterestedArea = dtCompany.Rows[0]["InterestedArea"].ToString();
                 strMasterAlloted = dtCompany.Rows[0]["MasterAllowed"].ToString();
             }
@@ -179,10 +178,10 @@ public partial class Admin_MasterPage : System.Web.UI.MasterPage
         }
     }
     #endregion
-    protected void btnNo_Click(object sender, EventArgs e)
-    {
-        Session.Abandon();
-        Session.Clear();
-        Response.RedirectToRoute("Login");
-    }
+    //protected void btnNo_Click(object sender, EventArgs e)
+    //{
+    //    Session.Abandon();
+    //    Session.Clear();
+    //    Response.RedirectToRoute("Login");
+    //}
 }
