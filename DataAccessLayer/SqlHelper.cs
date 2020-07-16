@@ -851,7 +851,7 @@ namespace DataAccessLayer
                     for (int k = 0; k < dtEstimateQuantity.Rows.Count; k++)
                     {
                         DbCommand dbcom3 = db.GetStoredProcCommand("sp_trn_ProdQtyPrice");
-                        db.AddInParameter(dbcom3, "@ProdQtyPriceId", DbType.Int64, k);
+                        db.AddInParameter(dbcom3, "@ProdQtyPriceId", DbType.Int64, dtEstimateQuantity.Rows[k]["ProdQtyPriceId"]);
                         db.AddInParameter(dbcom3, "@ProductRefNo", DbType.String, mCurrentID);
                         db.AddInParameter(dbcom3, "@Year", DbType.Int64, dtEstimateQuantity.Rows[k]["Year"]);
                         db.AddInParameter(dbcom3, "@FYear", DbType.String, dtEstimateQuantity.Rows[k]["FYear"]);
@@ -864,7 +864,7 @@ namespace DataAccessLayer
                     for (int x = 0; x < dtEstimateQuantity1.Rows.Count; x++)
                     {
                         DbCommand dbcom5 = db.GetStoredProcCommand("sp_trn_ProdQtyPrice");
-                        db.AddInParameter(dbcom5, "@ProdQtyPriceId", DbType.Int64, x);
+                        db.AddInParameter(dbcom5, "@ProdQtyPriceId", DbType.Int64, dtEstimateQuantity1.Rows[x]["ProdQtyPriceId"]);
                         db.AddInParameter(dbcom5, "@ProductRefNo", DbType.String, mCurrentID);
                         db.AddInParameter(dbcom5, "@Year", DbType.Int64, dtEstimateQuantity1.Rows[x]["Year"]);
                         db.AddInParameter(dbcom5, "@FYear", DbType.String, dtEstimateQuantity1.Rows[x]["FYear"]);
@@ -1834,7 +1834,7 @@ namespace DataAccessLayer
             }
         }
         public DataTable GetDashboardData(string Purpose, string Search)
-         {
+        {
             using (DbConnection dbCon = db.CreateConnection())
             {
                 dbCon.Open();
@@ -1854,7 +1854,7 @@ namespace DataAccessLayer
                     throw ex;
                 }
             }
-        }       
+        }
         public DataTable GetProductFilterData(string Purpose, string refno, string Search)
         {
             using (DbConnection dbCon = db.CreateConnection())
@@ -1927,7 +1927,7 @@ namespace DataAccessLayer
                 }
             }
         }
-        public DataTable RetriveSaveEstimateGrid(string Function, Int32 ProdInfoId, string ProdRefNo, Int32 Year, string FYear, string EstimateQuantity, string Unit, string Price,string type)
+        public DataTable RetriveSaveEstimateGrid(string Function, Int32 ProdInfoId, string ProdRefNo, Int32 Year, string FYear, string EstimateQuantity, string Unit, string Price, string type)
         {
             using (DbConnection dbCon = db.CreateConnection())
             {

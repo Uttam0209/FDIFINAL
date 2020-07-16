@@ -172,9 +172,10 @@
                                             <asp:BoundField DataField="1819" HeaderText="2018-19" NullDisplayText="-" SortExpression="1819" />
                                             <asp:BoundField DataField="1920" HeaderText="2019-20" NullDisplayText="-" SortExpression="1920" />
                                             <asp:BoundField DataField="2021" HeaderText="2020-21" NullDisplayText="-" SortExpression="2021" />
+                                             <asp:BoundField DataField="IsShowGeneral" HeaderText="Product Display" NullDisplayText="-" SortExpression="IsShowGeneral" />
                                             <asp:TemplateField HeaderText="Last Updated">
                                                 <ItemTemplate>
-                                                    <asp:Label runat="server" ID="lblLastUpdated" Text='<%#Eval("LastUpdated") %>'></asp:Label>
+                                                    <asp:Label runat="server" ID="lblLastUpdated" Text='<%#Eval("LastUpdated","{0:dd/MMM/yyyy}") %>'></asp:Label>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="Part Number" Visible="false">

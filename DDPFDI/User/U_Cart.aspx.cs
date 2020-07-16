@@ -314,10 +314,14 @@ public partial class User_U_Cart : System.Web.UI.Page
                     if (DtView.Rows[0]["ProductDescription"].ToString() != "")
                     {
                         itemname2.Text = DtView.Rows[0]["ProductDescription"].ToString();
+                        lblitemname1.Text = DtView.Rows[0]["ProductDescription"].ToString();
                         eleven.Visible = true;
+                        Tr23.Visible = true;
+
                     }
                     else
                     {
+                        Tr23.Visible = false;
                         eleven.Visible = false;
                     }
                     if (DtView.Rows[0]["DPSUPartNumber"].ToString() != "")
@@ -578,7 +582,7 @@ public partial class User_U_Cart : System.Web.UI.Page
                             lblisshowgeneral.Text = "Yes";
                         else
                             lblisshowgeneral.Text = "No";
-                        twentyfour.Visible = true;
+                        twentyfour.Visible = false;
                     }
                     else
                     {
@@ -586,7 +590,7 @@ public partial class User_U_Cart : System.Web.UI.Page
                     }
                     if (DtView.Rows[0]["TermConditionImage"].ToString() != "")
                     {
-                        twentythree.Visible = true;
+                        twentythree.Visible = false;
                     }
                     else
                     {
@@ -628,12 +632,33 @@ public partial class User_U_Cart : System.Web.UI.Page
                         {
                             Tr19.Visible = true;
                             lblisindigenised.Text = "Yes";
-                            Tr20.Visible = true;
-                            Tr21.Visible = true;
-                            Tr22.Visible = true;
-                            lblmanuname.Text = DtView.Rows[0]["ManufactureName"].ToString();
-                            lblmanuaddress.Text = DtView.Rows[0]["ManufactureAddress"].ToString();
-                            lblyearofindi.Text = DtView.Rows[0]["YearofIndiginization"].ToString();
+                            if (DtView.Rows[0]["ManufactureName"].ToString() != "")
+                            {
+                                lblmanuname.Text = DtView.Rows[0]["ManufactureName"].ToString();
+                                Tr20.Visible = true;
+                            }
+                            else
+                            {
+                                Tr20.Visible = false;
+                            }
+                            if (DtView.Rows[0]["ManufactureAddress"].ToString() != "")
+                            {
+                                lblmanuaddress.Text = DtView.Rows[0]["ManufactureAddress"].ToString();
+                                Tr21.Visible = true;
+                            }
+                            else
+                            {
+                                Tr21.Visible = false;
+                            }
+                            if (DtView.Rows[0]["YearofIndiginization"].ToString() != "")
+                            {
+                                lblyearofindi.Text = DtView.Rows[0]["FY"].ToString();
+                                Tr22.Visible = true;
+                            }
+                            else
+                            {
+                                Tr22.Visible = false;
+                            }
                         }
                         else
                         {

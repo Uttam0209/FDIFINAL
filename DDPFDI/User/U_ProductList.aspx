@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head id="Head1" runat="server">
-    <title>Defence Imported Product List</title>
+    <title>Product List</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="utf-8">
     <link rel="icon" href="media/fevi.png">
@@ -242,7 +242,7 @@
                             <img src="user/ddp_logo.png" alt="" class="img-fluid" />
                         </div>
                         <div class="col-sm-10 topheadline col-9">
-                            <h2 class="mb-0" style="color: #6915cf;">Opportunities of Indigenisation in Defence</h2>
+                            <h2 class="mb-0" style="color: #6915cf;">Opportunities for Make in India in Defence</h2>
                         </div>
                     </div>
                 </div>
@@ -301,8 +301,8 @@
                                                                 <asp:RadioButtonList ID="rbsort" runat="server" AutoPostBack="true" CssClass="custom-checkbox" OnSelectedIndexChanged="rbsort_SelectedIndexChanged">
                                                                     <asp:ListItem Value="EstimatePricefuture" style="margin-left: 5px !important;">&nbsp;2020-21</asp:ListItem>
                                                                     <asp:ListItem Value="EstimatePrice" Selected="True" style="margin-left: 5px !important;">&nbsp;2019-20</asp:ListItem>
-                                                                    <asp:ListItem Value="EstimatePrice18" style="margin-left: 5px !important;">&nbsp;2018-19</asp:ListItem>
-                                                                    <asp:ListItem Value="EstimatePrice17" style="margin-left: 5px !important;">&nbsp;2017-18</asp:ListItem>
+                                                                    <%--  <asp:ListItem Value="EstimatePrice18" style="margin-left: 5px !important;">&nbsp;2018-19</asp:ListItem>
+                                                                    <asp:ListItem Value="EstimatePrice17" style="margin-left: 5px !important;">&nbsp;2017-18</asp:ListItem>--%>
                                                                 </asp:RadioButtonList>
                                                             </div>
                                                         </div>
@@ -489,7 +489,7 @@
                                                 <div class="card product-card" style="box-shadow: 0 0.3rem 1.525rem -0.375rem rgba(0, 0, 0, 0.1);">
                                                     <a class="card-img-top d-block overflow-hidden" href="#" style="text-align: center;">
                                                         <img src='<%#Eval("TopImages") %>' alt="Product" style="max-width: 100%; width: 50%; height: 90px;">
-                                                    </a>&nbsp;&nbsp;&nbsp;<div class="card-body py-2" style="height: 180px;">
+                                                    </a>&nbsp;&nbsp;&nbsp;<div class="card-body py-2" style="height: 230px;">
                                                         <b>
                                                             <p class="product-meta d-block font-size-xs pb-1" style="color: #6915cf; font-size: 16px!important;">
                                                                 <%#Eval("CompanyName") %>
@@ -525,7 +525,7 @@
                                                                     </b>
                                                                     </td>
                                                                 </tr>
-                                                                <tr id="Tr16">
+                                                                <tr id="Tr16" runat="server" visible="false">
                                                                     <td colspan="2" style="padding: 8px; font-size: 12px;">Annual Import Quantity                                                                       
                                                                             <b>
                                                                                 <asp:Label ID="Label2" runat="server" Style="margin-right: 0px;" Visible="false" Text='<%# Eval("EstimateQu") %>' />
@@ -552,7 +552,7 @@
                                                                         <%#Eval("OEMCountry") %></b>
                                                                     </td>
                                                                 </tr>
-                                                                <tr id="Tr2" runat="server" visible="false">
+                                                                <tr id="Tr2">
                                                                     <td colspan="2" style="padding: 5px; font-size: 12px;">Nato Supply Group Class :-
                                                                        <p><b>[<%#Eval("NSCCode") %>] -  <%# Eval("NSNGroupClass").ToString().Length > 35? (Eval("NSNGroupClass") as string).Substring(0,35) + ".." : Eval("NSNGroupClass")  %></b></p>
                                                                     </td>
@@ -658,7 +658,7 @@
                                                         <div class="card-body card-custom ">
                                                             <table class="table mb-2">
                                                                 <tbody>
-                                                                    <tr runat="server" id="eleven">
+                                                                    <tr runat="server" id="eleven" style="color:blue;">
                                                                         <th>Item Name</th>
                                                                         <td>
                                                                             <asp:Label ID="itemname2" runat="server" Text=""></asp:Label>
@@ -791,6 +791,12 @@
                                                                         </th>
                                                                         <td>
                                                                             <asp:Label ID="lblrefnoview" runat="server" Text=""></asp:Label>
+                                                                        </td>
+                                                                    </tr>
+                                                                     <tr runat="server" id="Tr23" style="color:blue;">
+                                                                        <th>Item Name</th>
+                                                                        <td>
+                                                                            <asp:Label ID="lblitemname1" runat="server" Text=""></asp:Label>
                                                                         </td>
                                                                     </tr>
                                                                     <tr runat="server" id="three">
@@ -1102,24 +1108,23 @@
                                                                         </td>
                                                                     </tr>
                                                                     <tr runat="server" id="Tr20" visible="false">
-                                                                        <th scope="row">Manufacture Name
+                                                                        <th scope="row">Indian Manufacturer
                                                                         </th>
                                                                         <td>
                                                                             <asp:Label ID="lblmanuname" runat="server" Text=""></asp:Label>
                                                                         </td>
                                                                     </tr>
                                                                     <tr runat="server" id="Tr21" visible="false">
-                                                                        <th scope="row">Manufacture Address
+                                                                        <th scope="row">Address
                                                                         </th>
                                                                         <td>
                                                                             <asp:Label ID="lblmanuaddress" runat="server" Text=""></asp:Label>
                                                                         </td>
                                                                     </tr>
                                                                     <tr runat="server" id="Tr22" visible="false">
-                                                                        <th scope="row">Year of Indiginization
+                                                                        <th scope="row">Year of Make in India
                                                                         </th>
-                                                                        <td>
-                                                                            <asp:Label ID="lblyearofindi" runat="server" Text=""></asp:Label>
+                                                                        <td><asp:Label ID="lblyearofindi" runat="server" Text=""></asp:Label>
                                                                         </td>
                                                                     </tr>
 

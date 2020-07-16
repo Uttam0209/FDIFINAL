@@ -24,7 +24,7 @@
                             <img src="user/ddp_logo.png" alt="" class="img-fluid" />
                         </div>
                         <div class="col-sm-10 topheadline col-9">
-                            <h2 class="mb-0" style="color: #6915cf;">Opportunities of Indigenisation in Defence</h2>
+                            <h2 class="mb-0" style="color: #6915cf;">Opportunities for Make in India in Defence</h2>
                         </div>
                     </div>
                 </div>
@@ -180,7 +180,7 @@
                                                         <div class="card-body card-custom ">
                                                             <table class="table mb-2">
                                                                 <tbody>
-                                                                    <tr runat="server" id="eleven">
+                                                                    <tr runat="server" id="eleven" style="color: blue;">
                                                                         <th>Item Name</th>
                                                                         <td>
                                                                             <asp:Label ID="itemname2" runat="server" Text=""></asp:Label>
@@ -313,6 +313,12 @@
                                                                         </th>
                                                                         <td>
                                                                             <asp:Label ID="lblrefnoview" runat="server" Text=""></asp:Label>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr runat="server" id="Tr23" style="color: blue;">
+                                                                        <th>Item Name</th>
+                                                                        <td>
+                                                                            <asp:Label ID="lblitemname1" runat="server" Text=""></asp:Label>
                                                                         </td>
                                                                     </tr>
                                                                     <tr runat="server" id="three">
@@ -624,21 +630,21 @@
                                                                         </td>
                                                                     </tr>
                                                                     <tr runat="server" id="Tr20" visible="false">
-                                                                        <th scope="row">Manufacture Name
+                                                                        <th scope="row">Indian Manufacturer
                                                                         </th>
                                                                         <td>
                                                                             <asp:Label ID="lblmanuname" runat="server" Text=""></asp:Label>
                                                                         </td>
                                                                     </tr>
                                                                     <tr runat="server" id="Tr21" visible="false">
-                                                                        <th scope="row">Manufacture Address
+                                                                        <th scope="row">Address
                                                                         </th>
                                                                         <td>
                                                                             <asp:Label ID="lblmanuaddress" runat="server" Text=""></asp:Label>
                                                                         </td>
                                                                     </tr>
                                                                     <tr runat="server" id="Tr22" visible="false">
-                                                                        <th scope="row">Year of Indiginization
+                                                                        <th scope="row">Year of Make in India
                                                                         </th>
                                                                         <td>
                                                                             <asp:Label ID="lblyearofindi" runat="server" Text=""></asp:Label>

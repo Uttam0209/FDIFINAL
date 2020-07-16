@@ -309,7 +309,7 @@ namespace BusinessLayer
         {
             // if (sortvalue == "")
             // {
-            return SqlHelper.Instance.GetExecuteData("select * from fn_ProductFilterSearch() where (EstimatePrice > 1  or EstimatePrice17 > 1  or EstimatePrice18 > 1 or EstimatePricefuture > 1) order by  ISNULL(EstimatePrice * 0,1), EstimatePrice desc;");
+            return SqlHelper.Instance.GetExecuteData("select * from fn_ProductFilterSearch() where (EstimatePrice > 1  or EstimatePricefuture > 1) order by  ISNULL(EstimatePrice * 0,1), EstimatePrice desc;");
             // }
             ////    else
             ////    {

@@ -383,6 +383,7 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
                 string DeleteRec = Lo.DeleteRecord(e.CommandArgument.ToString(), "InActiveProd");
                 if (DeleteRec == "true")
                 {
+                    BindGridView();
                     ScriptManager.RegisterStartupScript(this, GetType(), "alert", "SuccessfullPop('Product deactive successfully.')", true);
                 }
                 else

@@ -80,9 +80,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                             BindCompany();
                             BindCountry();
                             BindFinancialYear();
-                            IsProductImported();
-                            BindQualityAssurance();
-                            PROCURMENTCATEGORYIndigenization();
+                            // IsProductImported();
                             if (Request.QueryString["mcurrentcompRefNo"] != null)
                             {
                                 BindMasterCategory();
@@ -108,7 +106,9 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                             BindCompany();
                             BindCountry();
                             BindFinancialYear();
-                            IsProductImported();
+                            BindQualityAssurance();
+                            PROCURMENTCATEGORYIndigenization();
+                            // IsProductImported();
                         }
                     }
                     if (hidType.Value == "Company")
@@ -668,25 +668,25 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     }
     protected void rbproductImported_CheckedChanged(object sender, EventArgs e)
     {
-        if (rbproductImported.SelectedItem.Value == "Y")
-        {
-            divyearofimportYes.Visible = true;
-        }
-        else if (rbproductImported.SelectedItem.Value == "N")
-        {
-            divyearofimportYes.Visible = false;
-        }
+        //if (rbproductImported.SelectedItem.Value == "Y")
+        //{
+        // divyearofimportYes.Visible = true;
+        //}
+        //else if (rbproductImported.SelectedItem.Value == "N")
+        //{
+        //divyearofimportYes.Visible = false;
+        //}
     }
     protected void IsProductImported()
     {
-        if (rbproductImported.SelectedItem.Value == "Y")
-        {
-            divyearofimportYes.Visible = true;
-        }
-        else if (rbproductImported.SelectedItem.Value == "N")
-        {
-            divyearofimportYes.Visible = false;
-        }
+        //if (rbproductImported.SelectedItem.Value == "Y")
+        //{
+        //    divyearofimportYes.Visible = true;
+        //}
+        //else if (rbproductImported.SelectedItem.Value == "N")
+        //{
+        //    divyearofimportYes.Visible = false;
+        //}
     }
     private void NSCCode(string NSNGroupddl, string NSNClassddl)
     {
@@ -1306,7 +1306,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                 {
                     Cleartext();
                     btnsubmitpanel1.Text = "Save";
-                    ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "alert('Item Id (Portal) = " + lblrefnoforinfo.Text + " updated successfully.')", true);
+                    ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "alert('Item Id (Portal) = " + StrProductDescription + " updated successfully.')", true);
                 }
             }
             else
@@ -1470,21 +1470,23 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                     }
                     else
                     {
-                        ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "alert('Please fill mandatory fields.')", true);
+                        ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "alert('Please fill (*) mandatory fields.')", true);
                     }
                 }
                 else
                 {
-                    ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "alert('Please fill mandatory fields.')", true);
+                    ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "alert('Please fill (*) mandatory fields.')", true);
                 }
             }
             else
             {
-                ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "alert('Please fill mandatory fields.')", true);
+                ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "alert('Please fill (*) mandatory fields.')", true);
             }
         }
         catch (Exception ex)
-        { ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "ErrorMssgPopup('Technical error " + ex.Message + "')", true); }
+        {
+            ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "alert('Please check all (*) mandatory field are filled or check properly.' )", true);
+        }
     }
     protected void btncancelpanel1_Click(object sender, EventArgs e)
     {
@@ -1529,7 +1531,6 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         txtadditionalinfo.Text = "";
         txtremarksyearofimportyes.Text = "";
         rbproductImported.SelectedIndex = 0;
-        divyearofimportYes.Visible = false;
         txtNameOfSpecificationAdd.Text = "";
         TxtValueProdAdd.Text = "";
         txtUnitProdAdd.Text = "";
@@ -1541,10 +1542,26 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         }
         txtfiigno.Text = "";
         txtfiigtype.Text = "";
-        ViewState["MF"] = null;
-        ViewState["MF1"] = null;
         rbeoimake2.SelectedIndex = -1;
         chkQAA.SelectedIndex = -1;
+        txtestquan1.Text = "";
+        txtpriceestimate1.Text = "";
+        txtestquan2.Text = "";
+        txtpriceestimate2.Text = "";
+        txtestquan3.Text = "";
+        txtpriceestimate3.Text = "";
+        txtfutQuantity1.Text = "";
+        txtfutvalue1.Text = "";
+        txtfutQuantity2.Text = "";
+        txtfutvalue2.Text = "";
+        txtfutQuantity3.Text = "";
+        txtfutvalue3.Text = "";
+        txtfutQuantity4.Text = "";
+        txtfutvalue4.Text = "";
+        txtfutQuantity5.Text = "";
+        txtfutvalue5.Text = "";
+        lblrefnoforinfo.Text = "";
+        portalid.Visible = false;
     }
     #endregion
     #region Image Code
@@ -1779,10 +1796,19 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         insertfuture.Columns.Add(new DataColumn("Unit", typeof(string)));
         insertfuture.Columns.Add(new DataColumn("EstimatedPrice", typeof(string)));
         insertfuture.Columns.Add(new DataColumn("Type", typeof(string)));
+        insertfuture.Columns.Add(new DataColumn("ProdQtyPriceId", typeof(Int64)));
         DataRow dr;
         if (txtfutQuantity1.Text != "" && txtfutvalue1.Text != "")
         {
             dr = insertfuture.NewRow();
+            if (EstimateQunFutureID.Value == "")
+            {
+                dr["ProdQtyPriceId"] = 0;
+            }
+            else
+            {
+                dr["ProdQtyPriceId"] = EstimateQunFutureID.Value;
+            }
             dr["Year"] = ddlfutyear1.SelectedItem.Value;
             dr["FYear"] = ddlfutyear1.SelectedItem.Text;
             dr["EstimatedQty"] = txtfutQuantity1.Text;
@@ -1794,6 +1820,14 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         if (txtfutQuantity2.Text != "" && txtfutvalue2.Text != "")
         {
             dr = insertfuture.NewRow();
+            if (EstimateQunFutureID2.Value == "")
+            {
+                dr["ProdQtyPriceId"] = 0;
+            }
+            else
+            {
+                dr["ProdQtyPriceId"] = EstimateQunFutureID2.Value;
+            }
             dr["Year"] = ddlfutyear2.SelectedItem.Value;
             dr["FYear"] = ddlfutyear2.SelectedItem.Text;
             dr["EstimatedQty"] = txtfutQuantity2.Text;
@@ -1805,6 +1839,14 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         if (txtfutQuantity3.Text != "" && txtfutvalue3.Text != "")
         {
             dr = insertfuture.NewRow();
+            if (EstimateQunFutureID3.Value == "")
+            {
+                dr["ProdQtyPriceId"] = 0;
+            }
+            else
+            {
+                dr["ProdQtyPriceId"] = EstimateQunFutureID3.Value;
+            }
             dr["Year"] = ddlfutyear3.SelectedItem.Value;
             dr["FYear"] = ddlfutyear3.SelectedItem.Text;
             dr["EstimatedQty"] = txtfutQuantity3.Text;
@@ -1816,6 +1858,14 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         if (txtfutQuantity4.Text != "" && txtfutvalue4.Text != "")
         {
             dr = insertfuture.NewRow();
+            if (EstimateQunFutureID4.Value == "")
+            {
+                dr["ProdQtyPriceId"] = 0;
+            }
+            else
+            {
+                dr["ProdQtyPriceId"] = EstimateQunFutureID4.Value;
+            }
             dr["Year"] = ddlfutyear4.SelectedItem.Value;
             dr["FYear"] = ddlfutyear4.SelectedItem.Text;
             dr["EstimatedQty"] = txtfutQuantity4.Text;
@@ -1827,6 +1877,14 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         if (txtfutQuantity5.Text != "" && txtfutvalue5.Text != "")
         {
             dr = insertfuture.NewRow();
+            if (EstimateQunFutureID5.Value == "")
+            {
+                dr["ProdQtyPriceId"] = 0;
+            }
+            else
+            {
+                dr["ProdQtyPriceId"] = EstimateQunFutureID5.Value;
+            }
             dr["Year"] = ddlfutyear5.SelectedItem.Value;
             dr["FYear"] = ddlfutyear5.SelectedItem.Text;
             dr["EstimatedQty"] = txtfutQuantity5.Text;
@@ -1847,6 +1905,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
             {
                 if (DtGridEstimate.Rows[ss]["FYear"].ToString() == "2020-21")
                 {
+                    EstimateQunFutureID.Value = DtGridEstimate.Rows[ss]["ProdQtyPriceId"].ToString();
                     ddlfutyear1.SelectedValue = DtGridEstimate.Rows[ss]["Year"].ToString();
                     txtfutQuantity1.Text = DtGridEstimate.Rows[ss]["EstimatedQty"].ToString();
                     ddlfutunit1.SelectedValue = DtGridEstimate.Rows[ss]["Unit"].ToString();
@@ -1854,6 +1913,8 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                 }
                 else if (DtGridEstimate.Rows[ss]["FYear"].ToString() == "2021-22")
                 {
+
+                    EstimateQunFutureID2.Value = DtGridEstimate.Rows[ss]["ProdQtyPriceId"].ToString();
                     ddlfutyear2.SelectedValue = DtGridEstimate.Rows[ss]["Year"].ToString();
                     txtfutQuantity2.Text = DtGridEstimate.Rows[ss]["EstimatedQty"].ToString();
                     ddlfutunit2.SelectedValue = DtGridEstimate.Rows[ss]["Unit"].ToString();
@@ -1861,6 +1922,8 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                 }
                 else if (DtGridEstimate.Rows[ss]["FYear"].ToString() == "2022-23")
                 {
+
+                    EstimateQunFutureID3.Value = DtGridEstimate.Rows[ss]["ProdQtyPriceId"].ToString();
                     ddlfutyear3.SelectedValue = DtGridEstimate.Rows[ss]["Year"].ToString();
                     txtfutQuantity3.Text = DtGridEstimate.Rows[ss]["EstimatedQty"].ToString();
                     ddlfutunit3.SelectedValue = DtGridEstimate.Rows[ss]["Unit"].ToString();
@@ -1868,6 +1931,8 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                 }
                 else if (DtGridEstimate.Rows[ss]["FYear"].ToString() == "2023-24")
                 {
+
+                    EstimateQunFutureID4.Value = DtGridEstimate.Rows[ss]["ProdQtyPriceId"].ToString();
                     ddlfutyear4.SelectedValue = DtGridEstimate.Rows[ss]["Year"].ToString();
                     txtfutQuantity4.Text = DtGridEstimate.Rows[ss]["EstimatedQty"].ToString();
                     ddlfutunit4.SelectedValue = DtGridEstimate.Rows[ss]["Unit"].ToString();
@@ -1875,6 +1940,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                 }
                 else if (DtGridEstimate.Rows[ss]["FYear"].ToString() == "2024-25")
                 {
+                    EstimateQunFutureID5.Value = DtGridEstimate.Rows[ss]["ProdQtyPriceId"].ToString();
                     ddlfutyear5.SelectedValue = DtGridEstimate.Rows[ss]["Year"].ToString();
                     txtfutQuantity5.Text = DtGridEstimate.Rows[ss]["EstimatedQty"].ToString();
                     ddlfutunit5.SelectedValue = DtGridEstimate.Rows[ss]["Unit"].ToString();
@@ -1882,7 +1948,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                 }
             }
         }
-    }   
+    }
     #endregion
     #region Add Grid of EstimateQuanPriceOld
     protected DataTable Dvinsert()
@@ -1894,10 +1960,19 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         insert.Columns.Add(new DataColumn("Unit", typeof(string)));
         insert.Columns.Add(new DataColumn("EstimatedPrice", typeof(string)));
         insert.Columns.Add(new DataColumn("Type", typeof(string)));
+        insert.Columns.Add(new DataColumn("ProdQtyPriceId", typeof(Int64)));
         DataRow dr;
         if (txtestquan1.Text != "" && txtpriceestimate1.Text != "")
         {
             dr = insert.NewRow();
+            if (EstimateQunOldID.Value == "")
+            {
+                dr["ProdQtyPriceId"] = 0;
+            }
+            else
+            {
+                dr["ProdQtyPriceId"] = EstimateQunOldID.Value;
+            }
             dr["Year"] = ddlyearestimate1.SelectedItem.Value;
             dr["FYear"] = ddlyearestimate1.SelectedItem.Text;
             dr["EstimatedQty"] = txtestquan1.Text;
@@ -1909,6 +1984,14 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         if (txtestquan2.Text != "" && txtpriceestimate2.Text != "")
         {
             dr = insert.NewRow();
+            if (EstimateQunOldID2.Value == "")
+            {
+                dr["ProdQtyPriceId"] = 0;
+            }
+            else
+            {
+                dr["ProdQtyPriceId"] = EstimateQunOldID2.Value;
+            }
             dr["Year"] = ddlyearestimate2.SelectedItem.Value;
             dr["FYear"] = ddlyearestimate2.SelectedItem.Text;
             dr["EstimatedQty"] = txtestquan2.Text;
@@ -1920,6 +2003,14 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         if (txtestquan3.Text != "" && txtpriceestimate3.Text != "")
         {
             dr = insert.NewRow();
+            if (EstimateQunOldID3.Value == "")
+            {
+                dr["ProdQtyPriceId"] = 0;
+            }
+            else
+            {
+                dr["ProdQtyPriceId"] = EstimateQunOldID3.Value;
+            }
             dr["Year"] = ddlyearestimate3.SelectedItem.Value;
             dr["FYear"] = ddlyearestimate3.SelectedItem.Text;
             dr["EstimatedQty"] = txtestquan3.Text;
@@ -1940,6 +2031,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
             {
                 if (DtGridEstimate1.Rows[estimate]["FYear"].ToString() == "2017-18")
                 {
+                    EstimateQunOldID.Value = DtGridEstimate1.Rows[estimate]["ProdQtyPriceId"].ToString();
                     ddlyearestimate1.SelectedValue = DtGridEstimate1.Rows[estimate]["Year"].ToString();
                     txtestquan1.Text = DtGridEstimate1.Rows[estimate]["EstimatedQty"].ToString();
                     ddlunit1.SelectedValue = DtGridEstimate1.Rows[estimate]["Unit"].ToString();
@@ -1947,7 +2039,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                 }
                 else if (DtGridEstimate1.Rows[estimate]["FYear"].ToString() == "2018-19")
                 {
-
+                    EstimateQunOldID2.Value = DtGridEstimate1.Rows[estimate]["ProdQtyPriceId"].ToString();
                     ddlyearestimate2.SelectedValue = DtGridEstimate1.Rows[estimate]["Year"].ToString();
                     txtestquan2.Text = DtGridEstimate1.Rows[estimate]["EstimatedQty"].ToString();
                     ddlunit2.SelectedValue = DtGridEstimate1.Rows[estimate]["Unit"].ToString();
@@ -1955,6 +2047,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                 }
                 else if (DtGridEstimate1.Rows[estimate]["FYear"].ToString() == "2019-20")
                 {
+                    EstimateQunOldID3.Value = DtGridEstimate1.Rows[estimate]["ProdQtyPriceId"].ToString();
                     ddlyearestimate3.SelectedValue = DtGridEstimate1.Rows[estimate]["Year"].ToString();
                     txtestquan3.Text = DtGridEstimate1.Rows[estimate]["EstimatedQty"].ToString();
                     ddlunit3.SelectedValue = DtGridEstimate1.Rows[estimate]["Unit"].ToString();
@@ -1962,7 +2055,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                 }
             }
         }
-    }   
+    }
     #endregion
     #region Show NSNGroup GRID TO Add
     protected void lblviewitemcode_Click(object sender, EventArgs e)
@@ -2150,7 +2243,6 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                 txtoemaddress.Text = DtView.Rows[0]["OEMAddress"].ToString();
                 txtdpsupartnumber.Text = DtView.Rows[0]["DPSUPartNumber"].ToString();
                 txthsncodereadonly.Text = DtView.Rows[0]["HsnCode8digit"].ToString();
-
                 if (DtView.Rows[0]["EndUser"].ToString() != "")
                 {
                     DataTable dtEndUseredit = Lo.RetriveProductCode("", hfprodrefno.Value, "EndUser", hidType.Value);
@@ -2166,7 +2258,6 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                                 }
                             }
                         }
-
                     }
                 }
                 if (DtView.Rows[0]["Platform"].ToString() != "")
@@ -2191,7 +2282,6 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                 rbisindinised.SelectedValue = DtView.Rows[0]["IsIndeginized"].ToString();
                 if (rbisindinised.SelectedItem.Value == "Y")
                 {
-
                     txtmanufacturename.Text = DtView.Rows[0]["ManufactureName"].ToString();
                     txtmanifacaddress.Text = DtView.Rows[0]["ManufactureAddress"].ToString();
                     ddlyearofindiginization.SelectedValue = DtView.Rows[0]["YearofIndiginization"].ToString();
@@ -2205,12 +2295,10 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                 if (rbproductImported.SelectedItem.Value == "N")
                 {
                     txtremarksyearofimportyes.Text = DtView.Rows[0]["YearofImportRemarks"].ToString();
-                    divyearofimportYes.Visible = true;
                 }
                 else
                 {
                     BindGridEstimateQuantity1();
-                    divyearofimportYes.Visible = true;
                 }
                 DataTable dtPdfBind = Lo.RetriveProductCode("", hfprodrefno.Value, "ProductImage", "PDF");
                 if (dtPdfBind.Rows.Count > 0)
