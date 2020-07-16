@@ -675,7 +675,24 @@ public partial class User_U_Cart : System.Web.UI.Page
                         Tr21.Visible = false;
                         Tr22.Visible = false;
                     }
-
+                    if (DtView.Rows[0]["IndTargetYear"].ToString() != "")
+                    {
+                        lblprocstart.Text = DtView.Rows[0]["lblprocstart"].ToString().Substring(0, DtView.Rows[0]["lblprocstart"].ToString().Length - 1);
+                        Tr25.Visible = true;
+                    }
+                    else
+                    {
+                        Tr25.Visible = false;
+                    }
+                    if (DtView.Rows[0]["IndProcess"].ToString() != "")
+                    {
+                        lblprocstart.Text = DtView.Rows[0]["IndProcess"].ToString();
+                        Tr24.Visible = true;
+                    }
+                    else
+                    {
+                        Tr24.Visible = false;
+                    }
                     ScriptManager.RegisterStartupScript(this, GetType(), "ProductCompany", "showPopup();", true);
                 }
             }

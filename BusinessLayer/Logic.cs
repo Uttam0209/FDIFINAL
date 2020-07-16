@@ -307,14 +307,11 @@ namespace BusinessLayer
         }
         public DataTable RetriveProductUser()
         {
-            // if (sortvalue == "")
-            // {
             return SqlHelper.Instance.GetExecuteData("select * from fn_ProductFilterSearch() where (EstimatePrice > 1  or EstimatePricefuture > 1) order by  ISNULL(EstimatePrice * 0,1), EstimatePrice desc;");
-            // }
-            ////    else
-            ////    {
-            //return SqlHelper.Instance.GetExecuteData("select * from fn_ProductFilterSearch() where (" + sortvalue + " > 50) order by  ISNULL(" + sortvalue + "*0,1), " + sortvalue + " desc;");
-            ////  }
+        }
+        public DataTable RetriveProductView()
+        {
+            return SqlHelper.Instance.GetExecuteData("select * from fn_ProductView()");
         }
         #endregion
         #region DeleteCode

@@ -720,6 +720,17 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         else
         { eoi.Visible = false; }
     }
+    protected void chkindiprocstart_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        if (chkindiprocstart.SelectedValue == "Yes")
+        {
+            indicatchk.Visible = true;
+        }
+        else
+        {
+            indicatchk.Visible = false;
+        }
+    }
     #endregion
     #region For ProductCode
     protected void BindMasterCategory()
@@ -981,7 +992,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     #endregion
     #region PanelSaveCode
     private string m;
-    string a, b, qa = string.Empty;
+    string a, b, qa, ity = string.Empty;
     protected void SaveProductDescription()
     {
         try
@@ -1228,21 +1239,6 @@ public partial class Admin_AddProduct : System.Web.UI.Page
             dtSaveProdInfo = SaveCodeProdInfo();
             HyPanel1["AdditionalDetail"] = Co.RSQandSQLInjection(txtadditionalinfo.Text.Trim(), "soft");
             dtSaveEstimateQuantity = Dvinsertfuture();
-            for (int j = 0; j < rbIgCategory.Items.Count; j++)
-            {
-                if (rbIgCategory.Items[j].Selected == true)
-                {
-                    a = a + rbIgCategory.Items[j].Value + ",";
-                }
-            }
-            if (a.ToString() != "")
-            {
-                HyPanel1["PurposeofProcurement"] = a.ToString();
-            }
-            else
-            {
-                HyPanel1["PurposeofProcurement"] = "";
-            }
             HyPanel1["ProcurmentCategoryRemark"] = Co.RSQandSQLInjection(txtremarksprocurmentCategory.Text.Trim(), "soft");
             HyPanel1["TenderSubmition"] = "";
             HyPanel1["TenderStatus"] = "";
@@ -1276,6 +1272,44 @@ public partial class Admin_AddProduct : System.Web.UI.Page
             HyPanel1["Remarks"] = "";
             HyPanel1["FinancialSupport"] = "";
             HyPanel1["FinancialRemark"] = "";
+            for (int i = 0; i < chkinditargetyear.Items.Count; i++)
+            {
+                if (chkinditargetyear.Items[i].Selected == true)
+                {
+                    ity = ity + chkinditargetyear.Items[i].Value + ",";
+                }
+            }
+            if (ity.ToString() != "")
+            {
+                HyPanel1["IndTargetYear"] = ity.ToString();
+            }
+            else
+            {
+                HyPanel1["IndTargetYear"] = "";
+            }
+            HyPanel1["IndProcess"] = chkindiprocstart.SelectedItem.Value;
+            if (chkindiprocstart.SelectedItem.Value == "Yes")
+            {
+                for (int j = 0; j < rbIgCategory.Items.Count; j++)
+                {
+                    if (rbIgCategory.Items[j].Selected == true)
+                    {
+                        a = a + rbIgCategory.Items[j].Value + ",";
+                    }
+                }
+                if (a.ToString() != "")
+                {
+                    HyPanel1["PurposeofProcurement"] = a.ToString();
+                }
+                else
+                {
+                    HyPanel1["PurposeofProcurement"] = "";
+                }
+            }
+            else
+            {
+                HyPanel1["PurposeofProcurement"] = "";
+            }
             if (ddlNodalOfficerEmail.Text == "" || ddlNodalOfficerEmail.SelectedItem.Text == "Select")
             {
                 HyPanel1["NodelDetail"] = null;
@@ -1347,67 +1381,36 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                             }
                             if (checklistdeclaration != "")
                             {
-                                string mIgCat = "";
-                                foreach (ListItem chkIg in rbIgCategory.Items)
+                                //string mIgCat = "";
+                                //foreach (ListItem chkIg in rbIgCategory.Items)
+                                //{
+                                //    if (chkIg.Selected == true)
+                                //    {
+                                //        mIgCat = mIgCat + chkIg;
+                                //    }
+                                //}
+                                //if (mIgCat != "")
+                                //{
+                                if (rbeligible.SelectedIndex != -1)
                                 {
-                                    if (chkIg.Selected == true)
+                                    string mchkqua = "";
+                                    foreach (ListItem chkQa in chkQAA.Items)
                                     {
-                                        mIgCat = mIgCat + chkIg;
-                                    }
-                                }
-                                if (mIgCat != "")
-                                {
-                                    if (rbeligible.SelectedIndex != -1)
-                                    {
-                                        string mchkqua = "";
-                                        foreach (ListItem chkQa in chkQAA.Items)
+                                        if (chkQa.Selected == true)
                                         {
-                                            if (chkQa.Selected == true)
-                                            {
-                                                mchkqua = mchkqua + chkQa;
-                                            }
+                                            mchkqua = mchkqua + chkQa;
                                         }
-                                        if (mchkqua != "")
+                                    }
+                                    if (mchkqua != "")
+                                    {
+                                        if (txtestquan1.Text != "" && txtpriceestimate1.Text != "" || txtestquan2.Text != "" && txtpriceestimate2.Text != "" || txtestquan3.Text != "" && txtpriceestimate3.Text != "")
                                         {
-                                            if (txtestquan1.Text != "" && txtpriceestimate1.Text != "" || txtestquan2.Text != "" && txtpriceestimate2.Text != "" || txtestquan3.Text != "" && txtpriceestimate3.Text != "")
+                                            if (fuitemdescriptionfile.HasFile != false)
                                             {
-                                                if (fuitemdescriptionfile.HasFile != false)
+                                                int iFileSize = fuitemdescriptionfile.PostedFile.ContentLength;
+                                                if (iFileSize > 5242880) // 5MB
                                                 {
-                                                    int iFileSize = fuitemdescriptionfile.PostedFile.ContentLength;
-                                                    if (iFileSize > 5242880) // 5MB
-                                                    {
-                                                        ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "alert('Maximum 5 Mb pdf file can be uploaded')", true);
-                                                    }
-                                                    else
-                                                    {
-                                                        if (fuimages.HasFile != false)
-                                                        {
-                                                            int filecount = 0;
-                                                            filecount = Convert.ToInt32(fuimages.PostedFiles.Count.ToString());
-                                                            if (filecount <= 4)
-                                                            {
-                                                                int iImageFileSize = fuimages.PostedFile.ContentLength;
-                                                                if (iImageFileSize > 20971520)
-                                                                {
-                                                                    ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert",
-                                                                        "alert('Maximum 5 Mb each .jpg,.jpeg,.png,.tif images can be uploaded')", true);
-                                                                }
-                                                                else
-                                                                {
-                                                                    SaveProductDescription();
-                                                                }
-                                                            }
-                                                            else
-                                                            {
-                                                                ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert",
-                                                                    "alert('Maximum 4 files can be uploaded')", true);
-                                                            }
-                                                        }
-                                                        else
-                                                        {
-                                                            SaveProductDescription();
-                                                        }
-                                                    }
+                                                    ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "alert('Maximum 5 Mb pdf file can be uploaded')", true);
                                                 }
                                                 else
                                                 {
@@ -1442,21 +1445,52 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                                             }
                                             else
                                             {
-                                                ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "alert('Please select any one year of import during last 3 years detail.')", true);
+                                                if (fuimages.HasFile != false)
+                                                {
+                                                    int filecount = 0;
+                                                    filecount = Convert.ToInt32(fuimages.PostedFiles.Count.ToString());
+                                                    if (filecount <= 4)
+                                                    {
+                                                        int iImageFileSize = fuimages.PostedFile.ContentLength;
+                                                        if (iImageFileSize > 20971520)
+                                                        {
+                                                            ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert",
+                                                                "alert('Maximum 5 Mb each .jpg,.jpeg,.png,.tif images can be uploaded')", true);
+                                                        }
+                                                        else
+                                                        {
+                                                            SaveProductDescription();
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert",
+                                                            "alert('Maximum 4 files can be uploaded')", true);
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    SaveProductDescription();
+                                                }
                                             }
                                         }
                                         else
                                         {
-                                            ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "alert('Please select Quality Assurance Agency category tab and select checkbox before submit.')", true);
+                                            ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "alert('Please select any one year of import during last 3 years detail.')", true);
                                         }
                                     }
                                     else
                                     {
-                                        ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "alert('Please select EoI/RFP before submit.')", true);
+                                        ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "alert('Please select Quality Assurance Agency category tab and select checkbox before submit.')", true);
                                     }
                                 }
                                 else
-                                { ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "alert('Please select indigenization category tab and select checkbox before submit.')", true); }
+                                {
+                                    ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "alert('Please select EoI/RFP before submit.')", true);
+                                }
+                                //}
+                                //else
+                                //{ ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "alert('Please select indigenization category tab and select checkbox before submit.')", true); }
                             }
                             else
                             {
@@ -1543,7 +1577,11 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         txtfiigno.Text = "";
         txtfiigtype.Text = "";
         rbeoimake2.SelectedIndex = -1;
+        eoi.Visible = false;
         chkQAA.SelectedIndex = -1;
+        chkindiprocstart.SelectedValue = "Yes";
+        chkinditargetyear.SelectedIndex = -1;
+        rbIgCategory.SelectedIndex = -1;
         txtestquan1.Text = "";
         txtpriceestimate1.Text = "";
         txtestquan2.Text = "";
@@ -1561,6 +1599,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         txtfutQuantity5.Text = "";
         txtfutvalue5.Text = "";
         lblrefnoforinfo.Text = "";
+        txteoilink.Text = "";
         portalid.Visible = false;
     }
     #endregion
@@ -2333,23 +2372,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                 }
                 txtadditionalinfo.Text = DtView.Rows[0]["AdditionalDetail"].ToString();
                 BindGridEstimateQuantity();
-                if (DtView.Rows[0]["PurposeofProcurement"].ToString() != "")
-                {
-                    DataTable DTporCat = Lo.RetriveProductCode("", hfprodrefno.Value, "ProductPOP", hidType.Value);
-                    if (DTporCat.Rows.Count > 0)
-                    {
-                        for (int i = 0; DTporCat.Rows.Count > i; i++)
-                        {
-                            foreach (ListItem rw in rbIgCategory.Items)
-                            {
-                                if (rw.Value == DTporCat.Rows[i]["SCategoryId"].ToString())
-                                {
-                                    rw.Selected = true;
-                                }
-                            }
-                        }
-                    }
-                }
+
                 txtremarksprocurmentCategory.Text = DtView.Rows[0]["ProcurmentCategoryRemark"].ToString();
                 rbeoimake2.SelectedValue = DtView.Rows[0]["EOIStatus"].ToString();
                 if (rbeoimake2.SelectedValue == "Yes")
@@ -2357,7 +2380,6 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                     txteoilink.Text = DtView.Rows[0]["EOIURL"].ToString();
                     eoi.Visible = true;
                 }
-
                 if (DtView.Rows[0]["QAAgency"].ToString() != "")
                 {
                     DataTable dtQat = Lo.RetriveProductCode("", hfprodrefno.Value, "ProductQAAgency", hidType.Value);
@@ -2374,6 +2396,69 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                             }
                         }
 
+                    }
+                }
+                if (DtView.Rows[0]["IndTargetYear"].ToString() != "")
+                {
+                    string m = DtView.Rows[0]["IndTargetYear"].ToString().Substring(0, DtView.Rows[0]["IndTargetYear"].ToString().Length - 1);
+                    char[] spearator = { ',', ' ' };
+                    Int32 count = 6;
+                    String[] strlist = m.Split(spearator, count, StringSplitOptions.None);
+                    foreach (String s in strlist)
+                    {
+                        for (int i = 0; chkinditargetyear.Items.Count > i; i++)
+                        {
+                            if (s == chkinditargetyear.Items[i].Value)
+                            {
+                                chkinditargetyear.Items[i].Selected = true;
+                            }
+                        }
+                    }
+                }
+                chkindiprocstart.SelectedValue = DtView.Rows[0]["IndProcess"].ToString();
+                if (chkindiprocstart.SelectedValue == "Yes")
+                {
+                    if (DtView.Rows[0]["PurposeofProcurement"].ToString() != "")
+                    {
+                        DataTable DTporCat = Lo.RetriveProductCode("", hfprodrefno.Value, "ProductPOP", hidType.Value);
+                        if (DTporCat.Rows.Count > 0)
+                        {
+                            for (int i = 0; DTporCat.Rows.Count > i; i++)
+                            {
+                                foreach (ListItem rw in rbIgCategory.Items)
+                                {
+                                    if (rw.Value == DTporCat.Rows[i]["SCategoryId"].ToString())
+                                    {
+                                        rw.Selected = true;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    if (DtView.Rows[0]["PurposeofProcurement"].ToString() != "")
+                    {
+                        DataTable DTporCat = Lo.RetriveProductCode("", hfprodrefno.Value, "ProductPOP", hidType.Value);
+                        if (DTporCat.Rows.Count > 0)
+                        {
+                            for (int i = 0; DTporCat.Rows.Count > i; i++)
+                            {
+                                foreach (ListItem rw in rbIgCategory.Items)
+                                {
+                                    if (rw.Value == DTporCat.Rows[i]["SCategoryId"].ToString())
+                                    {
+                                        rw.Selected = true;
+                                    }
+                                }
+                            }
+                            chkindiprocstart.SelectedValue = "Yes";
+                        }
+                    }
+                    else
+                    {
+                        indicatchk.Visible = false;
                     }
                 }
                 ddlNodalOfficerEmail.SelectedValue = DtView.Rows[0]["NodelDetail"].ToString();

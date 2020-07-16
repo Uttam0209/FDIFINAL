@@ -166,21 +166,18 @@
                 </div>
                 <div class="modal-body tab-content py-4">
                     <p class="text-justify">
-                        Indigenization Portal <b>(srijandefence.gov.in)</b> is on online market place platform(<b>non-
-                            transactional</b>). It is set up by DDP/MoD/Government of India to boost up the indigenization of
-                            defence imported items/components/spares/equipment by the Indian Industries
+                        Indigenization Portal <b>(srijandefence.gov.in)</b> is on online market place platform(non-transactional). It is set up by DDP/MoD/Government of India to boost up the 
+                        indigenization of defence imported items/components/spares/equipment by the Indian Industries through their own or through Joint Venture with OEMs.
                     </p>
                     <p class="text-justify">
-                        DPSUs/OFB/SHQs will share their list of items on this portal with the Indian Industry, which
-                            DPSUs/OFB/SHQs have imported last year (2019-20) and which they are going to import in the
-                            current year (2020-21), each item has a total annual import value of more than Rs 50 Lakh.
+                        DPSUs/OFB/SHQs will share their list of items on this portal with the Indian Industry, which DPSUs/OFB/SHQs have imported last year (2019-20) and which they 
+                        are going to import in the current year (2020-21), each item has a total annual import value of more than Rs 50 Lakh. 
+                        They will also share their list of items which have been targeted in the current year (2020-21) for indigenization.
                     </p>
                     <p class="text-justify">
-                        The Indian Industry will show their interest in those items for which they have capability to
-                            manufacture. Thereafter, the concerned DPSUs/OFB/SHQs, based on their requirement of the
-                            items and their respective guidelines &amp; procedures will interact with the interested Indian
-                            Industry for indigenization. The interested Indian Industry can also interact with concerned
-                            DPSUs/OFB/SHQs for their queries related to indigenization.
+                        The Indian Industry will show their interest in those items for which they have capability to design develop & manufacture either on their own or through JVs with OEMs.
+                         Thereafter, the concerned DPSUs/OFB/SHQs, based on their requirement of the items and their respective guidelines & procedures will interact with the interested Indian
+                         Industry for indigenization.The interested Indian Industry can also interact with concerned DPSUs/OFB/SHQs for their queries related to indigenization.
                     </p>
                 </div>
             </div>
@@ -481,6 +478,15 @@
                             </div>
                             <br />
                             <div id="divcontentproduct" runat="server">
+                                <p style="float: right;">
+                                    Showing
+                                    <asp:Label runat="server" ID="lbltotalshowpageitem"></asp:Label>
+                                    products of
+                                <asp:Label ID="lbltotfilter" runat="server"></asp:Label>
+                                    products  
+                                </p>
+                                <div class="clearfix">
+                                </div>
                                 <div class="row mx-n2">
                                     <asp:DataList runat="server" ID="dlproduct" RepeatColumns="3" RepeatLayout="Flow"
                                         RepeatDirection="Horizontal" OnItemCommand="dlproduct_ItemCommand" OnItemDataBound="dlproduct_ItemDataBound">
@@ -612,10 +618,10 @@
                                             <asp:LinkButton ID="lnkbtnPgPrevious" runat="server" class="page-link" OnClick="lnkbtnPgPrevious_Click"><i class="fas fa-chevron-left mr-2"></i>Prev</asp:LinkButton>
                                         </li>
                                     </ul>
-                                    <ul class="pagination">
+                                    <%-- <ul class="pagination">
                                         <asp:TextBox ID="txtpageno" runat="server" AutoPostBack="true" ToolTip="Enter No (Number could not be 0 or either -1)" CssClass="form-control"
                                             Placeholder="Enter PageNo" OnTextChanged="btngoto_Click"></asp:TextBox>
-                                    </ul>
+                                    </ul>--%>
                                     <ul class="pagination">
                                         <li class="page-item">
                                             <asp:LinkButton ID="lnkbtnPgNext" runat="server" class="page-link" OnClick="lnkbtnPgNext_Click">
@@ -658,7 +664,7 @@
                                                         <div class="card-body card-custom ">
                                                             <table class="table mb-2">
                                                                 <tbody>
-                                                                    <tr runat="server" id="eleven" style="color:blue;">
+                                                                    <tr runat="server" id="eleven" style="color: blue;">
                                                                         <th>Item Name</th>
                                                                         <td>
                                                                             <asp:Label ID="itemname2" runat="server" Text=""></asp:Label>
@@ -793,7 +799,7 @@
                                                                             <asp:Label ID="lblrefnoview" runat="server" Text=""></asp:Label>
                                                                         </td>
                                                                     </tr>
-                                                                     <tr runat="server" id="Tr23" style="color:blue;">
+                                                                    <tr runat="server" id="Tr23" style="color: blue;">
                                                                         <th>Item Name</th>
                                                                         <td>
                                                                             <asp:Label ID="lblitemname1" runat="server" Text=""></asp:Label>
@@ -1124,9 +1130,27 @@
                                                                     <tr runat="server" id="Tr22" visible="false">
                                                                         <th scope="row">Year of Make in India
                                                                         </th>
-                                                                        <td><asp:Label ID="lblyearofindi" runat="server" Text=""></asp:Label>
+                                                                        <td>
+                                                                            <asp:Label ID="lblyearofindi" runat="server" Text=""></asp:Label>
                                                                         </td>
                                                                     </tr>
+
+                                                                     <tr runat="server" id="Tr24" visible="false">
+                                                                        <th scope="row">Indigenization Process started
+                                                                        </th>
+                                                                        <td>
+                                                                            <asp:Label ID="lblprocstart" runat="server" Text=""></asp:Label>
+                                                                        </td>
+                                                                    </tr>
+                                                                     <tr runat="server" id="Tr25" visible="false">
+                                                                        <th scope="row">Indigenization Target Year
+                                                                        </th>
+                                                                        <td>
+                                                                            <asp:Label ID="lblindtrgyr" runat="server" Text=""></asp:Label>
+                                                                        </td>
+                                                                    </tr>
+
+
 
                                                                 </tbody>
                                                             </table>
@@ -1182,9 +1206,10 @@
                 </div>
             </ContentTemplate>
             <Triggers>
-                <asp:PostBackTrigger ControlID="lnkbtnPgPrevious" />
-                <asp:PostBackTrigger ControlID="txtpageno" />
+                <%--<asp:PostBackTrigger ControlID="lnkbtnPgPrevious" />
                 <asp:PostBackTrigger ControlID="lnkbtnPgNext" />
+                <asp:PostBackTrigger ControlID="txtpageno" />--%>
+                <asp:PostBackTrigger ControlID="btnreset" />
             </Triggers>
         </asp:UpdatePanel>
         <asp:UpdateProgress ID="UpdateProgress" runat="server" AssociatedUpdatePanelID="update">
@@ -1214,8 +1239,6 @@
         <script src="User/Uassets/js/bootstrap.bundle.min.js"></script>
         <script src="User/Uassets/js/theme.min.js"></script>
         <script type="text/javascript">
-
-
             function showPopup() {
                 $('#ProductCompany').modal('show');
             }
@@ -1234,49 +1257,49 @@
                 popupWin.document.close();
             }
         </script>
+        <script>
+            $(document).ready(function () {
+                $("#adnce_search").click(function () {
+                    $("#adnce_search_box").toggle(400);
+                });
+            });
+        </script>
+        <script src="User/Uassets/js/jquery-ui.min.js"></script>
+        <script type="text/javascript">
+            $(function () {
+                SetAutoComplete();
+            });
+            var prm = Sys.WebForms.PageRequestManager.getInstance();
+            if (prm != null) {
+                prm.add_endRequest(function (sender, e) {
+                    if (sender._postBackSettings.panelsToUpdate != null) {
+                        SetAutoComplete();
+                    }
+                });
+            };
+            function SetAutoComplete() {
+                $("[id$=txtsearch]").autocomplete({
+                    source: function (request, response) {
+                        $.ajax({
+                            url: 'User/U_ProductList.aspx/GetSearchKeyword',
+                            data: "{ 'prefix': '" + request.term + "'}",
+                            dataType: "json",
+                            type: "POST",
+                            contentType: "application/json; charset=utf-8",
+                            success: function (data) {
+                                response($.map(data.d, function (item) {
+                                    return {
+                                        label: item.split('-')[0],
+                                        val: item.split('-')[1]
+                                    };
+                                }))
+                            }
+                        });
+                    },
+                    minLength: 3
+                });
+            }
+        </script>
     </form>
-    <script>
-        $(document).ready(function () {
-            $("#adnce_search").click(function () {
-                $("#adnce_search_box").toggle(400);
-            });
-        });
-    </script>
-    <script src="User/Uassets/js/jquery-ui.min.js"></script>
-    <script type="text/javascript">
-        $(function () {
-            SetAutoComplete();
-        });
-        var prm = Sys.WebForms.PageRequestManager.getInstance();
-        if (prm != null) {
-            prm.add_endRequest(function (sender, e) {
-                if (sender._postBackSettings.panelsToUpdate != null) {
-                    SetAutoComplete();
-                }
-            });
-        };
-        function SetAutoComplete() {
-            $("[id$=txtsearch]").autocomplete({
-                source: function (request, response) {
-                    $.ajax({
-                        url: 'User/U_ProductList.aspx/GetSearchKeyword',
-                        data: "{ 'prefix': '" + request.term + "'}",
-                        dataType: "json",
-                        type: "POST",
-                        contentType: "application/json; charset=utf-8",
-                        success: function (data) {
-                            response($.map(data.d, function (item) {
-                                return {
-                                    label: item.split('-')[0],
-                                    val: item.split('-')[1]
-                                };
-                            }))
-                        }
-                    });
-                },
-                minLength: 3
-            });
-        }
-    </script>
 </body>
 </html>

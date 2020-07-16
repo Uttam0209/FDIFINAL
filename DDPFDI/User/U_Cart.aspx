@@ -650,6 +650,21 @@
                                                                             <asp:Label ID="lblyearofindi" runat="server" Text=""></asp:Label>
                                                                         </td>
                                                                     </tr>
+                                                                     <tr runat="server" id="Tr24" visible="false">
+                                                                        <th scope="row">Indigenization Process started
+                                                                        </th>
+                                                                        <td>
+                                                                            <asp:Label ID="lblprocstart" runat="server" Text=""></asp:Label>
+                                                                        </td>
+                                                                    </tr>
+                                                                     <tr runat="server" id="Tr25" visible="false">
+                                                                        <th scope="row">Indigenization Target Year
+                                                                        </th>
+                                                                        <td>
+                                                                            <asp:Label ID="lblindtrgyr" runat="server" Text=""></asp:Label>
+                                                                        </td>
+                                                                    </tr>
+
                                                                 </tbody>
                                                             </table>
                                                         </div>

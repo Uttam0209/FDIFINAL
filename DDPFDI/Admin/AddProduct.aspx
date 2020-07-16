@@ -947,35 +947,80 @@
                                     </div>
                                     <div class="section-pannel">
                                         <div class="row">
+                                            <div class="col-sm-12">
+                                                <h5>Status of Indigenization <span class="mandatory">*</span></h5>
+                                            </div>
                                             <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <h5>Indigenization Category <span class="mandatory">*</span></h5>
-                                                    <asp:CheckBoxList ID="rbIgCategory" runat="server" RepeatColumns="1" RepeatDirection="Horizontal" RepeatLayout="Flow">
+                                                    <h5>Indigenization Target Year</h5>
+                                                    <asp:CheckBoxList ID="chkinditargetyear" runat="server" RepeatColumns="6" RepeatDirection="Horizontal" RepeatLayout="Flow">
+                                                        <asp:ListItem Value="NIL" style="margin-left: 5px;">NIL</asp:ListItem>
+                                                        <asp:ListItem Value="2020-21" style="margin-left: 5px;">2020-21</asp:ListItem>
+                                                        <asp:ListItem Value="2021-22" style="margin-left: 5px;">2021-22</asp:ListItem>
+                                                        <asp:ListItem Value="2022-23" style="margin-left: 5px;">2022-23</asp:ListItem>
+                                                        <asp:ListItem Value="2023-24" style="margin-left: 5px;">2023-24</asp:ListItem>
+                                                        <asp:ListItem Value="2024-25" style="margin-left: 5px;">2024-25</asp:ListItem>
                                                     </asp:CheckBoxList>
                                                 </div>
+                                                <div class="form-group">
+                                                    <h5>Quality Assurance Agency <span class="mandatory">*</span></h5>
+                                                    <asp:CheckBoxList ID="chkQAA" runat="server" RepeatColumns="5" RepeatDirection="Horizontal" RepeatLayout="Flow">
+                                                    </asp:CheckBoxList>
+                                                </div>
+                                                <asp:UpdatePanel runat="server" ID="UpdatePanel3">
+                                                    <ContentTemplate>
+                                                        <div class="col-sm-6">
+                                                            <div class="form-group">
+                                                                <h5>EoI/RFP </h5>
+                                                                <asp:RadioButtonList ID="rbeoimake2" runat="server" RepeatColumns="3" RepeatDirection="Horizontal" AutoPostBack="true" RepeatLayout="Flow" OnSelectedIndexChanged="rbeoimake2_SelectedIndexChanged">
+                                                                    <asp:ListItem Value="Yes" style="margin-left: 10px;">Yes</asp:ListItem>
+                                                                    <asp:ListItem Value="No" Selected="True" style="margin-left: 10px;">No</asp:ListItem>
+                                                                    <asp:ListItem Value="Archive" style="margin-left: 10px;">Archive</asp:ListItem>
+                                                                </asp:RadioButtonList>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-6">
+                                                            <div class="form-group" runat="server" id="eoi" visible="false">
+                                                                <label>Link</label>
+                                                                (if yes) <span class="mandatory">*</span>
+                                                                <asp:TextBox ID="txteoilink" runat="server" CssClass="form-control" placeholder="Link of Tendor"></asp:TextBox>
+                                                            </div>
+                                                        </div>
+                                                    </ContentTemplate>
+                                                </asp:UpdatePanel>
+                                                <asp:UpdateProgress ID="UpdateProgress10" runat="server" AssociatedUpdatePanelID="UpdatePanel1">
+                                                    <ProgressTemplate>
+                                                        <!---Progress Bar ---->
+                                                        <div class="overlay-progress">
+                                                            <div class="custom-progress-bar blue stripes">
+                                                                <span></span>
+                                                                <p>Processing</p>
+                                                            </div>
+                                                        </div>
+                                                        <!---Progress Bar ---->
+                                                    </ProgressTemplate>
+                                                </asp:UpdateProgress>
                                             </div>
-                                            <asp:UpdatePanel runat="server" ID="UpdatePanel3">
+                                            <asp:UpdatePanel runat="server" ID="UpdatePanel7">
                                                 <ContentTemplate>
                                                     <div class="col-md-6">
                                                         <div class="form-group">
-                                                            <h5>Status of Indigenization <span class="mandatory">*</span></h5>
-                                                            <label>EoI/RFP</label>
-                                                            <asp:RadioButtonList ID="rbeoimake2" runat="server" RepeatColumns="3" RepeatDirection="Horizontal" AutoPostBack="true" RepeatLayout="Flow" OnSelectedIndexChanged="rbeoimake2_SelectedIndexChanged">
-                                                                <asp:ListItem Value="Yes" style="margin-left: 10px;">Yes</asp:ListItem>
-                                                                <asp:ListItem Value="No" Selected="True" style="margin-left: 10px;">No</asp:ListItem>
-                                                                <asp:ListItem Value="Archive" style="margin-left: 10px;">Archive</asp:ListItem>
+                                                            <h5>Indigenization Process started</h5>
+                                                            <asp:RadioButtonList ID="chkindiprocstart" runat="server" RepeatColumns="2" RepeatDirection="Horizontal" AutoPostBack="true"
+                                                                RepeatLayout="Flow" OnSelectedIndexChanged="chkindiprocstart_SelectedIndexChanged">
+                                                                <asp:ListItem Value="Yes" style="margin-left: 5px;" Selected="True">Yes</asp:ListItem>
+                                                                <asp:ListItem Value="No" style="margin-left: 5px;">No</asp:ListItem>
                                                             </asp:RadioButtonList>
                                                         </div>
-                                                        <div class="clearfix"></div>
-                                                        <div class="form-group" runat="server" id="eoi" visible="false">
-                                                            <label>Link</label>
-                                                            (if yes) <span class="mandatory">*</span>
-                                                            <asp:TextBox ID="txteoilink" runat="server" CssClass="form-control" placeholder="Link of Tendor"></asp:TextBox>
+                                                        <div class="form-group" runat="server" id="indicatchk">
+                                                            <h5>Indigenization Category</h5>
+                                                            <asp:CheckBoxList ID="rbIgCategory" runat="server" RepeatColumns="1" RepeatDirection="Horizontal" RepeatLayout="Flow">
+                                                            </asp:CheckBoxList>
                                                         </div>
                                                     </div>
                                                 </ContentTemplate>
                                             </asp:UpdatePanel>
-                                            <asp:UpdateProgress ID="UpdateProgress10" runat="server" AssociatedUpdatePanelID="UpdatePanel1">
+                                            <asp:UpdateProgress ID="UpdateProgress11" runat="server" AssociatedUpdatePanelID="UpdatePanel1">
                                                 <ProgressTemplate>
                                                     <!---Progress Bar ---->
                                                     <div class="overlay-progress">
@@ -987,13 +1032,8 @@
                                                     <!---Progress Bar ---->
                                                 </ProgressTemplate>
                                             </asp:UpdateProgress>
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <h5>Quality Assurance Agency <span class="mandatory">*</span></h5>
-                                                    <asp:CheckBoxList ID="chkQAA" runat="server" RepeatColumns="5" RepeatDirection="Horizontal" RepeatLayout="Flow">
-                                                    </asp:CheckBoxList>
-                                                </div>
-                                            </div>
+
+
                                             <div class="col-md-4" runat="server" visible="false">
                                                 <div class="form-group">
                                                     <asp:Label runat="server" ID="Label1" CssClass="form-label " Text="Quality Assurance"></asp:Label>
@@ -1140,7 +1180,7 @@
                                                             <div class="form-group">
                                                                 <label>
                                                                     <span class="mandatory">*</span> Product is eligible to be displayed for general viewing (without registration) and hereby respective DPSU/OFB/SHQ provides consent 
-                                                                    for onward display of the relevant information at defenceimports.gov.in.
+                                                                    for onward display of the relevant information at srijandefence.gov.in..
                                                                     
                                                                 </label>
                                                                 <div class="fr">

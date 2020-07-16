@@ -809,6 +809,8 @@ namespace DataAccessLayer
                     db.AddInParameter(cmd, "@Role", DbType.String, hyProduct["Role"]);
                     db.AddInParameter(cmd, "@CreatedBy", DbType.String, hyProduct["CreatedBy"]);
                     db.AddInParameter(cmd, "@Criteria", DbType.String, Criteria);
+                    db.AddInParameter(cmd, "@IndProcess", DbType.String, hyProduct["IndProcess"]);
+                    db.AddInParameter(cmd, "@IndTargetYear", DbType.String, hyProduct["IndTargetYear"]);
                     db.AddOutParameter(cmd, "@ReturnID", DbType.String, 20);
                     db.ExecuteNonQuery(cmd, dbTran);
                     mCurrentID = db.GetParameterValue(cmd, "@ReturnID").ToString();
