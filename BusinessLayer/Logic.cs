@@ -160,6 +160,10 @@ namespace BusinessLayer
         {
             return SqlHelper.Instance.GetExecuteData("select * from fn_companywiseproduct() order by compName");
         }
+        public DataTable RetriveProductIndig1()
+        {
+            return SqlHelper.Instance.GetExecuteData("select * from fn_EstimatewiseCompanyProduct() order by compName");
+        }
 
         public DataTable RetriveAllCompany(string UnitRefNo, string Role)
         {

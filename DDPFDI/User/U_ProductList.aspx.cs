@@ -85,42 +85,9 @@ public partial class User_U_ProductList : System.Web.UI.Page
         DtGrid = Lo.RetriveProductUser();
         if (DtGrid.Rows.Count > 0)
         {
-            //DtGrid.Columns.Add("RCount", typeof(Int64));
-            //for (int n = 0; DtGrid.Rows.Count > n; n++)
-            //{
-            //    DtGrid.Rows[n]["RCount"] = n + 1;
-            //}
-            //object sumObject = DtGrid.Compute("Sum(EstimatePrice)", string.Empty);
-            //if (sumObject.ToString() == "")
-            //{ lblestimateprice.Text = "0"; }
-            //else
-            //{
-            //    lblestimateprice.Text = sumObject.ToString();
-            //}
-            //object sumObject1 = DtGrid.Compute("Sum(EstimatePricefuture)", string.Empty);
-            //if (sumObject1.ToString() == "")
-            //{ lblfuturepurchase.Text = "0"; }
-            //else
-            //{ lblfuturepurchase.Text = sumObject1.ToString(); }
             UpdateDtGridValue(DtGrid);
             Session["TempData"] = DtGrid;
             ViewState["ResetData"] = DtGrid;
-            // DtFilterView = (DataTable)Session["TempData"];           
-            //DataView dv4 = new DataView(DtGrid, "RCount >='" + n1 + "' And  RCount<='" + n2 + "'", "", DataViewRowState.CurrentRows);
-            //DataTable dtads4 = dv4.ToTable();
-            //pgsource.DataSource = DtGrid.DefaultView;
-            //pgsource.AllowPaging = true;
-            //pgsource.PageSize = 50;
-            //pgsource.CurrentPageIndex = pagingCurrentPage;
-            //ViewState["totpage"] = pgsource.PageCount;
-            //lblpaging.Text = "Page " + (pagingCurrentPage + 1) + " of " + pgsource.PageCount;
-            //lbltotal.Text = "Filter/Search Results " + DtGrid.Rows.Count.ToString() + " items";
-            //lbltotalleft.Text = "Total items uploaded :-  " + DtGrid.Rows.Count.ToString();
-            //lnkbtnPgPrevious.Enabled = !pgsource.IsFirstPage;
-            //lnkbtnPgNext.Enabled = !pgsource.IsLastPage;
-            //dlproduct.DataSource = dtads4.DefaultView;
-            //divcontentproduct.Visible = true;
-            //dlproduct.DataBind();
             SeachResult();
         }
         else
@@ -308,7 +275,7 @@ public partial class User_U_ProductList : System.Web.UI.Page
         DataTable DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, "PROCURMENT CATEGORY", "", "SelectProductCat", "", "");
         if (DtMasterCategroy.Rows.Count > 0)
         {
-            Co.FillCheckBox(chktendor, DtMasterCategroy, "SCategoryName", "SCategoryID");
+            Co.FillRadioBoxList(chktendor, DtMasterCategroy, "SCategoryName", "SCategoryID");
         }
     }
     #endregion
@@ -456,10 +423,6 @@ public partial class User_U_ProductList : System.Web.UI.Page
     }
     protected void ddldeclaration_SelectedIndexChanged(object sender, EventArgs e)
     {
-        for (int i = 0; i < ddldeclaration.Items.Count; i++)
-        {
-            ddldeclaration.Items[i].Attributes.Add("onclick", "MutExChkList(this)");
-        }
         SeachResult();
     }
     protected void ddlimported_SelectedIndexChanged(object sender, EventArgs e)
@@ -763,11 +726,25 @@ public partial class User_U_ProductList : System.Web.UI.Page
                 insert.Rows.Add(dr);
             }
         }
+        if (ddldeclaration.SelectedIndex != -1)
+        {
+            dr = insert.NewRow();
+            dr["Column"] = "IsShowGeneral =";
+            dr["Value"] = "'" + ddldeclaration.SelectedItem.Value + "'";
+            insert.Rows.Add(dr);
+        }
+        if (chkeoistatus.SelectedIndex != -1)
+        {
+            dr = insert.NewRow();
+            dr["Column"] = "EOIStatus =";
+            dr["Value"] = "'" + chkeoistatus.SelectedItem.Value + "'";
+            insert.Rows.Add(dr);
+        }
         if (txtsearch.Text.Trim() != "" && txtsearch.Text.Trim().Length >= 3)
         {
             dr = insert.NewRow();
             dr["Column"] = "((ProductRefNo like";
-            dr["Value"] = "'" + txtsearch.Text.Trim() + "%') or (CompanyName like '" + txtsearch.Text.Trim() + "%') or (UnitName like '" + txtsearch.Text.Trim() + "%') or (FactoryName like '" + txtsearch.Text.Trim() + "%') or (NSCCode like '" + txtsearch.Text.Trim() + "%') or (ProductDescription like '" + txtsearch.Text.Trim() + "%') or (NSNGroup like '" + txtsearch.Text.Trim() + "%') or (DefencePlatform  like '" + txtsearch.Text.Trim() + "%') or (ProdIndustryDoamin like '" + txtsearch.Text.Trim() + "%')  or (NSNGroupClass like '" + txtsearch.Text.Trim() + "%')  or  (ItemCode  like '" + txtsearch.Text.Trim() + "%')  or (ProdIndustrySubDomain like '" + txtsearch.Text.Trim() + "%') or (TopPdf like '" + txtsearch.Text.Trim() + "%')  or (TopImages like '" + txtsearch.Text.Trim() + "%')  or (HSNCode like '" + txtsearch.Text.Trim() + "%') or (Convert(EstimateQu, 'System.String') LIKE '" + txtsearch.Text + "%') or (Convert(EstimatePrice, 'System.String') LIKE '" + txtsearch.Text + "%'))";
+            dr["Value"] = "'" + txtsearch.Text.Trim() + "%') or (CompanyName like '" + txtsearch.Text.Trim() + "%') or (UnitName like '" + txtsearch.Text.Trim() + "%') or (FactoryName like '" + txtsearch.Text.Trim() + "%') or (NSCCode like '" + txtsearch.Text.Trim() + "%') or (ProductDescription like '" + txtsearch.Text.Trim() + "%') or (NSNGroup like '" + txtsearch.Text.Trim() + "%') or (DefencePlatform  like '" + txtsearch.Text.Trim() + "%') or (ProdIndustryDoamin like '" + txtsearch.Text.Trim() + "%')  or (NSNGroupClass like '" + txtsearch.Text.Trim() + "%')  or  (ItemCode  like '" + txtsearch.Text.Trim() + "%')  or (ProdIndustrySubDomain like '" + txtsearch.Text.Trim() + "%') or (TopPdf like '" + txtsearch.Text.Trim() + "%')  or (TopImages like '" + txtsearch.Text.Trim() + "%')  or (HSNCode like '" + txtsearch.Text.Trim() + "%') or (Convert(EstimateQu, 'System.String') LIKE '" + txtsearch.Text + "%') or (Convert(EstimatePrice, 'System.String') LIKE '" + txtsearch.Text + "%') or (DPSUPartNumber like '" + txtsearch.Text.Trim() + "%') or (OEMName like '" + txtsearch.Text.Trim() + "%') or (OEMCountry like '" + txtsearch.Text.Trim() + "%'))";
             insert.Rows.Add(dr);
         }
         for (int i = 0; insert.Rows.Count > i; i++)
@@ -796,7 +773,6 @@ public partial class User_U_ProductList : System.Web.UI.Page
                 DataTable dtnew = dv.ToTable();
                 if (dtnew.Rows.Count > 0)
                 {
-                    // UpdateDtGridValue(dtnew);
                     dv.RowFilter = BindInsertfilter();
                     DataTable dtinner = dv.ToTable();
                     if (dtinner.Rows.Count > 0)
@@ -873,14 +849,6 @@ public partial class User_U_ProductList : System.Web.UI.Page
                     lbltotal.Text = "Filter/Search Results " + dtinner.Rows.Count.ToString() + " items";
                     lbltotfilter.Text = dtinner.Rows.Count.ToString();
                     DataTable dtads = dv.ToTable();
-                    //dtads.Columns.Add("FCount", typeof(Int64));
-                    //for (int n = 0; dtads.Rows.Count > n; n++)
-                    //{
-                    //    dtads.Rows[n]["FCount"] = n + 1;
-                    //}
-                    //  DataView dv4 = new DataView(dtads, "FCount >='" + n1 + "' And  FCount<='" + n2 + "'", "", DataViewRowState.CurrentRows);
-                    //  DataView dv4 = new DataView(dtads);
-                    //  dtads = dv4.ToTable();
                     if (dtads.Rows.Count > 0)
                     {
                         pgsource.DataSource = dtinner.DefaultView;
@@ -893,7 +861,7 @@ public partial class User_U_ProductList : System.Web.UI.Page
                         pgsource.DataSource = dtads.DefaultView;
                         dlproduct.DataSource = pgsource;
                         dlproduct.DataBind();
-                        lbltotalleft.Text = "Total items uploaded :-  " + DtFilterView.Rows.Count.ToString();
+                        lbltotalleft.Text = "Total Imported Items uploaded :-  " + DtFilterView.Rows.Count.ToString();
                         lbltotalshowpageitem.Text = pgsource.FirstIndexInPage + 1 + " - " + (pgsource.FirstIndexInPage + pgsource.Count);
                         divcontentproduct.Visible = true;
                     }
@@ -1325,7 +1293,7 @@ public partial class User_U_ProductList : System.Web.UI.Page
                             lblisshowgeneral.Text = "Yes";
                         else
                             lblisshowgeneral.Text = "No";
-                        twentyfour.Visible = false;
+                        twentyfour.Visible = true;
                     }
                     else
                     {
@@ -1333,7 +1301,7 @@ public partial class User_U_ProductList : System.Web.UI.Page
                     }
                     if (DtView.Rows[0]["TermConditionImage"].ToString() != "")
                     {
-                        twentythree.Visible = false;
+                        twentythree.Visible = true;
                     }
                     else
                     {
@@ -1420,8 +1388,13 @@ public partial class User_U_ProductList : System.Web.UI.Page
                     }
                     if (DtView.Rows[0]["IndTargetYear"].ToString() != "")
                     {
-                        lblprocstart.Text = DtView.Rows[0]["lblprocstart"].ToString().Substring(0, DtView.Rows[0]["lblprocstart"].ToString().Length - 1);
-                        Tr25.Visible = true;
+                        lblindtrgyr.Text = DtView.Rows[0]["IndTargetYear"].ToString().Substring(0, DtView.Rows[0]["IndTargetYear"].ToString().Length - 1);
+                        if (lblindtrgyr.Text == "NIL")
+                        { Tr25.Visible = false; }
+                        else
+                        {
+                            Tr25.Visible = true;
+                        }
                     }
                     else
                     {
@@ -1607,7 +1580,7 @@ public partial class User_U_ProductList : System.Web.UI.Page
     }
     public void FillProduct()
     {
-        DataTable dtProductDetail = Lo.RetriveProductIndig();
+        DataTable dtProductDetail = Lo.RetriveProductIndig1();
         if (dtProductDetail.Rows.Count > 0)
         {
             gvPrdoct.DataSource = dtProductDetail;
@@ -1758,6 +1731,30 @@ public partial class User_U_ProductList : System.Web.UI.Page
                         customers.Add(string.Format("{0}-{1}", sdr["HSNCode"], sdr["HSNCode"]));
                     }
                 }
+                cmd.CommandText = "select distinct DPSUPartNumber from tbl_mst_MainProduct where DPSUPartNumber like @SearchText + '%'";
+                using (SqlDataReader sdr = cmd.ExecuteReader())
+                {
+                    while (sdr.Read())
+                    {
+                        customers.Add(string.Format("{0}-{1}", sdr["DPSUPartNumber"], sdr["DPSUPartNumber"]));
+                    }
+                }
+                cmd.CommandText = "select distinct OEMName from tbl_mst_MainProduct where OEMName like @SearchText + '%'";
+                using (SqlDataReader sdr = cmd.ExecuteReader())
+                {
+                    while (sdr.Read())
+                    {
+                        customers.Add(string.Format("{0}-{1}", sdr["OEMName"], sdr["OEMName"]));
+                    }
+                }
+                cmd.CommandText = "select distinct CountryName from tbl_mst_Country where CountryName like @SearchText + '%'";
+                using (SqlDataReader sdr = cmd.ExecuteReader())
+                {
+                    while (sdr.Read())
+                    {
+                        customers.Add(string.Format("{0}-{1}", sdr["CountryName"], sdr["CountryName"]));
+                    }
+                }
                 cmd.CommandText = "select distinct EstimatedQty from tbl_trn_ProdQtyPrice where EstimatedQty like @SearchText + '%'";
                 using (SqlDataReader sdr = cmd.ExecuteReader())
                 {
@@ -1812,6 +1809,8 @@ public partial class User_U_ProductList : System.Web.UI.Page
         ddlprodindustrydomain.SelectedIndex = -1;
         chkimportvalue.SelectedIndex = -1;
         rbsort.SelectedValue = "EstimatePrice";
+        ddldeclaration.SelectedIndex = -1;
+        chkeoistatus.SelectedIndex = -1;
     }
     #endregion
 }

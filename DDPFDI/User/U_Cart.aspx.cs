@@ -582,7 +582,7 @@ public partial class User_U_Cart : System.Web.UI.Page
                             lblisshowgeneral.Text = "Yes";
                         else
                             lblisshowgeneral.Text = "No";
-                        twentyfour.Visible = false;
+                        twentyfour.Visible = true;
                     }
                     else
                     {
@@ -590,7 +590,7 @@ public partial class User_U_Cart : System.Web.UI.Page
                     }
                     if (DtView.Rows[0]["TermConditionImage"].ToString() != "")
                     {
-                        twentythree.Visible = false;
+                        twentythree.Visible = true;
                     }
                     else
                     {
@@ -677,8 +677,13 @@ public partial class User_U_Cart : System.Web.UI.Page
                     }
                     if (DtView.Rows[0]["IndTargetYear"].ToString() != "")
                     {
-                        lblprocstart.Text = DtView.Rows[0]["lblprocstart"].ToString().Substring(0, DtView.Rows[0]["lblprocstart"].ToString().Length - 1);
-                        Tr25.Visible = true;
+                        lblindtrgyr.Text = DtView.Rows[0]["IndTargetYear"].ToString().Substring(0, DtView.Rows[0]["IndTargetYear"].ToString().Length - 1);
+                        if (lblindtrgyr.Text == "NIL")
+                        { Tr25.Visible = false; }
+                        else
+                        {
+                            Tr25.Visible = true;
+                        }
                     }
                     else
                     {

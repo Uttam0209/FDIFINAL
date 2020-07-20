@@ -952,7 +952,7 @@
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <h5>Indigenization Target Year</h5>
+                                                    <h5>Indigenization Target Year <span class="mandatory">*</span></h5>
                                                     <asp:CheckBoxList ID="chkinditargetyear" runat="server" RepeatColumns="6" RepeatDirection="Horizontal" RepeatLayout="Flow">
                                                         <asp:ListItem Value="NIL" style="margin-left: 5px;">NIL</asp:ListItem>
                                                         <asp:ListItem Value="2020-21" style="margin-left: 5px;">2020-21</asp:ListItem>
