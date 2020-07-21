@@ -576,26 +576,26 @@ public partial class User_U_Cart : System.Web.UI.Page
                     {
                         twentytwo.Visible = false;
                     }
-                    if (DtView.Rows[0]["IsShowGeneral"].ToString() != "")
-                    {
-                        if (DtView.Rows[0]["IsShowGeneral"].ToString() == "Y")
-                            lblisshowgeneral.Text = "Yes";
-                        else
-                            lblisshowgeneral.Text = "No";
-                        twentyfour.Visible = true;
-                    }
-                    else
-                    {
-                        twentyfour.Visible = false;
-                    }
-                    if (DtView.Rows[0]["TermConditionImage"].ToString() != "")
-                    {
-                        twentythree.Visible = true;
-                    }
-                    else
-                    {
-                        twentythree.Visible = false;
-                    }
+                    //if (DtView.Rows[0]["IsShowGeneral"].ToString() != "")
+                    //{
+                    //    if (DtView.Rows[0]["IsShowGeneral"].ToString() == "Y")
+                    //        lblisshowgeneral.Text = "Yes";
+                    //    else
+                    //        lblisshowgeneral.Text = "No";
+                    //    twentyfour.Visible = true;
+                    //}
+                    //else
+                    //{
+                    //    twentyfour.Visible = false;
+                    //}
+                    //if (DtView.Rows[0]["TermConditionImage"].ToString() != "")
+                    //{
+                    //    twentythree.Visible = true;
+                    //}
+                    //else
+                    //{
+                    //    twentythree.Visible = false;
+                    //}
                     if (DtView.Rows[0]["QAAgency"].ToString() != "")
                     {
                         DataTable DTporCat = Lo.RetriveProductCode("", e.CommandArgument.ToString(), "ProductQAAgency", "Company");
@@ -675,29 +675,29 @@ public partial class User_U_Cart : System.Web.UI.Page
                         Tr21.Visible = false;
                         Tr22.Visible = false;
                     }
-                    if (DtView.Rows[0]["IndTargetYear"].ToString() != "")
-                    {
-                        lblindtrgyr.Text = DtView.Rows[0]["IndTargetYear"].ToString().Substring(0, DtView.Rows[0]["IndTargetYear"].ToString().Length - 1);
-                        if (lblindtrgyr.Text == "NIL")
-                        { Tr25.Visible = false; }
-                        else
-                        {
-                            Tr25.Visible = true;
-                        }
-                    }
-                    else
-                    {
-                        Tr25.Visible = false;
-                    }
-                    if (DtView.Rows[0]["IndProcess"].ToString() != "")
-                    {
-                        lblprocstart.Text = DtView.Rows[0]["IndProcess"].ToString();
-                        Tr24.Visible = true;
-                    }
-                    else
-                    {
-                        Tr24.Visible = false;
-                    }
+                    //if (DtView.Rows[0]["IndTargetYear"].ToString() != "")
+                    //{
+                    //    lblindtrgyr.Text = DtView.Rows[0]["IndTargetYear"].ToString().Substring(0, DtView.Rows[0]["IndTargetYear"].ToString().Length - 1);
+                    //    if (lblindtrgyr.Text == "NIL")
+                    //    { Tr25.Visible = false; }
+                    //    else
+                    //    {
+                    //        Tr25.Visible = true;
+                    //    }
+                    //}
+                    //else
+                    //{
+                    //    Tr25.Visible = false;
+                    //}
+                    //if (DtView.Rows[0]["IndProcess"].ToString() != "")
+                    //{
+                    //    lblprocstart.Text = DtView.Rows[0]["IndProcess"].ToString();
+                    //    Tr24.Visible = true;
+                    //}
+                    //else
+                    //{
+                    //    Tr24.Visible = false;
+                    //}
                     ScriptManager.RegisterStartupScript(this, GetType(), "ProductCompany", "showPopup();", true);
                 }
             }

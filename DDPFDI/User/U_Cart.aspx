@@ -1,4 +1,4 @@
-﻿<%@ page language="C#" autoeventwireup="true" inherits="User_U_Cart" CodeFile="U_Cart.aspx.cs" viewstateencryptionmode="Always" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" Inherits="User_U_Cart" CodeFile="U_Cart.aspx.cs" ViewStateEncryptionMode="Always" %>
 
 <!DOCTYPE html>
 
@@ -168,7 +168,7 @@
                                     <div class="widget widget-categories mb-4">
                                         <div class="accordion mt-n1" id="shop-categories">
                                             <div id="printarea">
-                                               
+
                                                 <div class="card" style="border-bottom: solid 1.4px #e5e5e5!important;">
                                                     <div class="card-header">
                                                         <h3 class="accordion-heading mb-2">
@@ -331,7 +331,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                 <div class="card border-btm" style="border-bottom: solid 1.4px #e5e5e5!important;">
+                                                <div class="card border-btm" style="border-bottom: solid 1.4px #e5e5e5!important;">
                                                     <div class="card-header">
                                                         <h3 class="accordion-heading mb-2">
                                                             <a class="collapsed" href="#ItemSpecification" role="button" data-toggle="collapse"
@@ -610,15 +610,15 @@
                                                                             <asp:Label ID="lblnameofdefplat" runat="server" Text=""></asp:Label>
                                                                         </td>
                                                                     </tr>
-                                                                    <tr runat="server" id="twentythree">
+                                                                    <tr runat="server" id="twentythree" visible="false">
                                                                         <th scope="row"></th>
-                                                                        <td id="Td1" runat="server" >
+                                                                        <td id="Td1" runat="server">
                                                                             <asp:Label ID="lbldeclaration" runat="server" Text="No IPR issue, No violation of TOT agreement, No violation of Security Concern"></asp:Label>
                                                                         </td>
                                                                     </tr>
-                                                                    <tr runat="server" id="twentyfour">
+                                                                    <tr runat="server" id="twentyfour" visible="false">
                                                                         <th scope="row"></th>
-                                                                        <td id="Td2" runat="server" >
+                                                                        <td id="Td2" runat="server">
                                                                             <asp:Label ID="lblisshowgeneral" runat="server" Text=""></asp:Label>
                                                                         </td>
                                                                     </tr>
@@ -650,7 +650,7 @@
                                                                             <asp:Label ID="lblyearofindi" runat="server" Text=""></asp:Label>
                                                                         </td>
                                                                     </tr>
-                                                                     <tr runat="server" id="Tr24" visible="false">
+                                                                    <tr runat="server" id="Tr24" visible="false">
                                                                         <th scope="row">Make in India Process started
                                                                         </th>
                                                                         <td>

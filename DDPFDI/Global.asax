@@ -81,12 +81,9 @@
         routes.MapPageRoute("Industry", "Industry", "~/Admin/Industry.aspx", true);
         //routes.MapPageRoute("Industry", "Industry", "~/Admin/Industry.html", true);
         routes.MapPageRoute("FAQ", "FAQ", "~/Admin/faq.aspx", true);
-        routes.MapPageRoute("ViewDashboard", "ViewDashboard", "~/Admin/ViewDashboard.aspx", true);
-        //routes.MapPageRoute("Test", "Test", "~/Admin/HeadDropdown.aspx", true);
-        routes.MapPageRoute("Test1", "Test1", "~/Admin/EditHeadDropdown.aspx", true);
-        routes.MapPageRoute("Test", "Test", "~/Admin/Test.aspx", true);
+        routes.MapPageRoute("ViewDashboard", "ViewDashboard", "~/Admin/ViewDashboard.aspx", true);       
+        routes.MapPageRoute("mTest", "mTest", "~/Admin/Test.aspx", true);
         routes.MapPageRoute("UExcel", "UExcel", "~/frmUploadExcel.aspx", true);
-        //routes.MapPageRoute("VendorRegistration", "VendorRegistration", "~/Vendor/VendorRegistration.aspx", true);
         routes.MapPageRoute("VendorRegistration", "VendorRegistration", "~/Vendor/VendorDetailRegistration.aspx", true);
         routes.MapPageRoute("VendorRegistrationStep", "VendorRegistrationStep", "~/Vendor/VendorRegistrationStep1.aspx", true);
         routes.MapPageRoute("CreateVenPass", "CreateVenPass", "~/Vendor/CreateVendorPassword.aspx", true);
@@ -121,5 +118,6 @@
         routes.MapPageRoute("SearchProductFilter", "SearchProductFilter", "~/Admin/SearchProductFilter.aspx", true);
         routes.MapPageRoute("UProductList", "UProductList", "~/User/U_ProductList.aspx", true);
         routes.MapPageRoute("UCart", "U_Cart", "~/User/U_Cart.aspx", true);
+        routes.MapPageRoute("Popup", "Popup", "~/ViewPopup.aspx", true);
     }    
 </script>

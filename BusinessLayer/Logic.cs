@@ -155,16 +155,15 @@ namespace BusinessLayer
         {
             return SqlHelper.Instance.RetriveState(text);
         }
-
         public DataTable RetriveProductIndig()
         {
             return SqlHelper.Instance.GetExecuteData("select * from fn_companywiseproduct() order by compName");
         }
         public DataTable RetriveProductIndig1()
         {
-            return SqlHelper.Instance.GetExecuteData("select * from fn_EstimatewiseCompanyProduct() order by compName");
+           // return SqlHelper.Instance.GetExecuteData("select * from fn_EstimatewiseCompanyProduct() order by compName");
+            return SqlHelper.Instance.GetExecuteData("select Count(CompanyRefNo) as TotalProd,CompanyName as CompName from tbl_trn_ProductFilterSearchTemp  group by Companyrefno,CompanyName order by CompanyName");
         }
-
         public DataTable RetriveAllCompany(string UnitRefNo, string Role)
         {
             return SqlHelper.Instance.RetriveAllCompany(UnitRefNo, Role);
@@ -311,7 +310,8 @@ namespace BusinessLayer
         }
         public DataTable RetriveProductUser()
         {
-            return SqlHelper.Instance.GetExecuteData("select * from fn_ProductFilterSearch() where (EstimatePrice > 1  or EstimatePricefuture > 1) order by  ISNULL(EstimatePrice * 0,1), EstimatePrice desc;");
+            return SqlHelper.Instance.GetExecuteData("select * from tbl_trn_ProductFilterSearchTemp");
+            // fn_ProductFilterSearch()
         }
         public DataTable RetriveProductView()
         {
@@ -365,8 +365,6 @@ namespace BusinessLayer
         {
             return SqlHelper.Instance.RetriveSaveEstimateGrid(Function, ProdInfoId, ProdRefNo, Year, FYear, EstimateQuantity, Unit, Price, type);
         }
-
-
         #endregion
         ////////////////////////////////////////================================ Vendor Code=======================================//////////////////////////////////////
         #region Code for vendor  Save

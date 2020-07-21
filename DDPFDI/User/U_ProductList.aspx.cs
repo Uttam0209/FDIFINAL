@@ -24,8 +24,6 @@ public partial class User_U_ProductList : System.Web.UI.Page
     DataTable DtFilterView = new DataTable();
     DataTable dtCart = new DataTable();
     DataRow dr;
-    // int n1 = 1;
-    // int n2 = 50;
     #endregion
     #region Pageload
     protected void Page_Load(object sender, EventArgs e)
@@ -54,30 +52,14 @@ public partial class User_U_ProductList : System.Web.UI.Page
     }
     private void ControlGrid()
     {
-        BindComapnyCheckbox();
-        BindIndusrtyDomain();
-        BindPurposeProcuremnt();
-        BindNSG();
-        BindIndiCategory();
+        ddlcomp.Items.Insert(0, "Select");
+        ddlnsg.Items.Insert(0, "Select");
+        ddlprodindustrydomain.Items.Insert(0, "Select");
         BindProduct();
-    }
-    protected void UpdateDtGridValue(DataTable DtGrid)
-    {
-        for (int a = 0; a < DtGrid.Rows.Count; a++)
-        {
-            if (DtGrid.Rows[a]["UCompany"].ToString() != "")
-            {
-                DtGrid.Rows[a]["CompanyName"] = DtGrid.Rows[a]["UCompany"];
-                DtGrid.Rows[a]["FactoryName"] = DtGrid.Rows[a]["UFactory"];
-                DtGrid.Rows[a]["CompanyRefNo"] = DtGrid.Rows[a]["UCompRefNo"];
-                DtGrid.Rows[a]["FactoryRefNo"] = DtGrid.Rows[a]["UFactoryRefNo"];
-            }
-            else if (DtGrid.Rows[a]["FCompany"].ToString() != "")
-            {
-                DtGrid.Rows[a]["CompanyName"] = DtGrid.Rows[a]["FCompany"];
-                DtGrid.Rows[a]["CompanyRefNo"] = DtGrid.Rows[a]["FCompRefNo"];
-            }
-        }
+        BindComapnyCheckbox();
+        BindNSG();
+        BindIndusrtyDomain();
+        BindIndiCategory();
     }
     protected void BindProduct()
     {
@@ -85,9 +67,7 @@ public partial class User_U_ProductList : System.Web.UI.Page
         DtGrid = Lo.RetriveProductUser();
         if (DtGrid.Rows.Count > 0)
         {
-            UpdateDtGridValue(DtGrid);
             Session["TempData"] = DtGrid;
-            ViewState["ResetData"] = DtGrid;
             SeachResult();
         }
         else
@@ -101,10 +81,11 @@ public partial class User_U_ProductList : System.Web.UI.Page
     DataTable DtCompanyDDL = new DataTable();
     protected void BindComapnyCheckbox()
     {
-        DtCompanyDDL = Lo.RetriveMasterData(0, "", "", 0, "", "", "Select");
-        if (DtCompanyDDL.Rows.Count > 0)
+        if (DtGrid.Rows.Count > 0)
         {
-            Co.FillDropdownlist(ddlcomp, DtCompanyDDL, "CompanyName", "CompanyRefNo");
+            DataTable mDtGrid = DtGrid.DefaultView.ToTable(true, "CompanyName", "CompanyRefNo");
+            mDtGrid.DefaultView.Sort = "CompanyName asc";
+            Co.FillDropdownlist(ddlcomp, mDtGrid, "CompanyName", "CompanyRefNo");
             ddlcomp.Items.Insert(0, "Select");
             ddlcomp.Enabled = true;
         }
@@ -113,35 +94,23 @@ public partial class User_U_ProductList : System.Web.UI.Page
             ddlcomp.Enabled = false;
         }
     }
-    protected void BindComapnyCompanyCheckbox()
-    {
-        try
-        {
-            DataTable dtFactory = Lo.GetDashboardData("CompanyByname", ddlcomp.SelectedItem.Value);
-            if (dtFactory.Rows.Count > 0)
-            {
-                Co.FillDropdownlist(ddldivision, dtFactory, "FactoryName", "FactoryRefNo");
-                ddldivision.Items.Insert(0, "Select");
-                divfilterdivision.Visible = true;
-            }
-        }
-        catch (Exception ex)
-        { }
-    }
     protected void BindComapnyDivisionCheckbox()
     {
         try
         {
-            DataTable dtFactory = Lo.GetDashboardData("DivisionByname", ddlcomp.SelectedItem.Value);
-            if (dtFactory.Rows.Count > 0)
+            if (Session["TempData"] != null)
             {
-                Co.FillDropdownlist(ddldivision, dtFactory, "FactoryName", "FactoryRefNo");
+                DtGrid = (DataTable)Session["TempData"];
+                DataTable mDtGrid = DtGrid.DefaultView.ToTable(true, "FactoryName", "FactoryRefNo", "CompanyRefNo");
+                mDtGrid.DefaultView.Sort = "FactoryName asc";
+                DataView dvm = new DataView(mDtGrid);
+                dvm.RowFilter = "CompanyRefNo='" + ddlcomp.SelectedItem.Value + "'";
+                Co.FillDropdownlist(ddldivision, dvm.ToTable(), "FactoryName", "FactoryRefNo");
                 ddldivision.Items.Insert(0, "Select");
                 divfilterdivision.Visible = true;
             }
             else
             {
-                // ddldivision.Items.Insert(0, "Select");
                 divfilterdivision.Visible = false;
             }
         }
@@ -152,10 +121,14 @@ public partial class User_U_ProductList : System.Web.UI.Page
     {
         try
         {
-            DataTable dtUnit = Lo.GetDashboardData("UnitByname", ddldivision.SelectedItem.Value);
-            if (dtUnit.Rows.Count > 0)
+            if (Session["TempData"] != null)
             {
-                Co.FillDropdownlist(ddlunit, dtUnit, "UnitName", "UnitRefNo");
+                DtGrid = (DataTable)Session["TempData"];
+                DataTable mDtGrid = DtGrid.DefaultView.ToTable(true, "UnitName", "UnitRefNo", "FactoryRefNo");
+                mDtGrid.DefaultView.Sort = "UnitName asc";
+                DataView dvm = new DataView(mDtGrid);
+                dvm.RowFilter = "FactoryRefNo='" + ddldivision.SelectedItem.Value + "'";
+                Co.FillDropdownlist(ddlunit, dvm.ToTable(), "UnitName", "UnitRefNo");
                 ddlunit.Items.Insert(0, "Select");
                 divfilterunit.Visible = true;
             }
@@ -171,16 +144,70 @@ public partial class User_U_ProductList : System.Web.UI.Page
     {
         try
         {
-            DataTable DtMasterCategroy = new DataTable();
-            DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, "", "", "DefPlatIndus", "", "");
-            if (DtMasterCategroy.Rows.Count > 0)
+
+            if (ddlcomp.SelectedItem.Text != "Select")
             {
-                Co.FillDropdownlist(ddlprodindustrydomain, DtMasterCategroy, "SCategoryName", "SCategoryID");
-                ddlprodindustrydomain.Items.Insert(0, "Select");
+                if (Session["TempData"] != null)
+                {
+                    DtGrid = (DataTable)Session["TempData"];
+                    DataTable mDtGrid = DtGrid.DefaultView.ToTable(true, "ProdIndustryDoamin", "TechnologyLevel1", "CompanyRefNo");
+                    mDtGrid.DefaultView.Sort = "ProdIndustryDoamin asc";
+                    DataView dvm = new DataView(mDtGrid);
+                    dvm.RowFilter = "CompanyRefNo='" + ddlcomp.SelectedItem.Value + "'";
+                    Co.FillDropdownlist(ddlprodindustrydomain, dvm.ToTable(), "ProdIndustryDoamin", "TechnologyLevel1");
+                    ddlprodindustrydomain.Items.Insert(0, "Select");
+                    Div7.Visible = true;
+                }
+                else
+                {
+                    Div7.Visible = false;
+                    divisd.Visible = false;
+                }
+            }
+            else
+            {
+                if (DtGrid.Rows.Count > 0)
+                {
+                    DataTable mDtGrid = DtGrid.DefaultView.ToTable(true, "ProdIndustryDoamin", "TechnologyLevel1");
+                    mDtGrid.DefaultView.Sort = "ProdIndustryDoamin asc";
+                    Co.FillDropdownlist(ddlprodindustrydomain, mDtGrid, "ProdIndustryDoamin", "TechnologyLevel1");
+                    ddlprodindustrydomain.Items.Insert(0, "Select");
+                    Div7.Visible = true;
+                }
+                else
+                {
+                    Div7.Visible = false;
+                    divisd.Visible = false;
+                }
             }
         }
         catch (Exception ex)
         { }
+    }
+    protected void BindIndustrySubDomain()
+    {
+        if (ddlprodindustrydomain.SelectedItem.Text != "Select")
+        {
+            if (Session["TempData"] != null)
+            {
+                DtGrid = (DataTable)Session["TempData"];
+                DataTable mDtGrid = DtGrid.DefaultView.ToTable(true, "ProdIndustrySubDomain", "TechnologyLevel2", "TechnologyLevel1");
+                mDtGrid.DefaultView.Sort = "ProdIndustrySubDomain asc";
+                DataView dvm = new DataView(mDtGrid);
+                dvm.RowFilter = "TechnologyLevel1='" + ddlprodindustrydomain.SelectedItem.Value + "'";
+                Co.FillDropdownlist(ddlindustrysubdoamin, dvm.ToTable(), "ProdIndustrySubDomain", "TechnologyLevel1");
+                ddlindustrysubdoamin.Items.Insert(0, "Select");
+                divisd.Visible = true;
+            }
+            else
+            {
+                divisd.Visible = false;
+            }
+        }
+        else
+        {
+            divisd.Visible = false;
+        }
     }
     protected void BindPurposeProcuremnt()
     {
@@ -207,67 +234,83 @@ public partial class User_U_ProductList : System.Web.UI.Page
     }
     protected void BindNSG()
     {
-        DataTable DtMasterCategroy = new DataTable();
         if (ddlcomp.SelectedItem.Text != "Select")
         {
-            DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, "NSN GROUP", "", "SelectProductCat", ddlcomp.SelectedItem.Value, "");
+            if (Session["TempData"] != null)
+            {
+                DtGrid = (DataTable)Session["TempData"];
+                DataTable mDtGrid = DtGrid.DefaultView.ToTable(true, "NSNGROUP", "ProductLevel1", "CompanyRefNo");
+                mDtGrid.DefaultView.Sort = "NSNGROUP asc";
+                DataView dvm = new DataView(mDtGrid);
+                dvm.RowFilter = "CompanyRefNo='" + ddlcomp.SelectedItem.Value + "'";
+                Co.FillDropdownlist(ddlnsg, dvm.ToTable(), "NSNGROUP", "ProductLevel1");
+                ddlnsg.Items.Insert(0, "Select");
+            }
+            else
+            {
+                ddlnsg.Visible = false;
+                divnsc.Visible = false;
+                divic.Visible = false;
+            }
         }
         else
         {
-            DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, "NSN GROUP", "", "SelectProductCat", "", "");
-        }
-        if (DtMasterCategroy.Rows.Count > 0)
-        {
-            Co.FillDropdownlist(ddlnsg, DtMasterCategroy, "SCategoryName", "SCategoryID");
-            ddlnsg.Items.Insert(0, "Select");
-        }
-        else
-        {
-            ddlnsg.Visible = false;
-            divnsc.Visible = false;
-            divic.Visible = false;
+            if (DtGrid.Rows.Count > 0)
+            {
+                DataTable mDtGrid = DtGrid.DefaultView.ToTable(true, "NSNGROUP", "ProductLevel1");
+                mDtGrid.DefaultView.Sort = "NSNGROUP asc";
+                Co.FillDropdownlist(ddlnsg, mDtGrid, "NSNGROUP", "ProductLevel1");
+                ddlnsg.Items.Insert(0, "Select");
+            }
+            else
+            {
+                ddlnsg.Visible = false;
+                divnsc.Visible = false;
+                divic.Visible = false;
+            }
         }
     }
     protected void BindNSC()
     {
-        DataTable DtMasterCategroy = new DataTable();
-        if (ddlnsg.SelectedItem.Text != "Select")
+        if (ddlnsg.SelectedIndex != -1 || ddlnsg.SelectedItem.Text != "Select")
         {
-            DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(Convert.ToInt32(ddlnsg.SelectedItem.Value), "", "", "SubSelectID", "", "");
-        }
-        else
-        {
-            DtMasterCategroy = Lo.RetriveMasterSubCategoryDate(0, "", "", "SubSelectSec", "", "");
-        }
-        if (DtMasterCategroy.Rows.Count > 0)
-        {
-            Co.FillDropdownlist(ddlnsc, DtMasterCategroy, "SCategoryName", "SCategoryId");
-            ddlnsc.Items.Insert(0, "Select");
-            divnsc.Visible = true;
-        }
-        else
-        {
-            divic.Visible = false;
-            divnsc.Visible = false;
+            if (Session["TempData"] != null)
+            {
+                DtGrid = (DataTable)Session["TempData"];
+                DataTable mDtGrid = DtGrid.DefaultView.ToTable(true, "NSNGroupClass", "ProductLevel2", "ProductLevel1");
+                mDtGrid.DefaultView.Sort = "NSNGROUPClass asc";
+                DataView dvm = new DataView(mDtGrid);
+                dvm.RowFilter = "ProductLevel1='" + ddlnsg.SelectedItem.Value + "'";
+                Co.FillDropdownlist(ddlnsc, dvm.ToTable(), "NSNGroupClass", "ProductLevel2");
+                ddlnsc.Items.Insert(0, "Select");
+                divnsc.Visible = true;
+            }
+            else
+            {
+                divic.Visible = false;
+                divnsc.Visible = false;
+            }
         }
     }
     protected void BindIC()
     {
-        DataTable DtMasterCategroyLevel3 = new DataTable();
-        if (ddlnsc.SelectedIndex != -1)
-        { DtMasterCategroyLevel3 = Lo.RetriveMasterSubCategoryDate(Convert.ToInt32(ddlnsc.SelectedItem.Value), "", "", "SubSelectID", "", ""); }
-        else
-        { DtMasterCategroyLevel3 = Lo.RetriveMasterSubCategoryDate(0, "", "", "SubSelectthr", "", ""); }
-        if (DtMasterCategroyLevel3.Rows.Count > 0)
+        if (ddlnsc.SelectedIndex != -1 || ddlnsc.SelectedItem.Text != "Select")
         {
-            Co.FillDropdownlist(ddlic, DtMasterCategroyLevel3, "SCategoryName", "SCategoryId");
-            ddlic.Items.Insert(0, "Select");
-            divic.Visible = true;
-        }
-        else
-        {
-            ddlic.Items.Insert(0, "Select");
-            ddlic.Items.Insert(1, "NA");
+            if (Session["TempData"] != null)
+            {
+                DtGrid = (DataTable)Session["TempData"];
+                DataTable mDtGrid = DtGrid.DefaultView.ToTable(true, "ItemCode", "ProductLevel3", "ProductLevel2");
+                mDtGrid.DefaultView.Sort = "ItemCode asc";
+                DataView dvm = new DataView(mDtGrid);
+                dvm.RowFilter = "ProductLevel2='" + ddlnsc.SelectedItem.Value + "'";
+                Co.FillDropdownlist(ddlic, dvm.ToTable(), "ItemCode", "ProductLevel3");
+                ddlic.Items.Insert(0, "Select");
+                divic.Visible = true;
+            }
+            else
+            {
+                ddlic.Items.Insert(0, "Select");
+            }
         }
     }
     protected void BindIndiCategory()
@@ -286,112 +329,35 @@ public partial class User_U_ProductList : System.Web.UI.Page
     }
     protected void ddlcomp_SelectedIndexChanged(object sender, EventArgs e)
     {
-        BindComapnyDivisionCheckbox();
-        SeachResult();
-        DataTable dtcompindustry = (DataTable)Session["TempData"];
-        if (dtcompindustry.Rows.Count > 0)
+        if (ddlcomp.SelectedItem.Text != "Select")
         {
-            //Bind Industry Domain
-            DataView dvcompind = new DataView(dtcompindustry);
-            dvcompind.RowFilter = "CompanyRefNo='" + ddlcomp.SelectedItem.Value + "' and ProdIndustryDoamin is not null";
-            DataTable dtnew1 = dvcompind.ToTable();
-            string[] strColnames = new string[2];
-            strColnames[0] = "ProdIndustryDoamin";
-            strColnames[1] = "TechnologyLevel1";
-            dtnew1 = dvcompind.ToTable(true, strColnames);
-            ddlprodindustrydomain.DataTextField = "ProdIndustryDoamin";
-            ddlprodindustrydomain.DataValueField = "TechnologyLevel1";
-            ddlprodindustrydomain.DataSource = dtnew1;
-            ddlprodindustrydomain.DataBind();
-            ddlprodindustrydomain.Items.Insert(0, "Select");
-            if (ddlprodindustrydomain.SelectedItem.Text == "Select")
-            {
-                ddlindustrysubdoamin.SelectedValue = "Select";
-                divisd.Visible = false;
-            }
-            //Bind SearchKeyword
-            DataView dvcompind1 = new DataView(dtcompindustry);
-            dvcompind1.RowFilter = "CompanyRefNo='" + ddlcomp.SelectedItem.Value + "' and SearchKeyword is not null";
-            DataTable dtnew2 = dvcompind1.ToTable();
-            string[] strColnames1 = new string[2];
-            strColnames1[0] = "SearchKeyword";
-            strColnames1[1] = "CompanyRefNo";
-            dtnew2 = dvcompind1.ToTable(true, strColnames1);
-            //ddlsearchkeywordsfilter.DataTextField = "SearchKeyword";
-            //ddlsearchkeywordsfilter.DataValueField = "CompanyRefNo";
-            //ddlsearchkeywordsfilter.DataSource = dtnew2;
-            //ddlsearchkeywordsfilter.DataBind();
-            //ddlsearchkeywordsfilter.Items.Insert(0, "Select");
+            BindComapnyDivisionCheckbox();
+            SeachResult();
+        }
+        else
+        {
+            divfilterdivision.Visible = false;
+            divfilterunit.Visible = false;
+            SeachResult();
+
         }
     }
     protected void ddldivision_SelectedIndexChanged(object sender, EventArgs e)
     {
-        BindComapnyDivisionUnitCheckbox();
-        SeachResult();
-        DataTable dtcompindustry = (DataTable)Session["TempData"];
-        if (dtcompindustry.Rows.Count > 0)
+        if (ddldivision.SelectedItem.Text != "Select")
         {
-            //Bind Industry Domain
-            DataView dvcompind = new DataView(dtcompindustry);
-            dvcompind.RowFilter = "FactoryRefNo='" + ddldivision.SelectedItem.Value + "' and ProdIndustryDoamin is not null";
-            DataTable dtnew1 = dvcompind.ToTable();
-            string[] strColnames = new string[2];
-            strColnames[0] = "ProdIndustryDoamin";
-            strColnames[1] = "TechnologyLevel1";
-            dtnew1 = dvcompind.ToTable(true, strColnames);
-            ddlprodindustrydomain.DataTextField = "ProdIndustryDoamin";
-            ddlprodindustrydomain.DataValueField = "TechnologyLevel1";
-            ddlprodindustrydomain.DataSource = dtnew1;
-            ddlprodindustrydomain.DataBind();
-            ddlprodindustrydomain.Items.Insert(0, "Select");
-            //Bind SearchKeyword
-            DataView dvcompind1 = new DataView(dtcompindustry);
-            dvcompind1.RowFilter = "FactoryRefNo='" + ddldivision.SelectedItem.Value + "' and SearchKeyword is not null";
-            DataTable dtnew2 = dvcompind1.ToTable();
-            string[] strColnames1 = new string[2];
-            strColnames1[0] = "SearchKeyword";
-            strColnames1[1] = "FactoryRefNo";
-            dtnew2 = dvcompind1.ToTable(true, strColnames1);
-            //ddlsearchkeywordsfilter.DataTextField = "SearchKeyword";
-            //ddlsearchkeywordsfilter.DataValueField = "FactoryRefNo";
-            //ddlsearchkeywordsfilter.DataSource = dtnew2;
-            //ddlsearchkeywordsfilter.DataBind();
-            //ddlsearchkeywordsfilter.Items.Insert(0, "Select");
+            BindComapnyDivisionUnitCheckbox();
+            SeachResult();
+        }
+        else
+        {
+            SeachResult();
+            divfilterunit.Visible = false;
         }
     }
     protected void ddlunit_SelectedIndexChanged(object sender, EventArgs e)
     {
         SeachResult();
-        DataTable dtcompindustry = (DataTable)Session["TempData"];
-        if (dtcompindustry.Rows.Count > 0)
-        {
-            //Bind Industry Domain
-            DataView dvcompind = new DataView(dtcompindustry);
-            dvcompind.RowFilter = "UnitRefNo='" + ddlunit.SelectedItem.Value + "' and ProdIndustryDoamin is not null";
-            DataTable dtnew1 = dvcompind.ToTable();
-            string[] strColnames = new string[2];
-            strColnames[0] = "ProdIndustryDoamin";
-            strColnames[1] = "TechnologyLevel1";
-            dtnew1 = dvcompind.ToTable(true, strColnames);
-            ddlprodindustrydomain.DataTextField = "ProdIndustryDoamin";
-            ddlprodindustrydomain.DataValueField = "TechnologyLevel1";
-            ddlprodindustrydomain.DataSource = dtnew1;
-            ddlprodindustrydomain.DataBind();
-            ddlprodindustrydomain.Items.Insert(0, "Select");
-            //Bind SearchKeyword
-            DataView dvcompind1 = new DataView(dtcompindustry);
-            dvcompind1.RowFilter = "UnitRefNo='" + ddlunit.SelectedItem.Value + "' and SearchKeyword is not null";
-            DataTable dtnew2 = dvcompind1.ToTable();
-            string[] strColnames1 = new string[2];
-            strColnames1[0] = "SearchKeyword";
-            strColnames1[1] = "UnitRefNo";
-            dtnew2 = dvcompind1.ToTable(true, strColnames1);
-            //ddlsearchkeywordsfilter.DataTextField = "SearchKeyword";
-            //ddlsearchkeywordsfilter.DataValueField = "UnitRefNo";
-            //ddlsearchkeywordsfilter.DataSource = dtnew2;
-            //ddlsearchkeywordsfilter.DataBind();
-            //ddlsearchkeywordsfilter.Items.Insert(0, "Select");
-        }
     }
     protected void ddlnameofdefplat_SelectedIndexChanged(object sender, EventArgs e)
     {
@@ -399,22 +365,7 @@ public partial class User_U_ProductList : System.Web.UI.Page
     }
     protected void ddlprodindustrydomain_SelectedIndexChanged(object sender, EventArgs e)
     {
-        DataTable dtisd = new DataTable();
-        if (ddlprodindustrydomain.SelectedItem.Text != "Select")
-        {
-            dtisd = Lo.RetriveMasterSubCategoryDate(Convert.ToInt32(ddlprodindustrydomain.SelectedItem.Value), "", "", "SubSelectID", "", "");
-            if (dtisd.Rows.Count > 0)
-            {
-                Co.FillDropdownlist(ddlindustrysubdoamin, dtisd, "ScategoryName", "SCategoryId");
-                ddlindustrysubdoamin.Items.Insert(0, "Select");
-                divisd.Visible = true;
-            }
-            else
-            {
-                ddlprocurmentcatgory.Items.Insert(0, "Select");
-                divisd.Visible = false;
-            }
-        }
+        BindIndustrySubDomain();
         SeachResult();
     }
     protected void ddlprocurmentcatgory_SelectedIndexChanged(object sender, EventArgs e)
@@ -435,46 +386,35 @@ public partial class User_U_ProductList : System.Web.UI.Page
     }
     protected void ddlnsg_SelectedIndexChanged(object sender, EventArgs e)
     {
-        if (ddlnsg.SelectedItem.Text == "Select")
+        if (ddlnsg.SelectedItem.Text != "Select")
         {
-            divnsc.Visible = false;
-            ddlnsc.Items.Insert(0, "Select");
-            divic.Visible = false;
-            ddlic.Items.Insert(0, "Select");
+            BindNSC();
+            SeachResult();
         }
         else
         {
-            BindNSC();
-        }
-        if (ddlnsg.SelectedItem.Text != "Select")
-        {
+            divnsc.Visible = false;
+            divic.Visible = false;
             SeachResult();
+
         }
     }
     protected void ddlnsc_SelectedIndexChanged(object sender, EventArgs e)
     {
-        if (ddlnsc.SelectedItem.Text == "Select")
+        if (ddlnsc.SelectedItem.Text != "Select")
         {
-            divic.Visible = false;
-            ddlic.Items.Insert(0, "Select");
+            BindIC();
+            SeachResult();
         }
         else
         {
-            BindIC();
-        }
-        if (ddlnsc.SelectedItem.Text != "Select")
-        {
             SeachResult();
+            divic.Visible = false;
         }
     }
     protected void ddlic_SelectedIndexChanged(object sender, EventArgs e)
     {
-        if (ddlic.SelectedItem.Text == "Select")
-        { }
-        else
-        {
-            SeachResult();
-        }
+        SeachResult();
     }
     protected void ddlindustrysubdoamin_SelectedIndexChanged(object sender, EventArgs e)
     {
@@ -486,7 +426,6 @@ public partial class User_U_ProductList : System.Web.UI.Page
     }
     protected void chktendor_SelectedIndexChanged(object sender, EventArgs e)
     {
-
         SeachResult();
     }
     protected void txtsearch_TextChanged(object sender, EventArgs e)
@@ -495,7 +434,6 @@ public partial class User_U_ProductList : System.Web.UI.Page
     }
     protected void rberffpurchase_SelectedIndexChanged(object sender, EventArgs e)
     {
-
         SeachResult();
     }
     protected void rbsort_SelectedIndexChanged(object sender, EventArgs e)
@@ -853,7 +791,7 @@ public partial class User_U_ProductList : System.Web.UI.Page
                     {
                         pgsource.DataSource = dtinner.DefaultView;
                         pgsource.AllowPaging = true;
-                        pgsource.PageSize = 50;
+                        pgsource.PageSize = 48;
                         pgsource.CurrentPageIndex = pagingCurrentPage;
                         lblpaging.Text = "Page " + (pagingCurrentPage + 1) + " of " + pgsource.PageCount;
                         lnkbtnPgPrevious.Enabled = !pgsource.IsFirstPage;
@@ -892,49 +830,11 @@ public partial class User_U_ProductList : System.Web.UI.Page
     {
         pagingCurrentPage -= 1;
         SeachResult();
-        //n2 = Convert.ToInt16(pagingCurrentPage) * Convert.ToInt16(24);
-        //if (ddlcomp.SelectedItem.Text != "Select" || ddlnsg.SelectedItem.Text != "Select" || ddlprodindustrydomain.SelectedItem.Text != "Select" || ddlprocurmentcatgory.SelectedItem.Text != "Select" || txtsearch.Text != "" || rbsort.SelectedIndex != -1)
-        //{
-        //    n1 = 1;
-        //}
-        //else
-        //{
-        //    n1 = Convert.ToInt16(n2 - 50);
-        //}
-        //if (ddlcomp.SelectedItem.Text != "Select" || ddlnsg.SelectedItem.Text != "Select" || ddlprodindustrydomain.SelectedItem.Text != "Select" || ddlprocurmentcatgory.SelectedItem.Text != "Select" || txtsearch.Text != "" || rbsort.SelectedIndex != -1)
-        //{ SeachResult(); }
-        //else
-        //{
-        //    BindProduct();
-        //}
     }
     protected void lnkbtnPgNext_Click(object sender, EventArgs e)
     {
         pagingCurrentPage += 1;
         SeachResult();
-        //int txtpage = Convert.ToInt32(pagingCurrentPage) + 1;
-        //string mcount = "";
-        //mcount = txtpage.ToString();
-        ////if (txtpageno.Text != "")
-        ////{
-        ////    txtpageno.Text = txtpage.ToString();
-        ////    mcount = txtpageno.Text;
-        ////}
-        //n2 = Convert.ToInt16(mcount) * Convert.ToInt16(50);
-        //if (ddlcomp.SelectedItem.Text != "Select" || ddlnsg.SelectedItem.Text != "Select" || ddlprodindustrydomain.SelectedItem.Text != "Select" || ddlprocurmentcatgory.SelectedItem.Text != "Select" || txtsearch.Text != "" || rbsort.SelectedIndex != -1)
-        //{
-        //    n1 = 1;
-        //}
-        //else
-        //{
-        //    n1 = Convert.ToInt16(n2 - 49);
-        //}
-        //if (ddlcomp.SelectedItem.Text != "Select" || ddlnsg.SelectedItem.Text != "Select" || ddlprodindustrydomain.SelectedItem.Text != "Select" || ddlprocurmentcatgory.SelectedItem.Text != "Select" || txtsearch.Text != "" || rbsort.SelectedIndex != -1)
-        //{ SeachResult(); }
-        //else
-        //{
-        //    BindProduct();
-        //}
     }
     private int pagingCurrentPage
     {
@@ -954,36 +854,6 @@ public partial class User_U_ProductList : System.Web.UI.Page
             ViewState["pagingCurrentPage"] = value;
         }
     }
-    //protected void btngoto_Click(object sender, EventArgs e)
-    //{
-    //    if (System.Text.RegularExpressions.Regex.IsMatch(txtpageno.Text, "[^0-9]"))
-    //    {
-    //        ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "ErrorMssgPopup('Please enter only number')", true);
-    //    }
-    //    else
-    //    {
-    //        if (txtpageno.Text != "")
-    //        {
-    //            int txtpage = Convert.ToInt32(txtpageno.Text) - 1;
-    //            pagingCurrentPage = Convert.ToInt32(txtpage.ToString());
-    //        }
-    //        n2 = Convert.ToInt16(pagingCurrentPage + 1) * Convert.ToInt16(50);
-    //        if (ddlcomp.SelectedItem.Text != "Select" || ddlnsg.SelectedItem.Text != "Select" || ddlprodindustrydomain.SelectedItem.Text != "Select" || ddlprocurmentcatgory.SelectedItem.Text != "Select" || txtsearch.Text != "")
-    //        {
-    //            n1 = 1;
-    //        }
-    //        else
-    //        {
-    //            n1 = Convert.ToInt16(n2 + 1 - 50);
-    //        }
-    //        if (ddlcomp.SelectedItem.Text != "Select" || ddlnsg.SelectedItem.Text != "Select" || ddlprodindustrydomain.SelectedItem.Text != "Select" || ddlprocurmentcatgory.SelectedItem.Text != "Select" || txtsearch.Text != "")
-    //        { SeachResult(); }
-    //        else
-    //        {
-    //            { BindProduct(); }
-    //        }
-    //    }
-    //}
     #endregion
     #region CartCode
     protected void dlproduct_ItemCommand(object source, DataListCommandEventArgs e)
@@ -1287,26 +1157,26 @@ public partial class User_U_ProductList : System.Web.UI.Page
                     {
                         twentytwo.Visible = false;
                     }
-                    if (DtView.Rows[0]["IsShowGeneral"].ToString() != "")
-                    {
-                        if (DtView.Rows[0]["IsShowGeneral"].ToString() == "Y")
-                            lblisshowgeneral.Text = "Yes";
-                        else
-                            lblisshowgeneral.Text = "No";
-                        twentyfour.Visible = true;
-                    }
-                    else
-                    {
-                        twentyfour.Visible = false;
-                    }
-                    if (DtView.Rows[0]["TermConditionImage"].ToString() != "")
-                    {
-                        twentythree.Visible = true;
-                    }
-                    else
-                    {
-                        twentythree.Visible = false;
-                    }
+                    //if (DtView.Rows[0]["IsShowGeneral"].ToString() != "")
+                    //{
+                    //    if (DtView.Rows[0]["IsShowGeneral"].ToString() == "Y")
+                    //        lblisshowgeneral.Text = "Yes";
+                    //    else
+                    //        lblisshowgeneral.Text = "No";
+                    //    twentyfour.Visible = true;
+                    //}
+                    //else
+                    //{
+                    //    twentyfour.Visible = false;
+                    //}
+                    //if (DtView.Rows[0]["TermConditionImage"].ToString() != "")
+                    //{
+                    //    twentythree.Visible = true;
+                    //}
+                    //else
+                    //{
+                    //    twentythree.Visible = false;
+                    //}
                     if (DtView.Rows[0]["QAAgency"].ToString() != "")
                     {
                         DataTable DTporCat = Lo.RetriveProductCode("", e.CommandArgument.ToString(), "ProductQAAgency", "Company");
@@ -1386,29 +1256,29 @@ public partial class User_U_ProductList : System.Web.UI.Page
                         Tr21.Visible = false;
                         Tr22.Visible = false;
                     }
-                    if (DtView.Rows[0]["IndTargetYear"].ToString() != "")
-                    {
-                        lblindtrgyr.Text = DtView.Rows[0]["IndTargetYear"].ToString().Substring(0, DtView.Rows[0]["IndTargetYear"].ToString().Length - 1);
-                        if (lblindtrgyr.Text == "NIL")
-                        { Tr25.Visible = false; }
-                        else
-                        {
-                            Tr25.Visible = true;
-                        }
-                    }
-                    else
-                    {
-                        Tr25.Visible = false;
-                    }
-                    if (DtView.Rows[0]["IndProcess"].ToString() != "")
-                    {
-                        lblprocstart.Text = DtView.Rows[0]["IndProcess"].ToString();
-                        Tr24.Visible = true;
-                    }
-                    else
-                    {
-                        Tr24.Visible = false;
-                    }
+                    //if (DtView.Rows[0]["IndTargetYear"].ToString() != "")
+                    //{
+                    //    lblindtrgyr.Text = DtView.Rows[0]["IndTargetYear"].ToString().Substring(0, DtView.Rows[0]["IndTargetYear"].ToString().Length - 1);
+                    //    if (lblindtrgyr.Text == "NIL")
+                    //    { Tr25.Visible = false; }
+                    //    else
+                    //    {
+                    //        Tr25.Visible = true;
+                    //    }
+                    //}
+                    //else
+                    //{
+                    //    Tr25.Visible = false;
+                    //}
+                    //if (DtView.Rows[0]["IndProcess"].ToString() != "")
+                    //{
+                    //    lblprocstart.Text = DtView.Rows[0]["IndProcess"].ToString();
+                    //    Tr24.Visible = true;
+                    //}
+                    //else
+                    //{
+                    //    Tr24.Visible = false;
+                    //}
                     ScriptManager.RegisterStartupScript(this, GetType(), "ProductCompany", "showPopup();", true);
                 }
             }
@@ -1590,9 +1460,6 @@ public partial class User_U_ProductList : System.Web.UI.Page
     }
     protected void btnreset_Click(object sender, EventArgs e)
     {
-        // cleartext();
-        // Div1.Visible = false;
-        // SeachResult();
         Response.RedirectToRoute("UproductList");
     }
     #region AutoComplete Serach Box
@@ -1777,9 +1644,6 @@ public partial class User_U_ProductList : System.Web.UI.Page
         return customers.ToArray();
     }
     #endregion
-    protected void lbadvancesearch_Click(object sender, EventArgs e)
-    {
-    }
     protected void cleartext()
     {
         txtsearch.Text = "";

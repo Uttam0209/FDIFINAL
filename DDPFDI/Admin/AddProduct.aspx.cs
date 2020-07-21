@@ -145,9 +145,10 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                 }
                 catch (Exception ex)
                 {
-                    string error = ex.ToString();
+                    string error = ex.Message;
                     string Page = Request.Url.AbsolutePath.ToString();
                     Response.Redirect("Error?techerror=" + objEnc.EncryptData(error) + "&page=" + objEnc.EncryptData(Page));
+                    // ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "ErrorMssgPopup('Oops some error occured Please refresh page." + ex.Message + "')", true);
                 }
             }
         }

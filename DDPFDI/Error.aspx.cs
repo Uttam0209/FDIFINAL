@@ -9,7 +9,13 @@ public partial class Error : System.Web.UI.Page
     {
         try
         {
-            Load();
+            if (Request.QueryString["techerror"].ToString() != "" && Request.QueryString["page"] != null)
+            {
+                FriendlyErrorMsg.Text = Enc.DecryptData(Request.QueryString["techerror"].ToString()) + "Page:- "+Enc.DecryptData(Request.QueryString["page"].ToString());
+            }
+            else
+            { }
+            //  Load();
         }
         catch (Exception ex)
         {

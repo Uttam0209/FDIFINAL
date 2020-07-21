@@ -335,7 +335,7 @@
                                                         <%-- <h3 class="accordion-heading">
                                                             <asp:LinkButton class="collapsed" runat="server" ID="lbadvancesearch" OnClick="lbadvancesearch_Click">Advanced Filters</asp:LinkButton></h3>
                                                         <div class="widget widget-links cz-filter" runat="server" id="divhiddensearch" visible="false">--%>
-                                                        <div class="widget widget-categories mb-3 ">
+                                                        <div class="widget widget-categories mb-3 " runat="server">
                                                             <div id="Div5" runat="server">
                                                                 <label><b>Company</b></label>
                                                                 <div class="input-group">
@@ -355,7 +355,7 @@
                                                                 <asp:DropDownList ID="ddlunit" runat="server" CssClass="custom-select" AutoPostBack="true" OnSelectedIndexChanged="ddlunit_SelectedIndexChanged"></asp:DropDownList>
                                                             </div>
                                                         </div>
-                                                        <div id="Div6" class="widget widget-categories mb-3" runat="server">
+                                                        <div id="Div6" class="widget widget-categories mb-3" runat="server" runat="server">
                                                             <label><b>Nato Supply Group</b></label>
                                                             <div class="input-group">
                                                                 <asp:DropDownList ID="ddlnsg" runat="server" CssClass="custom-select" Style="margin-top: 5px;" AutoPostBack="true" OnSelectedIndexChanged="ddlnsg_SelectedIndexChanged"></asp:DropDownList>
@@ -373,7 +373,7 @@
                                                                 <asp:DropDownList ID="ddlic" runat="server" CssClass="custom-select" Style="margin-top: 5px;" AutoPostBack="true" OnSelectedIndexChanged="ddlic_SelectedIndexChanged"></asp:DropDownList>
                                                             </div>
                                                         </div>
-                                                        <div id="Div7" class="widget widget-categories mb-3" runat="server">
+                                                        <div id="Div7" class="widget widget-categories mb-3" runat="server" runat="server">
                                                             <label><b>Industry Domain</b></label>
                                                             <div class="input-group">
                                                                 <asp:DropDownList ID="ddlprodindustrydomain" runat="server" CssClass="custom-select" AutoPostBack="true" OnSelectedIndexChanged="ddlprodindustrydomain_SelectedIndexChanged"></asp:DropDownList>
@@ -402,14 +402,14 @@
                                                                 </asp:CheckBoxList>
                                                             </div>
                                                         </div>
-                                                        <div id="Div3" class="widget widget-categories mb-3">
+                                                        <div id="Div3" class="widget widget-categories mb-3" runat="server">
                                                             <label><b>Make in India Category</b></label>
                                                             <div class="input-group">
                                                                 <asp:RadioButtonList ID="chktendor" runat="server" AutoPostBack="true" CssClass="custom-checkbox" OnSelectedIndexChanged="chktendor_SelectedIndexChanged">
                                                                 </asp:RadioButtonList>
                                                             </div>
                                                         </div>
-                                                        <div id="Div10" class="widget widget-categories mb-3" runat="server">
+                                                        <div id="Div10" class="widget widget-categories mb-3" runat="server" visible="false">
                                                             <label><b>Displayed for General</b></label>
                                                             <div class="input-group">
                                                                 <asp:RadioButtonList ID="ddldeclaration" runat="server" AutoPostBack="true" CssClass="custom-checkbox" OnSelectedIndexChanged="ddldeclaration_SelectedIndexChanged">
@@ -418,7 +418,7 @@
                                                                 </asp:RadioButtonList>
                                                             </div>
                                                         </div>
-                                                        <div id="Div13" class="widget widget-categories mb-3" runat="server">
+                                                        <div id="Div13" class="widget widget-categories mb-3" runat="server" visible="false">
                                                             <label><b>EoI/RFP</b></label>
                                                             <div class="input-group">
                                                                 <asp:RadioButtonList ID="chkeoistatus" runat="server" AutoPostBack="true" CssClass="custom-checkbox" OnSelectedIndexChanged="ddldeclaration_SelectedIndexChanged">
@@ -448,7 +448,7 @@
                             <div class="d-flex justify-content-center justify-content-sm-between align-items-center pt-2 pb-4 pb-sm-5">
                                 <div class="col-md-9">
                                     <div class="input-group-overlay d-none d-lg-flex mx-4">
-                                        <asp:TextBox ID="txtsearch" runat="server" AutoPostBack="true" Style="max-height: 40px;"
+                                        <asp:TextBox ID="txtsearch" runat="server" AutoPostBack="false" Style="max-height: 40px;"
                                             ToolTip="search tab with all criteria using words." CssClass="form-control appended-form-control"
                                             OnTextChanged="txtsearch_TextChanged" Placeholder="Search (type min three character)"></asp:TextBox>
                                         <div class="input-group-append-overlay">
@@ -503,9 +503,10 @@
                                         <ItemTemplate>
                                             <div class="">
                                                 <div class="card product-card" style="box-shadow: 0 0.3rem 1.525rem -0.375rem rgba(0, 0, 0, 0.1);">
-                                                    <a class="card-img-top d-block overflow-hidden" href="#" style="text-align: center;">
+                                                     <a class="card-img-top d-block overflow-hidden" href="#" style="text-align: center;">
                                                         <img src='<%#Eval("TopImages") %>' alt="Product" style="max-width: 100%; width: 50%; height: 90px;">
-                                                    </a>&nbsp;&nbsp;&nbsp;<div class="card-body py-2" style="height: 230px;">
+                                                    </a>&nbsp;&nbsp;&nbsp;
+                                                    <div class="card-body py-2" style="height: 230px;">
                                                         <b>
                                                             <p class="product-meta d-block font-size-xs pb-1" style="color: #6915cf; font-size: 16px!important;">
                                                                 <%#Eval("CompanyName") %>
@@ -662,7 +663,6 @@
                                     <div class="widget widget-categories mb-4">
                                         <div class="accordion mt-n1" id="shop-categories">
                                             <div id="printarea">
-
                                                 <div class="card" style="border-bottom: solid 1.4px #e5e5e5!important;">
                                                     <div class="card-header">
                                                         <h3 class="accordion-heading mb-2">
@@ -825,7 +825,6 @@
                                                         </div>
                                                     </div>
                                                 </div>
-
                                                 <div class="card border-btm" style="border-bottom: solid 1.4px #e5e5e5!important;">
                                                     <div class="card-header">
                                                         <h3 class="accordion-heading mb-2">
@@ -927,7 +926,6 @@
                                                         </div>
                                                     </div>
                                                 </div>
-
                                                 <div class="card border-btm" style="border-bottom: solid 1.4px #e5e5e5!important;">
                                                     <div class="card-header">
                                                         <h3 class="accordion-heading mb-2">
@@ -1106,13 +1104,13 @@
                                                                             <asp:Label ID="lblnameofdefplat" runat="server" Text=""></asp:Label>
                                                                         </td>
                                                                     </tr>
-                                                                    <tr runat="server" id="twentythree">
+                                                                    <tr runat="server" id="twentythree" visible="false">
                                                                         <th scope="row"></th>
                                                                         <td runat="server">
                                                                             <asp:Label ID="lbldeclaration" runat="server" Text="No IPR issue, No violation of TOT agreement, No violation of Security Concern"></asp:Label>
                                                                         </td>
                                                                     </tr>
-                                                                    <tr runat="server" id="twentyfour">
+                                                                    <tr runat="server" id="twentyfour" visible="false">
                                                                         <th scope="row"></th>
                                                                         <td runat="server">
                                                                             <asp:Label ID="lblisshowgeneral" runat="server" Text=""></asp:Label>
@@ -1165,7 +1163,6 @@
                                                         </div>
                                                     </div>
                                                 </div>
-
                                             </div>
                                         </div>
                                     </div>
@@ -1304,7 +1301,7 @@
                             }
                         });
                     },
-                    minLength: 3
+                    minLength: 1
                 });
             }
         </script>
