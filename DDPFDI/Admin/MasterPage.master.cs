@@ -28,6 +28,7 @@ public partial class Admin_MasterPage : System.Web.UI.MasterPage
         {
             Response.RedirectToRoute("Login");
         }
+        Response.Cache.SetExpires(DateTime.Now.AddMonths(1));
     }
     protected void lbllogout_Click(object sender, EventArgs e)
     {

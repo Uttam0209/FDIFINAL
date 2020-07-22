@@ -195,7 +195,7 @@ public partial class User_U_ProductList : System.Web.UI.Page
                 mDtGrid.DefaultView.Sort = "ProdIndustrySubDomain asc";
                 DataView dvm = new DataView(mDtGrid);
                 dvm.RowFilter = "TechnologyLevel1='" + ddlprodindustrydomain.SelectedItem.Value + "'";
-                Co.FillDropdownlist(ddlindustrysubdoamin, dvm.ToTable(), "ProdIndustrySubDomain", "TechnologyLevel1");
+                Co.FillDropdownlist(ddlindustrysubdoamin, dvm.ToTable(), "ProdIndustrySubDomain", "TechnologyLevel2");
                 ddlindustrysubdoamin.Items.Insert(0, "Select");
                 divisd.Visible = true;
             }
@@ -1474,7 +1474,7 @@ public partial class User_U_ProductList : System.Web.UI.Page
             conn.ConnectionString = objCrypto1.DecryptData(ConfigurationManager.ConnectionStrings["connectiondb"].ConnectionString);
             using (SqlCommand cmd = new SqlCommand())
             {
-                cmd.CommandText = "select top 100000 ProductRefNo from tbl_mst_MainProduct  where ProductRefNo like @SearchText + '%'";
+                cmd.CommandText = "select ProductRefNo from tbl_trn_ProductFilterSearchTemp  where ProductRefNo like @SearchText + '%'";
                 cmd.Parameters.AddWithValue("@SearchText", prefix);
                 cmd.Connection = conn;
                 conn.Open();
@@ -1485,7 +1485,7 @@ public partial class User_U_ProductList : System.Web.UI.Page
                         customers.Add(string.Format("{0}-{1}", sdr["ProductRefNo"], sdr["ProductRefNo"]));
                     }
                 }
-                cmd.CommandText = "select distinct CompanyName from tbl_mst_Company where CompanyName like @SearchText + '%'";
+                cmd.CommandText = "select distinct CompanyName from tbl_trn_ProductFilterSearchTemp where CompanyName like @SearchText + '%'";
                 using (SqlDataReader sdr = cmd.ExecuteReader())
                 {
                     while (sdr.Read())
@@ -1493,7 +1493,7 @@ public partial class User_U_ProductList : System.Web.UI.Page
                         customers.Add(string.Format("{0}-{1}", sdr["CompanyName"], sdr["CompanyName"]));
                     }
                 }
-                cmd.CommandText = "select distinct FactoryName from tbl_mst_Factory where FactoryName like @SearchText + '%'";
+                cmd.CommandText = "select distinct FactoryName from tbl_trn_ProductFilterSearchTemp where FactoryName like @SearchText + '%'";
                 using (SqlDataReader sdr = cmd.ExecuteReader())
                 {
                     while (sdr.Read())
@@ -1502,7 +1502,7 @@ public partial class User_U_ProductList : System.Web.UI.Page
                     }
                 }
 
-                cmd.CommandText = "select distinct UnitName from tbl_mst_Unit where UnitName like @SearchText + '%'";
+                cmd.CommandText = "select distinct UnitName from tbl_trn_ProductFilterSearchTemp where UnitName like @SearchText + '%'";
                 using (SqlDataReader sdr = cmd.ExecuteReader())
                 {
                     while (sdr.Read())
@@ -1518,7 +1518,7 @@ public partial class User_U_ProductList : System.Web.UI.Page
                         customers.Add(string.Format("{0}-{1}", sdr["NSCCode"], sdr["NSCCode"]));
                     }
                 }
-                cmd.CommandText = "select distinct ProductDescription from tbl_Mst_MainProduct where ProductDescription like @SearchText + '%'";
+                cmd.CommandText = "select distinct ProductDescription from tbl_Mst_MainProduct where ProductDescription like @SearchText + '%' and (ProductDescription is not null or ProductDescription !='')";
                 using (SqlDataReader sdr = cmd.ExecuteReader())
                 {
                     while (sdr.Read())
@@ -1526,7 +1526,7 @@ public partial class User_U_ProductList : System.Web.UI.Page
                         customers.Add(string.Format("{0}-{1}", sdr["ProductDescription"], sdr["ProductDescription"]));
                     }
                 }
-                cmd.CommandText = "select distinct NSNGroup from Vw_MasteRecord where NSNGroup like @SearchText + '%'";
+                cmd.CommandText = "select distinct NSNGroup from tbl_trn_ProductFilterSearchTemp where NSNGroup like @SearchText + '%' and (NSNGroup is not null or NSNGroup !='')";
                 using (SqlDataReader sdr = cmd.ExecuteReader())
                 {
                     while (sdr.Read())
@@ -1534,7 +1534,7 @@ public partial class User_U_ProductList : System.Web.UI.Page
                         customers.Add(string.Format("{0}-{1}", sdr["NSNGroup"], sdr["NSNGroup"]));
                     }
                 }
-                cmd.CommandText = "select distinct DefencePlatform from Vw_MasteRecord where DefencePlatform like @SearchText + '%'";
+                cmd.CommandText = "select distinct DefencePlatform from tbl_trn_ProductFilterSearchTemp where DefencePlatform like @SearchText + '%' and (DefencePlatform is not null or DefencePlatform !='')";
                 using (SqlDataReader sdr = cmd.ExecuteReader())
                 {
                     while (sdr.Read())
@@ -1542,7 +1542,7 @@ public partial class User_U_ProductList : System.Web.UI.Page
                         customers.Add(string.Format("{0}-{1}", sdr["DefencePlatform"], sdr["DefencePlatform"]));
                     }
                 }
-                cmd.CommandText = "select distinct ProdIndustryDoamin from Vw_MasteRecord where ProdIndustryDoamin like @SearchText + '%'";
+                cmd.CommandText = "select distinct ProdIndustryDoamin from tbl_trn_ProductFilterSearchTemp where ProdIndustryDoamin like @SearchText + '%' and (ProdIndustryDoamin is not null or ProdIndustryDoamin !='')";
                 using (SqlDataReader sdr = cmd.ExecuteReader())
                 {
                     while (sdr.Read())
@@ -1550,7 +1550,7 @@ public partial class User_U_ProductList : System.Web.UI.Page
                         customers.Add(string.Format("{0}-{1}", sdr["ProdIndustryDoamin"], sdr["ProdIndustryDoamin"]));
                     }
                 }
-                cmd.CommandText = "select distinct NSNGroupClass from Vw_MasteRecord where NSNGroupClass like @SearchText + '%'";
+                cmd.CommandText = "select distinct NSNGroupClass from tbl_trn_ProductFilterSearchTemp where NSNGroupClass like @SearchText + '%' and (NSNGroupClass is not null or NSNGroupClass !='')";
                 using (SqlDataReader sdr = cmd.ExecuteReader())
                 {
                     while (sdr.Read())
@@ -1558,7 +1558,7 @@ public partial class User_U_ProductList : System.Web.UI.Page
                         customers.Add(string.Format("{0}-{1}", sdr["NSNGroupClass"], sdr["NSNGroupClass"]));
                     }
                 }
-                cmd.CommandText = "select distinct ItemCode from Vw_MasteRecord where ItemCode like @SearchText + '%'";
+                cmd.CommandText = "select distinct ItemCode from tbl_trn_ProductFilterSearchTemp where ItemCode like @SearchText + '%' and (ItemCode is not null or ItemCode !='')";
                 using (SqlDataReader sdr = cmd.ExecuteReader())
                 {
                     while (sdr.Read())
@@ -1566,7 +1566,7 @@ public partial class User_U_ProductList : System.Web.UI.Page
                         customers.Add(string.Format("{0}-{1}", sdr["ItemCode"], sdr["ItemCode"]));
                     }
                 }
-                cmd.CommandText = "select distinct ProdIndustrySubDomain from Vw_MasteRecord where ProdIndustrySubDomain like @SearchText + '%'";
+                cmd.CommandText = "select distinct ProdIndustrySubDomain from tbl_trn_ProductFilterSearchTemp where ProdIndustrySubDomain like @SearchText + '%' and (ProdIndustrySubDomain is not null or ProdIndustrySubDomain !='')";
                 using (SqlDataReader sdr = cmd.ExecuteReader())
                 {
                     while (sdr.Read())
@@ -1574,23 +1574,23 @@ public partial class User_U_ProductList : System.Web.UI.Page
                         customers.Add(string.Format("{0}-{1}", sdr["ProdIndustrySubDomain"], sdr["ProdIndustrySubDomain"]));
                     }
                 }
-                cmd.CommandText = "select distinct ImageName from tbl_trn_Image where ImageName like @SearchText + '%' and FType='Image'";
+                cmd.CommandText = "select distinct TopImages from tbl_trn_ProductFilterSearchTemp where TopImages like @SearchText + '%' and (TopImages is not null or TopImages !='')";
                 using (SqlDataReader sdr = cmd.ExecuteReader())
                 {
                     while (sdr.Read())
                     {
-                        customers.Add(string.Format("{0}-{1}", sdr["ImageName"], sdr["ImageName"]));
+                        customers.Add(string.Format("{0}-{1}", sdr["TopImages"], sdr["TopImages"]));
                     }
                 }
-                cmd.CommandText = "select  distinct ImageName from tbl_trn_Image where ImageName like @SearchText + '%' and FType='PDF'";
+                cmd.CommandText = "select  distinct TopPdf from tbl_trn_ProductFilterSearchTemp where TopPdf like @SearchText + '%' and (TopPdf is not null or TopPdf !='') ";
                 using (SqlDataReader sdr = cmd.ExecuteReader())
                 {
                     while (sdr.Read())
                     {
-                        customers.Add(string.Format("{0}-{1}", sdr["ImageName"], sdr["ImageName"]));
+                        customers.Add(string.Format("{0}-{1}", sdr["TopPdf"], sdr["TopPdf"]));
                     }
                 }
-                cmd.CommandText = "select distinct HSNCode from tbl_mst_MainProduct where HSNCode like @SearchText + '%'";
+                cmd.CommandText = "select distinct HSNCode from tbl_trn_ProductFilterSearchTemp where HSNCode like @SearchText + '%' and (HSNCode is not null or HSNCode !='')";
                 using (SqlDataReader sdr = cmd.ExecuteReader())
                 {
                     while (sdr.Read())
@@ -1598,7 +1598,7 @@ public partial class User_U_ProductList : System.Web.UI.Page
                         customers.Add(string.Format("{0}-{1}", sdr["HSNCode"], sdr["HSNCode"]));
                     }
                 }
-                cmd.CommandText = "select distinct DPSUPartNumber from tbl_mst_MainProduct where DPSUPartNumber like @SearchText + '%'";
+                cmd.CommandText = "select distinct DPSUPartNumber from tbl_trn_ProductFilterSearchTemp where DPSUPartNumber like @SearchText + '%' and (DPSUPartNumber is not null or DPSUPartNumber !='')";
                 using (SqlDataReader sdr = cmd.ExecuteReader())
                 {
                     while (sdr.Read())
@@ -1606,7 +1606,7 @@ public partial class User_U_ProductList : System.Web.UI.Page
                         customers.Add(string.Format("{0}-{1}", sdr["DPSUPartNumber"], sdr["DPSUPartNumber"]));
                     }
                 }
-                cmd.CommandText = "select distinct OEMName from tbl_mst_MainProduct where OEMName like @SearchText + '%'";
+                cmd.CommandText = "select distinct OEMName from tbl_trn_ProductFilterSearchTemp where OEMName like @SearchText + '%' and (OEMName is not null or OEMName !='')";
                 using (SqlDataReader sdr = cmd.ExecuteReader())
                 {
                     while (sdr.Read())
@@ -1614,12 +1614,12 @@ public partial class User_U_ProductList : System.Web.UI.Page
                         customers.Add(string.Format("{0}-{1}", sdr["OEMName"], sdr["OEMName"]));
                     }
                 }
-                cmd.CommandText = "select distinct CountryName from tbl_mst_Country where CountryName like @SearchText + '%'";
+                cmd.CommandText = "select distinct OEMCountry from tbl_trn_ProductFilterSearchTemp where OEMCountry like @SearchText + '%' and (OEMCountry is not null or OEMCountry !='')";
                 using (SqlDataReader sdr = cmd.ExecuteReader())
                 {
                     while (sdr.Read())
                     {
-                        customers.Add(string.Format("{0}-{1}", sdr["CountryName"], sdr["CountryName"]));
+                        customers.Add(string.Format("{0}-{1}", sdr["OEMCountry"], sdr["OEMCountry"]));
                     }
                 }
                 cmd.CommandText = "select distinct EstimatedQty from tbl_trn_ProdQtyPrice where EstimatedQty like @SearchText + '%'";
@@ -1642,7 +1642,7 @@ public partial class User_U_ProductList : System.Web.UI.Page
             }
         }
         return customers.ToArray();
-    }
+    }   
     #endregion
     protected void cleartext()
     {

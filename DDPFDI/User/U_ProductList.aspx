@@ -229,7 +229,7 @@
         </div>
     </div>
     <form id="form1" runat="server">
-        <asp:ScriptManager ID="sc" runat="server">
+        <asp:ScriptManager ID="sc" runat="server" EnablePageMethods="true">
         </asp:ScriptManager>
         <asp:UpdatePanel ID="update" runat="server">
             <ContentTemplate>
@@ -448,7 +448,7 @@
                             <div class="d-flex justify-content-center justify-content-sm-between align-items-center pt-2 pb-4 pb-sm-5">
                                 <div class="col-md-9">
                                     <div class="input-group-overlay d-none d-lg-flex mx-4">
-                                        <asp:TextBox ID="txtsearch" runat="server" AutoPostBack="false" Style="max-height: 40px;"
+                                        <asp:TextBox ID="txtsearch" runat="server" AutoPostBack="true" Style="max-height: 40px;"
                                             ToolTip="search tab with all criteria using words." CssClass="form-control appended-form-control"
                                             OnTextChanged="txtsearch_TextChanged" Placeholder="Search (type min three character)"></asp:TextBox>
                                         <div class="input-group-append-overlay">
@@ -503,19 +503,21 @@
                                         <ItemTemplate>
                                             <div class="">
                                                 <div class="card product-card" style="box-shadow: 0 0.3rem 1.525rem -0.375rem rgba(0, 0, 0, 0.1);">
-                                                     <a class="card-img-top d-block overflow-hidden" href="#" style="text-align: center;">
+                                                    <asp:LinkButton runat="server" ID="lbimagesgow" CommandArgument='<%#Eval("ProductRefNo") %>' CommandName="View"
+                                                        class="card-img-top d-block overflow-hidden" Style="text-align: center;">
                                                         <img src='<%#Eval("TopImages") %>' alt="Product" style="max-width: 100%; width: 50%; height: 90px;">
-                                                    </a>&nbsp;&nbsp;&nbsp;
+                                                    </asp:LinkButton>&nbsp;&nbsp;&nbsp;
                                                     <div class="card-body py-2" style="height: 230px;">
                                                         <b>
-                                                            <p class="product-meta d-block font-size-xs pb-1" style="color: #6915cf; font-size: 16px!important;">
+                                                            <asp:LinkButton runat="server" ID="lblcompshow" CommandArgument='<%#Eval("ProductRefNo") %>' CommandName="View" class="product-meta d-block font-size-xs pb-1" Style="color: #6915cf; font-size: 16px!important;">
                                                                 <%#Eval("CompanyName") %>
-                                                            </p>
+                                                            </asp:LinkButton>
                                                         </b>
                                                         <h3 class="product-title font-size-sm">
-                                                            <p title='<%#Eval("ProductDescription") %>'>
+                                                            <asp:LinkButton runat="server" ID="lbldesc" title='<%#Eval("ProductDescription") %>' CommandArgument='<%#Eval("ProductRefNo") %>' CommandName="View">
                                                                 <%# Eval("ProductDescription").ToString().Length > 25? (Eval("ProductDescription") as string).Substring(0,25) + ".." : Eval("ProductDescription")  %>
-                                                            </p>
+                                                            </asp:LinkButton>
+
                                                         </h3>
                                                         <table class="table" style="font-size: 14px;">
                                                             <tbody>
@@ -951,7 +953,11 @@
                                                                                 CssClass="table table-hover">
                                                                                 <Columns>
                                                                                     <asp:BoundField DataField="FYear" HeaderText="Year of Import" />
-                                                                                    <asp:BoundField DataField="EstimatedQty" HeaderText="Quantity" />
+                                                                                    <asp:TemplateField HeaderText="Quantity">
+                                                                                        <ItemTemplate>
+                                                                                            <%# Eval("EstimatedQty").ToString() == "0" ? "*" : Eval("EstimatedQty").ToString()%>
+                                                                                        </ItemTemplate>
+                                                                                    </asp:TemplateField>
                                                                                     <asp:BoundField DataField="Unit" HeaderText="Unit" />
                                                                                     <asp:BoundField DataField="EstimatedPrice" HeaderText="Import value in Rs lakh (Qty*Price)" />
                                                                                 </Columns>
@@ -975,7 +981,11 @@
                                                                                             <asp:GridView ID="gvestimatequanold" runat="server" AutoGenerateColumns="false" Class="table table-responsive table-bordered">
                                                                                                 <Columns>
                                                                                                     <asp:BoundField HeaderText="Year of Import" DataField="FYear" />
-                                                                                                    <asp:BoundField HeaderText="Quantity" DataField="EstimatedQty" />
+                                                                                                    <asp:TemplateField HeaderText="Quantity">
+                                                                                                        <ItemTemplate>
+                                                                                                            <%# Eval("EstimatedQty").ToString() == "0" ? "*" : Eval("EstimatedQty").ToString()%>
+                                                                                                        </ItemTemplate>
+                                                                                                    </asp:TemplateField>
                                                                                                     <asp:BoundField HeaderText="Unit" DataField="Unit" />
                                                                                                     <asp:BoundField HeaderText="Imported value in Rs lakh (Qty*Price)" DataField="EstimatedPrice" />
                                                                                                 </Columns>
@@ -1171,7 +1181,7 @@
                             <div class="clearfix mt10">
                             </div>
                             <div class="modal-footer">
-                                <input id="btnprint" type="button" onclick="PrintDiv()" style="width: 70px;" class="btn btn-primary  pull-right"
+                                <input id="btnprint" type="button" runat="server" visible="false" onclick="PrintDiv()" style="width: 70px;" class="btn btn-primary  pull-right"
                                     value="Print" />
                             </div>
                         </div>
@@ -1196,7 +1206,9 @@
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                         <asp:BoundField DataField="CompName" HeaderText="ORGANIZATION" NullDisplayText="#" />
-                                        <asp:BoundField DataField="TotalProd" HeaderText="Total ITEMS" NullDisplayText="#" />
+                                        <asp:BoundField DataField="TotalProd" HeaderText="ITEMS Uploads" NullDisplayText="#" />
+                                        <asp:BoundField DataField="Total1920" HeaderText="Import value during 2019-20 (in million Rs)" NullDisplayText="#" />
+                                        <asp:BoundField DataField="Total2021" HeaderText="Import value during 2020-21 (in million Rs)" NullDisplayText="#" />
                                     </Columns>
                                 </asp:GridView>
                             </div>

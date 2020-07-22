@@ -6,8 +6,8 @@
             <ContentTemplate>
                 <asp:LinkButton ID="a" runat="server" Text="safgaga" CssClass="btn btn-primary" OnClick="a_Click"></asp:LinkButton>
                 <div class="modal-quick-view modal fade" id="ProductCompany" tabindex="-1">
-                    <div class="modal-dialog modal-xl" style="max-width: 800px!important; z-index: 9999999999;">
-                        <iframe runat="server" id="aa" width="900" height="600" frameborder="0" visible="true"></iframe>
+                    <div class="modal-dialog modal-xl" style="min-width: 700px!important; z-index: 9999999999;">
+                        <iframe runat="server" id="aa" style="margin-top: 11px;" frameborder="0" visible="true"></iframe>
                     </div>
                 </div>
             </ContentTemplate>
@@ -31,4 +31,7 @@
         }
     </script>
 </asp:Content>
+
+
+
 

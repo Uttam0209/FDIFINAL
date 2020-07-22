@@ -546,6 +546,12 @@
                                                                                         <asp:TextBox runat="server" CssClass="form-control" ID="txtpriceestimate1" onpaste="showError()" onkeypress="return isNumberKey(event)" Placeholder="Imported value in Rs lakh (Qty*Price)"></asp:TextBox></td>
                                                                                 </tr>
                                                                             </table>
+                                                                            <p class="pull-right mr10">
+                                                                                <span class="mandatory">Quantity may be entered as 0 if DPSU doesn't want to show
+                                                                                quantity of the imported item on the public portal.
+                                                                                </span>
+                                                                            </p>
+                                                                            <div class="clearfix mt5"></div>
                                                                             <p class="pull-right mr10"><span class="mandatory">Imported During last 3 years field fill mandatory</span></p>
                                                                             <div class="clearfix mt5"></div>
 
