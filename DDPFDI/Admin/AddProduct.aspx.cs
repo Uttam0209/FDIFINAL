@@ -145,10 +145,10 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                 }
                 catch (Exception ex)
                 {
-                    string error = ex.Message;
-                    string Page = Request.Url.AbsolutePath.ToString();
-                    Response.Redirect("Error?techerror=" + objEnc.EncryptData(error) + "&page=" + objEnc.EncryptData(Page));
-                    // ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "ErrorMssgPopup('Oops some error occured Please refresh page." + ex.Message + "')", true);
+                    //string error = ex.Message;
+                    //string Page = Request.Url.AbsolutePath.ToString();
+                    //Response.Redirect("Error?techerror=" + objEnc.EncryptData(error) + "&page=" + objEnc.EncryptData(Page));
+                    ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "ErrorMssgPopup('Oops some error occured Please refresh page or contact us." + ex.Message + "')", true);
                 }
             }
         }
@@ -1288,7 +1288,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
             {
                 HyPanel1["IndTargetYear"] = "";
             }
-            HyPanel1["IndProcess"] = chkindiprocstart.SelectedItem.Value;
+            HyPanel1["IndProcess"] = chkindiprocstart.SelectedItem.Value.Trim();
             if (chkindiprocstart.SelectedItem.Value == "Yes")
             {
                 for (int j = 0; j < rbIgCategory.Items.Count; j++)
@@ -2315,24 +2315,34 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                         }
                     }
                 }
-                if (DtView.Rows[0]["Platform"].ToString() != "")
+                try
                 {
-                    ddlplatform.Items.FindByValue(DtView.Rows[0]["Platform"].ToString()).Selected = true;
-                    if (DtView.Rows[0]["NomenclatureOfMainSystem"].ToString() != "")
+                    if (DtView.Rows[0]["Platform"].ToString() != "")
                     {
-                        BindMasterProductNoenCletureCategory();
-                        ddlnomnclature.SelectedValue = DtView.Rows[0]["NomenclatureOfMainSystem"].ToString();
+                        ddlplatform.Items.FindByValue(DtView.Rows[0]["Platform"].ToString()).Selected = true;
+                        if (DtView.Rows[0]["NomenclatureOfMainSystem"].ToString() != "")
+                        {
+                            BindMasterProductNoenCletureCategory();
+                            ddlnomnclature.SelectedValue = DtView.Rows[0]["NomenclatureOfMainSystem"].ToString();
+                        }
                     }
                 }
-                if (DtView.Rows[0]["TechnologyLevel1"].ToString() != "")
+                catch (Exception ex)
+                { ex.Message.ToString();}
+                try
                 {
-                    ddltechnologycat.Items.FindByValue(DtView.Rows[0]["TechnologyLevel1"].ToString()).Selected = true;
-                    BindMasterSubCategoryTech();
-                    if (DtView.Rows[0]["TechnologyLevel2"].ToString() != "")
+                    if (DtView.Rows[0]["TechnologyLevel1"].ToString() != "")
                     {
-                        ddlsubtech.Items.FindByValue(DtView.Rows[0]["TechnologyLevel2"].ToString()).Selected = true;
+                        ddltechnologycat.Items.FindByValue(DtView.Rows[0]["TechnologyLevel1"].ToString()).Selected = true;
+                        BindMasterSubCategoryTech();
+                        if (DtView.Rows[0]["TechnologyLevel2"].ToString() != "")
+                        {
+                            ddlsubtech.Items.FindByValue(DtView.Rows[0]["TechnologyLevel2"].ToString()).Selected = true;
+                        }
                     }
                 }
+                catch (Exception ex)
+                { ex.Message.ToString(); }
                 txtsearchkeyword.Text = DtView.Rows[0]["SearchKeyword"].ToString();
                 rbisindinised.SelectedValue = DtView.Rows[0]["IsIndeginized"].ToString();
                 if (rbisindinised.SelectedItem.Value == "Y")
@@ -2431,7 +2441,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                         }
                     }
                 }
-                chkindiprocstart.SelectedValue = DtView.Rows[0]["IndProcess"].ToString();
+                chkindiprocstart.SelectedValue = DtView.Rows[0]["IndProcess"].ToString().Trim();
                 if (chkindiprocstart.SelectedValue == "Yes")
                 {
                     if (DtView.Rows[0]["PurposeofProcurement"].ToString() != "")

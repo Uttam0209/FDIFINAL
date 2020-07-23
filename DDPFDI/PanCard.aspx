@@ -8,6 +8,10 @@
 </head>
 <body>
     <form id="form1" runat="server">
+
+        
+
+
         <div>
             <div style="text-align: center;">
                 <asp:RadioButtonList ID="rbcheck" runat="server" RepeatColumns="4" RepeatDirection="Horizontal" AutoPostBack="true" RepeatLayout="Flow" OnSelectedIndexChanged="rbcheck_SelectedIndexChanged">
@@ -16,6 +20,7 @@
                     <asp:ListItem Value="3">TIN & OTHER</asp:ListItem>
                     <asp:ListItem Value="4">ENC & DEC</asp:ListItem>
                 </asp:RadioButtonList>
+
             </div>
             <br />
             <br />

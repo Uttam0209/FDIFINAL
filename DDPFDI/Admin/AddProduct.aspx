@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" Inherits="Admin_AddProduct" CodeFile="AddProduct.aspx.cs" ValidateRequest="false" MasterPageFile="~/Admin/MasterPage.master" ViewStateEncryptionMode="Always" %>
+﻿<%@ page language="C#" autoeventwireup="true" inherits="Admin_AddProduct" CodeFile="AddProduct.aspx.cs" validaterequest="false" masterpagefile="~/Admin/MasterPage.master" viewstateencryptionmode="Always" %>
 
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="asp" %>
 <asp:Content ID="head" runat="server" ContentPlaceHolderID="head">
@@ -424,7 +424,7 @@
                                                                             <table class="table table-responsive">
                                                                                 <tr>
                                                                                     <th>Year</th>
-                                                                                    <th>Imported Quantity <span class="mandatory">*</span></th>
+                                                                                    <th>Imported Quantity <span class="mandatory">#</span></th>
                                                                                     <th>Unit</th>
                                                                                     <th>Imported value in Rs Lakh (Qty*Price) <span class="mandatory">*</span></th>
                                                                                 </tr>
@@ -546,14 +546,13 @@
                                                                                         <asp:TextBox runat="server" CssClass="form-control" ID="txtpriceestimate1" onpaste="showError()" onkeypress="return isNumberKey(event)" Placeholder="Imported value in Rs lakh (Qty*Price)"></asp:TextBox></td>
                                                                                 </tr>
                                                                             </table>
-                                                                            <p class="pull-right mr10">
-                                                                                <span class="mandatory">Quantity may be entered as 0 if DPSU doesn't want to show
+                                                                           <p class="pull-left mr10">
+                                                                                <span class="mandatory">#Quantity may be entered as 0 if DPSU doesn't want to show
                                                                                 quantity of the imported item on the public portal.
                                                                                 </span>
                                                                             </p>
                                                                             <div class="clearfix mt5"></div>
-                                                                            <p class="pull-right mr10"><span class="mandatory">Imported During last 3 years field fill mandatory</span></p>
-                                                                            <div class="clearfix mt5"></div>
+
 
                                                                         </ContentTemplate>
                                                                     </asp:UpdatePanel>
@@ -730,7 +729,7 @@
                                     <div class="section-pannel">
                                         <asp:UpdatePanel runat="server" ID="UpdatePanel1">
                                             <ContentTemplate>
-                                                <h5>Future requirement next 5 years</h5>
+                                                <h5>Future requirement next 5 years <span class="mandatory">#</span></h5>
 
                                                 <table class="table table-responsive">
                                                     <tr>
@@ -935,6 +934,12 @@
                                                             <asp:TextBox runat="server" CssClass="form-control" ID="txtfutvalue5" onpaste="showError()" onkeypress="return isNumberKey(event)" Placeholder="Import Value as these are future values in Rs lakh (Qty*Price)"></asp:TextBox></td>
                                                     </tr>
                                                 </table>
+
+                                                 <p class="pull-left mr10">
+                                                                                <span class="mandatory">#Quantity may be entered as 0 if DPSU doesn't want to show
+                                                                                quantity of the imported item on the public portal.
+                                                                                </span>
+                                                                            </p>
 
                                             </ContentTemplate>
                                         </asp:UpdatePanel>

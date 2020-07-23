@@ -1455,6 +1455,13 @@ public partial class User_U_ProductList : System.Web.UI.Page
         {
             gvPrdoct.DataSource = dtProductDetail;
             gvPrdoct.DataBind();
+            atime.Text = DateTime.Now.ToString("dd-MMM-yyyy");
+            object sumObjectn = dtProductDetail.Compute("Sum(TotalProd)", string.Empty);
+            lbltotaluploadedpopup.Text = sumObjectn.ToString();
+            object sumObjectd = dtProductDetail.Compute("Sum(Total1920)", string.Empty);
+            lbltotalin1920.Text = sumObjectd.ToString();
+            object sumObjectf = dtProductDetail.Compute("Sum(Total2021)", string.Empty);
+            lbltotalin2021.Text = sumObjectf.ToString();
             ScriptManager.RegisterStartupScript(this, GetType(), "divCompany", "showPopup1();", true);
         }
     }
@@ -1642,7 +1649,7 @@ public partial class User_U_ProductList : System.Web.UI.Page
             }
         }
         return customers.ToArray();
-    }   
+    }
     #endregion
     protected void cleartext()
     {

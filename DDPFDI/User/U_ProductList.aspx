@@ -1188,34 +1188,89 @@
                     </div>
                 </div>
                 <div class="modal fade" id="divCompany" role="dialog">
-                    <div class="modal-dialog">
-                        <!-- Modal content-->
+                    <div class="modal-dialog" style="max-width: 750px;">
                         <div class="modal-content">
-                            <div class="modal-header modal-header1">
-                                <h6 class="modal-title">Imported Items</h6>
-                                <button type="button" class="close close1" data-dismiss="modal">
-                                    &times;</button>
-                            </div>
-                            <div class="modal-body">
-                                <asp:GridView ID="gvPrdoct" runat="server" Width="100%" AutoGenerateColumns="false"
-                                    Class="table  table-hover">
-                                    <Columns>
-                                        <asp:TemplateField HeaderText="S.No.">
-                                            <ItemTemplate>
-                                                <%#Container.DataItemIndex+1 %>
-                                            </ItemTemplate>
-                                        </asp:TemplateField>
-                                        <asp:BoundField DataField="CompName" HeaderText="ORGANIZATION" NullDisplayText="#" />
-                                        <asp:BoundField DataField="TotalProd" HeaderText="ITEMS Uploads" NullDisplayText="#" />
-                                        <asp:BoundField DataField="Total1920" HeaderText="Import value during 2019-20 (in million Rs)" NullDisplayText="#" />
-                                        <asp:BoundField DataField="Total2021" HeaderText="Import value during 2020-21 (in million Rs)" NullDisplayText="#" />
-                                    </Columns>
-                                </asp:GridView>
+                            <div runat="server" id="mPrint">
+                                <div class="modal-header modal-header1">
+                                    <h6 class="modal-title">Imported Items  
+                                                   <span>(as on
+                                                       <asp:Label runat="server" ID="atime"></asp:Label>
+                                                       ) 
+                                                   </span></h6>
+                                    <button type="button" class="close close1" data-dismiss="modal">
+                                        &times;</button>
+                                </div>
+                                <div class="modal-body">
+                                    <table class="table table-bordered mb-0">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">S.No.</th>
+                                                <th scope="col" class="w-25">Organization</th>
+                                                <th scope="col" class="w-25">Items Uploaded
+                                                </th>
+                                                <th scope="col" style="text-align: center;">Annual Import Value (in million Rs)
+                                              <table class=" w-100" style="border-top: 1px solid #e3e9ef;">
+                                                  <tr>
+                                                      <td class="w-50" style="border-right: 1px solid #e3e9ef; border-top: 0px; border-left: 0px; text-align: center; border-bottom: 0px;">2019-20
+                                                      </td>
+                                                      <td class="w-50" style="border: none; text-align: center;">2020-21
+                                                      </td>
+                                                  </tr>
+                                              </table>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <asp:DataList ID="gvPrdoct" runat="server" Width="100%" AutoGenerateColumns="false"
+                                                    Class=" table-bordered  table-hover" Style="text-align: center;">
+                                                    <ItemTemplate>
+                                                        <%#Container.ItemIndex + 1 %>
+                                                        <td class="w-25" style="text-align: center;"><%#Eval("CompName") %></td>
+                                                        <td class="w-25" style="text-align: center;"><%#Eval("TotalProd") %></td>
+                                                        <td>
+                                                            <table class="w-100">
+                                                                <tr>
+                                                                    <td class="w-50" style="border-right: 1px solid #e3e9ef; text-align: center; border-top: 0px; border-left: 0px; border-bottom: 0px;"><%#Eval("Total1920") %>
+                                                                    </td>
+                                                                    <td class="w-50" style="border: none; text-align: center;"><%#Eval("Total2021") %>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                    </ItemTemplate>
+                                                </asp:DataList>
+                                            </tr>
+                                        </tbody>
+                                        <table class="table table-bordered mb-0">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col" style="width: 230px; text-align: right;">Total</th>
+                                                    <th scope="col" class="w-25" style="text-align: center;">
+                                                        <asp:Label runat="server" ID="lbltotaluploadedpopup"></asp:Label>
+                                                    </th>
+                                                    <th scope="col">
+                                                        <table class=" w-100">
+                                                            <tr>
+                                                                <td class="w-50" style="border-right: 1px solid #e3e9ef; text-align: center; border-top: 0px; border-left: 0px; border-bottom: 0px;">
+                                                                    <asp:Label ID="lbltotalin1920" runat="server"></asp:Label>
+                                                                </td>
+                                                                <td class="w-50" style="border: none; text-align: center;">
+                                                                    <asp:Label ID="lbltotalin2021" runat="server"></asp:Label>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                    </table>
+                                </div>
                             </div>
                             <div class="modal-footer">
                                 <div class="col-sm-3 pull-right">
-                                    <button type="button" class="btn btn-primary" data-dismiss="modal">
-                                        Close</button>
+                                    <input id="Button1" type="button" runat="server" onclick="Printm()" style="width: 70px;" class="btn btn-primary  pull-right"
+                                        value="Print" />
                                 </div>
                             </div>
                         </div>
@@ -1274,6 +1329,15 @@
                 popupWin.document.close();
             }
         </script>
+        <script type="text/javascript">
+            function Printm() {
+                var divToPrint = document.getElementById('mPrint');
+                var popupWin = window.open('', '_blank', 'width=300,height=400,location=no,left=200px');
+                popupWin.document.open();
+                popupWin.document.write('<html><body onload="window.print()">' + divToPrint.innerHTML + '</html>');
+                popupWin.document.close();
+            }
+        </script>
         <script>
             $(document).ready(function () {
                 $("#adnce_search").click(function () {
@@ -1316,6 +1380,10 @@
                     minLength: 1
                 });
             }
+        </script>
+        <script>
+            var d = new Date();
+            document.getElementById("demo").innerHTML = d;
         </script>
     </form>
 </body>
