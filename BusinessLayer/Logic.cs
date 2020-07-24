@@ -159,10 +159,9 @@ namespace BusinessLayer
         {
             return SqlHelper.Instance.GetExecuteData("select * from fn_companywiseproduct() order by compName");
         }
-        public DataTable RetriveProductIndig1()
+        public DataTable RetriveProductIndig1(string m,string n, string o)
         {
-           // return SqlHelper.Instance.GetExecuteData("select * from fn_EstimatewiseCompanyProduct() order by compName");
-            return SqlHelper.Instance.GetExecuteData("select Count(CompanyRefNo) as TotalProd,CompanyName as CompName, Sum(EstimatePrice) as Total1920 , Sum(EstimatePricefuture)  as Total2021 from tbl_trn_ProductFilterSearchTemp  group by Companyrefno,CompanyName order by CompanyName");
+            return SqlHelper.Instance.RetriveFilterCode(m, n, o);
         }
         public DataTable RetriveAllCompany(string UnitRefNo, string Role)
         {

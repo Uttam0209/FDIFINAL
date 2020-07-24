@@ -119,5 +119,6 @@
         routes.MapPageRoute("UProductList", "UProductList", "~/User/U_ProductList.aspx", true);
         routes.MapPageRoute("UCart", "U_Cart", "~/User/U_Cart.aspx", true);
         routes.MapPageRoute("Popup", "Popup", "~/ViewPopup.aspx", true);
+        routes.MapPageRoute("TempTable", "TempTable", "~/Admin/CreatetempTable.aspx", true);
     }    
 </script>

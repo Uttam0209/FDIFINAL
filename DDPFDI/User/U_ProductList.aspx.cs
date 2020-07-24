@@ -68,6 +68,7 @@ public partial class User_U_ProductList : System.Web.UI.Page
         if (DtGrid.Rows.Count > 0)
         {
             Session["TempData"] = DtGrid;
+            object sum = DtGrid.Compute("Sum(EstimatePrice)", string.Empty);
             SeachResult();
         }
         else
@@ -1019,7 +1020,7 @@ public partial class User_U_ProductList : System.Web.UI.Page
                     if (DtView.Rows[0]["FeatursandDetail"].ToString() != "")
                     {
                         lblfeaturesanddetail.Text = DtView.Rows[0]["FeatursandDetail"].ToString();
-                        fourteen.Visible = true;
+                        fourteen.Visible = false;
                     }
                     else
                     {
@@ -1450,20 +1451,33 @@ public partial class User_U_ProductList : System.Web.UI.Page
     }
     public void FillProduct()
     {
-        DataTable dtProductDetail = Lo.RetriveProductIndig1();
+        atime.Text = DateTime.Now.ToString("dd-MMM-yyyy , hh:mm");
+        DataTable dtProductDetail = Lo.RetriveProductIndig1("", "", "Gettotalprovalue20");
         if (dtProductDetail.Rows.Count > 0)
         {
             gvPrdoct.DataSource = dtProductDetail;
-            gvPrdoct.DataBind();
-            atime.Text = DateTime.Now.ToString("dd-MMM-yyyy");
+            gvPrdoct.DataBind();           
             object sumObjectn = dtProductDetail.Compute("Sum(TotalProd)", string.Empty);
             lbltotaluploadedpopup.Text = sumObjectn.ToString();
             object sumObjectd = dtProductDetail.Compute("Sum(Total1920)", string.Empty);
-            lbltotalin1920.Text = sumObjectd.ToString();
-            object sumObjectf = dtProductDetail.Compute("Sum(Total2021)", string.Empty);
-            lbltotalin2021.Text = sumObjectf.ToString();
-            ScriptManager.RegisterStartupScript(this, GetType(), "divCompany", "showPopup1();", true);
+            lbltotalin1920.Text = sumObjectd.ToString();        
         }
+        else
+        { }
+        DataTable dtProductDetail1 = Lo.RetriveProductIndig1("", "", "Gettotalprovalue21");
+        if (dtProductDetail.Rows.Count > 0)
+        {
+            DataList1.DataSource = dtProductDetail1;
+            DataList1.DataBind();
+            object sumObjectn1 = dtProductDetail1.Compute("Sum(TotalProd)", string.Empty);
+            Label1.Text = sumObjectn1.ToString();
+            object sumObjectf1 = dtProductDetail1.Compute("Sum(Total2021)", string.Empty);
+            Label4.Text = sumObjectf1.ToString();
+          
+        }
+        else
+        { }
+        ScriptManager.RegisterStartupScript(this, GetType(), "divCompany", "showPopup1();", true);
     }
     protected void btnreset_Click(object sender, EventArgs e)
     {

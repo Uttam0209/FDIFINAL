@@ -168,7 +168,6 @@
                                     <div class="widget widget-categories mb-4">
                                         <div class="accordion mt-n1" id="shop-categories">
                                             <div id="printarea">
-
                                                 <div class="card" style="border-bottom: solid 1.4px #e5e5e5!important;">
                                                     <div class="card-header">
                                                         <h3 class="accordion-heading mb-2">
@@ -400,7 +399,7 @@
                                                                             <asp:Label ID="lblitemspecification" runat="server" Text=""></asp:Label>
                                                                         </td>
                                                                     </tr>
-                                                                    <tr runat="server" id="fourteen">
+                                                                    <tr runat="server" id="fourteen" visible="false">
                                                                         <th scope="row">Features & Details
                                                                         </th>
                                                                         <td>
@@ -457,7 +456,12 @@
                                                                                 CssClass="table table-hover">
                                                                                 <Columns>
                                                                                     <asp:BoundField DataField="FYear" HeaderText="Year of Import" />
-                                                                                    <asp:BoundField DataField="EstimatedQty" HeaderText="Quantity" />
+                                                                                    <asp:TemplateField HeaderText="Quantity">
+                                                                                        <ItemTemplate>
+                                                                                            <%-- <%# Eval("EstimatedQty").ToString() == "0" ? "*" : Eval("EstimatedQty").ToString()%>--%>
+                                                                                            <%# Eval("EstimatedQty").ToString() == "0" ? "*" : "*"%>
+                                                                                        </ItemTemplate>
+                                                                                    </asp:TemplateField>
                                                                                     <asp:BoundField DataField="Unit" HeaderText="Unit" />
                                                                                     <asp:BoundField DataField="EstimatedPrice" HeaderText="Import value in Rs lakh (Qty*Price)" />
                                                                                 </Columns>
@@ -481,7 +485,13 @@
                                                                                             <asp:GridView ID="gvestimatequanold" runat="server" AutoGenerateColumns="false" Class="table table-responsive table-bordered">
                                                                                                 <Columns>
                                                                                                     <asp:BoundField HeaderText="Year of Import" DataField="FYear" />
-                                                                                                    <asp:BoundField HeaderText="Quantity" DataField="EstimatedQty" />
+                                                                                                    <asp:TemplateField HeaderText="Quantity">
+                                                                                                        <ItemTemplate>
+                                                                                                            <%-- <%# Eval("EstimatedQty").ToString() == "0" ? "*" : Eval("EstimatedQty").ToString()%>--%>
+                                                                                                            <%# Eval("EstimatedQty").ToString() == "0" ? "*" : "*"%>
+                                                                                                        </ItemTemplate>
+                                                                                                    </asp:TemplateField>
+
                                                                                                     <asp:BoundField HeaderText="Unit" DataField="Unit" />
                                                                                                     <asp:BoundField HeaderText="Imported value in Rs lakh (Qty*Price)" DataField="EstimatedPrice" />
                                                                                                 </Columns>
@@ -498,7 +508,7 @@
                                                             <table class="table mb-2">
                                                                 <tbody>
                                                                     <tr runat="server" id="sixteen">
-                                                                        <th scope="row">Indigenization Category
+                                                                        <th scope="row">Make in India Category
                                                                         </th>
                                                                         <td>
                                                                             <asp:Label ID="lblindicate" runat="server" Text=""></asp:Label>
@@ -577,7 +587,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="card border-btm" style="border-bottom: solid 1.4px #e5e5e5!important;">
+                                                <div id="Div1" class="card border-btm" style="border-bottom: solid 1.4px #e5e5e5!important;" runat="server" visible="false">
                                                     <div class="card-header">
                                                         <h3 class="accordion-heading mb-2">
                                                             <a class="collapsed" href="#AdditionalValue" role="button" data-toggle="collapse" aria-expanded="false"
@@ -622,7 +632,7 @@
                                                                             <asp:Label ID="lblisshowgeneral" runat="server" Text=""></asp:Label>
                                                                         </td>
                                                                     </tr>
-                                                                    <tr runat="server" id="Tr19">
+                                                                    <tr runat="server" id="Tr19" visible="false">
                                                                         <th id="Th1" scope="row" runat="server" visible="false">Is Indigenised 
                                                                         </th>
                                                                         <td id="Td3" runat="server" visible="false">
@@ -669,7 +679,6 @@
                                                         </div>
                                                     </div>
                                                 </div>
-
                                             </div>
                                         </div>
                                     </div>
@@ -678,7 +687,7 @@
                             <div class="clearfix mt10">
                             </div>
                             <div class="modal-footer">
-                                <input id="btnprint" type="button" onclick="PrintDiv()" style="width: 70px;" class="btn btn-primary  pull-right"
+                                <input id="btnprint" type="button" runat="server" visible="false" onclick="PrintDiv()" style="width: 70px;" class="btn btn-primary  pull-right"
                                     value="Print" />
                             </div>
                         </div>

@@ -469,16 +469,13 @@
                                 </div>
                                 <asp:LinkButton ID="totoalmore" runat="server" CssClass="pull-right" OnClick="totoalmore_Click">  <span class="fa fa-eye"></span>  More details</asp:LinkButton>
                             </div>
-                            <div class="clearfix">
-                            </div>
+
                             <div style="float: left;">
                                 <p style="float: left;">
                                     Import value during<asp:Label ID="lblyearvalue" runat="server"></asp:Label>
                                     (in million Rs) -
                                     <asp:Label ID="lblestimateprice" runat="server"></asp:Label>
                                 </p>
-                                <div class="clearfix">
-                                </div>
                                 <p style="float: left;" runat="server" visible="false">
                                     Future requirements in lakhs -
                                 <asp:Label ID="lblfuturepurchase" runat="server" Text="0"></asp:Label>
@@ -488,14 +485,27 @@
                             </div>
                             <br />
                             <div id="divcontentproduct" runat="server">
-                                <p style="float: right;">
-                                    Showing
+
+                                <nav class="d-flex justify-content-between pt-2" aria-label="Page navigation">
+                                    <ul class="pagination">
+                                        <li class="page-item">
+                                            <asp:LinkButton ID="LinkButton1" runat="server" class="page-link" OnClick="lnkbtnPgPrevious_Click"><i class="fas fa-chevron-left mr-2"></i>Prev</asp:LinkButton>
+                                        </li>
+                                    </ul>
+                                    <span style="text-align: center;">Showing
                                     <asp:Label runat="server" ID="lbltotalshowpageitem"></asp:Label>
-                                    products of
+                                        products of
                                 <asp:Label ID="lbltotfilter" runat="server"></asp:Label>
-                                    products  
-                                </p>
-                                <div class="clearfix">
+                                        products  
+                                    </span>
+                                    <ul class="pagination">
+                                        <li class="page-item">
+                                            <asp:LinkButton ID="LinkButton2" runat="server" class="page-link" OnClick="lnkbtnPgNext_Click">
+                            Next<i class="fas fa-chevron-right ml-2"></i></asp:LinkButton>
+                                        </li>
+                                    </ul>
+                                </nav>
+                                <div class="clearfix mt10">
                                 </div>
                                 <div class="row mx-n2">
                                     <asp:DataList runat="server" ID="dlproduct" RepeatColumns="3" RepeatLayout="Flow"
@@ -506,46 +516,47 @@
                                                     <asp:LinkButton runat="server" ID="lbimagesgow" CommandArgument='<%#Eval("ProductRefNo") %>' CommandName="View"
                                                         class="card-img-top d-block overflow-hidden" Style="text-align: center;">
                                                         <img src='<%#Eval("TopImages") %>' alt="Product" style="max-width: 100%; width: 50%; height: 90px;">
-                                                    </asp:LinkButton>&nbsp;&nbsp;&nbsp;
-                                                    <div class="card-body py-2" style="height: 230px;">
-                                                        <b>
-                                                            <asp:LinkButton runat="server" ID="lblcompshow" CommandArgument='<%#Eval("ProductRefNo") %>' CommandName="View" class="product-meta d-block font-size-xs pb-1" Style="color: #6915cf; font-size: 16px!important;">
-                                                                <%#Eval("CompanyName") %>
-                                                            </asp:LinkButton>
-                                                        </b>
-                                                        <h3 class="product-title font-size-sm">
-                                                            <asp:LinkButton runat="server" ID="lbldesc" title='<%#Eval("ProductDescription") %>' CommandArgument='<%#Eval("ProductRefNo") %>' CommandName="View">
-                                                                <%# Eval("ProductDescription").ToString().Length > 25? (Eval("ProductDescription") as string).Substring(0,25) + ".." : Eval("ProductDescription")  %>
-                                                            </asp:LinkButton>
+                                                    </asp:LinkButton>&nbsp;&nbsp;&nbsp;                                                    
+                                                         <div class="card-body py-2" style="height: 230px;">
 
-                                                        </h3>
-                                                        <table class="table" style="font-size: 14px;">
-                                                            <tbody>
-                                                                <tr id="Tr1" runat="server" visible="false">
-                                                                    <td style="padding: 8px;">NSN Group
-                                                                    </td>
-                                                                    <td style="padding: 8px;" class="text-right" title='<%#Eval("NSNGroup") %>'>
-                                                                        <%# Eval("NSNGroup").ToString().Length > 15? (Eval("NSNGroup") as string).Substring(0,15) + ".." : Eval("NSNGroup")  %>
-                                                                        <asp:HiddenField ID="hfrole" runat="server" Value='<%#Eval("Role") %>' />
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td colspan="2" style="padding: 8px; font-size: 11px; color: #6915cf;">Annual Import Value (in million Rs) <b>
-                                                                        <asp:Label ID="lblepold" Visible="false" runat="server" Text='<%# Eval("EstimatePrice") %>'></asp:Label>
-                                                                        <asp:Label ID="lblepfu" Visible="false" runat="server" Text='<%# Eval("EstimatePricefuture") %>'></asp:Label>
-                                                                        <asp:Label ID="lblepold17" Visible="false" runat="server" Text='<%# Eval("EstimatePrice17") %>'></asp:Label>
-                                                                        <asp:Label ID="lblepold18" Visible="false" runat="server" Text='<%# Eval("EstimatePrice18") %>'></asp:Label>
-                                                                    </b>
-                                                                    </td>
-                                                                </tr>
-                                                                <tr runat="server" visible="false">
-                                                                    <td colspan="2" style="padding: 8px; font-size: 12px;">Future requirements in lakhs <b>
-                                                                        <asp:Label ID="lblep" runat="server" Text='<%# Eval("EstimatePricefuture") %>'></asp:Label>
-                                                                    </b>
-                                                                    </td>
-                                                                </tr>
-                                                                <tr id="Tr16" runat="server" visible="false">
-                                                                    <td colspan="2" style="padding: 8px; font-size: 12px;">Annual Import Quantity                                                                       
+                                                             <b>
+                                                                 <asp:LinkButton runat="server" ID="lblcompshow" CommandArgument='<%#Eval("ProductRefNo") %>' CommandName="View" class="product-meta d-block font-size-xs pb-1" Style="color: #6915cf; font-size: 16px!important;">
+                                                                <%#Eval("CompanyName") %>
+                                                                 </asp:LinkButton>
+                                                             </b>
+                                                             <h3 class="product-title font-size-sm">
+                                                                 <asp:LinkButton runat="server" ID="lbldesc" title='<%#Eval("ProductDescription") %>' CommandArgument='<%#Eval("ProductRefNo") %>' CommandName="View">
+                                                                <%# Eval("ProductDescription").ToString().Length > 25? (Eval("ProductDescription") as string).Substring(0,25) + ".." : Eval("ProductDescription")  %>
+                                                                 </asp:LinkButton>
+
+                                                             </h3>
+                                                             <table class="table" style="font-size: 14px;">
+                                                                 <tbody>
+                                                                     <tr id="Tr1" runat="server" visible="false">
+                                                                         <td style="padding: 8px;">NSN Group
+                                                                         </td>
+                                                                         <td style="padding: 8px;" class="text-right" title='<%#Eval("NSNGroup") %>'>
+                                                                             <%# Eval("NSNGroup").ToString().Length > 15? (Eval("NSNGroup") as string).Substring(0,15) + ".." : Eval("NSNGroup")  %>
+                                                                             <asp:HiddenField ID="hfrole" runat="server" Value='<%#Eval("Role") %>' />
+                                                                         </td>
+                                                                     </tr>
+                                                                     <tr>
+                                                                         <td colspan="2" style="padding: 8px; font-size: 11px; color: #6915cf;">Annual Import Value (in million Rs) <b>
+                                                                             <asp:Label ID="lblepold" Visible="false" runat="server" Text='<%# Eval("EstimatePrice") %>'></asp:Label>
+                                                                             <asp:Label ID="lblepfu" Visible="false" runat="server" Text='<%# Eval("EstimatePricefuture") %>'></asp:Label>
+                                                                             <asp:Label ID="lblepold17" Visible="false" runat="server" Text='<%# Eval("EstimatePrice17") %>'></asp:Label>
+                                                                             <asp:Label ID="lblepold18" Visible="false" runat="server" Text='<%# Eval("EstimatePrice18") %>'></asp:Label>
+                                                                         </b>
+                                                                         </td>
+                                                                     </tr>
+                                                                     <tr runat="server" visible="false">
+                                                                         <td colspan="2" style="padding: 8px; font-size: 12px;">Future requirements in lakhs <b>
+                                                                             <asp:Label ID="lblep" runat="server" Text='<%# Eval("EstimatePricefuture") %>'></asp:Label>
+                                                                         </b>
+                                                                         </td>
+                                                                     </tr>
+                                                                     <tr id="Tr16" runat="server" visible="false">
+                                                                         <td colspan="2" style="padding: 8px; font-size: 12px;">Annual Import Quantity                                                                       
                                                                             <b>
                                                                                 <asp:Label ID="Label2" runat="server" Style="margin-right: 0px;" Visible="false" Text='<%# Eval("EstimateQu") %>' />
                                                                                 <asp:Label ID="Label7" runat="server" Style="margin-right: 0px;" Visible="false" Text='<%# Eval("EstimateQu17") %>' />
@@ -554,60 +565,60 @@
                                                                                 <asp:Label ID="Label3" runat="server" Visible="false" Style="margin-right: 0px;" Text='<%# Eval("EstimateQufuture")%>' />
                                                                                 <asp:Label ID="lblestunitfut" runat="server" Style="margin-right: 0px;" Visible="false" Text='<%# Eval("EstUnitfuture") %>' />
                                                                             </b>
-                                                                    </td>
-                                                                </tr>
-                                                                <tr id="Tr3" runat="server" visible="false">
-                                                                    <td colspan="2" style="padding: 8px; font-size: 12px;">OEM Part Number :- <b>
-                                                                        <%#Eval("OEMPartNumber") %></b>
-                                                                    </td>
-                                                                </tr>
-                                                                <tr id="Tr17" runat="server" visible="false">
-                                                                    <td colspan="2" style="padding: 8px; font-size: 12px;">OEM Name :- <b>
-                                                                        <%#Eval("OEMName") %></b>
-                                                                    </td>
-                                                                </tr>
-                                                                <tr id="Tr18" runat="server" visible="false">
-                                                                    <td colspan="2" style="padding: 8px; font-size: 12px;">OEM Country :- <b>
-                                                                        <%#Eval("OEMCountry") %></b>
-                                                                    </td>
-                                                                </tr>
-                                                                <tr id="Tr2">
-                                                                    <td colspan="2" style="padding: 5px; font-size: 12px;">Nato Supply Group Class :-
+                                                                         </td>
+                                                                     </tr>
+                                                                     <tr id="Tr3" runat="server" visible="false">
+                                                                         <td colspan="2" style="padding: 8px; font-size: 12px;">OEM Part Number :- <b>
+                                                                             <%#Eval("OEMPartNumber") %></b>
+                                                                         </td>
+                                                                     </tr>
+                                                                     <tr id="Tr17" runat="server" visible="false">
+                                                                         <td colspan="2" style="padding: 8px; font-size: 12px;">OEM Name :- <b>
+                                                                             <%#Eval("OEMName") %></b>
+                                                                         </td>
+                                                                     </tr>
+                                                                     <tr id="Tr18" runat="server" visible="false">
+                                                                         <td colspan="2" style="padding: 8px; font-size: 12px;">OEM Country :- <b>
+                                                                             <%#Eval("OEMCountry") %></b>
+                                                                         </td>
+                                                                     </tr>
+                                                                     <tr id="Tr2">
+                                                                         <td colspan="2" style="padding: 5px; font-size: 12px;">Nato Supply Group Class :-
                                                                        <p><b>[<%#Eval("NSCCode") %>] -  <%# Eval("NSNGroupClass").ToString().Length > 35? (Eval("NSNGroupClass") as string).Substring(0,35) + ".." : Eval("NSNGroupClass")  %></b></p>
-                                                                    </td>
-                                                                </tr>
-                                                                <tr id="Tr4" runat="server" visible="false">
-                                                                    <td colspan="2" style="padding: 8px; font-size: 12px;">Tender Status :- <b>
-                                                                        <%#Eval("TenderStatus") %></b>
-                                                                    </td>
-                                                                </tr>
-                                                                <tr id="Tr5" runat="server" visible="false">
-                                                                    <td colspan="2" style="padding: 8px; font-size: 12px;">Industry Domain :-
-                                                                    </td>
-                                                                </tr>
-                                                                <tr id="Tr6" runat="server" visible="false">
-                                                                    <td colspan="2" style="padding: 8px; font-size: 12px; font-weight: 900; border-top: 0px;"
-                                                                        title='<%#Eval("ProdIndustryDoamin") %>'>
-                                                                        <%# Eval("ProdIndustryDoamin")  %>
+                                                                         </td>
+                                                                     </tr>
+                                                                     <tr id="Tr4" runat="server" visible="false">
+                                                                         <td colspan="2" style="padding: 8px; font-size: 12px;">Tender Status :- <b>
+                                                                             <%#Eval("TenderStatus") %></b>
+                                                                         </td>
+                                                                     </tr>
+                                                                     <tr id="Tr5" runat="server" visible="false">
+                                                                         <td colspan="2" style="padding: 8px; font-size: 12px;">Industry Domain :-
+                                                                         </td>
+                                                                     </tr>
+                                                                     <tr id="Tr6" runat="server" visible="false">
+                                                                         <td colspan="2" style="padding: 8px; font-size: 12px; font-weight: 900; border-top: 0px;"
+                                                                             title='<%#Eval("ProdIndustryDoamin") %>'>
+                                                                             <%# Eval("ProdIndustryDoamin")  %>
                                                                     /
                                                                     <%#Eval("ProdIndustrySubDomain") %>
-                                                                    </td>
-                                                                </tr>
-                                                                <tr id="Tr7" runat="server" visible="false">
-                                                                    <td style="padding: 8px;">Quantity
-                                                                    </td>
-                                                                    <td style="padding: 8px;" class="text-right">
-                                                                        <%#Eval("EstimateQu") %>
-                                                                    </td>
-                                                                </tr>
-                                                                <tr id="Tr233" runat="server">
-                                                                    <td class="text-right" colspan="2" style="padding: 8px; font-size: 11px;">Last Updated :- 
+                                                                         </td>
+                                                                     </tr>
+                                                                     <tr id="Tr7" runat="server" visible="false">
+                                                                         <td style="padding: 8px;">Quantity
+                                                                         </td>
+                                                                         <td style="padding: 8px;" class="text-right">
+                                                                             <%#Eval("EstimateQu") %>
+                                                                         </td>
+                                                                     </tr>
+                                                                     <tr id="Tr233" runat="server">
+                                                                         <td class="text-right" colspan="2" style="padding: 8px; font-size: 11px;">Last Updated :- 
                                                                         <%#Eval("LastUpdated","{0:dd-MMM-yyyy}") %>
-                                                                    </td>
-                                                                </tr>
-                                                            </tbody>
-                                                        </table>
-                                                    </div>
+                                                                         </td>
+                                                                     </tr>
+                                                                 </tbody>
+                                                             </table>
+                                                         </div>
                                                     <div class="text-center">
                                                         <asp:LinkButton ID="lbview" runat="server" class="nav-link-style font-size-ms" CommandName="View"
                                                             CommandArgument='<%#Eval("ProductRefNo") %>'>                                                
@@ -631,10 +642,6 @@
                                             <asp:LinkButton ID="lnkbtnPgPrevious" runat="server" class="page-link" OnClick="lnkbtnPgPrevious_Click"><i class="fas fa-chevron-left mr-2"></i>Prev</asp:LinkButton>
                                         </li>
                                     </ul>
-                                    <%-- <ul class="pagination">
-                                        <asp:TextBox ID="txtpageno" runat="server" AutoPostBack="true" ToolTip="Enter No (Number could not be 0 or either -1)" CssClass="form-control"
-                                            Placeholder="Enter PageNo" OnTextChanged="btngoto_Click"></asp:TextBox>
-                                    </ul>--%>
                                     <ul class="pagination">
                                         <li class="page-item">
                                             <asp:LinkButton ID="lnkbtnPgNext" runat="server" class="page-link" OnClick="lnkbtnPgNext_Click">
@@ -896,7 +903,7 @@
                                                                             <asp:Label ID="lblitemspecification" runat="server" Text=""></asp:Label>
                                                                         </td>
                                                                     </tr>
-                                                                    <tr runat="server" id="fourteen">
+                                                                    <tr runat="server" id="fourteen" visible="false">
                                                                         <th scope="row">Features & Details
                                                                         </th>
                                                                         <td>
@@ -955,7 +962,8 @@
                                                                                     <asp:BoundField DataField="FYear" HeaderText="Year of Import" />
                                                                                     <asp:TemplateField HeaderText="Quantity">
                                                                                         <ItemTemplate>
-                                                                                            <%# Eval("EstimatedQty").ToString() == "0" ? "*" : Eval("EstimatedQty").ToString()%>
+                                                                                            <%-- <%# Eval("EstimatedQty").ToString() == "0" ? "*" : Eval("EstimatedQty").ToString()%>--%>
+                                                                                            <%# Eval("EstimatedQty").ToString() == "0" ? "*" : "*"%>
                                                                                         </ItemTemplate>
                                                                                     </asp:TemplateField>
                                                                                     <asp:BoundField DataField="Unit" HeaderText="Unit" />
@@ -983,9 +991,11 @@
                                                                                                     <asp:BoundField HeaderText="Year of Import" DataField="FYear" />
                                                                                                     <asp:TemplateField HeaderText="Quantity">
                                                                                                         <ItemTemplate>
-                                                                                                            <%# Eval("EstimatedQty").ToString() == "0" ? "*" : Eval("EstimatedQty").ToString()%>
+                                                                                                            <%-- <%# Eval("EstimatedQty").ToString() == "0" ? "*" : Eval("EstimatedQty").ToString()%>--%>
+                                                                                                            <%# Eval("EstimatedQty").ToString() == "0" ? "*" : "*"%>
                                                                                                         </ItemTemplate>
                                                                                                     </asp:TemplateField>
+
                                                                                                     <asp:BoundField HeaderText="Unit" DataField="Unit" />
                                                                                                     <asp:BoundField HeaderText="Imported value in Rs lakh (Qty*Price)" DataField="EstimatedPrice" />
                                                                                                 </Columns>
@@ -1081,7 +1091,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="card border-btm" style="border-bottom: solid 1.4px #e5e5e5!important;">
+                                                <div class="card border-btm" style="border-bottom: solid 1.4px #e5e5e5!important;" runat="server" visible="false">
                                                     <div class="card-header">
                                                         <h3 class="accordion-heading mb-2">
                                                             <a class="collapsed" href="#AdditionalValue" role="button" data-toggle="collapse" aria-expanded="false"
@@ -1193,77 +1203,97 @@
                             <div runat="server" id="mPrint">
                                 <div class="modal-header modal-header1">
                                     <h6 class="modal-title">Imported Items  
-                                                   <span>(as on
-                                                       <asp:Label runat="server" ID="atime"></asp:Label>
-                                                       ) 
-                                                   </span></h6>
+                                   <div>
+                                       (as on
+                                       <asp:Label runat="server" ID="atime"></asp:Label>
+                                       ) 
+                                   </div>
+                                    </h6>
                                     <button type="button" class="close close1" data-dismiss="modal">
                                         &times;</button>
                                 </div>
                                 <div class="modal-body">
-                                    <table class="table table-bordered mb-0">
+                                    <div class="clearfix mt10"></div>
+                                    <table class="table table-bordered" style="border: 1px solid #e3e9ef; border-collapse: collapse; position: absolute; top: 10px; width: 705px; max-width: 100%;">
                                         <thead>
                                             <tr>
-                                                <th scope="col">S.No.</th>
-                                                <th scope="col" class="w-25">Organization</th>
-                                                <th scope="col" class="w-25">Items Uploaded
-                                                </th>
-                                                <th scope="col" style="text-align: center;">Annual Import Value (in million Rs)
-                                              <table class=" w-100" style="border-top: 1px solid #e3e9ef;">
-                                                  <tr>
-                                                      <td class="w-50" style="border-right: 1px solid #e3e9ef; border-top: 0px; border-left: 0px; text-align: center; border-bottom: 0px;">2019-20
-                                                      </td>
-                                                      <td class="w-50" style="border: none; text-align: center;">2020-21
-                                                      </td>
-                                                  </tr>
-                                              </table>
-                                                </th>
+                                                <td colspan="4" style="text-align: center;">
+                                                    <b>2019-20 </b>
+                                                </td>
+                                            </tr>
+                                        </thead>
+                                        <thead>
+                                            <tr style="text-align: center;">
+                                                <th style="padding: 5px!important; border: 1px solid #e3e9ef;">Sr.No.</th>
+                                                <th style="padding: 5px!important; border: 1px solid #e3e9ef;">Organization</th>
+                                                <th style="padding: 5px!important; border: 1px solid #e3e9ef;">Items Uploaded</th>
+                                                <th style="padding: 5px!important; border: 1px solid #e3e9ef;">Annual Import Value (in million Rs)</th>
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            <asp:DataList runat="server" ID="gvPrdoct" RepeatColumns="1" RepeatDirection="Vertical" RepeatLayout="Flow">
+                                                <ItemTemplate>
+                                                    <tr style="text-align: center;">
+                                                        <td style="padding: 5px!important; border: 1px solid #e3e9ef;"><%#Container.ItemIndex +1 %></td>
+                                                        <td style="padding: 5px!important; border: 1px solid #e3e9ef;"><%#Eval("CompName") %></td>
+                                                        <td style="padding: 5px!important; border: 1px solid #e3e9ef;"><%#Eval("TotalProd") %></td>
+                                                        <td style="padding: 5px!important; border: 1px solid #e3e9ef;"><%#Eval("Total1920") %></td>
+                                                    </tr>
+                                                </ItemTemplate>
+                                            </asp:DataList>
+                                        </tbody>
+                                        <tbody>
+                                            <tr style="text-align: center;">
+                                                <td colspan="2">Total</td>
+                                                <td>
+                                                    <asp:Label ID="lbltotaluploadedpopup" runat="server"></asp:Label></td>
+                                                <td>
+                                                    <asp:Label ID="lbltotalin1920" runat="server"></asp:Label></td>
+                                            </tr>
+
+                                        </tbody>
+
+
+                                    </table>
+                                    <div class="clearfix mt10"></div>
+
+                                    <table class="table table-bordered" style="margin-top: 70px; border: 1px solid #e3e9ef; border-collapse: collapse; width: 705px; max-width: 100%;">
+                                        <thead>
                                             <tr>
-                                                <asp:DataList ID="gvPrdoct" runat="server" Width="100%" AutoGenerateColumns="false"
-                                                    Class=" table-bordered  table-hover" Style="text-align: center;">
-                                                    <ItemTemplate>
-                                                        <%#Container.ItemIndex + 1 %>
-                                                        <td class="w-25" style="text-align: center;"><%#Eval("CompName") %></td>
-                                                        <td class="w-25" style="text-align: center;"><%#Eval("TotalProd") %></td>
-                                                        <td>
-                                                            <table class="w-100">
-                                                                <tr>
-                                                                    <td class="w-50" style="border-right: 1px solid #e3e9ef; text-align: center; border-top: 0px; border-left: 0px; border-bottom: 0px;"><%#Eval("Total1920") %>
-                                                                    </td>
-                                                                    <td class="w-50" style="border: none; text-align: center;"><%#Eval("Total2021") %>
-                                                                    </td>
-                                                                </tr>
-                                                            </table>
-                                                        </td>
-                                                    </ItemTemplate>
-                                                </asp:DataList>
+                                                <td colspan="4" style="text-align: center;">
+                                                    <b>2020-21 </b>
+                                                </td>
+                                            </tr>
+                                        </thead>
+                                        <thead>
+                                            <tr style="text-align: center;">
+                                                <th style="padding: 5px!important; border: 1px solid #e3e9ef;">Sr.No.</th>
+                                                <th style="padding: 5px!important; border: 1px solid #e3e9ef;">Organization</th>
+                                                <th style="padding: 5px!important; border: 1px solid #e3e9ef;">Items Uploaded</th>
+                                                <th style="padding: 5px!important; border: 1px solid #e3e9ef;">Annual Import Value (in million Rs)</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <asp:DataList runat="server" ID="DataList1" RepeatColumns="1" RepeatDirection="Vertical" RepeatLayout="Flow">
+                                                <ItemTemplate>
+                                                    <tr style="text-align: center;">
+                                                        <td style="padding: 5px!important; border: 1px solid #e3e9ef;"><%#Container.ItemIndex +1 %></td>
+                                                        <td style="padding: 5px!important; border: 1px solid #e3e9ef;"><%#Eval("CompName") %></td>
+                                                        <td style="padding: 5px!important; border: 1px solid #e3e9ef;"><%#Eval("TotalProd") %></td>
+                                                        <td style="padding: 5px!important; border: 1px solid #e3e9ef;"><%#Eval("Total2021") %></td>
+                                                    </tr>
+                                                </ItemTemplate>
+                                            </asp:DataList>
+                                        </tbody>
+                                        <tbody>
+                                            <tr style="text-align: center;">
+                                                <td colspan="2">Total</td>
+                                                <td>
+                                                    <asp:Label ID="Label1" runat="server"></asp:Label></td>
+                                                <td>
+                                                    <asp:Label ID="Label4" runat="server"></asp:Label></td>
                                             </tr>
                                         </tbody>
-                                        <table class="table table-bordered mb-0">
-                                            <thead>
-                                                <tr>
-                                                    <th scope="col" style="width: 230px; text-align: right;">Total</th>
-                                                    <th scope="col" class="w-25" style="text-align: center;">
-                                                        <asp:Label runat="server" ID="lbltotaluploadedpopup"></asp:Label>
-                                                    </th>
-                                                    <th scope="col">
-                                                        <table class=" w-100">
-                                                            <tr>
-                                                                <td class="w-50" style="border-right: 1px solid #e3e9ef; text-align: center; border-top: 0px; border-left: 0px; border-bottom: 0px;">
-                                                                    <asp:Label ID="lbltotalin1920" runat="server"></asp:Label>
-                                                                </td>
-                                                                <td class="w-50" style="border: none; text-align: center;">
-                                                                    <asp:Label ID="lbltotalin2021" runat="server"></asp:Label>
-                                                                </td>
-                                                            </tr>
-                                                        </table>
-                                                    </th>
-                                                </tr>
-                                            </thead>
-                                        </table>
                                     </table>
                                 </div>
                             </div>
@@ -1276,6 +1306,7 @@
                         </div>
                     </div>
                 </div>
+
             </ContentTemplate>
             <Triggers>
                 <%--<asp:PostBackTrigger ControlID="lnkbtnPgPrevious" />
