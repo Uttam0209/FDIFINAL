@@ -471,11 +471,11 @@
                             </div>
 
                             <div style="float: left;">
-                                <p style="float: left;">
+                               <b> <p style="float: left; color:#FF00FF;">
                                     Import value during<asp:Label ID="lblyearvalue" runat="server"></asp:Label>
                                     (in million Rs) -
                                     <asp:Label ID="lblestimateprice" runat="server"></asp:Label>
-                                </p>
+                                </p></b>
                                 <p style="float: left;" runat="server" visible="false">
                                     Future requirements in lakhs -
                                 <asp:Label ID="lblfuturepurchase" runat="server" Text="0"></asp:Label>
@@ -1202,7 +1202,7 @@
                         <div class="modal-content">
                             <div runat="server" id="mPrint">
                                 <div class="modal-header modal-header1">
-                                    <h6 class="modal-title">Imported Items  
+                                    <h6 class="modal-title">Items Imported 
                                    <div>
                                        (as on
                                        <asp:Label runat="server" ID="atime"></asp:Label>
@@ -1226,7 +1226,7 @@
                                             <tr style="text-align: center;">
                                                 <th style="padding: 5px!important; border: 1px solid #e3e9ef;">Sr.No.</th>
                                                 <th style="padding: 5px!important; border: 1px solid #e3e9ef;">Organization</th>
-                                                <th style="padding: 5px!important; border: 1px solid #e3e9ef;">Items Uploaded</th>
+                                                <th style="padding: 5px!important; border: 1px solid #e3e9ef;">Items Imported</th>
                                                 <th style="padding: 5px!important; border: 1px solid #e3e9ef;">Annual Import Value (in million Rs)</th>
                                             </tr>
                                         </thead>
@@ -1269,7 +1269,7 @@
                                             <tr style="text-align: center;">
                                                 <th style="padding: 5px!important; border: 1px solid #e3e9ef;">Sr.No.</th>
                                                 <th style="padding: 5px!important; border: 1px solid #e3e9ef;">Organization</th>
-                                                <th style="padding: 5px!important; border: 1px solid #e3e9ef;">Items Uploaded</th>
+                                                <th style="padding: 5px!important; border: 1px solid #e3e9ef;">Items Imported</th>
                                                 <th style="padding: 5px!important; border: 1px solid #e3e9ef;">Annual Import Value (in million Rs)</th>
                                             </tr>
                                         </thead>

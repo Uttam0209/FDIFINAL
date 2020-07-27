@@ -84,7 +84,7 @@ public partial class User_U_Cart : System.Web.UI.Page
         }
         else
         {
-            Response.Redirect("UProductList");
+            Response.Redirect("ProductList");
         }
     }
     protected void Page_Load(object sender, EventArgs e)
@@ -98,7 +98,7 @@ public partial class User_U_Cart : System.Web.UI.Page
     {
         Session.Clear();
         Session.Abandon();
-        Response.Redirect("Uproductlist");
+        Response.Redirect("Productlist");
     }
     protected void btnsendmail_Click(object sender, EventArgs e)
     {
@@ -273,7 +273,7 @@ public partial class User_U_Cart : System.Web.UI.Page
                 Session["DCart"] = null;
                 Session.Abandon();
                 Session.Clear();
-                Response.Redirect("UProductList");
+                Response.Redirect("ProductList");
             }
 
         }

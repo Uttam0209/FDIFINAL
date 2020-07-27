@@ -116,8 +116,10 @@
         routes.MapPageRoute("ProductGraphNSN", "ProductGraphNSN", "~/Admin/ProductNSNWise.aspx", true);
         routes.MapPageRoute("NatoCodeSearch", "NatoCodeSearch", "~/Admin/NatoCodeSearch.aspx", true);
         routes.MapPageRoute("SearchProductFilter", "SearchProductFilter", "~/Admin/SearchProductFilter.aspx", true);
-        routes.MapPageRoute("UProductList", "UProductList", "~/User/U_ProductList.aspx", true);
+        routes.MapPageRoute("ProductList", "ProductList", "~/User/U_ProductList.aspx", true);
+        routes.MapPageRoute("UproductList", "UproductList", "~/User/Redirect.aspx", true);
         routes.MapPageRoute("UCart", "U_Cart", "~/User/U_Cart.aspx", true);
+        routes.MapPageRoute("Home", "Home", "~/User/Login.aspx", true);
         routes.MapPageRoute("Popup", "Popup", "~/ViewPopup.aspx", true);
         routes.MapPageRoute("TempTable", "TempTable", "~/Admin/CreatetempTable.aspx", true);
     }    

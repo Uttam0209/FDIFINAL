@@ -9,6 +9,7 @@ using System.Windows.Input;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Configuration;
+using System.Web;
 
 public partial class User_U_ProductList : System.Web.UI.Page
 {
@@ -30,23 +31,30 @@ public partial class User_U_ProductList : System.Web.UI.Page
     {
         if (!IsPostBack)
         {
-            try
+            if (Session["U_User"] != null)
             {
-                if (Session["DCart"] != null)
+                try
                 {
-                    ViewState["buyitems"] = Session["DCart"];
-                    dtCart = (DataTable)ViewState["buyitems"];
-                    totalno.InnerText = dtCart.Rows.Count.ToString();
+                    if (Session["DCart"] != null)
+                    {
+                        ViewState["buyitems"] = Session["DCart"];
+                        dtCart = (DataTable)ViewState["buyitems"];
+                        totalno.InnerText = dtCart.Rows.Count.ToString();
+                    }
+                    else
+                    {
+                        totalno.InnerText = dtCart.Rows.Count.ToString();
+                    }
+                    ControlGrid();
                 }
-                else
+                catch (Exception ex)
                 {
-                    totalno.InnerText = dtCart.Rows.Count.ToString();
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "alert", "alert('Technical Error:- " + ex.Message + "');", true);
                 }
-                ControlGrid();
             }
-            catch (Exception ex)
+            else
             {
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "alert", "alert('Technical Error:- " + ex.Message + "');", true);
+                Response.Redirect("Home");
             }
         }
     }
@@ -800,7 +808,7 @@ public partial class User_U_ProductList : System.Web.UI.Page
                         pgsource.DataSource = dtads.DefaultView;
                         dlproduct.DataSource = pgsource;
                         dlproduct.DataBind();
-                        lbltotalleft.Text = "Total Imported Items uploaded :-  " + DtFilterView.Rows.Count.ToString();
+                        lbltotalleft.Text = "Total Imported Items :-  " + DtFilterView.Rows.Count.ToString();
                         lbltotalshowpageitem.Text = pgsource.FirstIndexInPage + 1 + " - " + (pgsource.FirstIndexInPage + pgsource.Count);
                         divcontentproduct.Visible = true;
                     }
@@ -1451,16 +1459,16 @@ public partial class User_U_ProductList : System.Web.UI.Page
     }
     public void FillProduct()
     {
-        atime.Text = DateTime.Now.ToString("dd-MMM-yyyy , hh:mm");
+        atime.Text = DateTime.Now.ToString("dd-MMM-yyyy , hh:mm tt");
         DataTable dtProductDetail = Lo.RetriveProductIndig1("", "", "Gettotalprovalue20");
         if (dtProductDetail.Rows.Count > 0)
         {
             gvPrdoct.DataSource = dtProductDetail;
-            gvPrdoct.DataBind();           
+            gvPrdoct.DataBind();
             object sumObjectn = dtProductDetail.Compute("Sum(TotalProd)", string.Empty);
             lbltotaluploadedpopup.Text = sumObjectn.ToString();
             object sumObjectd = dtProductDetail.Compute("Sum(Total1920)", string.Empty);
-            lbltotalin1920.Text = sumObjectd.ToString();        
+            lbltotalin1920.Text = sumObjectd.ToString();
         }
         else
         { }
@@ -1473,7 +1481,7 @@ public partial class User_U_ProductList : System.Web.UI.Page
             Label1.Text = sumObjectn1.ToString();
             object sumObjectf1 = dtProductDetail1.Compute("Sum(Total2021)", string.Empty);
             Label4.Text = sumObjectf1.ToString();
-          
+
         }
         else
         { }
@@ -1481,7 +1489,7 @@ public partial class User_U_ProductList : System.Web.UI.Page
     }
     protected void btnreset_Click(object sender, EventArgs e)
     {
-        Response.RedirectToRoute("UproductList");
+        Response.RedirectToRoute("ProductList");
     }
     #region AutoComplete Serach Box
     [System.Web.Services.WebMethod]
