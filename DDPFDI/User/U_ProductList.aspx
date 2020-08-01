@@ -471,11 +471,13 @@
                             </div>
 
                             <div style="float: left;">
-                               <b> <p style="float: left; color:#FF00FF;">
-                                    Import value during<asp:Label ID="lblyearvalue" runat="server"></asp:Label>
-                                    (in million Rs) -
+                                <b>
+                                    <p style="float: left; color: #FF00FF;">
+                                        <asp:Label ID="lblyearvalue" runat="server"></asp:Label>
+                                        (in million Rs) -
                                     <asp:Label ID="lblestimateprice" runat="server"></asp:Label>
-                                </p></b>
+                                    </p>
+                                </b>
                                 <p style="float: left;" runat="server" visible="false">
                                     Future requirements in lakhs -
                                 <asp:Label ID="lblfuturepurchase" runat="server" Text="0"></asp:Label>
@@ -962,12 +964,12 @@
                                                                                     <asp:BoundField DataField="FYear" HeaderText="Year of Import" />
                                                                                     <asp:TemplateField HeaderText="Quantity">
                                                                                         <ItemTemplate>
-                                                                                            <%-- <%# Eval("EstimatedQty").ToString() == "0" ? "*" : Eval("EstimatedQty").ToString()%>--%>
-                                                                                            <%# Eval("EstimatedQty").ToString() == "0" ? "*" : "*"%>
+                                                                                            <%# Eval("EstimatedQty").ToString() == "0" ? "*" : Eval("EstimatedQty").ToString()%>
+                                                                                            <%-- <%# Eval("EstimatedQty").ToString() == "0" ? "*" : "*"%>--%>
                                                                                         </ItemTemplate>
                                                                                     </asp:TemplateField>
                                                                                     <asp:BoundField DataField="Unit" HeaderText="Unit" />
-                                                                                    <asp:BoundField DataField="EstimatedPrice" HeaderText="Import value in Rs lakh (Qty*Price)" />
+                                                                                    <asp:BoundField DataField="EstimatedPrice" HeaderText="Import value in million Rs (Qty*Price)" DataFormatString="{0:f2}" />
                                                                                 </Columns>
                                                                             </asp:GridView>
                                                                         </td>
@@ -978,7 +980,7 @@
                                                                                 <tbody>
                                                                                     <tr runat="server" id="five">
                                                                                         <td colspan="2">
-                                                                                            <b>Import value during last 3 year (Rs lakhs) :</b>
+                                                                                            <b>Import value during last 3 year (million Rs) :</b>
                                                                                             <asp:Label ID="lblisproductimported" runat="server" Text=""></asp:Label>&nbsp;&nbsp;
                                                                                         &nbsp;<asp:Label ID="lblvalueimport" runat="server"
                                                                                             Text="0"></asp:Label>&nbsp;
@@ -986,18 +988,18 @@
                                                                                     </tr>
                                                                                     <tr runat="server" id="ten">
                                                                                         <td colspan="2" style="border-top: 0px;">
-                                                                                            <asp:GridView ID="gvestimatequanold" runat="server" AutoGenerateColumns="false" Class="table table-responsive table-bordered">
+                                                                                            <asp:GridView ID="gvestimatequanold" runat="server" AutoGenerateColumns="false"
+                                                                                                Class="table table-responsive table-bordered">
                                                                                                 <Columns>
                                                                                                     <asp:BoundField HeaderText="Year of Import" DataField="FYear" />
                                                                                                     <asp:TemplateField HeaderText="Quantity">
                                                                                                         <ItemTemplate>
-                                                                                                            <%-- <%# Eval("EstimatedQty").ToString() == "0" ? "*" : Eval("EstimatedQty").ToString()%>--%>
-                                                                                                            <%# Eval("EstimatedQty").ToString() == "0" ? "*" : "*"%>
+                                                                                                            <%# Eval("EstimatedQty").ToString() == "0" ? "*" : Eval("EstimatedQty").ToString()%>
+                                                                                                            <%-- <%# Eval("EstimatedQty").ToString() == "0" ? "*" : "*"%>--%>
                                                                                                         </ItemTemplate>
                                                                                                     </asp:TemplateField>
-
                                                                                                     <asp:BoundField HeaderText="Unit" DataField="Unit" />
-                                                                                                    <asp:BoundField HeaderText="Imported value in Rs lakh (Qty*Price)" DataField="EstimatedPrice" />
+                                                                                                    <asp:BoundField HeaderText="Imported value in million Rs (Qty*Price)" DataField="EstimatedPrice" DataFormatString="{0:f2}" />
                                                                                                 </Columns>
                                                                                             </asp:GridView>
                                                                                         </td>
@@ -1198,7 +1200,7 @@
                     </div>
                 </div>
                 <div class="modal fade" id="divCompany" role="dialog">
-                    <div class="modal-dialog" style="max-width: 750px;">
+                    <div class="modal-dialog" style="max-width: 900px;">
                         <div class="modal-content">
                             <div runat="server" id="mPrint">
                                 <div class="modal-header modal-header1">
@@ -1213,88 +1215,98 @@
                                         &times;</button>
                                 </div>
                                 <div class="modal-body">
+                                    <b><span style="text-align: center;">2019-20 (Annual Import Value (in million Rs))</span></b>
                                     <div class="clearfix mt10"></div>
-                                    <table class="table table-bordered" style="border: 1px solid #e3e9ef; border-collapse: collapse; position: absolute; top: 10px; width: 705px; max-width: 100%;">
-                                        <thead>
-                                            <tr>
-                                                <td colspan="4" style="text-align: center;">
-                                                    <b>2019-20 </b>
-                                                </td>
-                                            </tr>
-                                        </thead>
-                                        <thead>
-                                            <tr style="text-align: center;">
-                                                <th style="padding: 5px!important; border: 1px solid #e3e9ef;">Sr.No.</th>
-                                                <th style="padding: 5px!important; border: 1px solid #e3e9ef;">Organization</th>
-                                                <th style="padding: 5px!important; border: 1px solid #e3e9ef;">Items Imported</th>
-                                                <th style="padding: 5px!important; border: 1px solid #e3e9ef;">Annual Import Value (in million Rs)</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <asp:DataList runat="server" ID="gvPrdoct" RepeatColumns="1" RepeatDirection="Vertical" RepeatLayout="Flow">
+                                    <asp:GridView ID="gvPrdoct" runat="server" AutoGenerateColumns="false" Class="table table-bordered table-responsive" ShowFooter="true">
+                                        <Columns>
+                                            <asp:TemplateField HeaderText="Sr.No.">
                                                 <ItemTemplate>
-                                                    <tr style="text-align: center;">
-                                                        <td style="padding: 5px!important; border: 1px solid #e3e9ef;"><%#Container.ItemIndex +1 %></td>
-                                                        <td style="padding: 5px!important; border: 1px solid #e3e9ef;"><%#Eval("CompName") %></td>
-                                                        <td style="padding: 5px!important; border: 1px solid #e3e9ef;"><%#Eval("TotalProd") %></td>
-                                                        <td style="padding: 5px!important; border: 1px solid #e3e9ef;"><%#Eval("Total1920") %></td>
-                                                    </tr>
+                                                    <%#Container.DataItemIndex+1 %>
                                                 </ItemTemplate>
-                                            </asp:DataList>
-                                        </tbody>
-                                        <tbody>
-                                            <tr style="text-align: center;">
-                                                <td colspan="2">Total</td>
-                                                <td>
-                                                    <asp:Label ID="lbltotaluploadedpopup" runat="server"></asp:Label></td>
-                                                <td>
-                                                    <asp:Label ID="lbltotalin1920" runat="server"></asp:Label></td>
-                                            </tr>
-
-                                        </tbody>
-
-
-                                    </table>
+                                            </asp:TemplateField>
+                                            <asp:BoundField DataField="CompName" HeaderText="Organization" NullDisplayText="" />
+                                            <asp:BoundField DataField="TotalProd" HeaderText="Items Imported" NullDisplayText="" />
+                                            <asp:BoundField DataField="TotalPrice1920" HeaderText="Value (in million Rs)" NullDisplayText="" />
+                                            <asp:BoundField DataField="ProdLess5" HeaderText="Items Imported (1-5 million Rs)" NullDisplayText="" />
+                                            <asp:BoundField DataField="PriceLess5" HeaderText="Annual Import Value 1-5 million" NullDisplayText="" Visible="false" />
+                                            <asp:BoundField DataField="ProdLess10" HeaderText="Items Imported (5-10 million Rs)" NullDisplayText="" />
+                                            <asp:BoundField DataField="PriceLess10" HeaderText="Annual Import Value 5-10 million" NullDisplayText="" Visible="false" />
+                                            <asp:BoundField DataField="ProdLess50" HeaderText="Items Imported (10-50 million Rs)" NullDisplayText="" />
+                                            <asp:BoundField DataField="PriceLess50" HeaderText="Annual Import Value 10-50 million" NullDisplayText="" Visible="false" />
+                                            <asp:BoundField DataField="ProdAbove50" HeaderText="Items Imported (Above 50 million Rs)" NullDisplayText="" />
+                                            <asp:BoundField DataField="PriceAbove50" HeaderText="Annual Import Value 50 million above" NullDisplayText="" Visible="false" />
+                                        </Columns>
+                                    </asp:GridView>
                                     <div class="clearfix mt10"></div>
-
-                                    <table class="table table-bordered" style="margin-top: 70px; border: 1px solid #e3e9ef; border-collapse: collapse; width: 705px; max-width: 100%;">
-                                        <thead>
-                                            <tr>
-                                                <td colspan="4" style="text-align: center;">
-                                                    <b>2020-21 </b>
-                                                </td>
-                                            </tr>
-                                        </thead>
-                                        <thead>
-                                            <tr style="text-align: center;">
-                                                <th style="padding: 5px!important; border: 1px solid #e3e9ef;">Sr.No.</th>
-                                                <th style="padding: 5px!important; border: 1px solid #e3e9ef;">Organization</th>
-                                                <th style="padding: 5px!important; border: 1px solid #e3e9ef;">Items Imported</th>
-                                                <th style="padding: 5px!important; border: 1px solid #e3e9ef;">Annual Import Value (in million Rs)</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <asp:DataList runat="server" ID="DataList1" RepeatColumns="1" RepeatDirection="Vertical" RepeatLayout="Flow">
+                                    <b><span style="text-align: center;">2020-21 (Annual Import Value (in million Rs))</span></b>
+                                    <asp:GridView ID="DataList1" runat="server" AutoGenerateColumns="false" Class="table table-bordered table-responsive" ShowFooter="true">
+                                        <Columns>
+                                            <asp:TemplateField HeaderText="Sr.No.">
                                                 <ItemTemplate>
-                                                    <tr style="text-align: center;">
-                                                        <td style="padding: 5px!important; border: 1px solid #e3e9ef;"><%#Container.ItemIndex +1 %></td>
-                                                        <td style="padding: 5px!important; border: 1px solid #e3e9ef;"><%#Eval("CompName") %></td>
-                                                        <td style="padding: 5px!important; border: 1px solid #e3e9ef;"><%#Eval("TotalProd") %></td>
-                                                        <td style="padding: 5px!important; border: 1px solid #e3e9ef;"><%#Eval("Total2021") %></td>
-                                                    </tr>
+                                                    <%#Container.DataItemIndex+1 %>
                                                 </ItemTemplate>
-                                            </asp:DataList>
-                                        </tbody>
-                                        <tbody>
-                                            <tr style="text-align: center;">
-                                                <td colspan="2">Total</td>
-                                                <td>
-                                                    <asp:Label ID="Label1" runat="server"></asp:Label></td>
-                                                <td>
-                                                    <asp:Label ID="Label4" runat="server"></asp:Label></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                                            </asp:TemplateField>
+                                            <asp:BoundField DataField="CompName" HeaderText="Organization" NullDisplayText="" />
+                                            <asp:BoundField DataField="TotalProd" HeaderText="Items Imported" NullDisplayText="" />
+                                            <asp:BoundField DataField="TotalPrice2021" HeaderText="Value (in million Rs)" NullDisplayText="" />
+                                            <asp:BoundField DataField="ProdLess5" HeaderText="Items Imported (1-5 million Rs)" NullDisplayText="" />
+                                            <asp:BoundField DataField="PriceLess5" HeaderText="Annual Import Value 1-5 million" NullDisplayText="" Visible="false" />
+                                            <asp:BoundField DataField="ProdLess10" HeaderText="Items Imported (5-10 million Rs)" NullDisplayText="" />
+                                            <asp:BoundField DataField="PriceLess10" HeaderText="Annual Import Value 5-10 million" NullDisplayText="" Visible="false" />
+                                            <asp:BoundField DataField="ProdLess50" HeaderText="Items Imported (10-50 million Rs)" NullDisplayText="" />
+                                            <asp:BoundField DataField="PriceLess50" HeaderText="Annual Import Value 10-50 million" NullDisplayText="" Visible="false" />
+                                            <asp:BoundField DataField="ProdAbove50" HeaderText="Items Imported (Above 50 million Rs)" NullDisplayText="" />
+                                            <asp:BoundField DataField="PriceAbove50" HeaderText="Annual Import Value 50 million above" NullDisplayText="" Visible="false" />
+                                        </Columns>
+                                    </asp:GridView>
+                                    <div class="clearfix mt10"></div>
+                                    <b><span style="text-align: center;">Make in India Category 2019-20 (Number of Items)</span></b>
+                                    <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="false" Class="table table-bordered table-responsive" ShowFooter="true">
+                                        <Columns>
+                                            <asp:TemplateField HeaderText="Sr.No.">
+                                                <ItemTemplate>
+                                                    <%#Container.DataItemIndex+1 %>
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:BoundField DataField="CompName" HeaderText="Organization" NullDisplayText="" />
+                                            <asp:BoundField DataField="TotalProd" HeaderText="Items Imported" NullDisplayText="" />
+                                            <asp:BoundField DataField="TotalPrice1920" HeaderText="Annual Import Value (in million Rs)" NullDisplayText="" Visible="false" />
+                                            <asp:BoundField DataField="MAKE2Total" HeaderText="MakeII" NullDisplayText="" />
+                                            <asp:BoundField DataField="MAKE2Price" HeaderText="Annual Import Value MakeII" NullDisplayText="" Visible="false" />
+                                            <asp:BoundField DataField="IDExTotal" HeaderText="IDEX/AI/INNOVATION/R&D" NullDisplayText="" />
+                                            <asp:BoundField DataField="IDExPriceTotal" HeaderText="Annual Import Value IDEX/AI/INNOVATION/R&D" NullDisplayText="" Visible="false" />
+                                            <asp:BoundField DataField="IGATotal" HeaderText="IGA" NullDisplayText="" />
+                                            <asp:BoundField DataField="IGAPrice" HeaderText="Annual Import Value IGA" NullDisplayText="" Visible="false" />
+                                            <asp:BoundField DataField="OTHERTHANMAKE2Total" HeaderText="OTHER THAN MAKE-II" NullDisplayText="" />
+                                            <asp:BoundField DataField="OTHERTHANMAKE2Price" HeaderText="Annual Import Value OTHER THAN MAKE-II" NullDisplayText="" Visible="false" />
+                                            <asp:BoundField DataField="HOUSETotal" HeaderText="IN HOUSE" NullDisplayText="" />
+                                            <asp:BoundField DataField="HOUSEPrice" HeaderText="Annual Import Value IN HOUSE" NullDisplayText="" Visible="false" />
+                                        </Columns>
+                                    </asp:GridView>
+                                    <div class="clearfix mt10"></div>
+                                    <b><span style="text-align: center;">Make in India Category 2020-21 (Number of Items)</span></b>
+                                    <asp:GridView ID="GridView2" runat="server" AutoGenerateColumns="false" Class="table table-bordered table-responsive" ShowFooter="true">
+                                        <Columns>
+                                            <asp:TemplateField HeaderText="Sr.No.">
+                                                <ItemTemplate>
+                                                    <%#Container.DataItemIndex+1 %>
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:BoundField DataField="CompName" HeaderText="Organization" NullDisplayText="" />
+                                            <asp:BoundField DataField="TotalProd" HeaderText="Items Imported" NullDisplayText="" />
+                                            <asp:BoundField DataField="TotalPrice2021" HeaderText="Annual Import Value (in million Rs)" NullDisplayText="" Visible="false" />
+                                            <asp:BoundField DataField="MAKE2Total" HeaderText="MakeII" NullDisplayText="" />
+                                            <asp:BoundField DataField="MAKE2Price" HeaderText="Annual Import Value MakeII" NullDisplayText="" Visible="false" />
+                                            <asp:BoundField DataField="IDExTotal" HeaderText="IDEX/AI/INNOVATION/R&D" NullDisplayText="" />
+                                            <asp:BoundField DataField="IDExPriceTotal" HeaderText="Annual Import Value IDEX/AI/INNOVATION/R&D" NullDisplayText="" Visible="false" />
+                                            <asp:BoundField DataField="IGATotal" HeaderText="IGA" NullDisplayText="" />
+                                            <asp:BoundField DataField="IGAPrice" HeaderText="Annual Import Value IGA" NullDisplayText="" Visible="false" />
+                                            <asp:BoundField DataField="OTHERTHANMAKE2Total" HeaderText="OTHER THAN MAKE-II" NullDisplayText="" />
+                                            <asp:BoundField DataField="OTHERTHANMAKE2Price" HeaderText="Annual Import Value OTHER THAN MAKE-II" NullDisplayText="" Visible="false" />
+                                            <asp:BoundField DataField="HOUSETotal" HeaderText="IN HOUSE" NullDisplayText="" />
+                                            <asp:BoundField DataField="HOUSEPrice" HeaderText="Annual Import Value IN HOUSE" NullDisplayText="" Visible="false" />
+                                        </Columns>
+                                    </asp:GridView>
                                 </div>
                             </div>
                             <div class="modal-footer">
@@ -1306,7 +1318,6 @@
                         </div>
                     </div>
                 </div>
-
             </ContentTemplate>
             <Triggers>
                 <%--<asp:PostBackTrigger ControlID="lnkbtnPgPrevious" />

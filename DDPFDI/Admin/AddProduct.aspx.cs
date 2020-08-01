@@ -1953,7 +1953,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     private void BindGridEstimateQuantity()
     {
         DataTable DtGridEstimate = new DataTable();
-        DtGridEstimate = Lo.RetriveSaveEstimateGrid("Select", 0, hfprodrefno.Value, 0, "", "", "", "", "F");
+        DtGridEstimate = Lo.RetriveSaveEstimateGrid("Selectp1", 0, hfprodrefno.Value, 0, "", "", "", "", "F");
         if (DtGridEstimate.Rows.Count > 0)
         {
             for (int ss = 0; DtGridEstimate.Rows.Count > ss; ss++)
@@ -2079,7 +2079,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     private void BindGridEstimateQuantity1()
     {
         DataTable DtGridEstimate1 = new DataTable();
-        DtGridEstimate1 = Lo.RetriveSaveEstimateGrid("Select", 0, hfprodrefno.Value, 0, "", "", "", "", "O");
+        DtGridEstimate1 = Lo.RetriveSaveEstimateGrid("Selectp1", 0, hfprodrefno.Value, 0, "", "", "", "", "O");
         if (DtGridEstimate1.Rows.Count > 0)
         {
             for (int estimate = 0; DtGridEstimate1.Rows.Count > estimate; estimate++)

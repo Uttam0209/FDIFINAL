@@ -39,11 +39,16 @@ public partial class Admin_CreatetempTable : System.Web.UI.Page
                 if (dt.Rows.Count != 0)
                 {
                     lbl.Text = "Total rows update :- " + dt.Rows[0]["Total"].ToString();
+                    DataTable mdt = Lo.RetriveFilterCode(objEnc.DecryptData(Session["User"].ToString()).Trim(), dt.Rows[0]["Total"].ToString(), "updatestatus");
                 }
                 else
                 {
                     ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Oops some error occurs')", true);
                 }
+            }
+            else
+            {
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Oops some error occurs (Timeout error)')", true);
             }
         }
         catch (Exception ex)

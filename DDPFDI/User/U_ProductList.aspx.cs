@@ -71,7 +71,14 @@ public partial class User_U_ProductList : System.Web.UI.Page
     }
     protected void BindProduct()
     {
-        lblyearvalue.Text = rbsort.SelectedItem.Text;
+        if (rbsort.SelectedItem.Text.Trim() == "2020-21")
+        {
+            lblyearvalue.Text = "Estimated Import value " + rbsort.SelectedItem.Text;
+        }
+        else
+        {
+            lblyearvalue.Text = "Import value during " + rbsort.SelectedItem.Text;
+        }
         DtGrid = Lo.RetriveProductUser();
         if (DtGrid.Rows.Count > 0)
         {
@@ -737,12 +744,12 @@ public partial class User_U_ProductList : System.Web.UI.Page
                             object sumObject = dtinner.Compute("Sum(EstimatePrice)", string.Empty);
                             if (sumObject.ToString() == "")
                             {
-                                lblyearvalue.Text = rbsort.SelectedItem.Text;
+                                lblyearvalue.Text = "Import Value during " + rbsort.SelectedItem.Text;
                                 lblestimateprice.Text = "0";
                             }
                             else
                             {
-                                lblyearvalue.Text = rbsort.SelectedItem.Text;
+                                lblyearvalue.Text = "Import Value during " + rbsort.SelectedItem.Text;
                                 lblestimateprice.Text = sumObject.ToString();
                             }
                         }
@@ -751,12 +758,12 @@ public partial class User_U_ProductList : System.Web.UI.Page
                             object sumObject = dtinner.Compute("Sum(EstimatePrice18)", string.Empty);
                             if (sumObject.ToString() == "")
                             {
-                                lblyearvalue.Text = rbsort.SelectedItem.Text;
+                                lblyearvalue.Text = "Import Value during " + rbsort.SelectedItem.Text;
                                 lblestimateprice.Text = "0";
                             }
                             else
                             {
-                                lblyearvalue.Text = rbsort.SelectedItem.Text;
+                                lblyearvalue.Text = "Import Value during " + rbsort.SelectedItem.Text;
                                 lblestimateprice.Text = sumObject.ToString();
                             }
                         }
@@ -765,12 +772,12 @@ public partial class User_U_ProductList : System.Web.UI.Page
                             object sumObject = dtinner.Compute("Sum(EstimatePrice17)", string.Empty);
                             if (sumObject.ToString() == "")
                             {
-                                lblyearvalue.Text = rbsort.SelectedItem.Text;
+                                lblyearvalue.Text = "Import Value during " + rbsort.SelectedItem.Text;
                                 lblestimateprice.Text = "0";
                             }
                             else
                             {
-                                lblyearvalue.Text = rbsort.SelectedItem.Text;
+                                lblyearvalue.Text = "Import Value during " + rbsort.SelectedItem.Text;
                                 lblestimateprice.Text = sumObject.ToString();
                             }
                         }
@@ -779,12 +786,12 @@ public partial class User_U_ProductList : System.Web.UI.Page
                             object sumObject1 = dtinner.Compute("Sum(EstimatePricefuture)", string.Empty);
                             if (sumObject1.ToString() == "")
                             {
-                                lblyearvalue.Text = rbsort.SelectedItem.Text;
+                                lblyearvalue.Text = "Estimted Import Value " + rbsort.SelectedItem.Text;
                                 lblestimateprice.Text = "0";
                             }
                             else
                             {
-                                lblyearvalue.Text = rbsort.SelectedItem.Text;
+                                lblyearvalue.Text = "Estimted Import Value " + rbsort.SelectedItem.Text;
                                 lblestimateprice.Text = sumObject1.ToString();
                             }
                         }
@@ -804,7 +811,9 @@ public partial class User_U_ProductList : System.Web.UI.Page
                         pgsource.CurrentPageIndex = pagingCurrentPage;
                         lblpaging.Text = "Page " + (pagingCurrentPage + 1) + " of " + pgsource.PageCount;
                         lnkbtnPgPrevious.Enabled = !pgsource.IsFirstPage;
+                        LinkButton1.Enabled = !pgsource.IsFirstPage;
                         lnkbtnPgNext.Enabled = !pgsource.IsLastPage;
+                        LinkButton2.Enabled = !pgsource.IsLastPage;
                         pgsource.DataSource = dtads.DefaultView;
                         dlproduct.DataSource = pgsource;
                         dlproduct.DataBind();
@@ -981,14 +990,14 @@ public partial class User_U_ProductList : System.Web.UI.Page
                     DtGridEstimate1 = Lo.RetriveSaveEstimateGrid("Select", 0, e.CommandArgument.ToString(), 0, "", "", "", "", "O");
                     if (DtGridEstimate1.Rows.Count > 0)
                     {
+                        gvestimatequanold.DataSource = DtGridEstimate1;
+                        gvestimatequanold.DataBind();
+                        gvestimatequanold.Visible = true;
                         decimal tot = 0;
                         for (int i = 0; DtGridEstimate1.Rows.Count > i; i++)
                         {
                             tot = tot + Convert.ToDecimal(DtGridEstimate1.Rows[i]["EstimatedPrice"]);
                         }
-                        gvestimatequanold.DataSource = DtGridEstimate1;
-                        gvestimatequanold.DataBind();
-                        gvestimatequanold.Visible = true;
                         decimal msumobject = tot; //* qtyimp / 100000;
                         lblvalueimport.Text = msumobject.ToString("F2");
                         ten.Visible = true;
@@ -1459,32 +1468,192 @@ public partial class User_U_ProductList : System.Web.UI.Page
     }
     public void FillProduct()
     {
-        atime.Text = DateTime.Now.ToString("dd-MMM-yyyy , hh:mm tt");
+        DataTable dt = Lo.RetriveFilterCode("", "", "Updatetimeget");
+        if (dt.Rows.Count != 0)
+        {
+            DateTime mdt = Convert.ToDateTime(dt.Rows[0]["UpdateDate"].ToString());
+            atime.Text = mdt.ToString("dd-MMM-yyyy , hh:mm tt");
+        }
+        #region First Table
         DataTable dtProductDetail = Lo.RetriveProductIndig1("", "", "Gettotalprovalue20");
         if (dtProductDetail.Rows.Count > 0)
         {
             gvPrdoct.DataSource = dtProductDetail;
             gvPrdoct.DataBind();
+            //0
+            gvPrdoct.FooterRow.Cells[1].Text = "Total";
+            gvPrdoct.FooterRow.Cells[1].HorizontalAlign = HorizontalAlign.Left;
             object sumObjectn = dtProductDetail.Compute("Sum(TotalProd)", string.Empty);
-            lbltotaluploadedpopup.Text = sumObjectn.ToString();
-            object sumObjectd = dtProductDetail.Compute("Sum(Total1920)", string.Empty);
-            lbltotalin1920.Text = sumObjectd.ToString();
+            gvPrdoct.FooterRow.Cells[2].Text = sumObjectn.ToString();
+            //1
+            object sumObjectn1 = dtProductDetail.Compute("Sum(TotalPrice1920)", string.Empty);
+            gvPrdoct.FooterRow.Cells[3].Text = sumObjectn1.ToString();
+            //2
+            object sumObjectn2 = dtProductDetail.Compute("Sum(ProdLess5)", string.Empty);
+            gvPrdoct.FooterRow.Cells[4].Text = sumObjectn2.ToString();
+            //3
+            object sumObjectn3 = dtProductDetail.Compute("Sum(PriceLess5)", string.Empty);
+            gvPrdoct.FooterRow.Cells[5].Text = sumObjectn3.ToString();
+            //4
+            object sumObjectn4 = dtProductDetail.Compute("Sum(ProdLess10)", string.Empty);
+            gvPrdoct.FooterRow.Cells[6].Text = sumObjectn4.ToString();
+            //5
+            object sumObjectn5 = dtProductDetail.Compute("Sum(PriceLess10)", string.Empty);
+            gvPrdoct.FooterRow.Cells[7].Text = sumObjectn5.ToString();
+            //6
+            object sumObjectn6 = dtProductDetail.Compute("Sum(ProdLess50)", string.Empty);
+            gvPrdoct.FooterRow.Cells[8].Text = sumObjectn6.ToString();
+            //7
+            object sumObjectn7 = dtProductDetail.Compute("Sum(PriceLess50)", string.Empty);
+            gvPrdoct.FooterRow.Cells[9].Text = sumObjectn7.ToString();
+            //8
+            object sumObjectn8 = dtProductDetail.Compute("Sum(ProdAbove50)", string.Empty);
+            gvPrdoct.FooterRow.Cells[10].Text = sumObjectn8.ToString();
+            //9
+            object sumObjectn9 = dtProductDetail.Compute("Sum(PriceAbove50)", string.Empty);
+            gvPrdoct.FooterRow.Cells[11].Text = sumObjectn9.ToString();
         }
         else
         { }
+        #endregion
+        #region Second Table
         DataTable dtProductDetail1 = Lo.RetriveProductIndig1("", "", "Gettotalprovalue21");
         if (dtProductDetail.Rows.Count > 0)
         {
             DataList1.DataSource = dtProductDetail1;
             DataList1.DataBind();
-            object sumObjectn1 = dtProductDetail1.Compute("Sum(TotalProd)", string.Empty);
-            Label1.Text = sumObjectn1.ToString();
-            object sumObjectf1 = dtProductDetail1.Compute("Sum(Total2021)", string.Empty);
-            Label4.Text = sumObjectf1.ToString();
-
+            //0
+            DataList1.FooterRow.Cells[1].Text = "Total";
+            DataList1.FooterRow.Cells[1].HorizontalAlign = HorizontalAlign.Left;
+            object sumObjectn = dtProductDetail1.Compute("Sum(TotalProd)", string.Empty);
+            DataList1.FooterRow.Cells[2].Text = sumObjectn.ToString();
+            //1
+            object sumObjectn1 = dtProductDetail1.Compute("Sum(TotalPrice2021)", string.Empty);
+            DataList1.FooterRow.Cells[3].Text = sumObjectn1.ToString();
+            //2
+            object sumObjectn2 = dtProductDetail1.Compute("Sum(ProdLess5)", string.Empty);
+            DataList1.FooterRow.Cells[4].Text = sumObjectn2.ToString();
+            //3
+            object sumObjectn3 = dtProductDetail1.Compute("Sum(PriceLess5)", string.Empty);
+            DataList1.FooterRow.Cells[5].Text = sumObjectn3.ToString();
+            //4
+            object sumObjectn4 = dtProductDetail1.Compute("Sum(ProdLess10)", string.Empty);
+            DataList1.FooterRow.Cells[6].Text = sumObjectn4.ToString();
+            //5
+            object sumObjectn5 = dtProductDetail1.Compute("Sum(PriceLess10)", string.Empty);
+            DataList1.FooterRow.Cells[7].Text = sumObjectn5.ToString();
+            //6
+            object sumObjectn6 = dtProductDetail1.Compute("Sum(ProdLess50)", string.Empty);
+            DataList1.FooterRow.Cells[8].Text = sumObjectn6.ToString();
+            //7
+            object sumObjectn7 = dtProductDetail1.Compute("Sum(PriceLess50)", string.Empty);
+            DataList1.FooterRow.Cells[9].Text = sumObjectn7.ToString();
+            //8
+            object sumObjectn8 = dtProductDetail1.Compute("Sum(ProdAbove50)", string.Empty);
+            DataList1.FooterRow.Cells[10].Text = sumObjectn8.ToString();
+            //9
+            object sumObjectn9 = dtProductDetail1.Compute("Sum(PriceAbove50)", string.Empty);
+            DataList1.FooterRow.Cells[11].Text = sumObjectn9.ToString();
         }
         else
         { }
+        #endregion
+        #region Third Table
+        DataTable dtProductDetail2 = Lo.RetriveProductIndig1("", "", "GettoalMake2019");
+        if (dtProductDetail2.Rows.Count > 0)
+        {
+            GridView1.DataSource = dtProductDetail2;
+            GridView1.DataBind();
+            //0
+            GridView1.FooterRow.Cells[1].Text = "Total";
+            GridView1.FooterRow.Cells[1].HorizontalAlign = HorizontalAlign.Left;
+            object sumObjectn = dtProductDetail2.Compute("Sum(TotalProd)", string.Empty);
+            GridView1.FooterRow.Cells[2].Text = sumObjectn.ToString();
+            //1
+            object sumObjectn1 = dtProductDetail2.Compute("Sum(TotalPrice1920)", string.Empty);
+            GridView1.FooterRow.Cells[3].Text = sumObjectn1.ToString();
+            //2
+            object sumObjectn2 = dtProductDetail2.Compute("Sum(MAKE2Total)", string.Empty);
+            GridView1.FooterRow.Cells[4].Text = sumObjectn2.ToString();
+            //3
+            object sumObjectn3 = dtProductDetail2.Compute("Sum(MAKE2Price)", string.Empty);
+            GridView1.FooterRow.Cells[5].Text = sumObjectn3.ToString();
+            //4
+            object sumObjectn4 = dtProductDetail2.Compute("Sum(IDExTotal)", string.Empty);
+            GridView1.FooterRow.Cells[6].Text = sumObjectn4.ToString();
+            //5
+            object sumObjectn5 = dtProductDetail2.Compute("Sum(IDExPriceTotal)", string.Empty);
+            GridView1.FooterRow.Cells[7].Text = sumObjectn5.ToString();
+            //6
+            object sumObjectn6 = dtProductDetail2.Compute("Sum(IGATotal)", string.Empty);
+            GridView1.FooterRow.Cells[8].Text = sumObjectn6.ToString();
+            //7
+            object sumObjectn7 = dtProductDetail2.Compute("Sum(IGAPrice)", string.Empty);
+            GridView1.FooterRow.Cells[9].Text = sumObjectn7.ToString();
+            //8
+            object sumObjectn8 = dtProductDetail2.Compute("Sum(OTHERTHANMAKE2Total)", string.Empty);
+            GridView1.FooterRow.Cells[10].Text = sumObjectn8.ToString();
+            //9
+            object sumObjectn9 = dtProductDetail2.Compute("Sum(OTHERTHANMAKE2Price)", string.Empty);
+            GridView1.FooterRow.Cells[11].Text = sumObjectn9.ToString();
+            //10
+            object sumObjectn10 = dtProductDetail2.Compute("Sum(HOUSETotal)", string.Empty);
+            GridView1.FooterRow.Cells[12].Text = sumObjectn10.ToString();
+            //11
+            object sumObjectn11 = dtProductDetail2.Compute("Sum(HOUSEPrice)", string.Empty);
+            GridView1.FooterRow.Cells[13].Text = sumObjectn11.ToString();
+        }
+        else
+        { }
+        #endregion
+        #region FOurth Table
+        DataTable dtProductDetail3 = Lo.RetriveProductIndig1("", "", "GettoalMake2021");
+        if (dtProductDetail3.Rows.Count > 0)
+        {
+            GridView2.DataSource = dtProductDetail3;
+            GridView2.DataBind();
+            //0
+            GridView2.FooterRow.Cells[1].Text = "Total";
+            GridView2.FooterRow.Cells[1].HorizontalAlign = HorizontalAlign.Left;
+            object sumObjectn = dtProductDetail3.Compute("Sum(TotalProd)", string.Empty);
+            GridView2.FooterRow.Cells[2].Text = sumObjectn.ToString();
+            //1
+            object sumObjectn1 = dtProductDetail3.Compute("Sum(TotalPrice2021)", string.Empty);
+            GridView2.FooterRow.Cells[3].Text = sumObjectn1.ToString();
+            //2
+            object sumObjectn2 = dtProductDetail3.Compute("Sum(MAKE2Total)", string.Empty);
+            GridView2.FooterRow.Cells[4].Text = sumObjectn2.ToString();
+            //3
+            object sumObjectn3 = dtProductDetail3.Compute("Sum(MAKE2Price)", string.Empty);
+            GridView2.FooterRow.Cells[5].Text = sumObjectn3.ToString();
+            //4
+            object sumObjectn4 = dtProductDetail3.Compute("Sum(IDExTotal)", string.Empty);
+            GridView2.FooterRow.Cells[6].Text = sumObjectn4.ToString();
+            //5
+            object sumObjectn5 = dtProductDetail3.Compute("Sum(IDExPriceTotal)", string.Empty);
+            GridView2.FooterRow.Cells[7].Text = sumObjectn5.ToString();
+            //6
+            object sumObjectn6 = dtProductDetail3.Compute("Sum(IGATotal)", string.Empty);
+            GridView2.FooterRow.Cells[8].Text = sumObjectn6.ToString();
+            //7
+            object sumObjectn7 = dtProductDetail3.Compute("Sum(IGAPrice)", string.Empty);
+            GridView2.FooterRow.Cells[9].Text = sumObjectn7.ToString();
+            //8
+            object sumObjectn8 = dtProductDetail3.Compute("Sum(OTHERTHANMAKE2Total)", string.Empty);
+            GridView2.FooterRow.Cells[10].Text = sumObjectn8.ToString();
+            //9
+            object sumObjectn9 = dtProductDetail3.Compute("Sum(OTHERTHANMAKE2Price)", string.Empty);
+            GridView2.FooterRow.Cells[11].Text = sumObjectn9.ToString();
+            //10
+            object sumObjectn10 = dtProductDetail3.Compute("Sum(HOUSETotal)", string.Empty);
+            GridView2.FooterRow.Cells[12].Text = sumObjectn10.ToString();
+            //11
+            object sumObjectn11 = dtProductDetail3.Compute("Sum(HOUSEPrice)", string.Empty);
+            GridView2.FooterRow.Cells[13].Text = sumObjectn11.ToString();
+        }
+        else
+        { }
+        #endregion
         ScriptManager.RegisterStartupScript(this, GetType(), "divCompany", "showPopup1();", true);
     }
     protected void btnreset_Click(object sender, EventArgs e)

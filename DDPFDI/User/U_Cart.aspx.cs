@@ -391,14 +391,14 @@ public partial class User_U_Cart : System.Web.UI.Page
                     DtGridEstimate1 = Lo.RetriveSaveEstimateGrid("Select", 0, e.CommandArgument.ToString(), 0, "", "", "", "", "O");
                     if (DtGridEstimate1.Rows.Count > 0)
                     {
+                        gvestimatequanold.DataSource = DtGridEstimate1;
+                        gvestimatequanold.DataBind();
+                        gvestimatequanold.Visible = true;
                         decimal tot = 0;
                         for (int i = 0; DtGridEstimate1.Rows.Count > i; i++)
                         {
                             tot = tot + Convert.ToDecimal(DtGridEstimate1.Rows[i]["EstimatedPrice"]);
                         }
-                        gvestimatequanold.DataSource = DtGridEstimate1;
-                        gvestimatequanold.DataBind();
-                        gvestimatequanold.Visible = true;
                         decimal msumobject = tot; //* qtyimp / 100000;
                         lblvalueimport.Text = msumobject.ToString("F2");
                         ten.Visible = true;

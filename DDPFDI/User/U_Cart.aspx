@@ -458,12 +458,12 @@
                                                                                     <asp:BoundField DataField="FYear" HeaderText="Year of Import" />
                                                                                     <asp:TemplateField HeaderText="Quantity">
                                                                                         <ItemTemplate>
-                                                                                            <%-- <%# Eval("EstimatedQty").ToString() == "0" ? "*" : Eval("EstimatedQty").ToString()%>--%>
-                                                                                            <%# Eval("EstimatedQty").ToString() == "0" ? "*" : "*"%>
+                                                                                            <%# Eval("EstimatedQty").ToString() == "0" ? "*" : Eval("EstimatedQty").ToString()%>
+                                                                                            <%-- <%# Eval("EstimatedQty").ToString() == "0" ? "*" : "*"%>--%>
                                                                                         </ItemTemplate>
                                                                                     </asp:TemplateField>
                                                                                     <asp:BoundField DataField="Unit" HeaderText="Unit" />
-                                                                                    <asp:BoundField DataField="EstimatedPrice" HeaderText="Import value in Rs lakh (Qty*Price)" />
+                                                                                    <asp:BoundField DataField="EstimatedPrice" HeaderText="Import value in Rs lakh (Qty*Price)" DataFormatString="{0:N2}" />
                                                                                 </Columns>
                                                                             </asp:GridView>
                                                                         </td>
@@ -487,13 +487,13 @@
                                                                                                     <asp:BoundField HeaderText="Year of Import" DataField="FYear" />
                                                                                                     <asp:TemplateField HeaderText="Quantity">
                                                                                                         <ItemTemplate>
-                                                                                                            <%-- <%# Eval("EstimatedQty").ToString() == "0" ? "*" : Eval("EstimatedQty").ToString()%>--%>
-                                                                                                            <%# Eval("EstimatedQty").ToString() == "0" ? "*" : "*"%>
+                                                                                                            <%# Eval("EstimatedQty").ToString() == "0" ? "*" : Eval("EstimatedQty").ToString()%>
+                                                                                                            <%--  <%# Eval("EstimatedQty").ToString() == "0" ? "*" : "*"%>--%>
                                                                                                         </ItemTemplate>
                                                                                                     </asp:TemplateField>
 
                                                                                                     <asp:BoundField HeaderText="Unit" DataField="Unit" />
-                                                                                                    <asp:BoundField HeaderText="Imported value in Rs lakh (Qty*Price)" DataField="EstimatedPrice" />
+                                                                                                    <asp:BoundField HeaderText="Imported value in Rs lakh (Qty*Price)" DataField="EstimatedPrice" DataFormatString="{0:N2}" />
                                                                                                 </Columns>
                                                                                             </asp:GridView>
                                                                                         </td>

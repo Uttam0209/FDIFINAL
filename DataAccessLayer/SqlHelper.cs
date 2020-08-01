@@ -1090,6 +1090,7 @@ namespace DataAccessLayer
                     db.AddInParameter(cmd, "@CountryID", DbType.Int64, ID);
                     db.AddInParameter(cmd, "@CountryName", DbType.String, Value1);
                     db.AddInParameter(cmd, "@WorkCodeFor", DbType.String, Value2);
+                    cmd.CommandTimeout = 0;
                     db.ExecuteNonQuery(cmd, dbTran);
                     dbTran.Commit();
                     return "true";
