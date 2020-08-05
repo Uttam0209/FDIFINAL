@@ -1277,12 +1277,12 @@ public partial class Admin_AddProduct : System.Web.UI.Page
             {
                 if (chkinditargetyear.Items[i].Selected == true)
                 {
-                    ity = ity + chkinditargetyear.Items[i].Value + ",";
+                    ity = ity + chkinditargetyear.Items[i].Value.Trim() + ",";
                 }
             }
             if (ity.ToString() != "")
             {
-                HyPanel1["IndTargetYear"] = ity.ToString();
+                HyPanel1["IndTargetYear"] = ity.ToString().Trim();
             }
             else
             {
@@ -1409,7 +1409,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                                         {
                                             if (chkIty.Selected == true)
                                             {
-                                                mIndigYearTarget = mIndigYearTarget + chkIty;
+                                                mIndigYearTarget = mIndigYearTarget + chkIty.ToString().Trim();
                                             }
                                         }
                                         if (mIndigYearTarget != "")
@@ -2434,7 +2434,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                     {
                         for (int i = 0; chkinditargetyear.Items.Count > i; i++)
                         {
-                            if (s == chkinditargetyear.Items[i].Value)
+                            if (s == chkinditargetyear.Items[i].Value.Trim())
                             {
                                 chkinditargetyear.Items[i].Selected = true;
                             }

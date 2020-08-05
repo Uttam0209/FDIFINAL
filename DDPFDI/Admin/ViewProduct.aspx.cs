@@ -994,7 +994,7 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
     {
         if (txtsearchbyrefid.Text != "")
         {
-            BindGridView();
+                    BindGridView();
         }
     }
     #endregion

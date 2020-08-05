@@ -71,19 +71,10 @@ public partial class User_U_ProductList : System.Web.UI.Page
     }
     protected void BindProduct()
     {
-        if (rbsort.SelectedItem.Text.Trim() == "2020-21")
-        {
-            lblyearvalue.Text = "Estimated Import value " + rbsort.SelectedItem.Text;
-        }
-        else
-        {
-            lblyearvalue.Text = "Import value during " + rbsort.SelectedItem.Text;
-        }
         DtGrid = Lo.RetriveProductUser();
         if (DtGrid.Rows.Count > 0)
         {
             Session["TempData"] = DtGrid;
-            object sum = DtGrid.Compute("Sum(EstimatePrice)", string.Empty);
             SeachResult();
         }
         else
@@ -454,12 +445,12 @@ public partial class User_U_ProductList : System.Web.UI.Page
     }
     protected void rbsort_SelectedIndexChanged(object sender, EventArgs e)
     {
-        if (rberffpurchase.SelectedIndex != -1 || chklast5year.SelectedIndex != -1 || chktendor.SelectedIndex != -1 || ddlcomp.SelectedIndex != 0 || ddlnsg.SelectedIndex != 0 || ddlprodindustrydomain.SelectedIndex != 0 || ddlprocurmentcatgory.SelectedIndex != 0 || ddlisindezinized.SelectedIndex != -1 || ddldeclaration.SelectedIndex != -1)
-        { BindProduct(); }
-        else
-        {
-            SeachResult();
-        }
+        //if (rberffpurchase.SelectedIndex != -1 || chklast5year.SelectedIndex != -1 || chktendor.SelectedIndex != -1 || ddlcomp.SelectedIndex != 0 || ddlnsg.SelectedIndex != 0 || ddlprodindustrydomain.SelectedIndex != 0 || ddlprocurmentcatgory.SelectedIndex != 0 || ddlisindezinized.SelectedIndex != -1 || ddldeclaration.SelectedIndex != -1)
+        //{ BindProduct(); }
+        //else
+        //{
+        SeachResult();
+        //}
     }
     protected void chkimportvalue_SelectedIndexChanged(object sender, EventArgs e)
     {
@@ -617,68 +608,65 @@ public partial class User_U_ProductList : System.Web.UI.Page
             {
                 dr = insert.NewRow();
                 dr["Column"] = "(" + rbsort.SelectedValue + " >=";
-                dr["Value"] = " '1'  and " + rbsort.SelectedValue + " < '5')";
+                dr["Value"] = " '0.5'  and " + rbsort.SelectedValue + " < '5')";
                 insert.Rows.Add(dr);
             }
         }
-        if (rbsort.SelectedIndex != -1)
+        if (rbsort.SelectedValue == "EstimatePrice")
         {
-            if (rbsort.SelectedValue == "EstimatePrice")
+            dr = insert.NewRow();
+            dr["Column"] = "ImportYear " + "= ";
+            if (chkimportvalue.SelectedIndex == -1)
             {
-                dr = insert.NewRow();
-                dr["Column"] = "ImportYear " + "= ";
-                if (chkimportvalue.SelectedIndex == -1)
-                {
-                    dr["Value"] = "'2019-20' and EstimatePrice >= 1 ";
-                }
-                else
-                {
-                    dr["Value"] = "'2019-20'";
-                }
-                insert.Rows.Add(dr);
+                dr["Value"] = "'2019-20' and EstimatePrice >= 0.5 ";
             }
-            else if (rbsort.SelectedValue == "EstimatePrice18")
+            else
             {
-                dr = insert.NewRow();
-                dr["Column"] = "ImportYear18 " + "= ";
-                if (chkimportvalue.SelectedIndex == -1)
-                {
-                    dr["Value"] = "'2018-19' and EstimatePrice18 >= 1 ";
-                }
-                else
-                {
-                    dr["Value"] = "'2018-19'";
-                }
-                insert.Rows.Add(dr);
+                dr["Value"] = "'2019-20'";
             }
-            else if (rbsort.SelectedValue == "EstimatePrice17")
+            insert.Rows.Add(dr);
+        }
+        else if (rbsort.SelectedValue == "EstimatePrice18")
+        {
+            dr = insert.NewRow();
+            dr["Column"] = "ImportYear18 " + "= ";
+            if (chkimportvalue.SelectedIndex == -1)
             {
-                dr = insert.NewRow();
-                dr["Column"] = "ImportYear17 " + "= ";
-                if (chkimportvalue.SelectedIndex == -1)
-                {
-                    dr["Value"] = "'2017-18' and EstimatePrice17 >= 1 ";
-                }
-                else
-                {
-                    dr["Value"] = "'2017-18'";
-                }
-                insert.Rows.Add(dr);
+                dr["Value"] = "'2018-19' and EstimatePrice18 >= 0.5 ";
             }
-            else if (rbsort.SelectedValue == "EstimatePricefuture")
+            else
             {
-                dr = insert.NewRow();
-                dr["Column"] = "ImportFutureYear" + " = ";
-                if (chkimportvalue.SelectedIndex == -1)
-                {
-                    dr["Value"] = "'2020-21' and EstimatePricefuture >= 1 ";
-                }
-                else
-                {
-                    dr["Value"] = "'2020-21'";
-                }
-                insert.Rows.Add(dr);
+                dr["Value"] = "'2018-19'";
             }
+            insert.Rows.Add(dr);
+        }
+        else if (rbsort.SelectedValue == "EstimatePrice17")
+        {
+            dr = insert.NewRow();
+            dr["Column"] = "ImportYear17 " + "= ";
+            if (chkimportvalue.SelectedIndex == -1)
+            {
+                dr["Value"] = "'2017-18' and EstimatePrice17 >= 0.5 ";
+            }
+            else
+            {
+                dr["Value"] = "'2017-18'";
+            }
+            insert.Rows.Add(dr);
+        }
+        else if (rbsort.SelectedValue == "EstimatePricefuture")
+        {
+            dr = insert.NewRow();
+            dr["Column"] = "ImportFutureYear" + " = ";
+            if (chkimportvalue.SelectedIndex == -1)
+            {
+                dr["Value"] = "'2020-21' and EstimatePricefuture >= 0.5 ";
+            }
+            else
+            {
+                dr["Value"] = "'2020-21'";
+            }
+            insert.Rows.Add(dr);
         }
         if (ddldeclaration.SelectedIndex != -1)
         {
@@ -692,6 +680,13 @@ public partial class User_U_ProductList : System.Web.UI.Page
             dr = insert.NewRow();
             dr["Column"] = "EOIStatus =";
             dr["Value"] = "'" + chkeoistatus.SelectedItem.Value + "'";
+            insert.Rows.Add(dr);
+        }
+        if (rbindigtarget.SelectedIndex != -1)
+        {
+            dr = insert.NewRow();
+            dr["Column"] = "IndTargetYear  like ";
+            dr["Value"] = "'%" + rbindigtarget.SelectedItem.Value.Trim() + "%'";
             insert.Rows.Add(dr);
         }
         if (txtsearch.Text.Trim() != "" && txtsearch.Text.Trim().Length >= 3)
@@ -739,7 +734,7 @@ public partial class User_U_ProductList : System.Web.UI.Page
                         {
                             dv.Sort = "EstiPriMultiF desc";
                         }
-                        if (rbsort.SelectedItem.Text.Trim() == "2019-20")
+                        if (rbsort.SelectedIndex != -1 && rbsort.SelectedItem.Text.Trim() == "2019-20")
                         {
                             object sumObject = dtinner.Compute("Sum(EstimatePrice)", string.Empty);
                             if (sumObject.ToString() == "")
@@ -753,7 +748,7 @@ public partial class User_U_ProductList : System.Web.UI.Page
                                 lblestimateprice.Text = sumObject.ToString();
                             }
                         }
-                        else if (rbsort.SelectedItem.Text.Trim() == "2018-19")
+                        else if (rbsort.SelectedIndex != -1 && rbsort.SelectedItem.Text.Trim() == "2018-19")
                         {
                             object sumObject = dtinner.Compute("Sum(EstimatePrice18)", string.Empty);
                             if (sumObject.ToString() == "")
@@ -765,9 +760,10 @@ public partial class User_U_ProductList : System.Web.UI.Page
                             {
                                 lblyearvalue.Text = "Import Value during " + rbsort.SelectedItem.Text;
                                 lblestimateprice.Text = sumObject.ToString();
+
                             }
                         }
-                        else if (rbsort.SelectedItem.Text.Trim() == "2017-18")
+                        else if (rbsort.SelectedIndex != -1 && rbsort.SelectedItem.Text.Trim() == "2017-18")
                         {
                             object sumObject = dtinner.Compute("Sum(EstimatePrice17)", string.Empty);
                             if (sumObject.ToString() == "")
@@ -783,16 +779,19 @@ public partial class User_U_ProductList : System.Web.UI.Page
                         }
                         else
                         {
-                            object sumObject1 = dtinner.Compute("Sum(EstimatePricefuture)", string.Empty);
-                            if (sumObject1.ToString() == "")
+                            if (rbsort.SelectedIndex != -1)
                             {
-                                lblyearvalue.Text = "Estimted Import Value " + rbsort.SelectedItem.Text;
-                                lblestimateprice.Text = "0";
-                            }
-                            else
-                            {
-                                lblyearvalue.Text = "Estimted Import Value " + rbsort.SelectedItem.Text;
-                                lblestimateprice.Text = sumObject1.ToString();
+                                object sumObject1 = dtinner.Compute("Sum(EstimatePricefuture)", string.Empty);
+                                if (sumObject1.ToString() == "")
+                                {
+                                    lblyearvalue.Text = "Estimted Import Value " + rbsort.SelectedItem.Text;
+                                    lblestimateprice.Text = "0";
+                                }
+                                else
+                                {
+                                    lblyearvalue.Text = "Estimted Import Value " + rbsort.SelectedItem.Text;
+                                    lblestimateprice.Text = sumObject1.ToString();
+                                }
                             }
                         }
                     }
@@ -1274,20 +1273,20 @@ public partial class User_U_ProductList : System.Web.UI.Page
                         Tr21.Visible = false;
                         Tr22.Visible = false;
                     }
-                    //if (DtView.Rows[0]["IndTargetYear"].ToString() != "")
-                    //{
-                    //    lblindtrgyr.Text = DtView.Rows[0]["IndTargetYear"].ToString().Substring(0, DtView.Rows[0]["IndTargetYear"].ToString().Length - 1);
-                    //    if (lblindtrgyr.Text == "NIL")
-                    //    { Tr25.Visible = false; }
-                    //    else
-                    //    {
-                    //        Tr25.Visible = true;
-                    //    }
-                    //}
-                    //else
-                    //{
-                    //    Tr25.Visible = false;
-                    //}
+                    if (DtView.Rows[0]["IndTargetYear"].ToString() != "")
+                    {
+                        lblindtrgyr.Text = DtView.Rows[0]["IndTargetYear"].ToString().Substring(0, DtView.Rows[0]["IndTargetYear"].ToString().Length - 1);
+                        if (lblindtrgyr.Text == "NIL")
+                        { Tr25.Visible = false; }
+                        else
+                        {
+                            Tr25.Visible = true;
+                        }
+                    }
+                    else
+                    {
+                        Tr25.Visible = false;
+                    }
                     //if (DtView.Rows[0]["IndProcess"].ToString() != "")
                     //{
                     //    lblprocstart.Text = DtView.Rows[0]["IndProcess"].ToString();
@@ -1415,7 +1414,7 @@ public partial class User_U_ProductList : System.Web.UI.Page
             Label lbleuold = (Label)e.Item.FindControl("lblestunitold");
             Label lbleufutu = (Label)e.Item.FindControl("lblestunitfut");
 
-            if (rbsort.SelectedItem.Text.Trim() == "2019-20")
+            if (rbsort.SelectedIndex != -1 && rbsort.SelectedItem.Text.Trim() == "2019-20")
             {
                 lblepold.Visible = true;
                 lbleq.Visible = true;
@@ -1427,7 +1426,7 @@ public partial class User_U_ProductList : System.Web.UI.Page
                 lbleq18.Visible = false;
 
             }
-            else if (rbsort.SelectedItem.Text.Trim() == "2018-19")
+            else if (rbsort.SelectedIndex != -1 && rbsort.SelectedItem.Text.Trim() == "2018-19")
             {
                 lblepold.Visible = false;
                 lbleq.Visible = false;
@@ -1439,7 +1438,7 @@ public partial class User_U_ProductList : System.Web.UI.Page
                 lbleq18.Visible = true;
 
             }
-            else if (rbsort.SelectedItem.Text.Trim() == "2017-18")
+            else if (rbsort.SelectedIndex != -1 && rbsort.SelectedItem.Text.Trim() == "2017-18")
             {
                 lblepold.Visible = false;
                 lbleq.Visible = false;
@@ -1451,7 +1450,7 @@ public partial class User_U_ProductList : System.Web.UI.Page
                 lbleq18.Visible = false;
 
             }
-            else if (rbsort.SelectedItem.Text.Trim() == "2020-21")
+            else if (rbsort.SelectedIndex != -1 && rbsort.SelectedItem.Text.Trim() == "2020-21")
             {
                 lblepold.Visible = false;
                 lbleq.Visible = false;
@@ -1482,7 +1481,7 @@ public partial class User_U_ProductList : System.Web.UI.Page
             gvPrdoct.DataBind();
             //0
             gvPrdoct.FooterRow.Cells[1].Text = "Total";
-            gvPrdoct.FooterRow.Cells[1].HorizontalAlign = HorizontalAlign.Left;
+            gvPrdoct.FooterRow.Cells[1].HorizontalAlign = HorizontalAlign.Center;
             object sumObjectn = dtProductDetail.Compute("Sum(TotalProd)", string.Empty);
             gvPrdoct.FooterRow.Cells[2].Text = sumObjectn.ToString();
             //1
@@ -1512,6 +1511,9 @@ public partial class User_U_ProductList : System.Web.UI.Page
             //9
             object sumObjectn9 = dtProductDetail.Compute("Sum(PriceAbove50)", string.Empty);
             gvPrdoct.FooterRow.Cells[11].Text = sumObjectn9.ToString();
+            //10
+            object sumObjectn10 = dtProductDetail.Compute("Sum(TargetIndig2020)", string.Empty);
+            gvPrdoct.FooterRow.Cells[12].Text = sumObjectn10.ToString();
         }
         else
         { }
@@ -1524,7 +1526,7 @@ public partial class User_U_ProductList : System.Web.UI.Page
             DataList1.DataBind();
             //0
             DataList1.FooterRow.Cells[1].Text = "Total";
-            DataList1.FooterRow.Cells[1].HorizontalAlign = HorizontalAlign.Left;
+            DataList1.FooterRow.Cells[1].HorizontalAlign = HorizontalAlign.Center;
             object sumObjectn = dtProductDetail1.Compute("Sum(TotalProd)", string.Empty);
             DataList1.FooterRow.Cells[2].Text = sumObjectn.ToString();
             //1
@@ -1554,6 +1556,9 @@ public partial class User_U_ProductList : System.Web.UI.Page
             //9
             object sumObjectn9 = dtProductDetail1.Compute("Sum(PriceAbove50)", string.Empty);
             DataList1.FooterRow.Cells[11].Text = sumObjectn9.ToString();
+            //10
+            object sumObjectn10 = dtProductDetail1.Compute("Sum(TargetIndig2021)", string.Empty);
+            DataList1.FooterRow.Cells[12].Text = sumObjectn10.ToString();
         }
         else
         { }
@@ -1566,7 +1571,7 @@ public partial class User_U_ProductList : System.Web.UI.Page
             GridView1.DataBind();
             //0
             GridView1.FooterRow.Cells[1].Text = "Total";
-            GridView1.FooterRow.Cells[1].HorizontalAlign = HorizontalAlign.Left;
+            GridView1.FooterRow.Cells[1].HorizontalAlign = HorizontalAlign.Center;
             object sumObjectn = dtProductDetail2.Compute("Sum(TotalProd)", string.Empty);
             GridView1.FooterRow.Cells[2].Text = sumObjectn.ToString();
             //1
@@ -1614,7 +1619,7 @@ public partial class User_U_ProductList : System.Web.UI.Page
             GridView2.DataBind();
             //0
             GridView2.FooterRow.Cells[1].Text = "Total";
-            GridView2.FooterRow.Cells[1].HorizontalAlign = HorizontalAlign.Left;
+            GridView2.FooterRow.Cells[1].HorizontalAlign = HorizontalAlign.Center;
             object sumObjectn = dtProductDetail3.Compute("Sum(TotalProd)", string.Empty);
             GridView2.FooterRow.Cells[2].Text = sumObjectn.ToString();
             //1
@@ -1650,6 +1655,67 @@ public partial class User_U_ProductList : System.Web.UI.Page
             //11
             object sumObjectn11 = dtProductDetail3.Compute("Sum(HOUSEPrice)", string.Empty);
             GridView2.FooterRow.Cells[13].Text = sumObjectn11.ToString();
+        }
+        else
+        { }
+        #endregion
+        #region Fifth Table
+        DataTable dtProductDetail4 = Lo.RetriveProductIndig1("", "", "GetIndigTarAll");
+        if (dtProductDetail4.Rows.Count > 0)
+        {
+            GridView3.DataSource = dtProductDetail4;
+            GridView3.DataBind();
+            //0
+            GridView3.FooterRow.Cells[1].Text = "Total";
+            GridView3.FooterRow.Cells[1].HorizontalAlign = HorizontalAlign.Center;
+            object sumObjectn = dtProductDetail4.Compute("Sum(TargetIndig2021)", string.Empty);
+            GridView3.FooterRow.Cells[2].Text = sumObjectn.ToString();
+            //1
+            object sumObjectn1 = dtProductDetail4.Compute("Sum(TargetIndig2022)", string.Empty);
+            GridView3.FooterRow.Cells[3].Text = sumObjectn1.ToString();
+            //2
+            object sumObjectn2 = dtProductDetail4.Compute("Sum(TargetIndig2023)", string.Empty);
+            GridView3.FooterRow.Cells[4].Text = sumObjectn2.ToString();
+            //3
+            object sumObjectn3 = dtProductDetail4.Compute("Sum(TargetIndig2024)", string.Empty);
+            GridView3.FooterRow.Cells[5].Text = sumObjectn3.ToString();
+            //4
+            object sumObjectn4 = dtProductDetail4.Compute("Sum(TargetIndig2025)", string.Empty);
+            GridView3.FooterRow.Cells[6].Text = sumObjectn4.ToString();
+            //5
+            object sumObjectn5 = dtProductDetail4.Compute("Sum(TargetIndigNILL)", string.Empty);
+            GridView3.FooterRow.Cells[7].Text = sumObjectn5.ToString();
+        }
+        else
+        { }
+        #endregion
+        #region sixth Table
+        DataTable dtProductDetail5 = Lo.RetriveProductIndig1("", "", "gettotprovalue18");
+        if (dtProductDetail5.Rows.Count > 0)
+        {
+            GridView4.DataSource = dtProductDetail5;
+            GridView4.DataBind();
+            //0
+            GridView4.FooterRow.Cells[1].Text = "Total";
+            GridView4.FooterRow.Cells[1].HorizontalAlign = HorizontalAlign.Center;
+            object sumObjectn = dtProductDetail5.Compute("Sum(TotalProd)", string.Empty);
+            GridView4.FooterRow.Cells[2].Text = sumObjectn.ToString();
+            //1
+            object sumObjectn1 = dtProductDetail5.Compute("Sum(TotalPrice1819)", string.Empty);
+            GridView4.FooterRow.Cells[3].Text = sumObjectn1.ToString();
+            //2
+            object sumObjectn2 = dtProductDetail5.Compute("Sum(ProdLess5)", string.Empty);
+            GridView4.FooterRow.Cells[4].Text = sumObjectn2.ToString();
+            //3
+            object sumObjectn3 = dtProductDetail5.Compute("Sum(ProdLess10)", string.Empty);
+            GridView4.FooterRow.Cells[5].Text = sumObjectn3.ToString();
+            //4
+            object sumObjectn4 = dtProductDetail5.Compute("Sum(ProdLess50)", string.Empty);
+            GridView4.FooterRow.Cells[6].Text = sumObjectn4.ToString();
+            //5
+            object sumObjectn5 = dtProductDetail5.Compute("Sum(ProdAbove50)", string.Empty);
+            GridView4.FooterRow.Cells[7].Text = sumObjectn5.ToString();
+
         }
         else
         { }
@@ -1870,7 +1936,7 @@ public partial class User_U_ProductList : System.Web.UI.Page
         ddlnsg.SelectedIndex = -1;
         ddlprodindustrydomain.SelectedIndex = -1;
         chkimportvalue.SelectedIndex = -1;
-        rbsort.SelectedValue = "EstimatePrice";
+        rbsort.SelectedIndex = -1;
         ddldeclaration.SelectedIndex = -1;
         chkeoistatus.SelectedIndex = -1;
     }

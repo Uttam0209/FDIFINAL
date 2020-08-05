@@ -964,14 +964,14 @@
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <h5>Indigenization Target Year <span class="mandatory">*</span></h5>
-                                                    <asp:CheckBoxList ID="chkinditargetyear" runat="server" RepeatColumns="6" RepeatDirection="Horizontal" RepeatLayout="Flow">
-                                                        <asp:ListItem Value="NIL" style="margin-left: 5px;">NIL</asp:ListItem>
-                                                        <asp:ListItem Value="2020-21" style="margin-left: 5px;">2020-21</asp:ListItem>
-                                                        <asp:ListItem Value="2021-22" style="margin-left: 5px;">2021-22</asp:ListItem>
-                                                        <asp:ListItem Value="2022-23" style="margin-left: 5px;">2022-23</asp:ListItem>
-                                                        <asp:ListItem Value="2023-24" style="margin-left: 5px;">2023-24</asp:ListItem>
-                                                        <asp:ListItem Value="2024-25" style="margin-left: 5px;">2024-25</asp:ListItem>
-                                                    </asp:CheckBoxList>
+                                                    <asp:RadioButtonList ID="chkinditargetyear" runat="server" RepeatColumns="6" RepeatDirection="Horizontal" RepeatLayout="Flow">
+                                                        <asp:ListItem Value="NIL">&nbsp;NIL</asp:ListItem>
+                                                        <asp:ListItem Value="2020-21">&nbsp;2020-21</asp:ListItem>
+                                                        <asp:ListItem Value="2021-22">&nbsp;2021-22</asp:ListItem>
+                                                        <asp:ListItem Value="2022-23">&nbsp;2022-23</asp:ListItem>
+                                                        <asp:ListItem Value="2023-24">&nbsp;2023-24</asp:ListItem>
+                                                        <asp:ListItem Value="2024-25">&nbsp;2024-25</asp:ListItem>
+                                                    </asp:RadioButtonList>
                                                 </div>
                                                 <div class="form-group">
                                                     <h5>Quality Assurance Agency <span class="mandatory">*</span></h5>

@@ -535,6 +535,13 @@
                                                                             <asp:Label ID="lbltendor" runat="server" Text=""></asp:Label>
                                                                         </td>
                                                                     </tr>
+                                                                    <tr runat="server" id="Tr25">
+                                                                        <th scope="row">Make in India Target Year
+                                                                        </th>
+                                                                        <td>
+                                                                            <asp:Label ID="lblindtrgyr" runat="server" Text=""></asp:Label>
+                                                                        </td>
+                                                                    </tr>
                                                                 </tbody>
                                                             </table>
                                                             <h6 class="tablemidhead">Contact Details</h6>
@@ -667,13 +674,7 @@
                                                                             <asp:Label ID="lblprocstart" runat="server" Text=""></asp:Label>
                                                                         </td>
                                                                     </tr>
-                                                                    <tr runat="server" id="Tr25" visible="false">
-                                                                        <th scope="row">Make in India Target Year
-                                                                        </th>
-                                                                        <td>
-                                                                            <asp:Label ID="lblindtrgyr" runat="server" Text=""></asp:Label>
-                                                                        </td>
-                                                                    </tr>
+
                                                                 </tbody>
                                                             </table>
                                                         </div>
