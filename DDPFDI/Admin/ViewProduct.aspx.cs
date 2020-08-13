@@ -713,16 +713,16 @@ public partial class Admin_ViewProduct : System.Web.UI.Page
     {
         if (e.Row.RowType == DataControlRowType.DataRow)
         {
-            if (objEnc.DecryptData(Session["Type"].ToString()) == "SuperAdmin")
-            {
-                LinkButton delpro = ((LinkButton)e.Row.FindControl("lbldel"));
-                delpro.Visible = true;
-            }
-            else
-            {
-                LinkButton delpro = ((LinkButton)e.Row.FindControl("lbldel"));
-                delpro.Visible = false;
-            }
+            //if (objEnc.DecryptData(Session["Type"].ToString()) == "SuperAdmin")
+            //{
+            //    LinkButton delpro = ((LinkButton)e.Row.FindControl("lbldel"));
+            //    delpro.Visible = true;
+            //}
+            //else
+            //{
+            //    LinkButton delpro = ((LinkButton)e.Row.FindControl("lbldel"));
+            //    delpro.Visible = false;
+            //}
         }
     }
     #endregion

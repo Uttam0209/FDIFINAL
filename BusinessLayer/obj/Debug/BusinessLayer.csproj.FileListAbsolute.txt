@@ -111,6 +111,32 @@ F:\FDIFINAL\BusinessLayer\bin\Debug\System.Web.WebPages.Razor.xml
 F:\FDIFINAL\BusinessLayer\obj\Debug\BusinessLayer.csprojResolveAssemblyReference.cache
 F:\FDIFINAL\BusinessLayer\obj\Debug\BusinessLayer.dll
 F:\FDIFINAL\BusinessLayer\obj\Debug\BusinessLayer.pdb
+D:\CurrentProject2020\FDIFINAL-master\BusinessLayer\bin\Debug\BusinessLayer.dll
+D:\CurrentProject2020\FDIFINAL-master\BusinessLayer\bin\Debug\BusinessLayer.pdb
+D:\CurrentProject2020\FDIFINAL-master\BusinessLayer\bin\Debug\DataAccessLayer.dll
+D:\CurrentProject2020\FDIFINAL-master\BusinessLayer\bin\Debug\Encryption.dll
+D:\CurrentProject2020\FDIFINAL-master\BusinessLayer\bin\Debug\Microsoft.Web.Infrastructure.dll
+D:\CurrentProject2020\FDIFINAL-master\BusinessLayer\bin\Debug\System.Web.Helpers.dll
+D:\CurrentProject2020\FDIFINAL-master\BusinessLayer\bin\Debug\System.Web.Razor.dll
+D:\CurrentProject2020\FDIFINAL-master\BusinessLayer\bin\Debug\System.Web.WebPages.Deployment.dll
+D:\CurrentProject2020\FDIFINAL-master\BusinessLayer\bin\Debug\System.Web.WebPages.dll
+D:\CurrentProject2020\FDIFINAL-master\BusinessLayer\bin\Debug\System.Web.WebPages.Razor.dll
+D:\CurrentProject2020\FDIFINAL-master\BusinessLayer\bin\Debug\Microsoft.Practices.EnterpriseLibrary.Data.dll
+D:\CurrentProject2020\FDIFINAL-master\BusinessLayer\bin\Debug\Microsoft.Practices.EnterpriseLibrary.Common.dll
+D:\CurrentProject2020\FDIFINAL-master\BusinessLayer\bin\Debug\Microsoft.Practices.Unity.dll
+D:\CurrentProject2020\FDIFINAL-master\BusinessLayer\bin\Debug\Microsoft.Practices.Unity.Interception.dll
+D:\CurrentProject2020\FDIFINAL-master\BusinessLayer\bin\Debug\DataAccessLayer.pdb
+D:\CurrentProject2020\FDIFINAL-master\BusinessLayer\bin\Debug\Encryption.pdb
+D:\CurrentProject2020\FDIFINAL-master\BusinessLayer\bin\Debug\System.Web.Helpers.xml
+D:\CurrentProject2020\FDIFINAL-master\BusinessLayer\bin\Debug\System.Web.Razor.xml
+D:\CurrentProject2020\FDIFINAL-master\BusinessLayer\bin\Debug\System.Web.WebPages.xml
+D:\CurrentProject2020\FDIFINAL-master\BusinessLayer\bin\Debug\System.Web.WebPages.Deployment.xml
+D:\CurrentProject2020\FDIFINAL-master\BusinessLayer\bin\Debug\System.Web.WebPages.Razor.xml
+D:\CurrentProject2020\FDIFINAL-master\BusinessLayer\obj\Debug\BusinessLayer.csprojAssemblyReference.cache
+D:\CurrentProject2020\FDIFINAL-master\BusinessLayer\obj\Debug\BusinessLayer.csproj.CoreCompileInputs.cache
+D:\CurrentProject2020\FDIFINAL-master\BusinessLayer\obj\Debug\BusinessLayer.csproj.CopyComplete
+D:\CurrentProject2020\FDIFINAL-master\BusinessLayer\obj\Debug\BusinessLayer.dll
+D:\CurrentProject2020\FDIFINAL-master\BusinessLayer\obj\Debug\BusinessLayer.pdb
 E:\Wali Projects\FDIFINAL\BusinessLayer\bin\Debug\BusinessLayer.dll
 E:\Wali Projects\FDIFINAL\BusinessLayer\bin\Debug\BusinessLayer.pdb
 E:\Wali Projects\FDIFINAL\BusinessLayer\bin\Debug\DataAccessLayer.dll

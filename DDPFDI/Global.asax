@@ -5,6 +5,7 @@
 <script RunAt="server">
     void Application_Start(object sender, EventArgs e)
     {
+        
         System.Net.ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls12;
         RegisterRoutes(RouteTable.Routes);
     }
@@ -40,6 +41,7 @@
     }
     void Session_Start(object sender, EventArgs e)
     {
+        Response.Redirect("Home");
         Session.Timeout = 20;
     }
     void Session_Remove(object sender, EventArgs e)

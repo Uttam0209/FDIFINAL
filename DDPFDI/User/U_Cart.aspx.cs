@@ -10,6 +10,7 @@ using System.Web.UI.WebControls;
 using System.Web;
 using System.Web.Helpers;
 using System.Text.RegularExpressions;
+using System.Net;
 
 public partial class User_U_Cart : System.Web.UI.Page
 {
@@ -102,19 +103,25 @@ public partial class User_U_Cart : System.Web.UI.Page
     }
     protected void btnsendmail_Click(object sender, EventArgs e)
     {
-        if (txtname.Text != "" && txtemail.Text != "" && txtcompname.Text != "" && txtofficeaddress.Text != "" && txtphone.Text != "")
+        try
         {
-            if (VerifyEmailID(txtemail.Text) != false)
+            if (txtname.Text != "" && txtemail.Text != "" && txtcompname.Text != "" && txtofficeaddress.Text != "" && txtphone.Text != "")
             {
-                SendEmailCode(txtemail.Text, ViewState["RefN"].ToString());
-                SendEmailCodeNodalOfficer(ViewState["RefN"].ToString());
-                cleartext();
+                if (VerifyEmailID(txtemail.Text) != false)
+                {
+                    GenerateOTP();
+                    sendMailOTP();
+                    txtotp.Text = hfotp.Value;
+                    ScriptManager.RegisterStartupScript(this, GetType(), "modelotp", "showPopup1();", true);
+                }
+            }
+            else
+            {
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Please enter your name or email')", true);
             }
         }
-        else
-        {
-            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Please enter your name or email')", true);
-        }
+        catch (Exception ex)
+        { ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('" + ex.Message.ToString() + "')", true); }
     }
     protected void cleartext()
     {
@@ -708,4 +715,64 @@ public partial class User_U_Cart : System.Web.UI.Page
             #endregion
         }
     }
+    #region OTPCode
+    protected void GenerateOTP()
+    {
+        try
+        {
+            string numbers = "1234567890";
+            string characters = numbers;
+            int length = int.Parse("6");
+            string otp = string.Empty;
+            for (int i = 0; i < length; i++)
+            {
+                string character = string.Empty;
+                do
+                {
+                    int index = new Random().Next(0, characters.Length);
+                    character = characters.ToCharArray()[index].ToString();
+                } while (otp.IndexOf(character) != -1);
+                otp += character;
+            }
+            hfotp.Value = otp;
+        }
+        catch (Exception ex)
+        {
+            ex.Message.ToString();
+        }
+    }
+    private void sendMailOTP()
+    {
+        string body;
+        using (StreamReader reader = new StreamReader(Server.MapPath("~/emailPage/OTP.html")))
+        {
+            body = reader.ReadToEnd();
+        }
+        body = body.Replace("{OTP}", hfotp.Value);
+        SendMail s;
+        s = new SendMail();
+        s.CreateMail("noreply-srijandefence@gov.in", txtemail.Text, "OTP Verification Cart.", body);
+        s.sendMail();
+    }
+    protected void lbresendotp_Click(object sender, EventArgs e)
+    {
+        GenerateOTP();
+        sendMailOTP();
+    }
+    protected void lbsubmit_Click(object sender, EventArgs e)
+    {
+        if (txtotp.Text != "" && txtotp.Text == hfotp.Value)
+        {
+            SendEmailCode(txtemail.Text, ViewState["RefN"].ToString());
+            SendEmailCodeNodalOfficer(ViewState["RefN"].ToString());
+            cleartext();
+            ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alert", "alert('Mail send successfully.'); window.location.href='U_Cart';", true);
+        }
+        else
+        {
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "ErrorMssgPopup('Invalid OTP.')", true);
+        }
+
+    }
+    #endregion
 }

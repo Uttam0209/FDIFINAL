@@ -13,7 +13,7 @@ public partial class User_Login : System.Web.UI.Page
     }
     protected void log_Click(object sender, EventArgs e)
     {
-        if (txtpass.Text.Trim() == "Dpit@#_$@2020")
+        if (txtpass.Text.Trim() == "2508")
         {
             Session["U_User"] = txtpass.Text.Trim();
             Response.Redirect("ProductList");

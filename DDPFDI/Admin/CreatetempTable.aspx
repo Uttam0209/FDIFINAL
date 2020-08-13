@@ -20,16 +20,11 @@
                             <asp:Button ID="btnupdate" runat="server" CssClass="btn btn-primary text-center" Text="Click me to update record" OnClick="btnupdate_Click" />
                             <div class="clearfix mt10"></div>
                             <asp:Label ID="lbl" runat="server" Text="" CssClass="text-center"></asp:Label>
-                            <div class="clearfix mt10"></div>
-                            <asp:LinkButton ID="lbldownloadexcel" runat="server" CssClass="fa fa-download btn btn-success" OnClick="lbldownloadexcel_Click">&nbsp;Download Excel</asp:LinkButton>
                         </div>
                     </div>
                 </div>
             </div>
         </ContentTemplate>
-        <Triggers>
-            <asp:PostBackTrigger ControlID="lbldownloadexcel" />
-        </Triggers>
     </asp:UpdatePanel>
     <asp:UpdateProgress ID="UpdateProgress" runat="server" AssociatedUpdatePanelID="updatepan">
         <ProgressTemplate>

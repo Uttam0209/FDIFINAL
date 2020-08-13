@@ -100,7 +100,7 @@
                                             <asp:BoundField DataField="1920" HeaderText="2019-20" NullDisplayText="-" SortExpression="1920" />
                                             <asp:BoundField DataField="2021" HeaderText="2020-21" NullDisplayText="-" SortExpression="2021" />
                                             <asp:BoundField DataField="IsShowGeneral" HeaderText="Product Display" NullDisplayText="-" SortExpression="IsShowGeneral" />
-                                            <asp:BoundField DataField="IsApproved" HeaderText="Approval Status" NullDisplayText="-" SortExpression="IsApproved" />
+                                            <asp:BoundField DataField="IsApproved" HeaderText="DOS Approval Status" NullDisplayText="-" SortExpression="IsApproved" />
                                             <asp:BoundField DataField="LastUpdated" HeaderText="LastUpdated" NullDisplayText="-" DataFormatString="{0:dd/MMM/yyyy}" SortExpression="LastUpdated" />
                                             <asp:TemplateField HeaderText="Action">
                                                 <ItemTemplate>

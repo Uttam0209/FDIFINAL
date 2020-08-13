@@ -60,7 +60,6 @@ E:\Wali Projects\FDIFINAL\Encryption\bin\Debug\System.Web.Razor.xml
 E:\Wali Projects\FDIFINAL\Encryption\bin\Debug\System.Web.WebPages.xml
 E:\Wali Projects\FDIFINAL\Encryption\bin\Debug\System.Web.WebPages.Deployment.xml
 E:\Wali Projects\FDIFINAL\Encryption\bin\Debug\System.Web.WebPages.Razor.xml
-E:\Wali Projects\FDIFINAL\Encryption\obj\Debug\Encryption.csprojAssemblyReference.cache
 E:\Wali Projects\FDIFINAL\Encryption\obj\Debug\Encryption.csproj.CopyComplete
 E:\Wali Projects\FDIFINAL\Encryption\obj\Debug\Encryption.dll
 E:\Wali Projects\FDIFINAL\Encryption\obj\Debug\Encryption.pdb

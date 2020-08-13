@@ -166,19 +166,11 @@
                 </div>
                 <div class="modal-body tab-content py-4">
                     <p class="text-justify">
-                        Indigenization Portal <b>(srijandefence.gov.in)</b> is on online market place platform(non-transactional). It is set up by DDP/MoD/Government of India to boost up the 
-                        indigenization of defence imported items/components/spares/equipment by the Indian Industries through their own or through Joint Venture with OEMs.
-                    </p>
+                        Pursuant to ‘Atmanirbhar Bharat’ announcement, the Department of Defence Production/Ministry of Defence/Government of India has developed this portal named, <b>srijandefence.gov.in</b>, as “Opportunities for Make in India in Defence”.  The main objective of the portal is to partner the private sector in indigenization efforts of Defence Public Sector Undertakings(DPSUs), OFB and the Armed Forces. The portal will be a non-transactional online market place platform.  </p>
                     <p class="text-justify">
-                        DPSUs/OFB/SHQs will share their list of items on this portal with the Indian Industry, which DPSUs/OFB/SHQs have imported last year (2019-20) and which they 
-                        are going to import in the current year (2020-21), each item has a total annual import value of more than Rs 50 Lakh. 
-                        They will also share their list of items which have been targeted in the current year (2020-21) for indigenization.
-                    </p>
+                       DPSUs/OFB/SHQs will display their items on this portal, which they have imported or going to import, each item having sizeable import value. They will also display those items which have been planned/targeted in the coming years, for indigenization.</p>
                     <p class="text-justify">
-                        The Indian Industry will show their interest in those items for which they have capability to design develop & manufacture either on their own or through JVs with OEMs.
-                         Thereafter, the concerned DPSUs/OFB/SHQs, based on their requirement of the items and their respective guidelines & procedures will interact with the interested Indian
-                         Industry for indigenization.The interested Indian Industry can also interact with concerned DPSUs/OFB/SHQs for their queries related to indigenization.
-                    </p>
+                        The Indian industry will be able to show their interest in those items for which they can design, develop and manufacture as per their capability or through joint venture with OEMs. The concerned DPSUs/OFB/SHQs, based on their requirement of the items and their respective guidelines & procedures, will interact with the interested Indian industry for indigenization. The interested Indian industry can also interact with concerned DPSUs/OFB/SHQs for their queries related to indigenization through the contact details given under each item. </p>
                 </div>
             </div>
         </div>
@@ -247,6 +239,7 @@
                     <div class="container d-lg-flex justify-content-between">
                         <div class="order-lg-2 mb-3 mb-lg-0 pt-lg-2">
                             <div class="navbar-tool dropdown ml-5">
+                                <b><a href="https://srijandefence.gov.in/Login" target="_blank" class="menu_"><i class="fa fa-user" aria-hidden="true"></i> DPSU Login </a></b>
                                 <b><a href="#aboutus-modal" class="menu_" data-toggle="modal">About us </a></b><a
                                     href="#contact_us_modal" class="menu_" data-toggle="modal" id="a" runat="server"
                                     visible="false">Contact us </a>
@@ -462,12 +455,13 @@
                             <div class="d-flex justify-content-center justify-content-sm-between align-items-center pt-2 pb-4 pb-sm-5">
                                 <div class="col-md-9">
                                     <div class="input-group-overlay d-none d-lg-flex mx-4">
-                                        <asp:TextBox ID="txtsearch" runat="server" AutoPostBack="true" Style="max-height: 40px;"
-                                            ToolTip="search tab with all criteria using words." CssClass="form-control appended-form-control"
-                                            OnTextChanged="txtsearch_TextChanged" Placeholder="Search (type min three character)"></asp:TextBox>
-                                        <div class="input-group-append-overlay">
+                                        <asp:TextBox ID="txtsearch" runat="server" Style="max-height: 40px;"
+                                            ToolTip="search tab with all criteria using words." onblur="SaveData('txtsearch')"   CssClass="form-control appended-form-control"
+                                             Placeholder="Search (type min three character)"></asp:TextBox>
+                                        <%--<div class="input-group-append-overlay">
                                             <span class="input-group-text"><i class="fas fa-search"></i></span>
-                                        </div>
+                                        </div>--%>
+                                         <asp:Button runat="server" ID="btnsearch" Style="padding: 3px 20px 3px 20px; width: auto;" CssClass="btn btn-info btn-sm pull-right" Text="Search" OnClick="btnsearch_Click" />
                                     </div>
                                 </div>
                             </div>
@@ -1225,9 +1219,25 @@
                                        <asp:Label runat="server" ID="atime"></asp:Label>
                                             ) 
                                         </div>
+                                        <h6></h6>
+                                        <button class="close close1" data-dismiss="modal" type="button">
+                                            ×
+                                        </button>
+                                        <h6></h6>
+                                        <h6></h6>
+                                        <h6></h6>
+                                        <h6></h6>
+                                        <h6></h6>
+                                        <h6></h6>
+                                        <h6></h6>
+                                        <h6></h6>
+                                        <h6></h6>
+                                        <h6></h6>
+                                        <h6></h6>
+                                        <h6></h6>
+                                        <h6></h6>
+                                        <h6></h6>
                                     </h6>
-                                    <button type="button" class="close close1" data-dismiss="modal">
-                                        &times;</button>
                                 </div>
                                 <div class="modal-body" style="text-align: center;">
                                     <b><span>2018-19 (Annual Import Value (in million Rs))</span></b>
@@ -1307,7 +1317,7 @@
                                             <asp:BoundField DataField="CompName" HeaderStyle-Width="200" HeaderText="Organization" NullDisplayText="" />
                                             <asp:BoundField DataField="TotalProd" HeaderText="Items Imported" NullDisplayText="" Visible="false" />
                                             <asp:BoundField DataField="TotalPrice1920" HeaderText="Annual Import Value (in million Rs)" NullDisplayText="" Visible="false" />
-                                            <asp:BoundField DataField="MAKE2Total" HeaderStyle-Width="200" HeaderText="MakeII" NullDisplayText="" />
+                                            <asp:BoundField DataField="MAKE2Total" HeaderStyle-Width="200" HeaderText=" MAKE-II" NullDisplayText="" />
                                             <asp:BoundField DataField="MAKE2Price" HeaderText="Annual Import Value MakeII" NullDisplayText="" Visible="false" />
                                             <asp:BoundField DataField="IDExTotal" HeaderStyle-Width="200" HeaderText="IDEX/AI/INNOVATION/R&D" NullDisplayText="" />
                                             <asp:BoundField DataField="IDExPriceTotal" HeaderText="Annual Import Value IDEX/AI/INNOVATION/R&D" NullDisplayText="" Visible="false" />
@@ -1332,7 +1342,7 @@
                                                 <asp:BoundField DataField="CompName" HeaderText="Organization" NullDisplayText="" />
                                                 <asp:BoundField DataField="TotalProd" HeaderText="Items Imported" NullDisplayText="" />
                                                 <asp:BoundField DataField="TotalPrice2021" HeaderText="Annual Import Value (in million Rs)" NullDisplayText="" Visible="false" />
-                                                <asp:BoundField DataField="MAKE2Total" HeaderText="MakeII" NullDisplayText="" />
+                                                <asp:BoundField DataField="MAKE2Total" HeaderText=" MAKE-II" NullDisplayText="" />
                                                 <asp:BoundField DataField="MAKE2Price" HeaderText="Annual Import Value MakeII" NullDisplayText="" Visible="false" />
                                                 <asp:BoundField DataField="IDExTotal" HeaderText="IDEX/AI/INNOVATION/R&D" NullDisplayText="" />
                                                 <asp:BoundField DataField="IDExPriceTotal" HeaderText="Annual Import Value IDEX/AI/INNOVATION/R&D" NullDisplayText="" Visible="false" />
@@ -1468,16 +1478,45 @@
                             success: function (data) {
                                 response($.map(data.d, function (item) {
                                     return {
-                                        label: item.split('-')[0],
-                                        val: item.split('-')[1]
+                                        label: item,
+                                        val: item
+                                        //label: item.split('-')[0],
+                                        //val: item.split('-')[1]
                                     };
                                 }))
                             }
                         });
                     },
                     minLength: 1
+
                 });
+
+                
             }
+
+            //function SaveData(textBoxId) {
+            //    var Mtest = $("[id$=txtsearch]").val();
+
+            //    $.get("User/U_ProductList.aspx/GetSearchKeywordemo?prefix=" + Mtest, function (data) {
+
+            //    });
+            //    //$.ajax({
+            //    //        url: 'User/U_ProductList.aspx/GetSearchKeywordemo',
+            //    //        data: "{ 'prefix': '" + Mtest + "'}",
+            //    //        dataType: "json",
+            //    //        type: "POST",
+            //    //        contentType: "application/json; charset=utf-8",
+            //    //        success: function (data) {
+            //    //            response($.map(data.d, function (item) {
+            //    //                return {
+            //    //                    label: item,
+            //    //                    val: item
+                                    
+            //    //                };
+            //    //            }))
+            //    //        }
+            //    //    });
+            //}
         </script>
         <script>
             var d = new Date();

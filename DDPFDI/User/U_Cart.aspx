@@ -117,19 +117,19 @@
                                         <div class="widget widget-categories mb-3">
                                             <label>Your Email</label>
                                             <div class="input-group">
-                                                <asp:TextBox ID="txtemail" runat="server" CssClass="form-control" TextMode="Email" Placeholder="Email" TabIndex="4"></asp:TextBox>
+                                                <asp:TextBox ID="txtemail" runat="server" CssClass="form-control" TextMode="Email" Placeholder="Email" TabIndex="2"></asp:TextBox>
                                             </div>
                                         </div>
                                         <div class="widget widget-categories mb-3">
                                             <label>Company Name</label>
                                             <div class="input-group">
-                                                <asp:TextBox ID="txtcompname" runat="server" CssClass="form-control" Placeholder="Company Name" TabIndex="2"></asp:TextBox>
+                                                <asp:TextBox ID="txtcompname" runat="server" CssClass="form-control" Placeholder="Company Name" TabIndex="3"></asp:TextBox>
                                             </div>
                                         </div>
                                         <div class="widget widget-categories mb-3">
                                             <label>Registerd Office Address</label>
                                             <div class="input-group">
-                                                <asp:TextBox ID="txtofficeaddress" runat="server" TextMode="MultiLine" Height="70px" CssClass="form-control" Placeholder="Registerd Office Address" TabIndex="3"></asp:TextBox>
+                                                <asp:TextBox ID="txtofficeaddress" runat="server" TextMode="MultiLine" Height="70px" CssClass="form-control" Placeholder="Registerd Office Address" TabIndex="4"></asp:TextBox>
                                             </div>
                                         </div>
 
@@ -141,8 +141,8 @@
                                         </div>
                                         <div class="widget widget-categories mb-3">
                                             <div class="input-group">
-                                                <asp:Button ID="btnsendmail" runat="server" CssClass="btn btn-primary btn-shadow btn-block mt-4" Text="Send Mail" TabIndex="6"
-                                                    OnClick="btnsendmail_Click" ToolTip="Thank you for showing intrest in these product mail will send to admin and also you will recieved a copy."></asp:Button>
+                                                <asp:Button ID="btnsendmail" runat="server" CssClass="btn btn-primary btn-shadow btn-block mt-4" Text="Get OTP" TabIndex="6"
+                                                    OnClick="btnsendmail_Click" ToolTip="Get otp after click on this"></asp:Button>
                                             </div>
                                         </div>
                                     </div>
@@ -247,7 +247,8 @@
                                                                         <td>
                                                                             <asp:Label ID="prodIndustryDomain" runat="server" Text=""></asp:Label>
                                                                             /
-                                                                        <asp:Label ID="ProdIndusSubDomain" runat="server" Text=""></asp:Label>
+                                                                       
+                                                                            <asp:Label ID="ProdIndusSubDomain" runat="server" Text=""></asp:Label>
                                                                         </td>
                                                                     </tr>
                                                                     <tr id="Tr9" runat="server" visible="false">
@@ -477,7 +478,7 @@
                                                                                             <b>Import value during last 3 year (Rs lakhs) :</b>
                                                                                             <asp:Label ID="lblisproductimported" runat="server" Text=""></asp:Label>&nbsp;&nbsp;
                                                                                         &nbsp;<asp:Label ID="lblvalueimport" runat="server"
-                                                                                            Text="0"></asp:Label>&nbsp;
+                                                                                                Text="0"></asp:Label>&nbsp;
                                                                                         </td>
                                                                                     </tr>
                                                                                     <tr runat="server" id="ten">
@@ -694,7 +695,38 @@
                         </div>
                     </div>
                 </div>
+                <asp:HiddenField runat="server" ID="hfotp" />
+                <div class="modal fade" id="modelotp" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+                    <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 600px;">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <ul class="nav nav-tabs card-header-tabs" role="tablist">
+                                    <li class="nav-item"><a class="nav-link active" href="#" data-toggle="tab" role="tab"
+                                        aria-selected="true">OTP</a></li>
+                                </ul>
+                                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span></button>
+                            </div>
+                            <div class="modal-body tab-content py-4">
+                                <p class="text-justify">
+                                    <asp:TextBox runat="server" ID="txtotp" placeholder="OTP (6 Digit)" TabIndex="1" CssClass="form-control"></asp:TextBox>
+                                    <div class="clearfix mt-1">
+                                    </div>
+                                    <span>Please enter otp received on your given email id.</span>
+                                    <div class="clearfix mt-1">
+                                    </div>
+                                    <asp:LinkButton ID="lbsubmit" runat="server" CssClass="btn btn-primary btn-shadow pull-right" TabIndex="2" Text="Send Mail"
+                                        ToolTip="Thank you for showing intrest in these product mail will send to admin and also you will recieved a copy." OnClick="lbsubmit_Click"></asp:LinkButton>
+                                    <asp:LinkButton runat="server" Text="Resend OTP" ID="lbresendotp" TabIndex="3" CssClass="pull-right mr-1 p-2" OnClick="lbresendotp_Click"></asp:LinkButton>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </ContentTemplate>
+            <Triggers>
+                <asp:PostBackTrigger ControlID="lbsubmit" />
+            </Triggers>
         </asp:UpdatePanel>
         <asp:UpdateProgress ID="UpdateProgress" runat="server" AssociatedUpdatePanelID="update">
             <ProgressTemplate>
@@ -713,6 +745,7 @@
                 <div class="col-sm-10 col-9">
                     <p style="color: white; padding: 20px; text-align: center;">
                         Website content managed by : Department of Defence Production
+                   
                     </p>
                 </div>
             </div>
@@ -722,10 +755,13 @@
         <script src="User/Uassets/js/bootstrap.bundle.min.js"></script>
         <script src="User/Uassets/js/theme.min.js"></script>
         <script type="text/javascript">
-
-
             function showPopup() {
                 $('#ProductCompany').modal('show');
+            }
+        </script>
+        <script type="text/javascript">
+            function showPopup1() {
+                $('#modelotp').modal('show');
             }
         </script>
         <script type="text/javascript">

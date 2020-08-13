@@ -36,8 +36,11 @@
         <div class="page-title-overlap bg-dark pb-3 pt-3">
             <div class="container d-lg-flex justify-content-between">
                 <div class="order-lg-1 pr-lg-4 text-center text-lg-left">
-                    <h1 class="h3 text-light mb-0">Login to DDP </h1>
+                    <%--<h1 class="h3 text-light mb-0">Login to DDP </h1>--%>
                 </div>
+                 <div class="order-lg-1 pr-lg-4 text-center text-lg-right">
+                 <b><a href="https://srijandefence.gov.in/Login" target="_blank" class="menu_"><i class="fa fa-user" aria-hidden="true"></i> DPSU Login </a></b>
+                  </div>           
             </div>
         </div>
         <div class="container py-4 py-lg-5 my-4">
