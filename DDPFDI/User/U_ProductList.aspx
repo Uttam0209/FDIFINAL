@@ -166,11 +166,14 @@
                 </div>
                 <div class="modal-body tab-content py-4">
                     <p class="text-justify">
-                        Pursuant to ‘Atmanirbhar Bharat’ announcement, the Department of Defence Production/Ministry of Defence/Government of India has developed this portal named, <b>srijandefence.gov.in</b>, as “Opportunities for Make in India in Defence”.  The main objective of the portal is to partner the private sector in indigenization efforts of Defence Public Sector Undertakings(DPSUs), OFB and the Armed Forces. The portal will be a non-transactional online market place platform.  </p>
+                        Pursuant to ‘Atmanirbhar Bharat’ announcement, the Department of Defence Production/Ministry of Defence/Government of India has developed this portal named, <b>srijandefence.gov.in</b>, as “Opportunities for Make in India in Defence”.  The main objective of the portal is to partner the private sector in indigenization efforts of Defence Public Sector Undertakings(DPSUs), OFB and the Armed Forces. The portal will be a non-transactional online market place platform. 
+                    </p>
                     <p class="text-justify">
-                       DPSUs/OFB/SHQs will display their items on this portal, which they have imported or going to import, each item having sizeable import value. They will also display those items which have been planned/targeted in the coming years, for indigenization.</p>
+                        DPSUs/OFB/SHQs will display their items on this portal, which they have imported or going to import, each item having sizeable import value. They will also display those items which have been planned/targeted in the coming years, for indigenization.
+                    </p>
                     <p class="text-justify">
-                        The Indian industry will be able to show their interest in those items for which they can design, develop and manufacture as per their capability or through joint venture with OEMs. The concerned DPSUs/OFB/SHQs, based on their requirement of the items and their respective guidelines & procedures, will interact with the interested Indian industry for indigenization. The interested Indian industry can also interact with concerned DPSUs/OFB/SHQs for their queries related to indigenization through the contact details given under each item. </p>
+                        The Indian industry will be able to show their interest in those items for which they can design, develop and manufacture as per their capability or through joint venture with OEMs. The concerned DPSUs/OFB/SHQs, based on their requirement of the items and their respective guidelines & procedures, will interact with the interested Indian industry for indigenization. The interested Indian industry can also interact with concerned DPSUs/OFB/SHQs for their queries related to indigenization through the contact details given under each item.
+                    </p>
                 </div>
             </div>
         </div>
@@ -197,6 +200,7 @@
                                     <ul class="list-unstyled font-size-sm mb-0">
                                         <p class="font-size-sm text-muted">
                                             Example adress here
+                                       
                                         </p>
                                     </ul>
                                 </div>
@@ -239,7 +243,7 @@
                     <div class="container d-lg-flex justify-content-between">
                         <div class="order-lg-2 mb-3 mb-lg-0 pt-lg-2">
                             <div class="navbar-tool dropdown ml-5">
-                                <b><a href="https://srijandefence.gov.in/Login" target="_blank" class="menu_"><i class="fa fa-user" aria-hidden="true"></i> DPSU Login </a></b>
+                                <b><a href="https://srijandefence.gov.in/Login" target="_blank" class="menu_"><i class="fa fa-user" aria-hidden="true"></i>DPSU Login </a></b>
                                 <b><a href="#aboutus-modal" class="menu_" data-toggle="modal">About us </a></b><a
                                     href="#contact_us_modal" class="menu_" data-toggle="modal" id="a" runat="server"
                                     visible="false">Contact us </a>
@@ -456,12 +460,12 @@
                                 <div class="col-md-9">
                                     <div class="input-group-overlay d-none d-lg-flex mx-4">
                                         <asp:TextBox ID="txtsearch" runat="server" Style="max-height: 40px;"
-                                            ToolTip="search tab with all criteria using words." onblur="SaveData('txtsearch')"   CssClass="form-control appended-form-control"
-                                             Placeholder="Search (type min three character)"></asp:TextBox>
+                                            ToolTip="search tab with all criteria using words." onblur="SaveData('txtsearch')" CssClass="form-control appended-form-control"
+                                            Placeholder="Search (type min three character)"></asp:TextBox>
                                         <%--<div class="input-group-append-overlay">
                                             <span class="input-group-text"><i class="fas fa-search"></i></span>
                                         </div>--%>
-                                         <asp:Button runat="server" ID="btnsearch" Style="padding: 3px 20px 3px 20px; width: auto;" CssClass="btn btn-info btn-sm pull-right" Text="Search" OnClick="btnsearch_Click" />
+                                        <asp:Button runat="server" ID="btnsearch" Style="padding: 3px 20px 3px 20px; width: auto;" CssClass="btn btn-info btn-sm pull-right" Text="Search" OnClick="btnsearch_Click" />
                                     </div>
                                 </div>
                             </div>
@@ -483,12 +487,14 @@
                                     <p style="float: left; color: #FF00FF;">
                                         <asp:Label ID="lblyearvalue" runat="server"></asp:Label>
                                         (in million Rs) -
-                                    <asp:Label ID="lblestimateprice" runat="server"></asp:Label>
+                                   
+                                        <asp:Label ID="lblestimateprice" runat="server"></asp:Label>
                                     </p>
                                 </b>
                                 <p style="float: left;" runat="server" visible="false">
                                     Future requirements in lakhs -
-                                <asp:Label ID="lblfuturepurchase" runat="server" Text="0"></asp:Label>
+                               
+                                    <asp:Label ID="lblfuturepurchase" runat="server" Text="0"></asp:Label>
                                 </p>
                             </div>
                             <div class="clearfix">
@@ -503,9 +509,11 @@
                                         </li>
                                     </ul>
                                     <span style="text-align: center;">Showing
-                                    <asp:Label runat="server" ID="lbltotalshowpageitem"></asp:Label>
+                                   
+                                        <asp:Label runat="server" ID="lbltotalshowpageitem"></asp:Label>
                                         products of
-                                <asp:Label ID="lbltotfilter" runat="server"></asp:Label>
+                               
+                                        <asp:Label ID="lbltotfilter" runat="server"></asp:Label>
                                         products  
                                     </span>
                                     <ul class="pagination">
@@ -527,108 +535,113 @@
                                                         class="card-img-top d-block overflow-hidden" Style="text-align: center;">
                                                         <img src='<%#Eval("TopImages") %>' alt="Product" style="max-width: 100%; width: 50%; height: 90px;">
                                                     </asp:LinkButton>&nbsp;&nbsp;&nbsp;                                                    
-                                                         <div class="card-body py-2" style="height: 230px;">
+                                                        
+                                                    <div class="card-body py-2" style="height: 230px;">
 
-                                                             <b>
-                                                                 <asp:LinkButton runat="server" ID="lblcompshow" CommandArgument='<%#Eval("ProductRefNo") %>' CommandName="View" class="product-meta d-block font-size-xs pb-1" Style="color: #6915cf; font-size: 16px!important;">
+                                                        <b>
+                                                            <asp:LinkButton runat="server" ID="lblcompshow" CommandArgument='<%#Eval("ProductRefNo") %>' CommandName="View" class="product-meta d-block font-size-xs pb-1" Style="color: #6915cf; font-size: 16px!important;">
                                                                 <%#Eval("CompanyName") %>
                                                                  </asp:LinkButton>
-                                                             </b>
-                                                             <h3 class="product-title font-size-sm">
-                                                                 <asp:LinkButton runat="server" ID="lbldesc" title='<%#Eval("ProductDescription") %>' CommandArgument='<%#Eval("ProductRefNo") %>' CommandName="View">
+                                                        </b>
+                                                        <h3 class="product-title font-size-sm">
+                                                            <asp:LinkButton runat="server" ID="lbldesc" title='<%#Eval("ProductDescription") %>' CommandArgument='<%#Eval("ProductRefNo") %>' CommandName="View">
                                                                 <%# Eval("ProductDescription").ToString().Length > 25? (Eval("ProductDescription") as string).Substring(0,25) + ".." : Eval("ProductDescription")  %>
                                                                  </asp:LinkButton>
 
-                                                             </h3>
-                                                             <table class="table" style="font-size: 14px;">
-                                                                 <tbody>
-                                                                     <tr id="Tr1" runat="server" visible="false">
-                                                                         <td style="padding: 8px;">NSN Group
+                                                        </h3>
+                                                        <table class="table" style="font-size: 14px;">
+                                                            <tbody>
+                                                                <tr id="Tr1" runat="server" visible="false">
+                                                                    <td style="padding: 8px;">NSN Group
                                                                          </td>
-                                                                         <td style="padding: 8px;" class="text-right" title='<%#Eval("NSNGroup") %>'>
-                                                                             <%# Eval("NSNGroup").ToString().Length > 15? (Eval("NSNGroup") as string).Substring(0,15) + ".." : Eval("NSNGroup")  %>
-                                                                             <asp:HiddenField ID="hfrole" runat="server" Value='<%#Eval("Role") %>' />
+                                                                    <td style="padding: 8px;" class="text-right" title='<%#Eval("NSNGroup") %>'>
+                                                                        <%# Eval("NSNGroup").ToString().Length > 15? (Eval("NSNGroup") as string).Substring(0,15) + ".." : Eval("NSNGroup")  %>
+                                                                        <asp:HiddenField ID="hfrole" runat="server" Value='<%#Eval("Role") %>' />
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td colspan="2" style="padding: 8px; font-size: 11px; color: #6915cf;">Annual Import Value (in million Rs) <b>
+                                                                        <asp:Label ID="lblepold" Visible="false" runat="server" Text='<%# Eval("EstimatePrice") %>'></asp:Label>
+                                                                        <asp:Label ID="lblepfu" Visible="false" runat="server" Text='<%# Eval("EstimatePricefuture") %>'></asp:Label>
+                                                                        <asp:Label ID="lblepold17" Visible="false" runat="server" Text='<%# Eval("EstimatePrice17") %>'></asp:Label>
+                                                                        <asp:Label ID="lblepold18" Visible="false" runat="server" Text='<%# Eval("EstimatePrice18") %>'></asp:Label>
+                                                                    </b>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr runat="server" visible="false">
+                                                                    <td colspan="2" style="padding: 8px; font-size: 12px;">Future requirements in lakhs <b>
+                                                                        <asp:Label ID="lblep" runat="server" Text='<%# Eval("EstimatePricefuture") %>'></asp:Label>
+                                                                    </b>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr id="Tr16" runat="server" visible="false">
+                                                                    <td colspan="2" style="padding: 8px; font-size: 12px;">Annual Import Quantity                                                                       
+                                                                           
+                                                                        <b>
+                                                                            <asp:Label ID="Label2" runat="server" Style="margin-right: 0px;" Visible="false" Text='<%# Eval("EstimateQu") %>' />
+                                                                            <asp:Label ID="Label7" runat="server" Style="margin-right: 0px;" Visible="false" Text='<%# Eval("EstimateQu17") %>' />
+                                                                            <asp:Label ID="Label8" runat="server" Style="margin-right: 0px;" Visible="false" Text='<%# Eval("EstimateQu18") %>' />
+                                                                            <asp:Label ID="lblestunitold" runat="server" Style="margin-right: 0px;" Visible="false" Text='<%# Eval("EstUnitOld") %>' />
+                                                                            <asp:Label ID="Label3" runat="server" Visible="false" Style="margin-right: 0px;" Text='<%# Eval("EstimateQufuture")%>' />
+                                                                            <asp:Label ID="lblestunitfut" runat="server" Style="margin-right: 0px;" Visible="false" Text='<%# Eval("EstUnitfuture") %>' />
+                                                                        </b>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr id="Tr3" runat="server" visible="false">
+                                                                    <td colspan="2" style="padding: 8px; font-size: 12px;">OEM Part Number :- <b>
+                                                                        <%#Eval("OEMPartNumber") %></b>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr id="Tr17" runat="server" visible="false">
+                                                                    <td colspan="2" style="padding: 8px; font-size: 12px;">OEM Name :- <b>
+                                                                        <%#Eval("OEMName") %></b>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr id="Tr18" runat="server" visible="false">
+                                                                    <td colspan="2" style="padding: 8px; font-size: 12px;">OEM Country :- <b>
+                                                                        <%#Eval("OEMCountry") %></b>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr id="Tr2">
+                                                                    <td colspan="2" style="padding: 5px; font-size: 12px;">Nato Supply Group Class :-
+                                                                      
+                                                                        <p><b>[<%#Eval("NSCCode") %>] -  <%# Eval("NSNGroupClass").ToString().Length > 35? (Eval("NSNGroupClass") as string).Substring(0,35) + ".." : Eval("NSNGroupClass")  %></b></p>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr id="Tr4" runat="server" visible="false">
+                                                                    <td colspan="2" style="padding: 8px; font-size: 12px;">Tender Status :- <b>
+                                                                        <%#Eval("TenderStatus") %></b>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr id="Tr5" runat="server" visible="false">
+                                                                    <td colspan="2" style="padding: 8px; font-size: 12px;">Industry Domain :-
                                                                          </td>
-                                                                     </tr>
-                                                                     <tr>
-                                                                         <td colspan="2" style="padding: 8px; font-size: 11px; color: #6915cf;">Annual Import Value (in million Rs) <b>
-                                                                             <asp:Label ID="lblepold" Visible="false" runat="server" Text='<%# Eval("EstimatePrice") %>'></asp:Label>
-                                                                             <asp:Label ID="lblepfu" Visible="false" runat="server" Text='<%# Eval("EstimatePricefuture") %>'></asp:Label>
-                                                                             <asp:Label ID="lblepold17" Visible="false" runat="server" Text='<%# Eval("EstimatePrice17") %>'></asp:Label>
-                                                                             <asp:Label ID="lblepold18" Visible="false" runat="server" Text='<%# Eval("EstimatePrice18") %>'></asp:Label>
-                                                                         </b>
-                                                                         </td>
-                                                                     </tr>
-                                                                     <tr runat="server" visible="false">
-                                                                         <td colspan="2" style="padding: 8px; font-size: 12px;">Future requirements in lakhs <b>
-                                                                             <asp:Label ID="lblep" runat="server" Text='<%# Eval("EstimatePricefuture") %>'></asp:Label>
-                                                                         </b>
-                                                                         </td>
-                                                                     </tr>
-                                                                     <tr id="Tr16" runat="server" visible="false">
-                                                                         <td colspan="2" style="padding: 8px; font-size: 12px;">Annual Import Quantity                                                                       
-                                                                            <b>
-                                                                                <asp:Label ID="Label2" runat="server" Style="margin-right: 0px;" Visible="false" Text='<%# Eval("EstimateQu") %>' />
-                                                                                <asp:Label ID="Label7" runat="server" Style="margin-right: 0px;" Visible="false" Text='<%# Eval("EstimateQu17") %>' />
-                                                                                <asp:Label ID="Label8" runat="server" Style="margin-right: 0px;" Visible="false" Text='<%# Eval("EstimateQu18") %>' />
-                                                                                <asp:Label ID="lblestunitold" runat="server" Style="margin-right: 0px;" Visible="false" Text='<%# Eval("EstUnitOld") %>' />
-                                                                                <asp:Label ID="Label3" runat="server" Visible="false" Style="margin-right: 0px;" Text='<%# Eval("EstimateQufuture")%>' />
-                                                                                <asp:Label ID="lblestunitfut" runat="server" Style="margin-right: 0px;" Visible="false" Text='<%# Eval("EstUnitfuture") %>' />
-                                                                            </b>
-                                                                         </td>
-                                                                     </tr>
-                                                                     <tr id="Tr3" runat="server" visible="false">
-                                                                         <td colspan="2" style="padding: 8px; font-size: 12px;">OEM Part Number :- <b>
-                                                                             <%#Eval("OEMPartNumber") %></b>
-                                                                         </td>
-                                                                     </tr>
-                                                                     <tr id="Tr17" runat="server" visible="false">
-                                                                         <td colspan="2" style="padding: 8px; font-size: 12px;">OEM Name :- <b>
-                                                                             <%#Eval("OEMName") %></b>
-                                                                         </td>
-                                                                     </tr>
-                                                                     <tr id="Tr18" runat="server" visible="false">
-                                                                         <td colspan="2" style="padding: 8px; font-size: 12px;">OEM Country :- <b>
-                                                                             <%#Eval("OEMCountry") %></b>
-                                                                         </td>
-                                                                     </tr>
-                                                                     <tr id="Tr2">
-                                                                         <td colspan="2" style="padding: 5px; font-size: 12px;">Nato Supply Group Class :-
-                                                                       <p><b>[<%#Eval("NSCCode") %>] -  <%# Eval("NSNGroupClass").ToString().Length > 35? (Eval("NSNGroupClass") as string).Substring(0,35) + ".." : Eval("NSNGroupClass")  %></b></p>
-                                                                         </td>
-                                                                     </tr>
-                                                                     <tr id="Tr4" runat="server" visible="false">
-                                                                         <td colspan="2" style="padding: 8px; font-size: 12px;">Tender Status :- <b>
-                                                                             <%#Eval("TenderStatus") %></b>
-                                                                         </td>
-                                                                     </tr>
-                                                                     <tr id="Tr5" runat="server" visible="false">
-                                                                         <td colspan="2" style="padding: 8px; font-size: 12px;">Industry Domain :-
-                                                                         </td>
-                                                                     </tr>
-                                                                     <tr id="Tr6" runat="server" visible="false">
-                                                                         <td colspan="2" style="padding: 8px; font-size: 12px; font-weight: 900; border-top: 0px;"
-                                                                             title='<%#Eval("ProdIndustryDoamin") %>'>
-                                                                             <%# Eval("ProdIndustryDoamin")  %>
+                                                                </tr>
+                                                                <tr id="Tr6" runat="server" visible="false">
+                                                                    <td colspan="2" style="padding: 8px; font-size: 12px; font-weight: 900; border-top: 0px;"
+                                                                        title='<%#Eval("ProdIndustryDoamin") %>'>
+                                                                        <%# Eval("ProdIndustryDoamin")  %>
                                                                     /
-                                                                    <%#Eval("ProdIndustrySubDomain") %>
+                                                                   
+                                                                        <%#Eval("ProdIndustrySubDomain") %>
                                                                          </td>
-                                                                     </tr>
-                                                                     <tr id="Tr7" runat="server" visible="false">
-                                                                         <td style="padding: 8px;">Quantity
+                                                                </tr>
+                                                                <tr id="Tr7" runat="server" visible="false">
+                                                                    <td style="padding: 8px;">Quantity
                                                                          </td>
-                                                                         <td style="padding: 8px;" class="text-right">
-                                                                             <%#Eval("EstimateQu") %>
+                                                                    <td style="padding: 8px;" class="text-right">
+                                                                        <%#Eval("EstimateQu") %>
                                                                          </td>
-                                                                     </tr>
-                                                                     <tr id="Tr233" runat="server">
-                                                                         <td class="text-right" colspan="2" style="padding: 8px; font-size: 11px;">Last Updated :- 
+                                                                </tr>
+                                                                <tr id="Tr233" runat="server">
+                                                                    <td class="text-right" colspan="2" style="padding: 8px; font-size: 11px;">Last Updated :- 
+                                                                       
                                                                         <%#Eval("LastUpdated","{0:dd-MMM-yyyy}") %>
                                                                          </td>
-                                                                     </tr>
-                                                                 </tbody>
-                                                             </table>
-                                                         </div>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
                                                     <div class="text-center">
                                                         <asp:LinkButton ID="lbview" runat="server" class="nav-link-style font-size-ms" CommandName="View"
                                                             CommandArgument='<%#Eval("ProductRefNo") %>'>                                                
@@ -761,7 +774,8 @@
                                                                         <td>
                                                                             <asp:Label ID="prodIndustryDomain" runat="server" Text=""></asp:Label>
                                                                             /
-                                                                        <asp:Label ID="ProdIndusSubDomain" runat="server" Text=""></asp:Label>
+                                                                       
+                                                                            <asp:Label ID="ProdIndusSubDomain" runat="server" Text=""></asp:Label>
                                                                         </td>
                                                                     </tr>
                                                                     <tr id="Tr9" runat="server" visible="false">
@@ -991,7 +1005,7 @@
                                                                                             <b>Import value during last 3 year (million Rs) :</b>
                                                                                             <asp:Label ID="lblisproductimported" runat="server" Text=""></asp:Label>&nbsp;&nbsp;
                                                                                         &nbsp;<asp:Label ID="lblvalueimport" runat="server"
-                                                                                            Text="0"></asp:Label>&nbsp;
+                                                                                                Text="0"></asp:Label>&nbsp;
                                                                                         </td>
                                                                                     </tr>
                                                                                     <tr runat="server" id="ten">
@@ -1216,12 +1230,15 @@
                                     <h6 class="modal-title">
                                         <div>
                                             (as on
-                                       <asp:Label runat="server" ID="atime"></asp:Label>
+                                      
+                                            <asp:Label runat="server" ID="atime"></asp:Label>
                                             ) 
+                                       
                                         </div>
                                         <h6></h6>
                                         <button class="close close1" data-dismiss="modal" type="button">
                                             ×
+                                       
                                         </button>
                                         <h6></h6>
                                         <h6></h6>
@@ -1411,6 +1428,7 @@
                 <div class="col-sm-10 col-9">
                     <p style="color: white; padding: 20px; text-align: center;">
                     Website content managed by : Department of Defence Production
+               
                 </div>
             </div>
         </div>
@@ -1491,7 +1509,7 @@
 
                 });
 
-                
+
             }
 
             //function SaveData(textBoxId) {
@@ -1511,7 +1529,7 @@
             //    //                return {
             //    //                    label: item,
             //    //                    val: item
-                                    
+
             //    //                };
             //    //            }))
             //    //        }

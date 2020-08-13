@@ -55,8 +55,8 @@
                                     <!-- Header-->
                                     <div class="d-flex flex-wrap justify-content-between align-items-center border-bottom pb-3">
                                         <div class="py-1">
-                                            <a class="btn btn-outline-accent btn-sm" href="UProductList">
-                                                <i class="fas fa-chevron-left mr-1 ml-n1"></i>Back to Home</a>
+                                            <asp:LinkButton runat="server" class="btn btn-outline-accent btn-sm" id="lblhome" OnClick="lblhome_Click">
+                                                <i class="fas fa-chevron-left mr-1 ml-n1"></i>Back to Home</asp:LinkButton>
                                         </div>
                                         <div class="d-none d-sm-block py-1 font-size-ms">
                                             <asp:Label ID="lbltotalprodincart" runat="server" Text=""></asp:Label>
@@ -464,7 +464,7 @@
                                                                                         </ItemTemplate>
                                                                                     </asp:TemplateField>
                                                                                     <asp:BoundField DataField="Unit" HeaderText="Unit" />
-                                                                                    <asp:BoundField DataField="EstimatedPrice" HeaderText="Import value in Rs lakh (Qty*Price)" DataFormatString="{0:N2}" />
+                                                                                    <asp:BoundField DataField="EstimatedPrice" HeaderText="Import value in million Rs (Qty*Price)" DataFormatString="{0:f2}" />
                                                                                 </Columns>
                                                                             </asp:GridView>
                                                                         </td>
@@ -475,7 +475,7 @@
                                                                                 <tbody>
                                                                                     <tr runat="server" id="five">
                                                                                         <td colspan="2">
-                                                                                            <b>Import value during last 3 year (Rs lakhs) :</b>
+                                                                                            <b>Import value during last 3 year (million Rs) :</b>
                                                                                             <asp:Label ID="lblisproductimported" runat="server" Text=""></asp:Label>&nbsp;&nbsp;
                                                                                         &nbsp;<asp:Label ID="lblvalueimport" runat="server"
                                                                                                 Text="0"></asp:Label>&nbsp;
@@ -483,18 +483,18 @@
                                                                                     </tr>
                                                                                     <tr runat="server" id="ten">
                                                                                         <td colspan="2" style="border-top: 0px;">
-                                                                                            <asp:GridView ID="gvestimatequanold" runat="server" AutoGenerateColumns="false" Class="table table-responsive table-bordered">
+                                                                                            <asp:GridView ID="gvestimatequanold" runat="server" AutoGenerateColumns="false"
+                                                                                                Class="table table-responsive table-bordered">
                                                                                                 <Columns>
                                                                                                     <asp:BoundField HeaderText="Year of Import" DataField="FYear" />
                                                                                                     <asp:TemplateField HeaderText="Quantity">
                                                                                                         <ItemTemplate>
                                                                                                             <%# Eval("EstimatedQty").ToString() == "0" ? "*" : Eval("EstimatedQty").ToString()%>
-                                                                                                            <%--  <%# Eval("EstimatedQty").ToString() == "0" ? "*" : "*"%>--%>
+                                                                                                            <%-- <%# Eval("EstimatedQty").ToString() == "0" ? "*" : "*"%>--%>
                                                                                                         </ItemTemplate>
                                                                                                     </asp:TemplateField>
-
                                                                                                     <asp:BoundField HeaderText="Unit" DataField="Unit" />
-                                                                                                    <asp:BoundField HeaderText="Imported value in Rs lakh (Qty*Price)" DataField="EstimatedPrice" DataFormatString="{0:N2}" />
+                                                                                                    <asp:BoundField HeaderText="Imported value in million Rs (Qty*Price)" DataField="EstimatedPrice" DataFormatString="{0:f2}" />
                                                                                                 </Columns>
                                                                                             </asp:GridView>
                                                                                         </td>
@@ -595,7 +595,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div id="Div1" class="card border-btm" style="border-bottom: solid 1.4px #e5e5e5!important;" runat="server" visible="false">
+                                                <div class="card border-btm" style="border-bottom: solid 1.4px #e5e5e5!important;" runat="server" visible="false">
                                                     <div class="card-header">
                                                         <h3 class="accordion-heading mb-2">
                                                             <a class="collapsed" href="#AdditionalValue" role="button" data-toggle="collapse" aria-expanded="false"
@@ -630,20 +630,20 @@
                                                                     </tr>
                                                                     <tr runat="server" id="twentythree" visible="false">
                                                                         <th scope="row"></th>
-                                                                        <td id="Td1" runat="server">
+                                                                        <td runat="server">
                                                                             <asp:Label ID="lbldeclaration" runat="server" Text="No IPR issue, No violation of TOT agreement, No violation of Security Concern"></asp:Label>
                                                                         </td>
                                                                     </tr>
                                                                     <tr runat="server" id="twentyfour" visible="false">
                                                                         <th scope="row"></th>
-                                                                        <td id="Td2" runat="server">
+                                                                        <td runat="server">
                                                                             <asp:Label ID="lblisshowgeneral" runat="server" Text=""></asp:Label>
                                                                         </td>
                                                                     </tr>
                                                                     <tr runat="server" id="Tr19" visible="false">
-                                                                        <th id="Th1" scope="row" runat="server" visible="false">Is Indigenised 
+                                                                        <th scope="row" runat="server" visible="false">Is Indigenised 
                                                                         </th>
-                                                                        <td id="Td3" runat="server" visible="false">
+                                                                        <td runat="server" visible="false">
                                                                             <asp:Label ID="lblisindigenised" runat="server" Text=""></asp:Label>
                                                                         </td>
                                                                     </tr>

@@ -85,6 +85,7 @@ public partial class User_U_Cart : System.Web.UI.Page
         }
         else
         {
+            Session["U_User"] = "2508";
             Response.Redirect("ProductList");
         }
     }
@@ -775,4 +776,9 @@ public partial class User_U_Cart : System.Web.UI.Page
 
     }
     #endregion
+    protected void lblhome_Click(object sender, EventArgs e)
+    {
+        Session["U_User"] = "2508";
+        Response.Redirect("ProductList");
+    }
 }
