@@ -124,5 +124,7 @@
         routes.MapPageRoute("Home", "Home", "~/User/Login.aspx", true);
         routes.MapPageRoute("Popup", "Popup", "~/ViewPopup.aspx", true);
         routes.MapPageRoute("TempTable", "TempTable", "~/Admin/CreatetempTable.aspx", true);
+         routes.MapPageRoute("ViewRequest", "ViewRequest", "~/Admin/ViewRequestInfo.aspx", true);
+
     }    
 </script>

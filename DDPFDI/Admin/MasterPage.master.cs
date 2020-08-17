@@ -34,7 +34,7 @@ public partial class Admin_MasterPage : System.Web.UI.MasterPage
     {
         Session.Abandon();
         Session.Clear();
-        Response.RedirectToRoute("Login");
+        Response.RedirectToRoute("Productlist");
     }
     private void bindMenu(string sType)
     {

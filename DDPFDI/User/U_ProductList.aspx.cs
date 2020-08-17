@@ -35,31 +35,31 @@ public partial class User_U_ProductList : System.Web.UI.Page
     {
         if (!IsPostBack)
         {
-            if (Session["U_User"] != null)
+            //if (Session["U_User"] != null)
+            //{
+            try
             {
-                try
+                if (Session["DCart"] != null)
                 {
-                    if (Session["DCart"] != null)
-                    {
-                        ViewState["buyitems"] = Session["DCart"];
-                        dtCart = (DataTable)ViewState["buyitems"];
-                        totalno.InnerText = dtCart.Rows.Count.ToString();
-                    }
-                    else
-                    {
-                        totalno.InnerText = dtCart.Rows.Count.ToString();
-                    }
-                    ControlGrid();
+                    ViewState["buyitems"] = Session["DCart"];
+                    dtCart = (DataTable)ViewState["buyitems"];
+                    totalno.InnerText = dtCart.Rows.Count.ToString();
                 }
-                catch (Exception ex)
+                else
                 {
-                    ScriptManager.RegisterStartupScript(this, this.GetType(), "alert", "alert('Technical Error:- " + ex.Message + "');", true);
+                    totalno.InnerText = dtCart.Rows.Count.ToString();
                 }
+                ControlGrid();
             }
-            else
+            catch (Exception ex)
             {
-                Response.Redirect("Home");
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "alert", "alert('Technical Error:- " + ex.Message + "');", true);
             }
+            //}
+            //else
+            //{
+            //    Response.Redirect("Home");
+            //}
         }
     }
     private void ControlGrid()
@@ -1312,7 +1312,7 @@ public partial class User_U_ProductList : System.Web.UI.Page
                     //{
                     //    Tr24.Visible = false;
                     //}
-                    ScriptManager.RegisterStartupScript(this, GetType(), "ProductCompany", "showPopup();", true);
+                    ScriptManager.RegisterStartupScript(this, GetType(), "aboutus", "showPopup();", true);
                 }
             }
             catch (Exception ex)
