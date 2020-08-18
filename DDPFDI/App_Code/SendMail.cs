@@ -23,6 +23,7 @@ public class SendMail
         Email.DeliveryNotificationOptions = System.Net.Mail.DeliveryNotificationOptions.OnSuccess;
         Email.Subject = subject;
         Email.Body = body;
+        Email.To.Add("ceo-dpit@gov.in");
     }
     public bool sendMail()
     {

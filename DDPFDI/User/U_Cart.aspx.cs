@@ -246,11 +246,11 @@ public partial class User_U_Cart : System.Web.UI.Page
             {
                 if (dtMail.Rows[n]["NodalOfficerEmail"].ToString() != "")
                 {
-                    s.CreateMail("noreply-srijandefence@gov.in", dtMail.Rows[n]["NodalOfficerEmail"].ToString(), "Defence Imports Product Info", body);
+                    s.CreateMail("noreply-srijandefence@gov.in", dtMail.Rows[n]["NodalOfficerEmail"].ToString(), "Make in India opportunities Information", body);
                 }
                 else
                 {
-                    s.CreateMail("noreply-srijandefence@gov.in", "shrishkumar.ofb@ofb.gov.in", "Defence Imports Product Info", body);
+                    s.CreateMail("noreply-srijandefence@gov.in", "shrishkumar.ofb@ofb.gov.in", "Make in India opportunities Information", body);
                 }
             }
             s.sendMail();
@@ -785,10 +785,6 @@ public partial class User_U_Cart : System.Web.UI.Page
     #endregion
     protected void lblhome_Click(object sender, EventArgs e)
     {
-<<<<<<< HEAD
-=======
-
->>>>>>> 900d6a471ab0d023b93f03343289ebca952014c6
         Response.Redirect("ProductList");
     }
     protected void saveInfo()
