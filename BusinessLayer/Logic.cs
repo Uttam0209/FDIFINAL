@@ -301,7 +301,7 @@ namespace BusinessLayer
         }
         public DataTable RetriveMailCart(string value)
         {
-            string mquery = "SELECT P.ProductDescription, P.DPSUPartNumber, s1.SCategoryName AS NSNGroup,s2.SCategoryName AS NSNGroupClass,s3.SCategoryName as ItemCode,n.NodalOfficerEmail AS NodalOfficerEmail " +
+            string mquery = "SELECT P.ProductRefNo,P.ProductDescription, P.DPSUPartNumber, s1.SCategoryName AS NSNGroup,s2.SCategoryName AS NSNGroupClass,s3.SCategoryName as ItemCode,n.NodalOfficerEmail AS NodalOfficerEmail " +
                          " FROM  tbl_mst_MainProduct AS P LEFT OUTER JOIN tbl_mst_NodalOfficer as n ON P.NodelDetail=n.NodalOfficerID Left Outer Join tbl_mst_SubCategory as s1 ON   P.ProductLevel1 = s1.SCategoryId LEFT OUTER JOIN " +
                         " tbl_mst_SubCategory AS  s2 ON P.ProductLevel2 = s2.SCategoryId LEFT OUTER JOIN tbl_mst_SubCategory AS s3 ON P.ProductLevel3 = s3.SCategoryId LEFT OUTER JOIN " +
                             " tbl_mst_MainProduct AS o ON s1.SCategoryName='' WHERE  (P.IsActive = 'Y') and P.ProductRefNo in (" + value + ")";

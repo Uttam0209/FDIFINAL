@@ -53,7 +53,7 @@ public partial class User_U_Cart : System.Web.UI.Page
             dtCart = (DataTable)Session["DCart"];
             for (int i = 0; dtCart.Rows.Count > i; i++)
             {
-                mval = mval + "," + "'" + dtCart.Rows[i]["ProductRefNo"].ToString() + "'";
+                mval = mval + "," + "'" + dtCart.Rows[i]["ProductRefNo"].ToString() + "'" + ",";
             }
             string smval = mval.Substring(1);
             ViewState["RefN"] = smval;
@@ -190,7 +190,7 @@ public partial class User_U_Cart : System.Web.UI.Page
             body = body.Replace("{dt}", html.ToString());
             SendMail s;
             s = new SendMail();
-            s.CreateMail("noreply-srijandefence@gov.in", empid, "Defence Imports Cart Product Info", body);
+            s.CreateMail("noreply-srijandefence@gov.in", empid, "Make in India opportunities Information", body);
             s.sendMail();
             ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Thankyou for your intrest in these product.We will revert you soon')", true);
         }

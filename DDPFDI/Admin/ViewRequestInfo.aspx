@@ -26,11 +26,11 @@
                                 <div class="col-sm-3">
                                     <div class="card product-card" style="box-shadow: 0 0.3rem 1.525rem -0.375rem rgba(0, 0, 0, 0.1);">
 
-                                        <div class="card-body py-2" style="height: 230px;">
+                                        <div class="card-body py-2" style="height: 300px;">
 
                                             <h2 class="m-0 text-center">
                                                 <b class="text-center">
-                                                <asp:Label runat="server" ID="lblcompshow" class="product-meta d-block font-size-xs pb-1 text-center mt5" Style="color: #6915cf; font-size: 24px!important; margin-top: 10px;">
+                                                <asp:Label runat="server" ID="lblcompshow" class="product-meta d-block font-size-xs pb-1 text-center mt5" Style="color: #6915cf; font-size: 20px!important; margin-top: 10px;">
                                                                 <%#Eval("RequestBy") %>
                                                                  </asp:Label>
                                             </b>

@@ -35,16 +35,10 @@ public partial class User_U_ProductList : System.Web.UI.Page
     {
         if (!IsPostBack)
         {
-<<<<<<< HEAD
-            
-                try
-=======
-            //if (Session["U_User"] != null)
-            //{
+
             try
             {
                 if (Session["DCart"] != null)
->>>>>>> 900d6a471ab0d023b93f03343289ebca952014c6
                 {
                     ViewState["buyitems"] = Session["DCart"];
                     dtCart = (DataTable)ViewState["buyitems"];
@@ -54,21 +48,13 @@ public partial class User_U_ProductList : System.Web.UI.Page
                 {
                     totalno.InnerText = dtCart.Rows.Count.ToString();
                 }
-<<<<<<< HEAD
-            
-=======
                 ControlGrid();
             }
             catch (Exception ex)
             {
                 ScriptManager.RegisterStartupScript(this, this.GetType(), "alert", "alert('Technical Error:- " + ex.Message + "');", true);
             }
-            //}
-            //else
-            //{
-            //    Response.Redirect("Home");
-            //}
->>>>>>> 900d6a471ab0d023b93f03343289ebca952014c6
+            
         }
     }
     private void ControlGrid()

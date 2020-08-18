@@ -80,4 +80,3 @@ D:\CurrentProject2020\FDIFINAL-master\FDIFINAL\Encryption\obj\Debug\Encryption.c
 D:\CurrentProject2020\FDIFINAL-master\FDIFINAL\Encryption\obj\Debug\Encryption.csproj.CopyComplete
 D:\CurrentProject2020\FDIFINAL-master\FDIFINAL\Encryption\obj\Debug\Encryption.dll
 D:\CurrentProject2020\FDIFINAL-master\FDIFINAL\Encryption\obj\Debug\Encryption.pdb
-D:\CurrentProject2020\FDIFINAL-master\FDIFINAL\Encryption\obj\Debug\Encryption.csprojAssemblyReference.cache
