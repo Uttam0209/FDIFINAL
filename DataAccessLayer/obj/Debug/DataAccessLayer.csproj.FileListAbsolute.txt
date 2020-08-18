@@ -120,3 +120,23 @@ E:\Wali Projects\FDIFINAL\DataAccessLayer\obj\Debug\DataAccessLayer.csprojAssemb
 E:\Wali Projects\FDIFINAL\DataAccessLayer\obj\Debug\DataAccessLayer.csproj.CopyComplete
 E:\Wali Projects\FDIFINAL\DataAccessLayer\obj\Debug\DataAccessLayer.dll
 E:\Wali Projects\FDIFINAL\DataAccessLayer\obj\Debug\DataAccessLayer.pdb
+D:\CurrentProject2020\FDIFINAL-master\FDIFINAL\DataAccessLayer\bin\Debug\DataAccessLayer.dll
+D:\CurrentProject2020\FDIFINAL-master\FDIFINAL\DataAccessLayer\bin\Debug\DataAccessLayer.pdb
+D:\CurrentProject2020\FDIFINAL-master\FDIFINAL\DataAccessLayer\bin\Debug\Encryption.dll
+D:\CurrentProject2020\FDIFINAL-master\FDIFINAL\DataAccessLayer\bin\Debug\Microsoft.Web.Infrastructure.dll
+D:\CurrentProject2020\FDIFINAL-master\FDIFINAL\DataAccessLayer\bin\Debug\System.Web.Helpers.dll
+D:\CurrentProject2020\FDIFINAL-master\FDIFINAL\DataAccessLayer\bin\Debug\System.Web.Razor.dll
+D:\CurrentProject2020\FDIFINAL-master\FDIFINAL\DataAccessLayer\bin\Debug\System.Web.WebPages.Deployment.dll
+D:\CurrentProject2020\FDIFINAL-master\FDIFINAL\DataAccessLayer\bin\Debug\System.Web.WebPages.dll
+D:\CurrentProject2020\FDIFINAL-master\FDIFINAL\DataAccessLayer\bin\Debug\System.Web.WebPages.Razor.dll
+D:\CurrentProject2020\FDIFINAL-master\FDIFINAL\DataAccessLayer\bin\Debug\Encryption.pdb
+D:\CurrentProject2020\FDIFINAL-master\FDIFINAL\DataAccessLayer\bin\Debug\System.Web.Helpers.xml
+D:\CurrentProject2020\FDIFINAL-master\FDIFINAL\DataAccessLayer\bin\Debug\System.Web.Razor.xml
+D:\CurrentProject2020\FDIFINAL-master\FDIFINAL\DataAccessLayer\bin\Debug\System.Web.WebPages.xml
+D:\CurrentProject2020\FDIFINAL-master\FDIFINAL\DataAccessLayer\bin\Debug\System.Web.WebPages.Deployment.xml
+D:\CurrentProject2020\FDIFINAL-master\FDIFINAL\DataAccessLayer\bin\Debug\System.Web.WebPages.Razor.xml
+D:\CurrentProject2020\FDIFINAL-master\FDIFINAL\DataAccessLayer\obj\Debug\DataAccessLayer.csprojAssemblyReference.cache
+D:\CurrentProject2020\FDIFINAL-master\FDIFINAL\DataAccessLayer\obj\Debug\DataAccessLayer.csproj.CoreCompileInputs.cache
+D:\CurrentProject2020\FDIFINAL-master\FDIFINAL\DataAccessLayer\obj\Debug\DataAccessLayer.csproj.CopyComplete
+D:\CurrentProject2020\FDIFINAL-master\FDIFINAL\DataAccessLayer\obj\Debug\DataAccessLayer.dll
+D:\CurrentProject2020\FDIFINAL-master\FDIFINAL\DataAccessLayer\obj\Debug\DataAccessLayer.pdb

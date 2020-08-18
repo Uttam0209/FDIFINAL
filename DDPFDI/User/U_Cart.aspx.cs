@@ -112,7 +112,7 @@ public partial class User_U_Cart : System.Web.UI.Page
                 {
                     GenerateOTP();
                     sendMailOTP();
-                    txtotp.Text = hfotp.Value;
+                   // txtotp.Text = hfotp.Value;
                     ScriptManager.RegisterStartupScript(this, GetType(), "modelotp", "showPopup1();", true);
                 }
             }
@@ -778,7 +778,6 @@ public partial class User_U_Cart : System.Web.UI.Page
     #endregion
     protected void lblhome_Click(object sender, EventArgs e)
     {
-        Session["U_User"] = "2508";
         Response.Redirect("ProductList");
     }
 }

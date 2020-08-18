@@ -243,8 +243,7 @@
                     <div class="container d-lg-flex justify-content-between">
                         <div class="order-lg-2 mb-3 mb-lg-0 pt-lg-2">
                             <div class="navbar-tool dropdown ml-5">
-                                <b><a href="https://srijandefence.gov.in/Login" target="_blank" class="menu_"><i class="fa fa-user" aria-hidden="true"></i>DPSU Login </a></b>
-                                <b><a href="#aboutus-modal" class="menu_" data-toggle="modal">About us </a></b><a
+                               <a
                                     href="#contact_us_modal" class="menu_" data-toggle="modal" id="a" runat="server"
                                     visible="false">Contact us </a>
                                 <asp:LinkButton ID="lbtotalcart" runat="server" class="navbar-tool-icon-box bg-secondary dropdown-toggle"
@@ -261,7 +260,13 @@
                         <div class="order-lg-1 pr-lg-4 text-center text-lg-left">
                             <h1 class="h3 text-light mb-0">Products imported by Defence PSUs/OFB/SHQ </h1>
                         </div>
+                       
                     </div>
+                     <div class="order-lg-1 pr-lg-4 text-center text-lg-right" style="margin-top:10px;">
+                         <b>   <a href="https://www.makeinindiadefence.gov.in/" target="_blank" class="menu_">Make In India Defence Portal </a></b>
+                       <b> <a href="Login" target="_blank" class="menu_"><i class="fa fa-user" aria-hidden="true"></i> DPSU Login </a></b>
+                                <b><a href="#aboutus-modal" class="menu_" data-toggle="modal">About us </a></b>
+                         </div>
                 </div>
                 <div class="container pb-5 mb-2 mb-md-4">
                     <div class="row">
@@ -541,19 +546,19 @@
                                                         <b>
                                                             <asp:LinkButton runat="server" ID="lblcompshow" CommandArgument='<%#Eval("ProductRefNo") %>' CommandName="View" class="product-meta d-block font-size-xs pb-1" Style="color: #6915cf; font-size: 16px!important;">
                                                                 <%#Eval("CompanyName") %>
-                                                                 </asp:LinkButton>
+                                                            </asp:LinkButton>
                                                         </b>
                                                         <h3 class="product-title font-size-sm">
                                                             <asp:LinkButton runat="server" ID="lbldesc" title='<%#Eval("ProductDescription") %>' CommandArgument='<%#Eval("ProductRefNo") %>' CommandName="View">
                                                                 <%# Eval("ProductDescription").ToString().Length > 25? (Eval("ProductDescription") as string).Substring(0,25) + ".." : Eval("ProductDescription")  %>
-                                                                 </asp:LinkButton>
+                                                            </asp:LinkButton>
 
                                                         </h3>
                                                         <table class="table" style="font-size: 14px;">
                                                             <tbody>
                                                                 <tr id="Tr1" runat="server" visible="false">
                                                                     <td style="padding: 8px;">NSN Group
-                                                                         </td>
+                                                                    </td>
                                                                     <td style="padding: 8px;" class="text-right" title='<%#Eval("NSNGroup") %>'>
                                                                         <%# Eval("NSNGroup").ToString().Length > 15? (Eval("NSNGroup") as string).Substring(0,15) + ".." : Eval("NSNGroup")  %>
                                                                         <asp:HiddenField ID="hfrole" runat="server" Value='<%#Eval("Role") %>' />
@@ -615,7 +620,7 @@
                                                                 </tr>
                                                                 <tr id="Tr5" runat="server" visible="false">
                                                                     <td colspan="2" style="padding: 8px; font-size: 12px;">Industry Domain :-
-                                                                         </td>
+                                                                    </td>
                                                                 </tr>
                                                                 <tr id="Tr6" runat="server" visible="false">
                                                                     <td colspan="2" style="padding: 8px; font-size: 12px; font-weight: 900; border-top: 0px;"
@@ -624,20 +629,20 @@
                                                                     /
                                                                    
                                                                         <%#Eval("ProdIndustrySubDomain") %>
-                                                                         </td>
+                                                                    </td>
                                                                 </tr>
                                                                 <tr id="Tr7" runat="server" visible="false">
                                                                     <td style="padding: 8px;">Quantity
-                                                                         </td>
+                                                                    </td>
                                                                     <td style="padding: 8px;" class="text-right">
                                                                         <%#Eval("EstimateQu") %>
-                                                                         </td>
+                                                                    </td>
                                                                 </tr>
                                                                 <tr id="Tr233" runat="server">
                                                                     <td class="text-right" colspan="2" style="padding: 8px; font-size: 11px;">Last Updated :- 
                                                                        
                                                                         <%#Eval("LastUpdated","{0:dd-MMM-yyyy}") %>
-                                                                         </td>
+                                                                    </td>
                                                                 </tr>
                                                             </tbody>
                                                         </table>
@@ -1005,7 +1010,7 @@
                                                                                             <b>Import value during last 3 year (million Rs) :</b>
                                                                                             <asp:Label ID="lblisproductimported" runat="server" Text=""></asp:Label>&nbsp;&nbsp;
                                                                                         &nbsp;<asp:Label ID="lblvalueimport" runat="server"
-                                                                                                Text="0"></asp:Label>&nbsp;
+                                                                                            Text="0"></asp:Label>&nbsp;
                                                                                         </td>
                                                                                     </tr>
                                                                                     <tr runat="server" id="ten">
@@ -1254,6 +1259,14 @@
                                         <h6></h6>
                                         <h6></h6>
                                         <h6></h6>
+                                        <h6></h6>
+                                        <h6></h6>
+                                        <h6></h6>
+                                        <h6></h6>
+                                        <h6></h6>
+                                        <h6></h6>
+                                        <h6></h6>
+                                        <h6></h6>
                                     </h6>
                                 </div>
                                 <div class="modal-body" style="text-align: center;">
@@ -1423,13 +1436,23 @@
         </asp:UpdateProgress>
         <div class="container-fluid" style="background-color: #000000;">
             <div class="row ">
-                <div class="col-sm-2 col-3 ">
+                <div class="col-sm-2 col-3">
                 </div>
                 <div class="col-sm-10 col-9">
-                    <p style="color: white; padding: 20px; text-align: center;">
-                    Website content managed by : Department of Defence Production
-               
+                    <p style="color: white; padding: 15px 5px 0px 0px; text-align: center;">
+                        Visitor Counter <a href="#">
+                            <img src="https://hitwebcounter.com/counter/counter.php?page=7649671&style=0006&nbdigits=6&type=page&initCount=0" border="0">
+                        </a>
+                    </p>
                 </div>
+                <div class="col-sm-2 col-3">
+                </div>
+                <div class="col-sm-10 col-9">
+                    <p style="color: white; padding: 0px; text-align: center;">
+                        Website content managed by : Department of Defence Production
+                    </p>
+                </div>
+
             </div>
         </div>
         <script src="User/Uassets/js/jquery-3.4.1.min.js"></script>

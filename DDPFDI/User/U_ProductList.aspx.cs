@@ -35,8 +35,7 @@ public partial class User_U_ProductList : System.Web.UI.Page
     {
         if (!IsPostBack)
         {
-            if (Session["U_User"] != null)
-            {
+            
                 try
                 {
                     if (Session["DCart"] != null)
@@ -55,11 +54,7 @@ public partial class User_U_ProductList : System.Web.UI.Page
                 {
                     ScriptManager.RegisterStartupScript(this, this.GetType(), "alert", "alert('Technical Error:- " + ex.Message + "');", true);
                 }
-            }
-            else
-            {
-                Response.Redirect("Home");
-            }
+            
         }
     }
     private void ControlGrid()

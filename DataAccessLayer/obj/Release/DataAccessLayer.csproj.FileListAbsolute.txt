@@ -90,3 +90,27 @@ E:\Wali Projects\FDIFINAL\DataAccessLayer\obj\Release\DataAccessLayer.csprojAsse
 E:\Wali Projects\FDIFINAL\DataAccessLayer\obj\Release\DataAccessLayer.csproj.CopyComplete
 E:\Wali Projects\FDIFINAL\DataAccessLayer\obj\Release\DataAccessLayer.dll
 E:\Wali Projects\FDIFINAL\DataAccessLayer\obj\Release\DataAccessLayer.pdb
+D:\CurrentProject2020\FDIFINAL-master\FDIFINAL\DataAccessLayer\bin\Release\DataAccessLayer.dll
+D:\CurrentProject2020\FDIFINAL-master\FDIFINAL\DataAccessLayer\bin\Release\DataAccessLayer.pdb
+D:\CurrentProject2020\FDIFINAL-master\FDIFINAL\DataAccessLayer\bin\Release\Encryption.dll
+D:\CurrentProject2020\FDIFINAL-master\FDIFINAL\DataAccessLayer\bin\Release\Microsoft.Practices.EnterpriseLibrary.Common.dll
+D:\CurrentProject2020\FDIFINAL-master\FDIFINAL\DataAccessLayer\bin\Release\Microsoft.Practices.EnterpriseLibrary.Data.dll
+D:\CurrentProject2020\FDIFINAL-master\FDIFINAL\DataAccessLayer\bin\Release\Microsoft.Practices.Unity.dll
+D:\CurrentProject2020\FDIFINAL-master\FDIFINAL\DataAccessLayer\bin\Release\Microsoft.Practices.Unity.Interception.dll
+D:\CurrentProject2020\FDIFINAL-master\FDIFINAL\DataAccessLayer\bin\Release\Microsoft.Web.Infrastructure.dll
+D:\CurrentProject2020\FDIFINAL-master\FDIFINAL\DataAccessLayer\bin\Release\System.Web.Helpers.dll
+D:\CurrentProject2020\FDIFINAL-master\FDIFINAL\DataAccessLayer\bin\Release\System.Web.Razor.dll
+D:\CurrentProject2020\FDIFINAL-master\FDIFINAL\DataAccessLayer\bin\Release\System.Web.WebPages.Deployment.dll
+D:\CurrentProject2020\FDIFINAL-master\FDIFINAL\DataAccessLayer\bin\Release\System.Web.WebPages.dll
+D:\CurrentProject2020\FDIFINAL-master\FDIFINAL\DataAccessLayer\bin\Release\System.Web.WebPages.Razor.dll
+D:\CurrentProject2020\FDIFINAL-master\FDIFINAL\DataAccessLayer\bin\Release\Encryption.pdb
+D:\CurrentProject2020\FDIFINAL-master\FDIFINAL\DataAccessLayer\bin\Release\System.Web.Helpers.xml
+D:\CurrentProject2020\FDIFINAL-master\FDIFINAL\DataAccessLayer\bin\Release\System.Web.Razor.xml
+D:\CurrentProject2020\FDIFINAL-master\FDIFINAL\DataAccessLayer\bin\Release\System.Web.WebPages.xml
+D:\CurrentProject2020\FDIFINAL-master\FDIFINAL\DataAccessLayer\bin\Release\System.Web.WebPages.Deployment.xml
+D:\CurrentProject2020\FDIFINAL-master\FDIFINAL\DataAccessLayer\bin\Release\System.Web.WebPages.Razor.xml
+D:\CurrentProject2020\FDIFINAL-master\FDIFINAL\DataAccessLayer\obj\Release\DataAccessLayer.csprojAssemblyReference.cache
+D:\CurrentProject2020\FDIFINAL-master\FDIFINAL\DataAccessLayer\obj\Release\DataAccessLayer.csproj.CoreCompileInputs.cache
+D:\CurrentProject2020\FDIFINAL-master\FDIFINAL\DataAccessLayer\obj\Release\DataAccessLayer.csproj.CopyComplete
+D:\CurrentProject2020\FDIFINAL-master\FDIFINAL\DataAccessLayer\obj\Release\DataAccessLayer.dll
+D:\CurrentProject2020\FDIFINAL-master\FDIFINAL\DataAccessLayer\obj\Release\DataAccessLayer.pdb
