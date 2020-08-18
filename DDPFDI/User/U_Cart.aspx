@@ -73,7 +73,7 @@
                                                 <a class="d-block position-relative mb-3 mb-sm-0 mr-sm-4 mx-auto" href="#" style="width: 12.5rem;">
                                                     <img class="rounded-lg" src='<%#Eval("TopImages") %>' alt="Product">
                                                 </a>
-                                                &nbsp;&nbsp;&nbsp;<div class="media-body text-center text-sm-left">
+                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<div class="media-body text-center text-sm-left">
                                                     <h3 class="h6 product-title mb-2">
                                                         <a href="#"><%#Eval("CompanyName") %>
                                                         </a>
@@ -109,6 +109,7 @@
                                     <div class="text-center mb-4 pb-3 border-bottom">
                                         <h2 class="h6 mb-3 pb-1">Show interest section</h2>
                                         <div class="widget widget-categories mb-3">
+                                            <asp:HiddenField runat="server" ID="hfsaveid" />
                                             <label>Your Name</label>
                                             <div class="input-group">
                                                 <asp:TextBox ID="txtname" runat="server" CssClass="form-control" Placeholder="Name" TabIndex="1"></asp:TextBox>
@@ -718,6 +719,8 @@
                                     <asp:LinkButton ID="lbsubmit" runat="server" CssClass="btn btn-primary btn-shadow pull-right" TabIndex="2" Text="Send Mail"
                                         ToolTip="Thank you for showing intrest in these product mail will send to admin and also you will recieved a copy." OnClick="lbsubmit_Click"></asp:LinkButton>
                                     <asp:LinkButton runat="server" Text="Resend OTP" ID="lbresendotp" TabIndex="3" CssClass="pull-right mr-1 p-2" OnClick="lbresendotp_Click"></asp:LinkButton>
+                                    <p>
+                                    </p>
                                 </p>
                             </div>
                         </div>
@@ -746,8 +749,7 @@
                     <p style="color: white; padding: 20px; text-align: center;">
                         Website content managed by : Department of Defence Production
                    
-                    </p>
-                </div>
+                                    </div>
             </div>
         </div>
         <script src="User/Uassets/js/jquery-3.4.1.min.js"></script>

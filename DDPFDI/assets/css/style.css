@@ -3914,15 +3914,6 @@ ul.icheck-buttons > li {
         filter: alpha(opacity=50);
     }
 
-.modal-header {
-    min-height: 16.428571429px;
-    padding: 15px;
-    border-bottom: 1px solid #e5e5e5;
-}
-
-    .modal-header .close {
-        margin-top: -2px;
-    }
 
 .modal-title {
     margin: 0;
@@ -4624,3 +4615,10 @@ div#filter_schedule {
     background: #e7e7e7 !important;
 }
 
+.liclose {
+    float: right !important;
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+    height: 33px;
+}

@@ -25,6 +25,8 @@ public partial class User_U_Cart : System.Web.UI.Page
     DataTable dtCart = new DataTable();
     DataRow dr;
     string mval = "";
+
+    HybridDictionary hySave = new HybridDictionary();
     #endregion
     protected void UpdateDtGridValue(DataTable DtGrid)
     {
@@ -85,7 +87,6 @@ public partial class User_U_Cart : System.Web.UI.Page
         }
         else
         {
-            Session["U_User"] = "2508";
             Response.Redirect("ProductList");
         }
     }
@@ -764,10 +765,16 @@ public partial class User_U_Cart : System.Web.UI.Page
     {
         if (txtotp.Text != "" && txtotp.Text == hfotp.Value)
         {
-            SendEmailCode(txtemail.Text, ViewState["RefN"].ToString());
-            SendEmailCodeNodalOfficer(ViewState["RefN"].ToString());
-            cleartext();
-            ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alert", "alert('Mail send successfully.'); window.location.href='U_Cart';", true);
+            try
+            {
+                SendEmailCode(txtemail.Text, ViewState["RefN"].ToString());
+                SendEmailCodeNodalOfficer(ViewState["RefN"].ToString());
+                saveInfo();
+                cleartext();
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alert", "alert('Mail send successfully.'); window.location.href='U_Cart';", true);
+            }
+            catch (Exception ex)
+            { ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "ErrorMssgPopup('Error occured in send mail please contact admin person.')", true); }
         }
         else
         {
@@ -778,6 +785,37 @@ public partial class User_U_Cart : System.Web.UI.Page
     #endregion
     protected void lblhome_Click(object sender, EventArgs e)
     {
+<<<<<<< HEAD
+=======
+
+>>>>>>> 900d6a471ab0d023b93f03343289ebca952014c6
         Response.Redirect("ProductList");
+    }
+    protected void saveInfo()
+    {
+        try
+        {
+            DataTable dtgetprod = Lo.RetriveGridViewCompany(DateTime.Now.ToString("yyyy-MM-dd"), txtemail.Text.Trim(), txtphone.Text, "ret");
+            if (dtgetprod.Rows.Count > 0)
+            {
+
+                hySave["RequestID"] = dtgetprod.Rows[0]["RequestID"].ToString();
+            }
+            else
+            {
+                hySave["RequestID"] = 0;
+            }
+            hySave["RequestBy"] = Co.RSQandSQLInjection(txtname.Text.Trim(), "soft");
+            hySave["RequestCompName"] = Co.RSQandSQLInjection(txtcompname.Text.Trim(), "soft");
+            hySave["RequestMobileNo"] = Co.RSQandSQLInjection(txtphone.Text.Trim(), "soft");
+            hySave["RequestAddress"] = Co.RSQandSQLInjection(txtofficeaddress.Text.Trim(), "soft");
+            hySave["RequestEmail"] = Co.RSQandSQLInjection(txtemail.Text.Trim(), "soft");
+            hySave["RequestProduct"] = Co.RSQandSQLInjection(ViewState["RefN"].ToString(), "soft");
+            hySave["IsMailSend"] = Co.RSQandSQLInjection("Y", "soft");
+            hySave["RequestDate"] = Co.RSQandSQLInjection(DateTime.Now.ToString("dd/MMM/yyyy"), "soft");
+            string str = Lo.SaveRequestInfo(hySave, out _sysMsg, out _msg);
+        }
+        catch (Exception ex)
+        { }
     }
 }

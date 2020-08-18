@@ -159,7 +159,7 @@ namespace BusinessLayer
         {
             return SqlHelper.Instance.GetExecuteData("select * from fn_companywiseproduct() order by compName");
         }
-        public DataTable RetriveProductIndig1(string m,string n, string o)
+        public DataTable RetriveProductIndig1(string m, string n, string o)
         {
             return SqlHelper.Instance.RetriveFilterCode(m, n, o);
         }
@@ -623,6 +623,13 @@ namespace BusinessLayer
             return SqlHelper.Instance.RetriveVendor(Vid, VRefNo, VEmail, RetFor);
         }
 
+        #endregion
+
+        #region RequestInfoCard
+        public string SaveRequestInfo(HybridDictionary hyLog, out string _sysMsg, out string _msg)
+        {
+            return SqlHelper.Instance.SaveRequestInfo(hyLog, out _sysMsg, out _msg);
+        }
         #endregion
     }
 }
