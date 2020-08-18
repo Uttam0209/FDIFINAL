@@ -1,19 +1,13 @@
 ﻿using BusinessLayer;
 using Encryption;
 using System;
+using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
+using System.Data.SqlClient;
+using System.Linq;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using System.Web.UI.HtmlControls;
-using System.Windows.Input;
-using System.Collections.Generic;
-using System.Data.SqlClient;
-using System.Configuration;
-using System.Web;
-using System.Linq;
-using System.Web.Services;
-using Microsoft.Ajax.Utilities;
-using Microsoft.SqlServer.Server;
 
 public partial class User_U_ProductList : System.Web.UI.Page
 {
@@ -35,16 +29,9 @@ public partial class User_U_ProductList : System.Web.UI.Page
     {
         if (!IsPostBack)
         {
-<<<<<<< HEAD
-            
-                try
-=======
-            //if (Session["U_User"] != null)
-            //{
             try
             {
                 if (Session["DCart"] != null)
->>>>>>> 900d6a471ab0d023b93f03343289ebca952014c6
                 {
                     ViewState["buyitems"] = Session["DCart"];
                     dtCart = (DataTable)ViewState["buyitems"];
@@ -54,21 +41,12 @@ public partial class User_U_ProductList : System.Web.UI.Page
                 {
                     totalno.InnerText = dtCart.Rows.Count.ToString();
                 }
-<<<<<<< HEAD
-            
-=======
                 ControlGrid();
             }
             catch (Exception ex)
             {
                 ScriptManager.RegisterStartupScript(this, this.GetType(), "alert", "alert('Technical Error:- " + ex.Message + "');", true);
             }
-            //}
-            //else
-            //{
-            //    Response.Redirect("Home");
-            //}
->>>>>>> 900d6a471ab0d023b93f03343289ebca952014c6
         }
     }
     private void ControlGrid()
