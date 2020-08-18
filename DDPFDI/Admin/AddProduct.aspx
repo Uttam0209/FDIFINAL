@@ -265,7 +265,7 @@
                                                 <div class="form-group">
                                                     <label>OEM Part Number</label><span></span>
                                                     <asp:TextBox runat="server" ID="txtoempartnumber" TabIndex="9" class="form-control"></asp:TextBox>
-                                                    <span  ><b style="margin-top:5px;">Available for general public viewing unless prohibited by specific contract clauses on Non Disclosure of information such as name of OEM</b></span>
+                                                    <span><b style="margin-top: 5px;">Available for general public viewing unless prohibited by specific contract clauses on Non Disclosure of information such as name of OEM</b></span>
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
@@ -308,7 +308,7 @@
                                                         <div class="form-group">
                                                             <label>DEFENCE PLATFORM<span class="mandatory">* </span></label>
                                                             <asp:DropDownList runat="server" ID="ddlplatform" AutoPostBack="True" TabIndex="13" Style="text-transform: uppercase !important;" class="form-control" OnSelectedIndexChanged="ddlplatform_SelectedIndexChanged"></asp:DropDownList>
-                                                            <span ><b style="margin-top:5px;">Please get the correct or additional options inserted in drop down menu through category master by CIOs</b></span>
+                                                            <span><b style="margin-top: 5px;">Please get the correct or additional options inserted in drop down menu through category master by CIOs</b></span>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6" style="margin-top: 8px;">

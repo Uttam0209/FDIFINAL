@@ -1,36 +1,3 @@
-F:\FDIFINAL\Encryption\bin\Release\Encryption.dll
-F:\FDIFINAL\Encryption\bin\Release\Encryption.pdb
-F:\FDIFINAL\Encryption\bin\Release\Microsoft.Web.Infrastructure.dll
-F:\FDIFINAL\Encryption\bin\Release\System.Web.Helpers.dll
-F:\FDIFINAL\Encryption\bin\Release\System.Web.Razor.dll
-F:\FDIFINAL\Encryption\bin\Release\System.Web.WebPages.Deployment.dll
-F:\FDIFINAL\Encryption\bin\Release\System.Web.WebPages.dll
-F:\FDIFINAL\Encryption\bin\Release\System.Web.WebPages.Razor.dll
-F:\FDIFINAL\Encryption\bin\Release\System.Web.Helpers.xml
-F:\FDIFINAL\Encryption\bin\Release\System.Web.Razor.xml
-F:\FDIFINAL\Encryption\bin\Release\System.Web.WebPages.xml
-F:\FDIFINAL\Encryption\bin\Release\System.Web.WebPages.Deployment.xml
-F:\FDIFINAL\Encryption\bin\Release\System.Web.WebPages.Razor.xml
-F:\FDIFINAL\Encryption\obj\Release\Encryption.dll
-F:\FDIFINAL\Encryption\obj\Release\Encryption.pdb
-F:\FDIFINAL\Encryption\obj\Release\Encryption.csprojResolveAssemblyReference.cache
-E:\pROJECT\FDIFINAL\Encryption\bin\Release\Encryption.dll
-E:\pROJECT\FDIFINAL\Encryption\bin\Release\Encryption.pdb
-E:\pROJECT\FDIFINAL\Encryption\bin\Release\Microsoft.Web.Infrastructure.dll
-E:\pROJECT\FDIFINAL\Encryption\bin\Release\System.Web.Helpers.dll
-E:\pROJECT\FDIFINAL\Encryption\bin\Release\System.Web.Razor.dll
-E:\pROJECT\FDIFINAL\Encryption\bin\Release\System.Web.WebPages.Deployment.dll
-E:\pROJECT\FDIFINAL\Encryption\bin\Release\System.Web.WebPages.dll
-E:\pROJECT\FDIFINAL\Encryption\bin\Release\System.Web.WebPages.Razor.dll
-E:\pROJECT\FDIFINAL\Encryption\bin\Release\System.Web.Helpers.xml
-E:\pROJECT\FDIFINAL\Encryption\bin\Release\System.Web.Razor.xml
-E:\pROJECT\FDIFINAL\Encryption\bin\Release\System.Web.WebPages.xml
-E:\pROJECT\FDIFINAL\Encryption\bin\Release\System.Web.WebPages.Deployment.xml
-E:\pROJECT\FDIFINAL\Encryption\bin\Release\System.Web.WebPages.Razor.xml
-E:\pROJECT\FDIFINAL\Encryption\obj\Release\Encryption.csprojAssemblyReference.cache
-E:\pROJECT\FDIFINAL\Encryption\obj\Release\Encryption.csproj.CopyComplete
-E:\pROJECT\FDIFINAL\Encryption\obj\Release\Encryption.dll
-E:\pROJECT\FDIFINAL\Encryption\obj\Release\Encryption.pdb
 E:\Wali Projects\FDIFINAL\Encryption\bin\Release\Encryption.dll
 E:\Wali Projects\FDIFINAL\Encryption\bin\Release\Encryption.pdb
 E:\Wali Projects\FDIFINAL\Encryption\bin\Release\Microsoft.Web.Infrastructure.dll
@@ -44,25 +11,6 @@ E:\Wali Projects\FDIFINAL\Encryption\bin\Release\System.Web.Razor.xml
 E:\Wali Projects\FDIFINAL\Encryption\bin\Release\System.Web.WebPages.xml
 E:\Wali Projects\FDIFINAL\Encryption\bin\Release\System.Web.WebPages.Deployment.xml
 E:\Wali Projects\FDIFINAL\Encryption\bin\Release\System.Web.WebPages.Razor.xml
-E:\Wali Projects\FDIFINAL\Encryption\obj\Release\Encryption.csprojAssemblyReference.cache
 E:\Wali Projects\FDIFINAL\Encryption\obj\Release\Encryption.csproj.CopyComplete
 E:\Wali Projects\FDIFINAL\Encryption\obj\Release\Encryption.dll
 E:\Wali Projects\FDIFINAL\Encryption\obj\Release\Encryption.pdb
-D:\CurrentProject2020\FDIFINAL-master\FDIFINAL\Encryption\bin\Release\Encryption.dll
-D:\CurrentProject2020\FDIFINAL-master\FDIFINAL\Encryption\bin\Release\Encryption.pdb
-D:\CurrentProject2020\FDIFINAL-master\FDIFINAL\Encryption\bin\Release\Microsoft.Web.Infrastructure.dll
-D:\CurrentProject2020\FDIFINAL-master\FDIFINAL\Encryption\bin\Release\System.Web.Helpers.dll
-D:\CurrentProject2020\FDIFINAL-master\FDIFINAL\Encryption\bin\Release\System.Web.Razor.dll
-D:\CurrentProject2020\FDIFINAL-master\FDIFINAL\Encryption\bin\Release\System.Web.WebPages.Deployment.dll
-D:\CurrentProject2020\FDIFINAL-master\FDIFINAL\Encryption\bin\Release\System.Web.WebPages.dll
-D:\CurrentProject2020\FDIFINAL-master\FDIFINAL\Encryption\bin\Release\System.Web.WebPages.Razor.dll
-D:\CurrentProject2020\FDIFINAL-master\FDIFINAL\Encryption\bin\Release\System.Web.Helpers.xml
-D:\CurrentProject2020\FDIFINAL-master\FDIFINAL\Encryption\bin\Release\System.Web.Razor.xml
-D:\CurrentProject2020\FDIFINAL-master\FDIFINAL\Encryption\bin\Release\System.Web.WebPages.xml
-D:\CurrentProject2020\FDIFINAL-master\FDIFINAL\Encryption\bin\Release\System.Web.WebPages.Deployment.xml
-D:\CurrentProject2020\FDIFINAL-master\FDIFINAL\Encryption\bin\Release\System.Web.WebPages.Razor.xml
-D:\CurrentProject2020\FDIFINAL-master\FDIFINAL\Encryption\obj\Release\Encryption.csprojAssemblyReference.cache
-D:\CurrentProject2020\FDIFINAL-master\FDIFINAL\Encryption\obj\Release\Encryption.csproj.CoreCompileInputs.cache
-D:\CurrentProject2020\FDIFINAL-master\FDIFINAL\Encryption\obj\Release\Encryption.csproj.CopyComplete
-D:\CurrentProject2020\FDIFINAL-master\FDIFINAL\Encryption\obj\Release\Encryption.dll
-D:\CurrentProject2020\FDIFINAL-master\FDIFINAL\Encryption\obj\Release\Encryption.pdb

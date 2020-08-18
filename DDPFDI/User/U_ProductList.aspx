@@ -243,7 +243,7 @@
                     <div class="container d-lg-flex justify-content-between">
                         <div class="order-lg-2 mb-3 mb-lg-0 pt-lg-2">
                             <div class="navbar-tool dropdown ml-5">
-                               <a
+                                <a
                                     href="#contact_us_modal" class="menu_" data-toggle="modal" id="a" runat="server"
                                     visible="false">Contact us </a>
                                 <asp:LinkButton ID="lbtotalcart" runat="server" class="navbar-tool-icon-box bg-secondary dropdown-toggle"
@@ -260,13 +260,13 @@
                         <div class="order-lg-1 pr-lg-4 text-center text-lg-left">
                             <h1 class="h3 text-light mb-0">Products imported by Defence PSUs/OFB/SHQ </h1>
                         </div>
-                       
+
                     </div>
-                     <div class="order-lg-1 pr-lg-4 text-center text-lg-right" style="margin-top:10px;">
-                         <b>   <a href="https://www.makeinindiadefence.gov.in/" target="_blank" class="menu_">Make In India Defence Portal </a></b>
-                       <b> <a href="Login" target="_blank" class="menu_"><i class="fa fa-user" aria-hidden="true"></i> DPSU Login </a></b>
-                                <b><a href="#aboutus-modal" class="menu_" data-toggle="modal">About us </a></b>
-                         </div>
+                    <div class="order-lg-1 pr-lg-4 text-center text-lg-right" style="margin-top: 10px;">
+                        <b><a href="https://www.makeinindiadefence.gov.in/" target="_blank" class="menu_">Make In India Defence Portal </a></b>
+                        <b><a href="Login" target="_blank" class="menu_"><i class="fa fa-user" aria-hidden="true"></i>DPSU Login </a></b>
+                        <b><a href="#aboutus-modal" class="menu_" data-toggle="modal">About us </a></b>
+                    </div>
                 </div>
                 <div class="container pb-5 mb-2 mb-md-4">
                     <div class="row">
@@ -1242,31 +1242,8 @@
                                         </div>
                                         <h6></h6>
                                         <button class="close close1" data-dismiss="modal" type="button">
-                                            ×
-                                       
+                                            ×                                       
                                         </button>
-                                        <h6></h6>
-                                        <h6></h6>
-                                        <h6></h6>
-                                        <h6></h6>
-                                        <h6></h6>
-                                        <h6></h6>
-                                        <h6></h6>
-                                        <h6></h6>
-                                        <h6></h6>
-                                        <h6></h6>
-                                        <h6></h6>
-                                        <h6></h6>
-                                        <h6></h6>
-                                        <h6></h6>
-                                        <h6></h6>
-                                        <h6></h6>
-                                        <h6></h6>
-                                        <h6></h6>
-                                        <h6></h6>
-                                        <h6></h6>
-                                        <h6></h6>
-                                        <h6></h6>
                                     </h6>
                                 </div>
                                 <div class="modal-body" style="text-align: center;">

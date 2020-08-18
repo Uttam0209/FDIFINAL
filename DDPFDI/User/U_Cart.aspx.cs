@@ -113,7 +113,7 @@ public partial class User_U_Cart : System.Web.UI.Page
                 {
                     GenerateOTP();
                     sendMailOTP();
-                   // txtotp.Text = hfotp.Value;
+                    // txtotp.Text = hfotp.Value;
                     ScriptManager.RegisterStartupScript(this, GetType(), "modelotp", "showPopup1();", true);
                 }
             }
@@ -190,7 +190,7 @@ public partial class User_U_Cart : System.Web.UI.Page
             body = body.Replace("{dt}", html.ToString());
             SendMail s;
             s = new SendMail();
-            s.CreateMail("noreply-srijandefence@gov.in", empid, "Defence Imports Cart Product Info", body);
+            s.CreateMail("noreply-srijandefence@gov.in", empid, "Make in India opportunities Information", body);
             s.sendMail();
             ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Thankyou for your intrest in these product.We will revert you soon')", true);
         }

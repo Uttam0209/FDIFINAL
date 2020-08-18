@@ -116,7 +116,6 @@ E:\Wali Projects\FDIFINAL\DataAccessLayer\bin\Debug\System.Web.Razor.xml
 E:\Wali Projects\FDIFINAL\DataAccessLayer\bin\Debug\System.Web.WebPages.xml
 E:\Wali Projects\FDIFINAL\DataAccessLayer\bin\Debug\System.Web.WebPages.Deployment.xml
 E:\Wali Projects\FDIFINAL\DataAccessLayer\bin\Debug\System.Web.WebPages.Razor.xml
-E:\Wali Projects\FDIFINAL\DataAccessLayer\obj\Debug\DataAccessLayer.csprojAssemblyReference.cache
 E:\Wali Projects\FDIFINAL\DataAccessLayer\obj\Debug\DataAccessLayer.csproj.CopyComplete
 E:\Wali Projects\FDIFINAL\DataAccessLayer\obj\Debug\DataAccessLayer.dll
 E:\Wali Projects\FDIFINAL\DataAccessLayer\obj\Debug\DataAccessLayer.pdb
@@ -140,3 +139,4 @@ D:\CurrentProject2020\FDIFINAL-master\FDIFINAL\DataAccessLayer\obj\Debug\DataAcc
 D:\CurrentProject2020\FDIFINAL-master\FDIFINAL\DataAccessLayer\obj\Debug\DataAccessLayer.csproj.CopyComplete
 D:\CurrentProject2020\FDIFINAL-master\FDIFINAL\DataAccessLayer\obj\Debug\DataAccessLayer.dll
 D:\CurrentProject2020\FDIFINAL-master\FDIFINAL\DataAccessLayer\obj\Debug\DataAccessLayer.pdb
+E:\Wali Projects\FDIFINAL\DataAccessLayer\obj\Debug\DataAccessLayer.csprojAssemblyReference.cache
