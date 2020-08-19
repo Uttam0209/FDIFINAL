@@ -108,6 +108,8 @@ F:\FDIFINAL\BusinessLayer\bin\Debug\System.Web.Razor.xml
 F:\FDIFINAL\BusinessLayer\bin\Debug\System.Web.WebPages.xml
 F:\FDIFINAL\BusinessLayer\bin\Debug\System.Web.WebPages.Deployment.xml
 F:\FDIFINAL\BusinessLayer\bin\Debug\System.Web.WebPages.Razor.xml
-F:\FDIFINAL\BusinessLayer\obj\Debug\BusinessLayer.csprojResolveAssemblyReference.cache
 F:\FDIFINAL\BusinessLayer\obj\Debug\BusinessLayer.dll
 F:\FDIFINAL\BusinessLayer\obj\Debug\BusinessLayer.pdb
+F:\FDIFINAL\BusinessLayer\obj\Debug\BusinessLayer.csprojAssemblyReference.cache
+F:\FDIFINAL\BusinessLayer\obj\Debug\BusinessLayer.csproj.CoreCompileInputs.cache
+F:\FDIFINAL\BusinessLayer\obj\Debug\BusinessLayer.csproj.CopyComplete

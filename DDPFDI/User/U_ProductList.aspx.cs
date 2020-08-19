@@ -745,7 +745,9 @@ public partial class User_U_ProductList : System.Web.UI.Page
                             else
                             {
                                 lblyearvalue.Text = "Import Value during " + rbsort.SelectedItem.Text;
-                                lblestimateprice.Text = sumObject.ToString();
+                                decimal d = Convert.ToDecimal(sumObject.ToString());
+                                decimal m = Math.Round(d, 0);
+                                lblestimateprice.Text = m.ToString();
                             }
                         }
                         else if (rbsort.SelectedIndex != -1 && rbsort.SelectedItem.Text.Trim() == "2018-19")
@@ -759,7 +761,9 @@ public partial class User_U_ProductList : System.Web.UI.Page
                             else
                             {
                                 lblyearvalue.Text = "Import Value during " + rbsort.SelectedItem.Text;
-                                lblestimateprice.Text = sumObject.ToString();
+                                decimal d = Convert.ToDecimal(sumObject.ToString());
+                                decimal m = Math.Round(d, 0);
+                                lblestimateprice.Text = m.ToString();
 
                             }
                         }
@@ -774,7 +778,9 @@ public partial class User_U_ProductList : System.Web.UI.Page
                             else
                             {
                                 lblyearvalue.Text = "Import Value during " + rbsort.SelectedItem.Text;
-                                lblestimateprice.Text = sumObject.ToString();
+                                decimal d = Convert.ToDecimal(sumObject.ToString());
+                                decimal m = Math.Round(d, 0);
+                                lblestimateprice.Text = m.ToString();
                             }
                         }
                         else
@@ -784,13 +790,15 @@ public partial class User_U_ProductList : System.Web.UI.Page
                                 object sumObject1 = dtinner.Compute("Sum(EstimatePricefuture)", string.Empty);
                                 if (sumObject1.ToString() == "")
                                 {
-                                    lblyearvalue.Text = "Estimted Import Value " + rbsort.SelectedItem.Text;
+                                    lblyearvalue.Text = "Estimated Import Value " + rbsort.SelectedItem.Text;
                                     lblestimateprice.Text = "0";
                                 }
                                 else
                                 {
-                                    lblyearvalue.Text = "Estimted Import Value " + rbsort.SelectedItem.Text;
-                                    lblestimateprice.Text = sumObject1.ToString();
+                                    lblyearvalue.Text = "Estimated Import Value " + rbsort.SelectedItem.Text;
+                                    decimal d = Convert.ToDecimal(sumObject1.ToString());
+                                    decimal m = Math.Round(d, 0);
+                                    lblestimateprice.Text = m.ToString();
                                 }
                             }
                         }
