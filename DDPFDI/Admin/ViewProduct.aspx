@@ -100,42 +100,43 @@
                                             <asp:BoundField DataField="1920" HeaderText="2019-20" NullDisplayText="-" SortExpression="1920" />
                                             <asp:BoundField DataField="2021" HeaderText="2020-21" NullDisplayText="-" SortExpression="2021" />
                                             <asp:BoundField DataField="IsShowGeneral" HeaderText="Product Display" NullDisplayText="-" SortExpression="IsShowGeneral" />
-                                            <asp:BoundField DataField="IsApproved" HeaderText="Approval Status" NullDisplayText="-" SortExpression="IsApproved" />
+                                            <asp:BoundField DataField="IsApproved" HeaderText="DOS Approval Status" NullDisplayText="-" SortExpression="IsApproved" />
                                             <asp:BoundField DataField="LastUpdated" HeaderText="LastUpdated" NullDisplayText="-" DataFormatString="{0:dd/MMM/yyyy}" SortExpression="LastUpdated" />
                                             <asp:TemplateField HeaderText="Action">
                                                 <ItemTemplate>
                                                     <asp:LinkButton ID="lblview" runat="server" CssClass="fa fa-eye" CommandName="ViewComp" CommandArgument='<%#Eval("ProductRefNo") %>'></asp:LinkButton>
                                                     <asp:LinkButton ID="lbledit" runat="server" CssClass="fa fa-edit" CommandName="EditComp" CommandArgument='<%#Eval("ProductRefNo") %>'></asp:LinkButton>
-                                                    <asp:LinkButton ID="lbldel" runat="server" CssClass="fa fa-trash" Visible="False" CommandName="DeleteComp" OnClientClick="return confirm('Are you sure you want to delete this product?');" CommandArgument='<%#Eval("ProductRefNo") %>'></asp:LinkButton>
+                                                    <asp:LinkButton ID="lbldel" runat="server" CssClass="fa fa-trash" CommandName="DeleteComp" OnClientClick="return confirm('Are you sure you want to delete this product?');" CommandArgument='<%#Eval("ProductRefNo") %>'></asp:LinkButton>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                         </Columns>
                                     </asp:GridView>
-                                    <!-----------------------------------------Code for pageindexing----------------------------------------------------->
-                                    <div class="row" runat="server" id="divpageindex" visible="false">
-                                        <div class="col-sm-9">
-                                            <div class="col-sm-4 row">
-                                                <asp:LinkButton ID="lnkbtnPgPrevious" runat="server" CssClass="btn btn-info  btn-sm"
-                                                    OnClick="lnkbtnPgPrevious_Click">Previous</asp:LinkButton>
-                                            </div>
-                                            <div class="col-sm-4 row">
-                                                <asp:LinkButton ID="lnkbtnPgNext" runat="server" CssClass="btn  btn-info btn-sm pull-right" Style="margin-right: 3px;"
-                                                    OnClick="lnkbtnPgNext_Click">Next</asp:LinkButton>
-                                            </div>
+                                </div>
+                                <!-----------------------------------------Code for pageindexing----------------------------------------------------->
+                                <div class="row" runat="server" id="divpageindex" visible="false">
+                                    <div class="col-sm-9">
+                                        <div class="col-sm-4 row">
+                                            <asp:LinkButton ID="lnkbtnPgPrevious" runat="server" CssClass="btn btn-info  btn-sm"
+                                                OnClick="lnkbtnPgPrevious_Click">Previous</asp:LinkButton>
                                         </div>
-                                        <div class="col-sm-3">
-                                            <div class="pull-right">
-                                                <asp:Label ID="lblpaging" runat="server" class="btn btn-primary text-center" Text=""></asp:Label>
-                                            </div>
+                                        <div class="col-sm-4 row">
+                                            <asp:LinkButton ID="lnkbtnPgNext" runat="server" CssClass="btn  btn-info btn-sm pull-right" Style="margin-right: 3px;"
+                                                OnClick="lnkbtnPgNext_Click">Next</asp:LinkButton>
                                         </div>
                                     </div>
-                                    <!-----------------------------------------end code for page indexing----------------------------------------------------->
+                                    <div class="col-sm-3">
+                                        <div class="pull-right">
+                                            <asp:Label ID="lblpaging" runat="server" class="btn btn-primary text-center" Text=""></asp:Label>
+                                        </div>
+                                    </div>
                                 </div>
+                                <!-----------------------------------------end code for page indexing----------------------------------------------------->
                             </div>
                         </div>
-                    </form>
                 </div>
-                <div class="footer">© 2019 <a href="#">Department of Defence Production</a> </div>
+                </form>
+            </div>
+            <div class="footer">© 2019 <a href="#">Department of Defence Production</a> </div>
             </div>
             <div class="modal fade" id="changePass" role="dialog">
                 <div class="modal-dialog" style="width: 1200px; z-index: 9999999999;">

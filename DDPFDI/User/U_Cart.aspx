@@ -55,8 +55,8 @@
                                     <!-- Header-->
                                     <div class="d-flex flex-wrap justify-content-between align-items-center border-bottom pb-3">
                                         <div class="py-1">
-                                            <a class="btn btn-outline-accent btn-sm" href="UProductList">
-                                                <i class="fas fa-chevron-left mr-1 ml-n1"></i>Back to Home</a>
+                                            <asp:LinkButton runat="server" class="btn btn-outline-accent btn-sm" ID="lblhome" OnClick="lblhome_Click">
+                                                <i class="fas fa-chevron-left mr-1 ml-n1"></i>Back to Home</asp:LinkButton>
                                         </div>
                                         <div class="d-none d-sm-block py-1 font-size-ms">
                                             <asp:Label ID="lbltotalprodincart" runat="server" Text=""></asp:Label>
@@ -73,10 +73,10 @@
                                                 <a class="d-block position-relative mb-3 mb-sm-0 mr-sm-4 mx-auto" href="#" style="width: 12.5rem;">
                                                     <img class="rounded-lg" src='<%#Eval("TopImages") %>' alt="Product">
                                                 </a>
-                                                &nbsp;&nbsp;&nbsp;<div class="media-body text-center text-sm-left">
+                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<div class="media-body text-center text-sm-left">
                                                     <h3 class="h6 product-title mb-2">
-                                                        <a href="#"><%#Eval("CompanyName") %>
-                                                        </a>
+                                                        <asp:Label runat="server" ID="mComp" Text='<%#Eval("CompanyName") %>'>
+                                                        </asp:Label>
                                                         <asp:HiddenField ID="hfrole" runat="server" Value='<%#Eval("Role") %>' />
                                                     </h3>
                                                     <div class="d-inline-block text-accent" runat="server" visible="false">
@@ -109,6 +109,7 @@
                                     <div class="text-center mb-4 pb-3 border-bottom">
                                         <h2 class="h6 mb-3 pb-1">Show interest section</h2>
                                         <div class="widget widget-categories mb-3">
+                                            <asp:HiddenField runat="server" ID="hfsaveid" />
                                             <label>Your Name</label>
                                             <div class="input-group">
                                                 <asp:TextBox ID="txtname" runat="server" CssClass="form-control" Placeholder="Name" TabIndex="1"></asp:TextBox>
@@ -117,19 +118,19 @@
                                         <div class="widget widget-categories mb-3">
                                             <label>Your Email</label>
                                             <div class="input-group">
-                                                <asp:TextBox ID="txtemail" runat="server" CssClass="form-control" TextMode="Email" Placeholder="Email" TabIndex="4"></asp:TextBox>
+                                                <asp:TextBox ID="txtemail" runat="server" CssClass="form-control" TextMode="Email" Placeholder="Email" TabIndex="2"></asp:TextBox>
                                             </div>
                                         </div>
                                         <div class="widget widget-categories mb-3">
                                             <label>Company Name</label>
                                             <div class="input-group">
-                                                <asp:TextBox ID="txtcompname" runat="server" CssClass="form-control" Placeholder="Company Name" TabIndex="2"></asp:TextBox>
+                                                <asp:TextBox ID="txtcompname" runat="server" CssClass="form-control" Placeholder="Company Name" TabIndex="3"></asp:TextBox>
                                             </div>
                                         </div>
                                         <div class="widget widget-categories mb-3">
                                             <label>Registerd Office Address</label>
                                             <div class="input-group">
-                                                <asp:TextBox ID="txtofficeaddress" runat="server" TextMode="MultiLine" Height="70px" CssClass="form-control" Placeholder="Registerd Office Address" TabIndex="3"></asp:TextBox>
+                                                <asp:TextBox ID="txtofficeaddress" runat="server" TextMode="MultiLine" Height="70px" CssClass="form-control" Placeholder="Registerd Office Address" TabIndex="4"></asp:TextBox>
                                             </div>
                                         </div>
 
@@ -141,8 +142,8 @@
                                         </div>
                                         <div class="widget widget-categories mb-3">
                                             <div class="input-group">
-                                                <asp:Button ID="btnsendmail" runat="server" CssClass="btn btn-primary btn-shadow btn-block mt-4" Text="Send Mail" TabIndex="6"
-                                                    OnClick="btnsendmail_Click" ToolTip="Thank you for showing intrest in these product mail will send to admin and also you will recieved a copy."></asp:Button>
+                                                <asp:Button ID="btnsendmail" runat="server" CssClass="btn btn-primary btn-shadow btn-block mt-4" Text="Get OTP" TabIndex="6"
+                                                    OnClick="btnsendmail_Click" ToolTip="Get otp after click on this"></asp:Button>
                                             </div>
                                         </div>
                                     </div>
@@ -247,7 +248,8 @@
                                                                         <td>
                                                                             <asp:Label ID="prodIndustryDomain" runat="server" Text=""></asp:Label>
                                                                             /
-                                                                        <asp:Label ID="ProdIndusSubDomain" runat="server" Text=""></asp:Label>
+                                                                       
+                                                                            <asp:Label ID="ProdIndusSubDomain" runat="server" Text=""></asp:Label>
                                                                         </td>
                                                                     </tr>
                                                                     <tr id="Tr9" runat="server" visible="false">
@@ -463,7 +465,7 @@
                                                                                         </ItemTemplate>
                                                                                     </asp:TemplateField>
                                                                                     <asp:BoundField DataField="Unit" HeaderText="Unit" />
-                                                                                    <asp:BoundField DataField="EstimatedPrice" HeaderText="Import value in Rs lakh (Qty*Price)" DataFormatString="{0:N2}" />
+                                                                                    <asp:BoundField DataField="EstimatedPrice" HeaderText="Import value in million Rs (Qty*Price)" DataFormatString="{0:f2}" />
                                                                                 </Columns>
                                                                             </asp:GridView>
                                                                         </td>
@@ -474,7 +476,7 @@
                                                                                 <tbody>
                                                                                     <tr runat="server" id="five">
                                                                                         <td colspan="2">
-                                                                                            <b>Import value during last 3 year (Rs lakhs) :</b>
+                                                                                            <b>Import value during last 3 year (million Rs) :</b>
                                                                                             <asp:Label ID="lblisproductimported" runat="server" Text=""></asp:Label>&nbsp;&nbsp;
                                                                                         &nbsp;<asp:Label ID="lblvalueimport" runat="server"
                                                                                             Text="0"></asp:Label>&nbsp;
@@ -482,18 +484,18 @@
                                                                                     </tr>
                                                                                     <tr runat="server" id="ten">
                                                                                         <td colspan="2" style="border-top: 0px;">
-                                                                                            <asp:GridView ID="gvestimatequanold" runat="server" AutoGenerateColumns="false" Class="table table-responsive table-bordered">
+                                                                                            <asp:GridView ID="gvestimatequanold" runat="server" AutoGenerateColumns="false"
+                                                                                                Class="table table-responsive table-bordered">
                                                                                                 <Columns>
                                                                                                     <asp:BoundField HeaderText="Year of Import" DataField="FYear" />
                                                                                                     <asp:TemplateField HeaderText="Quantity">
                                                                                                         <ItemTemplate>
                                                                                                             <%# Eval("EstimatedQty").ToString() == "0" ? "*" : Eval("EstimatedQty").ToString()%>
-                                                                                                            <%--  <%# Eval("EstimatedQty").ToString() == "0" ? "*" : "*"%>--%>
+                                                                                                            <%-- <%# Eval("EstimatedQty").ToString() == "0" ? "*" : "*"%>--%>
                                                                                                         </ItemTemplate>
                                                                                                     </asp:TemplateField>
-
                                                                                                     <asp:BoundField HeaderText="Unit" DataField="Unit" />
-                                                                                                    <asp:BoundField HeaderText="Imported value in Rs lakh (Qty*Price)" DataField="EstimatedPrice" DataFormatString="{0:N2}" />
+                                                                                                    <asp:BoundField HeaderText="Imported value in million Rs (Qty*Price)" DataField="EstimatedPrice" DataFormatString="{0:f2}" />
                                                                                                 </Columns>
                                                                                             </asp:GridView>
                                                                                         </td>
@@ -594,7 +596,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div id="Div1" class="card border-btm" style="border-bottom: solid 1.4px #e5e5e5!important;" runat="server" visible="false">
+                                                <div class="card border-btm" style="border-bottom: solid 1.4px #e5e5e5!important;" runat="server" visible="false">
                                                     <div class="card-header">
                                                         <h3 class="accordion-heading mb-2">
                                                             <a class="collapsed" href="#AdditionalValue" role="button" data-toggle="collapse" aria-expanded="false"
@@ -629,20 +631,20 @@
                                                                     </tr>
                                                                     <tr runat="server" id="twentythree" visible="false">
                                                                         <th scope="row"></th>
-                                                                        <td id="Td1" runat="server">
+                                                                        <td runat="server">
                                                                             <asp:Label ID="lbldeclaration" runat="server" Text="No IPR issue, No violation of TOT agreement, No violation of Security Concern"></asp:Label>
                                                                         </td>
                                                                     </tr>
                                                                     <tr runat="server" id="twentyfour" visible="false">
                                                                         <th scope="row"></th>
-                                                                        <td id="Td2" runat="server">
+                                                                        <td runat="server">
                                                                             <asp:Label ID="lblisshowgeneral" runat="server" Text=""></asp:Label>
                                                                         </td>
                                                                     </tr>
                                                                     <tr runat="server" id="Tr19" visible="false">
-                                                                        <th id="Th1" scope="row" runat="server" visible="false">Is Indigenised 
+                                                                        <th scope="row" runat="server" visible="false">Is Indigenised 
                                                                         </th>
-                                                                        <td id="Td3" runat="server" visible="false">
+                                                                        <td runat="server" visible="false">
                                                                             <asp:Label ID="lblisindigenised" runat="server" Text=""></asp:Label>
                                                                         </td>
                                                                     </tr>
@@ -694,7 +696,40 @@
                         </div>
                     </div>
                 </div>
+                <asp:HiddenField runat="server" ID="hfotp" />
+                <div class="modal fade" id="modelotp" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+                    <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 600px;">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <ul class="nav nav-tabs card-header-tabs" role="tablist">
+                                    <li class="nav-item"><a class="nav-link active" href="#" data-toggle="tab" role="tab"
+                                        aria-selected="true">OTP</a></li>
+                                </ul>
+                                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span></button>
+                            </div>
+                            <div class="modal-body tab-content py-4">
+                                <p class="text-justify">
+                                    <asp:TextBox runat="server" ID="txtotp" placeholder="OTP (6 Digit)" TabIndex="1" CssClass="form-control"></asp:TextBox>
+                                    <div class="clearfix mt-1">
+                                    </div>
+                                    <span>Please enter otp received on your given email id.</span>
+                                    <div class="clearfix mt-1">
+                                    </div>
+                                    <asp:LinkButton ID="lbsubmit" runat="server" CssClass="btn btn-primary btn-shadow pull-right" TabIndex="2" Text="Submit"
+                                        ToolTip="Thank you for showing intrest in these product mail will send to admin and also you will recieved a copy." OnClick="lbsubmit_Click"></asp:LinkButton>
+                                    <asp:LinkButton runat="server" Text="Resend OTP" ID="lbresendotp" TabIndex="3" CssClass="pull-right mr-1 p-2" OnClick="lbresendotp_Click"></asp:LinkButton>
+                                    <p>
+                                    </p>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </ContentTemplate>
+            <Triggers>
+                <asp:PostBackTrigger ControlID="lbsubmit" />
+            </Triggers>
         </asp:UpdatePanel>
         <asp:UpdateProgress ID="UpdateProgress" runat="server" AssociatedUpdatePanelID="update">
             <ProgressTemplate>
@@ -712,8 +747,8 @@
                 </div>
                 <div class="col-sm-10 col-9">
                     <p style="color: white; padding: 20px; text-align: center;">
-                        Website content managed by : Department of Defence Production
-                    </p>
+                    Website content managed by : Department of Defence Production
+                   
                 </div>
             </div>
         </div>
@@ -722,10 +757,13 @@
         <script src="User/Uassets/js/bootstrap.bundle.min.js"></script>
         <script src="User/Uassets/js/theme.min.js"></script>
         <script type="text/javascript">
-
-
             function showPopup() {
                 $('#ProductCompany').modal('show');
+            }
+        </script>
+        <script type="text/javascript">
+            function showPopup1() {
+                $('#modelotp').modal('show');
             }
         </script>
         <script type="text/javascript">

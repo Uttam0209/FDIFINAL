@@ -1,15 +1,13 @@
 ﻿using BusinessLayer;
 using Encryption;
 using System;
+using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
+using System.Data.SqlClient;
+using System.Linq;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using System.Web.UI.HtmlControls;
-using System.Windows.Input;
-using System.Collections.Generic;
-using System.Data.SqlClient;
-using System.Configuration;
-using System.Web;
 
 public partial class User_U_ProductList : System.Web.UI.Page
 {
@@ -31,30 +29,23 @@ public partial class User_U_ProductList : System.Web.UI.Page
     {
         if (!IsPostBack)
         {
-            if (Session["U_User"] != null)
+            try
             {
-                try
+                if (Session["DCart"] != null)
                 {
-                    if (Session["DCart"] != null)
-                    {
-                        ViewState["buyitems"] = Session["DCart"];
-                        dtCart = (DataTable)ViewState["buyitems"];
-                        totalno.InnerText = dtCart.Rows.Count.ToString();
-                    }
-                    else
-                    {
-                        totalno.InnerText = dtCart.Rows.Count.ToString();
-                    }
-                    ControlGrid();
+                    ViewState["buyitems"] = Session["DCart"];
+                    dtCart = (DataTable)ViewState["buyitems"];
+                    totalno.InnerText = dtCart.Rows.Count.ToString();
                 }
-                catch (Exception ex)
+                else
                 {
-                    ScriptManager.RegisterStartupScript(this, this.GetType(), "alert", "alert('Technical Error:- " + ex.Message + "');", true);
+                    totalno.InnerText = dtCart.Rows.Count.ToString();
                 }
+                ControlGrid();
             }
-            else
+            catch (Exception ex)
             {
-                Response.Redirect("Home");
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "alert", "alert('Technical Error:- " + ex.Message + "');", true);
             }
         }
     }
@@ -460,12 +451,13 @@ public partial class User_U_ProductList : System.Web.UI.Page
     #region Search Code Filter Code
     string insert1 = "";
     string chkproofcat = "";
-    protected string Dvinsert()
+    protected string Dvinsert(string sortExpression = null)
     {
         DataTable insert = new DataTable();
         insert.Columns.Add(new DataColumn("Column", typeof(string)));
         insert.Columns.Add(new DataColumn("Value", typeof(string)));
         DataRow dr;
+
         if (ddlcomp.SelectedItem.Text != "Select")
         {
             dr = insert.NewRow();
@@ -487,6 +479,7 @@ public partial class User_U_ProductList : System.Web.UI.Page
                 }
             }
         }
+
         if (ddlnsg.SelectedItem.Text != "Select")
         {
             dr = insert.NewRow();
@@ -689,7 +682,7 @@ public partial class User_U_ProductList : System.Web.UI.Page
             dr["Value"] = "'%" + rbindigtarget.SelectedItem.Value.Trim() + "%'";
             insert.Rows.Add(dr);
         }
-        if (txtsearch.Text.Trim() != "" && txtsearch.Text.Trim().Length >= 3)
+        if (txtsearch.Text.Trim() != "")
         {
             dr = insert.NewRow();
             dr["Column"] = "((ProductRefNo like";
@@ -711,7 +704,8 @@ public partial class User_U_ProductList : System.Web.UI.Page
     {
         return Dvinsert();
     }
-    protected void SeachResult(string sortExpression = null)
+
+    public void SeachResult(string sortExpression = null)
     {
         try
         {
@@ -1304,7 +1298,7 @@ public partial class User_U_ProductList : System.Web.UI.Page
                     //{
                     //    Tr24.Visible = false;
                     //}
-                    ScriptManager.RegisterStartupScript(this, GetType(), "ProductCompany", "showPopup();", true);
+                    ScriptManager.RegisterStartupScript(this, GetType(), "aboutus", "showPopup();", true);
                 }
             }
             catch (Exception ex)
@@ -1734,6 +1728,10 @@ public partial class User_U_ProductList : System.Web.UI.Page
     {
         Response.RedirectToRoute("ProductList");
     }
+    protected void btnsearch_Click(object sender, EventArgs e)
+    {
+        SeachResult();
+    }
     #region AutoComplete Serach Box
     [System.Web.Services.WebMethod]
     [System.Web.Script.Services.ScriptMethod()]
@@ -1741,12 +1739,13 @@ public partial class User_U_ProductList : System.Web.UI.Page
     {
         Cryptography objCrypto1 = new Cryptography();
         List<string> customers = new List<string>();
+        List<string> Finalcustomers = new List<string>();
         using (SqlConnection conn = new SqlConnection())
         {
             conn.ConnectionString = objCrypto1.DecryptData(ConfigurationManager.ConnectionStrings["connectiondb"].ConnectionString);
             using (SqlCommand cmd = new SqlCommand())
             {
-                cmd.CommandText = "select ProductRefNo from tbl_trn_ProductFilterSearchTemp  where ProductRefNo like @SearchText + '%'";
+                cmd.CommandText = "select distinct ProductRefNo from tbl_trn_ProductFilterSearchTemp  where ProductRefNo like @SearchText + '%'";
                 cmd.Parameters.AddWithValue("@SearchText", prefix);
                 cmd.Connection = conn;
                 conn.Open();
@@ -1754,7 +1753,7 @@ public partial class User_U_ProductList : System.Web.UI.Page
                 {
                     while (sdr.Read())
                     {
-                        customers.Add(string.Format("{0}-{1}", sdr["ProductRefNo"], sdr["ProductRefNo"]));
+                        customers.Add(string.Format("{0}", sdr["ProductRefNo"]));
                     }
                 }
                 cmd.CommandText = "select distinct CompanyName from tbl_trn_ProductFilterSearchTemp where CompanyName like @SearchText + '%'";
@@ -1762,7 +1761,7 @@ public partial class User_U_ProductList : System.Web.UI.Page
                 {
                     while (sdr.Read())
                     {
-                        customers.Add(string.Format("{0}-{1}", sdr["CompanyName"], sdr["CompanyName"]));
+                        customers.Add(string.Format("{0}", sdr["CompanyName"]));
                     }
                 }
                 cmd.CommandText = "select distinct FactoryName from tbl_trn_ProductFilterSearchTemp where FactoryName like @SearchText + '%'";
@@ -1770,7 +1769,7 @@ public partial class User_U_ProductList : System.Web.UI.Page
                 {
                     while (sdr.Read())
                     {
-                        customers.Add(string.Format("{0}-{1}", sdr["FactoryName"], sdr["FactoryName"]));
+                        customers.Add(string.Format("{0}", sdr["FactoryName"]));
                     }
                 }
 
@@ -1779,7 +1778,7 @@ public partial class User_U_ProductList : System.Web.UI.Page
                 {
                     while (sdr.Read())
                     {
-                        customers.Add(string.Format("{0}-{1}", sdr["UnitName"], sdr["UnitName"]));
+                        customers.Add(string.Format("{0}", sdr["UnitName"]));
                     }
                 }
                 cmd.CommandText = "select distinct NSCCode from tbl_mst_MainProduct where NSCCode like @SearchText + '%'";
@@ -1787,7 +1786,7 @@ public partial class User_U_ProductList : System.Web.UI.Page
                 {
                     while (sdr.Read())
                     {
-                        customers.Add(string.Format("{0}-{1}", sdr["NSCCode"], sdr["NSCCode"]));
+                        customers.Add(string.Format("{0}", sdr["NSCCode"]));
                     }
                 }
                 cmd.CommandText = "select distinct ProductDescription from tbl_Mst_MainProduct where ProductDescription like @SearchText + '%' and (ProductDescription is not null or ProductDescription !='')";
@@ -1795,7 +1794,7 @@ public partial class User_U_ProductList : System.Web.UI.Page
                 {
                     while (sdr.Read())
                     {
-                        customers.Add(string.Format("{0}-{1}", sdr["ProductDescription"], sdr["ProductDescription"]));
+                        customers.Add(string.Format("{0}", sdr["ProductDescription"]));
                     }
                 }
                 cmd.CommandText = "select distinct NSNGroup from tbl_trn_ProductFilterSearchTemp where NSNGroup like @SearchText + '%' and (NSNGroup is not null or NSNGroup !='')";
@@ -1803,7 +1802,7 @@ public partial class User_U_ProductList : System.Web.UI.Page
                 {
                     while (sdr.Read())
                     {
-                        customers.Add(string.Format("{0}-{1}", sdr["NSNGroup"], sdr["NSNGroup"]));
+                        customers.Add(string.Format("{0}", sdr["NSNGroup"]));
                     }
                 }
                 cmd.CommandText = "select distinct DefencePlatform from tbl_trn_ProductFilterSearchTemp where DefencePlatform like @SearchText + '%' and (DefencePlatform is not null or DefencePlatform !='')";
@@ -1811,7 +1810,7 @@ public partial class User_U_ProductList : System.Web.UI.Page
                 {
                     while (sdr.Read())
                     {
-                        customers.Add(string.Format("{0}-{1}", sdr["DefencePlatform"], sdr["DefencePlatform"]));
+                        customers.Add(string.Format("{0}", sdr["DefencePlatform"]));
                     }
                 }
                 cmd.CommandText = "select distinct ProdIndustryDoamin from tbl_trn_ProductFilterSearchTemp where ProdIndustryDoamin like @SearchText + '%' and (ProdIndustryDoamin is not null or ProdIndustryDoamin !='')";
@@ -1819,7 +1818,7 @@ public partial class User_U_ProductList : System.Web.UI.Page
                 {
                     while (sdr.Read())
                     {
-                        customers.Add(string.Format("{0}-{1}", sdr["ProdIndustryDoamin"], sdr["ProdIndustryDoamin"]));
+                        customers.Add(string.Format("{0}", sdr["ProdIndustryDoamin"]));
                     }
                 }
                 cmd.CommandText = "select distinct NSNGroupClass from tbl_trn_ProductFilterSearchTemp where NSNGroupClass like @SearchText + '%' and (NSNGroupClass is not null or NSNGroupClass !='')";
@@ -1827,7 +1826,7 @@ public partial class User_U_ProductList : System.Web.UI.Page
                 {
                     while (sdr.Read())
                     {
-                        customers.Add(string.Format("{0}-{1}", sdr["NSNGroupClass"], sdr["NSNGroupClass"]));
+                        customers.Add(string.Format("{0}", sdr["NSNGroupClass"]));
                     }
                 }
                 cmd.CommandText = "select distinct ItemCode from tbl_trn_ProductFilterSearchTemp where ItemCode like @SearchText + '%' and (ItemCode is not null or ItemCode !='')";
@@ -1835,7 +1834,7 @@ public partial class User_U_ProductList : System.Web.UI.Page
                 {
                     while (sdr.Read())
                     {
-                        customers.Add(string.Format("{0}-{1}", sdr["ItemCode"], sdr["ItemCode"]));
+                        customers.Add(string.Format("{0}", sdr["ItemCode"]));
                     }
                 }
                 cmd.CommandText = "select distinct ProdIndustrySubDomain from tbl_trn_ProductFilterSearchTemp where ProdIndustrySubDomain like @SearchText + '%' and (ProdIndustrySubDomain is not null or ProdIndustrySubDomain !='')";
@@ -1843,7 +1842,7 @@ public partial class User_U_ProductList : System.Web.UI.Page
                 {
                     while (sdr.Read())
                     {
-                        customers.Add(string.Format("{0}-{1}", sdr["ProdIndustrySubDomain"], sdr["ProdIndustrySubDomain"]));
+                        customers.Add(string.Format("{0}", sdr["ProdIndustrySubDomain"]));
                     }
                 }
                 cmd.CommandText = "select distinct TopImages from tbl_trn_ProductFilterSearchTemp where TopImages like @SearchText + '%' and (TopImages is not null or TopImages !='')";
@@ -1851,7 +1850,7 @@ public partial class User_U_ProductList : System.Web.UI.Page
                 {
                     while (sdr.Read())
                     {
-                        customers.Add(string.Format("{0}-{1}", sdr["TopImages"], sdr["TopImages"]));
+                        customers.Add(string.Format("{0}", sdr["TopImages"]));
                     }
                 }
                 cmd.CommandText = "select  distinct TopPdf from tbl_trn_ProductFilterSearchTemp where TopPdf like @SearchText + '%' and (TopPdf is not null or TopPdf !='') ";
@@ -1859,7 +1858,7 @@ public partial class User_U_ProductList : System.Web.UI.Page
                 {
                     while (sdr.Read())
                     {
-                        customers.Add(string.Format("{0}-{1}", sdr["TopPdf"], sdr["TopPdf"]));
+                        customers.Add(string.Format("{0}", sdr["TopPdf"]));
                     }
                 }
                 cmd.CommandText = "select distinct HSNCode from tbl_trn_ProductFilterSearchTemp where HSNCode like @SearchText + '%' and (HSNCode is not null or HSNCode !='')";
@@ -1867,7 +1866,7 @@ public partial class User_U_ProductList : System.Web.UI.Page
                 {
                     while (sdr.Read())
                     {
-                        customers.Add(string.Format("{0}-{1}", sdr["HSNCode"], sdr["HSNCode"]));
+                        customers.Add(string.Format("{0}", sdr["HSNCode"]));
                     }
                 }
                 cmd.CommandText = "select distinct DPSUPartNumber from tbl_trn_ProductFilterSearchTemp where DPSUPartNumber like @SearchText + '%' and (DPSUPartNumber is not null or DPSUPartNumber !='')";
@@ -1875,7 +1874,7 @@ public partial class User_U_ProductList : System.Web.UI.Page
                 {
                     while (sdr.Read())
                     {
-                        customers.Add(string.Format("{0}-{1}", sdr["DPSUPartNumber"], sdr["DPSUPartNumber"]));
+                        customers.Add(string.Format("{0}", sdr["DPSUPartNumber"]));
                     }
                 }
                 cmd.CommandText = "select distinct OEMName from tbl_trn_ProductFilterSearchTemp where OEMName like @SearchText + '%' and (OEMName is not null or OEMName !='')";
@@ -1883,7 +1882,7 @@ public partial class User_U_ProductList : System.Web.UI.Page
                 {
                     while (sdr.Read())
                     {
-                        customers.Add(string.Format("{0}-{1}", sdr["OEMName"], sdr["OEMName"]));
+                        customers.Add(string.Format("{0}", sdr["OEMName"]));
                     }
                 }
                 cmd.CommandText = "select distinct OEMCountry from tbl_trn_ProductFilterSearchTemp where OEMCountry like @SearchText + '%' and (OEMCountry is not null or OEMCountry !='')";
@@ -1891,7 +1890,7 @@ public partial class User_U_ProductList : System.Web.UI.Page
                 {
                     while (sdr.Read())
                     {
-                        customers.Add(string.Format("{0}-{1}", sdr["OEMCountry"], sdr["OEMCountry"]));
+                        customers.Add(string.Format("{0}", sdr["OEMCountry"]));
                     }
                 }
                 cmd.CommandText = "select distinct EstimatedQty from tbl_trn_ProdQtyPrice where EstimatedQty like @SearchText + '%'";
@@ -1899,7 +1898,7 @@ public partial class User_U_ProductList : System.Web.UI.Page
                 {
                     while (sdr.Read())
                     {
-                        customers.Add(string.Format("{0}-{1}", sdr["EstimatedQty"], sdr["EstimatedQty"]));
+                        customers.Add(string.Format("{0}", sdr["EstimatedQty"]));
                     }
                 }
                 cmd.CommandText = "select distinct EstimatedPrice from tbl_trn_ProdQtyPrice where EstimatedPrice like @SearchText + '%'";
@@ -1907,13 +1906,24 @@ public partial class User_U_ProductList : System.Web.UI.Page
                 {
                     while (sdr.Read())
                     {
-                        customers.Add(string.Format("{0}-{1}", sdr["EstimatedPrice"], sdr["EstimatedPrice"]));
+                        customers.Add(string.Format("{0}", sdr["EstimatedPrice"]));
                     }
                 }
                 conn.Close();
             }
         }
-        return customers.ToArray();
+
+        return customers.Distinct().ToArray();
+    }
+    #endregion
+    #region AutoComplete Serach Box
+    [System.Web.Services.WebMethod]
+    [System.Web.Script.Services.ScriptMethod()]
+    public static string GetSearchKeywordemo(string prefix)
+    {
+        User_U_ProductList u = new User_U_ProductList();
+        u.SeachResult(prefix);
+        return "search";
     }
     #endregion
     protected void cleartext()

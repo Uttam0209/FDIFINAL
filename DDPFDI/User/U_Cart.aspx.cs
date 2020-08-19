@@ -10,6 +10,7 @@ using System.Web.UI.WebControls;
 using System.Web;
 using System.Web.Helpers;
 using System.Text.RegularExpressions;
+using System.Net;
 
 public partial class User_U_Cart : System.Web.UI.Page
 {
@@ -24,7 +25,10 @@ public partial class User_U_Cart : System.Web.UI.Page
     DataTable dtCart = new DataTable();
     DataRow dr;
     string mval = "";
+
+    HybridDictionary hySave = new HybridDictionary();
     #endregion
+    string temp = "";
     protected void UpdateDtGridValue(DataTable DtGrid)
     {
         for (int a = 0; a < DtGrid.Rows.Count; a++)
@@ -54,32 +58,13 @@ public partial class User_U_Cart : System.Web.UI.Page
             }
             string smval = mval.Substring(1);
             ViewState["RefN"] = smval;
-            dtCart = Lo.RetriveCart(smval.ToString());
+            dtCart = Lo.RetriveCartNew(smval.ToString());
             if (dtCart.Rows.Count > 0)
             {
-                UpdateDtGridValue(DtGrid);
-                dtCart.Columns.Add("TopImages", typeof(string));
-                for (int i = 0; dtCart.Rows.Count > i; i++)
-                {
-                    string mProdRefTime = dtCart.Rows[i]["ProductRefNo"].ToString();
-                    DataTable dtImageBind4 = Lo.RetriveProductCode("", mProdRefTime, "RetImageTop", "");
-                    if (dtImageBind4.Rows.Count > 0)
-                    {
-                        dtCart.Rows[i]["TopImages"] = dtImageBind4.Rows[0]["ImageName"].ToString();
-                    }
-                    else
-                    {
-                        dtCart.Rows[i]["TopImages"] = "/assets/images/Noimage.png";
-                    }
-                }
                 dlCartProd.DataSource = dtCart;
                 dlCartProd.DataBind();
                 lbltotalprodincart.Text = "You have " + dtCart.Rows.Count + " products in your cart";
                 totalno.InnerText = dtCart.Rows.Count.ToString();
-            }
-            else
-            {
-
             }
         }
         else
@@ -102,19 +87,24 @@ public partial class User_U_Cart : System.Web.UI.Page
     }
     protected void btnsendmail_Click(object sender, EventArgs e)
     {
-        if (txtname.Text != "" && txtemail.Text != "" && txtcompname.Text != "" && txtofficeaddress.Text != "" && txtphone.Text != "")
+        try
         {
-            if (VerifyEmailID(txtemail.Text) != false)
+            if (txtname.Text != "" && txtemail.Text != "" && txtcompname.Text != "" && txtofficeaddress.Text != "" && txtphone.Text != "")
             {
-                SendEmailCode(txtemail.Text, ViewState["RefN"].ToString());
-                SendEmailCodeNodalOfficer(ViewState["RefN"].ToString());
-                cleartext();
+                if (VerifyEmailID(txtemail.Text) != false)
+                {
+                    GenerateOTP();
+                    sendMailOTP();
+                    ScriptManager.RegisterStartupScript(this, GetType(), "modelotp", "showPopup1();", true);
+                }
+            }
+            else
+            {
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Please enter your name or email')", true);
             }
         }
-        else
-        {
-            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Please enter your name or email')", true);
-        }
+        catch (Exception ex)
+        { ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('" + ex.Message.ToString() + "')", true); }
     }
     protected void cleartext()
     {
@@ -181,7 +171,7 @@ public partial class User_U_Cart : System.Web.UI.Page
             body = body.Replace("{dt}", html.ToString());
             SendMail s;
             s = new SendMail();
-            s.CreateMail("noreply-srijandefence@gov.in", empid, "Defence Imports Cart Product Info", body);
+            s.CreateMail("noreply-srijandefence@gov.in", empid, "Make in India opportunities Information", body);
             s.sendMail();
             ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Thankyou for your intrest in these product.We will revert you soon')", true);
         }
@@ -237,11 +227,19 @@ public partial class User_U_Cart : System.Web.UI.Page
             {
                 if (dtMail.Rows[n]["NodalOfficerEmail"].ToString() != "")
                 {
-                    s.CreateMail("noreply-srijandefence@gov.in", dtMail.Rows[n]["NodalOfficerEmail"].ToString(), "Defence Imports Product Info", body);
+                    s.CreateMail("noreply-srijandefence@gov.in", dtMail.Rows[n]["NodalOfficerEmail"].ToString(), "Make in India opportunities Information", body);
                 }
                 else
                 {
-                    s.CreateMail("noreply-srijandefence@gov.in", "shrishkumar.ofb@ofb.gov.in", "Defence Imports Product Info", body);
+                    DataTable DtGetCompIdbyNodal = Lo.RetriveGridViewCompany(dtMail.Rows[n]["ProductRefNo"].ToString(), "", "", "GetIdComporNodal");
+                    if (DtGetCompIdbyNodal.Rows.Count > 0)
+                    {
+                        s.CreateMail("noreply-srijandefence@gov.in", DtGetCompIdbyNodal.Rows[0]["NodalOfficerEmail"].ToString(), "Make in India opportunities Information", body);
+                    }
+                    else
+                    {
+                        s.CreateMail("noreply-srijandefence@gov.in", "shrishkumar.ofb@ofb.gov.in", "Make in India opportunities Information", body);
+                    }
                 }
             }
             s.sendMail();
@@ -707,5 +705,111 @@ public partial class User_U_Cart : System.Web.UI.Page
             }
             #endregion
         }
+    }
+    #region OTPCode
+    protected void GenerateOTP()
+    {
+        try
+        {
+            string numbers = "1234567890";
+            string characters = numbers;
+            int length = int.Parse("6");
+            string otp = string.Empty;
+            for (int i = 0; i < length; i++)
+            {
+                string character = string.Empty;
+                do
+                {
+                    int index = new Random().Next(0, characters.Length);
+                    character = characters.ToCharArray()[index].ToString();
+                } while (otp.IndexOf(character) != -1);
+                otp += character;
+            }
+            hfotp.Value = otp;
+        }
+        catch (Exception ex)
+        {
+            ex.Message.ToString();
+        }
+    }
+    private void sendMailOTP()
+    {
+        string body;
+        using (StreamReader reader = new StreamReader(Server.MapPath("~/emailPage/OTP.html")))
+        {
+            body = reader.ReadToEnd();
+        }
+        body = body.Replace("{OTP}", hfotp.Value);
+        SendMail s;
+        s = new SendMail();
+        s.CreateMail("noreply-srijandefence@gov.in", txtemail.Text, "OTP Verification Cart.", body);
+        s.sendMail();
+    }
+    protected void lbresendotp_Click(object sender, EventArgs e)
+    {
+        GenerateOTP();
+        sendMailOTP();
+    }
+    protected void lbsubmit_Click(object sender, EventArgs e)
+    {
+        if (txtotp.Text != "" && txtotp.Text == hfotp.Value)
+        {
+            try
+            {
+                SendEmailCode(txtemail.Text, ViewState["RefN"].ToString());
+                SendEmailCodeNodalOfficer(ViewState["RefN"].ToString());
+                saveInfo();
+                cleartext();
+                Session.Clear();
+                Session.Abandon();
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alert", "alert('Mail send successfully.'); window.location.href='Productlist';", true);
+            }
+            catch (Exception ex)
+            { ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "ErrorMssgPopup('Error occured in send mail please contact admin person.')", true); }
+        }
+        else
+        {
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "ErrorMssgPopup('Invalid OTP.')", true);
+        }
+    }
+    #endregion
+    protected void lblhome_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("ProductList");
+    }
+    string lblm;
+    string FinalValue;
+    protected void saveInfo()
+    {
+        try
+        {
+            foreach (DataListItem item in dlCartProd.Items)
+            {
+                lblm = ((Label)(item.FindControl("mComp"))).Text;
+                FinalValue = FinalValue + "," + lblm.ToString();
+            }
+            DataTable dtgetprod = Lo.RetriveGridViewCompany(DateTime.Now.ToString("yyyy-MM-dd"), txtemail.Text.Trim(), txtphone.Text, "ret");
+            if (dtgetprod.Rows.Count > 0)
+            {
+
+                hySave["RequestID"] = dtgetprod.Rows[0]["RequestID"].ToString();
+            }
+            else
+            {
+                hySave["RequestID"] = 0;
+            }
+            hySave["RequestBy"] = Co.RSQandSQLInjection(txtname.Text.Trim(), "soft");
+            hySave["RequestCompName"] = Co.RSQandSQLInjection(txtcompname.Text.Trim(), "soft");
+            hySave["RequestMobileNo"] = Co.RSQandSQLInjection(txtphone.Text.Trim(), "soft");
+            hySave["RequestAddress"] = Co.RSQandSQLInjection(txtofficeaddress.Text.Trim(), "soft");
+            hySave["RequestEmail"] = Co.RSQandSQLInjection(txtemail.Text.Trim(), "soft");
+            hySave["RequestProduct"] = Co.RSQandSQLInjection(ViewState["RefN"].ToString(), "soft");
+            hySave["RequestMCompName"] = Co.RSQandSQLInjection(FinalValue.ToString().Substring(1), "soft");
+            hySave["IsMailSend"] = Co.RSQandSQLInjection("Y", "soft");
+            hySave["RequestDate"] = Co.RSQandSQLInjection(DateTime.Now.ToString("dd/MMM/yyyy"), "soft");
+            string str = Lo.SaveRequestInfo(hySave, out _sysMsg, out _msg);
+        }
+        catch (Exception ex)
+        { }
     }
 }

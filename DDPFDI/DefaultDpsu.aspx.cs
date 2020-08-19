@@ -12,7 +12,7 @@ using System.Web;
 using System.Net;
 
 
-public partial class _Default : System.Web.UI.Page
+public partial class _DefaultD : System.Web.UI.Page
 {
     #region "Variables"
     Logic LO = new Logic();
@@ -30,6 +30,7 @@ public partial class _Default : System.Web.UI.Page
     #endregion
     protected void Page_Load(object sender, EventArgs e)
     {
+
     }
     #region "Login Code"
     public static bool IsValidEmailId(string InputEmail)

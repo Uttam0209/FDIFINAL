@@ -2700,5 +2700,46 @@ namespace DataAccessLayer
         }
 
         #endregion
+        #region RequsetInfo Cart
+        public string SaveRequestInfo(HybridDictionary hySaveProdInfo, out string _sysMsg, out string _msg)
+        {
+            using (DbConnection dbcon = db.CreateConnection())
+            {
+                dbcon.Open();
+                DbTransaction dbTran = dbcon.BeginTransaction();
+                try
+                {
+                    DbCommand dbcom = db.GetStoredProcCommand("sp_RequestInfo");
+                    db.AddInParameter(dbcom, "@RequestID", DbType.Int64, hySaveProdInfo["RequestID"]);
+                    db.AddInParameter(dbcom, "@RequestBy", DbType.String, hySaveProdInfo["RequestBy"]);
+                    db.AddInParameter(dbcom, "@RequestProduct", DbType.String, hySaveProdInfo["RequestProduct"]);
+                    db.AddInParameter(dbcom, "@RequestMCompName", DbType.String, hySaveProdInfo["RequestMCompName"]);
+                    db.AddInParameter(dbcom, "@RequestMobileNo", DbType.Int64, hySaveProdInfo["RequestMobileNo"]);
+                    db.AddInParameter(dbcom, "@RequestAddress", DbType.String, hySaveProdInfo["RequestAddress"]); 
+                    db.AddInParameter(dbcom, "@RequestEmail", DbType.String, hySaveProdInfo["RequestEmail"]);
+                    db.AddInParameter(dbcom, "@RequestCompName", DbType.String, hySaveProdInfo["RequestCompName"]);
+                    db.AddInParameter(dbcom, "@IsMailSend", DbType.String, hySaveProdInfo["IsMailSend"]);
+                    db.AddInParameter(dbcom, "@RequestDate", DbType.Date, hySaveProdInfo["RequestDate"]);
+                    db.AddInParameter(dbcom, "@Usedfor", DbType.String, hySaveProdInfo["Usedfor"]);
+                    db.ExecuteNonQuery(dbcom, dbTran);
+                    dbTran.Commit();
+                    _msg = "Save";
+                    _sysMsg = "Save";
+                    return "Save";
+                }
+                catch (SqlException ex)
+                {
+                    dbTran.Rollback();
+                    _msg = ex.Message;
+                    _sysMsg = ex.Message;
+                    return "-1";
+                }
+                finally
+                {
+                    dbcon.Close();
+                }
+            }
+        }
+        #endregion
     }
 }

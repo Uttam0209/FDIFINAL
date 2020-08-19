@@ -79,44 +79,46 @@
                                 <div class="table-responsive" id="divproductgridview" runat="server">
                                     <asp:Label ID="lbltot" runat="server" CssClass="text-center"></asp:Label>
                                     <div class="clearfix mt10"></div>
-                                    <asp:GridView ID="gvproductItem" runat="server" Width="100%" Class="table table-bordered table-wraper table-hover manage-user"
-                                        AutoGenerateColumns="false" OnRowCommand="gvproductItem_RowCommand" OnRowDataBound="gvproductItem_RowDataBound" OnRowCreated="gvproductItem_RowCreated">
-                                        <Columns>
-                                            <asp:TemplateField HeaderText="S.No.">
-                                                <ItemTemplate>
-                                                    <%#Container.DataItemIndex+1 %>
-                                                </ItemTemplate>
-                                            </asp:TemplateField>
-                                            <asp:BoundField DataField="ProductRefNo" HeaderText="Item Id (Portal)" NullDisplayText="#" />
-                                            <asp:BoundField DataField="NSNGroup" HeaderText="NATO Supply Group" NullDisplayText="#" />
-                                            <asp:BoundField DataField="NSNGroupClass" HeaderText="NATO Supply Class" NullDisplayText="#" />
-                                            <asp:BoundField DataField="ProdIndustryDoamin" HeaderText="Prod Indus Doamin" NullDisplayText="#" />
-                                            <asp:BoundField DataField="ProdIndustrySubDomain" HeaderText="Prod Indus Sub Doamin" NullDisplayText="#" />
-                                            <asp:BoundField DataField="ProductDescription" HeaderText="Item Description" ItemStyle-Wrap="true" ItemStyle-Width="150" NullDisplayText="#" />
-                                            <asp:TemplateField HeaderText="DPSUPartNumber">
-                                                <ItemTemplate>
-                                                    <asp:Label ID="lblnodelname" runat="server" Text='<%#Eval("DPSUPartNumber") %>' NullDisplayText="#"></asp:Label>
-                                                    <asp:HiddenField ID="hfdivisionrefno" runat="server" Value='<%#Eval("FactoryRefNo") %>' />
-                                                    <asp:HiddenField ID="hfunitrefno" runat="server" Value='<%#Eval("UnitRefNo") %>' />
-                                                    <asp:Label ID="lblrefno" runat="server" Visible="false" Text='<%#Eval("ProductRefNo") %>'></asp:Label>
-                                                    <asp:HiddenField ID="hfrole" runat="server" Value='<%#Eval("Role") %>' />
-                                                    <asp:HiddenField ID="hfcomprefno" runat="server" Value='<%#Eval("CompanyRefNo") %>' />
-                                                    <asp:HiddenField ID="hfisaaproved" runat="server" Value='<%#Eval("IsApproved") %>' />
-                                                </ItemTemplate>
-                                            </asp:TemplateField>
-                                            <asp:TemplateField HeaderText="Is Approve">
-                                                <ItemTemplate>
-                                                    <asp:Label ID="lblisapproved" runat="server" Text='<%#Eval("IsApproved") %>'></asp:Label>
-                                                </ItemTemplate>
-                                            </asp:TemplateField>
-                                            <asp:TemplateField HeaderText="Action">
-                                                <ItemTemplate>
-                                                    <asp:LinkButton ID="lblview" runat="server" CssClass="fa fa-eye" CommandName="ViewComp" CommandArgument='<%#Eval("ProductRefNo") %>'></asp:LinkButton>
-                                                    <asp:LinkButton ID="lbledit" runat="server" CssClass="fa fa-edit" CommandName="EditComp" CommandArgument='<%#Eval("ProductRefNo") %>'></asp:LinkButton>
-                                                </ItemTemplate>
-                                            </asp:TemplateField>
-                                        </Columns>
-                                    </asp:GridView>
+                                    <div style="overflow:scroll;">
+                                        <asp:GridView ID="gvproductItem" runat="server" Width="100%" Class="table table-bordered table-wraper table-hover manage-user"
+                                            AutoGenerateColumns="false" OnRowCommand="gvproductItem_RowCommand" OnRowDataBound="gvproductItem_RowDataBound" OnRowCreated="gvproductItem_RowCreated">
+                                            <Columns>
+                                                <asp:TemplateField HeaderText="S.No.">
+                                                    <ItemTemplate>
+                                                        <%#Container.DataItemIndex+1 %>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:BoundField DataField="ProductRefNo" HeaderText="Item Id (Portal)" NullDisplayText="#" />
+                                                <asp:BoundField DataField="NSNGroup" HeaderText="NATO Supply Group" NullDisplayText="#" />
+                                                <asp:BoundField DataField="NSNGroupClass" HeaderText="NATO Supply Class" NullDisplayText="#" />
+                                                <asp:BoundField DataField="ProdIndustryDoamin" HeaderText="Prod Indus Doamin" NullDisplayText="#" />
+                                                <asp:BoundField DataField="ProdIndustrySubDomain" HeaderText="Prod Indus Sub Doamin" NullDisplayText="#" />
+                                                <asp:BoundField DataField="ProductDescription" HeaderText="Item Description" ItemStyle-Wrap="true" ItemStyle-Width="150" NullDisplayText="#" />
+                                                <asp:TemplateField HeaderText="DPSUPartNumber">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="lblnodelname" runat="server" Text='<%#Eval("DPSUPartNumber") %>' NullDisplayText="#"></asp:Label>
+                                                        <asp:HiddenField ID="hfdivisionrefno" runat="server" Value='<%#Eval("FactoryRefNo") %>' />
+                                                        <asp:HiddenField ID="hfunitrefno" runat="server" Value='<%#Eval("UnitRefNo") %>' />
+                                                        <asp:Label ID="lblrefno" runat="server" Visible="false" Text='<%#Eval("ProductRefNo") %>'></asp:Label>
+                                                        <asp:HiddenField ID="hfrole" runat="server" Value='<%#Eval("Role") %>' />
+                                                        <asp:HiddenField ID="hfcomprefno" runat="server" Value='<%#Eval("CompanyRefNo") %>' />
+                                                        <asp:HiddenField ID="hfisaaproved" runat="server" Value='<%#Eval("IsApproved") %>' />
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="Is Approve">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="lblisapproved" runat="server" Text='<%#Eval("IsApproved") %>'></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="Action">
+                                                    <ItemTemplate>
+                                                        <asp:LinkButton ID="lblview" runat="server" CssClass="fa fa-eye" CommandName="ViewComp" CommandArgument='<%#Eval("ProductRefNo") %>'></asp:LinkButton>
+                                                        <asp:LinkButton ID="lbledit" runat="server" CssClass="fa fa-edit" CommandName="EditComp" CommandArgument='<%#Eval("ProductRefNo") %>'></asp:LinkButton>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                            </Columns>
+                                        </asp:GridView>
+                                    </div>
                                     <!-----------------------------------------Code for pageindexing----------------------------------------------------->
                                     <div class="row" runat="server" id="divpageindex" visible="false">
                                         <div class="col-sm-9">

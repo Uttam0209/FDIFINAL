@@ -1063,22 +1063,30 @@ public partial class Admin_AddProduct : System.Web.UI.Page
             {
                 HyPanel1["ProductLevel1"] = null;
             }
-            if (ddlsubcategory.SelectedItem.Value != "Select")
-            {
-                HyPanel1["ProductLevel2"] = Co.RSQandSQLInjection(ddlsubcategory.SelectedItem.Value, "soft");
-            }
-            else
-            {
-                HyPanel1["ProductLevel2"] = null;
-            }
-            if (ddllevel3product.SelectedItem.Value != "Select")
-            {
-                HyPanel1["ProductLevel3"] = Co.RSQandSQLInjection(ddllevel3product.SelectedItem.Value, "soft");
-                DtNSFIIG = SaveFiigNo();
-            }
-            else
+            if (ddlmastercategory.SelectedItem.Value == "Select")
             {
                 HyPanel1["ProductLevel3"] = null;
+                HyPanel1["ProductLevel2"] = null;
+            }
+            else
+            {
+                if (ddlsubcategory.SelectedItem.Value != "Select")
+                {
+                    HyPanel1["ProductLevel2"] = Co.RSQandSQLInjection(ddlsubcategory.SelectedItem.Value, "soft");
+                }
+                else
+                {
+                    HyPanel1["ProductLevel2"] = null;
+                }
+                if (ddllevel3product.SelectedItem.Value != "Select")
+                {
+                    HyPanel1["ProductLevel3"] = Co.RSQandSQLInjection(ddllevel3product.SelectedItem.Value, "soft");
+                    DtNSFIIG = SaveFiigNo();
+                }
+                else
+                {
+                    HyPanel1["ProductLevel3"] = null;
+                }
             }
             HyPanel1["ProductDescription"] = Co.RSQandSQLInjection(txtproductdescription.Text.Trim(), "soft");
             HyPanel1["NSCCode"] = Co.RSQandSQLInjection(txtnsccode.Text.Trim(), "soft");
@@ -1146,7 +1154,15 @@ public partial class Admin_AddProduct : System.Web.UI.Page
             }
             HyPanel1["OEMPartNumber"] = Co.RSQandSQLInjection(txtoempartnumber.Text.Trim(), "soft");
             HyPanel1["OEMName"] = Co.RSQandSQLInjection(txtoemname.Text.Trim(), "soft");
-            HyPanel1["OEMCountry"] = Convert.ToInt64(txtcountry.SelectedItem.Value);
+            if(txtcountry.SelectedItem.Value != "Select")
+            {
+                HyPanel1["OEMCountry"] = Convert.ToInt64(txtcountry.SelectedItem.Value);
+            }
+            else
+            {
+                HyPanel1["OEMCountry"] = "0";
+            }
+            
             HyPanel1["OEMAddress"] = Co.RSQandSQLInjection(txtoemaddress.Text.Trim(), "soft");
             HyPanel1["DPSUPartNumber"] = Co.RSQandSQLInjection(txtdpsupartnumber.Text.Trim(), "soft");
             HyPanel1["HSCode"] = null;
@@ -1159,53 +1175,69 @@ public partial class Admin_AddProduct : System.Web.UI.Page
             HyPanel1["HsCode4digit"] = "";
             HyPanel1["HsnCode8digit"] = txthsncodereadonly.Text.Trim();
             HyPanel1["EndUserPartNumber"] = "";
-            if (ddlenduser.SelectedItem.Value != "Select")
-            {
-                for (int o = 0; o < ddlenduser.Items.Count; o++)
+            
+                if (ddlenduser.SelectedIndex != -1)
                 {
-                    if (ddlenduser.Items[o].Selected == true)
+                    for (int o = 0; o < ddlenduser.Items.Count; o++)
                     {
-                        m = m + ddlenduser.Items[o].Value + ",";
+                        if (ddlenduser.Items[o].Selected == true)
+                        {
+                            m = m + ddlenduser.Items[o].Value + ",";
+                        }
                     }
+                    HyPanel1["EndUser"] = m;
                 }
-                HyPanel1["EndUser"] = m;
-            }
-            else
-            {
-                HyPanel1["EndUser"] = null;
-            }
-            if (ddlplatform.SelectedItem.Value != "Select")
-            {
-                HyPanel1["Platform"] = Co.RSQandSQLInjection(ddlplatform.SelectedItem.Value, "soft");
-            }
-            else
-            {
-                HyPanel1["Platform"] = null;
-            }
-            if (ddlnomnclature.SelectedItem.Value != "Select")
-            {
-                HyPanel1["NomenclatureOfMainSystem"] = Co.RSQandSQLInjection(ddlnomnclature.SelectedItem.Value, "soft");
-            }
-            else
+                else
+                {
+                    HyPanel1["EndUser"] = null;
+                }
+                if (ddlplatform.SelectedItem.Value != "Select")
+                {
+                    HyPanel1["Platform"] = Co.RSQandSQLInjection(ddlplatform.SelectedItem.Value, "soft");
+                }
+                else
+                {
+                    HyPanel1["Platform"] = null;
+                }
+            if (ddlplatform.SelectedItem.Value == "Select")
             {
                 HyPanel1["NomenclatureOfMainSystem"] = null;
             }
-            if (ddltechnologycat.SelectedItem.Value != "Select")
-            {
-                HyPanel1["TechnologyLevel1"] = Co.RSQandSQLInjection(ddltechnologycat.SelectedItem.Value, "soft");
-            }
             else
             {
-                HyPanel1["TechnologyLevel1"] = null;
+                if (ddlnomnclature.SelectedItem.Value != "Select")
+                {
+                    HyPanel1["NomenclatureOfMainSystem"] = Co.RSQandSQLInjection(ddlnomnclature.SelectedItem.Value, "soft");
+                }
+                else
+                {
+                    HyPanel1["NomenclatureOfMainSystem"] = null;
+                }
             }
-            if (ddlsubtech.SelectedItem.Value != "Select")
-            {
-                HyPanel1["TechnologyLevel2"] = Co.RSQandSQLInjection(ddlsubtech.SelectedItem.Value, "soft");
-            }
-            else
+                if (ddltechnologycat.SelectedItem.Value != "Select")
+                {
+                    HyPanel1["TechnologyLevel1"] = Co.RSQandSQLInjection(ddltechnologycat.SelectedItem.Value, "soft");
+                }
+                else
+                {
+                    HyPanel1["TechnologyLevel1"] = null;
+                }
+            if (ddltechnologycat.SelectedItem.Value == "Select")
             {
                 HyPanel1["TechnologyLevel2"] = null;
             }
+            else
+            {
+                if (ddlsubtech.SelectedItem.Value != "Select")
+                {
+                    HyPanel1["TechnologyLevel2"] = Co.RSQandSQLInjection(ddlsubtech.SelectedItem.Value, "soft");
+                }
+                else
+                {
+                    HyPanel1["TechnologyLevel2"] = null;
+                }
+            }
+
             HyPanel1["TechnologyLevel3"] = null;
             HyPanel1["SearchKeyword"] = Co.RSQandSQLInjection(txtsearchkeyword.Text.Trim(), "soft");
             HyPanel1["IsIndeginized"] = Co.RSQandSQLInjection(rbisindinised.SelectedItem.Value, "soft");
@@ -1334,8 +1366,8 @@ public partial class Admin_AddProduct : System.Web.UI.Page
             {
                 if (btnsubmitpanel1.Text != "Update")
                 {
-                    Cleartext();
                     ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "alert('Item Id (Portal) = " + StrProductDescription + " saved successfully.')", true);
+                    Cleartext();
                 }
                 else
                 {
@@ -1357,71 +1389,123 @@ public partial class Admin_AddProduct : System.Web.UI.Page
     #region PanelSaveButtonCode
     protected void btnsubmitpanel1_Click(object sender, EventArgs e)
     {
-        try
+        HyPanel1["CompanyRefNo"] = Co.RSQandSQLInjection(ddlcompany.SelectedItem.Value, "soft");
+        if (HyPanel1["CompanyRefNo"].ToString() == "C0023" || HyPanel1["CompanyRefNo"].ToString() == "C0024" || HyPanel1["CompanyRefNo"].ToString() == "C0025")
         {
-            if (ddlcompany.SelectedItem.Text != "Select" && ddlmastercategory.SelectedItem.Text != "Select" && ddlsubcategory.SelectedItem.Text != "Select" && ddllevel3product.SelectedItem.Text != "Select" && ddltechnologycat.SelectedItem.Text != "Select" && ddlcompany.SelectedItem.Text != "Select")
+            if (txtproductdescription.Text != "")
             {
-                if (ddlsubtech.SelectedItem.Text != "Select" && ddlnomnclature.SelectedItem.Text != "Select" && ddlenduser.SelectedItem.Text != "Select" && ddlplatform.SelectedItem.Text != "Select")
+                if (txtestquan1.Text != "" && txtpriceestimate1.Text != "" || txtestquan2.Text != "" && txtpriceestimate2.Text != "" || txtestquan3.Text != "" && txtpriceestimate3.Text != "")
                 {
-                    if (txtcountry.SelectedItem.Text != "Select")
+                    SaveProductDescription();
+                }
+                else
+                {
+                    ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "alert('Please select any one year of import during last 3 years detail. and Item Name is mandatory')", true);
+                }
+            }
+            else
+            {
+                ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "alert('Item Name is mandatory')", true);
+            }
+        }
+        else
+        {
+            try
+            {
+                if (ddlcompany.SelectedItem.Text != "Select" && ddlmastercategory.SelectedItem.Text != "Select" && ddlsubcategory.SelectedItem.Text != "Select" && ddllevel3product.SelectedItem.Text != "Select" && ddltechnologycat.SelectedItem.Text != "Select" && ddlcompany.SelectedItem.Text != "Select")
+                {
+                    if (ddlsubtech.SelectedItem.Text != "Select" && ddlnomnclature.SelectedItem.Text != "Select" && ddlenduser.SelectedItem.Text != "Select" && ddlplatform.SelectedItem.Text != "Select")
                     {
-                        if (rbeligible.SelectedIndex != -1)
+                        if (txtcountry.SelectedItem.Text != "Select")
                         {
-                            string checklistdeclaration = "";
-                            foreach (ListItem chkd in chklistdeclarationimage.Items)
+                            if (rbeligible.SelectedIndex != -1)
                             {
-                                if (chkd.Selected == true)
+                                string checklistdeclaration = "";
+                                foreach (ListItem chkd in chklistdeclarationimage.Items)
                                 {
-                                    checklistdeclaration = checklistdeclaration + chkd.ToString().Substring(0, 1);
-                                }
-                                else
-                                {
-                                    checklistdeclaration = "";
-                                    break;
-                                }
-                            }
-                            if (checklistdeclaration != "")
-                            {
-                                //string mIgCat = "";
-                                //foreach (ListItem chkIg in rbIgCategory.Items)
-                                //{
-                                //    if (chkIg.Selected == true)
-                                //    {
-                                //        mIgCat = mIgCat + chkIg;
-                                //    }
-                                //}
-                                //if (mIgCat != "")
-                                //{
-                                if (rbeligible.SelectedIndex != -1)
-                                {
-                                    string mchkqua = "";
-                                    foreach (ListItem chkQa in chkQAA.Items)
+                                    if (chkd.Selected == true)
                                     {
-                                        if (chkQa.Selected == true)
-                                        {
-                                            mchkqua = mchkqua + chkQa;
-                                        }
+                                        checklistdeclaration = checklistdeclaration + chkd.ToString().Substring(0, 1);
                                     }
-                                    if (mchkqua != "")
+                                    else
                                     {
-                                        string mIndigYearTarget = "";
-                                        foreach (ListItem chkIty in chkinditargetyear.Items)
+                                        checklistdeclaration = "";
+                                        break;
+                                    }
+                                }
+                                if (checklistdeclaration != "")
+                                {
+                                    //string mIgCat = "";
+                                    //foreach (ListItem chkIg in rbIgCategory.Items)
+                                    //{
+                                    //    if (chkIg.Selected == true)
+                                    //    {
+                                    //        mIgCat = mIgCat + chkIg;
+                                    //    }
+                                    //}
+                                    //if (mIgCat != "")
+                                    //{
+                                    if (rbeligible.SelectedIndex != -1)
+                                    {
+                                        string mchkqua = "";
+                                        foreach (ListItem chkQa in chkQAA.Items)
                                         {
-                                            if (chkIty.Selected == true)
+                                            if (chkQa.Selected == true)
                                             {
-                                                mIndigYearTarget = mIndigYearTarget + chkIty.ToString().Trim();
+                                                mchkqua = mchkqua + chkQa;
                                             }
                                         }
-                                        if (mIndigYearTarget != "")
+                                        if (mchkqua != "")
                                         {
-                                            if (txtestquan1.Text != "" && txtpriceestimate1.Text != "" || txtestquan2.Text != "" && txtpriceestimate2.Text != "" || txtestquan3.Text != "" && txtpriceestimate3.Text != "")
+                                            string mIndigYearTarget = "";
+                                            foreach (ListItem chkIty in chkinditargetyear.Items)
                                             {
-                                                if (fuitemdescriptionfile.HasFile != false)
+                                                if (chkIty.Selected == true)
                                                 {
-                                                    int iFileSize = fuitemdescriptionfile.PostedFile.ContentLength;
-                                                    if (iFileSize > 5242880) // 5MB
+                                                    mIndigYearTarget = mIndigYearTarget + chkIty.ToString().Trim();
+                                                }
+                                            }
+                                            if (mIndigYearTarget != "")
+                                            {
+                                                if (txtestquan1.Text != "" && txtpriceestimate1.Text != "" || txtestquan2.Text != "" && txtpriceestimate2.Text != "" || txtestquan3.Text != "" && txtpriceestimate3.Text != "")
+                                                {
+                                                    if (fuitemdescriptionfile.HasFile != false)
                                                     {
-                                                        ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "alert('Maximum 5 Mb pdf file can be uploaded')", true);
+                                                        int iFileSize = fuitemdescriptionfile.PostedFile.ContentLength;
+                                                        if (iFileSize > 5242880) // 5MB
+                                                        {
+                                                            ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "alert('Maximum 5 Mb pdf file can be uploaded')", true);
+                                                        }
+                                                        else
+                                                        {
+                                                            if (fuimages.HasFile != false)
+                                                            {
+                                                                int filecount = 0;
+                                                                filecount = Convert.ToInt32(fuimages.PostedFiles.Count.ToString());
+                                                                if (filecount <= 4)
+                                                                {
+                                                                    int iImageFileSize = fuimages.PostedFile.ContentLength;
+                                                                    if (iImageFileSize > 20971520)
+                                                                    {
+                                                                        ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert",
+                                                                            "alert('Maximum 5 Mb each .jpg,.jpeg,.png,.tif images can be uploaded')", true);
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        SaveProductDescription();
+                                                                    }
+                                                                }
+                                                                else
+                                                                {
+                                                                    ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert",
+                                                                        "alert('Maximum 4 files can be uploaded')", true);
+                                                                }
+                                                            }
+                                                            else
+                                                            {
+                                                                SaveProductDescription();
+                                                            }
+                                                        }
                                                     }
                                                     else
                                                     {
@@ -1456,66 +1540,40 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                                                 }
                                                 else
                                                 {
-                                                    if (fuimages.HasFile != false)
-                                                    {
-                                                        int filecount = 0;
-                                                        filecount = Convert.ToInt32(fuimages.PostedFiles.Count.ToString());
-                                                        if (filecount <= 4)
-                                                        {
-                                                            int iImageFileSize = fuimages.PostedFile.ContentLength;
-                                                            if (iImageFileSize > 20971520)
-                                                            {
-                                                                ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert",
-                                                                    "alert('Maximum 5 Mb each .jpg,.jpeg,.png,.tif images can be uploaded')", true);
-                                                            }
-                                                            else
-                                                            {
-                                                                SaveProductDescription();
-                                                            }
-                                                        }
-                                                        else
-                                                        {
-                                                            ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert",
-                                                                "alert('Maximum 4 files can be uploaded')", true);
-                                                        }
-                                                    }
-                                                    else
-                                                    {
-                                                        SaveProductDescription();
-                                                    }
+                                                    ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "alert('Please select any one year of import during last 3 years detail.')", true);
                                                 }
                                             }
                                             else
                                             {
-                                                ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "alert('Please select any one year of import during last 3 years detail.')", true);
+                                                ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "alert('Please checked Indigenization Target Year.')", true);
                                             }
                                         }
                                         else
                                         {
-                                            ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "alert('Please checked Indigenization Target Year.')", true);
+                                            ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "alert('Please select Quality Assurance Agency category tab and select checkbox before submit.')", true);
                                         }
                                     }
                                     else
                                     {
-                                        ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "alert('Please select Quality Assurance Agency category tab and select checkbox before submit.')", true);
+                                        ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "alert('Please select EoI/RFP before submit.')", true);
                                     }
+                                    //}
+                                    //else
+                                    //{ ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "alert('Please select indigenization category tab and select checkbox before submit.')", true); }
                                 }
                                 else
                                 {
-                                    ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "alert('Please select EoI/RFP before submit.')", true);
+                                    ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "alert('Please select declaration tab and select all checkbox before submit.')", true);
                                 }
-                                //}
-                                //else
-                                //{ ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "alert('Please select indigenization category tab and select checkbox before submit.')", true); }
                             }
                             else
                             {
-                                ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "alert('Please select declaration tab and select all checkbox before submit.')", true);
+                                ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "alert('Please select and check declaration section at last tab.')", true);
                             }
                         }
                         else
                         {
-                            ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "alert('Please select and check declaration section at last tab.')", true);
+                            ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "alert('Please fill (*) mandatory fields.')", true);
                         }
                     }
                     else
@@ -1528,14 +1586,10 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                     ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "alert('Please fill (*) mandatory fields.')", true);
                 }
             }
-            else
+            catch (Exception ex)
             {
-                ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "alert('Please fill (*) mandatory fields.')", true);
+                ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "alert('Please check all (*) mandatory field are filled or check properly.' )", true);
             }
-        }
-        catch (Exception ex)
-        {
-            ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "alert('Please check all (*) mandatory field are filled or check properly.' )", true);
         }
     }
     protected void btncancelpanel1_Click(object sender, EventArgs e)
@@ -2423,6 +2477,10 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                         }
 
                     }
+                    else
+                    {
+
+                    }
                 }
                 if (DtView.Rows[0]["IndTargetYear"].ToString() != "")
                 {
@@ -2498,9 +2556,19 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                 else
                 { contactpanel2.Visible = false; }
                 rbeligible.SelectedValue = DtView.Rows[0]["IsShowGeneral"].ToString();
-                foreach (ListItem chki in chklistdeclarationimage.Items)
+                if (hfcomprefno.Value == "C0023" || hfcomprefno.Value == "C0024" || hfcomprefno.Value == "C0025")
                 {
-                    chki.Selected = true;
+                    foreach (ListItem chki in chklistdeclarationimage.Items)
+                    {
+                        chki.Selected = false;
+                    }
+                }
+                else
+                {
+                    foreach (ListItem chki in chklistdeclarationimage.Items)
+                    {
+                        chki.Selected = true;
+                    }
                 }
             }
         }

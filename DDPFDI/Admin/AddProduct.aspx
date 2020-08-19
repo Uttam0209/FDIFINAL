@@ -1,4 +1,4 @@
-﻿<%@ page language="C#" autoeventwireup="true" inherits="Admin_AddProduct" CodeFile="AddProduct.aspx.cs" validaterequest="false" masterpagefile="~/Admin/MasterPage.master" viewstateencryptionmode="Always" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" Inherits="Admin_AddProduct" CodeFile="AddProduct.aspx.cs" ValidateRequest="false" MasterPageFile="~/Admin/MasterPage.master" ViewStateEncryptionMode="Always" %>
 
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="asp" %>
 <asp:Content ID="head" runat="server" ContentPlaceHolderID="head">
@@ -51,6 +51,7 @@
                         <div class="form-group">
                             <div class="col-sm-4" runat="server" visible="false" id="portalid">
                                 <b>Item Id (Portal):- 
+                                   
                                     <asp:Label ID="lblrefnoforinfo" runat="server"></asp:Label></b>
                             </div>
                         </div>
@@ -98,6 +99,7 @@
                                                                 <span data-toggle="tooltip" class="fa fa-question" title="Number in bracket indicates NATO SUPPLY GROUP"></span>
                                                             </label>
                                                             <asp:DropDownList runat="server" ID="ddlmastercategory" class="form-control" Style="text-transform: uppercase !important;" TabIndex="1" AutoPostBack="True" OnSelectedIndexChanged="ddlmastercategory_SelectedIndexChanged"></asp:DropDownList>
+                                                            <span><a href="NATO Supply Group-Class.xlsx" class="fa fa-download mt5">&nbsp;Guide for selecting correct NATO Supply- Group Class.</a></span>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-4">
@@ -131,13 +133,15 @@
                                                             <div class="col-sm-3 padding_0">
                                                                 <label style="font-size: 14px !important;">
                                                                     NSC Code (4 digit)
-                                                                        <span data-toggle="tooltip" class="fa fa-question" title="NSC Code = NATO SUPPLY GROUP (2 digit) + NATO SUPPLY CLASS (2 digit)"></span>
+                                                                       
+                                                                    <span data-toggle="tooltip" class="fa fa-question" title="NSC Code = NATO SUPPLY GROUP (2 digit) + NATO SUPPLY CLASS (2 digit)"></span>
                                                                 </label>
                                                                 <asp:TextBox runat="server" ID="txtnsccode" ReadOnly="True" MaxLength="4" CssClass="form-cascade-control form-control"></asp:TextBox>
                                                             </div>
                                                             <div class="col-sm-6 padding_0">
                                                                 <label>
                                                                     NIIN Code (9-digit)
+                                                                   
                                                                     <span data-toggle="tooltip" class="fa fa-question" title="Please enter if NIIN code is available"></span>
                                                                 </label>
                                                                 <asp:TextBox runat="server" ID="txtniincode" TabIndex="4" MaxLength="9" class="form-control"></asp:TextBox>
@@ -173,7 +177,7 @@
                                                         <div class="form-group">
                                                             <label>Item Name</label>
                                                             <span class="mandatory">* (Editable)</span>  <span data-toggle="tooltip" class="fa fa-question" title="If item name is not relevant, edit the item name."></span>
-                                                            <asp:TextBox runat="server" ID="txtproductdescription" required="" Height="100px" MaxLength="250" TabIndex="5" class="form-control"></asp:TextBox>
+                                                            <asp:TextBox runat="server" ID="txtproductdescription" Height="100px" MaxLength="250" TabIndex="5" class="form-control"></asp:TextBox>
                                                             <div class="clearfix" style="margin-top: 5px;"></div>
                                                             <span style="margin-right: 5px; float: right;">(Max length 250 words only)</span>
                                                         </div>
@@ -259,8 +263,9 @@
                                         <div class="row">
                                             <div class="col-md-4">
                                                 <div class="form-group">
-                                                    <label>OEM Part Number</label>
+                                                    <label>OEM Part Number</label><span></span>
                                                     <asp:TextBox runat="server" ID="txtoempartnumber" TabIndex="9" class="form-control"></asp:TextBox>
+                                                    <span><b style="margin-top: 5px;">Available for general public viewing unless prohibited by specific contract clauses on Non Disclosure of information such as name of OEM</b></span>
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
@@ -277,6 +282,7 @@
                                                     </asp:DropDownList>
                                                 </div>
                                             </div>
+                                            <div class="clearfix mt10"></div>
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>OEM Address</label>
@@ -300,8 +306,9 @@
                                                 <ContentTemplate>
                                                     <div class="col-md-6">
                                                         <div class="form-group">
-                                                            <label>DEFENCE PLATFORM<span class="mandatory">*</span></label>
+                                                            <label>DEFENCE PLATFORM<span class="mandatory">* </span></label>
                                                             <asp:DropDownList runat="server" ID="ddlplatform" AutoPostBack="True" TabIndex="13" Style="text-transform: uppercase !important;" class="form-control" OnSelectedIndexChanged="ddlplatform_SelectedIndexChanged"></asp:DropDownList>
+                                                            <span><b style="margin-top: 5px;">Please get the correct or additional options inserted in drop down menu through category master by CIOs</b></span>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6" style="margin-top: 8px;">
@@ -379,11 +386,12 @@
                                                             <div class="form-group">
                                                                 <label class="mlive-status-box productalreadylabel">
                                                                     Item already indigenized :                                                               
-                                                                <asp:RadioButtonList runat="server" ID="rbisindinised" RepeatColumns="2" TabIndex="19" RepeatLayout="Flow"
-                                                                    RepeatDirection="Horizontal" AutoPostBack="true" OnSelectedIndexChanged="rbisindinised_CheckedChanged ">
-                                                                    <asp:ListItem Value="N" Selected="True">No</asp:ListItem>
-                                                                    <asp:ListItem Value="Y" class="yes">Yes</asp:ListItem>
-                                                                </asp:RadioButtonList>
+                                                               
+                                                                    <asp:RadioButtonList runat="server" ID="rbisindinised" RepeatColumns="2" TabIndex="19" RepeatLayout="Flow"
+                                                                        RepeatDirection="Horizontal" AutoPostBack="true" OnSelectedIndexChanged="rbisindinised_CheckedChanged ">
+                                                                        <asp:ListItem Value="N" Selected="True">No</asp:ListItem>
+                                                                        <asp:ListItem Value="Y" class="yes">Yes</asp:ListItem>
+                                                                    </asp:RadioButtonList>
                                                                 </label>
                                                                 <div class="clearfix" style="margin-top: 10px;"></div>
                                                                 <div runat="server" class="row" id="divisIndigenized" visible="false">
@@ -546,7 +554,7 @@
                                                                                         <asp:TextBox runat="server" CssClass="form-control" ID="txtpriceestimate1" onpaste="showError()" onkeypress="return isNumberKey(event)" Placeholder="Imported value in Rs lakh (Qty*Price)"></asp:TextBox></td>
                                                                                 </tr>
                                                                             </table>
-                                                                           <p class="pull-left mr10">
+                                                                            <p class="pull-left mr10">
                                                                                 <span class="mandatory">#Quantity may be entered as 0 if DPSU doesn't want to show
                                                                                 quantity of the imported item on the public portal.
                                                                                 </span>
@@ -935,11 +943,11 @@
                                                     </tr>
                                                 </table>
 
-                                                 <p class="pull-left mr10">
-                                                                                <span class="mandatory">#Quantity may be entered as 0 if DPSU doesn't want to show
+                                                <p class="pull-left mr10">
+                                                    <span class="mandatory">#Quantity may be entered as 0 if DPSU doesn't want to show
                                                                                 quantity of the imported item on the public portal.
                                                                                 </span>
-                                                                            </p>
+                                                </p>
 
                                             </ContentTemplate>
                                         </asp:UpdatePanel>
@@ -1193,6 +1201,7 @@
                                                                     <span class="mandatory">*</span> Product is eligible to be displayed for general viewing (without registration) and hereby respective DPSU/OFB/SHQ provides consent 
                                                                     for onward display of the relevant information at srijandefence.gov.in..
                                                                     
+                                                               
                                                                 </label>
                                                                 <div class="fr">
                                                                     <asp:RadioButtonList ID="rbeligible" runat="server" RepeatColumns="2" RepeatDirection="Horizontal" RepeatLayout="Table">

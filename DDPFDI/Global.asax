@@ -5,6 +5,7 @@
 <script RunAt="server">
     void Application_Start(object sender, EventArgs e)
     {
+
         System.Net.ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls12;
         RegisterRoutes(RouteTable.Routes);
     }
@@ -40,6 +41,7 @@
     }
     void Session_Start(object sender, EventArgs e)
     {
+        Response.Redirect("ProductList");
         Session.Timeout = 20;
     }
     void Session_Remove(object sender, EventArgs e)
@@ -49,7 +51,8 @@
     }
     static void RegisterRoutes(RouteCollection routes)
     {
-        routes.MapPageRoute("Login", "Login", "~/Default.aspx", true);
+        routes.MapPageRoute("Login", "Login", "~/DefaultDpsu.aspx", true);
+        routes.MapPageRoute("ShowInterest", "ShowInterest", "~/Admin/ViewRequestInfo.aspx", true);
         routes.MapPageRoute("PageNotFound", "PageNotFound", "~/404.aspx", true);
         routes.MapPageRoute("Error", "Error", "~/Error.aspx", true);
         routes.MapPageRoute("FDIRegistration", "FDIRegistration", "~/Admin/frmAddFDI.aspx", true);
@@ -81,7 +84,7 @@
         routes.MapPageRoute("Industry", "Industry", "~/Admin/Industry.aspx", true);
         //routes.MapPageRoute("Industry", "Industry", "~/Admin/Industry.html", true);
         routes.MapPageRoute("FAQ", "FAQ", "~/Admin/faq.aspx", true);
-        routes.MapPageRoute("ViewDashboard", "ViewDashboard", "~/Admin/ViewDashboard.aspx", true);       
+        routes.MapPageRoute("ViewDashboard", "ViewDashboard", "~/Admin/ViewDashboard.aspx", true);
         routes.MapPageRoute("mTest", "mTest", "~/Admin/Test.aspx", true);
         routes.MapPageRoute("UExcel", "UExcel", "~/frmUploadExcel.aspx", true);
         routes.MapPageRoute("VendorRegistration", "VendorRegistration", "~/Vendor/VendorDetailRegistration.aspx", true);
@@ -103,9 +106,9 @@
         routes.MapPageRoute("Declarations", "Declarations", "~/Vendor/V_Declaration.aspx", true);
         routes.MapPageRoute("GeneralInformation", "GeneralInformation", "~/Vendor/V_GeneralInfo.aspx", true);
         routes.MapPageRoute("VendorDetails", "VendorDetails", "~/Vendor/View_V_AllDetails.aspx", true);
-        
-        
-        
+
+
+
         routes.MapPageRoute("News", "News", "~/Admin/ImportantNews.aspx", true);
         routes.MapPageRoute("AddNews", "AddNews", "~/Admin/AddImpNews.aspx", true);
         routes.MapPageRoute("CatStatus", "CatStatus", "~/Admin/UpdateCatstatus.aspx", true);
@@ -117,10 +120,12 @@
         routes.MapPageRoute("NatoCodeSearch", "NatoCodeSearch", "~/Admin/NatoCodeSearch.aspx", true);
         routes.MapPageRoute("SearchProductFilter", "SearchProductFilter", "~/Admin/SearchProductFilter.aspx", true);
         routes.MapPageRoute("ProductList", "ProductList", "~/User/U_ProductList.aspx", true);
-        routes.MapPageRoute("UproductList", "UproductList", "~/User/Redirect.aspx", true);
+        routes.MapPageRoute("UproductListr", "UproductListr", "~/User/Redirect.aspx", true);
         routes.MapPageRoute("UCart", "U_Cart", "~/User/U_Cart.aspx", true);
-        routes.MapPageRoute("Home", "Home", "~/User/Login.aspx", true);
+        routes.MapPageRoute("HomeRemove", "HomeRemove", "~/User/Login.aspx", true);
         routes.MapPageRoute("Popup", "Popup", "~/ViewPopup.aspx", true);
         routes.MapPageRoute("TempTable", "TempTable", "~/Admin/CreatetempTable.aspx", true);
-    }    
+        routes.MapPageRoute("ViewRequest", "ViewRequest", "~/Admin/ViewRequestInfo.aspx", true);
+
+    }
 </script>

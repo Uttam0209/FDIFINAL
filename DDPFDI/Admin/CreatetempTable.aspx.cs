@@ -56,4 +56,8 @@ public partial class Admin_CreatetempTable : System.Web.UI.Page
             ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Oops some error occurs')", true);
         }
     }
+    protected void lbldownloadexcel_Click(object sender, EventArgs e)
+    {
+
+    }
 }
