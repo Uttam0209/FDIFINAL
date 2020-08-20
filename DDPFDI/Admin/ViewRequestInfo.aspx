@@ -49,6 +49,8 @@
                         </span>
 
                         <div class="clearfix mt10"></div>
+                        <asp:HiddenField runat="server" ID="hfType" />
+                         <asp:HiddenField runat="server" ID="hfCompRefNo" />
                         <asp:DataList runat="server" ID="dlrequest" RepeatColumns="4" RepeatDirection="Horizontal" RepeatLayout="Flow" OnItemCommand="dlrequest_ItemCommand">
                             <ItemTemplate>
                                 <div class="col-sm-3">

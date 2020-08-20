@@ -22,3 +22,26 @@ F:\FDIFINAL\DataAccessLayer\obj\Release\DataAccessLayer.csproj.CoreCompileInputs
 F:\FDIFINAL\DataAccessLayer\obj\Release\DataAccessLayer.csproj.CopyComplete
 F:\FDIFINAL\DataAccessLayer\obj\Release\DataAccessLayer.dll
 F:\FDIFINAL\DataAccessLayer\obj\Release\DataAccessLayer.pdb
+E:\Wali Projects\FDIFinal\DataAccessLayer\bin\Release\DataAccessLayer.dll
+E:\Wali Projects\FDIFinal\DataAccessLayer\bin\Release\DataAccessLayer.pdb
+E:\Wali Projects\FDIFinal\DataAccessLayer\bin\Release\Encryption.dll
+E:\Wali Projects\FDIFinal\DataAccessLayer\bin\Release\Microsoft.Practices.EnterpriseLibrary.Common.dll
+E:\Wali Projects\FDIFinal\DataAccessLayer\bin\Release\Microsoft.Practices.EnterpriseLibrary.Data.dll
+E:\Wali Projects\FDIFinal\DataAccessLayer\bin\Release\Microsoft.Practices.Unity.dll
+E:\Wali Projects\FDIFinal\DataAccessLayer\bin\Release\Microsoft.Practices.Unity.Interception.dll
+E:\Wali Projects\FDIFinal\DataAccessLayer\bin\Release\Microsoft.Web.Infrastructure.dll
+E:\Wali Projects\FDIFinal\DataAccessLayer\bin\Release\System.Web.Helpers.dll
+E:\Wali Projects\FDIFinal\DataAccessLayer\bin\Release\System.Web.Razor.dll
+E:\Wali Projects\FDIFinal\DataAccessLayer\bin\Release\System.Web.WebPages.Deployment.dll
+E:\Wali Projects\FDIFinal\DataAccessLayer\bin\Release\System.Web.WebPages.dll
+E:\Wali Projects\FDIFinal\DataAccessLayer\bin\Release\System.Web.WebPages.Razor.dll
+E:\Wali Projects\FDIFinal\DataAccessLayer\bin\Release\Encryption.pdb
+E:\Wali Projects\FDIFinal\DataAccessLayer\bin\Release\System.Web.Helpers.xml
+E:\Wali Projects\FDIFinal\DataAccessLayer\bin\Release\System.Web.Razor.xml
+E:\Wali Projects\FDIFinal\DataAccessLayer\bin\Release\System.Web.WebPages.xml
+E:\Wali Projects\FDIFinal\DataAccessLayer\bin\Release\System.Web.WebPages.Deployment.xml
+E:\Wali Projects\FDIFinal\DataAccessLayer\bin\Release\System.Web.WebPages.Razor.xml
+E:\Wali Projects\FDIFinal\DataAccessLayer\obj\Release\DataAccessLayer.csprojAssemblyReference.cache
+E:\Wali Projects\FDIFinal\DataAccessLayer\obj\Release\DataAccessLayer.csproj.CopyComplete
+E:\Wali Projects\FDIFinal\DataAccessLayer\obj\Release\DataAccessLayer.dll
+E:\Wali Projects\FDIFinal\DataAccessLayer\obj\Release\DataAccessLayer.pdb

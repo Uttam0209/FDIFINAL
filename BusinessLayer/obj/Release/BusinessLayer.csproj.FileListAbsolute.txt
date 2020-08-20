@@ -24,3 +24,28 @@ F:\FDIFINAL\BusinessLayer\obj\Release\BusinessLayer.csproj.CoreCompileInputs.cac
 F:\FDIFINAL\BusinessLayer\obj\Release\BusinessLayer.csproj.CopyComplete
 F:\FDIFINAL\BusinessLayer\obj\Release\BusinessLayer.dll
 F:\FDIFINAL\BusinessLayer\obj\Release\BusinessLayer.pdb
+E:\Wali Projects\FDIFinal\BusinessLayer\bin\Release\BusinessLayer.dll
+E:\Wali Projects\FDIFinal\BusinessLayer\bin\Release\BusinessLayer.pdb
+E:\Wali Projects\FDIFinal\BusinessLayer\bin\Release\DataAccessLayer.dll
+E:\Wali Projects\FDIFinal\BusinessLayer\bin\Release\Encryption.dll
+E:\Wali Projects\FDIFinal\BusinessLayer\bin\Release\Microsoft.Web.Infrastructure.dll
+E:\Wali Projects\FDIFinal\BusinessLayer\bin\Release\System.Web.Helpers.dll
+E:\Wali Projects\FDIFinal\BusinessLayer\bin\Release\System.Web.Razor.dll
+E:\Wali Projects\FDIFinal\BusinessLayer\bin\Release\System.Web.WebPages.Deployment.dll
+E:\Wali Projects\FDIFinal\BusinessLayer\bin\Release\System.Web.WebPages.dll
+E:\Wali Projects\FDIFinal\BusinessLayer\bin\Release\System.Web.WebPages.Razor.dll
+E:\Wali Projects\FDIFinal\BusinessLayer\bin\Release\Microsoft.Practices.EnterpriseLibrary.Data.dll
+E:\Wali Projects\FDIFinal\BusinessLayer\bin\Release\Microsoft.Practices.EnterpriseLibrary.Common.dll
+E:\Wali Projects\FDIFinal\BusinessLayer\bin\Release\Microsoft.Practices.Unity.dll
+E:\Wali Projects\FDIFinal\BusinessLayer\bin\Release\Microsoft.Practices.Unity.Interception.dll
+E:\Wali Projects\FDIFinal\BusinessLayer\bin\Release\DataAccessLayer.pdb
+E:\Wali Projects\FDIFinal\BusinessLayer\bin\Release\Encryption.pdb
+E:\Wali Projects\FDIFinal\BusinessLayer\bin\Release\System.Web.Helpers.xml
+E:\Wali Projects\FDIFinal\BusinessLayer\bin\Release\System.Web.Razor.xml
+E:\Wali Projects\FDIFinal\BusinessLayer\bin\Release\System.Web.WebPages.xml
+E:\Wali Projects\FDIFinal\BusinessLayer\bin\Release\System.Web.WebPages.Deployment.xml
+E:\Wali Projects\FDIFinal\BusinessLayer\bin\Release\System.Web.WebPages.Razor.xml
+E:\Wali Projects\FDIFinal\BusinessLayer\obj\Release\BusinessLayer.csprojAssemblyReference.cache
+E:\Wali Projects\FDIFinal\BusinessLayer\obj\Release\BusinessLayer.csproj.CopyComplete
+E:\Wali Projects\FDIFinal\BusinessLayer\obj\Release\BusinessLayer.dll
+E:\Wali Projects\FDIFinal\BusinessLayer\obj\Release\BusinessLayer.pdb

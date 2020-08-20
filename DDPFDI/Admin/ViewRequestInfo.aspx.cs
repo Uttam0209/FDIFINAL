@@ -23,27 +23,37 @@ public partial class Admin_ViewRequestInfo : System.Web.UI.Page
     }
     protected void BindRequest()
     {
-        DtReq = Lo.RetriveGridViewCompany("", "", "", "retdata");
-        if (DtReq.Rows.Count > 0)
+        if (Session["User"] != null)
         {
-            Session["TempData"] = DtReq;
-            pgsource.DataSource = DtReq.DefaultView;
-            pgsource.AllowPaging = true;
-            pgsource.PageSize = 52;
-            pgsource.CurrentPageIndex = pagingCurrentPage;
-            lblpaging.Text = "Page " + (pagingCurrentPage + 1) + " of " + pgsource.PageCount;
-            lnkbtnPgPrevious.Enabled = !pgsource.IsFirstPage;
-            // LinkButton1.Enabled = !pgsource.IsFirstPage;
-            lnkbtnPgNext.Enabled = !pgsource.IsLastPage;
-            // LinkButton2.Enabled = !pgsource.IsLastPage;
-            dlrequest.DataSource = pgsource;
-            dlrequest.DataBind();
-            lbltotalshowpageitem.Text = pgsource.FirstIndexInPage + 1 + " - " + (pgsource.FirstIndexInPage + pgsource.Count);
-            lbltotfilter.Text = DtReq.Rows.Count.ToString();
+            hfType.Value = Enc.DecryptData(Session["Type"].ToString().Trim());
+            hfCompRefNo.Value = Session["CompanyRefNo"].ToString().Trim();
+            //DtReq = Lo.RetriveGridViewCompany("", hfCompRefNo.Value, hfType.Value, "retdata");
+            DtReq = Lo.RetriveGridViewCompany("", hfCompRefNo.Value, hfType.Value, "RetBindData");
+            if (DtReq.Rows.Count > 0)
+            {
+                Session["TempData"] = DtReq;
+                pgsource.DataSource = DtReq.DefaultView;
+                pgsource.AllowPaging = true;
+                pgsource.PageSize = 52;
+                pgsource.CurrentPageIndex = pagingCurrentPage;
+                lblpaging.Text = "Page " + (pagingCurrentPage + 1) + " of " + pgsource.PageCount;
+                lnkbtnPgPrevious.Enabled = !pgsource.IsFirstPage;
+                // LinkButton1.Enabled = !pgsource.IsFirstPage;
+                lnkbtnPgNext.Enabled = !pgsource.IsLastPage;
+                // LinkButton2.Enabled = !pgsource.IsLastPage;
+                dlrequest.DataSource = pgsource;
+                dlrequest.DataBind();
+                lbltotalshowpageitem.Text = pgsource.FirstIndexInPage + 1 + " - " + (pgsource.FirstIndexInPage + pgsource.Count);
+                lbltotfilter.Text = DtReq.Rows.Count.ToString();
+            }
+            else
+            {
+                ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "ErrorMssgPopup('No Record Found')", true);
+            }
         }
         else
         {
-            ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "ErrorMssgPopup('No Record Found')", true);
+            ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "ErrorMssgPopup('Session Expired,Please login again');window.location='Login'", true);
         }
     }
     protected void gvRequestInfo_RowCreated(object sender, GridViewRowEventArgs e)
@@ -696,7 +706,4 @@ public partial class Admin_ViewRequestInfo : System.Web.UI.Page
         }
     }
     #endregion
-
-
-
 }

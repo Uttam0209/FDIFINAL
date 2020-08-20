@@ -94,7 +94,7 @@ public partial class User_U_Cart : System.Web.UI.Page
                 if (VerifyEmailID(txtemail.Text) != false)
                 {
                     GenerateOTP();
-                    sendMailOTP();
+                    //sendMailOTP();
                     ScriptManager.RegisterStartupScript(this, GetType(), "modelotp", "showPopup1();", true);
                 }
             }
@@ -810,6 +810,6 @@ public partial class User_U_Cart : System.Web.UI.Page
             string str = Lo.SaveRequestInfo(hySave, out _sysMsg, out _msg);
         }
         catch (Exception ex)
-        { }
+        {  }
     }
 }

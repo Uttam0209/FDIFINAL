@@ -16,3 +16,20 @@ F:\FDIFINAL\Encryption\obj\Release\Encryption.csproj.CoreCompileInputs.cache
 F:\FDIFINAL\Encryption\obj\Release\Encryption.csproj.CopyComplete
 F:\FDIFINAL\Encryption\obj\Release\Encryption.dll
 F:\FDIFINAL\Encryption\obj\Release\Encryption.pdb
+E:\Wali Projects\FDIFinal\Encryption\bin\Release\Encryption.dll
+E:\Wali Projects\FDIFinal\Encryption\bin\Release\Encryption.pdb
+E:\Wali Projects\FDIFinal\Encryption\bin\Release\Microsoft.Web.Infrastructure.dll
+E:\Wali Projects\FDIFinal\Encryption\bin\Release\System.Web.Helpers.dll
+E:\Wali Projects\FDIFinal\Encryption\bin\Release\System.Web.Razor.dll
+E:\Wali Projects\FDIFinal\Encryption\bin\Release\System.Web.WebPages.Deployment.dll
+E:\Wali Projects\FDIFinal\Encryption\bin\Release\System.Web.WebPages.dll
+E:\Wali Projects\FDIFinal\Encryption\bin\Release\System.Web.WebPages.Razor.dll
+E:\Wali Projects\FDIFinal\Encryption\bin\Release\System.Web.Helpers.xml
+E:\Wali Projects\FDIFinal\Encryption\bin\Release\System.Web.Razor.xml
+E:\Wali Projects\FDIFinal\Encryption\bin\Release\System.Web.WebPages.xml
+E:\Wali Projects\FDIFinal\Encryption\bin\Release\System.Web.WebPages.Deployment.xml
+E:\Wali Projects\FDIFinal\Encryption\bin\Release\System.Web.WebPages.Razor.xml
+E:\Wali Projects\FDIFinal\Encryption\obj\Release\Encryption.csprojAssemblyReference.cache
+E:\Wali Projects\FDIFinal\Encryption\obj\Release\Encryption.csproj.CopyComplete
+E:\Wali Projects\FDIFinal\Encryption\obj\Release\Encryption.dll
+E:\Wali Projects\FDIFinal\Encryption\obj\Release\Encryption.pdb

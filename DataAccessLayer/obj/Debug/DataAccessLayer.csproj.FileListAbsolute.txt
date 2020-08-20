@@ -18,3 +18,22 @@ F:\FDIFINAL\DataAccessLayer\obj\Debug\DataAccessLayer.csproj.CopyComplete
 F:\FDIFINAL\DataAccessLayer\obj\Debug\DataAccessLayer.dll
 F:\FDIFINAL\DataAccessLayer\obj\Debug\DataAccessLayer.pdb
 F:\FDIFINAL\DataAccessLayer\obj\Debug\DataAccessLayer.csprojAssemblyReference.cache
+E:\Wali Projects\FDIFINAL\DataAccessLayer\bin\Debug\DataAccessLayer.dll
+E:\Wali Projects\FDIFINAL\DataAccessLayer\bin\Debug\DataAccessLayer.pdb
+E:\Wali Projects\FDIFINAL\DataAccessLayer\bin\Debug\Encryption.dll
+E:\Wali Projects\FDIFINAL\DataAccessLayer\bin\Debug\Microsoft.Web.Infrastructure.dll
+E:\Wali Projects\FDIFINAL\DataAccessLayer\bin\Debug\System.Web.Helpers.dll
+E:\Wali Projects\FDIFINAL\DataAccessLayer\bin\Debug\System.Web.Razor.dll
+E:\Wali Projects\FDIFINAL\DataAccessLayer\bin\Debug\System.Web.WebPages.Deployment.dll
+E:\Wali Projects\FDIFINAL\DataAccessLayer\bin\Debug\System.Web.WebPages.dll
+E:\Wali Projects\FDIFINAL\DataAccessLayer\bin\Debug\System.Web.WebPages.Razor.dll
+E:\Wali Projects\FDIFINAL\DataAccessLayer\bin\Debug\Encryption.pdb
+E:\Wali Projects\FDIFINAL\DataAccessLayer\bin\Debug\System.Web.Helpers.xml
+E:\Wali Projects\FDIFINAL\DataAccessLayer\bin\Debug\System.Web.Razor.xml
+E:\Wali Projects\FDIFINAL\DataAccessLayer\bin\Debug\System.Web.WebPages.xml
+E:\Wali Projects\FDIFINAL\DataAccessLayer\bin\Debug\System.Web.WebPages.Deployment.xml
+E:\Wali Projects\FDIFINAL\DataAccessLayer\bin\Debug\System.Web.WebPages.Razor.xml
+E:\Wali Projects\FDIFINAL\DataAccessLayer\obj\Debug\DataAccessLayer.csprojAssemblyReference.cache
+E:\Wali Projects\FDIFINAL\DataAccessLayer\obj\Debug\DataAccessLayer.csproj.CopyComplete
+E:\Wali Projects\FDIFINAL\DataAccessLayer\obj\Debug\DataAccessLayer.dll
+E:\Wali Projects\FDIFINAL\DataAccessLayer\obj\Debug\DataAccessLayer.pdb
