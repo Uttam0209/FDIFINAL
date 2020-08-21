@@ -80,7 +80,15 @@ public partial class Admin_ViewRequestInfo : System.Web.UI.Page
                 DataListItem item = (DataListItem)(((Control)(e.CommandSource)).NamingContainer);
                 string email = ((Label)item.FindControl("lblemail")).Text;
                 string mdate = e.CommandArgument.ToString();
-                DataTable dtgetProd = Lo.RetriveGridViewCompany(mdate.ToString(), email, "", "RetReqProd");
+                DataTable dtgetProd = new DataTable();
+                if (hfType.Value == "SuperAdmin" || hfType.Value == "Admin")
+                {
+                    dtgetProd = Lo.RetriveGridViewCompany(mdate.ToString(), email, hfType.Value, "RetReqProd");
+                }
+                else
+                {
+                    dtgetProd = Lo.RetriveGridViewCompany(mdate.ToString(), email, hfCompRefNo.Value, "RetReqProd");
+                }
                 if (dtgetProd.Rows.Count > 0)
                 {
                     gvViewNodalOfficerAdd.DataSource = dtgetProd;
