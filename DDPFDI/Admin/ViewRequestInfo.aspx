@@ -25,6 +25,19 @@
                             <asp:LinkButton ID="btnexcelexport" runat="server" CssClass="btn btn-primary" Text="Export Excel" OnClick="btnexcelexport_Click"></asp:LinkButton>
                         </div>
                         <div class="clearfix mt10"></div>
+                        <div class="col-sm-4" runat="server" id="">
+                            <p>Select Company</p>
+                            <asp:DropDownList runat="server" ID="ddlcompany" CssClass="form-control" OnSelectedIndexChanged="ddlComp_SelectedIndexChanged"></asp:DropDownList>
+                        </div>
+                        <div class="col-sm-4"  runat="server" id="divlblselectdivison">
+                            <p>Select Division/Factory</p>
+                            <asp:DropDownList runat="server" ID="ddldivision" CssClass="form-control" OnSelectedIndexChanged="ddldivision_SelectedIndexChanged"></asp:DropDownList>
+                        </div>
+                        <div class="col-sm-4"  runat="server" id="divlblselectunit">
+                            <p>Select Unit</p>
+                            <asp:DropDownList runat="server" ID="ddlunit" CssClass="form-control" OnSelectedIndexChanged="ddlunit_SelectedIndexChanged"></asp:DropDownList>
+                        </div>
+                        <div class="clearfix mt10"></div>
                         <div class="col-sm-4">
                             <p>Enter Search Keyword</p>
                             <asp:TextBox runat="server" ID="txtsearch" CssClass="form-control" placeholder="Serach"></asp:TextBox>
@@ -50,7 +63,7 @@
 
                         <div class="clearfix mt10"></div>
                         <asp:HiddenField runat="server" ID="hfType" />
-                         <asp:HiddenField runat="server" ID="hfCompRefNo" />
+                        <asp:HiddenField runat="server" ID="hfCompRefNo" />
                         <asp:DataList runat="server" ID="dlrequest" RepeatColumns="4" RepeatDirection="Horizontal" RepeatLayout="Flow" OnItemCommand="dlrequest_ItemCommand">
                             <ItemTemplate>
                                 <div class="col-sm-3">

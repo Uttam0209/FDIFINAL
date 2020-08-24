@@ -324,20 +324,7 @@
                                                                     <asp:ListItem Value="3" style="margin-left: 5px !important;" onClick="MutExChkList(this);">&nbsp; 50 Million and above</asp:ListItem>
                                                                 </asp:RadioButtonList>
                                                             </div>
-                                                        </div>
-                                                        <div id="Div14" class="widget widget-categories mb-3" runat="server">
-                                                            <label><b>Make in India Target Year</b></label>
-                                                            <div class="input-group">
-                                                                <asp:RadioButtonList ID="rbindigtarget" runat="server" AutoPostBack="true" CssClass="custom-checkbox" OnSelectedIndexChanged="ddldeclaration_SelectedIndexChanged">
-                                                                    <%--<asp:ListItem Value="NIL" style="margin-left: 5px !important;">NIL</asp:ListItem>--%>
-                                                                    <asp:ListItem Value="2020-21" style="margin-left: 5px !important;">&nbsp;2020-21</asp:ListItem>
-                                                                    <asp:ListItem Value="2021-22" style="margin-left: 5px !important;">&nbsp;2021-22</asp:ListItem>
-                                                                    <asp:ListItem Value="2022-23" style="margin-left: 5px !important;">&nbsp;2022-23</asp:ListItem>
-                                                                    <asp:ListItem Value="2023-24" style="margin-left: 5px !important;">&nbsp;2023-24</asp:ListItem>
-                                                                    <asp:ListItem Value="2024-25" style="margin-left: 5px !important;">&nbsp;2024-25</asp:ListItem>
-                                                                </asp:RadioButtonList>
-                                                            </div>
-                                                        </div>
+                                                        </div>                                                        
                                                         <div id="Div4" class="widget widget-categories mb-3" runat="server" visible="false">
                                                             <label><b>Future requirements</b></label>
                                                             <div class="input-group">
@@ -443,7 +430,19 @@
                                                                 </asp:RadioButtonList>
                                                             </div>
                                                         </div>
-
+                                                        <div id="Div14" class="widget widget-categories mb-3" runat="server">
+                                                            <label><b>Make in India Target Initiation</b></label>
+                                                            <div class="input-group">
+                                                                <asp:RadioButtonList ID="rbindigtarget" runat="server" AutoPostBack="true" CssClass="custom-checkbox" OnSelectedIndexChanged="ddldeclaration_SelectedIndexChanged">
+                                                                    <%--<asp:ListItem Value="NIL" style="margin-left: 5px !important;">NIL</asp:ListItem>--%>
+                                                                    <asp:ListItem Value="2020-21" style="margin-left: 5px !important;">&nbsp;2020-21</asp:ListItem>
+                                                                    <asp:ListItem Value="2021-22" style="margin-left: 5px !important;">&nbsp;2021-22</asp:ListItem>
+                                                                    <asp:ListItem Value="2022-23" style="margin-left: 5px !important;">&nbsp;2022-23</asp:ListItem>
+                                                                    <asp:ListItem Value="2023-24" style="margin-left: 5px !important;">&nbsp;2023-24</asp:ListItem>
+                                                                    <asp:ListItem Value="2024-25" style="margin-left: 5px !important;">&nbsp;2024-25</asp:ListItem>
+                                                                </asp:RadioButtonList>
+                                                            </div>
+                                                        </div>
                                                         <%--</div>--%>
                                                     </div>
                                                 </div>
