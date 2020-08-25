@@ -81,6 +81,9 @@ public partial class _DefaultD : System.Web.UI.Page
                                 Session["Type"] = objEnc.EncryptData(_msg);
                                 Session["User"] = objEnc.EncryptData(txtUserName.Text);
                                 Session["CompanyRefNo"] = _EmpId;
+                                string guid = Guid.NewGuid().ToString();
+                                Session["SFToken"] = guid;
+                                Response.Cookies.Add(new HttpCookie("SFToken", guid));
                                 Logoutstatus();
                                 UserLoginLog();
                                 Response.RedirectToRoute(Defaultpage);

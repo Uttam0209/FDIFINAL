@@ -25,31 +25,43 @@
                             <asp:LinkButton ID="btnexcelexport" runat="server" CssClass="btn btn-primary" Text="Export Excel" OnClick="btnexcelexport_Click"></asp:LinkButton>
                         </div>
                         <div class="clearfix mt10"></div>
-                        <div class="col-sm-4" runat="server" id="">
-                            <p>Select Company</p>
-                            <asp:DropDownList runat="server" ID="ddlcompany" CssClass="form-control" OnSelectedIndexChanged="ddlComp_SelectedIndexChanged"></asp:DropDownList>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <asp:Label runat="server" CssClass="form-label">Select Company/Organization</asp:Label>
+                                <asp:DropDownList runat="server" ID="ddlcompany" CssClass="form-cascade-control form-control" AutoPostBack="True" OnSelectedIndexChanged="ddlcompany_OnSelectedIndexChanged"></asp:DropDownList>
+                            </div>
                         </div>
-                        <div class="col-sm-4"  runat="server" id="divlblselectdivison">
-                            <p>Select Division/Factory</p>
-                            <asp:DropDownList runat="server" ID="ddldivision" CssClass="form-control" OnSelectedIndexChanged="ddldivision_SelectedIndexChanged"></asp:DropDownList>
+                        <div class="col-md-2" runat="server" id="divlblselectdivison">
+                            <div class="form-group">
+                                <asp:Label runat="server" CssClass="form-label">Select Division/Plant</asp:Label>
+                                <asp:DropDownList runat="server" ID="ddldivision" CssClass="form-cascade-control form-control" AutoPostBack="True" OnSelectedIndexChanged="ddldivision_OnSelectedIndexChanged"></asp:DropDownList>
+                            </div>
                         </div>
-                        <div class="col-sm-4"  runat="server" id="divlblselectunit">
-                            <p>Select Unit</p>
-                            <asp:DropDownList runat="server" ID="ddlunit" CssClass="form-control" OnSelectedIndexChanged="ddlunit_SelectedIndexChanged"></asp:DropDownList>
+                        <div class="col-md-2" runat="server" id="divlblselectunit">
+                            <div class="form-group">
+                                <asp:Label runat="server" CssClass="form-label">Select Unit</asp:Label>
+                                <asp:DropDownList runat="server" ID="ddlunit" CssClass="form-cascade-control form-control" AutoPostBack="True" OnSelectedIndexChanged="ddlunit_OnSelectedIndexChanged"></asp:DropDownList>
+                            </div>
                         </div>
-                        <div class="clearfix mt10"></div>
-                        <div class="col-sm-4">
-                            <p>Enter Search Keyword</p>
-                            <asp:TextBox runat="server" ID="txtsearch" CssClass="form-control" placeholder="Serach"></asp:TextBox>
+                        <div class="col-sm-2">
+                            <div class="form-group">
+                                <Label>Enter Search Keyword</Label>
+                                <asp:TextBox runat="server" ID="txtsearch" CssClass="form-control" placeholder="Serach"></asp:TextBox>
+                            </div>
                         </div>
-                        <div class="col-sm-4">
-                            <p>Start Date</p>
-                            <asp:TextBox runat="server" ID="txtstartdate" CssClass="form-control" type="date"></asp:TextBox>
+                        <div class="col-sm-2">
+                            <div class="form-group">
+                                <Label>Start Date</Label>
+                                <asp:TextBox runat="server" ID="txtstartdate" CssClass="form-control" type="date"></asp:TextBox>
+                            </div>
                         </div>
-                        <div class="col-sm-4">
-                            <p>End Date</p>
-                            <asp:TextBox runat="server" ID="txtenddate" CssClass="form-control" type="date"></asp:TextBox>
+                        <div class="col-sm-2">
+                            <div class="form-group">
+                                <Label>End Date</Label>
+                                <asp:TextBox runat="server" ID="txtenddate" CssClass="form-control" type="date"></asp:TextBox>
+                            </div>
                         </div>
+                          <div class="clearfix mt10"></div>
                         <div class="pull-right mr10">
                             <asp:LinkButton runat="server" ID="btnsearch" CssClass="btn btn-success" Style="margin-top: 5px; margin-right: 15px;" Text="Seach" OnClick="btnsearch_Click"></asp:LinkButton>
                         </div>

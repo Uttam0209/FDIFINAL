@@ -45,9 +45,11 @@ public partial class Admin_ViewRequestInfo : System.Web.UI.Page
                 dlrequest.DataBind();
                 lbltotalshowpageitem.Text = pgsource.FirstIndexInPage + 1 + " - " + (pgsource.FirstIndexInPage + pgsource.Count);
                 lbltotfilter.Text = DtReq.Rows.Count.ToString();
+                BindCompany();
             }
             else
             {
+                dlrequest.Visible = false;
                 ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "ErrorMssgPopup('No Record Found')", true);
             }
         }
@@ -642,6 +644,27 @@ public partial class Admin_ViewRequestInfo : System.Web.UI.Page
             dr["Value"] = "'%" + txtsearch.Text.Trim() + "%') or (RequestCompName like '%" + txtsearch.Text.Trim() + "%') or (RequestEmail like '%" + txtsearch.Text.Trim() + "%') or RequestProduct like '%" + txtsearch.Text.Trim() + "%%')";
             insert.Rows.Add(dr);
         }
+        if (ddlcompany.SelectedItem.Text != "Select")
+        {
+            dr = insert.NewRow();
+            dr["Column"] = "RequestCompName" + " like";
+            dr["Value"] = "'%" + ddlcompany.SelectedItem.Text + "%'";
+            insert.Rows.Add(dr);
+            if (ddldivision.Visible == true && ddldivision.SelectedItem.Text != "Select")
+            {
+                dr = insert.NewRow();
+                dr["Column"] = "RequestCompName" + " like";
+                dr["Value"] = "'%" + ddldivision.SelectedItem.Text + "%'";
+                insert.Rows.Add(dr);
+                if (ddlunit.Visible == true && ddlunit.SelectedItem.Text != "Select")
+                {
+                    dr = insert.NewRow();
+                    dr["Column"] = "RequestCompName" + " like";
+                    dr["Value"] = "'%" + ddlunit.SelectedItem.Text + "%'";
+                    insert.Rows.Add(dr);
+                }
+            }
+        }
         for (int i = 0; insert.Rows.Count > i; i++)
         {
             insert1 = insert1 + insert.Rows[i]["Column"].ToString() + " " + insert.Rows[i]["Value"].ToString() + " " + " and ";
@@ -714,9 +737,6 @@ public partial class Admin_ViewRequestInfo : System.Web.UI.Page
         }
     }
     #endregion
-
-
-
     #region MasterEntryofCompUnitDivi
     DataTable DtCompanyDDL = new DataTable();
     protected void BindCompany()
@@ -943,8 +963,7 @@ public partial class Admin_ViewRequestInfo : System.Web.UI.Page
                 ddlunit.Enabled = false;
             }
         }
-    }
-    #endregion
+    }   
     protected void ddlcompany_OnSelectedIndexChanged(object sender, EventArgs e)
     {
         if (ddlcompany.SelectedItem.Text != "Select")
@@ -1028,4 +1047,5 @@ public partial class Admin_ViewRequestInfo : System.Web.UI.Page
             hfCompRefNo.Value = ddldivision.SelectedItem.Value;
         }
     }
+    #endregion
 }
