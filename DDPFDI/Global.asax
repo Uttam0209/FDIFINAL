@@ -1,11 +1,14 @@
 ﻿<%@ Application Language="C#" %>
 <%@ Import Namespace="System.Web.Routing" %>
 <%@ Import Namespace="System.Net" %>
+<%@ Import Namespace="System.Web.Optimization" %>
 
 <script RunAt="server">
     void Application_Start(object sender, EventArgs e)
     {
 
+
+       // BundleConfig.RegisterBundles(BundleTable.Bundles);
         System.Net.ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls12;
         RegisterRoutes(RouteTable.Routes);
     }

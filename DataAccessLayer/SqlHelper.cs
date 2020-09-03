@@ -729,7 +729,7 @@ namespace DataAccessLayer
                 }
             }
         }
-        public string SaveCodeProduct(HybridDictionary hyProduct, DataTable dt, DataTable dtPdf, DataTable dtProdInfo, DataTable dtEstimateQuantity, DataTable dtEstimateQuantity1, DataTable dtFIIGNo, out string _sysMsg, out string _msg, string Criteria)
+        public string SaveCodeProduct(HybridDictionary hyProduct, DataTable dt, DataTable dtPdf, DataTable dtEstimateQuantity, DataTable dtEstimateQuantity1,    out string _sysMsg, out string _msg, string Criteria)
         {
             using (DbConnection dbCon = db.CreateConnection())
             {
@@ -753,64 +753,30 @@ namespace DataAccessLayer
                     db.AddInParameter(cmd, "@OEMCountry", DbType.Int64, hyProduct["OEMCountry"].ToString().Trim());
                     db.AddInParameter(cmd, "@OEMAddress", DbType.String, hyProduct["OEMAddress"].ToString().Trim());
                     db.AddInParameter(cmd, "@DPSUPartNumber", DbType.String, hyProduct["DPSUPartNumber"]);
-                    db.AddInParameter(cmd, "@HSCode", DbType.Int64, hyProduct["HSCode"]);
-                    db.AddInParameter(cmd, "@HSNCode", DbType.String, hyProduct["HSNCode"]);
-                    db.AddInParameter(cmd, "@HSChapter", DbType.Int64, hyProduct["HSChapter"]);
-                    db.AddInParameter(cmd, "@HSNCodeLevel1", DbType.Int64, hyProduct["HSNCodeLevel1"]);
-                    db.AddInParameter(cmd, "@HSNCodeLevel2", DbType.Int64, hyProduct["HSNCodeLevel2"]);
-                    db.AddInParameter(cmd, "@HSNCodeLevel3", DbType.Int64, hyProduct["HSNCodeLevel3"]);
-                    db.AddInParameter(cmd, "@HsCode4digit", DbType.String, hyProduct["HsCode4digit"]);
                     db.AddInParameter(cmd, "@HsnCode8digit", DbType.String, hyProduct["HsnCode8digit"]);
-                    db.AddInParameter(cmd, "@EndUserPartNumber", DbType.String, hyProduct["EndUserPartNumber"]);
                     db.AddInParameter(cmd, "@EndUser", DbType.String, hyProduct["EndUser"]);
                     db.AddInParameter(cmd, "@Platform", DbType.Int64, hyProduct["Platform"]);
                     db.AddInParameter(cmd, "@NomenclatureOfMainSystem", DbType.Int64, hyProduct["NomenclatureOfMainSystem"]);
                     db.AddInParameter(cmd, "@TechnologyLevel1", DbType.Int64, hyProduct["TechnologyLevel1"]);
                     db.AddInParameter(cmd, "@TechnologyLevel2", DbType.Int64, hyProduct["TechnologyLevel2"]);
-                    db.AddInParameter(cmd, "@TechnologyLevel3", DbType.Int64, hyProduct["TechnologyLevel3"]);
-                    db.AddInParameter(cmd, "@SearchKeyword", DbType.String, hyProduct["SearchKeyword"]);
                     db.AddInParameter(cmd, "@IsIndeginized", DbType.String, hyProduct["IsIndeginized"].ToString().Trim());
                     db.AddInParameter(cmd, "@ManufactureName", DbType.String, hyProduct["ManufactureName"]);
                     db.AddInParameter(cmd, "@ManufactureAddress", DbType.String, hyProduct["ManufactureAddress"]);
                     db.AddInParameter(cmd, "@YearofIndiginization", DbType.Int64, hyProduct["YearofIndiginization"]);
-                    db.AddInParameter(cmd, "@IsProductImported", DbType.String, hyProduct["IsProductImported"]);
-                    db.AddInParameter(cmd, "@YearofImport", DbType.String, hyProduct["YearofImport"]);
-                    db.AddInParameter(cmd, "@NEstimateQuantity", DbType.String, hyProduct["NEstimateQuantity"]);
-                    db.AddInParameter(cmd, "@NEstimateUnit", DbType.String, hyProduct["NEstimateUnit"]);
-                    db.AddInParameter(cmd, "@NEstimatePrice", DbType.String, hyProduct["NEstimatePrice"]);
-                    db.AddInParameter(cmd, "@YearofImportRemarks", DbType.String, hyProduct["YearofImportRemarks"]);
-                    db.AddInParameter(cmd, "@ItemDescriptionPDFFile", DbType.String, hyProduct["ItemDescriptionPDFFile"]);
-                    db.AddInParameter(cmd, "@FeatursandDetail", DbType.String, hyProduct["FeatursandDetail"]);
-                    db.AddInParameter(cmd, "@ItemSpecification", DbType.String, hyProduct["ItemSpecification"]);
-                    db.AddInParameter(cmd, "@AdditionalDetail", DbType.String, hyProduct["AdditionalDetail"]);
-                    db.AddInParameter(cmd, "@PurposeofProcurement", DbType.String, hyProduct["PurposeofProcurement"]);
-                    db.AddInParameter(cmd, "@ProcurmentCategoryRemark", DbType.String, hyProduct["ProcurmentCategoryRemark"]);
-                    db.AddInParameter(cmd, "@QAAgency", DbType.String, hyProduct["QAAgency"].ToString().Trim());
-                    db.AddInParameter(cmd, "@QAReamrks", DbType.String, hyProduct["QAReamrks"].ToString().Trim());
-                    db.AddInParameter(cmd, "@Testing", DbType.String, hyProduct["Testing"].ToString().Trim());
-                    db.AddInParameter(cmd, "@TestingRemarks", DbType.String, hyProduct["TestingRemarks"].ToString().Trim());
-                    db.AddInParameter(cmd, "@Certification", DbType.String, hyProduct["Certification"].ToString().Trim());
-                    db.AddInParameter(cmd, "@CertificationRemark", DbType.String, hyProduct["CertificationRemark"].ToString().Trim());
-                    db.AddInParameter(cmd, "@DPSUServices", DbType.String, hyProduct["DPSUServices"].ToString().Trim());
-                    db.AddInParameter(cmd, "@Remarks", DbType.String, hyProduct["Remarks"].ToString().Trim());
-                    db.AddInParameter(cmd, "@FinancialSupport", DbType.String, hyProduct["FinancialSupport"].ToString().Trim());
-                    db.AddInParameter(cmd, "@FinancialRemark", DbType.String, hyProduct["FinancialRemark"].ToString().Trim());
-                    db.AddInParameter(cmd, "@TenderStatus", DbType.String, hyProduct["TenderStatus"].ToString().Trim());
-                    db.AddInParameter(cmd, "@TenderSubmition", DbType.String, hyProduct["TenderSubmition"].ToString().Trim());
-                    db.AddInParameter(cmd, "@TenderFillDate", DbType.Date, hyProduct["TenderFillDate"]);
-                    db.AddInParameter(cmd, "@TenderUrl", DbType.String, hyProduct["TenderUrl"]);
+                    db.AddInParameter(cmd, "@IsProductImported", DbType.String, hyProduct["IsProductImported"]);                 
+                    db.AddInParameter(cmd, "@FeatursandDetail", DbType.String, hyProduct["FeatursandDetail"]);                   
                     db.AddInParameter(cmd, "@EOIStatus", DbType.String, hyProduct["EOIStatus"].ToString().Trim());
-                    db.AddInParameter(cmd, "@EOISubmition", DbType.String, hyProduct["EOISubmition"].ToString().Trim());
-                    db.AddInParameter(cmd, "@EOIFillDate", DbType.Date, hyProduct["EOIFillDate"]);
                     db.AddInParameter(cmd, "@EOIURL", DbType.String, hyProduct["EOIURL"]);
+                    db.AddInParameter(cmd, "@QAAgency", DbType.String, hyProduct["QAAgency"].ToString().Trim());
+                    db.AddInParameter(cmd, "@IndProcess", DbType.String, hyProduct["IndProcess"]);
+                    db.AddInParameter(cmd, "@IndTargetYear", DbType.String, hyProduct["IndTargetYear"]);
+                    db.AddInParameter(cmd, "@PurposeofProcurement", DbType.String, hyProduct["PurposeofProcurement"]);                   
                     db.AddInParameter(cmd, "@NodelDetail", DbType.Int16, hyProduct["NodelDetail"]);
                     db.AddInParameter(cmd, "@NodalDetail2", DbType.Int16, hyProduct["NodalDetail2"]);
                     db.AddInParameter(cmd, "@IsShowGeneral", DbType.String, hyProduct["ShowGeneralDec"]);
                     db.AddInParameter(cmd, "@Role", DbType.String, hyProduct["Role"]);
                     db.AddInParameter(cmd, "@CreatedBy", DbType.String, hyProduct["CreatedBy"]);
                     db.AddInParameter(cmd, "@Criteria", DbType.String, Criteria);
-                    db.AddInParameter(cmd, "@IndProcess", DbType.String, hyProduct["IndProcess"]);
-                    db.AddInParameter(cmd, "@IndTargetYear", DbType.String, hyProduct["IndTargetYear"]);
                     db.AddOutParameter(cmd, "@ReturnID", DbType.String, 20);
                     db.ExecuteNonQuery(cmd, dbTran);
                     mCurrentID = db.GetParameterValue(cmd, "@ReturnID").ToString();
@@ -840,16 +806,6 @@ namespace DataAccessLayer
                         db.AddInParameter(dbcom6, "@FType", DbType.String, "PDF");
                         db.ExecuteNonQuery(dbcom6, dbTran);
                     }
-                    for (int j = 0; j < dtProdInfo.Rows.Count; j++)
-                    {
-                        DbCommand dbcom2 = db.GetStoredProcCommand("sp_trn_ProductInformation");
-                        db.AddInParameter(dbcom2, "@ProdInfoId", DbType.Int64, dtProdInfo.Rows[j]["ProdInfoId"]);
-                        db.AddInParameter(dbcom2, "@ProductRefNo", DbType.String, mCurrentID);
-                        db.AddInParameter(dbcom2, "@NameOfSpec", DbType.String, dtProdInfo.Rows[j]["Length"]);
-                        db.AddInParameter(dbcom2, "@Value", DbType.String, dtProdInfo.Rows[j]["Value"]);
-                        db.AddInParameter(dbcom2, "@Unit", DbType.String, dtProdInfo.Rows[j]["ProductUnit"]);
-                        db.ExecuteNonQuery(dbcom2, dbTran);
-                    }
                     for (int k = 0; k < dtEstimateQuantity.Rows.Count; k++)
                     {
                         DbCommand dbcom3 = db.GetStoredProcCommand("sp_trn_ProdQtyPrice");
@@ -875,17 +831,6 @@ namespace DataAccessLayer
                         db.AddInParameter(dbcom5, "@EstimatedPrice", DbType.String, dtEstimateQuantity1.Rows[x]["EstimatedPrice"]);
                         db.AddInParameter(dbcom5, "@Type", DbType.String, dtEstimateQuantity1.Rows[x]["Type"]);
                         db.ExecuteNonQuery(dbcom5, dbTran);
-                    }
-                    for (int L = 0; L < dtFIIGNo.Rows.Count; L++)
-                    {
-                        DbCommand dbcom4 = db.GetStoredProcCommand("sp_trn_FiiGSave");
-                        db.AddInParameter(dbcom4, "@FiigID", DbType.Int64, dtFIIGNo.Rows[L]["FiigID"]);
-                        db.AddInParameter(dbcom4, "@ProductRefNo", DbType.String, mCurrentID);
-                        db.AddInParameter(dbcom4, "@SCategoryName", DbType.String, dtFIIGNo.Rows[L]["SCategoryName"]);
-                        db.AddInParameter(dbcom4, "@Remarks", DbType.String, dtFIIGNo.Rows[L]["Remarks"]);
-                        db.AddInParameter(dbcom4, "@Remarks2", DbType.String, dtFIIGNo.Rows[L]["Remarks2"]);
-                        db.AddInParameter(dbcom4, "@Remarks3", DbType.String, dtFIIGNo.Rows[L]["Remarks3"]);
-                        db.ExecuteNonQuery(dbcom4, dbTran);
                     }
                     dbTran.Commit();
                     _msg = "Save";

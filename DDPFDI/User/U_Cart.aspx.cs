@@ -307,8 +307,7 @@ public partial class User_U_Cart : System.Web.UI.Page
                     }
                     lblnsngroup.Text = DtView.Rows[0]["ProdLevel1Name"].ToString();
                     lblnsngroupclass.Text = DtView.Rows[0]["ProdLevel2Name"].ToString();
-                    lblclassitem.Text = DtView.Rows[0]["ProdLevel3Name"].ToString();
-                    lblsearchkeywords.Text = DtView.Rows[0]["Searchkeyword"].ToString();
+                    lblclassitem.Text = DtView.Rows[0]["ProdLevel3Name"].ToString();                  
                     if (DtView.Rows[0]["ProductDescription"].ToString() != "")
                     {
                         itemname2.Text = DtView.Rows[0]["ProductDescription"].ToString();
@@ -432,27 +431,7 @@ public partial class User_U_Cart : System.Web.UI.Page
                     {
                         dlimage.Visible = false;
                         thirteen.Visible = false;
-                    }
-                    if (DtView.Rows[0]["FeatursandDetail"].ToString() != "")
-                    {
-                        lblfeaturesanddetail.Text = DtView.Rows[0]["FeatursandDetail"].ToString();
-                        fourteen.Visible = true;
-                    }
-                    else
-                    {
-                        fourteen.Visible = false;
-                    }
-                    DataTable dtProdInfo = Lo.RetriveProductCode("", e.CommandArgument.ToString(), "RetriveProdInfo", "");
-                    if (dtProdInfo.Rows.Count > 0)
-                    {
-                        gvProdInfo.DataSource = dtProdInfo;
-                        gvProdInfo.DataBind();
-                        gvProdInfo.Visible = true;
-                    }
-                    else
-                    {
-                        gvProdInfo.Visible = false;
-                    }
+                    }                  
                     DataTable dtestimatequanorprice = Lo.RetriveSaveEstimateGrid("2Select", 0, e.CommandArgument.ToString(), 0, "", "", "", "", "F");
                     if (dtestimatequanorprice.Rows.Count > 0)
                     {
@@ -487,7 +466,6 @@ public partial class User_U_Cart : System.Web.UI.Page
                     {
                         sixteen.Visible = false;
                     }
-                    lblprocremarks.Text = DtView.Rows[0]["ProcurmentCategoryRemark"].ToString();
                     if (DtView.Rows[0]["EOIStatus"].ToString() != "")
                     {
                         lbleoirep.Text = DtView.Rows[0]["EOIStatus"].ToString();
@@ -501,19 +479,7 @@ public partial class User_U_Cart : System.Web.UI.Page
                         eighteen.Visible = true;
                     }
                     else
-                    { eighteen.Visible = false; }
-                    if (DtView.Rows[0]["TenderStatus"].ToString() == "Live")
-                    {
-                        lbltendor.Text = "Live";
-                    }
-                    else if (DtView.Rows[0]["TenderStatus"].ToString() == "Archive" || DtView.Rows[0]["TenderStatus"].ToString() == "Not Floated")
-                    {
-                        lbltendor.Text = DtView.Rows[0]["TenderStatus"].ToString();
-                    }
-                    else
-                    {
-                        lbltendor.Text = "No";
-                    }
+                    { eighteen.Visible = false; }                  
                     string Nodel1Id = DtView.Rows[0]["NodelDetail"].ToString();
                     if (Nodel1Id.ToString() != "")
                     {
@@ -522,10 +488,8 @@ public partial class User_U_Cart : System.Web.UI.Page
                         {
                             lblempname.Text = dtNodal.Rows[0]["NodalOficerName"].ToString();
                             lbldesignation.Text = dtNodal.Rows[0]["Designation"].ToString();
-                            lblemailidpro.Text = dtNodal.Rows[0]["NodalOfficerEmail"].ToString();
-                            lblmobilenumber.Text = dtNodal.Rows[0]["NodalOfficerMobile"].ToString();
+                            lblemailidpro.Text = dtNodal.Rows[0]["NodalOfficerEmail"].ToString();                          
                             lblphonenumber.Text = dtNodal.Rows[0]["NodalOfficerTelephone"].ToString();
-                            lblfaxpro.Text = dtNodal.Rows[0]["NodalOfficerFax"].ToString();
                         }
                         else
                         {
@@ -574,26 +538,6 @@ public partial class User_U_Cart : System.Web.UI.Page
                     {
                         twentytwo.Visible = false;
                     }
-                    //if (DtView.Rows[0]["IsShowGeneral"].ToString() != "")
-                    //{
-                    //    if (DtView.Rows[0]["IsShowGeneral"].ToString() == "Y")
-                    //        lblisshowgeneral.Text = "Yes";
-                    //    else
-                    //        lblisshowgeneral.Text = "No";
-                    //    twentyfour.Visible = true;
-                    //}
-                    //else
-                    //{
-                    //    twentyfour.Visible = false;
-                    //}
-                    //if (DtView.Rows[0]["TermConditionImage"].ToString() != "")
-                    //{
-                    //    twentythree.Visible = true;
-                    //}
-                    //else
-                    //{
-                    //    twentythree.Visible = false;
-                    //}
                     if (DtView.Rows[0]["QAAgency"].ToString() != "")
                     {
                         DataTable DTporCat = Lo.RetriveProductCode("", e.CommandArgument.ToString(), "ProductQAAgency", "Company");
@@ -623,56 +567,6 @@ public partial class User_U_Cart : System.Web.UI.Page
                     {
                         Tr8.Visible = false;
                     }
-                    if (DtView.Rows[0]["IsIndeginized"].ToString() != "")
-                    {
-
-                        if (DtView.Rows[0]["IsIndeginized"].ToString() == "Y")
-                        {
-                            Tr19.Visible = true;
-                            lblisindigenised.Text = "Yes";
-                            if (DtView.Rows[0]["ManufactureName"].ToString() != "")
-                            {
-                                lblmanuname.Text = DtView.Rows[0]["ManufactureName"].ToString();
-                                Tr20.Visible = true;
-                            }
-                            else
-                            {
-                                Tr20.Visible = false;
-                            }
-                            if (DtView.Rows[0]["ManufactureAddress"].ToString() != "")
-                            {
-                                lblmanuaddress.Text = DtView.Rows[0]["ManufactureAddress"].ToString();
-                                Tr21.Visible = true;
-                            }
-                            else
-                            {
-                                Tr21.Visible = false;
-                            }
-                            if (DtView.Rows[0]["YearofIndiginization"].ToString() != "")
-                            {
-                                lblyearofindi.Text = DtView.Rows[0]["FY"].ToString();
-                                Tr22.Visible = true;
-                            }
-                            else
-                            {
-                                Tr22.Visible = false;
-                            }
-                        }
-                        else
-                        {
-                            lblisindigenised.Text = "No";
-                            Tr20.Visible = false;
-                            Tr21.Visible = false;
-                            Tr22.Visible = false;
-                        }
-                    }
-                    else
-                    {
-                        Tr19.Visible = false;
-                        Tr20.Visible = false;
-                        Tr21.Visible = false;
-                        Tr22.Visible = false;
-                    }
                     if (DtView.Rows[0]["IndTargetYear"].ToString() != "")
                     {
                         lblindtrgyr.Text = DtView.Rows[0]["IndTargetYear"].ToString().Substring(0, DtView.Rows[0]["IndTargetYear"].ToString().Length - 1);
@@ -686,16 +580,7 @@ public partial class User_U_Cart : System.Web.UI.Page
                     else
                     {
                         Tr25.Visible = false;
-                    }
-                    //if (DtView.Rows[0]["IndProcess"].ToString() != "")
-                    //{
-                    //    lblprocstart.Text = DtView.Rows[0]["IndProcess"].ToString();
-                    //    Tr24.Visible = true;
-                    //}
-                    //else
-                    //{
-                    //    Tr24.Visible = false;
-                    //}
+                    }                    
                     ScriptManager.RegisterStartupScript(this, GetType(), "ProductCompany", "showPopup();", true);
                 }
             }

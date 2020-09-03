@@ -73,14 +73,12 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                         {
                             hidType.Value = objEnc.DecryptData(Session["Type"].ToString().Trim());
                             hfcomprefno.Value = Session["CompanyRefNo"].ToString().Trim();
-                            BindGrid();
                         }
                         if (hidType.Value.ToString() != "SuperAdmin" || hidType.Value.ToString() != "Admin")
                         {
                             BindCompany();
                             BindCountry();
                             BindFinancialYear();
-                            // IsProductImported();
                             if (Request.QueryString["mcurrentcompRefNo"] != null)
                             {
                                 BindMasterCategory();
@@ -108,7 +106,6 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                             BindFinancialYear();
                             BindQualityAssurance();
                             PROCURMENTCATEGORYIndigenization();
-                            // IsProductImported();
                         }
                     }
                     if (hidType.Value == "Company")
@@ -145,9 +142,6 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                 }
                 catch (Exception ex)
                 {
-                    //string error = ex.Message;
-                    //string Page = Request.Url.AbsolutePath.ToString();
-                    //Response.Redirect("Error?techerror=" + objEnc.EncryptData(error) + "&page=" + objEnc.EncryptData(Page));
                     ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "ErrorMssgPopup('Oops some error occured Please refresh page or contact us." + ex.Message + "')", true);
                 }
             }
@@ -626,24 +620,9 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         }
         NSCCode(ddlmastercategory.SelectedItem.Text, ddlsubcategory.SelectedItem.Text);
     }
-    protected void ddllevel3product_SelectedIndexChanged(object sender, EventArgs e)
-    {
-        if (ddllevel3product.SelectedItem.Text != "Select" && ddllevel3product.SelectedItem.Text != "NA")
-        {
-            lblviewitemcode.Visible = true;
-        }
-        else
-        {
-            lblviewitemcode.Visible = false;
-        }
-    }
     protected void ddltechnologycat_SelectedIndexChanged(object sender, EventArgs e)
     {
         BindMasterSubCategoryTech();
-    }
-    protected void ddlsubtech_SelectedIndexChanged(object sender, EventArgs e)
-    {
-        BindMasterSubCategoryTechLevel3();
     }
     protected void rbisindinised_CheckedChanged(object sender, EventArgs e)
     {
@@ -666,29 +645,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         {
             ddlnomnclature.Items.Clear();
         }
-    }
-    protected void rbproductImported_CheckedChanged(object sender, EventArgs e)
-    {
-        //if (rbproductImported.SelectedItem.Value == "Y")
-        //{
-        // divyearofimportYes.Visible = true;
-        //}
-        //else if (rbproductImported.SelectedItem.Value == "N")
-        //{
-        //divyearofimportYes.Visible = false;
-        //}
-    }
-    protected void IsProductImported()
-    {
-        //if (rbproductImported.SelectedItem.Value == "Y")
-        //{
-        //    divyearofimportYes.Visible = true;
-        //}
-        //else if (rbproductImported.SelectedItem.Value == "N")
-        //{
-        //    divyearofimportYes.Visible = false;
-        //}
-    }
+    }   
     private void NSCCode(string NSNGroupddl, string NSNClassddl)
     {
         try
@@ -795,11 +752,9 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         {
             Co.FillDropdownlist(ddllevel3product, DtMasterCategroyLevel3, "SCategoryName", "SCategoryId");
             ddllevel3product.Items.Insert(0, "Select");
-            lblviewitemcode.Visible = true;
         }
         else
         {
-            lblviewitemcode.Visible = false;
             ddllevel3product.Items.Clear();
             ddllevel3product.Items.Insert(0, "Select");
             ddllevel3product.Items.Insert(1, "NA");
@@ -864,23 +819,6 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         {
             ddlsubtech.Items.Clear();
             ddlsubtech.Items.Insert(0, "Select");
-        }
-    }
-    protected void BindMasterSubCategoryTechLevel3()
-    {
-        if (ddlsubtech.SelectedItem.Value != null || ddlsubtech.SelectedItem.Text != "Select")
-        {
-            DataTable DtMasterCategroyLevel3 = Lo.RetriveMasterSubCategoryDate(Convert.ToInt32(ddlsubtech.SelectedItem.Value), "", "", "SubSelectID", "", "");
-            if (DtMasterCategroyLevel3.Rows.Count > 0)
-            {
-                Co.FillDropdownlist(ddltechlevel3, DtMasterCategroyLevel3, "SCategoryName", "SCategoryId");
-                ddltechlevel3.Items.Insert(0, "Select");
-            }
-            else
-            {
-                ddltechlevel3.Items.Clear();
-                ddltechlevel3.Items.Insert(0, "Select");
-            }
         }
     }
     #endregion
@@ -1081,7 +1019,6 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                 if (ddllevel3product.SelectedItem.Value != "Select")
                 {
                     HyPanel1["ProductLevel3"] = Co.RSQandSQLInjection(ddllevel3product.SelectedItem.Value, "soft");
-                    DtNSFIIG = SaveFiigNo();
                 }
                 else
                 {
@@ -1091,7 +1028,6 @@ public partial class Admin_AddProduct : System.Web.UI.Page
             HyPanel1["ProductDescription"] = Co.RSQandSQLInjection(txtproductdescription.Text.Trim(), "soft");
             HyPanel1["NSCCode"] = Co.RSQandSQLInjection(txtnsccode.Text.Trim(), "soft");
             HyPanel1["NIINCode"] = Co.RSQandSQLInjection(txtniincode.Text.Trim(), "soft");
-            HyPanel1["ItemDescriptionPDFFile"] = null;
             if (fuitemdescriptionfile.HasFiles != false)
             {
                 if (hfprodid.Value != "")
@@ -1154,7 +1090,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
             }
             HyPanel1["OEMPartNumber"] = Co.RSQandSQLInjection(txtoempartnumber.Text.Trim(), "soft");
             HyPanel1["OEMName"] = Co.RSQandSQLInjection(txtoemname.Text.Trim(), "soft");
-            if(txtcountry.SelectedItem.Value != "Select")
+            if (txtcountry.SelectedItem.Value != "Select")
             {
                 HyPanel1["OEMCountry"] = Convert.ToInt64(txtcountry.SelectedItem.Value);
             }
@@ -1162,43 +1098,33 @@ public partial class Admin_AddProduct : System.Web.UI.Page
             {
                 HyPanel1["OEMCountry"] = "0";
             }
-            
+
             HyPanel1["OEMAddress"] = Co.RSQandSQLInjection(txtoemaddress.Text.Trim(), "soft");
-            HyPanel1["DPSUPartNumber"] = Co.RSQandSQLInjection(txtdpsupartnumber.Text.Trim(), "soft");
-            HyPanel1["HSCode"] = null;
-            HyPanel1["HSNCode"] = null;
-            HyPanel1["HSChapter"] = null;
-            HyPanel1["HSNCodeLevel1"] = null;
-            HyPanel1["HSNCodeLevel2"] = null;
-            HyPanel1["HSNCodeLevel3"] = null;
-            // }
-            HyPanel1["HsCode4digit"] = "";
-            HyPanel1["HsnCode8digit"] = txthsncodereadonly.Text.Trim();
-            HyPanel1["EndUserPartNumber"] = "";
-            
-                if (ddlenduser.SelectedIndex != -1)
+            HyPanel1["DPSUPartNumber"] = Co.RSQandSQLInjection(txtdpsupartnumber.Text.Trim(), "soft");          
+            HyPanel1["HsnCode8digit"] = txthsncodereadonly.Text.Trim();         
+            if (ddlenduser.SelectedIndex != -1)
+            {
+                for (int o = 0; o < ddlenduser.Items.Count; o++)
                 {
-                    for (int o = 0; o < ddlenduser.Items.Count; o++)
+                    if (ddlenduser.Items[o].Selected == true)
                     {
-                        if (ddlenduser.Items[o].Selected == true)
-                        {
-                            m = m + ddlenduser.Items[o].Value + ",";
-                        }
+                        m = m + ddlenduser.Items[o].Value + ",";
                     }
-                    HyPanel1["EndUser"] = m;
                 }
-                else
-                {
-                    HyPanel1["EndUser"] = null;
-                }
-                if (ddlplatform.SelectedItem.Value != "Select")
-                {
-                    HyPanel1["Platform"] = Co.RSQandSQLInjection(ddlplatform.SelectedItem.Value, "soft");
-                }
-                else
-                {
-                    HyPanel1["Platform"] = null;
-                }
+                HyPanel1["EndUser"] = m;
+            }
+            else
+            {
+                HyPanel1["EndUser"] = null;
+            }
+            if (ddlplatform.SelectedItem.Value != "Select")
+            {
+                HyPanel1["Platform"] = Co.RSQandSQLInjection(ddlplatform.SelectedItem.Value, "soft");
+            }
+            else
+            {
+                HyPanel1["Platform"] = null;
+            }
             if (ddlplatform.SelectedItem.Value == "Select")
             {
                 HyPanel1["NomenclatureOfMainSystem"] = null;
@@ -1214,14 +1140,14 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                     HyPanel1["NomenclatureOfMainSystem"] = null;
                 }
             }
-                if (ddltechnologycat.SelectedItem.Value != "Select")
-                {
-                    HyPanel1["TechnologyLevel1"] = Co.RSQandSQLInjection(ddltechnologycat.SelectedItem.Value, "soft");
-                }
-                else
-                {
-                    HyPanel1["TechnologyLevel1"] = null;
-                }
+            if (ddltechnologycat.SelectedItem.Value != "Select")
+            {
+                HyPanel1["TechnologyLevel1"] = Co.RSQandSQLInjection(ddltechnologycat.SelectedItem.Value, "soft");
+            }
+            else
+            {
+                HyPanel1["TechnologyLevel1"] = null;
+            }
             if (ddltechnologycat.SelectedItem.Value == "Select")
             {
                 HyPanel1["TechnologyLevel2"] = null;
@@ -1237,9 +1163,6 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                     HyPanel1["TechnologyLevel2"] = null;
                 }
             }
-
-            HyPanel1["TechnologyLevel3"] = null;
-            HyPanel1["SearchKeyword"] = Co.RSQandSQLInjection(txtsearchkeyword.Text.Trim(), "soft");
             HyPanel1["IsIndeginized"] = Co.RSQandSQLInjection(rbisindinised.SelectedItem.Value, "soft");
             HyPanel1["ManufactureName"] = Co.RSQandSQLInjection(txtmanufacturename.Text.Trim(), "soft");
             HyPanel1["ManufactureAddress"] = Co.RSQandSQLInjection(txtmanifacaddress.Text.Trim(), "soft");
@@ -1254,32 +1177,15 @@ public partial class Admin_AddProduct : System.Web.UI.Page
             if (rbproductImported.SelectedItem.Value == "N")
             {
                 HyPanel1["IsProductImported"] = Co.RSQandSQLInjection(rbproductImported.SelectedItem.Value.Trim(), "soft");
-                HyPanel1["YearofImport"] = null;
-                HyPanel1["YearofImportRemarks"] = Co.RSQandSQLInjection(txtremarksyearofimportyes.Text.Trim(), "soft");
             }
             else
             {
                 HyPanel1["IsProductImported"] = Co.RSQandSQLInjection(rbproductImported.SelectedItem.Value.Trim(), "soft");
                 dtSaveEstimateQuantity1 = Dvinsert();
-                HyPanel1["YearofImport"] = null;
-                HyPanel1["NEstimateQuantity"] = null;
-                HyPanel1["NEstimateUnit"] = null;
-                HyPanel1["NEstimatePrice"] = null;
-                HyPanel1["YearofImportRemarks"] = Co.RSQandSQLInjection(txtremarksyearofimportyes.Text.Trim(), "soft");
             }
             HyPanel1["FeatursandDetail"] = Co.RSQandSQLInjection(txtfeaturesanddetails.Text.Trim(), "soft");
-            HyPanel1["ItemSpecification"] = Co.RSQandSQLInjection(rbitemspecification.SelectedValue, "soft");
-            dtSaveProdInfo = SaveCodeProdInfo();
-            HyPanel1["AdditionalDetail"] = Co.RSQandSQLInjection(txtadditionalinfo.Text.Trim(), "soft");
             dtSaveEstimateQuantity = Dvinsertfuture();
-            HyPanel1["ProcurmentCategoryRemark"] = Co.RSQandSQLInjection(txtremarksprocurmentCategory.Text.Trim(), "soft");
-            HyPanel1["TenderSubmition"] = "";
-            HyPanel1["TenderStatus"] = "";
-            HyPanel1["TenderFillDate"] = null;
-            HyPanel1["TenderUrl"] = "";
             HyPanel1["EOIStatus"] = Co.RSQandSQLInjection(rbeoimake2.SelectedValue, "soft");
-            HyPanel1["EOISubmition"] = "";
-            HyPanel1["EOIFillDate"] = null;
             HyPanel1["EOIURL"] = txteoilink.Text;
             for (int i = 0; i < chkQAA.Items.Count; i++)
             {
@@ -1296,15 +1202,6 @@ public partial class Admin_AddProduct : System.Web.UI.Page
             {
                 HyPanel1["QAAgency"] = "";
             }
-            HyPanel1["QAReamrks"] = "";
-            HyPanel1["Testing"] = "";
-            HyPanel1["TestingRemarks"] = "";
-            HyPanel1["Certification"] = "";
-            HyPanel1["CertificationRemark"] = "";
-            HyPanel1["DPSUServices"] = "";
-            HyPanel1["Remarks"] = "";
-            HyPanel1["FinancialSupport"] = "";
-            HyPanel1["FinancialRemark"] = "";
             for (int i = 0; i < chkinditargetyear.Items.Count; i++)
             {
                 if (chkinditargetyear.Items[i].Selected == true)
@@ -1361,7 +1258,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
             }
             HyPanel1["ShowGeneralDec"] = rbeligible.SelectedItem.Value;
             HyPanel1["CreatedBy"] = ViewState["UserLoginEmail"].ToString();
-            string StrProductDescription = Lo.SaveCodeProduct(HyPanel1, dtImage, dtPdf, dtSaveProdInfo, dtSaveEstimateQuantity, dtSaveEstimateQuantity1, DtNSFIIG, out _sysMsg, out _msg, "Product");
+            string StrProductDescription = Lo.SaveCodeProduct(HyPanel1, dtImage, dtPdf, dtSaveEstimateQuantity, dtSaveEstimateQuantity1, out _sysMsg, out _msg, "Product");
             if (StrProductDescription != "-1")
             {
                 if (btnsubmitpanel1.Text != "Update")
@@ -1381,8 +1278,9 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                 ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "alert('Record not saved.')", true);
             }
         }
-        catch (Exception)
+        catch (Exception ex)
         {
+            ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "alert("+ex.Message+")", true);
         }
     }
     #endregion
@@ -1607,7 +1505,6 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         txtcountry.SelectedIndex = 0;
         txtmanifacaddress.Text = "";
         ddlyearofindiginization.SelectedIndex = 0;
-        txtremarksprocurmentCategory.Text = "";
         txtnsccode.Text = "";
         txtniincode.Text = "";
         txtdpsupartnumber.Text = "";
@@ -1626,26 +1523,17 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         rbisindinised.SelectedIndex = 0;
         divisIndigenized.Visible = false;
         txtmanufacturename.Text = "";
-        txtsearchkeyword.Text = "";
         ddlsubcategory.Items.Clear();
         ddllevel3product.Items.Clear();
         ddlsubtech.Items.Clear();
-        ddltechlevel3.Items.Clear();
         txtfeaturesanddetails.Text = "";
-        txtadditionalinfo.Text = "";
-        txtremarksyearofimportyes.Text = "";
         rbproductImported.SelectedIndex = 0;
-        txtNameOfSpecificationAdd.Text = "";
-        TxtValueProdAdd.Text = "";
-        txtUnitProdAdd.Text = "";
         contactpanel1.Visible = false;
         divnodal2.Visible = false;
         if (ddlNodalOfficerEmail.Text != "")
         {
             ddlNodalOfficerEmail.SelectedIndex = 0;
         }
-        txtfiigno.Text = "";
-        txtfiigtype.Text = "";
         rbeoimake2.SelectedIndex = -1;
         eoi.Visible = false;
         chkQAA.SelectedIndex = -1;
@@ -1796,103 +1684,6 @@ public partial class Admin_AddProduct : System.Web.UI.Page
             }
         }
         return customers.ToArray();
-    }
-    #endregion
-    #region SetGridView Initial ProductInformaTION
-    protected DataTable SaveCodeProdInfo()
-    {
-        DataTable DtNProdInfo = new DataTable();
-        DtNProdInfo.Columns.Add(new DataColumn("ProdInfoId", typeof(int)));
-        DtNProdInfo.Columns.Add(new DataColumn("Length", typeof(string)));
-        DtNProdInfo.Columns.Add(new DataColumn("Value", typeof(string)));
-        DtNProdInfo.Columns.Add(new DataColumn("ProductUnit", typeof(string)));
-        DataRow drProdInfoSave;
-        {
-            try
-            {
-                for (int i = 0; i <= gvProductInformation.Rows.Count; i++)
-                {
-                    int txtProdInfoId = Convert.ToInt32(gvProductInformation.DataKeys[i].Value.ToString());
-                    Label txtlenth = (Label)gvProductInformation.Rows[i].Cells[1].FindControl("lblNameofspec");
-                    Label txtvalue = (Label)gvProductInformation.Rows[i].Cells[2].FindControl("lblvalueProd");
-                    Label txtProdInfoUnit = (Label)gvProductInformation.Rows[i].Cells[3].FindControl("lblUnitProd");
-                    drProdInfoSave = DtNProdInfo.NewRow();
-                    drProdInfoSave["ProdInfoId"] = txtProdInfoId.ToString();
-                    drProdInfoSave["Length"] = txtlenth.Text.Trim();
-                    drProdInfoSave["Value"] = txtvalue.Text.Trim();
-                    drProdInfoSave["ProductUnit"] = txtProdInfoUnit.Text.Trim();
-                    DtNProdInfo.Rows.Add(drProdInfoSave);
-                }
-            }
-            catch (Exception)
-            { }
-            return DtNProdInfo;
-        }
-    }
-    private void BindGrid()
-    {
-        DataTable DtGrid = new DataTable();
-        DtGrid = Lo.TestGrid("Select", hfprodrefno.Value, 0, "", "", "");
-        if (DtGrid.Rows.Count > 0)
-        {
-            gvProductInformation.DataSource = DtGrid;
-            gvProductInformation.DataBind();
-            gvProductInformation.Visible = true;
-        }
-        else
-        {
-            gvProductInformation.Visible = false;
-        }
-    }
-    protected void Insert(object sender, EventArgs e)
-    {
-        string nameofspeci = txtNameOfSpecificationAdd.Text;
-        string ValueProd = TxtValueProdAdd.Text;
-        string UnitProd = txtUnitProdAdd.Text;
-        Lo.TestGrid("Insert", hfprodrefno.Value, 0, nameofspeci, ValueProd, UnitProd);
-        txtNameOfSpecificationAdd.Text = "";
-        TxtValueProdAdd.Text = "";
-        txtUnitProdAdd.Text = "";
-        BindGrid();
-    }
-    protected void OnRowEditing(object sender, GridViewEditEventArgs e)
-    {
-        gvProductInformation.EditIndex = e.NewEditIndex;
-        BindGrid();
-    }
-    protected void OnRowUpdating(object sender, GridViewUpdateEventArgs e)
-    {
-        GridViewRow row = gvProductInformation.Rows[e.RowIndex];
-        int ProdSpeciId = Convert.ToInt32(gvProductInformation.DataKeys[e.RowIndex].Values[0]);
-        string namePro = (row.FindControl("txtNameofspeci") as TextBox).Text;
-        string ValuePro = (row.FindControl("txtValueProd") as TextBox).Text;
-        string unitPro = (row.FindControl("txtUnitProd") as TextBox).Text;
-        Lo.TestGrid("Update", hfprodrefno.Value, ProdSpeciId, namePro, ValuePro, unitPro);
-        gvProductInformation.EditIndex = -1;
-        BindGrid();
-    }
-    protected void OnRowCancelingEdit(object sender, EventArgs e)
-    {
-        gvProductInformation.EditIndex = -1;
-        BindGrid();
-    }
-    protected void OnRowDeleting(object sender, GridViewDeleteEventArgs e)
-    {
-        int ProdIdDel = Convert.ToInt32(gvProductInformation.DataKeys[e.RowIndex].Values[0]);
-        Lo.TestGrid("Delete", "", ProdIdDel, "", "", "");
-        BindGrid();
-    }
-    protected void OnRowDataBound(object sender, GridViewRowEventArgs e)
-    {
-        if (e.Row.RowType == DataControlRowType.DataRow && e.Row.RowIndex != gvProductInformation.EditIndex)
-        {
-            (e.Row.Cells[4].Controls[2] as LinkButton).Attributes["onclick"] = "return confirm('Do you want to delete this row?');";
-        }
-    }
-    protected void OnPaging(object sender, GridViewPageEventArgs e)
-    {
-        gvProductInformation.PageIndex = e.NewPageIndex;
-        BindGrid();
     }
     #endregion
     #region Add Grid of EstimateQuanPrice
@@ -2166,156 +1957,6 @@ public partial class Admin_AddProduct : System.Web.UI.Page
         }
     }
     #endregion
-    #region Show NSNGroup GRID TO Add
-    protected void lblviewitemcode_Click(object sender, EventArgs e)
-    {
-        if (btnsubmitpanel1.Text == "Update")
-        {
-            DataTable DtViewNewCodeup = Lo.RetrivenewcategortFIIG_No(hfprodrefno.Value, "UFound");
-            if (DtViewNewCodeup.Rows.Count > 0)
-            {
-                DataView Dv = new DataView(DtViewNewCodeup);
-                Dv.RowFilter = "Remarks3='Y'";
-                DataTable DtVY = Dv.ToTable();
-                gvproditemdetail.DataSource = DtVY.DefaultView;
-                gvproditemdetail.DataBind();
-                gvproditemdetail.Visible = true;
-                for (int i = 0; DtVY.Rows.Count > i; i++)
-                {
-                    txtfiigtype.Text = DtVY.Rows[i]["Remarks2"].ToString();
-                    TextBox box = (TextBox)gvproditemdetail.Rows[i].Cells[2].FindControl("txtinfonsnfig");
-                    box.Text = DtVY.Rows[i]["Remarks"].ToString();
-                }
-                pan.Visible = true;
-                Panel2.Visible = true;
-                Dv.RowFilter = "Remarks3='N'";
-                DataTable DTVN = Dv.ToTable();
-                GridView1.DataSource = DTVN.DefaultView;
-                GridView1.DataBind();
-                for (int i = 0; DTVN.Rows.Count > i; i++)
-                {
-                    txtfiigno.Text = DTVN.Rows[i]["Remarks2"].ToString();
-                    TextBox box1 = (TextBox)GridView1.Rows[i].Cells[2].FindControl("txtremNoFiig");
-                    box1.Text = DTVN.Rows[i]["Remarks"].ToString();
-                }
-                GridView1.Visible = true;
-                ScriptManager.RegisterStartupScript(this, GetType(), "changePass", "showPopup();", true);
-            }
-            else
-            {
-                DataTable DtViewNewCode = Lo.RetrivenewcategortFIIG_No(ddllevel3product.SelectedItem.Text, "Found");
-                if (DtViewNewCode.Rows.Count > 0)
-                {
-                    DataView Dv = new DataView(DtViewNewCode);
-                    Dv.RowFilter = "Type='Y'";
-                    DataTable DtVY = Dv.ToTable();
-                    gvproditemdetail.DataSource = DtVY.DefaultView;
-                    gvproditemdetail.DataBind();
-                    gvproditemdetail.Visible = true;
-                    pan.Visible = true;
-                    Panel2.Visible = true;
-                    Dv.RowFilter = "Type='N'";
-                    DataTable DTVN = Dv.ToTable();
-                    GridView1.DataSource = DTVN.DefaultView;
-                    GridView1.DataBind();
-                    GridView1.Visible = true;
-                    ScriptManager.RegisterStartupScript(this, GetType(), "changePass", "showPopup();", true);
-                }
-                else
-                {
-                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "ErrorMssgPopup('No Record Found')", true);
-                }
-            }
-        }
-        else
-        {
-            DataTable DtViewNewCode = Lo.RetrivenewcategortFIIG_No(ddllevel3product.SelectedItem.Text, "Found");
-            if (DtViewNewCode.Rows.Count > 0)
-            {
-                DataView Dv = new DataView(DtViewNewCode);
-                Dv.RowFilter = "Type='Y'";
-                DataTable DtVY = Dv.ToTable();
-                gvproditemdetail.DataSource = DtVY.DefaultView;
-                gvproditemdetail.DataBind();
-                gvproditemdetail.Visible = true;
-                pan.Visible = true;
-                Panel2.Visible = true;
-                Dv.RowFilter = "Type='N'";
-                DataTable DTVN = Dv.ToTable();
-                GridView1.DataSource = DTVN.DefaultView;
-                GridView1.DataBind();
-                GridView1.Visible = true;
-                ScriptManager.RegisterStartupScript(this, GetType(), "changePass", "showPopup();", true);
-            }
-            else
-            {
-                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "ErrorMssgPopup('No Record Found')", true);
-            }
-        }
-    }
-    protected void gvproductItem_RowCreated(object sender, GridViewRowEventArgs e)
-    {
-        if (e.Row.RowType == DataControlRowType.DataRow)
-        {
-            e.Row.TableSection = TableRowSection.TableBody;
-        }
-        else if (e.Row.RowType == DataControlRowType.Header)
-        {
-            e.Row.TableSection = TableRowSection.TableHeader;
-        }
-        else if (e.Row.RowType == DataControlRowType.Footer)
-        {
-            e.Row.TableSection = TableRowSection.TableFooter;
-        }
-    }
-    protected DataTable SaveFiigNo()
-    {
-        DataTable dt = new DataTable();
-        dt.Columns.Add(new DataColumn("FiigID", typeof(long)));
-        dt.Columns.Add(new DataColumn("ProductRefNo", typeof(string)));
-        dt.Columns.Add(new DataColumn("SCategoryName", typeof(string)));
-        dt.Columns.Add(new DataColumn("Remarks", typeof(string)));
-        dt.Columns.Add(new DataColumn("Remarks2", typeof(string)));
-        dt.Columns.Add(new DataColumn("Remarks3", typeof(string)));
-        DataRow dr;
-        {
-            try
-            {
-                foreach (GridViewRow row in gvproditemdetail.Rows)
-                {
-                    string scatfig = row.Cells[1].Text;
-                    TextBox tb = (TextBox)row.FindControl("txtinfonsnfig");
-                    dr = dt.NewRow();
-                    dr["FiigID"] = "-1";
-                    dr["ProductRefNo"] = "";
-                    dr["SCategoryName"] = scatfig.ToString();
-                    dr["Remarks"] = tb.Text;
-                    dr["Remarks2"] = txtfiigtype.Text;
-                    dr["Remarks3"] = "Y";
-                    dt.Rows.Add(dr);
-                }
-                foreach (GridViewRow row1 in GridView1.Rows)
-                {
-                    string scatfig1 = row1.Cells[1].Text;
-                    TextBox tb1 = (TextBox)row1.FindControl("txtremNoFiig");
-                    dr = dt.NewRow();
-                    dr["FiigID"] = "-1";
-                    dr["ProductRefNo"] = "";
-                    dr["SCategoryName"] = scatfig1.ToString();
-                    dr["Remarks"] = tb1.Text;
-                    dr["Remarks2"] = txtfiigno.Text; ;
-                    dr["Remarks3"] = "N";
-                    dt.Rows.Add(dr);
-                }
-            }
-            catch (Exception ex)
-            {
-                ex.Message.ToString();
-            }
-            return dt;
-        }
-    }
-    #endregion
     #region EditCodeForProduct
     protected void EditCode()
     {
@@ -2339,7 +1980,6 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                     BindMaster3levelSubCategory();
                     ddllevel3product.SelectedValue = DtView.Rows[0]["ProductLevel3"].ToString();
                 }
-                lblviewitemcode.Visible = true;
                 txtnsccode.Text = DtView.Rows[0]["NSCCode"].ToString();
                 txtniincode.Text = DtView.Rows[0]["NIINCode"].ToString();
                 txtproductdescription.Text = DtView.Rows[0]["ProductDescription"].ToString();
@@ -2382,7 +2022,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                     }
                 }
                 catch (Exception ex)
-                { ex.Message.ToString();}
+                { ex.Message.ToString(); }
                 try
                 {
                     if (DtView.Rows[0]["TechnologyLevel1"].ToString() != "")
@@ -2397,7 +2037,6 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                 }
                 catch (Exception ex)
                 { ex.Message.ToString(); }
-                txtsearchkeyword.Text = DtView.Rows[0]["SearchKeyword"].ToString();
                 rbisindinised.SelectedValue = DtView.Rows[0]["IsIndeginized"].ToString();
                 if (rbisindinised.SelectedItem.Value == "Y")
                 {
@@ -2411,14 +2050,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                     divisIndigenized.Visible = false;
                 }
                 rbproductImported.SelectedValue = DtView.Rows[0]["IsProductImported"].ToString();
-                if (rbproductImported.SelectedItem.Value == "N")
-                {
-                    txtremarksyearofimportyes.Text = DtView.Rows[0]["YearofImportRemarks"].ToString();
-                }
-                else
-                {
-                    BindGridEstimateQuantity1();
-                }
+                BindGridEstimateQuantity1();
                 DataTable dtPdfBind = Lo.RetriveProductCode("", hfprodrefno.Value, "ProductImage", "PDF");
                 if (dtPdfBind.Rows.Count > 0)
                 {
@@ -2442,18 +2074,7 @@ public partial class Admin_AddProduct : System.Web.UI.Page
                     divimgdel.Visible = false;
                 }
                 txtfeaturesanddetails.Text = DtView.Rows[0]["FeatursandDetail"].ToString();
-                rbitemspecification.SelectedValue = DtView.Rows[0]["ItemSpecification"].ToString();
-                BindGrid();
-                DataTable DtPInfoEditBind = Lo.RetriveProductCode("", hfprodrefno.Value, "ProdInfoBindEdit", "");
-                if (DtPInfoEditBind.Rows.Count > 0)
-                {
-                    gvProductInformation.DataSource = DtPInfoEditBind;
-                    gvProductInformation.DataBind();
-                }
-                txtadditionalinfo.Text = DtView.Rows[0]["AdditionalDetail"].ToString();
                 BindGridEstimateQuantity();
-
-                txtremarksprocurmentCategory.Text = DtView.Rows[0]["ProcurmentCategoryRemark"].ToString();
                 rbeoimake2.SelectedValue = DtView.Rows[0]["EOIStatus"].ToString();
                 if (rbeoimake2.SelectedValue == "Yes")
                 {

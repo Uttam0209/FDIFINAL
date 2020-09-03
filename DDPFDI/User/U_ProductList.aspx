@@ -324,7 +324,7 @@
                                                                     <asp:ListItem Value="3" style="margin-left: 5px !important;" onClick="MutExChkList(this);">&nbsp; 50 Million and above</asp:ListItem>
                                                                 </asp:RadioButtonList>
                                                             </div>
-                                                        </div>                                                        
+                                                        </div>
                                                         <div id="Div4" class="widget widget-categories mb-3" runat="server" visible="false">
                                                             <label><b>Future requirements</b></label>
                                                             <div class="input-group">
@@ -332,6 +332,33 @@
                                                                     <asp:ListItem Value="" style="margin-left: 5px !important;">&nbsp; YES</asp:ListItem>
                                                                     <%--<asp:ListItem Value="0" style="margin-left: 5px !important;" onclick="MutExChkList(this);">&nbsp; NO</asp:ListItem>--%>
                                                                 </asp:CheckBoxList>
+                                                            </div>
+                                                        </div>
+                                                        <div id="Div14" class="widget widget-categories mb-3" runat="server">
+                                                            <label><b>Starting Make in India Target Year</b></label>
+                                                            <div class="input-group">
+                                                                <asp:RadioButtonList ID="rbindigtarget" runat="server" AutoPostBack="true" CssClass="custom-checkbox" OnSelectedIndexChanged="ddldeclaration_SelectedIndexChanged">
+                                                                    <%--<asp:ListItem Value="NIL" style="margin-left: 5px !important;">NIL</asp:ListItem>--%>
+                                                                    <asp:ListItem Value="2020-21" style="margin-left: 5px !important;">&nbsp;2020-21</asp:ListItem>
+                                                                    <asp:ListItem Value="2021-22" style="margin-left: 5px !important;">&nbsp;2021-22</asp:ListItem>
+                                                                    <asp:ListItem Value="2022-23" style="margin-left: 5px !important;">&nbsp;2022-23</asp:ListItem>
+                                                                    <asp:ListItem Value="2023-24" style="margin-left: 5px !important;">&nbsp;2023-24</asp:ListItem>
+                                                                    <asp:ListItem Value="2024-25" style="margin-left: 5px !important;">&nbsp;2024-25</asp:ListItem>
+                                                                </asp:RadioButtonList>
+                                                            </div>
+                                                        </div>
+                                                        <div id="Div16" class="widget widget-categories mb-3" runat="server">
+                                                            <label><b>Industry Specification</b></label>
+                                                            <div class="input-group">
+                                                                <asp:RadioButtonList ID="rbindustryspecification" runat="server" AutoPostBack="true" CssClass="custom-checkbox" OnSelectedIndexChanged="rbindustryspecification_SelectedIndexChanged">
+                                                                    <asp:ListItem Value="'%15%' or NSNGroup like '%16%' or NSNGroup like '%17%'" style="margin-left: 5px !important;">&nbsp;AeroSpace Craft Componet and Accessories</asp:ListItem>
+                                                                    <asp:ListItem Value="'%95%' NSNGroup like '%96%'" style="margin-left: 5px !important;">&nbsp;Critical and Strategic Raw Material</asp:ListItem>
+                                                                    <asp:ListItem Value="'%59%' or NSNGroup like '%61%'" style="margin-left: 5px !important;">&nbsp;Electrical and Electronic</asp:ListItem>
+                                                                    <asp:ListItem Value="'%31%'" style="margin-left: 5px !important;">&nbsp;Bearing</asp:ListItem>
+                                                                    <asp:ListItem Value="'%48'%" style="margin-left: 5px !important;">&nbsp;Valves</asp:ListItem>
+                                                                    <asp:ListItem Value="'%20%'" style="margin-left: 5px !important;">&nbsp;Shipping and Marine</asp:ListItem>
+                                                                    <asp:ListItem Value="'%66%'" style="margin-left: 5px !important;">&nbsp;Instruments and Laboratory Equipment</asp:ListItem>
+                                                                </asp:RadioButtonList>
                                                             </div>
                                                         </div>
                                                         <%-- <h3 class="accordion-heading">
@@ -357,8 +384,8 @@
                                                                 <asp:DropDownList ID="ddlunit" runat="server" CssClass="custom-select" AutoPostBack="true" OnSelectedIndexChanged="ddlunit_SelectedIndexChanged"></asp:DropDownList>
                                                             </div>
                                                         </div>
-                                                        <div id="Div6" class="widget widget-categories mb-3" runat="server" runat="server">
-                                                            <label><b>Nato Supply Group</b></label>
+                                                        <div id="Div6" class="widget widget-categories mb-3" runat="server">
+                                                            <label><b>Nato Supply Group</b></label><asp:LinkButton runat="server" ID="lblviewnato" OnClick="lblviewnato_Click"><i class="fa fa-eye pull-right mr-1" style="margin-top:5px;"></i></asp:LinkButton>
                                                             <div class="input-group">
                                                                 <asp:DropDownList ID="ddlnsg" runat="server" CssClass="custom-select" Style="margin-top: 5px;" AutoPostBack="true" OnSelectedIndexChanged="ddlnsg_SelectedIndexChanged"></asp:DropDownList>
                                                             </div>
@@ -430,19 +457,7 @@
                                                                 </asp:RadioButtonList>
                                                             </div>
                                                         </div>
-                                                        <div id="Div14" class="widget widget-categories mb-3" runat="server">
-                                                            <label><b>Make in India Target Initiation</b></label>
-                                                            <div class="input-group">
-                                                                <asp:RadioButtonList ID="rbindigtarget" runat="server" AutoPostBack="true" CssClass="custom-checkbox" OnSelectedIndexChanged="ddldeclaration_SelectedIndexChanged">
-                                                                    <%--<asp:ListItem Value="NIL" style="margin-left: 5px !important;">NIL</asp:ListItem>--%>
-                                                                    <asp:ListItem Value="2020-21" style="margin-left: 5px !important;">&nbsp;2020-21</asp:ListItem>
-                                                                    <asp:ListItem Value="2021-22" style="margin-left: 5px !important;">&nbsp;2021-22</asp:ListItem>
-                                                                    <asp:ListItem Value="2022-23" style="margin-left: 5px !important;">&nbsp;2022-23</asp:ListItem>
-                                                                    <asp:ListItem Value="2023-24" style="margin-left: 5px !important;">&nbsp;2023-24</asp:ListItem>
-                                                                    <asp:ListItem Value="2024-25" style="margin-left: 5px !important;">&nbsp;2024-25</asp:ListItem>
-                                                                </asp:RadioButtonList>
-                                                            </div>
-                                                        </div>
+
                                                         <%--</div>--%>
                                                     </div>
                                                 </div>
@@ -782,13 +797,6 @@
                                                                             <asp:Label ID="ProdIndusSubDomain" runat="server" Text=""></asp:Label>
                                                                         </td>
                                                                     </tr>
-                                                                    <tr id="Tr9" runat="server" visible="false">
-                                                                        <th scope="row">Search keywords
-                                                                        </th>
-                                                                        <td>
-                                                                            <asp:Label ID="lblsearchkeywords" runat="server" Text=""></asp:Label>
-                                                                        </td>
-                                                                    </tr>
                                                                     <tr>
                                                                         <td colspan="2">
                                                                             <h6 class="tablemidhead">OEM Details</h6>
@@ -857,8 +865,6 @@
                                                                     </tr>
                                                                 </tbody>
                                                             </table>
-
-                                                            <%--<h6 class="tablemidhead">Imported During Last 3 years</h6>--%>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -924,40 +930,6 @@
                                                                             <asp:Label ID="lbqa" runat="server" Text=""></asp:Label>
                                                                         </td>
                                                                     </tr>
-                                                                    <tr id="Tr10" runat="server" visible="false">
-                                                                        <th scope="row">Specification
-                                                                        </th>
-                                                                        <td>
-                                                                            <asp:Label ID="lblitemspecification" runat="server" Text=""></asp:Label>
-                                                                        </td>
-                                                                    </tr>
-                                                                    <tr runat="server" id="fourteen" visible="false">
-                                                                        <th scope="row">Features & Details
-                                                                        </th>
-                                                                        <td>
-                                                                            <asp:Label ID="lblfeaturesanddetail" runat="server" Text=""></asp:Label>
-                                                                        </td>
-                                                                    </tr>
-                                                                    <tr id="Tr11" runat="server" visible="false">
-                                                                        <th scope="row">Information
-                                                                        </th>
-                                                                        <td>
-                                                                            <asp:GridView ID="gvProdInfo" runat="server" AutoGenerateColumns="false" CssClass="table table-hover">
-                                                                                <Columns>
-                                                                                    <asp:BoundField DataField="NameOfSpec" HeaderText="Name of Specification" />
-                                                                                    <asp:BoundField DataField="Value" HeaderText="Value " />
-                                                                                    <asp:BoundField DataField="Unit" HeaderText="Unit" />
-                                                                                </Columns>
-                                                                            </asp:GridView>
-                                                                        </td>
-                                                                    </tr>
-                                                                    <tr id="Tr12" runat="server" visible="false">
-                                                                        <th scope="row">Additional Information
-                                                                        </th>
-                                                                        <td>
-                                                                            <asp:Label ID="lbladditionalinfo" runat="server" Text=""></asp:Label>
-                                                                        </td>
-                                                                    </tr>
                                                                 </tbody>
                                                             </table>
                                                         </div>
@@ -975,13 +947,7 @@
                                                         <div class="card-body card-custom ">
                                                             <table class="table" width="100%">
                                                                 <tbody>
-                                                                    <tr id="Tr13" runat="server" visible="false">
-                                                                        <th scope="row">PROCURMENT CATEGORY REMARK
-                                                                        </th>
-                                                                        <td>
-                                                                            <asp:Label ID="lblprocremarks" runat="server" Text=""></asp:Label>
-                                                                        </td>
-                                                                    </tr>
+
                                                                     <tr runat="server" id="fifteen">
                                                                         <td>
                                                                             <asp:GridView ID="gvestimatequanorprice" runat="server" AutoGenerateColumns="false"
@@ -1060,13 +1026,6 @@
                                                                             <asp:Label ID="lbleoilink" runat="server" Text=""></asp:Label>
                                                                         </td>
                                                                     </tr>
-                                                                    <tr id="Tr1" runat="server" visible="false">
-                                                                        <th scope="row">Tendor Uploaded
-                                                                        </th>
-                                                                        <td>
-                                                                            <asp:Label ID="lbltendor" runat="server" Text=""></asp:Label>
-                                                                        </td>
-                                                                    </tr>
                                                                     <tr runat="server" id="Tr25">
                                                                         <th scope="row">Make in India Target Year
                                                                         </th>
@@ -1100,25 +1059,11 @@
                                                                             <asp:Label ID="lblemailidpro" runat="server" Text=""></asp:Label>
                                                                         </td>
                                                                     </tr>
-                                                                    <tr id="Tr14" runat="server" visible="false">
-                                                                        <th scope="row">Mobile Number
-                                                                        </th>
-                                                                        <td>
-                                                                            <asp:Label ID="lblmobilenumber" runat="server" Text=""></asp:Label>
-                                                                        </td>
-                                                                    </tr>
                                                                     <tr>
                                                                         <th scope="row">Phone Number
                                                                         </th>
                                                                         <td>
                                                                             <asp:Label ID="lblphonenumber" runat="server" Text=""></asp:Label>
-                                                                        </td>
-                                                                    </tr>
-                                                                    <tr id="Tr15" runat="server" visible="false">
-                                                                        <th scope="row">Fax
-                                                                        </th>
-                                                                        <td>
-                                                                            <asp:Label ID="lblfaxpro" runat="server" Text=""></asp:Label>
                                                                         </td>
                                                                     </tr>
                                                                 </tbody>
@@ -1159,54 +1104,12 @@
                                                                             <asp:Label ID="lblnameofdefplat" runat="server" Text=""></asp:Label>
                                                                         </td>
                                                                     </tr>
-                                                                    <tr runat="server" id="twentythree" visible="false">
-                                                                        <th scope="row"></th>
-                                                                        <td runat="server">
-                                                                            <asp:Label ID="lbldeclaration" runat="server" Text="No IPR issue, No violation of TOT agreement, No violation of Security Concern"></asp:Label>
-                                                                        </td>
-                                                                    </tr>
                                                                     <tr runat="server" id="twentyfour" visible="false">
                                                                         <th scope="row"></th>
                                                                         <td runat="server">
                                                                             <asp:Label ID="lblisshowgeneral" runat="server" Text=""></asp:Label>
                                                                         </td>
                                                                     </tr>
-                                                                    <tr runat="server" id="Tr19" visible="false">
-                                                                        <th scope="row" runat="server" visible="false">Is Indigenised 
-                                                                        </th>
-                                                                        <td runat="server" visible="false">
-                                                                            <asp:Label ID="lblisindigenised" runat="server" Text=""></asp:Label>
-                                                                        </td>
-                                                                    </tr>
-                                                                    <tr runat="server" id="Tr20" visible="false">
-                                                                        <th scope="row">Indian Manufacturer
-                                                                        </th>
-                                                                        <td>
-                                                                            <asp:Label ID="lblmanuname" runat="server" Text=""></asp:Label>
-                                                                        </td>
-                                                                    </tr>
-                                                                    <tr runat="server" id="Tr21" visible="false">
-                                                                        <th scope="row">Address
-                                                                        </th>
-                                                                        <td>
-                                                                            <asp:Label ID="lblmanuaddress" runat="server" Text=""></asp:Label>
-                                                                        </td>
-                                                                    </tr>
-                                                                    <tr runat="server" id="Tr22" visible="false">
-                                                                        <th scope="row">Year of Make in India
-                                                                        </th>
-                                                                        <td>
-                                                                            <asp:Label ID="lblyearofindi" runat="server" Text=""></asp:Label>
-                                                                        </td>
-                                                                    </tr>
-                                                                    <tr runat="server" id="Tr24" visible="false">
-                                                                        <th scope="row">Make in India Process started
-                                                                        </th>
-                                                                        <td>
-                                                                            <asp:Label ID="lblprocstart" runat="server" Text=""></asp:Label>
-                                                                        </td>
-                                                                    </tr>
-
                                                                 </tbody>
                                                             </table>
                                                         </div>
@@ -1243,6 +1146,16 @@
                                         <button class="close close1" data-dismiss="modal" type="button">
                                             ×                                       
                                         </button>
+                                        <h6></h6>
+                                        <h6></h6>
+                                        <h6></h6>
+                                        <h6></h6>
+                                        <h6></h6>
+                                        <h6></h6>
+                                        <h6></h6>
+                                        <h6></h6>
+                                        <h6></h6>
+                                        <h6></h6>
                                     </h6>
                                 </div>
                                 <div class="modal-body" style="text-align: center;">
@@ -1390,6 +1303,50 @@
                         </div>
                     </div>
                 </div>
+                <!----------------------------------------------------Code For Nato Popup------------------------------>
+                <div class="modal fade" id="divNatoPopup" role="dialog">
+                    <div class="modal-dialog" style="max-width: 900px;">
+                        <div class="modal-content">
+                            <div runat="server" id="Div15">
+                                <div class="modal-header modal-header1">
+                                    <h6 class="modal-title">
+                                        <button class="close close1" data-dismiss="modal" type="button">
+                                            ×                                       
+                                        </button>
+                                    </h6>
+                                </div>
+                                <div class="modal-body" style="text-align: center;">
+                                    <b><span style="text-align: center;">DPSU's Top 20 Product of Nato Group Wise</span></b>
+                                    <asp:GridView runat="server" ID="gvnatopop" AutoGenerateColumns="false" Class="table table-bordered table-responsive">
+                                        <Columns>
+                                            <asp:BoundField DataField="NSNGroup" HeaderText="NSN Group" />
+                                            <asp:BoundField DataField="BDL" HeaderText="BDL" />
+                                            <asp:BoundField DataField="BEML" HeaderText="BEML" />
+                                            <asp:BoundField DataField="BEL" HeaderText="BEL" />
+                                            <asp:BoundField DataField="GRSE" HeaderText="GRSE" />
+                                            <asp:BoundField DataField="GSL" HeaderText="GSL" />
+                                            <asp:BoundField DataField="HAL" HeaderText="HAL" />
+                                            <asp:BoundField DataField="MDL" HeaderText="MDL" />
+                                            <asp:BoundField DataField="MIDHANI" HeaderText="MIDHANI" />
+                                            <asp:BoundField DataField="OFB" HeaderText="OFB" />
+                                            <asp:BoundField DataField="SHQ_AIR_FORCE" HeaderText="SHQ (AIR FORCE)" />
+                                            <asp:BoundField DataField="SHQ_ARMY" HeaderText="SHQ (ARMY)" />
+                                            <asp:BoundField DataField="SHQ_NAVY" HeaderText="SHQ (NAVY)" />
+                                            <asp:BoundField DataField="Total" HeaderText="Total" />
+                                        </Columns>
+                                    </asp:GridView>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <div class="col-sm-3 pull-right">
+                                    <input id="Button2" type="button" runat="server" onclick="Printm()" style="width: 70px;" class="btn btn-primary  pull-right"
+                                        value="Print" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!----------------------------------------------------Code end For Nato Popup------------------------------>
             </ContentTemplate>
             <Triggers>
                 <%--<asp:PostBackTrigger ControlID="lnkbtnPgPrevious" />
@@ -1446,6 +1403,11 @@
             }
         </script>
         <script type="text/javascript">
+            function showPopup2() {
+                $('#divNatoPopup').modal('show');
+            }
+        </script>
+        <script type="text/javascript">
             function PrintDiv() {
                 var divToPrint = document.getElementById('printarea');
                 var popupWin = window.open('', '_blank', 'width=300,height=400,location=no,left=200px');
@@ -1457,6 +1419,15 @@
         <script type="text/javascript">
             function Printm() {
                 var divToPrint = document.getElementById('mPrint');
+                var popupWin = window.open('', '_blank', 'width=300,height=400,location=no,left=200px');
+                popupWin.document.open();
+                popupWin.document.write('<html><body onload="window.print()">' + divToPrint.innerHTML + '</html>');
+                popupWin.document.close();
+            }
+        </script>
+        <script type="text/javascript">
+            function Printm() {
+                var divToPrint = document.getElementById('Div15');
                 var popupWin = window.open('', '_blank', 'width=300,height=400,location=no,left=200px');
                 popupWin.document.open();
                 popupWin.document.write('<html><body onload="window.print()">' + divToPrint.innerHTML + '</html>');

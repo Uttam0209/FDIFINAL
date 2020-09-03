@@ -1,5 +1,6 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="DefaultDpsu.aspx.cs" Inherits="_DefaultD" %>
 
+<%@ Import Namespace="System.Web.Optimization" %>
 <%@ Register Assembly="MSCaptcha" Namespace="MSCaptcha" TagPrefix="cc1" %>
 <!DOCTYPE html>
 
@@ -14,6 +15,7 @@
     <link href="~/assets/css/style.css" rel="stylesheet" type="text/css">
     <link href="~/assets/css/custom.css" rel="stylesheet" type="text/css">
     <link href="~/assets/css/responsive.css" rel="stylesheet" type="text/css">
+    <link href="~/assets/css/fonts-googleapis.css" rel="stylesheet" />
     <style>
         .swal2-container.swal2-center.swal2-shown {
             z-index: 22222;
@@ -171,6 +173,9 @@
             </div>
         </div>
     </form>
+
+
+
     <script src="assets/js/jquery-3.4.1.js"></script>
     <script src="assets/js/bootstrap.min.js"></script>
     <script src="assets/js/custom.js"></script>

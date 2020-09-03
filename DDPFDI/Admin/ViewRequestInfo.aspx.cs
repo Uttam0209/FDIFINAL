@@ -46,6 +46,23 @@ public partial class Admin_ViewRequestInfo : System.Web.UI.Page
                 lbltotalshowpageitem.Text = pgsource.FirstIndexInPage + 1 + " - " + (pgsource.FirstIndexInPage + pgsource.Count);
                 lbltotfilter.Text = DtReq.Rows.Count.ToString();
                 BindCompany();
+                //Code of Count Product
+                DataTable mtable = new DataTable();
+                DataColumn ProdRef = mtable.Columns.Add("MProduct", typeof(string));
+                for (int i = 0; DtReq.Rows.Count > i; i++)
+                {
+                    string source = DtReq.Rows[i]["RequestProduct"].ToString();
+                    string[] lines = source.Split(',');
+                    foreach (var line in lines)
+                    {
+                        string[] split = line.Split(',');
+                        DataRow row = mtable.NewRow();
+                        row.SetField(ProdRef, split[0]);
+                        mtable.Rows.Add(row);
+                    }
+                }
+                DataTable uniqueCols = mtable.DefaultView.ToTable(true, "MProduct");
+                lbltotprodreq.Text =  uniqueCols.Rows.Count.ToString();
             }
             else
             {
@@ -146,7 +163,6 @@ public partial class Admin_ViewRequestInfo : System.Web.UI.Page
                     lblnsngroup.Text = DtView.Rows[0]["ProdLevel1Name"].ToString();
                     lblnsngroupclass.Text = DtView.Rows[0]["ProdLevel2Name"].ToString();
                     lblclassitem.Text = DtView.Rows[0]["ProdLevel3Name"].ToString();
-                    lblsearchkeywords.Text = DtView.Rows[0]["Searchkeyword"].ToString();
                     if (DtView.Rows[0]["ProductDescription"].ToString() != "")
                     {
                         itemname2.Text = DtView.Rows[0]["ProductDescription"].ToString();
@@ -280,17 +296,6 @@ public partial class Admin_ViewRequestInfo : System.Web.UI.Page
                     {
                         fourteen.Visible = false;
                     }
-                    DataTable dtProdInfo = Lo.RetriveProductCode("", e.CommandArgument.ToString(), "RetriveProdInfo", "");
-                    if (dtProdInfo.Rows.Count > 0)
-                    {
-                        gvProdInfo.DataSource = dtProdInfo;
-                        gvProdInfo.DataBind();
-                        gvProdInfo.Visible = true;
-                    }
-                    else
-                    {
-                        gvProdInfo.Visible = false;
-                    }
                     DataTable dtestimatequanorprice = Lo.RetriveSaveEstimateGrid("2Select", 0, e.CommandArgument.ToString(), 0, "", "", "", "", "F");
                     if (dtestimatequanorprice.Rows.Count > 0)
                     {
@@ -325,7 +330,6 @@ public partial class Admin_ViewRequestInfo : System.Web.UI.Page
                     {
                         sixteen.Visible = false;
                     }
-                    lblprocremarks.Text = DtView.Rows[0]["ProcurmentCategoryRemark"].ToString();
                     if (DtView.Rows[0]["EOIStatus"].ToString() != "")
                     {
                         lbleoirep.Text = DtView.Rows[0]["EOIStatus"].ToString();
@@ -440,70 +444,6 @@ public partial class Admin_ViewRequestInfo : System.Web.UI.Page
                     else
                     {
                         Tr8.Visible = false;
-                    }
-                    if (DtView.Rows[0]["IsIndeginized"].ToString() != "")
-                    {
-
-                        if (DtView.Rows[0]["IsIndeginized"].ToString() == "Y")
-                        {
-                            Tr19.Visible = true;
-                            lblisindigenised.Text = "Yes";
-                            if (DtView.Rows[0]["ManufactureName"].ToString() != "")
-                            {
-                                lblmanuname.Text = DtView.Rows[0]["ManufactureName"].ToString();
-                                Tr20.Visible = true;
-                            }
-                            else
-                            {
-                                Tr20.Visible = false;
-                            }
-                            if (DtView.Rows[0]["ManufactureAddress"].ToString() != "")
-                            {
-                                lblmanuaddress.Text = DtView.Rows[0]["ManufactureAddress"].ToString();
-                                Tr21.Visible = true;
-                            }
-                            else
-                            {
-                                Tr21.Visible = false;
-                            }
-                            if (DtView.Rows[0]["YearofIndiginization"].ToString() != "")
-                            {
-                                lblyearofindi.Text = DtView.Rows[0]["FY"].ToString();
-                                Tr22.Visible = true;
-                            }
-                            else
-                            {
-                                Tr22.Visible = false;
-                            }
-                        }
-                        else
-                        {
-                            lblisindigenised.Text = "No";
-                            Tr20.Visible = false;
-                            Tr21.Visible = false;
-                            Tr22.Visible = false;
-                        }
-                    }
-                    else
-                    {
-                        Tr19.Visible = false;
-                        Tr20.Visible = false;
-                        Tr21.Visible = false;
-                        Tr22.Visible = false;
-                    }
-                    if (DtView.Rows[0]["IndTargetYear"].ToString() != "")
-                    {
-                        lblindtrgyr.Text = DtView.Rows[0]["IndTargetYear"].ToString().Substring(0, DtView.Rows[0]["IndTargetYear"].ToString().Length - 1);
-                        if (lblindtrgyr.Text == "NIL")
-                        { Tr25.Visible = false; }
-                        else
-                        {
-                            Tr25.Visible = true;
-                        }
-                    }
-                    else
-                    {
-                        Tr25.Visible = false;
                     }
                     pan1.Visible = false;
                     panview.Visible = true;

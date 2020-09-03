@@ -103,9 +103,9 @@ namespace BusinessLayer
         {
             return SqlHelper.Instance.SaveMasterNodal(hySaveNodal, out _sysMsg, out _msg);
         }
-        public string SaveCodeProduct(HybridDictionary hyProduct, DataTable DtImage, DataTable DtPdf, DataTable dtProdInfo, DataTable dtEstimateQuantity, DataTable dtEstimateQuantity1, DataTable DtNSFIIG, out string _sysMsg, out string _msg, string Criteria)
+        public string SaveCodeProduct(HybridDictionary hyProduct, DataTable DtImage, DataTable DtPdf,  DataTable dtEstimateQuantity, DataTable dtEstimateQuantity1, out string _sysMsg, out string _msg, string Criteria)
         {
-            return SqlHelper.Instance.SaveCodeProduct(hyProduct, DtImage, DtPdf, dtProdInfo, dtEstimateQuantity, dtEstimateQuantity1, DtNSFIIG, out _sysMsg, out _msg, Criteria);
+            return SqlHelper.Instance.SaveCodeProduct(hyProduct, DtImage, DtPdf,  dtEstimateQuantity, dtEstimateQuantity1,  out _sysMsg, out _msg, Criteria);
         }
         public string UpdateCodeProduct(HybridDictionary HyUpdateProd, out string _sysMsg, out string _msg)
         {
