@@ -39,6 +39,30 @@ public partial class User_U_ProductList : System.Web.UI.Page
                 }
                 else
                 {
+                    //Code by Shalini
+                    if (Session["User"] != null)
+                    {
+                        linklogin.Visible = false;
+                        linkusername.Text = Encrypt.DecryptData(Session["User"].ToString());
+
+                        if (Encrypt.DecryptData(Session["Type"].ToString()) == "Admin" || Encrypt.DecryptData(Session["Type"].ToString()) == "SuperAdmin" || Encrypt.DecryptData(Session["Type"].ToString()) == "Company" ||
+                            Encrypt.DecryptData(Session["Type"].ToString()) == "Division" || Encrypt.DecryptData(Session["Type"].ToString()) == "Unit")
+                        {
+                            linklogin.Visible = false;
+                            linkusername.Text = Encrypt.DecryptData(Session["User"].ToString());
+                        }
+                        else
+                        {
+                            linklogin.Visible = true;
+                            linkusername.Visible = false;
+                        }
+                    }
+                    else
+                    {
+                        linklogin.Visible = true;
+                        linkusername.Visible = false;
+                    }
+                    //end
                     totalno.InnerText = dtCart.Rows.Count.ToString();
                 }
                 ControlGrid();
@@ -1866,4 +1890,21 @@ public partial class User_U_ProductList : System.Web.UI.Page
         }
     }
     #endregion
+    //code by shalini
+    protected void linklogin_Click(object sender, EventArgs e)
+    {
+        Response.RedirectToRoute("Login");
+    }
+    protected void linkusername_Click(object sender, EventArgs e)
+    {
+        if (Session["User"] != null)
+        {
+            Response.RedirectToRoute("Dashboard");
+        }
+        else
+        {
+            ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "ErrorMssgPopup('Please login again');window.location='Login'", true);
+        }
+    }
+    //end
 }

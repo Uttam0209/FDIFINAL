@@ -151,6 +151,120 @@
             font-size: 13px;
         }
     </style>
+    <!----------------Raveecode----------------->
+
+    <style>
+        .dropdown1 {
+            float: right;
+            overflow: hidden;
+        }
+            .dropdown1 .dropbtn1 {
+                font-size: 16px;
+                border: none;              
+                color: white;
+                padding: 12px 14px;
+                background-color: inherit;
+                font-family: inherit;
+                margin: 0;
+            }
+
+
+        .dropdown-content1 {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+
+            .dropdown-content1 a {
+                float: none;
+                color: black;
+                padding: 12px 16px;
+                text-decoration: none;
+                display: block;
+                text-align: left;
+            }
+
+                .dropdown-content1 a:hover {
+                    background-color: #ddd;
+                }
+
+        .dropdown1:hover .dropdown-content1 {
+            display: block;
+        }
+    </style>
+
+
+
+
+    <%--<style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .navbar {
+            overflow: hidden;
+            background-color: #333;
+        }
+
+            .navbar a {
+                float: left;
+                font-size: 16px;
+                color: white;
+                text-align: center;
+                padding: 14px 16px;
+                text-decoration: none;
+            }
+
+        .dropdown {
+            float: left;
+            overflow: hidden;
+        }
+
+            .dropdown .dropbtn {
+                font-size: 16px;
+                border: none;
+                outline: none;
+                color: white;
+                padding: 14px 16px;
+                background-color: inherit;
+                font-family: inherit;
+                margin: 0;
+            }
+
+            .navbar a:hover, .dropdown:hover .dropbtn {
+                background-color: red;
+            }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+
+            .dropdown-content a {
+                float: none;
+                color: black;
+                padding: 12px 16px;
+                text-decoration: none;
+                display: block;
+                text-align: left;
+            }
+
+                .dropdown-content a:hover {
+                    background-color: #ddd;
+                }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+    </style>--%>
+    <!----------------End----------------->
 </head>
 <body>
     <div class="modal fade" id="aboutus-modal" tabindex="-1" role="dialog">
@@ -260,15 +374,32 @@
                         <div class="order-lg-1 pr-lg-4 text-center text-lg-left">
                             <h1 class="h3 text-light mb-0">Products imported by Defence PSUs/OFB/SHQ </h1>
                         </div>
-
                     </div>
                     <div class="order-lg-1 pr-lg-4 text-center text-lg-right" style="margin-top: 10px;">
-                        <b><a href="https://www.makeinindiadefence.gov.in/" target="_blank" class="menu_">Make In India Defence Portal </a></b>
-                        <b><a href="Login" target="_blank" class="menu_"><i class="fa fa-user" aria-hidden="true"></i>DPSU Login </a></b>
+                        <!------------Shalini------------->
+                        <b>
+                            <asp:LinkButton ID="linklogin" runat="server" CssClass="menu_" OnClick="linklogin_Click"><i class="fa fa-user" aria-hidden="true"></i>DPSU Login </asp:LinkButton>
+                            <asp:LinkButton ID="linkusername" runat="server" CssClass="menu_" OnClick="linkusername_Click" ToolTip="Go To MIS"></asp:LinkButton></b>
                         <b><a href="#aboutus-modal" class="menu_" data-toggle="modal">About us </a></b>
+                        <b><a href="https://www.makeinindiadefence.gov.in/" target="_blank" class="menu_">Make In India Defence Portal </a></b>
+                        <!------------Old------------->
+                        <%-- <b><a href="https://www.makeinindiadefence.gov.in/" target="_blank" class="menu_">Make In India Defence Portal </a></b>
+                        <b><a href="Login" target="_blank" class="menu_"><i class="fa fa-user" aria-hidden="true"></i>DPSU Login </a></b>
+                        <b><a href="#aboutus-modal" class="menu_" data-toggle="modal">About us </a></b>--%>
+
+                        <div class="dropdown1" style="display: inline; margin-top:-12px;">
+                            <button class="dropbtn1 menu_"><b>FAQ</b></button>
+                            <div class="dropdown-content1">
+                                <a href="MakeII">More Details on Make-II</a>
+                                <a href="iDEX">More Details (iDEX)</a>
+                                <a href="IGA">More Details (IGA)</a>
+                                <a href="FAQs">FAQs on Make II, iDEX and IGA</a>
+                            </div>
+                        </div>
+                        <b><a href="Contact-Us" class="menu_">Contact us </a></b>
                     </div>
                 </div>
-                <div class="container pb-5 mb-2 mb-md-4">
+                <div class="container pb-5 mb-2 mb-mdsd-4">
                     <div class="row">
                         <aside class="col-lg-4">
                             <!-- Sidebar-->
@@ -350,7 +481,7 @@
                                                         <div id="Div16" class="widget widget-categories mb-3" runat="server">
                                                             <label><b>Industry Specification</b></label>
                                                             <div class="input-group">
-                                                                <asp:RadioButtonList ID="rbindustryspecification" runat="server" AutoPostBack="true" CssClass="custom-checkbox" OnSelectedIndexChanged="rbindustryspecification_SelectedIndexChanged">
+                                                                <asp:RadioButtonList ID="rbindustryspecification" runat="server" AutoPostBack="true" CssClass="custom-radio" OnSelectedIndexChanged="rbindustryspecification_SelectedIndexChanged">
                                                                     <asp:ListItem Value="'%15%' or NSNGroup like '%16%' or NSNGroup like '%17%'" style="margin-left: 5px !important;">&nbsp;AeroSpace Craft Componet and Accessories</asp:ListItem>
                                                                     <asp:ListItem Value="'%95%' NSNGroup like '%96%'" style="margin-left: 5px !important;">&nbsp;Critical and Strategic Raw Material</asp:ListItem>
                                                                     <asp:ListItem Value="'%59%' or NSNGroup like '%61%'" style="margin-left: 5px !important;">&nbsp;Electrical and Electronic</asp:ListItem>
@@ -415,7 +546,7 @@
                                                             </div>
                                                         </div>
                                                         <div id="Div8" class="widget widget-categories mb-3" runat="server" visible="false">
-                                                            <label><b>Make in India Category</b></label>
+                                                            <label><b>Make in India Category</b>  </label>
                                                             <div class="input-group">
                                                                 <asp:DropDownList ID="ddlprocurmentcatgory" runat="server" AutoPostBack="true" CssClass="custom-select"
                                                                     OnSelectedIndexChanged="ddlprocurmentcatgory_SelectedIndexChanged">
@@ -433,6 +564,7 @@
                                                         </div>
                                                         <div id="Div3" class="widget widget-categories mb-3" runat="server">
                                                             <label><b>Make in India Category</b></label>
+                                                            <a data-target="#divInfoIdex" data-toggle="modal" href="#" style="margin-top: 5px;" class="fa fa-question pull-right"></a>
                                                             <div class="input-group">
                                                                 <asp:RadioButtonList ID="chktendor" runat="server" AutoPostBack="true" CssClass="custom-checkbox" OnSelectedIndexChanged="chktendor_SelectedIndexChanged">
                                                                 </asp:RadioButtonList>
@@ -1316,7 +1448,7 @@
                                     </h6>
                                 </div>
                                 <div class="modal-body" style="text-align: center;">
-                                    <b><span style="text-align: center;">DPSU's Top 20 Product of Nato Group Wise</span></b>
+                                    <b><span style="text-align: center;">DPSU's Top 10 Product of Nato Group Wise</span></b>
                                     <asp:GridView runat="server" ID="gvnatopop" AutoGenerateColumns="false" Class="table table-bordered table-responsive">
                                         <Columns>
                                             <asp:BoundField DataField="NSNGroup" HeaderText="NSN Group" />
@@ -1347,11 +1479,28 @@
                     </div>
                 </div>
                 <!----------------------------------------------------Code end For Nato Popup------------------------------>
+                <div class="modal fade" id="divInfoIdex" role="dialog">
+                    <div class="modal-dialog" style="max-width: 900px;">
+                        <div class="modal-content">
+                            <div class="modal-body">
+                                <p>1: IDEX/AI/INNOVATION/R&D - Inovaltion for defence excellence (iDex) ministry of Defence scheme for an ecosystem to foster innovation and technology development in Defence and Aerospace and solve related problems.</p>
+                                <p>2: IGA- Inter government agreements for procurements or transfer of technology from foreign countries</p>
+                                <p>3: IN HOUSE- OFB/DPSUs/SHQs may use their In-house capability to indigenize their items </p>
+                                <p>4: MAKE - II  procedure for prototype development purposes with  an assurance of orders on successful development and trials of the prototype(with no Government funding is envisaged ) </p>
+                                <p>5. OTHER THAN MAKE-II - extant processes of indigenization adopted by SHQ's/OFB/DPSU's.</p>
+                            </div>
+                            <div class="modal-footer">
+                                <div class="col-sm-2">
+                                    <button class=" btn btn-default mr-0" data-dismiss="modal" type="button">
+                                        <i class="fa fa-arrow-circle-left"></i>&nbsp;Close
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </ContentTemplate>
             <Triggers>
-                <%--<asp:PostBackTrigger ControlID="lnkbtnPgPrevious" />
-                <asp:PostBackTrigger ControlID="lnkbtnPgNext" />
-                <asp:PostBackTrigger ControlID="txtpageno" />--%>
                 <asp:PostBackTrigger ControlID="btnreset" />
             </Triggers>
         </asp:UpdatePanel>
@@ -1405,6 +1554,11 @@
         <script type="text/javascript">
             function showPopup2() {
                 $('#divNatoPopup').modal('show');
+            }
+        </script>
+        <script type="text/javascript">
+            function showPopup3() {
+                $('#divInfoIdex').modal('show');
             }
         </script>
         <script type="text/javascript">
@@ -1468,8 +1622,6 @@
                                     return {
                                         label: item,
                                         val: item
-                                        //label: item.split('-')[0],
-                                        //val: item.split('-')[1]
                                     };
                                 }))
                             }
@@ -1478,37 +1630,17 @@
                     minLength: 1
 
                 });
-
-
             }
-
-            //function SaveData(textBoxId) {
-            //    var Mtest = $("[id$=txtsearch]").val();
-
-            //    $.get("User/U_ProductList.aspx/GetSearchKeywordemo?prefix=" + Mtest, function (data) {
-
-            //    });
-            //    //$.ajax({
-            //    //        url: 'User/U_ProductList.aspx/GetSearchKeywordemo',
-            //    //        data: "{ 'prefix': '" + Mtest + "'}",
-            //    //        dataType: "json",
-            //    //        type: "POST",
-            //    //        contentType: "application/json; charset=utf-8",
-            //    //        success: function (data) {
-            //    //            response($.map(data.d, function (item) {
-            //    //                return {
-            //    //                    label: item,
-            //    //                    val: item
-
-            //    //                };
-            //    //            }))
-            //    //        }
-            //    //    });
-            //}
         </script>
         <script>
             var d = new Date();
             document.getElementById("demo").innerHTML = d;
+        </script>
+
+        <script>
+            $(document).ready(function () {
+                $('[data-toggle="tooltip"]').tooltip();
+            });
         </script>
     </form>
 </body>

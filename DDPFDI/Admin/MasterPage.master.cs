@@ -49,10 +49,21 @@ public partial class Admin_MasterPage : System.Web.UI.MasterPage
         Response.Cache.SetExpires(DateTime.Now.AddMonths(1));
     }
     protected void lbllogout_Click(object sender, EventArgs e)
-    {
-        Session.Clear();
+    {      
         Session.Abandon();
+        Session.Remove("Type");
+        Session.Remove("User");
+        Session.Remove("CompanyRefNo");
+        Session.Remove("SFToken");
         Session.RemoveAll();
+        Session.Contents.RemoveAll();
+        Session.Clear();
+        Response.Cache.SetCacheability(HttpCacheability.NoCache);
+        Response.Cookies["DefaultDpsu"].Expires = DateTime.Now;
+        Response.Buffer = true;
+        Response.AppendHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
+        Response.AppendHeader("Pragma", "no-cache"); // HTTP 1.0.
+        Response.AppendHeader("Expires", "0"); // Proxies.
         if (Request.Cookies["User"] != null)
         {
             Response.Cookies["User"].Value = string.Empty;
