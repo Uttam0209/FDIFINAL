@@ -9,7 +9,7 @@ using System.Linq;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-public partial class User_U_ProductList : System.Web.UI.Page
+public partial class User_IntrestedProduct : System.Web.UI.Page
 {
     #region Pagevariable
     private Logic Lo = new Logic();
@@ -22,6 +22,7 @@ public partial class User_U_ProductList : System.Web.UI.Page
     DataTable DtCompany = new DataTable();
     DataTable DtFilterView = new DataTable();
     DataTable dtCart = new DataTable();
+    DataTable dtmGrid = new DataTable();
     DataRow dr;
     #endregion
     #region Pageload
@@ -31,41 +32,29 @@ public partial class User_U_ProductList : System.Web.UI.Page
         {
             try
             {
-                if (Session["DCart"] != null)
+                //Code by Shalini
+                if (Session["User"] != null)
                 {
-                    ViewState["buyitems"] = Session["DCart"];
-                    dtCart = (DataTable)ViewState["buyitems"];
-                    totalno.InnerText = dtCart.Rows.Count.ToString();
-                }
-                else
-                {
-                    //Code by Shalini
-                    if (Session["User"] != null)
+                    linklogin.Visible = false;
+                    linkusername.Text = Encrypt.DecryptData(Session["User"].ToString());
+
+                    if (Encrypt.DecryptData(Session["Type"].ToString()) == "Admin" || Encrypt.DecryptData(Session["Type"].ToString()) == "SuperAdmin" || Encrypt.DecryptData(Session["Type"].ToString()) == "Company" ||
+                        Encrypt.DecryptData(Session["Type"].ToString()) == "Division" || Encrypt.DecryptData(Session["Type"].ToString()) == "Unit")
                     {
                         linklogin.Visible = false;
                         linkusername.Text = Encrypt.DecryptData(Session["User"].ToString());
 
-                        if (Encrypt.DecryptData(Session["Type"].ToString()) == "Admin" || Encrypt.DecryptData(Session["Type"].ToString()) == "SuperAdmin" || Encrypt.DecryptData(Session["Type"].ToString()) == "Company" ||
-                            Encrypt.DecryptData(Session["Type"].ToString()) == "Division" || Encrypt.DecryptData(Session["Type"].ToString()) == "Unit")
-                        {
-                            linklogin.Visible = false;
-                            linkusername.Text = Encrypt.DecryptData(Session["User"].ToString());
-                            divIntrested.Visible = true;
-                        }
-                        else
-                        {
-                            divIntrested.Visible = false;
-                            linklogin.Visible = true;
-                            linkusername.Visible = false;
-                        }
                     }
                     else
                     {
                         linklogin.Visible = true;
                         linkusername.Visible = false;
                     }
-                    //end
-                    totalno.InnerText = dtCart.Rows.Count.ToString();
+                }
+                else
+                {
+                    linklogin.Visible = true;
+                    linkusername.Visible = false;
                 }
                 ControlGrid();
             }
@@ -86,13 +75,44 @@ public partial class User_U_ProductList : System.Web.UI.Page
         BindIndusrtyDomain();
         BindIndiCategory();
     }
+    string mprodInt;
     protected void BindProduct()
     {
-        DtGrid = Lo.RetriveProductUser();
+        DtGrid = Lo.RetriveIntrestedProductFilter();
         if (DtGrid.Rows.Count > 0)
         {
-            Session["TempData"] = DtGrid;
-            SeachResult();
+            DataTable mtable = new DataTable();
+            DataColumn ProdRef = mtable.Columns.Add("MProduct", typeof(string));
+            for (int i = 0; DtGrid.Rows.Count > i; i++)
+            {
+                string source = DtGrid.Rows[i]["RequestProduct"].ToString();
+                string[] lines = source.Split(',');
+                foreach (var line in lines)
+                {
+                    string[] split = line.Split(',');
+                    DataRow row = mtable.NewRow();
+                    row.SetField(ProdRef, split[0]);
+                    mtable.Rows.Add(row);
+                }
+            }
+            DataTable uniqueCols = mtable.DefaultView.ToTable(true, "MProduct");
+            for (int k = 0; uniqueCols.Rows.Count > k; k++)
+            {
+                if (uniqueCols.Rows[k]["MProduct"].ToString() != "")
+                    mprodInt = mprodInt + "'" + uniqueCols.Rows[k]["MProduct"].ToString() + "'" + ",";
+            }
+            mprodInt = mprodInt.Substring(0, mprodInt.Length - 1);
+            dtmGrid = Lo.RetriveIntrestedProductFilter1(mprodInt);
+            if (dtmGrid.Rows.Count > 0)
+            {
+                Session["TempData"] = dtmGrid;
+                SeachResult();
+            }
+            else
+            {
+                divcontentproduct.Visible = false;
+                dlproduct.DataBind();
+            }
         }
         else
         {
@@ -105,9 +125,9 @@ public partial class User_U_ProductList : System.Web.UI.Page
     DataTable DtCompanyDDL = new DataTable();
     protected void BindComapnyCheckbox()
     {
-        if (DtGrid.Rows.Count > 0)
+        if (dtmGrid.Rows.Count > 0)
         {
-            DataTable mDtGrid = DtGrid.DefaultView.ToTable(true, "CompanyName", "CompanyRefNo");
+            DataTable mDtGrid = dtmGrid.DefaultView.ToTable(true, "CompanyName", "CompanyRefNo");
             mDtGrid.DefaultView.Sort = "CompanyName asc";
             Co.FillDropdownlist(ddlcomp, mDtGrid, "CompanyName", "CompanyRefNo");
             ddlcomp.Items.Insert(0, "Select");
@@ -124,8 +144,8 @@ public partial class User_U_ProductList : System.Web.UI.Page
         {
             if (Session["TempData"] != null)
             {
-                DtGrid = (DataTable)Session["TempData"];
-                DataTable mDtGrid = DtGrid.DefaultView.ToTable(true, "FactoryName", "FactoryRefNo", "CompanyRefNo");
+                dtmGrid = (DataTable)Session["TempData"];
+                DataTable mDtGrid = dtmGrid.DefaultView.ToTable(true, "FactoryName", "FactoryRefNo", "CompanyRefNo");
                 mDtGrid.DefaultView.Sort = "FactoryName asc";
                 DataView dvm = new DataView(mDtGrid);
                 dvm.RowFilter = "CompanyRefNo='" + ddlcomp.SelectedItem.Value + "'";
@@ -147,8 +167,8 @@ public partial class User_U_ProductList : System.Web.UI.Page
         {
             if (Session["TempData"] != null)
             {
-                DtGrid = (DataTable)Session["TempData"];
-                DataTable mDtGrid = DtGrid.DefaultView.ToTable(true, "UnitName", "UnitRefNo", "FactoryRefNo");
+                dtmGrid = (DataTable)Session["TempData"];
+                DataTable mDtGrid = dtmGrid.DefaultView.ToTable(true, "UnitName", "UnitRefNo", "FactoryRefNo");
                 mDtGrid.DefaultView.Sort = "UnitName asc";
                 DataView dvm = new DataView(mDtGrid);
                 dvm.RowFilter = "FactoryRefNo='" + ddldivision.SelectedItem.Value + "'";
@@ -173,8 +193,8 @@ public partial class User_U_ProductList : System.Web.UI.Page
             {
                 if (Session["TempData"] != null)
                 {
-                    DtGrid = (DataTable)Session["TempData"];
-                    DataTable mDtGrid = DtGrid.DefaultView.ToTable(true, "ProdIndustryDoamin", "TechnologyLevel1", "CompanyRefNo");
+                    dtmGrid = (DataTable)Session["TempData"];
+                    DataTable mDtGrid = dtmGrid.DefaultView.ToTable(true, "ProdIndustryDoamin", "TechnologyLevel1", "CompanyRefNo");
                     mDtGrid.DefaultView.Sort = "ProdIndustryDoamin asc";
                     DataView dvm = new DataView(mDtGrid);
                     dvm.RowFilter = "CompanyRefNo='" + ddlcomp.SelectedItem.Value + "'";
@@ -190,9 +210,9 @@ public partial class User_U_ProductList : System.Web.UI.Page
             }
             else
             {
-                if (DtGrid.Rows.Count > 0)
+                if (dtmGrid.Rows.Count > 0)
                 {
-                    DataTable mDtGrid = DtGrid.DefaultView.ToTable(true, "ProdIndustryDoamin", "TechnologyLevel1");
+                    DataTable mDtGrid = dtmGrid.DefaultView.ToTable(true, "ProdIndustryDoamin", "TechnologyLevel1");
                     mDtGrid.DefaultView.Sort = "ProdIndustryDoamin asc";
                     Co.FillDropdownlist(ddlprodindustrydomain, mDtGrid, "ProdIndustryDoamin", "TechnologyLevel1");
                     ddlprodindustrydomain.Items.Insert(0, "Select");
@@ -214,8 +234,8 @@ public partial class User_U_ProductList : System.Web.UI.Page
         {
             if (Session["TempData"] != null)
             {
-                DtGrid = (DataTable)Session["TempData"];
-                DataTable mDtGrid = DtGrid.DefaultView.ToTable(true, "ProdIndustrySubDomain", "TechnologyLevel2", "TechnologyLevel1");
+                dtmGrid = (DataTable)Session["TempData"];
+                DataTable mDtGrid = dtmGrid.DefaultView.ToTable(true, "ProdIndustrySubDomain", "TechnologyLevel2", "TechnologyLevel1");
                 mDtGrid.DefaultView.Sort = "ProdIndustrySubDomain asc";
                 DataView dvm = new DataView(mDtGrid);
                 dvm.RowFilter = "TechnologyLevel1='" + ddlprodindustrydomain.SelectedItem.Value + "'";
@@ -262,8 +282,8 @@ public partial class User_U_ProductList : System.Web.UI.Page
         {
             if (Session["TempData"] != null)
             {
-                DtGrid = (DataTable)Session["TempData"];
-                DataTable mDtGrid = DtGrid.DefaultView.ToTable(true, "NSNGROUP", "ProductLevel1", "CompanyRefNo");
+                dtmGrid = (DataTable)Session["TempData"];
+                DataTable mDtGrid = dtmGrid.DefaultView.ToTable(true, "NSNGROUP", "ProductLevel1", "CompanyRefNo");
                 mDtGrid.DefaultView.Sort = "NSNGROUP asc";
                 DataView dvm = new DataView(mDtGrid);
                 dvm.RowFilter = "CompanyRefNo='" + ddlcomp.SelectedItem.Value + "'";
@@ -279,9 +299,9 @@ public partial class User_U_ProductList : System.Web.UI.Page
         }
         else
         {
-            if (DtGrid.Rows.Count > 0)
+            if (dtmGrid.Rows.Count > 0)
             {
-                DataTable mDtGrid = DtGrid.DefaultView.ToTable(true, "NSNGROUP", "ProductLevel1");
+                DataTable mDtGrid = dtmGrid.DefaultView.ToTable(true, "NSNGROUP", "ProductLevel1");
                 mDtGrid.DefaultView.Sort = "NSNGROUP asc";
                 Co.FillDropdownlist(ddlnsg, mDtGrid, "NSNGROUP", "ProductLevel1");
                 ddlnsg.Items.Insert(0, "Select");
@@ -300,8 +320,8 @@ public partial class User_U_ProductList : System.Web.UI.Page
         {
             if (Session["TempData"] != null)
             {
-                DtGrid = (DataTable)Session["TempData"];
-                DataTable mDtGrid = DtGrid.DefaultView.ToTable(true, "NSNGroupClass", "ProductLevel2", "ProductLevel1");
+                dtmGrid = (DataTable)Session["TempData"];
+                DataTable mDtGrid = dtmGrid.DefaultView.ToTable(true, "NSNGroupClass", "ProductLevel2", "ProductLevel1");
                 mDtGrid.DefaultView.Sort = "NSNGROUPClass asc";
                 DataView dvm = new DataView(mDtGrid);
                 dvm.RowFilter = "ProductLevel1='" + ddlnsg.SelectedItem.Value + "'";
@@ -322,8 +342,8 @@ public partial class User_U_ProductList : System.Web.UI.Page
         {
             if (Session["TempData"] != null)
             {
-                DtGrid = (DataTable)Session["TempData"];
-                DataTable mDtGrid = DtGrid.DefaultView.ToTable(true, "ItemCode", "ProductLevel3", "ProductLevel2");
+                dtmGrid = (DataTable)Session["TempData"];
+                DataTable mDtGrid = dtmGrid.DefaultView.ToTable(true, "ItemCode", "ProductLevel3", "ProductLevel2");
                 mDtGrid.DefaultView.Sort = "ItemCode asc";
                 DataView dvm = new DataView(mDtGrid);
                 dvm.RowFilter = "ProductLevel2='" + ddlnsc.SelectedItem.Value + "'";
@@ -1220,67 +1240,22 @@ public partial class User_U_ProductList : System.Web.UI.Page
                     {
                         Tr25.Visible = false;
                     }
+                    DataTable DtBindIntrestUser = Lo.RetriveFilterCode("", e.CommandArgument.ToString(), "RequesterPop");
+                    if (DtBindIntrestUser.Rows.Count > 0)
+                    {
+                        gvRequester.DataSource = DtBindIntrestUser;
+                        gvRequester.DataBind();
+                    }
+                    else
+                    {
+                        gvRequester.Visible = false;
+                    }
                     ScriptManager.RegisterStartupScript(this, GetType(), "aboutus", "showPopup();", true);
                 }
             }
             catch (Exception ex)
             {
                 ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('" + ex.Message + "')", true);
-            }
-        }
-        #endregion
-        #region AddCart
-        else if (e.CommandName == "addcart")
-        {
-            LinkButton lnkId = (LinkButton)e.Item.FindControl("lbaddcart");
-            dtCart.Columns.Add(new DataColumn("ProductRefNo", typeof(string)));
-            if (ViewState["buyitems"] != null)
-            {
-                dtCart = (DataTable)ViewState["buyitems"];
-                if (dtCart.Rows.Count > 0)
-                {
-                    string InCart = "";
-                    for (int i = 0; dtCart.Rows.Count > i; i++)
-                    {
-                        if (e.CommandArgument.ToString() == dtCart.Rows[i]["ProductRefNo"].ToString())
-                        {
-                            InCart = "AlreadyInCart";
-                            lnkId.Text = "Successfully Added";
-                            lnkId.Attributes.Remove("Class");
-                            lnkId.Attributes.Add("Class", "btn btn-success btn-sm btn-block");
-                            break;
-                        }
-                    }
-                    if (InCart != "AlreadyInCart")
-                    {
-                        dr = dtCart.NewRow();
-                        dr["ProductRefNo"] = e.CommandArgument.ToString();
-                        dtCart.Rows.Add(dr);
-                        ViewState["buyitems"] = dtCart;
-                        lnkId.Text = "Successfully Added";
-                        lnkId.Attributes.Remove("Class");
-                        lnkId.Attributes.Add("Class", "btn btn-success btn-sm btn-block");
-
-                    }
-                }
-            }
-            else
-            {
-                dr = dtCart.NewRow();
-                dr["ProductRefNo"] = e.CommandArgument.ToString();
-                dtCart.Rows.Add(dr);
-                ViewState["buyitems"] = dtCart;
-                lnkId.Text = "Successfully Added";
-                lnkId.Attributes.Remove("Class");
-                lnkId.Attributes.Add("Class", "btn btn-success btn-sm btn-block");
-            }
-            if (dtCart != null)
-            {
-                totalno.InnerText = dtCart.Rows.Count.ToString();
-            }
-            else
-            {
-                totalno.InnerText = "0";
             }
         }
         #endregion
@@ -1331,55 +1306,35 @@ public partial class User_U_ProductList : System.Web.UI.Page
             Label lblepold17 = (Label)e.Item.FindControl("lblepold17");
             Label lblepold18 = (Label)e.Item.FindControl("lblepold18");
             Label lblepfu = (Label)e.Item.FindControl("lblepfu");
-            Label lbleq = (Label)e.Item.FindControl("Label2");
-            Label lbleq17 = (Label)e.Item.FindControl("Label7");
-            Label lbleq18 = (Label)e.Item.FindControl("Label8");
-            Label lbleqf = (Label)e.Item.FindControl("Label3");
-            Label lbleuold = (Label)e.Item.FindControl("lblestunitold");
-            Label lbleufutu = (Label)e.Item.FindControl("lblestunitfut");
 
             if (rbsort.SelectedIndex != -1 && rbsort.SelectedItem.Text.Trim() == "2019-20")
             {
                 lblepold.Visible = true;
-                lbleq.Visible = true;
                 lblepfu.Visible = false;
-                lbleqf.Visible = false;
                 lblepold17.Visible = false;
                 lblepold18.Visible = false;
-                lbleq17.Visible = false;
-                lbleq18.Visible = false;
 
             }
             else if (rbsort.SelectedIndex != -1 && rbsort.SelectedItem.Text.Trim() == "2018-19")
             {
                 lblepold.Visible = false;
-                lbleq.Visible = false;
                 lblepfu.Visible = false;
-                lbleqf.Visible = false;
                 lblepold17.Visible = false;
                 lblepold18.Visible = true;
-                lbleq17.Visible = false;
-                lbleq18.Visible = true;
 
             }
             else if (rbsort.SelectedIndex != -1 && rbsort.SelectedItem.Text.Trim() == "2017-18")
             {
                 lblepold.Visible = false;
-                lbleq.Visible = false;
                 lblepfu.Visible = false;
-                lbleqf.Visible = false;
                 lblepold17.Visible = true;
                 lblepold18.Visible = false;
-                lbleq17.Visible = true;
-                lbleq18.Visible = false;
 
             }
             else if (rbsort.SelectedIndex != -1 && rbsort.SelectedItem.Text.Trim() == "2020-21")
             {
                 lblepold.Visible = false;
-                lbleq.Visible = false;
                 lblepfu.Visible = true;
-                lbleqf.Visible = true;
                 lblepold17.Visible = false;
                 lblepold18.Visible = false;
             }
@@ -1843,7 +1798,7 @@ public partial class User_U_ProductList : System.Web.UI.Page
     [System.Web.Script.Services.ScriptMethod()]
     public static string GetSearchKeywordemo(string prefix)
     {
-        User_U_ProductList u = new User_U_ProductList();
+        User_IntrestedProduct u = new User_IntrestedProduct();
         u.SeachResult(prefix);
         return "search";
     }
@@ -1909,8 +1864,4 @@ public partial class User_U_ProductList : System.Web.UI.Page
         }
     }
     //end
-    protected void lbShownIntrested_Click(object sender, EventArgs e)
-    {
-        Response.RedirectToRoute("IntrestedProduct");
-    }
 }

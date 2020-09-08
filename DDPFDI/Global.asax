@@ -130,12 +130,12 @@
         routes.MapPageRoute("TempTable", "TempTable", "~/Admin/CreatetempTable.aspx", true);
         routes.MapPageRoute("ViewRequest", "ViewRequest", "~/Admin/ViewRequestInfo.aspx", true);
 
-
         routes.MapPageRoute("Contact-Us", "Contact-Us", "~/User/Contact_us.html", true);
         routes.MapPageRoute("iDex", "iDex", "~/User/More_Details_iDEX.html", true);
         routes.MapPageRoute("IGA", "IGA", "~/User/More_Details_IGA.html", true);
         routes.MapPageRoute("MakeII", "MakeII", "~/User/More_Details_Make_II.html", true);
-         routes.MapPageRoute("FAQs", "FAQs", "~/User/FAQS.html", true);
+        routes.MapPageRoute("FAQs", "FAQs", "~/User/FAQS.html", true);
+        routes.MapPageRoute("IntrestedProduct", "IntrestedProduct", "~/User/IntrestedProduct.aspx", true);
 
     }
 </script>

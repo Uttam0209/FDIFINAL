@@ -1,0 +1,68 @@
+*
+{
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+}
+.header
+{
+  background: #373f50;  
+}
+
+.card-img-top
+{
+  height: 75px;
+  width: auto;
+}
+.footer1
+{
+  background: #373f50;
+}
+
+
+
+.col-md-3
+{
+  box-shadow: 0 0 5px 0 rgb(0, 89, 179);
+  text-align: center; 
+
+}
+.contact_form
+{
+  color: black;
+  padding: 20px;
+  font-size: 18px;
+  font-weight: bold;
+  
+  margin-left: -12px;
+  margin-right: auto;
+}
+.col-xl-4
+{
+  box-shadow: 0 0 5px 0 rgb(0, 89, 179);
+   column-gap: 2px;
+}
+.col-xl-8
+{
+  box-shadow: 0 0 5px 0 rgb(0, 89, 179);
+}
+
+.table
+{
+  
+  font-size: 12px;
+  font-weight: bold;
+   
+
+}
+.table th
+{
+  background-color: black;
+  color: white;
+  
+
+}
+.col-md-3 img
+{
+  margin: 10px;
+}

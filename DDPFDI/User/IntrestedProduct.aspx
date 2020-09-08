@@ -1,6 +1,7 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" Inherits="User_U_ProductList" CodeFile="U_ProductList.aspx.cs" ViewStateEncryptionMode="Always" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="IntrestedProduct.aspx.cs" Inherits="User_IntrestedProduct" %>
 
 <!DOCTYPE html>
+
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head id="Head1" runat="server">
     <title>Product List</title>
@@ -13,10 +14,6 @@
     <link rel="stylesheet" type="text/css" href="~/User/Uassets/css/style.css">
     <link rel="stylesheet" type="text/css" href="~/User/Uassets/css/jquery-ui.css" />
     <style>
-        #maindiv1
-        {
-            float:right;
-        }
         .adnce_box {
             display: none;
         }
@@ -134,10 +131,6 @@
         .btn:hover {
             color: #ffffff;
         }
-
-        #rbindustryspecification_0{
-    margin-top:5px;
-}
     </style>
     <script type="text/javascript">
         function MutExChkList(checkbox) {
@@ -158,6 +151,7 @@
         #chktendor label {
             font-size: 13px;
         }
+
         #rbindustryspecification_6 {
             margin-top: 5px;
         }
@@ -208,15 +202,6 @@
                     <div class="container d-lg-flex justify-content-between">
                         <div class="order-lg-2 mb-3 mb-lg-0 pt-lg-2">
                             <div class="navbar-tool dropdown ml-5">
-                                <asp:LinkButton ID="lbtotalcart" runat="server" class="navbar-tool-icon-box bg-secondary dropdown-toggle"
-                                    OnClick="lbtotalcart_Click">
-                                    <span class="navbar-tool-label" runat="server" id="totalno"></span><i class="navbar-tool-icon fas fa-cart-plus"
-                                        style="margin-top: 13px;"></i>
-                                </asp:LinkButton>
-                                <asp:LinkButton ID="lbcart" runat="server" Style="color: white; margin-left: auto;"
-                                    OnClick="lbcart_Click">
-                                     Show Interest
-                                </asp:LinkButton>
                             </div>
                         </div>
                         <div class="order-lg-1 pr-lg-4 text-center text-lg-left">
@@ -232,6 +217,7 @@
                             <b><a href="#aboutus-modal" class="menu_" data-toggle="modal">About us </a></b>
                             <b><a href="Contact-Us" class="menu_">Contact Us </a></b>
                             <b><a href="FAQs" class="menu_">FAQ</a></b>
+
                         </div>
                     </div>
                 </div>
@@ -301,7 +287,6 @@
                                                                 </asp:CheckBoxList>
                                                             </div>
                                                         </div>
-
                                                         <div class="widget widget-categories mb-3 " runat="server">
                                                             <div id="Div5" runat="server">
                                                                 <label><b>Company</b></label>
@@ -327,12 +312,12 @@
                                                             <div class="input-group">
                                                                 <asp:RadioButtonList ID="rbindustryspecification" runat="server" AutoPostBack="true" OnSelectedIndexChanged="rbindustryspecification_SelectedIndexChanged">
                                                                     <asp:ListItem Value="'%15%' or NSNGroup like '%16%' or NSNGroup like '%17%'" class="d-flex" style="margin-top: 5px;">&nbsp;AeroSpace Craft Componet and Accessories</asp:ListItem>
-                                                                    <asp:ListItem Value="'%95%'  or NSNGroup like '%96%'" style="margin-left: 5px !important;">&nbsp;Critical and Strategic Raw Material</asp:ListItem>
+                                                                    <asp:ListItem Value="'%95%' or NSNGroup like '%96%'" style="margin-left: 5px !important;">&nbsp;Critical and Strategic Raw Material</asp:ListItem>
                                                                     <asp:ListItem Value="'%59%' or NSNGroup like '%61%'" style="margin-left: 5px !important;">&nbsp;Electrical and Electronic</asp:ListItem>
                                                                     <asp:ListItem Value="'%31%'" style="margin-left: 5px !important;">&nbsp;Bearing</asp:ListItem>
                                                                     <asp:ListItem Value="'%48'%" style="margin-left: 5px !important;">&nbsp;Valves</asp:ListItem>
                                                                     <asp:ListItem Value="'%20%'" style="margin-left: 5px !important;">&nbsp;Shipping and Marine</asp:ListItem>
-                                                                    <asp:ListItem Value="'%66%'" style="margin-left: 5px !important;"  class="d-flex">&nbsp;Instruments and Laboratory Equipment</asp:ListItem>
+                                                                    <asp:ListItem Value="'%66%'" style="margin-left: 5px !important;">&nbsp;Instruments and Laboratory Equipment</asp:ListItem>
                                                                 </asp:RadioButtonList>
                                                             </div>
                                                         </div>
@@ -427,11 +412,7 @@
                                                                 </asp:RadioButtonList>
                                                             </div>
                                                         </div>
-                                                        <div id="divIntrested" class="widget widget-categories mb-3" runat="server" visible="false">
-                                                            <div class="input-group">
-                                                                <asp:LinkButton runat="server" ID="lbShownIntrested" CssClass="btn btn-primary" OnClick="lbShownIntrested_Click"><i class="fa fa-life-ring"></i>&nbsp; Show Intrested Product</asp:LinkButton>
-                                                            </div>
-                                                        </div>
+
                                                         <%--</div>--%>
                                                     </div>
                                                 </div>
@@ -529,8 +510,7 @@
                                                         <img src='<%#Eval("TopImages") %>' alt="Product" style="max-width: 100%; width: 50%; height: 90px;">
                                                     </asp:LinkButton>&nbsp;&nbsp;&nbsp;                                                    
                                                         
-                                                    <div class="card-body py-2" style="height: 230px;">
-
+                                                    <div class="card-body py-2" style="height: 200px;">
                                                         <b>
                                                             <asp:LinkButton runat="server" ID="lblcompshow" CommandArgument='<%#Eval("ProductRefNo") %>' CommandName="View" class="product-meta d-block font-size-xs pb-1" Style="color: #6915cf; font-size: 16px!important;">
                                                                 <%#Eval("CompanyName") %>
@@ -561,69 +541,10 @@
                                                                     </b>
                                                                     </td>
                                                                 </tr>
-                                                                <tr runat="server" visible="false">
-                                                                    <td colspan="2" style="padding: 8px; font-size: 12px;">Future requirements in lakhs <b>
-                                                                        <asp:Label ID="lblep" runat="server" Text='<%# Eval("EstimatePricefuture") %>'></asp:Label>
-                                                                    </b>
-                                                                    </td>
-                                                                </tr>
-                                                                <tr id="Tr16" runat="server" visible="false">
-                                                                    <td colspan="2" style="padding: 8px; font-size: 12px;">Annual Import Quantity                                                                       
-                                                                           
-                                                                        <b>
-                                                                            <asp:Label ID="Label2" runat="server" Style="margin-right: 0px;" Visible="false" Text='<%# Eval("EstimateQu") %>' />
-                                                                            <asp:Label ID="Label7" runat="server" Style="margin-right: 0px;" Visible="false" Text='<%# Eval("EstimateQu17") %>' />
-                                                                            <asp:Label ID="Label8" runat="server" Style="margin-right: 0px;" Visible="false" Text='<%# Eval("EstimateQu18") %>' />
-                                                                            <asp:Label ID="lblestunitold" runat="server" Style="margin-right: 0px;" Visible="false" Text='<%# Eval("EstUnitOld") %>' />
-                                                                            <asp:Label ID="Label3" runat="server" Visible="false" Style="margin-right: 0px;" Text='<%# Eval("EstimateQufuture")%>' />
-                                                                            <asp:Label ID="lblestunitfut" runat="server" Style="margin-right: 0px;" Visible="false" Text='<%# Eval("EstUnitfuture") %>' />
-                                                                        </b>
-                                                                    </td>
-                                                                </tr>
-                                                                <tr id="Tr3" runat="server" visible="false">
-                                                                    <td colspan="2" style="padding: 8px; font-size: 12px;">OEM Part Number :- <b>
-                                                                        <%#Eval("OEMPartNumber") %></b>
-                                                                    </td>
-                                                                </tr>
-                                                                <tr id="Tr17" runat="server" visible="false">
-                                                                    <td colspan="2" style="padding: 8px; font-size: 12px;">OEM Name :- <b>
-                                                                        <%#Eval("OEMName") %></b>
-                                                                    </td>
-                                                                </tr>
-                                                                <tr id="Tr18" runat="server" visible="false">
-                                                                    <td colspan="2" style="padding: 8px; font-size: 12px;">OEM Country :- <b>
-                                                                        <%#Eval("OEMCountry") %></b>
-                                                                    </td>
-                                                                </tr>
                                                                 <tr id="Tr2">
                                                                     <td colspan="2" style="padding: 5px; font-size: 12px;">Nato Supply Group Class :-
                                                                       
                                                                         <p><b>[<%#Eval("NSCCode") %>] -  <%# Eval("NSNGroupClass").ToString().Length > 35? (Eval("NSNGroupClass") as string).Substring(0,35) + ".." : Eval("NSNGroupClass")  %></b></p>
-                                                                    </td>
-                                                                </tr>
-                                                                <tr id="Tr4" runat="server" visible="false">
-                                                                    <td colspan="2" style="padding: 8px; font-size: 12px;">Tender Status :- <b>
-                                                                        <%#Eval("TenderStatus") %></b>
-                                                                    </td>
-                                                                </tr>
-                                                                <tr id="Tr5" runat="server" visible="false">
-                                                                    <td colspan="2" style="padding: 8px; font-size: 12px;">Industry Domain :-
-                                                                    </td>
-                                                                </tr>
-                                                                <tr id="Tr6" runat="server" visible="false">
-                                                                    <td colspan="2" style="padding: 8px; font-size: 12px; font-weight: 900; border-top: 0px;"
-                                                                        title='<%#Eval("ProdIndustryDoamin") %>'>
-                                                                        <%# Eval("ProdIndustryDoamin")  %>
-                                                                    /
-                                                                   
-                                                                        <%#Eval("ProdIndustrySubDomain") %>
-                                                                    </td>
-                                                                </tr>
-                                                                <tr id="Tr7" runat="server" visible="false">
-                                                                    <td style="padding: 8px;">Quantity
-                                                                    </td>
-                                                                    <td style="padding: 8px;" class="text-right">
-                                                                        <%#Eval("EstimateQu") %>
                                                                     </td>
                                                                 </tr>
                                                                 <tr id="Tr233" runat="server">
@@ -636,14 +557,9 @@
                                                         </table>
                                                     </div>
                                                     <div class="text-center">
-                                                        <asp:LinkButton ID="lbview" runat="server" class="nav-link-style font-size-ms" CommandName="View"
-                                                            CommandArgument='<%#Eval("ProductRefNo") %>'>                                                
-                                                    <i class="fas fa-eye align-middle mr-1"></i>
-                                                    More Details
-                                                        </asp:LinkButton>
+                                                        <asp:LinkButton runat="server" ID="lbview" class="btn btn-sm btn-block" CommandArgument='<%#Eval("ProductRefNo") %>'
+                                                            CommandName="View">  <i class="fas fa-eye align-middle mr-1"></i>   More Details </asp:LinkButton>
                                                     </div>
-                                                    <asp:LinkButton runat="server" ID="lbaddcart" class="btn btn-sm btn-block" CommandArgument='<%#Eval("ProductRefNo") %>'
-                                                        CommandName="addcart"><i class="navbar-tool-icon fas fa-cart-plus"></i> Add to show interest </asp:LinkButton>
                                                     <asp:HiddenField ID="hfr" runat="server" Value='<%#Eval("ProductRefNo") %>' />
                                                 </div>
                                             </div>
@@ -673,7 +589,7 @@
                     </div>
                 </div>
                 <div class="modal-quick-view modal fade" id="ProductCompany" tabindex="-1">
-                    <div class="modal-dialog modal-xl" style="max-width: 800px!important; z-index: 9999999999;">
+                    <div class="modal-dialog modal-xl" style="max-width: 900px!important; z-index: 9999999999;">
                         <div class="modal-content">
                             <div class="modal-header modelhead">
                                 <h4 class="modal-title product-title" style="font-size: 25px;">Import Item Details
@@ -1089,6 +1005,40 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <div class="card border-btm" style="border-bottom: solid 1.4px #e5e5e5!important;">
+                                                    <div class="card-header">
+                                                        <h3 class="accordion-heading mb-2">
+                                                            <a class="collapsed" href="#Intrest" role="button" data-toggle="collapse" aria-expanded="false"
+                                                                aria-controls="shoes">Shown Intrest By:- <span class="accordion-indicator iconupanddown">
+                                                                    <i class="fas fa-chevron-up"></i></span></a>
+                                                        </h3>
+                                                    </div>
+                                                    <div class="collapse" id="Intrest" data-parent="#shop-categories">
+                                                        <div class="card-body card-custom ">
+                                                            <table class="table" width="100%">
+                                                                <tbody>
+                                                                    <tr runat="server" id="Tr3">
+                                                                        <td>
+                                                                            <asp:GridView ID="gvRequester" runat="server" AutoGenerateColumns="false"
+                                                                                CssClass="table table-hover">
+                                                                                <Columns>
+                                                                                    <asp:BoundField DataField="RequestBy" HeaderText="Name" />
+                                                                                    <asp:BoundField DataField="RequestCompName" HeaderText="Company" />
+                                                                                    <asp:BoundField DataField="RequestMobileNo" HeaderText="Mobile" />
+                                                                                    <asp:BoundField DataField="RequestAddress" HeaderText="Address" />
+                                                                                    <asp:BoundField DataField="RequestEmail" HeaderText="Email" />
+                                                                                    <asp:BoundField DataField="RequestDate" HeaderText="Date" DataFormatString="{0: dd-MMM-yyyy}" />
+                                                                                    <asp:BoundField DataField="RequestTime" HeaderText="Time" />
+                                                                                </Columns>
+                                                                            </asp:GridView>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                            <div class="clearfix mt-1"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -1120,7 +1070,30 @@
                                         <button class="close close1" data-dismiss="modal" type="button">
                                             ×                                       
                                         </button>
-
+                                        <h6></h6>
+                                        <h6></h6>
+                                        <h6></h6>
+                                        <h6></h6>
+                                        <h6></h6>
+                                        <h6></h6>
+                                        <h6></h6>
+                                        <h6></h6>
+                                        <h6></h6>
+                                        <h6></h6>
+                                        <h6></h6>
+                                        <h6></h6>
+                                        <h6></h6>
+                                        <h6></h6>
+                                        <h6></h6>
+                                        <h6></h6>
+                                        <h6></h6>
+                                        <h6></h6>
+                                        <h6></h6>
+                                        <h6></h6>
+                                        <h6></h6>
+                                        <h6></h6>
+                                        <h6></h6>
+                                        <h6></h6>
                                     </h6>
                                 </div>
                                 <div class="modal-body" style="text-align: center;">
@@ -1281,7 +1254,7 @@
                                     </h6>
                                 </div>
                                 <div class="modal-body" style="text-align: center;">
-                                    <b><span style="text-align: center;">Top 10 Products based on Indicative Nato classification</span></b>
+                                    <b><span style="text-align: center;">DPSU's Top 10 Product of Nato Group Wise</span></b>
                                     <asp:GridView runat="server" ID="gvnatopop" AutoGenerateColumns="false" Class="table table-bordered table-responsive">
                                         <Columns>
                                             <asp:BoundField DataField="NSNGroup" HeaderText="NSN Group" />

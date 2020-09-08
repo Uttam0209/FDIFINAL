@@ -103,9 +103,9 @@ namespace BusinessLayer
         {
             return SqlHelper.Instance.SaveMasterNodal(hySaveNodal, out _sysMsg, out _msg);
         }
-        public string SaveCodeProduct(HybridDictionary hyProduct, DataTable DtImage, DataTable DtPdf,  DataTable dtEstimateQuantity, DataTable dtEstimateQuantity1, out string _sysMsg, out string _msg, string Criteria)
+        public string SaveCodeProduct(HybridDictionary hyProduct, DataTable DtImage, DataTable DtPdf, DataTable dtEstimateQuantity, DataTable dtEstimateQuantity1, out string _sysMsg, out string _msg, string Criteria)
         {
-            return SqlHelper.Instance.SaveCodeProduct(hyProduct, DtImage, DtPdf,  dtEstimateQuantity, dtEstimateQuantity1,  out _sysMsg, out _msg, Criteria);
+            return SqlHelper.Instance.SaveCodeProduct(hyProduct, DtImage, DtPdf, dtEstimateQuantity, dtEstimateQuantity1, out _sysMsg, out _msg, Criteria);
         }
         public string UpdateCodeProduct(HybridDictionary HyUpdateProd, out string _sysMsg, out string _msg)
         {
@@ -634,6 +634,19 @@ namespace BusinessLayer
         public string SaveRequestInfo(HybridDictionary hyLog, out string _sysMsg, out string _msg)
         {
             return SqlHelper.Instance.SaveRequestInfo(hyLog, out _sysMsg, out _msg);
+        }
+        public DataTable RetriveIntrestedProductFilter()
+        {
+            return SqlHelper.Instance.RetriveFilterCode("", "", "FilterIntrProd");
+        }
+        public DataTable RetriveIntrestedProductFilter1(string p)
+        {
+            string query = "select ProductRefNo,CompanyRefNo,CompanyName,FactoryRefNo,FactoryName,UnitName,UnitRefNo,ProductLevel1,ProductLevel2,ProductLevel3,NSCCode,ProductDescription,TechnologyLevel1,TechnologyLevel2,Platform,PurposeofProcurement,IsIndeginized,"
+    + "SearchKeyword,IsShowGeneral,IsActive,LastUpdated,IsApproved,NSNGroup,DefencePlatform,ProdIndustryDoamin,NSNGroupClass,ItemCode,ProdIndustrySubDomain,TopPdf,TopImages,EstimateQu,EstimatePrice,EstimateQufuture,EstimatePricefuture,"
+    + "IsProductImported,TenderStatus,EOIStatus,Role,HSNCode,EstiPriMulti,EstiPriMultiF,EstUnitOld,EstUnitfuture,importYear,importFutureYear,OEMName,OEMPartNumber,OEMCountry,EstimatePrice17,EstimatePrice18,importYear17,importYear18,"
+    + "EstimateQu17,EstimateQu18,DPSUPartNumber,IndTargetYear from tbl_trn_ProductFilterSearchTemp where ProductRefNo in (" + p + ")";
+            return SqlHelper.Instance.GetDataset(query).Tables[0];
+            //return SqlHelper.Instance.RetriveFilterCode(p, "", "FilterIntrProd1");
         }
         #endregion
     }
