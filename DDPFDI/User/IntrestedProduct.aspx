@@ -212,10 +212,13 @@
                         <div class="w-100 d-flex" style="margin-top: 10px; justify-content: flex-end;">
                             <b>
                                 <asp:LinkButton ID="linklogin" runat="server" CssClass="menu_" OnClick="linklogin_Click"><i class="fa fa-user" aria-hidden="true"></i>DPSU Login </asp:LinkButton>
-                                <asp:LinkButton ID="linkusername" runat="server" CssClass="menu_" OnClick="linkusername_Click" ToolTip="Go To MIS"></asp:LinkButton></b>
+                                <asp:Label ID="linkusername" runat="server" CssClass="menu_" ToolTip="Go To MIS"></asp:Label>
+                                <asp:LinkButton ID="lblmis" runat="server" CssClass="menu_" data-toggle="tooltip" OnClick="linkusername_Click" ToolTip="DPSU's Dashboard Page Link (Click here to go back dashboard for add product)">MIS</asp:LinkButton>
+
+                            </b>
                             <b><a href="https://www.makeinindiadefence.gov.in/" target="_blank" class="menu_">Make In India Defence Portal </a></b>
                             <b><a href="#aboutus-modal" class="menu_" data-toggle="modal">About us </a></b>
-                            <b><a href="Contact-Us" class="menu_">Contact Us </a></b>
+                            <b><a href="#" class="menu_">Contact Us </a></b>
                             <b><a href="FAQs" class="menu_">FAQ</a></b>
 
                         </div>
@@ -254,17 +257,7 @@
                                                                     <asp:ListItem Value="EstimatePrice18" style="margin-left: 5px !important;">&nbsp;2018-19</asp:ListItem>
                                                                     <asp:ListItem Value="EstimatePrice" Selected="True" style="margin-left: 5px !important;">&nbsp;2019-20</asp:ListItem>
                                                                     <asp:ListItem Value="EstimatePricefuture" style="margin-left: 5px !important;">&nbsp;2020-21</asp:ListItem>
-                                                                    <%-- <asp:ListItem Value="EstimatePrice17" style="margin-left: 5px !important;">&nbsp;2017-18</asp:ListItem>--%>
                                                                 </asp:RadioButtonList>
-                                                            </div>
-                                                        </div>
-                                                        <div id="Div2" class="widget widget-categories mb-3" runat="server" visible="false">
-                                                            <label><b>Imported During last 3 years</b></label>
-                                                            <div class="input-group">
-                                                                <asp:CheckBoxList ID="chklast5year" runat="server" AutoPostBack="true" CssClass="custom-checkbox" OnSelectedIndexChanged="chklast5year_SelectedIndexChanged">
-                                                                    <asp:ListItem Value="Y" style="margin-left: 5px !important;">&nbsp; YES</asp:ListItem>
-                                                                    <%--<asp:ListItem Value="N"  style="margin-left: 5px !important;" onClick="MutExChkList(this);">&nbsp; NO</asp:ListItem>--%>
-                                                                </asp:CheckBoxList>
                                                             </div>
                                                         </div>
                                                         <div id="Div12" class="widget widget-categories mb-3">
@@ -276,15 +269,6 @@
                                                                     <asp:ListItem Value="2" style="margin-left: 5px !important;" onClick="MutExChkList(this);">&nbsp; 10 - 50 Million</asp:ListItem>
                                                                     <asp:ListItem Value="3" style="margin-left: 5px !important;" onClick="MutExChkList(this);">&nbsp; 50 Million and above</asp:ListItem>
                                                                 </asp:RadioButtonList>
-                                                            </div>
-                                                        </div>
-                                                        <div id="Div4" class="widget widget-categories mb-3" runat="server" visible="false">
-                                                            <label><b>Future requirements</b></label>
-                                                            <div class="input-group">
-                                                                <asp:CheckBoxList ID="rberffpurchase" runat="server" AutoPostBack="true" CssClass="custom-checkbox" OnSelectedIndexChanged="rberffpurchase_SelectedIndexChanged">
-                                                                    <asp:ListItem Value="" style="margin-left: 5px !important;">&nbsp; YES</asp:ListItem>
-                                                                    <%--<asp:ListItem Value="0" style="margin-left: 5px !important;" onclick="MutExChkList(this);">&nbsp; NO</asp:ListItem>--%>
-                                                                </asp:CheckBoxList>
                                                             </div>
                                                         </div>
                                                         <div class="widget widget-categories mb-3 " runat="server">
@@ -308,23 +292,18 @@
                                                             </div>
                                                         </div>
                                                         <div id="Div16" class="widget widget-categories mb-3" runat="server">
-                                                            <label><b>Industry Specification</b></label>
+                                                            <label><b>Industry Specifics (NATO Class)</b></label>
                                                             <div class="input-group">
-                                                                <asp:RadioButtonList ID="rbindustryspecification" runat="server" AutoPostBack="true" OnSelectedIndexChanged="rbindustryspecification_SelectedIndexChanged">
-                                                                    <asp:ListItem Value="'%15%' or NSNGroup like '%16%' or NSNGroup like '%17%'" class="d-flex" style="margin-top: 5px;">&nbsp;AeroSpace Craft Componet and Accessories</asp:ListItem>
-                                                                    <asp:ListItem Value="'%95%' or NSNGroup like '%96%'" style="margin-left: 5px !important;">&nbsp;Critical and Strategic Raw Material</asp:ListItem>
+                                                                <asp:RadioButtonList ID="rbindustryspecification" runat="server" CssClass="custom-radio" AutoPostBack="true" OnSelectedIndexChanged="rbindustryspecification_SelectedIndexChanged">
+                                                                    <asp:ListItem Value="'%15%' or NSNGroup like '%16%' or NSNGroup like '%17%'" style="margin-left: 5px !important;">&nbsp;AeroSpace</asp:ListItem>
+                                                                    <asp:ListItem Value="'%95%'  or NSNGroup like '%96%' or ItemCode like '%20324%'" style="margin-left: 5px !important;">&nbsp;Critical & Strategic Raw Material</asp:ListItem>
                                                                     <asp:ListItem Value="'%59%' or NSNGroup like '%61%'" style="margin-left: 5px !important;">&nbsp;Electrical and Electronic</asp:ListItem>
-                                                                    <asp:ListItem Value="'%31%'" style="margin-left: 5px !important;">&nbsp;Bearing</asp:ListItem>
+                                                                    <asp:ListItem Value="'%31%'" style="margin-left: 5px !important;">&nbsp;Bearings</asp:ListItem>
                                                                     <asp:ListItem Value="'%48'%" style="margin-left: 5px !important;">&nbsp;Valves</asp:ListItem>
                                                                     <asp:ListItem Value="'%20%'" style="margin-left: 5px !important;">&nbsp;Shipping and Marine</asp:ListItem>
-                                                                    <asp:ListItem Value="'%66%'" style="margin-left: 5px !important;">&nbsp;Instruments and Laboratory Equipment</asp:ListItem>
                                                                 </asp:RadioButtonList>
                                                             </div>
                                                         </div>
-                                                        <%-- <h3 class="accordion-heading">
-                                                            <asp:LinkButton class="collapsed" runat="server" ID="lbadvancesearch" OnClick="lbadvancesearch_Click">Advanced Filters</asp:LinkButton></h3>
-                                                        <div class="widget widget-links cz-filter" runat="server" id="divhiddensearch" visible="false">--%>
-
                                                         <div id="Div6" class="widget widget-categories mb-3" runat="server">
                                                             <label><b>Nato Supply Group</b></label><asp:LinkButton runat="server" ID="lblviewnato" OnClick="lblviewnato_Click"><i class="fa fa-eye pull-right mr-1" style="margin-top:5px;"></i></asp:LinkButton>
                                                             <div class="input-group">
@@ -359,7 +338,6 @@
                                                             <label><b>Make in India Target (starting) Year</b></label>
                                                             <div class="input-group">
                                                                 <asp:RadioButtonList ID="rbindigtarget" runat="server" AutoPostBack="true" CssClass="custom-checkbox" OnSelectedIndexChanged="ddldeclaration_SelectedIndexChanged">
-                                                                    <%--<asp:ListItem Value="NIL" style="margin-left: 5px !important;">NIL</asp:ListItem>--%>
                                                                     <asp:ListItem Value="2020-21" style="margin-left: 5px !important;">&nbsp;2020-21</asp:ListItem>
                                                                     <asp:ListItem Value="2021-22" style="margin-left: 5px !important;">&nbsp;2021-22</asp:ListItem>
                                                                     <asp:ListItem Value="2022-23" style="margin-left: 5px !important;">&nbsp;2022-23</asp:ListItem>
@@ -368,52 +346,14 @@
                                                                 </asp:RadioButtonList>
                                                             </div>
                                                         </div>
-                                                        <div id="Div8" class="widget widget-categories mb-3" runat="server" visible="false">
-                                                            <label><b>Make in India Category</b>  </label>
-                                                            <div class="input-group">
-                                                                <asp:DropDownList ID="ddlprocurmentcatgory" runat="server" AutoPostBack="true" CssClass="custom-select"
-                                                                    OnSelectedIndexChanged="ddlprocurmentcatgory_SelectedIndexChanged">
-                                                                </asp:DropDownList>
-                                                            </div>
-                                                        </div>
-                                                        <div id="Div9" class="widget widget-categories mb-3" runat="server" visible="false">
-                                                            <label><b>Indigenized</b></label>
-                                                            <div class="input-group">
-                                                                <asp:CheckBoxList ID="ddlisindezinized" runat="server" AutoPostBack="true" CssClass="custom-checkbox" OnSelectedIndexChanged="ddlisindezinized_SelectedIndexChanged">
-                                                                    <asp:ListItem Value="Y" style="margin-left: 5px !important;" onclick="MutExChkList(this);">&nbsp;YES</asp:ListItem>
-                                                                    <asp:ListItem Value="N" style="margin-left: 5px !important;" onclick="MutExChkList(this);">&nbsp;NO</asp:ListItem>
-                                                                </asp:CheckBoxList>
-                                                            </div>
-                                                        </div>
                                                         <div id="Div3" class="widget widget-categories mb-3" runat="server">
                                                             <label><b>Make in India Category</b></label>
-                                                            <a data-target="#divInfoIdex" data-toggle="modal" href="#" style="margin-top: 5px;" class="fa fa-question pull-right"></a>
+                                                            <a data-target="#divInfoIdex" data-toggle="modal" href="#" style="margin-top: 5px;" class="pull-right"><i class="fa fa-question-circle"></i>&nbsp;Definitions</a>
                                                             <div class="input-group">
                                                                 <asp:RadioButtonList ID="chktendor" runat="server" AutoPostBack="true" CssClass="custom-checkbox" OnSelectedIndexChanged="chktendor_SelectedIndexChanged">
                                                                 </asp:RadioButtonList>
                                                             </div>
                                                         </div>
-                                                        <div id="Div10" class="widget widget-categories mb-3" runat="server" visible="false">
-                                                            <label><b>Displayed for General</b></label>
-                                                            <div class="input-group">
-                                                                <asp:RadioButtonList ID="ddldeclaration" runat="server" AutoPostBack="true" CssClass="custom-checkbox" OnSelectedIndexChanged="ddldeclaration_SelectedIndexChanged">
-                                                                    <asp:ListItem Value="Y" style="margin-left: 5px !important;">&nbsp; YES</asp:ListItem>
-                                                                    <asp:ListItem Value="N" style="margin-left: 5px !important;">&nbsp; NO</asp:ListItem>
-                                                                </asp:RadioButtonList>
-                                                            </div>
-                                                        </div>
-                                                        <div id="Div13" class="widget widget-categories mb-3" runat="server" visible="false">
-                                                            <label><b>EoI/RFP</b></label>
-                                                            <div class="input-group">
-                                                                <asp:RadioButtonList ID="chkeoistatus" runat="server" AutoPostBack="true" CssClass="custom-checkbox" OnSelectedIndexChanged="ddldeclaration_SelectedIndexChanged">
-                                                                    <asp:ListItem Value="Yes" style="margin-left: 5px !important;">&nbsp; YES</asp:ListItem>
-                                                                    <asp:ListItem Value="No" style="margin-left: 5px !important;">&nbsp; NO</asp:ListItem>
-                                                                    <asp:ListItem Value="Archive" style="margin-left: 5px !important;">&nbsp; Archive</asp:ListItem>
-                                                                </asp:RadioButtonList>
-                                                            </div>
-                                                        </div>
-
-                                                        <%--</div>--%>
                                                     </div>
                                                 </div>
                                             </div>
@@ -436,9 +376,6 @@
                                         <asp:TextBox ID="txtsearch" runat="server" Style="max-height: 40px;"
                                             ToolTip="search tab with all criteria using words." onblur="SaveData('txtsearch')" CssClass="form-control appended-form-control"
                                             Placeholder="Search (type min three character)"></asp:TextBox>
-                                        <%--<div class="input-group-append-overlay">
-                                            <span class="input-group-text"><i class="fas fa-search"></i></span>
-                                        </div>--%>
                                         <asp:Button runat="server" ID="btnsearch" Style="padding: 3px 20px 3px 20px; width: auto;" CssClass="btn btn-info btn-sm pull-right" Text="Search" OnClick="btnsearch_Click" />
                                     </div>
                                 </div>
@@ -508,8 +445,7 @@
                                                     <asp:LinkButton runat="server" ID="lbimagesgow" CommandArgument='<%#Eval("ProductRefNo") %>' CommandName="View"
                                                         class="card-img-top d-block overflow-hidden" Style="text-align: center;">
                                                         <img src='<%#Eval("TopImages") %>' alt="Product" style="max-width: 100%; width: 50%; height: 90px;">
-                                                    </asp:LinkButton>&nbsp;&nbsp;&nbsp;                                                    
-                                                        
+                                                    </asp:LinkButton>&nbsp;&nbsp;&nbsp;
                                                     <div class="card-body py-2" style="height: 200px;">
                                                         <b>
                                                             <asp:LinkButton runat="server" ID="lblcompshow" CommandArgument='<%#Eval("ProductRefNo") %>' CommandName="View" class="product-meta d-block font-size-xs pb-1" Style="color: #6915cf; font-size: 16px!important;">
@@ -1009,7 +945,7 @@
                                                     <div class="card-header">
                                                         <h3 class="accordion-heading mb-2">
                                                             <a class="collapsed" href="#Intrest" role="button" data-toggle="collapse" aria-expanded="false"
-                                                                aria-controls="shoes">Shown Intrest By:- <span class="accordion-indicator iconupanddown">
+                                                                aria-controls="shoes">Interest Shown - Industry<span class="accordion-indicator iconupanddown">
                                                                     <i class="fas fa-chevron-up"></i></span></a>
                                                         </h3>
                                                     </div>
@@ -1018,17 +954,21 @@
                                                             <table class="table" width="100%">
                                                                 <tbody>
                                                                     <tr runat="server" id="Tr3">
+
                                                                         <td>
+                                                                            <b>Total Industry Shown Interest :-
+                                                                            <asp:Label runat="server" ID="lblIntrCount"></asp:Label></b>
+                                                                            <div class="clearfix mt-1"></div>
                                                                             <asp:GridView ID="gvRequester" runat="server" AutoGenerateColumns="false"
                                                                                 CssClass="table table-hover">
                                                                                 <Columns>
-                                                                                    <asp:BoundField DataField="RequestBy" HeaderText="Name" />
-                                                                                    <asp:BoundField DataField="RequestCompName" HeaderText="Company" />
-                                                                                    <asp:BoundField DataField="RequestMobileNo" HeaderText="Mobile" />
-                                                                                    <asp:BoundField DataField="RequestAddress" HeaderText="Address" />
-                                                                                    <asp:BoundField DataField="RequestEmail" HeaderText="Email" />
                                                                                     <asp:BoundField DataField="RequestDate" HeaderText="Date" DataFormatString="{0: dd-MMM-yyyy}" />
-                                                                                    <asp:BoundField DataField="RequestTime" HeaderText="Time" />
+                                                                                    <asp:BoundField DataField="RequestCompName" HeaderText="Company" />
+                                                                                    <asp:BoundField DataField="RequestAddress" HeaderText="Address" />
+                                                                                    <asp:BoundField DataField="RequestBy" HeaderText="Name" />
+                                                                                    <asp:BoundField DataField="RequestMobileNo" HeaderText="Mobile" />
+                                                                                    <asp:BoundField DataField="RequestEmail" HeaderText="Email" />
+                                                                                    <%--<asp:BoundField DataField="RequestTime" HeaderText="Time" />--%>
                                                                                 </Columns>
                                                                             </asp:GridView>
                                                                         </td>
@@ -1060,40 +1000,13 @@
                                 <div class="modal-header modal-header1">
                                     <h6 class="modal-title">
                                         <div>
-                                            (as on
-                                      
+                                            (as on 
                                             <asp:Label runat="server" ID="atime"></asp:Label>
                                             ) 
-                                       
                                         </div>
-                                        <h6></h6>
-                                        <button class="close close1" data-dismiss="modal" type="button">
+                                        <button class="close close1 btn btn-info" data-dismiss="modal" type="button">
                                             ×                                       
                                         </button>
-                                        <h6></h6>
-                                        <h6></h6>
-                                        <h6></h6>
-                                        <h6></h6>
-                                        <h6></h6>
-                                        <h6></h6>
-                                        <h6></h6>
-                                        <h6></h6>
-                                        <h6></h6>
-                                        <h6></h6>
-                                        <h6></h6>
-                                        <h6></h6>
-                                        <h6></h6>
-                                        <h6></h6>
-                                        <h6></h6>
-                                        <h6></h6>
-                                        <h6></h6>
-                                        <h6></h6>
-                                        <h6></h6>
-                                        <h6></h6>
-                                        <h6></h6>
-                                        <h6></h6>
-                                        <h6></h6>
-                                        <h6></h6>
                                     </h6>
                                 </div>
                                 <div class="modal-body" style="text-align: center;">
@@ -1248,7 +1161,7 @@
                             <div runat="server" id="Div15">
                                 <div class="modal-header modal-header1">
                                     <h6 class="modal-title">
-                                        <button class="close close1" data-dismiss="modal" type="button">
+                                        <button class="close close1 btn btn-info" data-dismiss="modal" type="button">
                                             ×                                       
                                         </button>
                                     </h6>
@@ -1297,7 +1210,7 @@
                                             <div id="printarea1">
                                                 <div class="card" style="border-bottom: solid 1.4px #e5e5e5!important;">
                                                     <div class="card-header">
-                                                        <h3 class="accordion-heading mb-2">About (Make in India Category)
+                                                        <h3 class="accordion-heading mb-2">Make in India Category
                                                         </h3>
                                                         <br />
                                                     </div>
@@ -1313,8 +1226,8 @@
                                                     <div class="collapse" id="ItemSpecification12" data-parent="#shop-categories1">
                                                         <div class="card-body card-custom ">
                                                             <div>
-                                                                <p>Innovations for Defence Excellence (iDEX) the ﬁrst initiative of its kind in the country, was launched by Hon’ble PM in April 2018. It is a scheme formulated in collaboration with Atal Innovation Mission (AIM). iDEX is aimed at creation of an ecosystem to foster innovation and technology development in Defence and Aerospace and solve related problems, by engaging Industries, including MSMEs, Start-ups, Individual Innovators, R&D institutes and Academia and provide them grants/funding and other support to carry out R&D. It is expected that India can take advantage of its vibrant start-up ecosystem to develop technologies related to defence and aerospace. iDEX has so far run 3 rounds of Defence India Start-up Challenges, and two rounds of Open Challenge.</p>
-                                                                <p>Information pertaining to the guidelines, frameworks, procedures and challenges can be accessed at idex.gov.in.</p>
+                                                                <p>Innovations for Defence Excellence (iDEX), the ﬁrst initiative of its kind in the country, was launched by Hon’ble PM in April 2018. It is a scheme formulated in collaboration with Atal Innovation Mission (AIM). iDEX is aimed at creation of an ecosystem to foster innovation and technology development in Defence and Aerospace and solve related problems, by engaging Industries, including MSMEs, Start-ups, Individual Innovators, R&D institutes and Academia and provide them grants/funding and other support to carry out R&D. It is expected that India can take advantage of its vibrant start-up ecosystem to develop technologies related to defence and aerospace. iDEX has so far run 3 rounds of Defence India Start-up Challenges, and two rounds of Open Challenge.</p>
+                                                                <p>Information pertaining to the guidelines, frameworks, procedures and challenges can be accessed at <a href="https://idex.gov.in" target="_blank">idex.gov.in.</a></p>
 
                                                             </div>
                                                         </div>
@@ -1344,7 +1257,7 @@
                                                     <div class="card-header">
                                                         <h4 class="accordion-heading mb-2">
                                                             <a class="collapsed" href="#Estimated1" role="button" data-toggle="collapse" aria-expanded="false"
-                                                                aria-controls="shoes">Indigenization<span class="accordion-indicator iconupanddown">
+                                                                aria-controls="shoes">In-House | Make-II | Other than Make-II <span class="accordion-indicator iconupanddown">
                                                                     <i class="fas fa-chevron-up"></i></span></a>
                                                         </h4>
                                                     </div>
@@ -1360,6 +1273,46 @@
                                                             <p>The list of items taken up for indigenous development under Make-II is uploaded on respective websites of OFB/DPSUs and is updated periodically. The same is also available at srijandefence.gov.in. The detailed framework for implementation of ‘Make-II’ Procedure at OFB & DPSUs can be downloaded here.</p>
                                                             <h6>b. Other than Make-II</h6>
                                                             <p>DPSUs/OFB/SHQs may adopt their other extant processes of indigenization.  The other extant processes of indigenization have been clubbed as “Other than Make-II”.</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="card border-btm" style="border-bottom: solid 1.4px #e5e5e5!important;">
+                                                    <div class="card-header">
+                                                        <h4 class="accordion-heading mb-2">
+                                                            <a class="collapsed" href="#Estimated12" role="button" data-toggle="collapse" aria-expanded="false"
+                                                                aria-controls="shoes">Related FAQ <span class="accordion-indicator iconupanddown">
+                                                                    <i class="fas fa-chevron-up"></i></span></a>
+                                                        </h4>
+                                                    </div>
+                                                    <div class="collapse" id="Estimated12" data-parent="#shop-categories">
+                                                        <div class="card-body card-custom ">
+                                                            <p class="font-weight-bold">Q1. What is the difference between Make I & Make II procedure?</p>
+                                                            <p>A1. Development under Make I procedure are funded by Government of India whereas developments under Make II are funded by Indian industry.</p>
+                                                            <p class="font-weight-bold">
+                                                                Q2. Is there assurance of orders under Make II?
+                                                            </p>
+                                                            <p>A2.	Yes, the vendors are given assured orders subject to successful development and trial of the item.</p>
+                                                            <p class="font-weight-bold">
+                                                                Q3. How can the industry participate in Make II developments?
+                                                            </p>
+                                                            <p>A3. The list of items taken up for indigenous development under Make-II is uploaded on respective websites of DPSUs/ OFB and is updated periodically. Comprehensive details of items identified for indigenisation under Make II by various DPSUs and OFB are also displayed on this portal srijandefence.gov.in.</p>
+                                                            <p class="font-weight-bold">
+                                                                Q4. Can the Start-ups participate in Make II developments?
+                                                            </p>
+                                                            <p>A4.	The Start-ups under specific categories and domains as give at Annexure II of Make II procedure can participate in Make II developments.</p>
+                                                            <p class="font-weight-bold">
+                                                                Q5. How will the iDEX be funded?
+                                                            </p>
+                                                            <p>A5.	iDEX will be funded and managed by a “Defence Innovation Organization (DIO)” formed as non-profit company as per Section 8 of the companies Act 2013 for the purpose.</p>
+                                                            <p class="font-weight-bold">
+                                                                Q6. How the IPRs under iDEX schemes will be managed?
+                                                            </p>
+                                                            <p>A6. The ownership of IPR generated under the program shall be owned by the company/institution/individual innovators who develop the IPR. The Government may also put restrictions on transfer/licensing of technology/IPR developed under the program on considerations of national security or other strategic reasons.</p>
+                                                            <p class="font-weight-bold">
+                                                                Q7. What are IGAs?
+                                                            </p>
+                                                            <p>A7. IGAs are inter government agreements for procurements or transfer of technology from foreign countries. Details of IGAs with respect to procurement of defence equipment are covered at Para 104 to 105 of Chapter II of DPP 2016.</p>
+
                                                         </div>
                                                     </div>
                                                 </div>

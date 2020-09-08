@@ -37,13 +37,12 @@ public partial class User_IntrestedProduct : System.Web.UI.Page
                 {
                     linklogin.Visible = false;
                     linkusername.Text = Encrypt.DecryptData(Session["User"].ToString());
-
+                    linkusername.Visible = true;
                     if (Encrypt.DecryptData(Session["Type"].ToString()) == "Admin" || Encrypt.DecryptData(Session["Type"].ToString()) == "SuperAdmin" || Encrypt.DecryptData(Session["Type"].ToString()) == "Company" ||
                         Encrypt.DecryptData(Session["Type"].ToString()) == "Division" || Encrypt.DecryptData(Session["Type"].ToString()) == "Unit")
                     {
                         linklogin.Visible = false;
                         linkusername.Text = Encrypt.DecryptData(Session["User"].ToString());
-
                     }
                     else
                     {
@@ -55,6 +54,7 @@ public partial class User_IntrestedProduct : System.Web.UI.Page
                 {
                     linklogin.Visible = true;
                     linkusername.Visible = false;
+                    lblmis.Visible = false;
                 }
                 ControlGrid();
             }
@@ -251,29 +251,6 @@ public partial class User_IntrestedProduct : System.Web.UI.Page
         else
         {
             divisd.Visible = false;
-        }
-    }
-    protected void BindPurposeProcuremnt()
-    {
-        DataTable DtPurposeProcuremnt = new DataTable();
-        if (ddlcomp.SelectedItem.Text != "Select")
-        {
-            DtPurposeProcuremnt = Lo.RetriveMasterSubCategoryDate(0, "PROCURMENT CATEGORY", "", "SelectProductCat", ddlcomp.SelectedItem.Value, "");
-        }
-        else
-        {
-            DtPurposeProcuremnt = Lo.RetriveMasterSubCategoryDate(0, "PROCURMENT CATEGORY", "", "SelectProductCat", "", "");
-        }
-        if (DtPurposeProcuremnt.Rows.Count > 0)
-        {
-            Co.FillDropdownlist(ddlprocurmentcatgory, DtPurposeProcuremnt, "ScategoryName", "SCategoryId");
-            ddlprocurmentcatgory.Items.Insert(0, "Select");
-        }
-        else
-        {
-            DtPurposeProcuremnt = Lo.RetriveMasterSubCategoryDate(0, "PROCURMENT CATEGORY", "", "SelectProductCat", "", "");
-            Co.FillDropdownlist(ddlprocurmentcatgory, DtPurposeProcuremnt, "ScategoryName", "SCategoryId");
-            ddlprocurmentcatgory.Items.Insert(0, "Select");
         }
     }
     protected void BindNSG()
@@ -574,23 +551,6 @@ public partial class User_IntrestedProduct : System.Web.UI.Page
                 }
             }
         }
-        if (chklast5year.SelectedIndex != -1)
-        {
-            if (chklast5year.SelectedItem.Value == "Y")
-            {
-                dr = insert.NewRow();
-                dr["Column"] = "EstimatePrice" + "> ";
-                dr["Value"] = "0";
-                insert.Rows.Add(dr);
-            }
-            else
-            {
-                dr = insert.NewRow();
-                dr["Column"] = "EstimatePrice" + "=";
-                dr["Value"] = "'0'";
-                insert.Rows.Add(dr);
-            }
-        }
         if (chktendor.SelectedIndex != -1)
         {
             dr = insert.NewRow();
@@ -604,23 +564,6 @@ public partial class User_IntrestedProduct : System.Web.UI.Page
             dr["Column"] = "PurposeofProcurement" + " like";
             dr["Value"] = "'%" + chkproofcat.Substring(0, chkproofcat.Length - 1) + "%'";
             insert.Rows.Add(dr);
-        }
-        if (rberffpurchase.SelectedIndex != -1)
-        {
-            if (rberffpurchase.SelectedItem.Value != "0")
-            {
-                dr = insert.NewRow();
-                dr["Column"] = "EstiPriMultiF" + ">";
-                dr["Value"] = "'0'";
-                insert.Rows.Add(dr);
-            }
-            else
-            {
-                dr = insert.NewRow();
-                dr["Column"] = "EstiPriMultiF" + "=";
-                dr["Value"] = "'0'";
-                insert.Rows.Add(dr);
-            }
         }
         if (chkimportvalue.SelectedIndex != -1)
         {
@@ -709,20 +652,6 @@ public partial class User_IntrestedProduct : System.Web.UI.Page
             {
                 dr["Value"] = "'2020-21'";
             }
-            insert.Rows.Add(dr);
-        }
-        if (ddldeclaration.SelectedIndex != -1)
-        {
-            dr = insert.NewRow();
-            dr["Column"] = "IsShowGeneral =";
-            dr["Value"] = "'" + ddldeclaration.SelectedItem.Value + "'";
-            insert.Rows.Add(dr);
-        }
-        if (chkeoistatus.SelectedIndex != -1)
-        {
-            dr = insert.NewRow();
-            dr["Column"] = "EOIStatus =";
-            dr["Value"] = "'" + chkeoistatus.SelectedItem.Value + "'";
             insert.Rows.Add(dr);
         }
         if (rbindigtarget.SelectedIndex != -1)
@@ -865,7 +794,7 @@ public partial class User_IntrestedProduct : System.Web.UI.Page
                     {
                         pgsource.DataSource = dtinner.DefaultView;
                         pgsource.AllowPaging = true;
-                        pgsource.PageSize = 20;
+                        pgsource.PageSize = 21;
                         pgsource.CurrentPageIndex = pagingCurrentPage;
                         lblpaging.Text = "Page " + (pagingCurrentPage + 1) + " of " + pgsource.PageCount;
                         lnkbtnPgPrevious.Enabled = !pgsource.IsFirstPage;
@@ -1245,6 +1174,7 @@ public partial class User_IntrestedProduct : System.Web.UI.Page
                     {
                         gvRequester.DataSource = DtBindIntrestUser;
                         gvRequester.DataBind();
+                        lblIntrCount.Text = DtBindIntrestUser.Rows.Count.ToString();
                     }
                     else
                     {
@@ -1306,7 +1236,6 @@ public partial class User_IntrestedProduct : System.Web.UI.Page
             Label lblepold17 = (Label)e.Item.FindControl("lblepold17");
             Label lblepold18 = (Label)e.Item.FindControl("lblepold18");
             Label lblepfu = (Label)e.Item.FindControl("lblepfu");
-
             if (rbsort.SelectedIndex != -1 && rbsort.SelectedItem.Text.Trim() == "2019-20")
             {
                 lblepold.Visible = true;
@@ -1832,8 +1761,6 @@ public partial class User_IntrestedProduct : System.Web.UI.Page
         ddlprodindustrydomain.SelectedIndex = -1;
         chkimportvalue.SelectedIndex = -1;
         rbsort.SelectedIndex = -1;
-        ddldeclaration.SelectedIndex = -1;
-        chkeoistatus.SelectedIndex = -1;
         rbindustryspecification.SelectedIndex = -1;
     }
     protected void lblviewnato_Click(object sender, EventArgs e)
