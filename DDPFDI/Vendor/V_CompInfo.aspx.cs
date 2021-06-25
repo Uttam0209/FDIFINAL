@@ -10,6 +10,8 @@ using Encryption;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls.WebParts;
 using System.Collections.Specialized;
+using System.Data.SqlClient;
+using System.Configuration;
 
 public partial class Vendor_V_CompInfo : System.Web.UI.Page
 {
@@ -29,12 +31,26 @@ public partial class Vendor_V_CompInfo : System.Web.UI.Page
         {
             if (!IsPostBack)
             {
+                GetAllState();
+                GetAllPincode();
+                GetAllCity();
                 LoadCode();
             }
         }
         else
+        {
             ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert",
                    "alert('Session Expired,Please login again');window.location='VendorLogin'", true);
+        }
+    }
+    public void GetAllCity()
+    {
+        DataTable dtAllCity = Lo.GetCity();
+        ddlCity.DataSource = dtAllCity;
+        ddlCity.DataTextField = "CityName";
+        ddlCity.DataValueField = "CityCode";
+        ddlCity.DataBind();
+        ddlCity.Items.Insert(0, "Select");
     }
     protected void LoadCode()
     {
@@ -74,9 +90,24 @@ public partial class Vendor_V_CompInfo : System.Web.UI.Page
                 txtlname.Text = DtCheckSavedetails1.Rows[0]["NodelName"].ToString();
                 txtstreetaddress.Text = DtCheckSavedetails1.Rows[0]["MarketingOfficeAddress"].ToString();
                 txtstreetaddressline2.Text = DtCheckSavedetails1.Rows[0]["Line2"].ToString();
-                txtcity.Text = DtCheckSavedetails1.Rows[0]["OfficerCity"].ToString();
-                txtstate.Text = DtCheckSavedetails1.Rows[0]["OfficeState"].ToString();
-                txtpincode.Text = DtCheckSavedetails1.Rows[0]["OfficePincode"].ToString();
+               // txtpincode.Text = DtCheckSavedetails1.Rows[0]["OfficePincode"].ToString();
+               if (DtCheckSavedetails1.Rows[0]["OfficePincode"].ToString()!=null)
+                {
+                    ddlPincode.SelectedItem.Text = DtCheckSavedetails1.Rows[0]["OfficePincode"].ToString();
+                }
+               // txtcity.Text = DtCheckSavedetails1.Rows[0]["OfficerCity"].ToString();
+               if(DtCheckSavedetails1.Rows[0]["OfficerCity"].ToString()!=null)
+                {
+                    ddlCity.SelectedItem.Text= DtCheckSavedetails1.Rows[0]["OfficerCity"].ToString();
+                }
+                if (DtCheckSavedetails1.Rows[0]["OfficeState"].ToString() != null)
+                {
+                    string Mstate = DtCheckSavedetails1.Rows[0]["OfficeState"].ToString();
+                   // ddlstate.SelectedItem.Text = Mstate;
+                    ddlstate.SelectedItem.Text = DtCheckSavedetails1.Rows[0]["OfficeState"].ToString();
+                   
+                }
+               // txtstate.Text = DtCheckSavedetails1.Rows[0]["OfficeState"].ToString();
                 txtcontactno.Text = DtCheckSavedetails1.Rows[0]["PhoneNo"].ToString();
                 txtfaxno.Text = DtCheckSavedetails1.Rows[0]["OfficeFaxNo"].ToString();
                 txtemail.Text = DtCheckSavedetails1.Rows[0]["OfficeEmail"].ToString();
@@ -1022,7 +1053,9 @@ public partial class Vendor_V_CompInfo : System.Web.UI.Page
                     drPlantSave["MachineModelSpec"] = TextBox1P.Text;
                     drPlantSave["MakePlant"] = TextBox2P.Text;
                     drPlantSave["QuanPlant"] = TextBox3P.Text;
-                    drPlantSave["DOPPlant"] = TextBox4P.Text;
+                    DateTime dateofPurchasen = Convert.ToDateTime(Server.HtmlEncode(TextBox4P.Text));
+                    string D_dateofpurchase = dateofPurchasen.ToString("yyyy-MMM-dd");
+                    drPlantSave["DOPPlant"] = D_dateofpurchase.ToString();
                     drPlantSave["UsagePlant"] = TextBox5P.Text;
                     dtPlantMSave.Rows.Add(drPlantSave);
                 }
@@ -1516,8 +1549,16 @@ public partial class Vendor_V_CompInfo : System.Web.UI.Page
                     drTestFaciliSave["TestLeastCount"] = TextBox3TF.Text;
                     drTestFaciliSave["Rangeofmeasur"] = TextBox4TF.Text;
                     drTestFaciliSave["Unitofmeasur"] = TextBox7TF.Text;
-                    drTestFaciliSave["CertificationYear"] = TextBox5TF.Text;
-                    drTestFaciliSave["YearofPurchase"] = TextBox6TF.Text;
+                    DateTime CertYear = Convert.ToDateTime(Server.HtmlEncode(TextBox5TF.Text));
+                    string D_CertYear = CertYear.ToString("yyyy-MMM-dd");
+                    drTestFaciliSave["CertificationYear"] = D_CertYear.ToString();
+
+                    DateTime purYear = Convert.ToDateTime(Server.HtmlEncode(TextBox6TF.Text));
+                    string D_PurYear = purYear.ToString("yyyy-MMM-dd");
+
+                   // DateTime purYear = DateTime.Parse(TextBox6TF.Text);
+                   // string D_PurYear = purYear.ToString("dd/MM/yyyy");
+                    drTestFaciliSave["YearofPurchase"] = D_PurYear.ToString();
                     dtTestFaciliSave.Rows.Add(drTestFaciliSave);
                 }
             }
@@ -2458,8 +2499,11 @@ public partial class Vendor_V_CompInfo : System.Web.UI.Page
         HySaveVendorRegisdetail["Is_Lab_accredited_by_NABL"] = Co.RSQandSQLInjection(ddlnabl.SelectedItem.Value, "soft");
         if (txtdate.Text != "")
         {
-            DateTime datetime = Convert.ToDateTime(txtdate.Text);
-            string mdatetime = datetime.ToString("dd/MMM/yyyy");
+            DateTime datetimep = Convert.ToDateTime(Server.HtmlEncode(txtdate.Text));
+            string mdatetime = datetimep.ToString("yyyy-MMM-dd");
+
+           // DateTime datetime = Convert.ToDateTime(txtdate.Text);
+           // string mdatetime = datetime.ToString("dd/MMM/yyyy");
             HySaveVendorRegisdetail["CertifictionValid"] = Co.RSQandSQLInjection(mdatetime.ToString(), "soft");
         }
         else
@@ -2473,9 +2517,9 @@ public partial class Vendor_V_CompInfo : System.Web.UI.Page
             HySaveVendorRegisdetail["NodelName"] = Co.RSQandSQLInjection(txtlname.Text, "soft");
             HySaveVendorRegisdetail["MarketingOfficeAddress"] = Co.RSQandSQLInjection(txtstreetaddress.Text, "soft");
             HySaveVendorRegisdetail["Line2"] = Co.RSQandSQLInjection(txtstreetaddressline2.Text, "soft");
-            HySaveVendorRegisdetail["OfficerCity"] = Co.RSQandSQLInjection(txtcity.Text, "soft");
-            HySaveVendorRegisdetail["OfficeState"] = Co.RSQandSQLInjection(txtstate.Text, "soft");
-            HySaveVendorRegisdetail["OfficePincode"] = Co.RSQandSQLInjection(txtpincode.Text, "soft");
+            HySaveVendorRegisdetail["OfficerCity"] = Co.RSQandSQLInjection(ddlCity.SelectedItem.Text, "soft");
+            HySaveVendorRegisdetail["OfficeState"] = Co.RSQandSQLInjection(ddlstate.SelectedItem.Text, "soft");
+            HySaveVendorRegisdetail["OfficePincode"] = Co.RSQandSQLInjection(ddlPincode.SelectedItem.Text, "soft");
             HySaveVendorRegisdetail["PhoneNo"] = Co.RSQandSQLInjection(txtcontactno.Text, "soft");
             HySaveVendorRegisdetail["OfficeFaxNo"] = Co.RSQandSQLInjection(txtfaxno.Text, "soft");
             HySaveVendorRegisdetail["OfficeEmail"] = Co.RSQandSQLInjection(txtemail.Text, "soft");
@@ -2599,7 +2643,7 @@ public partial class Vendor_V_CompInfo : System.Web.UI.Page
     {
         if (e.CommandName == "addnewmfe")
         {
-            btnupdate.Text = "Submit";
+            btnupdate.Text = "Save";
             txtnameoffactorypopup.Text = "";
             txtfactorygstnopopup.Text = "";
             txtcompletepostaladdresspopup.Text = "";
@@ -3454,6 +3498,57 @@ public partial class Vendor_V_CompInfo : System.Web.UI.Page
                 ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Certificate not save successfully')", true);
             }
         }
+    }
+    #endregion
+    #region Pin Related code
+    protected void btnPrev_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("https://srijandefence.gov.in/GeneralInformation?mu=KQ5FIC8PdXE=&id=YUM6Wog/7cKd56S2dApVEg==");
+    }
+
+    protected void btnNext_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("https://srijandefence.gov.in/CompanyInformation_II?mu=KQ5FIC8PdXE=&id=YUM6Wog/7cKd56S2dApVEg==");
+    }
+
+    public void GetAllPincode()
+    {
+        DataTable dtpincode = Lo.GetPincode();
+        ddlPincode.DataSource = dtpincode;
+        ddlPincode.DataTextField = "PinCode";
+        ddlPincode.DataValueField = "PinCode";
+        ddlPincode.DataBind();
+        ddlPincode.Items.Insert(0, "Select");
+    }
+   
+
+    protected void ddlCity_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        DataTable dtState = Lo.GetStateByCity(ddlCity.SelectedValue);
+        ddlPincode.DataSource = dtState;
+        ddlPincode.DataTextField = "PinCode";
+        ddlPincode.DataValueField = "PinCode";
+        ddlPincode.DataBind();
+
+        ddlPincode.Items.Insert(0, "Select");
+    }
+    public void GetAllState()
+    {
+        DataTable dtAllState = Lo.GetState();
+        ddlstate.DataSource = dtAllState;
+        ddlstate.DataTextField = "StateName";
+        ddlstate.DataValueField = "StateId";
+        ddlstate.DataBind();
+        ddlstate.Items.Insert(0, "Select");
+    }
+    protected void ddlstate_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        DataTable dtCity = Lo.GetCitybyPin(ddlstate.SelectedValue);
+        ddlCity.DataSource = dtCity;
+        ddlCity.DataTextField = "CityName";
+        ddlCity.DataValueField = "CityCode";
+        ddlCity.DataBind();
+        ddlCity.Items.Insert(0, "Select");
     }
     #endregion
 }

@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="DefaultDpsu.aspx.cs" Inherits="_DefaultD" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" ErrorPage="~/ErrorPages/Error.aspx" CodeFile="DefaultDpsu.aspx.cs" Inherits="_DefaultD" %>
 
 <%@ Import Namespace="System.Web.Optimization" %>
 <%@ Register Assembly="MSCaptcha" Namespace="MSCaptcha" TagPrefix="cc1" %>
@@ -9,7 +9,9 @@
     <title>Login</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="~/assets/images/favicon.ico">
+    <meta http-equiv="cache-control" content="no-cache" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <link rel="shortcut icon" href="~/assets/images/icon.png">
     <link href="~/assets/css/bootstrap.css" rel="stylesheet">
     <link href="~/assets/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="~/assets/css/style.css" rel="stylesheet" type="text/css">
@@ -17,6 +19,42 @@
     <link href="~/assets/css/responsive.css" rel="stylesheet" type="text/css">
     <link href="~/assets/css/fonts-googleapis.css" rel="stylesheet" />
     <style>
+        #top {
+            background-color: #373f50;
+            text-transform: uppercase;
+            color: #f1faee !important;
+            padding-bottom: 0px !important;
+            padding-top: 0px !important;
+            padding-left: 20px;
+        }
+
+            #top a {
+                color: #f1faee !important;
+                display: inline-block;
+                padding: 15px 10px 15px 10px;
+                text-decoration: none;
+            }
+
+
+        #top2 {
+            box-shadow: 0 0 5px;
+        }
+
+        #footer2 {
+            background-color: #0c0032;
+            color: #f1faee;
+            width: 100%;
+            text-align: center;
+            padding: 15px !important;
+        }
+
+
+            #footer2 a {
+                color: white !important;
+                text-decoration: none !important;
+            }
+
+
         .swal2-container.swal2-center.swal2-shown {
             z-index: 22222;
         }
@@ -24,8 +62,7 @@
         .modal {
             margin-top: 70px !important;
         }
-    </style>
-    <style type="text/css">
+
         .form-group {
             margin: 8px 0px;
         }
@@ -39,6 +76,24 @@
             padding: 10px 10px;
             border-radius: 0px;
             font: normal 14px/18px Arial, Helvetica, sans-serif;
+        }
+
+        @media screen and (max-width: 993px) {
+
+            #top2 {
+                align-content: center;
+            }
+        }
+
+        @media screen and (max-width: 993px) {
+
+            #top2 h2 {
+                text-align: center;
+            }
+
+            #top2 .col-md-3 {
+                text-align: center;
+            }
         }
     </style>
     <script src="assets/js/jquery-3.4.1.js"></script>
@@ -60,17 +115,38 @@
 <body>
     <form id="form1" runat="server" method="post" asp-antiforgery="false">
         <asp:ScriptManager runat="server" ID="sc"></asp:ScriptManager>
-        <nav class="navbar" role="navigation">
-            <div class="navbar-header">
-                <a class="navbar-brand" href="#">
-                    <span class="logo" title="Department of Defense Product">MOD</span>
-                </a>
-            </div>
-        </nav>
-        <div class="container">
+        <div id="top">
+            <a href="#"><i class="fa fa-envelope" aria-hidden="true"></i>&nbsp; helpdesk-dpit@ddpmod.gov.in</a>
+            <a href="#"><i class="fa fa-phone-square" aria-hidden="true"></i>&nbsp; 011-20836145 &nbsp;|&nbsp; 011-23019066</a>
+            <li class="nav-item active" style="float: right; margin-right: 30px">
+                <a class="nav-link" runat="server" href="~/ProductList"><i class="fa fa-home" aria-hidden="true"></i></a>
+            </li>
+        </div>
+        <div id="top2" class="container-fluid" style="background: white;">
+
             <div class="row">
+                <div class="col-md-2">
+                    <a href="ProductList">
+                        <img src="ddp_logo.png" class="img-fluid" style="max-height: 70px" /></a>
+                </div>
+                <div class="col-md-8">
+                    <h2 class="text-center" style="color: #6915cf;">OPPORTUNITIES FOR MAKE IN INDIA IN DEFENCE</h2>
+                </div>
+                <div class="col-md-2">
+                </div>
+            </div>
+        </div>
+        <div class="container" style="min-height: 83vh;">
+            <div class="row">
+                <div style="margin: 5px; color: red; padding: 5px;">
+                    <marquee scrollamount="3"><p>Note:-&nbsp;1.The Menus has been Reorganised please contact helpdesk-dpit@ddpmod.gov.in for any clarifications.</p> </marquee>
+
+                </div>
                 <div class="loginBg clearfix">
-                    <h3>Login</h3>
+                    <h2 style="text-align: center; margin: 0px; color: black; padding: 5px;">Login</h2>
+                    <div class="text-center">
+                        <img id="logo" src="assets/images/login.png" class="mx-auto d-block rounded-circle " />
+                    </div>
                     <asp:Panel ID="Panel1" runat="server" DefaultButton="btnLogin">
                         <label for="uname" class=" tetLable">
                             Email
@@ -81,6 +157,8 @@
                         </label>
                         <span class="passbox">
                             <asp:TextBox runat="server" ID="txtPwd" TabIndex="2" name="txtPwd" class="form-control passField" autocomplete="off" ToolTip="Please enter valid password (case sensitive)." placeholder="Password" type="password" required=""></asp:TextBox>
+                            <%-- <asp:RegularExpressionValidator ID="valPassword" Display="Dynamic" runat="server" ControlToValidate="txtPwd"
+                            ErrorMessage="Password must be 8 characters long with at least one numeric,one upper case character and one special character." ForeColor="Red" ValidationExpression="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$#^@$!%*?&])[A-Za-z\d$@$#^!%*?&]{8,64}" />--%>
                             <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
                         </span>
                         <p style="margin-top: 15px;">
@@ -93,42 +171,40 @@
                             <div class="row">
                                 <div class="col-sm-6">
                                     <div class="row">
-                                        <asp:TextBox runat="server" ID="txtCaptcha" TabIndex="3" ToolTip="enter captcha (case sensitive)" class="form-control" autocomplete="off" placeholder="Captcha" required=""></asp:TextBox>
+                                        <asp:TextBox runat="server" ID="txtCaptcha" TabIndex="3" ToolTip="enter captcha (case sensitive)"
+                                            class="form-control text-uppercase" autocomplete="off" placeholder="Captcha" required=""></asp:TextBox>
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="col-sm-9">
-                                        <cc1:CaptchaControl ID="Captcha1" runat="server" CaptchaBackgroundNoise="Low" CaptchaLength="6"
-                                            CaptchaHeight="35" CaptchaWidth="125" CaptchaMinTimeout="5" CaptchaMaxTimeout="240"
-                                            FontColor="#D20B0C" NoiseColor="#B1B1B1" />
+                                        <asp:Image ID="imgCaptcha" runat="server" />
                                     </div>
                                     <div class="col-sm-1" style="margin-top: 15px;">
-                                        <asp:LinkButton ID="btnCaptchaNew" runat="server" class="" CausesValidation="false"><i class="fas fa-sync-alt fa-lg"></i></asp:LinkButton>
+                                        <asp:LinkButton ID="btnCaptchaNew" runat="server" class="" CausesValidation="false" OnClick="btnCaptchaNew_Click"><i class="fas fa-sync-alt fa-lg"></i></asp:LinkButton>
                                     </div>
                                 </div>
+                                <div class="clearfix"></div>
+                                <p style="margin-top: 15px;">
+                                    Captcha is case sensitive
+                                </p>
                             </div>
                         </div>
-                        <div class="clearfix" style="border-bottom: 1px solid #fff; margin-top: 15px;">
+                        <div class="clearfix" style="border-bottom: 1px solid #fff; margin-top: 10px;">
                         </div>
-                        <br>
-                        <asp:CustomValidator ID="CustomValidator1" ErrorMessage="" OnServerValidate="ValidateCaptcha"
-                            runat="server" />
-                        <div class="clearfix p10">
-                        </div>
+                        <br />
                         <asp:LinkButton ID="btnLogin" runat="server" TabIndex="4" CssClass="btn btn-info" ToolTip="After validate your username or password we will redirect to your dashboard."
                             OnClick="btnLogin_Click" Text="Login"></asp:LinkButton>
                         <asp:UpdatePanel ID="UpdatePanel1" runat="server" ChildrenAsTriggers="True">
                             <ContentTemplate>
                                 <div class="clearfix" style="border-bottom: 1px solid #fff; margin-top: 15px; text-align: right;">
-                                    <asp:LinkButton runat="server" ID="lblforgotpass" Text="Forgot Password ?" OnClick="lblforgotpass_Click"></asp:LinkButton>
+                                    <asp:LinkButton runat="server" ID="lblforgotpass" Text="Forgot Password ?" OnClick="lblforgotpass_Click" Style="text-decoration: none;"></asp:LinkButton>
                                 </div>
                             </ContentTemplate>
-                            <Triggers>
-                            </Triggers>
                         </asp:UpdatePanel>
                         <div class="clearfix" style="margin-top: 15px;">
                         </div>
-                        <p>Note:- For better site experiance please use Google Chrome,Mozila FireFox,Internet Edge,Safari.</p>
+                        <p>Note:- For better site experience please use Google Chrome, Mozilla FireFox, Internet Edge, Safari.</p>
+
                     </asp:Panel>
                 </div>
             </div>
@@ -147,10 +223,10 @@
                                 <label for="uname" class=" tetLable">
                                     Email
                                 </label>
-                                <asp:TextBox runat="server" ID="txtforgotemailid" class="form-control" autocomplete="off" type="email" placeholder="Email" ToolTip="Please enter valid registerd email id." required="" autofocus=""></asp:TextBox>
+                                <asp:TextBox runat="server" ID="txtforgotemailid" class="form-control" autocomplete="off" type="email" placeholder="Email" ToolTip="Please enter valid registered email id." required="" autofocus=""></asp:TextBox>
                             </div>
                             <div class="form-group" style="margin: 0">
-                                <asp:Button runat="server" ID="btnsendmail" Text="Get Reset Password Link" CausesValidation="False" UseSubmitBehavior="False" CssClass="btn btn-primary pull-right forgot-pass-btn" ToolTip="Get Reset password link on your registerd email id." OnClick="btnsendmail_Click" />
+                                <asp:Button runat="server" ID="btnsendmail" Text="Get Reset Password Link" CausesValidation="False" UseSubmitBehavior="False" CssClass="btn btn-primary pull-right forgot-pass-btn" ToolTip="Get Reset password link on your registered email id." OnClick="btnsendmail_Click" />
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -172,10 +248,17 @@
                 </div>
             </div>
         </div>
+
+        <div id="footer1" class="container-fluid" style="min-height: 50px; text-align: center; background: #373f50;">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12" style="padding-top: 10px; color: white;">
+                        ©2020 <a href="https://srijandefence.gov.in/ProductList" style="color: white;">www.srijandefence.gov.in</a> | All Right Reserved. | Designed, Developed and Hosted by Department of Defence Production                           
+                    </div>
+                </div>
+            </div>
+        </div>
     </form>
-
-
-
     <script src="assets/js/jquery-3.4.1.js"></script>
     <script src="assets/js/bootstrap.min.js"></script>
     <script src="assets/js/custom.js"></script>

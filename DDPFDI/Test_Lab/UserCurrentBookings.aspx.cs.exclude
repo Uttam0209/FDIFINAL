@@ -1,0 +1,626 @@
+﻿using BusinessLayer;
+using Encryption;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using System.Text;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+
+public partial class Test_Lab_UserCurrentBookings : System.Web.UI.Page
+{
+    Cryptography objCrypto = new Cryptography();
+    Logic Lo = new Logic();
+    string sType = "";
+    string strInterestedArea = "";
+    string strMasterAlloted = "";
+    string compname;
+    DataUtility Co = new DataUtility();
+    private DataTable DtCompanyDDL = new DataTable();
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        if (!IsPostBack)
+        {
+            if (Session["User"] != null)
+            {
+                hidType.Value = objCrypto.DecryptData(Session["Type"].ToString().Trim());
+                hfcomprefno.Value = Session["CompanyRefNo"].ToString().Trim();
+                if (Request.QueryString["id"] != null)
+                {
+                    string strid = Request.QueryString["id"].ToString().Replace(" ", "+");
+                    string strPageName = objCrypto.DecryptData(strid);
+                    StringBuilder strheadPage = new StringBuilder();
+                    strheadPage.Append("<ul class='breadcrumb'>");
+                    string[] MCateg = strPageName.Split(new string[] { ">>" }, StringSplitOptions.RemoveEmptyEntries);
+                    string MmCval = "";
+                    for (int x = 0; x < MCateg.Length; x++)
+                    {
+                        MmCval = MCateg[x];
+                        strheadPage.Append("<li class=''><span>" + MmCval + "</span></li>");
+                    }
+                    //divHeadPage.InnerHtml = strheadPage.ToString();
+                    strheadPage.Append("</ul");
+                }
+                MenuLogin();
+                GetPendingOrders();
+                BindCompany();
+                GetAllDiscipline();
+            }
+        }
+    }
+
+    public void GetPendingOrders()
+    {
+
+        DataTable dtpendingorders = new DataTable();
+        dtpendingorders = Lo.pendingBookedOrders();
+        Session["TempData"] = dtpendingorders;
+        if (dtpendingorders.Rows.Count > 0)
+        {
+            gvcurrentbookings.DataSource = dtpendingorders;
+            gvcurrentbookings.DataBind();
+        }
+    }
+
+    #region Menu Wise Login
+    protected void MenuLogin()
+    {
+        lblusername.Text = objCrypto.DecryptData(Session["User"].ToString());
+        if (Session["VendorRefNo"] != null)
+        {
+            sType = Session["VendorRefNo"].ToString();
+            DataTable dtCompany = Lo.RetriveMasterData(0, objCrypto.DecryptData(sType), "", 0, "", "", "InterestedAreaVendor");
+            if (dtCompany.Rows.Count > 0)
+            {
+                   DivCompanyName.Visible = true;
+                  lblmastercompany.Text = "Company - " + dtCompany.Rows[0]["V_CompName"].ToString() + " , ";
+                
+                strInterestedArea = dtCompany.Rows[0]["InterestedArea"].ToString();
+                strMasterAlloted = dtCompany.Rows[0]["MasterAllowed"].ToString();
+            }
+        }
+        if (strInterestedArea != "")
+        {
+            bindMenu(sType);
+        }
+        if (strMasterAlloted != "")
+        {
+            bindMasterMenu(sType);
+        }
+    }
+
+    #endregion
+
+    private void bindMenu(string sType)
+    {
+        StringBuilder strMenu = new StringBuilder();
+        strMenu.Append("<ul class='nav  nav-list'>");
+        string[] Categ = strInterestedArea.Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries);
+        string mCval = "";
+        for (int x = 0; x < Categ.Length; x++)
+        {
+            mCval = Categ[x];
+            DataTable dtArea = Lo.RetriveMasterData(Convert.ToInt64(mCval), sType, "", 0, "", "", "VendorIntAreaMenuId");
+            foreach (DataRow row in dtArea.Rows)
+            {
+                strMenu.Append("<li class='parent-nav'><a href='#'  title='" + row["Tooltip"].ToString() + "'><i class='fas fa-tachometer-alt'></i><span class='hidden-minibar'>" + row["InterestArea"].ToString() + " </span><span class='menuNo' style='position:absolute; right:40px;top:13px;'>M" + row["Id"].ToString() + "</span> <i class='fas fa-angle-down'></i></a>");
+                string[] Categ1 = dtArea.Rows[0]["MenuId"].ToString().Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries);
+                string mCval1 = "";
+                strMenu.Append("<ul class='parent-nav-child'>");
+                for (int j = 0; j < Categ1.Length; j++)
+                {
+                    mCval1 = Categ1[j];
+                    DataTable dtMenu = Lo.RetriveMasterData(0, "", objCrypto.DecryptData(Session["Type"].ToString()), Convert.ToInt16(mCval1), "", "", "MenuMain");
+                    foreach (DataRow row2 in dtMenu.Rows)
+                    {
+                        strMenu.Append("<li class='parent-nav'><a href='" + row2["MenuUrl"].ToString() + "?mu=" + HttpUtility.UrlEncode(objCrypto.EncryptData(row2["Spanclass"].ToString())) + "&id=" + HttpUtility.UrlEncode(objCrypto.EncryptData(row["InterestArea"].ToString() + " >> " + row2["MenuName"].ToString())) + "' title='" + row2["Tooltip"].ToString() + "'><i class='fas fa-tachometer-alt'></i><span class='hidden-minibar'>" + row2["MenuName"].ToString() + "</span><span class='menuNo' style='position:absolute; right:40px;top:13px;'>C" + row2["MenuId"].ToString() + "</span>");
+                        strMenu.Append("<i class='fas fa-angle-down'></i></a>");
+                        DataTable Submenu = Lo.RetriveMasterData(0, "", objCrypto.DecryptData(Session["Type"].ToString()), Convert.ToInt16(row2["MenuID"].ToString()), "", "", "SubMenu");
+                        if (Submenu.Rows.Count > 0)
+                        {
+                            strMenu.Append("<ul class='parent-nav-child'>");
+                            foreach (DataRow row1 in Submenu.Rows)
+                            {
+                                strMenu.Append("<li><a href='" + row1["MenuUrl"].ToString() + "?mu=" + HttpUtility.UrlEncode(objCrypto.EncryptData(row1["Spanclass"].ToString())) + "&id=" + HttpUtility.UrlEncode(objCrypto.EncryptData(row["InterestArea"].ToString() + " >> " + row2["MenuName"].ToString() + " >> " + row1["MenuName"].ToString())) + "' title='" + row1["Tooltip"].ToString() + "'><i class='far fa-building'></i><span class='hidden-minibar'>" + row1["MenuName"].ToString() + "</span><span class='menuNo' style='position:absolute; right:20px;top:13px;'>L" + row1["MenuId"].ToString() + "</span></a></li> ");
+                            }
+                            strMenu.Append("</ul>");
+
+                        }
+                        strMenu.Append("</li>");
+                    }
+                }
+                strMenu.Append("</ul>");
+                strMenu.Append("</li>");
+            }
+            //  menu.InnerHtml = strMenu.ToString();
+            strMenu.Append("</ul>");
+        }
+    }
+    private void bindMasterMenu(string sType)
+    {
+        StringBuilder strMasterMenu = new StringBuilder();
+        strMasterMenu.Append("<ul class='nav  nav-list'>");
+        string[] MCateg = strMasterAlloted.Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries);
+        string MmCval = "";
+        for (int x = 0; x < MCateg.Length; x++)
+        {
+            MmCval = MCateg[x];
+            DataTable dtMArea = Lo.RetriveMasterData(Convert.ToInt64(MmCval), sType, "", 0, "", "", "VendorIntAreaMenuId");
+            foreach (DataRow row in dtMArea.Rows)
+            {
+                strMasterMenu.Append("<li class='parent-nav'><a href='#'  title='" + row["Tooltip"].ToString() + "'><i class='fas fa-tachometer-alt'></i><span class='hidden-minibar'>" + row["InterestArea"].ToString() + " </span><span class='menuNo' style='position:absolute; right:40px;top:13px;'>M" + row["Id"].ToString() + "</span> <i class='fas fa-angle-down'></i></a>");
+                string[] MCateg1 = dtMArea.Rows[0]["MenuId"].ToString().Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries);
+                string MmCval1 = "";
+                strMasterMenu.Append("<ul class='parent-nav-child'>");
+                for (int j = 0; j < MCateg1.Length; j++)
+                {
+                    MmCval1 = MCateg1[j];
+                    DataTable dtMMenu = Lo.RetriveMasterData(0, "", objCrypto.DecryptData(Session["Type"].ToString()), Convert.ToInt16(MmCval1), "", "", "MenuMainVendor");
+                    foreach (DataRow row2 in dtMMenu.Rows)
+                    {
+                        strMasterMenu.Append("<li class='parent-nav'><a href='" + row2["MenuUrl"].ToString() + "?mu=" + objCrypto.EncryptData(row2["Spanclass"].ToString()) + "&id=" + objCrypto.EncryptData(row["InterestArea"].ToString() + " >> " + row2["MenuName"].ToString()) + "' title='" + row2["Tooltip"].ToString() + "'><i class='fas fa-tachometer-alt'></i><span class='hidden-minibar'>" + row2["MenuName"].ToString() + "</span><span class='menuNo' style='position:absolute; right:40px;top:13px;'>C" + row2["MenuId"].ToString() + "</span>");
+                        strMasterMenu.Append("<i class='fas fa-angle-down'></i></a>");
+                        DataTable SubMmenu = Lo.RetriveMasterData(0, "", objCrypto.DecryptData(Session["Type"].ToString()), Convert.ToInt16(row2["MenuID"].ToString()), "", "", "SubMenuVendor");
+                        if (SubMmenu.Rows.Count > 0)
+                        {
+                            strMasterMenu.Append("<ul class='parent-nav-child'>");
+                            foreach (DataRow row1 in SubMmenu.Rows)
+                            {
+                                strMasterMenu.Append("<li><a href='" + row1["MenuUrl"].ToString() + "?mu=" + objCrypto.EncryptData(row1["Spanclass"].ToString()) + "&id=" + objCrypto.EncryptData(row["InterestArea"].ToString() + " >> " + row2["MenuName"].ToString() + " >> " + row1["MenuName"].ToString()) + "' title='" + row1["Tooltip"].ToString() + "'><i class='far fa-building'></i><span class='hidden-minibar'>" + row1["MenuName"].ToString() + "</span><span class='menuNo' style='position:absolute; right:20px;top:13px;'>L" + row1["MenuId"].ToString() + "</span></a></li> ");
+                            }
+                            strMasterMenu.Append("</ul>");
+                        }
+                        strMasterMenu.Append("</li>");
+                    }
+                }
+                strMasterMenu.Append("</ul>");
+                strMasterMenu.Append("</li>");
+            }
+        }
+        //  MasterMenu.InnerHtml = strMasterMenu.ToString();
+        strMasterMenu.Append("</ul>");
+    }
+
+    protected void lbllogout_Click(object sender, EventArgs e)
+    {
+     //   FuncLogout();
+        Response.Redirect("TestLab");
+    }
+
+    protected void FuncLogout()
+    {
+        Session.Abandon();
+        Session.Remove("Type");
+        Session.Remove("User");
+        Session.Remove("CompanyRefNo");
+        Session.Remove("VendorRefNo");
+        Session.Remove("SFToken");
+        Session.RemoveAll();
+        Session.Contents.RemoveAll();
+        Session.Clear();
+        Response.Cache.SetCacheability(HttpCacheability.NoCache);
+        Response.Cookies["DefaultDpsu"].Expires = DateTime.Now;
+        Response.Buffer = true;
+        Response.AppendHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
+        Response.AppendHeader("Pragma", "no-cache"); // HTTP 1.0.
+        Response.AppendHeader("Expires", "0"); // Proxies.
+        if (Request.Cookies["User"] != null)
+        {
+            Response.Cookies["User"].Value = string.Empty;
+            Response.Cookies["User"].Expires = DateTime.Now.AddMonths(-20);
+        }
+        if (Request.Cookies["SFToken"] != null)
+        {
+            Response.Cookies["SFToken"].Value = string.Empty;
+            Response.Cookies["SFToken"].Expires = DateTime.Now.AddMonths(-20);
+        }
+    }
+
+    protected void gvcurrentbookings_RowCreated(object sender, GridViewRowEventArgs e)
+    {
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            e.Row.TableSection = TableRowSection.TableBody;
+        }
+        else if (e.Row.RowType == DataControlRowType.Header)
+        {
+            e.Row.TableSection = TableRowSection.TableHeader;
+        }
+        else if (e.Row.RowType == DataControlRowType.Footer)
+        {
+            e.Row.TableSection = TableRowSection.TableFooter;
+        }
+    }
+
+    protected void BindCompany()
+    {
+        if (hidType.Value == "SuperAdmin" || hidType.Value == "Admin" || hidType.Value == "Vendor")
+        {
+            if (Request.QueryString["mcurrentcompRefNo"] != null)
+            {
+                ddlcomp.Enabled = false;
+                if (objCrypto.DecryptData(Request.QueryString["mrcreaterole"].ToString()) == "Company")
+                {
+                    DtCompanyDDL = Lo.RetriveMasterData(0, HttpUtility.UrlEncode(objCrypto.DecryptData(Request.QueryString["mcurrentcompRefNo"].ToString())), "Company", 0, "", "", "CompanyName");
+                    ddlcomp.Enabled = false;
+                    if (DtCompanyDDL.Rows.Count > 0)
+                    {
+                        Co.FillDropdownlist(ddlcomp, DtCompanyDDL, "CompanyName", "CompanyRefNo");
+                        //  divlblselectunit.Visible = false;
+                        //  divlblselectdivison.Visible = false;
+                    }
+                }
+                else if (objCrypto.DecryptData(Request.QueryString["mrcreaterole"].ToString()) == "Factory" || objCrypto.DecryptData(Request.QueryString["mrcreaterole"].ToString()) == "Division")
+                {
+                    DtCompanyDDL = Lo.RetriveMasterData(0, objCrypto.DecryptData(Request.QueryString["mcurrentcompRefNo"].ToString()), "Company1", 0, "", "", "CompanyName");
+                    ddlcomp.Enabled = false;
+                    if (DtCompanyDDL.Rows.Count > 0)
+                    {
+                        Co.FillDropdownlist(ddlcomp, DtCompanyDDL, "CompanyName", "CompanyRefNo");
+                    }
+                    DtCompanyDDL = Lo.RetriveMasterData(0, objCrypto.DecryptData(Request.QueryString["mcurrentcompRefNo"].ToString()), "Factory", 0, "", "", "CompanyName");
+                    //DataTable DtDivisionDDL = Lo.RetriveMasterData(0, DtCompanyDDL.Rows[0]["CompanyRefNo"].ToString(), "Factory1", 0, "", "", "CompanyName");
+                    //if (DtDivisionDDL.Rows.Count > 0)
+                    //{
+                    //    Co.FillDropdownlist(ddldivision, DtDivisionDDL, "FactoryName", "FactoryRefNo");
+                    //    ddldivision.Enabled = false;
+                    //    ddlcomp.Enabled = false;
+                    //    ddldivision.Visible = true;
+                    //    divlblselectunit.Visible = false;
+                    //}
+                    //else
+                    //{
+                    //    ddldivision.Enabled = false;
+                    //}
+                }
+                else if (objCrypto.DecryptData(Request.QueryString["mrcreaterole"].ToString()) == "Unit")
+                {
+                    DtCompanyDDL = Lo.RetriveMasterData(0, objCrypto.DecryptData(Request.QueryString["mcurrentcompRefNo"].ToString()), "Company2", 0, "", "", "CompanyName");
+                    ddlcomp.Enabled = false;
+                    if (DtCompanyDDL.Rows.Count > 0)
+                    {
+                        Co.FillDropdownlist(ddlcomp, DtCompanyDDL, "CompanyName", "CompanyRefNo");
+                    }
+                    DtCompanyDDL = Lo.RetriveMasterData(0, objCrypto.DecryptData(Request.QueryString["mcurrentcompRefNo"].ToString()), "Unit", 0, "", "", "CompanyName");
+                    //DataTable DtDivisionDDL = Lo.RetriveMasterData(0, DtCompanyDDL.Rows[0]["CompanyRefNo"].ToString(), "Factory1", 0, "", "", "CompanyName");
+                    //if (DtDivisionDDL.Rows.Count > 0)
+                    //{
+                    //    Co.FillDropdownlist(ddldivision, DtDivisionDDL, "FactoryName", "FactoryRefNo");
+                    //    divlblselectdivison.Visible = true;
+                    //    ddldivision.Enabled = false;
+                    //    ddlcomp.Enabled = false;
+                    //    ddldivision.Visible = true;
+                    //    DataTable DtUnitDDL = Lo.RetriveMasterData(0, DtDivisionDDL.Rows[0]["FactoryRefNo"].ToString(), "Unit1", 0, "", "", "CompanyName");
+                    //    if (DtUnitDDL.Rows.Count > 0)
+                    //    {
+                    //        Co.FillDropdownlist(ddlunit, DtUnitDDL, "UnitName", "UnitRefNo");
+                    //        ddlunit.Enabled = true;
+                    //        divlblselectunit.Visible = true;
+                    //        ddlunit.Visible = true;
+                    //        ddlunit.Enabled = false;
+                    //    }
+                    //    else
+                    //    {
+                    //        ddlunit.Enabled = false;
+                    //    }
+                    //}
+                    //else
+                    //{
+                    //    ddldivision.Enabled = false;
+                    //}
+                }
+            }
+            else
+            {
+                DtCompanyDDL = Lo.RetriveMasterData(0, "", hidType.Value, 0, "", "", "Select");
+                if (DtCompanyDDL.Rows.Count > 0)
+                {
+                    Co.FillDropdownlist(ddlcomp, DtCompanyDDL, "CompanyName", "CompanyRefNo");
+                    ddlcomp.Items.Insert(0, "Select");
+                    ddlcomp.Enabled = true;
+                    //  divlblselectdivison.Visible = false;
+                    //  divlblselectunit.Visible = false;
+                }
+                else
+                {
+                    ddlcomp.Enabled = false;
+                }
+            }
+        }
+        else if (hidType.Value == "Company")
+        {
+            DtCompanyDDL = Lo.RetriveMasterData(0, hfcomprefno.Value, "Company", 0, "", "", "CompanyName");
+            if (DtCompanyDDL.Rows.Count > 0)
+            {
+                Co.FillDropdownlist(ddlcomp, DtCompanyDDL, "CompanyName", "CompanyRefNo");
+                ddlcomp.Enabled = false;
+                //  ddldivision.Items.Insert(0, "Select");
+                //   divlblselectdivison.Visible = false;
+                //   divlblselectunit.Visible = false;
+
+            }
+            else
+            {
+                ddlcomp.Enabled = false;
+            }
+            //DtCompanyDDL = Lo.RetriveMasterData(0, ddlcomp.SelectedItem.Value, "Factory1", 0, "", "", "CompanyName");
+            //if (DtCompanyDDL.Rows.Count > 0)
+            //{
+            //    Co.FillDropdownlist(ddldivision, DtCompanyDDL, "FactoryName", "FactoryRefNo");
+            //    ddldivision.Items.Insert(0, "Select");
+            //    if (hidType.Value == "Company")
+            //    {
+            //        divlblselectdivison.Visible = true;
+            //        ddldivision.Enabled = true;
+            //        divlblselectunit.Visible = false;
+            //    }
+            //    else
+            //    {
+            //        ddldivision.Enabled = false;
+            //    }
+            //}
+            //else
+            //{
+            //    ddldivision.Enabled = false;
+            //}
+        }
+        else if (hidType.Value == "Factory" || hidType.Value == "Division")
+        {
+            DtCompanyDDL = Lo.RetriveMasterData(0, hfcomprefno.Value, "Company1", 0, "", "", "CompanyName");
+            if (DtCompanyDDL.Rows.Count > 0)
+            {
+                Co.FillDropdownlist(ddlcomp, DtCompanyDDL, "CompanyName", "CompanyRefNo");
+                ddlcomp.Enabled = false;
+            }
+            else
+            {
+                ddlcomp.Enabled = false;
+            }
+            //DtCompanyDDL = Lo.RetriveMasterData(0, ddlcomp.SelectedItem.Value, "Factory1", 0, "", "", "CompanyName");
+            //if (DtCompanyDDL.Rows.Count > 0)
+            //{
+            //    Co.FillDropdownlist(ddldivision, DtCompanyDDL, "FactoryName", "FactoryRefNo");
+            //    DataTable dt = Lo.RetriveMasterData(0, hfcomprefno.Value, "Factory2", 0, "", "", "CompanyName");
+            //    if (dt.Rows.Count > 0)
+            //    {
+            //        ddldivision.SelectedValue = dt.Rows[0]["FactoryRefNo"].ToString();
+            //    }
+            //    ddlunit.Items.Insert(0, "Select");
+            //    divlblselectunit.Visible = false;
+            //    divlblselectdivison.Visible = true;
+            //    ddldivision.Enabled = false;
+            //}
+            //else
+            //{
+            //    ddldivision.Enabled = false;
+            //}
+            //DtCompanyDDL = Lo.RetriveMasterData(0, ddldivision.SelectedItem.Value, "Unit1", 0, "", "", "CompanyName");
+            //if (DtCompanyDDL.Rows.Count > 0)
+            //{
+            //    Co.FillDropdownlist(ddlunit, DtCompanyDDL, "UnitName", "UnitRefNo");
+            //    ddlunit.Items.Insert(0, "Select");
+            //    ddlunit.Enabled = true;
+            //    ddlunit.Visible = true;
+            //    divlblselectunit.Visible = true;
+            //}
+            //else
+            //{
+            //    ddlunit.Items.Insert(0, "Select");
+            //    divlblselectunit.Visible = false;
+            //}
+        }
+        else if (hidType.Value == "Unit")
+        {
+            DtCompanyDDL = Lo.RetriveMasterData(0, hfcomprefno.Value, "Company2", 0, "", "", "CompanyName");
+            if (DtCompanyDDL.Rows.Count > 0)
+            {
+                Co.FillDropdownlist(ddlcomp, DtCompanyDDL, "CompanyName", "CompanyRefNo");
+                ddlcomp.Enabled = false;
+            }
+            else
+            {
+                ddlcomp.Enabled = false;
+            }
+            //DtCompanyDDL = Lo.RetriveMasterData(0, ddlcomp.SelectedItem.Value, "Factory1", 0, "", "", "CompanyName");
+            //if (DtCompanyDDL.Rows.Count > 0)
+            //{
+            //    Co.FillDropdownlist(ddldivision, DtCompanyDDL, "FactoryName", "FactoryRefNo");
+            //    DataTable dt = Lo.RetriveMasterData(0, hfcomprefno.Value, "Factory3", 0, "", "", "CompanyName");
+            //    if (dt.Rows.Count > 0)
+            //    {
+            //        ddldivision.SelectedValue = dt.Rows[0]["FactoryRefNo"].ToString();
+            //    }
+            //    divlblselectdivison.Visible = true;
+            //    ddldivision.Enabled = false;
+            //}
+            //else
+            //{
+            //    ddldivision.Enabled = false;
+            //}
+            //DtCompanyDDL = Lo.RetriveMasterData(0, ddldivision.SelectedItem.Value, "Unit1", 0, "", "", "CompanyName");
+            //if (DtCompanyDDL.Rows.Count > 0)
+            //{
+            //    Co.FillDropdownlist(ddlunit, DtCompanyDDL, "UnitName", "UnitRefNo");
+            //    ddlunit.SelectedValue = hfcomprefno.Value;
+            //    ddlunit.Enabled = false;
+            //    divlblselectunit.Visible = true;
+            //}
+            //else
+            //{
+            //    ddlunit.Enabled = false;
+            //}
+        }
+    }
+
+    protected void ddlcomp_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        SeachResult();
+        //if (ddlcomp.SelectedItem.Text != "Select")
+        //{
+
+        //    DataTable dtorg = Lo.GetUserdatabycompany(ddlcomp.SelectedItem.Text);
+        //    gvcurrentbookings.DataSource = dtorg;
+        //    gvcurrentbookings.DataBind();
+
+        //}
+        //else
+        //{
+        //    ddldiscipline.SelectedItem.Text = "Select";
+        //    GetPendingOrders();
+
+        //}
+    }
+
+    public void GetAllDiscipline()
+    {
+        DataTable dtdiscipline = Lo.GetDiscipline();
+        ddldiscipline.DataSource = dtdiscipline;
+        ddldiscipline.DataTextField = "discipline_name";
+        ddldiscipline.DataBind();
+        ddldiscipline.Items.Insert(0, "Select");
+    }
+
+    public void GridViewTestBind(string mRefNo, string mRole)
+    {
+        BindTest(mRole);
+    }
+
+    protected void BindTest(string compname)
+    {
+        DataTable DtGrid = new DataTable();
+        DtGrid = Lo.Dashboarddatabycompany("SearchingonUserDashboard", "", 0, "");
+        DataView dv = new DataView(DtGrid);
+        if (compname == "organisation_id")
+        {
+            dv.RowFilter = "organisation_id='" + ddlcomp.SelectedItem.Text + "'";
+        }
+        //else if (compname == "Division_id")
+        //{
+        //    dv.RowFilter = "Division_id='" + ddldivision.SelectedItem.Text + "'";
+        //}
+        //else if (compname == "Unit_id")
+        //{
+        //    dv.RowFilter = "Unit_id='" + ddlunit.SelectedItem.Text + "'";
+        //}
+        else if (compname == "discipline")
+        {
+            dv.RowFilter = "discipline='" + ddldiscipline.SelectedItem.Text + "'";
+        }
+        // dv.Sort = "organisation_id asc,Division_id asc";
+        gvcurrentbookings.DataSource = dv.ToTable();
+        gvcurrentbookings.DataBind();
+        gvcurrentbookings.Visible = true;
+        lbltotal.Text = "Total Records:- " + gvcurrentbookings.Rows.Count.ToString();
+        divTotalNumber.Visible = true;
+    }
+
+    protected void ddldiscipline_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        SeachResult();
+        //if (ddldiscipline.SelectedItem.Text != "Select")
+        //{
+        //    DataTable dtdiscipline = Lo.Dashboarddatabycompany("UserSearchingonDiscipline", "", 0, ddldiscipline.SelectedItem.Text);
+        //    gvcurrentbookings.DataSource = dtdiscipline;
+        //    gvcurrentbookings.DataBind();
+        //}
+        //else
+        //{
+        //    ddlcomp.SelectedItem.Text = "Select";
+        //    GetPendingOrders();
+        //}
+    }
+
+    // 24/03/2021
+    #region New SearchFilterCode
+    #region Search Code Filter Code
+    string insert1 = "";
+    protected string Dvinsert(string sortExpression = null)
+    {
+        DataTable insert = new DataTable();
+        insert.Columns.Add(new DataColumn("Column", typeof(string)));
+        insert.Columns.Add(new DataColumn("Value", typeof(string)));
+        DataRow dr;
+        if (ddlcomp.SelectedItem.Text != "Select")
+        {
+            dr = insert.NewRow();
+            dr["Column"] = "organisation_id" + "=";
+            dr["Value"] = "'" + ddlcomp.SelectedItem.Text + "'";
+            insert.Rows.Add(dr);
+            //if (ddlLab.Visible == true && ddlLab.SelectedItem.Text != "Select")
+            //{
+            //    dr = insert.NewRow();
+            //    dr["Column"] = "discipline_id" + "=";
+            //    dr["Value"] = "'" + ddlLab.SelectedItem.Text + "'";
+            //    insert.Rows.Add(dr);
+            //}
+            if (ddldiscipline.Visible == true && ddldiscipline.SelectedItem.Text != "Select")
+            {
+                dr = insert.NewRow();
+                dr["Column"] = "discipline" + "=";
+                dr["Value"] = "'" + ddldiscipline.SelectedItem.Text + "'";
+                insert.Rows.Add(dr);
+            }
+        }
+        for (int i = 0; insert.Rows.Count > i; i++)
+        {
+            insert1 = insert1 + insert.Rows[i]["Column"].ToString() + " " + insert.Rows[i]["Value"].ToString() + " " + " and ";
+        }
+        if (insert1.ToString() != "")
+        {
+            insert1 = insert1.Substring(0, insert1.Length - 5);
+        }
+        return insert1;
+    }
+    protected string BindInsertfilter()
+    {
+        return Dvinsert();
+    }
+
+    DataTable DtFilterView = new DataTable();
+    public void SeachResult(string sortExpression = null)
+    {
+        try
+        {
+            DtFilterView = (DataTable)Session["TempData"];
+            if (DtFilterView.Rows.Count > 0)
+            {
+                DataView dv = new DataView(DtFilterView);
+                DataTable dtnew = dv.ToTable();
+                if (dtnew.Rows.Count > 0)
+                {
+                    dv.RowFilter = BindInsertfilter();
+                    DataTable dtinner = dv.ToTable();
+                    if (dtinner.Rows.Count > 0)
+                    {
+                        gvcurrentbookings.DataSource = dv.ToTable();
+                        gvcurrentbookings.DataBind();
+                        gvcurrentbookings.Visible = true;
+                    }
+                    else
+                    {
+                        ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('No Record Found')", true);
+                        gvcurrentbookings.Visible = false;
+                    }
+                }
+                else
+                {
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('No Record Found')", true);
+                    gvcurrentbookings.Visible = false;
+                }
+            }
+            else
+            {
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('No Record Found')", true);
+                gvcurrentbookings.Visible = false;
+            }
+        }
+        catch (Exception ex)
+        {
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('" + ex.Message + "')", true);
+        }
+    }
+    #endregion
+    #endregion
+}

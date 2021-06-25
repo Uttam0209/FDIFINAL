@@ -1,16 +1,14 @@
-﻿using System;
+﻿using BusinessLayer;
+using Encryption;
+using System;
 using System.Collections.Specialized;
 using System.Data;
 using System.IO;
-using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
-using BusinessLayer;
-using Encryption;
-using System.Net.Security;
+using context = System.Web.HttpContext;
 
 public partial class Vendor_VendorLogin : System.Web.UI.Page
 {
@@ -20,16 +18,30 @@ public partial class Vendor_VendorLogin : System.Web.UI.Page
     Cryptography objEnc = new Cryptography();
     HybridDictionary hyLogin = new HybridDictionary();
     HybridDictionary HySaveVendor = new HybridDictionary();
+    string VName = string.Empty;
     string _msg = string.Empty;
     string Defaultpage = string.Empty;
+    string CompanyName = string.Empty;
     string _sysMsg = string.Empty;
     string notvalidate = string.Empty;
     string _EmpId = string.Empty;
+    string AuthFilePath = string.Empty;
+    string IdentityPath = string.Empty;
+    bool MsgStatus;
     Int64 MId = 0;
-    #endregion
+    #endregion  
     protected void Page_Load(object sender, EventArgs e)
-    { 
-        
+    {
+        if (!IsPostBack)
+        {
+            if (Request.Cookies["User"] != null)
+                txtUserName.Text = Request.Cookies["User"].Value;
+            if (Request.Cookies["pwd"] != null)
+                txtPwd.Attributes.Add("value", Request.Cookies["pwd"].Value);
+            if (Request.Cookies["User"] != null && Request.Cookies["pwd"] != null)
+                remberme.Checked = true;
+            FillCapctha();
+        }
     }
     #region "Login Code"
     public static bool IsValidEmailId(string InputEmail)
@@ -53,86 +65,108 @@ public partial class Vendor_VendorLogin : System.Web.UI.Page
             return true;
         }
     }
-    public bool IsValidMobile(string InputMobile)
-    {
-        string DtEmailValidate = LO.VerifyEmailandCompany(InputMobile, "VPhone", out _msg);
-        if (_msg.ToString() == InputMobile.ToString())
-        {
-            return false;
-        }
-        else
-        {
-            return true;
-        }
-    }
-    protected void ValidateCaptcha(object sender, ServerValidateEventArgs e)
-    {
-        Captcha1.ValidateCaptcha(txtCaptcha.Text.Trim());
-        e.IsValid = Captcha1.UserValidated;
-        if (e.IsValid)
-        {
-        }
-    }
     protected void btnLogin_Click(object sender, EventArgs e)
     {
         try
         {
             if (IsValidEmailId(txtUserName.Text) == true)
             {
-                if (Captcha1.UserValidated == false)
+                if (txtCaptcha.Text != Session["captcha"].ToString())
                 {
                     txtPwd.Text = "";
-                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "ErrorMssgPopup('Invalid Captcha')", true);
+                    lblmsg.Text = "Invalid Captcha.";
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "modelmsg", "showPopup();", true);
                 }
                 else
                 {
                     hyLogin["UserName"] = Co.RSQandSQLInjection(txtUserName.Text.Trim() + "'", "hard" + "'");
-                    hyLogin["Password"] = objEnc.EncryptData(txtPwd.Text.Trim());
-                    _EmpId = LO.VerifyVendorEmployee(hyLogin, out _msg, out Defaultpage);
-                    if (_EmpId != "0" && _EmpId != "1" && _msg != "")
+                    string _VerEmail = LO.VerifyEmailVendor(hyLogin, out _msg, out _sysMsg);
+                    if (_VerEmail != "0" && _VerEmail != "1" && _msg != "0" && _sysMsg != "")
                     {
-                        if (txtPwd.Text == "16VDPIT#")
+                        string HashedPassword = _msg.ToString();
+                        string Salt = _sysMsg.ToString();
+                        byte[] passwordAndSalt = System.Text.Encoding.UTF8.GetBytes(txtPwd.Text + Salt);
+                        byte[] hashPass = new System.Security.Cryptography.SHA256Managed().ComputeHash(passwordAndSalt);
+                        string hashCode = Convert.ToBase64String(hashPass);
+                        if (hashCode == HashedPassword)
                         {
-                            p2.Visible = false;
-                            p1.Visible = false;
-                            P3.Visible = true;
-                            SendEmailOTP(txtUserName.Text);
-                            ScriptManager.RegisterStartupScript(this, this.GetType(), "changePass", "showPopup();", true);
+                            hyLogin["Password"] = _msg.ToString();
+                            string _EmpId = LO.VerifyVendorEmployee(hyLogin, out _msg, out Defaultpage, out CompanyName, out VName);
+                            if (_EmpId != "0" && _EmpId != "1" && _msg != "")
+                            {
+                                Session["VType"] = objEnc.EncryptData(_msg);
+                                Session["VUserEmail"] = objEnc.EncryptData(txtUserName.Text);
+                                Session["VUser"] = objEnc.EncryptData(VName);
+                                Session["VendorRefNo"] = objEnc.EncryptData(_EmpId);
+                                Session["VCompName"] = CompanyName;
+                                string guid = Guid.NewGuid().ToString();
+                                Session["SFToken"] = guid;
+                                Response.Cookies.Add(new HttpCookie("SFToken", guid));
+                                if (remberme.Checked == true)
+                                {
+                                    Response.Cookies["User"].Value = txtUserName.Text;
+                                    Response.Cookies["pwd"].Value = txtPwd.Text;
+                                    Response.Cookies["User"].Expires = DateTime.Now.AddDays(15);
+                                    Response.Cookies["pwd"].Expires = DateTime.Now.AddDays(15);
+                                }
+                                else
+                                {
+                                    Response.Cookies["User"].Expires = DateTime.Now.AddDays(-1);
+                                    Response.Cookies["pwd"].Expires = DateTime.Now.AddDays(-1);
+                                }
+                                hfredirec.Value = Defaultpage.ToString();
+                                timer1.Enabled = true;
+                                lblmsg.ForeColor = System.Drawing.Color.Green;
+                                lblmsg.Text = "Successfully Login.Please wait while we redirect you to HomePage.";
+                                ScriptManager.RegisterStartupScript(this, this.GetType(), "modelmsg", "showPopup();", true);
+                            }
+                            else
+                            {
+                                FillCapctha();
+                                lblmsg.Text = "Invalid Login. Either user id or password or both are incorrect.";
+                                ScriptManager.RegisterStartupScript(this, this.GetType(), "modelmsg", "showPopup();", true);
+                            }
                         }
                         else
                         {
-                            Session["Type"] = objEnc.EncryptData(_msg);
-                            Session["User"] = objEnc.EncryptData(txtUserName.Text);
-                            Session["VendorRefNo"] = objEnc.EncryptData(_EmpId);
-                            Response.RedirectToRoute(Defaultpage);
+                            FillCapctha();
+                            lblmsg.Text = "Invalid Password.";
+                            ScriptManager.RegisterStartupScript(this, this.GetType(), "modelmsg", "showPopup();", true);
                         }
                     }
                     else
                     {
-                        ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Invalid Login. Either user id or password or both are incorrect.');", true);
+                        FillCapctha();
+                        lblmsg.Text = "Invalid User.";
+                        ScriptManager.RegisterStartupScript(this, this.GetType(), "modelmsg", "showPopup();", true);
                     }
                 }
             }
             else
             {
-                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Invalid email format.');", true);
+                lblmsg.Text = "Invalid email format.";
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "modelmsg", "showPopup();", true);
             }
         }
         catch (Exception ex)
         {
-            Response.RedirectToRoute("login");
+            lblmsg.Text = ex.Message;
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "modelmsg", "showPopup();", true);
         }
     }
-    #endregion
-    #region Forgot Password"
-    protected void lblforgotpass_Click(object sender, EventArgs e)
+    protected void timer1_Tick(object sender, EventArgs e)
     {
+        timer1.Enabled = false;
+        Response.Redirect(hfredirec.Value);
+    }
+    #endregion
+    #region Forgot Password" 
+    protected void lbforgot_Click(object sender, EventArgs e)
+    {
+        am.Visible = false;
+        lbmsgforgot.Text = "";
         txtforgotemailid.Text = "";
-        p2.Visible = false;
-        p1.Visible = true;
-        divregistration.Visible = false;
-        P3.Visible = false;
-        ScriptManager.RegisterStartupScript(this, this.GetType(), "changePass", "showPopup();", true);
+        ScriptManager.RegisterStartupScript(this, this.GetType(), "exampleModal", "showPopup1();", true);
     }
     protected void btnsendmail_Click(object sender, EventArgs e)
     {
@@ -147,15 +181,20 @@ public partial class Vendor_VendorLogin : System.Web.UI.Page
                     {
                         string EmpCode = DtSendMailForgotpassword.Rows[0]["VendorRefNo"].ToString();
                         SendEmailCode(EmpCode);
+                        txtforgotemailid.Text = "";
+                        am.Visible = true;
+                        lbmsgforgot.Text = "A reset password mail send to your registerd mail id successfully.Please click on given link and update your password.";
                     }
                     else
                     {
-                        ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Email id not registerd with us.');", true);
+                        am.Visible = true;
+                        lbmsgforgot.Text = "Email-Id not registerd with us.";
                     }
                 }
                 else
                 {
-                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Invalid email format.');", true);
+                    am.Visible = true;
+                    lbmsgforgot.Text = "Invalid Email-Id format.";
                 }
             }
         }
@@ -180,37 +219,12 @@ public partial class Vendor_VendorLogin : System.Web.UI.Page
             SendMail s;
             s = new SendMail();
             s.CreateMail("noreply-srijandefence@gov.in", txtforgotemailid.Text, "Forgot Password Recover Mail", body);
-            s.sendMail();
-            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Email send to your registerd email id successfully.');", true);
+            // s.sendMail();
+            s.sendMail("smtp.gmail.com", 587, "noreply.gipinfosystems@gmail.com", "Gip@1234##");
         }
         catch (Exception ex)
         {
-            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('" + ex.Message + "')", true);
         }
-
-    }
-    public void SendEmailCodeRegis(string empid)
-    {
-        try
-        {
-            string body;
-            using (StreamReader reader = new StreamReader(Server.MapPath("~/emailPage/VenRegisOrPassGenerateLink.html")))
-            {
-                body = reader.ReadToEnd();
-            }
-            body = body.Replace("{UserName}", txtnodelemail.Text);
-            body = body.Replace("{refno}", HttpUtility.UrlEncode(objEnc.EncryptData(empid)));
-            body = body.Replace("{mcurid}", Resturl(56));
-            SendMail s;
-            s = new SendMail();
-            s.CreateMail("noreply-srijandefence@gov.in", txtnodelemail.Text, "Create Password Email", body);
-            s.sendMail();
-        }
-        catch (Exception ex)
-        {
-            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('" + ex.Message + "')", true);
-        }
-
     }
     #endregion
     #region ReturnUrl Long"
@@ -225,360 +239,73 @@ public partial class Vendor_VendorLogin : System.Web.UI.Page
         }
         return res.ToString();
     }
-    #endregion
-    #region Change Password Code
-    protected void btnsubmitpassword_Click(object sender, EventArgs e)
-    {
-        if (txtoldpass.Text != "" && txtnewpass.Text != "" && txtreppass.Text != "")
-        {
-            if (txtnewpass.Text == txtreppass.Text)
-            {
-                string UpdatePassword = LO.UpdateLoginPassword(objEnc.EncryptData(txtnewpass.Text), objEnc.EncryptData(txtoldpass.Text), txtUserName.Text, "LoginOldVendor", "", "");
-                if (UpdatePassword == "true")
-                {
-                    ScriptManager.RegisterStartupScript(this, this.GetType(), "alert", "alert('Password Change Successfully.Please Login again');window.location ='VendorLogin';", true);
-                }
-                else
-                {
-                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Password not changes')", true);
-                }
-            }
-            else
-            {
-                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Password not match')", true);
-            }
-        }
-        else
-        {
-            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('All field fill mandatory')", true);
-        }
-    }
-    protected void cleartext()
-    {
-        txtnewpass.Text = "";
-        txtoldpass.Text = "";
-        txtreppass.Text = "";
-    }
-    #endregion
-    #region PanCard Verification Code
-    protected void ddlpan_SelectedIndexChanged(object sender, EventArgs e)
-    {
-        if (ddlpan.SelectedItem.Text == "YES")
-        { divpan.Visible = true; }
-        else
-        { divpan.Visible = false; }
-    }
-    public Boolean AcceptAllCertifications(Object sender, System.Security.Cryptography.X509Certificates.X509Certificate certification, System.Security.Cryptography.X509Certificates.X509Chain chain, System.Net.Security.SslPolicyErrors sslPolicyErrors)
-    {
-        return true;
-    }
-    protected void PanVerification()
+    #endregion   
+    #region Captchs Code
+    void FillCapctha()
     {
         try
         {
-            string requestUristring = string.Format("http://maketheindia.in/Pan-Verification?pancardNO=V0224301^" + txtpanno.Text);
-            ServicePointManager.ServerCertificateValidationCallback = new RemoteCertificateValidationCallback(AcceptAllCertifications);
-            HttpWebRequest myReq = (HttpWebRequest)WebRequest.Create(requestUristring);
-            HttpWebResponse myResp = (HttpWebResponse)myReq.GetResponse();
-            System.IO.StreamReader respStreamReader = new System.IO.StreamReader(myResp.GetResponseStream());
-            string responseString = respStreamReader.ReadToEnd();
-            string str = responseString.ToString();
-            char[] deli = { '^' };
-            string[] split = str.Split(deli);
-            string A = split[0];
-            if (A.Substring(13) == "1")
-            {
-                string B = split[1];
-                string C = split[3];
-                string D = split[4];
-                string E = split[6];
-                string F = split[7];
-                string G = split[8];
-                string H = split[10];
-                if (split[4].ToString() == "")
-                {
-                    hfpanname.Value = split[3].ToString();
-                }
-                else
-                {
-                    hfpanname.Value = split[4] + " " + split[3].ToString();
-                }
-                panverifi.Attributes.Add("Class", "fa fa-check");
-                lblmsgpan.ForeColor = System.Drawing.Color.Green;
-                lblmsgpan.Text = "Valid Pan";
-                lblmsgpan.Visible = true;
-            }
-            else
-            {
-                panverifi.Attributes.Add("Class", "fa fa-times");
-                lblmsgpan.ForeColor = System.Drawing.Color.Red;
-                lblmsgpan.Text = "Invalid Pan";
-                lblmsgpan.Visible = true;
-            }
+            Random random = new Random();
+            string combination = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+            StringBuilder captcha = new StringBuilder();
+            for (int i = 0; i < 6; i++)
+                captcha.Append(combination[random.Next(combination.Length)]);
+            Session["captcha"] = captcha.ToString();
+            imgCaptcha.ImageUrl = "~/GenerateCaptcha.aspx?" + DateTime.Now.Ticks.ToString();
         }
-        catch (Exception ex)
+        catch
         {
-            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('" + ex.Message.ToString() + "')", true);
-        }
-    }
-    protected void txtpanno_TextChanged(object sender, EventArgs e)
-    {
-        try
-        {
-            PanVerification();
-        }
-        catch (Exception ex)
-        {
-            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('" + ex.Message.ToString() + "')", true);
-        }
-    }
-    #endregion
-    #region Registration Code
-    protected void binddpsu()
-    {
-        DataTable DtCompanyDDL = LO.RetriveMasterData(0, "", "Company", 0, "", "", "Select");
-        if (DtCompanyDDL.Rows.Count > 0)
-        {
-            Co.FillCheckBox(chkdpsu, DtCompanyDDL, "CompanyName", "CompanyName");
-        }
-    }
-    protected void lblresendotp_Click(object sender, EventArgs e)
-    {
-        SendEmailOTP(txtUserName.Text);
-        lblmssg.Text = "OTP Resend Successfully.";
-        lblresendotp.Enabled = false;
-    }
-    public void SendEmailOTP(string empid)
-    {
-        try
-        {
-            string body;
-            using (StreamReader reader = new StreamReader(Server.MapPath("~/emailPage/OTP.html")))
-            {
-                body = reader.ReadToEnd();
-            }
-            ViewState["mOTPKey"] = Resturl(6);
-            body = body.Replace("{OTP}", ViewState["mOTPKey"].ToString());
-            SendMail s;
-            s = new SendMail();
-            s.CreateMail("noreply-srijandefence@gov.in", txtUserName.Text, "Vendor Login OTP", body);
-            s.sendMail();
-            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('OTP send Successfully.');", true);
-        }
-        catch (Exception ex)
-        {
-            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('" + ex.Message + "')", true);
-        }
 
-    }
-    protected void lbsubotp_Click(object sender, EventArgs e)
-    {
-        if (txtOTP.Text == ViewState["mOTPKey"].ToString())
-        {
-            p2.Visible = true;
-            p1.Visible = false;
-            P3.Visible = false;
-            divregistration.Visible = false;
-            ViewState["mOTPKey"] = null;
-        }
-        else
-        { ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Invalid OTP')", true); }
-    }
-    protected void lbvenregis_Click(object sender, EventArgs e)
-    {
-        p2.Visible = false;
-        p1.Visible = false;
-        divregistration.Visible = true;
-        P3.Visible = false;
-        binddpsu();
-        BindTypeOfBusiness();
-        Bindbusinesssector();
-        ScriptManager.RegisterStartupScript(this, this.GetType(), "changePass", "showPopup();", true);
-    }
-    protected void BindTypeOfBusiness()
-    {
-        DataTable DtMasterCategroyBusiness = LO.RetriveMasterData(1, "", "", 0, "", "", "TypeofBusiness");
-        if (DtMasterCategroyBusiness.Rows.Count > 0)
-        {
-            Co.FillDropdownlist(ddltypeofbusiness, DtMasterCategroyBusiness, "VendorSubCatName", "VendorSubCatID");
-            ddltypeofbusiness.Items.Insert(0, "Select");
+            throw;
         }
     }
-    protected void Bindbusinesssector()
+    protected void btnCaptchaNew_Click(object sender, EventArgs e)
     {
-        DataTable DtMasterCategroyBusiness = LO.RetriveMasterData(2, "", "", 0, "", "", "BuisnessSector");
-        if (DtMasterCategroyBusiness.Rows.Count > 0)
-        {
-            Co.FillDropdownlist(ddlbusinesssector, DtMasterCategroyBusiness, "VendorSubCatName", "VendorSubCatID");
-            ddlbusinesssector.Items.Insert(0, "Select");
-        }
-    }
-    protected void txtbusinessname_TextChanged(object sender, EventArgs e)
-    {
-        if (hfpanname.Value == txtbusinessname.Text && lblmsgpan.Text == "Valid Pan")
-        {
-            lblbusinessname.Text = "";
-            check.Attributes.Add("Class", "fa fa-check");
-            lblbusinessname.Text = "Valid Company.";
-            lblbusinessname.Visible = true;
-            lblbusinessname.ForeColor = System.Drawing.Color.Green;
-        }
-        else
-        {
-            if (lblmsgpan.Text == "Valid Pan")
-            {
-                txtbusinessname.Text = hfpanname.Value;
-                check.Attributes.Add("Class", "fa fa-check");
-                lblbusinessname.Text = "Valid Company.";
-                lblbusinessname.Visible = true;
-                lblbusinessname.ForeColor = System.Drawing.Color.Green;
-            }
-            else
-            {
-                lblbusinessname.Text = "Invalid Company.";
-                check.Attributes.Add("Class", "fa fa-times");
-                lblbusinessname.ForeColor = System.Drawing.Color.Red;
-            }
-        }
-    }
-    protected void clearregistrationtext()
-    {
-        ddlpan.SelectedIndex = -1;
-        ddlregiscategory.SelectedIndex = -1;
-        txtpanno.Text = "";
-        txtbusinessname.Text = "";
-        ddltypeofbusiness.SelectedIndex = -1;
-        ddlbusinesssector.SelectedIndex = -1;
-        txtnodalname.Text = "";
-        txtnodelemail.Text = "";
-        txtMobileNodal.Text = "";
-        txtstreetaddress.Text = "";
-        txtstreetaddressline2.Text = "";
-        txtcity.Text = "";
-        txtstateprovince.Text = "";
-        txtpostalzipcode.Text = "";
-        // ddlcountry.SelectedIndex = -1;
-        ddlwoundedup.SelectedIndex = -1;
-        ddljudicialofficer.SelectedIndex = -1;
-        ddlbusinesssuspended.SelectedIndex = -1;
-        ddlforgingreasone.SelectedIndex = -1;
-        ddldebarredgovtcont.SelectedIndex = -1;
-        chkbuisness.SelectedIndex = -1;
-        lblbusinessname.Text = "";
-        lblmsgpan.Text = "";
-        hfpanname.Value = "";
-    }
-    string mdpsuid;
-    protected void SaveCode()
-    {
-        HySaveVendor["VendorID"] = MId;
-        HySaveVendor["PanNo"] = txtpanno.Text;
-        HySaveVendor["GSTNo"] = "";// txtgstno.Text.Trim();
-        HySaveVendor["V_CompName"] = txtbusinessname.Text.Trim();
-        foreach (ListItem lie in chkdpsu.Items)
-        {
-            if (lie.Selected == true)
-            {
-                mdpsuid = mdpsuid + lie.Value + ",";
-            }
-        }
-        HySaveVendor["V_RegisterdDPSU"] = mdpsuid.ToString().TrimEnd(',');
-        HySaveVendor["RegistrationCategory"] = ddlregiscategory.SelectedItem.Text;
-        HySaveVendor["TypeOfBuisness"] = ddltypeofbusiness.SelectedItem.Value;
-        HySaveVendor["BusinessSector"] = ddlbusinesssector.SelectedItem.Value;
-        HySaveVendor["NodalOfficerName"] = txtnodalname.Text.Trim();
-        HySaveVendor["NodalOfficerEmail"] = txtnodelemail.Text.Trim();
-        HySaveVendor["ContactNo"] = txtMobileNodal.Text.Trim();
-        HySaveVendor["StreetAddress"] = txtstreetaddress.Text.Trim();
-        HySaveVendor["StreetAddressLine2"] = txtstreetaddressline2.Text.Trim();
-        HySaveVendor["City"] = txtcity.Text.Trim();
-        HySaveVendor["State"] = txtstateprovince.Text.Trim();
-        HySaveVendor["ZipCode"] = txtpostalzipcode.Text.Trim();
-        //HySaveVendor["Country"] = ddlcountry.SelectedItem.Value;
-        HySaveVendor["CheckStatus"] = ddlwoundedup.SelectedItem.Text + "," + ddljudicialofficer.SelectedItem.Text + "," + ddlbusinesssuspended.SelectedItem.Text + "," + ddlforgingreasone.SelectedItem.Text + "," + ddldebarredgovtcont.SelectedItem.Text;
-        string str = LO.SaveVendorRegis(HySaveVendor, out _sysMsg, out _msg);
-        if (str != "")
-        {
-            SendEmailCodeRegis(str);
-            clearregistrationtext();
-            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record save successfully.Password releted mail send to your registerd email id.')", true);
-            ScriptManager.RegisterStartupScript(this, this.GetType(), "HidePopup", "$('#changePass').modal('hide')", true);
-        }
-        else
-        {
-            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not save successfully.')", true);
-        }
-    }
-    protected void btnsubmit_Click(object sender, EventArgs e)
-    {
-        try
-        {
-            if (txtnodalname.Text != "" && txtnodelemail.Text != "")
-            {
-                if (lblmsgpan.Text != "Invalid Pan" && lblbusinessname.Text == "Valid Company.")
-                 {
-                if (ddlwoundedup.SelectedValue != "0" && ddljudicialofficer.SelectedValue != "0" && ddlbusinesssuspended.SelectedValue != "0" && ddlforgingreasone.SelectedValue != "0" && ddldebarredgovtcont.SelectedValue != "0")
-                {
-                    if (IsValidEmailId(txtnodelemail.Text))
-                    {
-                        if (IsValidEmailRegister(txtnodelemail.Text))
-                        {
-                            if (IsValidEmailRegister(txtnodelemail.Text))
-                            {
-                                foreach (ListItem lie in chkdpsu.Items)
-                                {
-                                    if (lie.Selected == true)
-                                    {
-                                        mdpsuid = mdpsuid + lie.Value + ",";
-                                    }
-                                }
-                                if (mdpsuid.ToString() != "")
-                                {
-                                    SaveCode();
-                                }
-                                else
-                                {
-                                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Check alteast one dpsu.')", true);
-                                }
-                            }
-                            else
-                            {
-                                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Mobile already registerd.')", true);
-                            }
-                        }
-                        else
-                        {
-                            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Email already registerd')", true);
-                        }
-                    }
-                    else
-                    {
-                        ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Email format not valid')", true);
-                    }
-                }
-                else
-                {
-                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Please select term and condition')", true);
-                }
-                }
-                else
-                {
-                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "ErrorMssgPopup('Invalid pan or company name')", true);
-                }
-            }
-            else
-            {
-                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Please fill mandatory field')", true);
-            }
-        }
-        catch (Exception ex)
-        {
-            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('" + ex.Message.ToString() + "')", true);
-        }
-    }
-    protected void btnclear_Click(object sender, EventArgs e)
-    {
-        clearregistrationtext();
+        FillCapctha();
     }
     #endregion
+    #region TryCatchLog
+    public static class ExceptionLogging
+    {
+        private static String ErrorlineNo, Errormsg, extype, exurl, hostIp, ErrorLocation, HostAdd;
+        public static void SendErrorToText(Exception ex)
+        {
+            var line = Environment.NewLine + Environment.NewLine;
+            ErrorlineNo = ex.StackTrace.Substring(ex.StackTrace.Length - 7, 7);
+            Errormsg = ex.GetType().Name.ToString();
+            extype = ex.GetType().ToString();
+            exurl = context.Current.Request.Url.ToString();
+            ErrorLocation = ex.Message.ToString();
+            try
+            {
+                string filepath = context.Current.Server.MapPath("/Logs/");  //Text File Path
+                if (!Directory.Exists(filepath))
+                {
+                    Directory.CreateDirectory(filepath);
+                }
+                filepath = filepath + DateTime.Today.ToString("dd-MM-yy") + ".txt";   //Text File Name
+                if (!File.Exists(filepath))
+                {
+                    File.Create(filepath).Dispose();
+                }
+                using (StreamWriter sw = File.AppendText(filepath))
+                {
+                    string error = "Log Written Date:" + " " + DateTime.Now.ToString() + line + "Error Line No :" + " " + ErrorlineNo + line + "Error Message:" + " " + Errormsg + line + "Exception Type:" + " " + extype + line + "Error Location :" + " " + ErrorLocation + line + " Error Page Url:" + " " + exurl + line + "User Host IP:" + " " + hostIp + line;
+                    sw.WriteLine("-----------Exception Details on " + " " + DateTime.Now.ToString() + "-----------------");
+                    sw.WriteLine("-------------------------------------------------------------------------------------");
+                    sw.WriteLine(line);
+                    sw.WriteLine(error);
+                    sw.WriteLine("--------------------------------*End*------------------------------------------");
+                    sw.WriteLine(line);
+                    sw.Flush();
+                    sw.Close();
+                }
+            }
+            catch (Exception exm)
+            {
+                exm.Message.ToString();
+            }
+        }
+    }
+    #endregion   
 }

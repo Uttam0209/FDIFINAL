@@ -137,7 +137,7 @@ public partial class Admin_ProductApprovedDisApproved : System.Web.UI.Page
                         {
                             pgsource.DataSource = dtads.DefaultView;
                             pgsource.AllowPaging = true;
-                            pgsource.PageSize = 100;
+                            pgsource.PageSize = 25;
                             pgsource.CurrentPageIndex = pagingCurrentPage;
                             ViewState["totpage"] = pgsource.PageCount;
                             lblpaging.Text = "Page " + (pagingCurrentPage + 1) + " of " + pgsource.PageCount;
@@ -403,11 +403,12 @@ public partial class Admin_ProductApprovedDisApproved : System.Web.UI.Page
                         if (DTporCat.Rows.Count > 0)
                         {
                             lblindicate.Text = "";
-                            for (int i = 0; DTporCat.Rows.Count > i; i++)
-                            {
-                                lblindicate.Text = lblindicate.Text + DTporCat.Rows[i]["SCategoryName"].ToString() + ", ";
-                            }
-                            lblindicate.Text = lblindicate.Text.Substring(0, lblindicate.Text.Length - 2);
+                            lblindicate.Text = DTporCat.Rows[0]["SCategoryName"].ToString();
+                            //for (int i = 0; DTporCat.Rows.Count > i; i++)
+                            //{
+                            //    lblindicate.Text = lblindicate.Text + DTporCat.Rows[i]["SCategoryName"].ToString() + ", ";
+                            //}
+                            //lblindicate.Text = lblindicate.Text.Substring(0, lblindicate.Text.Length - 2);
                             sixteen.Visible = true;
                         }
                         else

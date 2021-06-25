@@ -1,0 +1,917 @@
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="S_Story.aspx.cs" Inherits="User_S_Story" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head id="Head1" runat="server">
+    <title>Success Story</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="~/User/Uassets/css/bootstrap.min.css" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css">
+
+    <!-----------------------------------------------------------------------For DataTable-------------------------->
+    <link href="DataTable/bootstrap.min.css" rel="stylesheet" />
+    <link href="DataTable/dataTables.bootstrap4.min.css" rel="stylesheet" />
+    <link href="DataTable/buttons.bootstrap4.css" rel="stylesheet" />
+    <style>
+        .dt-buttons {
+            display: block !important;
+        }
+
+        * {
+            margin: 0px;
+            padding: 0px;
+            box-sizing: border-box;
+        }
+
+        #table1 {
+            font-size: 12px !important;
+            font-weight: bold !important;
+        }
+
+            #table1 th {
+                background-color: black !important;
+                color: white !important;
+            }
+
+        .menu_ {
+            border-right: 2px solid white;
+            padding-right: 12px;
+            color: white !important;
+            margin-right: 12px !important;
+        }
+
+        #menu a {
+            text-decoration: none !important;
+        }
+
+        #menu {
+            text-align: right !important;
+        }
+
+        #gvshownproduct_wrapper button {
+            color: white !important;
+        }
+
+        #gvshownproduct th {
+            color: white;
+        }
+
+        #gvshownproduct_filter {
+            margin-top: -40px;
+        }
+    </style>
+</head>
+<body>
+    <form id="form1" runat="server">
+        <asp:ScriptManager runat="server" ID="sc"></asp:ScriptManager>
+        <asp:UpdatePanel runat="server" ID="up">
+            <ContentTemplate>
+                <div class="container-fluid py-2">
+                    <div class="row">
+                        <div class="col-sm-2 col-3 nr-auto">
+                            <img src="user/ddp_logo.png" alt="" class="img-fluid" />
+                        </div>
+                        <div class="col-md-10 topheadline text-center col-9 my-3">
+                            <h2 style="color: #6915cf;">OPPORTUNITIES FOR MAKE IN INDIA IN DEFENCE</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="container-fluid bg-dark py-md-4" style="background: #373f50!important;">
+
+                    <div class="row py-5">
+                        <div class="col-md-3">
+                            <h1 class="h3 text-light mx-md-3">Progress Report</h1>
+                        </div>
+                        <div id="menu" class="col-md-9">
+                            <b><a href="https://www.makeinindiadefence.gov.in/" target="_blank" class="menu_">Make In India Defence Portal </a></b>
+                            <b><a href="#aboutus-modal" class="menu_" data-toggle="modal">About us </a></b>
+                            <b><a href="~/Login" id="linklogin" runat="server" class="menu_" visible="false">DPSU Login</a> </b>
+
+                            <b>
+                                <asp:Label ID="linkusername" runat="server" class="menu_" Visible="false" ToolTip="Login UserName"></asp:Label></b>
+                            <b><a href="~/ProductList" id="lbmarket" runat="server" class="menu_" visible="false">Market Place</a></b>
+                            <b><a href="~/Dashboard" id="lblmis" runat="server" class="menu_" visible="false" data-toggle="tooltip"
+                                tooltip="DPSU's Dashboard Page Link (Click here to go back dashboard for add product)">MIS</a></b>
+                            <b><a href="~/DPSUHome" id="lbdpsuhome" runat="server" class="menu_" visible="false">Intrest Shown</a></b>
+                            <b><a href="~/EOIStatus" id="lbeoistatus" runat="server" class="menu_" visible="false">EOI Status</a></b>
+                            <b><a href="~/ProgressReport" id="lbProgressReport" runat="server" class="menu_" visible="false">Progress Report</a></b>
+                            <b><a href="~/SuccessStory" id="lbSuccesstory" runat="server" class="menu_" visible="false">Success Story</a></b>
+
+                            <b><a href="FAQs" class="menu_">FAQ</a></b>
+                            <b>
+                                <asp:LinkButton runat="server" ID="lbllogout" Visible="false" Class="menu_" OnClick="lbllogout_Click">&nbsp;Log Out</asp:LinkButton></b>
+                        </div>
+                    </div>
+                </div>
+                <div class="container-fluid my-3">
+                    <div class="row ">
+                        <div class="col-md-6 bg-dark p-2 text-white" style="background: #373f50!important; margin-left: 150px;">
+                            <h5>
+                                <asp:HiddenField runat="server" ID="hfType" />
+                                <asp:HiddenField runat="server" ID="hfCompRefNo" />
+                                Total Products :&nbsp;&nbsp;<asp:Label ID="lblNoOfProducts" runat="server"></asp:Label></h5>
+                        </div>
+                        <div class="col-md-4 bg-dark p-2 text-white" style="background: #373f50!important;">
+                            <h5>Interest Shown :&nbsp;&nbsp;                                   
+                                <asp:Label ID="lblinterest" runat="server"></asp:Label></h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-10 mx-auto md-auto">
+                        <asp:GridView ID="gvshownproduct" runat="server" AutoGenerateColumns="False" CssClass="table table-striped table-bordered  text-center "
+                            OnRowDataBound="gvshownproduct_RowDataBound" OnRowCreated="gvshownproduct_RowCreated" OnRowCommand="gvshownproduct_RowCommand" CellPadding="4" ForeColor="#333333" GridLines="None">
+                            <AlternatingRowStyle BackColor="White" ForeColor="#284775" />
+                            <Columns>
+                                <asp:TemplateField HeaderText="Sr.No">
+                                    <ItemTemplate>
+                                        <%#Container.DataItemIndex+1 %>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Date">
+                                    <ItemTemplate>
+                                        <asp:Label runat="server" ID="lbldate"></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Company Name">
+                                    <ItemTemplate>
+                                        <%# Eval("CompanyName") %>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Item Code">
+                                    <ItemTemplate>
+                                        <asp:LinkButton ID="Label1" runat="server" Text='<%# Eval("ProductRefNo") %>'
+                                            CommandName="Product" CommandArgument='<%# Eval("ProductRefNo") %>'>
+                                        </asp:LinkButton>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Vendor Name">
+                                    <ItemTemplate>
+                                        <asp:Label runat="server" ID="lblvendername"></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="No Of Intrest">
+                                    <ItemTemplate>
+                                        <%# Eval("Total") %>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="EOI">
+                                    <ItemTemplate>
+                                        <asp:LinkButton runat="server" ID="EOI" CommandArgument='<%#Eval("ProductRefNo") %>'
+                                            CommandName="EOI" Text="Yes"></asp:LinkButton>
+                                        <asp:HiddenField runat="server" ID="hfeoiurl" Value="" />
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Supply Order">
+                                    <ItemTemplate>
+                                        No
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Success Story">
+                                    <ItemTemplate>
+                                        No
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                            </Columns>
+                            <EditRowStyle BackColor="#999999" />
+                            <FooterStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" />
+                            <HeaderStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" />
+                            <PagerStyle BackColor="#284775" ForeColor="White" HorizontalAlign="Center" />
+                            <RowStyle BackColor="#F7F6F3" ForeColor="#333333" />
+                            <SelectedRowStyle BackColor="#E2DED6" Font-Bold="True" ForeColor="#333333" />
+                            <SortedAscendingCellStyle BackColor="#E9E7E2" />
+                            <SortedAscendingHeaderStyle BackColor="#506C8C" />
+                            <SortedDescendingCellStyle BackColor="#FFFDF8" />
+                            <SortedDescendingHeaderStyle BackColor="#6F8DAE" />
+                        </asp:GridView>
+                    </div>
+                </div>
+                <div class="container-fluid footer1 bg-dark text-white text-center" style="margin-top: 5px;">
+                    <div class="container p-2">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <p>
+                                    ©2020 www.srijandefence.gov.in | All Right Reserved. Department of Defence Production | Designed, Developed and Hosted by Department of Defence Production<p>
+                                        <p></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal fade" id="divstatus" role="dialog">
+                    <div class="modal-dialog" style="max-width: 400px;">
+                        <div class="modal-content">
+                            <div runat="server" id="Div15">
+                                <div class="modal-header modal-header1">
+                                    <h6 class="modal-title text-center">Status
+                                    </h6>
+                                </div>
+                                <div class="modal-body" style="text-align: center;">
+                                    <b><span style="text-align: center;">Please note we are using dummy data here.</span></b>
+                                    <p>Start Date:- 1-01-2020</p>
+                                    <p>EndDate:- 1-01-2020</p>
+                                    <p>
+                                        Link:-
+                                       
+                                       <asp:HyperLink runat="server" ID="mhylink" Target="_blank"></asp:HyperLink>
+
+                                    </p>
+                                </div>
+                                <button class="btn btn-info m-1" style="float: right;" data-dismiss="modal" type="button">
+                                    Close
+                               
+                                </button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-quick-view modal fade" id="ProductCompany1" tabindex="-1">
+                    <div class="modal-dialog modal-xl" style="max-width: 900px!important; z-index: 9999999999;">
+                        <div class="modal-content">
+                            <div class="modal-header modelhead">
+                                <h4 class="modal-title product-title" style="font-size: 25px;">Import Item Details
+                                </h4>
+                                <button class="close" style="padding-right: 45px;" type="button" data-dismiss="modal"
+                                    aria-label="Close">
+                                    <span aria-hidden="true">&times;</span></button>
+                            </div>
+                            <div class="modal-body" style="padding: 20px 40px 18px 40px;">
+                                <div class="simplebar-content">
+                                    <!-- Categories-->
+                                    <div class="widget widget-categories mb-4">
+                                        <div class="accordion mt-n1" id="shop-categories">
+                                            <div id="printarea">
+                                                <div class="card" style="border-bottom: solid 1.4px #e5e5e5!important;">
+                                                    <div class="card-header">
+                                                        <h3 class="accordion-heading mb-2">
+                                                            <a class="collapsed" href="#shoes" role="button" data-toggle="collapse" aria-expanded="false"
+                                                                aria-controls="shoes">Item Description <span class="accordion-indicator iconupanddown">
+                                                                    <i class="fas fa-chevron-up"></i></span></a>
+                                                        </h3>
+                                                    </div>
+                                                    <div class="collapse" id="shoes" data-parent="#shop-categories">
+                                                        <div class="card-body card-custom ">
+                                                            <h6 class="tablemidhead">DPSUs,OFB & SHQs Details</h6>
+                                                            <table class="table mb-2">
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <th scope="row">DPSU/OFB/SHQ:
+                                                                        </th>
+                                                                        <td>
+                                                                            <asp:Label ID="lblcompname" runat="server" Text=""></asp:Label>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr runat="server" id="one">
+                                                                        <th scope="row">Division/Plant:
+                                                                        </th>
+                                                                        <td>
+                                                                            <asp:Label ID="lbldiviname" runat="server" Text=""></asp:Label>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr runat="server" id="two">
+                                                                        <th scope="row">Unit:
+                                                                        </th>
+                                                                        <td>
+                                                                            <asp:Label ID="lblunitnamepro" runat="server" Text=""></asp:Label>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                            <h6 class="tablemidhead">Item Description</h6>
+                                                            <table class="table mb-2">
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <th scope="row">Item Id (Portal)
+                                                                        </th>
+                                                                        <td>
+                                                                            <asp:Label ID="lblrefnoview" runat="server" Text=""></asp:Label>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr runat="server" id="Tr23" style="color: blue;">
+                                                                        <th>Item Name</th>
+                                                                        <td>
+                                                                            <asp:Label ID="lblitemname1" runat="server" Text=""></asp:Label>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr runat="server" id="three">
+                                                                        <th scope="row">DPSU Part Number
+                                                                        </th>
+                                                                        <td>
+                                                                            <asp:Label ID="lbldpsupartno" runat="server" Text=""></asp:Label>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr runat="server" id="Tr8">
+                                                                        <th scope="row">NIN Code
+                                                                        </th>
+                                                                        <td>
+                                                                            <asp:Label ID="lblnincode" runat="server" Text=""></asp:Label>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr runat="server" id="four">
+                                                                        <th scope="row">HSN Code
+                                                                        </th>
+                                                                        <td>
+                                                                            <asp:Label ID="lblhsncode8digit" runat="server" Text=""></asp:Label>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th scope="row">Industry Domain
+                                                                        </th>
+                                                                        <td>
+                                                                            <asp:Label ID="prodIndustryDomain" runat="server" Text=""></asp:Label>
+                                                                            /
+                                                                       
+                                                                           
+
+                                                                            <asp:Label ID="ProdIndusSubDomain" runat="server" Text=""></asp:Label>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td colspan="2">
+                                                                            <h6 class="tablemidhead">OEM Details</h6>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr runat="server" id="seven">
+                                                                        <th scope="row">OEM Name
+                                                                        </th>
+                                                                        <td>
+                                                                            <asp:Label ID="lbloemname" runat="server" Text=""></asp:Label>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr runat="server" id="eight">
+                                                                        <th scope="row">OEM Part Number
+                                                                        </th>
+                                                                        <td>
+                                                                            <asp:Label ID="lbloempartno" runat="server" Text=""></asp:Label>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr runat="server" id="nine">
+                                                                        <th scope="row">OEM Country
+                                                                        </th>
+                                                                        <td>
+                                                                            <asp:Label ID="lbloemcountry" runat="server" Text=""></asp:Label>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr runat="server" id="twentyfive">
+                                                                        <th scope="row">OEM Address
+                                                                        </th>
+                                                                        <td>
+                                                                            <asp:Label ID="lbloemaddress" runat="server" Text=""></asp:Label>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td colspan="2">
+                                                                            <h6 class="tablemidhead">Item Classification (NATO Group & Class)</h6>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th scope="row">NATO Supply Group:
+                                                                        </th>
+                                                                        <td>
+                                                                            <asp:Label ID="lblnsngroup" runat="server" Text=""></asp:Label>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th scope="row">NATO Supply Class:
+                                                                        </th>
+                                                                        <td>
+                                                                            <asp:Label ID="lblnsngroupclass" runat="server" Text=""></asp:Label>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th scope="row">Item Name Code:
+                                                                        </th>
+                                                                        <td>
+                                                                            <asp:Label ID="lblclassitem" runat="server" Text=""></asp:Label>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr runat="server" id="six">
+                                                                        <th scope="row">NSC Code (4 digit):
+                                                                        </th>
+                                                                        <td>
+                                                                            <asp:Label ID="lblnsccode4digit" runat="server" Text=""></asp:Label>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="card border-btm" style="border-bottom: solid 1.4px #e5e5e5!important;">
+                                                    <div class="card-header">
+                                                        <h3 class="accordion-heading mb-2">
+                                                            <a class="collapsed" href="#ItemSpecification" role="button" data-toggle="collapse"
+                                                                aria-expanded="false" aria-controls="shoes">Item Specification <span class="accordion-indicator iconupanddown">
+                                                                    <i class="fas fa-chevron-up"></i></span></a>
+                                                        </h3>
+                                                    </div>
+                                                    <div class="collapse" id="ItemSpecification" data-parent="#shop-categories">
+                                                        <div class="card-body card-custom ">
+                                                            <table class="table mb-2">
+                                                                <tbody>
+                                                                    <tr runat="server" id="eleven" style="color: blue;">
+                                                                        <th>Item Name</th>
+                                                                        <td>
+                                                                            <asp:Label ID="itemname2" runat="server" Text=""></asp:Label>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr runat="server" id="twele">
+                                                                        <th scope="row">Document
+                                                                        </th>
+                                                                        <td>
+                                                                            <asp:GridView runat="server" ID="gvpdf" AutoGenerateColumns="false" Class="table table-responsive table-bordered">
+                                                                                <Columns>
+                                                                                    <asp:TemplateField HeaderText="">
+                                                                                        <ItemTemplate>
+                                                                                            <asp:Label ID="lblpathname" runat="server" Text='<%#Eval("ImageName").ToString().Substring(7) %>'></asp:Label>
+                                                                                        </ItemTemplate>
+                                                                                    </asp:TemplateField>
+                                                                                    <asp:TemplateField HeaderText="View or Download">
+                                                                                        <ItemTemplate>
+                                                                                            <a href='<%#Eval("ImageName") %>' target="_blank" title="Click on icon for download pdf">View or downlaod</a>
+                                                                                        </ItemTemplate>
+                                                                                    </asp:TemplateField>
+                                                                                </Columns>
+                                                                            </asp:GridView>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr runat="server" id="thirteen">
+                                                                        <th scope="row">Image
+                                                                        </th>
+                                                                        <td>
+                                                                            <asp:DataList ID="dlimage" runat="server" RepeatColumns="4" Visible="true" RepeatDirection="Horizontal"
+                                                                                RepeatLayout="Flow">
+                                                                                <ItemTemplate>
+                                                                                    <div class="col-sm-3">
+                                                                                        <a data-fancybox="Prodgridviewgellry" target="_blank" href='<%#Eval("[ImageName]") %>'>
+                                                                                            <asp:Image ID="imgprodimage" runat="server" CssClass="img-responsive img-container"
+                                                                                                Height="90px" Width="110px" src='<%#Eval("[ImageName]") %>' />
+                                                                                        </a>
+                                                                                    </div>
+                                                                                </ItemTemplate>
+                                                                            </asp:DataList>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr runat="server" id="twentysix">
+                                                                        <th scope="row">Quality Assurance Agency 
+                                                                        </th>
+                                                                        <td>
+                                                                            <asp:Label ID="lbqa" runat="server" Text=""></asp:Label>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="card border-btm" style="border-bottom: solid 1.4px #e5e5e5!important;">
+                                                    <div class="card-header">
+                                                        <h3 class="accordion-heading mb-2">
+                                                            <a class="collapsed" href="#Estimated" role="button" data-toggle="collapse" aria-expanded="false"
+                                                                aria-controls="shoes">Import Value, Quantity <span class="accordion-indicator iconupanddown">
+                                                                    <i class="fas fa-chevron-up"></i></span></a>
+                                                        </h3>
+                                                    </div>
+                                                    <div class="collapse" id="Estimated" data-parent="#shop-categories">
+                                                        <div class="card-body card-custom ">
+                                                            <table class="table" width="100%">
+                                                                <tbody>
+
+                                                                    <tr runat="server" id="fifteen">
+                                                                        <td>
+                                                                            <asp:GridView ID="gvestimatequanorprice" runat="server" AutoGenerateColumns="false"
+                                                                                CssClass="table table-hover">
+                                                                                <Columns>
+                                                                                    <asp:BoundField DataField="FYear" HeaderText="Year of Import" />
+                                                                                    <asp:TemplateField HeaderText="Quantity">
+                                                                                        <ItemTemplate>
+                                                                                            <%# Eval("EstimatedQty").ToString() == "0" ? "*" : Eval("EstimatedQty").ToString()%>
+                                                                                            <%-- <%# Eval("EstimatedQty").ToString() == "0" ? "*" : "*"%>--%>
+                                                                                        </ItemTemplate>
+                                                                                    </asp:TemplateField>
+                                                                                    <asp:BoundField DataField="Unit" HeaderText="Unit" />
+                                                                                    <asp:BoundField DataField="EstimatedPrice" HeaderText="Import value in million Rs (Qty*Price)" DataFormatString="{0:f2}" />
+                                                                                </Columns>
+                                                                            </asp:GridView>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <table class="table mb-2">
+                                                                                <tbody>
+                                                                                    <tr runat="server" id="five">
+                                                                                        <td colspan="2">
+                                                                                            <b>Import value during last 3 year (million Rs) :</b>
+                                                                                            <asp:Label ID="lblisproductimported" runat="server" Text=""></asp:Label>&nbsp;&nbsp;
+                                                                                        &nbsp;<asp:Label ID="lblvalueimport" runat="server"
+                                                                                                Text="0"></asp:Label>&nbsp;
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                    <tr runat="server" id="ten">
+                                                                                        <td colspan="2" style="border-top: 0px;">
+                                                                                            <asp:GridView ID="gvestimatequanold" runat="server" AutoGenerateColumns="false"
+                                                                                                Class="table table-responsive table-bordered">
+                                                                                                <Columns>
+                                                                                                    <asp:BoundField HeaderText="Year of Import" DataField="FYear" />
+                                                                                                    <asp:TemplateField HeaderText="Quantity">
+                                                                                                        <ItemTemplate>
+                                                                                                            <%# Eval("EstimatedQty").ToString() == "0" ? "*" : Eval("EstimatedQty").ToString()%>
+                                                                                                            <%-- <%# Eval("EstimatedQty").ToString() == "0" ? "*" : "*"%>--%>
+                                                                                                        </ItemTemplate>
+                                                                                                    </asp:TemplateField>
+                                                                                                    <asp:BoundField HeaderText="Unit" DataField="Unit" />
+                                                                                                    <asp:BoundField HeaderText="Imported value in million Rs (Qty*Price)" DataField="EstimatedPrice" DataFormatString="{0:f2}" />
+                                                                                                </Columns>
+                                                                                            </asp:GridView>
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                            <h6 class="tablemidhead">Status of Indigenization</h6>
+                                                            <table class="table mb-2">
+                                                                <tbody>
+                                                                    <tr runat="server" id="sixteen">
+                                                                        <th scope="row">Make in India Category
+                                                                        </th>
+                                                                        <td>
+                                                                            <asp:Label ID="lblindicate" runat="server" Text=""></asp:Label>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr runat="server" id="seventeen">
+                                                                        <th scope="row">EoI/RFP
+                                                                        </th>
+                                                                        <td>
+                                                                            <asp:Label ID="lbleoirep" runat="server" Text=""></asp:Label>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr runat="server" id="eighteen">
+                                                                        <th scope="row">Link
+                                                                        </th>
+                                                                        <td>
+                                                                            <asp:Label ID="lbleoilink" runat="server" Text=""></asp:Label>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr runat="server" id="Tr25">
+                                                                        <th scope="row">Make in India (starting) Target Year
+                                                                        </th>
+                                                                        <td>
+                                                                            <asp:Label ID="lblindtrgyr" runat="server" Text=""></asp:Label>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                            <h6 class="tablemidhead">Contact Details</h6>
+                                                            <table class="table mb-2" runat="server" id="nineteen">
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <th scope="row">Name
+                                                                        </th>
+                                                                        <td>
+                                                                            <asp:Label ID="lblempname" runat="server" Text=""></asp:Label>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th scope="row">Designation
+                                                                        </th>
+                                                                        <td>
+                                                                            <asp:Label ID="lbldesignation" runat="server" Text=""></asp:Label>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th scope="row">E-Mail ID
+                                                                        </th>
+                                                                        <td>
+                                                                            <asp:Label ID="lblemailidpro" runat="server" Text=""></asp:Label>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th scope="row">Phone Number
+                                                                        </th>
+                                                                        <td>
+                                                                            <asp:Label ID="lblphonenumber" runat="server" Text=""></asp:Label>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="card border-btm" style="border-bottom: solid 1.4px #e5e5e5!important;" runat="server" visible="false">
+                                                    <div class="card-header">
+                                                        <h3 class="accordion-heading mb-2">
+                                                            <a class="collapsed" href="#AdditionalValue" role="button" data-toggle="collapse" aria-expanded="false"
+                                                                aria-controls="shoes">Additional Details <span class="accordion-indicator iconupanddown">
+                                                                    <i class="fas fa-chevron-up"></i></span></a>
+                                                        </h3>
+                                                    </div>
+                                                    <div class="collapse" id="AdditionalValue" data-parent="#shop-categories">
+                                                        <div class="card-body card-custom ">
+                                                            <table class="table mb-2">
+                                                                <tbody>
+                                                                    <tr runat="server" id="twenty">
+                                                                        <th scope="row">End User 
+                                                                        </th>
+                                                                        <td>
+                                                                            <asp:Label ID="lblenduser" runat="server" Text=""></asp:Label>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr runat="server" id="twentyone">
+                                                                        <th scope="row">Defence Paltform 
+                                                                        </th>
+                                                                        <td>
+                                                                            <asp:Label ID="lbldefenceplatform" runat="server" Text=""></asp:Label>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr runat="server" id="twentytwo">
+                                                                        <th scope="row">Name of Defence Platform 
+                                                                        </th>
+                                                                        <td>
+                                                                            <asp:Label ID="lblnameofdefplat" runat="server" Text=""></asp:Label>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr runat="server" id="twentyfour" visible="false">
+                                                                        <th scope="row"></th>
+                                                                        <td runat="server">
+                                                                            <asp:Label ID="lblisshowgeneral" runat="server" Text=""></asp:Label>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="card border-btm" style="border-bottom: solid 1.4px #e5e5e5!important;">
+                                                    <div class="card-header">
+                                                        <h3 class="accordion-heading mb-2">
+                                                            <a class="collapsed" href="#Intrest" role="button" data-toggle="collapse" aria-expanded="false"
+                                                                aria-controls="shoes">Interest Shown - Industry<span class="accordion-indicator iconupanddown">
+                                                                    <i class="fas fa-chevron-up"></i></span></a>
+                                                        </h3>
+                                                    </div>
+                                                    <div class="collapse" id="Intrest" data-parent="#shop-categories">
+                                                        <div class="card-body card-custom ">
+                                                            <table class="table" width="100%">
+                                                                <tbody>
+                                                                    <tr runat="server" id="Tr3">
+
+                                                                        <td>
+                                                                            <b>Total Industry Shown Interest :-
+                                                                           
+                                                                                <asp:Label runat="server" ID="lblIntrCount"></asp:Label></b>
+                                                                            <div class="clearfix mt-1"></div>
+                                                                            <asp:GridView ID="gvRequester" runat="server" AutoGenerateColumns="false"
+                                                                                CssClass="table table-hover">
+                                                                                <Columns>
+                                                                                    <asp:BoundField DataField="RequestDate" HeaderText="Date" DataFormatString="{0: dd-MMM-yyyy}" />
+                                                                                    <asp:BoundField DataField="RequestCompName" HeaderText="Company" />
+                                                                                    <asp:BoundField DataField="RequestAddress" HeaderText="Address" />
+                                                                                    <asp:BoundField DataField="RequestBy" HeaderText="Name" />
+                                                                                    <asp:BoundField DataField="RequestMobileNo" HeaderText="Mobile" />
+                                                                                    <asp:BoundField DataField="RequestEmail" HeaderText="Email" />
+                                                                                    <%--<asp:BoundField DataField="RequestTime" HeaderText="Time" />--%>
+                                                                                </Columns>
+                                                                            </asp:GridView>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                            <div class="clearfix mt-1"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="clearfix mt10">
+                            </div>
+                            <div class="modal-footer">
+
+                                <input id="btnprint" type="button" runat="server" visible="false" onclick="PrintDiv()" style="width: 70px;" class="btn btn-primary  pull-right"
+                                    value="Print" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-quick-view modal fade" id="UpdateEOI" tabindex="-1">
+                    <div class="modal-dialog modal-xl" style="max-width: 900px!important; z-index: 9999999999;">
+                        <div class="modal-content">
+                            <div class="modal-header modelhead">
+                                <h4 class="modal-title product-title" style="font-size: 25px;">Import Item Details
+                                </h4>
+                                <button class="close" style="padding-right: 45px;" type="button" data-dismiss="modal"
+                                    aria-label="Close">
+                                    <span aria-hidden="true">&times;</span></button>
+                            </div>
+                            <div class="modal-body" style="padding: 20px 40px 18px 40px;">
+                                <div class="simplebar-content">
+                                    <!-- Categories-->
+                                    <div class="widget widget-categories mb-4">
+                                        <div class="form-group">
+                                            <label>EOI Status</label>
+                                            <asp:RadioButtonList runat="server" ID="rbeoi" RepeatColumns="2" RepeatDirection="Horizontal" RepeatLayout="Flow">
+                                                <asp:ListItem Value="Yes">Yes</asp:ListItem>
+                                                <asp:ListItem Value="No">No</asp:ListItem>
+                                            </asp:RadioButtonList>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>EOI URL</label>
+                                            <asp:TextBox runat="server" ID="txtUrl" Placeholder="EOI URL" CssClass="form-control"></asp:TextBox>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>EOI Start Date</label>
+                                            <asp:TextBox runat="server" ID="txtstartdate" type="date" CssClass="form-control"></asp:TextBox>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>EOI End Date</label>
+                                            <asp:TextBox runat="server" ID="txtenddate" type="date" CssClass="form-control"></asp:TextBox>
+                                        </div>
+                                        <div class="form-group">
+                                            <asp:LinkButton runat="server" ID="btneoi" CssClass="btn btn-info fa-pull-right"><i class="fa fa-sun"></i>Update EOI</asp:LinkButton>
+                                        </div>
+                                        <div class="clearfix mt-1"></div>
+                                        <div class="form-group">
+                                            <label>Supply Order Status</label>
+                                            <asp:RadioButtonList runat="server" ID="rbsupplyorder" RepeatColumns="2" RepeatDirection="Horizontal" RepeatLayout="Flow">
+                                                <asp:ListItem Value="Yes">Yes</asp:ListItem>
+                                                <asp:ListItem Value="No">No</asp:ListItem>
+                                            </asp:RadioButtonList>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Manufacture Name</label>
+                                            <asp:TextBox runat="server" ID="txtManufacName" Placeholder="Manufacture Name" CssClass="form-control"></asp:TextBox>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Manufacture Address</label>
+                                            <asp:TextBox runat="server" ID="txtmanufacaddress" Placeholder="Manufacture Address" CssClass="form-control"></asp:TextBox>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Supply Start Date</label>
+                                            <asp:TextBox runat="server" ID="TextBox2" type="date" CssClass="form-control"></asp:TextBox>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Supply End Date</label>
+                                            <asp:TextBox runat="server" ID="TextBox3" type="date" CssClass="form-control"></asp:TextBox>
+                                        </div>
+                                        <div class="form-group">
+                                            <asp:LinkButton runat="server" ID="lbsupplyorderupdate" CssClass="btn btn-info fa-pull-right"><i class="fa fa-sun"></i>Update Supply Order</asp:LinkButton>
+                                        </div>
+                                        <div class="clearfix mt-1"></div>
+                                        <div class="form-group">
+                                            <label>Indizinised Criteria</label>
+                                            <asp:RadioButtonList runat="server" ID="rbIndiznised" RepeatColumns="2" RepeatDirection="Horizontal" RepeatLayout="Flow">
+                                                <asp:ListItem Value="Yes">Yes</asp:ListItem>
+                                                <asp:ListItem Value="No">No</asp:ListItem>
+                                            </asp:RadioButtonList>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Indizinised Year</label>
+                                            <asp:TextBox runat="server" ID="txtyear" Placeholder="Indizinised Year" ToolTip="Enter only Number (any special character not allowed)" CssClass="form-control"></asp:TextBox>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Import Indizinised Value (Rs Lakhs)</label>
+                                            <asp:TextBox runat="server" ID="txtIndizinisedAmount" Placeholder="Import Indizinised Value (Rs Lakhs)" CssClass="form-control"></asp:TextBox>
+                                        </div>
+                                        <div class="form-group">
+                                            <asp:LinkButton runat="server" ID="lbupdateindi" CssClass="btn btn-info fa-pull-right"><i class="fa fa-sun"></i>Update Supply Order</asp:LinkButton>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="clearfix mt10">
+                            </div>
+                            <div class="modal-footer">
+                                <input id="Button1" type="button" runat="server" visible="false" onclick="PrintDiv()" style="width: 70px;" class="btn btn-primary  pull-right"
+                                    value="Print" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </ContentTemplate>
+        </asp:UpdatePanel>
+        <asp:UpdateProgress ID="UpdateProgress" runat="server" AssociatedUpdatePanelID="up">
+            <ProgressTemplate>
+                <div class="overlay-progress">
+                    <div class="custom-progress-bar blue stripes">
+                        <span></span>
+                        <p style="margin-left: 200px; padding-bottom: 10px;">
+                            <b>Processing...</b>
+                        </p>
+                    </div>
+                </div>
+            </ProgressTemplate>
+        </asp:UpdateProgress>
+        <script src="User/Uassets/js/jquery-3.4.1.min.js"></script>
+        <%-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>--%>
+        <script type="text/javascript">
+            function showPopup1() {
+                $('#divstatus').modal('show');
+            }
+        </script>
+        <script type="text/javascript">
+            function showPopup2() {
+                $('#ProductCompany1').modal('show');
+            }
+        </script>
+        <script type="text/javascript">
+            function showPopup3() {
+                $('#UpdateEOI').modal('show');
+            }
+        </script>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('#gvshownproduct').DataTable();
+            });
+        </script>
+        <!-- jQuery and Bootstrap JS files  Datatable new  -->
+        <script src="DataTable/jquery-3.3.1.min.js"></script>
+        <script src="DataTable/popper.min.js"></script>
+        <script src="DataTable/bootstrap.min.js"></script>
+        <!-- Datatables-->
+        <script src="DataTable/jquery.dataTables.min.js"></script>
+        <script src="DataTable/dataTables.bootstrap4.min.js"></script>
+        <script src="DataTable/dataTables.buttons.min.js"></script>
+        <script src="DataTable/buttons.bootstrap4.min.js"></script>
+        <script src="DataTable/jszip.min.js"></script>
+        <script src="DataTable/pdfmake.min.js"></script>
+        <script src="DataTable/vfs_fonts.js"></script>
+        <script src="DataTable/buttons.html5.min.js"></script>
+        <script src="DataTable/buttons.print.min.js"></script>
+        <script src="DataTable/buttons.colVis.min.js"></script>
+        <script src="DataTable/datatables-init.js"></script>
+        <!-- pace -->
+        <script>
+            var handleDataTableButtons = function () {
+                "use strict";
+                0 !== $('#<%= gvshownproduct.ClientID %>').length && $('#<%= gvshownproduct.ClientID %>').DataTable({
+                    dom: "Bfrtip",
+                    buttons: [{
+                        extend: "copy",
+                        className: "btn-sm"
+                    }, {
+                        extend: "csv",
+                        className: "btn-sm"
+                    }, {
+                        extend: "excel",
+                        className: "btn-sm"
+                    }, {
+                        extend: "pdf",
+                        className: "btn-sm"
+                    }, {
+                        extend: "print",
+                        className: "btn-sm"
+                    }],
+                    responsive: !0
+                })
+            },
+                TableManageButtons = function () {
+                    "use strict";
+                    return {
+                        init: function () {
+                            handleDataTableButtons()
+                        }
+                    }
+                }();
+        </script>
+        <script type="text/javascript">
+            //On Page Load
+            $(document).ready(function () {
+                $('#<%= gvshownproduct.ClientID %>').dataTable();
+            });
+            //On UpdatePanel Refresh
+            var prm = Sys.WebForms.PageRequestManager.getInstance();
+            if (prm != null) {
+                prm.add_endRequest(function (sender, e) {
+                    $('#<%= gvshownproduct.ClientID %>').dataTable();
+                });
+                TableManageButtons.init();
+            };
+        </script>
+        <script type="text/javascript">
+            function Printm() {
+                var divToPrint = document.getElementById('mPrint');
+                var popupWin = window.open('', '_blank', 'width=300,height=400,location=no,left=200px');
+                popupWin.document.open();
+                popupWin.document.write('<html><body onload="window.print()">' + divToPrint.innerHTML + '</html>');
+                popupWin.document.close();
+            }
+        </script>
+    </form>
+</body>
+</html>
+

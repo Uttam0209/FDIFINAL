@@ -1,0 +1,211 @@
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Registration.aspx.cs" Inherits="Vendor_Registration" %>
+<%@ Import Namespace="System.Web.Optimization" %>
+<%@ Register Assembly="MSCaptcha" Namespace="MSCaptcha" TagPrefix="cc1" %>
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title></title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <style>
+        body {
+            font-family: sans-serif;
+        }
+
+        label {
+            font-weight: 500;
+        }
+
+        .mendatory {
+            color: red;
+        }
+
+        .btn-primary1 {
+            background-image: linear-gradient(to right, #e83e8c, #6610f2);
+            color: white;
+        }
+    </style>
+</head>
+<body style="min-height: 100vh; background-image: linear-gradient(to right, #e83e8c, #6610f2);">
+    <form id="form1" runat="server">
+        <div class="container-fluid">
+            <div class="row d-flex justify-content-center">
+                <div class="col-md-10 py-2" style="background-color: white; border-radius: 5px; margin-top:20px;">
+                    <h5 class="py-2 text-center my-2" style="background-image: linear-gradient(to right, #e83e8c, #6610f2); color: white; border-radius: 5px;">Vendor Registration</h5>
+                    <div class="row">
+                        <div class="col-12">
+                            <p>Please provide all required details to register your business with us</p>
+                            <p>Fill all details and submit your request after submit you will get E-mail of your login credential request.</p>
+                        </div>
+                        <div class="col-md-6" style="border-right: 1px solid #6610f2">
+                           
+                            <div class="row d-flex">
+                                <div class="col-12">
+                                    <label for="sel1">Testing Facility you want to apply:</label><br />
+                                    <asp:CheckBoxList ID="chkdpsu" runat="server" RepeatColumns="3" RepeatDirection="Horizontal">
+                                    </asp:CheckBoxList>
+
+                                    <div class="form-group">
+                                        <label for="sel1">REGISTRATION CATEGORY <span class="mendatory">*</span>:</label>
+                                        <asp:DropDownList ID="ddlregiscategory" runat="server" CssClass="form-control"
+                                            required="required">
+                                            <asp:ListItem Selected="True" Value="0">Select</asp:ListItem>
+                                            <asp:ListItem Value="MANUFACTURER">MANUFACTURER</asp:ListItem>
+                                            <asp:ListItem Value="SERVICE SUB CONTRACTOR">SERVICE SUB CONTRACTOR</asp:ListItem>
+                                            <asp:ListItem Value="AUTHORISED AGENT">AUTHORISED AGENT</asp:ListItem>
+                                            <asp:ListItem Value="TRADER">TRADER</asp:ListItem>
+                                            <asp:ListItem Value="OEM">OEM</asp:ListItem>
+                                            <asp:ListItem Value="Stockist">Stockist</asp:ListItem>
+                                            <asp:ListItem Value="Contractor">Contractor</asp:ListItem>
+                                            <asp:ListItem Value="Distributor">Distributor</asp:ListItem>
+                                            <asp:ListItem Value="Consortium">Consortium</asp:ListItem>
+                                        </asp:DropDownList>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="usr">Nodal officer Name <span class="mendatory">*</span>:</label>
+                                        <asp:TextBox ID="txtnodalname" runat="server" MaxLength="100" CssClass="form-control"></asp:TextBox>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="usr">Nodal officer email (treated as username) <span class="mendatory">*</span>:</label>
+                                        <asp:TextBox ID="txtnodelemail" runat="server" MaxLength="70" TextMode="Email" placeholder="ex: myemail@example.com" AutoCompleteType="Email" CssClass="form-control"></asp:TextBox>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="usr">Nodal office Contact No<span class="mendatory">*</span>:</label>
+                                        <asp:TextBox ID="txtMobileNodal" runat="server" MaxLength="10" onkeypress="return isNumberKey(event)" CssClass="form-control"></asp:TextBox>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6" style="border-right: 1px solid #6610f2;">
+                            
+                            <div class="row d-flex">
+                                <div class="col-12">
+
+                                    <div class="form-group">
+                                        <label for="usr">Registered Office Address<span class="mendatory">*</span>:</label>
+                                        <asp:TextBox ID="txtstreetaddress" runat="server" MaxLength="300" CssClass="form-control"></asp:TextBox>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="usr">Street Address 2</label>
+                                        <asp:TextBox ID="txtstreetaddressline2" MaxLength="300" runat="server" CssClass="form-control"></asp:TextBox>
+
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="usr">City<span class="mendatory">*</span></label>
+                                        <asp:TextBox ID="txtcity" runat="server" MaxLength="35" CssClass="form-control"></asp:TextBox>
+
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="usr">State<span class="mendatory">*</span></label>
+                                        <asp:TextBox ID="txtstateprovince" runat="server" MaxLength="35" CssClass="form-control"></asp:TextBox>
+
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="usr">Pin Code<span class="mendatory">*</span></label>
+                                        <asp:TextBox ID="txtpostalzipcode" runat="server" MaxLength="7" CssClass="form-control" onkeypress="return isNumberKey(event)"></asp:TextBox>
+
+                                    </div>
+
+                                      <div class="row">
+                        <div class="col-6 form-group">
+                            <label for="pwd">Captcha :</label>
+                            <asp:TextBox runat="server" ID="txtCapt" TabIndex="3" class="form-control passField" autocomplete="off" ToolTip="Please enter valid Captcha." placeholder="CAPTCHA"  ></asp:TextBox>
+                        </div>
+                        <div class="col-6 form-group pt-4">
+                            <div class="row">
+                                <div class="col-sm-8 py-2">
+                                    <cc1:CaptchaControl ID="Captcha2" runat="server" CaptchaBackgroundNoise="Low" CaptchaLength="6"
+                                        CaptchaHeight="35" CaptchaWidth="125" CaptchaMinTimeout="5" CaptchaMaxTimeout="240"
+                                        FontColor="#D20B0C" NoiseColor="#B1B1B1" />
+                                </div>
+                                <div class="col-sm-2" style="margin-top: 15px;">
+                                    <a href="#"><i class="fa fa-refresh" aria-hidden="true"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <asp:CustomValidator ID="CustomValidator1" ErrorMessage="" OnServerValidate="ValidateCaptcha"
+                        runat="server" />
+
+                                    <div class="form-group form-check">
+                                        <label class="form-check-label"></label>
+                                        <asp:CheckBoxList ID="chkbuisness" runat="server" RepeatColumns="1" RepeatDirection="Horizontal" RepeatLayout="Flow" CssClass="checkbox">
+                                            <asp:ListItem>    I/We note that registration ,does not carry with it the right to business with DPSUs/OFB, I/We hereby declare that the information pertaining to my/our firm/Company including all enclosures is correct and true to the best of my/our knowledge and belief as on date
+                                            </asp:ListItem>
+                                        </asp:CheckBoxList>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 d-flex justify-content-end">
+                            <div class="form-group">
+                                <asp:Button ID="btnsubmit" runat="server" CssClass="btn" Text="Submit"  style="background-image: linear-gradient(to right, #e83e8c, #6610f2); color: white; border-radius: 5px;"  UseSubmitBehavior="false" OnClick="btnsubmit_Click" OnClientClick="if (!confirm('Are you sure you want to save this record?')) return false;" />
+                                <asp:Button ID="btnclear" runat="server" CssClass="btn" UseSubmitBehavior="false" Text="Clear" style="background-image: linear-gradient(to right, #e83e8c, #6610f2); color: white; border-radius: 5px;" OnClick="btnclear_Click" OnClientClick="if (!confirm('Are you sure you want clear textfield?')) return false;" />
+                                <asp:Button ID="btnback" runat="server" CssClass="btn" Text="Back"  style="background-image: linear-gradient(to right, #e83e8c, #6610f2); color: white; border-radius: 5px;" OnClick="btnback_Click" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="Div1" role="dialog" data-keyboard="false" data-backdrop="static">
+                <div class="modal-dialog" style="width: 400px;">
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header modal-header1">
+                            <button type="button" class="close close1" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Alert</h4>
+                        </div>
+                        <form class="form-horizontal changepassword" role="form">
+                            <div class="modal-body clearfix" style="padding: 0 20px;">
+                                <asp:Panel ID="pansuccess" runat="server">
+                                    <div style="text-align: center;">
+                                        <div class="clearfix pb15"></div>
+                                        <img src="/assets/images/right.jpg" alt="" height="150px" width="150px" />
+                                        <div class="clearfix pb15"></div>
+                                        <h4>Registration succssfully done.A login releted mail send to your registerd mail id.</h4>
+                                    </div>
+                                </asp:Panel>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="modelfail" role="dialog" data-keyboard="false" data-backdrop="static">
+                <div class="modal-dialog" style="width: 400px;">
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header modal-header1">
+                            <button type="button" class="close close1" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Alert</h4>
+                        </div>
+                        <form class="form-horizontal changepassword" role="form">
+                            <div class="modal-body clearfix" style="padding: 0 20px;">
+
+                                <asp:Panel ID="panfail" runat="server">
+                                    <div style="text-align: center;">
+                                        <div class="clearfix pb15"></div>
+                                        <img src="/assets/images/Wrong.png" alt="" height="100px" width="100px" />
+                                        <div class="clearfix pb15"></div>
+                                        <h4>Record not save, Please try again, or mail us on defence production</h4>
+                                    </div>
+                                </asp:Panel>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</body>
+</html>

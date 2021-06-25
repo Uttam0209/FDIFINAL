@@ -1,0 +1,44 @@
+﻿
+.text-right {
+    text-align:right!important;
+}
+
+.hero_heading {
+    color: #6915cf;
+    font-size: 40px;
+    letter-spacing: .5px;
+    font-weight: 700;
+}
+
+.login_bg {
+    background-image: url('../media/images/bg-pattern-light.svg');
+    background-size: cover;
+    background-position: center;
+}
+
+.mr-2{
+    margin-right:15px;
+}
+
+.width-ft {
+    width: fit-content;
+    float: left;
+    margin-right: 14px;
+}
+
+.dropzone {
+    border: 1px solid#dee2e6!important;
+    padding: 5px!important;
+}
+
+.mr-2{
+    margin-right:20px;
+}
+
+.mr-1{
+    margin-right: 10px;
+}
+
+.lowpadding_table tr td {
+    padding: 4px;
+}

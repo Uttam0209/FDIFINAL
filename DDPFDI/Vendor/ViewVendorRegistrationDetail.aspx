@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="ViewVendorRegistrationDetail.aspx.cs" Inherits="Vendor_ViewVendorRegistrationDetail" MasterPageFile="~/Vendor/VendorMaster.master" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="ViewVendorRegistrationDetail.aspx.cs" Inherits="Vendor_ViewVendorRegistrationDetail" MasterPageFile="~/Vendor/VendorMasterWithTopMenu.master" %>
 
 <asp:Content ID="ConHead" runat="server" ContentPlaceHolderID="head">
     <script type="text/javascript">

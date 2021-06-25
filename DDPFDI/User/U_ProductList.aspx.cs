@@ -2,17 +2,25 @@
 using Encryption;
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.IO;
+using context = System.Web.HttpContext;
+using System.Web.UI.HtmlControls;
+using System.Collections;
 
-public partial class User_U_ProductList : System.Web.UI.Page
+public partial class User_U_ProductList1 : System.Web.UI.Page
 {
     #region Pagevariable
+    UserIPAnalytics userip = new UserIPAnalytics();
     private Logic Lo = new Logic();
+    HybridDictionary hysaveip = new HybridDictionary();
     private DataTable DtGrid = new DataTable();
     private string _msg = string.Empty;
     private string _sysMsg = string.Empty;
@@ -23,11 +31,13 @@ public partial class User_U_ProductList : System.Web.UI.Page
     DataTable DtFilterView = new DataTable();
     DataTable dtCart = new DataTable();
     DataRow dr;
+    string totalcartvalue;
     #endregion
     #region Pageload
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (!IsPostBack)
+        userip.GetAnalytics();
+        if (!this.IsPostBack)
         {
             try
             {
@@ -39,31 +49,9 @@ public partial class User_U_ProductList : System.Web.UI.Page
                 }
                 else
                 {
-                    //Code by Shalini
-                    if (Session["User"] != null)
-                    {
-                        linklogin.Visible = false;
-                        linkusername.Text = Encrypt.DecryptData(Session["User"].ToString());
-                        linkusername.Visible = true;
-                        lblmis.Visible = true;
-                        if (Encrypt.DecryptData(Session["Type"].ToString()) == "Admin" || Encrypt.DecryptData(Session["Type"].ToString()) == "SuperAdmin" || Encrypt.DecryptData(Session["Type"].ToString()) == "Company" ||
-                            Encrypt.DecryptData(Session["Type"].ToString()) == "Division" || Encrypt.DecryptData(Session["Type"].ToString()) == "Unit")
-                        {
-                            linklogin.Visible = false;
-                            linkusername.Text = Encrypt.DecryptData(Session["User"].ToString());
-                            divIntrested.Visible = true;
-                        }
-                    }
-                    else
-                    {
-                        divIntrested.Visible = false;
-                        linklogin.Visible = true;
-                        linkusername.Visible = false;
-                        lblmis.Visible = false;
-                    }
-                    //end
                     totalno.InnerText = dtCart.Rows.Count.ToString();
                 }
+                MenuLink();
                 ControlGrid();
             }
             catch (Exception ex)
@@ -72,20 +60,76 @@ public partial class User_U_ProductList : System.Web.UI.Page
             }
         }
     }
+    protected void MenuLink()
+    {
+        if (Session["User"] != null)
+        {
+            linkusername.Text = Encrypt.DecryptData(Session["User"].ToString());
+            linkusername.Visible = true;
+            linkusername.Text = "Welcome: " + linkusername.Text;
+            lnkfeedback.Visible = true;
+            linklogin.Visible = false;
+            lblmis.Visible = true;
+            lbllogout.Visible = true;
+            divIntrested.Visible = true;
+            lbSuccesstory.Visible = true;
+            lblviewcomp.Visible = true;
+            reportdiv.Visible = true;
+            mhwparti.Visible = false;
+        }
+        else
+        {
+            lbSuccesstory.Visible = false;
+            linklogin.Visible = true;
+            linkusername.Visible = false;
+            lblmis.Visible = false;
+            lbllogout.Visible = false;
+            divIntrested.Visible = false;
+            PR.Visible = false; mhwparti.Visible = true;
+            lblviewcomp.Visible = false; reportdiv.Visible = false;
+        }       
+    }
+    private void StoreUserIP(string Prodref)
+    {
+        string ipAddress;
+
+        DateTime Date = Convert.ToDateTime(DateTime.Now.ToString());
+        string mDate = Date.ToString("dd-MM-yyyy");
+        hysaveip["VisitedDate"] = mDate.ToString();
+        DateTime Time = Convert.ToDateTime(DateTime.Now.ToString());
+        string mTime = Time.ToString("hh:mm:ss");
+        hysaveip["VisitedTime"] = mDate.ToString();
+        ipAddress = Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
+        if (ipAddress == "" || ipAddress == null)
+            ipAddress = Request.ServerVariables["REMOTE_ADDR"];
+        hysaveip["IPAddress"] = ipAddress.ToString();
+        hysaveip["ProductRefNo"] = Prodref.ToString();
+        string strsaveip = Lo.SaveUserIP(hysaveip, out _sysMsg, out _msg);
+
+    }
     private void ControlGrid()
     {
-        ddlcomp.Items.Insert(0, "Select");
-        ddlnsg.Items.Insert(0, "Select");
-        ddlprodindustrydomain.Items.Insert(0, "Select");
-        BindProduct();
-        BindComapnyCheckbox();
-        BindNSG();
-        BindIndusrtyDomain();
-        BindIndiCategory();
+        try
+        {
+            ddlcomp.Items.Insert(0, "Select");
+            ddlnsg.Items.Insert(0, "Select");
+            ddlprodindustrydomain.Items.Insert(0, "Select");
+            BindProduct();
+            BindComapnyCheckbox();
+            BindNSG();
+            BindIndusrtyDomain();
+            BindIndiCategory();
+            BindSearchDropdownFilter();
+        }
+        catch (Exception ex)
+        {
+            ExceptionLogging.SendErrorToText(ex);
+        }
     }
     protected void BindProduct()
     {
-        DtGrid = Lo.RetriveProductUser();
+        string mMinute = DateTime.Now.ToString("mm");
+        DtGrid = Lo.RetriveFilterCode(mMinute, "", "BindMainProd");
         if (DtGrid.Rows.Count > 0)
         {
             Session["TempData"] = DtGrid;
@@ -125,7 +169,7 @@ public partial class User_U_ProductList : System.Web.UI.Page
                 DataTable mDtGrid = DtGrid.DefaultView.ToTable(true, "FactoryName", "FactoryRefNo", "CompanyRefNo");
                 mDtGrid.DefaultView.Sort = "FactoryName asc";
                 DataView dvm = new DataView(mDtGrid);
-                dvm.RowFilter = "CompanyRefNo='" + ddlcomp.SelectedItem.Value + "'";
+                dvm.RowFilter = "CompanyRefNo='" + ddlcomp.SelectedItem.Value + "' and FactoryName <> ''";
                 Co.FillDropdownlist(ddldivision, dvm.ToTable(), "FactoryName", "FactoryRefNo");
                 ddldivision.Items.Insert(0, "Select");
                 divfilterdivision.Visible = true;
@@ -148,7 +192,7 @@ public partial class User_U_ProductList : System.Web.UI.Page
                 DataTable mDtGrid = DtGrid.DefaultView.ToTable(true, "UnitName", "UnitRefNo", "FactoryRefNo");
                 mDtGrid.DefaultView.Sort = "UnitName asc";
                 DataView dvm = new DataView(mDtGrid);
-                dvm.RowFilter = "FactoryRefNo='" + ddldivision.SelectedItem.Value + "'";
+                dvm.RowFilter = "FactoryRefNo='" + ddldivision.SelectedItem.Value + "' and UnitName <> ''";
                 Co.FillDropdownlist(ddlunit, dvm.ToTable(), "UnitName", "UnitRefNo");
                 ddlunit.Items.Insert(0, "Select");
                 divfilterunit.Visible = true;
@@ -240,7 +284,7 @@ public partial class User_U_ProductList : System.Web.UI.Page
                 DataTable mDtGrid = DtGrid.DefaultView.ToTable(true, "NSNGROUP", "ProductLevel1", "CompanyRefNo");
                 mDtGrid.DefaultView.Sort = "NSNGROUP asc";
                 DataView dvm = new DataView(mDtGrid);
-                dvm.RowFilter = "CompanyRefNo='" + ddlcomp.SelectedItem.Value + "'";
+                dvm.RowFilter = "CompanyRefNo='" + ddlcomp.SelectedItem.Value + "' and ProductLevel1!=''";
                 Co.FillDropdownlist(ddlnsg, dvm.ToTable(), "NSNGROUP", "ProductLevel1");
                 ddlnsg.Items.Insert(0, "Select");
             }
@@ -317,13 +361,40 @@ public partial class User_U_ProductList : System.Web.UI.Page
         if (DtMasterCategroy.Rows.Count > 0)
         {
             Co.FillRadioBoxList(chktendor, DtMasterCategroy, "SCategoryName", "SCategoryID");
+            // chktendor.Items.Remove(chktendor.Items[1]);
+        }
+    }
+    protected void BindSearchDropdownFilter()
+    {
+        DataTable dtfiltersearch = Lo.NewRetriveFilterCode("SearchDropdown", "", "", "", "", 0, 0, 0);
+        if (dtfiltersearch.Rows.Count > 0)
+        {
+            Co.FillDropdownlist(ddlfiltersearch, dtfiltersearch, "FilterName", "FilterId");
+            ddlfiltersearch.Items.Insert(0, "All Criteria");
         }
     }
     #endregion
     #region Filter Dropdown Code
-    protected void ddlisindezinized_SelectedIndexChanged(object sender, EventArgs e)
+    protected void rbIsIndeginized_SelectedIndexChanged(object sender, EventArgs e)
     {
         SeachResult();
+        foreach (DataListItem row in dlproduct.Items)
+        {
+            LinkButton lbcart = row.FindControl("lbaddcart") as LinkButton;
+            HtmlAnchor imgIndi = row.FindControl("indevisi") as HtmlAnchor;
+            if (rbIsIndeginized.SelectedItem.Value == "Y")
+            {
+                lbcart.Enabled = false;
+                lbcart.Text = "View Only";
+                imgIndi.Visible = true;
+            }
+            else
+            {
+                lbcart.Enabled = true;
+                imgIndi.Visible = false;
+            }
+            lbcart.CssClass = "btn btn-sm btn-block text-white";
+        }
     }
     protected void ddlcomp_SelectedIndexChanged(object sender, EventArgs e)
     {
@@ -337,7 +408,26 @@ public partial class User_U_ProductList : System.Web.UI.Page
             divfilterdivision.Visible = false;
             divfilterunit.Visible = false;
             SeachResult();
-
+        }
+        foreach (DataListItem row in dlproduct.Items)
+        {
+            LinkButton lbcart = row.FindControl("lbaddcart") as LinkButton;
+            HtmlAnchor imgIndi = row.FindControl("indevisi") as HtmlAnchor;
+            if (rbIsIndeginized.SelectedIndex != -1)
+            {
+                if (rbIsIndeginized.SelectedItem.Value == "Y")
+                {
+                    lbcart.Enabled = false;
+                    lbcart.Text = "View Only";
+                    imgIndi.Visible = true;
+                }
+                else
+                {
+                    lbcart.Enabled = true;
+                    imgIndi.Visible = false;
+                }
+                lbcart.CssClass = "btn btn-sm btn-block text-white";
+            }
         }
     }
     protected void ddldivision_SelectedIndexChanged(object sender, EventArgs e)
@@ -352,35 +442,195 @@ public partial class User_U_ProductList : System.Web.UI.Page
             SeachResult();
             divfilterunit.Visible = false;
         }
+        foreach (DataListItem row in dlproduct.Items)
+        {
+            LinkButton lbcart = row.FindControl("lbaddcart") as LinkButton;
+            HtmlAnchor imgIndi = row.FindControl("indevisi") as HtmlAnchor;
+            if (rbIsIndeginized.SelectedIndex != -1)
+            {
+                if (rbIsIndeginized.SelectedItem.Value == "Y")
+                {
+                    lbcart.Enabled = false;
+                    lbcart.Text = "View Only";
+                    imgIndi.Visible = true;
+                }
+                else
+                {
+                    lbcart.Enabled = true;
+                    imgIndi.Visible = false;
+                }
+                lbcart.CssClass = "btn btn-sm btn-block text-white";
+            }
+        }
     }
     protected void ddlunit_SelectedIndexChanged(object sender, EventArgs e)
     {
         SeachResult();
+        foreach (DataListItem row in dlproduct.Items)
+        {
+            LinkButton lbcart = row.FindControl("lbaddcart") as LinkButton;
+            HtmlAnchor imgIndi = row.FindControl("indevisi") as HtmlAnchor;
+            if (rbIsIndeginized.SelectedIndex != -1)
+            {
+                if (rbIsIndeginized.SelectedItem.Value == "Y")
+                {
+                    lbcart.Enabled = false;
+                    lbcart.Text = "View Only";
+                    imgIndi.Visible = true;
+                }
+                else
+                {
+                    lbcart.Enabled = true;
+                    imgIndi.Visible = false;
+                }
+                lbcart.CssClass = "btn btn-sm btn-block text-white";
+            }
+        }
     }
     protected void ddlnameofdefplat_SelectedIndexChanged(object sender, EventArgs e)
     {
         SeachResult();
+        foreach (DataListItem row in dlproduct.Items)
+        {
+            LinkButton lbcart = row.FindControl("lbaddcart") as LinkButton;
+            HtmlAnchor imgIndi = row.FindControl("indevisi") as HtmlAnchor;
+            if (rbIsIndeginized.SelectedIndex != -1)
+            {
+                if (rbIsIndeginized.SelectedItem.Value == "Y")
+                {
+                    lbcart.Enabled = false;
+                    lbcart.Text = "View Only";
+                    imgIndi.Visible = true;
+                }
+                else
+                {
+                    lbcart.Enabled = true;
+                    imgIndi.Visible = false;
+                }
+                lbcart.CssClass = "btn btn-sm btn-block text-white";
+            }
+        }
     }
     protected void ddlprodindustrydomain_SelectedIndexChanged(object sender, EventArgs e)
     {
         BindIndustrySubDomain();
         SeachResult();
+        foreach (DataListItem row in dlproduct.Items)
+        {
+            LinkButton lbcart = row.FindControl("lbaddcart") as LinkButton;
+            HtmlAnchor imgIndi = row.FindControl("indevisi") as HtmlAnchor;
+            if (rbIsIndeginized.SelectedIndex != -1)
+            {
+                if (rbIsIndeginized.SelectedItem.Value == "Y")
+                {
+                    lbcart.Enabled = false;
+                    lbcart.Text = "View Only";
+                    imgIndi.Visible = true;
+                }
+                else
+                {
+                    lbcart.Enabled = true;
+                    imgIndi.Visible = false;
+                }
+                lbcart.CssClass = "btn btn-sm btn-block text-white";
+            }
+        }
     }
     protected void ddlprocurmentcatgory_SelectedIndexChanged(object sender, EventArgs e)
     {
         SeachResult();
+        foreach (DataListItem row in dlproduct.Items)
+        {
+            LinkButton lbcart = row.FindControl("lbaddcart") as LinkButton;
+            HtmlAnchor imgIndi = row.FindControl("indevisi") as HtmlAnchor;
+            if (rbIsIndeginized.SelectedIndex != -1)
+            {
+                if (rbIsIndeginized.SelectedItem.Value == "Y")
+                {
+                    lbcart.Enabled = false;
+                    lbcart.Text = "View Only";
+                    imgIndi.Visible = true;
+                }
+                else
+                {
+                    lbcart.Enabled = true;
+                    imgIndi.Visible = false;
+                }
+                lbcart.CssClass = "btn btn-sm btn-block text-white";
+            }
+        }
     }
     protected void ddldeclaration_SelectedIndexChanged(object sender, EventArgs e)
     {
         SeachResult();
+        foreach (DataListItem row in dlproduct.Items)
+        {
+            LinkButton lbcart = row.FindControl("lbaddcart") as LinkButton;
+            HtmlAnchor imgIndi = row.FindControl("indevisi") as HtmlAnchor;
+            if (rbIsIndeginized.SelectedIndex != -1)
+            {
+                if (rbIsIndeginized.SelectedItem.Value == "Y")
+                {
+                    lbcart.Enabled = false;
+                    lbcart.Text = "View Only";
+                    imgIndi.Visible = true;
+                }
+                else
+                {
+                    lbcart.Enabled = true;
+                    imgIndi.Visible = false;
+                }
+                lbcart.CssClass = "btn btn-sm btn-block text-white";
+            }
+        }
     }
     protected void ddlimported_SelectedIndexChanged(object sender, EventArgs e)
     {
         SeachResult();
+        foreach (DataListItem row in dlproduct.Items)
+        {
+            LinkButton lbcart = row.FindControl("lbaddcart") as LinkButton;
+            HtmlAnchor imgIndi = row.FindControl("indevisi") as HtmlAnchor;
+            if (rbIsIndeginized.SelectedIndex != -1)
+            {
+                if (rbIsIndeginized.SelectedItem.Value == "Y")
+                {
+                    lbcart.Enabled = false;
+                    lbcart.Text = "View Only";
+                    imgIndi.Visible = true;
+                }
+                else
+                {
+                    lbcart.Enabled = true;
+                    imgIndi.Visible = false;
+                }
+                lbcart.CssClass = "btn btn-sm btn-block text-white";
+            }
+        }
     }
     protected void ddlsearchkeywordsfilter_TextChanged(object sender, EventArgs e)
     {
         SeachResult();
+        foreach (DataListItem row in dlproduct.Items)
+        {
+            LinkButton lbcart = row.FindControl("lbaddcart") as LinkButton;
+            HtmlAnchor imgIndi = row.FindControl("indevisi") as HtmlAnchor;
+            if (rbIsIndeginized.SelectedIndex != -1)
+            {
+                if (rbIsIndeginized.SelectedItem.Value == "Y")
+                {
+                    lbcart.Enabled = false;
+                    lbcart.Text = "View Only";
+                    imgIndi.Visible = true;
+                }
+                else
+                {
+                    lbcart.Enabled = true;
+                    imgIndi.Visible = false;
+                }
+                lbcart.CssClass = "btn btn-sm btn-block text-white";
+            }
+        }
     }
     protected void ddlnsg_SelectedIndexChanged(object sender, EventArgs e)
     {
@@ -394,7 +644,26 @@ public partial class User_U_ProductList : System.Web.UI.Page
             divnsc.Visible = false;
             divic.Visible = false;
             SeachResult();
-
+        }
+        foreach (DataListItem row in dlproduct.Items)
+        {
+            LinkButton lbcart = row.FindControl("lbaddcart") as LinkButton;
+            HtmlAnchor imgIndi = row.FindControl("indevisi") as HtmlAnchor;
+            if (rbIsIndeginized.SelectedIndex != -1)
+            {
+                if (rbIsIndeginized.SelectedItem.Value == "Y")
+                {
+                    lbcart.Enabled = false;
+                    lbcart.Text = "View Only";
+                    imgIndi.Visible = true;
+                }
+                else
+                {
+                    lbcart.Enabled = true;
+                    imgIndi.Visible = false;
+                }
+                lbcart.CssClass = "btn btn-sm btn-block text-white";
+            }
         }
     }
     protected void ddlnsc_SelectedIndexChanged(object sender, EventArgs e)
@@ -409,30 +678,205 @@ public partial class User_U_ProductList : System.Web.UI.Page
             SeachResult();
             divic.Visible = false;
         }
+        foreach (DataListItem row in dlproduct.Items)
+        {
+            LinkButton lbcart = row.FindControl("lbaddcart") as LinkButton;
+            HtmlAnchor imgIndi = row.FindControl("indevisi") as HtmlAnchor;
+            if (rbIsIndeginized.SelectedIndex != -1)
+            {
+                if (rbIsIndeginized.SelectedItem.Value == "Y")
+                {
+                    lbcart.Enabled = false;
+                    lbcart.Text = "View Only";
+                    imgIndi.Visible = true;
+                }
+                else
+                {
+                    lbcart.Enabled = true;
+                    imgIndi.Visible = false;
+                }
+                lbcart.CssClass = "btn btn-sm btn-block text-white";
+            }
+        }
     }
     protected void ddlic_SelectedIndexChanged(object sender, EventArgs e)
     {
         SeachResult();
+        foreach (DataListItem row in dlproduct.Items)
+        {
+            LinkButton lbcart = row.FindControl("lbaddcart") as LinkButton;
+            HtmlAnchor imgIndi = row.FindControl("indevisi") as HtmlAnchor;
+            if (rbIsIndeginized.SelectedIndex != -1)
+            {
+                if (rbIsIndeginized.SelectedItem.Value == "Y")
+                {
+                    lbcart.Enabled = false;
+                    lbcart.Text = "View Only";
+                    imgIndi.Visible = true;
+                }
+                else
+                {
+                    lbcart.Enabled = true;
+                    imgIndi.Visible = false;
+                }
+                lbcart.CssClass = "btn btn-sm btn-block text-white";
+            }
+        }
     }
     protected void ddlindustrysubdoamin_SelectedIndexChanged(object sender, EventArgs e)
     {
         SeachResult();
+        foreach (DataListItem row in dlproduct.Items)
+        {
+            LinkButton lbcart = row.FindControl("lbaddcart") as LinkButton;
+            HtmlAnchor imgIndi = row.FindControl("indevisi") as HtmlAnchor;
+            if (rbIsIndeginized.SelectedIndex != -1)
+            {
+                if (rbIsIndeginized.SelectedItem.Value == "Y")
+                {
+                    lbcart.Enabled = false;
+                    lbcart.Text = "View Only";
+                    imgIndi.Visible = true;
+                }
+                else
+                {
+                    lbcart.Enabled = true;
+                    imgIndi.Visible = false;
+                }
+                lbcart.CssClass = "btn btn-sm btn-block text-white";
+            }
+        }
     }
     protected void chklast5year_SelectedIndexChanged(object sender, EventArgs e)
     {
         SeachResult();
+        foreach (DataListItem row in dlproduct.Items)
+        {
+            LinkButton lbcart = row.FindControl("lbaddcart") as LinkButton;
+            HtmlAnchor imgIndi = row.FindControl("indevisi") as HtmlAnchor;
+            if (rbIsIndeginized.SelectedIndex != -1)
+            {
+                if (rbIsIndeginized.SelectedItem.Value == "Y")
+                {
+                    lbcart.Enabled = false;
+                    lbcart.Text = "View Only";
+                    imgIndi.Visible = true;
+                }
+                else
+                {
+                    lbcart.Enabled = true;
+                    imgIndi.Visible = false;
+                }
+                lbcart.CssClass = "btn btn-sm btn-block text-white";
+            }
+        }
     }
     protected void chktendor_SelectedIndexChanged(object sender, EventArgs e)
     {
         SeachResult();
+        foreach (DataListItem row in dlproduct.Items)
+        {
+            LinkButton lbcart = row.FindControl("lbaddcart") as LinkButton;
+            HtmlAnchor imgIndi1 = row.FindControl("InHouse") as HtmlAnchor;
+            HtmlAnchor imgIndi2 = row.FindControl("IGA") as HtmlAnchor;
+            if (chktendor.SelectedItem.Value == "58264" || chktendor.SelectedItem.Value == "58270")
+            {
+                lbcart.Enabled = false;
+                lbcart.Text = "View Only";
+                if (rbIsIndeginized.SelectedIndex != -1)
+                {
+                    if (chktendor.SelectedItem.Value == "58264")
+                    {
+                        if (rbIsIndeginized.SelectedItem.Value == "Y")
+                        {
+                            imgIndi2.Visible = true;
+                        }
+                        else
+                        {
+                            imgIndi2.Visible = false;
+                        }
+                    }
+                    else if (chktendor.SelectedItem.Value == "58270")
+                    {
+                        if (rbIsIndeginized.SelectedItem.Value == "Y")
+                        {
+                            imgIndi1.Visible = true;
+                        }
+                        else
+                        {
+                            imgIndi1.Visible = false;
+                        }
+                    }
+                    else { }
+                }
+            }
+            else
+            {
+                if (rbIsIndeginized.SelectedIndex != -1)
+                {
+                    if (rbIsIndeginized.SelectedItem.Value == "Y")
+                    {
+                        imgIndi2.Visible = true;
+                        lbcart.Enabled = false;
+                        lbcart.Text = "View Only";
+                    }
+                    else
+                    {
+                        imgIndi2.Visible = false;
+                        lbcart.Enabled = true;
+                    }
+                }
+            }
+            lbcart.CssClass = "btn btn-sm btn-block text-white";
+        }
     }
     protected void txtsearch_TextChanged(object sender, EventArgs e)
     {
         SeachResult();
+        foreach (DataListItem row in dlproduct.Items)
+        {
+            LinkButton lbcart = row.FindControl("lbaddcart") as LinkButton;
+            HtmlAnchor imgIndi = row.FindControl("indevisi") as HtmlAnchor;
+            if (rbIsIndeginized.SelectedIndex != -1)
+            {
+                if (rbIsIndeginized.SelectedItem.Value == "Y")
+                {
+                    lbcart.Enabled = false;
+                    lbcart.Text = "View Only";
+                    imgIndi.Visible = true;
+                }
+                else
+                {
+                    lbcart.Enabled = true;
+                    imgIndi.Visible = false;
+                }
+                lbcart.CssClass = "btn btn-sm btn-block text-white";
+            }
+        }
     }
     protected void rberffpurchase_SelectedIndexChanged(object sender, EventArgs e)
     {
         SeachResult();
+        foreach (DataListItem row in dlproduct.Items)
+        {
+            LinkButton lbcart = row.FindControl("lbaddcart") as LinkButton;
+            HtmlAnchor imgIndi = row.FindControl("indevisi") as HtmlAnchor;
+            if (rbIsIndeginized.SelectedIndex != -1)
+            {
+                if (rbIsIndeginized.SelectedItem.Value == "Y")
+                {
+                    lbcart.Enabled = false;
+                    lbcart.Text = "View Only";
+                    imgIndi.Visible = true;
+                }
+                else
+                {
+                    lbcart.Enabled = true;
+                    imgIndi.Visible = false;
+                }
+                lbcart.CssClass = "btn btn-sm btn-block text-white";
+            }
+        }
     }
     protected void rbsort_SelectedIndexChanged(object sender, EventArgs e)
     {
@@ -441,13 +885,141 @@ public partial class User_U_ProductList : System.Web.UI.Page
         //else
         //{
         SeachResult();
+        foreach (DataListItem row in dlproduct.Items)
+        {
+            LinkButton lbcart = row.FindControl("lbaddcart") as LinkButton;
+            HtmlAnchor imgIndi = row.FindControl("indevisi") as HtmlAnchor;
+            if (rbIsIndeginized.SelectedIndex != -1)
+            {
+                if (rbIsIndeginized.SelectedItem.Value == "Y")
+                {
+                    lbcart.Enabled = false;
+                    lbcart.Text = "View Only";
+                    imgIndi.Visible = true;
+                }
+                else
+                {
+                    lbcart.Enabled = true;
+                    imgIndi.Visible = false;
+                }
+                lbcart.CssClass = "btn btn-sm btn-block text-white";
+            }
+        }
         //}
     }
     protected void rbindustryspecification_SelectedIndexChanged(object sender, EventArgs e)
     {
         SeachResult();
+        foreach (DataListItem row in dlproduct.Items)
+        {
+            LinkButton lbcart = row.FindControl("lbaddcart") as LinkButton;
+            HtmlAnchor imgIndi = row.FindControl("indevisi") as HtmlAnchor;
+            if (rbIsIndeginized.SelectedIndex != -1)
+            {
+                if (rbIsIndeginized.SelectedItem.Value == "Y")
+                {
+                    lbcart.Enabled = false;
+                    lbcart.Text = "View Only";
+                    imgIndi.Visible = true;
+                }
+                else
+                {
+                    lbcart.Enabled = true;
+                    imgIndi.Visible = false;
+                }
+                lbcart.CssClass = "btn btn-sm btn-block text-white";
+            }
+        }
     }
     protected void chkimportvalue_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        try
+        {
+            SeachResult();
+            foreach (DataListItem row in dlproduct.Items)
+            {
+                LinkButton lbcart = row.FindControl("lbaddcart") as LinkButton;
+                HtmlAnchor imgIndi = row.FindControl("indevisi") as HtmlAnchor;
+                if (rbIsIndeginized.SelectedIndex != -1)
+                {
+                    if (rbIsIndeginized.SelectedItem.Value == "Y")
+                    {
+                        lbcart.Enabled = false;
+                        lbcart.Text = "View Only";
+                        imgIndi.Visible = true;
+                    }
+                    else
+                    {
+                        lbcart.Enabled = true;
+                        imgIndi.Visible = false;
+                    }
+                    lbcart.CssClass = "btn btn-sm btn-block text-white";
+                }
+            }
+        }
+        catch (Exception EX)
+        {
+            EX.Message.ToString();
+        }
+    }
+    protected void rblsupplyOrder_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        SeachResult();
+        foreach (DataListItem row in dlproduct.Items)
+        {
+            LinkButton lbcart = row.FindControl("lbaddcart") as LinkButton;
+            HtmlAnchor SupplyOr = row.FindControl("SupplyOr") as HtmlAnchor;
+            if (rblsupplyOrder.SelectedItem.Value == "Yes")
+            {
+                lbcart.Enabled = false;
+                lbcart.Text = "View Only";
+                SupplyOr.Visible = true;
+            }
+            else
+            {
+                lbcart.Enabled = true;
+                SupplyOr.Visible = false;
+            }
+            lbcart.CssClass = "btn btn-sm btn-block text-white";
+        }
+    }
+    protected void lnktooltip_Click(object sender, EventArgs e)
+    {
+        ScriptManager.RegisterStartupScript(this, GetType(), "searchtooltip", "showPopup4();", true);
+    }
+    protected void lblviewcomp_Click(object sender, EventArgs e)
+    {
+        try
+        {
+            DataTable DtC = new DataTable();
+            DtC = Lo.NewRetriveFilterCode("CompMultiSearchHome", "", "", "", "", 0, 0, 0);
+            if (DtC.Rows.Count > 0)
+            {
+                GridView5.DataSource = DtC;
+                GridView5.DataBind();
+                GridView5.FooterRow.Cells[0].Text = "Total";
+                GridView5.FooterRow.Cells[0].HorizontalAlign = HorizontalAlign.Center;
+                object sumObjectn = DtC.Compute("Sum(TotalProd)", string.Empty);
+                GridView5.FooterRow.Cells[1].Text = sumObjectn.ToString();
+                //1
+                object sumObjectn1 = DtC.Compute("Sum(TotalProdPortal)", string.Empty);
+                GridView5.FooterRow.Cells[2].Text = sumObjectn1.ToString();
+                //2
+                object sumObjectn2 = DtC.Compute("Sum(ValueInYear)", string.Empty);
+                GridView5.FooterRow.Cells[3].Text = sumObjectn2.ToString();
+                ScriptManager.RegisterStartupScript(this, GetType(), "searchtooltip", "showPopup10();", true);
+            }
+        }
+        catch (Exception ex)
+        {
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('" + ex.Message + "');", true);
+        }
+    }
+    protected void ddlsort_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        SeachResult();
+    }
+    protected void rbeoistatus_SelectedIndexChanged(object sender, EventArgs e)
     {
         SeachResult();
     }
@@ -575,6 +1147,13 @@ public partial class User_U_ProductList : System.Web.UI.Page
                 dr["Value"] = " '0.5'  and " + rbsort.SelectedValue + " < '5')";
                 insert.Rows.Add(dr);
             }
+            else if (chkimportvalue.SelectedItem.Value == "5")
+            {
+                dr = insert.NewRow();
+                dr["Column"] = "(" + rbsort.SelectedValue + " <=";
+                dr["Value"] = " '0.5' and EstimatePrice >='0.0')";
+                insert.Rows.Add(dr);
+            }
         }
         if (rbsort.SelectedValue == "EstimatePrice")
         {
@@ -582,7 +1161,8 @@ public partial class User_U_ProductList : System.Web.UI.Page
             dr["Column"] = "ImportYear " + "= ";
             if (chkimportvalue.SelectedIndex == -1)
             {
-                dr["Value"] = "'2019-20' and EstimatePrice >= 0.5 ";
+                dr["Value"] = "'2019-20'";
+                //  and EstimatePrice >= 0.0
             }
             else
             {
@@ -593,38 +1173,56 @@ public partial class User_U_ProductList : System.Web.UI.Page
         else if (rbsort.SelectedValue == "EstimatePrice18")
         {
             dr = insert.NewRow();
-            dr["Column"] = "ImportYear18 " + "= ";
+            dr["Column"] = "(ImportYear18 " + "= ";
             if (chkimportvalue.SelectedIndex == -1)
             {
-                dr["Value"] = "'2018-19' and EstimatePrice18 >= 0.5 ";
+                dr["Value"] = "'2018-19' or ImportYear17 ='2017-18')";
+                // and EstimatePrice18 >= 0.0
             }
             else
             {
-                dr["Value"] = "'2018-19'";
+                dr["Value"] = "'2018-19' or ImportYear17 ='2017-18')";
             }
             insert.Rows.Add(dr);
         }
-        else if (rbsort.SelectedValue == "EstimatePrice17")
-        {
-            dr = insert.NewRow();
-            dr["Column"] = "ImportYear17 " + "= ";
-            if (chkimportvalue.SelectedIndex == -1)
-            {
-                dr["Value"] = "'2017-18' and EstimatePrice17 >= 0.5 ";
-            }
-            else
-            {
-                dr["Value"] = "'2017-18'";
-            }
-            insert.Rows.Add(dr);
-        }
+        //else if (rbsort.SelectedValue == "EstimatePrice17")
+        //{
+        //    dr = insert.NewRow();
+        //    dr["Column"] = "ImportYear17 " + "= ";
+        //    if (chkimportvalue.SelectedIndex == -1)
+        //    {
+        //        dr["Value"] = "'2017-18'";
+        //        //and EstimatePrice17 >= 0.0
+        //    }
+        //    else
+        //    {
+        //        dr["Value"] = "'2017-18'";
+        //    }
+        //    insert.Rows.Add(dr);
+        //}
         else if (rbsort.SelectedValue == "EstimatePricefuture")
         {
             dr = insert.NewRow();
             dr["Column"] = "ImportFutureYear" + " = ";
             if (chkimportvalue.SelectedIndex == -1)
             {
-                dr["Value"] = "'2020-21' and EstimatePricefuture >= 0.5 ";
+                dr["Value"] = "'2021-22'";
+                // and EstimatePricefuture >= 0.0
+            }
+            else
+            {
+                dr["Value"] = "'2021-22'";
+            }
+            insert.Rows.Add(dr);
+        }
+        else if (rbsort.SelectedValue == "EstimatePrice21")
+        {
+            dr = insert.NewRow();
+            dr["Column"] = "ImportYear21" + " = ";
+            if (chkimportvalue.SelectedIndex == -1)
+            {
+                dr["Value"] = "'2020-21'";
+                // and EstimatePricefuture >= 0.0
             }
             else
             {
@@ -632,20 +1230,38 @@ public partial class User_U_ProductList : System.Web.UI.Page
             }
             insert.Rows.Add(dr);
         }
-
+        if (rbIsIndeginized.SelectedIndex != -1)
+        {
+            dr = insert.NewRow();
+            dr["Column"] = "IsIndeginized  = ";
+            dr["Value"] = "'" + rbIsIndeginized.SelectedItem.Value.Trim() + "'";
+            insert.Rows.Add(dr);
+        }
         if (rbindigtarget.SelectedIndex != -1)
         {
             dr = insert.NewRow();
             dr["Column"] = "IndTargetYear  like ";
-            dr["Value"] = "'%" + rbindigtarget.SelectedItem.Value.Trim() + "%'";
+            dr["Value"] = "'" + rbindigtarget.SelectedItem.Value.Trim() + "'";
             insert.Rows.Add(dr);
         }
         if (txtsearch.Text.Trim() != "")
         {
-            dr = insert.NewRow();
-            dr["Column"] = "((ProductRefNo like";
-            dr["Value"] = "'" + txtsearch.Text.Trim() + "%') or (CompanyName like '" + txtsearch.Text.Trim() + "%') or (UnitName like '" + txtsearch.Text.Trim() + "%') or (FactoryName like '" + txtsearch.Text.Trim() + "%') or (NSCCode like '" + txtsearch.Text.Trim() + "%') or (ProductDescription like '" + txtsearch.Text.Trim() + "%') or (NSNGroup like '" + txtsearch.Text.Trim() + "%') or (DefencePlatform  like '" + txtsearch.Text.Trim() + "%') or (ProdIndustryDoamin like '" + txtsearch.Text.Trim() + "%')  or (NSNGroupClass like '" + txtsearch.Text.Trim() + "%')  or  (ItemCode  like '" + txtsearch.Text.Trim() + "%')  or (ProdIndustrySubDomain like '" + txtsearch.Text.Trim() + "%') or (TopPdf like '" + txtsearch.Text.Trim() + "%')  or (TopImages like '" + txtsearch.Text.Trim() + "%')  or (HSNCode like '" + txtsearch.Text.Trim() + "%') or (Convert(EstimateQu, 'System.String') LIKE '" + txtsearch.Text + "%') or (Convert(EstimatePrice, 'System.String') LIKE '" + txtsearch.Text + "%') or (DPSUPartNumber like '" + txtsearch.Text.Trim() + "%') or (OEMName like '" + txtsearch.Text.Trim() + "%') or (OEMCountry like '" + txtsearch.Text.Trim() + "%'))";
-            insert.Rows.Add(dr);
+            if (ddlfiltersearch.SelectedItem.Value == "All Criteria")
+            {
+                dr = insert.NewRow();
+                dr["Column"] = "((ProductRefNo like";
+                dr["Value"] = "'%" + txtsearch.Text.Trim() + "%') or (ProductDescription like '%" + txtsearch.Text.Trim() + "%')  or(CompanyName like '" + txtsearch.Text.Trim() + "%') or(UnitName like '" + txtsearch.Text.Trim() + "%') or(FactoryName like '" + txtsearch.Text.Trim() + "%') or(NSCCode like '" + txtsearch.Text.Trim() + "%') or(NSNGroup like '" + txtsearch.Text.Trim() + "%') or(DefencePlatform  like '" + txtsearch.Text.Trim() + "%') or(ProdIndustryDoamin like '" + txtsearch.Text.Trim() + "%')  or(NSNGroupClass like '" + txtsearch.Text.Trim() + "%')  or(ProdIndustrySubDomain like '" + txtsearch.Text.Trim() + "%')  or(HSNCode like '" + txtsearch.Text.Trim() + "%')  or(DPSUPartNumber like '" + txtsearch.Text.Trim() + "%') or(OEMName like '" + txtsearch.Text.Trim() + "%') or(OEMCountry like '" + txtsearch.Text.Trim() + "%'))";
+                // or(Convert(EstimateQu, 'System.String') LIKE '" + txtsearch.Text + "%') or(Convert(EstimatePrice, 'System.String') LIKE '" + txtsearch.Text + "%')
+                //or(ProductDescription like '%" + String.Concat(txtsearch.Text.Trim().Reverse()) + "%')
+                insert.Rows.Add(dr);
+            }
+            else
+            {
+                dr = insert.NewRow();
+                dr["Column"] = "" + ddlfiltersearch.SelectedItem.Text + " =";
+                dr["Value"] = "'" + txtsearch.Text.Trim() + "'";
+                insert.Rows.Add(dr);
+            }
         }
         if (rbindustryspecification.SelectedIndex != -1)
         {
@@ -654,6 +1270,25 @@ public partial class User_U_ProductList : System.Web.UI.Page
             dr["Value"] = rbindustryspecification.SelectedItem.Value.Trim();
             insert.Rows.Add(dr);
         }
+        if (rbeoistatus.SelectedIndex != -1)
+        {
+            dr = insert.NewRow();
+            dr["Column"] = "EOIStatus=";
+            if (rbeoistatus.SelectedItem.Value == "Yes" || rbeoistatus.SelectedItem.Value == "Active")
+            {
+                dr["Value"] = "'" + rbeoistatus.SelectedItem.Value + "' and EOIEndDate >'" + DateTime.Now.ToString("yyyy-MMM-dd") + "'";
+            }
+            else if (rbeoistatus.SelectedItem.Value == "Archive")
+            {
+                dr["Value"] = "'" + rbeoistatus.SelectedItem.Value + "' and EOIEndDate < '" + DateTime.Now.ToString("yyyy-MMM-dd") + "'";
+            }
+            else if (rbeoistatus.SelectedItem.Value == "No")
+            {
+                dr["Value"] = "'" + rbeoistatus.SelectedItem.Value + "'";
+            }
+            insert.Rows.Add(dr);
+        }
+
         for (int i = 0; insert.Rows.Count > i; i++)
         {
             insert1 = insert1 + insert.Rows[i]["Column"].ToString() + " " + insert.Rows[i]["Value"].ToString() + " " + " and ";
@@ -669,7 +1304,6 @@ public partial class User_U_ProductList : System.Web.UI.Page
     {
         return Dvinsert();
     }
-
     public void SeachResult(string sortExpression = null)
     {
         try
@@ -685,15 +1319,23 @@ public partial class User_U_ProductList : System.Web.UI.Page
                     DataTable dtinner = dv.ToTable();
                     if (dtinner.Rows.Count > 0)
                     {
-                        if (rbsort.SelectedIndex != -1)
+                        if (rbsort.SelectedIndex != -1 && rbsort.SelectedItem.Text.Trim() == "2020-21")
                         {
-                            dv.Sort = rbsort.SelectedItem.Value + " " + "desc";
+                            object sumObject = dtinner.Compute("Sum(EstimatePrice21)", string.Empty);
+                            if (sumObject.ToString() == "")
+                            {
+                                lblyearvalue.Text = "Import Value during " + rbsort.SelectedItem.Text;
+                                lblestimateprice.Text = "0";
+                            }
+                            else
+                            {
+                                lblyearvalue.Text = "Import Value during " + rbsort.SelectedItem.Text;
+                                decimal d = Convert.ToDecimal(sumObject.ToString());
+                                decimal m = Math.Round(d, 0);
+                                lblestimateprice.Text = m.ToString();
+                            }
                         }
-                        else
-                        {
-                            dv.Sort = "EstiPriMultiF desc";
-                        }
-                        if (rbsort.SelectedIndex != -1 && rbsort.SelectedItem.Text.Trim() == "2019-20")
+                        else if (rbsort.SelectedIndex != -1 && rbsort.SelectedItem.Text.Trim() == "2019-20")
                         {
                             object sumObject = dtinner.Compute("Sum(EstimatePrice)", string.Empty);
                             if (sumObject.ToString() == "")
@@ -781,6 +1423,33 @@ public partial class User_U_ProductList : System.Web.UI.Page
                         lnkbtnPgNext.Enabled = !pgsource.IsLastPage;
                         LinkButton2.Enabled = !pgsource.IsLastPage;
                         pgsource.DataSource = dtads.DefaultView;
+                        if (ddlsort.SelectedItem.Value != "Sort by")
+                        {
+                            if (ddlsort.SelectedItem.Text == "Popularity")
+                            { dtads.DefaultView.Sort = ddlsort.SelectedItem.Value + " desc"; }
+                            if (ddlsort.SelectedItem.Text == "opportunity")
+                            { dtads.DefaultView.Sort = "TotalInterest asc"; }
+                            else if (ddlsort.SelectedItem.Text == "Newest")
+                            { dtads.DefaultView.Sort = ddlsort.SelectedItem.Value + " desc"; }
+                            else if (ddlsort.SelectedItem.Text == "Oldest")
+                            { dtads.DefaultView.Sort = ddlsort.SelectedItem.Value; }
+                            else if (ddlsort.SelectedItem.Text == "Higest Value")
+                            { dtads.DefaultView.Sort = rbsort.SelectedItem.Value + " " + "desc"; }
+                            else if (ddlsort.SelectedItem.Text == "Lowest Value")
+                            { dtads.DefaultView.Sort = rbsort.SelectedItem.Value + " " + "asc"; }
+                        }
+                        else
+                        {
+                            dv.Sort = "EstiPriMultiF desc,CompanyName asc,LastUpdated desc";
+                        }
+                        //if (rbsort.SelectedIndex != -1)
+                        //{
+                        //    dtads.DefaultView.Sort = "SortUsing ASC";
+                        //}
+                        //else
+                        //{
+                        //    dtads.DefaultView.Sort = "EstiPriMultiF,SortUsing desc";
+                        //}
                         dlproduct.DataSource = pgsource;
                         dlproduct.DataBind();
                         lbltotalleft.Text = "Total Imported Items :-  " + DtFilterView.Rows.Count.ToString();
@@ -805,6 +1474,7 @@ public partial class User_U_ProductList : System.Web.UI.Page
         }
         catch (Exception ex)
         {
+            ExceptionLogging.SendErrorToText(ex);
             ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('" + ex.Message + "')", true);
         }
     }
@@ -878,6 +1548,7 @@ public partial class User_U_ProductList : System.Web.UI.Page
                     if (DtView.Rows[0]["ProductDescription"].ToString() != "")
                     {
                         itemname2.Text = DtView.Rows[0]["ProductDescription"].ToString();
+                        lblfeature.Text = DtView.Rows[0]["FeatursandDetail"].ToString();
                         lblitemname1.Text = DtView.Rows[0]["ProductDescription"].ToString();
                         eleven.Visible = true;
                         Tr23.Visible = true;
@@ -1019,11 +1690,12 @@ public partial class User_U_ProductList : System.Web.UI.Page
                         if (DTporCat.Rows.Count > 0)
                         {
                             lblindicate.Text = "";
-                            for (int i = 0; DTporCat.Rows.Count > i; i++)
-                            {
-                                lblindicate.Text = lblindicate.Text + DTporCat.Rows[i]["SCategoryName"].ToString() + ", ";
-                            }
-                            lblindicate.Text = lblindicate.Text.Substring(0, lblindicate.Text.Length - 2);
+                            lblindicate.Text = DTporCat.Rows[0]["SCategoryName"].ToString();
+                            //for (int i = 0; DTporCat.Rows.Count > i; i++)
+                            //{
+                            //    lblindicate.Text = lblindicate.Text + DTporCat.Rows[i]["SCategoryName"].ToString() + ", ";
+                            //}
+                            //lblindicate.Text = lblindicate.Text.Substring(0, lblindicate.Text.Length - 2);
                             sixteen.Visible = true;
                         }
                         else
@@ -1033,6 +1705,17 @@ public partial class User_U_ProductList : System.Web.UI.Page
                     {
                         sixteen.Visible = false;
                     }
+                    if (DtView.Rows[0]["IsIndeginized"].ToString() != "")
+                    {
+                        Tr1.Visible = true;
+                        lblindstart.Text = DtView.Rows[0]["IsIndeginized"].ToString();
+                        if (lblindstart.Text == "N")
+                            lblindstart.Text = "No";
+                        else
+                            lblindstart.Text = "Yes";
+                    }
+                    else
+                    { Tr1.Visible = false; }
                     if (DtView.Rows[0]["EOIStatus"].ToString() != "")
                     {
                         lbleoirep.Text = DtView.Rows[0]["EOIStatus"].ToString();
@@ -1136,7 +1819,8 @@ public partial class User_U_ProductList : System.Web.UI.Page
                     }
                     if (DtView.Rows[0]["IndTargetYear"].ToString() != "")
                     {
-                        lblindtrgyr.Text = DtView.Rows[0]["IndTargetYear"].ToString().Substring(0, DtView.Rows[0]["IndTargetYear"].ToString().Length - 1);
+                        // .Substring(0, DtView.Rows[0]["IndTargetYear"].ToString().Length - 1
+                        lblindtrgyr.Text = DtView.Rows[0]["IndTargetYear"].ToString();
                         if (lblindtrgyr.Text == "NIL")
                         { Tr25.Visible = false; }
                         else
@@ -1160,58 +1844,63 @@ public partial class User_U_ProductList : System.Web.UI.Page
         #region AddCart
         else if (e.CommandName == "addcart")
         {
+            this.StoreUserIP(e.CommandArgument.ToString());
             LinkButton lnkId = (LinkButton)e.Item.FindControl("lbaddcart");
             dtCart.Columns.Add(new DataColumn("ProductRefNo", typeof(string)));
-            if (ViewState["buyitems"] != null)
+            if (lnkId.Text != "View Only")
             {
-                dtCart = (DataTable)ViewState["buyitems"];
-                if (dtCart.Rows.Count > 0)
+                if (ViewState["buyitems"] != null)
                 {
-                    string InCart = "";
-                    for (int i = 0; dtCart.Rows.Count > i; i++)
+                    dtCart = (DataTable)ViewState["buyitems"];
+                    if (dtCart.Rows.Count > 0)
                     {
-                        if (e.CommandArgument.ToString() == dtCart.Rows[i]["ProductRefNo"].ToString())
+                        string InCart = "";
+                        for (int i = 0; dtCart.Rows.Count > i; i++)
                         {
-                            InCart = "AlreadyInCart";
+                            if (e.CommandArgument.ToString() == dtCart.Rows[i]["ProductRefNo"].ToString())
+                            {
+                                InCart = "AlreadyInCart";
+                                lnkId.Text = "Successfully Added";
+                                lnkId.Attributes.Remove("Class");
+                                lnkId.Attributes.Add("Class", "btn btn-success btn-sm btn-block");
+                                break;
+                            }
+                        }
+                        if (InCart != "AlreadyInCart")
+                        {
+                            dr = dtCart.NewRow();
+                            dr["ProductRefNo"] = e.CommandArgument.ToString();
+                            dtCart.Rows.Add(dr);
+                            ViewState["buyitems"] = dtCart;
                             lnkId.Text = "Successfully Added";
                             lnkId.Attributes.Remove("Class");
                             lnkId.Attributes.Add("Class", "btn btn-success btn-sm btn-block");
-                            break;
+
                         }
                     }
-                    if (InCart != "AlreadyInCart")
-                    {
-                        dr = dtCart.NewRow();
-                        dr["ProductRefNo"] = e.CommandArgument.ToString();
-                        dtCart.Rows.Add(dr);
-                        ViewState["buyitems"] = dtCart;
-                        lnkId.Text = "Successfully Added";
-                        lnkId.Attributes.Remove("Class");
-                        lnkId.Attributes.Add("Class", "btn btn-success btn-sm btn-block");
-
-                    }
+                }
+                else
+                {
+                    dr = dtCart.NewRow();
+                    dr["ProductRefNo"] = e.CommandArgument.ToString();
+                    dtCart.Rows.Add(dr);
+                    ViewState["buyitems"] = dtCart;
+                    lnkId.Text = "Successfully Added";
+                    lnkId.Attributes.Remove("Class");
+                    lnkId.Attributes.Add("Class", "btn btn-success btn-sm btn-block");
+                }
+                if (dtCart != null)
+                {
+                    Session["DCart"] = ViewState["buyitems"];
+                    totalno.InnerText = dtCart.Rows.Count.ToString();
+                }
+                else
+                {
+                    totalno.InnerText = "0";
                 }
             }
-            else
-            {
-                dr = dtCart.NewRow();
-                dr["ProductRefNo"] = e.CommandArgument.ToString();
-                dtCart.Rows.Add(dr);
-                ViewState["buyitems"] = dtCart;
-                lnkId.Text = "Successfully Added";
-                lnkId.Attributes.Remove("Class");
-                lnkId.Attributes.Add("Class", "btn btn-success btn-sm btn-block");
-            }
-            if (dtCart != null)
-            {
-                totalno.InnerText = dtCart.Rows.Count.ToString();
-            }
-            else
-            {
-                totalno.InnerText = "0";
-            }
         }
-        #endregion
+        #endregion      
     }
     protected void lbtotalcart_Click(object sender, EventArgs e)
     {
@@ -1243,23 +1932,32 @@ public partial class User_U_ProductList : System.Web.UI.Page
     {
         if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
         {
+            LinkButton lbcart = e.Item.FindControl("lbaddcart") as LinkButton;
+            HtmlAnchor lbindevisi = (HtmlAnchor)e.Item.FindControl("indevisi");
+            HtmlAnchor SupplyOr = (HtmlAnchor)e.Item.FindControl("SupplyOr");
+            HtmlAnchor inhouse = (HtmlAnchor)e.Item.FindControl("inhouse");
+            HtmlAnchor IGA = (HtmlAnchor)e.Item.FindControl("IGA");
+            Label ISINDI = (Label)e.Item.FindControl("ISINDI");
+            Label SupplyOr1 = (Label)e.Item.FindControl("SupplyOr1");
+            Label LBPURPOSEOFPROC = (Label)e.Item.FindControl("LBPURPOSEOFPROC");
+            HiddenField hfnsc = (HiddenField)e.Item.FindControl("hfnsc");
+            HtmlAnchor hydecenc = (HtmlAnchor)e.Item.FindControl("LinkButton6");
+            hydecenc.HRef = "~/SimilarProd?sProd=" + Encrypt.EncryptData(hfnsc.Value) + "&msort=" + Encrypt.EncryptData(rbsort.SelectedItem.Text.Trim());
             if (dtCart.Rows.Count > 0)
             {
-                LinkButton lnkId = (LinkButton)e.Item.FindControl("lbaddcart");
                 HiddenField hf = (HiddenField)e.Item.FindControl("hfr");
                 for (int i = 0; dtCart.Rows.Count > i; i++)
                 {
                     if (dtCart.Rows[i]["ProductRefNo"].ToString() == hf.Value)
-                        lnkId.Text = "Successfully Added";
-                    lnkId.Attributes.Remove("Class");
-                    lnkId.Attributes.Add("Class", "btn btn-success btn-sm btn-block");
+                        lbcart.Text = "Successfully Added";
+                    lbcart.Attributes.Remove("Class");
+                    lbcart.Attributes.Add("Class", "btn btn-success btn-sm btn-block");
                 }
             }
             Label lblepold = (Label)e.Item.FindControl("lblepold");
             Label lblepold17 = (Label)e.Item.FindControl("lblepold17");
             Label lblepold18 = (Label)e.Item.FindControl("lblepold18");
             Label lblepfu = (Label)e.Item.FindControl("lblepfu");
-
             if (rbsort.SelectedIndex != -1 && rbsort.SelectedItem.Text.Trim() == "2019-20")
             {
                 lblepold.Visible = true;
@@ -1290,6 +1988,51 @@ public partial class User_U_ProductList : System.Web.UI.Page
                 lblepold17.Visible = false;
                 lblepold18.Visible = false;
             }
+            if (LBPURPOSEOFPROC.Text == "58264" || LBPURPOSEOFPROC.Text == "58270")
+            {
+                lbcart.Enabled = false;
+                lbcart.Text = "View Only";
+                if (LBPURPOSEOFPROC.Text == "58264")
+                {
+                    IGA.Visible = true;
+                    SupplyOr.Visible = false;
+                    lbindevisi.Visible = false;
+                    inhouse.Visible = false;
+                }
+                if (LBPURPOSEOFPROC.Text == "58270")
+                {
+                    IGA.Visible = false;
+                    SupplyOr.Visible = false;
+                    lbindevisi.Visible = false;
+                    inhouse.Visible = true;
+                }
+            }
+            else
+            {
+                lbcart.Enabled = true;
+            }
+            if (SupplyOr1.Text.Trim() == "Yes")
+            {
+                IGA.Visible = false;
+                SupplyOr.Visible = true;
+                lbindevisi.Visible = false;
+                inhouse.Visible = false;
+                lbcart.Enabled = false;
+                lbcart.Text = "View Only";
+            }
+            if (ISINDI.Text.Trim() == "Y")
+            {
+
+                IGA.Visible = false;
+                SupplyOr.Visible = false;
+                lbindevisi.Visible = true;
+                inhouse.Visible = false;
+                lbcart.Enabled = false;
+                lbcart.Text = "View Only";
+            }
+
+
+            lbcart.CssClass = "btn btn-sm btn-block text-white";
         }
     }
     protected void totoalmore_Click(object sender, EventArgs e)
@@ -1319,35 +2062,36 @@ public partial class User_U_ProductList : System.Web.UI.Page
             object sumObjectn1 = dtProductDetail.Compute("Sum(TotalPrice1920)", string.Empty);
             gvPrdoct.FooterRow.Cells[3].Text = sumObjectn1.ToString();
             //2
-            object sumObjectn2 = dtProductDetail.Compute("Sum(ProdLess5)", string.Empty);
+            object sumObjectn2 = dtProductDetail.Compute("Sum(ProdBelow05)", string.Empty);
             gvPrdoct.FooterRow.Cells[4].Text = sumObjectn2.ToString();
             //3
-            object sumObjectn3 = dtProductDetail.Compute("Sum(PriceLess5)", string.Empty);
+            object sumObjectn3 = dtProductDetail.Compute("Sum(ProdLess5)", string.Empty);
             gvPrdoct.FooterRow.Cells[5].Text = sumObjectn3.ToString();
             //4
-            object sumObjectn4 = dtProductDetail.Compute("Sum(ProdLess10)", string.Empty);
+            object sumObjectn4 = dtProductDetail.Compute("Sum(PriceLess5)", string.Empty);
             gvPrdoct.FooterRow.Cells[6].Text = sumObjectn4.ToString();
             //5
-            object sumObjectn5 = dtProductDetail.Compute("Sum(PriceLess10)", string.Empty);
+            object sumObjectn5 = dtProductDetail.Compute("Sum(ProdLess10)", string.Empty);
             gvPrdoct.FooterRow.Cells[7].Text = sumObjectn5.ToString();
             //6
-            object sumObjectn6 = dtProductDetail.Compute("Sum(ProdLess50)", string.Empty);
+            object sumObjectn6 = dtProductDetail.Compute("Sum(PriceLess10)", string.Empty);
             gvPrdoct.FooterRow.Cells[8].Text = sumObjectn6.ToString();
             //7
-            object sumObjectn7 = dtProductDetail.Compute("Sum(PriceLess50)", string.Empty);
+            object sumObjectn7 = dtProductDetail.Compute("Sum(ProdLess50)", string.Empty);
             gvPrdoct.FooterRow.Cells[9].Text = sumObjectn7.ToString();
             //8
-            object sumObjectn8 = dtProductDetail.Compute("Sum(ProdAbove50)", string.Empty);
+            object sumObjectn8 = dtProductDetail.Compute("Sum(PriceLess50)", string.Empty);
             gvPrdoct.FooterRow.Cells[10].Text = sumObjectn8.ToString();
             //9
-            object sumObjectn9 = dtProductDetail.Compute("Sum(PriceAbove50)", string.Empty);
+            object sumObjectn9 = dtProductDetail.Compute("Sum(ProdAbove50)", string.Empty);
             gvPrdoct.FooterRow.Cells[11].Text = sumObjectn9.ToString();
             //10
-            object sumObjectn10 = dtProductDetail.Compute("Sum(TargetIndig2020)", string.Empty);
+            object sumObjectn10 = dtProductDetail.Compute("Sum(PriceAbove50)", string.Empty);
             gvPrdoct.FooterRow.Cells[12].Text = sumObjectn10.ToString();
+            //11
+            object sumObjectn11 = dtProductDetail.Compute("Sum(TargetIndig2020)", string.Empty);
+            gvPrdoct.FooterRow.Cells[13].Text = sumObjectn11.ToString();
         }
-        else
-        { }
         #endregion
         #region Second Table
         DataTable dtProductDetail1 = Lo.RetriveProductIndig1("", "", "Gettotalprovalue21");
@@ -1364,35 +2108,36 @@ public partial class User_U_ProductList : System.Web.UI.Page
             object sumObjectn1 = dtProductDetail1.Compute("Sum(TotalPrice2021)", string.Empty);
             DataList1.FooterRow.Cells[3].Text = sumObjectn1.ToString();
             //2
-            object sumObjectn2 = dtProductDetail1.Compute("Sum(ProdLess5)", string.Empty);
+            object sumObjectn2 = dtProductDetail1.Compute("Sum(ProdBelow05)", string.Empty);
             DataList1.FooterRow.Cells[4].Text = sumObjectn2.ToString();
             //3
-            object sumObjectn3 = dtProductDetail1.Compute("Sum(PriceLess5)", string.Empty);
+            object sumObjectn3 = dtProductDetail1.Compute("Sum(ProdLess5)", string.Empty);
             DataList1.FooterRow.Cells[5].Text = sumObjectn3.ToString();
             //4
-            object sumObjectn4 = dtProductDetail1.Compute("Sum(ProdLess10)", string.Empty);
+            object sumObjectn4 = dtProductDetail1.Compute("Sum(PriceLess5)", string.Empty);
             DataList1.FooterRow.Cells[6].Text = sumObjectn4.ToString();
             //5
-            object sumObjectn5 = dtProductDetail1.Compute("Sum(PriceLess10)", string.Empty);
+            object sumObjectn5 = dtProductDetail1.Compute("Sum(ProdLess10)", string.Empty);
             DataList1.FooterRow.Cells[7].Text = sumObjectn5.ToString();
             //6
-            object sumObjectn6 = dtProductDetail1.Compute("Sum(ProdLess50)", string.Empty);
+            object sumObjectn6 = dtProductDetail1.Compute("Sum(PriceLess10)", string.Empty);
             DataList1.FooterRow.Cells[8].Text = sumObjectn6.ToString();
             //7
-            object sumObjectn7 = dtProductDetail1.Compute("Sum(PriceLess50)", string.Empty);
+            object sumObjectn7 = dtProductDetail1.Compute("Sum(ProdLess50)", string.Empty);
             DataList1.FooterRow.Cells[9].Text = sumObjectn7.ToString();
             //8
-            object sumObjectn8 = dtProductDetail1.Compute("Sum(ProdAbove50)", string.Empty);
+            object sumObjectn8 = dtProductDetail1.Compute("Sum(PriceLess50)", string.Empty);
             DataList1.FooterRow.Cells[10].Text = sumObjectn8.ToString();
             //9
-            object sumObjectn9 = dtProductDetail1.Compute("Sum(PriceAbove50)", string.Empty);
+            object sumObjectn9 = dtProductDetail1.Compute("Sum(ProdAbove50)", string.Empty);
             DataList1.FooterRow.Cells[11].Text = sumObjectn9.ToString();
             //10
-            object sumObjectn10 = dtProductDetail1.Compute("Sum(TargetIndig2021)", string.Empty);
+            object sumObjectn10 = dtProductDetail1.Compute("Sum(PriceAbove50)", string.Empty);
             DataList1.FooterRow.Cells[12].Text = sumObjectn10.ToString();
+            //11
+            object sumObjectn11 = dtProductDetail1.Compute("Sum(TargetIndig2021)", string.Empty);
+            DataList1.FooterRow.Cells[13].Text = sumObjectn11.ToString();
         }
-        else
-        { }
         #endregion
         #region Third Table
         DataTable dtProductDetail2 = Lo.RetriveProductIndig1("", "", "GettoalMake2019");
@@ -1409,39 +2154,42 @@ public partial class User_U_ProductList : System.Web.UI.Page
             object sumObjectn1 = dtProductDetail2.Compute("Sum(TotalPrice1920)", string.Empty);
             GridView1.FooterRow.Cells[3].Text = sumObjectn1.ToString();
             //2
-            object sumObjectn2 = dtProductDetail2.Compute("Sum(MAKE2Total)", string.Empty);
+            object sumObjectn2 = dtProductDetail2.Compute("Sum(ProductTotal)", string.Empty);
             GridView1.FooterRow.Cells[4].Text = sumObjectn2.ToString();
             //3
-            object sumObjectn3 = dtProductDetail2.Compute("Sum(MAKE2Price)", string.Empty);
+            object sumObjectn3 = dtProductDetail2.Compute("Sum(MAKE2Total)", string.Empty);
             GridView1.FooterRow.Cells[5].Text = sumObjectn3.ToString();
             //4
-            object sumObjectn4 = dtProductDetail2.Compute("Sum(IDExTotal)", string.Empty);
+            object sumObjectn4 = dtProductDetail2.Compute("Sum(MAKE2Price)", string.Empty);
             GridView1.FooterRow.Cells[6].Text = sumObjectn4.ToString();
             //5
-            object sumObjectn5 = dtProductDetail2.Compute("Sum(IDExPriceTotal)", string.Empty);
+            object sumObjectn5 = dtProductDetail2.Compute("Sum(IDExTotal)", string.Empty);
             GridView1.FooterRow.Cells[7].Text = sumObjectn5.ToString();
             //6
-            object sumObjectn6 = dtProductDetail2.Compute("Sum(IGATotal)", string.Empty);
+            object sumObjectn6 = dtProductDetail2.Compute("Sum(IDExPriceTotal)", string.Empty);
             GridView1.FooterRow.Cells[8].Text = sumObjectn6.ToString();
             //7
-            object sumObjectn7 = dtProductDetail2.Compute("Sum(IGAPrice)", string.Empty);
+            object sumObjectn7 = dtProductDetail2.Compute("Sum(IGATotal)", string.Empty);
             GridView1.FooterRow.Cells[9].Text = sumObjectn7.ToString();
             //8
-            object sumObjectn8 = dtProductDetail2.Compute("Sum(OTHERTHANMAKE2Total)", string.Empty);
+            object sumObjectn8 = dtProductDetail2.Compute("Sum(IGAPrice)", string.Empty);
             GridView1.FooterRow.Cells[10].Text = sumObjectn8.ToString();
             //9
-            object sumObjectn9 = dtProductDetail2.Compute("Sum(OTHERTHANMAKE2Price)", string.Empty);
+            object sumObjectn9 = dtProductDetail2.Compute("Sum(OTHERTHANMAKE2Total)", string.Empty);
             GridView1.FooterRow.Cells[11].Text = sumObjectn9.ToString();
             //10
-            object sumObjectn10 = dtProductDetail2.Compute("Sum(HOUSETotal)", string.Empty);
+            object sumObjectn10 = dtProductDetail2.Compute("Sum(OTHERTHANMAKE2Price)", string.Empty);
             GridView1.FooterRow.Cells[12].Text = sumObjectn10.ToString();
             //11
-            object sumObjectn11 = dtProductDetail2.Compute("Sum(HOUSEPrice)", string.Empty);
+            object sumObjectn11 = dtProductDetail2.Compute("Sum(HOUSETotal)", string.Empty);
             GridView1.FooterRow.Cells[13].Text = sumObjectn11.ToString();
+            //12
+            object sumObjectn12 = dtProductDetail2.Compute("Sum(HOUSEPrice)", string.Empty);
+            GridView1.FooterRow.Cells[14].Text = sumObjectn12.ToString();
         }
         else
         { }
-        #endregion
+        #endregion      
         #region FOurth Table
         DataTable dtProductDetail3 = Lo.RetriveProductIndig1("", "", "GettoalMake2021");
         if (dtProductDetail3.Rows.Count > 0)
@@ -1499,19 +2247,19 @@ public partial class User_U_ProductList : System.Web.UI.Page
             //0
             GridView3.FooterRow.Cells[1].Text = "Total";
             GridView3.FooterRow.Cells[1].HorizontalAlign = HorizontalAlign.Center;
-            object sumObjectn = dtProductDetail4.Compute("Sum(TargetIndig2021)", string.Empty);
+            object sumObjectn = dtProductDetail4.Compute("Sum(TargetIndig2022)", string.Empty);
             GridView3.FooterRow.Cells[2].Text = sumObjectn.ToString();
             //1
-            object sumObjectn1 = dtProductDetail4.Compute("Sum(TargetIndig2022)", string.Empty);
+            object sumObjectn1 = dtProductDetail4.Compute("Sum(TargetIndig2023)", string.Empty);
             GridView3.FooterRow.Cells[3].Text = sumObjectn1.ToString();
             //2
-            object sumObjectn2 = dtProductDetail4.Compute("Sum(TargetIndig2023)", string.Empty);
+            object sumObjectn2 = dtProductDetail4.Compute("Sum(TargetIndig2024)", string.Empty);
             GridView3.FooterRow.Cells[4].Text = sumObjectn2.ToString();
             //3
-            object sumObjectn3 = dtProductDetail4.Compute("Sum(TargetIndig2024)", string.Empty);
+            object sumObjectn3 = dtProductDetail4.Compute("Sum(TargetIndig2025)", string.Empty);
             GridView3.FooterRow.Cells[5].Text = sumObjectn3.ToString();
             //4
-            object sumObjectn4 = dtProductDetail4.Compute("Sum(TargetIndig2025)", string.Empty);
+            object sumObjectn4 = dtProductDetail4.Compute("Sum(TargetIndig2026)", string.Empty);
             GridView3.FooterRow.Cells[6].Text = sumObjectn4.ToString();
             //5
             object sumObjectn5 = dtProductDetail4.Compute("Sum(TargetIndigNILL)", string.Empty);
@@ -1535,21 +2283,68 @@ public partial class User_U_ProductList : System.Web.UI.Page
             object sumObjectn1 = dtProductDetail5.Compute("Sum(TotalPrice1819)", string.Empty);
             GridView4.FooterRow.Cells[3].Text = sumObjectn1.ToString();
             //2
-            object sumObjectn2 = dtProductDetail5.Compute("Sum(ProdLess5)", string.Empty);
+            object sumObjectn2 = dtProductDetail5.Compute("Sum(ProdBelow05)", string.Empty);
             GridView4.FooterRow.Cells[4].Text = sumObjectn2.ToString();
             //3
-            object sumObjectn3 = dtProductDetail5.Compute("Sum(ProdLess10)", string.Empty);
+            object sumObjectn3 = dtProductDetail5.Compute("Sum(ProdLess5)", string.Empty);
             GridView4.FooterRow.Cells[5].Text = sumObjectn3.ToString();
             //4
-            object sumObjectn4 = dtProductDetail5.Compute("Sum(ProdLess50)", string.Empty);
+            object sumObjectn4 = dtProductDetail5.Compute("Sum(ProdLess10)", string.Empty);
             GridView4.FooterRow.Cells[6].Text = sumObjectn4.ToString();
             //5
-            object sumObjectn5 = dtProductDetail5.Compute("Sum(ProdAbove50)", string.Empty);
+            object sumObjectn5 = dtProductDetail5.Compute("Sum(ProdLess50)", string.Empty);
             GridView4.FooterRow.Cells[7].Text = sumObjectn5.ToString();
+            //6
+            object sumObjectn6 = dtProductDetail5.Compute("Sum(ProdAbove50)", string.Empty);
+            GridView4.FooterRow.Cells[8].Text = sumObjectn6.ToString();
 
         }
-        else
-        { }
+        #endregion
+        #region Seventh Table
+        DataTable dtprodGridView6 = Lo.RetriveProductIndig1("", "", "Gettotalprovalue22");
+        if (dtprodGridView6.Rows.Count > 0)
+        {
+            GridView6.DataSource = dtprodGridView6;
+            GridView6.DataBind();
+            //0
+            GridView6.FooterRow.Cells[1].Text = "Total";
+            GridView6.FooterRow.Cells[1].HorizontalAlign = HorizontalAlign.Center;
+            object sumObjectn = dtprodGridView6.Compute("Sum(TotalProd)", string.Empty);
+            GridView6.FooterRow.Cells[2].Text = sumObjectn.ToString();
+            //1
+            object sumObjectn1 = dtprodGridView6.Compute("Sum(TotalPrice2021)", string.Empty);
+            GridView6.FooterRow.Cells[3].Text = sumObjectn1.ToString();
+            //2
+            object sumObjectn2 = dtprodGridView6.Compute("Sum(ProdBelow05)", string.Empty);
+            GridView6.FooterRow.Cells[4].Text = sumObjectn2.ToString();
+            //3
+            object sumObjectn3 = dtprodGridView6.Compute("Sum(ProdLess5)", string.Empty);
+            GridView6.FooterRow.Cells[5].Text = sumObjectn3.ToString();
+            //4
+            object sumObjectn4 = dtprodGridView6.Compute("Sum(PriceLess5)", string.Empty);
+            GridView6.FooterRow.Cells[6].Text = sumObjectn4.ToString();
+            //5
+            object sumObjectn5 = dtprodGridView6.Compute("Sum(ProdLess10)", string.Empty);
+            GridView6.FooterRow.Cells[7].Text = sumObjectn5.ToString();
+            //6
+            object sumObjectn6 = dtprodGridView6.Compute("Sum(PriceLess10)", string.Empty);
+            GridView6.FooterRow.Cells[8].Text = sumObjectn6.ToString();
+            //7
+            object sumObjectn7 = dtprodGridView6.Compute("Sum(ProdLess50)", string.Empty);
+            GridView6.FooterRow.Cells[9].Text = sumObjectn7.ToString();
+            //8
+            object sumObjectn8 = dtprodGridView6.Compute("Sum(PriceLess50)", string.Empty);
+            GridView6.FooterRow.Cells[10].Text = sumObjectn8.ToString();
+            //9
+            object sumObjectn9 = dtprodGridView6.Compute("Sum(ProdAbove50)", string.Empty);
+            GridView6.FooterRow.Cells[11].Text = sumObjectn9.ToString();
+            //10
+            object sumObjectn10 = dtprodGridView6.Compute("Sum(PriceAbove50)", string.Empty);
+            GridView6.FooterRow.Cells[12].Text = sumObjectn10.ToString();
+            //11
+            object sumObjectn11 = dtprodGridView6.Compute("Sum(TargetIndig2021)", string.Empty);
+            GridView6.FooterRow.Cells[13].Text = sumObjectn11.ToString();
+        }
         #endregion
         ScriptManager.RegisterStartupScript(this, GetType(), "divCompany", "showPopup1();", true);
     }
@@ -1560,6 +2355,26 @@ public partial class User_U_ProductList : System.Web.UI.Page
     protected void btnsearch_Click(object sender, EventArgs e)
     {
         SeachResult();
+        foreach (DataListItem row in dlproduct.Items)
+        {
+            LinkButton lbcart = row.FindControl("lbaddcart") as LinkButton;
+            HtmlAnchor imgIndi = row.FindControl("indevisi") as HtmlAnchor;
+            if (rbIsIndeginized.SelectedIndex != -1)
+            {
+                if (rbIsIndeginized.SelectedItem.Value == "Y")
+                {
+                    lbcart.Enabled = false;
+                    lbcart.Text = "View Only";
+                    imgIndi.Visible = true;
+                }
+                else
+                {
+                    lbcart.Enabled = true;
+                    imgIndi.Visible = false;
+                }
+                lbcart.CssClass = "btn btn-sm btn-block text-white";
+            }
+        }
     }
     #region AutoComplete Serach Box
     [System.Web.Services.WebMethod]
@@ -1568,7 +2383,7 @@ public partial class User_U_ProductList : System.Web.UI.Page
     {
         Cryptography objCrypto1 = new Cryptography();
         List<string> customers = new List<string>();
-        List<string> Finalcustomers = new List<string>();
+       // List<string> Finalcustomers = new List<string>();
         using (SqlConnection conn = new SqlConnection())
         {
             conn.ConnectionString = objCrypto1.DecryptData(ConfigurationManager.ConnectionStrings["connectiondb"].ConnectionString);
@@ -1601,7 +2416,6 @@ public partial class User_U_ProductList : System.Web.UI.Page
                         customers.Add(string.Format("{0}", sdr["FactoryName"]));
                     }
                 }
-
                 cmd.CommandText = "select distinct UnitName from tbl_trn_ProductFilterSearchTemp where UnitName like @SearchText + '%'";
                 using (SqlDataReader sdr = cmd.ExecuteReader())
                 {
@@ -1674,22 +2488,22 @@ public partial class User_U_ProductList : System.Web.UI.Page
                         customers.Add(string.Format("{0}", sdr["ProdIndustrySubDomain"]));
                     }
                 }
-                cmd.CommandText = "select distinct TopImages from tbl_trn_ProductFilterSearchTemp where TopImages like @SearchText + '%' and (TopImages is not null or TopImages !='')";
-                using (SqlDataReader sdr = cmd.ExecuteReader())
-                {
-                    while (sdr.Read())
-                    {
-                        customers.Add(string.Format("{0}", sdr["TopImages"]));
-                    }
-                }
-                cmd.CommandText = "select  distinct TopPdf from tbl_trn_ProductFilterSearchTemp where TopPdf like @SearchText + '%' and (TopPdf is not null or TopPdf !='') ";
-                using (SqlDataReader sdr = cmd.ExecuteReader())
-                {
-                    while (sdr.Read())
-                    {
-                        customers.Add(string.Format("{0}", sdr["TopPdf"]));
-                    }
-                }
+                //cmd.CommandText = "select distinct TopImages from tbl_trn_ProductFilterSearchTemp where TopImages like @SearchText + '%' and (TopImages is not null or TopImages !='')";
+                //using (SqlDataReader sdr = cmd.ExecuteReader())
+                //{
+                //    while (sdr.Read())
+                //    {
+                //        customers.Add(string.Format("{0}", sdr["TopImages"]));
+                //    }
+                //}
+                //cmd.CommandText = "select  distinct TopPdf from tbl_trn_ProductFilterSearchTemp where TopPdf like @SearchText + '%' and (TopPdf is not null or TopPdf !='') ";
+                //using (SqlDataReader sdr = cmd.ExecuteReader())
+                //{
+                //    while (sdr.Read())
+                //    {
+                //        customers.Add(string.Format("{0}", sdr["TopPdf"]));
+                //    }
+                //}
                 cmd.CommandText = "select distinct HSNCode from tbl_trn_ProductFilterSearchTemp where HSNCode like @SearchText + '%' and (HSNCode is not null or HSNCode !='')";
                 using (SqlDataReader sdr = cmd.ExecuteReader())
                 {
@@ -1722,22 +2536,22 @@ public partial class User_U_ProductList : System.Web.UI.Page
                         customers.Add(string.Format("{0}", sdr["OEMCountry"]));
                     }
                 }
-                cmd.CommandText = "select distinct EstimatedQty from tbl_trn_ProdQtyPrice where EstimatedQty like @SearchText + '%'";
-                using (SqlDataReader sdr = cmd.ExecuteReader())
-                {
-                    while (sdr.Read())
-                    {
-                        customers.Add(string.Format("{0}", sdr["EstimatedQty"]));
-                    }
-                }
-                cmd.CommandText = "select distinct EstimatedPrice from tbl_trn_ProdQtyPrice where EstimatedPrice like @SearchText + '%'";
-                using (SqlDataReader sdr = cmd.ExecuteReader())
-                {
-                    while (sdr.Read())
-                    {
-                        customers.Add(string.Format("{0}", sdr["EstimatedPrice"]));
-                    }
-                }
+                //cmd.CommandText = "select distinct EstimatedQty from tbl_trn_ProdQtyPrice where EstimatedQty like @SearchText + '%'";
+                //using (SqlDataReader sdr = cmd.ExecuteReader())
+                //{
+                //    while (sdr.Read())
+                //    {
+                //        customers.Add(string.Format("{0}", sdr["EstimatedQty"]));
+                //    }
+                //}
+                //cmd.CommandText = "select distinct EstimatedPrice from tbl_trn_ProdQtyPrice where EstimatedPrice like @SearchText + '%'";
+                //using (SqlDataReader sdr = cmd.ExecuteReader())
+                //{
+                //    while (sdr.Read())
+                //    {
+                //        customers.Add(string.Format("{0}", sdr["EstimatedPrice"]));
+                //    }
+                //}
                 conn.Close();
             }
         }
@@ -1750,7 +2564,7 @@ public partial class User_U_ProductList : System.Web.UI.Page
     [System.Web.Script.Services.ScriptMethod()]
     public static string GetSearchKeywordemo(string prefix)
     {
-        User_U_ProductList u = new User_U_ProductList();
+        User_U_ProductList1 u = new User_U_ProductList1();
         u.SeachResult(prefix);
         return "search";
     }
@@ -1785,6 +2599,7 @@ public partial class User_U_ProductList : System.Web.UI.Page
         chkimportvalue.SelectedIndex = -1;
         rbsort.SelectedIndex = -1;
         rbindustryspecification.SelectedIndex = -1;
+        rbIsIndeginized.SelectedIndex = -1;
     }
     protected void lblviewnato_Click(object sender, EventArgs e)
     {
@@ -1793,6 +2608,28 @@ public partial class User_U_ProductList : System.Web.UI.Page
         {
             gvnatopop.DataSource = DtBindNato;
             gvnatopop.DataBind();
+            gvnatopop.FooterRow.Cells[0].Text = "Total";
+            gvnatopop.FooterRow.Cells[0].HorizontalAlign = HorizontalAlign.Center;
+            object sumObjectn = DtBindNato.Compute("Sum(Total)", string.Empty);
+            gvnatopop.FooterRow.Cells[1].Text = sumObjectn.ToString();
+            object sumObjectn1 = DtBindNato.Compute("Sum(HAL)", string.Empty);
+            gvnatopop.FooterRow.Cells[2].Text = sumObjectn1.ToString();
+            object sumObjectn2 = DtBindNato.Compute("Sum(BDL)", string.Empty);
+            gvnatopop.FooterRow.Cells[3].Text = sumObjectn2.ToString();
+            object sumObjectn3 = DtBindNato.Compute("Sum(BEML)", string.Empty);
+            gvnatopop.FooterRow.Cells[4].Text = sumObjectn3.ToString();
+            object sumObjectn4 = DtBindNato.Compute("Sum(BEL)", string.Empty);
+            gvnatopop.FooterRow.Cells[5].Text = sumObjectn4.ToString();
+            object sumObjectn5 = DtBindNato.Compute("Sum(GRSE)", string.Empty);
+            gvnatopop.FooterRow.Cells[6].Text = sumObjectn5.ToString();
+            object sumObjectn6 = DtBindNato.Compute("Sum(GSL)", string.Empty);
+            gvnatopop.FooterRow.Cells[7].Text = sumObjectn6.ToString();
+            object sumObjectn7 = DtBindNato.Compute("Sum(MDL)", string.Empty);
+            gvnatopop.FooterRow.Cells[8].Text = sumObjectn7.ToString();
+            object sumObjectn8 = DtBindNato.Compute("Sum(MIDHANI)", string.Empty);
+            gvnatopop.FooterRow.Cells[9].Text = sumObjectn8.ToString();
+            object sumObjectn9 = DtBindNato.Compute("Sum(OFB)", string.Empty);
+            gvnatopop.FooterRow.Cells[10].Text = sumObjectn9.ToString();
             ScriptManager.RegisterStartupScript(this, GetType(), "divNatoPopup", "showPopup2();", true);
         }
     }
@@ -1814,8 +2651,83 @@ public partial class User_U_ProductList : System.Web.UI.Page
         }
     }
     #endregion
-    protected void lbShownIntrested_Click(object sender, EventArgs e)
+    #region LogoutCode
+    protected void lbllogout_Click(object sender, EventArgs e)
     {
-        Response.RedirectToRoute("IntrestedProduct");
+        Session.Abandon();
+        Session.Remove("Type");
+        Session.Remove("User");
+        Session.Remove("CompanyRefNo");
+        Session.Remove("SFToken");
+        Session.RemoveAll();
+        Session.Contents.RemoveAll();
+        Session.Clear();
+        Response.Cache.SetCacheability(HttpCacheability.NoCache);
+        Response.Cookies["DefaultDpsu"].Expires = DateTime.Now;
+        Response.Buffer = true;
+        Response.AppendHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
+        Response.AppendHeader("Pragma", "no-cache"); // HTTP 1.0.
+        Response.AppendHeader("Expires", "0"); // Proxies.
+        if (Request.Cookies["User"] != null)
+        {
+            Response.Cookies["User"].Value = string.Empty;
+            Response.Cookies["User"].Expires = DateTime.Now.AddMonths(-20);
+        }
+        if (Request.Cookies["SFToken"] != null)
+        {
+            Response.Cookies["SFToken"].Value = string.Empty;
+            Response.Cookies["SFToken"].Expires = DateTime.Now.AddMonths(-20);
+        }
+        Response.RedirectToRoute("Productlist");
     }
+    #endregion
+    #region TryCatchLog
+    public static class ExceptionLogging
+    {
+        private static String ErrorlineNo, Errormsg, extype, exurl, hostIp, ErrorLocation, HostAdd;
+        public static void SendErrorToText(Exception ex)
+        {
+            var line = Environment.NewLine + Environment.NewLine;
+            ErrorlineNo = ex.StackTrace.Substring(ex.StackTrace.Length - 7, 7);
+            Errormsg = ex.GetType().Name.ToString();
+            extype = ex.GetType().ToString();
+            exurl = context.Current.Request.Url.ToString();
+            ErrorLocation = ex.Message.ToString();
+            try
+            {
+                string filepath = context.Current.Server.MapPath("/Logs/");  //Text File Path
+                if (!Directory.Exists(filepath))
+                {
+                    Directory.CreateDirectory(filepath);
+                }
+                filepath = filepath + DateTime.Today.ToString("dd-MM-yy") + ".txt";   //Text File Name
+                if (!File.Exists(filepath))
+                {
+                    File.Create(filepath).Dispose();
+                }
+                using (StreamWriter sw = File.AppendText(filepath))
+                {
+                    string error = "Log Written Date:" + " " + DateTime.Now.ToString() + line + "Error Line No :" + " " + ErrorlineNo + line + "Error Message:" + " " + Errormsg + line + "Exception Type:" + " " + extype + line + "Error Location :" + " " + ErrorLocation + line + " Error Page Url:" + " " + exurl + line + "User Host IP:" + " " + hostIp + line;
+                    sw.WriteLine("-----------Exception Details on " + " " + DateTime.Now.ToString() + "-----------------");
+                    sw.WriteLine("-------------------------------------------------------------------------------------");
+                    sw.WriteLine(line);
+                    sw.WriteLine(error);
+                    sw.WriteLine("--------------------------------*End*------------------------------------------");
+                    sw.WriteLine(line);
+                    sw.Flush();
+                    sw.Close();
+                }
+            }
+            catch (Exception exm)
+            {
+                exm.Message.ToString();
+            }
+        }
+    }
+    #endregion
+    //protected void lnktooltip_Click(object sender, EventArgs e)
+    //{
+    //    ScriptManager.RegisterStartupScript(this, GetType(), "searchtooltip", "showPopup4();", true);
+    //}
+
 }

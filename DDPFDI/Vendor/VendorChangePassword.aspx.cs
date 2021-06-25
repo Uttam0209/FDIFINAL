@@ -22,7 +22,8 @@ public partial class Vendor_VendorChangePassword : System.Web.UI.Page
         {
             if (txtnewpass.Text == txtreppass.Text)
             {
-                string UpdatePassword = Lo.UpdateLoginPassword(ObjEnc.EncryptData(txtnewpass.Text), ObjEnc.EncryptData(txtoldpass.Text), ObjEnc.DecryptData(Session["User"].ToString()), "LoginOldVendor","","");
+                string UpdatePassword = Lo.UpdateLoginPassword(ObjEnc.EncryptData(txtnewpass.Text), ObjEnc.EncryptData(txtoldpass.Text), ObjEnc.DecryptData(Session["User"].ToString()),
+                    "LoginOldVendor", txtnewpass.Text, "");
                 if (UpdatePassword == "true")
                 {
                     divmsg.InnerHtml = "Password change successfully";

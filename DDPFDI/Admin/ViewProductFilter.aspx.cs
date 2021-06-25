@@ -3,25 +3,24 @@ using Encryption;
 using System;
 using System.Collections.Specialized;
 using System.Data;
-using System.Drawing;
-using System.IO;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using System.Configuration;
-using System.Web.Configuration;
 
 public partial class Admin_ViewProductFilter : System.Web.UI.Page
 {
     private Logic Lo = new Logic();
     private DataTable DtGrid = new DataTable();
     private HybridDictionary hySaveProdInfo = new HybridDictionary();
-    private string _msg = string.Empty;
-    private string _sysMsg = string.Empty;
     DataUtility Co = new DataUtility();
     private Cryptography Encrypt = new Cryptography();
     private PagedDataSource pgsource = new PagedDataSource();
     HybridDictionary HyLoginStatus = new HybridDictionary();
-    DataTable DtCompany = new DataTable();
+    string _sysMsg = string.Empty;
+    string _msg = string.Empty;
+    string sType = "";
+    int n1 = 1;
+    int n2 = 25;
+    DataTable DtFilterView = new DataTable();
     protected void Page_Load(object sender, EventArgs e)
     {
         PageL();
@@ -35,22 +34,24 @@ public partial class Admin_ViewProductFilter : System.Web.UI.Page
             {
                 if (Request.QueryString["id"] != null)
                 {
+                    hfmtype.Value = Encrypt.DecryptData(Request.QueryString["id"].ToString());
                     if (Encrypt.DecryptData(Session["Type"].ToString()) == "Admin" || Encrypt.DecryptData(Session["Type"].ToString()) == "SuperAdmin")
                     {
                         if (Request.QueryString["strangone"] != null)
                         {
-                            ControlGrid(Encrypt.DecryptData(Request.QueryString["id"].ToString()), Encrypt.DecryptData(Request.QueryString["strangone"].ToString()));
+                            ControlGrid(hfmtype.Value, Encrypt.DecryptData(Request.QueryString["strangone"].ToString()));
                         }
                         else
                         {
-                            ControlGrid(Encrypt.DecryptData(Request.QueryString["id"].ToString()), "");
+                            ControlGrid(hfmtype.Value, "");
                         }
                     }
                     else
                     {
-                        ControlGrid(Encrypt.DecryptData(Request.QueryString["id"].ToString()), Session["CompanyRefNo"].ToString());
+                        ControlGrid(hfmtype.Value, Session["CompanyRefNo"].ToString());
                     }
                 }
+                MenuLogin();
             }
             else
             {
@@ -59,6 +60,7 @@ public partial class Admin_ViewProductFilter : System.Web.UI.Page
         }
     }
     #endregion
+    #region othercode
     protected void lbllogout_Click(object sender, EventArgs e)
     {
         Logoutstatus();
@@ -72,7 +74,7 @@ public partial class Admin_ViewProductFilter : System.Web.UI.Page
             DateTime Date = Convert.ToDateTime(DateTime.Now);
             string dateformat = Date.ToString("yyyy-MM-dd hh:mm:ss");
             HyLoginStatus["IsLogedOutTime"] = dateformat.ToString();
-            string InsertLogOutStatus = Lo.SaveLogoutstatus(HyLoginStatus, out  _sysMsg, out  _msg);
+            string InsertLogOutStatus = Lo.SaveLogoutstatus(HyLoginStatus, out _sysMsg, out _msg);
             Session.Clear();
             Session.Abandon();
             Session.RemoveAll();
@@ -80,6 +82,44 @@ public partial class Admin_ViewProductFilter : System.Web.UI.Page
         }
         catch (Exception ex)
         { Response.RedirectToRoute("Login"); }
+    }
+    protected void MenuLogin()
+    {
+        lblusername.Text = Encrypt.DecryptData(Session["User"].ToString());
+        if (Session["CompanyRefNo"] != null)
+        {
+            if (Session["CompanyRefNo"].ToString().Substring(0, 1) == "F" || Session["CompanyRefNo"].ToString().Substring(0, 1) == "D")
+            {
+                DataTable dtFactory = Lo.RetriveMasterData(0, Session["CompanyRefNo"].ToString(), "", 0, "", "", "FactoryName");
+                if (dtFactory.Rows.Count > 0)
+                {
+                    lblfactory.Text = "Division/Plant - " + dtFactory.Rows[0]["FactoryName"].ToString();
+                    sType = dtFactory.Rows[0]["CompanyRefNo"].ToString();
+                }
+            }
+            else if (Session["CompanyRefNo"].ToString().Substring(0, 1) == "U")
+            {
+                DataTable dtUnit = Lo.RetriveMasterData(0, Session["CompanyRefNo"].ToString(), "", 0, "", "", "UnitJoin");
+                if (dtUnit.Rows.Count > 0)
+                {
+                    lblfactory.Text = "Division/Plant - " + dtUnit.Rows[0]["FactoryName"].ToString();
+                    lblunit.Text = "UnitName - " + dtUnit.Rows[0]["UnitName"].ToString();
+                    sType = dtUnit.Rows[0]["CompanyRefNo"].ToString();
+                }
+            }
+            else
+            {
+                sType = Session["CompanyRefNo"].ToString();
+            }
+            DataTable dtCompany = Lo.RetriveMasterData(0, sType, "", 0, "", "", "InterestedArea");
+            if (dtCompany.Rows.Count > 0)
+            {
+
+                lblmastercompany.Text = "Company - " + dtCompany.Rows[0]["CompanyName"].ToString();
+                //  strInterestedArea = dtCompany.Rows[0]["InterestedArea"].ToString();
+                //  strMasterAlloted = dtCompany.Rows[0]["MasterAllowed"].ToString();
+            }
+        }
     }
     protected void UpdateDtGridValue(DataTable DtGrid)
     {
@@ -138,9 +178,8 @@ public partial class Admin_ViewProductFilter : System.Web.UI.Page
             BindProduct(hfmref.Value);
         }
     }
-    int n1 = 1;
-    int n2 = 100;
-    DataTable DtFilterView = new DataTable();
+    #endregion   
+    #region other1
     protected void BindProduct(string RefNo, string sortExpression = null)
     {
         DtGrid = Lo.GetDashboardData("Product", "");
@@ -148,607 +187,10 @@ public partial class Admin_ViewProductFilter : System.Web.UI.Page
         {
             Session["TempData"] = DtGrid;
             DtFilterView = (DataTable)Session["TempData"];
-            divclearfilorexceldown.Visible = true;
-            UpdateDtGridValue(DtGrid);
-            if (hfmref.Value != "")
-            {
-                DataView dv1 = new DataView(DtGrid, "ROW_NUMBER >='" + n1 + "' And  ROW_NUMBER <='" + n2 + "'", "", DataViewRowState.CurrentRows);
-                if (Request.QueryString["strangone"] != null)
-                {
-                    dv1.RowFilter = "CompanyRefNo='" + hfmref.Value + "'";
-                }
-                else if (Encrypt.DecryptData(Session["Type"].ToString()).ToUpper() == "COMPANY")
-                {
-                    dv1.RowFilter = "CompanyRefNo='" + hfmref.Value + "'";
-                }
-                else if (Encrypt.DecryptData(Session["Type"].ToString()).ToUpper() == "DIVISION")
-                {
-                    dv1.RowFilter = "FactoryRefNo='" + hfmref.Value + "'";
-                }
-                else if (Encrypt.DecryptData(Session["Type"].ToString()).ToUpper() == "UNIT")
-                {
-                    dv1.RowFilter = "UnitRefNo='" + hfmref.Value + "'";
-                }
-                dv1.Sort = "LastUpdated desc";
-                DataTable dtads1 = dv1.ToTable();
-                dtads1.Columns.Add("TopPdf", typeof(string));
-                dtads1.Columns.Add("TopImages", typeof(string));
-                dtads1.Columns.Add("1718", typeof(decimal));
-                dtads1.Columns.Add("1819", typeof(decimal));
-                dtads1.Columns.Add("1920", typeof(decimal));
-                dtads1.Columns.Add("2021", typeof(decimal));
-                for (int i = 0; dtads1.Rows.Count > i; i++)
-                {
-                    string mProdRefTime = dtads1.Rows[i]["ProductRefNo"].ToString();
-                    DataTable dtImageBind1 = Lo.RetriveProductCode("", mProdRefTime, "RetImageTop", "");
-                    if (dtImageBind1.Rows.Count > 0)
-                    {
-                        dtads1.Rows[i]["TopImages"] = dtImageBind1.Rows[0]["ImageName"].ToString();
-                    }
-                    else
-                    {
-                        // dtads.Rows[i]["TopImages"] = "assets/images/Noimage.png";
-                    }
-                    DataTable dtImageBind2 = Lo.RetriveProductCode("", mProdRefTime, "RetPdfTop", "");
-                    if (dtImageBind2.Rows.Count > 0)
-                    {
-                        dtads1.Rows[i]["TopPdf"] = dtImageBind2.Rows[0]["ImageName"].ToString();
-                    }
-                    else
-                    {
-                        // dtads.Rows[i]["TopImages"] = "assets/images/Noimage.png";
-                    }
-                    string mProdRefesti = dtads1.Rows[i]["ProductRefNo"].ToString();
-                    DataTable dtEstimate1 = Lo.RetriveProductCode("", mProdRefesti, "estimate", "");
-                    for (int es = 0; dtEstimate1.Rows.Count > es; es++)
-                    {
-                        if (dtEstimate1.Rows[es]["FYear"].ToString() == "2017-18" && dtEstimate1.Rows[es]["Type"].ToString() == "O")
-                        {
-                            dtads1.Rows[i]["1718"] = dtEstimate1.Rows[es]["EstimatedPrice"].ToString();
-                        }
-                        if (dtEstimate1.Rows[es]["FYear"].ToString() == "2018-19" && dtEstimate1.Rows[es]["Type"].ToString() == "O")
-                        {
-                            dtads1.Rows[i]["1819"] = dtEstimate1.Rows[es]["EstimatedPrice"].ToString();
-                        }
-                        if (dtEstimate1.Rows[es]["FYear"].ToString() == "2019-20" && dtEstimate1.Rows[es]["Type"].ToString() == "O")
-                        {
-                            dtads1.Rows[i]["1920"] = dtEstimate1.Rows[es]["EstimatedPrice"].ToString();
-                        }
-                        if (dtEstimate1.Rows[es]["FYear"].ToString() == "2020-21" && dtEstimate1.Rows[es]["Type"].ToString() == "F")
-                        {
-                            dtads1.Rows[i]["2021"] = dtEstimate1.Rows[es]["EstimatedPrice"].ToString();
-                        }
-                    }
-                }
-                pgsource.DataSource = dtads1.DefaultView;
-                pgsource.AllowPaging = true;
-                pgsource.PageSize = 100;
-                pgsource.CurrentPageIndex = pagingCurrentPage;
-                ViewState["totpage"] = pgsource.PageCount;
-                lblpaging.Text = "Page " + (pagingCurrentPage + 1) + " of " + pgsource.PageCount;
-                lblcountpgindex.Text = "Page " + (pagingCurrentPage + 1) + " of " + pgsource.PageCount;
-                if (hfmref.Value != "")
-                {
-                    lbltotal.Text = "Total Result " + dtads1.Rows.Count.ToString();
-
-                }
-                else
-                {
-                    lbltotal.Text = "Total Result " + DtGrid.Rows.Count.ToString();
-                }
-                lnkbtnPgPrevious.Enabled = !pgsource.IsFirstPage;
-                lnkbtnPgNext.Enabled = !pgsource.IsLastPage;
-                lnkbtnPgPre.Enabled = !pgsource.IsFirstPage;
-                lnkbtnne.Enabled = !pgsource.IsLastPage;
-                if (sortExpression != null)
-                {
-                    DataView _DvSort = dtads1.DefaultView;
-                    if (_DvSort != null && _DvSort.Count > 0)
-                    {
-                        this.SortDirection = this.SortDirection == "ASC" ? "DESC" : "ASC";
-                        _DvSort.Sort = sortExpression + " " + this.SortDirection;
-                        pgsource.DataSource = _DvSort;
-                    }
-                    else
-                    {
-                        pgsource.DataSource = dtads1.DefaultView;
-                    }
-                }
-                else
-                {
-                    pgsource.DataSource = dtads1.DefaultView;
-                }
-                gvproduct.DataSource = dtads1.DefaultView;
-                gvproduct.DataBind();
-                gvproduct.Visible = true;
-                divpageindex.Visible = true;
-                divProductGrid.Visible = true;
-                divpageindex1.Visible = true;
-            }
-            else
-            {
-                if (Request.QueryString["id"] != null)
-                {
-                    if (Encrypt.DecryptData(Request.QueryString["id"].ToString()) == "PI")
-                    {
-                        DataView dv2 = new DataView(DtGrid);
-                        dv2.RowFilter = "IsIndeginized='Y'";
-                        dv2.Sort = "LastUpdated desc";
-                        DataTable dtads2 = dv2.ToTable();
-                        dtads2.Columns.Add("TopPdf", typeof(string));
-                        dtads2.Columns.Add("TopImages", typeof(string));
-                        dtads2.Columns.Add("1718", typeof(decimal));
-                        dtads2.Columns.Add("1819", typeof(decimal));
-                        dtads2.Columns.Add("1920", typeof(decimal));
-                        dtads2.Columns.Add("2021", typeof(decimal));
-                        for (int i = 0; dtads2.Rows.Count > i; i++)
-                        {
-                            string mProdRefTime = dtads2.Rows[i]["ProductRefNo"].ToString();
-                            DataTable dtImageBind2 = Lo.RetriveProductCode("", mProdRefTime, "RetImageTop", "");
-                            if (dtImageBind2.Rows.Count > 0)
-                            {
-                                dtads2.Rows[i]["TopImages"] = dtImageBind2.Rows[0]["ImageName"].ToString();
-                            }
-                            else
-                            {
-                                //   dtads.Rows[i]["TopImages"] = "assets/images/Noimage.png";
-                            }
-                            DataTable dtImageBind3 = Lo.RetriveProductCode("", mProdRefTime, "RetPdfTop", "");
-                            if (dtImageBind3.Rows.Count > 0)
-                            {
-                                dtads2.Rows[i]["TopPdf"] = dtImageBind3.Rows[0]["ImageName"].ToString();
-                            }
-                            else
-                            {
-                                // dtads.Rows[i]["TopImages"] = "assets/images/Noimage.png";
-                            }
-                            string mProdRefesti = dtads2.Rows[i]["ProductRefNo"].ToString();
-                            DataTable dtEstimate1 = Lo.RetriveProductCode("", mProdRefesti, "estimate", "");
-                            for (int es = 0; dtEstimate1.Rows.Count > es; es++)
-                            {
-                                if (dtEstimate1.Rows[es]["FYear"].ToString() == "2017-18" && dtEstimate1.Rows[es]["Type"].ToString() == "O")
-                                {
-                                    dtads2.Rows[i]["1718"] = dtEstimate1.Rows[es]["EstimatedPrice"].ToString();
-                                }
-                                if (dtEstimate1.Rows[es]["FYear"].ToString() == "2018-19" && dtEstimate1.Rows[es]["Type"].ToString() == "O")
-                                {
-                                    dtads2.Rows[i]["1819"] = dtEstimate1.Rows[es]["EstimatedPrice"].ToString();
-                                }
-                                if (dtEstimate1.Rows[es]["FYear"].ToString() == "2019-20" && dtEstimate1.Rows[es]["Type"].ToString() == "O")
-                                {
-                                    dtads2.Rows[i]["1920"] = dtEstimate1.Rows[es]["EstimatedPrice"].ToString();
-                                }
-                                if (dtEstimate1.Rows[es]["FYear"].ToString() == "2020-21" && dtEstimate1.Rows[es]["Type"].ToString() == "F")
-                                {
-                                    dtads2.Rows[i]["2021"] = dtEstimate1.Rows[es]["EstimatedPrice"].ToString();
-                                }
-                            }
-                        }
-                        pgsource.DataSource = dtads2.DefaultView;
-                        pgsource.AllowPaging = true;
-                        pgsource.PageSize = 100;
-                        pgsource.CurrentPageIndex = pagingCurrentPage;
-                        ViewState["totpage"] = pgsource.PageCount;
-                        lblpaging.Text = "Page " + (pagingCurrentPage + 1) + " of " + pgsource.PageCount;
-                        lblcountpgindex.Text = "Page " + (pagingCurrentPage + 1) + " of " + pgsource.PageCount;
-                        if (hfmref.Value != "")
-                        {
-                            lbltotal.Text = "Total Result " + dtads2.Rows.Count.ToString();
-                        }
-                        else
-                        {
-                            lbltotal.Text = "Total Result " + DtGrid.Rows.Count.ToString();
-                        }
-                        lnkbtnPgPrevious.Enabled = !pgsource.IsFirstPage;
-                        lnkbtnPgNext.Enabled = !pgsource.IsLastPage;
-                        lnkbtnPgPre.Enabled = !pgsource.IsFirstPage;
-                        lnkbtnne.Enabled = !pgsource.IsLastPage;
-                        if (sortExpression != null)
-                        {
-                            DataView _DvSort2 = dtads2.DefaultView;
-                            if (_DvSort2 != null && _DvSort2.Count > 0)
-                            {
-                                this.SortDirection = this.SortDirection == "ASC" ? "DESC" : "ASC";
-                                _DvSort2.Sort = sortExpression + " " + this.SortDirection;
-                                pgsource.DataSource = _DvSort2;
-                            }
-                            else
-                            {
-                                pgsource.DataSource = dtads2.DefaultView;
-                            }
-                        }
-                        else
-                        {
-                            pgsource.DataSource = dtads2.DefaultView;
-                        }
-                        gvproduct.DataSource = dtads2.DefaultView;
-                    }
-                    else if (Encrypt.DecryptData(Request.QueryString["id"].ToString()) == "M2")
-                    {
-                        DataView dv3 = new DataView(DtGrid);
-                        dv3.RowFilter = "PurposeofProcurement like '%25%'";
-                        dv3.Sort = "LastUpdated desc";
-                        DataTable dtads3 = dv3.ToTable();
-                        dtads3.Columns.Add("TopPdf", typeof(string));
-                        dtads3.Columns.Add("TopImages", typeof(string));
-                        dtads3.Columns.Add("1718", typeof(decimal));
-                        dtads3.Columns.Add("1819", typeof(decimal));
-                        dtads3.Columns.Add("1920", typeof(decimal));
-                        dtads3.Columns.Add("2021", typeof(decimal));
-                        for (int i = 0; dtads3.Rows.Count > i; i++)
-                        {
-                            string mProdRefTime = dtads3.Rows[i]["ProductRefNo"].ToString();
-                            DataTable dtImageBind3 = Lo.RetriveProductCode("", mProdRefTime, "RetImageTop", "");
-                            if (dtImageBind3.Rows.Count > 0)
-                            {
-                                dtads3.Rows[i]["TopImages"] = dtImageBind3.Rows[0]["ImageName"].ToString();
-                            }
-                            else
-                            {
-                                //  dtads.Rows[i]["TopImages"] = "assets/images/Noimage.png";
-                            }
-                            DataTable dtImageBind4 = Lo.RetriveProductCode("", mProdRefTime, "RetPdfTop", "");
-                            if (dtImageBind4.Rows.Count > 0)
-                            {
-                                dtads3.Rows[i]["TopPdf"] = dtImageBind4.Rows[0]["ImageName"].ToString();
-                            }
-                            else
-                            {
-                                // dtads.Rows[i]["TopImages"] = "assets/images/Noimage.png";
-                            }
-                            string mProdRefesti = dtads3.Rows[i]["ProductRefNo"].ToString();
-                            DataTable dtEstimate1 = Lo.RetriveProductCode("", mProdRefesti, "estimate", "");
-                            for (int es = 0; dtEstimate1.Rows.Count > es; es++)
-                            {
-                                if (dtEstimate1.Rows[es]["FYear"].ToString() == "2017-18" && dtEstimate1.Rows[es]["Type"].ToString() == "O")
-                                {
-                                    dtads3.Rows[i]["1718"] = dtEstimate1.Rows[es]["EstimatedPrice"].ToString();
-                                }
-                                if (dtEstimate1.Rows[es]["FYear"].ToString() == "2018-19" && dtEstimate1.Rows[es]["Type"].ToString() == "O")
-                                {
-                                    dtads3.Rows[i]["1819"] = dtEstimate1.Rows[es]["EstimatedPrice"].ToString();
-                                }
-                                if (dtEstimate1.Rows[es]["FYear"].ToString() == "2019-20" && dtEstimate1.Rows[es]["Type"].ToString() == "O")
-                                {
-                                    dtads3.Rows[i]["1920"] = dtEstimate1.Rows[es]["EstimatedPrice"].ToString();
-                                }
-                                if (dtEstimate1.Rows[es]["FYear"].ToString() == "2020-21" && dtEstimate1.Rows[es]["Type"].ToString() == "F")
-                                {
-                                    dtads3.Rows[i]["2021"] = dtEstimate1.Rows[es]["EstimatedPrice"].ToString();
-                                }
-                            }
-                        }
-                        pgsource.DataSource = dtads3.DefaultView;
-                        pgsource.AllowPaging = true;
-                        pgsource.PageSize = 100;
-                        pgsource.CurrentPageIndex = pagingCurrentPage;
-                        ViewState["totpage"] = pgsource.PageCount;
-                        lblpaging.Text = "Page " + (pagingCurrentPage + 1) + " of " + pgsource.PageCount;
-                        lblcountpgindex.Text = "Page " + (pagingCurrentPage + 1) + " of " + pgsource.PageCount;
-                        if (hfmref.Value != "")
-                        {
-                            lbltotal.Text = "Total Result " + dtads3.Rows.Count.ToString();
-                        }
-                        else
-                        {
-                            lbltotal.Text = "Total Result " + DtGrid.Rows.Count.ToString();
-                        }
-                        lnkbtnPgPrevious.Enabled = !pgsource.IsFirstPage;
-                        lnkbtnPgNext.Enabled = !pgsource.IsLastPage;
-                        lnkbtnPgPre.Enabled = !pgsource.IsFirstPage;
-                        lnkbtnne.Enabled = !pgsource.IsLastPage;
-                        if (sortExpression != null)
-                        {
-                            DataView _DvSort3 = dtads3.DefaultView;
-                            if (_DvSort3 != null && _DvSort3.Count > 0)
-                            {
-                                this.SortDirection = this.SortDirection == "ASC" ? "DESC" : "ASC";
-                                _DvSort3.Sort = sortExpression + " " + this.SortDirection;
-                                pgsource.DataSource = _DvSort3;
-                            }
-                            else
-                            {
-                                pgsource.DataSource = dtads3.DefaultView;
-                            }
-                        }
-                        else
-                        {
-                            pgsource.DataSource = dtads3.DefaultView;
-                        }
-                        gvproduct.DataSource = dtads3.DefaultView; ;
-                    }
-                    else if (Encrypt.DecryptData(Request.QueryString["id"].ToString()) == "ID")
-                    {
-                        DataView dv5 = new DataView(DtGrid);
-                        dv5.RowFilter = "IsApproved='N'";
-                        dv5.Sort = "LastUpdated desc";
-                        DataTable dtads5 = dv5.ToTable();
-                        dtads5.Columns.Add("TopPdf", typeof(string));
-                        dtads5.Columns.Add("TopImages", typeof(string));
-                        dtads5.Columns.Add("1718", typeof(decimal));
-                        dtads5.Columns.Add("1819", typeof(decimal));
-                        dtads5.Columns.Add("1920", typeof(decimal));
-                        dtads5.Columns.Add("2021", typeof(decimal));
-                        for (int i = 0; dtads5.Rows.Count > i; i++)
-                        {
-                            string mProdRefTime = dtads5.Rows[i]["ProductRefNo"].ToString();
-                            DataTable dtImageBind5 = Lo.RetriveProductCode("", mProdRefTime, "RetImageTop", "");
-                            if (dtImageBind5.Rows.Count > 0)
-                            {
-                                dtads5.Rows[i]["TopImages"] = dtImageBind5.Rows[0]["ImageName"].ToString();
-                            }
-                            else
-                            {
-                                //   dtads.Rows[i]["TopImages"] = "assets/images/Noimage.png";
-                            }
-                            DataTable dtImageBind6 = Lo.RetriveProductCode("", mProdRefTime, "RetPdfTop", "");
-                            if (dtImageBind6.Rows.Count > 0)
-                            {
-                                dtads5.Rows[i]["TopPdf"] = dtImageBind6.Rows[0]["ImageName"].ToString();
-                            }
-                            else
-                            {
-                                // dtads.Rows[i]["TopImages"] = "assets/images/Noimage.png";
-                            }
-                            string mProdRefesti = dtads5.Rows[i]["ProductRefNo"].ToString();
-                            DataTable dtEstimate1 = Lo.RetriveProductCode("", mProdRefesti, "estimate", "");
-                            for (int es = 0; dtEstimate1.Rows.Count > es; es++)
-                            {
-                                if (dtEstimate1.Rows[es]["FYear"].ToString() == "2017-18" && dtEstimate1.Rows[es]["Type"].ToString() == "O")
-                                {
-                                    dtads5.Rows[i]["1718"] = dtEstimate1.Rows[es]["EstimatedPrice"].ToString();
-                                }
-                                if (dtEstimate1.Rows[es]["FYear"].ToString() == "2018-19" && dtEstimate1.Rows[es]["Type"].ToString() == "O")
-                                {
-                                    dtads5.Rows[i]["1819"] = dtEstimate1.Rows[es]["EstimatedPrice"].ToString();
-                                }
-                                if (dtEstimate1.Rows[es]["FYear"].ToString() == "2019-20" && dtEstimate1.Rows[es]["Type"].ToString() == "O")
-                                {
-                                    dtads5.Rows[i]["1920"] = dtEstimate1.Rows[es]["EstimatedPrice"].ToString();
-                                }
-                                if (dtEstimate1.Rows[es]["FYear"].ToString() == "2020-21" && dtEstimate1.Rows[es]["Type"].ToString() == "F")
-                                {
-                                    dtads5.Rows[i]["2021"] = dtEstimate1.Rows[es]["EstimatedPrice"].ToString();
-                                }
-                            }
-                        }
-                        pgsource.DataSource = dtads5.DefaultView;
-                        pgsource.AllowPaging = true;
-                        pgsource.PageSize = 100;
-                        pgsource.CurrentPageIndex = pagingCurrentPage;
-                        ViewState["totpage"] = pgsource.PageCount;
-                        lblpaging.Text = "Page " + (pagingCurrentPage + 1) + " of " + pgsource.PageCount;
-                        lblcountpgindex.Text = "Page " + (pagingCurrentPage + 1) + " of " + pgsource.PageCount;
-                        if (hfmref.Value != "")
-                        {
-                            lbltotal.Text = "Total Result " + dtads5.Rows.Count.ToString();
-                        }
-                        else
-                        {
-                            lbltotal.Text = "Total Result " + dtads5.Rows.Count.ToString();
-                        }
-                        lnkbtnPgPrevious.Enabled = !pgsource.IsFirstPage;
-                        lnkbtnPgNext.Enabled = !pgsource.IsLastPage;
-                        lnkbtnPgPre.Enabled = !pgsource.IsFirstPage;
-                        lnkbtnne.Enabled = !pgsource.IsLastPage;
-                        if (sortExpression != null)
-                        {
-                            DataView _DvSort2 = dtads5.DefaultView;
-                            if (_DvSort2 != null && _DvSort2.Count > 0)
-                            {
-                                this.SortDirection = this.SortDirection == "ASC" ? "DESC" : "ASC";
-                                _DvSort2.Sort = sortExpression + " " + this.SortDirection;
-                                pgsource.DataSource = _DvSort2;
-                            }
-                            else
-                            {
-                                pgsource.DataSource = dtads5.DefaultView;
-                            }
-                        }
-                        else
-                        {
-                            pgsource.DataSource = dtads5.DefaultView;
-                        }
-                        gvproduct.DataSource = dtads5.DefaultView;
-                    }
-                    else if (Encrypt.DecryptData(Request.QueryString["id"].ToString()) == "IA")
-                    {
-                        DataView dv2 = new DataView(DtGrid);
-                        dv2.RowFilter = "IsApproved='Y'";
-                        dv2.Sort = "LastUpdated desc";
-                        DataTable dtads2 = dv2.ToTable();
-                        dtads2.Columns.Add("TopPdf", typeof(string));
-                        dtads2.Columns.Add("TopImages", typeof(string));
-                        dtads2.Columns.Add("1718", typeof(decimal));
-                        dtads2.Columns.Add("1819", typeof(decimal));
-                        dtads2.Columns.Add("1920", typeof(decimal));
-                        dtads2.Columns.Add("2021", typeof(decimal));
-                        for (int i = 0; dtads2.Rows.Count > i; i++)
-                        {
-                            string mProdRefTime = dtads2.Rows[i]["ProductRefNo"].ToString();
-                            DataTable dtImageBind2 = Lo.RetriveProductCode("", mProdRefTime, "RetImageTop", "");
-                            if (dtImageBind2.Rows.Count > 0)
-                            {
-                                dtads2.Rows[i]["TopImages"] = dtImageBind2.Rows[0]["ImageName"].ToString();
-                            }
-                            else
-                            {
-                                //   dtads.Rows[i]["TopImages"] = "assets/images/Noimage.png";
-                            }
-                            DataTable dtImageBind6 = Lo.RetriveProductCode("", mProdRefTime, "RetPdfTop", "");
-                            if (dtImageBind6.Rows.Count > 0)
-                            {
-                                dtads2.Rows[i]["TopPdf"] = dtImageBind6.Rows[0]["ImageName"].ToString();
-                            }
-                            else
-                            {
-                                // dtads.Rows[i]["TopImages"] = "assets/images/Noimage.png";
-                            }
-                            string mProdRefesti = dtads2.Rows[i]["ProductRefNo"].ToString();
-                            DataTable dtEstimate1 = Lo.RetriveProductCode("", mProdRefesti, "estimate", "");
-                            for (int es = 0; dtEstimate1.Rows.Count > es; es++)
-                            {
-                                if (dtEstimate1.Rows[es]["FYear"].ToString() == "2017-18" && dtEstimate1.Rows[es]["Type"].ToString() == "O")
-                                {
-                                    dtads2.Rows[i]["1718"] = dtEstimate1.Rows[es]["EstimatedPrice"].ToString();
-                                }
-                                if (dtEstimate1.Rows[es]["FYear"].ToString() == "2018-19" && dtEstimate1.Rows[es]["Type"].ToString() == "O")
-                                {
-                                    dtads2.Rows[i]["1819"] = dtEstimate1.Rows[es]["EstimatedPrice"].ToString();
-                                }
-                                if (dtEstimate1.Rows[es]["FYear"].ToString() == "2019-20" && dtEstimate1.Rows[es]["Type"].ToString() == "O")
-                                {
-                                    dtads2.Rows[i]["1920"] = dtEstimate1.Rows[es]["EstimatedPrice"].ToString();
-                                }
-                                if (dtEstimate1.Rows[es]["FYear"].ToString() == "2020-21" && dtEstimate1.Rows[es]["Type"].ToString() == "F")
-                                {
-                                    dtads2.Rows[i]["2021"] = dtEstimate1.Rows[es]["EstimatedPrice"].ToString();
-                                }
-                            }
-                        }
-                        pgsource.DataSource = dtads2.DefaultView;
-                        pgsource.AllowPaging = true;
-                        pgsource.PageSize = 100;
-                        pgsource.CurrentPageIndex = pagingCurrentPage;
-                        ViewState["totpage"] = pgsource.PageCount;
-                        lblpaging.Text = "Page " + (pagingCurrentPage + 1) + " of " + pgsource.PageCount;
-                        lblcountpgindex.Text = "Page " + (pagingCurrentPage + 1) + " of " + pgsource.PageCount;
-                        if (hfmref.Value != "")
-                        {
-                            lbltotal.Text = "Total Result " + dtads2.Rows.Count.ToString();
-                        }
-                        else
-                        {
-                            lbltotal.Text = "Total Result " + dtads2.Rows.Count.ToString();
-                        }
-                        lnkbtnPgPrevious.Enabled = !pgsource.IsFirstPage;
-                        lnkbtnPgNext.Enabled = !pgsource.IsLastPage;
-                        lnkbtnPgPre.Enabled = !pgsource.IsFirstPage;
-                        lnkbtnne.Enabled = !pgsource.IsLastPage;
-                        if (sortExpression != null)
-                        {
-                            DataView _DvSort2 = dtads2.DefaultView;
-                            if (_DvSort2 != null && _DvSort2.Count > 0)
-                            {
-                                this.SortDirection = this.SortDirection == "ASC" ? "DESC" : "ASC";
-                                _DvSort2.Sort = sortExpression + " " + this.SortDirection;
-                                pgsource.DataSource = _DvSort2;
-                            }
-                            else
-                            {
-                                pgsource.DataSource = dtads2.DefaultView;
-                            }
-                        }
-                        else
-                        {
-                            pgsource.DataSource = dtads2.DefaultView;
-                        }
-                        gvproduct.DataSource = dtads2.DefaultView;
-                    }
-                    else
-                    {
-                        DataView dv4 = new DataView(DtGrid, "ROW_NUMBER >='" + n1 + "' And  ROW_NUMBER<='" + n2 + "'", "", DataViewRowState.CurrentRows);
-                        dv4.Sort = "LastUpdated desc";
-                        DataTable dtads4 = dv4.ToTable();
-                        dtads4.Columns.Add("TopPdf", typeof(string));
-                        dtads4.Columns.Add("TopImages", typeof(string));
-                        dtads4.Columns.Add("1718", typeof(decimal));
-                        dtads4.Columns.Add("1819", typeof(decimal));
-                        dtads4.Columns.Add("1920", typeof(decimal));
-                        dtads4.Columns.Add("2021", typeof(decimal));
-                        for (int i = 0; dtads4.Rows.Count > i; i++)
-                        {
-                            string mProdRefTime = dtads4.Rows[i]["ProductRefNo"].ToString();
-                            DataTable dtImageBind4 = Lo.RetriveProductCode("", mProdRefTime, "RetImageTop", "");
-                            if (dtImageBind4.Rows.Count > 0)
-                            {
-                                dtads4.Rows[i]["TopImages"] = dtImageBind4.Rows[0]["ImageName"].ToString();
-                            }
-                            else
-                            {
-                                //dtads.Rows[i]["TopImages"] = "assets/images/Noimage.png";
-                            }
-                            DataTable dtImageBind9 = Lo.RetriveProductCode("", mProdRefTime, "RetPdfTop", "");
-                            if (dtImageBind9.Rows.Count > 0)
-                            {
-                                dtads4.Rows[i]["TopPdf"] = dtImageBind9.Rows[0]["ImageName"].ToString();
-                            }
-                            else
-                            {
-                                // dtads.Rows[i]["TopImages"] = "assets/images/Noimage.png";
-                            }
-                            string mProdRefesti = dtads4.Rows[i]["ProductRefNo"].ToString();
-                            DataTable dtEstimate1 = Lo.RetriveProductCode("", mProdRefesti, "estimate", "");
-                            for (int es = 0; dtEstimate1.Rows.Count > es; es++)
-                            {
-                                if (dtEstimate1.Rows[es]["FYear"].ToString() == "2017-18" && dtEstimate1.Rows[es]["Type"].ToString() == "O")
-                                {
-                                    dtads4.Rows[i]["1718"] = dtEstimate1.Rows[es]["EstimatedPrice"].ToString();
-                                }
-                                if (dtEstimate1.Rows[es]["FYear"].ToString() == "2018-19" && dtEstimate1.Rows[es]["Type"].ToString() == "O")
-                                {
-                                    dtads4.Rows[i]["1819"] = dtEstimate1.Rows[es]["EstimatedPrice"].ToString();
-                                }
-                                if (dtEstimate1.Rows[es]["FYear"].ToString() == "2019-20" && dtEstimate1.Rows[es]["Type"].ToString() == "O")
-                                {
-                                    dtads4.Rows[i]["1920"] = dtEstimate1.Rows[es]["EstimatedPrice"].ToString();
-                                }
-                                if (dtEstimate1.Rows[es]["FYear"].ToString() == "2020-21" && dtEstimate1.Rows[es]["Type"].ToString() == "F")
-                                {
-                                    dtads4.Rows[i]["2021"] = dtEstimate1.Rows[es]["EstimatedPrice"].ToString();
-                                }
-                            }
-                        }
-                        pgsource.DataSource = DtGrid.DefaultView;
-                        pgsource.AllowPaging = true;
-                        pgsource.PageSize = 100;
-                        pgsource.CurrentPageIndex = pagingCurrentPage;
-                        ViewState["totpage"] = pgsource.PageCount;
-                        lblpaging.Text = "Page " + (pagingCurrentPage + 1) + " of " + pgsource.PageCount;
-                        lblcountpgindex.Text = "Page " + (pagingCurrentPage + 1) + " of " + pgsource.PageCount;
-                        if (hfmref.Value != "")
-                        {
-                            lbltotal.Text = "Total Result " + dtads4.Rows.Count.ToString();
-                        }
-                        else
-                        {
-                            lbltotal.Text = "Total Result " + DtGrid.Rows.Count.ToString();
-                        }
-                        lnkbtnPgPrevious.Enabled = !pgsource.IsFirstPage;
-                        lnkbtnPgNext.Enabled = !pgsource.IsLastPage;
-                        lnkbtnPgPre.Enabled = !pgsource.IsFirstPage;
-                        lnkbtnne.Enabled = !pgsource.IsLastPage;
-                        if (sortExpression != null)
-                        {
-                            DataView _DvSort4 = dtads4.DefaultView;
-                            if (_DvSort4 != null && _DvSort4.Count > 0)
-                            {
-                                this.SortDirection = this.SortDirection == "ASC" ? "DESC" : "ASC";
-                                _DvSort4.Sort = sortExpression + " " + this.SortDirection;
-                                pgsource.DataSource = _DvSort4;
-                            }
-                            else
-                            {
-                                pgsource.DataSource = dtads4.DefaultView;
-                            }
-                        }
-                        else
-                        {
-                            pgsource.DataSource = dtads4.DefaultView;
-                        }
-                        gvproduct.DataSource = dtads4.DefaultView;
-                    }
-                    gvproduct.DataBind();
-                    gvproduct.Visible = true;
-                    divpageindex.Visible = true;
-                    divProductGrid.Visible = true;
-                    divpageindex1.Visible = true;
-                }
-            }
+            SeachResult();
         }
         else
         {
-            divclearfilorexceldown.Visible = false;
             divpageindex.Visible = false;
             divpageindex1.Visible = false;
         }
@@ -787,7 +229,7 @@ public partial class Admin_ViewProductFilter : System.Web.UI.Page
                     }
                     lblnsngroup.Text = DtView.Rows[0]["ProdLevel1Name"].ToString();
                     lblnsngroupclass.Text = DtView.Rows[0]["ProdLevel2Name"].ToString();
-                    lblclassitem.Text = DtView.Rows[0]["ProdLevel3Name"].ToString();                   
+                    lblclassitem.Text = DtView.Rows[0]["ProdLevel3Name"].ToString();
                     if (DtView.Rows[0]["ProductDescription"].ToString() != "")
                     {
                         itemname2.Text = DtView.Rows[0]["ProductDescription"].ToString();
@@ -912,15 +354,15 @@ public partial class Admin_ViewProductFilter : System.Web.UI.Page
                         dlimage.Visible = false;
                         thirteen.Visible = false;
                     }
-                    if (DtView.Rows[0]["FeatursandDetail"].ToString() != "")
-                    {
-                        lblfeaturesanddetail.Text = DtView.Rows[0]["FeatursandDetail"].ToString();
-                        fourteen.Visible = true;
-                    }
-                    else
-                    {
-                        fourteen.Visible = false;
-                    }
+                    //if (DtView.Rows[0]["FeatursandDetail"].ToString() != "")
+                    //{
+                    //    lblfeaturesanddetail.Text = DtView.Rows[0]["FeatursandDetail"].ToString();
+                    //    fourteen.Visible = true;
+                    //}
+                    //else
+                    //{
+                    //    fourteen.Visible = false;
+                    //}
                     DataTable dtestimatequanorprice = Lo.RetriveSaveEstimateGrid("2Select", 0, e.CommandArgument.ToString(), 0, "", "", "", "", "F");
                     if (dtestimatequanorprice.Rows.Count > 0)
                     {
@@ -941,11 +383,12 @@ public partial class Admin_ViewProductFilter : System.Web.UI.Page
                         if (DTporCat.Rows.Count > 0)
                         {
                             lblindicate.Text = "";
-                            for (int i = 0; DTporCat.Rows.Count > i; i++)
-                            {
-                                lblindicate.Text = lblindicate.Text + DTporCat.Rows[i]["SCategoryName"].ToString() + ", ";
-                            }
-                            lblindicate.Text = lblindicate.Text.Substring(0, lblindicate.Text.Length - 2);
+                            lblindicate.Text = DTporCat.Rows[0]["SCategoryName"].ToString();
+                            //for (int i = 0; DTporCat.Rows.Count > i; i++)
+                            //{
+                            //    lblindicate.Text = lblindicate.Text + DTporCat.Rows[i]["SCategoryName"].ToString() + ", ";
+                            //}
+                            //lblindicate.Text = lblindicate.Text.Substring(0, lblindicate.Text.Length - 2);
                             sixteen.Visible = true;
                         }
                         else
@@ -968,7 +411,7 @@ public partial class Admin_ViewProductFilter : System.Web.UI.Page
                         eighteen.Visible = true;
                     }
                     else
-                    { eighteen.Visible = false; }                   
+                    { eighteen.Visible = false; }
                     string Nodel1Id = DtView.Rows[0]["NodelDetail"].ToString();
                     if (Nodel1Id.ToString() != "")
                     {
@@ -978,9 +421,9 @@ public partial class Admin_ViewProductFilter : System.Web.UI.Page
                             lblempname.Text = dtNodal.Rows[0]["NodalOficerName"].ToString();
                             lbldesignation.Text = dtNodal.Rows[0]["Designation"].ToString();
                             lblemailidpro.Text = dtNodal.Rows[0]["NodalOfficerEmail"].ToString();
-                            lblmobilenumber.Text = dtNodal.Rows[0]["NodalOfficerMobile"].ToString();
+                            // lblmobilenumber.Text = dtNodal.Rows[0]["NodalOfficerMobile"].ToString();
                             lblphonenumber.Text = dtNodal.Rows[0]["NodalOfficerTelephone"].ToString();
-                            lblfaxpro.Text = dtNodal.Rows[0]["NodalOfficerFax"].ToString();
+                            //  lblfaxpro.Text = dtNodal.Rows[0]["NodalOfficerFax"].ToString();
                         }
                         else
                         {
@@ -1029,7 +472,7 @@ public partial class Admin_ViewProductFilter : System.Web.UI.Page
                     {
                         twentytwo.Visible = false;
                     }
-                   
+
                     if (DtView.Rows[0]["QAAgency"].ToString() != "")
                     {
                         DataTable DTporCat = Lo.RetriveProductCode("", e.CommandArgument.ToString(), "ProductQAAgency", "Company");
@@ -1084,14 +527,43 @@ public partial class Admin_ViewProductFilter : System.Web.UI.Page
             e.Row.TableSection = TableRowSection.TableFooter;
         }
     }
-    #region //------------------------pageindex code--------------//
+    protected void gvproduct_RowDataBound(object sender, GridViewRowEventArgs e)
+    {
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            HyperLink hy = (e.Row.FindControl("lbpdffile") as HyperLink);
+            if (hy.NavigateUrl.Trim() == "" || hy.NavigateUrl.Trim() == "~/Upload/" || hy.NavigateUrl.Trim() == null)
+            {
+                e.Row.Cells[3].Text = "NA";
+            }
+            HiddenField hfimagehide = (e.Row.FindControl("hfimagehide") as HiddenField);
+            System.Web.UI.WebControls.Image img = (e.Row.FindControl("imgtop") as System.Web.UI.WebControls.Image);
+            Label lblimagena = (e.Row.FindControl("lblimagena") as Label);
+            if (hfimagehide.Value == "")
+            {
+                img.Visible = false;
+                lblimagena.Visible = true;
+            }
+            else
+            {
+                img.Visible = true;
+                lblimagena.Visible = false;
+            }
+        }
+    }
+    protected void lblback_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("Dashboard?mu=" + Encrypt.EncryptData(Session["Type"].ToString()) + "&id=" + Encrypt.EncryptData(Session["CompanyRefNo"].ToString()));
+    }
+    #endregion
+    #region pageindex
     protected void lnkbtnPgPrevious_Click(object sender, EventArgs e)
     {
         txtpageno.Text = "";
         txtsea.Text = "";
         pagingCurrentPage -= 1;
-        n2 = Convert.ToInt16(pagingCurrentPage) * Convert.ToInt16(100);
-        n1 = Convert.ToInt16(n2 - 100);
+        n2 = Convert.ToInt16(pagingCurrentPage) * Convert.ToInt16(25);
+        n1 = Convert.ToInt16(n2 - 25);
         if (lbclearfilter.Visible == true)
         { SeachResult(); }
         else
@@ -1122,8 +594,8 @@ public partial class Admin_ViewProductFilter : System.Web.UI.Page
             mcount = txtsea.Text;
             txtpageno.Text = txtsea.Text;
         }
-        n2 = Convert.ToInt16(mcount) * Convert.ToInt16(100);
-        n1 = Convert.ToInt16(n2 - 100);
+        n2 = Convert.ToInt16(mcount) * Convert.ToInt16(25);
+        n1 = Convert.ToInt16(n2 - 25);
         if (lbclearfilter.Visible == true)
         { SeachResult(); }
         else
@@ -1174,8 +646,8 @@ public partial class Admin_ViewProductFilter : System.Web.UI.Page
                 pagingCurrentPage = Convert.ToInt32(txtpage.ToString());
                 txtpageno.Text = txtsea.Text;
             }
-            n2 = Convert.ToInt16(pagingCurrentPage + 1) * Convert.ToInt16(100);
-            n1 = Convert.ToInt16(n2 + 1 - 100);
+            n2 = Convert.ToInt16(pagingCurrentPage + 1) * Convert.ToInt16(25);
+            n1 = Convert.ToInt16(n2 + 1 - 25);
             if (lbclearfilter.Visible == true)
             { SeachResult(); }
             else
@@ -1190,44 +662,7 @@ public partial class Admin_ViewProductFilter : System.Web.UI.Page
         }
     }
     //end page index---------------------------------------//
-    #endregion
-    protected void lblback_Click(object sender, EventArgs e)
-    {
-        Response.Redirect("Dashboard?mu=" + Encrypt.EncryptData(Session["Type"].ToString()) + "&id=" + Encrypt.EncryptData(Session["CompanyRefNo"].ToString()));
-    }
-    protected void gvproduct_RowDataBound(object sender, GridViewRowEventArgs e)
-    {
-        if (e.Row.RowType == DataControlRowType.DataRow)
-        {
-            HyperLink hy = (e.Row.FindControl("lbpdffile") as HyperLink);
-            HiddenField hfisapproved = (e.Row.FindControl("hfisaaproved") as HiddenField);
-            if (hy.NavigateUrl.Trim() == "" || hy.NavigateUrl.Trim() == "~/Upload/" || hy.NavigateUrl.Trim() == null)
-            {
-                e.Row.Cells[3].Text = "NA";
-            }
-            HiddenField hfimagehide = (e.Row.FindControl("hfimagehide") as HiddenField);
-            System.Web.UI.WebControls.Image img = (e.Row.FindControl("imgtop") as System.Web.UI.WebControls.Image);
-            Label lblimagena = (e.Row.FindControl("lblimagena") as Label);
-            if (hfimagehide.Value == "")
-            {
-                img.Visible = false;
-                lblimagena.Visible = true;
-            }
-            else
-            {
-                img.Visible = true;
-                lblimagena.Visible = false;
-            }
-            if (hfisapproved.Value == "Y")
-            {
-                //    gvproduct.BackColor = Color.Green;
-            }
-            else if (hfisapproved.Value == "N")
-            {
-                //  gvproduct.BackColor = Color.Red;
-            }
-        }
-    }
+    #endregion   
     #region Filtor or CheckBoxCode
     DataTable DtCompanyDDL = new DataTable();
     protected void BindComapnyCheckbox()
@@ -1428,28 +863,28 @@ public partial class Admin_ViewProductFilter : System.Web.UI.Page
         DataTable dtsearchkey = Lo.RetriveFilterCode(hfmref.Value, "", "SearchKeyword");
         if (dtsearchkey.Rows.Count > 0)
         {
-            //DataTable insert = new DataTable();
-            //insert.Columns.Add(new DataColumn("Column1", typeof(string)));
-            //DataRow dr;
-            //for (int i = 0; dtsearchkey.Rows.Count > i; i++)
-            //{
-            //    if (dtsearchkey.Rows[i]["SearchKeyword"].ToString().Contains(","))
-            //    {
-            //        string mystring = dtsearchkey.Rows[i]["SearchKeyword"].ToString();
-            //        string[] finalstring = mystring.Split(',');
-            //        dr = insert.NewRow();
-            //        dr["Column1"] = "" + finalstring[0].Trim() + "";
-            //        insert.Rows.Add(dr);
-            //        dr = insert.NewRow();
-            //        dr["Column1"] = "" + finalstring[1].Trim() + "";
-            //        insert.Rows.Add(dr);
-            //        dtsearchkey.Rows[i].Delete();
-            //        dtsearchkey.AcceptChanges();
-            //    }
-            //}
-            //dtsearchkey.Merge(insert);
-            ////  Co.FillDropdownlist(ddlsearchkeywordsfilter, dtsearchkey, "SearchKeyword", "SearchKeyword");
-            //// ddlsearchkeywordsfilter.Items.Insert(0, "Select");
+            DataTable insert = new DataTable();
+            insert.Columns.Add(new DataColumn("Column1", typeof(string)));
+            DataRow dr;
+            for (int i = 0; dtsearchkey.Rows.Count > i; i++)
+            {
+                if (dtsearchkey.Rows[i]["SearchKeyword"].ToString().Contains(","))
+                {
+                    string mystring = dtsearchkey.Rows[i]["SearchKeyword"].ToString();
+                    string[] finalstring = mystring.Split(',');
+                    dr = insert.NewRow();
+                    dr["Column1"] = "" + finalstring[0].Trim() + "";
+                    insert.Rows.Add(dr);
+                    dr = insert.NewRow();
+                    dr["Column1"] = "" + finalstring[1].Trim() + "";
+                    insert.Rows.Add(dr);
+                    dtsearchkey.Rows[i].Delete();
+                    dtsearchkey.AcceptChanges();
+                }
+            }
+            dtsearchkey.Merge(insert);
+            //  Co.FillDropdownlist(ddlsearchkeywordsfilter, dtsearchkey, "SearchKeyword", "SearchKeyword");
+            // ddlsearchkeywordsfilter.Items.Insert(0, "Select");
         }
     }
     protected void BindPurposeProcuremnt()
@@ -1572,11 +1007,11 @@ public partial class Admin_ViewProductFilter : System.Web.UI.Page
             ddlprodindustrydomain.Items.Insert(0, "Select");
             //Bind SearchKeyword
             DataView dvcompind1 = new DataView(dtcompindustry);
-            dvcompind1.RowFilter = "CompanyRefNo='" + ddlcomp.SelectedItem.Value + "' and SearchKeyword is not null";
+            dvcompind1.RowFilter = "CompanyRefNo='" + ddlcomp.SelectedItem.Value + "'";// and SearchKeyword is not null";
             DataTable dtnew2 = dvcompind1.ToTable();
-            string[] strColnames1 = new string[2];
-            strColnames1[0] = "SearchKeyword";
-            strColnames1[1] = "CompanyRefNo";
+            string[] strColnames1 = new string[1];
+            //  strColnames1[0] = "SearchKeyword";
+            strColnames1[0] = "CompanyRefNo";
             dtnew2 = dvcompind1.ToTable(true, strColnames1);
             //ddlsearchkeywordsfilter.DataTextField = "SearchKeyword";
             //ddlsearchkeywordsfilter.DataValueField = "CompanyRefNo";
@@ -1607,11 +1042,11 @@ public partial class Admin_ViewProductFilter : System.Web.UI.Page
             ddlprodindustrydomain.Items.Insert(0, "Select");
             //Bind SearchKeyword
             DataView dvcompind1 = new DataView(dtcompindustry);
-            dvcompind1.RowFilter = "FactoryRefNo='" + ddldivision.SelectedItem.Value + "' and SearchKeyword is not null";
+            dvcompind1.RowFilter = "FactoryRefNo='" + ddldivision.SelectedItem.Value + "'";// and SearchKeyword is not null";
             DataTable dtnew2 = dvcompind1.ToTable();
-            string[] strColnames1 = new string[2];
-            strColnames1[0] = "SearchKeyword";
-            strColnames1[1] = "FactoryRefNo";
+            string[] strColnames1 = new string[1];
+            //   strColnames1[0] = "SearchKeyword";
+            strColnames1[0] = "FactoryRefNo";
             dtnew2 = dvcompind1.ToTable(true, strColnames1);
             //ddlsearchkeywordsfilter.DataTextField = "SearchKeyword";
             //ddlsearchkeywordsfilter.DataValueField = "FactoryRefNo";
@@ -1641,11 +1076,11 @@ public partial class Admin_ViewProductFilter : System.Web.UI.Page
             ddlprodindustrydomain.Items.Insert(0, "Select");
             //Bind SearchKeyword
             DataView dvcompind1 = new DataView(dtcompindustry);
-            dvcompind1.RowFilter = "UnitRefNo='" + ddlunit.SelectedItem.Value + "' and SearchKeyword is not null";
+            dvcompind1.RowFilter = "UnitRefNo='" + ddlunit.SelectedItem.Value + "'";// and SearchKeyword is not null";
             DataTable dtnew2 = dvcompind1.ToTable();
-            string[] strColnames1 = new string[2];
-            strColnames1[0] = "SearchKeyword";
-            strColnames1[1] = "UnitRefNo";
+            string[] strColnames1 = new string[1];
+            // strColnames1[0] = "SearchKeyword";
+            strColnames1[0] = "UnitRefNo";
             dtnew2 = dvcompind1.ToTable(true, strColnames1);
             //ddlsearchkeywordsfilter.DataTextField = "SearchKeyword";
             //ddlsearchkeywordsfilter.DataValueField = "UnitRefNo";
@@ -1699,30 +1134,17 @@ public partial class Admin_ViewProductFilter : System.Web.UI.Page
             dr["Column"] = "CompanyRefNo" + "=";
             dr["Value"] = "'" + ddlcomp.SelectedItem.Value + "'";
             insert.Rows.Add(dr);
-        }
-        if (ddlnsg.SelectedItem.Text != "Select")
-        {
-            dr = insert.NewRow();
-            dr["Column"] = "ProductLevel1" + "=";
-            dr["Value"] = "'" + ddlnsg.SelectedItem.Value + "'";
-            insert.Rows.Add(dr);
-            if (divnsc.Visible != false)
+            if (ddldivision.Visible == true && ddldivision.SelectedItem.Text != "Select")
             {
-                if (ddlnsc.SelectedItem.Text != "Select")
+                dr = insert.NewRow();
+                dr["Column"] = "FactoryRefNo" + "=";
+                dr["Value"] = "'" + ddldivision.SelectedItem.Value + "'";
+                insert.Rows.Add(dr);
+                if (ddlunit.Visible == true && ddlunit.SelectedItem.Text != "Select")
                 {
                     dr = insert.NewRow();
-                    dr["Column"] = "ProductLevel2" + "=";
-                    dr["Value"] = "'" + ddlnsc.SelectedItem.Value + "'";
-                    insert.Rows.Add(dr);
-                }
-            }
-            if (divic.Visible != false)
-            {
-                if (ddlic.SelectedItem.Text != "Select")
-                {
-                    dr = insert.NewRow();
-                    dr["Column"] = "ProductLevel3" + "=";
-                    dr["Value"] = "'" + ddlic.SelectedItem.Value + "'";
+                    dr["Column"] = "UnitRefNo" + "=";
+                    dr["Value"] = "'" + ddlunit.SelectedItem.Value + "'";
                     insert.Rows.Add(dr);
                 }
             }
@@ -1744,7 +1166,7 @@ public partial class Admin_ViewProductFilter : System.Web.UI.Page
         if (ddlimported.SelectedItem.Text != "Select")
         {
             dr = insert.NewRow();
-            dr["Column"] = "IsProductImported" + "="; ;
+            dr["Column"] = "SupplyOrderStatus" + "="; ;
             dr["Value"] = "'" + ddlimported.SelectedItem.Value + "'";
             insert.Rows.Add(dr);
         }
@@ -1765,7 +1187,7 @@ public partial class Admin_ViewProductFilter : System.Web.UI.Page
         if (ddldeclaration.SelectedItem.Text != "Select")
         {
             dr = insert.NewRow();
-            dr["Column"] = "IsShowGeneral" + "="; ;
+            dr["Column"] = "EOIStatus" + "="; ;
             dr["Value"] = "'" + ddldeclaration.SelectedItem.Value + "'";
             insert.Rows.Add(dr);
         }
@@ -1779,8 +1201,8 @@ public partial class Admin_ViewProductFilter : System.Web.UI.Page
         if (hfmtype.Value == "M2")
         {
             dr = insert.NewRow();
-            dr["Column"] = "PurposeofProcurement" + " like";
-            dr["Value"] = "'%" + 25 + "%'";
+            dr["Column"] = "PurposeofProcurement" + "=";
+            dr["Value"] = "'25'";
             insert.Rows.Add(dr);
         }
         if (hfmtype.Value == "ID")
@@ -1797,13 +1219,6 @@ public partial class Admin_ViewProductFilter : System.Web.UI.Page
             dr["Value"] = "'Y'";
             insert.Rows.Add(dr);
         }
-        if (hfmref.Value != "")
-        {
-            dr = insert.NewRow();
-            dr["Column"] = "CompanyRefNo" + "=";
-            dr["Value"] = "'" + hfmref.Value + "'";
-            insert.Rows.Add(dr);
-        }
         if (txtitemportalid.Text != "")
         {
             dr = insert.NewRow();
@@ -1815,7 +1230,10 @@ public partial class Admin_ViewProductFilter : System.Web.UI.Page
         {
             insert1 = insert1 + insert.Rows[i]["Column"].ToString() + " " + insert.Rows[i]["Value"].ToString() + " " + " and ";
         }
-        insert1 = insert1.Substring(0, insert1.Length - 5);
+        if (insert1 != "")
+        {
+            insert1 = insert1.Substring(0, insert1.Length - 5);
+        }
         return insert1;
     }
     protected string BindInsertfilter()
@@ -1837,67 +1255,12 @@ public partial class Admin_ViewProductFilter : System.Web.UI.Page
                     dv.RowFilter = BindInsertfilter();
                     dv.Sort = "LastUpdated desc";
                     DataTable dtads = dv.ToTable();
+                    Session["ExcelDt"] = dtads;
                     if (dtads.Rows.Count > 0)
                     {
-                        dtads.Columns.Add("TopPdf", typeof(string));
-                        dtads.Columns.Add("TopImages", typeof(string));
-                        dtads.Columns.Add("1718", typeof(decimal));
-                        dtads.Columns.Add("1819", typeof(decimal));
-                        dtads.Columns.Add("1920", typeof(decimal));
-                        dtads.Columns.Add("2021", typeof(decimal));
-                        for (int i = 0; dtads.Rows.Count > i; i++)
-                        {
-                            try
-                            {
-                                string mProdRefTime = dtads.Rows[i]["ProductRefNo"].ToString();
-                                DataTable dtImageBind = Lo.RetriveProductCode("", mProdRefTime, "RetImageTop", "");
-                                if (dtImageBind.Rows.Count > 0)
-                                {
-                                    dtads.Rows[i]["TopImages"] = dtImageBind.Rows[0]["ImageName"].ToString();
-                                }
-                                else
-                                {
-                                    // dtads.Rows[i]["TopImages"] = "assets/images/Noimage.png";
-                                }
-                                DataTable dtImageBind0 = Lo.RetriveProductCode("", mProdRefTime, "RetPdfTop", "");
-                                if (dtImageBind0.Rows.Count > 0)
-                                {
-                                    dtads.Rows[i]["TopPdf"] = dtImageBind0.Rows[0]["ImageName"].ToString();
-                                }
-                                else
-                                {
-                                    // dtads.Rows[i]["TopImages"] = "assets/images/Noimage.png";
-                                }
-
-                                string mProdRefesti = dtads.Rows[i]["ProductRefNo"].ToString();
-                                DataTable dtEstimate1 = Lo.RetriveProductCode("", mProdRefesti, "estimate", "");
-                                for (int es = 0; dtEstimate1.Rows.Count > es; es++)
-                                {
-                                    if (dtEstimate1.Rows[es]["FYear"].ToString() == "2017-18" && dtEstimate1.Rows[es]["Type"].ToString() == "O")
-                                    {
-                                        dtads.Rows[i]["1718"] = dtEstimate1.Rows[es]["EstimatedPrice"].ToString();
-                                    }
-                                    if (dtEstimate1.Rows[es]["FYear"].ToString() == "2018-19" && dtEstimate1.Rows[es]["Type"].ToString() == "O")
-                                    {
-                                        dtads.Rows[i]["1819"] = dtEstimate1.Rows[es]["EstimatedPrice"].ToString();
-                                    }
-                                    if (dtEstimate1.Rows[es]["FYear"].ToString() == "2019-20" && dtEstimate1.Rows[es]["Type"].ToString() == "O")
-                                    {
-                                        dtads.Rows[i]["1920"] = dtEstimate1.Rows[es]["EstimatedPrice"].ToString();
-                                    }
-                                    if (dtEstimate1.Rows[es]["FYear"].ToString() == "2020-21" && dtEstimate1.Rows[es]["Type"].ToString() == "F")
-                                    {
-                                        dtads.Rows[i]["2021"] = dtEstimate1.Rows[es]["EstimatedPrice"].ToString();
-                                    }
-                                }
-                            }
-                            catch (Exception ex)
-                            {
-                            }
-                        }
                         pgsource.DataSource = dtads.DefaultView;
                         pgsource.AllowPaging = true;
-                        pgsource.PageSize = 100;
+                        pgsource.PageSize = 25;
                         pgsource.CurrentPageIndex = pagingCurrentPage;
                         ViewState["totpage"] = pgsource.PageCount;
                         lblpaging.Text = "Page " + (pagingCurrentPage + 1) + " of " + pgsource.PageCount;
@@ -1975,7 +1338,6 @@ public partial class Admin_ViewProductFilter : System.Web.UI.Page
         ddldivision.SelectedValue = "Select";
         ddlunit.SelectedValue = "Select";
         ddlprodindustrydomain.SelectedValue = "Select";
-        // ddlsearchkeywordsfilter.SelectedValue = "Select";
         ddlsearchkeywordsfilter.Text = "";
         ddlimported.SelectedIndex = -1;
         ddlprocurmentcatgory.SelectedValue = "Select";
@@ -1988,180 +1350,121 @@ public partial class Admin_ViewProductFilter : System.Web.UI.Page
         BindProduct(hfmref.Value);
     }
     #endregion
+    #region ExcelDownloadcode
+    DataTable DtFinal = new DataTable();
     protected void lbldownloadexcel_Click(object sender, EventArgs e)
     {
-        DtFilterView = (DataTable)Session["TempData"];
+        DtFilterView = (DataTable)Session["ExcelDt"];
         if (DtFilterView.Rows.Count > 0)
         {
-            UpdateDtGridValue();
-            DataView dv = new DataView(DtFilterView);
-            DataTable dtnew = dv.ToTable();
-            if (dtnew.Rows.Count > 0)
+            try
             {
-                try
-                {
-                    dv.RowFilter = BindInsertfilter();
-                    dv.Sort = "LastUpdated desc";
-                    DtFilterView = dv.ToTable();
-                    if (DtFilterView.Rows.Count > 0)
-                    {
-                        DtFilterView.Columns.Add("EstimateQu", typeof(int));
-                        DtFilterView.Columns.Add("EstimatePrice", typeof(int));
-                        for (int i = 0; DtFilterView.Rows.Count > i; i++)
-                        {
-                            try
-                            {
-                                string mProdRefesti = DtFilterView.Rows[i]["ProductRefNo"].ToString();
-                                DataTable dtEstimate = Lo.RetriveProductCode("", mProdRefesti, "EstimateQuanTotal", "");
-                                if (dtEstimate.Rows[0]["EstQe"].ToString() == "" || dtEstimate.Rows[0]["EstQe"].ToString() == null)
-                                {
-                                    DtFilterView.Rows[i]["EstimateQu"] = 0;
-                                }
-                                else
-                                {
-                                    DtFilterView.Rows[i]["EstimateQu"] = dtEstimate.Rows[0]["EstQe"].ToString();
-                                }
-                                if (dtEstimate.Rows[0]["estpri"].ToString() == "")
-                                {
-                                    DtFilterView.Rows[i]["EstimatePrice"] = 0;
-                                }
-                                else
-                                {
-                                    DtFilterView.Rows[i]["EstimatePrice"] = dtEstimate.Rows[0]["estpri"].ToString();
-                                }
-                            }
-                            catch (Exception ex)
-                            {
-                            }
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    ex.ToString();
-                }
+                int[] iColumns = { 13, 2, 4, 7, 9, 11, 57, 17, 18, 48, 49, 50, 51, 52, 53, 24, 20, 21, 22,  31, 39, 43, 32, 33, 
+                    34, 38, 40, 41, 42, 55, 56, 37, 45, 54, 19, 48, 47, 46, 58, 59, 60, 61, 62,65 };
+                RKLib.ExportData.Export objExport = new RKLib.ExportData.Export("Web");
+                objExport.ExportDetails(DtFilterView, iColumns, RKLib.ExportData.Export.ExportFormat.Excel, "Product.xls");
+            }
+            catch (Exception ex)
+            {
+               // ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Excel not download.- '" + ex.Message + ")", true);
             }
         }
-        try
-        {
-            //int[] iColumns = { 2, 4, 6, 7, 9, 11, 18, 19, 20, 21, 22, 24, 25, 57, 60, 58, 59, 62, 61 };
-            int[] iColumns = { 2, 4, 7, 18, 20, 24, 25, 60, 58, 61, 64, 66, 67 };
-            RKLib.ExportData.Export objExport = new RKLib.ExportData.Export("Web");
-            objExport.ExportDetails(DtFilterView, iColumns, RKLib.ExportData.Export.ExportFormat.Excel, "Product.xls");
-        }
-        catch (Exception ex)
-        {
-            ex.ToString();
-        }
     }
-    #region Clear Filter Select Result
-    protected void FilterSelectName()
+#endregion
+#region Clear Filter Select Result
+protected void FilterSelectName()
+{
+    lbclearfilter.Visible = true;
+    lbldownloadexcel.Visible = true;
+    hidemainclearfilter();
+}
+protected void hidemainclearfilter()
+{
+    if (ddlcomp.SelectedItem.Text == "Select" && ddlisindezinized.SelectedItem.Text == "Select" && ddlprocurmentcatgory.SelectedItem.Text == "Select" && ddlprodindustrydomain.SelectedItem.Text == "Select" && ddlimported.SelectedItem.Text == "Select")
     {
-        lbclearfilter.Visible = true;
-        lbldownloadexcel.Visible = true;
-        divclearfilorexceldown.Visible = true;
-        hidemainclearfilter();
+        lbclearfilter.Visible = false;
     }
-    protected void hidemainclearfilter()
+}
+#endregion
+#region other textchngecode
+protected void ddlprocurmentcatgory_SelectedIndexChanged(object sender, EventArgs e)
+{
+    SeachResult();
+}
+protected void ddldeclaration_SelectedIndexChanged(object sender, EventArgs e)
+{
+    SeachResult();
+}
+protected void ddlimported_SelectedIndexChanged(object sender, EventArgs e)
+{
+    SeachResult();
+}
+private string SortDirection
+{
+    get { return ViewState["SortDirection"] != null ? ViewState["SortDirection"].ToString() : "ASC"; }
+    set { ViewState["SortDirection"] = value; }
+}
+protected void OnSorting(object sender, GridViewSortEventArgs e)
+{
+    if (ddlcomp.SelectedItem.Text == "Select" && ddlsearchkeywordsfilter.Text == "Select" && ddldeclaration.SelectedItem.Text == "Select" && ddlisindezinized.SelectedItem.Text == "Select" && ddlprocurmentcatgory.SelectedItem.Text == "Select" && ddlprodindustrydomain.SelectedItem.Text == "Select")
     {
-        if (ddlcomp.SelectedItem.Text == "Select" && ddlisindezinized.SelectedItem.Text == "Select" && ddlprocurmentcatgory.SelectedItem.Text == "Select" && ddlprodindustrydomain.SelectedItem.Text == "Select" && ddlimported.SelectedItem.Text == "Select")
-        {
-            lbclearfilter.Visible = false;
-        }
+        this.BindProduct(hfmref.Value, e.SortExpression);
     }
+    else
+    {
+        SeachResult(e.SortExpression);
+    }
+}
+protected void ddlsearchkeywordsfilter_TextChanged(object sender, EventArgs e)
+{
+    SeachResult();
+}
+protected void ddlnsg_SelectedIndexChanged(object sender, EventArgs e)
+{
+    if (ddlnsg.SelectedItem.Text == "Select")
+    {
+        divnsc.Visible = false;
+        ddlnsc.Items.Insert(0, "Select");
+        divic.Visible = false;
+        ddlic.Items.Insert(0, "Select");
+    }
+    else
+    {
+        BindNSC();
+    }
+    if (ddlnsg.SelectedItem.Text != "Select")
+    {
+        SeachResult();
+    }
+}
+protected void ddlnsc_SelectedIndexChanged(object sender, EventArgs e)
+{
+    if (ddlnsc.SelectedItem.Text == "Select")
+    {
+        divic.Visible = false;
+        ddlic.Items.Insert(0, "Select");
+    }
+    else
+    {
+        BindIC();
+    }
+    if (ddlnsc.SelectedItem.Text != "Select")
+    {
+        SeachResult();
+    }
+}
+protected void ddlic_SelectedIndexChanged(object sender, EventArgs e)
+{
+    if (ddlic.SelectedItem.Text == "Select")
+    { }
+    else
+    {
+        SeachResult();
+    }
+}
+protected void txtitemportalid_TextChanged(object sender, EventArgs e)
+{
+    SeachResult();
+}
     #endregion
-    protected void gvproditemdetail_RowCreated(object sender, GridViewRowEventArgs e)
-    {
-        if (e.Row.RowType == DataControlRowType.DataRow)
-        {
-            e.Row.TableSection = TableRowSection.TableBody;
-        }
-        else if (e.Row.RowType == DataControlRowType.Header)
-        {
-            e.Row.TableSection = TableRowSection.TableHeader;
-        }
-        else if (e.Row.RowType == DataControlRowType.Footer)
-        {
-            e.Row.TableSection = TableRowSection.TableFooter;
-        }
-    }
-    protected void ddlprocurmentcatgory_SelectedIndexChanged(object sender, EventArgs e)
-    {
-        SeachResult();
-    }
-    protected void ddldeclaration_SelectedIndexChanged(object sender, EventArgs e)
-    {
-        SeachResult();
-    }
-    protected void ddlimported_SelectedIndexChanged(object sender, EventArgs e)
-    {
-        SeachResult();
-    }
-    private string SortDirection
-    {
-        get { return ViewState["SortDirection"] != null ? ViewState["SortDirection"].ToString() : "ASC"; }
-        set { ViewState["SortDirection"] = value; }
-    }
-    protected void OnSorting(object sender, GridViewSortEventArgs e)
-    {
-        if (ddlcomp.SelectedItem.Text == "Select" && ddlsearchkeywordsfilter.Text == "Select" && ddldeclaration.SelectedItem.Text == "Select" && ddlisindezinized.SelectedItem.Text == "Select" && ddlprocurmentcatgory.SelectedItem.Text == "Select" && ddlprodindustrydomain.SelectedItem.Text == "Select")
-        {
-            this.BindProduct(hfmref.Value, e.SortExpression);
-        }
-        else
-        {
-            SeachResult(e.SortExpression);
-        }
-    }
-    protected void ddlsearchkeywordsfilter_TextChanged(object sender, EventArgs e)
-    {
-        SeachResult();
-    }
-    protected void ddlnsg_SelectedIndexChanged(object sender, EventArgs e)
-    {
-        if (ddlnsg.SelectedItem.Text == "Select")
-        {
-            divnsc.Visible = false;
-            ddlnsc.Items.Insert(0, "Select");
-            divic.Visible = false;
-            ddlic.Items.Insert(0, "Select");
-        }
-        else
-        {
-            BindNSC();
-        }
-        if (ddlnsg.SelectedItem.Text != "Select")
-        {
-            SeachResult();
-        }
-    }
-    protected void ddlnsc_SelectedIndexChanged(object sender, EventArgs e)
-    {
-        if (ddlnsc.SelectedItem.Text == "Select")
-        {
-            divic.Visible = false;
-            ddlic.Items.Insert(0, "Select");
-        }
-        else
-        {
-            BindIC();
-        }
-        if (ddlnsc.SelectedItem.Text != "Select")
-        {
-            SeachResult();
-        }
-    }
-    protected void ddlic_SelectedIndexChanged(object sender, EventArgs e)
-    {
-        if (ddlic.SelectedItem.Text == "Select")
-        { }
-        else
-        {
-            SeachResult();
-        }
-    }
-    protected void txtitemportalid_TextChanged(object sender, EventArgs e)
-    {
-        SeachResult();
-    }
 }

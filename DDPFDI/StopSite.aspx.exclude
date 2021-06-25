@@ -1,0 +1,26 @@
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="StopSite.aspx.cs" Inherits="StopSite" MasterPageFile="~/Admin/MasterPage.master" %>
+
+<asp:Content ID="head" runat="server" ContentPlaceHolderID="head">
+</asp:Content>
+<asp:Content ID="inner" runat="server" ContentPlaceHolderID="ContentPlaceHolder1">
+    <div class="content oem-content">
+        <div class="sideBg">
+            <div class="row">
+                <div class="col-md-12 padding_0">
+                    <div id="divHeadPage" runat="server"></div>
+                    <div id="ContentPlaceHolder1_divHeadPage">
+                        <ul class="breadcrumb">
+                            <li class=""><span>Site Under Construction</span></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-12" style="text-align: center;">
+
+                    <div class="myimgdivshowhide">
+                        <img src="assets/images/uc.jpg" alt="Site Under Constraction" width="100%" class="img-responsive img-thumbnail" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</asp:Content>

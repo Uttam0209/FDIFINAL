@@ -11,7 +11,7 @@
 </asp:Content>
 <asp:Content ID="InnerDesignation" runat="server" ContentPlaceHolderID="ContentPlaceHolder1">
     <div class="content oem-content">
-        
+
         <asp:UpdatePanel runat="server" ID="updatepan">
             <ContentTemplate>
                 <div class="sideBg">
@@ -82,14 +82,14 @@
                                             <asp:Label ID="lblrefno" runat="server" Text='<%#Eval("News") %>' NullDisplayText="#"></asp:Label>
                                         </ItemTemplate>
                                     </asp:TemplateField>
-                                    <asp:BoundField DataField="Date" HeaderText="Update Date" DataFormatString = "{0:dd/MM/yyyy}" NullDisplayText="#" />
+                                    <asp:BoundField DataField="Date" HeaderText="Update Date" DataFormatString="{0:dd/MM/yyyy}" NullDisplayText="#" />
                                     <asp:BoundField DataField="Pages" HeaderText="Update Pages" Visible="False" NullDisplayText="#" />
                                 </Columns>
                             </asp:GridView>
                         </div>
                     </div>
                     <div class="clearfix"></div>
-                    <div class="footer"><i class="far fa-copyright"></i>2019 <a href="#">Department of Defence Production</a> </div>
+                  
                 </div>
             </ContentTemplate>
         </asp:UpdatePanel>

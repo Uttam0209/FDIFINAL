@@ -6,6 +6,7 @@ using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -32,36 +33,39 @@ public partial class User_IntrestedProduct : System.Web.UI.Page
         {
             try
             {
-                //Code by Shalini
-                if (Session["User"] != null)
-                {
-                    linklogin.Visible = false;
-                    linkusername.Text = Encrypt.DecryptData(Session["User"].ToString());
-                    linkusername.Visible = true;
-                    if (Encrypt.DecryptData(Session["Type"].ToString()) == "Admin" || Encrypt.DecryptData(Session["Type"].ToString()) == "SuperAdmin" || Encrypt.DecryptData(Session["Type"].ToString()) == "Company" ||
-                        Encrypt.DecryptData(Session["Type"].ToString()) == "Division" || Encrypt.DecryptData(Session["Type"].ToString()) == "Unit")
-                    {
-                        linklogin.Visible = false;
-                        linkusername.Text = Encrypt.DecryptData(Session["User"].ToString());
-                    }
-                    else
-                    {
-                        linklogin.Visible = true;
-                        linkusername.Visible = false;
-                    }
-                }
-                else
-                {
-                    linklogin.Visible = true;
-                    linkusername.Visible = false;
-                    lblmis.Visible = false;
-                }
+                MenuLink();
                 ControlGrid();
             }
             catch (Exception ex)
             {
                 ScriptManager.RegisterStartupScript(this, this.GetType(), "alert", "alert('Technical Error:- " + ex.Message + "');", true);
             }
+        }
+    }
+    protected void MenuLink()
+    {
+        if (Session["User"] != null)
+        {
+            linkusername.Text = Encrypt.DecryptData(Session["User"].ToString());
+            linkusername.Visible = true;
+            linkusername.Text = "Welcome: " + linkusername.Text;
+            lnkfeedback.Visible = true;
+            linklogin.Visible = false;
+            lblmis.Visible = true;
+            lbllogout.Visible = true;
+            lbSuccesstory.Visible = true;
+            reportdiv.Visible = true;
+            mhwparti.Visible = false;
+        }
+        else
+        {
+            lbSuccesstory.Visible = false;
+            linklogin.Visible = true;
+            linkusername.Visible = false;
+            lblmis.Visible = false;
+            lbllogout.Visible = false;
+            PR.Visible = false; mhwparti.Visible = true;
+            reportdiv.Visible = false;
         }
     }
     private void ControlGrid()
@@ -340,6 +344,7 @@ public partial class User_IntrestedProduct : System.Web.UI.Page
         if (DtMasterCategroy.Rows.Count > 0)
         {
             Co.FillRadioBoxList(chktendor, DtMasterCategroy, "SCategoryName", "SCategoryID");
+           // chktendor.Items.Remove(chktendor.Items[1]);
         }
     }
     #endregion
@@ -595,6 +600,13 @@ public partial class User_IntrestedProduct : System.Web.UI.Page
                 dr = insert.NewRow();
                 dr["Column"] = "(" + rbsort.SelectedValue + " >=";
                 dr["Value"] = " '0.5'  and " + rbsort.SelectedValue + " < '5')";
+                insert.Rows.Add(dr);
+            }
+            else if (chkimportvalue.SelectedItem.Value == "5")
+            {
+                dr = insert.NewRow();
+                dr["Column"] = "(" + rbsort.SelectedValue + " <=";
+                dr["Value"] = " '0.5')";
                 insert.Rows.Add(dr);
             }
         }
@@ -1040,11 +1052,12 @@ public partial class User_IntrestedProduct : System.Web.UI.Page
                         if (DTporCat.Rows.Count > 0)
                         {
                             lblindicate.Text = "";
-                            for (int i = 0; DTporCat.Rows.Count > i; i++)
-                            {
-                                lblindicate.Text = lblindicate.Text + DTporCat.Rows[i]["SCategoryName"].ToString() + ", ";
-                            }
-                            lblindicate.Text = lblindicate.Text.Substring(0, lblindicate.Text.Length - 2);
+                            lblindicate.Text = DTporCat.Rows[0]["SCategoryName"].ToString();
+                            //for (int i = 0; DTporCat.Rows.Count > i; i++)
+                            //{
+                            //    lblindicate.Text = lblindicate.Text + DTporCat.Rows[i]["SCategoryName"].ToString() + ", ";
+                            //}
+                            //lblindicate.Text = lblindicate.Text.Substring(0, lblindicate.Text.Length - 2);
                             sixteen.Visible = true;
                         }
                         else
@@ -1773,8 +1786,36 @@ public partial class User_IntrestedProduct : System.Web.UI.Page
             ScriptManager.RegisterStartupScript(this, GetType(), "divNatoPopup", "showPopup2();", true);
         }
     }
+    protected void lbllogout_Click(object sender, EventArgs e)
+    {
+        Session.Abandon();
+        Session.Remove("Type");
+        Session.Remove("User");
+        Session.Remove("CompanyRefNo");
+        Session.Remove("SFToken");
+        Session.RemoveAll();
+        Session.Contents.RemoveAll();
+        Session.Clear();
+        Response.Cache.SetCacheability(HttpCacheability.NoCache);
+        Response.Cookies["DefaultDpsu"].Expires = DateTime.Now;
+        Response.Buffer = true;
+        Response.AppendHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
+        Response.AppendHeader("Pragma", "no-cache"); // HTTP 1.0.
+        Response.AppendHeader("Expires", "0"); // Proxies.
+        if (Request.Cookies["User"] != null)
+        {
+            Response.Cookies["User"].Value = string.Empty;
+            Response.Cookies["User"].Expires = DateTime.Now.AddMonths(-20);
+        }
+        if (Request.Cookies["SFToken"] != null)
+        {
+            Response.Cookies["SFToken"].Value = string.Empty;
+            Response.Cookies["SFToken"].Expires = DateTime.Now.AddMonths(-20);
+        }
+        Response.RedirectToRoute("Productlist");
+    }
     #endregion
-    //code by shalini
+    #region SHALINI Code
     protected void linklogin_Click(object sender, EventArgs e)
     {
         Response.RedirectToRoute("Login");
@@ -1790,5 +1831,13 @@ public partial class User_IntrestedProduct : System.Web.UI.Page
             ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "ErrorMssgPopup('Please login again');window.location='Login'", true);
         }
     }
-    //end
+    protected void lbeoistatus_Click(object sender, EventArgs e)
+    {
+        Response.RedirectToRoute("EOIStatus");
+    }
+    #endregion
+    protected void lbdpsuhome_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("DPSUHome");
+    }
 }

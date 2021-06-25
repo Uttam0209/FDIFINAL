@@ -49,3 +49,702 @@ E:\Wali Projects\FDIFinal\BusinessLayer\obj\Release\BusinessLayer.csprojAssembly
 E:\Wali Projects\FDIFinal\BusinessLayer\obj\Release\BusinessLayer.csproj.CopyComplete
 E:\Wali Projects\FDIFinal\BusinessLayer\obj\Release\BusinessLayer.dll
 E:\Wali Projects\FDIFinal\BusinessLayer\obj\Release\BusinessLayer.pdb
+E:\Wali Projects\SrijanFinal\BusinessLayer\bin\Release\BusinessLayer.dll
+E:\Wali Projects\SrijanFinal\BusinessLayer\bin\Release\BusinessLayer.pdb
+E:\Wali Projects\SrijanFinal\BusinessLayer\bin\Release\DataAccessLayer.dll
+E:\Wali Projects\SrijanFinal\BusinessLayer\bin\Release\Encryption.dll
+E:\Wali Projects\SrijanFinal\BusinessLayer\bin\Release\Microsoft.Web.Infrastructure.dll
+E:\Wali Projects\SrijanFinal\BusinessLayer\bin\Release\System.Web.Helpers.dll
+E:\Wali Projects\SrijanFinal\BusinessLayer\bin\Release\System.Web.Razor.dll
+E:\Wali Projects\SrijanFinal\BusinessLayer\bin\Release\System.Web.WebPages.Deployment.dll
+E:\Wali Projects\SrijanFinal\BusinessLayer\bin\Release\System.Web.WebPages.dll
+E:\Wali Projects\SrijanFinal\BusinessLayer\bin\Release\System.Web.WebPages.Razor.dll
+E:\Wali Projects\SrijanFinal\BusinessLayer\bin\Release\Microsoft.Practices.EnterpriseLibrary.Data.dll
+E:\Wali Projects\SrijanFinal\BusinessLayer\bin\Release\Microsoft.Practices.EnterpriseLibrary.Common.dll
+E:\Wali Projects\SrijanFinal\BusinessLayer\bin\Release\Microsoft.Practices.Unity.dll
+E:\Wali Projects\SrijanFinal\BusinessLayer\bin\Release\Microsoft.Practices.Unity.Interception.dll
+E:\Wali Projects\SrijanFinal\BusinessLayer\bin\Release\DataAccessLayer.pdb
+E:\Wali Projects\SrijanFinal\BusinessLayer\bin\Release\Encryption.pdb
+E:\Wali Projects\SrijanFinal\BusinessLayer\bin\Release\System.Web.Helpers.xml
+E:\Wali Projects\SrijanFinal\BusinessLayer\bin\Release\System.Web.Razor.xml
+E:\Wali Projects\SrijanFinal\BusinessLayer\bin\Release\System.Web.WebPages.xml
+E:\Wali Projects\SrijanFinal\BusinessLayer\bin\Release\System.Web.WebPages.Deployment.xml
+E:\Wali Projects\SrijanFinal\BusinessLayer\bin\Release\System.Web.WebPages.Razor.xml
+E:\Wali Projects\SrijanFinal\BusinessLayer\obj\Release\BusinessLayer.csprojAssemblyReference.cache
+E:\Wali Projects\SrijanFinal\BusinessLayer\obj\Release\BusinessLayer.csproj.CopyComplete
+E:\Wali Projects\SrijanFinal\BusinessLayer\obj\Release\BusinessLayer.dll
+E:\Wali Projects\SrijanFinal\BusinessLayer\obj\Release\BusinessLayer.pdb
+C:\Users\Mohammad Wali\Desktop\SrijanDefence\BusinessLayer\bin\Release\BusinessLayer.dll
+C:\Users\Mohammad Wali\Desktop\SrijanDefence\BusinessLayer\bin\Release\BusinessLayer.pdb
+C:\Users\Mohammad Wali\Desktop\SrijanDefence\BusinessLayer\bin\Release\DataAccessLayer.dll
+C:\Users\Mohammad Wali\Desktop\SrijanDefence\BusinessLayer\bin\Release\Encryption.dll
+C:\Users\Mohammad Wali\Desktop\SrijanDefence\BusinessLayer\bin\Release\Microsoft.Web.Infrastructure.dll
+C:\Users\Mohammad Wali\Desktop\SrijanDefence\BusinessLayer\bin\Release\System.Web.Helpers.dll
+C:\Users\Mohammad Wali\Desktop\SrijanDefence\BusinessLayer\bin\Release\System.Web.Razor.dll
+C:\Users\Mohammad Wali\Desktop\SrijanDefence\BusinessLayer\bin\Release\System.Web.WebPages.Deployment.dll
+C:\Users\Mohammad Wali\Desktop\SrijanDefence\BusinessLayer\bin\Release\System.Web.WebPages.dll
+C:\Users\Mohammad Wali\Desktop\SrijanDefence\BusinessLayer\bin\Release\System.Web.WebPages.Razor.dll
+C:\Users\Mohammad Wali\Desktop\SrijanDefence\BusinessLayer\bin\Release\Microsoft.Practices.EnterpriseLibrary.Data.dll
+C:\Users\Mohammad Wali\Desktop\SrijanDefence\BusinessLayer\bin\Release\Microsoft.Practices.EnterpriseLibrary.Common.dll
+C:\Users\Mohammad Wali\Desktop\SrijanDefence\BusinessLayer\bin\Release\Microsoft.Practices.Unity.dll
+C:\Users\Mohammad Wali\Desktop\SrijanDefence\BusinessLayer\bin\Release\Microsoft.Practices.Unity.Interception.dll
+C:\Users\Mohammad Wali\Desktop\SrijanDefence\BusinessLayer\bin\Release\DataAccessLayer.pdb
+C:\Users\Mohammad Wali\Desktop\SrijanDefence\BusinessLayer\bin\Release\Encryption.pdb
+C:\Users\Mohammad Wali\Desktop\SrijanDefence\BusinessLayer\bin\Release\System.Web.Helpers.xml
+C:\Users\Mohammad Wali\Desktop\SrijanDefence\BusinessLayer\bin\Release\System.Web.Razor.xml
+C:\Users\Mohammad Wali\Desktop\SrijanDefence\BusinessLayer\bin\Release\System.Web.WebPages.xml
+C:\Users\Mohammad Wali\Desktop\SrijanDefence\BusinessLayer\bin\Release\System.Web.WebPages.Deployment.xml
+C:\Users\Mohammad Wali\Desktop\SrijanDefence\BusinessLayer\bin\Release\System.Web.WebPages.Razor.xml
+C:\Users\Mohammad Wali\Desktop\SrijanDefence\BusinessLayer\obj\Release\BusinessLayer.csprojAssemblyReference.cache
+C:\Users\Mohammad Wali\Desktop\SrijanDefence\BusinessLayer\obj\Release\BusinessLayer.csproj.CoreCompileInputs.cache
+C:\Users\Mohammad Wali\Desktop\SrijanDefence\BusinessLayer\obj\Release\BusinessLayer.csproj.CopyComplete
+C:\Users\Mohammad Wali\Desktop\SrijanDefence\BusinessLayer\obj\Release\BusinessLayer.dll
+C:\Users\Mohammad Wali\Desktop\SrijanDefence\BusinessLayer\obj\Release\BusinessLayer.pdb
+E:\Wali Projects\SrijanDefence\BusinessLayer\bin\Release\BusinessLayer.dll
+E:\Wali Projects\SrijanDefence\BusinessLayer\bin\Release\BusinessLayer.pdb
+E:\Wali Projects\SrijanDefence\BusinessLayer\bin\Release\DataAccessLayer.dll
+E:\Wali Projects\SrijanDefence\BusinessLayer\bin\Release\Encryption.dll
+E:\Wali Projects\SrijanDefence\BusinessLayer\bin\Release\Microsoft.Web.Infrastructure.dll
+E:\Wali Projects\SrijanDefence\BusinessLayer\bin\Release\System.Web.Helpers.dll
+E:\Wali Projects\SrijanDefence\BusinessLayer\bin\Release\System.Web.Razor.dll
+E:\Wali Projects\SrijanDefence\BusinessLayer\bin\Release\System.Web.WebPages.Deployment.dll
+E:\Wali Projects\SrijanDefence\BusinessLayer\bin\Release\System.Web.WebPages.dll
+E:\Wali Projects\SrijanDefence\BusinessLayer\bin\Release\System.Web.WebPages.Razor.dll
+E:\Wali Projects\SrijanDefence\BusinessLayer\bin\Release\Microsoft.Practices.EnterpriseLibrary.Data.dll
+E:\Wali Projects\SrijanDefence\BusinessLayer\bin\Release\Microsoft.Practices.EnterpriseLibrary.Common.dll
+E:\Wali Projects\SrijanDefence\BusinessLayer\bin\Release\Microsoft.Practices.Unity.dll
+E:\Wali Projects\SrijanDefence\BusinessLayer\bin\Release\Microsoft.Practices.Unity.Interception.dll
+E:\Wali Projects\SrijanDefence\BusinessLayer\bin\Release\DataAccessLayer.pdb
+E:\Wali Projects\SrijanDefence\BusinessLayer\bin\Release\Encryption.pdb
+E:\Wali Projects\SrijanDefence\BusinessLayer\bin\Release\System.Web.Helpers.xml
+E:\Wali Projects\SrijanDefence\BusinessLayer\bin\Release\System.Web.Razor.xml
+E:\Wali Projects\SrijanDefence\BusinessLayer\bin\Release\System.Web.WebPages.xml
+E:\Wali Projects\SrijanDefence\BusinessLayer\bin\Release\System.Web.WebPages.Deployment.xml
+E:\Wali Projects\SrijanDefence\BusinessLayer\bin\Release\System.Web.WebPages.Razor.xml
+E:\Wali Projects\SrijanDefence\BusinessLayer\obj\Release\BusinessLayer.csprojAssemblyReference.cache
+E:\Wali Projects\SrijanDefence\BusinessLayer\obj\Release\BusinessLayer.csproj.CopyComplete
+E:\Wali Projects\SrijanDefence\BusinessLayer\obj\Release\BusinessLayer.dll
+E:\Wali Projects\SrijanDefence\BusinessLayer\obj\Release\BusinessLayer.pdb
+D:\SrijanFinal\BusinessLayer\bin\Release\BusinessLayer.dll
+D:\SrijanFinal\BusinessLayer\bin\Release\BusinessLayer.pdb
+D:\SrijanFinal\BusinessLayer\bin\Release\DataAccessLayer.dll
+D:\SrijanFinal\BusinessLayer\bin\Release\Encryption.dll
+D:\SrijanFinal\BusinessLayer\bin\Release\Microsoft.Web.Infrastructure.dll
+D:\SrijanFinal\BusinessLayer\bin\Release\System.Web.Helpers.dll
+D:\SrijanFinal\BusinessLayer\bin\Release\System.Web.Razor.dll
+D:\SrijanFinal\BusinessLayer\bin\Release\System.Web.WebPages.Deployment.dll
+D:\SrijanFinal\BusinessLayer\bin\Release\System.Web.WebPages.dll
+D:\SrijanFinal\BusinessLayer\bin\Release\System.Web.WebPages.Razor.dll
+D:\SrijanFinal\BusinessLayer\bin\Release\Microsoft.Practices.EnterpriseLibrary.Data.dll
+D:\SrijanFinal\BusinessLayer\bin\Release\Microsoft.Practices.EnterpriseLibrary.Common.dll
+D:\SrijanFinal\BusinessLayer\bin\Release\Microsoft.Practices.Unity.dll
+D:\SrijanFinal\BusinessLayer\bin\Release\Microsoft.Practices.Unity.Interception.dll
+D:\SrijanFinal\BusinessLayer\bin\Release\DataAccessLayer.pdb
+D:\SrijanFinal\BusinessLayer\bin\Release\Encryption.pdb
+D:\SrijanFinal\BusinessLayer\bin\Release\System.Web.Helpers.xml
+D:\SrijanFinal\BusinessLayer\bin\Release\System.Web.Razor.xml
+D:\SrijanFinal\BusinessLayer\bin\Release\System.Web.WebPages.xml
+D:\SrijanFinal\BusinessLayer\bin\Release\System.Web.WebPages.Deployment.xml
+D:\SrijanFinal\BusinessLayer\bin\Release\System.Web.WebPages.Razor.xml
+D:\SrijanFinal\BusinessLayer\obj\Release\BusinessLayer.csprojAssemblyReference.cache
+D:\SrijanFinal\BusinessLayer\obj\Release\BusinessLayer.csproj.CoreCompileInputs.cache
+D:\SrijanFinal\BusinessLayer\obj\Release\BusinessLayer.csproj.CopyComplete
+D:\SrijanFinal\BusinessLayer\obj\Release\BusinessLayer.dll
+D:\SrijanFinal\BusinessLayer\obj\Release\BusinessLayer.pdb
+D:\dailyproject\SrijanFinal\BusinessLayer\bin\Release\BusinessLayer.dll
+D:\dailyproject\SrijanFinal\BusinessLayer\bin\Release\BusinessLayer.pdb
+D:\dailyproject\SrijanFinal\BusinessLayer\bin\Release\DataAccessLayer.dll
+D:\dailyproject\SrijanFinal\BusinessLayer\bin\Release\Encryption.dll
+D:\dailyproject\SrijanFinal\BusinessLayer\bin\Release\Microsoft.Web.Infrastructure.dll
+D:\dailyproject\SrijanFinal\BusinessLayer\bin\Release\System.Web.Helpers.dll
+D:\dailyproject\SrijanFinal\BusinessLayer\bin\Release\System.Web.Razor.dll
+D:\dailyproject\SrijanFinal\BusinessLayer\bin\Release\System.Web.WebPages.Deployment.dll
+D:\dailyproject\SrijanFinal\BusinessLayer\bin\Release\System.Web.WebPages.dll
+D:\dailyproject\SrijanFinal\BusinessLayer\bin\Release\System.Web.WebPages.Razor.dll
+D:\dailyproject\SrijanFinal\BusinessLayer\bin\Release\Microsoft.Practices.EnterpriseLibrary.Data.dll
+D:\dailyproject\SrijanFinal\BusinessLayer\bin\Release\Microsoft.Practices.EnterpriseLibrary.Common.dll
+D:\dailyproject\SrijanFinal\BusinessLayer\bin\Release\Microsoft.Practices.Unity.dll
+D:\dailyproject\SrijanFinal\BusinessLayer\bin\Release\Microsoft.Practices.Unity.Interception.dll
+D:\dailyproject\SrijanFinal\BusinessLayer\bin\Release\DataAccessLayer.pdb
+D:\dailyproject\SrijanFinal\BusinessLayer\bin\Release\Encryption.pdb
+D:\dailyproject\SrijanFinal\BusinessLayer\bin\Release\System.Web.Helpers.xml
+D:\dailyproject\SrijanFinal\BusinessLayer\bin\Release\System.Web.Razor.xml
+D:\dailyproject\SrijanFinal\BusinessLayer\bin\Release\System.Web.WebPages.xml
+D:\dailyproject\SrijanFinal\BusinessLayer\bin\Release\System.Web.WebPages.Deployment.xml
+D:\dailyproject\SrijanFinal\BusinessLayer\bin\Release\System.Web.WebPages.Razor.xml
+D:\dailyproject\SrijanFinal\BusinessLayer\obj\Release\BusinessLayer.csprojAssemblyReference.cache
+D:\dailyproject\SrijanFinal\BusinessLayer\obj\Release\BusinessLayer.csproj.CoreCompileInputs.cache
+D:\dailyproject\SrijanFinal\BusinessLayer\obj\Release\BusinessLayer.csproj.CopyComplete
+D:\dailyproject\SrijanFinal\BusinessLayer\obj\Release\BusinessLayer.dll
+D:\dailyproject\SrijanFinal\BusinessLayer\obj\Release\BusinessLayer.pdb
+D:\dailyproject\SrijanFinal04-01-2021\BusinessLayer\bin\Release\BusinessLayer.dll
+D:\dailyproject\SrijanFinal04-01-2021\BusinessLayer\bin\Release\BusinessLayer.pdb
+D:\dailyproject\SrijanFinal04-01-2021\BusinessLayer\bin\Release\DataAccessLayer.dll
+D:\dailyproject\SrijanFinal04-01-2021\BusinessLayer\bin\Release\Encryption.dll
+D:\dailyproject\SrijanFinal04-01-2021\BusinessLayer\bin\Release\Microsoft.Web.Infrastructure.dll
+D:\dailyproject\SrijanFinal04-01-2021\BusinessLayer\bin\Release\System.Web.Helpers.dll
+D:\dailyproject\SrijanFinal04-01-2021\BusinessLayer\bin\Release\System.Web.Razor.dll
+D:\dailyproject\SrijanFinal04-01-2021\BusinessLayer\bin\Release\System.Web.WebPages.Deployment.dll
+D:\dailyproject\SrijanFinal04-01-2021\BusinessLayer\bin\Release\System.Web.WebPages.dll
+D:\dailyproject\SrijanFinal04-01-2021\BusinessLayer\bin\Release\System.Web.WebPages.Razor.dll
+D:\dailyproject\SrijanFinal04-01-2021\BusinessLayer\bin\Release\Microsoft.Practices.EnterpriseLibrary.Data.dll
+D:\dailyproject\SrijanFinal04-01-2021\BusinessLayer\bin\Release\Microsoft.Practices.EnterpriseLibrary.Common.dll
+D:\dailyproject\SrijanFinal04-01-2021\BusinessLayer\bin\Release\Microsoft.Practices.Unity.dll
+D:\dailyproject\SrijanFinal04-01-2021\BusinessLayer\bin\Release\Microsoft.Practices.Unity.Interception.dll
+D:\dailyproject\SrijanFinal04-01-2021\BusinessLayer\bin\Release\DataAccessLayer.pdb
+D:\dailyproject\SrijanFinal04-01-2021\BusinessLayer\bin\Release\Encryption.pdb
+D:\dailyproject\SrijanFinal04-01-2021\BusinessLayer\bin\Release\System.Web.Helpers.xml
+D:\dailyproject\SrijanFinal04-01-2021\BusinessLayer\bin\Release\System.Web.Razor.xml
+D:\dailyproject\SrijanFinal04-01-2021\BusinessLayer\bin\Release\System.Web.WebPages.xml
+D:\dailyproject\SrijanFinal04-01-2021\BusinessLayer\bin\Release\System.Web.WebPages.Deployment.xml
+D:\dailyproject\SrijanFinal04-01-2021\BusinessLayer\bin\Release\System.Web.WebPages.Razor.xml
+D:\dailyproject\SrijanFinal04-01-2021\BusinessLayer\obj\Release\BusinessLayer.csprojAssemblyReference.cache
+D:\dailyproject\SrijanFinal04-01-2021\BusinessLayer\obj\Release\BusinessLayer.csproj.CoreCompileInputs.cache
+D:\dailyproject\SrijanFinal04-01-2021\BusinessLayer\obj\Release\BusinessLayer.csproj.CopyComplete
+D:\dailyproject\SrijanFinal04-01-2021\BusinessLayer\obj\Release\BusinessLayer.dll
+D:\dailyproject\SrijanFinal04-01-2021\BusinessLayer\obj\Release\BusinessLayer.pdb
+D:\dailyproject\LATESTPROJECT\SrijanFinal05-01-2021\BusinessLayer\bin\Release\BusinessLayer.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal05-01-2021\BusinessLayer\bin\Release\BusinessLayer.pdb
+D:\dailyproject\LATESTPROJECT\SrijanFinal05-01-2021\BusinessLayer\bin\Release\DataAccessLayer.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal05-01-2021\BusinessLayer\bin\Release\Encryption.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal05-01-2021\BusinessLayer\bin\Release\Microsoft.Web.Infrastructure.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal05-01-2021\BusinessLayer\bin\Release\System.Web.Helpers.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal05-01-2021\BusinessLayer\bin\Release\System.Web.Razor.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal05-01-2021\BusinessLayer\bin\Release\System.Web.WebPages.Deployment.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal05-01-2021\BusinessLayer\bin\Release\System.Web.WebPages.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal05-01-2021\BusinessLayer\bin\Release\System.Web.WebPages.Razor.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal05-01-2021\BusinessLayer\bin\Release\Microsoft.Practices.EnterpriseLibrary.Data.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal05-01-2021\BusinessLayer\bin\Release\Microsoft.Practices.EnterpriseLibrary.Common.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal05-01-2021\BusinessLayer\bin\Release\Microsoft.Practices.Unity.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal05-01-2021\BusinessLayer\bin\Release\Microsoft.Practices.Unity.Interception.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal05-01-2021\BusinessLayer\bin\Release\DataAccessLayer.pdb
+D:\dailyproject\LATESTPROJECT\SrijanFinal05-01-2021\BusinessLayer\bin\Release\Encryption.pdb
+D:\dailyproject\LATESTPROJECT\SrijanFinal05-01-2021\BusinessLayer\bin\Release\System.Web.Helpers.xml
+D:\dailyproject\LATESTPROJECT\SrijanFinal05-01-2021\BusinessLayer\bin\Release\System.Web.Razor.xml
+D:\dailyproject\LATESTPROJECT\SrijanFinal05-01-2021\BusinessLayer\bin\Release\System.Web.WebPages.xml
+D:\dailyproject\LATESTPROJECT\SrijanFinal05-01-2021\BusinessLayer\bin\Release\System.Web.WebPages.Deployment.xml
+D:\dailyproject\LATESTPROJECT\SrijanFinal05-01-2021\BusinessLayer\bin\Release\System.Web.WebPages.Razor.xml
+D:\dailyproject\LATESTPROJECT\SrijanFinal05-01-2021\BusinessLayer\obj\Release\BusinessLayer.csprojAssemblyReference.cache
+D:\dailyproject\LATESTPROJECT\SrijanFinal05-01-2021\BusinessLayer\obj\Release\BusinessLayer.csproj.CoreCompileInputs.cache
+D:\dailyproject\LATESTPROJECT\SrijanFinal05-01-2021\BusinessLayer\obj\Release\BusinessLayer.csproj.CopyComplete
+D:\dailyproject\LATESTPROJECT\SrijanFinal05-01-2021\BusinessLayer\obj\Release\BusinessLayer.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal05-01-2021\BusinessLayer\obj\Release\BusinessLayer.pdb
+D:\dailyproject\SrijanFinal08-01-2021\BusinessLayer\bin\Release\BusinessLayer.dll
+D:\dailyproject\SrijanFinal08-01-2021\BusinessLayer\bin\Release\BusinessLayer.pdb
+D:\dailyproject\SrijanFinal08-01-2021\BusinessLayer\bin\Release\DataAccessLayer.dll
+D:\dailyproject\SrijanFinal08-01-2021\BusinessLayer\bin\Release\Encryption.dll
+D:\dailyproject\SrijanFinal08-01-2021\BusinessLayer\bin\Release\Microsoft.Web.Infrastructure.dll
+D:\dailyproject\SrijanFinal08-01-2021\BusinessLayer\bin\Release\System.Web.Helpers.dll
+D:\dailyproject\SrijanFinal08-01-2021\BusinessLayer\bin\Release\System.Web.Razor.dll
+D:\dailyproject\SrijanFinal08-01-2021\BusinessLayer\bin\Release\System.Web.WebPages.Deployment.dll
+D:\dailyproject\SrijanFinal08-01-2021\BusinessLayer\bin\Release\System.Web.WebPages.dll
+D:\dailyproject\SrijanFinal08-01-2021\BusinessLayer\bin\Release\System.Web.WebPages.Razor.dll
+D:\dailyproject\SrijanFinal08-01-2021\BusinessLayer\bin\Release\Microsoft.Practices.EnterpriseLibrary.Data.dll
+D:\dailyproject\SrijanFinal08-01-2021\BusinessLayer\bin\Release\Microsoft.Practices.EnterpriseLibrary.Common.dll
+D:\dailyproject\SrijanFinal08-01-2021\BusinessLayer\bin\Release\Microsoft.Practices.Unity.dll
+D:\dailyproject\SrijanFinal08-01-2021\BusinessLayer\bin\Release\Microsoft.Practices.Unity.Interception.dll
+D:\dailyproject\SrijanFinal08-01-2021\BusinessLayer\bin\Release\DataAccessLayer.pdb
+D:\dailyproject\SrijanFinal08-01-2021\BusinessLayer\bin\Release\Encryption.pdb
+D:\dailyproject\SrijanFinal08-01-2021\BusinessLayer\bin\Release\System.Web.Helpers.xml
+D:\dailyproject\SrijanFinal08-01-2021\BusinessLayer\bin\Release\System.Web.Razor.xml
+D:\dailyproject\SrijanFinal08-01-2021\BusinessLayer\bin\Release\System.Web.WebPages.xml
+D:\dailyproject\SrijanFinal08-01-2021\BusinessLayer\bin\Release\System.Web.WebPages.Deployment.xml
+D:\dailyproject\SrijanFinal08-01-2021\BusinessLayer\bin\Release\System.Web.WebPages.Razor.xml
+D:\dailyproject\SrijanFinal08-01-2021\BusinessLayer\obj\Release\BusinessLayer.csprojAssemblyReference.cache
+D:\dailyproject\SrijanFinal08-01-2021\BusinessLayer\obj\Release\BusinessLayer.csproj.CoreCompileInputs.cache
+D:\dailyproject\SrijanFinal08-01-2021\BusinessLayer\obj\Release\BusinessLayer.csproj.CopyComplete
+D:\dailyproject\SrijanFinal08-01-2021\BusinessLayer\obj\Release\BusinessLayer.dll
+D:\dailyproject\SrijanFinal08-01-2021\BusinessLayer\obj\Release\BusinessLayer.pdb
+D:\dailyproject\LATESTPROJECT\SrijanFinal08-01-2021\BusinessLayer\bin\Release\BusinessLayer.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal08-01-2021\BusinessLayer\bin\Release\BusinessLayer.pdb
+D:\dailyproject\LATESTPROJECT\SrijanFinal08-01-2021\BusinessLayer\bin\Release\DataAccessLayer.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal08-01-2021\BusinessLayer\bin\Release\Encryption.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal08-01-2021\BusinessLayer\bin\Release\Microsoft.Web.Infrastructure.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal08-01-2021\BusinessLayer\bin\Release\System.Web.Helpers.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal08-01-2021\BusinessLayer\bin\Release\System.Web.Razor.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal08-01-2021\BusinessLayer\bin\Release\System.Web.WebPages.Deployment.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal08-01-2021\BusinessLayer\bin\Release\System.Web.WebPages.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal08-01-2021\BusinessLayer\bin\Release\System.Web.WebPages.Razor.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal08-01-2021\BusinessLayer\bin\Release\Microsoft.Practices.EnterpriseLibrary.Data.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal08-01-2021\BusinessLayer\bin\Release\Microsoft.Practices.EnterpriseLibrary.Common.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal08-01-2021\BusinessLayer\bin\Release\Microsoft.Practices.Unity.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal08-01-2021\BusinessLayer\bin\Release\Microsoft.Practices.Unity.Interception.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal08-01-2021\BusinessLayer\bin\Release\DataAccessLayer.pdb
+D:\dailyproject\LATESTPROJECT\SrijanFinal08-01-2021\BusinessLayer\bin\Release\Encryption.pdb
+D:\dailyproject\LATESTPROJECT\SrijanFinal08-01-2021\BusinessLayer\bin\Release\System.Web.Helpers.xml
+D:\dailyproject\LATESTPROJECT\SrijanFinal08-01-2021\BusinessLayer\bin\Release\System.Web.Razor.xml
+D:\dailyproject\LATESTPROJECT\SrijanFinal08-01-2021\BusinessLayer\bin\Release\System.Web.WebPages.xml
+D:\dailyproject\LATESTPROJECT\SrijanFinal08-01-2021\BusinessLayer\bin\Release\System.Web.WebPages.Deployment.xml
+D:\dailyproject\LATESTPROJECT\SrijanFinal08-01-2021\BusinessLayer\bin\Release\System.Web.WebPages.Razor.xml
+D:\dailyproject\LATESTPROJECT\SrijanFinal08-01-2021\BusinessLayer\obj\Release\BusinessLayer.csprojAssemblyReference.cache
+D:\dailyproject\LATESTPROJECT\SrijanFinal08-01-2021\BusinessLayer\obj\Release\BusinessLayer.csproj.CoreCompileInputs.cache
+D:\dailyproject\LATESTPROJECT\SrijanFinal08-01-2021\BusinessLayer\obj\Release\BusinessLayer.csproj.CopyComplete
+D:\dailyproject\LATESTPROJECT\SrijanFinal08-01-2021\BusinessLayer\obj\Release\BusinessLayer.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal08-01-2021\BusinessLayer\obj\Release\BusinessLayer.pdb
+D:\dailyproject\LATESTPROJECT\SrijanFinal12-01-2021\BusinessLayer\bin\Release\BusinessLayer.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal12-01-2021\BusinessLayer\bin\Release\BusinessLayer.pdb
+D:\dailyproject\LATESTPROJECT\SrijanFinal12-01-2021\BusinessLayer\bin\Release\DataAccessLayer.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal12-01-2021\BusinessLayer\bin\Release\Encryption.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal12-01-2021\BusinessLayer\bin\Release\Microsoft.Web.Infrastructure.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal12-01-2021\BusinessLayer\bin\Release\System.Web.Helpers.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal12-01-2021\BusinessLayer\bin\Release\System.Web.Razor.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal12-01-2021\BusinessLayer\bin\Release\System.Web.WebPages.Deployment.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal12-01-2021\BusinessLayer\bin\Release\System.Web.WebPages.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal12-01-2021\BusinessLayer\bin\Release\System.Web.WebPages.Razor.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal12-01-2021\BusinessLayer\bin\Release\Microsoft.Practices.EnterpriseLibrary.Data.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal12-01-2021\BusinessLayer\bin\Release\Microsoft.Practices.EnterpriseLibrary.Common.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal12-01-2021\BusinessLayer\bin\Release\Microsoft.Practices.Unity.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal12-01-2021\BusinessLayer\bin\Release\Microsoft.Practices.Unity.Interception.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal12-01-2021\BusinessLayer\bin\Release\DataAccessLayer.pdb
+D:\dailyproject\LATESTPROJECT\SrijanFinal12-01-2021\BusinessLayer\bin\Release\Encryption.pdb
+D:\dailyproject\LATESTPROJECT\SrijanFinal12-01-2021\BusinessLayer\bin\Release\System.Web.Helpers.xml
+D:\dailyproject\LATESTPROJECT\SrijanFinal12-01-2021\BusinessLayer\bin\Release\System.Web.Razor.xml
+D:\dailyproject\LATESTPROJECT\SrijanFinal12-01-2021\BusinessLayer\bin\Release\System.Web.WebPages.xml
+D:\dailyproject\LATESTPROJECT\SrijanFinal12-01-2021\BusinessLayer\bin\Release\System.Web.WebPages.Deployment.xml
+D:\dailyproject\LATESTPROJECT\SrijanFinal12-01-2021\BusinessLayer\bin\Release\System.Web.WebPages.Razor.xml
+D:\dailyproject\LATESTPROJECT\SrijanFinal12-01-2021\BusinessLayer\obj\Release\BusinessLayer.csprojAssemblyReference.cache
+D:\dailyproject\LATESTPROJECT\SrijanFinal12-01-2021\BusinessLayer\obj\Release\BusinessLayer.csproj.CoreCompileInputs.cache
+D:\dailyproject\LATESTPROJECT\SrijanFinal12-01-2021\BusinessLayer\obj\Release\BusinessLayer.csproj.CopyComplete
+D:\dailyproject\LATESTPROJECT\SrijanFinal12-01-2021\BusinessLayer\obj\Release\BusinessLayer.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal12-01-2021\BusinessLayer\obj\Release\BusinessLayer.pdb
+D:\dailyproject\LATESTPROJECT\SrijanFinal15-01-2021\BusinessLayer\bin\Release\BusinessLayer.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal15-01-2021\BusinessLayer\bin\Release\BusinessLayer.pdb
+D:\dailyproject\LATESTPROJECT\SrijanFinal15-01-2021\BusinessLayer\bin\Release\DataAccessLayer.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal15-01-2021\BusinessLayer\bin\Release\Encryption.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal15-01-2021\BusinessLayer\bin\Release\Microsoft.Web.Infrastructure.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal15-01-2021\BusinessLayer\bin\Release\System.Web.Helpers.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal15-01-2021\BusinessLayer\bin\Release\System.Web.Razor.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal15-01-2021\BusinessLayer\bin\Release\System.Web.WebPages.Deployment.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal15-01-2021\BusinessLayer\bin\Release\System.Web.WebPages.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal15-01-2021\BusinessLayer\bin\Release\System.Web.WebPages.Razor.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal15-01-2021\BusinessLayer\bin\Release\Microsoft.Practices.EnterpriseLibrary.Data.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal15-01-2021\BusinessLayer\bin\Release\Microsoft.Practices.EnterpriseLibrary.Common.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal15-01-2021\BusinessLayer\bin\Release\Microsoft.Practices.Unity.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal15-01-2021\BusinessLayer\bin\Release\Microsoft.Practices.Unity.Interception.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal15-01-2021\BusinessLayer\bin\Release\DataAccessLayer.pdb
+D:\dailyproject\LATESTPROJECT\SrijanFinal15-01-2021\BusinessLayer\bin\Release\Encryption.pdb
+D:\dailyproject\LATESTPROJECT\SrijanFinal15-01-2021\BusinessLayer\bin\Release\System.Web.Helpers.xml
+D:\dailyproject\LATESTPROJECT\SrijanFinal15-01-2021\BusinessLayer\bin\Release\System.Web.Razor.xml
+D:\dailyproject\LATESTPROJECT\SrijanFinal15-01-2021\BusinessLayer\bin\Release\System.Web.WebPages.xml
+D:\dailyproject\LATESTPROJECT\SrijanFinal15-01-2021\BusinessLayer\bin\Release\System.Web.WebPages.Deployment.xml
+D:\dailyproject\LATESTPROJECT\SrijanFinal15-01-2021\BusinessLayer\bin\Release\System.Web.WebPages.Razor.xml
+D:\dailyproject\LATESTPROJECT\SrijanFinal15-01-2021\BusinessLayer\obj\Release\BusinessLayer.csprojAssemblyReference.cache
+D:\dailyproject\LATESTPROJECT\SrijanFinal15-01-2021\BusinessLayer\obj\Release\BusinessLayer.csproj.CoreCompileInputs.cache
+D:\dailyproject\LATESTPROJECT\SrijanFinal15-01-2021\BusinessLayer\obj\Release\BusinessLayer.csproj.CopyComplete
+D:\dailyproject\LATESTPROJECT\SrijanFinal15-01-2021\BusinessLayer\obj\Release\BusinessLayer.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal15-01-2021\BusinessLayer\obj\Release\BusinessLayer.pdb
+D:\dailyproject\LATESTPROJECT\SrijanFinal19-01-2021\BusinessLayer\bin\Release\BusinessLayer.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal19-01-2021\BusinessLayer\bin\Release\BusinessLayer.pdb
+D:\dailyproject\LATESTPROJECT\SrijanFinal19-01-2021\BusinessLayer\bin\Release\DataAccessLayer.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal19-01-2021\BusinessLayer\bin\Release\Encryption.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal19-01-2021\BusinessLayer\bin\Release\Microsoft.Web.Infrastructure.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal19-01-2021\BusinessLayer\bin\Release\System.Web.Helpers.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal19-01-2021\BusinessLayer\bin\Release\System.Web.Razor.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal19-01-2021\BusinessLayer\bin\Release\System.Web.WebPages.Deployment.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal19-01-2021\BusinessLayer\bin\Release\System.Web.WebPages.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal19-01-2021\BusinessLayer\bin\Release\System.Web.WebPages.Razor.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal19-01-2021\BusinessLayer\bin\Release\Microsoft.Practices.EnterpriseLibrary.Data.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal19-01-2021\BusinessLayer\bin\Release\Microsoft.Practices.EnterpriseLibrary.Common.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal19-01-2021\BusinessLayer\bin\Release\Microsoft.Practices.Unity.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal19-01-2021\BusinessLayer\bin\Release\Microsoft.Practices.Unity.Interception.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal19-01-2021\BusinessLayer\bin\Release\DataAccessLayer.pdb
+D:\dailyproject\LATESTPROJECT\SrijanFinal19-01-2021\BusinessLayer\bin\Release\Encryption.pdb
+D:\dailyproject\LATESTPROJECT\SrijanFinal19-01-2021\BusinessLayer\bin\Release\System.Web.Helpers.xml
+D:\dailyproject\LATESTPROJECT\SrijanFinal19-01-2021\BusinessLayer\bin\Release\System.Web.Razor.xml
+D:\dailyproject\LATESTPROJECT\SrijanFinal19-01-2021\BusinessLayer\bin\Release\System.Web.WebPages.xml
+D:\dailyproject\LATESTPROJECT\SrijanFinal19-01-2021\BusinessLayer\bin\Release\System.Web.WebPages.Deployment.xml
+D:\dailyproject\LATESTPROJECT\SrijanFinal19-01-2021\BusinessLayer\bin\Release\System.Web.WebPages.Razor.xml
+D:\dailyproject\LATESTPROJECT\SrijanFinal19-01-2021\BusinessLayer\obj\Release\BusinessLayer.csprojAssemblyReference.cache
+D:\dailyproject\LATESTPROJECT\SrijanFinal19-01-2021\BusinessLayer\obj\Release\BusinessLayer.csproj.CoreCompileInputs.cache
+D:\dailyproject\LATESTPROJECT\SrijanFinal19-01-2021\BusinessLayer\obj\Release\BusinessLayer.csproj.CopyComplete
+D:\dailyproject\LATESTPROJECT\SrijanFinal19-01-2021\BusinessLayer\obj\Release\BusinessLayer.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal19-01-2021\BusinessLayer\obj\Release\BusinessLayer.pdb
+D:\dailyproject\LATESTPROJECT\SrijanFinal20-01-2021\BusinessLayer\bin\Release\BusinessLayer.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal20-01-2021\BusinessLayer\bin\Release\BusinessLayer.pdb
+D:\dailyproject\LATESTPROJECT\SrijanFinal20-01-2021\BusinessLayer\bin\Release\DataAccessLayer.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal20-01-2021\BusinessLayer\bin\Release\Encryption.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal20-01-2021\BusinessLayer\bin\Release\Microsoft.Web.Infrastructure.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal20-01-2021\BusinessLayer\bin\Release\System.Web.Helpers.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal20-01-2021\BusinessLayer\bin\Release\System.Web.Razor.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal20-01-2021\BusinessLayer\bin\Release\System.Web.WebPages.Deployment.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal20-01-2021\BusinessLayer\bin\Release\System.Web.WebPages.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal20-01-2021\BusinessLayer\bin\Release\System.Web.WebPages.Razor.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal20-01-2021\BusinessLayer\bin\Release\Microsoft.Practices.EnterpriseLibrary.Data.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal20-01-2021\BusinessLayer\bin\Release\Microsoft.Practices.EnterpriseLibrary.Common.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal20-01-2021\BusinessLayer\bin\Release\Microsoft.Practices.Unity.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal20-01-2021\BusinessLayer\bin\Release\Microsoft.Practices.Unity.Interception.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal20-01-2021\BusinessLayer\bin\Release\DataAccessLayer.pdb
+D:\dailyproject\LATESTPROJECT\SrijanFinal20-01-2021\BusinessLayer\bin\Release\Encryption.pdb
+D:\dailyproject\LATESTPROJECT\SrijanFinal20-01-2021\BusinessLayer\bin\Release\System.Web.Helpers.xml
+D:\dailyproject\LATESTPROJECT\SrijanFinal20-01-2021\BusinessLayer\bin\Release\System.Web.Razor.xml
+D:\dailyproject\LATESTPROJECT\SrijanFinal20-01-2021\BusinessLayer\bin\Release\System.Web.WebPages.xml
+D:\dailyproject\LATESTPROJECT\SrijanFinal20-01-2021\BusinessLayer\bin\Release\System.Web.WebPages.Deployment.xml
+D:\dailyproject\LATESTPROJECT\SrijanFinal20-01-2021\BusinessLayer\bin\Release\System.Web.WebPages.Razor.xml
+D:\dailyproject\LATESTPROJECT\SrijanFinal20-01-2021\BusinessLayer\obj\Release\BusinessLayer.csprojAssemblyReference.cache
+D:\dailyproject\LATESTPROJECT\SrijanFinal20-01-2021\BusinessLayer\obj\Release\BusinessLayer.csproj.CoreCompileInputs.cache
+D:\dailyproject\LATESTPROJECT\SrijanFinal20-01-2021\BusinessLayer\obj\Release\BusinessLayer.csproj.CopyComplete
+D:\dailyproject\LATESTPROJECT\SrijanFinal20-01-2021\BusinessLayer\obj\Release\BusinessLayer.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal20-01-2021\BusinessLayer\obj\Release\BusinessLayer.pdb
+D:\dailyproject\LATESTPROJECT\SrijanFinal22-01-2021\BusinessLayer\bin\Release\BusinessLayer.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal22-01-2021\BusinessLayer\bin\Release\BusinessLayer.pdb
+D:\dailyproject\LATESTPROJECT\SrijanFinal22-01-2021\BusinessLayer\bin\Release\DataAccessLayer.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal22-01-2021\BusinessLayer\bin\Release\Encryption.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal22-01-2021\BusinessLayer\bin\Release\Microsoft.Web.Infrastructure.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal22-01-2021\BusinessLayer\bin\Release\System.Web.Helpers.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal22-01-2021\BusinessLayer\bin\Release\System.Web.Razor.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal22-01-2021\BusinessLayer\bin\Release\System.Web.WebPages.Deployment.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal22-01-2021\BusinessLayer\bin\Release\System.Web.WebPages.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal22-01-2021\BusinessLayer\bin\Release\System.Web.WebPages.Razor.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal22-01-2021\BusinessLayer\bin\Release\Microsoft.Practices.EnterpriseLibrary.Data.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal22-01-2021\BusinessLayer\bin\Release\Microsoft.Practices.EnterpriseLibrary.Common.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal22-01-2021\BusinessLayer\bin\Release\Microsoft.Practices.Unity.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal22-01-2021\BusinessLayer\bin\Release\Microsoft.Practices.Unity.Interception.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal22-01-2021\BusinessLayer\bin\Release\DataAccessLayer.pdb
+D:\dailyproject\LATESTPROJECT\SrijanFinal22-01-2021\BusinessLayer\bin\Release\Encryption.pdb
+D:\dailyproject\LATESTPROJECT\SrijanFinal22-01-2021\BusinessLayer\bin\Release\System.Web.Helpers.xml
+D:\dailyproject\LATESTPROJECT\SrijanFinal22-01-2021\BusinessLayer\bin\Release\System.Web.Razor.xml
+D:\dailyproject\LATESTPROJECT\SrijanFinal22-01-2021\BusinessLayer\bin\Release\System.Web.WebPages.xml
+D:\dailyproject\LATESTPROJECT\SrijanFinal22-01-2021\BusinessLayer\bin\Release\System.Web.WebPages.Deployment.xml
+D:\dailyproject\LATESTPROJECT\SrijanFinal22-01-2021\BusinessLayer\bin\Release\System.Web.WebPages.Razor.xml
+D:\dailyproject\LATESTPROJECT\SrijanFinal22-01-2021\BusinessLayer\obj\Release\BusinessLayer.csprojAssemblyReference.cache
+D:\dailyproject\LATESTPROJECT\SrijanFinal22-01-2021\BusinessLayer\obj\Release\BusinessLayer.csproj.CoreCompileInputs.cache
+D:\dailyproject\LATESTPROJECT\SrijanFinal22-01-2021\BusinessLayer\obj\Release\BusinessLayer.csproj.CopyComplete
+D:\dailyproject\LATESTPROJECT\SrijanFinal22-01-2021\BusinessLayer\obj\Release\BusinessLayer.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal22-01-2021\BusinessLayer\obj\Release\BusinessLayer.pdb
+D:\dailyproject\LATESTPROJECT\SrijanFinal28-01-2021\BusinessLayer\bin\Release\BusinessLayer.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal28-01-2021\BusinessLayer\bin\Release\BusinessLayer.pdb
+D:\dailyproject\LATESTPROJECT\SrijanFinal28-01-2021\BusinessLayer\bin\Release\DataAccessLayer.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal28-01-2021\BusinessLayer\bin\Release\Encryption.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal28-01-2021\BusinessLayer\bin\Release\Microsoft.Web.Infrastructure.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal28-01-2021\BusinessLayer\bin\Release\System.Web.Helpers.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal28-01-2021\BusinessLayer\bin\Release\System.Web.Razor.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal28-01-2021\BusinessLayer\bin\Release\System.Web.WebPages.Deployment.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal28-01-2021\BusinessLayer\bin\Release\System.Web.WebPages.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal28-01-2021\BusinessLayer\bin\Release\System.Web.WebPages.Razor.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal28-01-2021\BusinessLayer\bin\Release\Microsoft.Practices.EnterpriseLibrary.Data.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal28-01-2021\BusinessLayer\bin\Release\Microsoft.Practices.EnterpriseLibrary.Common.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal28-01-2021\BusinessLayer\bin\Release\Microsoft.Practices.Unity.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal28-01-2021\BusinessLayer\bin\Release\Microsoft.Practices.Unity.Interception.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal28-01-2021\BusinessLayer\bin\Release\DataAccessLayer.pdb
+D:\dailyproject\LATESTPROJECT\SrijanFinal28-01-2021\BusinessLayer\bin\Release\Encryption.pdb
+D:\dailyproject\LATESTPROJECT\SrijanFinal28-01-2021\BusinessLayer\bin\Release\System.Web.Helpers.xml
+D:\dailyproject\LATESTPROJECT\SrijanFinal28-01-2021\BusinessLayer\bin\Release\System.Web.Razor.xml
+D:\dailyproject\LATESTPROJECT\SrijanFinal28-01-2021\BusinessLayer\bin\Release\System.Web.WebPages.xml
+D:\dailyproject\LATESTPROJECT\SrijanFinal28-01-2021\BusinessLayer\bin\Release\System.Web.WebPages.Deployment.xml
+D:\dailyproject\LATESTPROJECT\SrijanFinal28-01-2021\BusinessLayer\bin\Release\System.Web.WebPages.Razor.xml
+D:\dailyproject\LATESTPROJECT\SrijanFinal28-01-2021\BusinessLayer\obj\Release\BusinessLayer.csprojAssemblyReference.cache
+D:\dailyproject\LATESTPROJECT\SrijanFinal28-01-2021\BusinessLayer\obj\Release\BusinessLayer.csproj.CoreCompileInputs.cache
+D:\dailyproject\LATESTPROJECT\SrijanFinal28-01-2021\BusinessLayer\obj\Release\BusinessLayer.csproj.CopyComplete
+D:\dailyproject\LATESTPROJECT\SrijanFinal28-01-2021\BusinessLayer\obj\Release\BusinessLayer.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal28-01-2021\BusinessLayer\obj\Release\BusinessLayer.pdb
+D:\dailyproject\LATESTPROJECT\SrijanFinal26-02-2021\BusinessLayer\bin\Release\BusinessLayer.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal26-02-2021\BusinessLayer\bin\Release\BusinessLayer.pdb
+D:\dailyproject\LATESTPROJECT\SrijanFinal26-02-2021\BusinessLayer\bin\Release\DataAccessLayer.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal26-02-2021\BusinessLayer\bin\Release\Encryption.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal26-02-2021\BusinessLayer\bin\Release\Microsoft.Web.Infrastructure.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal26-02-2021\BusinessLayer\bin\Release\System.Web.Helpers.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal26-02-2021\BusinessLayer\bin\Release\System.Web.Razor.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal26-02-2021\BusinessLayer\bin\Release\System.Web.WebPages.Deployment.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal26-02-2021\BusinessLayer\bin\Release\System.Web.WebPages.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal26-02-2021\BusinessLayer\bin\Release\System.Web.WebPages.Razor.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal26-02-2021\BusinessLayer\bin\Release\Microsoft.Practices.EnterpriseLibrary.Data.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal26-02-2021\BusinessLayer\bin\Release\Microsoft.Practices.EnterpriseLibrary.Common.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal26-02-2021\BusinessLayer\bin\Release\Microsoft.Practices.Unity.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal26-02-2021\BusinessLayer\bin\Release\Microsoft.Practices.Unity.Interception.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal26-02-2021\BusinessLayer\bin\Release\DataAccessLayer.pdb
+D:\dailyproject\LATESTPROJECT\SrijanFinal26-02-2021\BusinessLayer\bin\Release\Encryption.pdb
+D:\dailyproject\LATESTPROJECT\SrijanFinal26-02-2021\BusinessLayer\bin\Release\System.Web.Helpers.xml
+D:\dailyproject\LATESTPROJECT\SrijanFinal26-02-2021\BusinessLayer\bin\Release\System.Web.Razor.xml
+D:\dailyproject\LATESTPROJECT\SrijanFinal26-02-2021\BusinessLayer\bin\Release\System.Web.WebPages.xml
+D:\dailyproject\LATESTPROJECT\SrijanFinal26-02-2021\BusinessLayer\bin\Release\System.Web.WebPages.Deployment.xml
+D:\dailyproject\LATESTPROJECT\SrijanFinal26-02-2021\BusinessLayer\bin\Release\System.Web.WebPages.Razor.xml
+D:\dailyproject\LATESTPROJECT\SrijanFinal26-02-2021\BusinessLayer\obj\Release\BusinessLayer.csprojAssemblyReference.cache
+D:\dailyproject\LATESTPROJECT\SrijanFinal26-02-2021\BusinessLayer\obj\Release\BusinessLayer.csproj.CoreCompileInputs.cache
+D:\dailyproject\LATESTPROJECT\SrijanFinal26-02-2021\BusinessLayer\obj\Release\BusinessLayer.csproj.CopyComplete
+D:\dailyproject\LATESTPROJECT\SrijanFinal26-02-2021\BusinessLayer\obj\Release\BusinessLayer.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal26-02-2021\BusinessLayer\obj\Release\BusinessLayer.pdb
+D:\dailyproject\LATESTPROJECT\march\04-03-2021\BusinessLayer\bin\Release\BusinessLayer.dll
+D:\dailyproject\LATESTPROJECT\march\04-03-2021\BusinessLayer\bin\Release\BusinessLayer.pdb
+D:\dailyproject\LATESTPROJECT\march\04-03-2021\BusinessLayer\bin\Release\DataAccessLayer.dll
+D:\dailyproject\LATESTPROJECT\march\04-03-2021\BusinessLayer\bin\Release\Encryption.dll
+D:\dailyproject\LATESTPROJECT\march\04-03-2021\BusinessLayer\bin\Release\Microsoft.Web.Infrastructure.dll
+D:\dailyproject\LATESTPROJECT\march\04-03-2021\BusinessLayer\bin\Release\System.Web.Helpers.dll
+D:\dailyproject\LATESTPROJECT\march\04-03-2021\BusinessLayer\bin\Release\System.Web.Razor.dll
+D:\dailyproject\LATESTPROJECT\march\04-03-2021\BusinessLayer\bin\Release\System.Web.WebPages.Deployment.dll
+D:\dailyproject\LATESTPROJECT\march\04-03-2021\BusinessLayer\bin\Release\System.Web.WebPages.dll
+D:\dailyproject\LATESTPROJECT\march\04-03-2021\BusinessLayer\bin\Release\System.Web.WebPages.Razor.dll
+D:\dailyproject\LATESTPROJECT\march\04-03-2021\BusinessLayer\bin\Release\Microsoft.Practices.EnterpriseLibrary.Data.dll
+D:\dailyproject\LATESTPROJECT\march\04-03-2021\BusinessLayer\bin\Release\Microsoft.Practices.EnterpriseLibrary.Common.dll
+D:\dailyproject\LATESTPROJECT\march\04-03-2021\BusinessLayer\bin\Release\Microsoft.Practices.Unity.dll
+D:\dailyproject\LATESTPROJECT\march\04-03-2021\BusinessLayer\bin\Release\Microsoft.Practices.Unity.Interception.dll
+D:\dailyproject\LATESTPROJECT\march\04-03-2021\BusinessLayer\bin\Release\DataAccessLayer.pdb
+D:\dailyproject\LATESTPROJECT\march\04-03-2021\BusinessLayer\bin\Release\Encryption.pdb
+D:\dailyproject\LATESTPROJECT\march\04-03-2021\BusinessLayer\bin\Release\System.Web.Helpers.xml
+D:\dailyproject\LATESTPROJECT\march\04-03-2021\BusinessLayer\bin\Release\System.Web.Razor.xml
+D:\dailyproject\LATESTPROJECT\march\04-03-2021\BusinessLayer\bin\Release\System.Web.WebPages.xml
+D:\dailyproject\LATESTPROJECT\march\04-03-2021\BusinessLayer\bin\Release\System.Web.WebPages.Deployment.xml
+D:\dailyproject\LATESTPROJECT\march\04-03-2021\BusinessLayer\bin\Release\System.Web.WebPages.Razor.xml
+D:\dailyproject\LATESTPROJECT\march\04-03-2021\BusinessLayer\obj\Release\BusinessLayer.csprojAssemblyReference.cache
+D:\dailyproject\LATESTPROJECT\march\04-03-2021\BusinessLayer\obj\Release\BusinessLayer.csproj.CoreCompileInputs.cache
+D:\dailyproject\LATESTPROJECT\march\04-03-2021\BusinessLayer\obj\Release\BusinessLayer.csproj.CopyComplete
+D:\dailyproject\LATESTPROJECT\march\04-03-2021\BusinessLayer\obj\Release\BusinessLayer.dll
+D:\dailyproject\LATESTPROJECT\march\04-03-2021\BusinessLayer\obj\Release\BusinessLayer.pdb
+D:\dailyproject\LATESTPROJECT\march\10-03-2021\BusinessLayer\bin\Release\BusinessLayer.dll
+D:\dailyproject\LATESTPROJECT\march\10-03-2021\BusinessLayer\bin\Release\BusinessLayer.pdb
+D:\dailyproject\LATESTPROJECT\march\10-03-2021\BusinessLayer\bin\Release\DataAccessLayer.dll
+D:\dailyproject\LATESTPROJECT\march\10-03-2021\BusinessLayer\bin\Release\Encryption.dll
+D:\dailyproject\LATESTPROJECT\march\10-03-2021\BusinessLayer\bin\Release\Microsoft.Web.Infrastructure.dll
+D:\dailyproject\LATESTPROJECT\march\10-03-2021\BusinessLayer\bin\Release\System.Web.Helpers.dll
+D:\dailyproject\LATESTPROJECT\march\10-03-2021\BusinessLayer\bin\Release\System.Web.Razor.dll
+D:\dailyproject\LATESTPROJECT\march\10-03-2021\BusinessLayer\bin\Release\System.Web.WebPages.Deployment.dll
+D:\dailyproject\LATESTPROJECT\march\10-03-2021\BusinessLayer\bin\Release\System.Web.WebPages.dll
+D:\dailyproject\LATESTPROJECT\march\10-03-2021\BusinessLayer\bin\Release\System.Web.WebPages.Razor.dll
+D:\dailyproject\LATESTPROJECT\march\10-03-2021\BusinessLayer\bin\Release\Microsoft.Practices.EnterpriseLibrary.Data.dll
+D:\dailyproject\LATESTPROJECT\march\10-03-2021\BusinessLayer\bin\Release\Microsoft.Practices.EnterpriseLibrary.Common.dll
+D:\dailyproject\LATESTPROJECT\march\10-03-2021\BusinessLayer\bin\Release\Microsoft.Practices.Unity.dll
+D:\dailyproject\LATESTPROJECT\march\10-03-2021\BusinessLayer\bin\Release\Microsoft.Practices.Unity.Interception.dll
+D:\dailyproject\LATESTPROJECT\march\10-03-2021\BusinessLayer\bin\Release\DataAccessLayer.pdb
+D:\dailyproject\LATESTPROJECT\march\10-03-2021\BusinessLayer\bin\Release\Encryption.pdb
+D:\dailyproject\LATESTPROJECT\march\10-03-2021\BusinessLayer\bin\Release\System.Web.Helpers.xml
+D:\dailyproject\LATESTPROJECT\march\10-03-2021\BusinessLayer\bin\Release\System.Web.Razor.xml
+D:\dailyproject\LATESTPROJECT\march\10-03-2021\BusinessLayer\bin\Release\System.Web.WebPages.xml
+D:\dailyproject\LATESTPROJECT\march\10-03-2021\BusinessLayer\bin\Release\System.Web.WebPages.Deployment.xml
+D:\dailyproject\LATESTPROJECT\march\10-03-2021\BusinessLayer\bin\Release\System.Web.WebPages.Razor.xml
+D:\dailyproject\LATESTPROJECT\march\10-03-2021\BusinessLayer\obj\Release\BusinessLayer.csprojAssemblyReference.cache
+D:\dailyproject\LATESTPROJECT\march\10-03-2021\BusinessLayer\obj\Release\BusinessLayer.csproj.CoreCompileInputs.cache
+D:\dailyproject\LATESTPROJECT\march\10-03-2021\BusinessLayer\obj\Release\BusinessLayer.csproj.CopyComplete
+D:\dailyproject\LATESTPROJECT\march\10-03-2021\BusinessLayer\obj\Release\BusinessLayer.dll
+D:\dailyproject\LATESTPROJECT\march\10-03-2021\BusinessLayer\obj\Release\BusinessLayer.pdb
+D:\dailyproject\LATESTPROJECT\march\19-03-2021\BusinessLayer\bin\Release\BusinessLayer.dll
+D:\dailyproject\LATESTPROJECT\march\19-03-2021\BusinessLayer\bin\Release\BusinessLayer.pdb
+D:\dailyproject\LATESTPROJECT\march\19-03-2021\BusinessLayer\bin\Release\DataAccessLayer.dll
+D:\dailyproject\LATESTPROJECT\march\19-03-2021\BusinessLayer\bin\Release\Encryption.dll
+D:\dailyproject\LATESTPROJECT\march\19-03-2021\BusinessLayer\bin\Release\Microsoft.Web.Infrastructure.dll
+D:\dailyproject\LATESTPROJECT\march\19-03-2021\BusinessLayer\bin\Release\System.Web.Helpers.dll
+D:\dailyproject\LATESTPROJECT\march\19-03-2021\BusinessLayer\bin\Release\System.Web.Razor.dll
+D:\dailyproject\LATESTPROJECT\march\19-03-2021\BusinessLayer\bin\Release\System.Web.WebPages.Deployment.dll
+D:\dailyproject\LATESTPROJECT\march\19-03-2021\BusinessLayer\bin\Release\System.Web.WebPages.dll
+D:\dailyproject\LATESTPROJECT\march\19-03-2021\BusinessLayer\bin\Release\System.Web.WebPages.Razor.dll
+D:\dailyproject\LATESTPROJECT\march\19-03-2021\BusinessLayer\bin\Release\Microsoft.Practices.EnterpriseLibrary.Data.dll
+D:\dailyproject\LATESTPROJECT\march\19-03-2021\BusinessLayer\bin\Release\Microsoft.Practices.EnterpriseLibrary.Common.dll
+D:\dailyproject\LATESTPROJECT\march\19-03-2021\BusinessLayer\bin\Release\Microsoft.Practices.Unity.dll
+D:\dailyproject\LATESTPROJECT\march\19-03-2021\BusinessLayer\bin\Release\Microsoft.Practices.Unity.Interception.dll
+D:\dailyproject\LATESTPROJECT\march\19-03-2021\BusinessLayer\bin\Release\DataAccessLayer.pdb
+D:\dailyproject\LATESTPROJECT\march\19-03-2021\BusinessLayer\bin\Release\Encryption.pdb
+D:\dailyproject\LATESTPROJECT\march\19-03-2021\BusinessLayer\bin\Release\System.Web.Helpers.xml
+D:\dailyproject\LATESTPROJECT\march\19-03-2021\BusinessLayer\bin\Release\System.Web.Razor.xml
+D:\dailyproject\LATESTPROJECT\march\19-03-2021\BusinessLayer\bin\Release\System.Web.WebPages.xml
+D:\dailyproject\LATESTPROJECT\march\19-03-2021\BusinessLayer\bin\Release\System.Web.WebPages.Deployment.xml
+D:\dailyproject\LATESTPROJECT\march\19-03-2021\BusinessLayer\bin\Release\System.Web.WebPages.Razor.xml
+D:\dailyproject\LATESTPROJECT\march\19-03-2021\BusinessLayer\obj\Release\BusinessLayer.csprojAssemblyReference.cache
+D:\dailyproject\LATESTPROJECT\march\19-03-2021\BusinessLayer\obj\Release\BusinessLayer.csproj.CoreCompileInputs.cache
+D:\dailyproject\LATESTPROJECT\march\19-03-2021\BusinessLayer\obj\Release\BusinessLayer.csproj.CopyComplete
+D:\dailyproject\LATESTPROJECT\march\19-03-2021\BusinessLayer\obj\Release\BusinessLayer.dll
+D:\dailyproject\LATESTPROJECT\march\19-03-2021\BusinessLayer\obj\Release\BusinessLayer.pdb
+E:\New Latest Srijan Final After Marriage\for changes new year deepti project\BusinessLayer\bin\Release\BusinessLayer.dll
+E:\New Latest Srijan Final After Marriage\for changes new year deepti project\BusinessLayer\bin\Release\BusinessLayer.pdb
+E:\New Latest Srijan Final After Marriage\for changes new year deepti project\BusinessLayer\bin\Release\DataAccessLayer.dll
+E:\New Latest Srijan Final After Marriage\for changes new year deepti project\BusinessLayer\bin\Release\Encryption.dll
+E:\New Latest Srijan Final After Marriage\for changes new year deepti project\BusinessLayer\bin\Release\Microsoft.Web.Infrastructure.dll
+E:\New Latest Srijan Final After Marriage\for changes new year deepti project\BusinessLayer\bin\Release\System.Web.Helpers.dll
+E:\New Latest Srijan Final After Marriage\for changes new year deepti project\BusinessLayer\bin\Release\System.Web.Razor.dll
+E:\New Latest Srijan Final After Marriage\for changes new year deepti project\BusinessLayer\bin\Release\System.Web.WebPages.Deployment.dll
+E:\New Latest Srijan Final After Marriage\for changes new year deepti project\BusinessLayer\bin\Release\System.Web.WebPages.dll
+E:\New Latest Srijan Final After Marriage\for changes new year deepti project\BusinessLayer\bin\Release\System.Web.WebPages.Razor.dll
+E:\New Latest Srijan Final After Marriage\for changes new year deepti project\BusinessLayer\bin\Release\Microsoft.Practices.EnterpriseLibrary.Data.dll
+E:\New Latest Srijan Final After Marriage\for changes new year deepti project\BusinessLayer\bin\Release\Microsoft.Practices.EnterpriseLibrary.Common.dll
+E:\New Latest Srijan Final After Marriage\for changes new year deepti project\BusinessLayer\bin\Release\Microsoft.Practices.Unity.dll
+E:\New Latest Srijan Final After Marriage\for changes new year deepti project\BusinessLayer\bin\Release\Microsoft.Practices.Unity.Interception.dll
+E:\New Latest Srijan Final After Marriage\for changes new year deepti project\BusinessLayer\bin\Release\DataAccessLayer.pdb
+E:\New Latest Srijan Final After Marriage\for changes new year deepti project\BusinessLayer\bin\Release\Encryption.pdb
+E:\New Latest Srijan Final After Marriage\for changes new year deepti project\BusinessLayer\bin\Release\System.Web.Helpers.xml
+E:\New Latest Srijan Final After Marriage\for changes new year deepti project\BusinessLayer\bin\Release\System.Web.Razor.xml
+E:\New Latest Srijan Final After Marriage\for changes new year deepti project\BusinessLayer\bin\Release\System.Web.WebPages.xml
+E:\New Latest Srijan Final After Marriage\for changes new year deepti project\BusinessLayer\bin\Release\System.Web.WebPages.Deployment.xml
+E:\New Latest Srijan Final After Marriage\for changes new year deepti project\BusinessLayer\bin\Release\System.Web.WebPages.Razor.xml
+E:\New Latest Srijan Final After Marriage\for changes new year deepti project\BusinessLayer\obj\Release\BusinessLayer.csprojAssemblyReference.cache
+E:\New Latest Srijan Final After Marriage\for changes new year deepti project\BusinessLayer\obj\Release\BusinessLayer.csproj.CopyComplete
+E:\New Latest Srijan Final After Marriage\for changes new year deepti project\BusinessLayer\obj\Release\BusinessLayer.dll
+E:\New Latest Srijan Final After Marriage\for changes new year deepti project\BusinessLayer\obj\Release\BusinessLayer.pdb
+D:\dailyproject\LATESTPROJECT\April for changes new year deepti project\1-04-2021\BusinessLayer\bin\Release\BusinessLayer.dll
+D:\dailyproject\LATESTPROJECT\April for changes new year deepti project\1-04-2021\BusinessLayer\bin\Release\BusinessLayer.pdb
+D:\dailyproject\LATESTPROJECT\April for changes new year deepti project\1-04-2021\BusinessLayer\bin\Release\DataAccessLayer.dll
+D:\dailyproject\LATESTPROJECT\April for changes new year deepti project\1-04-2021\BusinessLayer\bin\Release\Encryption.dll
+D:\dailyproject\LATESTPROJECT\April for changes new year deepti project\1-04-2021\BusinessLayer\bin\Release\Microsoft.Web.Infrastructure.dll
+D:\dailyproject\LATESTPROJECT\April for changes new year deepti project\1-04-2021\BusinessLayer\bin\Release\System.Web.Helpers.dll
+D:\dailyproject\LATESTPROJECT\April for changes new year deepti project\1-04-2021\BusinessLayer\bin\Release\System.Web.Razor.dll
+D:\dailyproject\LATESTPROJECT\April for changes new year deepti project\1-04-2021\BusinessLayer\bin\Release\System.Web.WebPages.Deployment.dll
+D:\dailyproject\LATESTPROJECT\April for changes new year deepti project\1-04-2021\BusinessLayer\bin\Release\System.Web.WebPages.dll
+D:\dailyproject\LATESTPROJECT\April for changes new year deepti project\1-04-2021\BusinessLayer\bin\Release\System.Web.WebPages.Razor.dll
+D:\dailyproject\LATESTPROJECT\April for changes new year deepti project\1-04-2021\BusinessLayer\bin\Release\Microsoft.Practices.EnterpriseLibrary.Data.dll
+D:\dailyproject\LATESTPROJECT\April for changes new year deepti project\1-04-2021\BusinessLayer\bin\Release\Microsoft.Practices.EnterpriseLibrary.Common.dll
+D:\dailyproject\LATESTPROJECT\April for changes new year deepti project\1-04-2021\BusinessLayer\bin\Release\Microsoft.Practices.Unity.dll
+D:\dailyproject\LATESTPROJECT\April for changes new year deepti project\1-04-2021\BusinessLayer\bin\Release\Microsoft.Practices.Unity.Interception.dll
+D:\dailyproject\LATESTPROJECT\April for changes new year deepti project\1-04-2021\BusinessLayer\bin\Release\DataAccessLayer.pdb
+D:\dailyproject\LATESTPROJECT\April for changes new year deepti project\1-04-2021\BusinessLayer\bin\Release\Encryption.pdb
+D:\dailyproject\LATESTPROJECT\April for changes new year deepti project\1-04-2021\BusinessLayer\bin\Release\System.Web.Helpers.xml
+D:\dailyproject\LATESTPROJECT\April for changes new year deepti project\1-04-2021\BusinessLayer\bin\Release\System.Web.Razor.xml
+D:\dailyproject\LATESTPROJECT\April for changes new year deepti project\1-04-2021\BusinessLayer\bin\Release\System.Web.WebPages.xml
+D:\dailyproject\LATESTPROJECT\April for changes new year deepti project\1-04-2021\BusinessLayer\bin\Release\System.Web.WebPages.Deployment.xml
+D:\dailyproject\LATESTPROJECT\April for changes new year deepti project\1-04-2021\BusinessLayer\bin\Release\System.Web.WebPages.Razor.xml
+D:\dailyproject\LATESTPROJECT\April for changes new year deepti project\1-04-2021\BusinessLayer\obj\Release\BusinessLayer.csprojAssemblyReference.cache
+D:\dailyproject\LATESTPROJECT\April for changes new year deepti project\1-04-2021\BusinessLayer\obj\Release\BusinessLayer.csproj.CoreCompileInputs.cache
+D:\dailyproject\LATESTPROJECT\April for changes new year deepti project\1-04-2021\BusinessLayer\obj\Release\BusinessLayer.csproj.CopyComplete
+D:\dailyproject\LATESTPROJECT\April for changes new year deepti project\1-04-2021\BusinessLayer\obj\Release\BusinessLayer.dll
+D:\dailyproject\LATESTPROJECT\April for changes new year deepti project\1-04-2021\BusinessLayer\obj\Release\BusinessLayer.pdb
+D:\dailyproject\LATESTPROJECT\April for changes new year deepti project\09-04-2021\BusinessLayer\bin\Release\BusinessLayer.dll
+D:\dailyproject\LATESTPROJECT\April for changes new year deepti project\09-04-2021\BusinessLayer\bin\Release\BusinessLayer.pdb
+D:\dailyproject\LATESTPROJECT\April for changes new year deepti project\09-04-2021\BusinessLayer\bin\Release\DataAccessLayer.dll
+D:\dailyproject\LATESTPROJECT\April for changes new year deepti project\09-04-2021\BusinessLayer\bin\Release\Encryption.dll
+D:\dailyproject\LATESTPROJECT\April for changes new year deepti project\09-04-2021\BusinessLayer\bin\Release\Microsoft.Web.Infrastructure.dll
+D:\dailyproject\LATESTPROJECT\April for changes new year deepti project\09-04-2021\BusinessLayer\bin\Release\System.Web.Helpers.dll
+D:\dailyproject\LATESTPROJECT\April for changes new year deepti project\09-04-2021\BusinessLayer\bin\Release\System.Web.Razor.dll
+D:\dailyproject\LATESTPROJECT\April for changes new year deepti project\09-04-2021\BusinessLayer\bin\Release\System.Web.WebPages.Deployment.dll
+D:\dailyproject\LATESTPROJECT\April for changes new year deepti project\09-04-2021\BusinessLayer\bin\Release\System.Web.WebPages.dll
+D:\dailyproject\LATESTPROJECT\April for changes new year deepti project\09-04-2021\BusinessLayer\bin\Release\System.Web.WebPages.Razor.dll
+D:\dailyproject\LATESTPROJECT\April for changes new year deepti project\09-04-2021\BusinessLayer\bin\Release\Microsoft.Practices.EnterpriseLibrary.Data.dll
+D:\dailyproject\LATESTPROJECT\April for changes new year deepti project\09-04-2021\BusinessLayer\bin\Release\Microsoft.Practices.EnterpriseLibrary.Common.dll
+D:\dailyproject\LATESTPROJECT\April for changes new year deepti project\09-04-2021\BusinessLayer\bin\Release\Microsoft.Practices.Unity.dll
+D:\dailyproject\LATESTPROJECT\April for changes new year deepti project\09-04-2021\BusinessLayer\bin\Release\Microsoft.Practices.Unity.Interception.dll
+D:\dailyproject\LATESTPROJECT\April for changes new year deepti project\09-04-2021\BusinessLayer\bin\Release\DataAccessLayer.pdb
+D:\dailyproject\LATESTPROJECT\April for changes new year deepti project\09-04-2021\BusinessLayer\bin\Release\Encryption.pdb
+D:\dailyproject\LATESTPROJECT\April for changes new year deepti project\09-04-2021\BusinessLayer\bin\Release\System.Web.Helpers.xml
+D:\dailyproject\LATESTPROJECT\April for changes new year deepti project\09-04-2021\BusinessLayer\bin\Release\System.Web.Razor.xml
+D:\dailyproject\LATESTPROJECT\April for changes new year deepti project\09-04-2021\BusinessLayer\bin\Release\System.Web.WebPages.xml
+D:\dailyproject\LATESTPROJECT\April for changes new year deepti project\09-04-2021\BusinessLayer\bin\Release\System.Web.WebPages.Deployment.xml
+D:\dailyproject\LATESTPROJECT\April for changes new year deepti project\09-04-2021\BusinessLayer\bin\Release\System.Web.WebPages.Razor.xml
+D:\dailyproject\LATESTPROJECT\April for changes new year deepti project\09-04-2021\BusinessLayer\obj\Release\BusinessLayer.csprojAssemblyReference.cache
+D:\dailyproject\LATESTPROJECT\April for changes new year deepti project\09-04-2021\BusinessLayer\obj\Release\BusinessLayer.csproj.CoreCompileInputs.cache
+D:\dailyproject\LATESTPROJECT\April for changes new year deepti project\09-04-2021\BusinessLayer\obj\Release\BusinessLayer.csproj.CopyComplete
+D:\dailyproject\LATESTPROJECT\April for changes new year deepti project\09-04-2021\BusinessLayer\obj\Release\BusinessLayer.dll
+D:\dailyproject\LATESTPROJECT\April for changes new year deepti project\09-04-2021\BusinessLayer\obj\Release\BusinessLayer.pdb
+F:\New Work Office\19 April\19 April\09-04-2021\BusinessLayer\bin\Release\BusinessLayer.dll
+F:\New Work Office\19 April\19 April\09-04-2021\BusinessLayer\bin\Release\BusinessLayer.pdb
+F:\New Work Office\19 April\19 April\09-04-2021\BusinessLayer\bin\Release\DataAccessLayer.dll
+F:\New Work Office\19 April\19 April\09-04-2021\BusinessLayer\bin\Release\Encryption.dll
+F:\New Work Office\19 April\19 April\09-04-2021\BusinessLayer\bin\Release\Microsoft.Web.Infrastructure.dll
+F:\New Work Office\19 April\19 April\09-04-2021\BusinessLayer\bin\Release\System.Web.Helpers.dll
+F:\New Work Office\19 April\19 April\09-04-2021\BusinessLayer\bin\Release\System.Web.Razor.dll
+F:\New Work Office\19 April\19 April\09-04-2021\BusinessLayer\bin\Release\System.Web.WebPages.Deployment.dll
+F:\New Work Office\19 April\19 April\09-04-2021\BusinessLayer\bin\Release\System.Web.WebPages.dll
+F:\New Work Office\19 April\19 April\09-04-2021\BusinessLayer\bin\Release\System.Web.WebPages.Razor.dll
+F:\New Work Office\19 April\19 April\09-04-2021\BusinessLayer\bin\Release\Microsoft.Practices.EnterpriseLibrary.Data.dll
+F:\New Work Office\19 April\19 April\09-04-2021\BusinessLayer\bin\Release\Microsoft.Practices.EnterpriseLibrary.Common.dll
+F:\New Work Office\19 April\19 April\09-04-2021\BusinessLayer\bin\Release\Microsoft.Practices.Unity.dll
+F:\New Work Office\19 April\19 April\09-04-2021\BusinessLayer\bin\Release\Microsoft.Practices.Unity.Interception.dll
+F:\New Work Office\19 April\19 April\09-04-2021\BusinessLayer\bin\Release\DataAccessLayer.pdb
+F:\New Work Office\19 April\19 April\09-04-2021\BusinessLayer\bin\Release\Encryption.pdb
+F:\New Work Office\19 April\19 April\09-04-2021\BusinessLayer\bin\Release\System.Web.Helpers.xml
+F:\New Work Office\19 April\19 April\09-04-2021\BusinessLayer\bin\Release\System.Web.Razor.xml
+F:\New Work Office\19 April\19 April\09-04-2021\BusinessLayer\bin\Release\System.Web.WebPages.xml
+F:\New Work Office\19 April\19 April\09-04-2021\BusinessLayer\bin\Release\System.Web.WebPages.Deployment.xml
+F:\New Work Office\19 April\19 April\09-04-2021\BusinessLayer\bin\Release\System.Web.WebPages.Razor.xml
+F:\New Work Office\19 April\19 April\09-04-2021\BusinessLayer\obj\Release\BusinessLayer.csprojAssemblyReference.cache
+F:\New Work Office\19 April\19 April\09-04-2021\BusinessLayer\obj\Release\BusinessLayer.csproj.CoreCompileInputs.cache
+F:\New Work Office\19 April\19 April\09-04-2021\BusinessLayer\obj\Release\BusinessLayer.csproj.CopyComplete
+F:\New Work Office\19 April\19 April\09-04-2021\BusinessLayer\obj\Release\BusinessLayer.dll
+F:\New Work Office\19 April\19 April\09-04-2021\BusinessLayer\obj\Release\BusinessLayer.pdb
+F:\New Work Office\09-04-2021\BusinessLayer\bin\Release\BusinessLayer.dll
+F:\New Work Office\09-04-2021\BusinessLayer\bin\Release\BusinessLayer.pdb
+F:\New Work Office\09-04-2021\BusinessLayer\bin\Release\DataAccessLayer.dll
+F:\New Work Office\09-04-2021\BusinessLayer\bin\Release\Encryption.dll
+F:\New Work Office\09-04-2021\BusinessLayer\bin\Release\Microsoft.Web.Infrastructure.dll
+F:\New Work Office\09-04-2021\BusinessLayer\bin\Release\System.Web.Helpers.dll
+F:\New Work Office\09-04-2021\BusinessLayer\bin\Release\System.Web.Razor.dll
+F:\New Work Office\09-04-2021\BusinessLayer\bin\Release\System.Web.WebPages.Deployment.dll
+F:\New Work Office\09-04-2021\BusinessLayer\bin\Release\System.Web.WebPages.dll
+F:\New Work Office\09-04-2021\BusinessLayer\bin\Release\System.Web.WebPages.Razor.dll
+F:\New Work Office\09-04-2021\BusinessLayer\bin\Release\Microsoft.Practices.EnterpriseLibrary.Data.dll
+F:\New Work Office\09-04-2021\BusinessLayer\bin\Release\Microsoft.Practices.EnterpriseLibrary.Common.dll
+F:\New Work Office\09-04-2021\BusinessLayer\bin\Release\Microsoft.Practices.Unity.dll
+F:\New Work Office\09-04-2021\BusinessLayer\bin\Release\Microsoft.Practices.Unity.Interception.dll
+F:\New Work Office\09-04-2021\BusinessLayer\bin\Release\DataAccessLayer.pdb
+F:\New Work Office\09-04-2021\BusinessLayer\bin\Release\Encryption.pdb
+F:\New Work Office\09-04-2021\BusinessLayer\bin\Release\System.Web.Helpers.xml
+F:\New Work Office\09-04-2021\BusinessLayer\bin\Release\System.Web.Razor.xml
+F:\New Work Office\09-04-2021\BusinessLayer\bin\Release\System.Web.WebPages.xml
+F:\New Work Office\09-04-2021\BusinessLayer\bin\Release\System.Web.WebPages.Deployment.xml
+F:\New Work Office\09-04-2021\BusinessLayer\bin\Release\System.Web.WebPages.Razor.xml
+F:\New Work Office\09-04-2021\BusinessLayer\obj\Release\BusinessLayer.csprojAssemblyReference.cache
+F:\New Work Office\09-04-2021\BusinessLayer\obj\Release\BusinessLayer.csproj.CoreCompileInputs.cache
+F:\New Work Office\09-04-2021\BusinessLayer\obj\Release\BusinessLayer.csproj.CopyComplete
+F:\New Work Office\09-04-2021\BusinessLayer\obj\Release\BusinessLayer.dll
+F:\New Work Office\09-04-2021\BusinessLayer\obj\Release\BusinessLayer.pdb
+D:\Office DPIT\may\27-05-2021\09-04-2021\BusinessLayer\bin\Release\BusinessLayer.dll
+D:\Office DPIT\may\27-05-2021\09-04-2021\BusinessLayer\bin\Release\BusinessLayer.pdb
+D:\Office DPIT\may\27-05-2021\09-04-2021\BusinessLayer\bin\Release\DataAccessLayer.dll
+D:\Office DPIT\may\27-05-2021\09-04-2021\BusinessLayer\bin\Release\Encryption.dll
+D:\Office DPIT\may\27-05-2021\09-04-2021\BusinessLayer\bin\Release\Microsoft.Web.Infrastructure.dll
+D:\Office DPIT\may\27-05-2021\09-04-2021\BusinessLayer\bin\Release\System.Web.Helpers.dll
+D:\Office DPIT\may\27-05-2021\09-04-2021\BusinessLayer\bin\Release\System.Web.Razor.dll
+D:\Office DPIT\may\27-05-2021\09-04-2021\BusinessLayer\bin\Release\System.Web.WebPages.Deployment.dll
+D:\Office DPIT\may\27-05-2021\09-04-2021\BusinessLayer\bin\Release\System.Web.WebPages.dll
+D:\Office DPIT\may\27-05-2021\09-04-2021\BusinessLayer\bin\Release\System.Web.WebPages.Razor.dll
+D:\Office DPIT\may\27-05-2021\09-04-2021\BusinessLayer\bin\Release\Microsoft.Practices.EnterpriseLibrary.Data.dll
+D:\Office DPIT\may\27-05-2021\09-04-2021\BusinessLayer\bin\Release\Microsoft.Practices.EnterpriseLibrary.Common.dll
+D:\Office DPIT\may\27-05-2021\09-04-2021\BusinessLayer\bin\Release\Microsoft.Practices.Unity.dll
+D:\Office DPIT\may\27-05-2021\09-04-2021\BusinessLayer\bin\Release\Microsoft.Practices.Unity.Interception.dll
+D:\Office DPIT\may\27-05-2021\09-04-2021\BusinessLayer\bin\Release\DataAccessLayer.pdb
+D:\Office DPIT\may\27-05-2021\09-04-2021\BusinessLayer\bin\Release\Encryption.pdb
+D:\Office DPIT\may\27-05-2021\09-04-2021\BusinessLayer\bin\Release\System.Web.Helpers.xml
+D:\Office DPIT\may\27-05-2021\09-04-2021\BusinessLayer\bin\Release\System.Web.Razor.xml
+D:\Office DPIT\may\27-05-2021\09-04-2021\BusinessLayer\bin\Release\System.Web.WebPages.xml
+D:\Office DPIT\may\27-05-2021\09-04-2021\BusinessLayer\bin\Release\System.Web.WebPages.Deployment.xml
+D:\Office DPIT\may\27-05-2021\09-04-2021\BusinessLayer\bin\Release\System.Web.WebPages.Razor.xml
+D:\Office DPIT\may\27-05-2021\09-04-2021\BusinessLayer\obj\Release\BusinessLayer.csprojAssemblyReference.cache
+D:\Office DPIT\may\27-05-2021\09-04-2021\BusinessLayer\obj\Release\BusinessLayer.csproj.CoreCompileInputs.cache
+D:\Office DPIT\may\27-05-2021\09-04-2021\BusinessLayer\obj\Release\BusinessLayer.csproj.CopyComplete
+D:\Office DPIT\may\27-05-2021\09-04-2021\BusinessLayer\obj\Release\BusinessLayer.dll
+D:\Office DPIT\may\27-05-2021\09-04-2021\BusinessLayer\obj\Release\BusinessLayer.pdb
+F:\New Work Office\27-05-2021\09-04-2021\BusinessLayer\bin\Release\BusinessLayer.dll
+F:\New Work Office\27-05-2021\09-04-2021\BusinessLayer\bin\Release\BusinessLayer.pdb
+F:\New Work Office\27-05-2021\09-04-2021\BusinessLayer\bin\Release\DataAccessLayer.dll
+F:\New Work Office\27-05-2021\09-04-2021\BusinessLayer\bin\Release\Encryption.dll
+F:\New Work Office\27-05-2021\09-04-2021\BusinessLayer\bin\Release\Microsoft.Web.Infrastructure.dll
+F:\New Work Office\27-05-2021\09-04-2021\BusinessLayer\bin\Release\System.Web.Helpers.dll
+F:\New Work Office\27-05-2021\09-04-2021\BusinessLayer\bin\Release\System.Web.Razor.dll
+F:\New Work Office\27-05-2021\09-04-2021\BusinessLayer\bin\Release\System.Web.WebPages.Deployment.dll
+F:\New Work Office\27-05-2021\09-04-2021\BusinessLayer\bin\Release\System.Web.WebPages.dll
+F:\New Work Office\27-05-2021\09-04-2021\BusinessLayer\bin\Release\System.Web.WebPages.Razor.dll
+F:\New Work Office\27-05-2021\09-04-2021\BusinessLayer\bin\Release\Microsoft.Practices.EnterpriseLibrary.Data.dll
+F:\New Work Office\27-05-2021\09-04-2021\BusinessLayer\bin\Release\Microsoft.Practices.EnterpriseLibrary.Common.dll
+F:\New Work Office\27-05-2021\09-04-2021\BusinessLayer\bin\Release\Microsoft.Practices.Unity.dll
+F:\New Work Office\27-05-2021\09-04-2021\BusinessLayer\bin\Release\Microsoft.Practices.Unity.Interception.dll
+F:\New Work Office\27-05-2021\09-04-2021\BusinessLayer\bin\Release\DataAccessLayer.pdb
+F:\New Work Office\27-05-2021\09-04-2021\BusinessLayer\bin\Release\Encryption.pdb
+F:\New Work Office\27-05-2021\09-04-2021\BusinessLayer\bin\Release\System.Web.Helpers.xml
+F:\New Work Office\27-05-2021\09-04-2021\BusinessLayer\bin\Release\System.Web.Razor.xml
+F:\New Work Office\27-05-2021\09-04-2021\BusinessLayer\bin\Release\System.Web.WebPages.xml
+F:\New Work Office\27-05-2021\09-04-2021\BusinessLayer\bin\Release\System.Web.WebPages.Deployment.xml
+F:\New Work Office\27-05-2021\09-04-2021\BusinessLayer\bin\Release\System.Web.WebPages.Razor.xml
+F:\New Work Office\27-05-2021\09-04-2021\BusinessLayer\obj\Release\BusinessLayer.csprojAssemblyReference.cache
+F:\New Work Office\27-05-2021\09-04-2021\BusinessLayer\obj\Release\BusinessLayer.csproj.CoreCompileInputs.cache
+F:\New Work Office\27-05-2021\09-04-2021\BusinessLayer\obj\Release\BusinessLayer.csproj.CopyComplete
+F:\New Work Office\27-05-2021\09-04-2021\BusinessLayer\obj\Release\BusinessLayer.dll
+F:\New Work Office\27-05-2021\09-04-2021\BusinessLayer\obj\Release\BusinessLayer.pdb
+D:\wali\27-05-2021\09-04-2021\BusinessLayer\bin\Release\BusinessLayer.dll
+D:\wali\27-05-2021\09-04-2021\BusinessLayer\bin\Release\BusinessLayer.pdb
+D:\wali\27-05-2021\09-04-2021\BusinessLayer\bin\Release\DataAccessLayer.dll
+D:\wali\27-05-2021\09-04-2021\BusinessLayer\bin\Release\Encryption.dll
+D:\wali\27-05-2021\09-04-2021\BusinessLayer\bin\Release\Microsoft.Web.Infrastructure.dll
+D:\wali\27-05-2021\09-04-2021\BusinessLayer\bin\Release\System.Web.Helpers.dll
+D:\wali\27-05-2021\09-04-2021\BusinessLayer\bin\Release\System.Web.Razor.dll
+D:\wali\27-05-2021\09-04-2021\BusinessLayer\bin\Release\System.Web.WebPages.Deployment.dll
+D:\wali\27-05-2021\09-04-2021\BusinessLayer\bin\Release\System.Web.WebPages.dll
+D:\wali\27-05-2021\09-04-2021\BusinessLayer\bin\Release\System.Web.WebPages.Razor.dll
+D:\wali\27-05-2021\09-04-2021\BusinessLayer\bin\Release\Microsoft.Practices.EnterpriseLibrary.Data.dll
+D:\wali\27-05-2021\09-04-2021\BusinessLayer\bin\Release\Microsoft.Practices.EnterpriseLibrary.Common.dll
+D:\wali\27-05-2021\09-04-2021\BusinessLayer\bin\Release\Microsoft.Practices.Unity.dll
+D:\wali\27-05-2021\09-04-2021\BusinessLayer\bin\Release\Microsoft.Practices.Unity.Interception.dll
+D:\wali\27-05-2021\09-04-2021\BusinessLayer\bin\Release\DataAccessLayer.pdb
+D:\wali\27-05-2021\09-04-2021\BusinessLayer\bin\Release\Encryption.pdb
+D:\wali\27-05-2021\09-04-2021\BusinessLayer\bin\Release\System.Web.Helpers.xml
+D:\wali\27-05-2021\09-04-2021\BusinessLayer\bin\Release\System.Web.Razor.xml
+D:\wali\27-05-2021\09-04-2021\BusinessLayer\bin\Release\System.Web.WebPages.xml
+D:\wali\27-05-2021\09-04-2021\BusinessLayer\bin\Release\System.Web.WebPages.Deployment.xml
+D:\wali\27-05-2021\09-04-2021\BusinessLayer\bin\Release\System.Web.WebPages.Razor.xml
+D:\wali\27-05-2021\09-04-2021\BusinessLayer\obj\Release\BusinessLayer.csprojAssemblyReference.cache
+D:\wali\27-05-2021\09-04-2021\BusinessLayer\obj\Release\BusinessLayer.csproj.CoreCompileInputs.cache
+D:\wali\27-05-2021\09-04-2021\BusinessLayer\obj\Release\BusinessLayer.csproj.CopyComplete
+D:\wali\27-05-2021\09-04-2021\BusinessLayer\obj\Release\BusinessLayer.dll
+D:\wali\27-05-2021\09-04-2021\BusinessLayer\obj\Release\BusinessLayer.pdb

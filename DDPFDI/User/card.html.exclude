@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+</head>
+<body>
+
+
+    <div class="container">
+        <div class="row">
+            <div class="col-3">
+                <div class="card">
+                    <img class="card-img-top" src="Product Image" alt="Product Image" style="width:100%">
+                    <div class="card-body">
+                        <table class="table table-responsive">
+                            <tbody>
+                                <tr>
+                                    <td>BDL</td>
+                                </tr>
+                                <tr>
+                                    <td>Battery Theramal</td>
+                                </tr>
+                                <tr>
+                                    <td>Annual Import value in millions:- 3.0</td>
+                                </tr>
+                                <tr>
+                                    <td>Notto supply Group</td>
+                                </tr>
+                                <tr>
+                                    <td>Last Updataion</td>
+                                </tr>
+                                <tr>
+                                    <td>More Details</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <a class="btn btn-primary" onclick="myFunction()">Add To Show Interest</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <a class="btn btn-primary" onclick="myFunction()">Similar Product</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div id="myDIV" class="container my-3" style="display:none;">
+                <div class="row">
+                    <div class="col-3">
+                        <div class="card">
+                            <img class="card-img-top" src="Product Image" alt="Product Image" style="width:100%">
+                            <div class="card-body">
+                                <table class="table table-responsive">
+                                    <tbody>
+                                        <tr>
+                                            <td>BDL</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Battery Theramal</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Annual Import value in millions:- 3.0</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Notto supply Group</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Last Updataion</td>
+                                        </tr>
+                                        <tr>
+                                            <td>More Details</td>
+                                        </tr>
+                                        <tr>
+                                            <td><a class="btn btn-primary" onclick="myFunction()">Add To Show Interest</a></td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+
+
+
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="card">
+                            <img class="card-img-top" src="Product Image" alt="Product Image" style="width:100%">
+                            <div class="card-body">
+                                <table class="table table-responsive">
+                                    <tbody>
+                                        <tr>
+                                            <td>BDL</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Battery Theramal</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Annual Import value in millions:- 3.0</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Notto supply Group</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Last Updataion</td>
+                                        </tr>
+                                        <tr>
+                                            <td>More Details</td>
+                                        </tr>
+                                        <tr>
+                                            <td><a class="btn btn-primary" onclick="myFunction()">Add To Show Interest</a></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="card">
+                            <img class="card-img-top" src="Product Image" alt="Product Image" style="width:100%">
+                            <div class="card-body">
+                                <table class="table table-responsive">
+                                    <tbody>
+                                        <tr>
+                                            <td>BDL</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Battery Theramal</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Annual Import value in millions:- 3.0</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Notto supply Group</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Last Updataion</td>
+                                        </tr>
+                                        <tr>
+                                            <td>More Details</td>
+                                        </tr>
+                                        <tr>
+                                            <td><a class="btn btn-primary" onclick="myFunction()">Add To Show Interest</a></td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="card">
+                            <img class="card-img-top" src="Product Image" alt="Product Image" style="width:100%">
+                            <div class="card-body">
+                                <table class="table table-responsive">
+                                    <tbody>
+                                        <tr>
+                                            <td>BDL</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Battery Theramal</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Annual Import value in millions:- 3.0</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Notto supply Group</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Last Updataion</td>
+                                        </tr>
+                                        <tr>
+                                            <td>More Details</td>
+                                        </tr>
+                                        <tr>
+                                            <td><a class="btn btn-primary" onclick="myFunction()">Add To Show Interest</a></td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+
+
+    <script>
+        function myFunction() {
+            var x = document.getElementById("myDIV");
+            if (x.style.display === "none") {
+                x.style.display = "block";
+            } else {
+                x.style.display = "none";
+            }
+        }
+    </script>
+
+
+</body>
+</html>
+

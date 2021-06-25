@@ -1,300 +1,567 @@
-********** 9/24/2019 5:47:24 PM **********
+********** 22-06-2021 11:05:30 **********
+Exception Type: System.Web.HttpException
+Exception: Session state has created a session id, but cannot save it because the response was already flushed by the application.
+Source: Error Page
+Stack Trace: 
+   at System.Web.SessionState.SessionIDManager.SaveSessionID(HttpContext context, String id, Boolean& redirected, Boolean& cookieAdded)
+   at System.Web.SessionState.SessionStateModule.CreateSessionId()
+   at System.Web.SessionState.SessionStateModule.DelayedGetSessionId()
+   at System.Web.SessionState.SessionStateModule.ReleaseStateGetSessionID()
+   at System.Web.SessionState.SessionStateModule.OnReleaseState(Object source, EventArgs eventArgs)
+   at System.Web.SessionState.SessionStateModule.OnEndRequest(Object source, EventArgs eventArgs)
+   at System.Web.HttpApplication.SyncEventExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+
+********** 22-06-2021 11:32:04 **********
+Inner Exception Type: System.FormatException
+Inner Exception: String was not recognized as a valid DateTime.
+Inner Source: mscorlib
+Inner Stack Trace: 
+   at System.DateTimeParse.Parse(String s, DateTimeFormatInfo dtfi, DateTimeStyles styles)
+   at System.Convert.ToDateTime(String value)
+   at Admin_AddProduct.rbisindinised_CheckedChanged(Object sender, EventArgs e) in d:\wali\27-05-2021\09-04-2021\DDPFDI\Admin\AddProduct.aspx.cs:line 645
+   at System.Web.UI.WebControls.ListControl.OnSelectedIndexChanged(EventArgs e)
+   at System.Web.UI.Page.RaiseChangedEvents()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+Exception Type: System.Web.HttpUnhandledException
+Exception: Exception of type 'System.Web.HttpUnhandledException' was thrown.
+Source: Error Page
+Stack Trace: 
+   at System.Web.UI.Page.HandleError(Exception e)
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+   at System.Web.UI.Page.ProcessRequest(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+   at System.Web.UI.Page.ProcessRequest()
+   at System.Web.UI.Page.ProcessRequest(HttpContext context)
+   at ASP.admin_addproduct_aspx.ProcessRequest(HttpContext context) in c:\Users\User\AppData\Local\Temp\Temporary ASP.NET Files\vs\19c7bda0\a494c425\App_Web_f3s0zfr2.0.cs:line 0
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+
+********** 22-06-2021 11:34:05 **********
+Inner Exception Type: System.ArgumentOutOfRangeException
+Inner Exception: 'ddlyear' has a SelectedValue which is invalid because it does not exist in the list of items.
+Parameter name: value
+Inner Source: System.Web
+Inner Stack Trace: 
+   at System.Web.UI.WebControls.ListControl.set_SelectedValue(String value)
+   at Admin_AddProduct.rbisindinised_CheckedChanged(Object sender, EventArgs e) in d:\wali\27-05-2021\09-04-2021\DDPFDI\Admin\AddProduct.aspx.cs:line 650
+   at System.Web.UI.WebControls.ListControl.OnSelectedIndexChanged(EventArgs e)
+   at System.Web.UI.Page.RaiseChangedEvents()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+Exception Type: System.Web.HttpUnhandledException
+Exception: Exception of type 'System.Web.HttpUnhandledException' was thrown.
+Source: Error Page
+Stack Trace: 
+   at System.Web.UI.Page.HandleError(Exception e)
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+   at System.Web.UI.Page.ProcessRequest(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+   at System.Web.UI.Page.ProcessRequest()
+   at System.Web.UI.Page.ProcessRequest(HttpContext context)
+   at ASP.admin_addproduct_aspx.ProcessRequest(HttpContext context) in c:\Users\User\AppData\Local\Temp\Temporary ASP.NET Files\vs\19c7bda0\a494c425\App_Web_52qw1eko.0.cs:line 0
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+
+********** 22-06-2021 11:35:19 **********
+Inner Exception Type: System.ArgumentOutOfRangeException
+Inner Exception: 'ddlyear' has a SelectedValue which is invalid because it does not exist in the list of items.
+Parameter name: value
+Inner Source: System.Web
+Inner Stack Trace: 
+   at System.Web.UI.WebControls.ListControl.set_SelectedValue(String value)
+   at Admin_AddProduct.rbisindinised_CheckedChanged(Object sender, EventArgs e) in d:\wali\27-05-2021\09-04-2021\DDPFDI\Admin\AddProduct.aspx.cs:line 650
+   at System.Web.UI.WebControls.ListControl.OnSelectedIndexChanged(EventArgs e)
+   at System.Web.UI.Page.RaiseChangedEvents()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+Exception Type: System.Web.HttpUnhandledException
+Exception: Exception of type 'System.Web.HttpUnhandledException' was thrown.
+Source: Error Page
+Stack Trace: 
+   at System.Web.UI.Page.HandleError(Exception e)
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+   at System.Web.UI.Page.ProcessRequest(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+   at System.Web.UI.Page.ProcessRequest()
+   at System.Web.UI.Page.ProcessRequest(HttpContext context)
+   at ASP.admin_addproduct_aspx.ProcessRequest(HttpContext context) in c:\Users\User\AppData\Local\Temp\Temporary ASP.NET Files\vs\19c7bda0\a494c425\App_Web_ualb14iu.0.cs:line 0
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+
+********** 22-06-2021 12:58:50 **********
 Exception Type: System.Exception
 Exception: The error was unhandled by application code.
 Source: Error Page
 Stack Trace: 
-********** 9/24/2019 5:48:05 PM **********
+********** 22-06-2021 13:00:33 **********
 Exception Type: System.Exception
 Exception: The error was unhandled by application code.
 Source: Error Page
 Stack Trace: 
-********** 9/24/2019 5:53:00 PM **********
+********** 22-06-2021 13:20:13 **********
 Exception Type: System.Exception
 Exception: The error was unhandled by application code.
 Source: Error Page
 Stack Trace: 
-********** 9/24/2019 5:53:45 PM **********
+********** 22-06-2021 13:23:16 **********
 Exception Type: System.Exception
 Exception: The error was unhandled by application code.
 Source: Error Page
 Stack Trace: 
-********** 9/24/2019 5:55:12 PM **********
+********** 22-06-2021 13:24:39 **********
 Exception Type: System.Exception
 Exception: The error was unhandled by application code.
 Source: Error Page
 Stack Trace: 
-********** 9/26/2019 2:06:24 PM **********
-Exception Type: System.Exception
-Exception: The error was unhandled by application code.
+********** 22-06-2021 16:28:46 **********
+Exception Type: System.Web.HttpCompileException
+Exception: d:\wali\27-05-2021\09-04-2021\DDPFDI\Admin\AddProduct.aspx.cs(2461): error CS0103: The name 'divnegatedvalue' does not exist in the current context
 Source: Error Page
 Stack Trace: 
-********** 9/27/2019 2:40:25 PM **********
-Exception Type: System.Exception
-Exception: The error was unhandled by application code.
+   at System.Web.Compilation.BuildManager.CompileWebFile(VirtualPath virtualPath)
+   at System.Web.Compilation.BuildManager.GetVPathBuildResultInternal(VirtualPath virtualPath, Boolean noBuild, Boolean allowCrossApp, Boolean allowBuildInPrecompile, Boolean throwIfNotFound, Boolean ensureIsUpToDate)
+   at System.Web.Compilation.BuildManager.GetVPathBuildResultWithNoAssert(HttpContext context, VirtualPath virtualPath, Boolean noBuild, Boolean allowCrossApp, Boolean allowBuildInPrecompile, Boolean throwIfNotFound, Boolean ensureIsUpToDate)
+   at System.Web.Compilation.BuildManager.GetVirtualPathObjectFactory(VirtualPath virtualPath, HttpContext context, Boolean allowCrossApp, Boolean throwIfNotFound)
+   at System.Web.Compilation.BuildManager.CreateInstanceFromVirtualPath(VirtualPath virtualPath, Type requiredBaseType, HttpContext context, Boolean allowCrossApp)
+   at System.Web.Routing.PageRouteHandler.GetHttpHandler(RequestContext requestContext)
+   at System.Web.Routing.UrlRoutingModule.PostResolveRequestCache(HttpContextBase context)
+   at System.Web.HttpApplication.SyncEventExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+
+********** 22-06-2021 17:56:20 **********
+Inner Exception Type: System.Data.SqlClient.SqlException
+Inner Exception: Invalid column name 'VTechId'.
+Inner Source: .Net SqlClient Data Provider
+Inner Stack Trace: 
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at System.Data.SqlClient.SqlCommand.RunExecuteNonQueryTds(String methodName, Boolean async, Int32 timeout, Boolean asyncWrite)
+   at System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(TaskCompletionSource`1 completion, String methodName, Boolean sendToPipe, Int32 timeout, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   at System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   at Microsoft.Practices.EnterpriseLibrary.Data.Database.DoExecuteNonQuery(DbCommand command)
+   at Microsoft.Practices.EnterpriseLibrary.Data.Database.ExecuteNonQuery(DbCommand command)
+   at DataAccessLayer.SqlHelper.ExecuteQuery(String mQuery) in D:\wali\27-05-2021\09-04-2021\DataAccessLayer\SqlHelper.cs:line 75
+   at BusinessLayer.Logic.DeleteTechdet(Int32 Id) in D:\wali\27-05-2021\09-04-2021\BusinessLayer\Logic.cs:line 472
+   at Vendor_V_DetailofDefence.gvtechnologyedit_RowCommand(Object sender, GridViewCommandEventArgs e) in d:\wali\27-05-2021\09-04-2021\DDPFDI\Vendor\V_DetailofDefence.aspx.cs:line 1533
+   at System.Web.UI.WebControls.GridView.OnRowCommand(GridViewCommandEventArgs e)
+   at System.Web.UI.WebControls.GridView.HandleEvent(EventArgs e, Boolean causesValidation, String validationGroup)
+   at System.Web.UI.Control.RaiseBubbleEvent(Object source, EventArgs args)
+   at System.Web.UI.WebControls.GridViewRow.OnBubbleEvent(Object source, EventArgs e)
+   at System.Web.UI.Control.RaiseBubbleEvent(Object source, EventArgs args)
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+Exception Type: System.Web.HttpUnhandledException
+Exception: Exception of type 'System.Web.HttpUnhandledException' was thrown.
 Source: Error Page
 Stack Trace: 
-********** 9/27/2019 2:40:52 PM **********
-Exception Type: System.Exception
-Exception: The error was unhandled by application code.
+   at System.Web.UI.Page.HandleError(Exception e)
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+   at System.Web.UI.Page.ProcessRequest(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+   at System.Web.UI.Page.ProcessRequest()
+   at System.Web.UI.Page.ProcessRequest(HttpContext context)
+   at ASP.vendor_v_detailofdefence_aspx.ProcessRequest(HttpContext context) in c:\Users\User\AppData\Local\Temp\Temporary ASP.NET Files\vs\19c7bda0\a494c425\App_Web_2fqyx1xd.4.cs:line 0
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+
+********** 22-06-2021 17:56:29 **********
+Inner Exception Type: System.Data.SqlClient.SqlException
+Inner Exception: Invalid column name 'VTechId'.
+Inner Source: .Net SqlClient Data Provider
+Inner Stack Trace: 
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at System.Data.SqlClient.SqlCommand.RunExecuteNonQueryTds(String methodName, Boolean async, Int32 timeout, Boolean asyncWrite)
+   at System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(TaskCompletionSource`1 completion, String methodName, Boolean sendToPipe, Int32 timeout, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   at System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   at Microsoft.Practices.EnterpriseLibrary.Data.Database.DoExecuteNonQuery(DbCommand command)
+   at Microsoft.Practices.EnterpriseLibrary.Data.Database.ExecuteNonQuery(DbCommand command)
+   at DataAccessLayer.SqlHelper.ExecuteQuery(String mQuery) in D:\wali\27-05-2021\09-04-2021\DataAccessLayer\SqlHelper.cs:line 75
+   at BusinessLayer.Logic.DeleteTechdet(Int32 Id) in D:\wali\27-05-2021\09-04-2021\BusinessLayer\Logic.cs:line 472
+   at Vendor_V_DetailofDefence.gvtechnologyedit_RowCommand(Object sender, GridViewCommandEventArgs e) in d:\wali\27-05-2021\09-04-2021\DDPFDI\Vendor\V_DetailofDefence.aspx.cs:line 1533
+   at System.Web.UI.WebControls.GridView.OnRowCommand(GridViewCommandEventArgs e)
+   at System.Web.UI.WebControls.GridView.HandleEvent(EventArgs e, Boolean causesValidation, String validationGroup)
+   at System.Web.UI.Control.RaiseBubbleEvent(Object source, EventArgs args)
+   at System.Web.UI.WebControls.GridViewRow.OnBubbleEvent(Object source, EventArgs e)
+   at System.Web.UI.Control.RaiseBubbleEvent(Object source, EventArgs args)
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+Exception Type: System.Web.HttpUnhandledException
+Exception: Exception of type 'System.Web.HttpUnhandledException' was thrown.
 Source: Error Page
 Stack Trace: 
-********** 9/27/2019 2:41:36 PM **********
-Exception Type: System.Exception
-Exception: The error was unhandled by application code.
+   at System.Web.UI.Page.HandleError(Exception e)
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+   at System.Web.UI.Page.ProcessRequest(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+   at System.Web.UI.Page.ProcessRequest()
+   at System.Web.UI.Page.ProcessRequest(HttpContext context)
+   at ASP.vendor_v_detailofdefence_aspx.ProcessRequest(HttpContext context) in c:\Users\User\AppData\Local\Temp\Temporary ASP.NET Files\vs\19c7bda0\a494c425\App_Web_2fqyx1xd.4.cs:line 0
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+
+********** 23-06-2021 10:56:14 **********
+Exception Type: System.Web.HttpException
+Exception: Session state has created a session id, but cannot save it because the response was already flushed by the application.
 Source: Error Page
 Stack Trace: 
-********** 9/27/2019 2:42:30 PM **********
-Exception Type: System.Exception
-Exception: The error was unhandled by application code.
+   at System.Web.SessionState.SessionIDManager.SaveSessionID(HttpContext context, String id, Boolean& redirected, Boolean& cookieAdded)
+   at System.Web.SessionState.SessionStateModule.CreateSessionId()
+   at System.Web.SessionState.SessionStateModule.DelayedGetSessionId()
+   at System.Web.SessionState.SessionStateModule.ReleaseStateGetSessionID()
+   at System.Web.SessionState.SessionStateModule.OnReleaseState(Object source, EventArgs eventArgs)
+   at System.Web.SessionState.SessionStateModule.OnEndRequest(Object source, EventArgs eventArgs)
+   at System.Web.HttpApplication.SyncEventExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+
+********** 23-06-2021 11:42:30 **********
+Inner Exception Type: System.ArgumentOutOfRangeException
+Inner Exception: 'ddlnatogroup' has a SelectedValue which is invalid because it does not exist in the list of items.
+Parameter name: value
+Inner Source: System.Web
+Inner Stack Trace: 
+   at System.Web.UI.WebControls.ListControl.set_SelectedValue(String value)
+   at Vendor_V_DetailofDefence.gvproddetailedit_RowCommand(Object sender, GridViewCommandEventArgs e) in d:\wali\27-05-2021\09-04-2021\DDPFDI\Vendor\V_DetailofDefence.aspx.cs:line 1473
+   at System.Web.UI.WebControls.GridView.OnRowCommand(GridViewCommandEventArgs e)
+   at System.Web.UI.WebControls.GridView.HandleEvent(EventArgs e, Boolean causesValidation, String validationGroup)
+   at System.Web.UI.Control.RaiseBubbleEvent(Object source, EventArgs args)
+   at System.Web.UI.WebControls.GridViewRow.OnBubbleEvent(Object source, EventArgs e)
+   at System.Web.UI.Control.RaiseBubbleEvent(Object source, EventArgs args)
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+Exception Type: System.Web.HttpUnhandledException
+Exception: Exception of type 'System.Web.HttpUnhandledException' was thrown.
 Source: Error Page
 Stack Trace: 
-********** 11/29/2019 2:38:09 PM **********
-Exception Type: System.Exception
-Exception: The error was unhandled by application code.
+   at System.Web.UI.Page.HandleError(Exception e)
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+   at System.Web.UI.Page.ProcessRequest(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+   at System.Web.UI.Page.ProcessRequest()
+   at System.Web.UI.Page.ProcessRequest(HttpContext context)
+   at ASP.vendor_v_detailofdefence_aspx.ProcessRequest(HttpContext context) in c:\Users\User\AppData\Local\Temp\Temporary ASP.NET Files\vs\19c7bda0\a494c425\App_Web_rppv1ij0.6.cs:line 0
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+
+********** 23-06-2021 11:43:09 **********
+Inner Exception Type: System.ArgumentOutOfRangeException
+Inner Exception: 'ddlnatogroup' has a SelectedValue which is invalid because it does not exist in the list of items.
+Parameter name: value
+Inner Source: System.Web
+Inner Stack Trace: 
+   at System.Web.UI.WebControls.ListControl.set_SelectedValue(String value)
+   at Vendor_V_DetailofDefence.gvproddetailedit_RowCommand(Object sender, GridViewCommandEventArgs e) in d:\wali\27-05-2021\09-04-2021\DDPFDI\Vendor\V_DetailofDefence.aspx.cs:line 1472
+   at System.Web.UI.WebControls.GridView.OnRowCommand(GridViewCommandEventArgs e)
+   at System.Web.UI.WebControls.GridView.HandleEvent(EventArgs e, Boolean causesValidation, String validationGroup)
+   at System.Web.UI.Control.RaiseBubbleEvent(Object source, EventArgs args)
+   at System.Web.UI.WebControls.GridViewRow.OnBubbleEvent(Object source, EventArgs e)
+   at System.Web.UI.Control.RaiseBubbleEvent(Object source, EventArgs args)
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+Exception Type: System.Web.HttpUnhandledException
+Exception: Exception of type 'System.Web.HttpUnhandledException' was thrown.
 Source: Error Page
 Stack Trace: 
-********** 11/29/2019 3:33:18 PM **********
-Exception Type: System.Exception
-Exception: The error was unhandled by application code.
+   at System.Web.UI.Page.HandleError(Exception e)
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+   at System.Web.UI.Page.ProcessRequest(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+   at System.Web.UI.Page.ProcessRequest()
+   at System.Web.UI.Page.ProcessRequest(HttpContext context)
+   at ASP.vendor_v_detailofdefence_aspx.ProcessRequest(HttpContext context) in c:\Users\User\AppData\Local\Temp\Temporary ASP.NET Files\vs\19c7bda0\a494c425\App_Web_sarnwfc0.4.cs:line 0
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+
+********** 23-06-2021 11:57:26 **********
+Inner Exception Type: System.ArgumentOutOfRangeException
+Inner Exception: 'ddlnatogroup' has a SelectedValue which is invalid because it does not exist in the list of items.
+Parameter name: value
+Inner Source: System.Web
+Inner Stack Trace: 
+   at System.Web.UI.WebControls.ListControl.set_SelectedValue(String value)
+   at Vendor_V_DetailofDefence.gvproddetailedit_RowCommand(Object sender, GridViewCommandEventArgs e) in d:\wali\27-05-2021\09-04-2021\DDPFDI\Vendor\V_DetailofDefence.aspx.cs:line 1472
+   at System.Web.UI.WebControls.GridView.OnRowCommand(GridViewCommandEventArgs e)
+   at System.Web.UI.WebControls.GridView.HandleEvent(EventArgs e, Boolean causesValidation, String validationGroup)
+   at System.Web.UI.Control.RaiseBubbleEvent(Object source, EventArgs args)
+   at System.Web.UI.WebControls.GridViewRow.OnBubbleEvent(Object source, EventArgs e)
+   at System.Web.UI.Control.RaiseBubbleEvent(Object source, EventArgs args)
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+Exception Type: System.Web.HttpUnhandledException
+Exception: Exception of type 'System.Web.HttpUnhandledException' was thrown.
 Source: Error Page
 Stack Trace: 
-********** 11/29/2019 3:35:34 PM **********
-Exception Type: System.Exception
-Exception: The error was unhandled by application code.
+   at System.Web.UI.Page.HandleError(Exception e)
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+   at System.Web.UI.Page.ProcessRequest(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+   at System.Web.UI.Page.ProcessRequest()
+   at System.Web.UI.Page.ProcessRequest(HttpContext context)
+   at ASP.vendor_v_detailofdefence_aspx.ProcessRequest(HttpContext context) in c:\Users\User\AppData\Local\Temp\Temporary ASP.NET Files\vs\19c7bda0\a494c425\App_Web_rseej3lr.0.cs:line 0
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+
+********** 23-06-2021 12:00:31 **********
+Exception Type: System.Web.HttpCompileException
+Exception: d:\wali\27-05-2021\09-04-2021\DDPFDI\Vendor\V_DetailofDefence.aspx.cs(1476): error CS1061: 'System.Web.UI.WebControls.TextBox' does not contain a definition for 'SelectedValue' and no extension method 'SelectedValue' accepting a first argument of type 'System.Web.UI.WebControls.TextBox' could be found (are you missing a using directive or an assembly reference?)
 Source: Error Page
 Stack Trace: 
-********** 11/29/2019 3:36:09 PM **********
-Exception Type: System.Exception
-Exception: The error was unhandled by application code.
+   at System.Web.Compilation.BuildManager.CompileWebFile(VirtualPath virtualPath)
+   at System.Web.Compilation.BuildManager.GetVPathBuildResultInternal(VirtualPath virtualPath, Boolean noBuild, Boolean allowCrossApp, Boolean allowBuildInPrecompile, Boolean throwIfNotFound, Boolean ensureIsUpToDate)
+   at System.Web.Compilation.BuildManager.GetVPathBuildResultWithNoAssert(HttpContext context, VirtualPath virtualPath, Boolean noBuild, Boolean allowCrossApp, Boolean allowBuildInPrecompile, Boolean throwIfNotFound, Boolean ensureIsUpToDate)
+   at System.Web.Compilation.BuildManager.GetVirtualPathObjectFactory(VirtualPath virtualPath, HttpContext context, Boolean allowCrossApp, Boolean throwIfNotFound)
+   at System.Web.Compilation.BuildManager.CreateInstanceFromVirtualPath(VirtualPath virtualPath, Type requiredBaseType, HttpContext context, Boolean allowCrossApp)
+   at System.Web.Routing.PageRouteHandler.GetHttpHandler(RequestContext requestContext)
+   at System.Web.Routing.UrlRoutingModule.PostResolveRequestCache(HttpContextBase context)
+   at System.Web.HttpApplication.SyncEventExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+
+********** 23-06-2021 12:22:44 **********
+Inner Exception Type: System.ArgumentOutOfRangeException
+Inner Exception: 'ddltech1edit' has a SelectedValue which is invalid because it does not exist in the list of items.
+Parameter name: value
+Inner Source: System.Web
+Inner Stack Trace: 
+   at System.Web.UI.WebControls.ListControl.set_SelectedValue(String value)
+   at Vendor_V_DetailofDefence.gvtechnologyedit_RowCommand(Object sender, GridViewCommandEventArgs e) in d:\wali\27-05-2021\09-04-2021\DDPFDI\Vendor\V_DetailofDefence.aspx.cs:line 1539
+   at System.Web.UI.WebControls.GridView.OnRowCommand(GridViewCommandEventArgs e)
+   at System.Web.UI.WebControls.GridView.HandleEvent(EventArgs e, Boolean causesValidation, String validationGroup)
+   at System.Web.UI.Control.RaiseBubbleEvent(Object source, EventArgs args)
+   at System.Web.UI.WebControls.GridViewRow.OnBubbleEvent(Object source, EventArgs e)
+   at System.Web.UI.Control.RaiseBubbleEvent(Object source, EventArgs args)
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+Exception Type: System.Web.HttpUnhandledException
+Exception: Exception of type 'System.Web.HttpUnhandledException' was thrown.
 Source: Error Page
 Stack Trace: 
-********** 11/29/2019 3:36:33 PM **********
-Exception Type: System.Exception
-Exception: The error was unhandled by application code.
+   at System.Web.UI.Page.HandleError(Exception e)
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+   at System.Web.UI.Page.ProcessRequest(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+   at System.Web.UI.Page.ProcessRequest()
+   at System.Web.UI.Page.ProcessRequest(HttpContext context)
+   at ASP.vendor_v_detailofdefence_aspx.ProcessRequest(HttpContext context) in c:\Users\User\AppData\Local\Temp\Temporary ASP.NET Files\vs\19c7bda0\a494c425\App_Web_lzzfz5et.0.cs:line 0
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+
+********** 23-06-2021 12:45:06 **********
+Exception Type: System.Web.HttpCompileException
+Exception: d:\wali\27-05-2021\09-04-2021\DDPFDI\Vendor\V_DetailofDefence.aspx.cs(202): error CS0103: The name 'ddltech3edit' does not exist in the current context
 Source: Error Page
 Stack Trace: 
-********** 11/29/2019 3:37:46 PM **********
-Exception Type: System.Exception
-Exception: The error was unhandled by application code.
+   at System.Web.Compilation.BuildManager.PostProcessFoundBuildResult(BuildResult result, Boolean keyFromVPP, VirtualPath virtualPath)
+   at System.Web.Compilation.BuildManager.GetBuildResultFromCacheInternal(String cacheKey, Boolean keyFromVPP, VirtualPath virtualPath, Int64 hashCode, Boolean ensureIsUpToDate)
+   at System.Web.Compilation.BuildManager.GetVPathBuildResultFromCacheInternal(VirtualPath virtualPath, Boolean ensureIsUpToDate)
+   at System.Web.Compilation.BuildManager.GetVPathBuildResultInternal(VirtualPath virtualPath, Boolean noBuild, Boolean allowCrossApp, Boolean allowBuildInPrecompile, Boolean throwIfNotFound, Boolean ensureIsUpToDate)
+   at System.Web.Compilation.BuildManager.GetVPathBuildResultWithNoAssert(HttpContext context, VirtualPath virtualPath, Boolean noBuild, Boolean allowCrossApp, Boolean allowBuildInPrecompile, Boolean throwIfNotFound, Boolean ensureIsUpToDate)
+   at System.Web.Compilation.BuildManager.GetVirtualPathObjectFactory(VirtualPath virtualPath, HttpContext context, Boolean allowCrossApp, Boolean throwIfNotFound)
+   at System.Web.Compilation.BuildManager.CreateInstanceFromVirtualPath(VirtualPath virtualPath, Type requiredBaseType, HttpContext context, Boolean allowCrossApp)
+   at System.Web.Routing.PageRouteHandler.GetHttpHandler(RequestContext requestContext)
+   at System.Web.Routing.UrlRoutingModule.PostResolveRequestCache(HttpContextBase context)
+   at System.Web.HttpApplication.SyncEventExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+
+********** 23-06-2021 13:19:41 **********
+Inner Exception Type: System.ArgumentOutOfRangeException
+Inner Exception: 'ddltech1edit' has a SelectedValue which is invalid because it does not exist in the list of items.
+Parameter name: value
+Inner Source: System.Web
+Inner Stack Trace: 
+   at System.Web.UI.WebControls.ListControl.set_SelectedValue(String value)
+   at Vendor_V_DetailofDefence.gvtechnologyedit_RowCommand(Object sender, GridViewCommandEventArgs e) in d:\wali\27-05-2021\09-04-2021\DDPFDI\Vendor\V_DetailofDefence.aspx.cs:line 1544
+   at System.Web.UI.WebControls.GridView.OnRowCommand(GridViewCommandEventArgs e)
+   at System.Web.UI.WebControls.GridView.HandleEvent(EventArgs e, Boolean causesValidation, String validationGroup)
+   at System.Web.UI.Control.RaiseBubbleEvent(Object source, EventArgs args)
+   at System.Web.UI.WebControls.GridViewRow.OnBubbleEvent(Object source, EventArgs e)
+   at System.Web.UI.Control.RaiseBubbleEvent(Object source, EventArgs args)
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+Exception Type: System.Web.HttpUnhandledException
+Exception: Exception of type 'System.Web.HttpUnhandledException' was thrown.
 Source: Error Page
 Stack Trace: 
-********** 12/2/2019 11:31:15 AM **********
-Exception Type: System.Exception
-Exception: The error was unhandled by application code.
+   at System.Web.UI.Page.HandleError(Exception e)
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+   at System.Web.UI.Page.ProcessRequest(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+   at System.Web.UI.Page.ProcessRequest()
+   at System.Web.UI.Page.ProcessRequest(HttpContext context)
+   at ASP.vendor_v_detailofdefence_aspx.ProcessRequest(HttpContext context) in c:\Users\User\AppData\Local\Temp\Temporary ASP.NET Files\vs\19c7bda0\a494c425\App_Web_z0m3nsqh.0.cs:line 0
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+
+********** 23-06-2021 13:48:00 **********
+Inner Exception Type: System.NullReferenceException
+Inner Exception: Object reference not set to an instance of an object.
+Inner Source: App_Web_32bczma3
+Inner Stack Trace: 
+   at Vendor_V_DetailofDefence.gvtechnologyedit_RowCommand(Object sender, GridViewCommandEventArgs e) in d:\wali\27-05-2021\09-04-2021\DDPFDI\Vendor\V_DetailofDefence.aspx.cs:line 1547
+   at System.Web.UI.WebControls.GridView.OnRowCommand(GridViewCommandEventArgs e)
+   at System.Web.UI.WebControls.GridView.HandleEvent(EventArgs e, Boolean causesValidation, String validationGroup)
+   at System.Web.UI.Control.RaiseBubbleEvent(Object source, EventArgs args)
+   at System.Web.UI.WebControls.GridViewRow.OnBubbleEvent(Object source, EventArgs e)
+   at System.Web.UI.Control.RaiseBubbleEvent(Object source, EventArgs args)
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+Exception Type: System.Web.HttpUnhandledException
+Exception: Exception of type 'System.Web.HttpUnhandledException' was thrown.
 Source: Error Page
 Stack Trace: 
-********** 12/11/2019 4:35:07 PM **********
-Exception Type: System.Exception
-Exception: The error was unhandled by application code.
+   at System.Web.UI.Page.HandleError(Exception e)
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+   at System.Web.UI.Page.ProcessRequest(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+   at System.Web.UI.Page.ProcessRequest()
+   at System.Web.UI.Page.ProcessRequest(HttpContext context)
+   at ASP.vendor_v_detailofdefence_aspx.ProcessRequest(HttpContext context) in c:\Users\User\AppData\Local\Temp\Temporary ASP.NET Files\vs\19c7bda0\a494c425\App_Web_32bczma3.0.cs:line 0
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+
+********** 23-06-2021 16:11:31 **********
+Exception Type: System.Web.HttpCompileException
+Exception: d:\wali\27-05-2021\09-04-2021\DDPFDI\User\S_Story2Update.aspx.cs(34): error CS0103: The name 'Exbt' does not exist in the current context
 Source: Error Page
 Stack Trace: 
-********** 12/11/2019 4:35:57 PM **********
-Exception Type: System.Exception
-Exception: The error was unhandled by application code.
+   at System.Web.Compilation.BuildManager.CompileWebFile(VirtualPath virtualPath)
+   at System.Web.Compilation.BuildManager.GetVPathBuildResultInternal(VirtualPath virtualPath, Boolean noBuild, Boolean allowCrossApp, Boolean allowBuildInPrecompile, Boolean throwIfNotFound, Boolean ensureIsUpToDate)
+   at System.Web.Compilation.BuildManager.GetVPathBuildResultWithNoAssert(HttpContext context, VirtualPath virtualPath, Boolean noBuild, Boolean allowCrossApp, Boolean allowBuildInPrecompile, Boolean throwIfNotFound, Boolean ensureIsUpToDate)
+   at System.Web.Compilation.BuildManager.GetVirtualPathObjectFactory(VirtualPath virtualPath, HttpContext context, Boolean allowCrossApp, Boolean throwIfNotFound)
+   at System.Web.Compilation.BuildManager.CreateInstanceFromVirtualPath(VirtualPath virtualPath, Type requiredBaseType, HttpContext context, Boolean allowCrossApp)
+   at System.Web.Routing.PageRouteHandler.GetHttpHandler(RequestContext requestContext)
+   at System.Web.Routing.UrlRoutingModule.PostResolveRequestCache(HttpContextBase context)
+   at System.Web.HttpApplication.SyncEventExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+
+********** 23-06-2021 16:12:07 **********
+Exception Type: System.Web.HttpCompileException
+Exception: d:\wali\27-05-2021\09-04-2021\DDPFDI\User\S_Story2Update.aspx.cs(34): error CS0103: The name 'Exbt' does not exist in the current context
 Source: Error Page
 Stack Trace: 
-********** 12/11/2019 4:46:55 PM **********
-Exception Type: System.Exception
-Exception: The error was unhandled by application code.
+   at System.Web.Compilation.BuildManager.CompileWebFile(VirtualPath virtualPath)
+   at System.Web.Compilation.BuildManager.GetVPathBuildResultInternal(VirtualPath virtualPath, Boolean noBuild, Boolean allowCrossApp, Boolean allowBuildInPrecompile, Boolean throwIfNotFound, Boolean ensureIsUpToDate)
+   at System.Web.Compilation.BuildManager.GetVPathBuildResultWithNoAssert(HttpContext context, VirtualPath virtualPath, Boolean noBuild, Boolean allowCrossApp, Boolean allowBuildInPrecompile, Boolean throwIfNotFound, Boolean ensureIsUpToDate)
+   at System.Web.Compilation.BuildManager.GetVirtualPathObjectFactory(VirtualPath virtualPath, HttpContext context, Boolean allowCrossApp, Boolean throwIfNotFound)
+   at System.Web.Compilation.BuildManager.CreateInstanceFromVirtualPath(VirtualPath virtualPath, Type requiredBaseType, HttpContext context, Boolean allowCrossApp)
+   at System.Web.Routing.PageRouteHandler.GetHttpHandler(RequestContext requestContext)
+   at System.Web.Routing.UrlRoutingModule.PostResolveRequestCache(HttpContextBase context)
+   at System.Web.HttpApplication.SyncEventExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+
+********** 23-06-2021 16:17:35 **********
+Exception Type: System.Web.HttpCompileException
+Exception: d:\wali\27-05-2021\09-04-2021\DDPFDI\User\S_Story2Update.aspx.cs(794): error CS0103: The name 'txtgosearch' does not exist in the current context
 Source: Error Page
 Stack Trace: 
-********** 12/11/2019 4:48:43 PM **********
-Exception Type: System.Exception
-Exception: The error was unhandled by application code.
+   at System.Web.Compilation.BuildManager.CompileWebFile(VirtualPath virtualPath)
+   at System.Web.Compilation.BuildManager.GetVPathBuildResultInternal(VirtualPath virtualPath, Boolean noBuild, Boolean allowCrossApp, Boolean allowBuildInPrecompile, Boolean throwIfNotFound, Boolean ensureIsUpToDate)
+   at System.Web.Compilation.BuildManager.GetVPathBuildResultWithNoAssert(HttpContext context, VirtualPath virtualPath, Boolean noBuild, Boolean allowCrossApp, Boolean allowBuildInPrecompile, Boolean throwIfNotFound, Boolean ensureIsUpToDate)
+   at System.Web.Compilation.BuildManager.GetVirtualPathObjectFactory(VirtualPath virtualPath, HttpContext context, Boolean allowCrossApp, Boolean throwIfNotFound)
+   at System.Web.Compilation.BuildManager.CreateInstanceFromVirtualPath(VirtualPath virtualPath, Type requiredBaseType, HttpContext context, Boolean allowCrossApp)
+   at System.Web.Routing.PageRouteHandler.GetHttpHandler(RequestContext requestContext)
+   at System.Web.Routing.UrlRoutingModule.PostResolveRequestCache(HttpContextBase context)
+   at System.Web.HttpApplication.SyncEventExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+
+********** 23-06-2021 16:27:15 **********
+Exception Type: System.Web.HttpCompileException
+Exception: d:\wali\27-05-2021\09-04-2021\DDPFDI\User\S_Story2Update.aspx.cs(509): error CS0103: The name 'DdlAscDsc' does not exist in the current context
 Source: Error Page
 Stack Trace: 
-********** 12/11/2019 4:49:28 PM **********
-Exception Type: System.Exception
-Exception: The error was unhandled by application code.
+   at System.Web.Compilation.BuildManager.CompileWebFile(VirtualPath virtualPath)
+   at System.Web.Compilation.BuildManager.GetVPathBuildResultInternal(VirtualPath virtualPath, Boolean noBuild, Boolean allowCrossApp, Boolean allowBuildInPrecompile, Boolean throwIfNotFound, Boolean ensureIsUpToDate)
+   at System.Web.Compilation.BuildManager.GetVPathBuildResultWithNoAssert(HttpContext context, VirtualPath virtualPath, Boolean noBuild, Boolean allowCrossApp, Boolean allowBuildInPrecompile, Boolean throwIfNotFound, Boolean ensureIsUpToDate)
+   at System.Web.Compilation.BuildManager.GetVirtualPathObjectFactory(VirtualPath virtualPath, HttpContext context, Boolean allowCrossApp, Boolean throwIfNotFound)
+   at System.Web.Compilation.BuildManager.CreateInstanceFromVirtualPath(VirtualPath virtualPath, Type requiredBaseType, HttpContext context, Boolean allowCrossApp)
+   at System.Web.Routing.PageRouteHandler.GetHttpHandler(RequestContext requestContext)
+   at System.Web.Routing.UrlRoutingModule.PostResolveRequestCache(HttpContextBase context)
+   at System.Web.HttpApplication.SyncEventExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+
+********** 24-06-2021 13:43:58 **********
+Inner Exception Type: System.FormatException
+Inner Exception: Input string was not in a correct format.
+Inner Source: mscorlib
+Inner Stack Trace: 
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at System.Convert.ToInt32(String value)
+   at Vendor_V_CheckList1.bindDropDown() in d:\wali\27-05-2021\09-04-2021\DDPFDI\Vendor\V_CheckList.aspx.cs:line 52
+   at Vendor_V_CheckList1.Page_Load(Object sender, EventArgs e) in d:\wali\27-05-2021\09-04-2021\DDPFDI\Vendor\V_CheckList.aspx.cs:line 33
+   at System.Web.UI.Control.OnLoad(EventArgs e)
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+Exception Type: System.Web.HttpUnhandledException
+Exception: Exception of type 'System.Web.HttpUnhandledException' was thrown.
 Source: Error Page
 Stack Trace: 
-********** 12/17/2019 11:13:57 AM **********
-Exception Type: System.Exception
-Exception: The error was unhandled by application code.
+   at System.Web.UI.Page.HandleError(Exception e)
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+   at System.Web.UI.Page.ProcessRequest(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+   at System.Web.UI.Page.ProcessRequest()
+   at System.Web.UI.Page.ProcessRequest(HttpContext context)
+   at ASP.vendor_v_checklist_aspx.ProcessRequest(HttpContext context) in c:\Users\User\AppData\Local\Temp\Temporary ASP.NET Files\vs\19c7bda0\a494c425\App_Web_oeydbelr.2.cs:line 0
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+
+********** 24-06-2021 13:44:03 **********
+Inner Exception Type: System.FormatException
+Inner Exception: Input string was not in a correct format.
+Inner Source: mscorlib
+Inner Stack Trace: 
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at System.Convert.ToInt32(String value)
+   at Vendor_V_CheckList1.bindDropDown() in d:\wali\27-05-2021\09-04-2021\DDPFDI\Vendor\V_CheckList.aspx.cs:line 52
+   at Vendor_V_CheckList1.Page_Load(Object sender, EventArgs e) in d:\wali\27-05-2021\09-04-2021\DDPFDI\Vendor\V_CheckList.aspx.cs:line 33
+   at System.Web.UI.Control.OnLoad(EventArgs e)
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+Exception Type: System.Web.HttpUnhandledException
+Exception: Exception of type 'System.Web.HttpUnhandledException' was thrown.
 Source: Error Page
 Stack Trace: 
-********** 4/20/2020 4:50:30 PM **********
-Exception Type: System.Exception
-Exception: The error was unhandled by application code.
+   at System.Web.UI.Page.HandleError(Exception e)
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+   at System.Web.UI.Page.ProcessRequest(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+   at System.Web.UI.Page.ProcessRequest()
+   at System.Web.UI.Page.ProcessRequest(HttpContext context)
+   at ASP.vendor_v_checklist_aspx.ProcessRequest(HttpContext context) in c:\Users\User\AppData\Local\Temp\Temporary ASP.NET Files\vs\19c7bda0\a494c425\App_Web_oeydbelr.2.cs:line 0
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+
+********** 25-06-2021 10:41:50 **********
+Exception Type: System.Web.HttpException
+Exception: Session state has created a session id, but cannot save it because the response was already flushed by the application.
 Source: Error Page
 Stack Trace: 
-********** 4/20/2020 4:53:15 PM **********
-Exception Type: System.Exception
-Exception: The error was unhandled by application code.
+   at System.Web.SessionState.SessionIDManager.SaveSessionID(HttpContext context, String id, Boolean& redirected, Boolean& cookieAdded)
+   at System.Web.SessionState.SessionStateModule.CreateSessionId()
+   at System.Web.SessionState.SessionStateModule.DelayedGetSessionId()
+   at System.Web.SessionState.SessionStateModule.ReleaseStateGetSessionID()
+   at System.Web.SessionState.SessionStateModule.OnReleaseState(Object source, EventArgs eventArgs)
+   at System.Web.SessionState.SessionStateModule.OnEndRequest(Object source, EventArgs eventArgs)
+   at System.Web.HttpApplication.SyncEventExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+
+********** 25-06-2021 14:26:39 **********
+Exception Type: System.Web.HttpCompileException
+Exception: d:\wali\27-05-2021\09-04-2021\DDPFDI\Vendor\V_GeneralInfo.aspx.cs(729): error CS1501: No overload for method 'InsertGovt' takes 5 arguments
 Source: Error Page
 Stack Trace: 
-********** 4/20/2020 4:53:49 PM **********
-Exception Type: System.Exception
-Exception: The error was unhandled by application code.
-Source: Error Page
-Stack Trace: 
-********** 4/20/2020 4:55:25 PM **********
-Exception Type: System.Exception
-Exception: The error was unhandled by application code.
-Source: Error Page
-Stack Trace: 
-********** 4/20/2020 4:56:51 PM **********
-Exception Type: System.Exception
-Exception: The error was unhandled by application code.
-Source: Error Page
-Stack Trace: 
-********** 4/20/2020 5:00:23 PM **********
-Exception Type: System.Exception
-Exception: The error was unhandled by application code.
-Source: Error Page
-Stack Trace: 
-********** 4/20/2020 5:01:47 PM **********
-Exception Type: System.Exception
-Exception: The error was unhandled by application code.
-Source: Error Page
-Stack Trace: 
-********** 4/30/2020 5:17:08 PM **********
-Exception Type: System.Exception
-Exception: The error was unhandled by application code.
-Source: Error Page
-Stack Trace: 
-********** 5/16/2020 5:54:13 PM **********
-Exception Type: System.Exception
-Exception: The error was unhandled by application code.
-Source: Error Page
-Stack Trace: 
-********** 5/16/2020 5:56:19 PM **********
-Exception Type: System.Exception
-Exception: The error was unhandled by application code.
-Source: Error Page
-Stack Trace: 
-********** 5/16/2020 5:57:07 PM **********
-Exception Type: System.Exception
-Exception: The error was unhandled by application code.
-Source: Error Page
-Stack Trace: 
-********** 5/16/2020 6:19:13 PM **********
-Exception Type: System.Exception
-Exception: The error was unhandled by application code.
-Source: Error Page
-Stack Trace: 
-********** 5/16/2020 6:26:48 PM **********
-Exception Type: System.Exception
-Exception: The error was unhandled by application code.
-Source: Error Page
-Stack Trace: 
-********** 6/26/2020 12:22:24 PM **********
-Exception Type: System.Exception
-Exception: The error was unhandled by application code.
-Source: Error Page
-Stack Trace: 
-********** 6/26/2020 12:51:23 PM **********
-Exception Type: System.Exception
-Exception: The error was unhandled by application code.
-Source: Error Page
-Stack Trace: 
-********** 6/26/2020 12:52:34 PM **********
-Exception Type: System.Exception
-Exception: The error was unhandled by application code.
-Source: Error Page
-Stack Trace: 
-********** 6/26/2020 12:54:08 PM **********
-Exception Type: System.Exception
-Exception: The error was unhandled by application code.
-Source: Error Page
-Stack Trace: 
-********** 6/26/2020 12:58:57 PM **********
-Exception Type: System.Exception
-Exception: The error was unhandled by application code.
-Source: Error Page
-Stack Trace: 
-********** 6/27/2020 1:37:18 PM **********
-Exception Type: System.Exception
-Exception: The error was unhandled by application code.
-Source: Error Page
-Stack Trace: 
-********** 6/27/2020 1:40:04 PM **********
-Exception Type: System.Exception
-Exception: The error was unhandled by application code.
-Source: Error Page
-Stack Trace: 
-********** 7/14/2020 4:12:59 PM **********
-Exception Type: System.Exception
-Exception: The error was unhandled by application code.
-Source: Error Page
-Stack Trace: 
-********** 7/14/2020 4:15:29 PM **********
-Exception Type: System.Exception
-Exception: The error was unhandled by application code.
-Source: Error Page
-Stack Trace: 
-********** 7/14/2020 4:15:49 PM **********
-Exception Type: System.Exception
-Exception: The error was unhandled by application code.
-Source: Error Page
-Stack Trace: 
-********** 7/14/2020 10:20:16 PM **********
-Exception Type: System.Exception
-Exception: The error was unhandled by application code.
-Source: Error Page
-Stack Trace: 
-********** 7/14/2020 10:20:29 PM **********
-Exception Type: System.Exception
-Exception: The error was unhandled by application code.
-Source: Error Page
-Stack Trace: 
-********** 7/15/2020 11:57:34 AM **********
-Exception Type: System.Exception
-Exception: The error was unhandled by application code.
-Source: Error Page
-Stack Trace: 
-********** 7/15/2020 11:58:34 AM **********
-Exception Type: System.Exception
-Exception: The error was unhandled by application code.
-Source: Error Page
-Stack Trace: 
-********** 7/15/2020 2:56:51 PM **********
-Exception Type: System.Exception
-Exception: The error was unhandled by application code.
-Source: Error Page
-Stack Trace: 
-********** 7/15/2020 3:13:24 PM **********
-Exception Type: System.Exception
-Exception: The error was unhandled by application code.
-Source: Error Page
-Stack Trace: 
-********** 7/15/2020 3:15:44 PM **********
-Exception Type: System.Exception
-Exception: The error was unhandled by application code.
-Source: Error Page
-Stack Trace: 
-********** 7/15/2020 3:21:58 PM **********
-Exception Type: System.Exception
-Exception: The error was unhandled by application code.
-Source: Error Page
-Stack Trace: 
-********** 7/16/2020 7:21:59 PM **********
-Exception Type: System.Exception
-Exception: The error was unhandled by application code.
-Source: Error Page
-Stack Trace: 
-********** 7/16/2020 7:47:46 PM **********
-Exception Type: System.Exception
-Exception: The error was unhandled by application code.
-Source: Error Page
-Stack Trace: 
-********** 7/16/2020 7:57:10 PM **********
-Exception Type: System.Exception
-Exception: The error was unhandled by application code.
-Source: Error Page
-Stack Trace: 
-********** 7/16/2020 7:57:55 PM **********
-Exception Type: System.Exception
-Exception: The error was unhandled by application code.
-Source: Error Page
-Stack Trace: 
-********** 7/16/2020 7:58:46 PM **********
-Exception Type: System.Exception
-Exception: The error was unhandled by application code.
-Source: Error Page
-Stack Trace: 
-********** 7/16/2020 8:06:25 PM **********
-Exception Type: System.Exception
-Exception: The error was unhandled by application code.
-Source: Error Page
-Stack Trace: 
+   at System.Web.Compilation.BuildManager.CompileWebFile(VirtualPath virtualPath)
+   at System.Web.Compilation.BuildManager.GetVPathBuildResultInternal(VirtualPath virtualPath, Boolean noBuild, Boolean allowCrossApp, Boolean allowBuildInPrecompile, Boolean throwIfNotFound, Boolean ensureIsUpToDate)
+   at System.Web.Compilation.BuildManager.GetVPathBuildResultWithNoAssert(HttpContext context, VirtualPath virtualPath, Boolean noBuild, Boolean allowCrossApp, Boolean allowBuildInPrecompile, Boolean throwIfNotFound, Boolean ensureIsUpToDate)
+   at System.Web.Compilation.BuildManager.GetVirtualPathObjectFactory(VirtualPath virtualPath, HttpContext context, Boolean allowCrossApp, Boolean throwIfNotFound)
+   at System.Web.Compilation.BuildManager.CreateInstanceFromVirtualPath(VirtualPath virtualPath, Type requiredBaseType, HttpContext context, Boolean allowCrossApp)
+   at System.Web.Routing.PageRouteHandler.GetHttpHandler(RequestContext requestContext)
+   at System.Web.Routing.UrlRoutingModule.PostResolveRequestCache(HttpContextBase context)
+   at System.Web.HttpApplication.SyncEventExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStepImpl(IExecutionStep step)
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+

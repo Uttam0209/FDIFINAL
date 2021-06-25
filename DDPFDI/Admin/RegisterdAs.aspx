@@ -142,7 +142,7 @@
                                                     <%#Container.DataItemIndex+1 %>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
-                                            <asp:TemplateField HeaderText="Categroy Name">
+                                            <asp:TemplateField HeaderText="Category Name">
                                                 <ItemTemplate>
                                                     <asp:Label runat="server" ID="lblsublevelcategory" Text='<%#Eval("SCategoryName") %>'></asp:Label>
                                                 </ItemTemplate>
@@ -177,6 +177,6 @@
                 </ProgressTemplate>
             </asp:UpdateProgress>
         </div>
-        <div class="footer">� 2019 <a href="#">Department of Defence Production</a> </div>
+       
     </div>
 </asp:Content>

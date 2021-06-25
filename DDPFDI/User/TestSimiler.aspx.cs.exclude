@@ -1,0 +1,266 @@
+﻿using BusinessLayer;
+using Encryption;
+using System;
+using System.Collections.Specialized;
+using System.Data;
+using System.IO;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using context = System.Web.HttpContext;
+
+public partial class User_TestSimiler : System.Web.UI.Page
+{
+    #region Pagevariable
+    private Logic Lo = new Logic();
+    HybridDictionary hysaveip = new HybridDictionary();
+    private DataTable DtGrid = new DataTable();
+    private string _msg = string.Empty;
+    private string _sysMsg = string.Empty;
+    DataUtility Co = new DataUtility();
+    private Cryptography Encrypt = new Cryptography();
+    private PagedDataSource pgsource = new PagedDataSource();
+    DataTable DtCompany = new DataTable();
+    DataTable DtFilterView = new DataTable();
+    DataTable dtCart = new DataTable();
+    DataRow dr;
+    #endregion
+    #region Pageload
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        if (!this.IsPostBack)
+        {
+            try
+            {
+                if (Session["DCart"] != null)
+                {
+                    ViewState["buyitems"] = Session["DCart"];
+                    dtCart = (DataTable)ViewState["buyitems"];
+                }
+                else
+                {
+                }
+                ControlGrid();
+            }
+            catch (Exception ex)
+            {
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "alert", "alert('Technical Error:- " + ex.Message + "');", true);
+            }
+        }
+    }
+
+    private void StoreUserIP(string Prodref)
+    {
+        string ipAddress;
+
+        DateTime Date = Convert.ToDateTime(DateTime.Now.ToString());
+        string mDate = Date.ToString("dd-MM-yyyy");
+        hysaveip["VisitedDate"] = mDate.ToString();
+        DateTime Time = Convert.ToDateTime(DateTime.Now.ToString());
+        string mTime = Time.ToString("hh:mm:ss");
+        hysaveip["VisitedTime"] = mDate.ToString();
+        ipAddress = Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
+        if (ipAddress == "" || ipAddress == null)
+            ipAddress = Request.ServerVariables["REMOTE_ADDR"];
+        hysaveip["IPAddress"] = ipAddress.ToString();
+        hysaveip["ProductRefNo"] = Prodref.ToString();
+        string strsaveip = Lo.SaveUserIP(hysaveip, out _sysMsg, out _msg);
+
+    }
+    private void ControlGrid()
+    {
+        try
+        {
+
+            BindProduct();
+        }
+        catch (Exception ex)
+        {
+            ExceptionLogging.SendErrorToText(ex);
+        }
+    }
+    protected void BindProduct()
+    {
+        string mMinute = DateTime.Now.ToString("mm");
+        DtGrid = Lo.RetriveFilterCode(mMinute, "", "BindMainProd");
+        if (DtGrid.Rows.Count > 0)
+        {
+            Session["TempData"] = DtGrid;
+            SeachResult();
+        }
+        else
+        {
+        }
+    }
+    #endregion
+
+
+    #region Search Code Filter Code
+    string insert1 = "";
+    string chkproofcat = "";
+    protected string Dvinsert(string sortExpression = null)
+    {
+        DataTable insert = new DataTable();
+        insert.Columns.Add(new DataColumn("Column", typeof(string)));
+        insert.Columns.Add(new DataColumn("Value", typeof(string)));
+        DataRow dr;
+        for (int i = 0; insert.Rows.Count > i; i++)
+        {
+            insert1 = insert1 + insert.Rows[i]["Column"].ToString() + " " + insert.Rows[i]["Value"].ToString() + " " + " and ";
+
+        }
+        if (insert1.ToString() != "")
+        {
+            insert1 = insert1.Substring(0, insert1.Length - 5);
+        }
+        return insert1;
+    }
+    protected string BindInsertfilter()
+    {
+        return Dvinsert();
+    }
+    public void SeachResult(string sortExpression = null)
+    {
+        try
+        {
+            DtFilterView = (DataTable)Session["TempData"];
+            if (DtFilterView.Rows.Count > 0)
+            {
+                DataView dv = new DataView(DtFilterView);
+                DataTable dtnew = dv.ToTable();
+                if (dtnew.Rows.Count > 0)
+                {
+                    dv.RowFilter = BindInsertfilter();
+                    DataTable dtinner = dv.ToTable();
+                    DataTable dtads = dv.ToTable();
+                    if (dtads.Rows.Count > 0)
+                    {
+                        pgsource.DataSource = dtinner.DefaultView;
+                        pgsource.AllowPaging = true;
+                        pgsource.PageSize = 24;
+                        pgsource.CurrentPageIndex = pagingCurrentPage;
+                        lblpaging.Text = "Page " + (pagingCurrentPage + 1) + " of " + pgsource.PageCount;
+                        lnkbtnPgPrevious.Enabled = !pgsource.IsFirstPage;
+                        lnkbtnPgNext.Enabled = !pgsource.IsLastPage;
+                        pgsource.DataSource = dtads.DefaultView;
+                        dlproduct.DataSource = pgsource;
+                        dlproduct.DataBind();
+                    }
+                    else
+                    {
+                        ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('No Record Found')", true);
+                    }
+                }
+                else
+                {
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('No Record Found')", true);
+                }
+            }
+            else
+            {
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('No Record Found')", true);
+            }
+        }
+        catch (Exception ex)
+        {
+            ExceptionLogging.SendErrorToText(ex);
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('" + ex.Message + "')", true);
+        }
+    }
+    #endregion
+    #region pageindex code
+    protected void lnkbtnPgPrevious_Click(object sender, EventArgs e)
+    {
+        pagingCurrentPage -= 1;
+        SeachResult();
+    }
+    protected void lnkbtnPgNext_Click(object sender, EventArgs e)
+    {
+        pagingCurrentPage += 1;
+        SeachResult();
+    }
+    private int pagingCurrentPage
+    {
+        get
+        {
+            if (ViewState["pagingCurrentPage"] == null)
+            {
+                return 0;
+            }
+            else
+            {
+                return ((int)ViewState["pagingCurrentPage"]);
+            }
+        }
+        set
+        {
+            ViewState["pagingCurrentPage"] = value;
+        }
+    }
+    #endregion
+    #region TryCatchLog
+    public static class ExceptionLogging
+    {
+        private static String ErrorlineNo, Errormsg, extype, exurl, hostIp, ErrorLocation, HostAdd;
+        public static void SendErrorToText(Exception ex)
+        {
+            var line = Environment.NewLine + Environment.NewLine;
+            ErrorlineNo = ex.StackTrace.Substring(ex.StackTrace.Length - 7, 7);
+            Errormsg = ex.GetType().Name.ToString();
+            extype = ex.GetType().ToString();
+            exurl = context.Current.Request.Url.ToString();
+            ErrorLocation = ex.Message.ToString();
+            try
+            {
+                string filepath = context.Current.Server.MapPath("/Logs/");  //Text File Path
+                if (!Directory.Exists(filepath))
+                {
+                    Directory.CreateDirectory(filepath);
+                }
+                filepath = filepath + DateTime.Today.ToString("dd-MM-yy") + ".txt";   //Text File Name
+                if (!File.Exists(filepath))
+                {
+                    File.Create(filepath).Dispose();
+                }
+                using (StreamWriter sw = File.AppendText(filepath))
+                {
+                    string error = "Log Written Date:" + " " + DateTime.Now.ToString() + line + "Error Line No :" + " " + ErrorlineNo + line + "Error Message:" + " " + Errormsg + line + "Exception Type:" + " " + extype + line + "Error Location :" + " " + ErrorLocation + line + " Error Page Url:" + " " + exurl + line + "User Host IP:" + " " + hostIp + line;
+                    sw.WriteLine("-----------Exception Details on " + " " + DateTime.Now.ToString() + "-----------------");
+                    sw.WriteLine("-------------------------------------------------------------------------------------");
+                    sw.WriteLine(line);
+                    sw.WriteLine(error);
+                    sw.WriteLine("--------------------------------*End*------------------------------------------");
+                    sw.WriteLine(line);
+                    sw.Flush();
+                    sw.Close();
+                }
+            }
+            catch (Exception exm)
+            {
+                exm.Message.ToString();
+            }
+        }
+    }
+    #endregion
+    protected void dlproduct_ItemCommand(object source, DataListCommandEventArgs e)
+    {
+        if (e.CommandName == "ddd")
+        {
+            LinkButton UpdateBtn = (LinkButton)e.Item.FindControl("fff");
+            string mMinute = DateTime.Now.ToString("mm");
+            DataTable DtGrid1 = Lo.RetriveFilterCode(mMinute, e.CommandArgument.ToString(), "BindSimiMainProd");
+            if (DtGrid1.Rows.Count > 0)
+            {
+                DataList1.DataSource = DtGrid1;
+                DataList1.DataBind();
+                DIV1.Visible = true;
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "hash", "location.hash = '#similarproduct';", true);
+            }
+            else
+            {
+                DIV1.Visible = false;
+            }
+        }
+    }
+
+   
+}

@@ -1,0 +1,46 @@
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="MaintancePage.aspx.cs" Inherits="_MaintancePage" %>
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head id="Head1" runat="server">
+    <title>Under Maintaince</title>
+</head>
+<body>
+    <form id="form1" runat="server">       
+        <div class="col-md-12" style="text-align: center;">
+            <div class="myimgdivshowhide">
+                <img src="assets/images/website-maintenance-big.png" alt="Site Under Constraction" width="100%" class="img-responsive img-thumbnail" />
+            </div>
+        </div>
+        <div id="footer1" class="container-fluid" style="min-height: 50px; text-align: center; background: #373f50;">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12" style="padding-top: 10px; color: white;">
+                        ©2020 <a href="https://srijandefence.gov.in/ProductList" style="color: white;">www.srijandefence.gov.in</a> | All Right Reserved. | Designed, Developed and Hosted by Department of Defence Production                           
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

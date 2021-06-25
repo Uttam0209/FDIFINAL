@@ -33,7 +33,7 @@ namespace Encryption
         }
         public string DecryptData(string strData)
         {
-           // strData = strData.Replace(" ", "+");
+            strData = strData.Replace(" ", "+");
             // strData = strData.Replace(" ", "");
             // strData = strData + new string('=', (4 - strData.Length % 4) % 4);
             byte[] key = { };// Key   

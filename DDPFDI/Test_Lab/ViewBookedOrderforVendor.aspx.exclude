@@ -1,0 +1,245 @@
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="ViewBookedOrderforVendor.aspx.cs" MasterPageFile="~/Test_Lab/VendorMaster.master" Inherits="Test_Lab_ViewBookedOrderforVendor" %>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
+     <asp:ScriptManager ID="script" runat="server"></asp:ScriptManager>
+    <div class="content oem-content">
+        <asp:UpdatePanel runat="server" ID="updatepan" UpdateMode="Conditional">
+            <ContentTemplate>
+                <div class="sideBg">
+                    <div class="row">
+                        <div class="col-md-12 padding_0">
+                            <div id="divHeadPage" runat="server">
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="clearfix"></div>
+                            <div style="margin-top: 5px;">
+                                <a class="fa fa-arrow-circle-left pull-right" href="javascript: history.go(-1)">&nbsp; &nbsp;Back</a>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+
+                    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+                    <script src="../assets/js/bootstrap.min.js"></script>
+
+
+
+                    <div class="clearfix" style="margin-bottom: 10px;"></div>
+                    <div class="addfdi">
+                        <div class="section-pannel">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="fdi-add-content">
+                                        <div class="table-wraper table-responsive">
+                                            <asp:GridView ID="gvbookedorder" runat="server" Width="100%" Class="commonAjaxTbl master-company-table table display 
+                                               responsive no-wrap table-hover manage-user Grid" OnRowCommand="gvbookedorder_RowCommand"
+                                                AutoGenerateColumns="false">
+                                                <Columns>
+                                                    <asp:TemplateField HeaderText="S.No.">
+                                                        <ItemTemplate>
+                                                            <%#Container.DataItemIndex + 1 %>
+                                                        </ItemTemplate>
+                                                    </asp:TemplateField>
+                                                      <asp:TemplateField HeaderText="Id" Visible="false">
+                                                        <ItemTemplate>
+                                                        <asp:Label ID="lblid" runat="server" Text='<%# Eval("id") %>'></asp:Label>
+                                                        </ItemTemplate>
+                                                    </asp:TemplateField>
+                                                     <asp:TemplateField HeaderText="Test name" Visible="false">
+                                                        <ItemTemplate>
+                                                        <asp:Label ID="lblname" runat="server" Text='<%# Eval("test_id") %>'></asp:Label>
+                                                        </ItemTemplate>
+                                                    </asp:TemplateField>
+                                                     <asp:TemplateField HeaderText="organisation" Visible="false">
+                                                        <ItemTemplate>
+                                                        <asp:Label ID="lblorg" runat="server" Text='<%# Eval("organisation_id") %>'></asp:Label>
+                                                        </ItemTemplate>
+                                                    </asp:TemplateField>
+                                                     <asp:TemplateField HeaderText="discipline" Visible="false">
+                                                        <ItemTemplate>
+                                                        <asp:Label ID="lbldiscipline" runat="server" Text='<%# Eval("discipline") %>'></asp:Label>
+                                                        </ItemTemplate>
+                                                    </asp:TemplateField>
+                                                     <asp:TemplateField HeaderText="lab" Visible="false">
+                                                        <ItemTemplate>
+                                                        <asp:Label ID="lab" runat="server" Text='<%# Eval("lab") %>'></asp:Label>
+                                                        </ItemTemplate>
+                                                    </asp:TemplateField>
+                                                        <asp:TemplateField HeaderText="No. Of Sample" HeaderStyle-Width="10%">
+                                                        <ItemTemplate>
+                                                        <asp:Label ID="lblnoofsample" runat="server" Text='<%# Eval("no_of_sample") %>'></asp:Label>
+                                                        </ItemTemplate>
+                                                    </asp:TemplateField>
+                                                      <asp:TemplateField HeaderText="Dimension" HeaderStyle-Width="8%">
+                                                        <ItemTemplate>
+                                                        <asp:Label ID="dimension" runat="server" Text='<%# Eval("dimension_eqpt") %>'></asp:Label>
+                                                        </ItemTemplate>
+                                                    </asp:TemplateField>
+                                                      <asp:TemplateField HeaderText="Weight" HeaderStyle-Width="8%">
+                                                        <ItemTemplate>
+                                                        <asp:Label ID="weight" runat="server" Text='<%# Eval("weight_eqpt") %>'></asp:Label>
+                                                        </ItemTemplate>
+                                                    </asp:TemplateField>
+                                                      <asp:TemplateField HeaderText="Start Date" HeaderStyle-Width="10%">
+                                                        <ItemTemplate>
+                                                        <asp:Label ID="startdate" runat="server" Text='<%# Eval("start_date","{0:dd-MMM-yyyy}") %>'></asp:Label>
+                                                        </ItemTemplate>
+                                                    </asp:TemplateField>
+                                                      <asp:TemplateField HeaderText="End Date" HeaderStyle-Width="10%">
+                                                        <ItemTemplate>
+                                                        <asp:Label ID="enddate" runat="server" Text='<%# Eval("end_date","{0:dd-MMM-yyyy}") %>'></asp:Label>
+                                                        </ItemTemplate>
+                                                    </asp:TemplateField>
+                                                      <asp:TemplateField HeaderText="Description" HeaderStyle-Width="10%">
+                                                        <ItemTemplate>
+                                                        <asp:Label ID="description" runat="server" Text='<%# Eval("description") %>'></asp:Label>
+                                                        </ItemTemplate>
+                                                    </asp:TemplateField>
+                                                        <asp:TemplateField HeaderText="Status" HeaderStyle-Width="10%">
+                                                        <ItemTemplate>
+                                                        <asp:Label ID="status" runat="server" Text='<%# Eval("bookingstatus") %>'></asp:Label>
+                                                        </ItemTemplate>
+                                                    </asp:TemplateField>
+                                                       <asp:TemplateField HeaderText="Remark" HeaderStyle-Width="12%">
+                                                        <ItemTemplate>
+                                                        <asp:Label ID="rejectremark" runat="server" Text='<%# Eval("Rejectremark") %>'></asp:Label>
+                                                        </ItemTemplate>
+                                                    </asp:TemplateField>
+                                                    <%--    <asp:TemplateField HeaderText="Actions" HeaderStyle-Width="10%">
+                                                        <ItemTemplate>
+                                                            <asp:RadioButtonList ID="rdblaction" runat="server" RepeatDirection="Horizontal" AutoPostBack="true" OnSelectedIndexChanged="rdblaction_SelectedIndexChanged">
+                                                                <asp:ListItem Text="Approve"  Value="1"></asp:ListItem>
+                                                                <asp:ListItem Text="Reject" Value="2"></asp:ListItem>
+                                                            </asp:RadioButtonList>
+                                                        </ItemTemplate>
+                                                    </asp:TemplateField>--%>
+                                                     <asp:TemplateField HeaderText="Remark" HeaderStyle-Width="20%" Visible="false">
+                                                        <ItemTemplate>
+                                                            <asp:TextBox ID="txtremarks" runat="server" CssClass="form-control" TextMode="MultiLine"></asp:TextBox>
+                                                        </ItemTemplate>
+                                                    </asp:TemplateField>
+                                                 <asp:TemplateField HeaderText="Actions">
+                                                        <ItemTemplate>
+                                                            <asp:LinkButton ID="lnkview" runat="server" CssClass="fa fa-eye" CommandName="view" CommandArgument='<%# Eval("id") %>'></asp:LinkButton>
+                                                           
+                                                        </ItemTemplate>
+                                                    </asp:TemplateField>
+                                                </Columns>
+                                            </asp:GridView>
+
+                                        </div>
+
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="modal fade" id="viewdiv">
+                        <div class="modal-dialog modal-lg" style="max-width: 1500px!important; z-index: 9999999999;" >
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">x</button>
+                                    <h4 class="modal-title">ORDER DETAILS</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <table class="table" id="updatetable">
+                                    <tr>
+                                        <td>Test Name: </td>
+                                        <td>
+                                            <asp:Label ID="lbltest" runat="server"></asp:Label></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Organisation:</td>
+                                        <td>
+                                          <asp:Label ID="lblorganisation" runat="server"></asp:Label>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Lab :</td>
+                                        <td>
+                                            <asp:Label ID="lblLab" runat="server"></asp:Label>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Discipline :</td>
+                                        <td>
+                                         <asp:Label ID="lbldiscipline" runat="server"></asp:Label>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>No. Of Sample :</td>
+                                        <td>
+                                           <asp:Label ID="lblsamplenumber" runat="server"></asp:Label></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Dimension :</td>
+                                        <td>
+                                         <asp:Label ID="lbldimension" runat="server"></asp:Label>
+                                    </tr>
+                                    <tr>
+                                        <td>Weight of Equipment : </td>
+                                        <td>
+                                         <asp:Label ID="lblweight" runat="server"></asp:Label>
+                                        </td>
+                                    </tr>
+                                          <tr>
+                                        <td>Start Date : </td>
+                                        <td>
+                                         <asp:Label ID="lblstartdate" runat="server"></asp:Label>
+                                        </td>
+                                    </tr>
+                                          <tr>
+                                        <td>End Date : </td>
+                                        <td>
+                                         <asp:Label ID="lblenddate" runat="server"></asp:Label>
+                                        </td>
+                                    </tr>
+                                          <tr>
+                                        <td>Description : </td>
+                                        <td>
+                                         <asp:Label ID="lbldescription" runat="server"></asp:Label>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td />
+                                        <td class="d-flex justify-content-end">
+                                            <asp:LinkButton ID="btnclose" runat="server" CssClass="btn btn-primary " Style="margin-right: 10px; background: #507CD1!important;">&nbsp;Close</asp:LinkButton>
+                                            
+                                        </td>
+                                    </tr>
+                                </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </ContentTemplate>
+
+        </asp:UpdatePanel>
+
+        <asp:UpdateProgress ID="UpdateProgress" runat="server" AssociatedUpdatePanelID="updatepan">
+            <ProgressTemplate>
+                <div class="overlay-progress">
+                    <div class="custom-progress-bar blue stripes">
+                        <span></span>
+                        <p>Processing</p>
+                    </div>
+                </div>
+            </ProgressTemplate>
+        </asp:UpdateProgress>
+          <script src="User/Uassets/js/jquery-3.4.1.min.js"></script>
+    <!-- pace -->
+    <script type="text/javascript">
+        function showPopup2() {
+            $('#viewdiv').modal('show');
+        }
+    </script>
+    </div>
+</asp:Content>

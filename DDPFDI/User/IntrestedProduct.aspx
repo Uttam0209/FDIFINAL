@@ -67,6 +67,11 @@
             z-index: 0;
         }
 
+        #shop-sidebar {
+            min-height: 1180px;
+            box-shadow: 0 0 5px #6915cf !important;
+        }
+
         .btn:hover {
             width: 100%;
             color: #fff;
@@ -158,31 +163,7 @@
     </style>
 </head>
 <body>
-    <div class="modal fade" id="aboutus-modal" tabindex="-1" role="dialog">
-        <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 600px;">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <ul class="nav nav-tabs card-header-tabs" role="tablist">
-                        <li class="nav-item"><a class="nav-link active" href="#" data-toggle="tab" role="tab"
-                            aria-selected="true">About us</a></li>
-                    </ul>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span></button>
-                </div>
-                <div class="modal-body tab-content py-4">
-                    <p class="text-justify">
-                        Pursuant to ‘Atmanirbhar Bharat’ announcement, the Department of Defence Production/Ministry of Defence/Government of India has developed this portal named, <b>srijandefence.gov.in</b>, as “Opportunities for Make in India in Defence”.  The main objective of the portal is to partner the private sector in indigenization efforts of Defence Public Sector Undertakings(DPSUs), OFB and the Armed Forces. The portal will be a non-transactional online market place platform. 
-                    </p>
-                    <p class="text-justify">
-                        DPSUs/OFB/SHQs will display their items on this portal, which they have imported or going to import, each item having sizeable import value. They will also display those items which have been planned/targeted in the coming years, for indigenization.
-                    </p>
-                    <p class="text-justify">
-                        The Indian industry will be able to show their interest in those items for which they can design, develop and manufacture as per their capability or through joint venture with OEMs. The concerned DPSUs/OFB/SHQs, based on their requirement of the items and their respective guidelines & procedures, will interact with the interested Indian industry for indigenization. The interested Indian industry can also interact with concerned DPSUs/OFB/SHQs for their queries related to indigenization through the contact details given under each item.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </div>
+
     <form id="form1" runat="server">
         <asp:ScriptManager ID="sc" runat="server" EnablePageMethods="true">
         </asp:ScriptManager>
@@ -191,10 +172,15 @@
                 <div class="container-fluid">
                     <div class="row " style="padding: 8px;">
                         <div class="col-sm-2 col-3 ">
-                            <img src="user/ddp_logo.png" alt="" class="img-fluid" />
+                            <img src="user/ddp_logo.png" class="img-fluid" />
                         </div>
-                        <div class="col-sm-10 topheadline col-9">
+                        <div class="col-sm-8 topheadline col-7">
                             <h2 class="mb-0" style="color: #6915cf;">Opportunities for Make in India in Defence</h2>
+
+                        </div>
+                        <div class="col-sm-2 topheadline col-2 ml-auto pt-4">
+                            <b><a href="#" style="color: blue; font-size: 12px;">
+                                <asp:Label ID="linkusername" runat="server" Visible="false" ToolTip="Login UserName"></asp:Label></a></b>
                         </div>
                     </div>
                 </div>
@@ -209,18 +195,79 @@
                         </div>
                     </div>
                     <div class="order-lg-1 pr-lg-4 text-center text-lg-right" style="margin-top: 10px;">
-                        <div class="w-100 d-flex" style="margin-top: 10px; justify-content: flex-end;">
-                            <b>
-                                <asp:LinkButton ID="linklogin" runat="server" CssClass="menu_" OnClick="linklogin_Click"><i class="fa fa-user" aria-hidden="true"></i>DPSU Login </asp:LinkButton>
-                                <asp:Label ID="linkusername" runat="server" CssClass="menu_" ToolTip="Go To MIS"></asp:Label>
-                                <asp:LinkButton ID="lblmis" runat="server" CssClass="menu_" data-toggle="tooltip" OnClick="linkusername_Click" ToolTip="DPSU's Dashboard Page Link (Click here to go back dashboard for add product)">MIS</asp:LinkButton>
+                        <div class="row d-flex justify-content-end" id="menubar">
+                            <div class="col navbar navbar-expand-md px-md-3 bg-dark">
+                                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav2" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                                    <i class="fa fa-bars" aria-hidden="true" style="color: white;"></i>
+                                </button>
+                                <div class="collapse navbar-collapse" id="navbarNav2">
+                                    <ul class="navbar-nav ml-auto">
+                                        <li class="nav-item active">
+                                            <a class="nav-link" runat="server" href="~/ProductList"><i class="fa fa-home" aria-hidden="true"></i></a>
+                                        </li>
+                                        <a href="About" class="nav-link">About us </a>
+                                        <a href="~/Participate" runat="server" id="mhwparti" class="nav-link">How to Participate</a>
 
-                            </b>
-                            <b><a href="https://www.makeinindiadefence.gov.in/" target="_blank" class="menu_">Make In India Defence Portal </a></b>
-                            <b><a href="#aboutus-modal" class="menu_" data-toggle="modal">About us </a></b>
-                            <b><a href="#" class="menu_">Contact Us </a></b>
-                            <b><a href="FAQs" class="menu_">FAQ</a></b>
+                                        <a href="~/Dashboard" id="lblmis" runat="server" class="nav-link" visible="false" data-toggle="tooltip"
+                                            tooltip="DPSU's Dashboard Page Link (Click here to go back dashboard for add product)">CMS</a>
+                                        <div runat="server" id="reportdiv" visible="false">
+                                            <li class="nav-item dropdown">
+                                                <a class="nav-link dropdown-toggle" href="#" id="navbardrop1" data-toggle="dropdown">Reports&nbsp;<i class="fa fa-chevron-down" aria-hidden="true"></i>
+                                                </a>
+                                                <div class="dropdown-menu bg-dark">
+                                                    <a href="~/PReport2" id="PR" runat="server" class="nav-link">Progress Report</a>
+                                                    <a href="~/SuccessStoryupdate" id="lbSuccesstory" runat="server" class="nav-link" visible="false">Success Story</a>
+                                                    <a href="~/Summery" id="A11" runat="server" class="nav-link">Summary Details</a>
+                                                    <a href="~/Make2Report" id="A2" runat="server" class="nav-link dropdown-item">Make-II Report</a>
+                                                    <a href="~/CategoryWiseRep" id="A10" runat="server" class="nav-link dropdown-item">Category Wise Report</a>
+                                                    <a href="~/SONOIndig" id="A1" runat="server" class="nav-link dropdown-item">Supply Order/No-Indiginized</a>
+                                                    <a href="~/EOINOSOINDIG" id="A12" runat="server" class="nav-link dropdown-item">EOI/No-SO/Indiginized</a>
+                                                </div>
+                                            </li>
+                                        </div>
+                                        <li class="nav-item dropdown">
+                                            <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">Documentation&nbsp;<i class="fa fa-chevron-down" aria-hidden="true"></i>
+                                            </a>
+                                            <div class="dropdown-menu bg-dark">
+                                                <a href="../Policy&framwork.pdf" runat="server" target="_blank" class="nav-link dropdown-item">Policy & Frame work</a>
+                                                <a href="../UserManualPublicDomain.pdf" runat="server" target="_blank" class="nav-link dropdown-item">User Manual</a>
+                                                <a href="~/FAQs" runat="server" class="nav-link dropdown-item">FAQ</a>
+                                            </div>
+                                        </li>
+                                        <b><a href="https://www.makeinindiadefence.gov.in/" target="_blank" class="nav-link" onclick="return confirm('You are being redirected to https://www.makeinindiadefence.gov.in');">Make In India Defence Portal </a></b>
 
+
+                                        <b><a href="~/Login" id="linklogin" runat="server" class="nav-link" visible="false">DPSU Login</a> </b>
+                                        <div runat="server" id="Div13" >
+                                            <li class="nav-item dropdown">
+                                                <a class="nav-link dropdown-toggle" href="#" id="navbardrop3" data-toggle="dropdown">Contact Us&nbsp;<i class="fa fa-chevron-down" aria-hidden="true"></i>
+                                                </a>
+                                                <div class="dropdown-menu bg-dark">
+                                                    <b><a href="~/FeedBack" runat="server" id="lnkfeedback" class="nav-link">FeedBack</a></b>
+                                                      <b><a href="~/GHelpDesk" runat="server" id="a8" class="nav-link">HelpDesk</a></b>
+                                                    <b><a href="~/GOfficialLogin" runat="server" id="ai" class="nav-link">HelpDesk Login</a></b>
+                                                </div>
+                                            </li>
+                                        </div>
+                                        <div runat="server" id="mhide" visible="false">
+                                            <li class="nav-item dropdown">
+                                                <a class="nav-link dropdown-toggle" href="#" id="navbardrop2" data-toggle="dropdown">All Test Links&nbsp;<i class="fa fa-chevron-down" aria-hidden="true"></i>
+                                                </a>
+                                                <div class="dropdown-menu bg-dark">
+                                                    <a href="~/PUpdate" id="A3" runat="server" class="nav-link" visible="false">Product Update</a>
+                                                    <a href="~/ItemStatus" id="A4" runat="server" class="nav-link dropdown-item" visible="false">Item Status</a>
+                                                    <a href="~/TestSimiler" id="A5" runat="server" class="nav-link dropdown-item" visible="false">Similar Product</a>
+                                                    <b><a href="~/SuccessStory2" id="A6" runat="server" class="nav-link" visible="false" style="display: none;">Success Story 2.0</a></b>
+                                                </div>
+                                            </li>
+                                        </div>
+                                        <a href="~/SiteMap" id="A7" runat="server" class="nav-link" data-toggle="tooltip"
+                                            tooltip="Sitemap">SiteMap</a>
+                                        <b>
+                                            <asp:LinkButton runat="server" ID="lbllogout" Visible="false" class="nav-link" OnClick="lbllogout_Click">&nbsp;Log Out</asp:LinkButton></b>
+                                    </ul>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -264,6 +311,7 @@
                                                             <label><b>Annual Import Value (Rs)</b></label>
                                                             <div class="input-group">
                                                                 <asp:RadioButtonList ID="chkimportvalue" runat="server" AutoPostBack="true" CssClass="custom-checkbox" OnSelectedIndexChanged="chkimportvalue_SelectedIndexChanged">
+                                                                    <asp:ListItem Value="5" style="margin-left: 5px !important;" onClick="MutExChkList(this);">&nbsp; Below 0.5 Million</asp:ListItem>
                                                                     <asp:ListItem Value="4" style="margin-left: 5px !important;" onClick="MutExChkList(this);">&nbsp; 0.5 - 5 Million</asp:ListItem>
                                                                     <asp:ListItem Value="1" style="margin-left: 5px !important;" onClick="MutExChkList(this);">&nbsp; 5 - 10 Million</asp:ListItem>
                                                                     <asp:ListItem Value="2" style="margin-left: 5px !important;" onClick="MutExChkList(this);">&nbsp; 10 - 50 Million</asp:ListItem>
@@ -348,7 +396,6 @@
                                                         </div>
                                                         <div id="Div3" class="widget widget-categories mb-3" runat="server">
                                                             <label><b>Make in India Category</b></label>
-                                                            <a data-target="#divInfoIdex" data-toggle="modal" href="#" style="margin-top: 5px;" class="pull-right"><i class="fa fa-question-circle"></i>&nbsp;Definitions</a>
                                                             <div class="input-group">
                                                                 <asp:RadioButtonList ID="chktendor" runat="server" AutoPostBack="true" CssClass="custom-checkbox" OnSelectedIndexChanged="chktendor_SelectedIndexChanged">
                                                                 </asp:RadioButtonList>
@@ -399,12 +446,16 @@
                                         <asp:Label ID="lblyearvalue" runat="server"></asp:Label>
                                         (in million Rs) -
                                    
+                                       
+
                                         <asp:Label ID="lblestimateprice" runat="server"></asp:Label>
                                     </p>
                                 </b>
                                 <p style="float: left;" runat="server" visible="false">
                                     Future requirements in lakhs -
                                
+                                   
+
                                     <asp:Label ID="lblfuturepurchase" runat="server" Text="0"></asp:Label>
                                 </p>
                             </div>
@@ -421,9 +472,13 @@
                                     </ul>
                                     <span style="text-align: center;">Showing
                                    
+                                       
+
                                         <asp:Label runat="server" ID="lbltotalshowpageitem"></asp:Label>
                                         products of
                                
+                                       
+
                                         <asp:Label ID="lbltotfilter" runat="server"></asp:Label>
                                         products  
                                     </span>
@@ -446,6 +501,7 @@
                                                         class="card-img-top d-block overflow-hidden" Style="text-align: center;">
                                                         <img src='<%#Eval("TopImages") %>' alt="Product" style="max-width: 100%; width: 50%; height: 90px;">
                                                     </asp:LinkButton>&nbsp;&nbsp;&nbsp;
+                                                   
                                                     <div class="card-body py-2" style="height: 200px;">
                                                         <b>
                                                             <asp:LinkButton runat="server" ID="lblcompshow" CommandArgument='<%#Eval("ProductRefNo") %>' CommandName="View" class="product-meta d-block font-size-xs pb-1" Style="color: #6915cf; font-size: 16px!important;">
@@ -454,7 +510,7 @@
                                                         </b>
                                                         <h3 class="product-title font-size-sm">
                                                             <asp:LinkButton runat="server" ID="lbldesc" title='<%#Eval("ProductDescription") %>' CommandArgument='<%#Eval("ProductRefNo") %>' CommandName="View">
-                                                                <%# Eval("ProductDescription").ToString().Length > 25? (Eval("ProductDescription") as string).Substring(0,25) + ".." : Eval("ProductDescription")  %>
+                                                                <%# Eval("ProductDescription").ToString().Length > 15? (Eval("ProductDescription") as string).Substring(0,15) + ".." : Eval("ProductDescription")  %>
                                                             </asp:LinkButton>
 
                                                         </h3>
@@ -469,7 +525,7 @@
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
-                                                                    <td colspan="2" style="padding: 8px; font-size: 11px; color: #6915cf;">Annual Import Value (in million Rs) <b>
+                                                                    <td colspan="2" style="padding: 8px; font-size: 11px; color: #6915cf;">Annual Import (in million Rs) <b>
                                                                         <asp:Label ID="lblepold" Visible="false" runat="server" Text='<%# Eval("EstimatePrice") %>'></asp:Label>
                                                                         <asp:Label ID="lblepfu" Visible="false" runat="server" Text='<%# Eval("EstimatePricefuture") %>'></asp:Label>
                                                                         <asp:Label ID="lblepold17" Visible="false" runat="server" Text='<%# Eval("EstimatePrice17") %>'></asp:Label>
@@ -480,12 +536,16 @@
                                                                 <tr id="Tr2">
                                                                     <td colspan="2" style="padding: 5px; font-size: 12px;">Nato Supply Group Class :-
                                                                       
+                                                                       
+
                                                                         <p><b>[<%#Eval("NSCCode") %>] -  <%# Eval("NSNGroupClass").ToString().Length > 35? (Eval("NSNGroupClass") as string).Substring(0,35) + ".." : Eval("NSNGroupClass")  %></b></p>
                                                                     </td>
                                                                 </tr>
                                                                 <tr id="Tr233" runat="server">
                                                                     <td class="text-right" colspan="2" style="padding: 8px; font-size: 11px;">Last Updated :- 
                                                                        
+                                                                       
+
                                                                         <%#Eval("LastUpdated","{0:dd-MMM-yyyy}") %>
                                                                     </td>
                                                                 </tr>
@@ -620,6 +680,8 @@
                                                                             <asp:Label ID="prodIndustryDomain" runat="server" Text=""></asp:Label>
                                                                             /
                                                                        
+                                                                           
+
                                                                             <asp:Label ID="ProdIndusSubDomain" runat="server" Text=""></asp:Label>
                                                                         </td>
                                                                     </tr>
@@ -957,7 +1019,8 @@
 
                                                                         <td>
                                                                             <b>Total Industry Shown Interest :-
-                                                                            <asp:Label runat="server" ID="lblIntrCount"></asp:Label></b>
+                                                                           
+                                                                                <asp:Label runat="server" ID="lblIntrCount"></asp:Label></b>
                                                                             <div class="clearfix mt-1"></div>
                                                                             <asp:GridView ID="gvRequester" runat="server" AutoGenerateColumns="false"
                                                                                 CssClass="table table-hover">
@@ -1001,12 +1064,17 @@
                                     <h6 class="modal-title">
                                         <div>
                                             (as on 
+                                           
                                             <asp:Label runat="server" ID="atime"></asp:Label>
                                             ) 
+                                       
                                         </div>
                                         <button class="close close1 btn btn-info" data-dismiss="modal" type="button">
                                             ×                                       
+                                       
                                         </button>
+                                        <h6></h6>
+                                        <h6></h6>
                                     </h6>
                                 </div>
                                 <div class="modal-body" style="text-align: center;">
@@ -1163,6 +1231,7 @@
                                     <h6 class="modal-title">
                                         <button class="close close1 btn btn-info" data-dismiss="modal" type="button">
                                             ×                                       
+                                       
                                         </button>
                                     </h6>
                                 </div>
@@ -1191,7 +1260,7 @@
                             </div>
                             <div class="modal-footer">
                                 <div class="col-sm-3 pull-right">
-                                    <input id="Button2" type="button" runat="server" onclick="Printm()" style="width: 70px;" class="btn btn-primary  pull-right"
+                                    <input id="Button2" type="button" runat="server" onclick="Prints()" style="width: 70px;" class="btn btn-primary  pull-right"
                                         value="Print" />
                                 </div>
                             </div>
@@ -1199,138 +1268,7 @@
                     </div>
                 </div>
                 <!----------------------------------------------------Code end For Nato Popup------------------------------>
-                <div class="modal fade" id="divInfoIdex" role="dialog">
-                    <div class="modal-dialog" style="max-width: 900px;">
-                        <div class="modal-content">
-                            <div class="modal-body" style="padding: 20px 40px 18px 40px;">
-                                <div class="simplebar-content">
-                                    <!-- Categories-->
-                                    <div class="widget widget-categories mb-4">
-                                        <div class="accordion mt-n1" id="shop-categories1">
-                                            <div id="printarea1">
-                                                <div class="card" style="border-bottom: solid 1.4px #e5e5e5!important;">
-                                                    <div class="card-header">
-                                                        <h3 class="accordion-heading mb-2">Make in India Category
-                                                        </h3>
-                                                        <br />
-                                                    </div>
-                                                </div>
-                                                <div class="card border-btm" style="border-bottom: solid 1.4px #e5e5e5!important;">
-                                                    <div class="card-header">
-                                                        <h4 class="accordion-heading mb-2">
-                                                            <a class="collapsed" href="#ItemSpecification12" role="button" data-toggle="collapse"
-                                                                aria-expanded="false" aria-controls="shoes">iDEX<span class="accordion-indicator iconupanddown">
-                                                                    <i class="fas fa-chevron-up"></i></span></a>
-                                                        </h4>
-                                                    </div>
-                                                    <div class="collapse" id="ItemSpecification12" data-parent="#shop-categories1">
-                                                        <div class="card-body card-custom ">
-                                                            <div>
-                                                                <p>Innovations for Defence Excellence (iDEX), the ﬁrst initiative of its kind in the country, was launched by Hon’ble PM in April 2018. It is a scheme formulated in collaboration with Atal Innovation Mission (AIM). iDEX is aimed at creation of an ecosystem to foster innovation and technology development in Defence and Aerospace and solve related problems, by engaging Industries, including MSMEs, Start-ups, Individual Innovators, R&D institutes and Academia and provide them grants/funding and other support to carry out R&D. It is expected that India can take advantage of its vibrant start-up ecosystem to develop technologies related to defence and aerospace. iDEX has so far run 3 rounds of Defence India Start-up Challenges, and two rounds of Open Challenge.</p>
-                                                                <p>Information pertaining to the guidelines, frameworks, procedures and challenges can be accessed at <a href="https://idex.gov.in" target="_blank">idex.gov.in.</a></p>
 
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="card border-btm" style="border-bottom: solid 1.4px #e5e5e5!important;">
-                                                    <div class="card-header">
-                                                        <h4 class="accordion-heading mb-2">
-                                                            <a class="collapsed" href="#ItemSpecification1" role="button" data-toggle="collapse"
-                                                                aria-expanded="false" aria-controls="shoes">Inter-Governmental Agreement (IGA)<span class="accordion-indicator iconupanddown">
-                                                                    <i class="fas fa-chevron-up"></i></span></a>
-                                                        </h4>
-                                                    </div>
-                                                    <div class="collapse" id="ItemSpecification1" data-parent="#shop-categories1">
-                                                        <div class="card-body card-custom ">
-                                                            <h6 class="tablemidhead">IGA</h6>
-                                                            <div>
-                                                                <p>Inter-Governmental Agreements (IGAs) are inter government agreements for procurements or transfer of technology from foreign countries. Details are covered at Para 104 to 105 of Chapter II of DPP 2016.</p>
-                                                                <p>In this case, it refers to an agreement between India and Russia on “Mutual Cooperation in Joint Manufacturing of Spares, Components, Aggregates and other material related to Russian/Soviet Origin Arms and Defence Equipment”. This was signed during the India-Russia Summit in 2019.  The objective of the IGA is to enhance the aftersales support and operational availability of Russian origin equipment currently in service in Indian Armed Forces by organizing production of spares and components in the territory of India by Indian Industry by way of creation of Joint Ventures/Partnership with Russian Original Equipment Manufacturers (OEMs) under the framework of the “Make in India” initiative.</p>
-                                                                <p>About 1000 types of spares are expected to be manufactured in India under this agreement for which 30 Memorandum of Understanding (MoU) have already been signed so far between Indian companies and Russian Original Equipment Manufacturers for manufacturing of these spares in India. The Indian Navy, Indian Air Force and the Ordnance Factory Board have issued RFPs for about 400 spares under the IGA.</p>
-
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="card border-btm" style="border-bottom: solid 1.4px #e5e5e5!important;">
-                                                    <div class="card-header">
-                                                        <h4 class="accordion-heading mb-2">
-                                                            <a class="collapsed" href="#Estimated1" role="button" data-toggle="collapse" aria-expanded="false"
-                                                                aria-controls="shoes">In-House | Make-II | Other than Make-II <span class="accordion-indicator iconupanddown">
-                                                                    <i class="fas fa-chevron-up"></i></span></a>
-                                                        </h4>
-                                                    </div>
-                                                    <div class="collapse" id="Estimated1" data-parent="#shop-categories">
-                                                        <div class="card-body card-custom ">
-                                                            <p>OFB/DPSUs/SHQs adopt various processes of indigenization for development of defence equipment or their sub-systems/sub-assembly/assemblies/components/ materials, primarily for import substitution. These include In-house and Industry Process (Make-II and Other than Make-II).</p>
-                                                            <h6 class="tablemidhead">1. In-house Process</h6>
-                                                            <p>OFB/DPSUs/SHQs may use their In-house capability to indigenize their items.</p>
-                                                            <h6 class="tablemidhead">2. Industry Process</h6>
-                                                            <h6>a. Make-II</h6>
-                                                            <p>OFB/DPSUs’ Make-II procedure is based on the similar Make-II procedure promulgated by Ministry of Defence under DPP-2016. Under this procedure, no Government funding is envisaged for prototype development purposes but there is an assurance of orders on successful development and trials of the prototype.</p>
-                                                            <p>‘Make-II’ development process starts with approval of project by OFB/DPSUs, subsequent to which EoI is issued online. Based on the EoI responses, Development Order is issued to selected Development Agency(ies). On successful development of prototype, procurement order is given to the lowest bidding Development Agency (DA).</p>
-                                                            <p>The list of items taken up for indigenous development under Make-II is uploaded on respective websites of OFB/DPSUs and is updated periodically. The same is also available at srijandefence.gov.in. The detailed framework for implementation of ‘Make-II’ Procedure at OFB & DPSUs can be downloaded here.</p>
-                                                            <h6>b. Other than Make-II</h6>
-                                                            <p>DPSUs/OFB/SHQs may adopt their other extant processes of indigenization.  The other extant processes of indigenization have been clubbed as “Other than Make-II”.</p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="card border-btm" style="border-bottom: solid 1.4px #e5e5e5!important;">
-                                                    <div class="card-header">
-                                                        <h4 class="accordion-heading mb-2">
-                                                            <a class="collapsed" href="#Estimated12" role="button" data-toggle="collapse" aria-expanded="false"
-                                                                aria-controls="shoes">Related FAQ <span class="accordion-indicator iconupanddown">
-                                                                    <i class="fas fa-chevron-up"></i></span></a>
-                                                        </h4>
-                                                    </div>
-                                                    <div class="collapse" id="Estimated12" data-parent="#shop-categories">
-                                                        <div class="card-body card-custom ">
-                                                            <p class="font-weight-bold">Q1. What is the difference between Make I & Make II procedure?</p>
-                                                            <p>A1. Development under Make I procedure are funded by Government of India whereas developments under Make II are funded by Indian industry.</p>
-                                                            <p class="font-weight-bold">
-                                                                Q2. Is there assurance of orders under Make II?
-                                                            </p>
-                                                            <p>A2.	Yes, the vendors are given assured orders subject to successful development and trial of the item.</p>
-                                                            <p class="font-weight-bold">
-                                                                Q3. How can the industry participate in Make II developments?
-                                                            </p>
-                                                            <p>A3. The list of items taken up for indigenous development under Make-II is uploaded on respective websites of DPSUs/ OFB and is updated periodically. Comprehensive details of items identified for indigenisation under Make II by various DPSUs and OFB are also displayed on this portal srijandefence.gov.in.</p>
-                                                            <p class="font-weight-bold">
-                                                                Q4. Can the Start-ups participate in Make II developments?
-                                                            </p>
-                                                            <p>A4.	The Start-ups under specific categories and domains as give at Annexure II of Make II procedure can participate in Make II developments.</p>
-                                                            <p class="font-weight-bold">
-                                                                Q5. How will the iDEX be funded?
-                                                            </p>
-                                                            <p>A5.	iDEX will be funded and managed by a “Defence Innovation Organization (DIO)” formed as non-profit company as per Section 8 of the companies Act 2013 for the purpose.</p>
-                                                            <p class="font-weight-bold">
-                                                                Q6. How the IPRs under iDEX schemes will be managed?
-                                                            </p>
-                                                            <p>A6. The ownership of IPR generated under the program shall be owned by the company/institution/individual innovators who develop the IPR. The Government may also put restrictions on transfer/licensing of technology/IPR developed under the program on considerations of national security or other strategic reasons.</p>
-                                                            <p class="font-weight-bold">
-                                                                Q7. What are IGAs?
-                                                            </p>
-                                                            <p>A7. IGAs are inter government agreements for procurements or transfer of technology from foreign countries. Details of IGAs with respect to procurement of defence equipment are covered at Para 104 to 105 of Chapter II of DPP 2016.</p>
-
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <div class="col-sm-2">
-                                    <button class=" btn btn-default mr-0" data-dismiss="modal" type="button">
-                                        <i class="fa fa-arrow-circle-left"></i>&nbsp;Close
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </ContentTemplate>
             <Triggers>
                 <asp:PostBackTrigger ControlID="btnreset" />
@@ -1348,27 +1286,17 @@
                 </div>
             </ProgressTemplate>
         </asp:UpdateProgress>
-        <div class="container-fluid" style="background-color: #000000;">
-            <div class="row ">
-                <div class="col-sm-2 col-3">
+        <div id="footer1" class="container-fluid" style="min-height: 50px; text-align: center; background: #373f50;">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12" style="padding-top: 10px; color: white;">
+                        ©2020 <a href="https://srijandefence.gov.in/ProductList" style="color: white;">www.srijandefence.gov.in</a> | All Right Reserved. | Designed, Developed and Hosted by Department of Defence Production
+                           
+                    </div>
                 </div>
-                <div class="col-sm-10 col-9">
-                    <p style="color: white; padding: 15px 5px 0px 0px; text-align: center;">
-                        Visitor Counter <a href="#">
-                            <img src="https://hitwebcounter.com/counter/counter.php?page=7649671&style=0006&nbdigits=6&type=page&initCount=0" border="0">
-                        </a>
-                    </p>
-                </div>
-                <div class="col-sm-2 col-3">
-                </div>
-                <div class="col-sm-10 col-9">
-                    <p style="color: white; padding: 0px; text-align: center;">
-                        Website content managed by : Department of Defence Production
-                    </p>
-                </div>
-
             </div>
         </div>
+
         <script src="User/Uassets/js/jquery-3.4.1.min.js"></script>
         <script src="User/Uassets/js/all.min.js"></script>
         <script src="User/Uassets/js/bootstrap.bundle.min.js"></script>
@@ -1412,7 +1340,7 @@
             }
         </script>
         <script type="text/javascript">
-            function Printm() {
+            function Prints() {
                 var divToPrint = document.getElementById('Div15');
                 var popupWin = window.open('', '_blank', 'width=300,height=400,location=no,left=200px');
                 popupWin.document.open();

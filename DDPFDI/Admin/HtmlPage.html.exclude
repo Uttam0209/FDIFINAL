@@ -1,0 +1,1045 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>
+        Srijan Defence
+    </title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <link href="Assets/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Our Custom CSS -->
+    <link href="Assets/css/style5.css" rel="stylesheet" />
+    <!-- Font Awesome JS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet" />
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #fff;
+            font: 'Open Sans';
+            color: #333;
+        }
+
+        #top {
+            margin-bottom: 0px !important;
+            padding: 0px !important;
+        }
+
+        #top2, #top {
+            margin-bottom: 0px !important;
+        }
+
+            #top2 a {
+                color: white;
+            }
+
+        #sidebar ul ul ul a {
+            padding-left: 40px;
+        }
+
+        #sidebarCollapse {
+            background: black !important;
+        }
+
+        .maincontainer {
+            box-shadow: 0 0 5px;
+            background: white;
+            border-radius: 5px;
+            min-height: 90vh;
+        }
+
+        #top .dropdown-toggle::after {
+            display: block;
+            position: absolute;
+            top: 50%;
+            right: 0px;
+            transform: translateY(-50%);
+        }
+
+        #sidebar {
+            background: #6915cf;
+        }
+
+            #sidebar ul li.active > a, a[aria-expanded="true"] {
+                color: #fff;
+                background: #6915cf;
+            }
+
+            #sidebar ul ul a {
+                font-size: 0.9em !important;
+                padding-left: 30px !important;
+                background: #6915cf;
+            }
+
+            #sidebar .sidebar-header {
+                padding: 20px;
+                background: #6915cf;
+            }
+
+        #Hellouser:hover {
+            background: white !important;
+        }
+
+        #top a[aria-expanded="true"] {
+            background: white !important;
+        }
+    </style>
+    <link href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
+    <style>
+        .box {
+            box-shadow: 0 0 3px;
+        }
+
+        .icon-box .fa-building {
+            color: #3276b1 !important;
+        }
+
+        .icon-box .fa-users {
+            color: #3276b1 !important;
+        }
+
+
+        .icon-box {
+            width: 50px;
+            height: 50px;
+            background: #fff;
+            text-align: center;
+            line-height: 50px;
+            border-radius: 100%;
+        }
+
+        .fa-file-excel {
+            font-size: 30px;
+            color: white;
+            margin-top: 20px;
+        }
+
+        .fa-pinterest-p {
+            color: #3276b1 !important;
+        }
+
+        #cardsection .card {
+            color: white !important;
+        }
+
+        h6 {
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <form method="post" action="./Dashboard2.aspx" id="form1">
+        <div class="aspNetHidden">
+            <input type="hidden" name="__EVENTTARGET" id="__EVENTTARGET" value="" />
+            <input type="hidden" name="__EVENTARGUMENT" id="__EVENTARGUMENT" value="" />
+            <input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="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" />
+        </div>
+        <script type="text/javascript">
+            //<![CDATA[
+            var theForm = document.forms['form1'];
+            if (!theForm) {
+                theForm = document.form1;
+            }
+            function __doPostBack(eventTarget, eventArgument) {
+                if (!theForm.onsubmit || (theForm.onsubmit() != false)) {
+                    theForm.__EVENTTARGET.value = eventTarget;
+                    theForm.__EVENTARGUMENT.value = eventArgument;
+                    theForm.submit();
+                }
+            }
+            //]]>
+        </script>
+        <div class="aspNetHidden">
+            <input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="E42B3C42" />
+            <input type="hidden" name="__VIEWSTATEENCRYPTED" id="__VIEWSTATEENCRYPTED" value="" />
+            <input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION" value="5XR2vHOBrRWJFG6XtEHtC7tySd7WDU3IM0AUdBP8IMZfhvv1znB10H6ORnr5p6oGf2lOl55VrTh74o6DlB5rl7XiztEERSJUva8uoCs8F5hJiG3hdW4/Bj2JtYMuEr4c6MW+ZH1nJvKxDcYtE2kSpFNHS/yoI8P4QIvw+Hmg+A40bkZpsXQLZXySbGubpZdRoD5M33OJ+qmDg3J1/8FOoLN+SYKTYn9MBIz5us8Spzk=" />
+        </div>
+        <div id="top" class="navbar navbar-expand-lg navbar-light bg-white">
+            <div class="container-fluid d-flex justify-content-between pr-5">
+                <ul class="nav navbar-nav">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">
+                            <img src="../ddp_logo.png" class="img-fluid" style="height: 70px" />
+                        </a>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav pr-5">
+                    <li class="nav-item">
+                        <h6 class="nav-link">
+                            <span id="lblmastercompany">Company - DDP</span>&nbsp;
+                            <span id="lblfactory"></span>&nbsp;
+                            <span id="lblunit"></span>&nbsp;
+                        </h6>
+                    </li>
+                    <li class="nav-item">
+                        <div class="dropdown">
+                            <a id="Hellouser" class="dropdown-item dropdown-toggle" data-toggle="dropdown">
+                                <span id="lblusername">testlink@test.com</span>
+                            </a>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href='/ChangePassword'>Change Password</a>
+                                <a id="lbllogout" class="dropdown-item" href="javascript:__doPostBack(&#39;ctl00$lbllogout&#39;,&#39;&#39;)">Log Out</a>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+        <div id="top2" class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container-fluid">
+                <button type="button" id="sidebarCollapse" class="btn btn-primary">
+                    <i class="fa fa-bars"></i>
+                </button>
+                <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <i class="fa fa-bars"></i>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="~/ProductList"><span class="fa fa-home"></span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="AboutUs">About Us</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="~/FeedBack">Feedback</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="https://www.makeinindiadefence.gov.in/" target="_blank" onclick="return confirm('You are being redirected to https://www.makeinindiadefence.gov.in');">Make In India Defence Portal</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="wrapper d-flex align-items-stretch">
+            <nav id="sidebar">
+                <div class="sidebar-header">
+                    <h4>
+                        <i class="fa fa-user-circle" aria-hidden="true"></i>
+                        <span id="lbltypelogin">SuperAdmin</span>
+                    </h4>
+                </div>
+                <div id="MasterMenu">
+                <ul class='list-unstyled components'>
+                    <li>
+                        <a href='#' data-original-title='Dashboard' data-toggle='collapse' aria-expanded='false' class='dropdown-toggle'>
+                        <span class='hidden-minibar'>Dashboard</span>
+                        <span style='position:absolute; right:40px;top:10px;'>M18</span>
+                            </a>
+                        <ul class='collapse list-unstyled' id='homeSubmenu2'>
+                        <li>
+                            <a href='Dashboard?mu=KQ5FIC8PdXE=&id=ZhXguCEKfZLgQKpCzFqeow=='>
+                            <span class='hidden-minibar'>Indigenisation</span>
+                            <span style='position:absolute; right:40px;top:10px;'>C31</span>
+                                </a>
+                            </li>
+                            </ul>
+                        </ul>
+                <li>
+                    <a href='#' data-original-title='Dashboard' data-toggle='collapse' aria-expanded='false' class='dropdown-toggle'>
+                    <span class='hidden-minibar'>Company Master</span>
+                    <span style='position:absolute; right:40px;top:10px;'>M10</span>
+                        </a>
+                    <ul class='collapse list-unstyled' id='homeSubmenu2'>
+                        <li>
+                        <a href='#?mu=KQ5FIC8PdXE=&id=+N4siQw3MQs='>
+                            <span class='hidden-minibar'>Add</span>
+                            <span style='position:absolute; right:40px;top:10px;'>C4</span>
+                            </a>
+                        <ul class='collapse list-unstyled' id='pageSubmenu7'>
+                            <li>
+                            <a href='AddMasterCompany?mu=KQ5FIC8PdXE=&id=uanRQDlFCCQ='>Company</span>
+                                <span style='position:absolute; right:20px;top:10px;'>SC5</span>
+                                </a>
+                                </li>
+                            <li>
+                            <a href='AddMasterCompany?mu=b0JLjihSzvQ=&id=dwzT7HjoZxpSzwwKRo2npw=='>Division/Plant</span>
+                                <span style='position:absolute; right:20px;top:10px;'>SC6</span>
+                                </a>
+                                </li>
+                            <li>
+                            <a href='AddMasterCompany?mu=OIVxjUlnTVc=&id=plEYtco5ebk='>Unit</span>
+                                <span style='position:absolute; right:20px;top:10px;'>SC7</span>
+                                </a>
+                                </li>
+                            <li>
+                            <a href='Add-Designation?mu=MRtCwN+7N6dMmohOhVozbQ==&id=00axf+fplYr76ffjnYF2Ig=='>Designation</span><span style='position:absolute; right:20px;top:10px;'>SC8</span></a></li><li><a href='Add-Nodal?mu=b0JLjihSzvQ=&id=pwG/8AY3JxsDZUWag9NFBw=='>Employee</span><span style='position:absolute; right:20px;top:10px;'>SC9</span></a></li></ul></li></li><li><a href='#?mu=KQ5FIC8PdXE=&id=68L+ArI+MgA='><span class='hidden-minibar'>View</span><span style='position:absolute; right:40px;top:10px;'>C10</span></a><ul class='collapse list-unstyled' id='pageSubmenu7'><li><a href='Detail-Company?mu=KQ5FIC8PdXE=&id=uanRQDlFCCQ='>Company</span><span style='position:absolute; right:20px;top:10px;'>SC11</span></a></li><li><a href='View-Designation?mu=MRtCwN+7N6dMmohOhVozbQ==&id=00axf+fplYr76ffjnYF2Ig=='>Designation</span><span style='position:absolute; right:20px;top:10px;'>SC12</span></a></li><li><a href='View-NodalOfficer?mu=b0JLjihSzvQ=&id=pwG/8AY3JxsDZUWag9NFBw=='>Employee</span><span style='position:absolute; right:20px;top:10px;'>SC13</span></a></li></ul></li></li></ul></ul<li><a href='#' data-original-title='Dashboard' data-toggle='collapse' aria-expanded='false' class='dropdown-toggle'><span class='hidden-minibar'>Category Master</span><span style='position:absolute; right:40px;top:10px;'>M16</span></a><ul class='collapse list-unstyled' id='homeSubmenu2'> <li><a href='#?mu=KQ5FIC8PdXE=&id=y1136XlgeQ8Cj+IhvyHcDA=='><span class='hidden-minibar'>Dropdown Master</span><span style='position:absolute; right:40px;top:10px;'>C18</span></a><ul class='collapse list-unstyled' id='pageSubmenu7'><li><a href='Master-Category?mu=xxlS4LX0O3k=&id=y1136XlgeQ+SzJjkU9PbAw=='>Dropdown Label</span><span style='position:absolute; right:20px;top:10px;'>SC19</span></a></li><li><a href='Master-Category?mu=b0JLjihSzvQ=&id=M+zi9fHG/QY='>Level1</span><span style='position:absolute; right:20px;top:10px;'>SC20</span></a></li><li><a href='Master-Category?mu=OIVxjUlnTVc=&id=4foFbVDNPPI='>Level2</span><span style='position:absolute; right:20px;top:10px;'>SC21</span></a></li><li><a href='Master-Category?mu=OMKNruBHOL4=&id=dMcXg6fbEL0='>Level3</span><span style='position:absolute; right:20px;top:10px;'>SC24</span></a></li><li><a href='Company-Category?mu=KQ5FIC8PdXE=&id=fbXXbZPTiKoJN9FfrYbBm8zmngQ8c7y6'>Category Dropdown</span><span style='position:absolute; right:20px;top:10px;'>SC25</span></a></li></ul></li></li><li><a href='#?mu=KQ5FIC8PdXE=&id=68L+ArI+MgA='><span class='hidden-minibar'>View</span><span style='position:absolute; right:40px;top:10px;'>C22</span></a><ul class='collapse list-unstyled' id='pageSubmenu7'><li><a href='View-Category?mu=KQ5FIC8PdXE=&id=y1136XlgeQ+SzJjkU9PbAw=='>Dropdown Label</span><span style='position:absolute; right:20px;top:10px;'>SC23</span></a></li><li><a href='CatStatus?mu=KQ5FIC8PdXE=&id=Cmz68fYiXA9z3YZEGG7iuA=='>Update Category</span><span style='position:absolute; right:20px;top:10px;'>SC43</span></a></li></ul></li></li></ul></ul<li><a href='#' data-original-title='Dashboard' data-toggle='collapse' aria-expanded='false' class='dropdown-toggle'><span class='hidden-minibar'>Product Master</span><span style='position:absolute; right:40px;top:10px;'>M2</span></a><ul class='collapse list-unstyled' id='homeSubmenu2'> <li><a href='#?mu=MRtCwN+7N6dMmohOhVozbQ==&id=ZhXguCEKfZLgQKpCzFqeow=='><span class='hidden-minibar'>Indigenisation</span><span style='position:absolute; right:40px;top:10px;'>C1</span></a><ul class='collapse list-unstyled' id='pageSubmenu7'><li><a href='AddProduct?mu=MRtCwN+7N6dMmohOhVozbQ==&id=+N4siQw3MQs='>Add</span><span style='position:absolute; right:20px;top:10px;'>SC2</span></a></li><li><a href='View-Product?mu=MRtCwN+7N6dMmohOhVozbQ==&id=68L+ArI+MgA='>View</span><span style='position:absolute; right:20px;top:10px;'>SC3</span></a></li><li><a href='UExcel?mu=KQ5FIC8PdXE=&id=lcabapmUfN/r08LkC3tq7k12xrR01C5X'>Upload Bulk Data</span><span style='position:absolute; right:20px;top:10px;'>SC36</span></a></li><li><a href='ProdVerifiUpdate?mu=KQ5FIC8PdXE=&id=q8jUjAMoUEy177a5+oY7UM10kW9QiRmZ'>Product Verification</span><span style='position:absolute; right:20px;top:10px;'>SC45</span></a></li><li><a href='NatoCodeSearch?mu=MRtCwN+7N6dMmohOhVozbQ==&id=o/g4QPk6JElkd4r7hD1NRA=='>VIew NatoCode</span><span style='position:absolute; right:20px;top:10px;'>SC46</span></a></li><li><a href='TempTable?mu=MRtCwN+7N6dMmohOhVozbQ==&id=EMgzK50n3eA9d8lazMk4aQ=='>Import UProduct</span><span style='position:absolute; right:20px;top:10px;'>SC47</span></a></li><li><a href='ShowInterest?mu=MRtCwN+7N6dMmohOhVozbQ==&id=vepfLDQ9QtWCrAd+NiVWjw=='>Show Interest</span><span style='position:absolute; right:20px;top:10px;'>SC48</span></a></li></ul></li></li></ul></ul<li><a href='#' data-original-title='Dashboard' data-toggle='collapse' aria-expanded='false' class='dropdown-toggle'><span class='hidden-minibar'>Industry</span><span style='position:absolute; right:40px;top:10px;'>M17</span></a><ul class='collapse list-unstyled' id='homeSubmenu2'> <li><a href='Industry?mu=KQ5FIC8PdXE=&id=IfS4okU1HvMiADTnF0cvpg=='><span class='hidden-minibar'>Industry</span><span style='position:absolute; right:40px;top:10px;'>C27</span></a></li></ul></ul<li><a href='#' data-original-title='Dashboard' data-toggle='collapse' aria-expanded='false' class='dropdown-toggle'><span class='hidden-minibar'>Manual</span><span style='position:absolute; right:40px;top:10px;'>M19</span></a><ul class='collapse list-unstyled' id='homeSubmenu2'> </ul></ul<li><a href='#' data-original-title='Dashboard' data-toggle='collapse' aria-expanded='false' class='dropdown-toggle'><span class='hidden-minibar'>What's New</span><span style='position:absolute; right:40px;top:10px;'>M22</span></a><ul class='collapse list-unstyled' id='homeSubmenu2'> <li><a href='AddNews?mu=KQ5FIC8PdXE=&id=WqVvJ232CF2CyKUFqhB4uetM6x2PzOSO'><span class='hidden-minibar'>Add Latest Updates</span><span style='position:absolute; right:40px;top:10px;'>C41</span></a></li><li><a href='News?mu=KQ5FIC8PdXE=&id=HrGzr8N9DcpkTP/9ECU7Qg=='><span class='hidden-minibar'>Latest Updates</span><span style='position:absolute; right:40px;top:10px;'>C42</span></a></li><li><a href='ActiveLogout?mu=KQ5FIC8PdXE=&id=8M1bGO++Vc5Vw1c7yGzxxg=='><span class='hidden-minibar'>Active login</span><span style='position:absolute; right:40px;top:10px;'>C44</span></a></li><li><a href='ViewFeedBack?mu=MRtCwN+7N6dMmohOhVozbQ==&id=AQaSx7hnO18OEqk7VIuqtg=='><span class='hidden-minibar'>View FeedBack</span><span style='position:absolute; right:40px;top:10px;'>C49</span></a></li><li><a href='ViewRemark?mu=MRtCwN+7N6dMmohOhVozbQ==&id=q8jUjAMoUEzGzf8ZF7zUvg=='><span class='hidden-minibar'>Product Remarks</span><span style='position:absolute; right:40px;top:10px;'>C50</span></a></li></ul></div>
+                <div id="menu"></div>
+                <ul class="list-unstyled components">
+                    <li>
+                        <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Dashboard</a>
+                        <ul class="collapse list-unstyled" id="homeSubmenu">
+                            <li>
+                                <a href="#">Indigenisation</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#homeSubmenu2" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Company Master</a>
+                        <ul class="collapse list-unstyled" id="homeSubmenu2">
+                            <li>
+                                <a href="#pageSubmenu7" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Add</a>
+                                <ul class="collapse list-unstyled" id="pageSubmenu7">
+                                    <li>
+                                        <a href="#">Company</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Division/Plant</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Unit</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Designation</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Employee</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+
+                </ul>
+            </nav>
+
+            <div class="container-fluid m-3 first">
+                <div class="row overflow-auto">
+                    <div class="col-12 my-2 py-2" style="background: #e6e9ed; border-radius: 5px;">
+                        <h4 style="margin-top: 5px;">Dashboard</h4>
+                    </div>
+                </div>
+                <div id="cardsection" class="row overflow-auto">
+                    <div class="col-xl-3 col-lg-4 col-md-6 col-12 my-3">
+                        <div class="card bg-primary">
+                            <div class="card-body text-center">
+                                <div class="row">
+                                    <div class="col-3">
+                                        <div class="icon-box">
+                                            <i class="fa fa-building"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col-7">
+                                        <h6 class="card-text">ORGANIZATION</h6>
+                                        <h6 class="card-text">58</h6>
+                                    </div>
+                                    <div class="col-2">
+                                        <i class="fa fa-file-excel" aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-4 col-md-6 col-12 my-3">
+                        <div class="card bg-warning">
+                            <div class="card-body text-center">
+                                <div class="row">
+                                    <div class="col-3">
+                                        <div class="icon-box">
+                                            <i class="fa fa-building"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col-7">
+                                        <h6 class="card-text">ORG-DIVSIONS</h6>
+                                        <h6 class="card-text">58</h6>
+                                    </div>
+                                    <div class="col-2">
+                                        <i class="fa fa-file-excel" aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-4 col-md-6 col-12 my-3">
+                        <div class="card bg-info">
+                            <div class="card-body text-center">
+                                <div class="row">
+                                    <div class="col-3">
+                                        <div class="icon-box">
+                                            <i class="fa fa-building"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col-7">
+                                        <h6 class="card-text">ORG-UNITS</h6>
+                                        <h6 class="card-text">58</h6>
+                                    </div>
+                                    <div class="col-2">
+                                        <i class="fa fa-file-excel" aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-4 col-md-6 col-12 my-3">
+                        <div class="card bg-danger">
+                            <div class="card-body text-center">
+                                <div class="row">
+                                    <div class="col-3">
+                                        <div class="icon-box">
+                                            <i class="fa fa-users" aria-hidden="true"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col-7">
+                                        <h6 class="card-text">ORG-EMPLOYEE</h6>
+                                        <h6 class="card-text">58</h6>
+                                    </div>
+                                    <div class="col-2">
+                                        <i class="fa fa-file-excel" aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-4 col-md-6 col-12 my-3">
+                        <div class="card bg-primary">
+                            <div class="card-body text-center">
+                                <div class="row">
+                                    <div class="col-3">
+                                        <div class="icon-box">
+                                            <i class="fa fa-building"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col-7">
+                                        <h6 class="card-text">ITEMS UPLOADED</h6>
+                                        <h6 class="card-text">58</h6>
+                                    </div>
+                                    <div class="col-2">
+                                        <i class="fa fa-file-excel" aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-4 col-md-6 col-12 my-3">
+                        <div class="card bg-warning">
+                            <div class="card-body text-center">
+                                <div class="row">
+                                    <div class="col-3">
+                                        <div class="icon-box">
+                                            <i class="fa fa-building"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col-7">
+                                        <h6 class="card-text">ITEMS INDIGENIZED</h6>
+                                        <h6 class="card-text">58</h6>
+                                    </div>
+                                    <div class="col-2">
+                                        <i class="fa fa-file-excel" aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-4 col-md-6 col-12 my-3">
+                        <div class="card bg-info">
+                            <div class="card-body text-center">
+                                <div class="row">
+                                    <div class="col-3">
+                                        <div class="icon-box">
+                                            <i class="fa fa-building"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col-7">
+                                        <h6 class="card-text">ITEMS APPROVED</h6>
+                                        <h6 class="card-text">58</h6>
+                                    </div>
+                                    <div class="col-2">
+                                        <i class="fa fa-file-excel" aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-4 col-md-6 col-12 my-3">
+                        <div class="card bg-danger">
+                            <div class="card-body text-center">
+                                <div class="row">
+                                    <div class="col-3">
+                                        <div class="icon-box">
+                                            <i class="fa fa-building"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col-7">
+                                        <h6 class="card-text">ITEMS DISAPPROVED</h6>
+                                        <h6 class="card-text">58</h6>
+                                    </div>
+                                    <div class="col-2">
+                                        <i class="fa fa-file-excel" aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-4 col-md-6 col-12 my-3">
+                        <div class="card bg-primary">
+                            <div class="card-body text-center">
+                                <div class="row">
+                                    <div class="col-3">
+                                        <div class="icon-box">
+                                            <i class="fa fa-building"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col-7">
+                                        <h6 class="card-text">ITEMS MAKEII</h6>
+                                        <h6 class="card-text">58</h6>
+                                    </div>
+                                    <div class="col-2">
+                                        <i class="fa fa-file-excel" aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-4 col-md-6 col-12 my-3">
+                        <div class="card bg-warning">
+                            <div class="card-body text-center">
+                                <div class="row">
+                                    <div class="col-3">
+                                        <div class="icon-box">
+                                            <i class="fa fa-users" aria-hidden="true"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col-7">
+                                        <h6 class="card-text">VENDOR</h6>
+                                        <h6 class="card-text">58</h6>
+                                    </div>
+                                    <div class="col-2">
+                                        <i class="fa fa-file-excel" aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row my-3 overflow-auto">
+                    <div class="col">
+                        <table id="example" class="display" style="width: 100%">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Position</th>
+                                    <th>Office</th>
+                                    <th>Age</th>
+                                    <th>Start date</th>
+                                    <th>Salary</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Tiger Nixon</td>
+                                    <td>System Architect</td>
+                                    <td>Edinburgh</td>
+                                    <td>61</td>
+                                    <td>2011/04/25</td>
+                                    <td>$320,800</td>
+                                </tr>
+                                <tr>
+                                    <td>Garrett Winters</td>
+                                    <td>Accountant</td>
+                                    <td>Tokyo</td>
+                                    <td>63</td>
+                                    <td>2011/07/25</td>
+                                    <td>$170,750</td>
+                                </tr>
+                                <tr>
+                                    <td>Ashton Cox</td>
+                                    <td>Junior Technical Author</td>
+                                    <td>San Francisco</td>
+                                    <td>66</td>
+                                    <td>2009/01/12</td>
+                                    <td>$86,000</td>
+                                </tr>
+                                <tr>
+                                    <td>Cedric Kelly</td>
+                                    <td>Senior Javascript Developer</td>
+                                    <td>Edinburgh</td>
+                                    <td>22</td>
+                                    <td>2012/03/29</td>
+                                    <td>$433,060</td>
+                                </tr>
+                                <tr>
+                                    <td>Airi Satou</td>
+                                    <td>Accountant</td>
+                                    <td>Tokyo</td>
+                                    <td>33</td>
+                                    <td>2008/11/28</td>
+                                    <td>$162,700</td>
+                                </tr>
+                                <tr>
+                                    <td>Brielle Williamson</td>
+                                    <td>Integration Specialist</td>
+                                    <td>New York</td>
+                                    <td>61</td>
+                                    <td>2012/12/02</td>
+                                    <td>$372,000</td>
+                                </tr>
+                                <tr>
+                                    <td>Herrod Chandler</td>
+                                    <td>Sales Assistant</td>
+                                    <td>San Francisco</td>
+                                    <td>59</td>
+                                    <td>2012/08/06</td>
+                                    <td>$137,500</td>
+                                </tr>
+                                <tr>
+                                    <td>Rhona Davidson</td>
+                                    <td>Integration Specialist</td>
+                                    <td>Tokyo</td>
+                                    <td>55</td>
+                                    <td>2010/10/14</td>
+                                    <td>$327,900</td>
+                                </tr>
+                                <tr>
+                                    <td>Colleen Hurst</td>
+                                    <td>Javascript Developer</td>
+                                    <td>San Francisco</td>
+                                    <td>39</td>
+                                    <td>2009/09/15</td>
+                                    <td>$205,500</td>
+                                </tr>
+                                <tr>
+                                    <td>Sonya Frost</td>
+                                    <td>Software Engineer</td>
+                                    <td>Edinburgh</td>
+                                    <td>23</td>
+                                    <td>2008/12/13</td>
+                                    <td>$103,600</td>
+                                </tr>
+                                <tr>
+                                    <td>Jena Gaines</td>
+                                    <td>Office Manager</td>
+                                    <td>London</td>
+                                    <td>30</td>
+                                    <td>2008/12/19</td>
+                                    <td>$90,560</td>
+                                </tr>
+                                <tr>
+                                    <td>Quinn Flynn</td>
+                                    <td>Support Lead</td>
+                                    <td>Edinburgh</td>
+                                    <td>22</td>
+                                    <td>2013/03/03</td>
+                                    <td>$342,000</td>
+                                </tr>
+                                <tr>
+                                    <td>Charde Marshall</td>
+                                    <td>Regional Director</td>
+                                    <td>San Francisco</td>
+                                    <td>36</td>
+                                    <td>2008/10/16</td>
+                                    <td>$470,600</td>
+                                </tr>
+                                <tr>
+                                    <td>Haley Kennedy</td>
+                                    <td>Senior Marketing Designer</td>
+                                    <td>London</td>
+                                    <td>43</td>
+                                    <td>2012/12/18</td>
+                                    <td>$313,500</td>
+                                </tr>
+                                <tr>
+                                    <td>Tatyana Fitzpatrick</td>
+                                    <td>Regional Director</td>
+                                    <td>London</td>
+                                    <td>19</td>
+                                    <td>2010/03/17</td>
+                                    <td>$385,750</td>
+                                </tr>
+                                <tr>
+                                    <td>Michael Silva</td>
+                                    <td>Marketing Designer</td>
+                                    <td>London</td>
+                                    <td>66</td>
+                                    <td>2012/11/27</td>
+                                    <td>$198,500</td>
+                                </tr>
+                                <tr>
+                                    <td>Paul Byrd</td>
+                                    <td>Chief Financial Officer (CFO)</td>
+                                    <td>New York</td>
+                                    <td>64</td>
+                                    <td>2010/06/09</td>
+                                    <td>$725,000</td>
+                                </tr>
+                                <tr>
+                                    <td>Gloria Little</td>
+                                    <td>Systems Administrator</td>
+                                    <td>New York</td>
+                                    <td>59</td>
+                                    <td>2009/04/10</td>
+                                    <td>$237,500</td>
+                                </tr>
+                                <tr>
+                                    <td>Bradley Greer</td>
+                                    <td>Software Engineer</td>
+                                    <td>London</td>
+                                    <td>41</td>
+                                    <td>2012/10/13</td>
+                                    <td>$132,000</td>
+                                </tr>
+                                <tr>
+                                    <td>Dai Rios</td>
+                                    <td>Personnel Lead</td>
+                                    <td>Edinburgh</td>
+                                    <td>35</td>
+                                    <td>2012/09/26</td>
+                                    <td>$217,500</td>
+                                </tr>
+                                <tr>
+                                    <td>Jenette Caldwell</td>
+                                    <td>Development Lead</td>
+                                    <td>New York</td>
+                                    <td>30</td>
+                                    <td>2011/09/03</td>
+                                    <td>$345,000</td>
+                                </tr>
+                                <tr>
+                                    <td>Yuri Berry</td>
+                                    <td>Chief Marketing Officer (CMO)</td>
+                                    <td>New York</td>
+                                    <td>40</td>
+                                    <td>2009/06/25</td>
+                                    <td>$675,000</td>
+                                </tr>
+                                <tr>
+                                    <td>Caesar Vance</td>
+                                    <td>Pre-Sales Support</td>
+                                    <td>New York</td>
+                                    <td>21</td>
+                                    <td>2011/12/12</td>
+                                    <td>$106,450</td>
+                                </tr>
+                                <tr>
+                                    <td>Doris Wilder</td>
+                                    <td>Sales Assistant</td>
+                                    <td>Sydney</td>
+                                    <td>23</td>
+                                    <td>2010/09/20</td>
+                                    <td>$85,600</td>
+                                </tr>
+                                <tr>
+                                    <td>Angelica Ramos</td>
+                                    <td>Chief Executive Officer (CEO)</td>
+                                    <td>London</td>
+                                    <td>47</td>
+                                    <td>2009/10/09</td>
+                                    <td>$1,200,000</td>
+                                </tr>
+                                <tr>
+                                    <td>Gavin Joyce</td>
+                                    <td>Developer</td>
+                                    <td>Edinburgh</td>
+                                    <td>42</td>
+                                    <td>2010/12/22</td>
+                                    <td>$92,575</td>
+                                </tr>
+                                <tr>
+                                    <td>Jennifer Chang</td>
+                                    <td>Regional Director</td>
+                                    <td>Singapore</td>
+                                    <td>28</td>
+                                    <td>2010/11/14</td>
+                                    <td>$357,650</td>
+                                </tr>
+                                <tr>
+                                    <td>Brenden Wagner</td>
+                                    <td>Software Engineer</td>
+                                    <td>San Francisco</td>
+                                    <td>28</td>
+                                    <td>2011/06/07</td>
+                                    <td>$206,850</td>
+                                </tr>
+                                <tr>
+                                    <td>Fiona Green</td>
+                                    <td>Chief Operating Officer (COO)</td>
+                                    <td>San Francisco</td>
+                                    <td>48</td>
+                                    <td>2010/03/11</td>
+                                    <td>$850,000</td>
+                                </tr>
+                                <tr>
+                                    <td>Shou Itou</td>
+                                    <td>Regional Marketing</td>
+                                    <td>Tokyo</td>
+                                    <td>20</td>
+                                    <td>2011/08/14</td>
+                                    <td>$163,000</td>
+                                </tr>
+                                <tr>
+                                    <td>Michelle House</td>
+                                    <td>Integration Specialist</td>
+                                    <td>Sydney</td>
+                                    <td>37</td>
+                                    <td>2011/06/02</td>
+                                    <td>$95,400</td>
+                                </tr>
+                                <tr>
+                                    <td>Suki Burks</td>
+                                    <td>Developer</td>
+                                    <td>London</td>
+                                    <td>53</td>
+                                    <td>2009/10/22</td>
+                                    <td>$114,500</td>
+                                </tr>
+                                <tr>
+                                    <td>Prescott Bartlett</td>
+                                    <td>Technical Author</td>
+                                    <td>London</td>
+                                    <td>27</td>
+                                    <td>2011/05/07</td>
+                                    <td>$145,000</td>
+                                </tr>
+                                <tr>
+                                    <td>Gavin Cortez</td>
+                                    <td>Team Leader</td>
+                                    <td>San Francisco</td>
+                                    <td>22</td>
+                                    <td>2008/10/26</td>
+                                    <td>$235,500</td>
+                                </tr>
+                                <tr>
+                                    <td>Martena Mccray</td>
+                                    <td>Post-Sales support</td>
+                                    <td>Edinburgh</td>
+                                    <td>46</td>
+                                    <td>2011/03/09</td>
+                                    <td>$324,050</td>
+                                </tr>
+                                <tr>
+                                    <td>Unity Butler</td>
+                                    <td>Marketing Designer</td>
+                                    <td>San Francisco</td>
+                                    <td>47</td>
+                                    <td>2009/12/09</td>
+                                    <td>$85,675</td>
+                                </tr>
+                                <tr>
+                                    <td>Howard Hatfield</td>
+                                    <td>Office Manager</td>
+                                    <td>San Francisco</td>
+                                    <td>51</td>
+                                    <td>2008/12/16</td>
+                                    <td>$164,500</td>
+                                </tr>
+                                <tr>
+                                    <td>Hope Fuentes</td>
+                                    <td>Secretary</td>
+                                    <td>San Francisco</td>
+                                    <td>41</td>
+                                    <td>2010/02/12</td>
+                                    <td>$109,850</td>
+                                </tr>
+                                <tr>
+                                    <td>Vivian Harrell</td>
+                                    <td>Financial Controller</td>
+                                    <td>San Francisco</td>
+                                    <td>62</td>
+                                    <td>2009/02/14</td>
+                                    <td>$452,500</td>
+                                </tr>
+                                <tr>
+                                    <td>Timothy Mooney</td>
+                                    <td>Office Manager</td>
+                                    <td>London</td>
+                                    <td>37</td>
+                                    <td>2008/12/11</td>
+                                    <td>$136,200</td>
+                                </tr>
+                                <tr>
+                                    <td>Jackson Bradshaw</td>
+                                    <td>Director</td>
+                                    <td>New York</td>
+                                    <td>65</td>
+                                    <td>2008/09/26</td>
+                                    <td>$645,750</td>
+                                </tr>
+                                <tr>
+                                    <td>Olivia Liang</td>
+                                    <td>Support Engineer</td>
+                                    <td>Singapore</td>
+                                    <td>64</td>
+                                    <td>2011/02/03</td>
+                                    <td>$234,500</td>
+                                </tr>
+                                <tr>
+                                    <td>Bruno Nash</td>
+                                    <td>Software Engineer</td>
+                                    <td>London</td>
+                                    <td>38</td>
+                                    <td>2011/05/03</td>
+                                    <td>$163,500</td>
+                                </tr>
+                                <tr>
+                                    <td>Sakura Yamamoto</td>
+                                    <td>Support Engineer</td>
+                                    <td>Tokyo</td>
+                                    <td>37</td>
+                                    <td>2009/08/19</td>
+                                    <td>$139,575</td>
+                                </tr>
+                                <tr>
+                                    <td>Thor Walton</td>
+                                    <td>Developer</td>
+                                    <td>New York</td>
+                                    <td>61</td>
+                                    <td>2013/08/11</td>
+                                    <td>$98,540</td>
+                                </tr>
+                                <tr>
+                                    <td>Finn Camacho</td>
+                                    <td>Support Engineer</td>
+                                    <td>San Francisco</td>
+                                    <td>47</td>
+                                    <td>2009/07/07</td>
+                                    <td>$87,500</td>
+                                </tr>
+                                <tr>
+                                    <td>Serge Baldwin</td>
+                                    <td>Data Coordinator</td>
+                                    <td>Singapore</td>
+                                    <td>64</td>
+                                    <td>2012/04/09</td>
+                                    <td>$138,575</td>
+                                </tr>
+                                <tr>
+                                    <td>Zenaida Frank</td>
+                                    <td>Software Engineer</td>
+                                    <td>New York</td>
+                                    <td>63</td>
+                                    <td>2010/01/04</td>
+                                    <td>$125,250</td>
+                                </tr>
+                                <tr>
+                                    <td>Zorita Serrano</td>
+                                    <td>Software Engineer</td>
+                                    <td>San Francisco</td>
+                                    <td>56</td>
+                                    <td>2012/06/01</td>
+                                    <td>$115,000</td>
+                                </tr>
+                                <tr>
+                                    <td>Jennifer Acosta</td>
+                                    <td>Junior Javascript Developer</td>
+                                    <td>Edinburgh</td>
+                                    <td>43</td>
+                                    <td>2013/02/01</td>
+                                    <td>$75,650</td>
+                                </tr>
+                                <tr>
+                                    <td>Cara Stevens</td>
+                                    <td>Sales Assistant</td>
+                                    <td>New York</td>
+                                    <td>46</td>
+                                    <td>2011/12/06</td>
+                                    <td>$145,600</td>
+                                </tr>
+                                <tr>
+                                    <td>Hermione Butler</td>
+                                    <td>Regional Director</td>
+                                    <td>London</td>
+                                    <td>47</td>
+                                    <td>2011/03/21</td>
+                                    <td>$356,250</td>
+                                </tr>
+                                <tr>
+                                    <td>Lael Greer</td>
+                                    <td>Systems Administrator</td>
+                                    <td>London</td>
+                                    <td>21</td>
+                                    <td>2009/02/27</td>
+                                    <td>$103,500</td>
+                                </tr>
+                                <tr>
+                                    <td>Jonas Alexander</td>
+                                    <td>Developer</td>
+                                    <td>San Francisco</td>
+                                    <td>30</td>
+                                    <td>2010/07/14</td>
+                                    <td>$86,500</td>
+                                </tr>
+                                <tr>
+                                    <td>Shad Decker</td>
+                                    <td>Regional Director</td>
+                                    <td>Edinburgh</td>
+                                    <td>51</td>
+                                    <td>2008/11/13</td>
+                                    <td>$183,000</td>
+                                </tr>
+                                <tr>
+                                    <td>Michael Bruce</td>
+                                    <td>Javascript Developer</td>
+                                    <td>Singapore</td>
+                                    <td>29</td>
+                                    <td>2011/06/27</td>
+                                    <td>$183,000</td>
+                                </tr>
+                                <tr>
+                                    <td>Donna Snider</td>
+                                    <td>Customer Support</td>
+                                    <td>New York</td>
+                                    <td>27</td>
+                                    <td>2011/01/25</td>
+                                    <td>$112,000</td>
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Position</th>
+                                    <th>Office</th>
+                                    <th>Age</th>
+                                    <th>Start date</th>
+                                    <th>Salary</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+
+            <script type="text/javascript">
+                $(document).ready(function () {
+                    $('#example').DataTable();
+                });
+            </script>
+
+        </div>
+
+        <div id="footer1" class="container-fluid bg-dark text-white">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col py-3 d-flex justify-content-center">
+                        © 2020 &nbsp;<a href="https://srijandefence.gov.in/ProductList" style="color: white;">www.srijandefence.gov.in</a>&nbsp; | All Right Reserved. | Designed, Developed and Hosted by Department of Defence Production
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </form>
+
+    <script src="Assets/js/slim.min.js"></script>
+    <!-- Popper.JS -->
+    <script src="Assets/js/popper.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="Assets/js/bootstrap.min.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#sidebarCollapse').on('click', function () {
+                $('#sidebar').toggleClass('active');
+                $(this).toggleClass('active');
+            });
+        });
+    </script>
+
+</body>
+</html>

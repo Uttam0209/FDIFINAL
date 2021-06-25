@@ -1,34 +1,41 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" Inherits="User_U_ProductList" CodeFile="U_ProductList.aspx.cs" ViewStateEncryptionMode="Always" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" Inherits="User_U_ProductList1" CodeFile="U_ProductList.aspx.cs" ViewStateEncryptionMode="Always" %>
 
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head id="Head1" runat="server">
     <title>Product List</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta charset="utf-8">
-    <link rel="icon" href="media/fevi.png">
-    <link rel="stylesheet" type="text/css" href="~/User/Uassets/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="~/User/Uassets/css/theme.min.css">
-    <link rel="stylesheet" type="text/css" href="~/User/Uassets/css/font-awesome-4.5.0/css/font-awesome.min.css">
-    <link rel="stylesheet" type="text/css" href="~/User/Uassets/css/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8" />
+    <meta name="google-site-verification" content="LPR-H1MjCk1oRRTFC79124pkSLiyG35I_YJ0kuICRuI" />
+    <link rel="icon" href="~/assets/images/icon.png" />
+    <link rel="stylesheet" type="text/css" href="~/User/Uassets/css/bootstrap.min.css" />
+    <link href="../assets/fontawesome-free-5.15.2/css/all.min.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="~/User/Uassets/css/style.css" />
     <link rel="stylesheet" type="text/css" href="~/User/Uassets/css/jquery-ui.css" />
     <style>
-        #maindiv1 {
-            float: right;
+        .filter_btn {
+            background: #e5e6e5;
         }
 
-        .adnce_box {
-            display: none;
+            .filter_btn:focus {
+                background: #e5e6e5 !important;
+            }
+
+        #navbarNav2 a {
+            padding-left: 10px !important;
+            padding-right: 10px !important;
+            font-size: 16px
         }
 
-        .btn.dropdown-toggle::after {
-            float: right;
-            margin-top: 8px;
-        }
-
-        .cart-btns {
-            padding: 4px 20px;
-            font-size: 15px;
+        .indigenized {
+            color: #ff0000a3;
+            transform: rotate(-52deg);
+            font-size: 53px;
+            position: absolute;
+            margin-bottom: 0;
+            font-weight: 400;
+            top: 136px;
+            left: -40px
         }
 
         .btn {
@@ -40,210 +47,348 @@
             width: 100%;
             font-size: 16px;
             border: none;
-            transition: background-color .2s ease-in-out;
+            transition: background-color .2s ease-in-out
         }
 
-            .btn span {
-                position: relative;
-                white-space: nowrap;
+            .btn:hover {
+                color: #fff
             }
 
-        .btn-content {
-            opacity: 1;
-            transition: opacity .4s ease-in-out;
+        #lbtotalcart {
+            position: relative
         }
 
-        .btn:focus {
-            outline: none;
-        }
-
-        .btn:before {
-            content: "";
+        #totalno {
             position: absolute;
-            display: inline-block;
-            background-color: #3c0184;
-            width: 0;
-            height: 100%;
-            left: 0;
-            top: 0;
-            transition: width .25s ease-in-out;
-            z-index: 0;
-        }
-
-        .btn:hover {
-            width: 100%;
+            top: -.3125rem;
+            right: -.3125rem;
+            width: 1.25rem;
+            height: 1.25rem;
+            border-radius: 50%;
+            background-color: #6915cf;
             color: #fff;
-            background-color: #3c0184;
+            font-size: .75rem;
+            font-weight: 500;
+            text-align: center;
+            line-height: 1.25rem
         }
 
-        .btn.state-change:before {
-            width: 0;
+        #lbcart {
+            margin-top: 10px;
+            margin-left: 10px;
+            color: #fff
         }
 
-        .btn.state-change .btn-content {
-            opacity: 0;
+        #lbtotalcart .fa-cart-plus {
+            margin-top: 15px
         }
 
-        .btn.loading-state .btn-loading {
-            opacity: 1;
+        #top h2 {
+            color: #6915cf
         }
 
-        .btn.success-state {
-            background-color: #00B729;
+        #menubar a {
+            color: #f1faee !important;
+            text-transform: uppercase;
+            border-bottom: 2px solid #373f50
         }
 
-            .btn.success-state .btn-success {
-                opacity: 1;
-                transform: translateX(-50%) translateY(-50%);
+            #menubar a:hover {
+                border-bottom: 2px solid #f1faee;
+                transition: .1s
             }
 
-        .btn.error-state {
-            background-color: #D93A40;
+        #shop-sidebar {
+            min-height: 1180px;
+            box-shadow: 0 0 5px #6915cf !important
         }
 
-            .btn.error-state .btn-error {
-                opacity: 1;
-                transform: translateX(-50%) translateY(-50%);
+        #dlproduct {
+            padding-left: 15px !important
+        }
+
+            #dlproduct span > div {
+                box-shadow: 0 0 2px #6915cf !important
             }
 
-        .btn .btn-loading {
-            position: absolute;
-            left: 50%;
-            margin-left: -11px;
-            opacity: 0;
-            transition: opacity .25s ease-in-out;
+        #mycard {
+            padding: 10px
         }
 
-        .btn .btn-error {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            opacity: 0;
-            transform: translateX(-100%) translateY(-50%);
-            transition: opacity 200ms ease-in-out, transform 500ms cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        #footer1 {
+            background: #373f50;
+            color: #f1faee !important;
+            text-align: center
         }
 
-        .btn .btn-success {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translateX(-50%) translateY(-300%);
-            transition: opacity 200ms ease-in-out, transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-        }
-
-        .btn:hover {
-            color: #ffffff;
-        }
-
-        /*#rbindustryspecification_0 {
-            margin-top: 5px;*/
-        }
-    </style>
-    <script type="text/javascript">
-        function MutExChkList(checkbox) {
-            var checkBoxList = checkbox.parentNode.parentNode.parentNode;
-            var list = checkBoxList.getElementsByTagName("input");
-            for (var i = 0; i < list.length; i++) {
-                if (list[i] != checkbox && checkbox.checked) {
-                    list[i].checked = false;
-                }
+            #footer1 a {
+                color: #f1faee !important;
+                text-decoration: none !important
             }
-        }
-    </script>
-    <style>
+
         #chktendor input {
-            margin-right: 10px;
+            margin-right: 10px
         }
 
         #chktendor label {
-            font-size: 13px;
+            font-size: 13px
         }
 
         #rbindustryspecification_6 {
-            margin-top: 5px;
+            margin-top: 5px
+        }
+
+        @media only screen and (max-width:1036px) {
+            #navbarNav2 a {
+                padding-left: 8px !important;
+                padding-right: 8px !important;
+                font-size: 14px
+            }
+        }
+
+        @media only screen and (max-width:998px) {
+            #navbarNav2 a {
+                padding-left: 5px !important;
+                padding-right: 5px !important;
+                font-size: 12px
+            }
+        }
+
+        @media screen and (max-width:1106px) {
+            #top h2 {
+                font-size: 24px
+            }
+
+            #topbar2 h4 {
+                font-size: 20px
+            }
+        }
+
+        @media screen and (max-width:868px) {
+            #top h2 {
+                font-size: 20px
+            }
+
+            #topbar2 h4 {
+                font-size: 16px
+            }
+        }
+
+        @media screen and (max-width:684px) {
+            #dlproduct span {
+                max-width: 45% !important
+            }
+        }
+
+        @media screen and (max-width:440px) {
+            #mycard .btn {
+                font-size: 12px !important
+            }
+
+            #mycard .fa-cart-plus {
+                font-size: 12px !important
+            }
+        }
+
+        @media screen and (max-width:400px) {
+            #dlproduct span {
+                max-width: 100%
+            }
+
+            #mycard .btn {
+                font-size: 15px !important
+            }
+
+            #mycard .fa-cart-plus {
+                font-size: 15px !important
+            }
+        }
+
+        #divcontentproduct .card {
+            border-radius: 0 !important;
         }
     </style>
+    <style>
+        .tooltip {
+            position: relative;
+            display: inline-block;
+            border-bottom: 1px dotted black;
+        }
+
+            .tooltip .tooltiptext {
+                visibility: hidden;
+                width: 120px;
+                background-color: black;
+                color: #fff;
+                text-align: center;
+                border-radius: 6px;
+                padding: 5px 0;
+                /* Position the tooltip */
+                position: absolute;
+                z-index: 1;
+            }
+
+            .tooltip:hover .tooltiptext {
+                visibility: visible;
+            }
+    </style>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-178148370-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'UA-178148370-1');
+    </script>
+    <!-- Google Analytics -->
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date(); a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+        ga('create', 'UA-XXXXX-Y', 'auto');
+        ga('send', 'pageview');
+    </script>
+    <!-- End Google Analytics -->
 </head>
-<body>
-    <div class="modal fade" id="aboutus-modal" tabindex="-1" role="dialog">
-        <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 600px;">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <ul class="nav nav-tabs card-header-tabs" role="tablist">
-                        <li class="nav-item"><a class="nav-link active" href="#" data-toggle="tab" role="tab"
-                            aria-selected="true">About us</a></li>
-                    </ul>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span></button>
-                </div>
-                <div class="modal-body tab-content py-4">
-                    <p class="text-justify">
-                        Pursuant to ‘Atmanirbhar Bharat’ announcement, the Department of Defence Production/Ministry of Defence/Government of India has developed this portal named, <b>srijandefence.gov.in</b>, as “Opportunities for Make in India in Defence”.  The main objective of the portal is to partner the private sector in indigenization efforts of Defence Public Sector Undertakings(DPSUs), OFB and the Armed Forces. The portal will be a non-transactional online market place platform. 
-                    </p>
-                    <p class="text-justify">
-                        DPSUs/OFB/SHQs will display their items on this portal, which they have imported or going to import, each item having sizeable import value. They will also display those items which have been planned/targeted in the coming years, for indigenization.
-                    </p>
-                    <p class="text-justify">
-                        The Indian industry will be able to show their interest in those items for which they can design, develop and manufacture as per their capability or through joint venture with OEMs. The concerned DPSUs/OFB/SHQs, based on their requirement of the items and their respective guidelines & procedures, will interact with the interested Indian industry for indigenization. The interested Indian industry can also interact with concerned DPSUs/OFB/SHQs for their queries related to indigenization through the contact details given under each item.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </div>
+<body oncut="return false;" oncopy="return false;" onpaste="return false;">
     <form id="form1" runat="server">
         <asp:ScriptManager ID="sc" runat="server" EnablePageMethods="true">
         </asp:ScriptManager>
         <asp:UpdatePanel ID="update" runat="server">
             <ContentTemplate>
-                <div class="container-fluid">
-                    <div class="row " style="padding: 8px;">
-                        <div class="col-sm-2 col-3 ">
-                            <img src="user/ddp_logo.png" alt="" class="img-fluid" />
+                <div class="container-fluid" id="top">
+                    <div class="row">
+                        <div class="col-md-3 d-flex">
+                            <a href="ProductList" class="d-flex justify-content-center">
+                                <img src="../ddp_logo.png" class="img-fluid" style="height: 70px" /></a>
                         </div>
-                        <div class="col-sm-10 topheadline col-9">
-                            <h2 class="mb-0" style="color: #6915cf;">Opportunities for Make in India in Defence</h2>
+                        <div class="col-md-6 d-flex align-items-center justify-content-center">
+                            <h2 class="mb-0">OPPORTUNITIES FOR MAKE IN INDIA DEFENCE</h2>
+                        </div>
+
+                        <div class="col-md-3 d-flex justify-content-center align-items-center">
+
+
+                            <a class="nav-link" style="color: blue;">
+                                <h6>
+                                    <asp:Label ID="linkusername" runat="server" Visible="false" ToolTip="Login UserName"></asp:Label>
+                                </h6>
+                            </a>
                         </div>
                     </div>
                 </div>
-                <div class="page-title-overlap bg-dark pt-4">
-                    <div class="container d-lg-flex justify-content-between">
-                        <div class="order-lg-2 mb-3 mb-lg-0 pt-lg-2">
-                            <div class="navbar-tool dropdown ml-5">
-                                <asp:LinkButton ID="lbtotalcart" runat="server" class="navbar-tool-icon-box bg-secondary dropdown-toggle"
-                                    OnClick="lbtotalcart_Click">
-                                    <span class="navbar-tool-label" runat="server" id="totalno"></span><i class="navbar-tool-icon fas fa-cart-plus"
-                                        style="margin-top: 13px;"></i>
-                                </asp:LinkButton>
-                                <asp:LinkButton ID="lbcart" runat="server" Style="color: white; margin-left: auto;"
-                                    OnClick="lbcart_Click">
-                                     Show Interest
-                                </asp:LinkButton>
+                <div class="container-fluid bg-dark py-3" id="topbar2">
+                    <div class="row d-flex">
+                        <div class="col-sm-6 d-flex justify-content-sm-start justify-content-center">
+                            <h4 class="text-white">Products imported by Defence PSUs/OFB/SHQ</h4>
+                        </div>
+                        <div class="col-sm-6 d-flex justify-content-end pr-4">
+                            <asp:LinkButton ID="lbtotalcart" runat="server" class="navbar-tool-icon-box bg-secondary dropdown-toggle"
+                                OnClick="lbtotalcart_Click">
+                                <span class="navbar-tool-label" runat="server" id="totalno"></span><i class="navbar-tool-icon fa fa-cart-plus"></i>
+                            </asp:LinkButton>
+                            <asp:LinkButton ID="lbcart" runat="server" OnClick="lbcart_Click"> Show Interest</asp:LinkButton>
+                        </div>
+                    </div>
+                    <div class="row d-flex justify-content-end" id="menubar">
+                        <div class="col navbar navbar-expand-md px-md-3 bg-dark">
+                            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav2" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                                <i class="fa fa-bars" aria-hidden="true" style="color: white;"></i>
+                            </button>
+                            <div class="collapse navbar-collapse" id="navbarNav2">
+                                <ul class="navbar-nav ml-auto">
+                                    <li class="nav-item active">
+                                        <a class="nav-link" runat="server" href="~/ProductList"><i class="fa fa-home" aria-hidden="true"></i></a>
+                                    </li>
+                                    <a href="About" class="nav-link">About us </a>
+                                    <a href="~/Participate" runat="server" id="mhwparti" class="nav-link">How to Participate</a>
+
+                                    <a href="~/Dashboard" id="lblmis" runat="server" class="nav-link" visible="false" data-toggle="tooltip"
+                                        tooltip="DPSU's Dashboard Page Link (Click here to go back dashboard for add product)">CMS</a>
+                                    <div runat="server" id="reportdiv" visible="false">
+                                        <li class="nav-item dropdown">
+                                            <a class="nav-link dropdown-toggle" href="#" id="navbardrop1" data-toggle="dropdown">Reports&nbsp;<i class="fa fa-chevron-down" aria-hidden="true"></i>
+                                            </a>
+                                            <div class="dropdown-menu bg-dark">
+                                                <a href="~/PReport2" id="PR" runat="server" class="nav-link">Progress Report</a>
+                                                <a href="~/SuccessStoryupdate" id="lbSuccesstory" runat="server" class="nav-link" visible="false">Success Story</a>
+                                                <a href="~/Summery" id="A11" runat="server" class="nav-link">Summary Details</a>
+                                                <a href="~/Make2Report" id="A2" runat="server" class="nav-link dropdown-item">Make-II Report</a>
+                                                <a href="~/CategoryWiseRep" id="A10" runat="server" class="nav-link dropdown-item">Category Wise Report</a>
+                                                <a href="~/SONOIndig" id="A1" runat="server" class="nav-link dropdown-item">Supply Order/No-Indiginized</a>
+                                                <a href="~/EOINOSOINDIG" id="A12" runat="server" class="nav-link dropdown-item">EOI/No-SO/Indiginized</a>
+                                            </div>
+                                        </li>
+                                    </div>
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">Documentation&nbsp;<i class="fa fa-chevron-down" aria-hidden="true"></i>
+                                        </a>
+                                        <div class="dropdown-menu bg-dark">
+                                            <a href="../Policy&framwork.pdf" runat="server" target="_blank" class="nav-link dropdown-item">Policy & Frame work</a>
+                                            <a href="../UserManualPublicDomain.pdf" runat="server" target="_blank" class="nav-link dropdown-item">User Manual</a>
+                                            <a href="~/FAQs" runat="server" class="nav-link dropdown-item">FAQ</a>
+                                        </div>
+                                    </li>
+                                    <b><a href="https://www.makeinindiadefence.gov.in/" target="_blank" class="nav-link" onclick="return confirm('You are being redirected to https://www.makeinindiadefence.gov.in');">Make In India Defence Portal </a></b>
+                                    <b><a href="~/Login" id="linklogin" runat="server" class="nav-link" visible="false">DPSU Login</a> </b>
+                                    <div runat="server" id="Div13">
+                                        <li class="nav-item dropdown">
+                                            <a class="nav-link dropdown-toggle" href="#" id="navbardrop3" data-toggle="dropdown">Contact Us&nbsp;<i class="fa fa-chevron-down" aria-hidden="true"></i>
+                                            </a>
+                                            <div class="dropdown-menu bg-dark">
+                                                <b><a href="~/FeedBack" runat="server" id="lnkfeedback" class="nav-link">FeedBack</a></b>
+                                                 <b><a href="~/GHelpDesk" runat="server" id="a8" class="nav-link">HelpDesk</a></b>
+                                                <b><a href="~/GOfficialLogin" runat="server" id="ai" class="nav-link">HelpDesk Login</a></b>
+                                                <%--~/Login?mhelpdesk=GRv9ZoStVr7DfCuZKHzgow==--%>
+                                            </div>
+                                        </li>
+                                    </div>
+                                    <div runat="server" id="mhide" visible="false">
+                                        <li class="nav-item dropdown">
+                                            <a class="nav-link dropdown-toggle" href="#" id="navbardrop2" data-toggle="dropdown">All Test Links&nbsp;<i class="fa fa-chevron-down" aria-hidden="true"></i>
+                                            </a>
+                                            <div class="dropdown-menu bg-dark">
+                                                <a href="~/PUpdate" id="A3" runat="server" class="nav-link" visible="false">Product Update</a>
+                                                <a href="~/ItemStatus" id="A4" runat="server" class="nav-link dropdown-item" visible="false">Item Status</a>
+                                                <a href="~/TestSimiler" id="A5" runat="server" class="nav-link dropdown-item" visible="false">Similar Product</a>
+                                                <b><a href="~/SuccessStory2" id="A6" runat="server" class="nav-link" visible="false" style="display: none;">Success Story 2.0</a></b>
+                                            </div>
+                                        </li>
+                                    </div>
+                                    <a href="~/SiteMap" id="A7" runat="server" class="nav-link" data-toggle="tooltip"
+                                        tooltip="Sitemap">SiteMap</a>
+                                    <b>
+                                        <asp:LinkButton runat="server" ID="lbllogout" Visible="false" class="nav-link" OnClick="lbllogout_Click">&nbsp;Log Out</asp:LinkButton></b>
+                                </ul>
                             </div>
                         </div>
-                        <div class="order-lg-1 pr-lg-4 text-center text-lg-left">
-                            <h1 class="h3 text-light mb-0">Products imported by Defence PSUs/OFB/SHQ </h1>
-                        </div>
                     </div>
-                    <div class="order-lg-1 pr-lg-4 text-center text-lg-right" style="margin-top: 10px;">
-                        <div class="w-100 d-flex" style="margin-top: 10px; justify-content: flex-end;">
-                            <b>
-                                <asp:LinkButton ID="linklogin" runat="server" CssClass="menu_" OnClick="linklogin_Click"><i class="fa fa-user" aria-hidden="true"></i>DPSU Login </asp:LinkButton>
-                                <asp:Label ID="linkusername" runat="server" CssClass="menu_" ToolTip="Go To MIS"></asp:Label>
-                                <asp:LinkButton ID="lblmis" runat="server" CssClass="menu_" data-toggle="tooltip" OnClick="linkusername_Click" ToolTip="DPSU's Dashboard Page Link (Click here to go back dashboard for add product)">MIS</asp:LinkButton>
-                            </b>
-                            <b><a href="https://www.makeinindiadefence.gov.in/" target="_blank" class="menu_">Make In India Defence Portal </a></b>
-                            <b><a href="#aboutus-modal" class="menu_" data-toggle="modal">About us </a></b>
-                            <b><a href="#" class="menu_">Contact Us </a></b>
-                            <b><a href="FAQs" class="menu_">FAQ</a></b>
+                    <div class="row d-flex justify-content-center">
+                        <div class="col-8">
+                            <div class="input-group-overlay d-none d-lg-flex">
+                                <asp:DropDownList runat="server" ID="ddlfiltersearch" CssClass="form-control mr-1" Width="45%" Height="40px"></asp:DropDownList>
+                                <asp:TextBox ID="txtsearch" runat="server" Style="max-height: 40px;"
+                                    ToolTip="search tab with all criteria using words." onblur="SaveData('txtsearch')" CssClass="form-control mr-1 appended-form-control"
+                                    Placeholder="Search (type min three character)"></asp:TextBox>
+                                <asp:Button runat="server" ID="btnsearch" Style="padding: 3px 20px 3px 20px; width: 25%;" Height="40px"
+                                    CssClass="btn btn-info btn-sm pull-right" Text="Search" OnClick="btnsearch_Click" />
+                                &nbsp;&nbsp;
+                                <asp:LinkButton ID="lnktooltip" runat="server" Text="How to Search" ForeColor="White" Width="32%" Height="40px" CssClass="ml-3 btn btn-info btn-sm pull-right" OnClick="lnktooltip_Click"></asp:LinkButton>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="container pb-5 mb-2 mb-mdsd-4">
+                <%-- </div>--%>
+                <div class="container my-3">
                     <div class="row">
                         <aside class="col-lg-4">
                             <!-- Sidebar-->
                             <div class="cz-sidebar rounded-lg box-shadow-lg" id="shop-sidebar">
-                                <div class="cz-sidebar-header box-shadow-sm">
+                                <div class="cz-sidebar-header">
                                     <button class="close ml-auto" type="button" data-dismiss="sidebar" aria-label="Close"><span class="d-inline-block font-size-xs font-weight-normal align-middle">Close sidebar</span><span class="d-inline-block align-middle ml-2" aria-hidden="true">×</span></button>
                                 </div>
                                 <div class="cz-sidebar-body" data-simplebar="init" data-simplebar-auto-hide="true">
@@ -256,11 +401,24 @@
                                                 <div class="simplebar-content-wrapper" style="height: auto; padding-right: 20px; padding-bottom: 0px; overflow: hidden;">
                                                     <div class="simplebar-content" style="padding: 30px 16px 30px 30px;">
                                                         <div class="row">
+                                                            <div class="col-12 p-0 d-flex justify-content-center">
+                                                                <h5>Criteria for filter</h5>
+                                                            </div>
+
+                                                            <div class="col-12 p-0 d-flex justify-content-end">
+                                                                <div runat="server" id="Div4" class="input-group" visible="false" style="justify-content: flex-end;">
+                                                                    <asp:Button runat="server" ID="Button3" Style="padding: 3px 20px 3px 20px; width: auto;"
+                                                                        CssClass="btn btn-info btn-sm pull-right" Text="Reset" OnClick="btnreset_Click" />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
                                                             <div class="col-6">
                                                             </div>
                                                             <div class="col-6 p-0">
                                                                 <div runat="server" id="Div1" class="input-group" visible="false" style="justify-content: flex-end;">
-                                                                    <asp:Button runat="server" ID="btnreset" Style="padding: 3px 20px 3px 20px; width: auto;" CssClass="btn btn-info btn-sm pull-right" Text="Reset" OnClick="btnreset_Click" />
+                                                                    <asp:Button runat="server" ID="btnreset" Style="padding: 3px 20px 3px 20px; width: auto;"
+                                                                        CssClass="btn btn-info btn-sm pull-right" Text="Reset" OnClick="btnreset_Click" />
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -268,26 +426,32 @@
                                                             <label><b>Year of Import</b></label>
                                                             <div class="input-group">
                                                                 <asp:RadioButtonList ID="rbsort" runat="server" AutoPostBack="true" CssClass="custom-checkbox" OnSelectedIndexChanged="rbsort_SelectedIndexChanged">
-                                                                    <asp:ListItem Value="EstimatePrice18" style="margin-left: 5px !important;">&nbsp;2018-19</asp:ListItem>
+
+                                                                    <asp:ListItem Value="EstimatePrice18" style="margin-left: 5px !important;">&nbsp;Previous Years <2019-20</asp:ListItem>
                                                                     <asp:ListItem Value="EstimatePrice" Selected="True" style="margin-left: 5px !important;">&nbsp;2019-20</asp:ListItem>
-                                                                    <asp:ListItem Value="EstimatePricefuture" style="margin-left: 5px !important;">&nbsp;2020-21</asp:ListItem>
+                                                                    <asp:ListItem Value="EstimatePrice21" style="margin-left: 5px !important;">&nbsp;2020-21</asp:ListItem>
+                                                                    <asp:ListItem Value="EstimatePricefuture" style="margin-left: 5px !important;">&nbsp;2021-22</asp:ListItem>
                                                                 </asp:RadioButtonList>
                                                             </div>
                                                         </div>
                                                         <div id="Div12" class="widget widget-categories mb-3">
                                                             <label><b>Annual Import Value (Rs)</b></label>
+
                                                             <div class="input-group">
                                                                 <asp:RadioButtonList ID="chkimportvalue" runat="server" AutoPostBack="true" CssClass="custom-checkbox" OnSelectedIndexChanged="chkimportvalue_SelectedIndexChanged">
-                                                                    <asp:ListItem Value="4" style="margin-left: 5px !important;" onClick="MutExChkList(this);">&nbsp; 0.5 - 5 Million</asp:ListItem>
-                                                                    <asp:ListItem Value="1" style="margin-left: 5px !important;" onClick="MutExChkList(this);">&nbsp; 5 - 10 Million</asp:ListItem>
-                                                                    <asp:ListItem Value="2" style="margin-left: 5px !important;" onClick="MutExChkList(this);">&nbsp; 10 - 50 Million</asp:ListItem>
-                                                                    <asp:ListItem Value="3" style="margin-left: 5px !important;" onClick="MutExChkList(this);">&nbsp; 50 Million and above</asp:ListItem>
+                                                                    <%--<asp:ListItem Value="6" style="margin-left: 5px !important;" onClick="MutExChkList(this);">&nbsp; Probable future import items</asp:ListItem>--%>
+                                                                    <asp:ListItem Value="5" style="margin-left: 5px !important;">&nbsp; Below 0.5 Million</asp:ListItem>
+                                                                    <asp:ListItem Value="4" style="margin-left: 5px !important;">&nbsp; 0.5 - 5 Million</asp:ListItem>
+                                                                    <asp:ListItem Value="1" style="margin-left: 5px !important;">&nbsp; 5 - 10 Million</asp:ListItem>
+                                                                    <asp:ListItem Value="2" style="margin-left: 5px !important;">&nbsp; 10 - 50 Million</asp:ListItem>
+                                                                    <asp:ListItem Value="3" style="margin-left: 5px !important;">&nbsp; 50 Million and above</asp:ListItem>
                                                                 </asp:RadioButtonList>
                                                             </div>
                                                         </div>
                                                         <div class="widget widget-categories mb-3 " runat="server">
                                                             <div id="Div5" runat="server">
                                                                 <label><b>Company</b></label>
+                                                                <asp:LinkButton runat="server" ID="lblviewcomp" Visible="false" OnClick="lblviewcomp_Click"><i class="fa fa-eye pull-right mr-1" style="margin-top: 5px;"></i></asp:LinkButton>
                                                                 <div class="input-group">
                                                                     <asp:DropDownList ID="ddlcomp" runat="server" CssClass="custom-select" AutoPostBack="true" OnSelectedIndexChanged="ddlcomp_SelectedIndexChanged"></asp:DropDownList>
                                                                 </div>
@@ -305,7 +469,7 @@
                                                                 <asp:DropDownList ID="ddlunit" runat="server" CssClass="custom-select" AutoPostBack="true" OnSelectedIndexChanged="ddlunit_SelectedIndexChanged"></asp:DropDownList>
                                                             </div>
                                                         </div>
-                                                        <div id="Div16" class="widget widget-categories mb-3" runat="server">
+                                                        <div id="Div16" class="widget widget-categories mb-3" runat="server" visible="false">
                                                             <label><b>Industry Specifics (NATO Class)</b></label>
                                                             <div class="input-group">
                                                                 <asp:RadioButtonList ID="rbindustryspecification" runat="server" CssClass="custom-radio" AutoPostBack="true" OnSelectedIndexChanged="rbindustryspecification_SelectedIndexChanged">
@@ -319,7 +483,9 @@
                                                             </div>
                                                         </div>
                                                         <div id="Div6" class="widget widget-categories mb-3" runat="server">
-                                                            <label><b>Nato Supply Group</b></label><asp:LinkButton runat="server" ID="lblviewnato" OnClick="lblviewnato_Click"><i class="fa fa-eye pull-right mr-1" style="margin-top:5px;"></i></asp:LinkButton>
+
+                                                            <label><b>Nato Supply Group Classification</b></label><asp:LinkButton runat="server" ID="lblviewnato" OnClick="lblviewnato_Click" ToolTip="Click here for view Details"><i class="fa fa-eye pull-right mr-1"  style="margin-top: 5px;"></i></asp:LinkButton>
+                                                            <%-- <span class="tooltiptext">View Only</span>--%>
                                                             <div class="input-group">
                                                                 <asp:DropDownList ID="ddlnsg" runat="server" CssClass="custom-select" Style="margin-top: 5px;" AutoPostBack="true" OnSelectedIndexChanged="ddlnsg_SelectedIndexChanged"></asp:DropDownList>
                                                             </div>
@@ -337,7 +503,7 @@
                                                             </div>
                                                         </div>
                                                         <div id="Div7" class="widget widget-categories mb-3" runat="server" runat="server">
-                                                            <label><b>Industry Domain</b></label>
+                                                            <label><b>Industry Domain (Simple_Way)</b></label>
                                                             <div class="input-group">
                                                                 <asp:DropDownList ID="ddlprodindustrydomain" runat="server" CssClass="custom-select" AutoPostBack="true" OnSelectedIndexChanged="ddlprodindustrydomain_SelectedIndexChanged"></asp:DropDownList>
                                                             </div>
@@ -353,25 +519,53 @@
                                                             <label><b>Make in India Target (starting) Year</b></label>
                                                             <div class="input-group">
                                                                 <asp:RadioButtonList ID="rbindigtarget" runat="server" AutoPostBack="true" CssClass="custom-checkbox" OnSelectedIndexChanged="ddldeclaration_SelectedIndexChanged">
-                                                                    <asp:ListItem Value="2020-21" style="margin-left: 5px !important;">&nbsp;2020-21</asp:ListItem>
                                                                     <asp:ListItem Value="2021-22" style="margin-left: 5px !important;">&nbsp;2021-22</asp:ListItem>
                                                                     <asp:ListItem Value="2022-23" style="margin-left: 5px !important;">&nbsp;2022-23</asp:ListItem>
                                                                     <asp:ListItem Value="2023-24" style="margin-left: 5px !important;">&nbsp;2023-24</asp:ListItem>
                                                                     <asp:ListItem Value="2024-25" style="margin-left: 5px !important;">&nbsp;2024-25</asp:ListItem>
+                                                                    <asp:ListItem Value="2025-26" style="margin-left: 5px !important;">&nbsp;2025-26</asp:ListItem>
                                                                 </asp:RadioButtonList>
                                                             </div>
                                                         </div>
                                                         <div id="Div3" class="widget widget-categories mb-3" runat="server">
                                                             <label><b>Make in India Category</b></label>
-                                                            <a data-target="#divInfoIdex" data-toggle="modal" href="#" style="margin-top: 5px;" class="pull-right"><i class="fa fa-question-circle"></i>&nbsp;Definitions</a>
                                                             <div class="input-group">
                                                                 <asp:RadioButtonList ID="chktendor" runat="server" AutoPostBack="true" CssClass="custom-checkbox" OnSelectedIndexChanged="chktendor_SelectedIndexChanged">
                                                                 </asp:RadioButtonList>
                                                             </div>
                                                         </div>
-                                                        <div id="divIntrested" class="widget widget-categories mb-3" runat="server" visible="false">
+                                                        <div id="Div2" class="widget widget-categories mb-3" runat="server">
+                                                            <label><b>Is Indegenized</b></label>
                                                             <div class="input-group">
-                                                                <asp:LinkButton runat="server" ID="lbShownIntrested" CssClass="btn btn-primary" OnClick="lbShownIntrested_Click"><i class="fa fa-life-ring"></i>&nbsp; Show Interested Product</asp:LinkButton>
+                                                                <asp:RadioButtonList ID="rbIsIndeginized" runat="server" AutoPostBack="true" CssClass="custom-checkbox" OnSelectedIndexChanged="rbIsIndeginized_SelectedIndexChanged">
+                                                                    <asp:ListItem Value="Y" style="margin-left: 5px !important;">&nbsp;Yes</asp:ListItem>
+                                                                    <asp:ListItem Value="N" style="margin-left: 5px !important;">&nbsp;No</asp:ListItem>
+                                                                </asp:RadioButtonList>
+                                                            </div>
+                                                        </div>
+                                                        <div id="DivA" class="widget widget-categories mb-3" runat="server" visible="false">
+                                                            <label><b>Supply Order</b></label>
+                                                            <div class="input-group">
+                                                                <asp:RadioButtonList ID="rblsupplyOrder" runat="server" AutoPostBack="true" CssClass="custom-checkbox" OnSelectedIndexChanged="rblsupplyOrder_SelectedIndexChanged">
+                                                                    <asp:ListItem Value="Yes" style="margin-left: 5px !important;">&nbsp;Yes</asp:ListItem>
+                                                                    <asp:ListItem Value="No" style="margin-left: 5px !important;">&nbsp;No</asp:ListItem>
+                                                                </asp:RadioButtonList>
+                                                            </div>
+                                                        </div>
+                                                        <div id="Div10" class="widget widget-categories mb-3" runat="server" visible="false">
+                                                            <label><b>EOI</b></label>
+                                                            <div class="input-group">
+                                                                <asp:RadioButtonList ID="rbeoistatus" runat="server" AutoPostBack="true" CssClass="custom-checkbox" OnSelectedIndexChanged="rbeoistatus_SelectedIndexChanged">
+                                                                    <asp:ListItem Value="Yes" style="margin-left: 5px !important;">Yes</asp:ListItem>
+                                                                    <asp:ListItem Value="No" style="margin-left: 5px !important;">No</asp:ListItem>
+                                                                    <asp:ListItem Value="Archive" style="margin-left: 5px !important;">Archive</asp:ListItem>
+                                                                    <asp:ListItem Value="Active" style="margin-left: 5px !important;">Active</asp:ListItem>
+                                                                </asp:RadioButtonList>
+                                                            </div>
+                                                        </div>
+                                                        <div id="divIntrested" class="widget widget-categories mb-3 d-none" runat="server" visible="false">
+                                                            <div class="input-group" visible="false">
+                                                                <a href="~/IntrestedProduct" runat="server" id="lbShownIntrested" class="btn btn-primary"><i class="fa fa-life-ring"></i>&nbsp; Show Interested Product</a>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -379,184 +573,201 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="simplebar-placeholder" style="width: auto; height: 1727px;"></div>
                                 </div>
                                 <div class="simplebar-track simplebar-horizontal" style="visibility: hidden;">
-                                    <div class="simplebar-scrollbar" style="transform: translate3d(0px, 0px, 0px); display: none;"></div>
+                                    <div class="simplebar-scrollbar" style="transform: translate3d(0px, 0px, 0px); display: none;">
+                                    </div>
                                 </div>
                                 <div class="simplebar-track simplebar-vertical" style="visibility: hidden;">
-                                    <div class="simplebar-scrollbar" style="height: 25px; transform: translate3d(0px, 0px, 0px); display: none;"></div>
-                                </div>
-                            </div>
-                        </aside>
-                        <div class="col-lg-8">
-                            <div class="d-flex justify-content-center justify-content-sm-between align-items-center pt-2 pb-4 pb-sm-5">
-                                <div class="col-md-9">
-                                    <div class="input-group-overlay d-none d-lg-flex mx-4">
-                                        <asp:TextBox ID="txtsearch" runat="server" Style="max-height: 40px;"
-                                            ToolTip="search tab with all criteria using words." onblur="SaveData('txtsearch')" CssClass="form-control appended-form-control"
-                                            Placeholder="Search (type min three character)"></asp:TextBox>
-                                        <asp:Button runat="server" ID="btnsearch" Style="padding: 3px 20px 3px 20px; width: auto;" CssClass="btn btn-info btn-sm pull-right" Text="Search" OnClick="btnsearch_Click" />
+                                    <div class="simplebar-scrollbar" style="height: 25px; transform: translate3d(0px, 0px, 0px); display: none;">
                                     </div>
                                 </div>
                             </div>
-                            <div class="clearfix">
-                            </div>
-                            <div>
-                                <b>
-                                    <asp:Label ID="lbltotal" runat="server" CssClass="pull-left"></asp:Label>
-                                    <b>
-                                        <asp:Label ID="lbltotalleft" runat="server" CssClass="pull-right"></asp:Label></b>
-                                </b>
-                                <div class="clearfix">
+                        </aside>
+                        <div class="col-lg-8" id="cardsection">
+                            <div class="row d-flex">
+                                <div id="col1" class="col-sm-6">
+                                    <h6>
+                                        <asp:Label ID="lbltotal" runat="server"></asp:Label></h6>
                                 </div>
-                                <asp:LinkButton ID="totoalmore" runat="server" CssClass="pull-right" OnClick="totoalmore_Click">  <span class="fa fa-eye"></span>  More details</asp:LinkButton>
-                            </div>
-
-                            <div style="float: left;">
-                                <b>
-                                    <p style="float: left; color: #FF00FF;">
+                                <div id="col2" class="col-sm-6 d-flex justify-content-sm-end justify-content-start">
+                                    <h6>
+                                        <asp:Label ID="lbltotalleft" runat="server"></asp:Label></h6>
+                                </div>
+                                <div id="col3" class="col-sm-8">
+                                    <h6 style="color: #FF00FF;">
                                         <asp:Label ID="lblyearvalue" runat="server"></asp:Label>
                                         (in million Rs) -
-                                   
-                                        <asp:Label ID="lblestimateprice" runat="server"></asp:Label>
-                                    </p>
-                                </b>
-                                <p style="float: left;" runat="server" visible="false">
-                                    Future requirements in lakhs -
-                               
-                                    <asp:Label ID="lblfuturepurchase" runat="server" Text="0"></asp:Label>
-                                </p>
-                            </div>
-                            <div class="clearfix">
-                            </div>
-                            <br />
-                            <div id="divcontentproduct" runat="server">
+                                <asp:Label ID="lblestimateprice" runat="server"></asp:Label></h6>
+                                </div>
+                                <div id="col4" class="col-sm-4 d-flex justify-content-sm-end justify-content-start">
+                                    <h6>
+                                        <asp:LinkButton ID="totoalmore" runat="server" OnClick="totoalmore_Click" ToolTip="Click here for More Details">  <span class="fa fa-eye"></span>  More details</asp:LinkButton></h6>
+                                    <p runat="server" visible="false">
+                                        Future requirements in lakhs -
+                                <asp:Label ID="lblfuturepurchase" runat="server" Text="0"></asp:Label>
 
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="clearfix"></div>
+
+                            <div class="row justify-content-end">
+                                <div class="col-3">
+                                    <asp:DropDownList ID="ddlsort" runat="server" CssClass="form-control filter_btn" AutoPostBack="true" OnSelectedIndexChanged="ddlsort_SelectedIndexChanged">
+                                        <asp:ListItem Value="Sort by">Sort by</asp:ListItem>
+                                        <asp:ListItem Value="TotalInterest" style="display: none;">Popularity</asp:ListItem>
+                                        <asp:ListItem Value="NonPopuler">opportunity</asp:ListItem>
+                                        <asp:ListItem Value="LastUpdated">Newest</asp:ListItem>
+                                        <asp:ListItem Value="LastUpdated asc">Oldest</asp:ListItem>
+                                        <asp:ListItem Value="Higest Value">Higest Value</asp:ListItem>
+                                        <asp:ListItem Value="Lowest Value">Lowest Value</asp:ListItem>
+                                    </asp:DropDownList>
+                                </div>
+                            </div>
+
+                            <div id="divcontentproduct" runat="server">
                                 <nav class="d-flex justify-content-between pt-2" aria-label="Page navigation">
                                     <ul class="pagination">
                                         <li class="page-item">
-                                            <asp:LinkButton ID="LinkButton1" runat="server" class="page-link" OnClick="lnkbtnPgPrevious_Click"><i class="fas fa-chevron-left mr-2"></i>Prev</asp:LinkButton>
+                                            <asp:LinkButton ID="LinkButton1" runat="server" class="page-link" OnClick="lnkbtnPgPrevious_Click"><i class="fa fa-chevron-left mr-2"></i>Prev</asp:LinkButton>
                                         </li>
                                     </ul>
                                     <span style="text-align: center;">Showing
-                                   
-                                        <asp:Label runat="server" ID="lbltotalshowpageitem"></asp:Label>
+                                            <asp:Label runat="server" ID="lbltotalshowpageitem"></asp:Label>
                                         products of
-                               
-                                        <asp:Label ID="lbltotfilter" runat="server"></asp:Label>
+                                            <asp:Label ID="lbltotfilter" runat="server"></asp:Label>
                                         products  
                                     </span>
                                     <ul class="pagination">
                                         <li class="page-item">
                                             <asp:LinkButton ID="LinkButton2" runat="server" class="page-link" OnClick="lnkbtnPgNext_Click">
-                            Next<i class="fas fa-chevron-right ml-2"></i></asp:LinkButton>
+                            Next<i class="fa fa-chevron-right ml-2"></i></asp:LinkButton>
                                         </li>
                                     </ul>
                                 </nav>
-                                <div class="clearfix mt10">
-                                </div>
-                                <div class="row mx-n2">
+                                <div class="row my-2">
+
                                     <asp:DataList runat="server" ID="dlproduct" RepeatColumns="3" RepeatLayout="Flow"
                                         RepeatDirection="Horizontal" OnItemCommand="dlproduct_ItemCommand" OnItemDataBound="dlproduct_ItemDataBound">
                                         <ItemTemplate>
-                                            <div class="">
-                                                <div class="card product-card" style="box-shadow: 0 0.3rem 1.525rem -0.375rem rgba(0, 0, 0, 0.1);">
+                                            <div class="card" id="mycard">
+                                                <div style="z-index: 9999!important; position: relative;">
+                                                    <a href="#" class="indigenized" runat="server" id="indevisi" style="color: #ff0000a3" visible="false">INDEGENIZED                                                       
+                                                    </a>
+                                                    <a href="#" class="indigenized" runat="server" id="SupplyOr" style="color: #ff0000a3; font-size: xx-large; font: bold; text-align: center" visible="false">Supply Order Yes
+                                                    </a>
+                                                    <a href="#" class="indigenized" runat="server" id="inhouse" style="color: #ff0000a3; font-size: -webkit-xxx-large; margin-left: 58px; font: bold; text-align: right" visible="false">In House
+                                                    </a>
+                                                    <a href="#" class="indigenized" runat="server" id="IGA" style="color: #ff0000a3; font-size: -webkit-xxx-large; margin-left: 121px; font: bold; text-align: center" visible="false">IGA
+                                                    </a>
+                                                    <asp:Label runat="server" ID="SupplyOr1" Visible="false" Text='<%#Eval("SupplyOrderStatus") %>'></asp:Label>
+                                                    <asp:Label runat="server" ID="ISINDI" Visible="false" Text='<%#Eval("IsIndeginized") %>'></asp:Label>
+                                                    <asp:Label runat="server" ID="LBPURPOSEOFPROC" Visible="false" Text='<%#Eval("PurposeofProcurement") %>'></asp:Label>
+                                                </div>
+                                                <div id="card-image d-flex justify-content-center">
                                                     <asp:LinkButton runat="server" ID="lbimagesgow" CommandArgument='<%#Eval("ProductRefNo") %>' CommandName="View"
                                                         class="card-img-top d-block overflow-hidden" Style="text-align: center;">
-                                                        <img src='<%#Eval("TopImages") %>' alt="Product" style="max-width: 100%; width: 50%; height: 90px;">
-                                                    </asp:LinkButton>&nbsp;&nbsp;&nbsp;     
-                                                    <div class="card-body py-2" style="height: 230px;">
-                                                        <b>
-                                                            <asp:LinkButton runat="server" ID="lblcompshow" CommandArgument='<%#Eval("ProductRefNo") %>' CommandName="View" class="product-meta d-block font-size-xs pb-1" Style="color: #6915cf; font-size: 16px!important;">
-                                                                <%#Eval("CompanyName") %>
-                                                            </asp:LinkButton>
-                                                        </b>
-                                                        <h3 class="product-title font-size-sm">
-                                                            <asp:LinkButton runat="server" ID="lbldesc" title='<%#Eval("ProductDescription") %>' CommandArgument='<%#Eval("ProductRefNo") %>' CommandName="View">
-                                                                <%# Eval("ProductDescription").ToString().Length > 25? (Eval("ProductDescription") as string).Substring(0,25) + ".." : Eval("ProductDescription")  %>
-                                                            </asp:LinkButton>
-                                                        </h3>
-                                                        <table class="table" style="font-size: 14px;">
-                                                            <tbody>
-                                                                <tr id="Tr1" runat="server" visible="false">
-                                                                    <td style="padding: 8px;">NSN Group
-                                                                    </td>
-                                                                    <td style="padding: 8px;" class="text-right" title='<%#Eval("NSNGroup") %>'>
-                                                                        <%# Eval("NSNGroup").ToString().Length > 15? (Eval("NSNGroup") as string).Substring(0,15) + ".." : Eval("NSNGroup")  %>
-                                                                        <asp:HiddenField ID="hfrole" runat="server" Value='<%#Eval("Role") %>' />
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td colspan="2" style="padding: 8px; font-size: 11px; color: #6915cf;">Annual Import Value (in million Rs) <b>
-                                                                        <asp:Label ID="lblepold" Visible="false" runat="server" Text='<%# Eval("EstimatePrice") %>'></asp:Label>
-                                                                        <asp:Label ID="lblepfu" Visible="false" runat="server" Text='<%# Eval("EstimatePricefuture") %>'></asp:Label>
-                                                                        <asp:Label ID="lblepold17" Visible="false" runat="server" Text='<%# Eval("EstimatePrice17") %>'></asp:Label>
-                                                                        <asp:Label ID="lblepold18" Visible="false" runat="server" Text='<%# Eval("EstimatePrice18") %>'></asp:Label>
-                                                                    </b>
-                                                                    </td>
-                                                                </tr>
-                                                                <tr id="Tr2">
-                                                                    <td colspan="2" style="padding: 5px; font-size: 12px;">Nato Supply Group Class :-
-                                                                      
-                                                                        <p><b>[<%#Eval("NSCCode") %>] -  <%# Eval("NSNGroupClass").ToString().Length > 35? (Eval("NSNGroupClass") as string).Substring(0,35) + ".." : Eval("NSNGroupClass")  %></b></p>
-                                                                    </td>
-                                                                </tr>
-                                                                <tr id="Tr233" runat="server">
-                                                                    <td class="text-right" colspan="2" style="padding: 8px; font-size: 11px;">Last Updated :- 
-                                                                       
-                                                                        <%#Eval("LastUpdated","{0:dd-MMM-yyyy}") %>
-                                                                    </td>
-                                                                </tr>
-                                                            </tbody>
-                                                        </table>
-                                                    </div>
-                                                    <div class="text-center">
-                                                        <asp:LinkButton ID="lbview" runat="server" class="nav-link-style font-size-ms" CommandName="View"
-                                                            CommandArgument='<%#Eval("ProductRefNo") %>'>                                                
-                                                    <i class="fas fa-eye align-middle mr-1"></i>
-                                                    More Details
-                                                        </asp:LinkButton>
-                                                    </div>
-                                                    <asp:LinkButton runat="server" ID="lbaddcart" class="btn btn-sm btn-block" CommandArgument='<%#Eval("ProductRefNo") %>'
-                                                        CommandName="addcart"><i class="navbar-tool-icon fas fa-cart-plus"></i> Add to show interest </asp:LinkButton>
-                                                    <asp:HiddenField ID="hfr" runat="server" Value='<%#Eval("ProductRefNo") %>' />
+                                                        <img src='<%#Eval("TopImages") %>' alt="Product" style="max-width: 100%; width: 80%; height: 90px;">
+                                                    </asp:LinkButton>&nbsp;&nbsp;&nbsp;
                                                 </div>
+                                                <div class="card-body" style="min-height: 300px;">
+                                                    <b>
+                                                        <asp:LinkButton runat="server" ID="lblcompshow" CommandArgument='<%#Eval("ProductRefNo") %>' CommandName="View" class="product-meta d-block font-size-xs pb-1" Style="color: #6915cf; font-size: 16px !important;">
+                                                                <%#Eval("CompanyName") %>
+                                                        </asp:LinkButton>
+                                                    </b>
+                                                    <p class="product-title" title='<%# Eval("ProductDescription")%>'>
+                                                        <%# Eval("ProductDescription").ToString().Length > 15? (Eval("ProductDescription") as string).Substring(0,15) + "..." : Eval("ProductDescription")  %>
+                                                    </p>
+                                                    <table class="table table-responsive">
+                                                        <tbody>
+                                                            <tr id="Tr1" runat="server" visible="false">
+                                                                <td style="padding: 8px;">NSN Group
+                                                                </td>
+                                                                <td style="padding: 8px;" class="text-right" title='<%#Eval("NSNGroup") %>'>
+                                                                    <%# Eval("NSNGroup").ToString().Length > 15? (Eval("NSNGroup") as string).Substring(0,15) + ".." : Eval("NSNGroup")  %>
+                                                                    <asp:HiddenField ID="hfrole" runat="server" Value='<%#Eval("Role") %>' />
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td colspan="2" style="font-size: 11px; color: #6915cf;">Annual Import (in million Rs) <b>
+                                                                    <asp:Label ID="lblepold" Visible="false" runat="server" Text='<%# Eval("EstimatePrice") %>'></asp:Label>
+                                                                    <asp:Label ID="lblepfu" Visible="false" runat="server" Text='<%# Eval("EstimatePricefuture") %>'></asp:Label>
+                                                                    <asp:Label ID="lblepold17" Visible="false" runat="server" Text='<%# Eval("EstimatePrice17") %>'></asp:Label>
+                                                                    <asp:Label ID="lblepold18" Visible="false" runat="server" Text='<%# Eval("EstimatePrice18") %>'></asp:Label>
+                                                                </b>
+                                                                </td>
+                                                            </tr>
+                                                            <tr id="Tr2" runat="server">
+                                                                <td colspan="2" style="font-size: 12px;">Nato Supply Group Class :-
+                                                                        <p><b>[<%#Eval("NSCCode") %>] -  <%# Eval("NSNGroupClass").ToString().Length > 35? (Eval("NSNGroupClass") as string).Substring(0,35) + ".." : Eval("NSNGroupClass")  %></b></p>
+                                                                    <asp:HiddenField runat="server" ID="hfnsc" Value='<%#Eval("NSCCode") %>' />
+                                                                </td>
+                                                            </tr>
+                                                            <tr id="Tr233" runat="server">
+                                                                <td colspan="2" style="font-size: 11px;">Last Updated :- 
+                                                                        <%#Eval("LastUpdated","{0:dd-MMM-yyyy}") %>
+                                                                </td>
+                                                            </tr>
+                                                            <tr id="Tr3" runat="server">
+                                                                <td colspan="2" style="font-size: 11px;">
+                                                                    <asp:LinkButton ID="lbview" runat="server" class="nav-link-style font-size-ms" ToolTip="Click here for Product More Details" CommandName="View"
+                                                                        CommandArgument='<%#Eval("ProductRefNo") %>' Style="color: #6915cf!important;">                                                
+                                                    <i class="fa fa-eye align-middle mr-1"></i>
+                                                    More Details
+                                                                    </asp:LinkButton>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td colspan="2" style="font-size: 11px;">
+                                                                    <a id="LinkButton6" runat="server" target="_blank" class="nav-link-style font-size-ms" tooltip="Click here for View Similar Product"
+                                                                        style="color: #6915cf!important;">
+                                                                        <i class=" fa fa-arrow-circle-o-right align-middle mr-1"></i>
+                                                                        Similar-Products 
+                                                                    </a>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <asp:LinkButton runat="server" ID="lbaddcart" class="btn btn-block" CommandArgument='<%#Eval("ProductRefNo") %>'
+                                                    CommandName="addcart"><i class="fa fa-cart-plus"></i> Add to show interest </asp:LinkButton>
+                                                <asp:HiddenField ID="hfr" runat="server" Value='<%#Eval("ProductRefNo") %>' />
                                             </div>
                                         </ItemTemplate>
                                     </asp:DataList>
                                 </div>
-                                <div class="clearfix">
-                                </div>
                                 <nav class="d-flex justify-content-between pt-2" aria-label="Page navigation">
                                     <ul class="pagination">
                                         <li class="page-item">
-                                            <asp:LinkButton ID="lnkbtnPgPrevious" runat="server" class="page-link" OnClick="lnkbtnPgPrevious_Click"><i class="fas fa-chevron-left mr-2"></i>Prev</asp:LinkButton>
+                                            <asp:LinkButton ID="lnkbtnPgPrevious" runat="server" class="page-link" OnClick="lnkbtnPgPrevious_Click"><i class="fa fa-chevron-left mr-2"></i>Prev</asp:LinkButton>
+                                        </li>
+                                    </ul>
+                                    <ul class="pagination">
+                                        <li class="page-item">
+                                            <asp:Label ID="lblpaging" runat="server"></asp:Label>
                                         </li>
                                     </ul>
                                     <ul class="pagination">
                                         <li class="page-item">
                                             <asp:LinkButton ID="lnkbtnPgNext" runat="server" class="page-link" OnClick="lnkbtnPgNext_Click">
-                            Next<i class="fas fa-chevron-right ml-2"></i></asp:LinkButton>
+                            Next<i class="fa fa-chevron-right ml-2"></i></asp:LinkButton>
                                         </li>
                                     </ul>
                                 </nav>
-                                <div style="margin-top: 10px;">
-                                    <asp:Label ID="lblpaging" runat="server"></asp:Label>
-                                </div>
+
                             </div>
+
                         </div>
                     </div>
                 </div>
-                <div class="modal-quick-view modal fade" id="ProductCompany" tabindex="-1">
-                    <div class="modal-dialog modal-xl" style="max-width: 800px!important; z-index: 9999999999;">
+                <div class="modal-quick-view modal fade" id="ProductCompany" tabindex="-1" style="z-index: 9999999;">
+                    <div class="modal-dialog modal-xl" style="max-width: 800px !important;">
                         <div class="modal-content">
-                            <div class="modal-header modelhead">
-                                <h4 class="modal-title product-title" style="font-size: 25px;">Import Item Details
-                                </h4>
-                                <button class="close" style="padding-right: 45px;" type="button" data-dismiss="modal"
-                                    aria-label="Close">
-                                    <span aria-hidden="true">&times;</span></button>
+                            <div class="modal-header modal-header1 d-flex justify-content-center" style="background: #507CD1!important;">
+                                <h5 class="modal-title text-white">Import Item Details</h5>
                             </div>
                             <div class="modal-body" style="padding: 20px 40px 18px 40px;">
                                 <div class="simplebar-content">
@@ -564,12 +775,12 @@
                                     <div class="widget widget-categories mb-4">
                                         <div class="accordion mt-n1" id="shop-categories">
                                             <div id="printarea">
-                                                <div class="card" style="border-bottom: solid 1.4px #e5e5e5!important;">
+                                                <div class="card" style="border-bottom: solid 1.4px #e5e5e5 !important;">
                                                     <div class="card-header">
                                                         <h3 class="accordion-heading mb-2">
                                                             <a class="collapsed" href="#shoes" role="button" data-toggle="collapse" aria-expanded="false"
                                                                 aria-controls="shoes">Item Description <span class="accordion-indicator iconupanddown">
-                                                                    <i class="fas fa-chevron-up"></i></span></a>
+                                                                    <i class="fa fa-chevron-up"></i></span></a>
                                                         </h3>
                                                     </div>
                                                     <div class="collapse" id="shoes" data-parent="#shop-categories">
@@ -585,18 +796,18 @@
                                                                         </td>
                                                                     </tr>
                                                                     <tr runat="server" id="one">
-                                                                        <th scope="row">Division/Plant:
+                                                                        <th scope="row">Division/Plant:Unit
                                                                         </th>
                                                                         <td>
                                                                             <asp:Label ID="lbldiviname" runat="server" Text=""></asp:Label>
-                                                                        </td>
-                                                                    </tr>
-                                                                    <tr runat="server" id="two">
-                                                                        <th scope="row">Unit:
-                                                                        </th>
-                                                                        <td>
+                                                                            &nbsp:
                                                                             <asp:Label ID="lblunitnamepro" runat="server" Text=""></asp:Label>
                                                                         </td>
+                                                                    </tr>
+                                                                    <tr runat="server" id="two" visible="false" class="d-none">
+                                                                        <th scope="row" class="d-none">Unit:
+                                                                        </th>
+                                                                        <td></td>
                                                                     </tr>
                                                                 </tbody>
                                                             </table>
@@ -643,7 +854,6 @@
                                                                         <td>
                                                                             <asp:Label ID="prodIndustryDomain" runat="server" Text=""></asp:Label>
                                                                             /
-                                                                       
                                                                             <asp:Label ID="ProdIndusSubDomain" runat="server" Text=""></asp:Label>
                                                                         </td>
                                                                     </tr>
@@ -653,10 +863,11 @@
                                                                         </td>
                                                                     </tr>
                                                                     <tr runat="server" id="seven">
-                                                                        <th scope="row">OEM Name
+                                                                        <th scope="row">OEM Name:Country
                                                                         </th>
                                                                         <td>
                                                                             <asp:Label ID="lbloemname" runat="server" Text=""></asp:Label>
+                                                                            :&nbsp;<asp:Label ID="lbloemcountry" runat="server" Text=""></asp:Label>
                                                                         </td>
                                                                     </tr>
                                                                     <tr runat="server" id="eight">
@@ -666,14 +877,12 @@
                                                                             <asp:Label ID="lbloempartno" runat="server" Text=""></asp:Label>
                                                                         </td>
                                                                     </tr>
-                                                                    <tr runat="server" id="nine">
-                                                                        <th scope="row">OEM Country
+                                                                    <tr runat="server" id="nine" visible="FALSE" class="d-none">
+                                                                        <th scope="row" class="d-none">OEM Country
                                                                         </th>
-                                                                        <td>
-                                                                            <asp:Label ID="lbloemcountry" runat="server" Text=""></asp:Label>
-                                                                        </td>
+                                                                        <td></td>
                                                                     </tr>
-                                                                    <tr runat="server" id="twentyfive">
+                                                                    <tr runat="server" id="twentyfive" visible="FALSE">
                                                                         <th scope="row">OEM Address
                                                                         </th>
                                                                         <td>
@@ -718,12 +927,12 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="card border-btm" style="border-bottom: solid 1.4px #e5e5e5!important;">
+                                                <div class="card border-btm" style="border-bottom: solid 1.4px #e5e5e5 !important;">
                                                     <div class="card-header">
                                                         <h3 class="accordion-heading mb-2">
                                                             <a class="collapsed" href="#ItemSpecification" role="button" data-toggle="collapse"
                                                                 aria-expanded="false" aria-controls="shoes">Item Specification <span class="accordion-indicator iconupanddown">
-                                                                    <i class="fas fa-chevron-up"></i></span></a>
+                                                                    <i class="fa fa-chevron-up"></i></span></a>
                                                         </h3>
                                                     </div>
                                                     <div class="collapse" id="ItemSpecification" data-parent="#shop-categories">
@@ -734,6 +943,12 @@
                                                                         <th>Item Name</th>
                                                                         <td>
                                                                             <asp:Label ID="itemname2" runat="server" Text=""></asp:Label>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr runat="server" id="Tr4" style="color: blue;">
+                                                                        <th>Feature & Details</th>
+                                                                        <td>
+                                                                            <asp:Label ID="lblfeature" runat="server" Text=""></asp:Label>
                                                                         </td>
                                                                     </tr>
                                                                     <tr runat="server" id="twele">
@@ -785,12 +1000,12 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="card border-btm" style="border-bottom: solid 1.4px #e5e5e5!important;">
+                                                <div class="card border-btm" style="border-bottom: solid 1.4px #e5e5e5 !important;">
                                                     <div class="card-header">
                                                         <h3 class="accordion-heading mb-2">
                                                             <a class="collapsed" href="#Estimated" role="button" data-toggle="collapse" aria-expanded="false"
                                                                 aria-controls="shoes">Import Value, Quantity <span class="accordion-indicator iconupanddown">
-                                                                    <i class="fas fa-chevron-up"></i></span></a>
+                                                                    <i class="fa fa-chevron-up"></i></span></a>
                                                         </h3>
                                                     </div>
                                                     <div class="collapse" id="Estimated" data-parent="#shop-categories">
@@ -855,6 +1070,20 @@
                                                             <h6 class="tablemidhead">Status of Indigenization</h6>
                                                             <table class="table mb-2">
                                                                 <tbody>
+                                                                    <tr runat="server" id="Tr25" class="d-none">
+                                                                        <th scope="row">Indigenization starting  Year
+                                                                        </th>
+                                                                        <td>
+                                                                            <asp:Label ID="lblindtrgyr" runat="server" Text=""></asp:Label>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr runat="server" id="Tr1">
+                                                                        <th scope="row">Indigenization started
+                                                                        </th>
+                                                                        <td>
+                                                                            <asp:Label ID="lblindstart" runat="server" Text=""></asp:Label>
+                                                                        </td>
+                                                                    </tr>
                                                                     <tr runat="server" id="sixteen">
                                                                         <th scope="row">Make in India Category
                                                                         </th>
@@ -870,17 +1099,10 @@
                                                                         </td>
                                                                     </tr>
                                                                     <tr runat="server" id="eighteen">
-                                                                        <th scope="row">Link
+                                                                        <th scope="row">EoI/RFP URL
                                                                         </th>
                                                                         <td>
                                                                             <asp:Label ID="lbleoilink" runat="server" Text=""></asp:Label>
-                                                                        </td>
-                                                                    </tr>
-                                                                    <tr runat="server" id="Tr25">
-                                                                        <th scope="row">Make in India (starting) Target Year
-                                                                        </th>
-                                                                        <td>
-                                                                            <asp:Label ID="lblindtrgyr" runat="server" Text=""></asp:Label>
                                                                         </td>
                                                                     </tr>
                                                                 </tbody>
@@ -921,12 +1143,12 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="card border-btm" style="border-bottom: solid 1.4px #e5e5e5!important;" runat="server" visible="false">
+                                                <div class="card border-btm" style="border-bottom: solid 1.4px #e5e5e5 !important;" runat="server" visible="false">
                                                     <div class="card-header">
                                                         <h3 class="accordion-heading mb-2">
                                                             <a class="collapsed" href="#AdditionalValue" role="button" data-toggle="collapse" aria-expanded="false"
                                                                 aria-controls="shoes">Additional Details <span class="accordion-indicator iconupanddown">
-                                                                    <i class="fas fa-chevron-up"></i></span></a>
+                                                                    <i class="fa fa-chevron-up"></i></span></a>
                                                         </h3>
                                                     </div>
                                                     <div class="collapse" id="AdditionalValue" data-parent="#shop-categories">
@@ -970,357 +1192,443 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="clearfix mt10">
-                            </div>
                             <div class="modal-footer">
                                 <input id="btnprint" type="button" runat="server" visible="false" onclick="PrintDiv()" style="width: 70px;" class="btn btn-primary  pull-right"
                                     value="Print" />
+                                <asp:LinkButton ID="LinkButton5" runat="server" Text="Close" Style="width: 80px; background: #507CD1!important;" class="btn"
+                                    ClientIDMode="Static" ToolTip="Update Data" data-dismiss="modal" />
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="modal fade" id="divCompany" role="dialog">
+                <div class="modal fade" id="divCompany" role="dialog" style="z-index: 9999999;">
                     <div class="modal-dialog" style="max-width: 900px;">
                         <div class="modal-content">
                             <div runat="server" id="mPrint">
-                                <div class="modal-header modal-header1">
-                                    <h6 class="modal-title">
-                                        <div>
-                                            (as on
-                                      
-                                            <asp:Label runat="server" ID="atime"></asp:Label>
-                                            ) 
-                                       
-                                        </div>
-                                        <h6></h6>
-                                        <button class="close close1" data-dismiss="modal" type="button">
-                                            ×                                       
-                                        </button>
-
-                                    </h6>
+                                <div class="modal-header modal-header1" style="background: #507CD1!important;">
+                                    <h5 class="text-white">As on
+                                        <asp:Label runat="server" ID="atime"></asp:Label></h5>
+                                    <asp:LinkButton ID="LinkButton7" runat="server" Text="Close" Style="width: 80px; background-color: white!important; color: blue!important;" class="btn btn-primary"
+                                        ClientIDMode="Static" ToolTip="Update Data" data-dismiss="modal" />
                                 </div>
                                 <div class="modal-body" style="text-align: center;">
-                                    <b><span>2018-19 (Annual Import Value (in million Rs))</span></b>
+                                    <h6>2018-19 (Annual Import Value (in million Rs))</h6>
                                     <div class="clearfix mt10"></div>
-                                    <asp:GridView ID="GridView4" runat="server" AutoGenerateColumns="false" Class="table table-bordered table-responsive" ShowFooter="true">
-                                        <Columns>
-                                            <asp:TemplateField HeaderText="Sr.No.">
-                                                <ItemTemplate>
-                                                    <%#Container.DataItemIndex+1 %>
-                                                </ItemTemplate>
-                                            </asp:TemplateField>
-                                            <asp:BoundField DataField="CompName" HeaderStyle-Width="200" HeaderText="Organization" NullDisplayText="" />
-                                            <asp:BoundField DataField="TotalProd" HeaderStyle-Width="200" HeaderText="Items Imported" NullDisplayText="" />
-                                            <asp:BoundField DataField="TotalPrice1819" HeaderStyle-Width="200" HeaderText="Value (in million Rs)" NullDisplayText="" />
-                                            <asp:BoundField DataField="ProdLess5" HeaderStyle-Width="200" HeaderText="Items Imported (0.5-5 million Rs)" NullDisplayText="" />
-                                            <asp:BoundField DataField="ProdLess10" HeaderStyle-Width="200" HeaderText="Items Imported (5-10 million Rs)" NullDisplayText="" />
-                                            <asp:BoundField DataField="ProdLess50" HeaderStyle-Width="200" HeaderText="Items Imported (10-50 million Rs)" NullDisplayText="" />
-                                            <asp:BoundField DataField="ProdAbove50" HeaderStyle-Width="200" HeaderText="Items Imported (Above 50 million Rs)" NullDisplayText="" />
-                                        </Columns>
-                                    </asp:GridView>
-                                    <div class="clearfix mt10"></div>
-                                    <b><span>2019-20 (Annual Import Value (in million Rs))</span></b>
-                                    <div class="clearfix mt10"></div>
-                                    <asp:GridView ID="gvPrdoct" runat="server" AutoGenerateColumns="false" Class="table table-bordered table-responsive" ShowFooter="true">
-                                        <Columns>
-                                            <asp:TemplateField HeaderText="Sr.No.">
-                                                <ItemTemplate>
-                                                    <%#Container.DataItemIndex+1 %>
-                                                </ItemTemplate>
-                                            </asp:TemplateField>
-                                            <asp:BoundField DataField="CompName" HeaderStyle-Width="200" HeaderText="Organization" NullDisplayText="" />
-                                            <asp:BoundField DataField="TotalProd" HeaderStyle-Width="200" HeaderText="Items Imported" NullDisplayText="" />
-                                            <asp:BoundField DataField="TotalPrice1920" HeaderStyle-Width="200" HeaderText="Value (in million Rs)" NullDisplayText="" />
-                                            <asp:BoundField DataField="ProdLess5" HeaderStyle-Width="200" HeaderText="Items Imported (0.5-5 million Rs)" NullDisplayText="" />
-                                            <asp:BoundField DataField="PriceLess5" HeaderText="Annual Import Value 1-5 million" NullDisplayText="" Visible="false" />
-                                            <asp:BoundField DataField="ProdLess10" HeaderStyle-Width="200" HeaderText="Items Imported (5-10 million Rs)" NullDisplayText="" />
-                                            <asp:BoundField DataField="PriceLess10" HeaderText="Annual Import Value 5-10 million" NullDisplayText="" Visible="false" />
-                                            <asp:BoundField DataField="ProdLess50" HeaderStyle-Width="200" HeaderText="Items Imported (10-50 million Rs)" NullDisplayText="" />
-                                            <asp:BoundField DataField="PriceLess50" HeaderText="Annual Import Value 10-50 million" NullDisplayText="" Visible="false" />
-                                            <asp:BoundField DataField="ProdAbove50" HeaderStyle-Width="200" HeaderText="Items Imported (Above 50 million Rs)" NullDisplayText="" />
-                                            <asp:BoundField DataField="PriceAbove50" HeaderText="Annual Import Value 50 million above" NullDisplayText="" Visible="false" />
-                                            <asp:BoundField DataField="TargetIndig2020" HeaderStyle-Width="200" HeaderText="Make in India Target Year" NullDisplayText="" Visible="false" />
-                                        </Columns>
-                                    </asp:GridView>
-                                    <div class="clearfix mt10"></div>
-                                    <b><span style="text-align: center;">2020-21 (Annual Import Value (in million Rs))</span></b>
-                                    <asp:GridView ID="DataList1" runat="server" AutoGenerateColumns="false" Class="table table-bordered table-responsive" ShowFooter="true">
-                                        <Columns>
-                                            <asp:TemplateField HeaderText="Sr.No.">
-                                                <ItemTemplate>
-                                                    <%#Container.DataItemIndex+1 %>
-                                                </ItemTemplate>
-                                            </asp:TemplateField>
-                                            <asp:BoundField DataField="CompName" HeaderStyle-Width="200" HeaderText="Organization" NullDisplayText="" />
-                                            <asp:BoundField DataField="TotalProd" HeaderStyle-Width="200" HeaderText="Items Imported" NullDisplayText="" />
-                                            <asp:BoundField DataField="TotalPrice2021" HeaderStyle-Width="200" HeaderText="Value (in million Rs)" NullDisplayText="" />
-                                            <asp:BoundField DataField="ProdLess5" HeaderStyle-Width="200" HeaderText="Items Imported (0.5-5 million Rs)" NullDisplayText="" />
-                                            <asp:BoundField DataField="PriceLess5" HeaderText="Annual Import Value 1-5 million" NullDisplayText="" Visible="false" />
-                                            <asp:BoundField DataField="ProdLess10" HeaderStyle-Width="200" HeaderText="Items Imported (5-10 million Rs)" NullDisplayText="" />
-                                            <asp:BoundField DataField="PriceLess10" HeaderText="Annual Import Value 5-10 million" NullDisplayText="" Visible="false" />
-                                            <asp:BoundField DataField="ProdLess50" HeaderStyle-Width="200" HeaderText="Items Imported (10-50 million Rs)" NullDisplayText="" />
-                                            <asp:BoundField DataField="PriceLess50" HeaderText="Annual Import Value 10-50 million" NullDisplayText="" Visible="false" />
-                                            <asp:BoundField DataField="ProdAbove50" HeaderStyle-Width="200" HeaderText="Items Imported (Above 50 million Rs)" NullDisplayText="" />
-                                            <asp:BoundField DataField="PriceAbove50" HeaderText="Annual Import Value 50 million above" NullDisplayText="" Visible="false" />
-                                            <asp:BoundField DataField="TargetIndig2021" HeaderStyle-Width="200" HeaderText="Make in India Target Year" NullDisplayText="" Visible="false" />
-                                        </Columns>
-                                    </asp:GridView>
-                                    <div class="clearfix mt10"></div>
-                                    <b><span style="text-align: center;">Make in India Category (Number of Items)</span></b>
-                                    <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="false" Class="table table-bordered table-responsive" ShowFooter="true">
-                                        <Columns>
-                                            <asp:TemplateField HeaderText="Sr.No.">
-                                                <ItemTemplate>
-                                                    <%#Container.DataItemIndex+1 %>
-                                                </ItemTemplate>
-                                            </asp:TemplateField>
-                                            <asp:BoundField DataField="CompName" HeaderStyle-Width="200" HeaderText="Organization" NullDisplayText="" />
-                                            <asp:BoundField DataField="TotalProd" HeaderText="Items Imported" NullDisplayText="" Visible="false" />
-                                            <asp:BoundField DataField="TotalPrice1920" HeaderText="Annual Import Value (in million Rs)" NullDisplayText="" Visible="false" />
-                                            <asp:BoundField DataField="MAKE2Total" HeaderStyle-Width="200" HeaderText=" MAKE-II" NullDisplayText="" />
-                                            <asp:BoundField DataField="MAKE2Price" HeaderText="Annual Import Value MakeII" NullDisplayText="" Visible="false" />
-                                            <asp:BoundField DataField="IDExTotal" HeaderStyle-Width="200" HeaderText="IDEX/AI/INNOVATION/R&D" NullDisplayText="" />
-                                            <asp:BoundField DataField="IDExPriceTotal" HeaderText="Annual Import Value IDEX/AI/INNOVATION/R&D" NullDisplayText="" Visible="false" />
-                                            <asp:BoundField DataField="IGATotal" HeaderStyle-Width="200" HeaderText="IGA" NullDisplayText="" />
-                                            <asp:BoundField DataField="IGAPrice" HeaderText="Annual Import Value IGA" NullDisplayText="" Visible="false" />
-                                            <asp:BoundField DataField="OTHERTHANMAKE2Total" HeaderStyle-Width="200" HeaderText="OTHER THAN MAKE-II" NullDisplayText="" />
-                                            <asp:BoundField DataField="OTHERTHANMAKE2Price" HeaderText="Annual Import Value OTHER THAN MAKE-II" NullDisplayText="" Visible="false" />
-                                            <asp:BoundField DataField="HOUSETotal" HeaderStyle-Width="200" HeaderText="IN HOUSE" NullDisplayText="" />
-                                            <asp:BoundField DataField="HOUSEPrice" HeaderText="Annual Import Value IN HOUSE" NullDisplayText="" Visible="false" />
-                                        </Columns>
-                                    </asp:GridView>
-                                    <div class="clearfix mt10"></div>
-                                    <div runat="server" visible="false">
-                                        <b><span style="text-align: center;">Make in India Category 2020-21 (Number of Items)</span></b>
-                                        <asp:GridView ID="GridView2" runat="server" AutoGenerateColumns="false" Class="table table-bordered table-responsive" ShowFooter="true">
+                                    <div class="table-responsive">
+                                        <asp:GridView ID="GridView4" runat="server" AutoGenerateColumns="false" Class="table table-bordered" ShowFooter="true">
                                             <Columns>
                                                 <asp:TemplateField HeaderText="Sr.No.">
                                                     <ItemTemplate>
                                                         <%#Container.DataItemIndex+1 %>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
-                                                <asp:BoundField DataField="CompName" HeaderText="Organization" NullDisplayText="" />
-                                                <asp:BoundField DataField="TotalProd" HeaderText="Items Imported" NullDisplayText="" />
-                                                <asp:BoundField DataField="TotalPrice2021" HeaderText="Annual Import Value (in million Rs)" NullDisplayText="" Visible="false" />
-                                                <asp:BoundField DataField="MAKE2Total" HeaderText=" MAKE-II" NullDisplayText="" />
+                                                <asp:BoundField DataField="CompName" HeaderStyle-Width="200" HeaderText="Organization" NullDisplayText="" />
+                                                <asp:BoundField DataField="TotalProd" HeaderStyle-Width="200" HeaderText="Items Imported" NullDisplayText="" />
+                                                <asp:BoundField DataField="TotalPrice1819" HeaderStyle-Width="200" HeaderText="Value (in million Rs)" NullDisplayText="" />
+                                                <asp:BoundField DataField="ProdBelow05" HeaderStyle-Width="200" HeaderText="Items Imported below (0.0-0.5 million Rs)" NullDisplayText="" />
+                                                <asp:BoundField DataField="ProdLess5" HeaderStyle-Width="200" HeaderText="Items Imported (0.5-5 million Rs)" NullDisplayText="" />
+                                                <asp:BoundField DataField="ProdLess10" HeaderStyle-Width="200" HeaderText="Items Imported (5-10 million Rs)" NullDisplayText="" />
+                                                <asp:BoundField DataField="ProdLess50" HeaderStyle-Width="200" HeaderText="Items Imported (10-50 million Rs)" NullDisplayText="" />
+                                                <asp:BoundField DataField="ProdAbove50" HeaderStyle-Width="200" HeaderText="Items Imported (Above 50 million Rs)" NullDisplayText="" />
+                                            </Columns>
+                                        </asp:GridView>
+                                    </div>
+                                    <div class="clearfix mt10"></div>
+                                    <h6><span>2019-20 (Annual Import Value (in million Rs))</span></h6>
+                                    <div class="clearfix mt10"></div>
+                                    <div class="table-responsive">
+                                        <asp:GridView ID="gvPrdoct" runat="server" AutoGenerateColumns="false" Class="table table-bordered" ShowFooter="true">
+                                            <Columns>
+                                                <asp:TemplateField HeaderText="Sr.No.">
+                                                    <ItemTemplate>
+                                                        <%#Container.DataItemIndex+1 %>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:BoundField DataField="CompName" HeaderStyle-Width="200" HeaderText="Organization" NullDisplayText="" />
+                                                <asp:BoundField DataField="TotalProd" HeaderStyle-Width="200" HeaderText="Items Imported" NullDisplayText="" />
+                                                <asp:BoundField DataField="TotalPrice1920" HeaderStyle-Width="200" HeaderText="Value (in million Rs)" NullDisplayText="" />
+                                                <asp:BoundField DataField="ProdBelow05" HeaderStyle-Width="200" HeaderText="Items Imported below (0.0-0.5 million Rs)" NullDisplayText="" />
+                                                <asp:BoundField DataField="ProdLess5" HeaderStyle-Width="200" HeaderText="Items Imported (0.5-5 million Rs)" NullDisplayText="" />
+                                                <asp:BoundField DataField="PriceLess5" HeaderText="Annual Import Value 1-5 million" NullDisplayText="" Visible="false" />
+                                                <asp:BoundField DataField="ProdLess10" HeaderStyle-Width="200" HeaderText="Items Imported (5-10 million Rs)" NullDisplayText="" />
+                                                <asp:BoundField DataField="PriceLess10" HeaderText="Annual Import Value 5-10 million" NullDisplayText="" Visible="false" />
+                                                <asp:BoundField DataField="ProdLess50" HeaderStyle-Width="200" HeaderText="Items Imported (10-50 million Rs)" NullDisplayText="" />
+                                                <asp:BoundField DataField="PriceLess50" HeaderText="Annual Import Value 10-50 million" NullDisplayText="" Visible="false" />
+                                                <asp:BoundField DataField="ProdAbove50" HeaderStyle-Width="200" HeaderText="Items Imported (Above 50 million Rs)" NullDisplayText="" />
+                                                <asp:BoundField DataField="PriceAbove50" HeaderText="Annual Import Value 50 million above" NullDisplayText="" Visible="false" />
+                                                <asp:BoundField DataField="TargetIndig2020" HeaderStyle-Width="200" HeaderText="Make in India Target Year" NullDisplayText="" Visible="false" />
+                                            </Columns>
+                                        </asp:GridView>
+                                    </div>
+                                    <div class="clearfix mt10"></div>
+                                    <h6><span style="text-align: center;">2020-21 (Annual Import Value (in million Rs))</span></h6>
+                                    <div class="table-responsive">
+                                        <asp:GridView ID="DataList1" runat="server" AutoGenerateColumns="false" Class="table table-bordered" ShowFooter="true">
+                                            <Columns>
+                                                <asp:TemplateField HeaderText="Sr.No.">
+                                                    <ItemTemplate>
+                                                        <%#Container.DataItemIndex+1 %>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:BoundField DataField="CompName" HeaderStyle-Width="200" HeaderText="Organization" NullDisplayText="" />
+                                                <asp:BoundField DataField="TotalProd" HeaderStyle-Width="200" HeaderText="Items Imported" NullDisplayText="" />
+                                                <asp:BoundField DataField="TotalPrice2021" HeaderStyle-Width="200" HeaderText="Value (in million Rs)" NullDisplayText="" />
+                                                <asp:BoundField DataField="ProdBelow05" HeaderStyle-Width="200" HeaderText="Items Imported below (0.0-0.5 million Rs)" NullDisplayText="" />
+                                                <asp:BoundField DataField="ProdLess5" HeaderStyle-Width="200" HeaderText="Items Imported (0.5-5 million Rs)" NullDisplayText="" />
+                                                <asp:BoundField DataField="PriceLess5" HeaderText="Annual Import Value 1-5 million" NullDisplayText="" Visible="false" />
+                                                <asp:BoundField DataField="ProdLess10" HeaderStyle-Width="200" HeaderText="Items Imported (5-10 million Rs)" NullDisplayText="" />
+                                                <asp:BoundField DataField="PriceLess10" HeaderText="Annual Import Value 5-10 million" NullDisplayText="" Visible="false" />
+                                                <asp:BoundField DataField="ProdLess50" HeaderStyle-Width="200" HeaderText="Items Imported (10-50 million Rs)" NullDisplayText="" />
+                                                <asp:BoundField DataField="PriceLess50" HeaderText="Annual Import Value 10-50 million" NullDisplayText="" Visible="false" />
+                                                <asp:BoundField DataField="ProdAbove50" HeaderStyle-Width="200" HeaderText="Items Imported (Above 50 million Rs)" NullDisplayText="" />
+                                                <asp:BoundField DataField="PriceAbove50" HeaderText="Annual Import Value 50 million above" NullDisplayText="" Visible="false" />
+                                                <asp:BoundField DataField="TargetIndig2021" HeaderStyle-Width="200" HeaderText="Make in India Target Year" NullDisplayText="" Visible="false" />
+                                            </Columns>
+                                        </asp:GridView>
+                                    </div>
+                                    <div class="clearfix mt10"></div>
+
+                                    <h6><span style="text-align: center;">2021-22 (Annual Import Value (in million Rs))</span></h6>
+                                    <div class="table-responsive">
+                                        <asp:GridView ID="GridView6" runat="server" AutoGenerateColumns="false" Class="table table-bordered" ShowFooter="true">
+                                            <Columns>
+                                                <asp:TemplateField HeaderText="Sr.No.">
+                                                    <ItemTemplate>
+                                                        <%#Container.DataItemIndex+1 %>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:BoundField DataField="CompName" HeaderStyle-Width="200" HeaderText="Organization" NullDisplayText="" />
+                                                <asp:BoundField DataField="TotalProd" HeaderStyle-Width="200" HeaderText="Items Imported" NullDisplayText="" />
+                                                <asp:BoundField DataField="TotalPrice2021" HeaderStyle-Width="200" HeaderText="Value (in million Rs)" NullDisplayText="" />
+                                                <asp:BoundField DataField="ProdBelow05" HeaderStyle-Width="200" HeaderText="Items Imported below (0.0-0.5 million Rs)" NullDisplayText="" />
+                                                <asp:BoundField DataField="ProdLess5" HeaderStyle-Width="200" HeaderText="Items Imported (0.5-5 million Rs)" NullDisplayText="" />
+                                                <asp:BoundField DataField="PriceLess5" HeaderText="Annual Import Value 1-5 million" NullDisplayText="" Visible="false" />
+                                                <asp:BoundField DataField="ProdLess10" HeaderStyle-Width="200" HeaderText="Items Imported (5-10 million Rs)" NullDisplayText="" />
+                                                <asp:BoundField DataField="PriceLess10" HeaderText="Annual Import Value 5-10 million" NullDisplayText="" Visible="false" />
+                                                <asp:BoundField DataField="ProdLess50" HeaderStyle-Width="200" HeaderText="Items Imported (10-50 million Rs)" NullDisplayText="" />
+                                                <asp:BoundField DataField="PriceLess50" HeaderText="Annual Import Value 10-50 million" NullDisplayText="" Visible="false" />
+                                                <asp:BoundField DataField="ProdAbove50" HeaderStyle-Width="200" HeaderText="Items Imported (Above 50 million Rs)" NullDisplayText="" />
+                                                <asp:BoundField DataField="PriceAbove50" HeaderText="Annual Import Value 50 million above" NullDisplayText="" Visible="false" />
+                                                <asp:BoundField DataField="TargetIndig2021" HeaderStyle-Width="200" HeaderText="Make in India Target Year" NullDisplayText="" Visible="false" />
+                                            </Columns>
+                                        </asp:GridView>
+                                    </div>
+                                    <div class="clearfix mt10"></div>
+
+
+
+                                    <h6><span style="text-align: center;">Make in India Category (Number of Items)</span></h6>
+                                    <div class="table-responsive">
+                                        <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="false" Class="table table-bordered" ShowFooter="true">
+                                            <Columns>
+                                                <asp:TemplateField HeaderText="Sr.No.">
+                                                    <ItemTemplate>
+                                                        <%#Container.DataItemIndex+1 %>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:BoundField DataField="CompName" HeaderStyle-Width="200" HeaderText="Organization" NullDisplayText="" />
+                                                <asp:BoundField DataField="TotalProd" HeaderText="Items Imported" NullDisplayText="" Visible="false" />
+                                                <asp:BoundField DataField="TotalPrice1920" HeaderText="Annual Import Value (in million Rs)" NullDisplayText="" Visible="false" />
+                                                <asp:BoundField DataField="ProductTotal" HeaderStyle-Width="200" HeaderText="Total Products" NullDisplayText="" />
+                                                <asp:BoundField DataField="MAKE2Total" HeaderStyle-Width="200" HeaderText=" MAKE-II" NullDisplayText="" />
                                                 <asp:BoundField DataField="MAKE2Price" HeaderText="Annual Import Value MakeII" NullDisplayText="" Visible="false" />
-                                                <asp:BoundField DataField="IDExTotal" HeaderText="IDEX/AI/INNOVATION/R&D" NullDisplayText="" />
+                                                <asp:BoundField DataField="IDExTotal" HeaderStyle-Width="200" HeaderText="IDEX/AI/INNOVATION/R&D" NullDisplayText="" />
                                                 <asp:BoundField DataField="IDExPriceTotal" HeaderText="Annual Import Value IDEX/AI/INNOVATION/R&D" NullDisplayText="" Visible="false" />
-                                                <asp:BoundField DataField="IGATotal" HeaderText="IGA" NullDisplayText="" />
+                                                <asp:BoundField DataField="IGATotal" HeaderStyle-Width="200" HeaderText="IGA" NullDisplayText="" />
                                                 <asp:BoundField DataField="IGAPrice" HeaderText="Annual Import Value IGA" NullDisplayText="" Visible="false" />
-                                                <asp:BoundField DataField="OTHERTHANMAKE2Total" HeaderText="OTHER THAN MAKE-II" NullDisplayText="" />
+                                                <asp:BoundField DataField="OTHERTHANMAKE2Total" HeaderStyle-Width="200" HeaderText="OTHER THAN MAKE-II" NullDisplayText="" />
                                                 <asp:BoundField DataField="OTHERTHANMAKE2Price" HeaderText="Annual Import Value OTHER THAN MAKE-II" NullDisplayText="" Visible="false" />
-                                                <asp:BoundField DataField="HOUSETotal" HeaderText="IN HOUSE" NullDisplayText="" />
+                                                <asp:BoundField DataField="HOUSETotal" HeaderStyle-Width="200" HeaderText="IN HOUSE" NullDisplayText="" />
                                                 <asp:BoundField DataField="HOUSEPrice" HeaderText="Annual Import Value IN HOUSE" NullDisplayText="" Visible="false" />
                                             </Columns>
                                         </asp:GridView>
                                     </div>
                                     <div class="clearfix mt10"></div>
-                                    <b><span style="text-align: center;">Make in India Target Year (Number of Items)</span></b>
-                                    <asp:GridView ID="GridView3" runat="server" AutoGenerateColumns="false" Class="table table-bordered table-responsive" ShowFooter="true">
-                                        <Columns>
-                                            <asp:TemplateField HeaderText="Sr.No.">
-                                                <ItemTemplate>
-                                                    <%#Container.DataItemIndex+1 %>
-                                                </ItemTemplate>
-                                            </asp:TemplateField>
-                                            <asp:BoundField DataField="CompName" HeaderStyle-Width="200" HeaderText="Organization" NullDisplayText="" />
-                                            <asp:BoundField DataField="TargetIndig2021" HeaderStyle-Width="200" HeaderText="2020-21" NullDisplayText="" />
-                                            <asp:BoundField DataField="TargetIndig2022" HeaderStyle-Width="200" HeaderText="2021-22" NullDisplayText="" />
-                                            <asp:BoundField DataField="TargetIndig2023" HeaderStyle-Width="200" HeaderText="2022-23" NullDisplayText="" />
-                                            <asp:BoundField DataField="TargetIndig2024" HeaderStyle-Width="200" HeaderText="2023-24" NullDisplayText="" />
-                                            <asp:BoundField DataField="TargetIndig2025" HeaderStyle-Width="200" HeaderText="2024-25" NullDisplayText="" />
-                                            <asp:BoundField DataField="TargetIndigNILL" HeaderStyle-Width="200" HeaderText="Make in India Target Year NIL" NullDisplayText="" Visible="false" />
-                                        </Columns>
-                                    </asp:GridView>
+                                    <div runat="server" visible="false">
+                                        <h6><span style="text-align: center;">Make in India Category 2020-21 (Number of Items)</span></h6>
+                                        <div class="table-responsive">
+                                            <asp:GridView ID="GridView2" runat="server" AutoGenerateColumns="false" Class="table table-bordered" ShowFooter="true">
+                                                <Columns>
+                                                    <asp:TemplateField HeaderText="Sr.No.">
+                                                        <ItemTemplate>
+                                                            <%#Container.DataItemIndex+1 %>
+                                                        </ItemTemplate>
+                                                    </asp:TemplateField>
+                                                    <asp:BoundField DataField="CompName" HeaderText="Organization" NullDisplayText="" />
+                                                    <asp:BoundField DataField="TotalProd" HeaderText="Items Imported" NullDisplayText="" />
+                                                    <asp:BoundField DataField="TotalPrice2021" HeaderText="Annual Import Value (in million Rs)" NullDisplayText="" Visible="false" />
+                                                    <asp:BoundField DataField="MAKE2Total" HeaderText=" MAKE-II" NullDisplayText="" />
+                                                    <asp:BoundField DataField="MAKE2Price" HeaderText="Annual Import Value MakeII" NullDisplayText="" Visible="false" />
+                                                    <asp:BoundField DataField="IDExTotal" HeaderText="IDEX/AI/INNOVATION/R&D" NullDisplayText="" />
+                                                    <asp:BoundField DataField="IDExPriceTotal" HeaderText="Annual Import Value IDEX/AI/INNOVATION/R&D" NullDisplayText="" Visible="false" />
+                                                    <asp:BoundField DataField="IGATotal" HeaderText="IGA" NullDisplayText="" />
+                                                    <asp:BoundField DataField="IGAPrice" HeaderText="Annual Import Value IGA" NullDisplayText="" Visible="false" />
+                                                    <asp:BoundField DataField="OTHERTHANMAKE2Total" HeaderText="OTHER THAN MAKE-II" NullDisplayText="" />
+                                                    <asp:BoundField DataField="OTHERTHANMAKE2Price" HeaderText="Annual Import Value OTHER THAN MAKE-II" NullDisplayText="" Visible="false" />
+                                                    <asp:BoundField DataField="HOUSETotal" HeaderText="IN HOUSE" NullDisplayText="" />
+                                                    <asp:BoundField DataField="HOUSEPrice" HeaderText="Annual Import Value IN HOUSE" NullDisplayText="" Visible="false" />
+                                                </Columns>
+                                            </asp:GridView>
+                                        </div>
+                                    </div>
+                                    <div class="clearfix mt10"></div>
+                                    <h6><span style="text-align: center;">Make in India Target Year (Number of Items)</span></h6>
+                                    <div class="table-responsive">
+                                        <asp:GridView ID="GridView3" runat="server" AutoGenerateColumns="false" Class="table table-bordered" ShowFooter="true">
+                                            <Columns>
+                                                <asp:TemplateField HeaderText="Sr.No.">
+                                                    <ItemTemplate>
+                                                        <%#Container.DataItemIndex+1 %>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:BoundField DataField="CompName" HeaderStyle-Width="200" HeaderText="Organization" NullDisplayText="" />
+                                                <asp:BoundField DataField="TargetIndig2022" HeaderStyle-Width="200" HeaderText="2021-22" NullDisplayText="" />
+                                                <asp:BoundField DataField="TargetIndig2023" HeaderStyle-Width="200" HeaderText="2022-23" NullDisplayText="" />
+                                                <asp:BoundField DataField="TargetIndig2024" HeaderStyle-Width="200" HeaderText="2023-24" NullDisplayText="" />
+                                                <asp:BoundField DataField="TargetIndig2025" HeaderStyle-Width="200" HeaderText="2024-25" NullDisplayText="" />
+                                                <asp:BoundField DataField="TargetIndig2026" HeaderStyle-Width="200" HeaderText="2025-26" NullDisplayText="" />
+                                                <asp:BoundField DataField="TargetIndigNILL" HeaderStyle-Width="200" HeaderText="Make in India Target Year NIL" NullDisplayText="" Visible="false" />
+                                            </Columns>
+                                        </asp:GridView>
+                                    </div>
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <div class="col-sm-3 pull-right">
-                                    <input id="Button1" type="button" runat="server" onclick="Printm()" style="width: 70px;" class="btn btn-primary  pull-right"
+                                <div class="d-flex justify-content-end">
+                                    <input id="Button1" type="button" runat="server" onclick="Printm()" style="width: 80px; background: #507CD1!important" class="btn btn-primary"
                                         value="Print" />
+                                    <asp:LinkButton type="button" ID="LinkButton4" runat="server" Text="Close" Style="width: 80px; background: #507CD1!important" class="btn btn-primary ml-1"
+                                        ClientIDMode="Static" ToolTip="Update Data" data-dismiss="modal" />
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <!----------------------------------------------------Code For Nato Popup------------------------------>
-                <div class="modal fade" id="divNatoPopup" role="dialog">
+                <div class="modal fade" id="divNatoPopup" role="dialog" style="z-index: 9999999;">
                     <div class="modal-dialog" style="max-width: 900px;">
                         <div class="modal-content">
                             <div runat="server" id="Div15">
-                                <div class="modal-header modal-header1">
-                                    <h6 class="modal-title">
-                                        <button class="close close1" data-dismiss="modal" type="button">
-                                            ×                                       
-                                        </button>
-                                    </h6>
+                                <div class="modal-header modal-header1 d-flex justify-content-center" style="background: #507CD1!important;">
+                                    <h6 class="modal-title text-white">Top 10 Products based on Indicative Nato classification</h6>
                                 </div>
-                                <div class="modal-body" style="text-align: center;">
-                                    <b><span style="text-align: center;">Top 10 Products based on Indicative Nato classification</span></b>
-                                    <asp:GridView runat="server" ID="gvnatopop" AutoGenerateColumns="false" Class="table table-bordered table-responsive">
-                                        <Columns>
-                                            <asp:BoundField DataField="NSNGroup" HeaderText="NSN Group" />
-                                            <asp:BoundField DataField="Total" HeaderText="Total" />
-                                            <asp:BoundField DataField="HAL" HeaderText="HAL" />
-                                            <asp:BoundField DataField="BDL" HeaderText="BDL" />
-                                            <asp:BoundField DataField="BEML" HeaderText="BEML" />
-                                            <asp:BoundField DataField="BEL" HeaderText="BEL" />
-                                            <asp:BoundField DataField="GRSE" HeaderText="GRSE" />
-                                            <asp:BoundField DataField="GSL" HeaderText="GSL" />
-                                            <asp:BoundField DataField="MDL" HeaderText="MDL" />
-                                            <asp:BoundField DataField="MIDHANI" HeaderText="MIDHANI" />
-                                            <asp:BoundField DataField="OFB" HeaderText="OFB" />
-                                            <asp:BoundField DataField="SHQ_AIR_FORCE" HeaderText="SHQ (AIR FORCE)" />
-                                            <asp:BoundField DataField="SHQ_ARMY" HeaderText="SHQ (ARMY)" />
-                                            <asp:BoundField DataField="SHQ_NAVY" HeaderText="SHQ (NAVY)" />
+                                <div class="modal-body">
+                                    <div class="table-responsive">
 
-                                        </Columns>
-                                    </asp:GridView>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <div class="col-sm-3 pull-right">
-                                    <input id="Button2" type="button" runat="server" onclick="Printm()" style="width: 70px;" class="btn btn-primary  pull-right"
-                                        value="Print" />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!----------------------------------------------------Code end For Nato Popup------------------------------>
-                <div class="modal fade" id="divInfoIdex" role="dialog">
-                    <div class="modal-dialog" style="max-width: 900px;">
-                        <div class="modal-content">
-                            <div class="modal-body" style="padding: 20px 40px 18px 40px;">
-                                <div class="simplebar-content">
-                                    <!-- Categories-->
-                                    <div class="widget widget-categories mb-4">
-                                        <div class="accordion mt-n1" id="shop-categories1">
-                                            <div id="printarea1">
-                                                <div class="card" style="border-bottom: solid 1.4px #e5e5e5!important;">
-                                                    <div class="card-header">
-                                                        <h3 class="accordion-heading mb-2">Make in India Category
-                                                        </h3>
-                                                        <br />
-                                                    </div>
-                                                </div>
-                                                <div class="card border-btm" style="border-bottom: solid 1.4px #e5e5e5!important;">
-                                                    <div class="card-header">
-                                                        <h4 class="accordion-heading mb-2">
-                                                            <a class="collapsed" href="#ItemSpecification12" role="button" data-toggle="collapse"
-                                                                aria-expanded="false" aria-controls="shoes">iDEX<span class="accordion-indicator iconupanddown">
-                                                                    <i class="fas fa-chevron-up"></i></span></a>
-                                                        </h4>
-                                                    </div>
-                                                    <div class="collapse" id="ItemSpecification12" data-parent="#shop-categories1">
-                                                        <div class="card-body card-custom ">
-                                                            <div>
-                                                                <p>Innovations for Defence Excellence (iDEX), the ﬁrst initiative of its kind in the country, was launched by Hon’ble PM in April 2018. It is a scheme formulated in collaboration with Atal Innovation Mission (AIM). iDEX is aimed at creation of an ecosystem to foster innovation and technology development in Defence and Aerospace and solve related problems, by engaging Industries, including MSMEs, Start-ups, Individual Innovators, R&D institutes and Academia and provide them grants/funding and other support to carry out R&D. It is expected that India can take advantage of its vibrant start-up ecosystem to develop technologies related to defence and aerospace. iDEX has so far run 3 rounds of Defence India Start-up Challenges, and two rounds of Open Challenge.</p>
-                                                                <p>Information pertaining to the guidelines, frameworks, procedures and challenges can be accessed at <a href="https://idex.gov.in" target="_blank">idex.gov.in.</a></p>
-
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="card border-btm" style="border-bottom: solid 1.4px #e5e5e5!important;">
-                                                    <div class="card-header">
-                                                        <h4 class="accordion-heading mb-2">
-                                                            <a class="collapsed" href="#ItemSpecification1" role="button" data-toggle="collapse"
-                                                                aria-expanded="false" aria-controls="shoes">Inter-Governmental Agreement (IGA)<span class="accordion-indicator iconupanddown">
-                                                                    <i class="fas fa-chevron-up"></i></span></a>
-                                                        </h4>
-                                                    </div>
-                                                    <div class="collapse" id="ItemSpecification1" data-parent="#shop-categories1">
-                                                        <div class="card-body card-custom ">
-                                                            <h6 class="tablemidhead">IGA</h6>
-                                                            <div>
-                                                                <p>Inter-Governmental Agreements (IGAs) are inter government agreements for procurements or transfer of technology from foreign countries. Details are covered at Para 104 to 105 of Chapter II of DPP 2016.</p>
-                                                                <p>In this case, it refers to an agreement between India and Russia on “Mutual Cooperation in Joint Manufacturing of Spares, Components, Aggregates and other material related to Russian/Soviet Origin Arms and Defence Equipment”. This was signed during the India-Russia Summit in 2019.  The objective of the IGA is to enhance the aftersales support and operational availability of Russian origin equipment currently in service in Indian Armed Forces by organizing production of spares and components in the territory of India by Indian Industry by way of creation of Joint Ventures/Partnership with Russian Original Equipment Manufacturers (OEMs) under the framework of the “Make in India” initiative.</p>
-                                                                <p>About 1000 types of spares are expected to be manufactured in India under this agreement for which 30 Memorandum of Understanding (MoU) have already been signed so far between Indian companies and Russian Original Equipment Manufacturers for manufacturing of these spares in India. The Indian Navy, Indian Air Force and the Ordnance Factory Board have issued RFPs for about 400 spares under the IGA.</p>
-
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="card border-btm" style="border-bottom: solid 1.4px #e5e5e5!important;">
-                                                    <div class="card-header">
-                                                        <h4 class="accordion-heading mb-2">
-                                                            <a class="collapsed" href="#Estimated1" role="button" data-toggle="collapse" aria-expanded="false"
-                                                                aria-controls="shoes">In-House | Make-II | Other than Make-II <span class="accordion-indicator iconupanddown">
-                                                                    <i class="fas fa-chevron-up"></i></span></a>
-                                                        </h4>
-                                                    </div>
-                                                    <div class="collapse" id="Estimated1" data-parent="#shop-categories">
-                                                        <div class="card-body card-custom ">
-                                                            <p>OFB/DPSUs/SHQs adopt various processes of indigenization for development of defence equipment or their sub-systems/sub-assembly/assemblies/components/ materials, primarily for import substitution. These include In-house and Industry Process (Make-II and Other than Make-II).</p>
-                                                            <h6 class="tablemidhead">1. In-house Process</h6>
-                                                            <p>OFB/DPSUs/SHQs may use their In-house capability to indigenize their items.</p>
-                                                            <h6 class="tablemidhead">2. Industry Process</h6>
-                                                            <h6>a. Make-II</h6>
-                                                            <p>OFB/DPSUs’ Make-II procedure is based on the similar Make-II procedure promulgated by Ministry of Defence under DPP-2016. Under this procedure, no Government funding is envisaged for prototype development purposes but there is an assurance of orders on successful development and trials of the prototype.</p>
-                                                            <p>‘Make-II’ development process starts with approval of project by OFB/DPSUs, subsequent to which EoI is issued online. Based on the EoI responses, Development Order is issued to selected Development Agency(ies). On successful development of prototype, procurement order is given to the lowest bidding Development Agency (DA).</p>
-                                                            <p>The list of items taken up for indigenous development under Make-II is uploaded on respective websites of OFB/DPSUs and is updated periodically. The same is also available at srijandefence.gov.in. The detailed framework for implementation of ‘Make-II’ Procedure at OFB & DPSUs can be downloaded here.</p>
-                                                            <h6>b. Other than Make-II</h6>
-                                                            <p>DPSUs/OFB/SHQs may adopt their other extant processes of indigenization.  The other extant processes of indigenization have been clubbed as “Other than Make-II”.</p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="card border-btm" style="border-bottom: solid 1.4px #e5e5e5!important;">
-                                                    <div class="card-header">
-                                                        <h4 class="accordion-heading mb-2">
-                                                            <a class="collapsed" href="#Estimated12" role="button" data-toggle="collapse" aria-expanded="false"
-                                                                aria-controls="shoes">Related FAQ <span class="accordion-indicator iconupanddown">
-                                                                    <i class="fas fa-chevron-up"></i></span></a>
-                                                        </h4>
-                                                    </div>
-                                                    <div class="collapse" id="Estimated12" data-parent="#shop-categories">
-                                                        <div class="card-body card-custom ">
-                                                            <p class="font-weight-bold">Q1. What is the difference between Make I & Make II procedure?</p>
-                                                            <p>A1. Development under Make I procedure are funded by Government of India whereas developments under Make II are funded by Indian industry.</p>
-                                                            <p class="font-weight-bold">
-                                                                Q2. Is there assurance of orders under Make II?
-                                                            </p>
-                                                            <p>A2.	Yes, the vendors are given assured orders subject to successful development and trial of the item.</p>
-                                                            <p class="font-weight-bold">
-                                                                Q3. How can the industry participate in Make II developments?
-                                                            </p>
-                                                            <p>A3. The list of items taken up for indigenous development under Make-II is uploaded on respective websites of DPSUs/ OFB and is updated periodically. Comprehensive details of items identified for indigenisation under Make II by various DPSUs and OFB are also displayed on this portal srijandefence.gov.in.</p>
-                                                            <p class="font-weight-bold">
-                                                                Q4. Can the Start-ups participate in Make II developments?
-                                                            </p>
-                                                            <p>A4.	The Start-ups under specific categories and domains as give at Annexure II of Make II procedure can participate in Make II developments.</p>
-                                                            <p class="font-weight-bold">
-                                                                Q5. How will the iDEX be funded?
-                                                            </p>
-                                                            <p>A5.	iDEX will be funded and managed by a “Defence Innovation Organization (DIO)” formed as non-profit company as per Section 8 of the companies Act 2013 for the purpose.</p>
-                                                            <p class="font-weight-bold">
-                                                                Q6. How the IPRs under iDEX schemes will be managed?
-                                                            </p>
-                                                            <p>A6. The ownership of IPR generated under the program shall be owned by the company/institution/individual innovators who develop the IPR. The Government may also put restrictions on transfer/licensing of technology/IPR developed under the program on considerations of national security or other strategic reasons.</p>
-                                                            <p class="font-weight-bold">
-                                                                Q7. What are IGAs?
-                                                            </p>
-                                                            <p>A7. IGAs are inter government agreements for procurements or transfer of technology from foreign countries. Details of IGAs with respect to procurement of defence equipment are covered at Para 104 to 105 of Chapter II of DPP 2016.</p>
-
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        <asp:GridView runat="server" ID="gvnatopop" AutoGenerateColumns="false" Class="table table-bordered " ShowFooter="true">
+                                            <Columns>
+                                                <asp:BoundField DataField="NSNGroup" HeaderText="NSN Group" />
+                                                <asp:BoundField DataField="Total" HeaderText="Total" />
+                                                <asp:BoundField DataField="HAL" HeaderText="HAL" />
+                                                <asp:BoundField DataField="BDL" HeaderText="BDL" />
+                                                <asp:BoundField DataField="BEML" HeaderText="BEML" />
+                                                <asp:BoundField DataField="BEL" HeaderText="BEL" />
+                                                <asp:BoundField DataField="GRSE" HeaderText="GRSE" />
+                                                <asp:BoundField DataField="GSL" HeaderText="GSL" />
+                                                <asp:BoundField DataField="MDL" HeaderText="MDL" />
+                                                <asp:BoundField DataField="MIDHANI" HeaderText="MIDHANI" />
+                                                <asp:BoundField DataField="OFB" HeaderText="OFB" />
+                                                <asp:BoundField DataField="SHQ_AIR_FORCE" Visible="false" HeaderText="SHQ (AIR FORCE)" />
+                                                <asp:BoundField DataField="SHQ_ARMY" Visible="false" HeaderText="SHQ (ARMY)" />
+                                                <asp:BoundField DataField="SHQ_NAVY" Visible="false" HeaderText="SHQ (NAVY)" />
+                                            </Columns>
+                                        </asp:GridView>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="modal-footer">
-                                <div class="col-sm-2">
-                                    <button class=" btn btn-default mr-0" data-dismiss="modal" type="button">
-                                        <i class="fa fa-arrow-circle-left"></i>&nbsp;Close
-                                    </button>
+                                <div class="modal-footer d-flex justify-content-end">
+                                    <input id="Button2" type="button" runat="server" onclick="Prints()" style="width: 80px; background: #507CD1!important;" class="btn"
+                                        value="Print" />
+                                    <asp:LinkButton type="button" ID="LinkButton3" runat="server" Text="Close" Style="width: 80px; background: #507CD1!important;" class="btn"
+                                        ClientIDMode="Static" ToolTip="Update Data" data-dismiss="modal" />
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                <!----------------------------------------------------Code For How to search------------------------------>
+                <div class="modal-quick-view modal fade" id="searchtooltip" tabindex="-1">
+                    <div class="modal-dialog modal-xl" style="max-width: 900px!important; z-index: 9999999999;">
+                        <div class="modal-content">
+                            <div class="modal-header d-flex justify-content-center" style="background: #507CD1!important">
+                                <h4 class="modal-title">How To Search</h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <b>Video</b>
+                                    <div>
+                                        <video width="100%" height="150" autoplay controls>
+                                            <source src="../Videos/how%20to%20search.mp4" autoplay="1" type="video/mp4">
+                                        </video>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                                <br />
+                                <p>There are <b>three ways</b> to search product(s) of your interest on srijandefence portal.</p>
+                                <br />
+                                <p><b>Search by typing minimum three characters. </p>
+                                </b>
+                                        
+                                        <p>(i)&nbsp;&nbsp;&nbsp;&nbsp; <b>Universal Search on the Top.</b></p>
+                                <img src="/User/Uassets/Images/img1-1.jpg" />
+                                <p>--------------------------------------------------------------------------------------------------</p>
+                                <p>
+                                    (ii.)<b>&nbsp;NATO classification based search in the left column</b>
+                                </p>
+                                <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>In three steps.</i></p>
+                                <p>
+                                </p>
+                                <p>
+                                    <b>Step1 : drop down menu</b>- NATO Supply Group
+                                </p>
+                                <p>
+                                    Select “Electrical and Electronic Equipment Components (59)” which is shown in below image.
+                                </p>
+                                <img src="/User/Uassets/Images/img2-1.jpg" />
+                                <p>
+                                    <b>Step2 :drop down menu</b> -Nato Supply Class
+                                </p>
+                                <p>For example: Search Electronic Item like: <i>Resistor</i></p>
+                                <p>
+                                    <i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Select“Resistor (05)” </i>.
+                                </p>
+                                <img src="/User/Uassets/Images/img2-2.jpg" />
+
+                                <p>
+                                    <b>Step3 : drop down menu</b> – Item Code
+                                </p>
+                                <p>
+                                    <i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Select“Resistor, Fixed (A2178)”</i>
+                                </p>
+                                <img src="/User/Uassets/Images/img2-3.jpg" />
+                                <p>--------------------------------------------------------------------------------------------------</p>
+                                <p>
+                                    <b>(iii).Simple way defined “Industry Domain” and “Industry Sub-Domain” search</b>
+                                </p>
+                                <p>
+                                    <b>Step 1 - drop down menu</b>- Industry Domain
+                                </p>
+                                <p>
+                                    <i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Select“Electronics”</i>
+                                </p>
+                                <img src="/User/Uassets/Images/img3-1.jpg" />
+                                <p>
+                                    <b>Step2 : drop down menu</b> – Industry Sub-Domain
+                                </p>
+                                <p>
+                                    <i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Select “Resistor”</i>
+                                </p>
+                                <img src="/User/Uassets/Images/img3-2.jpg" />
+                                <p>--------------------------------------------------------------------------------------------------</p>
+                                <div class="d-flex justify-content-end">
+                                    <asp:LinkButton ID="LinkButton8" runat="server" class="btn btn-primary ml-1" ClientIDMode="Static" data-dismiss="modal" Style="width: 80px; background: #507CD1!important" Text="Close" type="button" />
+                                </div>
+                                <p>
+                                </p>
+                                <p>
+                                </p>
+                                <p>
+                                </p>
+                                <p>
+                                </p>
+                                <p>
+                                </p>
+                                <p>
+                                </p>
+                                <p>
+                                </p>
+                                <p>
+                                </p>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!----------------------------------------------------Code For Nato Popup slider------------------------------>
+                <div class="modal fade" id="divcompmisorportal" role="dialog" style="z-index: 9999999;">
+                    <div class="modal-dialog" style="max-width: 900px;">
+                        <div class="modal-content">
+                            <div runat="server" id="Div8">
+                                <div class="modal-header modal-header1 d-flex justify-content-center" style="background: #507CD1!important;">
+                                    <h6 class="modal-title text-white">Company Wise Product (Portal/MIS) or Value</h6>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="table-responsive">
+                                        <asp:GridView runat="server" ID="GridView5" AutoGenerateColumns="false" Class="table table-bordered " ShowFooter="true">
+                                            <Columns>
+                                                <asp:BoundField DataField="CompName" HeaderText="Comp Name" />
+                                                <asp:BoundField DataField="TotalProd" HeaderText="Total Product On MIS" />
+                                                <asp:BoundField DataField="TotalProdPortal" HeaderText="Total Product on Portal" />
+                                                <asp:BoundField DataField="ValueInYear" HeaderText="Total Portal Product Value (In million Rs)" />
+                                            </Columns>
+                                        </asp:GridView>
+                                    </div>
+                                </div>
+                                <div class="modal-footer d-flex justify-content-end">
+                                    <asp:LinkButton type="button" ID="LinkButton9" runat="server" Text="Close" Style="width: 80px; background: #507CD1!important;" class="btn"
+                                        ClientIDMode="Static" ToolTip="close Data" data-dismiss="modal" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!----------------------------------------------------Code end For Nato Popup------------------------------>
+
+                <!----------------------------------------------------Banner popup------------------------------>
+                <%--<div class="modal fade" id="divbannerpopup" role="dialog" style="z-index: 9999999;">
+                    <div class="modal-dialog" style="max-width: 900px;">
+                        <div class="modal-content">
+                            <div runat="server" id="Div9">
+                                document.body.onload = addBanner;
+
+                                 function addBanner () { 
+                                // create a new div element 
+                               // and give it popup content 
+                                var newDiv = document.createElement("div"); 
+                                  newDiv.setAttribute("style", "position: fixed; width: 100%; height: 100%;z-index: 9999991;");	
+                                  newDiv.setAttribute("id", "popup");	
+                                  newDiv.innerHTML +='<div style="position: fixed; background: #000; width: 100%; height: 100%; opacity: .6; z-index: 9999992;"></div>
+                                <div style="position: absolute; width: 88%; z-index: 9999993; display: block; top: 0px; background-color: rgb(255, 255, 255); border: 1px solid rgb(221, 221, 221); border-radius: 5px; box-shadow: rgb(170, 170, 170) 0px 2px 8px; overflow: hidden; margin: auto; left: 0; right: 0; text-align: center; margin-top: 138px;">
+                                    <button class="open_button" onclick="closeMIBPopup1()" style="position: absolute; background: #fff; color: #000; right: 3px; top: 5px; border-radius: 50%; width: 32px; height: 32px; line-height: 20px; font-size: 18px; font-weight: bold; cursor: pointer; box-shadow: 0 0 10px 0 #000;">X</button>
+                                    <div class="popup_body" style="">
+                                        <a href="https://mib.gov.in/" style="curser: pointer;" target="_blank">
+                                            <img src="https://mib.gov.in/sites/default/files/banner2.png?12345" alt="Banner" style="width: 100%;" /></a>                                                                               
+                                    </div>
+                                </div>
+                                ';   
+
+                              // add the newly created element and its content into the DOM 
+                              //var currentDiv = document.getElementById("main_container"); 
+                                document.body.insertBefore(newDiv, document.body.firstChild); 
+
+                             // open popup onload
+                         openMIBPopup1();
+                             }
+
+                         function openMIBPopup1() {
+	                   //alert('sdf');
+                           var el = document.getElementById('popup');
+                           el.style.display = 'block';
+ 
+                         // Updates: set window background color black
+                            document.body.style.background = '#353333';
+                              }
+
+                            function closeMIBPopup1() {
+                          var el = document.getElementById('popup');
+                                       el.style.display = 'none';
+                                  document.body.style.background = 'white';
+                                     }
+                                <div class="modal-footer d-flex justify-content-end">
+                                    <asp:LinkButton type="button" ID="LinkButton10" runat="server" Text="Close" Style="width: 80px; background: #507CD1!important;" class="btn"
+                                        ClientIDMode="Static" ToolTip="close Data" data-dismiss="modal" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                --%><!----------------------------------------------------Banner popup------------------------------>
+
             </ContentTemplate>
             <Triggers>
                 <asp:PostBackTrigger ControlID="btnreset" />
@@ -1338,31 +1646,54 @@
                 </div>
             </ProgressTemplate>
         </asp:UpdateProgress>
-        <div class="container-fluid" style="background-color: #000000;">
-            <div class="row ">
-                <div class="col-sm-2 col-3">
+        <!----------------------------------------------------Code end For Simlier Popup------------------------------>
+        <div id="footer1" class="container-fluid py-3">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        © 2020 <a href="https://srijandefence.gov.in/ProductList">www.srijandefence.gov.in</a> | All Right Reserved. | Designed, Developed and Hosted by Department of Defence Production | Visitor Counter 
+                        <a href="#">
+                            <img src="https://hitwebcounter.com/counter/counter.php?page=7649671&style=0006&nbdigits=6&type=page&initCount=0" border="0" /></a>
+                    </div>
                 </div>
-                <div class="col-sm-10 col-9">
-                    <p style="color: white; padding: 15px 5px 0px 0px; text-align: center;">
-                        Visitor Counter <a href="#">
-                            <img src="https://hitwebcounter.com/counter/counter.php?page=7649671&style=0006&nbdigits=6&type=page&initCount=0" border="0">
-                        </a>
-                    </p>
-                </div>
-                <div class="col-sm-2 col-3">
-                </div>
-                <div class="col-sm-10 col-9">
-                    <p style="color: white; padding: 0px; text-align: center;">
-                        Website content managed by : Department of Defence Production
-                    </p>
-                </div>
-
             </div>
         </div>
         <script src="User/Uassets/js/jquery-3.4.1.min.js"></script>
-        <script src="User/Uassets/js/all.min.js"></script>
         <script src="User/Uassets/js/bootstrap.bundle.min.js"></script>
-        <script src="User/Uassets/js/theme.min.js"></script>
+        <script src="../assets/fontawesome-free-5.15.2/js/all.min.js"></script>
+        <script src="User/Uassets/js/jquery-ui.min.js"></script>
+        <%--<script type="text/javascript">
+            document.body.onload = addBanner;
+            function addBanner() {
+                // create a new div element 
+                // and give it popup content 
+                var newDiv = document.createElement("div");
+                newDiv.setAttribute("style", "position: fixed; width: 100%; height: 100%;z-index: 9999991;");
+                newDiv.setAttribute("id", "popup");
+                newDiv.innerHTML += '<div style=" position: fixed; background: #000; width: 100%;height: 100%;opacity: .6; z-index: 9999992;"></div><div style="  position: absolute;width: 88%; z-index: 9999993;display: block; top:0px; background-color: rgb(255, 255, 255); border: 1px solid rgb(221, 221, 221); border-radius: 5px;  box-shadow: rgb(170, 170, 170) 0px 2px 8px; overflow: hidden; margin: auto; left: 0;  right: 0;  text-align: center;margin-top: 138px;"><button class="open_button" onClick="closeMIBPopup1()" style="position: absolute; background: #fff;color: #000;right: 3px; top: 5px; border-radius: 50%; width: 32px; height: 32px; line-height: 20px; font-size: 18px; font-weight: bold; cursor: pointer;    box-shadow: 0 0 10px 0 #000;">X</button><div class="popup_body" style=" "><a href="https://mib.gov.in/" style="curser:pointer;" target="_blank"><img src="https://mib.gov.in/sites/default/files/banner2.png?12345" alt="Banner" style=" width: 100%;"/></a></div></div>';
+
+                // add the newly created element and its content into the DOM 
+                //var currentDiv = document.getElementById("main_container"); 
+                document.body.insertBefore(newDiv, document.body.firstChild);
+
+                // open popup onload
+                openMIBPopup1();
+            }
+            function openMIBPopup1() {
+                //alert('sdf');
+                var el = document.getElementById('popup');
+                el.style.display = 'block';
+
+                // Updates: set window background color black
+                document.body.style.background = '#353333';
+            }
+            function closeMIBPopup1() {
+                var el = document.getElementById('popup');
+                el.style.display = 'none';
+                document.body.style.background = 'white';
+            }
+        </script>--%>
+
         <script type="text/javascript">
             function showPopup() {
                 $('#ProductCompany').modal('show');
@@ -1384,6 +1715,16 @@
             }
         </script>
         <script type="text/javascript">
+            function showPopup4() {
+                $('#searchtooltip').modal('show');
+            }
+        </script>
+        <script type="text/javascript">
+            function showPopup10() {
+                $('#divcompmisorportal').modal('show');
+            }
+        </script>
+        <script type="text/javascript">
             function PrintDiv() {
                 var divToPrint = document.getElementById('printarea');
                 var popupWin = window.open('', '_blank', 'width=300,height=400,location=no,left=200px');
@@ -1402,7 +1743,7 @@
             }
         </script>
         <script type="text/javascript">
-            function Printm() {
+            function Prints() {
                 var divToPrint = document.getElementById('Div15');
                 var popupWin = window.open('', '_blank', 'width=300,height=400,location=no,left=200px');
                 popupWin.document.open();
@@ -1417,7 +1758,7 @@
                 });
             });
         </script>
-        <script src="User/Uassets/js/jquery-ui.min.js"></script>
+
         <script type="text/javascript">
             $(function () {
                 SetAutoComplete();
@@ -1434,7 +1775,7 @@
                 $("[id$=txtsearch]").autocomplete({
                     source: function (request, response) {
                         $.ajax({
-                            url: 'User/U_ProductList.aspx/GetSearchKeyword',
+                            url: 'User/U_ProductList1.aspx/GetSearchKeyword',
                             data: "{ 'prefix': '" + request.term + "'}",
                             dataType: "json",
                             type: "POST",
@@ -1454,11 +1795,6 @@
                 });
             }
         </script>
-        <script>
-            var d = new Date();
-            document.getElementById("demo").innerHTML = d;
-        </script>
-
         <script>
             $(document).ready(function () {
                 $('[data-toggle="tooltip"]').tooltip();

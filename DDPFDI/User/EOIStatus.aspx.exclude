@@ -1,0 +1,289 @@
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="EOIStatus.aspx.cs" Inherits="User_EOIStatus" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head id="Head1" runat="server">
+    <title>EOI Status</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="~/User/Uassets/css/bootstrap.min.css" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css">
+
+    <!-----------------------------------------------------------------------For DataTable-------------------------->
+    <link href="DataTable/bootstrap.min.css" rel="stylesheet" />
+    <link href="DataTable/dataTables.bootstrap4.min.css" rel="stylesheet" />
+    <link href="DataTable/buttons.bootstrap4.css" rel="stylesheet" />
+    <style>
+        .dt-buttons {
+            display: block !important;
+        }
+
+        * {
+            margin: 0px;
+            padding: 0px;
+            box-sizing: border-box;
+        }
+
+        #table1 {
+            font-size: 12px !important;
+            font-weight: bold !important;
+        }
+
+            #table1 th {
+                background-color: black !important;
+                color: white !important;
+            }
+
+        .menu_ {
+            border-right: 2px solid white;
+            padding-right: 12px;
+            color: white !important;
+            margin-right: 12px !important;
+        }
+
+        #menu a {
+            text-decoration: none !important;
+        }
+
+        #menu {
+            text-align: right !important;
+        }
+
+        #gveoi_wrapper button {
+            color: white !important;
+        }
+
+        #gveoi th {
+            color: white;
+        }
+         #gveoi_filter
+        {
+            margin-top:-40px;
+        }
+    </style>
+</head>
+<body>
+    <div class="modal fade" id="aboutus-modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 600px;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <ul class="nav nav-tabs card-header-tabs" role="tablist">
+                        <li class="nav-item"><a class="nav-link active" href="#" data-toggle="tab" role="tab"
+                            aria-selected="true">About us</a></li>
+                    </ul>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body tab-content py-4">
+                    <p class="text-justify">
+                        Pursuant to ‘Atmanirbhar Bharat’ announcement, the Department of Defence Production/Ministry of Defence/Government of India has developed this portal named, <b>srijandefence.gov.in</b>, as “Opportunities for Make in India in Defence”.  The main objective of the portal is to partner the private sector in indigenization efforts of Defence Public Sector Undertakings(DPSUs), OFB and the Armed Forces. The portal will be a non-transactional online market place platform. 
+                    </p>
+                    <p class="text-justify">
+                        DPSUs/OFB/SHQs will display their items on this portal, which they have imported or going to import, each item having sizeable import value. They will also display those items which have been planned/targeted in the coming years, for indigenization.
+                    </p>
+                    <p class="text-justify">
+                        The Indian industry will be able to show their interest in those items for which they can design, develop and manufacture as per their capability or through joint venture with OEMs. The concerned DPSUs/OFB/SHQs, based on their requirement of the items and their respective guidelines & procedures, will interact with the interested Indian industry for indigenization. The interested Indian industry can also interact with concerned DPSUs/OFB/SHQs for their queries related to indigenization through the contact details given under each item.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <form id="form1" runat="server">
+        <asp:ScriptManager runat="server" ID="sc"></asp:ScriptManager>
+        <asp:UpdatePanel runat="server" ID="up">
+            <ContentTemplate>
+                <div class="container-fluid py-2">
+                    <div class="row">
+                        <div class="col-sm-2 col-3 nr-auto">
+                            <img src="user/ddp_logo.png" alt="" class="img-fluid" />
+                        </div>
+                        <div class="col-md-10 topheadline text-center col-9 my-3">
+                            <h2 style="color: #6915cf;">OPPORTUNITIES FOR MAKE IN INDIA IN DEFENCE</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="container-fluid bg-dark py-md-4" style="background: #373f50!important;">
+
+                    <div class="row py-5">
+                        <div class="col-md-3">
+                            <h1 class="h3 text-light mx-md-3">EOI Status of Products</h1>
+                        </div>
+                        <div id="menu" class="col-md-9">
+                            <b><a href="https://www.makeinindiadefence.gov.in/" target="_blank" class="menu_">Make In India Defence Portal </a></b>
+                            <b><a href="#aboutus-modal" class="menu_" data-toggle="modal">About us </a></b>
+                            <b><a href="~/Login" id="linklogin" runat="server" class="menu_" visible="false">DPSU Login</a> </b>
+                            <b>
+                                <asp:Label ID="linkusername" runat="server" class="menu_" Visible="false" ToolTip="Login UserName"></asp:Label></b>
+                            <b><a href="~/ProductList" id="lbmarket" runat="server" class="menu_" visible="false">Market Place</a></b>
+                            <b><a href="~/Dashboard" id="lblmis" runat="server" class="menu_" visible="false" data-toggle="tooltip"
+                                tooltip="DPSU's Dashboard Page Link (Click here to go back dashboard for add product)">MIS</a></b>
+                            <b><a href="~/DPSUHome" id="lbdpsuhome" runat="server" class="menu_" visible="false">Intrest Shown</a></b>
+                            <b><a href="~/EOIStatus" id="lbeoistatus" runat="server" class="menu_" visible="false">EOI Status</a></b>
+                            <b><a href="~/ProgressReport" id="lbProgressReport" runat="server" class="menu_" visible="false">Progress Report</a></b>
+                            <b><a href="~/SuccessStory" id="lbSuccesstory" runat="server" class="menu_" visible="false">Success Story</a></b>
+
+                            <b><a href="FAQs" class="menu_">FAQ</a></b>
+                            <b>
+                                <asp:LinkButton runat="server" ID="lbllogout" Visible="false" Class="menu_" OnClick="lbllogout_Click">&nbsp;Log Out</asp:LinkButton></b>
+                        </div>
+                    </div>
+                </div>
+                <div class="container-fluid my-3">
+                </div>
+                <div class="row">
+                    <div class="col-md-10 mx-auto md-auto">
+                        <div runat="server" id="divhome">
+                            <asp:GridView runat="server" ID="gveoi" Class="table table-striped table-bordered  text-center" AutoGenerateColumns="False" OnRowDataBound="gveoi_RowDataBound" OnRowCreated="gveoi_RowCreated" CellPadding="4" ForeColor="#333333" GridLines="None">
+                                <AlternatingRowStyle BackColor="White" ForeColor="#284775" />
+                                <Columns>
+                                    <asp:TemplateField HeaderText="Sr.No">
+                                        <ItemTemplate>
+                                            <asp:Label runat="server" ID="lblsrno" Text='<%#Container.DataItemIndex+1 %>'></asp:Label>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                    <asp:TemplateField HeaderText="Last Update Date" HeaderStyle-Width="200px">
+                                        <ItemTemplate>
+                                            <asp:Label runat="server" ID="lbldate" Text='<%#Eval("LastUpdated","{0:dd-MMM-yyyy}") %>'></asp:Label>
+                                        </ItemTemplate>
+                                        <HeaderStyle Width="200px" />
+                                    </asp:TemplateField>
+                                    <asp:BoundField HeaderText="Item No" DataField="ProductRefNo" />
+                                    <asp:BoundField HeaderText="Product Description" DataField="ProductDescription" HeaderStyle-Width="500px">
+                                        <HeaderStyle Width="500px" />
+                                    </asp:BoundField>
+                                    <asp:BoundField HeaderText="Company" DataField="CompanyName" />
+                                    <asp:BoundField HeaderText="EOI Status" DataField="EOIStatus" />
+                                    <asp:TemplateField HeaderText="RFP URL">
+                                        <ItemTemplate>
+                                            <asp:HyperLink runat="server" ID="hfeoi" Target="_blank" Text='<%#Eval("EOIUrl") %>' NavigateUrl='<%#Eval("EOIUrl") %>'></asp:HyperLink>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                    <asp:TemplateField HeaderText="Interest" HeaderStyle-Width="100px">
+                                        <ItemTemplate>
+                                            <asp:Label runat="server" class="fa fa-thumbs-up" ID="mThumsup" title="Product That generate eoi link and also shown intrested by vendor" Text="Yes"></asp:Label>
+                                        </ItemTemplate>
+                                        <HeaderStyle Width="100px" />
+                                    </asp:TemplateField>
+                                </Columns>
+                                <EditRowStyle BackColor="#999999" />
+                                <FooterStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" />
+                                <HeaderStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" />
+                                <PagerStyle BackColor="#284775" ForeColor="White" HorizontalAlign="Center" />
+                                <RowStyle BackColor="#F7F6F3" ForeColor="#333333" />
+                                <SelectedRowStyle BackColor="#E2DED6" Font-Bold="True" ForeColor="#333333" />
+                                <SortedAscendingCellStyle BackColor="#E9E7E2" />
+                                <SortedAscendingHeaderStyle BackColor="#506C8C" />
+                                <SortedDescendingCellStyle BackColor="#FFFDF8" />
+                                <SortedDescendingHeaderStyle BackColor="#6F8DAE" />
+                            </asp:GridView>
+                        </div>
+                    </div>
+                </div>
+                <div class="container-fluid footer1 bg-dark text-white text-center" style="margin-top: 5px;">
+                    <div class="container p-2">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <p>
+                                    ©2020 www.srijandefence.gov.in | All Right Reserved. Department of Defence Production | Designed, Developed and Hosted by Department of Defence Production<p>
+                                        <p></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ContentTemplate>
+            <Triggers>
+            </Triggers>
+        </asp:UpdatePanel>
+        <asp:UpdateProgress ID="UpdateProgress" runat="server" AssociatedUpdatePanelID="up">
+            <ProgressTemplate>
+                <div class="overlay-progress">
+                    <div class="custom-progress-bar blue stripes">
+                        <span></span>
+                        <p style="margin-left: 200px; padding-bottom: 10px;">
+                            <b>Processing...</b>
+                        </p>
+                    </div>
+                </div>
+            </ProgressTemplate>
+        </asp:UpdateProgress>
+
+        <script src="User/Uassets/js/jquery-3.4.1.min.js"></script>
+        <script type="text/javascript">
+            function showPopup() {
+                $('#ProductCompany').modal('show');
+            }
+        </script>
+        <script type="text/javascript">
+            function showPopup1() {
+                $('#divstatus').modal('show');
+            }
+        </script>
+        <!-- jQuery and Bootstrap JS files  Datatable new  -->
+        <script src="DataTable/jquery-3.3.1.min.js"></script>
+        <script src="DataTable/popper.min.js"></script>
+        <script src="DataTable/bootstrap.min.js"></script>
+        <!-- Datatables-->
+        <script src="DataTable/jquery.dataTables.min.js"></script>
+        <script src="DataTable/dataTables.bootstrap4.min.js"></script>
+        <script src="DataTable/dataTables.buttons.min.js"></script>
+        <script src="DataTable/buttons.bootstrap4.min.js"></script>
+        <script src="DataTable/jszip.min.js"></script>
+        <script src="DataTable/pdfmake.min.js"></script>
+        <script src="DataTable/vfs_fonts.js"></script>
+        <script src="DataTable/buttons.html5.min.js"></script>
+        <script src="DataTable/buttons.print.min.js"></script>
+        <script src="DataTable/buttons.colVis.min.js"></script>
+        <script src="DataTable/datatables-init.js"></script>
+        <!-- pace -->
+        <script>
+            var handleDataTableButtons = function () {
+                "use strict";
+                0 !== $('#<%= gveoi.ClientID %>').length && $('#<%= gveoi.ClientID %>').DataTable({
+                    dom: "Bfrtip",
+                    buttons: [{
+                        extend: "copy",
+                        className: "btn-sm"
+                    }, {
+                        extend: "csv",
+                        className: "btn-sm"
+                    }, {
+                        extend: "excel",
+                        className: "btn-sm"
+                    }, {
+                        extend: "pdf",
+                        className: "btn-sm"
+                    }, {
+                        extend: "print",
+                        className: "btn-sm"
+                    }],
+                    responsive: !0
+                })
+            },
+                TableManageButtons = function () {
+                    "use strict";
+                    return {
+                        init: function () {
+                            handleDataTableButtons()
+                        }
+                    }
+                }();
+        </script>
+        <script type="text/javascript">
+            //On Page Load
+            $(document).ready(function () {
+                $('#<%= gveoi.ClientID %>').dataTable();
+            });
+            //On UpdatePanel Refresh
+            var prm = Sys.WebForms.PageRequestManager.getInstance();
+            if (prm != null) {
+                prm.add_endRequest(function (sender, e) {
+                    $('#<%= gveoi.ClientID %>').dataTable();
+                });
+                TableManageButtons.init();
+            };
+        </script>
+    </form>
+</body>
+</html>

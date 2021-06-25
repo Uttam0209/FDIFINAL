@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<siteMap xmlns="http://schemas.microsoft.com/AspNet/SiteMap-File-1.0" >
+	<siteMapNode url="DefaultDpsu.aspx" title="login page"  description="loginId Password page">
+		<siteMapNode url="U_ProductList.aspx" title="Product List "  description="All Product details with image " />
+		<siteMapNode url="ProgressReport2.aspx" title="Progress Report"  description="Product Progress Report for total product with total interest " />
+		<siteMapNode url="S_Story2.aspx" title="Success Story"  description="Success Story of total product" />
+		<siteMapNode url="FAQ.aspx" title="FAQ"  description="important question answer regarding for srijan defence portal " />
+		<siteMapNode url="About.aspx" title="About Us"  description="important information for srijan defence portal " />
+		<siteMapNode url="Feedback.aspx" title="Feedback "  description="user give our feedback for srijan defence portal " />
+		<siteMapNode url="Participate.aspx" title="Participate "  description="How to participate in srijan defence portal " />
+		<siteMapNode url="U_Cart.aspx" title="Add Cart"  description="Product add in the cart  " />
+	</siteMapNode>
+</siteMap>

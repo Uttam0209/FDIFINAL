@@ -1,0 +1,273 @@
+﻿using BusinessLayer;
+using Encryption;
+using System;
+using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.Data;
+using System.IO;
+using System.Linq;
+using System.Net;
+using System.Net.Security;
+using System.Text;
+using System.Text.RegularExpressions;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+
+public partial class Vendor_Registration : System.Web.UI.Page
+{
+
+    #region "Variables"
+    Logic LO = new Logic();
+    DataUtility Co = new DataUtility();
+    Cryptography objEnc = new Cryptography();
+    HybridDictionary hyLogin = new HybridDictionary();
+    HybridDictionary HySaveVendor = new HybridDictionary();
+    string _msg = string.Empty;
+    string Defaultpage = string.Empty;
+    string _sysMsg = string.Empty;
+    string notvalidate = string.Empty;
+    string _EmpId = string.Empty;
+    Int64 MId = 0;
+    #endregion
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        if (!IsPostBack)
+        {
+            binddpsu();
+        }
+    }
+
+    protected void binddpsu()
+    {
+        DataTable DtCompanyDDL = LO.RetriveMasterData(0, "", "Company", 0, "", "", "Select");
+        if (DtCompanyDDL.Rows.Count > 0)
+        {
+            Co.FillCheckBox(chkdpsu, DtCompanyDDL, "CompanyName", "CompanyName");
+        }
+    }
+
+    #region "Login Code"
+    public static bool IsValidEmailId(string InputEmail)
+    {
+        string pattern = @"^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,6}$";
+        Match match = Regex.Match(InputEmail.Trim(), pattern, RegexOptions.IgnoreCase);
+        if (match.Success)
+            return true;
+        else
+            return false;
+    }
+    public bool IsValidEmailRegister(string InputEmail)
+    {
+        string DtEmailValidate = LO.VerifyEmailandCompany(InputEmail, "VEmail", out _msg);
+        if (_msg.ToString() == InputEmail.ToString())
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
+    public bool IsValidMobile(string InputMobile)
+    {
+        string DtEmailValidate = LO.VerifyEmailandCompany(InputMobile, "VPhone", out _msg);
+        if (_msg.ToString() == InputMobile.ToString())
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
+    public void SendEmailCodeRegis(string empid)
+    {
+        try
+        {
+            string body;
+            using (StreamReader reader = new StreamReader(Server.MapPath("~/emailPage/VenRegisOrPassGenerateLink.html")))
+            {
+                body = reader.ReadToEnd();
+            }
+            body = body.Replace("{UserName}", txtnodelemail.Text);
+            body = body.Replace("{refno}", HttpUtility.UrlEncode(objEnc.EncryptData(empid)));
+            body = body.Replace("{mcurid}", Resturl(56));
+            SendMail s;
+            s = new SendMail();
+            s.CreateMail("noreply-srijandefence@gov.in", txtnodelemail.Text, "Create Password Email", body);
+            s.sendMail();
+        }
+        catch (Exception ex)
+        {
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('" + ex.Message + "')", true);
+        }
+
+    }
+    #endregion
+
+    #region ReturnUrl Long"
+    public string Resturl(int length)
+    {
+        const string valid = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+        StringBuilder res = new StringBuilder();
+        Random rnd = new Random();
+        while (0 < length--)
+        {
+            res.Append(valid[rnd.Next(valid.Length)]);
+        }
+        return res.ToString();
+    }
+    #endregion
+
+
+
+    #region Registration Code
+    protected void clearregistrationtext()
+    {
+        ddlregiscategory.SelectedIndex = -1;
+        txtnodalname.Text = "";
+        txtnodelemail.Text = "";
+        txtMobileNodal.Text = "";
+        txtstreetaddress.Text = "";
+        txtstreetaddressline2.Text = "";
+        txtcity.Text = "";
+        txtstateprovince.Text = "";
+        txtpostalzipcode.Text = "";
+        txtCapt.Text = "";
+        // ddlcountry.SelectedIndex = -1;
+    }
+    string mdpsuid = string.Empty;
+    protected void SaveCode()
+    {
+        HySaveVendor["VendorID"] = MId;
+        HySaveVendor["GSTNo"] = "";// txtgstno.Text.Trim();
+        for (int i = 0; i < chkdpsu.Items.Count; i++)
+        {
+            if (chkdpsu.Items[i].Selected == true)
+            {
+                mdpsuid = mdpsuid + chkdpsu.Items[i].Value + ",";
+            }
+        }
+        HySaveVendor["V_RegisterdDPSU"] = mdpsuid.ToString().TrimEnd(',');
+        HySaveVendor["RegistrationCategory"] = ddlregiscategory.SelectedItem.Text;
+        HySaveVendor["NodalOfficerName"] = txtnodalname.Text.Trim();
+        HySaveVendor["NodalOfficerEmail"] = txtnodelemail.Text.Trim();
+        HySaveVendor["ContactNo"] = txtMobileNodal.Text.Trim();
+        HySaveVendor["StreetAddress"] = txtstreetaddress.Text.Trim();
+        HySaveVendor["StreetAddressLine2"] = txtstreetaddressline2.Text.Trim();
+        HySaveVendor["City"] = txtcity.Text.Trim();
+        HySaveVendor["State"] = txtstateprovince.Text.Trim();
+        HySaveVendor["ZipCode"] = txtpostalzipcode.Text.Trim();
+        //HySaveVendor["Country"] = ddlcountry.SelectedItem.Value;
+        string str = LO.SaveVendorRegis(HySaveVendor, out _sysMsg, out _msg);
+        if (str != "")
+        {
+            SendEmailCodeRegis(str);
+            clearregistrationtext();
+            string message = "Record save successfully.Password releted mail send to your registerd email id.";
+            string script = "window.onload = function(){ alert('";
+            script += message;
+            script += "')};";
+            ClientScript.RegisterStartupScript(this.GetType(), "SuccessMessage", script, true);
+            // ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record save successfully.Password releted mail send to your registerd email id.')", true);
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "HidePopup", "$('#changePass').modal('hide')", true);
+        }
+        else
+        {
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not save successfully.')", true);
+        }
+    }
+
+    protected void ValidateCaptcha(object sender, ServerValidateEventArgs e)
+    {
+        Captcha2.ValidateCaptcha(txtCapt.Text.Trim());
+        e.IsValid = Captcha2.UserValidated;
+        if (e.IsValid)
+        {
+            //ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Valid Captcha!');", true);
+        }
+        //e.IsValid = Captcha2.UserValidated;
+        //if (e.IsValid)
+        //{
+        //    ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Valid Captcha!');", true);
+        //}
+    }
+    protected void btnsubmit_Click(object sender, EventArgs e)
+    {
+        try
+        {
+            if (txtnodalname.Text != "" && txtnodelemail.Text != "")
+            {
+                if (Captcha2.UserValidated == false)
+                {
+                    txtCapt.Text = "";
+                    ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "ErrorMssgPopup('Invalid Captcha')", true);
+                }
+                else if (txtCapt.Text == "")
+                {
+                    ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "ErrorMssgPopup('Enter Captcha')", true);
+                }
+                else
+                {
+                    if (IsValidEmailId(txtnodelemail.Text))
+                    {
+                        if (IsValidEmailRegister(txtnodelemail.Text))
+                        {
+                            if (IsValidEmailRegister(txtnodelemail.Text))
+                            {
+
+                                foreach (ListItem list in chkdpsu.Items)
+                                {
+                                    if (list.Selected == true)
+                                    {
+                                        mdpsuid = mdpsuid + list.Value + ",";
+                                    }
+                                }
+                                if (mdpsuid.ToString() != "")
+                                {
+                                    SaveCode();
+                                }
+                                else
+                                {
+                                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Check alteast one dpsu.')", true);
+                                }
+                            }
+                            else
+                            {
+                                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Mobile already registerd.')", true);
+                            }
+                        }
+                        else
+                        {
+                            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Email already registerd')", true);
+                        }
+                    }
+                    else
+                    {
+                        ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Email format not valid')", true);
+                    }
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record save successfully.Password releted mail send to your registerd email id.')", true);
+                }
+            }
+            else
+            {
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Please fill mandatory field')", true);
+            }
+        }
+        catch (Exception ex)
+        {
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('" + ex.Message.ToString() + "')", true);
+        }
+    }
+    protected void btnclear_Click(object sender, EventArgs e)
+    {
+        clearregistrationtext();
+    }
+    #endregion
+
+    protected void btnback_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("TestLab", true);
+    }
+}

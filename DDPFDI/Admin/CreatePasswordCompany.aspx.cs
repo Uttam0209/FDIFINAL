@@ -3,6 +3,7 @@ using System.Web.UI;
 using BusinessLayer;
 using Encryption;
 using System.Web.Helpers;
+using System.Data;
 
 public partial class Admin_CreatePasswordCompany : System.Web.UI.Page
 {
@@ -13,7 +14,21 @@ public partial class Admin_CreatePasswordCompany : System.Web.UI.Page
     {
         if (Request.QueryString["mcref"] != "" && Request.QueryString["mcurid"] != "")
         {
-            ViewState["Refno"] = Enc.DecryptData(Request.QueryString["mcref"].ToString()); 
+            ViewState["Refno"] = Enc.DecryptData(Request.QueryString["mcref"].ToString());
+            DataTable dtCreate = Lo.RetriveForgotPasswordEmail(ViewState["Refno"].ToString(), "Linkexp");
+            DateTime dtNow = Convert.ToDateTime(dtCreate.Rows[0]["timeexpire"].ToString());
+            DateTime dtCExp = DateTime.Now;
+            DateTime dtexp = dtNow.AddHours(2);
+            if (dtCExp > dtexp)
+            {
+                Expired.Visible = true;
+                Valid.Visible = false;
+            }
+            else
+            {
+                Expired.Visible = false;
+                Valid.Visible = true;
+            }
         }
         else
         {
@@ -39,7 +54,6 @@ public partial class Admin_CreatePasswordCompany : System.Web.UI.Page
                         txtpassword.Text = "";
                         txttnewpass.Text = "";
                         ScriptManager.RegisterStartupScript(this, this.GetType(), "alert", "SuccessfullPop('Password created successfully.Please login with new password.We will redirected to you login page');window.location ='Login';", true);
-                       
                     }
                     else
                     {
@@ -48,7 +62,7 @@ public partial class Admin_CreatePasswordCompany : System.Web.UI.Page
                 }
                 else
                 {
-                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "ErrorMssgPopup('Minimum Length is (8) charactor')", true);
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "ErrorMssgPopup('Minimum Length is (8) character')", true);
                 }
             }
             else

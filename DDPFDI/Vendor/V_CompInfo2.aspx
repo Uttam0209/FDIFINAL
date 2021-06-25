@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="V_CompInfo2.aspx.cs" Inherits="Vendor_V_CompInfo2" MasterPageFile="~/Vendor/VendorMaster.master" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="V_CompInfo2.aspx.cs" Inherits="Vendor_V_CompInfo2" MasterPageFile="~/Vendor/VendorMasterWithTopMenu.master" %>
 
 <asp:Content ID="ConHead" runat="server" ContentPlaceHolderID="head"></asp:Content>
 <asp:Content ID="Innercontent" runat="server" ContentPlaceHolderID="ContentPlaceHolder1">
@@ -10,7 +10,7 @@
                     <div id="divHeadPage" runat="server"></div>
                 </div>
             </div>
-            <div class="container">
+            <div class="container">  <%--style="width:1000px"--%>
                 <div class="cacade-forms">
                     <div class="clearfix mt10"></div>
                     <div id="ocd" class="tab-pane">
@@ -25,10 +25,10 @@
                                         ForeColor="#333333" GridLines="None" AutoGenerateColumns="false" OnRowCreated="gvOEMNameadd_RowCreated">
                                         <AlternatingRowStyle BackColor="White" />
                                         <Columns>
-                                            <asp:BoundField DataField="SNo" HeaderText="Raw Number" />
+                                            <asp:BoundField DataField="SNo" HeaderText="SR. Number" />
                                             <asp:TemplateField HeaderText="Name">
                                                 <ItemTemplate>
-                                                    <asp:TextBox ID="txtmanofficename1" runat="server" CssClass="form-control"></asp:TextBox>
+                                                    <asp:TextBox ID="txtmanofficename1" runat="server" CssClass="form-control" MaxLength="70"></asp:TextBox>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="OEM">
@@ -51,17 +51,19 @@
                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="Telephone No">
                                                 <ItemTemplate>
-                                                    <asp:TextBox ID="txttelephonenoMF1" runat="server" CssClass="form-control"></asp:TextBox>
+                                                    <asp:TextBox ID="txttelephonenoMF1" runat="server" onkeypress="return isNumberKey(event)" MaxLength="10" CssClass="form-control"></asp:TextBox>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="Fax No">
                                                 <ItemTemplate>
-                                                    <asp:TextBox ID="txtfaxnoMF1" runat="server" CssClass="form-control"></asp:TextBox>
+                                                    <asp:TextBox ID="txtfaxnoMF1" runat="server" onkeypress="return isNumberKey(event)" MaxLength="15" CssClass="form-control"></asp:TextBox>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="Email Id">
                                                 <ItemTemplate>
                                                     <asp:TextBox ID="txtemailidMF1" runat="server" TextMode="Email" CssClass="form-control"></asp:TextBox>
+                                                    <asp:RegularExpressionValidator ID="regextxtemailidMF1" runat="server" ValidationExpression="\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*" ControlToValidate="txtemailidMF1" ForeColor="Red" ErrorMessage="Invalid Email Format"></asp:RegularExpressionValidator>
+                        
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="Authrization">
@@ -134,7 +136,9 @@
                                         <SortedDescendingHeaderStyle BackColor="#4870BE" />
                                     </asp:GridView>
                                     <div class="clearfix mt10"></div>
-                                    <asp:Button ID="btnsubmit" runat="server" Text="Submit" CssClass="btn btn-primary pull-right mr10" OnClick="btnsubmit_Click" />
+                                    <asp:LinkButton ID="btnNext" runat="server" Text="Next" CssClass="btn btn-primary pull-right mr10" OnClick="btnNext_Click"></asp:LinkButton>
+                                    <asp:Button ID="btnsubmit" runat="server" Text="Save" CssClass="btn btn-primary pull-right mr10" OnClick="btnsubmit_Click" />
+                                     <asp:LinkButton ID="btnPrev" runat="server" Text="Previous" CssClass="btn btn-primary pull-right mr10" OnClick="btnPrev_Click"> </asp:LinkButton>
                                 </asp:Panel>
                             </ContentTemplate>
                             <Triggers>

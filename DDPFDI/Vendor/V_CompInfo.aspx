@@ -1,6 +1,8 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="V_CompInfo.aspx.cs" Inherits="Vendor_V_CompInfo" MasterPageFile="~/Vendor/VendorMaster.master" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="V_CompInfo.aspx.cs" Inherits="Vendor_V_CompInfo" MasterPageFile="~/Vendor/VendorMasterWithTopMenu.master" %>
 
-<asp:Content ID="ConHead" runat="server" ContentPlaceHolderID="head"></asp:Content>
+<asp:Content ID="ConHead" runat="server" ContentPlaceHolderID="head">
+    <script src="../assets/js/jquery-3.4.1.min.js"></script>
+</asp:Content>
 <asp:Content ID="Innercontent" runat="server" ContentPlaceHolderID="ContentPlaceHolder1">
     <asp:ScriptManager ID="sc" runat="server"></asp:ScriptManager>
     <div class="content oem-content">
@@ -10,26 +12,30 @@
                     <div id="divHeadPage" runat="server"></div>
                 </div>
             </div>
-            <div class="container">
+            <div class="container" > <%--style="width:1000px"--%>
                 <asp:UpdatePanel ID="up" runat="server">
                     <ContentTemplate>
                         <div class="cacade-forms">
                             <div class="clearfix mt10"></div>
                             <asp:Panel ID="testcompinfo1" runat="server">
+
+                               
+
                                 <p>List of Manufacturing Facilities</p>
                                 <asp:GridView ID="gvmanufacility" runat="server" CssClass="table table-hover" CellPadding="4" ShowFooter="true"
                                     ForeColor="#333333" GridLines="None" AutoGenerateColumns="false" OnRowCreated="gvmanufacility_RowCreated">
                                     <AlternatingRowStyle BackColor="White" />
                                     <Columns>
-                                        <asp:BoundField DataField="SNo" HeaderText="Raw Number" />
+                                        <asp:BoundField DataField="SNo" HeaderText="SR. No" />
                                         <asp:TemplateField HeaderText="Name of Factory">
                                             <ItemTemplate>
-                                                <asp:TextBox ID="txtmanofficename" runat="server" CssClass="form-control"></asp:TextBox>
+                                                <asp:TextBox ID="txtmanofficename" runat="server" MaxLength="70" CssClass="form-control"></asp:TextBox>
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="Factory GST No">
                                             <ItemTemplate>
-                                                <asp:TextBox ID="TXTFACGSTNO" runat="server" CssClass="form-control"></asp:TextBox>
+                                                <asp:TextBox ID="TXTFACGSTNO" runat="server" CssClass="form-control" MaxLength="15"></asp:TextBox>
+                                                <asp:RegularExpressionValidator ID="RegularExpressionValidator1" SetFocusOnError="true" runat="server" ValidationExpression="[a-zA-Z0-9]*[^!@%~?:#$%^&*()0']" ControlToValidate="TXTFACGSTNO" ForeColor="Red" ErrorMessage="Do not use special charactor"></asp:RegularExpressionValidator>
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="Complete postal Address">
@@ -39,23 +45,24 @@
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="Contact Official Name">
                                             <ItemTemplate>
-                                                <asp:TextBox ID="txtofficialNameMF" runat="server" CssClass="form-control"></asp:TextBox>
+                                                <asp:TextBox ID="txtofficialNameMF" runat="server" CssClass="form-control" MaxLength="100"></asp:TextBox>
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="Telephone No">
                                             <ItemTemplate>
-                                                <asp:TextBox ID="txttelephonenoMF" runat="server" onkeypress="return isNumberKey(event)" CssClass="form-control"></asp:TextBox>
+                                                <asp:TextBox ID="txttelephonenoMF" runat="server" onkeypress="return isNumberKey(event)" MaxLength="10" CssClass="form-control"></asp:TextBox>
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="Fax No">
                                             <ItemTemplate>
-                                                <asp:TextBox ID="txtfaxnoMF" runat="server" onkeypress="return isNumberKey(event)" CssClass="form-control"></asp:TextBox>
+                                                <asp:TextBox ID="txtfaxnoMF" runat="server" onkeypress="return isNumberKey(event)" MaxLength="15" CssClass="form-control"></asp:TextBox>
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="Email Id">
                                             <ItemTemplate>
                                                 <asp:TextBox ID="txtemailidMF" runat="server" TextMode="Email" CssClass="form-control" AutoPostBack="true" OnTextChanged="txtemailidMF_TextChanged"></asp:TextBox>
-                                            </ItemTemplate>
+                                            <asp:RegularExpressionValidator ID="regextxtemailidMF" runat="server" SetFocusOnError="true" ValidationExpression="\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*" ControlToValidate="txtemailidMF" ForeColor="Red" ErrorMessage="Invalid Email Format"></asp:RegularExpressionValidator>
+                                                </ItemTemplate>
                                             <FooterStyle HorizontalAlign="Right" />
                                             <FooterTemplate>
                                                 <asp:LinkButton ID="btnAddManufac" runat="server" Text="Add New Row" CssClass="btn btn-primary pull-right" OnClick="btnAddManufac_Click"></asp:LinkButton>
@@ -120,7 +127,7 @@
                                     ForeColor="#333333" GridLines="None" AutoGenerateColumns="false" OnRowCreated="gvareadetail_RowCreated">
                                     <AlternatingRowStyle BackColor="White" />
                                     <Columns>
-                                        <asp:BoundField DataField="Sno" HeaderText="Raw Number" />
+                                        <asp:BoundField DataField="Sno" HeaderText="SR. No" />
                                         <asp:TemplateField HeaderText="Name of Factory">
                                             <ItemTemplate>
                                                 <asp:TextBox ID="txtAreaFactoryName" runat="server" ReadOnly="true" CssClass="form-control"></asp:TextBox>
@@ -207,7 +214,7 @@
                                     CellPadding="4" ForeColor="#333333" GridLines="None" AutoGenerateColumns="false" OnRowCreated="gvplantandmachines_RowCreated">
                                     <AlternatingRowStyle BackColor="White" />
                                     <Columns>
-                                        <asp:BoundField DataField="Sno" HeaderText="Raw Number" />
+                                        <asp:BoundField DataField="Sno" HeaderText="SR. No" />
                                         <asp:TemplateField HeaderText="Description of Machine & Model Specs">
                                             <ItemTemplate>
                                                 <asp:TextBox ID="txtPlantandMachineName" runat="server" CssClass="form-control"></asp:TextBox>
@@ -297,40 +304,40 @@
                                     ShowFooter="true" OnRowCreated="gvempCompInfo_RowCreated" CellPadding="4" ForeColor="#333333" GridLines="None" AutoGenerateColumns="false">
                                     <AlternatingRowStyle BackColor="White" />
                                     <Columns>
-                                        <asp:BoundField DataField="SNo" HeaderText="Raw Number" />
+                                        <asp:BoundField DataField="SNo" HeaderText="SR. No" />
                                         <asp:TemplateField HeaderText="TOTAL Employees">
                                             <ItemTemplate>
-                                                <asp:TextBox ID="txttotalempCI" runat="server" CssClass="form-control"></asp:TextBox>
+                                                <asp:TextBox ID="txttotalempCI" runat="server" onkeypress="return isNumberKey(event)" MaxLength="5" CssClass="form-control"></asp:TextBox>
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="ADMINISTRATIVE">
                                             <ItemTemplate>
-                                                <asp:TextBox ID="txtadministrativeCI" runat="server" CssClass="form-control"></asp:TextBox>
+                                                <asp:TextBox ID="txtadministrativeCI" runat="server" onkeypress="return isNumberKey(event)" MaxLength="5" CssClass="form-control"></asp:TextBox>
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="TECHNICAL">
                                             <ItemTemplate>
-                                                <asp:TextBox ID="txttechCI" runat="server" CssClass="form-control"></asp:TextBox>
+                                                <asp:TextBox ID="txttechCI" runat="server" onkeypress="return isNumberKey(event)" MaxLength="5" CssClass="form-control"></asp:TextBox>
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="NON TECHNICAL">
                                             <ItemTemplate>
-                                                <asp:TextBox ID="txtNontechCI" runat="server" CssClass="form-control"></asp:TextBox>
+                                                <asp:TextBox ID="txtNontechCI" runat="server" onkeypress="return isNumberKey(event)" MaxLength="5" CssClass="form-control"></asp:TextBox>
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="QC/INSPECTION">
                                             <ItemTemplate>
-                                                <asp:TextBox ID="txtqcCI" runat="server" CssClass="form-control"></asp:TextBox>
+                                                <asp:TextBox ID="txtqcCI" runat="server" onkeypress="return isNumberKey(event)" MaxLength="5" CssClass="form-control"></asp:TextBox>
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="SKILLED LABOUR">
                                             <ItemTemplate>
-                                                <asp:TextBox ID="txtskCI" runat="server" CssClass="form-control"></asp:TextBox>
+                                                <asp:TextBox ID="txtskCI" runat="server" onkeypress="return isNumberKey(event)" MaxLength="5" CssClass="form-control"></asp:TextBox>
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="UNSKILLED LABOUR">
                                             <ItemTemplate>
-                                                <asp:TextBox ID="txtuLCI" runat="server" CssClass="form-control"></asp:TextBox>
+                                                <asp:TextBox ID="txtuLCI" runat="server" onkeypress="return isNumberKey(event)" MaxLength="5" CssClass="form-control"></asp:TextBox>
                                             </ItemTemplate>
                                             <%--  <FooterStyle HorizontalAlign="Right" />
                                             <FooterTemplate>
@@ -403,8 +410,8 @@
                                     ShowFooter="true" OnRowCreated="gvtestfacilities_RowCreated" GridLines="None" AutoGenerateColumns="false">
                                     <AlternatingRowStyle BackColor="White" />
                                     <Columns>
-                                        <asp:BoundField DataField="SNo" HeaderText="Raw Number" />
-                                        <asp:TemplateField HeaderText="Type of GAUGE / Test Equipment">
+                                        <asp:BoundField DataField="SNo" HeaderText="SR.No" />
+                                        <asp:TemplateField HeaderText="Type of GAUGE/Equipment">
                                             <ItemTemplate>
                                                 <asp:TextBox ID="txtnametestfesi" runat="server" CssClass="form-control"></asp:TextBox>
                                             </ItemTemplate>
@@ -416,7 +423,7 @@
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="Least Count">
                                             <ItemTemplate>
-                                                <asp:TextBox ID="txtcounttf" runat="server" CssClass="form-control"></asp:TextBox>
+                                                <asp:TextBox ID="txtcounttf" runat="server" CssClass="form-control" onkeypress="return isNumberKey(event)"></asp:TextBox>
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="Range of MEASURMENT">
@@ -424,7 +431,7 @@
                                                 <asp:TextBox ID="txtrangetf" runat="server" CssClass="form-control"></asp:TextBox>
                                             </ItemTemplate>
                                         </asp:TemplateField>
-                                        <asp:TemplateField HeaderText="Unit of MEASURMENT">
+                                        <asp:TemplateField HeaderText="MEASURMENT Unit">
                                             <ItemTemplate>
                                                 <asp:TextBox ID="txtunitofmeas" runat="server" CssClass="form-control"></asp:TextBox>
                                             </ItemTemplate>
@@ -437,11 +444,11 @@
                                                 </div>
                                             </ItemTemplate>
                                         </asp:TemplateField>
-                                        <asp:TemplateField HeaderText="Year of purchase">
+                                        <asp:TemplateField HeaderText="Purchase Year">
                                             <ItemTemplate>
                                                 <div class="input-append date" id="datePicker2" data-date="12-02-2012" data-date-format="dd-mm-yyyy" style="margin-top: -15px;">
                                                     <span class="add-on"><i class="icon-th"></i></span>
-                                                    <asp:TextBox ID="txtyearofpurtf" runat="server" CssClass="form-control datePicker" data-date-format="dd/mm/yyyy"></asp:TextBox>
+                                                    <asp:TextBox ID="txtyearofpurtf" runat="server" CssClass="form-control datePicker" data-date-format="dd/mm/yyyy" style="width:160px"></asp:TextBox>
                                                 </div>
                                             </ItemTemplate>
                                             <FooterStyle HorizontalAlign="Right" />
@@ -558,10 +565,8 @@
                                             Name of Nodal Officer
                                         </div>
                                         <div class="col-sm-7 row">
-                                            <asp:TextBox ID="txtlname" runat="server" CssClass="form-control"></asp:TextBox>
-                                            <p>
-                                                Name
-                                            </p>
+                                            <asp:TextBox ID="txtlname" runat="server" CssClass="form-control" MaxLength="50"></asp:TextBox>
+                                            
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -569,29 +574,29 @@
                                             Sales/Marketing Office Address
                                         </div>
                                         <div class="col-sm-7">
-                                            <asp:TextBox ID="txtstreetaddress" runat="server" CssClass="form-control"></asp:TextBox>
                                             <p>Street Address</p>
+                                            <asp:TextBox ID="txtstreetaddress" runat="server" CssClass="form-control"></asp:TextBox>
                                             <div class="clearfix mt5"></div>
-                                            <asp:TextBox ID="txtstreetaddressline2" runat="server" CssClass="form-control"></asp:TextBox>
                                             <p>Street Address Line 2</p>
+                                            <asp:TextBox ID="txtstreetaddressline2" runat="server" CssClass="form-control"></asp:TextBox>
+                                            <div class="clearfix mt5"></div>
                                             <div class="row">
                                                 <div class="col-sm-4">
-                                                    <asp:TextBox ID="txtcity" runat="server" CssClass="form-control"></asp:TextBox>
-                                                    <p>
-                                                        City
-                                                    </p>
-                                                </div>
+                                                     <%--<asp:TextBox ID="txtstate" runat="server" CssClass="form-control"></asp:TextBox>--%>
+                                                     <p>State </p>
+                                                      <asp:DropDownList runat="server" ID="ddlstate" CssClass="form-cascade-control form-control" AutoPostBack="true" OnSelectedIndexChanged="ddlstate_SelectedIndexChanged"> </asp:DropDownList>
+                                                     </div>
                                                 <div class="col-sm-4">
-                                                    <asp:TextBox ID="txtstate" runat="server" CssClass="form-control"></asp:TextBox>
-                                                    <p>
-                                                        State
-                                                    </p>
-                                                </div>
+                                                   <p>City</p>
+                                                     <%--<asp:TextBox ID="txtcity" runat="server" CssClass="form-control" AutoPostBack="true" OnTextChanged="txtcity_TextChanged"></asp:TextBox>--%>
+                                                     <asp:DropDownList runat="server" ID="ddlCity" CssClass="form-control" AutoPostBack="true" OnSelectedIndexChanged="ddlCity_SelectedIndexChanged"> </asp:DropDownList>
+                                                    </div>
                                                 <div class="col-sm-4">
-                                                    <asp:TextBox ID="txtpincode" runat="server" CssClass="form-control"></asp:TextBox>
-                                                    <p>
-                                                        Postal
-                                                    </p>
+                                                   
+                                                   <p> PinCode</p>
+                                                     <%--<asp:TextBox ID="txtpincode" runat="server" CssClass="form-control"></asp:TextBox>--%>
+                                                     <asp:DropDownList runat="server" ID="ddlPincode" CssClass="form-control"  > </asp:DropDownList>
+                                                    
                                                 </div>
                                             </div>
                                         </div>
@@ -601,7 +606,7 @@
                                             Phone Number
                                         </div>
                                         <div class="col-sm-7">
-                                            <asp:TextBox ID="txtcontactno" runat="server" onkeypress="return isNumberKey(event)" CssClass="form-control"></asp:TextBox>
+                                            <asp:TextBox ID="txtcontactno" runat="server" onkeypress="return isNumberKey(event)" MaxLength="10" CssClass="form-control"></asp:TextBox>
 
                                         </div>
                                     </div>
@@ -610,7 +615,7 @@
                                             Fax Number
                                         </div>
                                         <div class="col-sm-7">
-                                            <asp:TextBox ID="txtfaxno" runat="server" onkeypress="return isNumberKey(event)" CssClass="form-control"></asp:TextBox>
+                                            <asp:TextBox ID="txtfaxno" runat="server" onkeypress="return isNumberKey(event)" MaxLength="15" CssClass="form-control"></asp:TextBox>
 
                                         </div>
                                     </div>
@@ -620,6 +625,8 @@
                                         </div>
                                         <div class="col-sm-7">
                                             <asp:TextBox ID="txtemail" runat="server" CssClass="form-control"></asp:TextBox>
+                                             <asp:RegularExpressionValidator ID="regextxtemail1" runat="server" ValidationExpression="\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*" ControlToValidate="txtemail" ForeColor="Red" ErrorMessage="Invalid Email Format"></asp:RegularExpressionValidator>
+                        
                                             <p>
                                                 example@example.com
                                             </p>
@@ -645,10 +652,10 @@
                                         OnRowCreated="gvauthdealaddress_RowCreated" CellPadding="4" ForeColor="#333333" GridLines="None" AutoGenerateColumns="false">
                                         <AlternatingRowStyle BackColor="White" />
                                         <Columns>
-                                            <asp:BoundField DataField="SNo" HeaderText="Raw Number" />
+                                            <asp:BoundField DataField="SNo" HeaderText="SR. No" />
                                             <asp:TemplateField HeaderText="Name">
                                                 <ItemTemplate>
-                                                    <asp:TextBox ID="txtDName" runat="server" CssClass="form-control"></asp:TextBox>
+                                                    <asp:TextBox ID="txtDName" runat="server" CssClass="form-control" MaxLength="50"></asp:TextBox>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="StreetAddress">
@@ -663,22 +670,24 @@
                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="PinCode">
                                                 <ItemTemplate>
-                                                    <asp:TextBox ID="txtDPincode" runat="server" CssClass="form-control"></asp:TextBox>
+                                                    <asp:TextBox ID="txtDPincode" runat="server" CssClass="form-control" MaxLength="7"></asp:TextBox>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="Phone">
                                                 <ItemTemplate>
-                                                    <asp:TextBox ID="txtDPhone" runat="server" onkeypress="return isNumberKey(event)" CssClass="form-control"></asp:TextBox>
+                                                    <asp:TextBox ID="txtDPhone" runat="server" onkeypress="return isNumberKey(event)" MaxLength="10" CssClass="form-control"></asp:TextBox>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="Fax">
                                                 <ItemTemplate>
-                                                    <asp:TextBox ID="txtDFax" runat="server" onkeypress="return isNumberKey(event)" CssClass="form-control"></asp:TextBox>
+                                                    <asp:TextBox ID="txtDFax" runat="server" onkeypress="return isNumberKey(event)" MaxLength="15" CssClass="form-control"></asp:TextBox>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="Email">
                                                 <ItemTemplate>
                                                     <asp:TextBox ID="txtDEmail" runat="server" CssClass="form-control"></asp:TextBox>
+                                                    <asp:RegularExpressionValidator ID="regexDEmail" runat="server" ValidationExpression="\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*" ControlToValidate="txtDEmail" ForeColor="Red" ErrorMessage="Invalid Email Format"></asp:RegularExpressionValidator>
+                        
                                                 </ItemTemplate>
                                                 <FooterStyle HorizontalAlign="Right" />
                                                 <FooterTemplate>
@@ -748,7 +757,7 @@
                                     GridLines="None" AutoGenerateColumns="false">
                                     <AlternatingRowStyle BackColor="White" />
                                     <Columns>
-                                        <asp:BoundField DataField="SNo" HeaderText="Raw Number" />
+                                        <asp:BoundField DataField="SNo" HeaderText="SR. No" />
                                         <asp:TemplateField HeaderText="Main Equipment">
                                             <ItemTemplate>
                                                 <asp:TextBox ID="txtnameofsource" runat="server" CssClass="form-control"></asp:TextBox>
@@ -831,7 +840,7 @@
                                     OnRowCreated="gvjointventure_RowCreated" CellPadding="4" ForeColor="#333333" GridLines="None" AutoGenerateColumns="false">
                                     <AlternatingRowStyle BackColor="White" />
                                     <Columns>
-                                        <asp:BoundField DataField="SNo" HeaderText="Raw Number" />
+                                        <asp:BoundField DataField="SNo" HeaderText="SR. No" />
                                         <asp:TemplateField HeaderText="Name">
                                             <ItemTemplate>
                                                 <asp:TextBox ID="txtjvfname" runat="server" CssClass="form-control"></asp:TextBox>
@@ -847,27 +856,29 @@
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="Complete Address">
                                             <ItemTemplate>
-                                                <asp:TextBox ID="txtjvfaddress" runat="server" CssClass="form-control"></asp:TextBox>
+                                                <asp:TextBox ID="txtjvfaddress" runat="server" CssClass="form-control" MaxLength="70"></asp:TextBox>
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="Contact Official Name">
                                             <ItemTemplate>
-                                                <asp:TextBox ID="txtjvfoffname" runat="server" CssClass="form-control"></asp:TextBox>
+                                                <asp:TextBox ID="txtjvfoffname" runat="server" CssClass="form-control" MaxLength="70"></asp:TextBox>
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="Telephone No">
                                             <ItemTemplate>
-                                                <asp:TextBox ID="txtjvftele" runat="server" onkeypress="return isNumberKey(event)" CssClass="form-control"></asp:TextBox>
+                                                <asp:TextBox ID="txtjvftele" runat="server" onkeypress="return isNumberKey(event)" MaxLength="10" CssClass="form-control"></asp:TextBox>
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="Fax No">
                                             <ItemTemplate>
-                                                <asp:TextBox ID="txtjvffax" runat="server" onkeypress="return isNumberKey(event)" CssClass="form-control"></asp:TextBox>
+                                                <asp:TextBox ID="txtjvffax" runat="server" onkeypress="return isNumberKey(event)" MaxLength="15" CssClass="form-control"></asp:TextBox>
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="Email Id">
                                             <ItemTemplate>
                                                 <asp:TextBox ID="txtjvfemail" runat="server" TextMode="Email" CssClass="form-control"></asp:TextBox>
+                                                <asp:RegularExpressionValidator ID="regextxtjvfemail" runat="server" ValidationExpression="\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*" ControlToValidate="txtjvfemail" ForeColor="Red" ErrorMessage="Invalid Email Format"></asp:RegularExpressionValidator>
+                        
                                             </ItemTemplate>
                                             <FooterStyle HorizontalAlign="Right" />
                                             <FooterTemplate>
@@ -932,7 +943,7 @@
                                     ShowFooter="true" CellPadding="4" ForeColor="#333333" GridLines="None" AutoGenerateColumns="false">
                                     <AlternatingRowStyle BackColor="White" />
                                     <Columns>
-                                        <asp:BoundField DataField="SNo" HeaderText="Raw Number" />
+                                        <asp:BoundField DataField="SNo" HeaderText="SR. No" />
                                         <asp:TemplateField HeaderText="Select">
                                             <ItemTemplate>
                                                 <asp:CheckBox runat="server" ID="chkcertificate" />
@@ -1000,7 +1011,7 @@
                                     ShowFooter="true" CellPadding="4" ForeColor="#333333" GridLines="None" AutoGenerateColumns="false">
                                     <AlternatingRowStyle BackColor="White" />
                                     <Columns>
-                                        <asp:BoundField DataField="SNo" HeaderText="Raw Number" />
+                                        <asp:BoundField DataField="SNo" HeaderText="SR. No" />
                                         <asp:TemplateField HeaderText="Select">
                                             <ItemTemplate>
                                                 <asp:CheckBox runat="server" ID="Qchkcertificate" />
@@ -1080,8 +1091,10 @@
                                 </div>
                             </asp:Panel>
                             <div class="clearfix pb15"></div>
-                            <asp:LinkButton ID="btnsubmit" runat="server" Text="Submit" CssClass="btn btn-primary pull-right mr10" OnClick="btnsubmit_Click"></asp:LinkButton>
-                            <asp:LinkButton ID="btncancel" runat="server" Text="Cancel" CssClass="btn btn-primary pull-right mr10" OnClick="btncancel_Click"></asp:LinkButton>
+                           <asp:LinkButton ID="btnNext" runat="server" Text="Next" CssClass="btn btn-primary pull-right mr10" OnClick="btnNext_Click" ></asp:LinkButton>
+                            <asp:LinkButton ID="btnsubmit" runat="server" Text="Save" CssClass="btn btn-primary pull-right mr10" OnClick="btnsubmit_Click"></asp:LinkButton>
+                            <asp:LinkButton ID="btncancel" runat="server" Text="Reset" CssClass="btn btn-primary pull-right mr10" OnClick="btncancel_Click"></asp:LinkButton>
+                            <asp:LinkButton ID="btnPrev" runat="server" Text="Previous" CssClass="btn btn-primary pull-right mr10" OnClick="btnPrev_Click"> </asp:LinkButton>
                         </div>
                     </ContentTemplate>
                     <Triggers>
@@ -1756,4 +1769,68 @@
             return true;
         }
     </script>
+     <script src="../assets/js/jquery-1.10.0.min.js"></script>
+    <script src="../assets/js/jquery-1.9.2-ui.min.js"></script>
+    <link href="../assets/js/jquery-1.9.2-themes-blitzer-jquery-ui.css" rel="stylesheet" />
+    <script type="text/javascript">
+        $(function () {
+            $("[id$=txtpincode]").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: '<%=ResolveUrl("V_GeneralInfo.aspx/GetPinCodeService") %>',
+                        data: "{ 'prefix': '" + request.term + "'}",
+                        dataType: "json",
+                        type: "POST",
+                        contentType: "application/json; charset=utf-8",
+                        success: function (data) {
+                            response($.map(data.d, function (item) {
+                                return {
+                                    label: item.split('-')[0]
+                                }
+                            }))
+                        },
+                        error: function (response) {
+                            alert(response.responseText);
+                        },
+                        failure: function (response) {
+                            alert(response.responseText);
+                        }
+                    });
+                },
+                minLength: 1
+            });
+
+
+        });
+    </script>
+     <script type="text/javascript">
+         $(function () {
+             $("[id$=txtcity]").autocomplete({
+                    source: function (request, response) {
+                        $.ajax({
+                            url: '<%=ResolveUrl("V_GeneralInfo.aspx/GetCityService") %>',
+                            data: "{ 'prefix': '" + request.term + "'}",
+                            dataType: "json",
+                            type: "POST",
+                            contentType: "application/json; charset=utf-8",
+                            success: function (data) {
+                                response($.map(data.d, function (item) {
+                                    return {
+                                        label: item.split('-')[0]
+                                    }
+                                }))
+                            },
+                            error: function (response) {
+                                alert(response.responseText);
+                            },
+                            failure: function (response) {
+                                alert(response.responseText);
+                            }
+                        });
+                 },
+                 minLength: 1
+             });
+
+         });
+     </script>
 </asp:Content>

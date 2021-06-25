@@ -1,0 +1,128 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Test_Lab/DPSU_MasterPage.master" AutoEventWireup="true" CodeFile="Booking_Details.aspx.cs" Inherits="Test_Lab_Booking_Details" %>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
+    <asp:ScriptManager ID="scrptmanager" runat="server"></asp:ScriptManager>
+    <div class="content oem-content">
+        <div class="sideBg">
+            <div class="row">
+                <div class="col-md-12 padding_0">
+                    <div id="divHeadPage" runat="server"></div>
+                </div>
+            </div>
+            <div class="container-fluid">
+                <div class="col-12 py-3 px-2" id="top2">
+                    <div class="row">
+                        <div class="col-12" id="divtest" runat="server">
+                            <table id="example" class="table table-risponsive table-borderless" style="width: 50%">
+                                <tbody>
+                                    <tr>
+                                        <td></td>
+                                        <td>
+                                            <asp:Label ID="lblid" runat="server" Visible="false"></asp:Label></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Organisation Name:</td>
+                                        <td>
+                                            <asp:Label ID="lblorganisationname" runat="server"></asp:Label></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Test Facility:</td>
+                                        <td>
+                                            <asp:Label ID="lbltestfacility" runat="server"></asp:Label></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Lab Name:</td>
+                                        <td>
+                                            <asp:Label ID="lblLabname" runat="server"></asp:Label></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Discipline:</td>
+                                        <td>
+                                            <asp:Label ID="lblDiscipline" runat="server"></asp:Label></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Test:</td>
+                                        <td>
+                                            <asp:Label ID="lbltestname" runat="server"></asp:Label></td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>Material:</td>
+                                        <td>
+                                            <asp:Label ID="lblmaterial" runat="server"></asp:Label></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Specifications:</td>
+                                        <td>
+                                            <asp:Label ID="lblspecifications" runat="server"></asp:Label></td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="mendatory">*</span>Number of Sample:</td>
+                                        <td>
+                                            <asp:TextBox ID="txtnoofsample" runat="server" CssClass="form-control" placeholder="Number of Sample (Numbers only)" onkeypress="return isNumberKeyOutDecimal(event)">
+                                            </asp:TextBox>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Dimension of Eqpt to be tested:</td>
+                                        <td>
+                                            <asp:TextBox ID="txteqptbetested" runat="server" CssClass="form-control" placeholder="Dimension of Eqpt to be tested"></asp:TextBox></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Weight of Eqpt to be tested:</td>
+                                        <td>
+                                            <asp:TextBox ID="txtwghtbetested" runat="server" CssClass="form-control" placeholder="Weight of Eqpt to be tested"></asp:TextBox></td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="mendatory">*</span>Start Date:</td>
+                                        <td>
+                                            <asp:TextBox ID="txtstartdate" runat="server" CssClass="form-control" TextMode="Date"></asp:TextBox></td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="mendatory">*</span>End Date:</td>
+                                        <td>
+                                            <asp:TextBox ID="txtendDate" runat="server" input="date" CssClass="form-control" TextMode="Date"></asp:TextBox>
+                                             <asp:CompareValidator ID="cmpVal1" ControlToCompare="txtstartdate" 
+         ControlToValidate="txtendDate" Type="Date" Operator="GreaterThanEqual" ForeColor="Red" 
+         ErrorMessage="*End Date should be greater than equal to Start Date" runat="server"></asp:CompareValidator>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Upload Attachement:</td>
+                                        <td>
+                                            <asp:FileUpload ID="fufiles" runat="server" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="mendatory">*</span>Description:</td>
+                                        <td>
+                                            <asp:TextBox ID="txtremarks" runat="server" CssClass="form-control" TextMode="MultiLine" placeholder="Any Special Remarks for Test"></asp:TextBox></td>
+                                    </tr>
+                                    <tr>
+                                        <td />
+                                        <td class="d-flex justify-content-end">
+                                            <asp:LinkButton ID="btnsubmit" runat="server" class="btn btn-primary" Text="Submit" OnClick="btnsubmit_Click"></asp:LinkButton></td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                            <div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        function isNumberKeyOutDecimal(evt) {
+            var charCode = (evt.which) ? evt.which : event.keyCode;
+            if (charCode > 31
+                && (charCode < 48 || charCode > 57))
+                return false;
+            return true;
+        }
+    </script>
+</asp:Content>
+

@@ -1,0 +1,48 @@
+-----------Exception Details on  23-06-2021 11:07:49-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 23-06-2021 11:07:49
+
+Error Line No : ne 2597
+
+Error Message: ArgumentException
+
+Exception Type: System.ArgumentException
+
+Error Location : Column 'SanctionOrderStatus' does not belong to table .
+
+ Error Page Url: http://localhost:19213/AddProduct?mrcreaterole=plEYtco5ebk=&mcurrentcompRefNo= IUtaL4Gcg+I=&MProductRefNo=Ylb1hA7gXnLgJBajuwG34w==&id=iFywFSoghMYQBgjH8w5JOyanqao4gEhN
+
+User Host IP: 
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  23-06-2021 11:10:08-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 23-06-2021 11:10:08
+
+Error Line No : ne 2597
+
+Error Message: ArgumentException
+
+Exception Type: System.ArgumentException
+
+Error Location : Column 'SanctionOrderStatus' does not belong to table .
+
+ Error Page Url: http://localhost:19213/AddProduct?mrcreaterole=plEYtco5ebk=&mcurrentcompRefNo= KOL1Uu4aSn8=&MProductRefNo=TuinHgkKMTPlQEsCgIZvCg==&id=iFywFSoghMYQBgjH8w5JOyanqao4gEhN
+
+User Host IP: 
+
+
+--------------------------------*End*------------------------------------------
+
+
+

@@ -1,0 +1,155 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Test_Lab/DPSU_MasterPage.master" AutoEventWireup="true" CodeFile="ViewBookedOrder.aspx.cs" Inherits="Test_Lab_ViewBookedOrder" %>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
+     <style>
+        #ContentPlaceHolder1_gvbookedorder_info {
+            margin-top: 10px !important;
+            background: rgba(105,21,207,0.8) !important;
+            color: #fff;
+        }
+
+        #ContentPlaceHolder1_gvbookedorder_paginate {
+            margin-top: 10px !important;
+            padding: 0 !important;
+            border: 0 !important;
+        }
+
+            #ContentPlaceHolder1_gvbookedorder_paginate span .paginate_button {
+                background: rgba(105,21,207,0.8) !important;
+                color: #fff !important;
+            }
+
+            #ContentPlaceHolder1_gvbookedorder_paginate .paginate_button {
+                background: rgba(105,21,207,0.8) !important;
+                color: #fff !important;
+            }
+
+        #updatetable table tr th, td {
+            border: 1px solid #333 !important;
+        }
+
+        .box1 {
+            box-shadow: 0 0 5px;
+        }
+        .modal-header
+        {
+            background: rgba(105,21,207,0.8) !important;
+                color: #fff !important;
+        }
+    </style>
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
+     <asp:HiddenField ID="hidCompanyRefNo" runat="server" />
+    <asp:HiddenField ID="hidType" runat="server" />
+    <asp:HiddenField runat="server" ID="hfcomprefno" />
+  <asp:ScriptManager ID="script" runat="server"></asp:ScriptManager>
+   
+                <div class="container-fluid">
+                                        <div class="row my-2 box1 py-2">
+            <div class="col-md-12">
+                <div class="fdi-add-content">
+                     <asp:Label ID="lblError" runat="server" Visible="false"></asp:Label>
+                    <div class="table-wraper table-responsive">
+                         <asp:GridView ID="gvbookedorder" runat="server" Class="table table-responsive" OnRowCreated="gvbookedorder_RowCreated" EmptyDataText="No Record Found"
+                                AutoGenerateColumns="false">
+                                <Columns>
+                                    <asp:TemplateField HeaderText="S.No.">
+                                        <ItemTemplate>
+                                            <%#Container.DataItemIndex + 1 %>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                    <asp:TemplateField HeaderText="Id" Visible="false">
+                                        <ItemTemplate>
+                                            <asp:Label ID="lblid" runat="server" Text='<%# Eval("id") %>'></asp:Label>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                     <asp:TemplateField HeaderText="Booking ID" HeaderStyle-Width="10%">
+                                        <ItemTemplate>
+                                            <asp:Label ID="lbltest" runat="server" Text='<%# Eval("userid") %>'></asp:Label>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                    <asp:TemplateField HeaderText="Test" HeaderStyle-Width="10%">
+                                        <ItemTemplate>
+                                            <asp:Label ID="lbltest" runat="server" Text='<%# Eval("test_id") %>'></asp:Label>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                    <asp:TemplateField HeaderText="Organisation" HeaderStyle-Width="10%">
+                                        <ItemTemplate>
+                                            <asp:Label ID="lblorganisation" runat="server" Text='<%# Eval("organisation_id") %>'></asp:Label>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                    <asp:TemplateField HeaderText="Lab" HeaderStyle-Width="10%">
+                                        <ItemTemplate>
+                                            <asp:Label ID="lbLab" runat="server" Text='<%# Eval("lab") %>'></asp:Label>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                    <asp:TemplateField HeaderText="No. Of Sample" HeaderStyle-Width="10%">
+                                        <ItemTemplate>
+                                            <asp:Label ID="lblnoofsample" runat="server" Text='<%# Eval("no_of_sample") %>'></asp:Label>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                      <asp:TemplateField HeaderText="Dimension" HeaderStyle-Width="8%">
+                                                        <ItemTemplate>
+                                                        <asp:Label ID="dimension" runat="server" Text='<%# Eval("dimension_eqpt") %>'></asp:Label>
+                                                        </ItemTemplate>
+                                                    </asp:TemplateField>
+                                    <asp:TemplateField HeaderText="Weight" HeaderStyle-Width="8%">
+                                        <ItemTemplate>
+                                            <asp:Label ID="weight" runat="server" Text='<%# Eval("weight_eqpt") %>'></asp:Label>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                    <asp:TemplateField HeaderText="Start Date" HeaderStyle-Width="10%">
+                                        <ItemTemplate>
+                                            <asp:Label ID="startdate" runat="server" Text='<%# Eval("start_date","{0:dd-MMM-yyyy}") %>'></asp:Label>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                    <asp:TemplateField HeaderText="End Date" HeaderStyle-Width="10%">
+                                        <ItemTemplate>
+                                            <asp:Label ID="enddate" runat="server" Text='<%# Eval("end_date","{0:dd-MMM-yyyy}") %>'></asp:Label>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                     <asp:TemplateField HeaderText="Description" HeaderStyle-Width="10%">
+                                                        <ItemTemplate>
+                                                        <asp:Label ID="description" runat="server" Text='<%# Eval("description") %>'></asp:Label>
+                                                        </ItemTemplate>
+                                                    </asp:TemplateField>
+                                   <asp:TemplateField HeaderText="Status" HeaderStyle-Width="10%">
+                                        <ItemTemplate>
+                                            <asp:Label ID="status" runat="server" Text='<%# Eval("bookingstatus") %>'></asp:Label>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                    <asp:TemplateField HeaderText="Remark" HeaderStyle-Width="10%">
+                                        <ItemTemplate>
+                                            <asp:Label ID="rejectremark" runat="server" Text='<%# Eval("Rejectremark") %>'></asp:Label>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                    <asp:TemplateField HeaderText="Actions" HeaderStyle-Width="10%">
+                                        <ItemTemplate>
+                                            <asp:RadioButtonList ID="rdblaction" runat="server" AutoPostBack="true" OnSelectedIndexChanged="rdblaction_SelectedIndexChanged">
+                                                <asp:ListItem Text="Approve" Value="1"></asp:ListItem>
+                                                <asp:ListItem Text="Reject" Value="2"></asp:ListItem>
+                                            </asp:RadioButtonList>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                    <asp:TemplateField HeaderText="Remark" HeaderStyle-Width="30%" Visible="false">
+                                        <ItemTemplate>
+                                            <asp:TextBox ID="txtremarks" runat="server" CssClass="form-control" TextMode="MultiLine"></asp:TextBox>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                    <asp:TemplateField Visible="false">
+                                        <ItemTemplate>
+                                            <asp:Button ID="btnsave" runat="server" CssClass="btn btn-primary" Text="Save" OnClick="btnsave_Click" />
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                </Columns>
+                            </asp:GridView>
+                    </div>
+                </div>
+            </div>
+        </div>
+                </div>
+          
+        <!-- pace -->
+     
+</asp:Content>
+

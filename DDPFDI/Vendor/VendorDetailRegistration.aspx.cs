@@ -3795,7 +3795,7 @@ public partial class Vendor_VendorDetailRegistration : System.Web.UI.Page
         if (txtdateofincorofthecompany.Text != "")
         {
             DateTime DtIcor_Comp = Convert.ToDateTime(txtdateofincorofthecompany.Text);
-            string Date_Icor_Comp = DtIcor_Comp.ToString("dd-MMM-yyyy");
+            string Date_Icor_Comp = DtIcor_Comp.ToString("yyyy-MMM-dd");
             HySaveVendorRegisdetail["Date_Incorportaion_Company"] = Co.RSQandSQLInjection(Date_Icor_Comp.ToString(), "soft");
         }
         else

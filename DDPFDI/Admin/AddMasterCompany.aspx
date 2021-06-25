@@ -267,7 +267,7 @@
                 </div>
             </div>
             <div class="clearfix"></div>
-            <div class="footer"><i class="far fa-copyright"></i>2019 <a href="#">Department of Defence Production</a> </div>
+            
         </div>
     </div>
 </asp:Content>

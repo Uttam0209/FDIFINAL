@@ -54,7 +54,7 @@
                                 </div>
                                 <div class="col-md-4" runat="server" id="lblselectdivison">
                                     <div class="form-group">
-                                        <label>Select Division/Palnt</label>
+                                        <label>Select Division/Plant</label>
                                         <asp:DropDownList runat="server" ID="ddldivision" CssClass="form-control form-cascade-control" AutoPostBack="True" OnSelectedIndexChanged="ddldivision_OnSelectedIndexChanged"></asp:DropDownList>
                                     </div>
                                 </div>
@@ -674,7 +674,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="footer">© 2019 <a href="#">Department of Defence Production</a> </div>
+              
             </div>
         </ContentTemplate>
         <Triggers>

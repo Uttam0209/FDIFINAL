@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using BusinessLayer;
+using Encryption;
+using System;
+using System.Collections.Specialized;
+using System.Data;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using System.Data;
-using BusinessLayer;
-using Encryption;
-using System.Web.UI.HtmlControls;
-using System.Web.UI.WebControls.WebParts;
-using System.Collections.Specialized;
 
 public partial class Vendor_V_FinanceInfo : System.Web.UI.Page
 {
@@ -25,12 +20,14 @@ public partial class Vendor_V_FinanceInfo : System.Web.UI.Page
     #region PageLoad
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (Session["User"] != null)
+        if (Session["VUser"] != null)
         {
             if (!IsPostBack)
             {
                 PgL();
+                lbcomp.Text = Session["VCompName"].ToString();
             }
+
         }
         else
             ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert",
@@ -38,91 +35,40 @@ public partial class Vendor_V_FinanceInfo : System.Web.UI.Page
     }
     protected void PgL()
     {
-        SetInitialRowType();
-        DataTable DtCheckSavedetails = Lo.RetriveVendor(0, Enc.DecryptData(Session["VendorRefNo"].ToString()), "", "CheckRegis");
-        if (DtCheckSavedetails.Rows.Count > 0)
+        DataTable dtfinacial = Lo.RetriveVendor(0, Enc.DecryptData(Session["VendorRefNo"].ToString()), "", "MultigridF_TurnOver");
+        if (dtfinacial.Rows.Count > 0)
         {
+            gvturnoveredit.DataSource = dtfinacial;
+            gvturnoveredit.DataBind();
+            gvTURNOVERDURINGLAST3YEARS.Visible = false;
+            gvturnoveredit.Visible = true;
             btnsubmit.Text = "Update";
-            ViewState["Mid"] = Convert.ToInt64(DtCheckSavedetails.Rows[0]["VendorDetailID"].ToString());
-            DataTable dtcheckmultigriddata = Lo.RetriveVendor(0, Enc.DecryptData(Session["VendorRefNo"].ToString()), "", "RetriveMultigrid");
-            if (dtcheckmultigriddata.Rows.Count > 0)
-            {
-                DataView dv = new DataView(dtcheckmultigriddata);
-                dv.RowFilter = "Type='TurnOver'";
-                if (dv.Count > 0)
-                {
-                    gvturnoveredit.DataSource = dv;
-                    gvturnoveredit.DataBind();
-                    gvTURNOVERDURINGLAST3YEARS.Visible = false;
-                    gvturnoveredit.Visible = true;
-                }
-                else
-                {
-                    gvturnoveredit.Visible = false;
-                    gvTURNOVERDURINGLAST3YEARS.Visible = true;
-                    SetInitialRowTurnOverLast3Years();
-                }
-                dv.RowFilter = "Type='AccountInfo'";
-                if (dv.Count > 0)
-                {
-                    gvaccountedit.DataSource = dv;
-                    gvaccountedit.DataBind();
-                    gvaccount.Visible = false;
-                    gvaccountedit.Visible = true;
-                }
-                else
-                {
-                    gvaccountedit.Visible = false;
-                    gvaccount.Visible = true;
-                    SetInitialRowAccountDetails();
-                }
-            }
-            else
-            {
-
-            }
         }
         else
         {
+            gvturnoveredit.Visible = false;
+            gvTURNOVERDURINGLAST3YEARS.Visible = true;
             SetInitialRowTurnOverLast3Years();
+        }
+        DataTable dtbank = Lo.RetriveVendor(0, Enc.DecryptData(Session["VendorRefNo"].ToString()), "", "MultigridF_Bank");
+        if (dtbank.Rows.Count > 0)
+        {
+
+            gvaccountedit.DataSource = dtbank;
+            gvaccountedit.DataBind();
+            gvaccount.Visible = false;
+            gvaccountedit.Visible = true;
+            btnsubmit.Text = "Update";
+        }
+        else
+        {
+            gvaccountedit.Visible = false;
+            gvaccount.Visible = true;
             SetInitialRowAccountDetails();
         }
     }
     #endregion
-    //test type
-    private void SetInitialRowType()
-    {
-        //Create false table
-        DataTable dttype = new DataTable();
-        DataRow drtype = null;
-        dttype.Columns.Add(new DataColumn("SNo", typeof(string)));
-        dttype.Columns.Add(new DataColumn("Type", typeof(string)));
-        dttype.Columns.Add(new DataColumn("Valid", typeof(string)));
-        drtype = dttype.NewRow();
-        drtype["SNo"] = 1;
-        drtype["Type"] = "Financial";
-        drtype["Valid"] = string.Empty;
-        dttype.Rows.Add(drtype);
-        drtype = dttype.NewRow();
-        drtype["SNo"] = 2;
-        drtype["Type"] = "Banning";
-        drtype["Valid"] = string.Empty;
-        dttype.Rows.Add(drtype);
-        drtype = dttype.NewRow();
-        drtype["SNo"] = 3;
-        drtype["Type"] = "Suspension";
-        drtype["Valid"] = string.Empty;
-        dttype.Rows.Add(drtype);
-        drtype = dttype.NewRow();
-        drtype["SNo"] = 4;
-        drtype["Type"] = "Tender holiday";
-        drtype["Valid"] = string.Empty;
-        dttype.Rows.Add(drtype);
-        ViewState["Type"] = dttype;
-        gvtype.DataSource = dttype;
-        gvtype.DataBind();
-    }
-    //Add Grid of Turn Over During Last 3 years
+    //Add Grid of Last 3 years Details
     #region Turn Over during last three year
     private void SetInitialRowTurnOverLast3Years()
     {
@@ -496,7 +442,7 @@ public partial class Vendor_V_FinanceInfo : System.Web.UI.Page
             {
                 draccounts = dtaccounts.NewRow();
                 draccounts["NameofBank"] = TextBox1AO.Text;
-                draccounts["TypeofAccount"] = TextBox2AO.Text;
+                draccounts["TypeofAccount"] = TextBox2AO.SelectedItem.Text;
                 draccounts["AccountNo"] = TextBox3AO.Text;
                 draccounts["MICRCode"] = TextBox4AO.Text;
                 draccounts["IFSCCode"] = TextBox5AO.Text;
@@ -532,9 +478,6 @@ public partial class Vendor_V_FinanceInfo : System.Web.UI.Page
                 SaveCodeForAccount();
                 dtaccount = (DataTable)ViewState["AccountDetails"];
             }
-            else
-            {
-            }
         }
         else
         {
@@ -549,21 +492,22 @@ public partial class Vendor_V_FinanceInfo : System.Web.UI.Page
             if (btnsubmit.Text == "Update")
             {
                 PgL();
-                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Successfully update company information')", true);
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Successfully update financial information')", true);
             }
             else
             {
-                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Successfully save company information')", true);
+                PgL();
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Successfully save financial information')", true);
             }
         }
         else
-        { ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not saved.')", true); }
+        { ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Financial information not saved.')", true); }
     }
     protected void gvturnoveredit_RowCommand(object sender, GridViewCommandEventArgs e)
     {
         if (e.CommandName == "newsave")
         {
-            btnsubmit.Text = "Submit";
+            lbsub.Text = "Submit";
             txtfinancialyear.Text = "";
             txtcurrasst.Text = "";
             txtcurrliablities.Text = "";
@@ -575,7 +519,7 @@ public partial class Vendor_V_FinanceInfo : System.Web.UI.Page
         }
         else if (e.CommandName == "newedit")
         {
-            btnsubmit.Text = "Edit & Update";
+            lbsub.Text = "Edit & Update";
             int rowIndex = Convert.ToInt32(e.CommandArgument);
             GridViewRow row = gvturnoveredit.Rows[rowIndex];
             HiddenField hfn = (HiddenField)gvturnoveredit.Rows[rowIndex].FindControl("hfturnedit");
@@ -589,15 +533,20 @@ public partial class Vendor_V_FinanceInfo : System.Web.UI.Page
         }
         else if (e.CommandName == "newdel")
         {
-            Int32 Delid = Lo.DeleteEditGrid(Convert.ToInt32(e.CommandArgument.ToString()));
-            if (Delid != 0)
+            try
             {
-                PgL();
-                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record deleted successfull.')", true);
+                DataTable Delid = Lo.RetriveVendor(Convert.ToInt64(e.CommandArgument.ToString()), "", "", "DTODetail");
+                if (Delid.Rows.Count == 0)
+                {
+                    PgL();
+                    lblmsg.Text = "Record deleted successfully";
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "modelmsg", "showPopup2();", true);
+                }
             }
-            else
+            catch (Exception ex)
             {
-                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not deleted.')", true);
+                lblmsg.Text = "Record not deleted. " + ex.Message;
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "modelmsg", "showPopup2();", true);
             }
         }
     }
@@ -605,7 +554,7 @@ public partial class Vendor_V_FinanceInfo : System.Web.UI.Page
     {
         if (e.CommandName == "newsave")
         {
-            btnsubmit.Text = "Submit";
+            lblsub2.Text = "Submit";
             txtnameofbank.Text = "";
             txttypeofaccount.Text = "";
             txtaccountno.Text = "";
@@ -618,12 +567,12 @@ public partial class Vendor_V_FinanceInfo : System.Web.UI.Page
         }
         else if (e.CommandName == "newedit")
         {
-            btnsubmit.Text = "Edit & Update";
+            lblsub2.Text = "Edit & Update";
             int rowIndex = Convert.ToInt32(e.CommandArgument);
             GridViewRow row = gvaccountedit.Rows[rowIndex];
-            HiddenField hfn = (HiddenField)gvaccountedit.Rows[rowIndex].FindControl("hfeditgovt");
+            HiddenField hfn = (HiddenField)gvaccountedit.Rows[rowIndex].FindControl("hfaccountedit");
             txtnameofbank.Text = row.Cells[1].Text;
-            txttypeofaccount.Text = row.Cells[2].Text;
+            txttypeofaccount.SelectedItem.Text = row.Cells[2].Text;
             txtaccountno.Text = row.Cells[3].Text;
             txtmicrcode.Text = row.Cells[4].Text;
             txtifsc.Text = row.Cells[5].Text;
@@ -633,15 +582,20 @@ public partial class Vendor_V_FinanceInfo : System.Web.UI.Page
         }
         else if (e.CommandName == "newdel")
         {
-            Int32 Delid = Lo.DeleteEditGrid(Convert.ToInt32(e.CommandArgument.ToString()));
-            if (Delid != 0)
+            try
             {
-                PgL();
-                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record deleted successfull.')", true);
+                DataTable Delid = Lo.RetriveVendor(Convert.ToInt64(e.CommandArgument.ToString()), "", "", "DFinDetail");
+                if (Delid.Rows.Count == 0)
+                {
+                    PgL();
+                    lblmsg.Text = "Record deleted successfully";
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "modelmsg", "showPopup2();", true);
+                }
             }
-            else
+            catch (Exception ex)
             {
-                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not deleted.')", true);
+                lblmsg.Text = "Record not deleted. " + ex.Message;
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "modelmsg", "showPopup2();", true);
             }
         }
     }
@@ -649,11 +603,11 @@ public partial class Vendor_V_FinanceInfo : System.Web.UI.Page
     {
         try
         {
-            if (lbsub.Text == "Edit & Update")
+            if (lblsub2.Text == "Edit & Update")
             {
                 if (txtnameofbank.Text != "")
                 {
-                    Int32 ESaveID = Lo.UpdateAccount(Convert.ToInt64(ViewState["editaccount"]), Enc.DecryptData(Session["VendorRefNo"].ToString()), txtnameofbank.Text, txttypeofaccount.Text, txtaccountno.Text, txtmicrcode.Text, txtifsc.Text, hfsolencycertificate.Value);
+                    Int32 ESaveID = Lo.UpdateAccount(Convert.ToInt64(ViewState["editaccount"]), Enc.DecryptData(Session["VendorRefNo"].ToString()), txtnameofbank.Text, txttypeofaccount.SelectedItem.Text, txtaccountno.Text, txtmicrcode.Text, txtifsc.Text, hfsolencycertificate.Value);
                     if (ESaveID != 0)
                     {
                         txtnameofbank.Text = "";
@@ -664,38 +618,48 @@ public partial class Vendor_V_FinanceInfo : System.Web.UI.Page
                         hfsolencycertificate.Value = "";
                         ViewState["editaccount"] = null;
                         PgL();
-                        ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record update successfully')", true);
+                        lblmsg.Text = "Bank Detail update successfully";
+                        ScriptManager.RegisterStartupScript(this, this.GetType(), "modelmsg", "showPopup2();", true);
+                        ScriptManager.RegisterStartupScript(this, this.GetType(), "HidePopup", "$('#divbank').modal('hide')", true);
                     }
                     else
                     {
-                        ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not update successfully')", true);
+                        lblmsg.Text = "Bank Detail not update successfully";
+                        ScriptManager.RegisterStartupScript(this, this.GetType(), "modelmsg", "showPopup2();", true);
+                        ScriptManager.RegisterStartupScript(this, this.GetType(), "HidePopup", "$('#divbank').modal('hide')", true);
                     }
                 }
             }
-            else if (lbsub.Text == "Submit")
+            else if (lblsub2.Text == "Submit")
             {
-                Int32 ESaveID = Lo.InsertAccount(Enc.DecryptData(Session["VendorRefNo"].ToString()), "AccountInfo", txtnameofbank.Text, txttypeofaccount.Text, txtaccountno.Text, txtmicrcode.Text, txtifsc.Text, hfsolencycertificate.Value);
+                Int32 ESaveID = Lo.InsertAccount(Enc.DecryptData(Session["VendorRefNo"].ToString()), txtnameofbank.Text, txttypeofaccount.Text, txtaccountno.Text, txtmicrcode.Text, txtifsc.Text, hfsolencycertificate.Value);
                 if (ESaveID != 0)
                 {
                     txtnameofbank.Text = "";
-                    txttypeofaccount.Text = "";
+                    // txttypeofaccount.SelectedIndex = -1;
                     txtaccountno.Text = "";
                     txtmicrcode.Text = "";
                     txtifsc.Text = "";
                     hfsolencycertificate.Value = "";
                     ViewState["editaccount"] = null;
                     PgL();
-                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record save successfully')", true);
+                    lblmsg.Text = "Bank Detail save successfully";
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "modelmsg", "showPopup2();", true);
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "HidePopup", "$('#divbank').modal('hide')", true);
                 }
                 else
                 {
-                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not save successfully')", true);
+                    lblmsg.Text = "Bank Detail not save successfully";
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "modelmsg", "showPopup2();", true);
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "HidePopup", "$('#divbank').modal('hide')", true);
                 }
             }
         }
         catch (Exception ex)
         {
-            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('" + ex.Message + "')", true);
+            lblmsg.Text = ex.Message;
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "modelmsg", "showPopup2();", true);
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "HidePopup", "$('#divbank').modal('hide')", true);
         }
     }
     protected void lbsub_Click(object sender, EventArgs e)
@@ -716,17 +680,21 @@ public partial class Vendor_V_FinanceInfo : System.Web.UI.Page
                         hffileaudit.Value = "";
                         ViewState["editturn"] = null;
                         PgL();
-                        ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record update successfully')", true);
+                        lblmsg.Text = "Financial Turn Over update successfully";
+                        ScriptManager.RegisterStartupScript(this, this.GetType(), "modelmsg", "showPopup2();", true);
+                        ScriptManager.RegisterStartupScript(this, this.GetType(), "HidePopup", "$('#divturnover').modal('hide')", true);
                     }
                     else
                     {
-                        ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not update successfully')", true);
+                        lblmsg.Text = "Financial Turn Over not update successfully";
+                        ScriptManager.RegisterStartupScript(this, this.GetType(), "modelmsg", "showPopup2();", true);
+                        ScriptManager.RegisterStartupScript(this, this.GetType(), "HidePopup", "$('#divturnover').modal('hide')", true);
                     }
                 }
             }
             else if (lbsub.Text == "Submit")
             {
-                Int32 ESaveID = Lo.InsertTurnOver(Enc.DecryptData(Session["VendorRefNo"].ToString()), "TurnOver", txtfinancialyear.Text, txtcurrasst.Text, txtcurrliablities.Text, txtprofitloss.Text, hffileaudit.Value);
+                Int32 ESaveID = Lo.InsertTurnOver(Enc.DecryptData(Session["VendorRefNo"].ToString()), txtfinancialyear.Text, txtcurrasst.Text, txtcurrliablities.Text, txtprofitloss.Text, hffileaudit.Value);
                 if (ESaveID != 0)
                 {
                     txtfinancialyear.Text = "";
@@ -736,17 +704,31 @@ public partial class Vendor_V_FinanceInfo : System.Web.UI.Page
                     hffileaudit.Value = "";
                     ViewState["editturn"] = null;
                     PgL();
-                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record save successfully')", true);
+                    lblmsg.Text = "Financial Turn Over save successfully";
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "modelmsg", "showPopup2();", true);
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "HidePopup", "$('#divturnover').modal('hide')", true);
                 }
                 else
                 {
-                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Record not save successfully')", true);
+                    lblmsg.Text = "Financial Turn Over not save successfully";
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "modelmsg", "showPopup2();", true);
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "HidePopup", "$('#divturnover').modal('hide')", true);
                 }
             }
         }
         catch (Exception ex)
         {
-            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('" + ex.Message + "')", true);
+            lblmsg.Text = ex.Message;
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "modelmsg", "showPopup2();", true);
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "HidePopup", "$('#divturnover').modal('hide')", true);
         }
+    }
+    protected void btnPrev_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("https://srijandefence.gov.in/RegistrationNoDetails?mu=OIVxjUlnTVc=&id=YUM6Wog/7cKd56S2dApVEg==");
+    }
+    protected void btnNext_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("https://srijandefence.gov.in/CheckList?mu=OIVxjUlnTVc=&id=YUM6Wog/7cKd56S2dApVEg==");
     }
 }

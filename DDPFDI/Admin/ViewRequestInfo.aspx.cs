@@ -27,7 +27,6 @@ public partial class Admin_ViewRequestInfo : System.Web.UI.Page
         {
             hfType.Value = Enc.DecryptData(Session["Type"].ToString().Trim());
             hfCompRefNo.Value = Session["CompanyRefNo"].ToString().Trim();
-            //DtReq = Lo.RetriveGridViewCompany("", hfCompRefNo.Value, hfType.Value, "retdata");
             DtReq = Lo.RetriveGridViewCompany("", hfCompRefNo.Value, hfType.Value, "RetBindData");
             if (DtReq.Rows.Count > 0)
             {
@@ -38,31 +37,18 @@ public partial class Admin_ViewRequestInfo : System.Web.UI.Page
                 pgsource.CurrentPageIndex = pagingCurrentPage;
                 lblpaging.Text = "Page " + (pagingCurrentPage + 1) + " of " + pgsource.PageCount;
                 lnkbtnPgPrevious.Enabled = !pgsource.IsFirstPage;
-                // LinkButton1.Enabled = !pgsource.IsFirstPage;
                 lnkbtnPgNext.Enabled = !pgsource.IsLastPage;
-                // LinkButton2.Enabled = !pgsource.IsLastPage;
                 dlrequest.DataSource = pgsource;
                 dlrequest.DataBind();
                 lbltotalshowpageitem.Text = pgsource.FirstIndexInPage + 1 + " - " + (pgsource.FirstIndexInPage + pgsource.Count);
                 lbltotfilter.Text = DtReq.Rows.Count.ToString();
                 BindCompany();
                 //Code of Count Product
-                DataTable mtable = new DataTable();
-                DataColumn ProdRef = mtable.Columns.Add("MProduct", typeof(string));
-                for (int i = 0; DtReq.Rows.Count > i; i++)
+                DataTable dtCount = Lo.RetriveGridViewCompany("", hfCompRefNo.Value, hfType.Value, "CountReq");
+                if (dtCount.Rows.Count > 0)
                 {
-                    string source = DtReq.Rows[i]["RequestProduct"].ToString();
-                    string[] lines = source.Split(',');
-                    foreach (var line in lines)
-                    {
-                        string[] split = line.Split(',');
-                        DataRow row = mtable.NewRow();
-                        row.SetField(ProdRef, split[0]);
-                        mtable.Rows.Add(row);
-                    }
+                    lbltotprodreq.Text = dtCount.Rows.Count.ToString();
                 }
-                DataTable uniqueCols = mtable.DefaultView.ToTable(true, "MProduct");
-                lbltotprodreq.Text =  uniqueCols.Rows.Count.ToString();
             }
             else
             {
@@ -344,18 +330,18 @@ public partial class Admin_ViewRequestInfo : System.Web.UI.Page
                     }
                     else
                     { eighteen.Visible = false; }
-                    if (DtView.Rows[0]["TenderStatus"].ToString() == "Live")
-                    {
-                        lbltendor.Text = "Live";
-                    }
-                    else if (DtView.Rows[0]["TenderStatus"].ToString() == "Archive" || DtView.Rows[0]["TenderStatus"].ToString() == "Not Floated")
-                    {
-                        lbltendor.Text = DtView.Rows[0]["TenderStatus"].ToString();
-                    }
-                    else
-                    {
-                        lbltendor.Text = "No";
-                    }
+                    //if (DtView.Rows[0]["TenderStatus"].ToString() == "Live")
+                    //{
+                    //    lbltendor.Text = "Live";
+                    //}
+                    //else if (DtView.Rows[0]["TenderStatus"].ToString() == "Archive" || DtView.Rows[0]["TenderStatus"].ToString() == "Not Floated")
+                    //{
+                    //    lbltendor.Text = DtView.Rows[0]["TenderStatus"].ToString();
+                    //}
+                    //else
+                    //{
+                    //    lbltendor.Text = "No";
+                    //}
                     string Nodel1Id = DtView.Rows[0]["NodelDetail"].ToString();
                     if (Nodel1Id.ToString() != "")
                     {
@@ -590,20 +576,6 @@ public partial class Admin_ViewRequestInfo : System.Web.UI.Page
             dr["Column"] = "RequestCompName" + " like";
             dr["Value"] = "'%" + ddlcompany.SelectedItem.Text + "%'";
             insert.Rows.Add(dr);
-            //if (ddldivision.Visible == true && ddldivision.SelectedItem.Text != "Select")
-            //{
-            //    dr = insert.NewRow();
-            //    dr["Column"] = "RequestCompName" + " like";
-            //    dr["Value"] = "'%" + ddldivision.SelectedItem.Text + "%'";
-            //    insert.Rows.Add(dr);
-            //    if (ddlunit.Visible == true && ddlunit.SelectedItem.Text != "Select")
-            //    {
-            //        dr = insert.NewRow();
-            //        dr["Column"] = "RequestCompName" + " like";
-            //        dr["Value"] = "'%" + ddlunit.SelectedItem.Text + "%'";
-            //        insert.Rows.Add(dr);
-            //    }
-            //}
         }
         for (int i = 0; insert.Rows.Count > i; i++)
         {
@@ -646,9 +618,7 @@ public partial class Admin_ViewRequestInfo : System.Web.UI.Page
                             pgsource.CurrentPageIndex = pagingCurrentPage;
                             lblpaging.Text = "Page " + (pagingCurrentPage + 1) + " of " + pgsource.PageCount;
                             lnkbtnPgPrevious.Enabled = !pgsource.IsFirstPage;
-                            //  LinkButton1.Enabled = !pgsource.IsFirstPage;
                             lnkbtnPgNext.Enabled = !pgsource.IsLastPage;
-                            //  LinkButton2.Enabled = !pgsource.IsLastPage;
                             pgsource.DataSource = dtads.DefaultView;
                             dlrequest.DataSource = pgsource;
                             dlrequest.DataBind();
@@ -693,68 +663,14 @@ public partial class Admin_ViewRequestInfo : System.Web.UI.Page
                     if (DtCompanyDDL.Rows.Count > 0)
                     {
                         Co.FillDropdownlist(ddlcompany, DtCompanyDDL, "CompanyName", "CompanyRefNo");
-                        //   divlblselectunit.Visible = false;
-                        //   divlblselectdivison.Visible = false;
                     }
                 }
                 else if (Enc.DecryptData(Request.QueryString["mrcreaterole"].ToString()) == "Factory" || Enc.DecryptData(Request.QueryString["mrcreaterole"].ToString()) == "Division")
                 {
-                    //  DtCompanyDDL = Lo.RetriveMasterData(0, Enc.DecryptData(Request.QueryString["mcurrentcompRefNo"].ToString()), "Company1", 0, "", "", "CompanyName");
-                    //  ddlcompany.Enabled = false;
-                    //  if (DtCompanyDDL.Rows.Count > 0)
-                    //  {
-                    //      Co.FillDropdownlist(ddlcompany, DtCompanyDDL, "CompanyName", "CompanyRefNo");
-                    //  }
-                    //  DtCompanyDDL = Lo.RetriveMasterData(0, Enc.DecryptData(Request.QueryString["mcurrentcompRefNo"].ToString()), "Factory", 0, "", "", "CompanyName");
-                    //  DataTable DtDivisionDDL = Lo.RetriveMasterData(0, DtCompanyDDL.Rows[0]["CompanyRefNo"].ToString(), "Factory1", 0, "", "", "CompanyName");
-                    //    if (DtDivisionDDL.Rows.Count > 0)
-                    //    {
-                    //  Co.FillDropdownlist(ddldivision, DtDivisionDDL, "FactoryName", "FactoryRefNo");
-                    //  ddldivision.Enabled = false;
-                    //      ddlcompany.Enabled = false;
-                    //  ddldivision.Visible = true;
-                    // divlblselectunit.Visible = false;
-                    //   }
-                    //   else
-                    //   {
-                    //  ddldivision.Enabled = false;
-                    //   }
                 }
                 else if (Enc.DecryptData(Request.QueryString["mrcreaterole"].ToString()) == "Unit")
                 {
-                    // DtCompanyDDL = Lo.RetriveMasterData(0, Enc.DecryptData(Request.QueryString["mcurrentcompRefNo"].ToString()), "Company2", 0, "", "", "CompanyName");
-                    //  ddlcompany.Enabled = false;
-                    //  if (DtCompanyDDL.Rows.Count > 0)
-                    //   {
-                    //       Co.FillDropdownlist(ddlcompany, DtCompanyDDL, "CompanyName", "CompanyRefNo");
-                    //   }
-                    // DtCompanyDDL = Lo.RetriveMasterData(0, Enc.DecryptData(Request.QueryString["mcurrentcompRefNo"].ToString()), "Unit", 0, "", "", "CompanyName");
-                    //  DataTable DtDivisionDDL = Lo.RetriveMasterData(0, DtCompanyDDL.Rows[0]["CompanyRefNo"].ToString(), "Factory1", 0, "", "", "CompanyName");
-                    //  if (DtDivisionDDL.Rows.Count > 0)
-                    //  {
-                    //    Co.FillDropdownlist(ddldivision, DtDivisionDDL, "FactoryName", "FactoryRefNo");
-                    //   divlblselectdivison.Visible = true;
-                    //   ddldivision.Enabled = false;
-                    //   ddlcompany.Enabled = false;
-                    //     ddldivision.Visible = true;
-                    //  DataTable DtUnitDDL = Lo.RetriveMasterData(0, DtDivisionDDL.Rows[0]["FactoryRefNo"].ToString(), "Unit1", 0, "", "", "CompanyName");
-                    //   if (DtUnitDDL.Rows.Count > 0)
-                    //    {
-                    //       Co.FillDropdownlist(ddlunit, DtUnitDDL, "UnitName", "UnitRefNo");
-                    //    ddlunit.Enabled = true;
-                    //    divlblselectunit.Visible = true;
-                    //    ddlunit.Visible = true;
-                    //     ddlunit.Enabled = false;
-                    //  }
-                    //  else
-                    //   {
-                    //       ddlunit.Enabled = false;
-                    //   }
-                    //  }
-                    //  else
-                    //  {
-                    //     ddldivision.Enabled = false;
-                    //}
+
                 }
             }
             else
@@ -765,8 +681,6 @@ public partial class Admin_ViewRequestInfo : System.Web.UI.Page
                     Co.FillDropdownlist(ddlcompany, DtCompanyDDL, "CompanyName", "CompanyRefNo");
                     ddlcompany.Items.Insert(0, "Select");
                     ddlcompany.Enabled = true;
-                    //   divlblselectdivison.Visible = false;
-                    // divlblselectunit.Visible = false;
                 }
                 else
                 {
@@ -781,34 +695,11 @@ public partial class Admin_ViewRequestInfo : System.Web.UI.Page
             {
                 Co.FillDropdownlist(ddlcompany, DtCompanyDDL, "CompanyName", "CompanyRefNo");
                 ddlcompany.Enabled = false;
-                //  ddldivision.Items.Insert(0, "Select");
-                //   divlblselectdivison.Visible = false;
-                //   divlblselectunit.Visible = false;
             }
             else
             {
                 ddlcompany.Enabled = false;
             }
-            //DtCompanyDDL = Lo.RetriveMasterData(0, ddlcompany.SelectedItem.Value, "Factory1", 0, "", "", "CompanyName");
-            //if (DtCompanyDDL.Rows.Count > 0)
-            //{
-            //    Co.FillDropdownlist(ddldivision, DtCompanyDDL, "FactoryName", "FactoryRefNo");
-            //    ddldivision.Items.Insert(0, "Select");
-            //    if (hfType.Value == "Company")
-            //    {
-            //        divlblselectdivison.Visible = true;
-            //        ddldivision.Enabled = true;
-            //        divlblselectunit.Visible = false;
-            //    }
-            //    else
-            //    {
-            //        ddldivision.Enabled = false;
-            //    }
-            //}
-            //else
-            //{
-            //    ddldivision.Enabled = false;
-            //}
         }
         else if (hfType.Value == "Factory" || hfType.Value == "Division")
         {
@@ -822,40 +713,6 @@ public partial class Admin_ViewRequestInfo : System.Web.UI.Page
             {
                 ddlcompany.Enabled = false;
             }
-            //    DtCompanyDDL = Lo.RetriveMasterData(0, ddlcompany.SelectedItem.Value, "Factory1", 0, "", "", "CompanyName");
-            //    if (DtCompanyDDL.Rows.Count > 0)
-            //    {
-            //        Co.FillDropdownlist(ddldivision, DtCompanyDDL, "FactoryName", "FactoryRefNo");
-            //        // code by gk to select indivisual division for the particular unit
-            //        DataTable dt = Lo.RetriveMasterData(0, hfCompRefNo.Value, "Factory2", 0, "", "", "CompanyName");
-            //        if (dt.Rows.Count > 0)
-            //        {
-            //            ddldivision.SelectedValue = dt.Rows[0]["FactoryRefNo"].ToString();
-            //        }
-            //        //end code
-            //        ddlunit.Items.Insert(0, "Select");
-            //        divlblselectunit.Visible = false;
-            //        divlblselectdivison.Visible = true;
-            //        ddldivision.Enabled = false;
-            //    }
-            //    else
-            //    {
-            //        ddldivision.Enabled = false;
-            //    }
-            //    DtCompanyDDL = Lo.RetriveMasterData(0, ddldivision.SelectedItem.Value, "Unit1", 0, "", "", "CompanyName");
-            //    if (DtCompanyDDL.Rows.Count > 0)
-            //    {
-            //        Co.FillDropdownlist(ddlunit, DtCompanyDDL, "UnitName", "UnitRefNo");
-            //        ddlunit.Items.Insert(0, "Select");
-            //        ddlunit.Enabled = true;
-            //        ddlunit.Visible = true;
-            //        divlblselectunit.Visible = true;
-            //    }
-            //    else
-            //    {
-            //        ddlunit.Items.Insert(0, "Select");
-            //        divlblselectunit.Visible = false;
-            //    }
         }
         else if (hfType.Value == "Unit")
         {
@@ -869,122 +726,10 @@ public partial class Admin_ViewRequestInfo : System.Web.UI.Page
             {
                 ddlcompany.Enabled = false;
             }
-            //    DtCompanyDDL = Lo.RetriveMasterData(0, ddlcompany.SelectedItem.Value, "Factory1", 0, "", "", "CompanyName");
-            //    if (DtCompanyDDL.Rows.Count > 0)
-            //    {
-            //        Co.FillDropdownlist(ddldivision, DtCompanyDDL, "FactoryName", "FactoryRefNo");
-            //        // code by gk to select indivisual division for the particular unit
-            //        DataTable dt = Lo.RetriveMasterData(0, hfCompRefNo.Value, "Factory3", 0, "", "", "CompanyName");
-            //        if (dt.Rows.Count > 0)
-            //        {
-            //            ddldivision.SelectedValue = dt.Rows[0]["FactoryRefNo"].ToString();
-            //        }
-            //        //end code
-            //        divlblselectdivison.Visible = true;
-            //        ddldivision.Enabled = false;
-            //    }
-            //    else
-            //    {
-            //        ddldivision.Enabled = false;
-            //    }
-            //    DtCompanyDDL = Lo.RetriveMasterData(0, ddldivision.SelectedItem.Value, "Unit1", 0, "", "", "CompanyName");
-            //    if (DtCompanyDDL.Rows.Count > 0)
-            //    {
-            //        Co.FillDropdownlist(ddlunit, DtCompanyDDL, "UnitName", "UnitRefNo");
-            //        // code by gk to select indivisual unit for the particular unit             
-            //        ddlunit.SelectedValue = hfCompRefNo.Value;
-            //        //end code
-            //        ddlunit.Enabled = false;
-            //        divlblselectunit.Visible = true;
-            //    }
-            //    else
-            //    {
-            //        ddlunit.Enabled = false;
-            //    }
         }
     }
     protected void ddlcompany_OnSelectedIndexChanged(object sender, EventArgs e)
     {
-        //if (ddlcompany.SelectedItem.Text != "Select")
-        //{
-        //    DtCompanyDDL = Lo.RetriveMasterData(0, ddlcompany.SelectedItem.Value, "", 0, "", "", "FactoryCompanyID");
-        //    if (DtCompanyDDL.Rows.Count > 0)
-        //    {
-        //        Co.FillDropdownlist(ddldivision, DtCompanyDDL, "FactoryName", "FactoryRefNo");
-        //        ddldivision.Items.Insert(0, "Select");
-        //        divlblselectdivison.Visible = true;
-        //        ddldivision.Visible = true;
-        //        hfCompRefNo.Value = ddlcompany.SelectedItem.Value;
-        //        hfType.Value = "Company";
-        //    }
-        //    else
-        //    {
-        //        ddldivision.Items.Insert(0, "Select");
-        //        ddldivision.Visible = false;
-        //        divlblselectdivison.Visible = false;
-        //    }
-        //}
-        //else if (ddlcompany.SelectedItem.Text == "Select")
-        //{
-        //    divlblselectdivison.Visible = false;
-        //    divlblselectunit.Visible = false;
-        //}
-        //  hfCompRefNo.Value = "";
-        //  hfCompRefNo.Value = ddlcompany.SelectedItem.Value;
     }
-    //protected void ddldivision_OnSelectedIndexChanged(object sender, EventArgs e)
-    //{
-    //    if (ddldivision.SelectedItem.Text != "Select")
-    //    {
-    //        DtCompanyDDL = Lo.RetriveMasterData(0, ddldivision.SelectedItem.Value, "", 0, "", "", "UnitSelectID");
-    //        if (DtCompanyDDL.Rows.Count > 0)
-    //        {
-    //            Co.FillDropdownlist(ddlunit, DtCompanyDDL, "UnitName", "UnitRefNo");
-    //            ddlunit.Items.Insert(0, "Select");
-    //            ddlunit.Visible = true;
-    //            divlblselectunit.Visible = true;
-    //            if (ddlunit.SelectedItem.Text == "Select")
-    //            {
-    //                ddldivision.Enabled = true;
-    //            }
-    //            else
-    //            { ddldivision.Enabled = false; }
-    //            hfCompRefNo.Value = ddldivision.SelectedItem.Value;
-    //            hfType.Value = "Divison";
-    //        }
-    //        else
-    //        {
-    //            ddlunit.Items.Insert(0, "Select");
-    //            divlblselectunit.Visible = false;
-    //            ddlunit.Visible = false;
-    //        }
-    //        hfCompRefNo.Value = "";
-    //        hfCompRefNo.Value = ddldivision.SelectedItem.Value;          
-    //    }
-    //    else if (ddldivision.SelectedItem.Text == "Select")
-    //    {
-    //        divlblselectunit.Visible = false;
-    //        hfCompRefNo.Value = ddlcompany.SelectedItem.Value;
-    //        hfType.Value = "Company";
-
-    //    }
-    //}
-    //protected void ddlunit_OnSelectedIndexChanged(object sender, EventArgs e)
-    //{
-    //    if (ddlunit.SelectedItem.Text != "Select")
-    //    {
-    //        hfCompRefNo.Value = ddlunit.SelectedItem.Value;
-    //        hfType.Value = "Unit";
-    //        hfType.Value = "";
-    //        hfType.Value = ddlunit.SelectedItem.Value;
-    //    }
-    //    else
-    //    {
-    //        hfCompRefNo.Value = ddldivision.SelectedItem.Value;
-    //        hfType.Value = "Division";
-    //        hfCompRefNo.Value = "";
-    //        hfCompRefNo.Value = ddldivision.SelectedItem.Value;
-    //    }
-    //}
     #endregion
 }

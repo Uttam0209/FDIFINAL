@@ -1,45 +1,247 @@
+/*Master Page*/
+
 * {
     margin: 0px;
     padding: 0px;
     box-sizing: border-box;
+    font-family: "Rubik", sans-serif;
 }
 
-.header {
+#wrapper1 {
+    min-height: 85vh!important;
+    margin-bottom: -40px;
+}
+
+.push {
+    height: 40px;
+}
+
+
+#top3 a {
+    color: #f1faee !important;
+    text-transform: uppercase;
+    border-bottom: 2px solid #373f50;
+}
+    #top3 a:hover {
+        
+        border-bottom: 2px solid #f1faee;
+        transition:0.1s;
+    }
+
+
+#footer1 {
     background: #373f50;
+    color: #f1faee!important;
+   
+    text-align:center;
 }
 
-.contact {
-    background: #373f50;
+
+
+#top h2{
+    color: #6915cf;
 }
 
-.card-img-top {
-    height: 100px;
+@media only screen and (max-width: 1176px) {
+    #top3 a
+
+{
+    font-size: 14px;
+}
+
+#top h2 {
+    font-size: 30px;
+}
+
+}
+
+@media only screen and (max-width: 1031px) {
+
+    #top3 a {
+        font-size: 13px;
+    }
+
+   
+}
+
+/*FAQ page*/
+
+
+.accordian {
+    border: 1px solid black;
+}
+
+.accordian-tab label {
+    color: white;
+    background-color: #6915cf;
+    color: white !important;
+    font-size: 20px;
+    padding: 10px;
+    position: relative;
+    display: block;
+    cursor: pointer;
+    border-top: 1px solid white;
+    margin: 0px;
+}
+
+    .accordian-tab label:after {
+        content: "\f078";
+        font-family: fontawesome;
+        position: absolute;
+        top: 10px;
+        right: 20px;
+        transform: rotate(90deg);
+        transition: transform 0.3s;
+    }
+
+.accordian-tab > .accordian-toggel:checked ~ label:after {
+    transform: rotate(0deg);
+}
+
+.accordian-tab > .accordian-content {
+    max-height: 0;
+    transition: all 0.3s;
+    overflow: hidden;
+}
+
+    .accordian-tab > .accordian-content p {
+        padding: 10px;
+        line-height: 20px;
+        color: black;
+    }
+
+.accordian-tab .accordian-toggel {
+    display: none;
+}
+
+.accordian-tab > .accordian-toggel:checked ~ .accordian-content {
+    max-height: 100%;
+}
+
+
+
+/*Feedback page*/
+
+#table1 thead th {
+    background: #6915cf;
+    color: white;
+    text-align: center;
+    font-weight: 500;
+}
+
+
+#table1 tbody td {
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+}
+
+#table1 {
+    overflow: hidden;
+}
+
+
+.box1 .card-img-top {
+    height: 75px;
     width: auto;
 }
 
-.footer1 {
-    background: #373f50;
-}
-
-.btnlink {
-    display: inline-block;
-    padding: 8px;
-    float: right;
-    background-color: #373f50;
+.box1 {
+    box-shadow: 0 0 5px #6915cf;
+    text-align: center;
+    background: #6915cf !important;
     color: white;
 }
 
-    .btnlink a {
-        text-decoration: none;
-        color: white;
-    }
-
-.dropdown:hover .dropdown-menu {
-    display: block;
+.contact_form {
+    color: black;
+    padding: 20px;
+    font-size: 14px;
+    margin-left: -12px;
+    margin-right: auto;
 }
 
-.dropdown-menu a:hover {
-    background-color: #373f50;
-    color: white
+.Get_In_Touch {
+    box-shadow: 0 0 2px #6915cf;
+    column-gap: 2px;
 }
 
+.Contact_Persons {
+    box-shadow: 0 0 2px #6915cf;
+}
+
+.box1 img {
+    margin: 10px;
+    border-radius: 50%;
+}
+
+.box1 h4 {
+    color: white;
+}
+
+
+/*Success Story*/
+
+
+#ContentPlaceHolder1_rdblisindig label {
+    margin-right: 5px;
+}
+
+#updatetable {
+    margin-bottom: 0;
+}
+
+#ContentPlaceHolder1_divcontentproduct div {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
+#ContentPlaceHolder1_gveoi tr th {
+    background: #507CD1 !important;
+    color: white !important;
+    text-align: center;
+    font-size: 14px;
+}
+
+#ContentPlaceHolder1_gveoi tr td {
+    text-align: center;
+}
+
+#ContentPlaceHolder1_gveoi tr th:nth-child(3) {
+    width: 120px !important;
+}
+
+#ContentPlaceHolder1_gveoi tr th:nth-child(4) {
+    width: 100px !important;
+}
+
+#ContentPlaceHolder1_gveoi tr th:nth-child(7) {
+    width: 100px !important;
+}
+
+#ContentPlaceHolder1_gveoi tr th:nth-child(8) {
+    width: 130px !important;
+}
+
+#ContentPlaceHolder1_gveoi tr th:nth-child(9) {
+    width: 140px !important;
+}
+
+#ContentPlaceHolder1_gveoi tr th:nth-child(11) {
+    width: 140px !important;
+}
+
+#ContentPlaceHolder1_rdblisindig label {
+    margin-left: 5px !important;
+}
+
+#ContentPlaceHolder1_rbIgCategory label {
+    margin-left: 5px !important;
+}
+
+
+#successreport div {
+    margin-left: 0 !important;
+    margin-right: 0;
+    padding: 0 !important;
+}

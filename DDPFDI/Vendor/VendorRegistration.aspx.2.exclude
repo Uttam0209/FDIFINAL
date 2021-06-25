@@ -1,0 +1,521 @@
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="VendorRegistration.aspx.cs" Inherits="Vendor_VendorRegistration" MasterPageFile="~/Vendor/VendorMasterForReg.master" %>
+
+<%@ Register Assembly="MSCaptcha" Namespace="MSCaptcha" TagPrefix="cc1" %>
+<asp:Content ID="ConHead" runat="server" ContentPlaceHolderID="head">
+</asp:Content>
+<asp:Content ID="Innercontent" runat="server" ContentPlaceHolderID="ContentPlaceHolder1">
+    <asp:ScriptManager runat="server" ID="sc"></asp:ScriptManager>
+    <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
+        <ContentTemplate>
+            <div class="container mt10">
+                <div class="modal-content" runat="server" id="divregistration">
+                    <div class="modal-header modal-header1"> <a href="VendorLogin" title="Back to login"><i class="fa fa-times pull-right fa-2x" 
+                    style="margin-right:2px; margin-top:2px;"></i></a>
+                        <h3 class="text-center"><b>Raksha Udymi Portal</b></h3>
+                        <div class="text-center">
+                            <p>Please provide all required details to register your business with us</p>
+                            <p>Please fill all details below. After Submission you will get email an for your login credentials.</p>
+                        </div>
+                    </div>
+                    <div class="clearfix mt10"></div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                           
+                            <div runat="server" id="divfirst">
+                                <div class="col-md-4" style="border-right: 1px solid #6610f2;">
+                                    <div class="col-sm-12">
+                                        <div class="row d-flex">
+                                            <label>                                                 
+                                                DPSU/Defence Organisation you want to apply 
+                                            </label>
+                                            <div>
+                                                <asp:CheckBoxList ID="chkdpsu" runat="server" RepeatColumns="4" RepeatDirection="Horizontal" RepeatLayout="Flow">
+                                                </asp:CheckBoxList>
+                                            </div>
+                                            <div class="clearfix" style="margin: 5px; 0px; 0px; 0px;"></div>
+                                            <label>
+                                                Select Any One
+                                            </label>
+                                            <div>
+                                                <asp:DropDownList ID="ddlpan" runat="server" AutoPostBack="true" CssClass="form-control"
+                                                    OnSelectedIndexChanged="ddlpan_SelectedIndexChanged">
+                                                    <asp:ListItem Selected="True" Value="0">Select</asp:ListItem>
+                                                    <asp:ListItem Value="Y">GSTIN</asp:ListItem>
+                                                    <asp:ListItem Value="N">PAN</asp:ListItem>
+                                                </asp:DropDownList>
+                                            </div>
+                                            <div class="clearfix" style="margin: 5px; 0px; 0px; 0px;"></div>
+                                            <div runat="server" id="divpan" visible="false">
+                                                <label>
+                                                    <asp:Label ID="lbname" runat="server"></asp:Label>
+                                                </label>
+                                                <div>
+                                                    <asp:TextBox ID="txtpanno" runat="server" MaxLength="15" AutoPostBack="true" CssClass="form-control" OnTextChanged="txtpanno_TextChanged"></asp:TextBox>
+                                                    <span runat="server" id="panverifi"></span>
+                                                    <asp:Label ID="lblmsgpan" runat="server" ForeColor="Green" Visible="false"></asp:Label>
+                                                    <asp:HiddenField ID="hfpanname" runat="server" />
+                                                </div>
+                                            </div>
+                                            <div class="clearfix" style="margin: 5px; 0px; 0px; 0px;"></div>
+                                            <label>
+                                                Name of Company  
+                                            </label>
+                                            <div>
+                                                <asp:TextBox ID="txtbusinessname" runat="server" AutoPostBack="true" Style="text-transform: uppercase;" CssClass="form-control" OnTextChanged="txtbusinessname_TextChanged"></asp:TextBox>
+                                                <span runat="server" id="check"></span>
+                                                <asp:Label ID="lblbusinessname" runat="server" ForeColor="Green"></asp:Label>
+                                            </div>
+                                            <div class="clearfix" style="margin: 5px; 0px; 0px; 0px;"></div>
+                                            <label>
+                                                Registration Category <span class="mandatory">*</span>
+                                            </label>
+                                            <div>
+                                                <asp:DropDownList ID="ddlregiscategory" runat="server" CssClass="form-control"
+                                                    required="required">
+                                                    <asp:ListItem Selected="True" Value="0">Select</asp:ListItem>
+                                                    <asp:ListItem Value="MANUFACTURER">MANUFACTURER</asp:ListItem>
+                                                    <asp:ListItem Value="SERVICE SUB CONTRACTOR">SERVICE SUB CONTRACTOR</asp:ListItem>
+                                                    <asp:ListItem Value="AUTHORISED AGENT">AUTHORISED AGENT</asp:ListItem>
+                                                    <asp:ListItem Value="TRADER">TRADER</asp:ListItem>
+                                                    <asp:ListItem Value="OEM">OEM</asp:ListItem>
+                                                    <asp:ListItem Value="Stockist">Stockist</asp:ListItem>
+                                                    <asp:ListItem Value="Contractor">Contractor</asp:ListItem>
+                                                    <asp:ListItem Value="Distributor">Distributor</asp:ListItem>
+                                                    <asp:ListItem Value="Consortium">Consortium</asp:ListItem>
+                                                </asp:DropDownList>
+                                            </div>
+                                            <div class="clearfix" style="margin: 5px; 0px; 0px; 0px;"></div>
+                                            <label>
+                                                Type of Ownership
+                                            </label>
+                                            <div>
+                                                <asp:DropDownList ID="ddltypeofbusiness" runat="server" CssClass="form-control">
+                                                </asp:DropDownList>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="col-sm-12">
+                                        <div class="row d-flex">
+                                            <label>
+                                                Business Sector
+                                            </label>
+                                            <div>
+                                                <asp:DropDownList ID="ddlbusinesssector" runat="server" CssClass="form-control">
+                                                </asp:DropDownList>
+                                            </div>
+                                            <div class="clearfix" style="margin: 5px; 0px; 0px; 0px;"></div>
+                                            <label>
+                                                Nodal officer Name<span class="mandatory">*</span>
+                                            </label>
+                                            <div>
+                                                <asp:TextBox ID="txtnodalname" runat="server" MaxLength="100" required="" CssClass="form-control"></asp:TextBox>
+                                            </div>
+                                            <div class="clearfix" style="margin: 5px; 0px; 0px; 0px;"></div>
+                                            <label>
+                                                Nodal officer email (treated as username) <span class="mandatory">*</span>
+                                            </label>
+                                            <div>
+                                                <asp:TextBox ID="txtnodelemail" runat="server" MaxLength="70" TextMode="Email" placeholder="ex: myemail@example.com" required="" AutoCompleteType="Email" CssClass="form-control"></asp:TextBox>
+                                                <asp:RegularExpressionValidator ID="regexEmailValid" runat="server" ValidationExpression="\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*" ControlToValidate="txtnodelemail" ForeColor="Red" ErrorMessage="Invalid Email Format"></asp:RegularExpressionValidator>
+                                            </div>
+                                            <div class="clearfix" style="margin: 5px; 0px; 0px; 0px;"></div>
+                                            <label>
+                                                Nodal officer Contact No
+                                            </label>
+                                            <div>
+                                                <asp:TextBox ID="txtMobileNodal" runat="server" MaxLength="10" required="" onkeypress="return isNumberKey(event)" CssClass="form-control"></asp:TextBox>
+                                            </div>
+                                            <div class="clearfix" style="margin: 5px; 0px; 0px; 0px;"></div>
+                                            <label>Street Address</label>
+                                            <asp:TextBox ID="txtstreetaddress" runat="server" MaxLength="300" TextMode="MultiLine" Height="50px" required="" CssClass="form-control"></asp:TextBox>
+                                            <div class="clearfix" style="margin: 5px; 0px; 0px; 0px;"></div>
+                                            <label class="mt10">Street Address-II </label>
+                                            <asp:TextBox ID="txtstreetaddressline2" MaxLength="300" runat="server" TextMode="MultiLine" Height="50px" CssClass="form-control"></asp:TextBox>
+                                        </div>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="col-md-4" style="border-left: 1px solid #6610f2;">
+                                    <div class="col-sm-12">
+                                        <div class="row d-flex">
+                                            <label>State</label>
+                                            <asp:DropDownList runat="server" ID="ddlstate" CssClass="form-cascade-control form-control" AutoPostBack="true" OnSelectedIndexChanged="ddlstate_SelectedIndexChanged"></asp:DropDownList>
+                                            <div class="clearfix" style="margin: 5px; 0px; 0px; 0px;"></div>
+
+                                            <label>City</label>
+                                            <asp:DropDownList runat="server" ID="ddlCity" CssClass="form-cascade-control form-control" AutoPostBack="true" OnSelectedIndexChanged="ddlCity_SelectedIndexChanged"></asp:DropDownList>
+                                            <div class="clearfix" style="margin: 5px; 0px; 0px; 0px;"></div>
+                                            <label>Pin Code</label>
+                                            <asp:DropDownList runat="server" ID="ddlPincode" CssClass="form-cascade-control form-control"></asp:DropDownList>
+                                            <div class="clearfix" style="margin: 5px; 0px; 0px; 0px;"></div>
+
+                                            <asp:FileUpload ID="FileUpload1" runat="server" CssClass="form-control" />
+                                            <label>Authority letter to be issued from the organization for nodal officer </label>
+                                            <asp:FileUpload ID="FileIdentity" runat="server" CssClass="form-control" />
+                                            <label>Government ID Card (Showing Name as mentioned in Nodal officer Name).  </label>
+                                            <div class="clearfix mt10"></div>
+                                            <span class="mandatory" style="text-align: left">* All File should be pdf format only &nbsp;
+                                                                * Size should be less than 1 mb.
+                                            </span>
+                                            <div class="clearfix mt10"></div>
+                                            <asp:LinkButton ID="lbnext" runat="server" CssClass="btn btn-warning" Style="float: right;" OnClick="lbnext_Click"><i class="fa fa-forward"></i>&nbspNext</asp:LinkButton>
+                                        </div>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                            <br />
+                            <div runat="server" id="divfinalsubmit" visible="false">
+                                <div class="row d-flex">
+                                    <div class="col-sm-12">
+                                        <div runat="server" id="divsecond">
+                                            <div class="col-sm-6">
+                                                <label>1.Company declared insolvent in Receivership,Bankrupt or being wounded up?.</label>
+                                                <asp:DropDownList ID="ddlwoundedup" runat="server" CssClass="form-control">
+                                                    <asp:ListItem Selected="True" Value="0">Select</asp:ListItem>
+                                                    <asp:ListItem Value="1">Yes</asp:ListItem>
+                                                    <asp:ListItem Value="2">No</asp:ListItem>
+                                                </asp:DropDownList>
+                                                <div class="clearfix mt10"></div>
+                                                <label>2.Have Company affairs administered by a court or a judicial officer ?.</label>
+                                                <asp:DropDownList ID="ddljudicialofficer" runat="server" CssClass="form-control">
+                                                    <asp:ListItem Selected="True" Value="0">Select</asp:ListItem>
+                                                    <asp:ListItem Value="1">Yes</asp:ListItem>
+                                                    <asp:ListItem Value="2">No</asp:ListItem>
+                                                </asp:DropDownList>
+                                                <div class="clearfix mt10"></div>
+                                                <label>3.Is business activities suspended ?.</label>
+                                                <asp:DropDownList ID="ddlbusinesssuspended" runat="server" CssClass="form-control">
+                                                    <asp:ListItem Selected="True" Value="0">Select</asp:ListItem>
+                                                    <asp:ListItem Value="1">Yes</asp:ListItem>
+                                                    <asp:ListItem Value="2">No</asp:ListItem>
+                                                </asp:DropDownList>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <label>4.Is the Company subject of legal proceedings for any of the forging reasons ?.</label>
+                                                <asp:DropDownList ID="ddlforgingreasone" runat="server" CssClass="form-control">
+                                                    <asp:ListItem Selected="True" Value="0">Select</asp:ListItem>
+                                                    <asp:ListItem Value="1">Yes</asp:ListItem>
+                                                    <asp:ListItem Value="2">No</asp:ListItem>
+                                                </asp:DropDownList>
+                                                <div class="clearfix mt10"></div>
+                                                <label>5.Has the firm been debarred from Govt. Contracts ?.</label>
+                                                <asp:DropDownList ID="ddldebarredgovtcont" runat="server" CssClass="form-control">
+                                                    <asp:ListItem Selected="True" Value="0">Select</asp:ListItem>
+                                                    <asp:ListItem Value="1">Yes</asp:ListItem>
+                                                    <asp:ListItem Value="2">No</asp:ListItem>
+                                                </asp:DropDownList>
+                                                <div class="clearfix mt10"></div>
+                                                <div class="form-group">
+                                                    <div class="row">
+                                                        <div class="col-sm-6" style="margin-top: 8px;">
+                                                            <label>Captcha</label>
+                                                            <asp:TextBox runat="server" ID="Txtcatpcha2" TabIndex="3"
+                                                                ToolTip="enter captcha (case sensitive)" class="form-control" autocomplete="off" placeholder="Captcha Case Sensitive" required=""></asp:TextBox>
+                                                        </div>
+                                                        <div class="col-sm-5" style="margin-top: 30px;">
+                                                            <div class="col-sm-8">
+                                                                <asp:Image ID="Image1" runat="server" />
+                                                            </div>
+                                                            <div class="col-sm-1">
+                                                                <asp:LinkButton ID="CaptchaRefresh" runat="server" CausesValidation="false" Style="margin-top: 30px;" OnClick="CaptchaRefresh_Click"><i class="fas fa-sync-alt fa-lg" style="margin-left: 78px;"></i></asp:LinkButton>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="clearfix mt10"></div>
+                                            <div class="col-sm-12">
+                                                <asp:CheckBoxList ID="chkbuisness" runat="server" RepeatColumns="1" RepeatDirection="Horizontal" RepeatLayout="Flow" CssClass="checkbox">
+                                                    <asp:ListItem>I note that registration ,does not carry with it the right to business with DPSUs/OFB, I hereby declare that the information pertaining to my/our Company  including all enclosures is correct and true to the best of
+                                                                     my/our knowledge and belief as on date</asp:ListItem>
+                                                </asp:CheckBoxList>
+                                            </div>
+                                            <div class="clearfix mt10"></div>
+                                            <div class="col-sm-12">
+                                                <asp:LinkButton runat="server" ID="btnforotpget" CssClass="btn btn-success" Style="float: right;"
+                                                    OnClick="btnforotpget_Click"><i class="fa fa-edit"></i>&nbsp;Submit and get otp</asp:LinkButton>
+                                                <asp:LinkButton runat="server" ID="lbback" CssClass="btn btn-info" Style="float: right; margin-right: 5px;"
+                                                    OnClick="lbback_Click"><i class="fa fa-backward"></i>&nbsp;Back</asp:LinkButton>
+                                            </div>
+                                            <div class="clearfix mt10"></div>
+
+                                        </div>
+                                        <div runat="server" id="divotp" visible="false">
+                                            <div class="col-lg-offset-5" runat="server" id="OtpVrf">
+                                                <div class="col-sm-6">
+                                                    <label>Six digit otp (get on your enterd nodel email)</label>
+                                                    <asp:TextBox runat="server" ID="txtOTP" ToolTip="OTP" Style="text-align: center; width: 300px;" class="form-control"
+                                                        autocomplete="off" placeholder="OTP" required=""></asp:TextBox>
+                                                </div>
+                                                <div class="col-sm-3" style="margin-top: 25px;">
+                                                    <asp:LinkButton runat="server" ID="lbresentotp" OnClick="lbresentotp_Click">
+                                                            <i class="fa fa-recycle"></i>&nbsp;Resend-OTP</asp:LinkButton>
+                                                </div>
+                                            </div>
+                                            <div class="clearfix mt10"></div>
+                                            <br />
+                                            <asp:LinkButton runat="server" ID="lbback2" CssClass="btn btn-primary" OnClick="lbback2_Click"><i class="fa fa-backword"></i>Back</asp:LinkButton>
+                                            <asp:LinkButton ID="btnsubmit" runat="server" CssClass="btn btn-success pull-right" Style="margin-right: 10px;" Text="Submit and Save Registration" OnClick="btnsubmit_Click" OnClientClick="if (!confirm('Are you sure you want to save this record?')) return false;" />
+                                        </div>
+                                        <div class="clearfix mt10"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <asp:HiddenField runat="server" ID="hfdpsuid" />
+        </ContentTemplate>
+        <Triggers>
+            <asp:PostBackTrigger ControlID="btnsubmit" />
+            <asp:PostBackTrigger ControlID="lbnext" />
+        </Triggers>
+    </asp:UpdatePanel>
+
+    <asp:UpdateProgress ID="UpdateProgress1" runat="server" AssociatedUpdatePanelID="UpdatePanel1">
+        <ProgressTemplate>
+            <div class="overlay-progress" style="z-index: 99999;">
+                <div class="custom-progress-bar blue stripes">
+                    <span></span>
+                    <p>Processing</p>
+                </div>
+            </div>
+        </ProgressTemplate>
+    </asp:UpdateProgress>
+    <div class="modal fade" id="Div1" role="dialog" data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog" style="width: 400px;">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header modal-header1">
+                    <button type="button" class="close close1" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Alert</h4>
+                </div>
+                <form class="form-horizontal changepassword" role="form">
+                    <div class="modal-body clearfix" style="padding: 0 20px;">
+                        <asp:Panel ID="pansuccess" runat="server">
+                            <div style="text-align: center;">
+                                <div class="clearfix pb15"></div>
+                                <img src="/assets/images/right.jpg" alt="" height="150px" width="150px" />
+                                <div class="clearfix pb15"></div>
+                                <h4>Registration succssfully done.A login releted mail send to your registerd mail id.</h4>
+                            </div>
+                        </asp:Panel>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modelfail" role="dialog" data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog" style="width: 400px;">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header modal-header1">
+                    <button type="button" class="close close1" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Alert</h4>
+                </div>
+                <form class="form-horizontal changepassword" role="form">
+                    <div class="modal-body clearfix" style="padding: 0 20px;">
+
+                        <asp:Panel ID="panfail" runat="server">
+                            <div style="text-align: center;">
+                                <div class="clearfix pb15"></div>
+                                <img src="/assets/images/Wrong.png" alt="" height="100px" width="100px" />
+                                <div class="clearfix pb15"></div>
+                                <h4>Record not save, Please try again, or mail us on defence production</h4>
+                            </div>
+                        </asp:Panel>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal" />
+                        Close            
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script type='text/javascript'>
+        $(function () {
+            $('#ddlPincode').ufd({ log: true });
+        });
+    </script>
+    <script type="text/javascript">
+        function showPopup() {
+            $('#changePass').modal('show', function () {
+            });
+        }
+    </script>
+    <script type="text/javascript">
+        function showPopup1() {
+            $('#modelfail').modal('show');
+        }
+    </script>
+    <script type="text/javascript">
+        function showPopup2() {
+            $('#Div1').modal('show');
+        }
+    </script>
+    <style>
+        .modal.and.carousel {
+            position: fixed;
+        }
+
+        .carousel-control-prev {
+            position: absolute;
+            left: 0;
+            bottom: 0;
+        }
+
+            .carousel-control-prev i {
+                font-size: 30px;
+                font-weight: bold;
+            }
+
+        .carousel-control-next {
+            position: absolute;
+            right: 0;
+            bottom: 0;
+        }
+
+            .carousel-control-next i {
+                font-size: 30px;
+                font-weight: bold;
+            }
+
+        .carousel-inner {
+            padding: 0 20px;
+        }
+
+        .mt10 {
+            padding-top: 10px;
+        }
+    </style>
+    <script type="text/javascript">
+        function isNumberKey(evt) {
+            var charCode = (evt.which) ? evt.which : event.keyCode;
+            if (charCode != 46 && charCode > 31
+                && (charCode < 48 || charCode > 57))
+                return false;
+
+            return true;
+        }
+    </script>
+    <script src="../assets/js/jquery-1.10.0.min.js"></script>
+    <script src="../assets/js/jquery-1.9.2-ui.min.js"></script>
+    <link href="../assets/js/jquery-1.9.2-themes-blitzer-jquery-ui.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript">
+        $(function () {
+            $("[id$=txtzipcodeT]").autocomplete({
+                source: function (request, response) {
+                    AjaxCall("Default.aspx/GetCountries", request.term, 0, response)
+                },
+                select: function (e, i) {
+                    $("[id$=hfPin]").val(i.item.val);
+                },
+                minLength: 1
+            });
+            $("[id$=txtcityT]").autocomplete({
+                source: function (request, response) {
+                    AjaxCall("VendorRegistration.aspx/GetCities", request.term, $("[id$=hfPin]").val(), response)
+                },
+                select: function (e, i) {
+                    $("[id$=hfCity]").val(i.item.val);
+                },
+                minLength: 1
+            });
+
+        });
+        function AjaxCall(url, prefix, parentId, response) {
+            $.ajax({
+                url: url,
+                data: "{ 'prefix': '" + prefix + "', parentId: " + parentId + "}",
+                dataType: "json",
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                success: function (r) {
+                    response($.map(r.d, function (item) {
+                        return {
+                            label: item.split('-')[0],
+                            val: item.split('-')[1]
+                        }
+                    }))
+                },
+                error: function (r) {
+                    alert(r.responseText);
+                },
+                failure: function (r) {
+                    alert(r.responseText);
+                }
+            });
+        }
+    </script>
+    <script type="text/javascript">
+        $(function () {
+            $("[id$=txtzipcodeT]").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: '<%=ResolveUrl("VendorRegistration.aspx/GetPinCodeService") %>',
+                        data: "{ 'prefix': '" + request.term + "'}",
+                        dataType: "json",
+                        type: "POST",
+                        contentType: "application/json; charset=utf-8",
+                        success: function (data) {
+                            response($.map(data.d, function (item) {
+                                return {
+                                    label: item.split('-')[0]
+                                }
+                            }))
+                        },
+                        error: function (response) {
+                            alert(response.responseText);
+                        },
+                        failure: function (response) {
+                            alert(response.responseText);
+                        }
+                    });
+                },
+                minLength: 1
+            });
+
+
+        });
+    </script>
+    <script type="text/javascript">
+        $(function () {
+            $("[id$=txtcityT]").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: '<%=ResolveUrl("VendorRegistration.aspx/GetCityService") %>',
+                        data: "{ 'prefix': '" + request.term + "'}",
+                        dataType: "json",
+                        type: "POST",
+                        contentType: "application/json; charset=utf-8",
+                        success: function (data) {
+                            response($.map(data.d, function (item) {
+                                return {
+                                    label: item.split('-')[0]
+                                }
+                            }))
+                        },
+                        error: function (response) {
+                            alert(response.responseText);
+                        },
+                        failure: function (response) {
+                            alert(response.responseText);
+                        }
+                    });
+                },
+                minLength: 1
+            });
+
+        });
+    </script>
+</asp:Content>

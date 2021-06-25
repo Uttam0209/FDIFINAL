@@ -1,0 +1,150 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Test_Lab/DPSU_MasterPage.master" AutoEventWireup="true" CodeFile="Test_details.aspx.cs" Inherits="Test_Lab_Test_details" %>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
+      <style>
+        .box1 {
+            box-shadow: 0 0 5px;
+        }
+    </style>
+</asp:Content>
+
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
+    <asp:ScriptManager ID="sm" runat="server"></asp:ScriptManager>
+    <asp:HiddenField ID="hidCompanyRefNo" runat="server" />
+    <asp:HiddenField ID="hidType" runat="server" />
+    <asp:HiddenField runat="server" ID="hfcomprefno" />
+    <div class="container-fluid">
+                    <div class="row my-2 box1 py-2">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <asp:Label runat="server" CssClass="form-label">Select Company/Organization</asp:Label>
+                                <asp:DropDownList runat="server" ID="ddlcomp" CssClass="form-cascade-control form-control" AutoPostBack="true" OnSelectedIndexChanged="ddlcomp_SelectedIndexChanged"></asp:DropDownList>
+                            </div>
+                        </div>
+                        <div class="col-md-4" runat="server" id="divlblselectdivison">
+                            <div class="form-group">
+                                <asp:Label runat="server" CssClass="form-label">Select Division/Plant</asp:Label>
+                                <asp:DropDownList runat="server" ID="ddldivision" CssClass="form-cascade-control form-control" AutoPostBack="true" OnSelectedIndexChanged="ddldivision_SelectedIndexChanged"></asp:DropDownList>
+                            </div>
+                        </div>
+                        <div class="col-md-4" runat="server" id="divlblselectunit">
+                            <div class="form-group">
+                                <asp:Label runat="server" CssClass="form-label">Select Unit</asp:Label>
+                                <asp:DropDownList runat="server" ID="ddlunit" CssClass="form-cascade-control form-control" AutoPostBack="true" OnSelectedIndexChanged="ddlunit_SelectedIndexChanged"></asp:DropDownList>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group" runat="server" visible="false" id="portalid">
+                                <b>Item Id (Portal):-
+                                    <asp:Label ID="lblrefnoforinfo" runat="server"></asp:Label></b>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row box1 py-2">
+                      <%--     <div class="col-md-6" >
+                           <%-- <div class="form-group" style="visibility:hidden;">
+                                <asp:Label runat="server">Test ID :</asp:Label>
+                                <asp:TextBox ID="txttestid" runat="server" CssClass="form-control" Enabled="false"></asp:TextBox>
+                            </div>--%>
+                      <%--  </div>--%>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <asp:Label runat="server">Name of Test</asp:Label>
+                                <asp:TextBox ID="txttestname" runat="server" CssClass="form-control"></asp:TextBox>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <asp:Label runat="server">Discipline</asp:Label>
+                                <asp:TextBox ID="txtDisci" runat="server" CssClass="form-control"></asp:TextBox>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <asp:Label runat="server">Calibration Facility</asp:Label>
+                                <asp:TextBox ID="txtcalibrationfacility" runat="server" CssClass="form-control"></asp:TextBox>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <asp:Label runat="server">Manufacturer Name</asp:Label>
+                                <asp:TextBox ID="txtmanufacturename" runat="server" CssClass="form-control"></asp:TextBox>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <asp:Label runat="server">Manufacturing Year</asp:Label>
+                                <asp:TextBox ID="txtmanufyear" runat="server" TextMode="DateTime" CssClass="form-control"></asp:TextBox>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <asp:Label runat="server">Chamber Size</asp:Label>
+                                <asp:TextBox ID="txtchambersize" runat="server" CssClass="form-control"></asp:TextBox>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <asp:Label runat="server">Equipment Range</asp:Label>
+                                <asp:TextBox ID="txtequipmntrange" runat="server" CssClass="form-control"></asp:TextBox>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <asp:Label runat="server">Product Material</asp:Label>
+                                <asp:TextBox ID="txtprodctmaterial" runat="server" CssClass="form-control"></asp:TextBox>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <asp:Label runat="server">Specifications</asp:Label>
+                                <asp:TextBox ID="txtspecifications" runat="server" CssClass="form-control">
+                                </asp:TextBox>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <asp:Label runat="server">Max Dimension</asp:Label>
+                                <asp:TextBox ID="txtmaxdimension" runat="server" CssClass="form-control"></asp:TextBox>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <asp:Label runat="server">Max Weight</asp:Label>
+                                <asp:TextBox ID="txtmaxweight" runat="server" CssClass="form-control"></asp:TextBox>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <asp:Label runat="server">Duration</asp:Label>
+                                <asp:TextBox ID="txtduration" runat="server" CssClass="form-control"></asp:TextBox>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <asp:Label runat="server">Advance Notice</asp:Label>
+                                <asp:TextBox ID="txtadvancenotice" runat="server" CssClass="form-control"></asp:TextBox>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <asp:Label runat="server">Constraints</asp:Label>
+                                <asp:TextBox ID="txtconstraints" runat="server" CssClass="form-control"></asp:TextBox>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <asp:Label runat="server">Remarks</asp:Label>
+                                <asp:TextBox ID="txtremarks" runat="server" CssClass="form-control"></asp:TextBox>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <asp:Button ID="btnsubmit" runat="server" CssClass="btn" Text="Submit" OnClick="btnsubmit_Click" Style="background: rgba(105,21,207,0.8)!important; color: #fff!important;" />
+                                <asp:Button ID="btnCan" runat="server" CssClass="btn" Text="Cancel" OnClick="btnCan_Click" Style="background: rgba(105,21,207,0.8)!important; color: #fff!important;" />
+                            </div>
+                        </div>
+                    </div>
+            </div>
+</asp:Content>
+

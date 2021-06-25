@@ -1,0 +1,570 @@
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="V_CompInfo1.aspx.cs" Inherits="Vendor_V_CompInfo1" MasterPageFile="~/Vendor/VendorMaster.master" %>
+
+<%@ Register Src="~/Vendor/InnerMenu.ascx" TagName="Head" TagPrefix="Menu" %>
+<asp:Content runat="server" ID="msthead" ContentPlaceHolderID="head">
+</asp:Content>
+<asp:Content runat="server" ID="Content" ContentPlaceHolderID="ContentPlaceHolder1">
+    <asp:UpdatePanel runat="server" ID="up" UpdateMode="Conditional">
+        <ContentTemplate>
+            <asp:ScriptManager runat="server" ID="sc"></asp:ScriptManager>
+            <div class="container-fluid">
+                <div class="card-body">
+                    <Menu:Head ID="inner" runat="server" />
+                    <div class="tab-content">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="page-title-box">
+                                    <h4 class="page-title">Company Name :
+                        <asp:Label runat="server" ID="lbcomp"></asp:Label>
+                                    </h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="card card-h-100">
+                                    <div class="card-body">
+                                        <h4 class="header-title mb-1">List of Manufacturing Facilities
+                                        </h4>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <table class="table table-bordered table-centered mb-0">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>SR. Number	</th>
+                                                            <th>Designation</th>
+                                                            <th>Name</th>
+                                                            <th>Email</th>
+                                                            <th>DIN No</th>
+                                                            <th>Mobile No</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>1
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" id="simpleinput" class="form-control">
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" id="simpleinput" class="form-control">
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" id="simpleinput" class="form-control">
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" id="simpleinput" class="form-control">
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" id="simpleinput" class="form-control">
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                                <div class="col-12 text-right mt-2">
+                                                    <button type="button" class="btn btn-primary">Add</button>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <h4 class="header-title mb-1">Area Details
+                                        </h4>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <table class="table table-bordered table-centered mb-0">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>SR. Number	</th>
+                                                            <th>Designation</th>
+                                                            <th>Name</th>
+                                                            <th>Email</th>
+                                                            <th>DIN No</th>
+                                                            <th>Mobile No</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>1
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" id="simpleinput" class="form-control">
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" id="simpleinput" class="form-control">
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" id="simpleinput" class="form-control">
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" id="simpleinput" class="form-control">
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" id="simpleinput" class="form-control">
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                                <div class="col-12 text-right mt-2">
+                                                    <button type="button" class="btn btn-primary">Add</button>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <h4 class="header-title mb-1">List of All Plant and Machines
+                                        </h4>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <table class="table table-bordered table-centered mb-0">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>SR. Number	</th>
+                                                            <th>Designation</th>
+                                                            <th>Name</th>
+                                                            <th>Email</th>
+                                                            <th>DIN No</th>
+                                                            <th>Mobile No</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>1
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" id="simpleinput" class="form-control">
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" id="simpleinput" class="form-control">
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" id="simpleinput" class="form-control">
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" id="simpleinput" class="form-control">
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" id="simpleinput" class="form-control">
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                                <div class="col-12 text-right mt-2">
+                                                    <button type="button" class="btn btn-primary">Add</button>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <h4 class="header-title mb-1">Employees Details
+                                        </h4>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <table class="table table-bordered table-centered mb-0">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>SR. Number	</th>
+                                                            <th>Designation</th>
+                                                            <th>Name</th>
+                                                            <th>Email</th>
+                                                            <th>DIN No</th>
+                                                            <th>Mobile No</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>1
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" id="simpleinput" class="form-control">
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" id="simpleinput" class="form-control">
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" id="simpleinput" class="form-control">
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" id="simpleinput" class="form-control">
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" id="simpleinput" class="form-control">
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                                <div class="col-12 text-right mt-2">
+                                                    <button type="button" class="btn btn-primary">Add</button>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <h3>Details of Inspection and Quality Control of facilites
+                                        </h3>
+                                        <h4 class="header-title mb-1">List of Test Facilities
+                                        </h4>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <table class="table table-bordered table-centered mb-0">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>SR. Number	</th>
+                                                            <th>Designation</th>
+                                                            <th>Name</th>
+                                                            <th>Email</th>
+                                                            <th>DIN No</th>
+                                                            <th>Mobile No</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>1
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" id="simpleinput" class="form-control">
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" id="simpleinput" class="form-control">
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" id="simpleinput" class="form-control">
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" id="simpleinput" class="form-control">
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" id="simpleinput" class="form-control">
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                                <div class="col-12 text-right mt-2">
+                                                    <button type="button" class="btn btn-primary">Add</button>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="col-md-12 mb-2">
+                                                    <div class="row">
+                                                        <label for="simpleinput" class="form-label mb-0">
+                                                            Is Lab accredited by NABL
+                                                        </label>
+                                                        <select class="form-select">
+                                                            <option selected="">Open this select menu</option>
+                                                            <option value="1">One</option>
+                                                            <option value="2">Two</option>
+                                                            <option value="3">Three</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12 mb-0">
+                                                    <div class="row">
+                                                        <label for="simpleinput" class="form-label  mb-0">
+                                                            Do you have any Sales Office /Marketing Office
+                                                        </label>
+                                                        <select class="form-select">
+                                                            <option selected="">Open this select menu</option>
+                                                            <option value="1">One</option>
+                                                            <option value="2">Two</option>
+                                                            <option value="3">Three</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <label for="floatingTextarea">
+                                                    Details of R&D Facilities
+                                                </label>
+                                                <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea" style="height: 100px;"></textarea>
+                                            </div>
+
+                                            <div class="col-md-12 mb-0">
+                                                <div class="row">
+                                                    <label for="simpleinput" class="form-label  mb-0">
+                                                        Do you have any authorised distributor/dealer
+                                                    </label>
+                                                    <select class="form-select">
+                                                        <option selected="">Open this select menu</option>
+                                                        <option value="1">One</option>
+                                                        <option value="2">Two</option>
+                                                        <option value="3">Three</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <h4 class="header-title mb-1 mt-3">Details of Outsourcing Facilites
+                                        </h4>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <table class="table table-bordered table-centered mb-0">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>SR. Number	</th>
+                                                            <th>Designation</th>
+                                                            <th>Name</th>
+                                                            <th>Email</th>
+                                                            <th>DIN No</th>
+                                                            <th>Mobile No</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>1
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" id="simpleinput" class="form-control">
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" id="simpleinput" class="form-control">
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" id="simpleinput" class="form-control">
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" id="simpleinput" class="form-control">
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" id="simpleinput" class="form-control">
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                                <div class="col-12 text-right mt-2">
+                                                    <button type="button" class="btn btn-primary">Add</button>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <h4 class="header-title mb-1">List of Joint-Venture Facility
+                                        </h4>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <table class="table table-bordered table-centered mb-0">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>SR. Number	</th>
+                                                            <th>Designation</th>
+                                                            <th>Name</th>
+                                                            <th>Email</th>
+                                                            <th>DIN No</th>
+                                                            <th>Mobile No</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>1
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" id="simpleinput" class="form-control">
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" id="simpleinput" class="form-control">
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" id="simpleinput" class="form-control">
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" id="simpleinput" class="form-control">
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" id="simpleinput" class="form-control">
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                                <div class="col-12 text-right mt-2">
+                                                    <button type="button" class="btn btn-primary">Add</button>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row mt-3">
+                                            <div class="col-md-12">
+                                                <table class="table table-bordered table-centered mb-0">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>SR. Number	</th>
+                                                            <th>Select</th>
+                                                            <th>Name</th>
+                                                            <th>Uplaod Certificates</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>1
+                                                            </td>
+                                                            <td class="d-flex justify-content-center align-items-center">
+                                                                <input type="checkbox" class="form-check-input" id="customCheckcolor1" checked>
+                                                            </td>
+                                                            <td>Factory Licence /Municipal Shop's & Establishment
+                                                            </td>
+                                                            <td>
+                                                                <input type="file" id="example-fileinput" class="form-control">
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>1
+                                                            </td>
+                                                            <td class="d-flex justify-content-center align-items-center">
+                                                                <input type="checkbox" class="form-check-input" id="customCheckcolor1" checked>
+                                                            </td>
+                                                            <td>Factory Licence /Municipal Shop's & Establishment
+                                                            </td>
+                                                            <td>
+                                                                <input type="file" id="example-fileinput" class="form-control">
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>1
+                                                            </td>
+                                                            <td class="d-flex justify-content-center align-items-center">
+                                                                <input type="checkbox" class="form-check-input" id="customCheckcolor1" checked>
+                                                            </td>
+                                                            <td>Factory Licence /Municipal Shop's & Establishment
+                                                            </td>
+                                                            <td>
+                                                                <input type="file" id="example-fileinput" class="form-control">
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>1
+                                                            </td>
+                                                            <td class="d-flex justify-content-center align-items-center">
+                                                                <input type="checkbox" class="form-check-input" id="customCheckcolor1" checked>
+                                                            </td>
+                                                            <td>Factory Licence /Municipal Shop's & Establishment
+                                                            </td>
+                                                            <td>
+                                                                <input type="file" id="example-fileinput" class="form-control">
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                                <div class="col-12 text-right mt-2">
+                                                    <button type="button" class="btn btn-primary">Add</button>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row mt-3">
+                                            <div class="col-md-12">
+                                                <table class="table table-bordered table-centered mb-0">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>SR. Number	</th>
+                                                            <th>Select</th>
+                                                            <th>Name</th>
+                                                            <th>Uplaod Certificates</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>1
+                                                            </td>
+                                                            <td class="d-flex justify-content-center align-items-center">
+                                                                <input type="checkbox" class="form-check-input" id="customCheckcolor1" checked>
+                                                            </td>
+                                                            <td>Factory Licence /Municipal Shop's & Establishment
+                                                            </td>
+                                                            <td>
+                                                                <input type="file" id="example-fileinput" class="form-control">
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>1
+                                                            </td>
+                                                            <td class="d-flex justify-content-center align-items-center">
+                                                                <input type="checkbox" class="form-check-input" id="customCheckcolor1" checked>
+                                                            </td>
+                                                            <td>Factory Licence /Municipal Shop's & Establishment
+                                                            </td>
+                                                            <td>
+                                                                <input type="file" id="example-fileinput" class="form-control">
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>1
+                                                            </td>
+                                                            <td class="d-flex justify-content-center align-items-center">
+                                                                <input type="checkbox" class="form-check-input" id="customCheckcolor1" checked>
+                                                            </td>
+                                                            <td>Factory Licence /Municipal Shop's & Establishment
+                                                            </td>
+                                                            <td>
+                                                                <input type="file" id="example-fileinput" class="form-control">
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>1
+                                                            </td>
+                                                            <td class="d-flex justify-content-center align-items-center">
+                                                                <input type="checkbox" class="form-check-input" id="customCheckcolor1" checked>
+                                                            </td>
+                                                            <td>Factory Licence /Municipal Shop's & Establishment
+                                                            </td>
+                                                            <td>
+                                                                <input type="file" id="example-fileinput" class="form-control">
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                                <div class="col-12 text-right mt-2">
+                                                    <button type="button" class="btn btn-primary">Add</button>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <h4 class="header-title mb-1">Future Plans
+                                        </h4>
+                                        <div class="col-md-12">
+                                            <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea" style="height: 100px;"></textarea>
+                                        </div>
+                                        <div class="col-md-12 text-right mt-3">
+                                            <button type="button" class="btn btn-secondary">Previous</button>
+
+                                            <button type="button" class="btn btn-primary">Reset</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="modelmsg" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title"><i class="fa fa-bell "></i>&nbsp;Alert</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <asp:UpdatePanel runat="server" ID="uep2" ChildrenAsTriggers="true">
+                                <ContentTemplate>
+                                    <h4>
+                                        <asp:Label runat="server" ID="lblmsg" ForeColor="Red"></asp:Label></h4>
+                                </ContentTemplate>
+                            </asp:UpdatePanel>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ContentTemplate>
+    </asp:UpdatePanel>
+    <script type="text/javascript">
+        function showPopup2() { $('#modelmsg').modal('show', function () { }); }
+    </script>
+    <script type="text/javascript">
+        function isNumberKey(evt) {
+            var charCode = (evt.which) ? evt.which : event.keyCode;
+            if (charCode != 46 && charCode > 31
+                && (charCode < 48 || charCode > 57))
+                return false;
+            return true;
+        }
+    </script>
+</asp:Content>

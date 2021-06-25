@@ -1,6 +1,7 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" Inherits="Admin_AddProduct" CodeFile="AddProduct.aspx.cs" ValidateRequest="false" MasterPageFile="~/Admin/MasterPage.master" ViewStateEncryptionMode="Always" %>
 
-<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="asp" %>
+<%--<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="asp" %>--%>
+
 <asp:Content ID="head" runat="server" ContentPlaceHolderID="head">
     <!----------------------------------jquery Show image on load------------------------------------------------>
     <style>
@@ -17,6 +18,10 @@
 
         .ajax__html_editor_extender_texteditor {
             height: 200px !important;
+        }
+
+        .tox-notifications-container, .tox-statusbar {
+            display: none !important;
         }
     </style>
     <script type="text/javascript">
@@ -45,7 +50,7 @@
             </div>
             <div class="clearfix" style="margin-bottom: 10px;"></div>
             <div class="row">
-                <p style="position: absolute; right: 35px;">Mark with <span class="mandatory">*</span> is manadatory field.</p>
+                <p style="position: absolute; right: 35px;">Mark with <span class="mandatory">*</span> is mandatory field.</p>
                 <asp:UpdatePanel runat="server" ID="updrop">
                     <ContentTemplate>
                         <div class="form-group">
@@ -91,6 +96,7 @@
                                         <asp:UpdatePanel runat="server" ID="upproduct" UpdateMode="Conditional">
                                             <ContentTemplate>
                                                 <div class="row">
+                                                    <asp:HiddenField ID="dup" runat="server" />
                                                     <div class="col-md-4">
                                                         <div class="form-group">
                                                             <label>
@@ -165,7 +171,7 @@
                                                         <div class="form-group">
                                                             <label>Item Name</label>
                                                             <span class="mandatory">* (Editable)</span>  <span data-toggle="tooltip" class="fa fa-question" title="If item name is not relevant, edit the item name."></span>
-                                                            <asp:TextBox runat="server" ID="txtproductdescription" Height="100px" MaxLength="250" TabIndex="5" class="form-control"></asp:TextBox>
+                                                            <asp:TextBox runat="server" ID="txtproductdescription" Height="100px" MaxLength="250" TabIndex="5" AutoPostBack="true" class="form-control" OnTextChanged="txtproductdescription_TextChanged"></asp:TextBox>
                                                             <div class="clearfix" style="margin-top: 5px;"></div>
                                                             <span style="margin-right: 5px; float: right;">(Max length 250 words only)</span>
                                                         </div>
@@ -223,10 +229,22 @@
                                                     <div class="col-md-12">
                                                         <div class="form-group">
                                                             <label>Features & Details</label><span class="mandatory"> (Editable)</span>
-                                                            <asp:TextBox runat="server" ID="txtfeaturesanddetails" Style="background-color: #fff !important;" TabIndex="1"
+                                                            <%-- <asp:TextBox runat="server" ID="txtfeaturesanddetails" Style="background-color: #fff !important;" TabIndex="1"
                                                                 Width="1000" Height="70px" placeholder="Ductile,Tensile,Lusture" MaxLength="250"></asp:TextBox>
                                                             <asp:HtmlEditorExtender ID="HtmlEditorExtender1" runat="server" TargetControlID="txtfeaturesanddetails">
-                                                            </asp:HtmlEditorExtender>
+                                                            </asp:HtmlEditorExtender>--%>
+                                                            <%--<asp:TextBox runat="server" ID="txtfeaturesanddetails" Style="background-color: #fff !important;" TabIndex="1"
+                                                                Width="1000" Height="70px" placeholder="Ductile,Tensile,Lusture" MaxLength="250"></asp:TextBox>--%>
+                                                            <%--  <asp:HtmlEditorExtender ID="HtmlEditorExtender1" runat="server" TargetControlID="txtfeaturesanddetails">
+                                                            </asp:HtmlEditorExtender>--%>
+                                                            <%--<script src='https://cdn.tiny.cloud/1/no-api-key/tinymce/5.4.2-90/tinymce.min.js'></script>--%>
+                                                            <script src="../assets/js/tinymce.min.js"></script>
+                                                            <form method='post'>
+                                                                <asp:TextBox runat="server" ID="txtfeaturesanddetails" Width="100%" Height="100px" MaxLength="250"></asp:TextBox>
+                                                            </form>
+                                                            <script>
+                                                                tinymce.init({ selector: '#ContentPlaceHolder1_txtfeaturesanddetails' });
+                                                            </script>
                                                             <div class="clearfix" style="margin-top: 35px;"></div>
                                                             <span>(Max length 250)</span>
                                                         </div>
@@ -360,36 +378,7 @@
                                             <div class="col-md-12">
                                                 <asp:UpdatePanel runat="server" ID="UpdatePanel4">
                                                     <ContentTemplate>
-                                                        <div class="col-md-12">
-                                                            <div class="form-group">
-                                                                <label class="mlive-status-box productalreadylabel">
-                                                                    Item already indigenized : 
-                                                                    <asp:RadioButtonList runat="server" ID="rbisindinised" RepeatColumns="2" TabIndex="19" RepeatLayout="Flow"
-                                                                        RepeatDirection="Horizontal" AutoPostBack="true" OnSelectedIndexChanged="rbisindinised_CheckedChanged ">
-                                                                        <asp:ListItem Value="N" Selected="True">No</asp:ListItem>
-                                                                        <asp:ListItem Value="Y" class="yes">Yes</asp:ListItem>
-                                                                    </asp:RadioButtonList>
-                                                                </label>
-                                                                <div class="clearfix" style="margin-top: 10px;"></div>
-                                                                <div runat="server" class="row" id="divisIndigenized" visible="false">
-                                                                    <div class="col-sm-4">
-                                                                        <label>Enter Manufacturer name</label>
-                                                                        <asp:TextBox runat="server" ID="txtmanufacturename" TabIndex="20" class="form-control"></asp:TextBox>
-                                                                    </div>
-                                                                    <div class="col-sm-4">
-                                                                        <label>Address</label>
-                                                                        <asp:TextBox runat="server" ID="txtmanifacaddress" MaxLength="250" TabIndex="21" class="form-control"></asp:TextBox>
-                                                                        <div class="clearfix" style="margin-top: 5px;"></div>
-                                                                        <span>(Max length 250 words only)</span>
-                                                                    </div>
-                                                                    <div class="col-sm-4">
-                                                                        <label>Year of Indiginization</label>
-                                                                        <asp:DropDownList runat="server" ID="ddlyearofindiginization" Height="35px" TabIndex="22" class="form-control"></asp:DropDownList>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="clearfix mt10"></div>
+
                                                         <div class="col-sm-12">
                                                             <div class="form-group">
                                                                 <label class="checkbox-box productalreadylabel">
@@ -414,12 +403,51 @@
                                                                                 </tr>
                                                                                 <tr>
                                                                                     <td>
+                                                                                        <asp:HiddenField ID="EstimateQunOldID4" runat="server" />
+                                                                                        <asp:DropDownList ID="ddlyearestimate4" runat="server" CssClass="form-control">
+                                                                                            <asp:ListItem Value="4">2020-21</asp:ListItem>
+                                                                                        </asp:DropDownList></td>
+                                                                                    <td>
+                                                                                        <asp:TextBox runat="server" CssClass="form-control" ID="txtestquan4" oncopy="showError()" onpaste="showError()" onkeypress="return isNumberKeyOutDecimal(event)" Placeholder="Imported Quantity (Only number allowed)"></asp:TextBox></td>
+                                                                                    <td>
+                                                                                        <asp:DropDownList ID="ddlunit4" runat="server" CssClass="form-control">
+                                                                                            <asp:ListItem Value="number">number</asp:ListItem>
+                                                                                            <asp:ListItem Value="sets">sets</asp:ListItem>
+                                                                                            <asp:ListItem Value="milligrams(mg)">milligrams(mg)</asp:ListItem>
+                                                                                            <asp:ListItem Value="grams(g)">grams(g)</asp:ListItem>
+                                                                                            <asp:ListItem Value="kilograms(kg)">kilograms(kg),</asp:ListItem>
+                                                                                            <asp:ListItem Value="tons(t)">tons(t)</asp:ListItem>
+                                                                                            <asp:ListItem Value="metric tons (mt)">metric tons (mt)</asp:ListItem>
+                                                                                            <asp:ListItem Value="pounds(lb)">pounds(lb)</asp:ListItem>
+                                                                                            <asp:ListItem Value="ounces(oz)">ounces(oz)</asp:ListItem>
+                                                                                            <asp:ListItem Value="centimeters(cm)">centimeters(cm)</asp:ListItem>
+                                                                                            <asp:ListItem Value="meters(m)">meters(m)</asp:ListItem>
+                                                                                            <asp:ListItem Value="kilometers(km)">kilometers(km)</asp:ListItem>
+                                                                                            <asp:ListItem Value="inches(in)">inches(in)</asp:ListItem>
+                                                                                            <asp:ListItem Value="feet(ft)">feet(ft)</asp:ListItem>
+                                                                                            <asp:ListItem Value="yard(yd)">yard(yd)</asp:ListItem>
+                                                                                            <asp:ListItem Value="miles(mi)">miles(mi)</asp:ListItem>
+                                                                                            <asp:ListItem Value="square meters">square meters</asp:ListItem>
+                                                                                            <asp:ListItem Value="square inches">square inches</asp:ListItem>
+                                                                                            <asp:ListItem Value="square feets">square feets</asp:ListItem>
+                                                                                            <asp:ListItem Value="cubic">cubic</asp:ListItem>
+                                                                                            <asp:ListItem Value="cubic centimeters">cubic centimeters</asp:ListItem>
+                                                                                            <asp:ListItem Value="cubic meters">cubic meters</asp:ListItem>
+                                                                                            <asp:ListItem Value="cubic inches">cubic inches</asp:ListItem>
+                                                                                            <asp:ListItem Value="cubic feets">cubic feets</asp:ListItem>
+                                                                                            <asp:ListItem Value="cubic yards">cubic yards</asp:ListItem>
+                                                                                        </asp:DropDownList></td>
+                                                                                    <td>
+                                                                                        <asp:TextBox runat="server" CssClass="form-control" ID="txtpriceestimate4" oncopy="showError()" onpaste="showError()" onkeypress="return isNumberKey(event)" Placeholder="Imported value in Rs lakh (Qty*Price)"></asp:TextBox></td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>
                                                                                         <asp:HiddenField ID="EstimateQunOldID3" runat="server" />
                                                                                         <asp:DropDownList ID="ddlyearestimate3" runat="server" CssClass="form-control">
                                                                                             <asp:ListItem Value="3">2019-20</asp:ListItem>
                                                                                         </asp:DropDownList></td>
                                                                                     <td>
-                                                                                        <asp:TextBox runat="server" CssClass="form-control" ID="txtestquan3" onpaste="showError()" onkeypress="return isNumberKeyOutDecimal(event)" Placeholder="Imported Quantity (Only number allowed)"></asp:TextBox></td>
+                                                                                        <asp:TextBox runat="server" CssClass="form-control" ID="txtestquan3" oncopy="showError()" onpaste="showError()" onkeypress="return isNumberKeyOutDecimal(event)" Placeholder="Imported Quantity (Only number allowed)"></asp:TextBox></td>
                                                                                     <td>
                                                                                         <asp:DropDownList ID="ddlunit3" runat="server" CssClass="form-control">
                                                                                             <asp:ListItem Value="number">number</asp:ListItem>
@@ -449,7 +477,7 @@
                                                                                             <asp:ListItem Value="cubic yards">cubic yards</asp:ListItem>
                                                                                         </asp:DropDownList></td>
                                                                                     <td>
-                                                                                        <asp:TextBox runat="server" CssClass="form-control" ID="txtpriceestimate3" onpaste="showError()" onkeypress="return isNumberKey(event)" Placeholder="Imported value in Rs lakh (Qty*Price)"></asp:TextBox></td>
+                                                                                        <asp:TextBox runat="server" CssClass="form-control" ID="txtpriceestimate3" oncopy="showError()" onpaste="showError()" onkeypress="return isNumberKey(event)" Placeholder="Imported value in Rs lakh (Qty*Price)"></asp:TextBox></td>
                                                                                 </tr>
                                                                                 <tr>
                                                                                     <td>
@@ -458,7 +486,7 @@
                                                                                             <asp:ListItem Value="2">2018-19</asp:ListItem>
                                                                                         </asp:DropDownList></td>
                                                                                     <td>
-                                                                                        <asp:TextBox runat="server" CssClass="form-control" ID="txtestquan2" onpaste="showError()" onkeypress="return isNumberKeyOutDecimal(event)" Placeholder="Imported Quantity (Only number allowed)"></asp:TextBox></td>
+                                                                                        <asp:TextBox runat="server" CssClass="form-control" ID="txtestquan2" oncopy="showError()" onpaste="showError()" onkeypress="return isNumberKeyOutDecimal(event)" Placeholder="Imported Quantity (Only number allowed)"></asp:TextBox></td>
                                                                                     <td>
                                                                                         <asp:DropDownList ID="ddlunit2" runat="server" CssClass="form-control">
                                                                                             <asp:ListItem Value="number">number</asp:ListItem>
@@ -488,16 +516,16 @@
                                                                                             <asp:ListItem Value="cubic yards">cubic yards</asp:ListItem>
                                                                                         </asp:DropDownList></td>
                                                                                     <td>
-                                                                                        <asp:TextBox runat="server" CssClass="form-control" ID="txtpriceestimate2" onpaste="showError()" onkeypress="return isNumberKey(event)" Placeholder="Imported value in Rs lakh (Qty*Price)"></asp:TextBox></td>
+                                                                                        <asp:TextBox runat="server" CssClass="form-control" ID="txtpriceestimate2" oncopy="showError()" onpaste="showError()" onkeypress="return isNumberKey(event)" Placeholder="Imported value in Rs lakh (Qty*Price)"></asp:TextBox></td>
                                                                                 </tr>
-                                                                                <tr>
+                                                                                <tr runat="server" visible="false">
                                                                                     <td>
                                                                                         <asp:HiddenField ID="EstimateQunOldID" runat="server" />
                                                                                         <asp:DropDownList ID="ddlyearestimate1" runat="server" CssClass="form-control">
                                                                                             <asp:ListItem Value="1">2017-18</asp:ListItem>
                                                                                         </asp:DropDownList></td>
                                                                                     <td>
-                                                                                        <asp:TextBox runat="server" CssClass="form-control" ID="txtestquan1" onpaste="showError()" onkeypress="return isNumberKeyOutDecimal(event)" Placeholder="Imported Quantity (Only number allowed)"></asp:TextBox></td>
+                                                                                        <asp:TextBox runat="server" CssClass="form-control" ID="txtestquan1" oncopy="showError()" onpaste="showError()" onkeypress="return isNumberKeyOutDecimal(event)" Placeholder="Imported Quantity (Only number allowed)"></asp:TextBox></td>
                                                                                     <td>
                                                                                         <asp:DropDownList ID="ddlunit1" runat="server" CssClass="form-control">
                                                                                             <asp:ListItem Value="number">number</asp:ListItem>
@@ -527,12 +555,18 @@
                                                                                             <asp:ListItem Value="cubic yards">cubic yards</asp:ListItem>
                                                                                         </asp:DropDownList></td>
                                                                                     <td>
-                                                                                        <asp:TextBox runat="server" CssClass="form-control" ID="txtpriceestimate1" onpaste="showError()" onkeypress="return isNumberKey(event)" Placeholder="Imported value in Rs lakh (Qty*Price)"></asp:TextBox></td>
+                                                                                        <asp:TextBox runat="server" CssClass="form-control" ID="txtpriceestimate1" oncopy="showError()" onpaste="showError()" onkeypress="return isNumberKey(event)" Placeholder="Imported value in Rs lakh (Qty*Price)"></asp:TextBox></td>
                                                                                 </tr>
+
+
+
                                                                             </table>
                                                                             <p class="pull-left mr10">
                                                                                 <span class="mandatory">#Quantity may be entered as 0 if DPSU doesn't want to show
                                                                                 quantity of the imported item on the public portal.
+                                                                                </span>
+                                                                                <div class="clearfix"></div>
+                                                                                <span class="mandatory">&nbsp;&nbsp;#Do not copy paste Imported value in Rs Lakh (Qty*Price).
                                                                                 </span>
                                                                             </p>
                                                                             <div class="clearfix mt5"></div>
@@ -590,14 +624,14 @@
                                                         <th>Unit</th>
                                                         <th>Import Value as these are future values in Rs Lakh (Qty*Price) <span class="mandatory"></span></th>
                                                     </tr>
-                                                    <tr>
+                                                    <tr runat="server" visible="false">
                                                         <td>
                                                             <asp:HiddenField ID="EstimateQunFutureID" runat="server" />
                                                             <asp:DropDownList ID="ddlfutyear1" runat="server" CssClass="form-control">
                                                                 <asp:ListItem Value="1">2020-21</asp:ListItem>
                                                             </asp:DropDownList></td>
                                                         <td>
-                                                            <asp:TextBox runat="server" CssClass="form-control" ID="txtfutQuantity1" onpaste="showError()" onkeypress="return isNumberKeyOutDecimal(event)" Placeholder="Quantity (Only number allowed)"></asp:TextBox></td>
+                                                            <asp:TextBox runat="server" CssClass="form-control" ID="txtfutQuantity1" oncopy="showError()" onpaste="showError()" onkeypress="return isNumberKeyOutDecimal(event)" Placeholder="Quantity (Only number allowed)"></asp:TextBox></td>
                                                         <td>
                                                             <asp:DropDownList ID="ddlfutunit1" runat="server" CssClass="form-control">
                                                                 <asp:ListItem Value="number">number</asp:ListItem>
@@ -627,7 +661,7 @@
                                                                 <asp:ListItem Value="cubic yards">cubic yards</asp:ListItem>
                                                             </asp:DropDownList></td>
                                                         <td>
-                                                            <asp:TextBox runat="server" CssClass="form-control" ID="txtfutvalue1" onpaste="showError()" onkeypress="return isNumberKey(event)" Placeholder="Import Value as these are future values in Rs lakh (Qty*Price)"></asp:TextBox></td>
+                                                            <asp:TextBox runat="server" CssClass="form-control" ID="txtfutvalue1" oncopy="showError()" onpaste="showError()" onkeypress="return isNumberKey(event)" Placeholder="Import Value as these are future values in Rs lakh (Qty*Price)"></asp:TextBox></td>
                                                     </tr>
                                                     <tr>
                                                         <td>
@@ -636,7 +670,7 @@
                                                                 <asp:ListItem Value="2">2021-22</asp:ListItem>
                                                             </asp:DropDownList></td>
                                                         <td>
-                                                            <asp:TextBox runat="server" CssClass="form-control" ID="txtfutQuantity2" onpaste="showError()" onkeypress="return isNumberKeyOutDecimal(event)" Placeholder="Quantity (Only number allowed)"></asp:TextBox></td>
+                                                            <asp:TextBox runat="server" CssClass="form-control" ID="txtfutQuantity2" oncopy="showError()" onpaste="showError()" onkeypress="return isNumberKeyOutDecimal(event)" Placeholder="Quantity (Only number allowed)"></asp:TextBox></td>
                                                         <td>
                                                             <asp:DropDownList ID="ddlfutunit2" runat="server" CssClass="form-control">
                                                                 <asp:ListItem Value="number">number</asp:ListItem>
@@ -666,7 +700,7 @@
                                                                 <asp:ListItem Value="cubic yards">cubic yards</asp:ListItem>
                                                             </asp:DropDownList></td>
                                                         <td>
-                                                            <asp:TextBox runat="server" CssClass="form-control" ID="txtfutvalue2" onpaste="showError()" onkeypress="return isNumberKey(event)" Placeholder="Import Value as these are future values in Rs lakh (Qty*Price)"></asp:TextBox></td>
+                                                            <asp:TextBox runat="server" CssClass="form-control" ID="txtfutvalue2" oncopy="showError()" onpaste="showError()" onkeypress="return isNumberKey(event)" Placeholder="Import Value as these are future values in Rs lakh (Qty*Price)"></asp:TextBox></td>
                                                     </tr>
                                                     <tr>
                                                         <td>
@@ -675,7 +709,7 @@
                                                                 <asp:ListItem Value="3">2022-23</asp:ListItem>
                                                             </asp:DropDownList></td>
                                                         <td>
-                                                            <asp:TextBox runat="server" CssClass="form-control" ID="txtfutQuantity3" onpaste="showError()" onkeypress="return isNumberKeyOutDecimal(event)" Placeholder="Quantity (Only number allowed)"></asp:TextBox></td>
+                                                            <asp:TextBox runat="server" CssClass="form-control" ID="txtfutQuantity3" oncopy="showError()" onpaste="showError()" onkeypress="return isNumberKeyOutDecimal(event)" Placeholder="Quantity (Only number allowed)"></asp:TextBox></td>
                                                         <td>
                                                             <asp:DropDownList ID="ddlfutunit3" runat="server" CssClass="form-control">
                                                                 <asp:ListItem Value="number">number</asp:ListItem>
@@ -705,7 +739,7 @@
                                                                 <asp:ListItem Value="cubic yards">cubic yards</asp:ListItem>
                                                             </asp:DropDownList></td>
                                                         <td>
-                                                            <asp:TextBox runat="server" CssClass="form-control" ID="txtfutvalue3" onpaste="showError()" onkeypress="return isNumberKey(event)" Placeholder="Import Value as these are future values in Rs lakh (Qty*Price)"></asp:TextBox></td>
+                                                            <asp:TextBox runat="server" CssClass="form-control" ID="txtfutvalue3" oncopy="showError()" onpaste="showError()" onkeypress="return isNumberKey(event)" Placeholder="Import Value as these are future values in Rs lakh (Qty*Price)"></asp:TextBox></td>
                                                     </tr>
                                                     <tr>
                                                         <td>
@@ -714,7 +748,7 @@
                                                                 <asp:ListItem Value="4">2023-24</asp:ListItem>
                                                             </asp:DropDownList></td>
                                                         <td>
-                                                            <asp:TextBox runat="server" CssClass="form-control" ID="txtfutQuantity4" onpaste="showError()" onkeypress="return isNumberKeyOutDecimal(event)" Placeholder="Quantity (Only number allowed)"></asp:TextBox></td>
+                                                            <asp:TextBox runat="server" CssClass="form-control" ID="txtfutQuantity4" oncopy="showError()" onpaste="showError()" onkeypress="return isNumberKeyOutDecimal(event)" Placeholder="Quantity (Only number allowed)"></asp:TextBox></td>
                                                         <td>
                                                             <asp:DropDownList ID="ddlfutunit4" runat="server" CssClass="form-control">
                                                                 <asp:ListItem Value="number">number</asp:ListItem>
@@ -744,7 +778,7 @@
                                                                 <asp:ListItem Value="cubic yards">cubic yards</asp:ListItem>
                                                             </asp:DropDownList></td>
                                                         <td>
-                                                            <asp:TextBox runat="server" CssClass="form-control" ID="txtfutvalue4" onpaste="showError()" onkeypress="return isNumberKey(event)" Placeholder="Import Value as these are future values in Rs lakh (Qty*Price)"></asp:TextBox></td>
+                                                            <asp:TextBox runat="server" CssClass="form-control" ID="txtfutvalue4" oncopy="showError()" onpaste="showError()" onkeypress="return isNumberKey(event)" Placeholder="Import Value as these are future values in Rs lakh (Qty*Price)"></asp:TextBox></td>
                                                     </tr>
                                                     <tr>
                                                         <td>
@@ -753,7 +787,7 @@
                                                                 <asp:ListItem Value="5">2024-25</asp:ListItem>
                                                             </asp:DropDownList></td>
                                                         <td>
-                                                            <asp:TextBox runat="server" CssClass="form-control" ID="txtfutQuantity5" onpaste="showError()" onkeypress="return isNumberKeyOutDecimal(event)" Placeholder="Quantity (Only number allowed)"></asp:TextBox></td>
+                                                            <asp:TextBox runat="server" CssClass="form-control" ID="txtfutQuantity5" oncopy="showError()" onpaste="showError()" onkeypress="return isNumberKeyOutDecimal(event)" Placeholder="Quantity (Only number allowed)"></asp:TextBox></td>
                                                         <td>
                                                             <asp:DropDownList ID="ddlfutunit5" runat="server" CssClass="form-control">
                                                                 <asp:ListItem Value="number">number</asp:ListItem>
@@ -783,16 +817,96 @@
                                                                 <asp:ListItem Value="cubic yards">cubic yards</asp:ListItem>
                                                             </asp:DropDownList></td>
                                                         <td>
-                                                            <asp:TextBox runat="server" CssClass="form-control" ID="txtfutvalue5" onpaste="showError()" onkeypress="return isNumberKey(event)" Placeholder="Import Value as these are future values in Rs lakh (Qty*Price)"></asp:TextBox></td>
+                                                            <asp:TextBox runat="server" CssClass="form-control" ID="txtfutvalue5" oncopy="showError()" onpaste="showError()" onkeypress="return isNumberKey(event)" Placeholder="Import Value as these are future values in Rs lakh (Qty*Price)"></asp:TextBox></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <asp:HiddenField ID="EstimateQunFutureID7" runat="server" />
+                                                            <asp:DropDownList ID="ddlfutyear7" runat="server" CssClass="form-control">
+                                                                <asp:ListItem Value="6">2025-26</asp:ListItem>
+                                                            </asp:DropDownList></td>
+                                                        <td>
+                                                            <asp:TextBox runat="server" CssClass="form-control" ID="txtfutQuantity7" oncopy="showError()" onpaste="showError()" onkeypress="return isNumberKeyOutDecimal(event)" Placeholder="Quantity (Only number allowed)"></asp:TextBox></td>
+                                                        <td>
+                                                            <asp:DropDownList ID="ddlfutunit7" runat="server" CssClass="form-control">
+                                                                <asp:ListItem Value="number">number</asp:ListItem>
+                                                                <asp:ListItem Value="sets">sets</asp:ListItem>
+                                                                <asp:ListItem Value="milligrams(mg)">milligrams(mg)</asp:ListItem>
+                                                                <asp:ListItem Value="grams(g)">grams(g)</asp:ListItem>
+                                                                <asp:ListItem Value="kilograms(kg)">kilograms(kg),</asp:ListItem>
+                                                                <asp:ListItem Value="tons(t)">tons(t)</asp:ListItem>
+                                                                <asp:ListItem Value="metric tons (mt)">metric tons (mt)</asp:ListItem>
+                                                                <asp:ListItem Value="pounds(lb)">pounds(lb)</asp:ListItem>
+                                                                <asp:ListItem Value="ounces(oz)">ounces(oz)</asp:ListItem>
+                                                                <asp:ListItem Value="centimeters(cm)">centimeters(cm)</asp:ListItem>
+                                                                <asp:ListItem Value="meters(m)">meters(m)</asp:ListItem>
+                                                                <asp:ListItem Value="kilometers(km)">kilometers(km)</asp:ListItem>
+                                                                <asp:ListItem Value="inches(in)">inches(in)</asp:ListItem>
+                                                                <asp:ListItem Value="feet(ft)">feet(ft)</asp:ListItem>
+                                                                <asp:ListItem Value="yard(yd)">yard(yd)</asp:ListItem>
+                                                                <asp:ListItem Value="miles(mi)">miles(mi)</asp:ListItem>
+                                                                <asp:ListItem Value="square meters">square meters</asp:ListItem>
+                                                                <asp:ListItem Value="square inches">square inches</asp:ListItem>
+                                                                <asp:ListItem Value="square feets">square feets</asp:ListItem>
+                                                                <asp:ListItem Value="cubic">cubic</asp:ListItem>
+                                                                <asp:ListItem Value="cubic centimeters">cubic centimeters</asp:ListItem>
+                                                                <asp:ListItem Value="cubic meters">cubic meters</asp:ListItem>
+                                                                <asp:ListItem Value="cubic inches">cubic inches</asp:ListItem>
+                                                                <asp:ListItem Value="cubic feets">cubic feets</asp:ListItem>
+                                                                <asp:ListItem Value="cubic yards">cubic yards</asp:ListItem>
+                                                            </asp:DropDownList></td>
+                                                        <td>
+                                                            <asp:TextBox runat="server" CssClass="form-control" ID="txtfutvalue7" oncopy="showError()" onpaste="showError()" onkeypress="return isNumberKey(event)" Placeholder="Import Value as these are future values in Rs lakh (Qty*Price)"></asp:TextBox></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <asp:HiddenField ID="EstimateQunFutureID6" runat="server" />
+                                                            <asp:DropDownList ID="ddlfutyear6" runat="server" CssClass="form-control" ToolTip="Probable future import (with tentative value in Rs lakh)">
+                                                                <asp:ListItem Value="7">Probable future import (with tentative value in rupees lakh)</asp:ListItem>
+                                                            </asp:DropDownList>
+
+                                                        </td>
+                                                        <td>
+                                                            <asp:TextBox runat="server" CssClass="form-control" ID="txtfutQuantity6" oncopy="showError()" onpaste="showError()" onkeypress="return isNumberKeyOutDecimal(event)" Placeholder="Quantity (Only number allowed)"></asp:TextBox></td>
+                                                        <td>
+                                                            <asp:DropDownList ID="ddlfutunit6" runat="server" CssClass="form-control">
+                                                                <asp:ListItem Value="number">number</asp:ListItem>
+                                                                <asp:ListItem Value="sets">sets</asp:ListItem>
+                                                                <asp:ListItem Value="milligrams(mg)">milligrams(mg)</asp:ListItem>
+                                                                <asp:ListItem Value="grams(g)">grams(g)</asp:ListItem>
+                                                                <asp:ListItem Value="kilograms(kg)">kilograms(kg),</asp:ListItem>
+                                                                <asp:ListItem Value="tons(t)">tons(t)</asp:ListItem>
+                                                                <asp:ListItem Value="metric tons (mt)">metric tons (mt)</asp:ListItem>
+                                                                <asp:ListItem Value="pounds(lb)">pounds(lb)</asp:ListItem>
+                                                                <asp:ListItem Value="ounces(oz)">ounces(oz)</asp:ListItem>
+                                                                <asp:ListItem Value="centimeters(cm)">centimeters(cm)</asp:ListItem>
+                                                                <asp:ListItem Value="meters(m)">meters(m)</asp:ListItem>
+                                                                <asp:ListItem Value="kilometers(km)">kilometers(km)</asp:ListItem>
+                                                                <asp:ListItem Value="inches(in)">inches(in)</asp:ListItem>
+                                                                <asp:ListItem Value="feet(ft)">feet(ft)</asp:ListItem>
+                                                                <asp:ListItem Value="yard(yd)">yard(yd)</asp:ListItem>
+                                                                <asp:ListItem Value="miles(mi)">miles(mi)</asp:ListItem>
+                                                                <asp:ListItem Value="square meters">square meters</asp:ListItem>
+                                                                <asp:ListItem Value="square inches">square inches</asp:ListItem>
+                                                                <asp:ListItem Value="square feets">square feets</asp:ListItem>
+                                                                <asp:ListItem Value="cubic">cubic</asp:ListItem>
+                                                                <asp:ListItem Value="cubic centimeters">cubic centimeters</asp:ListItem>
+                                                                <asp:ListItem Value="cubic meters">cubic meters</asp:ListItem>
+                                                                <asp:ListItem Value="cubic inches">cubic inches</asp:ListItem>
+                                                                <asp:ListItem Value="cubic feets">cubic feets</asp:ListItem>
+                                                                <asp:ListItem Value="cubic yards">cubic yards</asp:ListItem>
+                                                            </asp:DropDownList></td>
+                                                        <td>
+                                                            <asp:TextBox runat="server" CssClass="form-control" ID="txtfutvalue6" oncopy="showError()" onpaste="showError()" onkeypress="return isNumberKey(event)" Placeholder="tentative value in Rs lakh"></asp:TextBox></td>
                                                     </tr>
                                                 </table>
 
                                                 <p class="pull-left mr10">
                                                     <span class="mandatory">#Quantity may be entered as 0 if DPSU doesn't want to show
                                                                                 quantity of the imported item on the public portal.
-                                                                                </span>
+                                                    </span>
                                                 </p>
-
+                                                <div class="clearfix mt5"></div>
                                             </ContentTemplate>
                                         </asp:UpdatePanel>
                                         <asp:UpdateProgress ID="UpdateProgress2" runat="server" AssociatedUpdatePanelID="UpdatePanel1">
@@ -811,79 +925,59 @@
                                     <div class="section-pannel">
                                         <div class="row">
                                             <div class="col-sm-12">
-                                                <h5>Status of Indigenization <span class="mandatory">*</span></h5>
+                                                <h4>Status of Indigenization <span class="mandatory">*</span></h4>
                                             </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <h5>Starting Indigenization Target Year <span class="mandatory">*</span></h5>
-                                                    <asp:RadioButtonList ID="chkinditargetyear" runat="server" RepeatColumns="6" RepeatDirection="Horizontal" RepeatLayout="Flow">
-                                                        <asp:ListItem Value="NIL">&nbsp;NIL</asp:ListItem>
-                                                        <asp:ListItem Value="2020-21">&nbsp;2020-21</asp:ListItem>
-                                                        <asp:ListItem Value="2021-22">&nbsp;2021-22</asp:ListItem>
-                                                        <asp:ListItem Value="2022-23">&nbsp;2022-23</asp:ListItem>
-                                                        <asp:ListItem Value="2023-24">&nbsp;2023-24</asp:ListItem>
-                                                        <asp:ListItem Value="2024-25">&nbsp;2024-25</asp:ListItem>
-                                                    </asp:RadioButtonList>
-                                                </div>
-                                                <div class="form-group">
-                                                    <h5>Quality Assurance Agency <span class="mandatory">*</span></h5>
-                                                    <asp:CheckBoxList ID="chkQAA" runat="server" RepeatColumns="5" RepeatDirection="Horizontal" RepeatLayout="Flow">
-                                                    </asp:CheckBoxList>
-                                                </div>
-                                                <asp:UpdatePanel runat="server" ID="UpdatePanel3">
-                                                    <ContentTemplate>
-                                                        <div class="col-sm-6">
-                                                            <div class="form-group">
-                                                                <h5>EoI/RFP </h5>
-                                                                <asp:RadioButtonList ID="rbeoimake2" runat="server" RepeatColumns="3" RepeatDirection="Horizontal" AutoPostBack="true" RepeatLayout="Flow" OnSelectedIndexChanged="rbeoimake2_SelectedIndexChanged">
-                                                                    <asp:ListItem Value="Yes" style="margin-left: 10px;">Yes</asp:ListItem>
-                                                                    <asp:ListItem Value="No" Selected="True" style="margin-left: 10px;">No</asp:ListItem>
-                                                                    <asp:ListItem Value="Archive" style="margin-left: 10px;">Archive</asp:ListItem>
-                                                                </asp:RadioButtonList>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-sm-6">
-                                                            <div class="form-group" runat="server" id="eoi" visible="false">
-                                                                <label>Link</label>
-                                                                (if yes) <span class="mandatory">*</span>
-                                                                <asp:TextBox ID="txteoilink" runat="server" CssClass="form-control" placeholder="Link of Tendor"></asp:TextBox>
-                                                            </div>
-                                                        </div>
-                                                    </ContentTemplate>
-                                                </asp:UpdatePanel>
-                                                <asp:UpdateProgress ID="UpdateProgress10" runat="server" AssociatedUpdatePanelID="UpdatePanel1">
-                                                    <ProgressTemplate>
-                                                        <!---Progress Bar ---->
-                                                        <div class="overlay-progress">
-                                                            <div class="custom-progress-bar blue stripes">
-                                                                <span></span>
-                                                                <p>Processing</p>
-                                                            </div>
-                                                        </div>
-                                                        <!---Progress Bar ---->
-                                                    </ProgressTemplate>
-                                                </asp:UpdateProgress>
-                                            </div>
-                                            <asp:UpdatePanel runat="server" ID="UpdatePanel7">
+                                            <asp:UpdatePanel runat="server" ID="UpdatePanel3">
                                                 <ContentTemplate>
                                                     <div class="col-md-6">
                                                         <div class="form-group">
-                                                            <h5>Indigenization Process started</h5>
-                                                            <asp:RadioButtonList ID="chkindiprocstart" runat="server" RepeatColumns="2" RepeatDirection="Horizontal" AutoPostBack="true"
-                                                                RepeatLayout="Flow" OnSelectedIndexChanged="chkindiprocstart_SelectedIndexChanged">
-                                                                <asp:ListItem Value="Yes" style="margin-left: 5px;" Selected="True">Yes</asp:ListItem>
-                                                                <asp:ListItem Value="No" style="margin-left: 5px;">No</asp:ListItem>
+                                                            <h5>Starting Indigenization Target Year <span class="mandatory">*</span></h5>
+                                                            <asp:RadioButtonList ID="chkinditargetyear" runat="server" RepeatColumns="6" RepeatDirection="Horizontal" RepeatLayout="Flow">
+                                                                <asp:ListItem Value="NIL" style="margin-left: 10px;">&nbsp;NIL</asp:ListItem>
+                                                                <%--<asp:ListItem Value="2020-21" style="margin-left: 10px;">&nbsp;2020-21</asp:ListItem>--%>
+                                                                <asp:ListItem Value="2021-22" style="margin-left: 10px;">&nbsp;2021-22</asp:ListItem>
+                                                                <asp:ListItem Value="2022-23" style="margin-left: 10px;">&nbsp;2022-23</asp:ListItem>
+                                                                <asp:ListItem Value="2023-24" style="margin-left: 10px;">&nbsp;2023-24</asp:ListItem>
+                                                                <asp:ListItem Value="2024-25" style="margin-left: 10px;">&nbsp;2024-25</asp:ListItem>
+                                                                <asp:ListItem Value="2025-26" style="margin-left: 10px;">&nbsp;2025-26</asp:ListItem>
                                                             </asp:RadioButtonList>
                                                         </div>
-                                                        <div class="form-group" runat="server" id="indicatchk">
-                                                            <h5>Make in India Category</h5>
-                                                            <asp:CheckBoxList ID="rbIgCategory" runat="server" RepeatColumns="1" RepeatDirection="Horizontal" RepeatLayout="Flow">
-                                                            </asp:CheckBoxList>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="col-sm-12">
+                                                            <div class="col-sm-6">
+                                                                <div class="form-group">
+                                                                    <h5>Indigenization Process started</h5>
+                                                                    <asp:RadioButtonList ID="chkindiprocstart" runat="server" RepeatColumns="2" RepeatDirection="Horizontal" AutoPostBack="true"
+                                                                        RepeatLayout="Flow" OnSelectedIndexChanged="chkindiprocstart_SelectedIndexChanged">
+                                                                        <asp:ListItem Value="Yes" style="margin-left: 10px;" Selected="True">Yes</asp:ListItem>
+                                                                        <asp:ListItem Value="No" style="margin-left: 10px;">No</asp:ListItem>
+                                                                    </asp:RadioButtonList>
+                                                                </div>
+                                                                <div class="clearfix mt10"></div>
+
+                                                            </div>
+                                                            <div class="col-sm-6">
+                                                                <div class="form-group" runat="server" id="indicatchk">
+                                                                    <h5>Make in India Category</h5>
+                                                                    <asp:RadioButtonList ID="rbIgCategory" runat="server" RepeatColumns="1" RepeatDirection="Horizontal" RepeatLayout="Flow">
+                                                                    </asp:RadioButtonList>
+                                                                </div>
+                                                                <div class="clearfix mt10"></div>
+                                                                <div class="form-group">
+                                                                    <h5>Quality Assurance Agency <span class="mandatory">*</span></h5>
+                                                                    <asp:CheckBoxList ID="chkQAA" runat="server" RepeatColumns="4" RepeatDirection="Horizontal" RepeatLayout="Flow">
+                                                                    </asp:CheckBoxList>
+                                                                </div>
+                                                                <div class="clearfix mt10"></div>
+                                                            </div>
+
+
                                                         </div>
                                                     </div>
                                                 </ContentTemplate>
                                             </asp:UpdatePanel>
-                                            <asp:UpdateProgress ID="UpdateProgress11" runat="server" AssociatedUpdatePanelID="UpdatePanel1">
+                                            <asp:UpdateProgress ID="UpdateProgress11" runat="server" AssociatedUpdatePanelID="UpdatePanel3">
                                                 <ProgressTemplate>
                                                     <!---Progress Bar ---->
                                                     <div class="overlay-progress">
@@ -897,6 +991,221 @@
                                             </asp:UpdateProgress>
                                         </div>
                                     </div>
+                                    <div class="section-pannel2">
+                                        <div class="row">
+                                            <asp:UpdatePanel runat="server" ID="UpdatePanel5">
+                                                <ContentTemplate>
+                                                    <div class="section-pannel row" style="margin: 14px;">
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <h5>EoI/RFP </h5>
+                                                                <asp:RadioButtonList ID="rbeoimake2" runat="server" RepeatColumns="4" RepeatDirection="Horizontal" AutoPostBack="true" RepeatLayout="Flow" OnSelectedIndexChanged="rbeoimake2_SelectedIndexChanged">
+                                                                    <asp:ListItem Value="Yes" style="margin-left: 10px;">Yes</asp:ListItem>
+                                                                    <asp:ListItem Value="No" Selected="True" style="margin-left: 10px;">No</asp:ListItem>
+                                                                </asp:RadioButtonList>
+                                                            </div>
+                                                            <div runat="server" id="eoi" visible="false">
+                                                                <div class="col-sm-3">
+                                                                    <div class="form-group" runat="server">
+                                                                        <asp:RadioButtonList ID="rbleoi" runat="server" AutoPostBack="true" RepeatDirection="Horizontal">
+                                                                            <asp:ListItem Value="Archive" style="margin-left: 10px;">Archive</asp:ListItem>
+                                                                            <asp:ListItem Value="Active" style="margin-left: 10px;">Active</asp:ListItem>
+                                                                        </asp:RadioButtonList>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-3">
+                                                                    <div class="form-group" runat="server">
+                                                                        <label>Link</label>
+                                                                        (if yes) <span class="mandatory">*</span>
+                                                                        <asp:TextBox ID="txteoilink" runat="server" CssClass="form-control" placeholder="Link of eoi/rfp tender"></asp:TextBox>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-3">
+                                                                    <div class="form-group">
+                                                                        <label>Start Date <span class="mandatory">*</span></label>
+                                                                        <asp:TextBox ID="txteoistartdate" runat="server" CssClass="form-control datepicker"
+                                                                            autocomplete="off" placeholder="Start date (format:- 01-jan-1900)"></asp:TextBox>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-3">
+                                                                    <div class="form-group">
+                                                                        <label>End Date <span class="mandatory">*</span> </label>
+                                                                        <asp:TextBox ID="txteoienddate" runat="server" CssClass="form-control datepicker" autocomplete="off"
+                                                                            placeholder="End date (format:- 01-jan-1900)"></asp:TextBox>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="clearfix"></div>
+                                                            <div class="form-group">
+                                                                <h5>Supply Order Placed </h5>
+                                                                <asp:RadioButtonList ID="rbSuuplyOrder" runat="server" RepeatColumns="3" RepeatDirection="Horizontal"
+                                                                    AutoPostBack="true" RepeatLayout="Flow" OnSelectedIndexChanged="rbSuuplyOrder_SelectedIndexChanged">
+                                                                    <asp:ListItem Value="Yes" style="margin-left: 10px;">Yes</asp:ListItem>
+                                                                    <asp:ListItem Value="No" Selected="True" style="margin-left: 10px;">No</asp:ListItem>
+                                                                </asp:RadioButtonList>
+                                                            </div>
+                                                            <div class="clearfix"></div>
+                                                            <div runat="server" id="supplyorder" visible="false">
+                                                                <div class="col-sm-6">
+                                                                    <div class="form-group">
+                                                                        <label>Manufacture Name <span class="mandatory">*</span></label>
+                                                                        <asp:TextBox ID="txtsupplumanufacturename" runat="server" CssClass="form-control" placeholder="Manufacture Name"></asp:TextBox>
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <label>Supply Order Value in (Rs Lakhs) <span class="mandatory">*</span></label>
+                                                                        <asp:TextBox ID="txtsupplyorderrplkh" runat="server" CssClass="form-control" onkeypress="return isNumberKey(event)"
+                                                                            placeholder="Supply Order Value in (Rs Lakhs)"></asp:TextBox>
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <label>Delivery (Compliance Date)<span class="mandatory">*</span></label>
+                                                                        <%--  <asp:TextBox ID="txtdeliverycompdate" runat="server" CssClass="form-control" type="date"
+                                                                        placeholder="Delivery (Compliance Date)"></asp:TextBox>--%>
+                                                                        <asp:TextBox runat="server" ID="txtdeliverycompdate" placeholder="Delivery (Compliance Date) (format:- 01-jan-1900)"
+                                                                            autocomplete="off" Class="form-control datepicker"></asp:TextBox>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-6">
+                                                                    <div class="form-group">
+                                                                        <label>Address <span class="mandatory">*</span></label>
+                                                                        <asp:TextBox ID="txtsupplymanufactureaddress" runat="server" CssClass="form-control" TextMode="MultiLine" Height="125px" placeholder="Address (Max length 250 words)"></asp:TextBox>
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <label>Supply Order Date<span class="mandatory">*</span></label>
+                                                                        <asp:TextBox ID="txtsodate" runat="server" autocomplete="off" CssClass="form-control datepicker"
+                                                                            placeholder="Supply Order Date (format:- 01-jan-1900)"></asp:TextBox>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group" id="divsanctionproject" runat="server" visible="false">
+                                                                <h5>Project Sanction order (Nil Value) </h5>
+                                                                <asp:RadioButtonList ID="RBLProjectSanction" runat="server" RepeatColumns="3" RepeatDirection="Horizontal" AutoPostBack="true" RepeatLayout="Flow" OnSelectedIndexChanged="RBLProjectSanction_SelectedIndexChanged">
+                                                                    <asp:ListItem Value="Yes" style="margin-left: 10px;">Yes</asp:ListItem>
+                                                                    <asp:ListItem Value="No" Selected="True" style="margin-left: 10px;">No</asp:ListItem>
+                                                                </asp:RadioButtonList>
+                                                            </div>
+                                                            <div class="clearfix"></div>
+                                                            <div id="divrblsanction" runat="server" class="form-group" visible="false">
+
+                                                                <asp:RadioButtonList ID="Rblsanction" runat="server" RepeatColumns="3" RepeatDirection="Horizontal" AutoPostBack="true" RepeatLayout="Flow" OnSelectedIndexChanged="RBLProjectSanction_SelectedIndexChanged">
+                                                                    <asp:ListItem Value="Nil Value project sanction order(FC-NC)" style="margin-left: 10px;">Nil Value project sanction order(FC-NC)</asp:ListItem>
+                                                                    <asp:ListItem Value="NC-NC Order" style="margin-left: 10px;">NC-NC Order</asp:ListItem>
+                                                                    <asp:ListItem Value="Development Order" style="margin-left: 10px;">Development Order</asp:ListItem>
+                                                                </asp:RadioButtonList>
+                                                            </div>
+                                                            <div runat="server" id="divsanction" visible="false">
+                                                                <div class="col-sm-6">
+                                                                    <div class="form-group">
+                                                                        <label>Project Manufacture Name <span class="mandatory">*</span></label>
+                                                                        <asp:TextBox ID="txtnamesanction" runat="server" CssClass="form-control" placeholder="Manufacture Name"></asp:TextBox>
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <label>Order Date<span class="mandatory">*</span></label>
+                                                                        <asp:TextBox ID="Txtorderdate" runat="server"
+                                                                            placeholder="Sanction Order Date (format:- 01-jan-1900)" autocomplete="off" Class="form-control datepicker"></asp:TextBox>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-6">
+                                                                    <div class="form-group">
+                                                                        <label>Project Address <span class="mandatory">*</span></label>
+                                                                        <asp:TextBox ID="TxtAddresssanction" runat="server" CssClass="form-control" TextMode="MultiLine" Height="110px" placeholder="Address (Max length 250 words)"></asp:TextBox>
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <h5>
+                                                                    <b>Item indigenized </b></h5>
+                                                                <asp:RadioButtonList runat="server" ID="rbisindinised" RepeatColumns="3" TabIndex="19" RepeatLayout="Flow"
+                                                                    RepeatDirection="Horizontal" AutoPostBack="true" OnSelectedIndexChanged="rbisindinised_CheckedChanged ">
+                                                                    <asp:ListItem Value="Y" class="yes" style="margin-left: 10px;">Yes</asp:ListItem>
+                                                                    <asp:ListItem Value="N" Selected="True" style="margin-left: 10px;">No</asp:ListItem>
+                                                                </asp:RadioButtonList>
+                                                                <div class="clearfix" style="margin-top: 10px;"></div>
+                                                                <div runat="server" class="col-sm-12 mt10 row" id="divisIndigenized" visible="false">
+                                                                    <div class="form-group">
+                                                                        <label>Enter Manufacturer name</label>
+                                                                        <asp:TextBox runat="server" ID="txtmanufacturename" TabIndex="20" class="form-control"></asp:TextBox>
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <label>Address</label>
+                                                                        <asp:TextBox runat="server" ID="txtmanifacaddress" MaxLength="250" Height="135px" placeholder="Max Length 250 words only." TextMode="MultiLine" TabIndex="21" class="form-control"></asp:TextBox>
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <label>Year of Indiginization</label>
+                                                                        <asp:DropDownList runat="server" ID="ddlyearofindiginization" Height="35px" TabIndex="22" class="form-control"></asp:DropDownList>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="clearfix mt10"></div>
+                                                        </div>
+                                                    </div>
+                                                </ContentTemplate>
+                                            </asp:UpdatePanel>
+                                            <asp:UpdateProgress ID="UpdateProgress1" runat="server" AssociatedUpdatePanelID="UpdatePanel3">
+                                                <ProgressTemplate>
+                                                    <!---Progress Bar ---->
+                                                    <div class="overlay-progress">
+                                                        <div class="custom-progress-bar blue stripes">
+                                                            <span></span>
+                                                            <p>Processing</p>
+                                                        </div>
+                                                    </div>
+                                                    <!---Progress Bar ---->
+                                                </ProgressTemplate>
+                                            </asp:UpdateProgress>
+                                        </div>
+                                    </div>
+                                    <asp:UpdatePanel runat="server" ID="mmm" ChildrenAsTriggers="true">
+                                        <ContentTemplate>
+                                            <div class="section-pannel" runat="server" id="DivAtmnirbhar" visible="false">
+                                                <h4>Atmnirbhar Data</h4>
+                                                <asp:HiddenField runat="server" ID="hfvaluelast3years" />
+                                                <div class="row">
+                                                    <div class="col-sm-4">
+                                                        <label>Month</label>
+                                                        <asp:DropDownList ID="ddlmonth" runat="server" CssClass="form-control">
+                                                            <asp:ListItem Value="Select">Month</asp:ListItem>
+                                                            <asp:ListItem Value="Jan">January</asp:ListItem>
+                                                            <asp:ListItem Value="Feb">Feburay</asp:ListItem>
+                                                            <asp:ListItem Value="Mar">march</asp:ListItem>
+                                                            <asp:ListItem Value="Apr">April</asp:ListItem>
+                                                            <asp:ListItem Value="May">May</asp:ListItem>
+                                                            <asp:ListItem Value="Jun">June</asp:ListItem>
+                                                            <asp:ListItem Value="Jul">July</asp:ListItem>
+                                                            <asp:ListItem Value="Aug">August</asp:ListItem>
+                                                            <asp:ListItem Value="Sep">September</asp:ListItem>
+                                                            <asp:ListItem Value="Oct">Octomber</asp:ListItem>
+                                                            <asp:ListItem Value="Nov">November</asp:ListItem>
+                                                            <asp:ListItem Value="Dec">Decomber</asp:ListItem>
+
+                                                        </asp:DropDownList>
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        <label>Year</label>
+                                                        <asp:DropDownList ID="ddlyear" runat="server" CssClass="form-control">
+                                                            <asp:ListItem Value="0">Year</asp:ListItem>
+                                                            <asp:ListItem Value="2018">2018</asp:ListItem>
+                                                            <asp:ListItem Value="2019">2019</asp:ListItem>
+                                                            <asp:ListItem Value="2020">2020</asp:ListItem>
+                                                            <asp:ListItem Value="2021">2021</asp:ListItem>
+                                                            <asp:ListItem Value="2022">2022</asp:ListItem>
+                                                            <asp:ListItem Value="2023">2023</asp:ListItem>
+                                                            <asp:ListItem Value="2024">2024</asp:ListItem>
+                                                            <asp:ListItem Value="2025">2025</asp:ListItem>
+                                                        </asp:DropDownList>
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        <label>Approx Annual Negated Value in Rs (Lakh)</label>
+                                                        <asp:TextBox runat="server" ID="txtmaxvalue" Text="0" ToolTip="This is your max value of indigenized year you can 
+                                                                                change it if it is not according to you"
+                                                            CssClass="form-control" onkeypress="return isNumberKey(event)" placeholder="Indigenized Max Value"></asp:TextBox>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </ContentTemplate>
+                                    </asp:UpdatePanel>
                                 </div>
                             </div>
                         </div>
@@ -1023,9 +1332,9 @@
                                                                 <label><span class="mandatory">*</span> While uploading drawing and specification of the item on indigenization portal , please ensure that there is</label>
                                                                 <div class="fr">
                                                                     <asp:CheckBoxList ID="chklistdeclarationimage" runat="server" RepeatColumns="3" RepeatDirection="Horizontal" RepeatLayout="Table">
-                                                                        <asp:ListItem Value="No IPR issue">1. No IPR issue</asp:ListItem>
-                                                                        <asp:ListItem Value="No violation of TOT agreement">2. No violation of TOT agreement</asp:ListItem>
-                                                                        <asp:ListItem Value="No violation of Security Concern">3. No violation of Security Concern</asp:ListItem>
+                                                                        <asp:ListItem Value="No IPR issue" Selected="True">1. No IPR issue</asp:ListItem>
+                                                                        <asp:ListItem Value="No violation of TOT agreement" Selected="True">2. No violation of TOT agreement</asp:ListItem>
+                                                                        <asp:ListItem Value="No violation of Security Concern" Selected="True">3. No violation of Security Concern</asp:ListItem>
                                                                     </asp:CheckBoxList>
                                                                 </div>
                                                             </div>
@@ -1038,6 +1347,20 @@
                                                                     <asp:RadioButtonList ID="rbeligible" runat="server" RepeatColumns="2" RepeatDirection="Horizontal" RepeatLayout="Table">
                                                                         <asp:ListItem Value="Y" Selected="True">Yes</asp:ListItem>
                                                                         <asp:ListItem Value="N" style="margin-left: 10px;">No</asp:ListItem>
+                                                                    </asp:RadioButtonList>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label>
+                                                                    View Only Reason
+                                                                </label>
+                                                                <div class="fr">
+                                                                    <asp:RadioButtonList ID="rbViewOnlyStatus" runat="server" RepeatColumns="2" RepeatDirection="Horizontal" RepeatLayout="Table">
+                                                                        <asp:ListItem Value="ITEM NOT REQUIRE">&nbsp;ITEM NOT REQUIRE</asp:ListItem>
+                                                                        <asp:ListItem Value="INDIGENIZATION WITH OTHER" style="margin-left: 10px;">&nbsp;INDIGENIZATION WITH OTHER</asp:ListItem>
+                                                                        <%--   <asp:ListItem Value="ITEM OF SMALL QUANTITY" style="margin-left: 10px;">&nbsp;ITEM OF SMALL QUANTITY</asp:ListItem>
+                                                                        <asp:ListItem Value="ITEM ONE TIME BUY" style="margin-left: 10px;">&nbsp;ITEM ONE TIME BUY</asp:ListItem>
+                                                                        <asp:ListItem Value="INTEREST NOTED FOR FUTURE" style="margin-left: 10px;">&nbsp;INTEREST NOTED FOR FUTURE</asp:ListItem>--%>
                                                                     </asp:RadioButtonList>
                                                                 </div>
                                                             </div>
@@ -1063,37 +1386,35 @@
                             </div>
                         </div>
                     </div>
-                    <div>
-                        <asp:Panel ID="Panel1" runat="server" DefaultButton="btnsubmitpanel1">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <asp:UpdatePanel runat="server" ID="UPSUBMIT">
-                                            <ContentTemplate>
-                                                <div runat="server" id="myhtmldiv"></div>
-                                                <asp:Button runat="server" ID="btnsubmitpanel1" CssClass="btn btn-primary pull-right" TabIndex="72" Text="Save" OnClick="btnsubmitpanel1_Click" OnClientClick="return confirm('Are you sure you want to save this product?');" />
-                                            </ContentTemplate>
-                                            <Triggers>
-                                                <asp:PostBackTrigger runat="server" ControlID="btnsubmitpanel1" />
-                                            </Triggers>
-                                        </asp:UpdatePanel>
-                                        <asp:UpdateProgress ID="UpdateProgress6" runat="server" AssociatedUpdatePanelID="UPSUBMIT">
-                                            <ProgressTemplate>
-                                                <!---Progress Bar ---->
-                                                <div class="overlay-progress">
-                                                    <div class="custom-progress-bar blue stripes">
-                                                        <span></span>
-                                                        <p>Processing</p>
-                                                    </div>
+                    <asp:Panel ID="Panel1" runat="server" DefaultButton="btnsubmitpanel1">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <asp:UpdatePanel runat="server" ID="UPSUBMIT">
+                                        <ContentTemplate>
+                                            <div runat="server" id="myhtmldiv"></div>
+                                            <asp:Button runat="server" ID="btnsubmitpanel1" CssClass="btn btn-primary pull-right" TabIndex="72" Text="Save" OnClick="btnsubmitpanel1_Click" OnClientClick="return confirm('Are you sure you want to save this product?');" />
+                                        </ContentTemplate>
+                                        <Triggers>
+                                            <asp:PostBackTrigger runat="server" ControlID="btnsubmitpanel1" />
+                                        </Triggers>
+                                    </asp:UpdatePanel>
+                                    <asp:UpdateProgress ID="UpdateProgress6" runat="server" AssociatedUpdatePanelID="UPSUBMIT">
+                                        <ProgressTemplate>
+                                            <!---Progress Bar ---->
+                                            <div class="overlay-progress">
+                                                <div class="custom-progress-bar blue stripes">
+                                                    <span></span>
+                                                    <p>Processing</p>
                                                 </div>
-                                                <!---Progress Bar ---->
-                                            </ProgressTemplate>
-                                        </asp:UpdateProgress>
-                                    </div>
+                                            </div>
+                                            <!---Progress Bar ---->
+                                        </ProgressTemplate>
+                                    </asp:UpdateProgress>
                                 </div>
                             </div>
-                        </asp:Panel>
-                    </div>
+                        </div>
+                    </asp:Panel>
                     <asp:HiddenField runat="server" ID="hfprodid" />
                     <asp:HiddenField runat="server" ID="hfprodrefno" />
                     <asp:HiddenField runat="server" ID="hfcomprefno" />
@@ -1101,6 +1422,7 @@
             </div>
         </div>
     </div>
+
     <script type="text/javascript">
         function showPopup1() {
             $('#divbank').modal('show', function () {
@@ -1169,4 +1491,43 @@
             });
         });
     </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#ContentPlaceHolder1_txtdeliverycompdate').datepicker({
+                dateFormat: "dd-M-yy"
+            });
+            $('#ContentPlaceHolder1_txteoistartdate').datepicker({
+                dateFormat: "dd-M-yy"
+            });
+            $('#ContentPlaceHolder1_txteoienddate').datepicker({
+                dateFormat: "dd-M-yy"
+            });
+            $('#ContentPlaceHolder1_txtsodate').datepicker({
+                dateFormat: "dd-M-yy"
+            });
+            $('#ContentPlaceHolder1_Txtorderdate').datepicker({
+                dateFormat: "dd-M-yy"
+            });
+            var parameter = Sys.WebForms.PageRequestManager.getInstance();
+            parameter.add_endRequest(function () {
+                $('#ContentPlaceHolder1_txtdeliverycompdate').datepicker({
+                    dateFormat: "dd-M-yy"
+                });
+                $('#ContentPlaceHolder1_txteoistartdate').datepicker({
+                    dateFormat: "dd-M-yy"
+                });
+                $('#ContentPlaceHolder1_txteoienddate').datepicker({
+                    dateFormat: "dd-M-yy"
+                });
+                $('#ContentPlaceHolder1_txtsodate').datepicker({
+                    dateFormat: "dd-M-yy"
+                });
+                $('#ContentPlaceHolder1_Txtorderdate').datepicker({
+                    dateFormat: "dd-M-yy"
+                });
+            });
+        });
+    </script>
+
+
 </asp:Content>

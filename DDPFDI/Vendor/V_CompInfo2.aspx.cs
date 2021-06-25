@@ -442,4 +442,14 @@ public partial class Vendor_V_CompInfo2 : System.Web.UI.Page
             ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('" + ex.Message + "')", true);
         }
     }
+
+    protected void btnNext_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("https://srijandefence.gov.in/DetailsofDefenceStores?mu=b0JLjihSzvQ=&id=YUM6Wog/7cKd56S2dApVEg==");
+    }
+
+    protected void btnPrev_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("https://srijandefence.gov.in/CompanyInformation_I?mu=KQ5FIC8PdXE=&id=YUM6Wog/7cKd56S2dApVEg==");
+    }
 }

@@ -1,0 +1,1153 @@
+﻿using BusinessLayer;
+using Encryption;
+using System;
+using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.Configuration;
+using System.Data;
+using System.Data.SqlClient;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.IO;
+using context = System.Web.HttpContext;
+using System.Activities.Statements;
+
+public partial class User_ProgressReport : System.Web.UI.Page
+{
+    #region Pagevariable
+    private Logic Lo = new Logic();
+    HybridDictionary hysaveip = new HybridDictionary();
+    private DataTable DtGrid = new DataTable();
+    private string _msg = string.Empty;
+    private string _sysMsg = string.Empty;
+    DataUtility Co = new DataUtility();
+    private Cryptography Encrypt = new Cryptography();
+    private PagedDataSource pgsource = new PagedDataSource();
+    DataTable DtCompany = new DataTable();
+    DataTable DtFilterView = new DataTable();
+    DataTable dtCart = new DataTable();
+    DataRow dr;
+    #endregion
+    #region Pageload
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        if (!this.IsPostBack)
+        {
+            try
+            {
+                ControlGrid();
+            }
+            catch (Exception ex)
+            {
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "alert", "alert('Technical Error:- " + ex.Message + "');", true);
+            }
+        }
+    }
+    private void ControlGrid()
+    {
+        try
+        {
+            BindTopBoxRecords();
+            BindProduct();
+        }
+        catch (Exception ex)
+        {
+            ExceptionLogging.SendErrorToText(ex);
+        }
+    }
+    protected void BindProduct()
+    {
+        DtGrid = Lo.RetriveFilterCode(Session["CompanyRefNo"].ToString(), Encrypt.DecryptData(Session["Type"].ToString()), "GetProgressData");
+        if (DtGrid.Rows.Count > 0)
+        {
+            Session["PDatatTable"] = DtGrid;
+            SeachResult();
+        }
+        else
+        {
+            divcontentproduct.Visible = false;
+            gvProgress.DataBind();
+        }
+    }
+    #endregion
+    #region Filter Dropdown Code
+    protected void txtsearch_TextChanged(object sender, EventArgs e)
+    {
+        SeachResult();
+    }
+    #endregion
+    #region Search Code Filter Code
+    string insert1 = "";
+    string chkproofcat = "";
+    protected string Dvinsert(string sortExpression = null)
+    {
+        DataTable insert = new DataTable();
+        insert.Columns.Add(new DataColumn("Column", typeof(string)));
+        insert.Columns.Add(new DataColumn("Value", typeof(string)));
+        DataRow dr;
+        if (CheckIntrestClick.Value == "Yes")
+        {
+            dr = insert.NewRow();
+            dr["Column"] = "VendorName <>";
+            dr["Value"] = "''";
+            insert.Rows.Add(dr);
+        }
+        else if (CheckEOIClick.Value == "Yes")
+        {
+            dr = insert.NewRow();
+            dr["Column"] = "EOIStatus =";
+            dr["Value"] = "'Yes' and Total <> 0";
+            insert.Rows.Add(dr);
+        }
+        else if (CheckInHouse.Value == "Yes")
+        {
+            dr = insert.NewRow();
+            dr["Column"] = "(PurposeofProcurement like";
+            dr["Value"] = "'%58270%')";
+            insert.Rows.Add(dr);
+        }
+        else if (CheckTotalEOI.Value == "Yes")
+        {
+            dr = insert.NewRow();
+            dr["Column"] = "EOIStatus =";
+            dr["Value"] = "'Yes'";
+            insert.Rows.Add(dr);
+        }
+        if (txtsearch.Text.Trim() != "")
+        {
+            dr = insert.NewRow();
+            dr["Column"] = "((ProductRefNo like";
+            dr["Value"] = "'" + txtsearch.Text.Trim() + "%') or (CompanyName like '" + txtsearch.Text.Trim() + "%') or (UnitName like '" + txtsearch.Text.Trim() + "%') or (FactoryName like '" + txtsearch.Text.Trim() + "%') or (NSCCode like '" + txtsearch.Text.Trim() + "%') or (ProductDescription like '" + txtsearch.Text.Trim() + "%') or (EOIStatus like '" + txtsearch.Text.Trim() + "%'))";
+            insert.Rows.Add(dr);
+        }
+        for (int i = 0; insert.Rows.Count > i; i++)
+        {
+            insert1 = insert1 + insert.Rows[i]["Column"].ToString() + " " + insert.Rows[i]["Value"].ToString() + " " + " and ";
+        }
+        if (insert1.ToString() != "")
+        {
+            insert1 = insert1.Substring(0, insert1.Length - 5);
+        }
+        return insert1;
+    }
+    protected string BindInsertfilter()
+    {
+        return Dvinsert();
+    }
+    public void SeachResult(string sortExpression = null)
+    {
+        try
+        {
+            DtFilterView = (DataTable)Session["PDatatTable"];
+            if (DtFilterView.Rows.Count > 0)
+            {
+                DataView dv = new DataView(DtFilterView);
+                DataTable dtnew = dv.ToTable();
+                if (dtnew.Rows.Count > 0)
+                {
+                    dv.RowFilter = BindInsertfilter();
+                    DataTable dtinner = dv.ToTable();
+                    if (CheckIntrestClick.Value == "Yes")
+                    {
+                        DataTable chkcountofven = dv.ToTable(true, "VendorName");
+                        lbltotalintrestshowprod.Text = "Interest/Vendor : " + chkcountofven.Rows.Count;
+                    }
+                    lbltotfilter.Text = dtinner.Rows.Count.ToString();
+                    DataTable dtads = dv.ToTable();
+                    if (dtads.Rows.Count > 0)
+                    {
+                        if (dtads.Columns.Contains("row_no"))
+                        {
+                            int i = 1; foreach (DataRow r in dtads.Rows) r["row_no"] = i++;
+                        }
+                        else
+                        {
+                            dtads.Columns.Add("row_no");
+                            int i = 1; foreach (DataRow r in dtads.Rows) r["row_no"] = i++;
+                        }
+                        pgsource.DataSource = dtinner.DefaultView;
+                        pgsource.AllowPaging = true;
+                        pgsource.PageSize = 25;
+                        pgsource.CurrentPageIndex = pagingCurrentPage;
+                        lblpaging.Text = "Page " + (pagingCurrentPage + 1) + " of " + pgsource.PageCount;
+                        lnkbtnPgPrevious.Enabled = !pgsource.IsFirstPage;
+                        LinkButton1.Enabled = !pgsource.IsFirstPage;
+                        lnkbtnPgNext.Enabled = !pgsource.IsLastPage;
+                        LinkButton2.Enabled = !pgsource.IsLastPage;
+                        pgsource.DataSource = dtads.DefaultView;
+                        gvProgress.DataSource = pgsource;
+                        gvProgress.DataBind();
+                        lbltotalshowpageitem.Text = pgsource.FirstIndexInPage + 1 + " - " + (pgsource.FirstIndexInPage + pgsource.Count);
+                        divcontentproduct.Visible = true;
+                    }
+                    else
+                    {
+                        ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('No Record Found')", true);
+                        divcontentproduct.Visible = false;
+                    }
+                }
+                else
+                {
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('No Record Found')", true);
+                }
+
+                if (CheckEOIClick.Value == "Yes")
+                {
+                    lbltotother.Text = "Total Product : " + lblProducts.Text;
+                    lblNoOfProducts.Text = "No. of interested shown : " + lblInterest.Text;
+                    lbltotalintrestshowprod.Text = "EOI Issued : interest : product " + lblEOIRFP.Text;
+                    tabcolrchng.Style["Background-Color"] = "#00CC66";
+                    th2.Visible = true;
+                    divInfo.Visible = true;
+                    th1.Visible = true;
+                }
+                if (CheckIntrestClick.Value == "Yes")
+                {
+                    lbltotother.Text = "Total Product : " + lblProducts.Text;
+                    lblNoOfProducts.Text = "No. of interested shown : " + lbltotfilter.Text;
+                    tabcolrchng.Style["Background-Color"] = "#999966";
+                    divInfo.Visible = true;
+                    th1.Visible = true;
+                    th2.Visible = false;
+                }
+            }
+            else
+            {
+                gvProgress.Visible = false;
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('No Record Found')", true);
+            }
+        }
+        catch (Exception ex)
+        {
+            ExceptionLogging.SendErrorToText(ex);
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('" + ex.Message + "')", true);
+        }
+    }
+    protected void BindTopBoxRecords()
+    {
+        DataTable dtprdetails = Lo.RetrieveProductDetails("Count", Encrypt.DecryptData(Session["Type"].ToString()), Session["CompanyRefNo"].ToString());
+        lblProducts.Text = dtprdetails.Rows[0]["Product"].ToString();
+        lblInterest.Text = dtprdetails.Rows[0]["TotalIntrestDis"].ToString();
+        decimal num = (Convert.ToDecimal(lblInterest.Text) / Convert.ToDecimal(lblProducts.Text) * 100);
+        lblIntrProdPer.Text = num.ToString("F2");
+        lblEOIRFP.Text = dtprdetails.Rows[0]["TotalEOIDis"].ToString();
+        lblother1.Text = "EOI issued : Total Product " + dtprdetails.Rows[0]["EOIRFP"].ToString();
+        decimal num1 = (Convert.ToDecimal(lblEOIRFP.Text) / Convert.ToDecimal(lblProducts.Text) * 100);
+        lblEoiPerc.Text = num1.ToString("F2");
+        lblsupply.Text = dtprdetails.Rows[0]["SupplyOrder"].ToString();
+        decimal num2 = (Convert.ToDecimal(lblsupply.Text) / Convert.ToDecimal(lblProducts.Text) * 100);
+        lbSupplyPer.Text = num2.ToString("F2");
+        lblindiginized.Text = dtprdetails.Rows[0]["IndiginizedOS"].ToString();
+        decimal num3 = (Convert.ToDecimal(lblindiginized.Text) / Convert.ToDecimal(lblProducts.Text) * 100);
+        lblIndiPerc.Text = num3.ToString("F2");
+        lblInhouse.Text = dtprdetails.Rows[0]["IndiginizedInhouse"].ToString();
+        lblIoS.Text = dtprdetails.Rows[0]["IndiginizedIOS"].ToString();
+        lblTotalIndi.Text = dtprdetails.Rows[0]["TotalIndiginized"].ToString();
+        lblNoOfProducts.Text = "Total products : " + lblProducts.Text;
+        //      lbltotalintrestshowprod.Text = "Interest's Shown by Vendor(s) : " + lblInterest.Text;
+    }
+    #endregion
+    #region pageindex code
+    protected void lnkbtnPgPrevious_Click(object sender, EventArgs e)
+    {
+        pagingCurrentPage -= 1;
+        SeachResult();
+    }
+    protected void lnkbtnPgNext_Click(object sender, EventArgs e)
+    {
+        pagingCurrentPage += 1;
+        SeachResult();
+    }
+    private int pagingCurrentPage
+    {
+        get
+        {
+            if (ViewState["pagingCurrentPage"] == null)
+            {
+                return 0;
+            }
+            else
+            {
+                return ((int)ViewState["pagingCurrentPage"]);
+            }
+        }
+        set
+        {
+            ViewState["pagingCurrentPage"] = value;
+        }
+    }
+    #endregion
+    #region CartCode
+    protected void gvProgress_RowCommand(object sender, GridViewCommandEventArgs e)
+    {
+        #region ViewOneProd
+        if (e.CommandName == "Product")
+        {
+            try
+            {
+                GridViewRow item = (GridViewRow)(((Control)(e.CommandSource)).NamingContainer);
+                DataTable DtView = Lo.RetriveProductCode("", e.CommandArgument.ToString(), "ProductMasterID", "Company");
+                if (DtView.Rows.Count > 0)
+                {
+                    lblrefnoview.Text = e.CommandArgument.ToString();
+                    lblcompname.Text = DtView.Rows[0]["CompanyName"].ToString();
+                    if (DtView.Rows[0]["FactoryName"].ToString() != "")
+                    {
+                        lbldiviname.Text = DtView.Rows[0]["FactoryName"].ToString();
+                        one.Visible = true;
+                    }
+                    else
+                    {
+                        one.Visible = false;
+                    }
+                    if (DtView.Rows[0]["UnitName"].ToString() != "")
+                    {
+                        lblunitnamepro.Text = DtView.Rows[0]["UnitName"].ToString();
+                        two.Visible = true;
+                    }
+                    else
+                    {
+                        two.Visible = false;
+                    }
+                    lblnsngroup.Text = DtView.Rows[0]["ProdLevel1Name"].ToString();
+                    lblnsngroupclass.Text = DtView.Rows[0]["ProdLevel2Name"].ToString();
+                    lblclassitem.Text = DtView.Rows[0]["ProdLevel3Name"].ToString();
+                    if (DtView.Rows[0]["ProductDescription"].ToString() != "")
+                    {
+                        itemname2.Text = DtView.Rows[0]["ProductDescription"].ToString();
+                        lblitemname1.Text = DtView.Rows[0]["ProductDescription"].ToString();
+                        eleven.Visible = true;
+                        Tr23.Visible = true;
+
+                    }
+                    else
+                    {
+                        Tr23.Visible = false;
+                        eleven.Visible = false;
+                    }
+                    if (DtView.Rows[0]["DPSUPartNumber"].ToString() != "")
+                    {
+                        lbldpsupartno.Text = DtView.Rows[0]["DPSUPartNumber"].ToString();
+                        three.Visible = true;
+                    }
+                    else
+                    {
+                        three.Visible = false;
+                    }
+                    if (DtView.Rows[0]["HsnCode8digit"].ToString() != "")
+                    {
+                        lblhsncode8digit.Text = DtView.Rows[0]["HsnCode8digit"].ToString();
+                        four.Visible = true;
+                    }
+                    else
+                    {
+                        four.Visible = false;
+                    }
+                    prodIndustryDomain.Text = DtView.Rows[0]["TechLevel1Name"].ToString();
+                    ProdIndusSubDomain.Text = DtView.Rows[0]["Techlevel2Name"].ToString();
+                    if (DtView.Rows[0]["IsProductImported"].ToString() != "")
+                    {
+                        five.Visible = true;
+                    }
+                    else
+                    {
+                        five.Visible = false;
+                    }
+                    if (DtView.Rows[0]["NSCCode"].ToString() != "")
+                    {
+                        lblnsccode4digit.Text = DtView.Rows[0]["NSCCode"].ToString();
+                        six.Visible = true;
+                    }
+                    else
+                    { six.Visible = false; }
+                    if (DtView.Rows[0]["CountryName"].ToString() != "")
+                    {
+                        lbloemcountry.Text = DtView.Rows[0]["CountryName"].ToString();
+                        nine.Visible = true;
+                    }
+                    else
+                    { nine.Visible = false; }
+                    if (DtView.Rows[0]["OEMName"].ToString() != "")
+                    {
+                        lbloemname.Text = DtView.Rows[0]["OEMName"].ToString();
+                        seven.Visible = true;
+                    }
+                    else
+                    { seven.Visible = false; }
+                    if (DtView.Rows[0]["OEMPartNumber"].ToString() != "")
+                    {
+                        lbloempartno.Text = DtView.Rows[0]["OEMPartNumber"].ToString();
+                        eight.Visible = true;
+                    }
+                    else
+                    { eight.Visible = false; }
+                    if (DtView.Rows[0]["OEMAddress"].ToString() != "")
+                    {
+                        lbloemaddress.Text = DtView.Rows[0]["OEMAddress"].ToString();
+                        twentyfive.Visible = true;
+                    }
+                    else
+                    { twentyfive.Visible = false; }
+                    DataTable DtGridEstimate1 = new DataTable();
+                    DtGridEstimate1 = Lo.RetriveSaveEstimateGrid("Select", 0, e.CommandArgument.ToString(), 0, "", "", "", "", "O");
+                    if (DtGridEstimate1.Rows.Count > 0)
+                    {
+                        gvestimatequanold.DataSource = DtGridEstimate1;
+                        gvestimatequanold.DataBind();
+                        gvestimatequanold.Visible = true;
+                        decimal tot = 0;
+                        for (int i = 0; DtGridEstimate1.Rows.Count > i; i++)
+                        {
+                            tot = tot + Convert.ToDecimal(DtGridEstimate1.Rows[i]["EstimatedPrice"]);
+                        }
+                        decimal msumobject = tot; //* qtyimp / 100000;
+                        lblvalueimport.Text = msumobject.ToString("F2");
+                        ten.Visible = true;
+                    }
+                    else
+                    {
+                        gvestimatequanold.Visible = false;
+                        lblvalueimport.Text = "0.00";
+                        ten.Visible = false;
+                    }
+                    DataTable dtPdfBind = Lo.RetriveProductCode("", e.CommandArgument.ToString(), "ProductImage", "PDF");
+                    if (dtPdfBind.Rows.Count > 0)
+                    {
+                        gvpdf.DataSource = dtPdfBind;
+                        gvpdf.DataBind();
+                        gvpdf.Visible = true;
+                        twele.Visible = true;
+                    }
+                    else
+                    {
+                        gvpdf.Visible = false;
+                        twele.Visible = false;
+                    }
+                    DataTable dtImageBindfinal = Lo.RetriveProductCode("", e.CommandArgument.ToString(), "ProductImage", "Image");
+                    if (dtImageBindfinal.Rows.Count > 0)
+                    {
+                        dlimage.DataSource = dtImageBindfinal;
+                        dlimage.DataBind();
+                        dlimage.Visible = true;
+                        thirteen.Visible = true;
+                    }
+                    else
+                    {
+                        dlimage.Visible = false;
+                        thirteen.Visible = false;
+                    }
+                    DataTable dtestimatequanorprice = Lo.RetriveSaveEstimateGrid("2Select", 0, e.CommandArgument.ToString(), 0, "", "", "", "", "F");
+                    if (dtestimatequanorprice.Rows.Count > 0)
+                    {
+                        gvestimatequanorprice.DataSource = dtestimatequanorprice;
+                        gvestimatequanorprice.DataBind();
+                        gvestimatequanorprice.Visible = true;
+                        fifteen.Visible = true;
+                    }
+                    else
+                    {
+                        gvestimatequanorprice.Visible = false;
+                        fifteen.Visible = false;
+                    }
+                    lblindicate.Text = "";
+                    if (DtView.Rows[0]["PurposeofProcurement"].ToString() != "")
+                    {
+                        DataTable DTporCat = Lo.RetriveProductCode("", e.CommandArgument.ToString(), "ProductPOP", "Company");
+                        if (DTporCat.Rows.Count > 0)
+                        {
+                            lblindicate.Text = "";
+                            lblindicate.Text = DTporCat.Rows[0]["SCategoryName"].ToString();
+                            //for (int i = 0; DTporCat.Rows.Count > i; i++)
+                            //{
+                            //    lblindicate.Text = lblindicate.Text + DTporCat.Rows[i]["SCategoryName"].ToString() + ", ";
+                            //}
+                            //lblindicate.Text = lblindicate.Text.Substring(0, lblindicate.Text.Length - 2);
+                            sixteen.Visible = true;
+                        }
+                        else
+                        { sixteen.Visible = false; }
+                    }
+                    else
+                    {
+                        sixteen.Visible = false;
+                    }
+                    if (DtView.Rows[0]["EOIStatus"].ToString() != "")
+                    {
+                        lbleoirep.Text = DtView.Rows[0]["EOIStatus"].ToString();
+                        seventeen.Visible = true;
+                    }
+                    else
+                    { seventeen.Visible = false; }
+                    if (DtView.Rows[0]["EOIURL"].ToString() != "")
+                    {
+                        lbleoilink.Text = DtView.Rows[0]["EOIURL"].ToString();
+                        eighteen.Visible = true;
+                    }
+                    else
+                    { eighteen.Visible = false; }
+
+                    if (DtView.Rows[0]["IsIndeginized"].ToString() != "")
+                    {
+                        Tr1.Visible = true;
+                        lblindstart.Text = DtView.Rows[0]["IsIndeginized"].ToString();
+                        if (lblindstart.Text == "N")
+                            lblindstart.Text = "No";
+                        else
+                            lblindstart.Text = "Yes";
+                    }
+                    else
+                    { Tr1.Visible = false; }
+                    string Nodel1Id = DtView.Rows[0]["NodelDetail"].ToString();
+                    if (Nodel1Id.ToString() != "")
+                    {
+                        DataTable dtNodal = Lo.RetriveProductCode(Nodel1Id.ToString(), "", "ProdNodal", "");
+                        if (dtNodal.Rows.Count > 0)
+                        {
+                            lblempname.Text = dtNodal.Rows[0]["NodalOficerName"].ToString();
+                            lbldesignation.Text = dtNodal.Rows[0]["Designation"].ToString();
+                            lblemailidpro.Text = dtNodal.Rows[0]["NodalOfficerEmail"].ToString();
+                            lblphonenumber.Text = dtNodal.Rows[0]["NodalOfficerTelephone"].ToString();
+                        }
+                        else
+                        {
+                            nineteen.Visible = false;
+                        }
+                    }
+                    else
+                    {
+                        nineteen.Visible = false;
+                    }
+                    if (DtView.Rows[0]["EndUser"].ToString() != "")
+                    {
+                        DataTable DTporCat = Lo.RetriveProductCode("", e.CommandArgument.ToString(), "EndUser", "Company");
+                        if (DTporCat.Rows.Count > 0)
+                        {
+                            lblenduser.Text = "";
+                            for (int i = 0; DTporCat.Rows.Count > i; i++)
+                            {
+                                lblenduser.Text = lblenduser.Text + DTporCat.Rows[i]["EndUser"].ToString() + ", ";
+                            }
+                            lblenduser.Text = lblenduser.Text.Substring(0, lblenduser.Text.Length - 2);
+                            twenty.Visible = true;
+                        }
+                        else
+                        { twenty.Visible = false; }
+                    }
+                    else
+                    {
+                        twenty.Visible = false;
+                    }
+                    if (DtView.Rows[0]["PlatName"].ToString() != "")
+                    {
+                        lbldefenceplatform.Text = DtView.Rows[0]["PlatName"].ToString();
+                        twentyone.Visible = true;
+                    }
+                    else
+                    {
+                        twentyone.Visible = false;
+                    }
+                    if (DtView.Rows[0]["Nomenclature"].ToString() != "")
+                    {
+                        lblnameofdefplat.Text = DtView.Rows[0]["Nomenclature"].ToString();
+                        twentytwo.Visible = true;
+                    }
+                    else
+                    {
+                        twentytwo.Visible = false;
+                    }
+                    if (DtView.Rows[0]["QAAgency"].ToString() != "")
+                    {
+                        DataTable DTporCat = Lo.RetriveProductCode("", e.CommandArgument.ToString(), "ProductQAAgency", "Company");
+                        if (DTporCat.Rows.Count > 0)
+                        {
+                            lbqa.Text = "";
+                            for (int i = 0; DTporCat.Rows.Count > i; i++)
+                            {
+                                lbqa.Text = lbqa.Text + DTporCat.Rows[i]["SCategoryName"].ToString() + ", ";
+                            }
+                            lbqa.Text = lbqa.Text.Substring(0, lbqa.Text.Length - 2);
+                            twentysix.Visible = true;
+                        }
+                        else
+                        { twentysix.Visible = false; }
+                    }
+                    else
+                    {
+                        twentysix.Visible = false;
+                    }
+                    if (DtView.Rows[0]["NIINCode"].ToString() != "")
+                    {
+                        Tr8.Visible = true;
+                        lblnincode.Text = DtView.Rows[0]["NIINCode"].ToString();
+                    }
+                    else
+                    {
+                        Tr8.Visible = false;
+                    }
+                    if (DtView.Rows[0]["IndTargetYear"].ToString() != "")
+                    {
+                        lblindtrgyr.Text = DtView.Rows[0]["IndTargetYear"].ToString();
+                        if (lblindtrgyr.Text == "NIL")
+                        { Tr25.Visible = false; }
+                        else
+                        {
+                            Tr25.Visible = true;
+                        }
+                    }
+                    else
+                    {
+                        Tr25.Visible = false;
+                    }
+                    DataTable DtBindIntrestUser = Lo.RetriveFilterCode(e.CommandArgument.ToString(), "", "SHomedetails2");
+                    if (DtBindIntrestUser.Rows.Count > 0)
+                    {
+                        gvRequester.DataSource = DtBindIntrestUser;
+                        gvRequester.DataBind();
+                        lblIntrCount.Text = DtBindIntrestUser.Rows.Count.ToString();
+                    }
+                    else
+                    {
+                        gvRequester.Visible = false;
+                    }
+                    ScriptManager.RegisterStartupScript(this, GetType(), "ProductCompany", "showPopup();", true);
+                }
+            }
+            catch (Exception ex)
+            {
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('" + ex.Message + "')", true);
+            }
+
+        }
+        else if (e.CommandName == "EOI")
+        {
+            lblrefnoview.Text = e.CommandArgument.ToString();
+            GridViewRow item = (GridViewRow)(((Control)(e.CommandSource)).NamingContainer);
+            HiddenField hfeoi = (HiddenField)item.FindControl("hfeoiurl");
+            HyperLink hflink = (HyperLink)item.FindControl("mhylink");
+            if (hfeoi.Value != "")
+            {
+                mhylink.Text = hfeoi.Value;
+                lblstartdate.Text = "";
+                lblenddate.Text = "";
+                ScriptManager.RegisterStartupScript(this, GetType(), "divstatus", "showPopup1();", true);
+            }
+            else
+            {
+                mhylink.Text = "";
+                lblstartdate.Text = "";
+                lblenddate.Text = "";
+                ScriptManager.RegisterStartupScript(this, GetType(), "divstatus", "showPopup1();", true);
+            }
+        }
+        else if (e.CommandName == "SupplyOrd")
+        {
+            lblrefnoview.Text = e.CommandArgument.ToString();
+            GridViewRow item = (GridViewRow)(((Control)(e.CommandSource)).NamingContainer);
+            LinkButton sostatus = (LinkButton)item.FindControl("mSupplyorder");
+            rdblsoplaced.SelectedValue = sostatus.Text;
+            txtsupplyvalue.Text = "";
+            txtsupplyname.Text = "";
+            txtsupplyaddress.Text = "";
+            //HiddenField hfsomanufname = (HiddenField)item.FindControl("hfsupplymanufname");
+            //if (hfsomanufname.Value != "")
+            //{
+            //    txtsupplyname.Text = hfsomanufname.Value;
+            //}
+            //else
+            //{
+            //    txtsupplyname.Text = "";
+            //}
+            //HiddenField hfsomanufadres = (HiddenField)item.FindControl("hfsupplymanufaddress");
+            //if (hfsomanufadres.Value != "NULL")
+            //{
+            //    txtsupplyaddress.Text = hfsomanufadres.Value;
+            //}
+            //else
+            //{
+            //    txtsupplyaddress.Text = "";
+            //}
+            ScriptManager.RegisterStartupScript(this, GetType(), "Supplyorder", "showPopup3();", true);
+        }
+        #endregion
+    }
+    #endregion
+    #region oterscode
+    protected void gvProgress_RowDataBound(object sender, GridViewRowEventArgs e)
+    {
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            //    HiddenField hfeoi = (HiddenField)e.Row.FindControl("hfeoiurl");
+            //    HiddenField hfrefno = (HiddenField)e.Row.FindControl("hfrefno");
+            LinkButton lbeoi = (LinkButton)e.Row.FindControl("EOI");
+            LinkButton lbSupplyorder = (LinkButton)e.Row.FindControl("mSupplyorder");
+            Label lbsuccessstory = (Label)e.Row.FindControl("successstory");
+            Label lbdivision = (Label)e.Row.FindControl("lbldivsion");
+            Label lbunit = (Label)e.Row.FindControl("lblunit");
+            Label lbcomp = (Label)e.Row.FindControl("lblcompshow");
+            Label lbdate = (Label)e.Row.FindControl("lbldate");
+
+            if (lbeoi.Text == "")
+            {
+                lbeoi.Text = "No";
+            }
+            if (lbSupplyorder.Text == "")
+            {
+                lbSupplyorder.Text = "No";
+            }
+            if (lbsuccessstory.Text == "")
+            {
+                lbsuccessstory.Text = "No";
+            }
+            if (lbunit.Text != "")
+            {
+                lbdivision.Visible = false;
+                lbunit.Visible = true;
+            }
+            else
+            {
+                lbdivision.Visible = true;
+                lbunit.Visible = false;
+                if (lbdivision.Text == "")
+                {
+                    lbdivision.Text = lbcomp.Text;
+                }
+            }
+            if (lbdate.Text == "01-Jan-1900")
+            { lbdate.Text = ""; }
+        }
+    }
+    protected void gvProgress_RowCreated(object sender, GridViewRowEventArgs e)
+    {
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            e.Row.TableSection = TableRowSection.TableBody;
+        }
+        else if (e.Row.RowType == DataControlRowType.Header)
+        {
+            e.Row.TableSection = TableRowSection.TableHeader;
+        }
+        else if (e.Row.RowType == DataControlRowType.Footer)
+        {
+            e.Row.TableSection = TableRowSection.TableFooter;
+        }
+    }
+    protected void btnsearch_Click(object sender, EventArgs e)
+    {
+        SeachResult();
+    }
+    #region AutoComplete Serach Box
+    [System.Web.Services.WebMethod]
+    [System.Web.Script.Services.ScriptMethod()]
+    public static string[] GetSearchKeyword(string prefix)
+    {
+        Cryptography objCrypto1 = new Cryptography();
+        List<string> customers = new List<string>();
+        List<string> Finalcustomers = new List<string>();
+        using (SqlConnection conn = new SqlConnection())
+        {
+            conn.ConnectionString = objCrypto1.DecryptData(ConfigurationManager.ConnectionStrings["connectiondb"].ConnectionString);
+            using (SqlCommand cmd = new SqlCommand())
+            {
+                cmd.CommandText = "select distinct ProductRefNo from tbl_mst_ProgressReport  where ProductRefNo like @SearchText + '%'";
+                cmd.Parameters.AddWithValue("@SearchText", prefix);
+                cmd.Connection = conn;
+                conn.Open();
+                using (SqlDataReader sdr = cmd.ExecuteReader())
+                {
+                    while (sdr.Read())
+                    {
+                        customers.Add(string.Format("{0}", sdr["ProductRefNo"]));
+                    }
+                }
+                cmd.CommandText = "select distinct CompanyName from tbl_mst_ProgressReport where CompanyName like @SearchText + '%'";
+                using (SqlDataReader sdr = cmd.ExecuteReader())
+                {
+                    while (sdr.Read())
+                    {
+                        customers.Add(string.Format("{0}", sdr["CompanyName"]));
+                    }
+                }
+                cmd.CommandText = "select distinct FactoryName from tbl_mst_ProgressReport where FactoryName like @SearchText + '%'";
+                using (SqlDataReader sdr = cmd.ExecuteReader())
+                {
+                    while (sdr.Read())
+                    {
+                        customers.Add(string.Format("{0}", sdr["FactoryName"]));
+                    }
+                }
+
+                cmd.CommandText = "select distinct UnitName from tbl_mst_ProgressReport where UnitName like @SearchText + '%'";
+                using (SqlDataReader sdr = cmd.ExecuteReader())
+                {
+                    while (sdr.Read())
+                    {
+                        customers.Add(string.Format("{0}", sdr["UnitName"]));
+                    }
+                }
+                cmd.CommandText = "select distinct NSCCode from tbl_mst_ProgressReport where NSCCode like @SearchText + '%'";
+                using (SqlDataReader sdr = cmd.ExecuteReader())
+                {
+                    while (sdr.Read())
+                    {
+                        customers.Add(string.Format("{0}", sdr["NSCCode"]));
+                    }
+                }
+                cmd.CommandText = "select distinct ProductDescription from tbl_mst_ProgressReport where ProductDescription like @SearchText + '%' and (ProductDescription is not null or ProductDescription !='')";
+                using (SqlDataReader sdr = cmd.ExecuteReader())
+                {
+                    while (sdr.Read())
+                    {
+                        customers.Add(string.Format("{0}", sdr["ProductDescription"]));
+                    }
+                }
+                cmd.CommandText = "select distinct VendorName from tbl_mst_ProgressReport where VendorName like @SearchText + '%' and (VendorName is not null or NSNGroup !='')";
+                using (SqlDataReader sdr = cmd.ExecuteReader())
+                {
+                    while (sdr.Read())
+                    {
+                        customers.Add(string.Format("{0}", sdr["VendorName"]));
+                    }
+                }
+                cmd.CommandText = "select distinct VendorDate from tbl_mst_ProgressReport where VendorDate like @SearchText + '%' and (VendorDate is not null or VendorDate !='')";
+                using (SqlDataReader sdr = cmd.ExecuteReader())
+                {
+                    while (sdr.Read())
+                    {
+                        customers.Add(string.Format("{0}", sdr["VendorDate"]));
+                    }
+                }
+                conn.Close();
+            }
+        }
+
+        return customers.Distinct().ToArray();
+    }
+    #endregion
+    #region AutoComplete Serach Box
+    [System.Web.Services.WebMethod]
+    [System.Web.Script.Services.ScriptMethod()]
+    public static string GetSearchKeywordemo(string prefix)
+    {
+        User_ProgressReport u = new User_ProgressReport();
+        u.SeachResult(prefix);
+        return "search";
+    }
+    #endregion
+    #endregion
+    #region SHALINI Code
+    protected void linklogin_Click(object sender, EventArgs e)
+    {
+        Response.RedirectToRoute("Login");
+    }
+    protected void linkusername_Click(object sender, EventArgs e)
+    {
+        if (Session["User"] != null)
+        {
+            Response.RedirectToRoute("Dashboard");
+        }
+        else
+        {
+            ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "ErrorMssgPopup('Please login again');window.location='Login'", true);
+        }
+    }
+    #endregion
+    #region LogoutCode
+    protected void lbllogout_Click(object sender, EventArgs e)
+    {
+        Session.Abandon();
+        Session.Remove("Type");
+        Session.Remove("User");
+        Session.Remove("CompanyRefNo");
+        Session.Remove("SFToken");
+        Session.RemoveAll();
+        Session.Contents.RemoveAll();
+        Session.Clear();
+        Response.Cache.SetCacheability(HttpCacheability.NoCache);
+        Response.Cookies["DefaultDpsu"].Expires = DateTime.Now;
+        Response.Buffer = true;
+        Response.AppendHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
+        Response.AppendHeader("Pragma", "no-cache"); // HTTP 1.0.
+        Response.AppendHeader("Expires", "0"); // Proxies.
+        if (Request.Cookies["User"] != null)
+        {
+            Response.Cookies["User"].Value = string.Empty;
+            Response.Cookies["User"].Expires = DateTime.Now.AddMonths(-20);
+        }
+        if (Request.Cookies["SFToken"] != null)
+        {
+            Response.Cookies["SFToken"].Value = string.Empty;
+            Response.Cookies["SFToken"].Expires = DateTime.Now.AddMonths(-20);
+        }
+        Response.RedirectToRoute("Productlist");
+    }
+    #endregion
+    #region TryCatchLog
+    public static class ExceptionLogging
+    {
+        private static String ErrorlineNo, Errormsg, extype, exurl, hostIp, ErrorLocation, HostAdd;
+        public static void SendErrorToText(Exception ex)
+        {
+            var line = Environment.NewLine + Environment.NewLine;
+            ErrorlineNo = ex.StackTrace.Substring(ex.StackTrace.Length - 7, 7);
+            Errormsg = ex.GetType().Name.ToString();
+            extype = ex.GetType().ToString();
+            exurl = context.Current.Request.Url.ToString();
+            ErrorLocation = ex.Message.ToString();
+            try
+            {
+                string filepath = context.Current.Server.MapPath("/Logs/");  //Text File Path
+                if (!Directory.Exists(filepath))
+                {
+                    Directory.CreateDirectory(filepath);
+                }
+                filepath = filepath + DateTime.Today.ToString("dd-MM-yy") + ".txt";   //Text File Name
+                if (!File.Exists(filepath))
+                {
+                    File.Create(filepath).Dispose();
+                }
+                using (StreamWriter sw = File.AppendText(filepath))
+                {
+                    string error = "Log Written Date:" + " " + DateTime.Now.ToString() + line + "Error Line No :" + " " + ErrorlineNo + line + "Error Message:" + " " + Errormsg + line + "Exception Type:" + " " + extype + line + "Error Location :" + " " + ErrorLocation + line + " Error Page Url:" + " " + exurl + line + "User Host IP:" + " " + hostIp + line;
+                    sw.WriteLine("-----------Exception Details on " + " " + DateTime.Now.ToString() + "-----------------");
+                    sw.WriteLine("-------------------------------------------------------------------------------------");
+                    sw.WriteLine(line);
+                    sw.WriteLine(error);
+                    sw.WriteLine("--------------------------------*End*------------------------------------------");
+                    sw.WriteLine(line);
+                    sw.Flush();
+                    sw.Close();
+                }
+            }
+            catch (Exception exm)
+            {
+                exm.Message.ToString();
+            }
+        }
+    }
+    #endregion
+    protected void lblProducts_Click(object sender, EventArgs e)
+    {
+        CheckEOIClick.Value = "";
+        CheckIntrestClick.Value = "";
+        CheckInHouse.Value = "";
+        CheckTotalEOI.Value = "";
+        Response.Redirect("PReport");
+    }
+    int countprod;
+    protected void lblInterest_Click(object sender, EventArgs e)
+    {
+        CheckIntrestClick.Value = "Yes";
+        CheckEOIClick.Value = "";
+        CheckInHouse.Value = "";
+        CheckTotalEOI.Value = "";
+        pagingCurrentPage = 0;
+        SeachResult();
+    }
+    protected void lblEOIRFP_Click(object sender, EventArgs e)
+    {
+        CheckEOIClick.Value = "Yes";
+        CheckIntrestClick.Value = "";
+        CheckInHouse.Value = "";
+        CheckTotalEOI.Value = "";
+        pagingCurrentPage = 0;
+        SeachResult();
+    }
+    protected void bindhover()
+    {
+        DataTable dtHover = Lo.RetriveFilterCode("", "", "GetProgHover");
+        if (dtHover.Rows.Count > 0)
+        {
+            gvhover.DataSource = dtHover;
+            gvhover.DataBind();
+            //0
+            gvhover.FooterRow.Cells[0].Text = "Total";
+            gvhover.FooterRow.Cells[0].HorizontalAlign = HorizontalAlign.Center;
+            object sumObjectn = dtHover.Compute("Sum(TotalProduct)", string.Empty);
+            gvhover.FooterRow.Cells[1].Text = sumObjectn.ToString();
+            //1
+            object sumObjectn1 = dtHover.Compute("Sum(Interest)", string.Empty);
+            decimal num = (Convert.ToDecimal(sumObjectn1.ToString()) / Convert.ToDecimal(lblProducts.Text) * 100);
+            gvhover.FooterRow.Cells[2].Text = sumObjectn1 + " " + "(" + num.ToString("F2") + "%)";
+            //2
+            object sumObjectn2 = dtHover.Compute("Sum(EoiProductIntrest)", string.Empty);
+            decimal num1 = (Convert.ToDecimal(sumObjectn2.ToString()) / Convert.ToDecimal(lblProducts.Text) * 100);
+            gvhover.FooterRow.Cells[3].Text = sumObjectn2 + " " + "(" + num1.ToString("F2") + "%)";
+            //3
+            object sumObjectn3 = dtHover.Compute("Sum(eoistatus)", string.Empty);
+            decimal num2 = (Convert.ToDecimal(sumObjectn3.ToString()) / Convert.ToDecimal(lblProducts.Text) * 100);
+            gvhover.FooterRow.Cells[4].Text = sumObjectn3 + " " + "(" + num2.ToString("F2") + "%)";
+            //4
+            object sumObjectn4 = dtHover.Compute("Sum(supplyorder)", string.Empty);
+            decimal num3 = (Convert.ToDecimal(sumObjectn4.ToString()) / Convert.ToDecimal(lblProducts.Text) * 100);
+            gvhover.FooterRow.Cells[5].Text = sumObjectn4 + " " + "(" + num3.ToString("F2") + "%)";
+            // 5
+            //  object sumObjectn5 = dtHover.Compute("Sum(Indiginized)", string.Empty);
+            //  decimal num4 = (Convert.ToDecimal(sumObjectn5.ToString()) / Convert.ToDecimal(lblProducts.Text) * 100);
+            //  gvhover.FooterRow.Cells[6].Text = sumObjectn5 + " " + "(" + num4.ToString("F2") + "%)";
+            //6
+            //  object sumObjectn6 = dtHover.Compute("Sum(IndigTarget)", string.Empty);
+            //  decimal num5 = (Convert.ToDecimal(sumObjectn6.ToString()) / Convert.ToDecimal(lblProducts.Text) * 100);
+            //   gvhover.FooterRow.Cells[7].Text = sumObjectn6 + " " + "(" + num5.ToString("F2") + "%)";
+            //7
+            //  object sumObjectn7 = dtHover.Compute("Sum(Category)", string.Empty);
+            //   decimal num6 = (Convert.ToDecimal(sumObjectn7.ToString()) / Convert.ToDecimal(lblProducts.Text) * 100);
+            //    gvhover.FooterRow.Cells[8].Text = sumObjectn7 + " " + "(" + num6.ToString("F2") + "%)";
+
+            //if (Encrypt.DecryptData(Session["User"].ToString()) == "shrishkumar.ofb@ofb.gov.in")
+            //{
+            //    gvhover.Columns[7].Visible = true;
+            //    gvhover.Columns[8].Visible = true;
+            //}
+            //else
+            //{
+            //    gvhover.Columns[7].Visible = false;
+            //    gvhover.Columns[8].Visible = false;
+            //}
+        }
+    }
+    protected void lbproddetail_Click(object sender, EventArgs e)
+    {
+        bindhover();
+        ScriptManager.RegisterStartupScript(this, GetType(), "ProductCompany1", "showPopup2();", true);
+    }
+    protected void lblInhouse_Click(object sender, EventArgs e)
+    {
+        CheckEOIClick.Value = "";
+        CheckIntrestClick.Value = "";
+        CheckInHouse.Value = "Yes";
+        CheckTotalEOI.Value = "";
+        pagingCurrentPage = 0;
+        SeachResult();
+    }
+    protected void lblother1_Click(object sender, EventArgs e)
+    {
+        CheckEOIClick.Value = "";
+        CheckIntrestClick.Value = "";
+        CheckInHouse.Value = "";
+        CheckTotalEOI.Value = "Yes";
+        pagingCurrentPage = 0;
+        SeachResult();
+    }
+    protected void btnExcel_Click(object sender, EventArgs e)
+    {
+        try
+        {
+            DataTable mIntrest = (DataTable)Session["PDatatTable"];
+            int[] iColumns = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20 };
+            RKLib.ExportData.Export objExport = new RKLib.ExportData.Export("Web");
+            objExport.ExportDetails(mIntrest, iColumns, RKLib.ExportData.Export.ExportFormat.Excel, "ProgressReportList.xls");
+        }
+        catch (Exception ex)
+        {
+        }
+    }
+
+    #region Shaliniin update code status
+    protected void btnUpdate_Click(object sender, EventArgs e)
+    {
+        if (lblstartdate.Text != "" && lblenddate.Text != "" && mhylink.Text != "")
+        {
+            hfprorefno.Value = lblrefnoview.Text;
+            string link = mhylink.Text.Trim();
+
+            Lo.updateeoi(hfprorefno.Value, rbeoimake2.SelectedValue, lblstartdate.Text.Trim(), lblenddate.Text.Trim(), link.Replace(",", ""));
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "alert", "alert('Updated Successfully!!!');window.location ='divstatus';", true);
+            ScriptManager.RegisterStartupScript(this, GetType(), "divstatus", "showPopup1();", true);
+            ControlGrid();
+            lblstartdate.ReadOnly = true;
+            lblenddate.ReadOnly = true;
+            mhylink.ReadOnly = true;
+            Response.Redirect("PReport");
+        }
+        else
+        {
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Fill mandatory')", true);
+        }
+    }
+    protected void lnkupate_Click(object sender, EventArgs e)
+    {
+        if (txtsupplyorderdate.Text != "" && txtsupplydelivrydate.Text != "" && txtsupplyname.Text != "")
+        {
+            hfprorefno.Value = lblrefnoview.Text;
+            if (txtsupplydelivrydate.Text != "")
+            {
+
+                DateTime dtsuppdelivery = Convert.ToDateTime(txtsupplydelivrydate.Text);
+                string dtsuppdeliveryDate = dtsuppdelivery.ToString("dd-MM-yyyy");
+                txtsupplydelivrydate.Text = dtsuppdelivery.ToString("dd-MM-yyyy");
+
+                try
+                {
+                    //   DateTime dtsuppdelivery = Convert.ToDateTime(txtsupplydelivrydate.Text);
+                    // string dtsuppdeliveryDate = dtsuppdelivery.ToString("dd-MMM-yyyy");
+                    txtsupplydelivrydate.Text = dtsuppdelivery.ToString();
+                }
+                catch (Exception ex)
+                { txtsupplydelivrydate.Text = ""; }
+
+            }
+            else
+            {
+                txtsupplydelivrydate.Text = "";
+            }
+            if (txtsupplyorderdate.Text != "")
+            {
+
+                DateTime dtsodate = Convert.ToDateTime(txtsupplyorderdate.Text);
+                string dtsoDatem = dtsodate.ToString("dd-MM-yyyy");
+                txtsupplyorderdate.Text = dtsodate.ToString("dd-MM-yyyy");
+
+                try
+                {
+                    //   DateTime dtsodate = Convert.ToDateTime(txtsupplyorderdate.Text);
+                    //   string dtsoDatem = dtsodate.ToString("dd-MMM-yyyy");
+                    txtsupplyorderdate.Text = dtsodate.ToString();
+                }
+                catch (Exception ex)
+                { txtsupplydelivrydate.Text = ""; }
+
+            }
+            else
+            {
+                txtsupplyorderdate.Text = "";
+            }
+            string supplyname = txtsupplyname.Text.Trim();
+            string supplyaddress = txtsupplyaddress.Text.Trim();
+            Lo.updatesupplyorder(hfprorefno.Value, rdblsoplaced.SelectedValue, Convert.ToDecimal(txtsupplyvalue.Text.Trim()), txtsupplydelivrydate.Text.Trim(), txtsupplyorderdate.Text.Trim(), supplyname.Replace(",", ""),
+                supplyaddress.Replace(",", ""));
+            //Lo.updatesupplyorder(hfprorefno.Value, txtsostrtdate.Text.Trim(), txtsoenddate.Text.Trim(), txtsupplyname.Text.Trim(),
+            //    txtsupplyaddress.Text.Trim());
+            //   ScriptManager.RegisterStartupScript(this, GetType(), "Supplyorder", "showPopup3();", true);
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "alert", "alert('Updated Successfully!!!');window.location ='Supplyorder';", true);
+
+
+            ControlGrid();
+            txtsupplyname.ReadOnly = true;
+            txtsupplyaddress.ReadOnly = true;
+            // Response.Redirect("PReport");
+        }
+        else
+        {
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Fill mandatory')", true);
+        }
+    }
+    #endregion
+    #region Minakkshi code for searching page number
+    protected void btngosearch_Click(object sender, EventArgs e)
+    {
+        if (System.Text.RegularExpressions.Regex.IsMatch(txtgosearch.Text, "[^0-9]"))
+        {
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "ErrorMssgPopup('Please enter only number')", true);
+        }
+        else
+        {
+            int txtpage = Convert.ToInt32(txtgosearch.Text) - 1;
+            pagingCurrentPage = Convert.ToInt32(txtpage.ToString());
+            BindProduct();
+        }
+    }
+    #endregion
+
+}

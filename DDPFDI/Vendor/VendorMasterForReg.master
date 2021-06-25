@@ -1,0 +1,79 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="VendorMasterForReg.master.cs" Inherits="Vendor_VendorMasterForReg" %>
+
+<!DOCTYPE html>
+<html>
+<head runat="server">
+    <title>Vendor Registration</title>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+    <link href="~/assets/css/select2.min.css" rel="stylesheet">
+    <link rel="shortcut icon" href="~/assets/images/favicon.ico" />
+    <link href="~/assets/css/bootstrap.css" rel="stylesheet" />
+    <link href="~/assets/css/all.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/css/style.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/css/custom.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/css/responsive.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/css/jquery.bxslider.css" rel="stylesheet" type="text/css" />
+    <script src="assets/js/jquery-1.12.4.js"></script>
+    <script src="assets/js/jquery-1.9.2-ui.min.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap.min.css">
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+    <script src="assets/js/select2.min.js"></script>
+    <script src="assets/js/custom.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/css/bootstrap-datepicker3.min.css">
+    <script type='text/javascript' src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.min.js"></script>
+    <script src="assets/js/jquery.bxslider.min.js"></script>
+    <script src="../assets/js/jquery-3.4.1.js"></script>
+    <style>
+        .swal2-container.swal2-center.swal2-shown {
+            z-index: 22222;
+        }
+
+        .modal {
+            margin-top: 70px !important;
+        }
+    </style>
+    <style type="text/css">
+        .form-group {
+            margin: 8px 0px;
+        }
+
+        .hhead {
+            background-color: #f5f5f5;
+            color: #000;
+            border: 0px;
+            margin-top: 8px !important;
+            margin-bottom: 8px !important;
+            padding: 10px 10px;
+            border-radius: 0px;
+            font: normal 14px/18px Arial, Helvetica, sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <form id="form1" runat="server" style="min-height: 100vh; background-image: linear-gradient(to right, #e83e8c, #6610f2);">
+        <div id="top" style="margin-left: 34px; height: 25px; margin-top: 6px;">
+            <a href="#" style="color: white;"><i class="fa fa-envelope" aria-hidden="true"></i>&nbsp; helpdesk-dpit@ddpmod.gov.in</a>
+            <a href="#" style="color: white;"><i class="fa fa-phone-square" aria-hidden="true"></i>&nbsp; 011-20836145 &nbsp;</a>
+        </div>
+        <div id="top2" class="container-fluid" style="background: white;">
+            <div class="row py-3">
+                <div class="col-md-2">
+                    <a href="ProductList">
+                        <img src="../ddp_logo.png" class="img-fluid" style="max-height: 70px"></a>
+                </div>
+                <div class="col-md-8">
+                    <h2 class="text-center" style="color: #6915cf;">RAKSHA UDYOG MITRA PORTAL </h2>
+                </div>
+                <div class="col-md-2">
+                </div>
+            </div>
+        </div>
+        <div>
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+            </asp:ContentPlaceHolder>
+        </div>
+    </form>
+</body>
+</html>

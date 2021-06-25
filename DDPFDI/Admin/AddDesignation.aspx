@@ -10,10 +10,9 @@
     </script>
 </asp:Content>
 <asp:Content ID="InnerDesignation" runat="server" ContentPlaceHolderID="ContentPlaceHolder1">
-    <div class="content oem-content">
-
-        <asp:UpdatePanel runat="server" ID="updatepan">
-            <ContentTemplate>
+    <asp:UpdatePanel runat="server" ID="updatepan">
+        <ContentTemplate>
+            <div class="content oem-content">
                 <div class="sideBg">
                     <div class="row">
                         <div class="col-md-12 padding_0">
@@ -95,19 +94,20 @@
                         </div>
                     </div>
                     <div class="clearfix"></div>
-                    <div class="footer"><i class="far fa-copyright"></i>2019 <a href="#">Department of Defence Production</a> </div>
                 </div>
-            </ContentTemplate>
-        </asp:UpdatePanel>
-        <asp:UpdateProgress ID="UpdateProgress" runat="server" AssociatedUpdatePanelID="updatepan">
-            <ProgressTemplate>
-                <div class="overlay-progress">
-                    <div class="custom-progress-bar blue stripes">
-                        <span></span>
-                        <p>Processing</p>
-                    </div>
+            </div>
+        </ContentTemplate>
+    </asp:UpdatePanel>
+    <asp:UpdateProgress ID="UpdateProgress" runat="server" AssociatedUpdatePanelID="updatepan">
+        <ProgressTemplate>
+            <div class="overlay-progress">
+                <div class="custom-progress-bar blue stripes">
+                    <span></span>
+                    <p>Processing</p>
                 </div>
-            </ProgressTemplate>
-        </asp:UpdateProgress>
-    </div>
+            </div>
+        </ProgressTemplate>
+    </asp:UpdateProgress>
+
+
 </asp:Content>

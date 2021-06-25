@@ -72,7 +72,7 @@
 }
 
 .fas {
-    color: #fff !important;
+    color: #201e96 !important;
 }
 
 
@@ -187,7 +187,7 @@ body {
 
 .site-holder {
     overflow: hidden;
-    min-height: 502px;
+    /*min-height: 502px;*/
     position: relative;
     background: #FFFFFF;
 }
@@ -3711,7 +3711,7 @@ blockquote.page-information {
 .elfinder-button {
     padding-top: 0px !important;
     padding-left: 0px !important;
-    border: 1px solid #e78f08!important;
+    border: 1px solid #e78f08 !important;
     height: 30px !important;
     width: 30px !important;
 }
@@ -4622,3 +4622,4 @@ div#filter_schedule {
     align-items: center;
     height: 33px;
 }
+

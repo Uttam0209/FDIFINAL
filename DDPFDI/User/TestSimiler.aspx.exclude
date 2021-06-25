@@ -1,0 +1,153 @@
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="TestSimiler.aspx.cs" Inherits="User_TestSimiler" MasterPageFile="~/User/MasterPage.master" %>
+
+<asp:Content ID="content1" ContentPlaceHolderID="head" runat="server">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <style>
+        #ContentPlaceHolder1_dlproduct {
+            display: flex;
+            flex-wrap: wrap;
+            min-width: 100%;
+        }
+
+            #ContentPlaceHolder1_dlproduct span {
+                max-width: 24%;
+                position: relative;
+                flex: auto;
+                box-shadow: 0 0 4px rgba(0,0,0,0.5);
+                margin: 5px!important;
+                margin-bottom: 15px;
+            }
+
+        #ContentPlaceHolder1_DataList1 {
+            display: flex;
+            flex-wrap: wrap;
+            min-width: 100%;
+        }
+
+            #ContentPlaceHolder1_DataList1 span {
+                max-width: 24%;
+                position: relative;
+                flex: auto;
+                box-shadow: 0 0 4px rgba(0,0,0,0.5);
+                margin-right: 10px;
+                margin-bottom: 15px;
+            }
+    </style>
+</asp:Content>
+<asp:Content ID="content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <asp:ScriptManager runat="server" ID="sc"></asp:ScriptManager>
+    <asp:UpdatePanel runat="server" ID="up">
+        <ContentTemplate>
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <nav class="d-flex justify-content-between pt-2" aria-label="Page navigation">
+                            <ul class="pagination">
+                                <li class="page-item">
+                                    <asp:LinkButton ID="lnkbtnPgPrevious" runat="server" class="page-link" OnClick="lnkbtnPgPrevious_Click"><i class="fa fa-chevron-left mr-2"></i>Prev</asp:LinkButton>
+                                </li>
+                            </ul>
+                            <ul class="pagination">
+                                <li class="page-item">
+                                    <asp:Label ID="lblpaging" runat="server"></asp:Label>
+                                </li>
+                            </ul>
+                            <ul class="pagination">
+                                <li class="page-item">
+                                    <asp:LinkButton ID="lnkbtnPgNext" runat="server" class="page-link" OnClick="lnkbtnPgNext_Click">
+                            Next<i class="fa fa-chevron-right ml-2"></i></asp:LinkButton>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                    <div class="col-12 d-flex justify-content-center">
+                        <asp:DataList runat="server" ID="dlproduct" RepeatColumns="3" RepeatLayout="Flow"
+                            RepeatDirection="Horizontal" OnItemCommand="dlproduct_ItemCommand">
+                            <ItemTemplate>
+                                <div>
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <table class="table table-responsive">
+                                                <tbody>
+                                                    <tr>
+                                                        <td><%#Eval("CompanyName") %></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><%# Eval("ProductDescription").ToString().Length > 25? (Eval("ProductDescription") as string).Substring(0,25) + ".." : Eval("ProductDescription")  %>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="padding: 8px;" class="text-right" title='<%#Eval("NSNGroup") %>'>
+                                                            <%# Eval("NSNGroup").ToString().Length > 15? (Eval("NSNGroup") as string).Substring(0,15) + ".." : Eval("NSNGroup")  %>
+                                                            <asp:HiddenField ID="hfrole" runat="server" Value='<%#Eval("Role") %>' />
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <a class="btn btn-primary">Add To Show Interest</a>
+
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <asp:UpdatePanel runat="server" UpdateMode="Conditional" ID="updFU">
+                                                                <ContentTemplate>
+                                                                    <asp:LinkButton runat="server" ID="fff" class="btn btn-primary"
+                                                                        CommandArgument='<%# Eval("ProductDescription").ToString().Length > 6? (Eval("ProductDescription") as string).Substring(0,6) + "" : Eval("ProductDescription")  %>'
+                                                                        CommandName="ddd">Similer Product</asp:LinkButton>
+                                                                </ContentTemplate>
+                                                                <Triggers>
+                                                                    <asp:PostBackTrigger ControlID="fff" />
+                                                                </Triggers>
+                                                            </asp:UpdatePanel>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ItemTemplate>
+                        </asp:DataList>
+                    </div>
+                    <div class="col-12 my-2" runat="server" id="DIV1" visible="false">
+                        <h2 class="d-flex justify-content-center py-2" id="similarproduct" style="background:#507CD1!important; color:white; border-radius:10px;">Similar Proudcut</h2>
+                        <asp:DataList runat="server" ID="DataList1" RepeatColumns="3" RepeatLayout="Flow"
+                            RepeatDirection="Horizontal">
+                            <ItemTemplate>
+                                <div>
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <table class="table table-responsive">
+                                                <tbody>
+                                                    <tr>
+                                                        <td><%#Eval("CompanyName") %></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><%# Eval("ProductDescription").ToString().Length > 25? (Eval("ProductDescription") as string).Substring(0,25) + ".." : Eval("ProductDescription")  %>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="padding: 8px;" class="text-right" title='<%#Eval("NSNGroup") %>'>
+                                                            <%# Eval("NSNGroup").ToString().Length > 15? (Eval("NSNGroup") as string).Substring(0,15) + ".." : Eval("NSNGroup")  %>
+                                                            <asp:HiddenField ID="hfrole" runat="server" Value='<%#Eval("Role") %>' />
+                                                        </td>
+                                                    </tr>
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </ItemTemplate>
+                        </asp:DataList>
+                    </div>
+                </div>
+            </div>
+        </ContentTemplate>
+    </asp:UpdatePanel>
+</asp:Content>

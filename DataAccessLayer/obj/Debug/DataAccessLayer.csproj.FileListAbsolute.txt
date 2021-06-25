@@ -37,3 +37,420 @@ E:\Wali Projects\FDIFINAL\DataAccessLayer\obj\Debug\DataAccessLayer.csprojAssemb
 E:\Wali Projects\FDIFINAL\DataAccessLayer\obj\Debug\DataAccessLayer.csproj.CopyComplete
 E:\Wali Projects\FDIFINAL\DataAccessLayer\obj\Debug\DataAccessLayer.dll
 E:\Wali Projects\FDIFINAL\DataAccessLayer\obj\Debug\DataAccessLayer.pdb
+C:\Users\Mohammad Wali\Desktop\SrijanDefence\DataAccessLayer\bin\Debug\DataAccessLayer.dll
+C:\Users\Mohammad Wali\Desktop\SrijanDefence\DataAccessLayer\bin\Debug\DataAccessLayer.pdb
+C:\Users\Mohammad Wali\Desktop\SrijanDefence\DataAccessLayer\bin\Debug\Encryption.dll
+C:\Users\Mohammad Wali\Desktop\SrijanDefence\DataAccessLayer\bin\Debug\Microsoft.Web.Infrastructure.dll
+C:\Users\Mohammad Wali\Desktop\SrijanDefence\DataAccessLayer\bin\Debug\System.Web.Helpers.dll
+C:\Users\Mohammad Wali\Desktop\SrijanDefence\DataAccessLayer\bin\Debug\System.Web.Razor.dll
+C:\Users\Mohammad Wali\Desktop\SrijanDefence\DataAccessLayer\bin\Debug\System.Web.WebPages.Deployment.dll
+C:\Users\Mohammad Wali\Desktop\SrijanDefence\DataAccessLayer\bin\Debug\System.Web.WebPages.dll
+C:\Users\Mohammad Wali\Desktop\SrijanDefence\DataAccessLayer\bin\Debug\System.Web.WebPages.Razor.dll
+C:\Users\Mohammad Wali\Desktop\SrijanDefence\DataAccessLayer\bin\Debug\Encryption.pdb
+C:\Users\Mohammad Wali\Desktop\SrijanDefence\DataAccessLayer\bin\Debug\System.Web.Helpers.xml
+C:\Users\Mohammad Wali\Desktop\SrijanDefence\DataAccessLayer\bin\Debug\System.Web.Razor.xml
+C:\Users\Mohammad Wali\Desktop\SrijanDefence\DataAccessLayer\bin\Debug\System.Web.WebPages.xml
+C:\Users\Mohammad Wali\Desktop\SrijanDefence\DataAccessLayer\bin\Debug\System.Web.WebPages.Deployment.xml
+C:\Users\Mohammad Wali\Desktop\SrijanDefence\DataAccessLayer\bin\Debug\System.Web.WebPages.Razor.xml
+C:\Users\Mohammad Wali\Desktop\SrijanDefence\DataAccessLayer\obj\Debug\DataAccessLayer.csprojAssemblyReference.cache
+C:\Users\Mohammad Wali\Desktop\SrijanDefence\DataAccessLayer\obj\Debug\DataAccessLayer.csproj.CoreCompileInputs.cache
+C:\Users\Mohammad Wali\Desktop\SrijanDefence\DataAccessLayer\obj\Debug\DataAccessLayer.csproj.CopyComplete
+C:\Users\Mohammad Wali\Desktop\SrijanDefence\DataAccessLayer\obj\Debug\DataAccessLayer.dll
+C:\Users\Mohammad Wali\Desktop\SrijanDefence\DataAccessLayer\obj\Debug\DataAccessLayer.pdb
+E:\Wali Projects\SrijanDefence\DataAccessLayer\bin\Debug\DataAccessLayer.dll
+E:\Wali Projects\SrijanDefence\DataAccessLayer\bin\Debug\DataAccessLayer.pdb
+E:\Wali Projects\SrijanDefence\DataAccessLayer\bin\Debug\Encryption.dll
+E:\Wali Projects\SrijanDefence\DataAccessLayer\bin\Debug\Microsoft.Web.Infrastructure.dll
+E:\Wali Projects\SrijanDefence\DataAccessLayer\bin\Debug\System.Web.Helpers.dll
+E:\Wali Projects\SrijanDefence\DataAccessLayer\bin\Debug\System.Web.Razor.dll
+E:\Wali Projects\SrijanDefence\DataAccessLayer\bin\Debug\System.Web.WebPages.Deployment.dll
+E:\Wali Projects\SrijanDefence\DataAccessLayer\bin\Debug\System.Web.WebPages.dll
+E:\Wali Projects\SrijanDefence\DataAccessLayer\bin\Debug\System.Web.WebPages.Razor.dll
+E:\Wali Projects\SrijanDefence\DataAccessLayer\bin\Debug\Encryption.pdb
+E:\Wali Projects\SrijanDefence\DataAccessLayer\bin\Debug\System.Web.Helpers.xml
+E:\Wali Projects\SrijanDefence\DataAccessLayer\bin\Debug\System.Web.Razor.xml
+E:\Wali Projects\SrijanDefence\DataAccessLayer\bin\Debug\System.Web.WebPages.xml
+E:\Wali Projects\SrijanDefence\DataAccessLayer\bin\Debug\System.Web.WebPages.Deployment.xml
+E:\Wali Projects\SrijanDefence\DataAccessLayer\bin\Debug\System.Web.WebPages.Razor.xml
+E:\Wali Projects\SrijanDefence\DataAccessLayer\obj\Debug\DataAccessLayer.csprojAssemblyReference.cache
+E:\Wali Projects\SrijanDefence\DataAccessLayer\obj\Debug\DataAccessLayer.csproj.CopyComplete
+E:\Wali Projects\SrijanDefence\DataAccessLayer\obj\Debug\DataAccessLayer.dll
+E:\Wali Projects\SrijanDefence\DataAccessLayer\obj\Debug\DataAccessLayer.pdb
+E:\Shalini\SrijanFinal\DataAccessLayer\bin\Debug\DataAccessLayer.dll
+E:\Shalini\SrijanFinal\DataAccessLayer\bin\Debug\DataAccessLayer.pdb
+E:\Shalini\SrijanFinal\DataAccessLayer\bin\Debug\Encryption.dll
+E:\Shalini\SrijanFinal\DataAccessLayer\bin\Debug\Microsoft.Web.Infrastructure.dll
+E:\Shalini\SrijanFinal\DataAccessLayer\bin\Debug\System.Web.Helpers.dll
+E:\Shalini\SrijanFinal\DataAccessLayer\bin\Debug\System.Web.Razor.dll
+E:\Shalini\SrijanFinal\DataAccessLayer\bin\Debug\System.Web.WebPages.Deployment.dll
+E:\Shalini\SrijanFinal\DataAccessLayer\bin\Debug\System.Web.WebPages.dll
+E:\Shalini\SrijanFinal\DataAccessLayer\bin\Debug\System.Web.WebPages.Razor.dll
+E:\Shalini\SrijanFinal\DataAccessLayer\bin\Debug\Encryption.pdb
+E:\Shalini\SrijanFinal\DataAccessLayer\bin\Debug\System.Web.Helpers.xml
+E:\Shalini\SrijanFinal\DataAccessLayer\bin\Debug\System.Web.Razor.xml
+E:\Shalini\SrijanFinal\DataAccessLayer\bin\Debug\System.Web.WebPages.xml
+E:\Shalini\SrijanFinal\DataAccessLayer\bin\Debug\System.Web.WebPages.Deployment.xml
+E:\Shalini\SrijanFinal\DataAccessLayer\bin\Debug\System.Web.WebPages.Razor.xml
+E:\Shalini\SrijanFinal\DataAccessLayer\obj\Debug\DataAccessLayer.csprojAssemblyReference.cache
+E:\Shalini\SrijanFinal\DataAccessLayer\obj\Debug\DataAccessLayer.csproj.CoreCompileInputs.cache
+E:\Shalini\SrijanFinal\DataAccessLayer\obj\Debug\DataAccessLayer.csproj.CopyComplete
+E:\Shalini\SrijanFinal\DataAccessLayer\obj\Debug\DataAccessLayer.dll
+E:\Shalini\SrijanFinal\DataAccessLayer\obj\Debug\DataAccessLayer.pdb
+D:\SrijanFinal\DataAccessLayer\bin\Debug\DataAccessLayer.dll
+D:\SrijanFinal\DataAccessLayer\bin\Debug\DataAccessLayer.pdb
+D:\SrijanFinal\DataAccessLayer\bin\Debug\Encryption.dll
+D:\SrijanFinal\DataAccessLayer\bin\Debug\Microsoft.Web.Infrastructure.dll
+D:\SrijanFinal\DataAccessLayer\bin\Debug\System.Web.Helpers.dll
+D:\SrijanFinal\DataAccessLayer\bin\Debug\System.Web.Razor.dll
+D:\SrijanFinal\DataAccessLayer\bin\Debug\System.Web.WebPages.Deployment.dll
+D:\SrijanFinal\DataAccessLayer\bin\Debug\System.Web.WebPages.dll
+D:\SrijanFinal\DataAccessLayer\bin\Debug\System.Web.WebPages.Razor.dll
+D:\SrijanFinal\DataAccessLayer\bin\Debug\Encryption.pdb
+D:\SrijanFinal\DataAccessLayer\bin\Debug\System.Web.Helpers.xml
+D:\SrijanFinal\DataAccessLayer\bin\Debug\System.Web.Razor.xml
+D:\SrijanFinal\DataAccessLayer\bin\Debug\System.Web.WebPages.xml
+D:\SrijanFinal\DataAccessLayer\bin\Debug\System.Web.WebPages.Deployment.xml
+D:\SrijanFinal\DataAccessLayer\bin\Debug\System.Web.WebPages.Razor.xml
+D:\SrijanFinal\DataAccessLayer\obj\Debug\DataAccessLayer.csprojAssemblyReference.cache
+D:\SrijanFinal\DataAccessLayer\obj\Debug\DataAccessLayer.csproj.CoreCompileInputs.cache
+D:\SrijanFinal\DataAccessLayer\obj\Debug\DataAccessLayer.csproj.CopyComplete
+D:\SrijanFinal\DataAccessLayer\obj\Debug\DataAccessLayer.dll
+D:\SrijanFinal\DataAccessLayer\obj\Debug\DataAccessLayer.pdb
+F:\Officework\SrijanFinal\DataAccessLayer\bin\Debug\DataAccessLayer.dll
+F:\Officework\SrijanFinal\DataAccessLayer\bin\Debug\DataAccessLayer.pdb
+F:\Officework\SrijanFinal\DataAccessLayer\bin\Debug\Encryption.dll
+F:\Officework\SrijanFinal\DataAccessLayer\bin\Debug\Microsoft.Web.Infrastructure.dll
+F:\Officework\SrijanFinal\DataAccessLayer\bin\Debug\System.Web.Helpers.dll
+F:\Officework\SrijanFinal\DataAccessLayer\bin\Debug\System.Web.Razor.dll
+F:\Officework\SrijanFinal\DataAccessLayer\bin\Debug\System.Web.WebPages.Deployment.dll
+F:\Officework\SrijanFinal\DataAccessLayer\bin\Debug\System.Web.WebPages.dll
+F:\Officework\SrijanFinal\DataAccessLayer\bin\Debug\System.Web.WebPages.Razor.dll
+F:\Officework\SrijanFinal\DataAccessLayer\bin\Debug\Encryption.pdb
+F:\Officework\SrijanFinal\DataAccessLayer\bin\Debug\System.Web.Helpers.xml
+F:\Officework\SrijanFinal\DataAccessLayer\bin\Debug\System.Web.Razor.xml
+F:\Officework\SrijanFinal\DataAccessLayer\bin\Debug\System.Web.WebPages.xml
+F:\Officework\SrijanFinal\DataAccessLayer\bin\Debug\System.Web.WebPages.Deployment.xml
+F:\Officework\SrijanFinal\DataAccessLayer\bin\Debug\System.Web.WebPages.Razor.xml
+F:\Officework\SrijanFinal\DataAccessLayer\obj\Debug\DataAccessLayer.csprojAssemblyReference.cache
+F:\Officework\SrijanFinal\DataAccessLayer\obj\Debug\DataAccessLayer.csproj.CoreCompileInputs.cache
+F:\Officework\SrijanFinal\DataAccessLayer\obj\Debug\DataAccessLayer.csproj.CopyComplete
+F:\Officework\SrijanFinal\DataAccessLayer\obj\Debug\DataAccessLayer.dll
+F:\Officework\SrijanFinal\DataAccessLayer\obj\Debug\DataAccessLayer.pdb
+D:\New Work Office\SrijanFinal\DataAccessLayer\bin\Debug\DataAccessLayer.dll
+D:\New Work Office\SrijanFinal\DataAccessLayer\bin\Debug\DataAccessLayer.pdb
+D:\New Work Office\SrijanFinal\DataAccessLayer\bin\Debug\Encryption.dll
+D:\New Work Office\SrijanFinal\DataAccessLayer\bin\Debug\Microsoft.Web.Infrastructure.dll
+D:\New Work Office\SrijanFinal\DataAccessLayer\bin\Debug\System.Web.Helpers.dll
+D:\New Work Office\SrijanFinal\DataAccessLayer\bin\Debug\System.Web.Razor.dll
+D:\New Work Office\SrijanFinal\DataAccessLayer\bin\Debug\System.Web.WebPages.Deployment.dll
+D:\New Work Office\SrijanFinal\DataAccessLayer\bin\Debug\System.Web.WebPages.dll
+D:\New Work Office\SrijanFinal\DataAccessLayer\bin\Debug\System.Web.WebPages.Razor.dll
+D:\New Work Office\SrijanFinal\DataAccessLayer\bin\Debug\Encryption.pdb
+D:\New Work Office\SrijanFinal\DataAccessLayer\bin\Debug\System.Web.Helpers.xml
+D:\New Work Office\SrijanFinal\DataAccessLayer\bin\Debug\System.Web.Razor.xml
+D:\New Work Office\SrijanFinal\DataAccessLayer\bin\Debug\System.Web.WebPages.xml
+D:\New Work Office\SrijanFinal\DataAccessLayer\bin\Debug\System.Web.WebPages.Deployment.xml
+D:\New Work Office\SrijanFinal\DataAccessLayer\bin\Debug\System.Web.WebPages.Razor.xml
+D:\New Work Office\SrijanFinal\DataAccessLayer\obj\Debug\DataAccessLayer.csprojAssemblyReference.cache
+D:\New Work Office\SrijanFinal\DataAccessLayer\obj\Debug\DataAccessLayer.csproj.CoreCompileInputs.cache
+D:\New Work Office\SrijanFinal\DataAccessLayer\obj\Debug\DataAccessLayer.csproj.CopyComplete
+D:\New Work Office\SrijanFinal\DataAccessLayer\obj\Debug\DataAccessLayer.dll
+D:\New Work Office\SrijanFinal\DataAccessLayer\obj\Debug\DataAccessLayer.pdb
+D:\deepti\srijanwork\SrijanFinal\DataAccessLayer\bin\Debug\DataAccessLayer.dll
+D:\deepti\srijanwork\SrijanFinal\DataAccessLayer\bin\Debug\DataAccessLayer.pdb
+D:\deepti\srijanwork\SrijanFinal\DataAccessLayer\bin\Debug\Encryption.dll
+D:\deepti\srijanwork\SrijanFinal\DataAccessLayer\bin\Debug\Microsoft.Web.Infrastructure.dll
+D:\deepti\srijanwork\SrijanFinal\DataAccessLayer\bin\Debug\System.Web.Helpers.dll
+D:\deepti\srijanwork\SrijanFinal\DataAccessLayer\bin\Debug\System.Web.Razor.dll
+D:\deepti\srijanwork\SrijanFinal\DataAccessLayer\bin\Debug\System.Web.WebPages.Deployment.dll
+D:\deepti\srijanwork\SrijanFinal\DataAccessLayer\bin\Debug\System.Web.WebPages.dll
+D:\deepti\srijanwork\SrijanFinal\DataAccessLayer\bin\Debug\System.Web.WebPages.Razor.dll
+D:\deepti\srijanwork\SrijanFinal\DataAccessLayer\bin\Debug\Encryption.pdb
+D:\deepti\srijanwork\SrijanFinal\DataAccessLayer\bin\Debug\System.Web.Helpers.xml
+D:\deepti\srijanwork\SrijanFinal\DataAccessLayer\bin\Debug\System.Web.Razor.xml
+D:\deepti\srijanwork\SrijanFinal\DataAccessLayer\bin\Debug\System.Web.WebPages.xml
+D:\deepti\srijanwork\SrijanFinal\DataAccessLayer\bin\Debug\System.Web.WebPages.Deployment.xml
+D:\deepti\srijanwork\SrijanFinal\DataAccessLayer\bin\Debug\System.Web.WebPages.Razor.xml
+D:\deepti\srijanwork\SrijanFinal\DataAccessLayer\obj\Debug\DataAccessLayer.csprojAssemblyReference.cache
+D:\deepti\srijanwork\SrijanFinal\DataAccessLayer\obj\Debug\DataAccessLayer.csproj.CoreCompileInputs.cache
+D:\deepti\srijanwork\SrijanFinal\DataAccessLayer\obj\Debug\DataAccessLayer.csproj.CopyComplete
+D:\deepti\srijanwork\SrijanFinal\DataAccessLayer\obj\Debug\DataAccessLayer.dll
+D:\deepti\srijanwork\SrijanFinal\DataAccessLayer\obj\Debug\DataAccessLayer.pdb
+D:\dailyproject\SrijanFinal\DataAccessLayer\bin\Debug\DataAccessLayer.dll
+D:\dailyproject\SrijanFinal\DataAccessLayer\bin\Debug\DataAccessLayer.pdb
+D:\dailyproject\SrijanFinal\DataAccessLayer\bin\Debug\Encryption.dll
+D:\dailyproject\SrijanFinal\DataAccessLayer\bin\Debug\Microsoft.Web.Infrastructure.dll
+D:\dailyproject\SrijanFinal\DataAccessLayer\bin\Debug\System.Web.Helpers.dll
+D:\dailyproject\SrijanFinal\DataAccessLayer\bin\Debug\System.Web.Razor.dll
+D:\dailyproject\SrijanFinal\DataAccessLayer\bin\Debug\System.Web.WebPages.Deployment.dll
+D:\dailyproject\SrijanFinal\DataAccessLayer\bin\Debug\System.Web.WebPages.dll
+D:\dailyproject\SrijanFinal\DataAccessLayer\bin\Debug\System.Web.WebPages.Razor.dll
+D:\dailyproject\SrijanFinal\DataAccessLayer\bin\Debug\Encryption.pdb
+D:\dailyproject\SrijanFinal\DataAccessLayer\bin\Debug\System.Web.Helpers.xml
+D:\dailyproject\SrijanFinal\DataAccessLayer\bin\Debug\System.Web.Razor.xml
+D:\dailyproject\SrijanFinal\DataAccessLayer\bin\Debug\System.Web.WebPages.xml
+D:\dailyproject\SrijanFinal\DataAccessLayer\bin\Debug\System.Web.WebPages.Deployment.xml
+D:\dailyproject\SrijanFinal\DataAccessLayer\bin\Debug\System.Web.WebPages.Razor.xml
+D:\dailyproject\SrijanFinal\DataAccessLayer\obj\Debug\DataAccessLayer.csprojAssemblyReference.cache
+D:\dailyproject\SrijanFinal\DataAccessLayer\obj\Debug\DataAccessLayer.csproj.CoreCompileInputs.cache
+D:\dailyproject\SrijanFinal\DataAccessLayer\obj\Debug\DataAccessLayer.csproj.CopyComplete
+D:\dailyproject\SrijanFinal\DataAccessLayer\obj\Debug\DataAccessLayer.dll
+D:\dailyproject\SrijanFinal\DataAccessLayer\obj\Debug\DataAccessLayer.pdb
+D:\dailyproject\SrijanFinal04-01-2021\DataAccessLayer\bin\Debug\DataAccessLayer.dll
+D:\dailyproject\SrijanFinal04-01-2021\DataAccessLayer\bin\Debug\DataAccessLayer.pdb
+D:\dailyproject\SrijanFinal04-01-2021\DataAccessLayer\bin\Debug\Encryption.dll
+D:\dailyproject\SrijanFinal04-01-2021\DataAccessLayer\bin\Debug\Microsoft.Web.Infrastructure.dll
+D:\dailyproject\SrijanFinal04-01-2021\DataAccessLayer\bin\Debug\System.Web.Helpers.dll
+D:\dailyproject\SrijanFinal04-01-2021\DataAccessLayer\bin\Debug\System.Web.Razor.dll
+D:\dailyproject\SrijanFinal04-01-2021\DataAccessLayer\bin\Debug\System.Web.WebPages.Deployment.dll
+D:\dailyproject\SrijanFinal04-01-2021\DataAccessLayer\bin\Debug\System.Web.WebPages.dll
+D:\dailyproject\SrijanFinal04-01-2021\DataAccessLayer\bin\Debug\System.Web.WebPages.Razor.dll
+D:\dailyproject\SrijanFinal04-01-2021\DataAccessLayer\bin\Debug\Encryption.pdb
+D:\dailyproject\SrijanFinal04-01-2021\DataAccessLayer\bin\Debug\System.Web.Helpers.xml
+D:\dailyproject\SrijanFinal04-01-2021\DataAccessLayer\bin\Debug\System.Web.Razor.xml
+D:\dailyproject\SrijanFinal04-01-2021\DataAccessLayer\bin\Debug\System.Web.WebPages.xml
+D:\dailyproject\SrijanFinal04-01-2021\DataAccessLayer\bin\Debug\System.Web.WebPages.Deployment.xml
+D:\dailyproject\SrijanFinal04-01-2021\DataAccessLayer\bin\Debug\System.Web.WebPages.Razor.xml
+D:\dailyproject\SrijanFinal04-01-2021\DataAccessLayer\obj\Debug\DataAccessLayer.csprojAssemblyReference.cache
+D:\dailyproject\SrijanFinal04-01-2021\DataAccessLayer\obj\Debug\DataAccessLayer.csproj.CoreCompileInputs.cache
+D:\dailyproject\SrijanFinal04-01-2021\DataAccessLayer\obj\Debug\DataAccessLayer.csproj.CopyComplete
+D:\dailyproject\SrijanFinal04-01-2021\DataAccessLayer\obj\Debug\DataAccessLayer.dll
+D:\dailyproject\SrijanFinal04-01-2021\DataAccessLayer\obj\Debug\DataAccessLayer.pdb
+D:\dailyproject\LATESTPROJECT\SrijanFinal28-01-2021\DataAccessLayer\bin\Debug\DataAccessLayer.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal28-01-2021\DataAccessLayer\bin\Debug\DataAccessLayer.pdb
+D:\dailyproject\LATESTPROJECT\SrijanFinal28-01-2021\DataAccessLayer\bin\Debug\Encryption.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal28-01-2021\DataAccessLayer\bin\Debug\Microsoft.Web.Infrastructure.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal28-01-2021\DataAccessLayer\bin\Debug\System.Web.Helpers.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal28-01-2021\DataAccessLayer\bin\Debug\System.Web.Razor.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal28-01-2021\DataAccessLayer\bin\Debug\System.Web.WebPages.Deployment.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal28-01-2021\DataAccessLayer\bin\Debug\System.Web.WebPages.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal28-01-2021\DataAccessLayer\bin\Debug\System.Web.WebPages.Razor.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal28-01-2021\DataAccessLayer\bin\Debug\Encryption.pdb
+D:\dailyproject\LATESTPROJECT\SrijanFinal28-01-2021\DataAccessLayer\bin\Debug\System.Web.Helpers.xml
+D:\dailyproject\LATESTPROJECT\SrijanFinal28-01-2021\DataAccessLayer\bin\Debug\System.Web.Razor.xml
+D:\dailyproject\LATESTPROJECT\SrijanFinal28-01-2021\DataAccessLayer\bin\Debug\System.Web.WebPages.xml
+D:\dailyproject\LATESTPROJECT\SrijanFinal28-01-2021\DataAccessLayer\bin\Debug\System.Web.WebPages.Deployment.xml
+D:\dailyproject\LATESTPROJECT\SrijanFinal28-01-2021\DataAccessLayer\bin\Debug\System.Web.WebPages.Razor.xml
+D:\dailyproject\LATESTPROJECT\SrijanFinal28-01-2021\DataAccessLayer\obj\Debug\DataAccessLayer.csprojAssemblyReference.cache
+D:\dailyproject\LATESTPROJECT\SrijanFinal28-01-2021\DataAccessLayer\obj\Debug\DataAccessLayer.csproj.CoreCompileInputs.cache
+D:\dailyproject\LATESTPROJECT\SrijanFinal28-01-2021\DataAccessLayer\obj\Debug\DataAccessLayer.csproj.CopyComplete
+D:\dailyproject\LATESTPROJECT\SrijanFinal28-01-2021\DataAccessLayer\obj\Debug\DataAccessLayer.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal28-01-2021\DataAccessLayer\obj\Debug\DataAccessLayer.pdb
+E:\Wali Projects\SrijanFinal\DataAccessLayer\bin\Debug\DataAccessLayer.dll
+E:\Wali Projects\SrijanFinal\DataAccessLayer\bin\Debug\DataAccessLayer.pdb
+E:\Wali Projects\SrijanFinal\DataAccessLayer\bin\Debug\Encryption.dll
+E:\Wali Projects\SrijanFinal\DataAccessLayer\bin\Debug\Microsoft.Web.Infrastructure.dll
+E:\Wali Projects\SrijanFinal\DataAccessLayer\bin\Debug\System.Web.Helpers.dll
+E:\Wali Projects\SrijanFinal\DataAccessLayer\bin\Debug\System.Web.Razor.dll
+E:\Wali Projects\SrijanFinal\DataAccessLayer\bin\Debug\System.Web.WebPages.Deployment.dll
+E:\Wali Projects\SrijanFinal\DataAccessLayer\bin\Debug\System.Web.WebPages.dll
+E:\Wali Projects\SrijanFinal\DataAccessLayer\bin\Debug\System.Web.WebPages.Razor.dll
+E:\Wali Projects\SrijanFinal\DataAccessLayer\bin\Debug\Encryption.pdb
+E:\Wali Projects\SrijanFinal\DataAccessLayer\bin\Debug\System.Web.Helpers.xml
+E:\Wali Projects\SrijanFinal\DataAccessLayer\bin\Debug\System.Web.Razor.xml
+E:\Wali Projects\SrijanFinal\DataAccessLayer\bin\Debug\System.Web.WebPages.xml
+E:\Wali Projects\SrijanFinal\DataAccessLayer\bin\Debug\System.Web.WebPages.Deployment.xml
+E:\Wali Projects\SrijanFinal\DataAccessLayer\bin\Debug\System.Web.WebPages.Razor.xml
+E:\Wali Projects\SrijanFinal\DataAccessLayer\obj\Debug\DataAccessLayer.csprojAssemblyReference.cache
+E:\Wali Projects\SrijanFinal\DataAccessLayer\obj\Debug\DataAccessLayer.csproj.CopyComplete
+E:\Wali Projects\SrijanFinal\DataAccessLayer\obj\Debug\DataAccessLayer.dll
+E:\Wali Projects\SrijanFinal\DataAccessLayer\obj\Debug\DataAccessLayer.pdb
+D:\dailyproject\LATESTPROJECT\SrijanFinal26-02-2021\DataAccessLayer\bin\Debug\DataAccessLayer.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal26-02-2021\DataAccessLayer\bin\Debug\DataAccessLayer.pdb
+D:\dailyproject\LATESTPROJECT\SrijanFinal26-02-2021\DataAccessLayer\bin\Debug\Encryption.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal26-02-2021\DataAccessLayer\bin\Debug\Microsoft.Web.Infrastructure.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal26-02-2021\DataAccessLayer\bin\Debug\System.Web.Helpers.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal26-02-2021\DataAccessLayer\bin\Debug\System.Web.Razor.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal26-02-2021\DataAccessLayer\bin\Debug\System.Web.WebPages.Deployment.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal26-02-2021\DataAccessLayer\bin\Debug\System.Web.WebPages.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal26-02-2021\DataAccessLayer\bin\Debug\System.Web.WebPages.Razor.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal26-02-2021\DataAccessLayer\bin\Debug\Encryption.pdb
+D:\dailyproject\LATESTPROJECT\SrijanFinal26-02-2021\DataAccessLayer\bin\Debug\System.Web.Helpers.xml
+D:\dailyproject\LATESTPROJECT\SrijanFinal26-02-2021\DataAccessLayer\bin\Debug\System.Web.Razor.xml
+D:\dailyproject\LATESTPROJECT\SrijanFinal26-02-2021\DataAccessLayer\bin\Debug\System.Web.WebPages.xml
+D:\dailyproject\LATESTPROJECT\SrijanFinal26-02-2021\DataAccessLayer\bin\Debug\System.Web.WebPages.Deployment.xml
+D:\dailyproject\LATESTPROJECT\SrijanFinal26-02-2021\DataAccessLayer\bin\Debug\System.Web.WebPages.Razor.xml
+D:\dailyproject\LATESTPROJECT\SrijanFinal26-02-2021\DataAccessLayer\obj\Debug\DataAccessLayer.csprojAssemblyReference.cache
+D:\dailyproject\LATESTPROJECT\SrijanFinal26-02-2021\DataAccessLayer\obj\Debug\DataAccessLayer.csproj.CoreCompileInputs.cache
+D:\dailyproject\LATESTPROJECT\SrijanFinal26-02-2021\DataAccessLayer\obj\Debug\DataAccessLayer.csproj.CopyComplete
+D:\dailyproject\LATESTPROJECT\SrijanFinal26-02-2021\DataAccessLayer\obj\Debug\DataAccessLayer.dll
+D:\dailyproject\LATESTPROJECT\SrijanFinal26-02-2021\DataAccessLayer\obj\Debug\DataAccessLayer.pdb
+D:\dailyproject\LATESTPROJECT\march\04-03-2021\DataAccessLayer\bin\Debug\DataAccessLayer.dll
+D:\dailyproject\LATESTPROJECT\march\04-03-2021\DataAccessLayer\bin\Debug\DataAccessLayer.pdb
+D:\dailyproject\LATESTPROJECT\march\04-03-2021\DataAccessLayer\bin\Debug\Encryption.dll
+D:\dailyproject\LATESTPROJECT\march\04-03-2021\DataAccessLayer\bin\Debug\Microsoft.Web.Infrastructure.dll
+D:\dailyproject\LATESTPROJECT\march\04-03-2021\DataAccessLayer\bin\Debug\System.Web.Helpers.dll
+D:\dailyproject\LATESTPROJECT\march\04-03-2021\DataAccessLayer\bin\Debug\System.Web.Razor.dll
+D:\dailyproject\LATESTPROJECT\march\04-03-2021\DataAccessLayer\bin\Debug\System.Web.WebPages.Deployment.dll
+D:\dailyproject\LATESTPROJECT\march\04-03-2021\DataAccessLayer\bin\Debug\System.Web.WebPages.dll
+D:\dailyproject\LATESTPROJECT\march\04-03-2021\DataAccessLayer\bin\Debug\System.Web.WebPages.Razor.dll
+D:\dailyproject\LATESTPROJECT\march\04-03-2021\DataAccessLayer\bin\Debug\Encryption.pdb
+D:\dailyproject\LATESTPROJECT\march\04-03-2021\DataAccessLayer\bin\Debug\System.Web.Helpers.xml
+D:\dailyproject\LATESTPROJECT\march\04-03-2021\DataAccessLayer\bin\Debug\System.Web.Razor.xml
+D:\dailyproject\LATESTPROJECT\march\04-03-2021\DataAccessLayer\bin\Debug\System.Web.WebPages.xml
+D:\dailyproject\LATESTPROJECT\march\04-03-2021\DataAccessLayer\bin\Debug\System.Web.WebPages.Deployment.xml
+D:\dailyproject\LATESTPROJECT\march\04-03-2021\DataAccessLayer\bin\Debug\System.Web.WebPages.Razor.xml
+D:\dailyproject\LATESTPROJECT\march\04-03-2021\DataAccessLayer\obj\Debug\DataAccessLayer.csprojAssemblyReference.cache
+D:\dailyproject\LATESTPROJECT\march\04-03-2021\DataAccessLayer\obj\Debug\DataAccessLayer.csproj.CoreCompileInputs.cache
+D:\dailyproject\LATESTPROJECT\march\04-03-2021\DataAccessLayer\obj\Debug\DataAccessLayer.csproj.CopyComplete
+D:\dailyproject\LATESTPROJECT\march\04-03-2021\DataAccessLayer\obj\Debug\DataAccessLayer.dll
+D:\dailyproject\LATESTPROJECT\march\04-03-2021\DataAccessLayer\obj\Debug\DataAccessLayer.pdb
+D:\dailyproject\LATESTPROJECT\march\10-03-2021\DataAccessLayer\bin\Debug\DataAccessLayer.dll
+D:\dailyproject\LATESTPROJECT\march\10-03-2021\DataAccessLayer\bin\Debug\DataAccessLayer.pdb
+D:\dailyproject\LATESTPROJECT\march\10-03-2021\DataAccessLayer\bin\Debug\Encryption.dll
+D:\dailyproject\LATESTPROJECT\march\10-03-2021\DataAccessLayer\bin\Debug\Microsoft.Web.Infrastructure.dll
+D:\dailyproject\LATESTPROJECT\march\10-03-2021\DataAccessLayer\bin\Debug\System.Web.Helpers.dll
+D:\dailyproject\LATESTPROJECT\march\10-03-2021\DataAccessLayer\bin\Debug\System.Web.Razor.dll
+D:\dailyproject\LATESTPROJECT\march\10-03-2021\DataAccessLayer\bin\Debug\System.Web.WebPages.Deployment.dll
+D:\dailyproject\LATESTPROJECT\march\10-03-2021\DataAccessLayer\bin\Debug\System.Web.WebPages.dll
+D:\dailyproject\LATESTPROJECT\march\10-03-2021\DataAccessLayer\bin\Debug\System.Web.WebPages.Razor.dll
+D:\dailyproject\LATESTPROJECT\march\10-03-2021\DataAccessLayer\bin\Debug\Encryption.pdb
+D:\dailyproject\LATESTPROJECT\march\10-03-2021\DataAccessLayer\bin\Debug\System.Web.Helpers.xml
+D:\dailyproject\LATESTPROJECT\march\10-03-2021\DataAccessLayer\bin\Debug\System.Web.Razor.xml
+D:\dailyproject\LATESTPROJECT\march\10-03-2021\DataAccessLayer\bin\Debug\System.Web.WebPages.xml
+D:\dailyproject\LATESTPROJECT\march\10-03-2021\DataAccessLayer\bin\Debug\System.Web.WebPages.Deployment.xml
+D:\dailyproject\LATESTPROJECT\march\10-03-2021\DataAccessLayer\bin\Debug\System.Web.WebPages.Razor.xml
+D:\dailyproject\LATESTPROJECT\march\10-03-2021\DataAccessLayer\obj\Debug\DataAccessLayer.csprojAssemblyReference.cache
+D:\dailyproject\LATESTPROJECT\march\10-03-2021\DataAccessLayer\obj\Debug\DataAccessLayer.csproj.CoreCompileInputs.cache
+D:\dailyproject\LATESTPROJECT\march\10-03-2021\DataAccessLayer\obj\Debug\DataAccessLayer.csproj.CopyComplete
+D:\dailyproject\LATESTPROJECT\march\10-03-2021\DataAccessLayer\obj\Debug\DataAccessLayer.dll
+D:\dailyproject\LATESTPROJECT\march\10-03-2021\DataAccessLayer\obj\Debug\DataAccessLayer.pdb
+D:\dailyproject\LATESTPROJECT\march\19-03-2021\DataAccessLayer\bin\Debug\DataAccessLayer.dll
+D:\dailyproject\LATESTPROJECT\march\19-03-2021\DataAccessLayer\bin\Debug\DataAccessLayer.pdb
+D:\dailyproject\LATESTPROJECT\march\19-03-2021\DataAccessLayer\bin\Debug\Encryption.dll
+D:\dailyproject\LATESTPROJECT\march\19-03-2021\DataAccessLayer\bin\Debug\Microsoft.Web.Infrastructure.dll
+D:\dailyproject\LATESTPROJECT\march\19-03-2021\DataAccessLayer\bin\Debug\System.Web.Helpers.dll
+D:\dailyproject\LATESTPROJECT\march\19-03-2021\DataAccessLayer\bin\Debug\System.Web.Razor.dll
+D:\dailyproject\LATESTPROJECT\march\19-03-2021\DataAccessLayer\bin\Debug\System.Web.WebPages.Deployment.dll
+D:\dailyproject\LATESTPROJECT\march\19-03-2021\DataAccessLayer\bin\Debug\System.Web.WebPages.dll
+D:\dailyproject\LATESTPROJECT\march\19-03-2021\DataAccessLayer\bin\Debug\System.Web.WebPages.Razor.dll
+D:\dailyproject\LATESTPROJECT\march\19-03-2021\DataAccessLayer\bin\Debug\Encryption.pdb
+D:\dailyproject\LATESTPROJECT\march\19-03-2021\DataAccessLayer\bin\Debug\System.Web.Helpers.xml
+D:\dailyproject\LATESTPROJECT\march\19-03-2021\DataAccessLayer\bin\Debug\System.Web.Razor.xml
+D:\dailyproject\LATESTPROJECT\march\19-03-2021\DataAccessLayer\bin\Debug\System.Web.WebPages.xml
+D:\dailyproject\LATESTPROJECT\march\19-03-2021\DataAccessLayer\bin\Debug\System.Web.WebPages.Deployment.xml
+D:\dailyproject\LATESTPROJECT\march\19-03-2021\DataAccessLayer\bin\Debug\System.Web.WebPages.Razor.xml
+D:\dailyproject\LATESTPROJECT\march\19-03-2021\DataAccessLayer\obj\Debug\DataAccessLayer.csprojAssemblyReference.cache
+D:\dailyproject\LATESTPROJECT\march\19-03-2021\DataAccessLayer\obj\Debug\DataAccessLayer.csproj.CoreCompileInputs.cache
+D:\dailyproject\LATESTPROJECT\march\19-03-2021\DataAccessLayer\obj\Debug\DataAccessLayer.csproj.CopyComplete
+D:\dailyproject\LATESTPROJECT\march\19-03-2021\DataAccessLayer\obj\Debug\DataAccessLayer.dll
+D:\dailyproject\LATESTPROJECT\march\19-03-2021\DataAccessLayer\obj\Debug\DataAccessLayer.pdb
+E:\New Latest Srijan Final After Marriage\for changes new year deepti project\DataAccessLayer\bin\Debug\DataAccessLayer.dll
+E:\New Latest Srijan Final After Marriage\for changes new year deepti project\DataAccessLayer\bin\Debug\DataAccessLayer.pdb
+E:\New Latest Srijan Final After Marriage\for changes new year deepti project\DataAccessLayer\bin\Debug\Encryption.dll
+E:\New Latest Srijan Final After Marriage\for changes new year deepti project\DataAccessLayer\bin\Debug\Microsoft.Web.Infrastructure.dll
+E:\New Latest Srijan Final After Marriage\for changes new year deepti project\DataAccessLayer\bin\Debug\System.Web.Helpers.dll
+E:\New Latest Srijan Final After Marriage\for changes new year deepti project\DataAccessLayer\bin\Debug\System.Web.Razor.dll
+E:\New Latest Srijan Final After Marriage\for changes new year deepti project\DataAccessLayer\bin\Debug\System.Web.WebPages.Deployment.dll
+E:\New Latest Srijan Final After Marriage\for changes new year deepti project\DataAccessLayer\bin\Debug\System.Web.WebPages.dll
+E:\New Latest Srijan Final After Marriage\for changes new year deepti project\DataAccessLayer\bin\Debug\System.Web.WebPages.Razor.dll
+E:\New Latest Srijan Final After Marriage\for changes new year deepti project\DataAccessLayer\bin\Debug\Encryption.pdb
+E:\New Latest Srijan Final After Marriage\for changes new year deepti project\DataAccessLayer\bin\Debug\System.Web.Helpers.xml
+E:\New Latest Srijan Final After Marriage\for changes new year deepti project\DataAccessLayer\bin\Debug\System.Web.Razor.xml
+E:\New Latest Srijan Final After Marriage\for changes new year deepti project\DataAccessLayer\bin\Debug\System.Web.WebPages.xml
+E:\New Latest Srijan Final After Marriage\for changes new year deepti project\DataAccessLayer\bin\Debug\System.Web.WebPages.Deployment.xml
+E:\New Latest Srijan Final After Marriage\for changes new year deepti project\DataAccessLayer\bin\Debug\System.Web.WebPages.Razor.xml
+E:\New Latest Srijan Final After Marriage\for changes new year deepti project\DataAccessLayer\obj\Debug\DataAccessLayer.csproj.CopyComplete
+E:\New Latest Srijan Final After Marriage\for changes new year deepti project\DataAccessLayer\obj\Debug\DataAccessLayer.dll
+E:\New Latest Srijan Final After Marriage\for changes new year deepti project\DataAccessLayer\obj\Debug\DataAccessLayer.pdb
+E:\New Latest Srijan Final After Marriage\for changes new year deepti project\DataAccessLayer\obj\Debug\DataAccessLayer.csprojAssemblyReference.cache
+D:\dailyproject\LATESTPROJECT\April for changes new year deepti project\1-04-2021\DataAccessLayer\bin\Debug\DataAccessLayer.dll
+D:\dailyproject\LATESTPROJECT\April for changes new year deepti project\1-04-2021\DataAccessLayer\bin\Debug\DataAccessLayer.pdb
+D:\dailyproject\LATESTPROJECT\April for changes new year deepti project\1-04-2021\DataAccessLayer\bin\Debug\Encryption.dll
+D:\dailyproject\LATESTPROJECT\April for changes new year deepti project\1-04-2021\DataAccessLayer\bin\Debug\Microsoft.Web.Infrastructure.dll
+D:\dailyproject\LATESTPROJECT\April for changes new year deepti project\1-04-2021\DataAccessLayer\bin\Debug\System.Web.Helpers.dll
+D:\dailyproject\LATESTPROJECT\April for changes new year deepti project\1-04-2021\DataAccessLayer\bin\Debug\System.Web.Razor.dll
+D:\dailyproject\LATESTPROJECT\April for changes new year deepti project\1-04-2021\DataAccessLayer\bin\Debug\System.Web.WebPages.Deployment.dll
+D:\dailyproject\LATESTPROJECT\April for changes new year deepti project\1-04-2021\DataAccessLayer\bin\Debug\System.Web.WebPages.dll
+D:\dailyproject\LATESTPROJECT\April for changes new year deepti project\1-04-2021\DataAccessLayer\bin\Debug\System.Web.WebPages.Razor.dll
+D:\dailyproject\LATESTPROJECT\April for changes new year deepti project\1-04-2021\DataAccessLayer\bin\Debug\Encryption.pdb
+D:\dailyproject\LATESTPROJECT\April for changes new year deepti project\1-04-2021\DataAccessLayer\bin\Debug\System.Web.Helpers.xml
+D:\dailyproject\LATESTPROJECT\April for changes new year deepti project\1-04-2021\DataAccessLayer\bin\Debug\System.Web.Razor.xml
+D:\dailyproject\LATESTPROJECT\April for changes new year deepti project\1-04-2021\DataAccessLayer\bin\Debug\System.Web.WebPages.xml
+D:\dailyproject\LATESTPROJECT\April for changes new year deepti project\1-04-2021\DataAccessLayer\bin\Debug\System.Web.WebPages.Deployment.xml
+D:\dailyproject\LATESTPROJECT\April for changes new year deepti project\1-04-2021\DataAccessLayer\bin\Debug\System.Web.WebPages.Razor.xml
+D:\dailyproject\LATESTPROJECT\April for changes new year deepti project\1-04-2021\DataAccessLayer\obj\Debug\DataAccessLayer.csprojAssemblyReference.cache
+D:\dailyproject\LATESTPROJECT\April for changes new year deepti project\1-04-2021\DataAccessLayer\obj\Debug\DataAccessLayer.csproj.CoreCompileInputs.cache
+D:\dailyproject\LATESTPROJECT\April for changes new year deepti project\1-04-2021\DataAccessLayer\obj\Debug\DataAccessLayer.csproj.CopyComplete
+D:\dailyproject\LATESTPROJECT\April for changes new year deepti project\1-04-2021\DataAccessLayer\obj\Debug\DataAccessLayer.dll
+D:\dailyproject\LATESTPROJECT\April for changes new year deepti project\1-04-2021\DataAccessLayer\obj\Debug\DataAccessLayer.pdb
+F:\New Work Office\09-04-2021\DataAccessLayer\bin\Debug\DataAccessLayer.dll
+F:\New Work Office\09-04-2021\DataAccessLayer\bin\Debug\DataAccessLayer.pdb
+F:\New Work Office\09-04-2021\DataAccessLayer\bin\Debug\Encryption.dll
+F:\New Work Office\09-04-2021\DataAccessLayer\bin\Debug\Microsoft.Web.Infrastructure.dll
+F:\New Work Office\09-04-2021\DataAccessLayer\bin\Debug\System.Web.Helpers.dll
+F:\New Work Office\09-04-2021\DataAccessLayer\bin\Debug\System.Web.Razor.dll
+F:\New Work Office\09-04-2021\DataAccessLayer\bin\Debug\System.Web.WebPages.Deployment.dll
+F:\New Work Office\09-04-2021\DataAccessLayer\bin\Debug\System.Web.WebPages.dll
+F:\New Work Office\09-04-2021\DataAccessLayer\bin\Debug\System.Web.WebPages.Razor.dll
+F:\New Work Office\09-04-2021\DataAccessLayer\bin\Debug\Encryption.pdb
+F:\New Work Office\09-04-2021\DataAccessLayer\bin\Debug\System.Web.Helpers.xml
+F:\New Work Office\09-04-2021\DataAccessLayer\bin\Debug\System.Web.Razor.xml
+F:\New Work Office\09-04-2021\DataAccessLayer\bin\Debug\System.Web.WebPages.xml
+F:\New Work Office\09-04-2021\DataAccessLayer\bin\Debug\System.Web.WebPages.Deployment.xml
+F:\New Work Office\09-04-2021\DataAccessLayer\bin\Debug\System.Web.WebPages.Razor.xml
+F:\New Work Office\09-04-2021\DataAccessLayer\obj\Debug\DataAccessLayer.csprojAssemblyReference.cache
+F:\New Work Office\09-04-2021\DataAccessLayer\obj\Debug\DataAccessLayer.csproj.CoreCompileInputs.cache
+F:\New Work Office\09-04-2021\DataAccessLayer\obj\Debug\DataAccessLayer.csproj.CopyComplete
+F:\New Work Office\09-04-2021\DataAccessLayer\obj\Debug\DataAccessLayer.dll
+F:\New Work Office\09-04-2021\DataAccessLayer\obj\Debug\DataAccessLayer.pdb
+D:\Office DPIT\may\27-05-2021\09-04-2021\DataAccessLayer\bin\Debug\DataAccessLayer.dll
+D:\Office DPIT\may\27-05-2021\09-04-2021\DataAccessLayer\bin\Debug\DataAccessLayer.pdb
+D:\Office DPIT\may\27-05-2021\09-04-2021\DataAccessLayer\bin\Debug\Encryption.dll
+D:\Office DPIT\may\27-05-2021\09-04-2021\DataAccessLayer\bin\Debug\Microsoft.Web.Infrastructure.dll
+D:\Office DPIT\may\27-05-2021\09-04-2021\DataAccessLayer\bin\Debug\System.Web.Helpers.dll
+D:\Office DPIT\may\27-05-2021\09-04-2021\DataAccessLayer\bin\Debug\System.Web.Razor.dll
+D:\Office DPIT\may\27-05-2021\09-04-2021\DataAccessLayer\bin\Debug\System.Web.WebPages.Deployment.dll
+D:\Office DPIT\may\27-05-2021\09-04-2021\DataAccessLayer\bin\Debug\System.Web.WebPages.dll
+D:\Office DPIT\may\27-05-2021\09-04-2021\DataAccessLayer\bin\Debug\System.Web.WebPages.Razor.dll
+D:\Office DPIT\may\27-05-2021\09-04-2021\DataAccessLayer\bin\Debug\Encryption.pdb
+D:\Office DPIT\may\27-05-2021\09-04-2021\DataAccessLayer\bin\Debug\System.Web.Helpers.xml
+D:\Office DPIT\may\27-05-2021\09-04-2021\DataAccessLayer\bin\Debug\System.Web.Razor.xml
+D:\Office DPIT\may\27-05-2021\09-04-2021\DataAccessLayer\bin\Debug\System.Web.WebPages.xml
+D:\Office DPIT\may\27-05-2021\09-04-2021\DataAccessLayer\bin\Debug\System.Web.WebPages.Deployment.xml
+D:\Office DPIT\may\27-05-2021\09-04-2021\DataAccessLayer\bin\Debug\System.Web.WebPages.Razor.xml
+D:\Office DPIT\may\27-05-2021\09-04-2021\DataAccessLayer\obj\Debug\DataAccessLayer.csprojAssemblyReference.cache
+D:\Office DPIT\may\27-05-2021\09-04-2021\DataAccessLayer\obj\Debug\DataAccessLayer.csproj.CoreCompileInputs.cache
+D:\Office DPIT\may\27-05-2021\09-04-2021\DataAccessLayer\obj\Debug\DataAccessLayer.csproj.CopyComplete
+D:\Office DPIT\may\27-05-2021\09-04-2021\DataAccessLayer\obj\Debug\DataAccessLayer.dll
+D:\Office DPIT\may\27-05-2021\09-04-2021\DataAccessLayer\obj\Debug\DataAccessLayer.pdb
+F:\New Work Office\27-05-2021\09-04-2021\DataAccessLayer\bin\Debug\DataAccessLayer.dll
+F:\New Work Office\27-05-2021\09-04-2021\DataAccessLayer\bin\Debug\DataAccessLayer.pdb
+F:\New Work Office\27-05-2021\09-04-2021\DataAccessLayer\bin\Debug\Encryption.dll
+F:\New Work Office\27-05-2021\09-04-2021\DataAccessLayer\bin\Debug\Microsoft.Web.Infrastructure.dll
+F:\New Work Office\27-05-2021\09-04-2021\DataAccessLayer\bin\Debug\System.Web.Helpers.dll
+F:\New Work Office\27-05-2021\09-04-2021\DataAccessLayer\bin\Debug\System.Web.Razor.dll
+F:\New Work Office\27-05-2021\09-04-2021\DataAccessLayer\bin\Debug\System.Web.WebPages.Deployment.dll
+F:\New Work Office\27-05-2021\09-04-2021\DataAccessLayer\bin\Debug\System.Web.WebPages.dll
+F:\New Work Office\27-05-2021\09-04-2021\DataAccessLayer\bin\Debug\System.Web.WebPages.Razor.dll
+F:\New Work Office\27-05-2021\09-04-2021\DataAccessLayer\bin\Debug\Encryption.pdb
+F:\New Work Office\27-05-2021\09-04-2021\DataAccessLayer\bin\Debug\System.Web.Helpers.xml
+F:\New Work Office\27-05-2021\09-04-2021\DataAccessLayer\bin\Debug\System.Web.Razor.xml
+F:\New Work Office\27-05-2021\09-04-2021\DataAccessLayer\bin\Debug\System.Web.WebPages.xml
+F:\New Work Office\27-05-2021\09-04-2021\DataAccessLayer\bin\Debug\System.Web.WebPages.Deployment.xml
+F:\New Work Office\27-05-2021\09-04-2021\DataAccessLayer\bin\Debug\System.Web.WebPages.Razor.xml
+F:\New Work Office\27-05-2021\09-04-2021\DataAccessLayer\obj\Debug\DataAccessLayer.csprojAssemblyReference.cache
+F:\New Work Office\27-05-2021\09-04-2021\DataAccessLayer\obj\Debug\DataAccessLayer.csproj.CoreCompileInputs.cache
+F:\New Work Office\27-05-2021\09-04-2021\DataAccessLayer\obj\Debug\DataAccessLayer.csproj.CopyComplete
+F:\New Work Office\27-05-2021\09-04-2021\DataAccessLayer\obj\Debug\DataAccessLayer.dll
+F:\New Work Office\27-05-2021\09-04-2021\DataAccessLayer\obj\Debug\DataAccessLayer.pdb
+D:\wali\27-05-2021\09-04-2021\DataAccessLayer\bin\Debug\DataAccessLayer.dll
+D:\wali\27-05-2021\09-04-2021\DataAccessLayer\bin\Debug\DataAccessLayer.pdb
+D:\wali\27-05-2021\09-04-2021\DataAccessLayer\bin\Debug\Encryption.dll
+D:\wali\27-05-2021\09-04-2021\DataAccessLayer\bin\Debug\Microsoft.Web.Infrastructure.dll
+D:\wali\27-05-2021\09-04-2021\DataAccessLayer\bin\Debug\System.Web.Helpers.dll
+D:\wali\27-05-2021\09-04-2021\DataAccessLayer\bin\Debug\System.Web.Razor.dll
+D:\wali\27-05-2021\09-04-2021\DataAccessLayer\bin\Debug\System.Web.WebPages.Deployment.dll
+D:\wali\27-05-2021\09-04-2021\DataAccessLayer\bin\Debug\System.Web.WebPages.dll
+D:\wali\27-05-2021\09-04-2021\DataAccessLayer\bin\Debug\System.Web.WebPages.Razor.dll
+D:\wali\27-05-2021\09-04-2021\DataAccessLayer\bin\Debug\Encryption.pdb
+D:\wali\27-05-2021\09-04-2021\DataAccessLayer\bin\Debug\System.Web.Helpers.xml
+D:\wali\27-05-2021\09-04-2021\DataAccessLayer\bin\Debug\System.Web.Razor.xml
+D:\wali\27-05-2021\09-04-2021\DataAccessLayer\bin\Debug\System.Web.WebPages.xml
+D:\wali\27-05-2021\09-04-2021\DataAccessLayer\bin\Debug\System.Web.WebPages.Deployment.xml
+D:\wali\27-05-2021\09-04-2021\DataAccessLayer\bin\Debug\System.Web.WebPages.Razor.xml
+D:\wali\27-05-2021\09-04-2021\DataAccessLayer\obj\Debug\DataAccessLayer.csprojAssemblyReference.cache
+D:\wali\27-05-2021\09-04-2021\DataAccessLayer\obj\Debug\DataAccessLayer.csproj.CoreCompileInputs.cache
+D:\wali\27-05-2021\09-04-2021\DataAccessLayer\obj\Debug\DataAccessLayer.csproj.CopyComplete
+D:\wali\27-05-2021\09-04-2021\DataAccessLayer\obj\Debug\DataAccessLayer.dll
+D:\wali\27-05-2021\09-04-2021\DataAccessLayer\obj\Debug\DataAccessLayer.pdb

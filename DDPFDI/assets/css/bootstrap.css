@@ -940,14 +940,14 @@ pre code {
     width: 83.33333333%;
   }
   .col-sm-9 {
-    width: 75%;
+    width: 77%;
   }
   .col-sm-8 {
     width: 66.66666667%;
   }
-  .col-sm-7 {
-    width: 58.33333333%;
-  }
+    .col-sm-7 {
+        width: 102.333333%;
+    }
   .col-sm-6 {
     width: 50%;
   }

@@ -1,0 +1,321 @@
+﻿using BusinessLayer;
+using Encryption;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+
+public partial class Test_Lab_HomePage : System.Web.UI.Page
+{
+    Cryptography objCrypto = new Cryptography();
+    Logic Lo = new Logic();
+    //private Cryptography Encrypt = new Cryptography();
+
+    private string _msg = string.Empty;
+    private string _sysMsg = string.Empty;
+    DataUtility Co = new DataUtility();
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        if (!IsPostBack)
+        {
+
+            //   BindTestDetails();
+            getorganisations();
+            GetAllLabs();
+            GetAllDiscipline();
+            GridViewTestBind("", "");
+
+        }
+        //else
+        //{
+        //    GridViewTestBind(ddlorganisation.SelectedItem.Text, "organisation_id");
+        //}
+    }
+
+    //public void BindTestDetails()
+    //{
+    //    DataTable dtremark = new DataTable();
+    //    dtremark = Lo.RetriveTestDetails();
+    //    if (dtremark.Rows.Count > 0)
+    //    {
+    //        gvtestdetails.DataSource = dtremark;
+    //        gvtestdetails.DataBind();
+    //    }
+    //}
+
+    protected void gvtestdetails_RowCreated(object sender, GridViewRowEventArgs e)
+    {
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            e.Row.TableSection = TableRowSection.TableBody;
+        }
+        else if (e.Row.RowType == DataControlRowType.Header)
+        {
+            e.Row.TableSection = TableRowSection.TableHeader;
+        }
+        else if (e.Row.RowType == DataControlRowType.Footer)
+        {
+            e.Row.TableSection = TableRowSection.TableFooter;
+        }
+    }
+    protected void gvtestdetails_RowCommand(object sender, GridViewCommandEventArgs e)
+    {
+        if (e.CommandName == "view")
+        {
+            GridViewRow item = (GridViewRow)(((Control)(e.CommandSource)).NamingContainer);
+            Label Organisation = (Label)item.FindControl("lblOrg");
+            lblorganisation.Text = Organisation.Text.Trim();
+            //    Label Division = (Label)item.FindControl("lblDivsion");
+            //lblofficecomplex.Text = Division.Text.Trim();
+            //if(lblofficecomplex.Text==""&& lblofficecomplex.Text==null && lblofficecomplex.Text =="Select")
+            //{
+            //    lblofficecomplex.Text = "N/A";
+            //}
+            Label Unit = (Label)item.FindControl("lblunit");
+            lblLab.Text = Unit.Text.Trim();
+
+            Label Discipline = (Label)item.FindControl("lbldiscipline");
+            lbldiscipline.Text = Discipline.Text.Trim();
+            Label nameoftest = (Label)item.FindControl("lblnameoftest");
+            lbltestname.Text = nameoftest.Text.Trim();
+            Label calibratnfacility = (Label)item.FindControl("lblcalibratnfac");
+            lblcalbiratn.Text = calibratnfacility.Text.Trim();
+            Label manufacturer = (Label)item.FindControl("lblmanufacturer");
+            lblequpmntmanuf.Text = manufacturer.Text.Trim();
+            Label chambersize = (Label)item.FindControl("lblchambersize");
+            lblchambersize.Text = chambersize.Text.Trim();
+            Label material = (Label)item.FindControl("lblmaterial");
+            lblmaterial.Text = material.Text.Trim();
+            Label equipmntrange = (Label)item.FindControl("lblequipmntrange");
+            lblrange.Text = equipmntrange.Text.Trim();
+            Label manufyear = (Label)item.FindControl("lblmanufyear");
+            lblmanufyear.Text = manufyear.Text.Trim();
+            Label specifications = (Label)item.FindControl("lblspecifications");
+            lblspecifications.Text = specifications.Text.Trim();
+            Label maxdimension = (Label)item.FindControl("lblmaxdimension");
+            lblmaxdimension.Text = maxdimension.Text.Trim();
+            Label maxweight = (Label)item.FindControl("lblmaxweight");
+            lblmaxweight.Text = maxweight.Text.Trim();
+            Label duration = (Label)item.FindControl("lblduration");
+            lblduration.Text = duration.Text.Trim();
+            Label advancenotice = (Label)item.FindControl("lbladvancenotice");
+            lbladvancenotice.Text = advancenotice.Text.Trim();
+            Label constraints = (Label)item.FindControl("lblconstraints");
+            lblconstraints.Text = constraints.Text.Trim();
+            Label remarks = (Label)item.FindControl("lblremrks");
+            lblremarks.Text = remarks.Text.Trim();
+
+            ScriptManager.RegisterStartupScript(this, GetType(), "viewdiv", "showPopup2();", true);
+        }
+        if (e.CommandName == "Book Order")
+        {
+            int id = Convert.ToInt32(e.CommandArgument);
+            Response.Redirect("~/Test_Lab/Booking.aspx?id=" + Convert.ToInt32(id));
+        }
+    }
+
+    protected void lnkbook_Click(object sender, EventArgs e)
+    {
+
+        Response.Redirect("~/Test_Lab/Booking.aspx", true);
+    }
+
+    public void getorganisations()
+    {
+        DataTable dtorganisation = Lo.Getorganisations();
+        ddlorganisation.DataSource = dtorganisation;
+        ddlorganisation.DataTextField = "organisation_name";
+        ddlorganisation.DataValueField = "id";
+        ddlorganisation.DataBind();
+        ddlorganisation.Items.Insert(0, "Select");
+    }
+
+    public void GetAllLabs()
+    {
+        DataTable dtLabs = Lo.GetLabs();
+        ddlLab.DataSource = dtLabs;
+        ddlLab.DataTextField = "lab_name";
+        ddlLab.DataBind();
+        ddlLab.Items.Insert(0, "Select");
+    }
+
+    public void GetAllDiscipline()
+    {
+        DataTable dtdiscipline = Lo.GetDiscipline();
+        ddldiscipline.DataSource = dtdiscipline;
+        ddldiscipline.DataTextField = "discipline_name";
+        ddldiscipline.DataBind();
+        ddldiscipline.Items.Insert(0, "Select");
+    }
+
+    protected void btnclose_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("HomePage", true);
+    }
+    protected void ddlorganisation_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        SeachResult();
+        //if (ddlorganisation.SelectedItem.Text != "Select")
+        //{
+        //    GridViewTestBind(ddlorganisation.SelectedItem.Text, "organisation_id");
+
+        //}
+        //else
+        //{
+        //    ddldiscipline.SelectedItem.Text = "Select";
+        //    ddlLab.SelectedItem.Text = "Select";
+        //    GridViewTestBind("", "");
+
+        //}
+    }
+
+    protected void ddlLab_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        //if (ddlLab.SelectedItem.Text != "Select")
+        //{
+        //    GridViewTestBind(ddlLab.SelectedItem.Text, "lab_id");
+
+        //}
+        //else
+        //{
+        //    ddldiscipline.SelectedItem.Text = "Select";
+        //    ddlorganisation.SelectedItem.Text = "Select";
+        //    GridViewTestBind("", "");
+        //}
+    }
+
+    protected void ddldiscipline_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        SeachResult();
+        //if (ddldiscipline.SelectedItem.Text != "Select")
+        //{
+        //    GridViewTestBind(ddldiscipline.SelectedItem.Text, "discipline_id");
+        //}
+        //else
+        //{
+        //    ddlorganisation.SelectedItem.Text = "Select";
+        //    ddlLab.SelectedItem.Text = "Select";
+        //    GridViewTestBind("", "");
+        //}
+    }
+    public void GridViewTestBind(string mRefNo, string mRole)
+    {
+        BindTest(mRole);
+    }
+   
+    protected void BindTest(string compname)
+    {
+        DataTable DtGrid = Lo.Dashboarddatabycompany("SearchingonHomepage", "", 0, "");
+          Session["TempData"] = DtGrid;
+          SeachResult();
+      //  DataView dv = new DataView(DtGrid);
+   //     if (compname == "organisation_id")
+   //     {
+   //         dv.RowFilter = "organisation_id='" + ddlorganisation.SelectedItem.Text + "'";
+   //     }
+   //     else if (compname == "lab_id")
+   //     {
+   //         dv.RowFilter = "lab_id='" + ddlLab.SelectedItem.Text + "'";
+   //     }
+   //     else if (compname == "discipline_id")
+   //     {
+   //         dv.RowFilter = "discipline_id='" + ddldiscipline.SelectedItem.Text + "'";
+   //     }
+   //Dvinsert();
+   //     gvtestdetails.DataSource = dv.ToTable();
+   //     gvtestdetails.DataBind();
+    }
+    #region New SearchFilterCode
+    #region Search Code Filter Code
+    string insert1 = "";
+    protected string Dvinsert(string sortExpression = null)
+    {
+        DataTable insert = new DataTable();
+        insert.Columns.Add(new DataColumn("Column", typeof(string)));
+        insert.Columns.Add(new DataColumn("Value", typeof(string)));
+        DataRow dr;
+        if (ddlorganisation.SelectedItem.Text != "Select")
+        {
+            dr = insert.NewRow();
+            dr["Column"] = "organisation_id" + "=";
+            dr["Value"] = "'" + ddlorganisation.SelectedItem.Text + "'";
+            insert.Rows.Add(dr);
+            //if (ddlLab.Visible == true && ddlLab.SelectedItem.Text != "Select")
+            //{
+            //    dr = insert.NewRow();
+            //    dr["Column"] = "discipline_id" + "=";
+            //    dr["Value"] = "'" + ddlLab.SelectedItem.Text + "'";
+            //    insert.Rows.Add(dr);
+            //}
+            if (ddldiscipline.Visible == true && ddldiscipline.SelectedItem.Text != "Select")
+            {
+                dr = insert.NewRow();
+                dr["Column"] = "discipline_id" + "=";
+                dr["Value"] = "'" + ddldiscipline.SelectedItem.Text + "'";
+                insert.Rows.Add(dr);
+            }
+        }
+        for (int i = 0; insert.Rows.Count > i; i++)
+        {
+            insert1 = insert1 + insert.Rows[i]["Column"].ToString() + " " + insert.Rows[i]["Value"].ToString() + " " + " and ";
+        }
+        if (insert1.ToString() != "")
+        {
+            insert1 = insert1.Substring(0, insert1.Length - 5);
+        }
+        return insert1;
+    }  
+    protected string BindInsertfilter()
+    {
+        return Dvinsert();
+    }
+
+    DataTable DtFilterView = new DataTable();
+    public void SeachResult(string sortExpression = null)
+    {
+        try
+        {
+            DtFilterView = (DataTable)Session["TempData"];
+            if (DtFilterView.Rows.Count > 0)
+            {
+                DataView dv = new DataView(DtFilterView);
+                DataTable dtnew = dv.ToTable();
+                if (dtnew.Rows.Count > 0)
+                {
+                    dv.RowFilter = BindInsertfilter();
+                    DataTable dtinner = dv.ToTable();
+                    if (dtinner.Rows.Count > 0)
+                    {
+                        gvtestdetails.DataSource = dv.ToTable();
+                        gvtestdetails.DataBind();
+                        gvtestdetails.Visible = true;
+                    }
+                    else
+                    {
+                        ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('No Record Found')", true);
+                        gvtestdetails.Visible = false;
+                    }
+                }
+                else
+                {
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('No Record Found')", true);
+                    gvtestdetails.Visible = false;
+                }
+            }
+            else
+            {
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('No Record Found')", true);
+                gvtestdetails.Visible = false;
+            }
+        }
+        catch (Exception ex)
+        {
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('" + ex.Message + "')", true);
+        }
+    }
+    #endregion
+    #endregion
+}

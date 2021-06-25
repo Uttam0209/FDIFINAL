@@ -1,0 +1,146 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="User_MasterPage.master.cs" Inherits="Test_Lab_User_MasterPage" %>
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>Test Lab Project</title>
+    <!-- Bootstrap core CSS -->
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+  <%--  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.23/datatables.min.css" />--%>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" />
+    <!-- Custom styles for this template -->
+    <link href="css/simple-sidebar.css" rel="stylesheet" />
+    <style>
+        #top3 ul li a
+        {
+            color:#fff;
+            text-transform:uppercase;
+        }
+    </style>
+
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form1" runat="server">
+        <div class="container-fluid" id="top">
+            <div class="row">
+                <div class="col-md-2">
+                    <a href="ProductList" class="d-flex justify-content-center">
+                        <img src="../ddp_logo.png" class="img-fluid" style="height: 70px" /></a>
+                </div>
+                <div class="col-md-8 pt-3 text-center">
+                    <h4 style="text-transform: uppercase;">Booking of government test facilities by industry in defence sector</h4>
+                </div>
+                <div class="col-md-2 text-center">
+                    <ul class="navbar-nav ml-auto" id="dropdown1">
+                        <li class="nav-item my-2">
+                            <div class="dropdown">
+                                <a class="dropdown-toggle nav-link" data-toggle="dropdown" href="#" style="border: 1px solid #333; color: #333;">
+                                    <asp:Label ID="lblusername" runat="server"></asp:Label></a>
+                                <div class="dropdown-menu">
+                                    <asp:LinkButton ID="lbllogout" runat="server" CssClass="dropdown-item">Logout</asp:LinkButton>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <nav id="top3" class="navbar navbar-expand-lg px-md-3 bg-dark">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav2" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="fa fa-bars" aria-hidden="true" style="color: white;"></i>
+            </button>
+            <div class="collapse navbar-collapse py-md-3 py-2" id="navbarNav2">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" runat="server" href="~/ProductList"><i class="fa fa-home" aria-hidden="true"></i></a>
+                    </li>
+                    <li class="nav-item active">
+                        <a href="~/About" runat="server" class="nav-link">About us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="~/FAQs" runat="server" class="nav-link">FAQ</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="~/FeedBack" runat="server" id="lnkfeedback" class="nav-link">FeedBack</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="~/FeedBack" runat="server" id="A1" class="nav-link">User Manual</a>
+                    </li>
+                </ul>
+            </div>
+            
+        </nav>
+
+        <div class="d-flex" id="wrapper">
+            <!-- Sidebar -->
+            <div class="bg-light border-right" id="sidebar-wrapper">
+                <div class="list-group list-group-flush">
+                    <a href="TestDashboard" class="list-group-item list-group-item-action bg-light"><i class="fa fa-tachometer" aria-hidden="true"></i>&nbsp;Dashboard</a>
+                    <a href="UserTestDetails" class="list-group-item list-group-item-action bg-light"><i class="fa fa-tachometer" aria-hidden="true"></i>&nbsp;Book Test Lab facilities</a>
+                    <a href="CurrentBookings" class="list-group-item list-group-item-action bg-light"><i class="fa fa-tachometer" aria-hidden="true"></i>&nbsp;My Current Bookings</a>
+                    <a href="AppndRejectedBookings" class="list-group-item list-group-item-action bg-light"><i class="fa fa-tachometer" aria-hidden="true"></i>&nbsp;Booking History</a>
+                   
+                </div>
+            </div>
+            <div id="page-content-wrapper" style="padding: 20px;">
+                <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+                </asp:ContentPlaceHolder>
+            </div>
+        </div>
+        <nav class="navbar bg-dark d-flex justify-content-center py-2" style="color: white;">
+            <p class="nav-link">Copyright @ 2020 | All Rights Reserved By Department of Defence Production</p>
+        </nav>
+
+
+    </form>
+
+
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+   <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.23/datatables.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+      <script type="text/javascript">
+          $(document).ready(function () {
+              $('#gvbookedorder').DataTable();
+          });
+          $(document).ready(function () {
+              $('#gvapprovedstatus').DataTable();
+          });
+          $(document).ready(function () {
+              $('#gvreject').DataTable();
+          });
+      </script>
+     <script type="text/javascript">
+         $(document).ready(function () {
+             $('#gvtest').DataTable();
+         });
+     </script>
+       <script type="text/javascript">
+           function showPopup2() {
+               $('#viewdiv').modal('show');
+           }
+       </script>
+      <script type="text/javascript">
+          $(document).ready(function () {
+              $('#gvcurrentbookings').DataTable();
+          });
+      </script>
+     <script type="text/javascript">
+         $(document).ready(function () {
+             $('#gvapprovedndrejected').DataTable();
+         });
+     </script>
+    <script>
+        $("#menu-toggle").click(function (e) {
+            e.preventDefault();
+            $("#wrapper").toggleClass("toggled");
+        });
+	</script>
+</body>
+</html>

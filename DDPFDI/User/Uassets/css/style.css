@@ -27,7 +27,7 @@ body {
 
 .custom-progress-bar {
     width: 500px;
-    max-width: 100%;
+    max-width: 80%;
     height: 10px;
     border-radius: 5px;
     position: absolute;
@@ -91,7 +91,7 @@ body {
 span #dlproduct {
     display: flex !important;
     flex-wrap: nowrap;
-    width: 33%;
+    max-width: 33%;
 }
 
 .topheadline {
@@ -139,7 +139,8 @@ span #dlproduct {
 }*/
 
 .table th, .table td {
-    padding: 2px!important;
+    padding: 8px!important;
+    text-align:center!important;
 }
 
 .tablemidhead {
@@ -151,10 +152,11 @@ span #dlproduct {
 #dlproduct {
     display: flex;
     flex-wrap: wrap;
+    min-width: 100%!important;
 }
 
     #dlproduct span {
-        width: 32%;
+        max-width: 31%;
         position: relative;
         flex: auto;
         box-shadow: 0 0 4px rgba(0,0,0,0.5);
@@ -190,4 +192,3 @@ span #dlproduct {
 .shadow{
     box-shadow: 0 0.25rem 0.5625rem -0.0625rem rgba(0, 0, 0, 0.03), 0 0.275rem 1.25rem -0.0625rem rgba(0, 0, 0, 0.2) !important;
 }
-

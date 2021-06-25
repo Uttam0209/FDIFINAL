@@ -38,7 +38,6 @@
 </asp:Content>
 <asp:Content ID="InnerDesignation" runat="server" ContentPlaceHolderID="ContentPlaceHolder1">
     <div class="content oem-content">
-        
         <asp:HiddenField runat="server" ID="hidType" />
         <asp:HiddenField runat="server" ID="hfcomprefno" />
         <div class="sideBg">
@@ -108,7 +107,6 @@
                 </div>
             </div>
             <div class="clearfix"></div>
-            <div class="footer"><i class="far fa-copyright"></i>2019 <a href="#">Department of Defence Production</a> </div>
         </div>
     </div>
 </asp:Content>

@@ -14,6 +14,26 @@
     <link href="~/assets/css/style.css" rel="stylesheet" type="text/css">
     <link href="~/assets/css/custom.css" rel="stylesheet" type="text/css">
     <script src="assets/js/jquery-3.4.1.js"></script>
+    <style>
+        #valPassword {
+            display: none;
+        }
+
+        #Expired {
+            margin: 0;
+            position: absolute;
+            top: 30%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 30px 25px;
+            box-shadow: 0 0 5px #6915cf;
+            font-size: 30px;
+            color: #333;
+            border-radius:5px;
+        }
+    </style>
+
+
     <script>
         function SuccessfullPop(data) {
             $("body").addClass('CaptchaError');
@@ -43,23 +63,29 @@
 </head>
 <body>
     <form id="form1" runat="server">
-        <div class="loginBg clearfix">
-            <h3>Create New Password</h3>
-            <label for="pass" class="tetLable">
-                Password
-            </label>
-            <asp:TextBox runat="server" ID="txtpassword" TextMode="Password" MaxLength="15" CssClass="form-control"></asp:TextBox>
-            <div style="margin-top: 5px;"></div>
-            <asp:RegularExpressionValidator ID="valPassword" runat="server" ControlToValidate="txtpassword"
-                ErrorMessage="Minimum Length is (8) charactor" ForeColor="Red" ValidationExpression="^[\s\S]{8,15}$" />
-            <label for="pass" class="tetLable">
-                Repeat Password
-            </label>
-            <asp:TextBox runat="server" ID="txttnewpass" TextMode="Password" MaxLength="15" CssClass="form-control"></asp:TextBox>
-            <div style="margin-top: 5px;"></div>
-            <asp:RegularExpressionValidator ID="RegularExpressionValidator1" runat="server" ControlToValidate="txttnewpass"
-                ErrorMessage="Minimum Length is (8) charactor" ForeColor="Red" ValidationExpression="^[\s\S]{8,15}$" />
-            <asp:Button runat="server" ID="btnchangepass" Text="Submit" CssClass="btn btn-primary createLoginPass" OnClick="btnchangepass_Click" />
+        <div id="Valid" runat="server">
+            <div class="loginBg clearfix">
+                <h3>Create New Password</h3>
+                <label for="pass" class="tetLable">Password</label>
+                <asp:TextBox runat="server" ID="txtpassword" TextMode="Password" MaxLength="15" CssClass="form-control"></asp:TextBox>
+                <div style="margin-top: 5px;"></div>
+                <asp:RegularExpressionValidator ID="valPassword" Display="Dynamic" runat="server" ControlToValidate="txtpassword" 
+                    ErrorMessage="Password must be 8 characters long with at least one numeric,</br>one upper case character and one special character." 
+                    ForeColor="Red"  ValidationExpression="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$#^@$!%*?&])[A-Za-z\d$@$#^!%*?&]{8,64}" />               
+                <div><label for="pass" class="tetLable">Repeat Password</label></div>
+                <asp:TextBox runat="server" ID="txttnewpass" TextMode="Password" MaxLength="15" CssClass="form-control"></asp:TextBox>
+                <div style="margin-top: 5px;"></div>
+                <asp:RegularExpressionValidator ID="RegularExpressionValidator1" Display="Dynamic" runat="server" ControlToValidate="txttnewpass"
+                    ErrorMessage="Password must be 8 characters long with at least one numeric,</br>one upper case character and one special character."
+                    ForeColor="Red" ValidationExpression="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$#^@$!%*?&])[A-Za-z\d$@$#^!%*?&]{8,64}"/>                             
+                <asp:Button runat="server" ID="btnchangepass" Text="Submit" CssClass="btn btn-primary createLoginPass" OnClick="btnchangepass_Click" />
+            </div>
+        </div>
+        <div id="Expired" runat="server">
+            <p>The Link has been Expired!!!</p>
+            
+            <p style="font-size: 20px!important; margin-top: 20px; color: #FF00FF;">Kindly Contact Your Nodal Officer to Resend It Again</p>
+            
         </div>
         <!-----Alert Box Success Fail Massage Popup ------>
         <div id="alertPopup" class="alert-overlay alert-overlay-error" style="display: none">

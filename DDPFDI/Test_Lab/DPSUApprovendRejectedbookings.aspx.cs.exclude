@@ -1,0 +1,558 @@
+﻿using BusinessLayer;
+using Encryption;
+using System;
+using System.Data;
+using System.Data.SqlClient;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+
+public partial class Test_Lab_DPSUApprovendRejectedbookings : System.Web.UI.Page
+{
+
+    Cryptography objCrypto = new Cryptography();
+    Logic Lo = new Logic();
+    private string _msg = string.Empty;
+    private string _sysMsg = string.Empty;
+    DataUtility Co = new DataUtility();
+    string insert1 = "";
+    private DataTable DtCompanyDDL = new DataTable();
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        if (Session["User"] != null)
+        {
+            if (!IsPostBack)
+            {
+
+                hidType.Value = objCrypto.DecryptData(Session["Type"].ToString().Trim());
+                hfcomprefno.Value = Session["CompanyRefNo"].ToString().Trim();
+                if (Request.QueryString["id"] != null)
+                {
+                    string strid = Request.QueryString["id"].ToString().Replace(" ", "+");
+                    string strPageName = objCrypto.DecryptData(strid);
+                    StringBuilder strheadPage = new StringBuilder();
+                    strheadPage.Append("<ul class='breadcrumb'>");
+                    string[] MCateg = strPageName.Split(new string[] { ">>" }, StringSplitOptions.RemoveEmptyEntries);
+                    string MmCval = "";
+                    for (int x = 0; x < MCateg.Length; x++)
+                    {
+                        MmCval = MCateg[x];
+                        strheadPage.Append("<li class=''><span>" + MmCval + "</span></li>");
+                    }
+                    //divHeadPage.InnerHtml = strheadPage.ToString();
+                    strheadPage.Append("</ul");
+                }
+               BindCompany();
+                GetApproveReject();
+               GetAllDiscipline();
+            }
+        }
+    }
+
+    protected void BindCompany()
+    {
+        if (hidType.Value == "SuperAdmin" || hidType.Value == "Admin")
+        {
+            if (Request.QueryString["mcurrentcompRefNo"] != null)
+            {
+                ddlcomp.Enabled = false;
+                if (objCrypto.DecryptData(Request.QueryString["mrcreaterole"].ToString()) == "Company")
+                {
+                    DtCompanyDDL = Lo.RetriveMasterData(0, HttpUtility.UrlEncode(objCrypto.DecryptData(Request.QueryString["mcurrentcompRefNo"].ToString())), "Company", 0, "", "", "CompanyName");
+                    ddlcomp.Enabled = false;
+                    if (DtCompanyDDL.Rows.Count > 0)
+                    {
+                        Co.FillDropdownlist(ddlcomp, DtCompanyDDL, "CompanyName", "CompanyRefNo");
+                        //divlblselectunit.Visible = false;
+                        //divlblselectdivison.Visible = false;
+                    }
+                }
+                else if (objCrypto.DecryptData(Request.QueryString["mrcreaterole"].ToString()) == "Factory" || objCrypto.DecryptData(Request.QueryString["mrcreaterole"].ToString()) == "Division")
+                {
+                    DtCompanyDDL = Lo.RetriveMasterData(0, objCrypto.DecryptData(Request.QueryString["mcurrentcompRefNo"].ToString()), "Company1", 0, "", "", "CompanyName");
+                    ddlcomp.Enabled = false;
+                    if (DtCompanyDDL.Rows.Count > 0)
+                    {
+                        Co.FillDropdownlist(ddlcomp, DtCompanyDDL, "CompanyName", "CompanyRefNo");
+                    }
+                    DtCompanyDDL = Lo.RetriveMasterData(0, objCrypto.DecryptData(Request.QueryString["mcurrentcompRefNo"].ToString()), "Factory", 0, "", "", "CompanyName");
+                    //DataTable DtDivisionDDL = Lo.RetriveMasterData(0, DtCompanyDDL.Rows[0]["CompanyRefNo"].ToString(), "Factory1", 0, "", "", "CompanyName");
+                    //if (DtDivisionDDL.Rows.Count > 0)
+                    //{
+                    //    Co.FillDropdownlist(ddldivision, DtDivisionDDL, "FactoryName", "FactoryRefNo");
+                    //    ddldivision.Enabled = false;
+                    //    ddlcomp.Enabled = false;
+                    //    ddldivision.Visible = true;
+                    //    divlblselectunit.Visible = false;
+                    //}
+                    //else
+                    //{
+                    //    ddldivision.Enabled = false;
+                    //}
+                }
+                else if (objCrypto.DecryptData(Request.QueryString["mrcreaterole"].ToString()) == "Unit")
+                {
+                    DtCompanyDDL = Lo.RetriveMasterData(0, objCrypto.DecryptData(Request.QueryString["mcurrentcompRefNo"].ToString()), "Company2", 0, "", "", "CompanyName");
+                    ddlcomp.Enabled = false;
+                    if (DtCompanyDDL.Rows.Count > 0)
+                    {
+                        Co.FillDropdownlist(ddlcomp, DtCompanyDDL, "CompanyName", "CompanyRefNo");
+                    }
+                    DtCompanyDDL = Lo.RetriveMasterData(0, objCrypto.DecryptData(Request.QueryString["mcurrentcompRefNo"].ToString()), "Unit", 0, "", "", "CompanyName");
+                    //DataTable DtDivisionDDL = Lo.RetriveMasterData(0, DtCompanyDDL.Rows[0]["CompanyRefNo"].ToString(), "Factory1", 0, "", "", "CompanyName");
+                    //if (DtDivisionDDL.Rows.Count > 0)
+                    //{
+                    //    Co.FillDropdownlist(ddldivision, DtDivisionDDL, "FactoryName", "FactoryRefNo");
+                    //    divlblselectdivison.Visible = true;
+                    //    ddldivision.Enabled = false;
+                    //    ddlcomp.Enabled = false;
+                    //    ddldivision.Visible = true;
+                    //    DataTable DtUnitDDL = Lo.RetriveMasterData(0, DtDivisionDDL.Rows[0]["FactoryRefNo"].ToString(), "Unit1", 0, "", "", "CompanyName");
+                    //    if (DtUnitDDL.Rows.Count > 0)
+                    //    {
+                    //        Co.FillDropdownlist(ddlunit, DtUnitDDL, "UnitName", "UnitRefNo");
+                    //        ddlunit.Enabled = true;
+                    //        divlblselectunit.Visible = true;
+                    //        ddlunit.Visible = true;
+                    //        ddlunit.Enabled = false;
+                    //    }
+                    //    else
+                    //    {
+                    //        ddlunit.Enabled = false;
+                    //    }
+                    //}
+                    //else
+                    //{
+                    //    ddldivision.Enabled = false;
+                    //}
+                }
+            }
+            else
+            {
+                DtCompanyDDL = Lo.RetriveMasterData(0, "", hidType.Value, 0, "", "", "Select");
+                if (DtCompanyDDL.Rows.Count > 0)
+                {
+                    Co.FillDropdownlist(ddlcomp, DtCompanyDDL, "CompanyName", "CompanyRefNo");
+                    ddlcomp.Items.Insert(0, "Select");
+                    ddlcomp.Enabled = true;
+                    //divlblselectdivison.Visible = false;
+                    //divlblselectunit.Visible = false;
+                }
+                else
+                {
+                    ddlcomp.Enabled = false;
+                }
+            }
+        }
+        else if (hidType.Value == "Company")
+        {
+            DtCompanyDDL = Lo.RetriveMasterData(0, hfcomprefno.Value, "Company", 0, "", "", "CompanyName");
+            if (DtCompanyDDL.Rows.Count > 0)
+            {
+                Co.FillDropdownlist(ddlcomp, DtCompanyDDL, "CompanyName", "CompanyRefNo");
+                ddlcomp.Enabled = false;
+                //ddldivision.Items.Insert(0, "Select");
+                //divlblselectdivison.Visible = false;
+                //divlblselectunit.Visible = false;
+
+            }
+            else
+            {
+                ddlcomp.Enabled = false;
+            }
+            //DtCompanyDDL = Lo.RetriveMasterData(0, ddlcomp.SelectedItem.Value, "Factory1", 0, "", "", "CompanyName");
+            //if (DtCompanyDDL.Rows.Count > 0)
+            //{
+            //    Co.FillDropdownlist(ddldivision, DtCompanyDDL, "FactoryName", "FactoryRefNo");
+            //    ddldivision.Items.Insert(0, "Select");
+            //    if (hidType.Value == "Company")
+            //    {
+            //        divlblselectdivison.Visible = true;
+            //        ddldivision.Enabled = true;
+            //        divlblselectunit.Visible = false;
+            //    }
+            //    else
+            //    {
+            //        ddldivision.Enabled = false;
+            //    }
+            //}
+            //else
+            //{
+            //    ddldivision.Enabled = false;
+            //}
+        }
+        else if (hidType.Value == "Factory" || hidType.Value == "Division")
+        {
+            DtCompanyDDL = Lo.RetriveMasterData(0, hfcomprefno.Value, "Company1", 0, "", "", "CompanyName");
+            if (DtCompanyDDL.Rows.Count > 0)
+            {
+                Co.FillDropdownlist(ddlcomp, DtCompanyDDL, "CompanyName", "CompanyRefNo");
+                ddlcomp.Enabled = false;
+            }
+            else
+            {
+                ddlcomp.Enabled = false;
+            }
+            //DtCompanyDDL = Lo.RetriveMasterData(0, ddlcomp.SelectedItem.Value, "Factory1", 0, "", "", "CompanyName");
+            //if (DtCompanyDDL.Rows.Count > 0)
+            //{
+            //    Co.FillDropdownlist(ddldivision, DtCompanyDDL, "FactoryName", "FactoryRefNo");
+            //    DataTable dt = Lo.RetriveMasterData(0, hfcomprefno.Value, "Factory2", 0, "", "", "CompanyName");
+            //    if (dt.Rows.Count > 0)
+            //    {
+            //        ddldivision.SelectedValue = dt.Rows[0]["FactoryRefNo"].ToString();
+            //    }
+            //    ddlunit.Items.Insert(0, "Select");
+            //    divlblselectunit.Visible = false;
+            //    divlblselectdivison.Visible = true;
+            //    ddldivision.Enabled = false;
+            //}
+            //else
+            //{
+            //    ddldivision.Enabled = false;
+            //}
+            //DtCompanyDDL = Lo.RetriveMasterData(0, ddldivision.SelectedItem.Value, "Unit1", 0, "", "", "CompanyName");
+            //if (DtCompanyDDL.Rows.Count > 0)
+            //{
+            //    Co.FillDropdownlist(ddlunit, DtCompanyDDL, "UnitName", "UnitRefNo");
+            //    ddlunit.Items.Insert(0, "Select");
+            //    ddlunit.Enabled = true;
+            //    ddlunit.Visible = true;
+            //    divlblselectunit.Visible = true;
+            //}
+            //else
+            //{
+            //    ddlunit.Items.Insert(0, "Select");
+            //    divlblselectunit.Visible = false;
+            //}
+        }
+        else if (hidType.Value == "Unit")
+        {
+            DtCompanyDDL = Lo.RetriveMasterData(0, hfcomprefno.Value, "Company2", 0, "", "", "CompanyName");
+            if (DtCompanyDDL.Rows.Count > 0)
+            {
+                Co.FillDropdownlist(ddlcomp, DtCompanyDDL, "CompanyName", "CompanyRefNo");
+                ddlcomp.Enabled = false;
+            }
+            else
+            {
+                ddlcomp.Enabled = false;
+            }
+            //DtCompanyDDL = Lo.RetriveMasterData(0, ddlcomp.SelectedItem.Value, "Factory1", 0, "", "", "CompanyName");
+            //if (DtCompanyDDL.Rows.Count > 0)
+            //{
+            //    Co.FillDropdownlist(ddldivision, DtCompanyDDL, "FactoryName", "FactoryRefNo");
+            //    DataTable dt = Lo.RetriveMasterData(0, hfcomprefno.Value, "Factory3", 0, "", "", "CompanyName");
+            //    if (dt.Rows.Count > 0)
+            //    {
+            //        ddldivision.SelectedValue = dt.Rows[0]["FactoryRefNo"].ToString();
+            //    }
+            //    divlblselectdivison.Visible = true;
+            //    ddldivision.Enabled = false;
+            //}
+            //else
+            //{
+            //    ddldivision.Enabled = false;
+            //}
+            //DtCompanyDDL = Lo.RetriveMasterData(0, ddldivision.SelectedItem.Value, "Unit1", 0, "", "", "CompanyName");
+            //if (DtCompanyDDL.Rows.Count > 0)
+            //{
+            //    Co.FillDropdownlist(ddlunit, DtCompanyDDL, "UnitName", "UnitRefNo");
+            //    ddlunit.SelectedValue = hfcomprefno.Value;
+            //    ddlunit.Enabled = false;
+            //    divlblselectunit.Visible = true;
+            //}
+            //else
+            //{
+            //    ddlunit.Enabled = false;
+            //}
+        }
+    }
+
+    protected string BindInsertfilter()
+    {
+        return Dvinsert();
+    }
+
+
+    protected string Dvinsert(string sortExpression = null)
+    {
+        DataTable insert = new DataTable();
+        insert.Columns.Add(new DataColumn("Column", typeof(string)));
+        insert.Columns.Add(new DataColumn("Value", typeof(string)));
+        DataRow dr;
+        if (ddlcomp.SelectedItem.Text != "Select")
+        {
+            dr = insert.NewRow();
+            dr["Column"] = "organisation_id" + "=";
+            dr["Value"] = "'" + ddlcomp.SelectedItem.Text + "'";
+            insert.Rows.Add(dr);
+            //if (ddlLab.Visible == true && ddlLab.SelectedItem.Text != "Select")
+            //{
+            //    dr = insert.NewRow();
+            //    dr["Column"] = "discipline_id" + "=";
+            //    dr["Value"] = "'" + ddlLab.SelectedItem.Text + "'";
+            //    insert.Rows.Add(dr);
+            //}
+            if (ddldiscipline.Visible == true && ddldiscipline.SelectedItem.Text != "Select")
+            {
+                dr = insert.NewRow();
+                dr["Column"] = "discipline" + "=";
+                dr["Value"] = "'" + ddldiscipline.SelectedItem.Text + "'";
+                insert.Rows.Add(dr);
+            }
+        }
+        for (int i = 0; insert.Rows.Count > i; i++)
+        {
+            insert1 = insert1 + insert.Rows[i]["Column"].ToString() + " " + insert.Rows[i]["Value"].ToString() + " " + " and ";
+        }
+        if (insert1.ToString() != "")
+        {
+            insert1 = insert1.Substring(0, insert1.Length - 5);
+        }
+        return insert1;
+    }
+    DataTable DtFilterView = new DataTable();
+    public void SeachResult(string sortExpression = null)
+    {
+        try
+        {
+            DtFilterView = (DataTable)Session["TempData"];
+            if (DtFilterView.Rows.Count > 0)
+            {
+                DataView dv = new DataView(DtFilterView);
+                DataTable dtnew = dv.ToTable();
+                if (dtnew.Rows.Count > 0)
+                {
+                    dv.RowFilter = BindInsertfilter();
+                    DataTable dtinner = dv.ToTable();
+                    if (dtinner.Rows.Count > 0)
+                    {
+                        gvapprovereject.DataSource = dv.ToTable();
+                        gvapprovereject.DataBind();
+                        gvapprovereject.Visible = true;
+                    }
+                    else
+                    {
+                        ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('No Record Found')", true);
+                        gvapprovereject.Visible = false;
+                    }
+                }
+                else
+                {
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('No Record Found')", true);
+                    gvapprovereject.Visible = false;
+                }
+            }
+            else
+            {
+                //ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('No Record Found')", true);
+                //gvtest.Visible = false;
+            }
+        }
+        catch (Exception ex)
+        {
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('" + ex.Message + "')", true);
+        }
+    }
+
+
+    protected void ddlcomp_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        SeachResult();
+        //if (ddlcomp.SelectedItem.Text != "Select")
+        //{
+        //    hidCompanyRefNo.Value = ddlcomp.SelectedItem.Value;
+        //    hidType.Value = "Company";
+        //    GridViewTestBind(ddlcomp.SelectedItem.Text, "organisation_id");
+        //    DtCompanyDDL = Lo.RetriveMasterData(0, ddlcomp.SelectedItem.Value, "", 0, "", "", "FactoryCompanyID");
+        //    if (DtCompanyDDL.Rows.Count > 0)
+        //    {
+        //        Co.FillDropdownlist(ddldivision, DtCompanyDDL, "FactoryName", "FactoryRefNo");
+        //        ddldivision.Items.Insert(0, "Select");
+        //        divlblselectdivison.Visible = true;
+        //        ddldivision.Visible = true;
+        //        hidCompanyRefNo.Value = ddlcomp.SelectedItem.Value;
+        //        hidType.Value = "Company";
+        //        GridViewTestBind(ddlcomp.SelectedItem.Text, "organisation_id");
+
+        //    }
+        //    else
+        //    {
+        //        GridViewTestBind(ddlcomp.SelectedItem.Text, "organisation_id");
+        //        ddldivision.Items.Insert(0, "Select");
+        //        ddldivision.Visible = false;
+        //        divlblselectdivison.Visible = false;
+        //    }
+        //}
+        //else if (ddlcomp.SelectedItem.Text == "Select")
+        //{
+        //    divlblselectdivison.Visible = false;
+        //    divlblselectunit.Visible = false;
+        //    GridViewTestBind("", "");
+        //}
+        //hfcomprefno.Value = "";
+        //hfcomprefno.Value = ddlcomp.SelectedItem.Value;
+
+    }
+
+    //protected void ddldivision_SelectedIndexChanged(object sender, EventArgs e)
+    //{
+    //    //if (ddldivision.SelectedItem.Text != "Select")
+    //    //{
+    //    //    DtCompanyDDL = Lo.RetriveMasterData(0, ddldivision.SelectedItem.Value, "", 0, "", "", "UnitSelectID");
+    //    //    if (DtCompanyDDL.Rows.Count > 0)
+    //    //    {
+    //    //        Co.FillDropdownlist(ddlunit, DtCompanyDDL, "UnitName", "UnitRefNo");
+    //    //        ddlunit.Items.Insert(0, "Select");
+    //    //        ddlunit.Visible = true;
+    //    //        divlblselectunit.Visible = true;
+    //    //        if (ddlunit.SelectedItem.Text == "Select")
+    //    //        {
+    //    //            ddldivision.Enabled = true;
+    //    //        }
+    //    //        else
+    //    //        { ddldivision.Enabled = false; }
+    //    //        hidCompanyRefNo.Value = ddldivision.SelectedItem.Value;
+    //    //        hidType.Value = "Divison";
+    //    //        GridViewTestBind(ddldivision.SelectedItem.Value, "Division_id");
+    //    //    }
+    //    //    else
+    //    //    {
+    //    //        ddlunit.Items.Insert(0, "Select");
+    //    //        divlblselectunit.Visible = false;
+    //    //        ddlunit.Visible = false;
+    //    //        GridViewTestBind(ddldivision.SelectedItem.Value, "Division_id");
+    //    //    }
+    //    //    hfcomprefno.Value = "";
+    //    //    hfcomprefno.Value = ddldivision.SelectedItem.Value;
+
+    //    //}
+    //    //else if (ddldivision.SelectedItem.Text == "Select")
+    //    //{
+    //    //    divlblselectunit.Visible = false;
+    //    //    hfcomprefno.Value = ddlcomp.SelectedItem.Value;
+    //    //    hidType.Value = "Company";
+    //    //    GridViewTestBind(ddlcomp.SelectedItem.Value, "Division_id");
+
+    //    //}
+    //}
+
+    //protected void ddlunit_SelectedIndexChanged(object sender, EventArgs e)
+    //{
+    //    //if (ddlunit.SelectedItem.Text != "Select")
+    //    //{
+    //    //    hidCompanyRefNo.Value = ddlunit.SelectedItem.Value;
+    //    //    hidType.Value = "Unit";
+    //    //    hfcomprefno.Value = "";
+    //    //    hfcomprefno.Value = ddlunit.SelectedItem.Value;
+
+
+    //    //}
+    //    //else
+    //    //{
+    //    //    hidCompanyRefNo.Value = ddldivision.SelectedItem.Value;
+    //    //    hidType.Value = "Division";
+    //    //    hfcomprefno.Value = "";
+    //    //    hfcomprefno.Value = ddldivision.SelectedItem.Value;
+    //    //    GridViewTestBind(ddlunit.SelectedItem.Value, "lab");
+
+    //    //}
+    //}
+
+    protected void ddldiscipline_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        SeachResult();
+        //if (ddldiscipline.SelectedItem.Text != "Select")
+        //{
+        //    DataTable dtdiscipline = Lo.Dashboarddatabycompany("UserSearchingonDiscipline", "", 0, ddldiscipline.SelectedItem.Text);
+        //    gvapprovereject.DataSource = dtdiscipline;
+        //    gvapprovereject.DataBind();
+        //}
+        //else
+        //{
+        //    ddlcomp.SelectedItem.Text = "Select";
+        //    GetApproveReject();
+        //}
+    }
+
+    public void GridViewTestBind(string mRefNo, string mRole)
+    {
+        BindTest(mRole);
+    }
+
+    protected void BindTest(string compname)
+    {
+        DataTable DtGrid = Lo.Dashboarddatabycompany("SearchingonUserDashboard", "", 0, "");
+        Session["TempData"] = DtGrid;
+        SeachResult();
+        //DataView dv = new DataView(DtGrid);
+        //if (compname == "organisation_id")
+        //{
+        //    dv.RowFilter = "organisation_id='" + ddlcomp.SelectedItem.Text + "'";
+        //}
+        //else if (compname == "lab")
+        //{
+        //    dv.RowFilter = "lab='" + ddldivision.SelectedItem.Text + "'";
+        //}
+        //else if (compname == "Unit_id")
+        //{
+        //    dv.RowFilter = "Unit_id='" + ddlunit.SelectedItem.Text + "'";
+        //}
+        //else if (compname == "discipline")
+        //{
+        //    dv.RowFilter = "discipline='" + ddldiscipline.SelectedItem.Text + "'";
+        //}
+     //   dv.Sort = "organisation_id asc,Division_id asc";
+        //gvapprovereject.DataSource = dv.ToTable();
+        //gvapprovereject.DataBind();
+        //gvapprovereject.Visible = true;
+        //lbltotal.Text = "Total Records:- " + gvapprovereject.Rows.Count.ToString();
+        //divTotalNumber.Visible = true;
+    }
+    public void GetApproveReject()
+    {
+        if (objCrypto.DecryptData(Session["Type"].ToString()) == "Admin" || objCrypto.DecryptData(Session["Type"].ToString()) == "SuperAdmin")
+        {
+            DataTable approvereject = Lo.Dashboarddatabycompany("GetapproveandrejectinDPSU", "", 0, "");
+            Session["TempData"] = approvereject;
+            gvapprovereject.DataSource = approvereject;
+            gvapprovereject.DataBind();
+        }
+        else
+        {
+            DataTable dtapprovereject = Lo.Dashboarddatabycompany("GetapproveandrejectinDPSU", ddlcomp.SelectedItem.Text, 0, "");
+            Session["TempData"] = dtapprovereject;
+            gvapprovereject.DataSource = dtapprovereject;
+            gvapprovereject.DataBind();
+        }
+    }
+
+    public void GetAllDiscipline()
+    {
+        DataTable dtdiscipline = Lo.GetDiscipline();
+        ddldiscipline.DataSource = dtdiscipline;
+        ddldiscipline.DataTextField = "discipline_name";
+        ddldiscipline.DataBind();
+        ddldiscipline.Items.Insert(0, "Select");
+    }
+
+    protected void gvapprovereject_RowCreated(object sender, GridViewRowEventArgs e)
+    {
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            e.Row.TableSection = TableRowSection.TableBody;
+        }
+        else if (e.Row.RowType == DataControlRowType.Header)
+        {
+            e.Row.TableSection = TableRowSection.TableHeader;
+        }
+        else if (e.Row.RowType == DataControlRowType.Footer)
+        {
+            e.Row.TableSection = TableRowSection.TableFooter;
+        }
+    }
+}

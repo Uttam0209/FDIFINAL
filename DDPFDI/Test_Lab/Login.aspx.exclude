@@ -1,0 +1,162 @@
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Login.aspx.cs" Inherits="Test_Lab_Login" %>
+
+<%@ Import Namespace="System.Web.Optimization" %>
+<%@ Register Assembly="MSCaptcha" Namespace="MSCaptcha" TagPrefix="cc1" %>
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title></title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" />
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <style type="text/css">
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            font-family: sans-serif;
+            line-height: 1.15;
+        }
+
+        .btn {
+            background-color: #0a0063;
+            color: white;
+        }
+
+        .btn:hover {
+            background-color: #0a0063;
+            color: white;
+        }
+
+        .mylabel {
+          font-size: 12px !important;
+        }
+
+        #show_hide_password {
+          position: relative;
+        }
+
+        .fa-eye-slash {
+          position: absolute;
+          right: 10px;
+          top: 43px;
+        }
+
+        .fa-eye {
+            position: absolute;
+            right: 10px;
+            top: 43px;
+        }
+
+        #top a {
+            padding-left: 20px;
+            color: #fff;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body style="min-height: 100vh; background-image: linear-gradient(to right, #e83e8c, #6610f2);">
+    <form id="form1" runat="server">
+        <div id="top">
+            <a href="#"><i class="fa fa-envelope" aria-hidden="true"></i>&nbsp; helpdesk-dpit@ddpmod.gov.in</a>
+            <a href="#"><i class="fa fa-phone-square" aria-hidden="true"></i>&nbsp; 011-20836145 &nbsp;|&nbsp; 011-23019066</a>
+        </div>
+        <div id="top2" class="container-fluid" style="background: white;">
+            <div class="row py-3">
+                <div class="col-md-2">
+                    <a href="ProductList">
+                        <img src="ddp_logo.png" class="img-fluid" style="max-height: 70px" /></a>
+                </div>
+                <div class="col-md-8">
+                    <h2 class="text-center" style="color: #6915cf;">OPPORTUNITIES FOR MAKE IN INDIA IN DEFENCE</h2>
+                </div>
+                <div class="col-md-2">
+                </div>
+            </div>
+        </div>
+        <div class="container" style="min-height: 83vh;">
+            <div class="row d-flex justify-content-center">
+                <div class="col-md-4 py-2" style="background-color: white; border-radius: 5px; margin-top: 50px;">
+                    <h6 class="py-2 text-center my-2" style="background-image: linear-gradient(to right, #e83e8c, #6610f2); color: white; border-radius: 5px;">Test Facility Portal</h6>
+                    <div class="form-group">
+                        <label for="email">Email address :</label>
+                        <asp:TextBox runat="server" ID="txtUserName" class="form-control" TabIndex="1" focus="true" autocomplete="off" type="email" placeholder="Email" ToolTip="Please enter valid registerd email id." required="" autofocus=""></asp:TextBox>
+                    </div>
+                    <div class="form-group" id="show_hide_password">
+                        <label for="pwd">Password :</label>
+                        <asp:TextBox runat="server" ID="txtPwd" TabIndex="2" name="txtPwd" class="form-control passField" autocomplete="off" ToolTip="Please enter valid password (case sensitive)." placeholder="Password" type="password" required=""></asp:TextBox>
+                        <a href="#"><i class="fa fa-eye-slash" aria-hidden="true"></i></a>
+                    </div>
+                    <div class="row">
+                        <div class="col-6 form-group">
+                            <label for="pwd">Captcha :</label>
+                            <asp:TextBox runat="server" ID="txtCapt" TabIndex="3" class="form-control passField" autocomplete="off" ToolTip="Please enter valid Captcha." placeholder="CAPTCHA"></asp:TextBox>
+                        </div>
+                        <div class="col-6 form-group pt-4">
+                            <div class="row">
+                                <div class="col-sm-8 py-2">
+                                    <cc1:CaptchaControl ID="Captcha2" runat="server" CaptchaBackgroundNoise="Low" CaptchaLength="6"
+                                        CaptchaHeight="35" CaptchaWidth="125" CaptchaMinTimeout="5" CaptchaMaxTimeout="240"
+                                        FontColor="#D20B0C" NoiseColor="#B1B1B1" />
+                                </div>
+                                <div class="col-sm-2" style="margin-top: 15px;">
+                                    <a href="#"><i class="fa fa-refresh" aria-hidden="true"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <asp:CustomValidator ID="CustomValidator1" ErrorMessage="" OnServerValidate="ValidateCaptcha"
+                        runat="server" />
+
+                   	<div class="form-check d-flex justify-content-between py-2">
+				 <asp:LinkButton runat="server" ID="lblforgotpass" Text="Forgot Password ?" OnClick="lblforgotpass_Click" style="text-decoration:none;">
+				 </asp:LinkButton>
+				</div>
+                  <asp:Button ID="btnLogin" runat="server" TabIndex="4" CssClass="btn btn-block" ToolTip="After validate your username or password we will redirect to your dashboard."
+                            OnClick="btnLogin_Click" Text="Sign in"></asp:Button>
+				<asp:Button ID="btnregister" runat="server" TabIndex="5"  CssClass="btn btn-block" OnClick="btnregister_Click" Text="Register" />
+				<asp:Button ID="btnhome" runat="server" TabIndex="6"  CssClass="btn btn-block" Text="Go To Home" OnClick="btnhome_Click" />
+				<div class="form-group pt-2 d-flex justify-content-center">
+					<label for="pwd">© 2021. All RIGHT RESERVED.</label>
+				</div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+    <script type="text/javascript">
+        $('#myModal').on('shown.bs.modal', function () {
+            $('#myInput').trigger('focus')
+        })
+
+        $(document).ready(function () {
+            $("#show_hide_password a").on('click', function (event) {
+                event.preventDefault();
+                if ($('#show_hide_password input').attr("type") == "text") {
+                    $('#show_hide_password input').attr('type', 'password');
+                    $('#show_hide_password i').addClass("fa-eye-slash");
+                    $('#show_hide_password i').removeClass("fa-eye");
+                } else if ($('#show_hide_password input').attr("type") == "password") {
+                    $('#show_hide_password input').attr('type', 'text');
+                    $('#show_hide_password i').removeClass("fa-eye-slash");
+                    $('#show_hide_password i').addClass("fa-eye");
+                }
+            });
+        });
+        function showPopup() {
+            $('#changePass').modal('show');
+        }
+    </script>
+</body>
+</html>
+
+

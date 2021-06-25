@@ -20,13 +20,21 @@ namespace BusinessLayer
         {
             return SqlHelper.Instance.VerifyEmail(hyLogin, out _msg, out mp);
         }
+        public string VerifyEmailVendor(HybridDictionary hyLogin, out string _msg, out string mp)
+        {
+            return SqlHelper.Instance.VerifyEmailVendor(hyLogin, out _msg, out mp);
+        }
         public string VerifyEmployee(HybridDictionary hyLogin, out string _msg, out string Defaultpage)
         {
             return SqlHelper.Instance.VerifyEmployee(hyLogin, out _msg, out Defaultpage);
         }
-        public string VerifyVendorEmployee(HybridDictionary hyLogin, out string _msg, out string Defaultpage)
+        public string VerifyVendorEmployee(HybridDictionary hyLogin, out string _msg, out string Defaultpage, out string CompanyName, out string VUser)
         {
-            return SqlHelper.Instance.VerifyVendorEmployee(hyLogin, out _msg, out Defaultpage);
+            return SqlHelper.Instance.VerifyVendorEmployee(hyLogin, out _msg, out Defaultpage, out CompanyName, out VUser);
+        }
+        public string VerifyHelpdeskEmployee(HybridDictionary hyLogin, out string _msg, out string Defaultpage)
+        {
+            return SqlHelper.Instance.VerifyHelpdeskEmployee(hyLogin, out _msg, out Defaultpage);
         }
         #endregion
         #region Email and Company Name"
@@ -41,6 +49,12 @@ namespace BusinessLayer
             DataTable dt = SqlHelper.Instance.CreateExcelConnection(FilePath, SheetName, out text);
             return dt;
         }
+        public DataTable CreateExcelConnection1(string FilePath, string SheetName, out string text)
+        {
+            DataTable dt = SqlHelper.Instance.CreateExcelConnection1(FilePath, SheetName, out text);
+            return dt;
+        }
+
         public string SaveUploadExcelCompany(DataTable dtMaster, DataTable dtExcel)
         {
             return SqlHelper.Instance.SaveUploadExcelCompany(dtMaster, dtExcel);
@@ -53,11 +67,26 @@ namespace BusinessLayer
         {
             return SqlHelper.Instance.SaveExcelProduct(dtMaster);
         }
+        public string SaveExcelProduct1(DataTable dtMaster, HybridDictionary hyadvertice)
+        {
+            return SqlHelper.Instance.SaveExcelProduct1(dtMaster, hyadvertice);
+        }
+        #endregion
+        #region SaveCdoe Or SHQExcel
+        public string SaveExcelProduct1FORSHQ(DataTable dtMaster, HybridDictionary hyadvertice)
+        {
+            return SqlHelper.Instance.SaveExcelProduct1FORSHQ(dtMaster, hyadvertice);
+        }
         #endregion
         #region SaveCode
         public string SaveLog(HybridDictionary hyLog, out string _sysMsg, out string _msg)
         {
             return SqlHelper.Instance.SaveLog(hyLog, out _sysMsg, out _msg);
+        }
+
+        public string SaveUserIP(HybridDictionary hysaveip, out string _sysMsg, out string _msg)
+        {
+            return SqlHelper.Instance.SaveUserIP(hysaveip, out _sysMsg, out _msg);
         }
         public string InsertLogProd(HybridDictionary hySaveProdInfo, out string _sysMsg, out string _msg)
         {
@@ -306,10 +335,8 @@ namespace BusinessLayer
         }
         public DataTable RetriveMailCart(string value)
         {
-            string mquery = "SELECT P.ProductRefNo,P.ProductDescription, P.DPSUPartNumber, s1.SCategoryName AS NSNGroup,s2.SCategoryName AS NSNGroupClass,s3.SCategoryName as ItemCode,n.NodalOfficerEmail AS NodalOfficerEmail " +
-                         " FROM  tbl_mst_MainProduct AS P LEFT OUTER JOIN tbl_mst_NodalOfficer as n ON P.NodelDetail=n.NodalOfficerID Left Outer Join tbl_mst_SubCategory as s1 ON   P.ProductLevel1 = s1.SCategoryId LEFT OUTER JOIN " +
-                        " tbl_mst_SubCategory AS  s2 ON P.ProductLevel2 = s2.SCategoryId LEFT OUTER JOIN tbl_mst_SubCategory AS s3 ON P.ProductLevel3 = s3.SCategoryId LEFT OUTER JOIN " +
-                            " tbl_mst_MainProduct AS o ON s1.SCategoryName='' WHERE  (P.IsActive = 'Y') and P.ProductRefNo in (" + value + ")";
+            string mquery = "SELECT P.ProductRefNo as ItemID,P.ProductDescription as ItemName,n.NodalOfficerEmail AS NodalOfficerEmail FROM  tbl_mst_MainProduct AS P LEFT OUTER JOIN tbl_mst_NodalOfficer as n" +
+                            " ON P.NodelDetail=n.NodalOfficerID WHERE  (P.IsActive = 'Y') and P.ProductRefNo in (" + value + ")";
             return SqlHelper.Instance.GetDataset(mquery).Tables[0];
         }
         public DataTable RetriveProductUser()
@@ -414,22 +441,44 @@ namespace BusinessLayer
         #region Code for vendor  Update
         public Int32 InsertStatusEdit(string ID, string Value1, string Value2, string Value3, string Value4, string Value5, string Value6)
         {
-            string mquery = "insert into tbl_trn_VendorDetailMultiGrid (VendorRefNo,Type,EnterNameof,Name,Designation,DIN_No,MobileNo)Values('" + ID + "','" + Value1 + "','" + Value2 + "','" + Value3 + "','" + Value4 + "','" + Value5 + "','" + Value6 + "')";
+            string mquery = "insert into tbl_trn_VendorGeneralInfoMultiGrid " +
+                "(VendorRefNo,Type,EnterNameof,Name,Designation,DIN_No,MobileNo)" +
+                "Values('" + ID + "','" + Value1 + "','" + Value2 + "','" + Value3 + "','" + Value4 + "','" + Value5 + "','" + Value6 + "')";
             return SqlHelper.Instance.ExecuteQuery(mquery);
         }
         public Int32 UpdateStatusEdit(Int64 ID, string Value1, string Value2, string Value3, string Value4, string Value5, string Value6)
         {
-            string mquery = "update tbl_trn_VendorDetailMultiGrid set VendorRefNo='" + Value1 + "',EnterNameof='" + Value2 + "',Name='" + Value3 + "',Designation='" + Value4 + "',DIN_No='" + Value5 + "',MobileNo='" + Value6 + "' where MasterId='" + ID + "'";
+            string mquery = "update tbl_trn_VendorGeneralInfoMultiGrid set VendorRefNo='" + Value1 + "',EnterNameof='" + Value2 + "',Name='" + Value3 + "',Designation='" + Value4 + "',DIN_No='" + Value5 + "',MobileNo='" + Value6 + "',LastUpdated='" + DateTime.Now.ToString("dd-MMM-yyyy") + "' where MasterId='" + ID + "'";
             return SqlHelper.Instance.ExecuteQuery(mquery);
         }
         public Int32 DeleteEditGrid(Int32 Id)
         {
-            string mquery = "delete from tbl_trn_VendorDetailMultiGrid  where MasterId='" + Id + "'";
+            string mquery = "delete from tbl_trn_VendorGeneralInfoMultiGrid  where MasterId='" + Id + "'";
             return SqlHelper.Instance.ExecuteQuery(mquery);
         }
         public Int32 DeleteEditGrid1(Int32 Id)
         {
             string mquery = "delete from VendorRegistrationMultiImage  where ImageID='" + Id + "'";
+            return SqlHelper.Instance.ExecuteQuery(mquery);
+        }
+        public Int32 DeleteProdDet(Int32 Id)
+        {
+            string mquery = "delete from tbl_trn_VendorDetailofDefence  where VDetailDefenceId='" + Id + "'";
+            return SqlHelper.Instance.ExecuteQuery(mquery);
+        }
+        public Int32 DeleteTechdet(Int32 Id)
+        {
+            string mquery = "delete from tbl_trn_VendorTechDetails  where VTechId='" + Id + "'";
+            return SqlHelper.Instance.ExecuteQuery(mquery);
+        }
+        public Int32 DeleteRawId(Int32 Id)
+        {
+            string mquery = "delete from tbl_trn_VendorRawMaterial  where VRawMaterialId='" + Id + "'";
+            return SqlHelper.Instance.ExecuteQuery(mquery);
+        }
+        public Int32 DeleteProdSupply(Int32 Id)
+        {
+            string mquery = "delete from tbl_trn_VendorProducedSupplied  where VSupplyId='" + Id + "'";
             return SqlHelper.Instance.ExecuteQuery(mquery);
         }
         #region Multigrid edit insert code
@@ -539,87 +588,74 @@ namespace BusinessLayer
 
         public Int32 UpdateGovt(Int64 ID, string Value1, string Value2, string Value3, string Value4, string Value5)
         {
-            string mquery = "update tbl_trn_VendorDetailMultiGrid set VendorRefNo='" + Value1 + "',Name_PSU_UnderGovt='" + Value2 + "',RegistrationNo='" + Value3 + "',Certificate_valid_upto='" + Value4 + "',Upload_Registration_Certificate='" + Value5 + "' where MasterId='" + ID + "'";
+            string mquery = "update tbl_trn_GovtApprovedCertificate set VendorRefNo='" + Value1 + "',GovtName='" + Value2 + "',RegistrationNo='" + Value3 + "',Validtill='" + Value4 + "',CertificateUpload='" + Value5 + "',LastUpdate='"+DateTime.Now.ToString("yyyy-MMM-dd")+ "' where GovtMId='" + ID + "'";
             return SqlHelper.Instance.ExecuteQuery(mquery);
         }
-        public Int32 InsertGovt(string ID, string Value1, string Value2, string Value3, string Value4, string Value5)
+        public Int32 InsertGovt(string Value1, string Value2, string Value3, string Value4, string Value5)
         {
-            string mquery = "insert into tbl_trn_VendorDetailMultiGrid (VendorRefNo,Type,Name_PSU_UnderGovt,RegistrationNo,Certificate_valid_upto,Upload_Registration_Certificate)Values('" + ID + "','" + Value1 + "','" + Value2 + "','" + Value3 + "','" + Value4 + "','" + Value5 + "')";
+            string mquery = "insert into tbl_trn_GovtApprovedCertificate (VendorRefNo,GovtName,RegistrationNo,Validtill,CertificateUpload)Values('" + Value1 + "','" + Value2 + "','" + Value3 + "','" + Value4 + "','" + Value5 + "')";
             return SqlHelper.Instance.ExecuteQuery(mquery);
         }
         public Int32 UpdateTurnOver(Int64 ID, string Value1, string Value2, string Value3, string Value4, string Value5, string Value6)
         {
-            string mquery = "update tbl_trn_VendorDetailMultiGrid set VendorRefNo='" + Value1 + "',FinancialYear='" + Value2 + "',Value_of_Current_Assets='" + Value3 + "',Value_of_Current_Liabilites='" + Value4 + "',Total_Profit_Loss='" + Value5 + "',File_Audited_Balance_account_sheet='" + Value6 + "' where MasterId='" + ID + "'";
+            string mquery = "update tbl_trn_VendorFinacialInfo set VendorRefNo='" + Value1 + "',FinancialYear='" + Value2 + "',Value_of_Current_Assets='" + Value3 + "',Value_of_Current_Liabilites='" + Value4 + "',Total_Profit_Loss='" + Value5 + "',File_Audited_Balance_account_sheet='" + Value6 + "',LastUpdate='" + DateTime.Now.ToString("yyyy-MMM-dd") + "' where FinancialInfoId='" + ID + "'";
             return SqlHelper.Instance.ExecuteQuery(mquery);
         }
-        public Int32 InsertTurnOver(string ID, string Value1, string Value2, string Value3, string Value4, string Value5, string Value6)
+        public Int32 InsertTurnOver(string ID,  string Value2, string Value3, string Value4, string Value5, string Value6)
         {
-            string mquery = "insert into tbl_trn_VendorDetailMultiGrid (VendorRefNo,Type,FinancialYear,Value_of_Current_Assets,Value_of_Current_Liabilites,Total_Profit_Loss,File_Audited_Balance_account_sheet)Values('" + ID + "','" + Value1 + "','" + Value2 + "','" + Value3 + "','" + Value4 + "','" + Value5 + "','" + Value6 + "')";
+            string mquery = "insert into tbl_trn_VendorFinacialInfo (VendorRefNo,FinancialYear,Value_of_Current_Assets,Value_of_Current_Liabilites,Total_Profit_Loss,File_Audited_Balance_account_sheet)Values('" + ID + "','" + Value2 + "','" + Value3 + "','" + Value4 + "','" + Value5 + "','" + Value6 + "')";
             return SqlHelper.Instance.ExecuteQuery(mquery);
         }
-
-
         public Int32 UpdateAccount(Int64 ID, string Value1, string Value2, string Value3, string Value4, string Value5, string Value6, string Value7)
         {
-            string mquery = "update tbl_trn_VendorDetailMultiGrid set VendorRefNo='" + Value1 + "',NameofBank='" + Value2 + "',TypeOfAccount='" + Value3 + "',AccountNo='" + Value4 + "',MICRNo='" + Value5 + "',IFSCCode='" + Value6 + "',File_Bank_Solvency_Certificate='" + Value7 + "' where MasterId='" + ID + "'";
+            string mquery = "update tbl_trn_VendorFinancialBank set VendorRefNo='" + Value1 + "',NameofBank='" + Value2 + "',TypeOfAccount='" + Value3 + "',AccountNo='" + Value4 + "',MICRNo='" + Value5 + "',IFSCCode='" + Value6 + "',File_Bank_Solvency_Certificate='" + Value7 + "', LastUpdate='" + DateTime.Now.ToString("yyyy-MMM-dd") + "' where FinancialAccountId='" + ID + "'";
             return SqlHelper.Instance.ExecuteQuery(mquery);
         }
-        public Int32 InsertAccount(string ID, string Value1, string Value2, string Value3, string Value4, string Value5, string Value6, string Value7)
+        public Int32 InsertAccount(string ID,  string Value2, string Value3, string Value4, string Value5, string Value6, string Value7)
         {
-            string mquery = "insert into tbl_trn_VendorDetailMultiGrid (VendorRefNo,Type,NameofBank,TypeOfAccount,AccountNo,MICRNo,IFSCCode,File_Bank_Solvency_Certificate)Values('" + ID + "','" + Value1 + "','" + Value2 + "','" + Value3 + "','" + Value4 + "','" + Value5 + "','" + Value6 + "','" + Value7 + "')";
+            string mquery = "insert into tbl_trn_VendorFinancialBank (VendorRefNo,NameofBank,TypeOfAccount,AccountNo,MICRNo,IFSCCode,File_Bank_Solvency_Certificate)Values('" + ID + "','" + Value2 + "','" + Value3 + "','" + Value4 + "','" + Value5 + "','" + Value6 + "','" + Value7 + "')";
             return SqlHelper.Instance.ExecuteQuery(mquery);
         }
-
-
-
         public Int32 UpdateProducts(Int64 ID, string Value1, string Value2, string Value3, string Value4, string Value5, string Value6)
         {
-            string mquery = "update tbl_trn_VendorDetailMultiGrid set VendorRefNo='" + Value1 + "',ProductNomenClature='" + Value2 + "',NatoGroup='" + Value3 + "',NatoClass='" + Value4 + "',ItemCode='" + Value5 + "',HSNCode='" + Value6 + "' where MasterId='" + ID + "'";
+            string mquery = "update tbl_trn_VendorDetailofDefence set VendorRefNo='" + Value1 + "',ProductNomenClature='" + Value2 + "',NatoGroup='" + Value3 + "',NatoClass='" + Value4 + "',ItemCode='" + Value5 + "',HSNCode='" + Value6 + "',LastUpdate='"+DateTime.Now.ToString("yyyy-MMM-dd")+"' where VDetailDefenceId='" + ID + "'";
             return SqlHelper.Instance.ExecuteQuery(mquery);
         }
-        public Int32 InsertProducts(string ID, string Value1, string Value2, string Value3, string Value4, string Value5, string Value6)
+        public Int32 InsertProducts(string ID, string Value1, string Value3, string Value4, string Value5, string Value6)
         {
-            string mquery = "insert into tbl_trn_VendorDetailMultiGrid (VendorRefNo,Type,ProductNomenClature,NatoGroup,NatoClass,ItemCode,HSNCode)Values('" + ID + "','" + Value1 + "','" + Value2 + "','" + Value3 + "','" + Value4 + "','" + Value5 + "','" + Value6 + "')";
+            string mquery = "insert into tbl_trn_VendorDetailofDefence (VendorRefNo,ProductNomenClature,NatoGroup,NatoClass,ItemCode,HSNCode)Values('" + ID + "','" + Value1 + "','" + Value3 + "','" + Value4 + "','" + Value5 + "','" + Value6 + "')";
             return SqlHelper.Instance.ExecuteQuery(mquery);
         }
-
-        public Int32 UpdateTechnology(Int64 ID, string Value1, string Value2, string Value3, string Value4, string Value5)
+        public Int32 UpdateTechnology(Int64 ID, string Value1, string Value2, string Value3, string Value4)
         {
-            string mquery = "update tbl_trn_VendorDetailMultiGrid set VendorRefNo='" + Value1 + "',ProductNomenClature1='" + Value2 + "',TechnologyLevel1='" + Value3 + "',TechnologyLevel2='" + Value4 + "',TechnologyLevel3='" + Value5 + "' where MasterId='" + ID + "'";
+            string mquery = "update tbl_trn_VendorTechDetails set VendorRefNo='" + Value1 + "',TechNomenclature='" + Value2 + "',Technology1='" + Value3 + "',Technology2='" + Value4 + "',LastUpdate='" + DateTime.Now.ToString("yyyy-MMM-dd") + "' where VTechId='" + ID + "'";
             return SqlHelper.Instance.ExecuteQuery(mquery);
         }
-        public Int32 InsertTechnology(string ID, string Value1, string Value2, string Value3, string Value4, string Value5)
+        public Int32 InsertTechnology(string ID, string Value1, string Value2, string Value3)
         {
-            string mquery = "insert into tbl_trn_VendorDetailMultiGrid (VendorRefNo,Type,ProductNomenClature1,TechnologyLevel1,TechnologyLevel2,TechnologyLevel3)Values('" + ID + "','" + Value1 + "','" + Value2 + "','" + Value3 + "','" + Value4 + "','" + Value5 + "')";
+            string mquery = "insert into tbl_trn_VendorTechDetails (VendorRefNo,TechNomenclature,Technology1,Technology2)Values('" + ID + "','" + Value1 + "','" + Value2 + "','" + Value3 + "')";
             return SqlHelper.Instance.ExecuteQuery(mquery);
         }
-
         public Int32 UpdateRaw(Int64 ID, string Value1, string Value2, string Value3, string Value4, string Value5)
         {
-            string mquery = "update tbl_trn_VendorDetailMultiGrid set VendorRefNo='" + Value1 + "',Items='" + Value2 + "',BasicRawMeterial='" + Value3 + "',SourceofMaterial='" + Value4 + "',Major_Raw_Material_Suppliers='" + Value5 + "' where MasterId='" + ID + "'";
+            string mquery = "update tbl_trn_VendorRawMaterial set VendorRefNo='" + Value1 + "',Items='" + Value2 + "',BasicRawMeterial='" + Value3 + "',SourceofMaterial='" + Value4 + "',Major_Raw_Material_Suppliers='" + Value5 + "',LastUpdate='"+DateTime.Now.ToString("yyyy-MMM-dd")+"' where VRawMaterialId='" + ID + "'";
             return SqlHelper.Instance.ExecuteQuery(mquery);
         }
-        public Int32 InsertRaw(string ID, string Value1, string Value2, string Value3, string Value4, string Value5)
+        public Int32 InsertRaw(string ID,  string Value2, string Value3, string Value4, string Value5)
         {
-            string mquery = "insert into tbl_trn_VendorDetailMultiGrid (VendorRefNo,Type,Items,BasicRawMeterial,SourceofMaterial,Major_Raw_Material_Suppliers)Values('" + ID + "','" + Value1 + "','" + Value2 + "','" + Value3 + "','" + Value4 + "','" + Value5 + "')";
+            string mquery = "insert into tbl_trn_VendorRawMaterial (VendorRefNo,Items,BasicRawMeterial,SourceofMaterial,Major_Raw_Material_Suppliers)Values('" + ID + "','" + Value2 + "','" + Value3 + "','" + Value4 + "','" + Value5 + "')";
             return SqlHelper.Instance.ExecuteQuery(mquery);
         }
-
         public Int32 Updateproducedprod(Int64 ID, string Value1, string Value2, string Value3, string Value4, string Value5, string Value6, string value7)
         {
-            string mquery = "update tbl_trn_VendorDetailMultiGrid set VendorRefNo='" + Value1 + "',Reputed_Customer='" + Value2 + "',Description='" + Value3 + "',SupplyNoDate='" + Value4 + "',OrderQuantity='" + Value5 + "'SuppliedQuantity='" + Value6 + "',Date2='" + value7 + "' where MasterId='" + ID + "'";
+            string mquery = "update tbl_trn_VendorProducedSupplied set VendorRefNo='" + Value1 + "',Reputed_Customer='" + Value2 + "',Description='" + Value3 + "',SupplyNoDate='" + Value4 + "',OrderQuantity='" + Value5 + "',SuppliedQuantity='" + Value6 + "',Date2='" + value7 + "',LastUpdate='"+DateTime.Now.ToString("yyyy-MMM-dd")+"' where VSupplyId='" + ID + "'";
             return SqlHelper.Instance.ExecuteQuery(mquery);
         }
         public Int32 Insertproducedprod(string ID, string Value1, string Value2, string Value3, string Value4, string Value5, string Value6, string value7)
         {
-            string mquery = "insert into tbl_trn_VendorDetailMultiGrid (VendorRefNo,Type,Reputed_Customer,Description,SupplyNoDate,OrderQuantity,SuppliedQuantity,Date2)Values('" + ID + "','" + Value1 + "','" + Value2 + "','" + Value3 + "','" + Value4 + "','" + Value5 + "','" + Value6 + "','" + value7 + "')";
+            string mquery = "insert into tbl_trn_VendorProducedSupplied (VendorRefNo,Type,Reputed_Customer,Description,SupplyNoDate,OrderQuantity,SuppliedQuantity,Date2)Values('" + ID + "','" + Value1 + "','" + Value2 + "','" + Value3 + "','" + Value4 + "','" + Value5 + "','" + Value6 + "','" + value7 + "')";
             return SqlHelper.Instance.ExecuteQuery(mquery);
         }
-
-
-
-
-
         #endregion
         #endregion
         #region Code for vendor  Retrive
@@ -629,11 +665,24 @@ namespace BusinessLayer
         }
 
         #endregion
-
-        #region RequestInfoCard
-        public string SaveRequestInfo(HybridDictionary hyLog, out string _sysMsg, out string _msg)
+        #region Feedback
+        public string InsertFeedback(HybridDictionary hySavefeed, out string sysMsg, out string msg)
         {
-            return SqlHelper.Instance.SaveRequestInfo(hyLog, out _sysMsg, out _msg);
+            return SqlHelper.Instance.InsertFeedback(hySavefeed, out sysMsg, out msg);
+        }
+        public string InsertFeedbackReply(HybridDictionary hySavefeedrep, out string sysMsg, out string msg)
+        {
+            return SqlHelper.Instance.InsertFeedbackReply(hySavefeedrep, out sysMsg, out msg);
+        }
+        public string InsertLogFeedbackMail(HybridDictionary hyfeedlog, out string sysMsg, out string msg)
+        {
+            return SqlHelper.Instance.InsertLogFeedbackMail(hyfeedlog, out sysMsg, out msg);
+        }
+        #endregion
+        #region RequestInfoCard
+        public string SaveRequestInfo(HybridDictionary hyLog, DataTable dtrepprod, out string _sysMsg, out string _msg)
+        {
+            return SqlHelper.Instance.SaveRequestInfo(hyLog, dtrepprod, out _sysMsg, out _msg);
         }
         public DataTable RetriveIntrestedProductFilter()
         {
@@ -642,11 +691,423 @@ namespace BusinessLayer
         public DataTable RetriveIntrestedProductFilter1(string p)
         {
             string query = "select ProductRefNo,CompanyRefNo,CompanyName,FactoryRefNo,FactoryName,UnitName,UnitRefNo,ProductLevel1,ProductLevel2,ProductLevel3,NSCCode,ProductDescription,TechnologyLevel1,TechnologyLevel2,Platform,PurposeofProcurement,IsIndeginized,"
-    + "SearchKeyword,IsShowGeneral,IsActive,LastUpdated,IsApproved,NSNGroup,DefencePlatform,ProdIndustryDoamin,NSNGroupClass,ItemCode,ProdIndustrySubDomain,TopPdf,TopImages,EstimateQu,EstimatePrice,EstimateQufuture,EstimatePricefuture,"
-    + "IsProductImported,TenderStatus,EOIStatus,Role,HSNCode,EstiPriMulti,EstiPriMultiF,EstUnitOld,EstUnitfuture,importYear,importFutureYear,OEMName,OEMPartNumber,OEMCountry,EstimatePrice17,EstimatePrice18,importYear17,importYear18,"
-    + "EstimateQu17,EstimateQu18,DPSUPartNumber,IndTargetYear from tbl_trn_ProductFilterSearchTemp where ProductRefNo in (" + p + ")";
+             + "IsShowGeneral,IsActive,LastUpdated,IsApproved,NSNGroup,DefencePlatform,ProdIndustryDoamin,NSNGroupClass,ItemCode,ProdIndustrySubDomain,TopPdf,TopImages,EstimateQu,EstimatePrice,EstimateQufuture,EstimatePricefuture,"
+                    + "IsProductImported,EOIStatus,Role,HSNCode,EstiPriMulti,EstiPriMultiF,EstUnitOld,EstUnitfuture,importYear,importFutureYear,OEMName,OEMPartNumber,OEMCountry,EstimatePrice17,EstimatePrice18,importYear17,importYear18,"
+                    + "EstimateQu17,EstimateQu18,DPSUPartNumber,IndTargetYear from tbl_trn_ProductFilterSearchTemp where ProductRefNo in (" + p + ")";
             return SqlHelper.Instance.GetDataset(query).Tables[0];
             //return SqlHelper.Instance.RetriveFilterCode(p, "", "FilterIntrProd1");
+        }
+
+        //Progress report code 
+        public DataTable RetrieveProductDetails(string p, string a, string n)
+        {
+            string query = "select * from fn_GetListProductDetails('" + p + "','" + a + "','" + n + "')";
+            return SqlHelper.Instance.GetDataset(query).Tables[0];
+            //return SqlHelper.Instance.RetriveFilterCode(p, "", "FilterIntrProd1");
+        }
+        #endregion
+        #region Shalini FeedBack Update
+        public string updateeoi(string refno, string eoistatus, string strtdate, string enddate, string eoiurl)
+        {
+            return SqlHelper.Instance.updateEOI(refno, eoistatus, strtdate, enddate, eoiurl);
+        }
+        public string updatesupplyorder(string refno, string soplaced, decimal supplyordervalue, string supplydelivrydate, string supplyorderdate, string manufacturename, string manufactureaddress)
+        {
+            return SqlHelper.Instance.updateSupplyOrder(refno, soplaced, supplyordervalue, supplydelivrydate, supplyorderdate, manufacturename, manufactureaddress);
+        }
+
+        public string updateSucessStory(string refno, string indegprocess, int indigyear, string isindegnized, string targetyear, string indiacategory,
+            string manufname, string manufaddress, decimal value, DateTime dat)
+        {
+            return SqlHelper.Instance.updateSuccessStory(refno, indegprocess, indigyear, isindegnized, targetyear, indiacategory, manufname, manufaddress, value, dat);
+        }
+        #endregion
+        #region Shalini Save Company Remarks Reply
+        public string SaveCompRemarkReply(string remarkrefno, string replyusername, string replyemail, string remark, string reply)
+        {
+            return SqlHelper.Instance.SaveCompRemarkReply(remarkrefno, replyusername, replyemail, remark, reply);
+        }
+        public DataTable NewRetriveFilterCode(string Criteria, string search, string value, string purpose, string role, int reqid, int refno, int id)
+        {
+            return SqlHelper.Instance.NewRetriveFilterCode(Criteria, search, value, purpose, role, reqid, refno, id);
+        }
+
+        public DataTable NewRetriveFilterCode12(string Criteria, string search, string value, string purpose, string role, int reqid, int refno, int id)
+        {
+            string mquery = "SELECT MR.RequestID, MR.RequestBy, MR.RequestMobileNo, MR.RequestEmail,MR.RequestDate,TR.ProductRefNo FROM tbl_mst_RequestInfo as MR LEFT OUTER JOIN" +
+                " tbl_trn_RequestInfo as TR ON MR.RequestID = TR.RequestID " +
+        "where TR.ProductRefNo in (" + search + ") and RequestEmail ='" + value + "' and RequestMobileNo = '" + purpose + "'";
+            return SqlHelper.Instance.GetDataset(mquery).Tables[0];
+        }
+
+        public string saveSuccessStoryLog(string prorefno, string comprefno, string date, string time)
+        {
+            return SqlHelper.Instance.SaveSuccessStoryLog(prorefno, comprefno, date, time);
+        }
+
+        public string UpdateSaveProduct(HybridDictionary hysave, DataTable DtImage)
+        {
+            return SqlHelper.Instance.UpdateProduct(hysave, DtImage);
+        }
+        public DataTable RetriveProductUpdation(string RefNo, string Criteria, string type)
+        {
+            return SqlHelper.Instance.RetriveProductUpdation(RefNo, Criteria, type);
+        }
+        public string UpdateNodalOfficers(string comprefno, string type, string nofficername, string nofficermobile, string nofficeremail, string nofficerdesignation)
+        {
+            return SqlHelper.Instance.updateNodalOfficer(comprefno, type, nofficername, nofficermobile, nofficeremail, nofficerdesignation);
+        }
+
+        #endregion               
+        #region Test Facility
+
+        public string InsertTestdetails(string test_name, string organisation_id, string Division_id, string Unit_id, string discipline_id, string calibrationfacility, string manufacturer, string manufactureyear, string chambersize,
+            string equimntrange, string productmaterial, string specifications,
+           string maxdimension, string maxweight, string duration, string advancenotice, string constraints, string remarks, out string _sysMsg, out string _msg)
+        {
+            return SqlHelper.Instance.InsertTestDetails(test_name, organisation_id, Division_id, Unit_id, discipline_id, calibrationfacility, manufacturer, manufactureyear, chambersize, equimntrange, productmaterial, specifications, maxdimension, maxweight, duration, advancenotice, constraints, remarks, out _sysMsg, out _msg);
+        }
+        public DataTable RetriveTestDetails()
+        {
+            return SqlHelper.Instance.RetriveTestDetails();
+        }
+
+        public DataTable RetriveTestDetailsbyId(int id)
+        {
+            return SqlHelper.Instance.RetrieveTestdetailsbyId(id);
+        }
+
+        public string savebookorders(int userid, string testname, string organisationid, string discipline, string lab, int noofsample, string dimension, string weighteqmnt, string startdate, string endDate, string attachment, string description)
+        {
+            return SqlHelper.Instance.SaveBookOrders(userid, testname, organisationid, discipline, lab, noofsample, dimension, weighteqmnt, startdate, endDate, attachment, description);
+        }
+
+        public DataTable GetBookedOrders(string compname)
+        {
+            return SqlHelper.Instance.RetriveBookedOrders(compname);
+        }
+
+        public string approvebookedorder(int id)
+        {
+            return SqlHelper.Instance.ApproveBookedOrder(id);
+        }
+
+        public string rejectorderbyremark(int id, string remarks)
+        {
+            return SqlHelper.Instance.RejectOrderwithRemark(id, remarks);
+        }
+        public DataTable Getorganisations()
+        {
+            return SqlHelper.Instance.GetAllOrganisations();
+        }
+        public DataTable GetLabs()
+        {
+            return SqlHelper.Instance.GetAllLAbs();
+        }
+
+        public DataTable GetDiscipline()
+        {
+            return SqlHelper.Instance.GetAllDiscipline();
+        }
+
+        public DataTable GetUserdatabycompany(string compname)
+        {
+            return SqlHelper.Instance.GetUserdatabycompany(compname);
+        }
+
+        public DataTable getsearchdataonhomepage(string compname)
+        {
+            return SqlHelper.Instance.SearchTestDataonHomepage(compname);
+        }
+
+        public DataTable GetTestdetailsbycompany(string comprefno)
+        {
+            return SqlHelper.Instance.GetTestdetailsbycompany(comprefno);
+        }
+        public DataTable BookedOrders()
+        {
+            return SqlHelper.Instance.GetAllBookedOrders();
+        }
+
+        public DataTable pendingBookedOrders()
+        {
+            return SqlHelper.Instance.GetPendingBookedOrders();
+        }
+
+        public DataTable RetriveApprovendRejectBookedOrders()
+        {
+            return SqlHelper.Instance.GetApprovendRejectedOrders();
+        }
+
+        public DataTable Dashboarddatabycompany(string criteria, string search, int id, string compname)
+        {
+            return SqlHelper.Instance.GetDashboardDatabyCompanywise(criteria, search, id, compname);
+        }
+        #endregion
+        #region other
+        public string Add_ErrorLog(HybridDictionary hyLog, out string sysMsg, out string msg)
+        {
+            return SqlHelper.Instance.Add_ErrorLog(hyLog, out sysMsg, out msg);
+        }
+        public string updateintshownstatus(string refno, string requestid, string reason, string struserreason, string mrreasone)
+        {
+            return SqlHelper.Instance.updateIntShownStatus(refno, requestid, reason, struserreason, mrreasone);
+        }
+        public DataTable newsuccessstory2(string Criteria, string search, string value, string purpose, string role, int reqid, int refno, int id, string eoi, string supplyorder, string indiginized)
+        {
+            return SqlHelper.Instance.newsuccessstory2(Criteria, search, value, purpose, role, reqid, refno, id, eoi, supplyorder, indiginized);
+        }
+        public string updateprogSuccessStory(string productrefno, string indigyear, string manufname, string manufaddress)
+        {
+            return SqlHelper.Instance.updateprogSuccessStory(productrefno, indigyear, manufname, manufaddress);
+        }
+        public string updateprogSuccessStory2(string productrefno, string indigyear, string manufname, string manufaddress)
+        {
+            return SqlHelper.Instance.updateprogSuccessStory2(productrefno, indigyear, manufname, manufaddress);
+        }
+        public string SaveExcelProduct2(DataTable dtMaster)
+        {
+            return SqlHelper.Instance.SaveExcelProduct2(dtMaster);
+        }
+        public string SaveExcelProduct2FORSHQ(DataTable dtMaster)
+        {
+            return SqlHelper.Instance.SaveExcelProduct2FORSHQ(dtMaster);
+        }
+        public string SaveForgetExp(string email)
+        {
+            return SqlHelper.Instance.SaveForgetExp(email);
+        }
+        public DataTable DeleteRecord1(string CompRefNo, string Criteria)
+        {
+            return SqlHelper.Instance.DeleteRecord1(CompRefNo, Criteria);
+        }
+        public string SaveExcelProductforSHQ(DataTable dtMaster)
+        {
+            return SqlHelper.Instance.SaveExcelProductforSHQ(dtMaster);
+        }
+        public string SaveExcel3510forSHQ(DataTable dtMaster, string l1, string l2, string pid)
+        {
+            return SqlHelper.Instance.SaveExcel3510forSHQ(dtMaster, l1, l2, pid);
+        }
+        public DataTable GetInteresteddata(string CompanyRefNo, string DivisionRefNo, string UnitRefNo)
+        {
+            return SqlHelper.Instance.GetInteresteddata(CompanyRefNo, DivisionRefNo, UnitRefNo);
+        }
+        public DataTable RetriveFilterCodeupdate(string CompRefNo, string DivisionRefNo, string UnitRefNo, string SearchValue, string Criteria)
+        {
+            return SqlHelper.Instance.RetriveFilterCodeupdate(CompRefNo, DivisionRefNo, UnitRefNo, SearchValue, Criteria);
+        }
+        public string TargetValueUpdate(string hfproc, string lblComp, string TotalProd, string texttarget, string lblinhouse, string lblmakeii, string lblotherthan, string Totalindigenized, string lblannual)
+        {
+            return SqlHelper.Instance.TargetValueUpdate(hfproc, lblComp, TotalProd, texttarget, lblinhouse, lblmakeii, lblotherthan, Totalindigenized, lblannual);
+        }
+        public DataTable GetProductData(string ddlval)
+        {
+            return SqlHelper.Instance.GetProductData(ddlval);
+        }
+        public string AddUserAnalytics(HybridDictionary hysave, out string sysMsg, out string msg)
+        {
+            return SqlHelper.Instance.AddUserAnalytics(hysave, out sysMsg, out msg);
+        }
+        public DataTable Getdroppopup(string SearchValue)
+        {
+            return SqlHelper.Instance.Getdroppopup(SearchValue);
+        }
+        public DataTable Getproductforpopup(string SearchValue)
+        {
+            return SqlHelper.Instance.Getproductforpopup(SearchValue);
+        }
+        public DataTable binddataforpopup(string search)
+        {
+            return SqlHelper.Instance.binddataforpopup(search);
+        }
+        public DataTable MaketwoReport(string CompRefNo, string DivisionRefNo, string UnitRefNo, string SearchValue, string Criteria)
+        {
+            return SqlHelper.Instance.MaketwoReport(CompRefNo, DivisionRefNo, UnitRefNo, SearchValue, Criteria);
+        }
+        #endregion
+        #region HelpdeskCode
+        public string SaveHelpDesk(HybridDictionary hyhelp, out string sysMsg, out string msg)
+        {
+            return SqlHelper.Instance.SaveHelpDesk(hyhelp, out sysMsg, out msg);
+        }
+        public DataTable RetriveHelpdesk(Int32 id, Int32 id1, Int32 id2, string code, string code1, string code2, string code3, string criteria)
+        {
+            return SqlHelper.Instance.RetriveHelpdesk(id, id1, id2, code, code1, code2, code3, criteria);
+        }
+        public string SaveGUser(HybridDictionary HySaveGRegis, out string sysMsg, out string msg)
+        {
+            return SqlHelper.Instance.SaveGUser(HySaveGRegis, out sysMsg, out msg);
+        }
+        #endregion
+        #region rofile management
+        public DataTable RetriveVendorDetal(string VEmail)
+        {
+            return SqlHelper.Instance.RetriveVendorProfMgmt(VEmail);
+        }
+        public DataTable UpdateContactVendor(string Mob, string VEmail)
+        {
+            return SqlHelper.Instance.UpdateVendorProfMgmt(Mob, VEmail);
+        }
+        public DataTable UpdateEmailVendor(string email, string venderID)
+        {
+            return SqlHelper.Instance.UpdateVendorEmailProfMgmt(email, venderID);
+        }
+        public DataTable UpdateContactVendor(string Mob, string VEmail, string StreetAddress, string StreetAddressLine2, string City, string State, string ZipCode, string VendorID5)
+        {
+            return SqlHelper.Instance.UpdateVendorProfMgmt(Mob, VEmail, StreetAddress, StreetAddressLine2, City, State, ZipCode, VendorID5);
+        }
+        public DataTable UpdateAuthrizationLVendor(string filename, string email)
+        {
+            return SqlHelper.Instance.UpdateVendorAuthenticationProfMgmt(filename, email);
+        }
+
+        public DataTable UpdateIdentityVendor(string filename, string email)
+        {
+            return SqlHelper.Instance.UpdateVendorIdentityCardProfMgmt(filename, email);
+        }
+
+        public DataTable ProfileMigrationVendor(string NodalOfficerName, string Contact, string VEmail, string StreetAddress, string StreetAddressLine2, string City, string State,
+            string ZipCode, string VendorIMGID)
+        {
+            return SqlHelper.Instance.profileMigrateVendorProfMgmt(NodalOfficerName, Contact, VEmail, StreetAddress, StreetAddressLine2, City, State, ZipCode, VendorIMGID);
+        }
+        #endregion
+        #region Summerycode
+        public DataTable RetriveSummery(string type, string company)
+        {
+            string mquery = "";
+            if (type == "Admin" || type == "SuperAdmin")
+            {
+                mquery = "Select A.MntName as MntName,isnull(A.TotalProd,0) as TotalProd,A.CountMonth as SR,A.MYear as MYear,isnull(B.TotalProd, 0) as MakeII," +
+                " isnull(C.TotalProd, 0) as OtherThenMakeII ,isnull(D.TotalProd, 0) as InHouse,isnull(E.TotalProd, 0) as Yettobe " +
+                " from(select Count(ProductrefNo) as TotalProd, DateName(Month, LastUpdated) as MntName, Month(LastUpdated) as CountMonth, " +
+                " DateName(Year, LastUpdated) as MYear from tbl_trn_ProductFilterSearchTemp where IsIndeginized = 'Y' group by DateName(Month, LastUpdated), Month(LastUpdated), DateName(Year, LastUpdated)) A " +
+                " left outer join " +
+                " (select  Count(ProductrefNo) as TotalProd, DateName(Month, LastUpdated) as MntName, DateName(Year, LastUpdated) as MYear  from " +
+                "     tbl_trn_ProductFilterSearchTemp where PurposeofProcurement = '25' and IsIndeginized = 'Y'  group by DateName(Month, LastUpdated), DateName(Year, LastUpdated))B on A.MntName = B.MntName     " +
+                " left outer join " +
+                " (select  Count(ProductrefNo) as TotalProd, DateName(Month, LastUpdated) as MntName, DateName(Year, LastUpdated) as MYear  from " +
+                "     tbl_trn_ProductFilterSearchTemp where PurposeofProcurement = '58265' and IsIndeginized = 'Y'  group by DateName(Month, LastUpdated), DateName(Year, LastUpdated))C on A.MntName = C.MntName     " +
+                " left outer join " +
+                " (select  Count(ProductrefNo) as TotalProd, DateName(Month, LastUpdated) as MntName, DateName(Year, LastUpdated) as MYear from " +
+                "     tbl_trn_ProductFilterSearchTemp where PurposeofProcurement = '58270'  and IsIndeginized = 'Y' group by DateName(Month, LastUpdated), DateName(Year, LastUpdated))D on A.MntName = D.MntName  " +
+                " left outer join " +
+                " (select  Count(ProductRefNo) as TotalProd, DateName(Month, LastUpdated) as MntName, DateName(Year, LastUpdated) as MYear  from " +
+                "     tbl_trn_ProductFilterSearchTemp where PurposeofProcurement = '' and IsIndeginized = 'Y'  group by DateName(Month, LastUpdated), DateName(Year, LastUpdated))E on A.MntName = E.MntName  order by SR";
+            }
+            else
+            {
+                mquery = "Select A.MntName as MntName,isnull(A.TotalProd,0) as TotalProd,A.CountMonth as SR,A.MYear as MYear,isnull(B.TotalProd, 0) as MakeII," +
+                  " isnull(C.TotalProd, 0) as OtherThenMakeII ,isnull(D.TotalProd, 0) as InHouse,isnull(E.TotalProd, 0) as Yettobe " +
+                  " from(select Count(ProductrefNo) as TotalProd, DateName(Month, LastUpdated) as MntName, Month(LastUpdated) as CountMonth, " +
+                  " DateName(Year, LastUpdated) as MYear from tbl_trn_ProductFilterSearchTemp where IsIndeginized = 'Y' and " + type + "='" + company + "' group by DateName(Month, LastUpdated), Month(LastUpdated), DateName(Year, LastUpdated)) A " +
+                  " left outer join " +
+                  " (select  Count(ProductrefNo) as TotalProd, DateName(Month, LastUpdated) as MntName, DateName(Year, LastUpdated) as MYear  from " +
+                  "     tbl_trn_ProductFilterSearchTemp where PurposeofProcurement = '25' and IsIndeginized = 'Y' and " + type + "='" + company + "'  group by DateName(Month, LastUpdated), DateName(Year, LastUpdated))B on A.MntName = B.MntName     " +
+                  " left outer join " +
+                  " (select  Count(ProductrefNo) as TotalProd, DateName(Month, LastUpdated) as MntName, DateName(Year, LastUpdated) as MYear  from " +
+                  "     tbl_trn_ProductFilterSearchTemp where PurposeofProcurement = '58265' and IsIndeginized = 'Y' and " + type + "='" + company + "'  group by DateName(Month, LastUpdated), DateName(Year, LastUpdated))C on A.MntName = C.MntName     " +
+                  " left outer join " +
+                  " (select  Count(ProductrefNo) as TotalProd, DateName(Month, LastUpdated) as MntName, DateName(Year, LastUpdated) as MYear from " +
+                  "     tbl_trn_ProductFilterSearchTemp where PurposeofProcurement = '58270'  and IsIndeginized = 'Y' and " + type + "='" + company + "' group by DateName(Month, LastUpdated), DateName(Year, LastUpdated))D on A.MntName = D.MntName  " +
+                  " left outer join " +
+                  " (select  Count(ProductRefNo) as TotalProd, DateName(Month, LastUpdated) as MntName, DateName(Year, LastUpdated) as MYear  from " +
+                  "     tbl_trn_ProductFilterSearchTemp where PurposeofProcurement = '' and IsIndeginized = 'Y' and " + type + "='" + company + "'  group by DateName(Month, LastUpdated), DateName(Year, LastUpdated))E on A.MntName = E.MntName  order by SR";
+
+            }
+            return SqlHelper.Instance.GetDataTable(mquery);
+        }
+
+        #endregion
+        #region ChoteyLalJi
+        public DataTable GetPincode()
+        {
+            return SqlHelper.Instance.GetAllPincode();
+        }
+
+        public DataTable GetCitybyPin(string PinCode)
+        {
+            return SqlHelper.Instance.GetCityNameWithPin(PinCode);
+        }
+        public DataTable GetStateByCity(string CityName)
+        {
+            return SqlHelper.Instance.GetStateWithCity(CityName);
+        }
+        public DataTable GetCity()
+        {
+            return SqlHelper.Instance.GetAllCity();
+        }
+        public DataTable GetState()
+        {
+            return SqlHelper.Instance.GetAllState();
+        }
+        public string SaveVendorCheckList(string ChecklistID, string mCurrentID, out string _sysMsg, out string _msg)
+        {
+            return SqlHelper.Instance.Savechecklist(ChecklistID, mCurrentID, out _sysMsg, out _msg);
+        }
+        #endregion
+        #region  naveen
+        public DataTable vendornodelofficerDetails(string vendorID)
+        {
+            return SqlHelper.Instance.RetriveVendorNodalOfficerDetails(vendorID);
+        }
+        public DataTable AddnewuserVendor(string UserName, string Contact, string VEmail, string StreetAddress, string StreetAddressLine2, string City, string State, string ZipCode, string VendorIMGID, string Password, string userType)
+        {
+            return SqlHelper.Instance.AddNewUserMvendor(UserName, Contact, VEmail, StreetAddress, StreetAddressLine2, City, State, ZipCode, VendorIMGID, Password, userType);
+        }
+        public DataTable RetriveUsersDetals(string VendorID, string Type)
+        {
+            return SqlHelper.Instance.RetriveUserDetailsMgmt(VendorID, Type);
+        }
+        public DataTable ProfileMigrationVendor(string NodalOfficerName, string Contact, string VEmail, string StreetAddress, string StreetAddressLine2, string City, string State, string ZipCode, string VendorIMGID, string Authorization, string Identity, string emailsend, string confirmationemail)
+        {
+            return SqlHelper.Instance.profileMigrateVendorProfMgmt(NodalOfficerName, Contact, VEmail, StreetAddress, StreetAddressLine2, City, State, ZipCode, VendorIMGID, Authorization, Identity, emailsend, confirmationemail);
+        }
+        public DataTable AddNewNodalOfficerVendor(string NodalOfficerName, string Contact, string VEmail, string VendorIMGID, string Authorization, string Identity, string NOffpass, string NodalEmpCode, string NodalOfficerDepartment, string NodalOfficerDesignation, string NodalOfficerTelephone, string NodalOfficerFax, string CompanyRefNo, string Type, string Salt, string TempRef, string IsActive, string IsLoginActive, string IsNodalOfficer, string DefaultPage, string CreatedBy, string RecTime)
+        {
+            return SqlHelper.Instance.AddNewNODofficVendorgmt(NodalOfficerName, Contact, VEmail, VendorIMGID, Authorization, Identity, NOffpass, NodalEmpCode, NodalOfficerDepartment, NodalOfficerDesignation, NodalOfficerTelephone, NodalOfficerFax, CompanyRefNo, Type, Salt, TempRef, IsActive, IsLoginActive, IsNodalOfficer, DefaultPage, CreatedBy);
+        }
+        public DataTable AddLatestCity(string City, string State, string ZipCode)
+        {
+            return SqlHelper.Instance.AddLatestCityVendorMST(City, State, ZipCode);
+        }
+        public DataTable AddLatestPincode(string postaladdress, string ZipCode)
+        {
+            return SqlHelper.Instance.AddLatestPostalcodeVendorMST(postaladdress, ZipCode);
+        }
+        public DataTable RetriveProMigrationDetals(string offliceID, string newNoEmailID)
+        {
+            return SqlHelper.Instance.RetriveMigrationProfDetails(offliceID, newNoEmailID);
+        }
+
+        public DataTable UpdateNewNodalofficerinfo(string VendorID, string NodalOfficerName, string NodalOfficerEmail, string ContactNo, string StreetAddress, string StreetAddressLine2, string City, string vState, string ZipCode, string authrizlatt, string indetityCard)
+        {
+            return SqlHelper.Instance.UpdatenewNodalofficerinfoMgmt(VendorID, NodalOfficerName, NodalOfficerEmail, ContactNo, StreetAddress, StreetAddressLine2, City, vState, ZipCode, authrizlatt, indetityCard);
+        }
+
+        public DataTable NewVendorregistrationVendor(string NodalOfficerName, string Contact, string VEmail, string StreetAddress, string StreetAddressLine2, string City, string State, string ZipCode, string VendorIMGID, string Authorization, string Identity, string vendorRefferNO, string registCAT, string TypeOfBuisness, string BusinessSector, string Country, string MasterAllowed, string IsActive, string IsLoginActive, string DefaultPage, string Type, string RecInsTime, string CompanyName, string PanNO, string GSTno)
+        {
+            return SqlHelper.Instance.AddnewvendorprofilVMGMT(NodalOfficerName, Contact, VEmail, StreetAddress, StreetAddressLine2, City, State, ZipCode, VendorIMGID, Authorization, Identity, vendorRefferNO, registCAT, TypeOfBuisness, BusinessSector, Country, MasterAllowed, IsActive, IsLoginActive, DefaultPage, Type, RecInsTime, CompanyName, PanNO, GSTno);
+        }
+        public DataTable verifyemailIDVendor(string VEmail)
+        {
+            return SqlHelper.Instance.GetverifyemailIDVendorProfMgmt(VEmail);
+        }
+        public DataTable verifyemailIDProfileMigrationVendor(string VEmail)
+        {
+            return SqlHelper.Instance.GetverifyemailIDProfilemigratVendor(VEmail);
+        }
+
+
+
+
+
+        #endregion
+        #region ProductWizard
+        public DataTable ProductWizard(Int32 a, Int32 b, Int32 c, Int32 d, Int32 e, string f, string g, string h, string i, string j, string k, string l, string m, string n, string @Criteria)
+        {
+            return SqlHelper.Instance.ProductWizard(a, b, c, d, e, f, g, h, i, j, k, l, m, n, Criteria);
         }
         #endregion
     }

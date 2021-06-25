@@ -1,0 +1,648 @@
+﻿using System;
+using System.Collections.Specialized;
+using System.Data;
+using System.IO;
+using System.Net;
+using System.Text;
+using System.Text.RegularExpressions;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using BusinessLayer;
+using Encryption;
+using System.Net.Security;
+using System.Net.Mail;
+using System.Data.SqlClient;
+using System.Configuration;
+using System.Collections.Generic;
+
+public partial class Vendor_VendorRegistration : System.Web.UI.Page
+{
+    #region "Variables"
+    Logic LO = new Logic();
+    DataUtility Co = new DataUtility();
+    Cryptography objEnc = new Cryptography();
+    HybridDictionary hyLogin = new HybridDictionary();
+    HybridDictionary HySaveVendor = new HybridDictionary();
+    string _msg = string.Empty;
+    string Defaultpage = string.Empty;
+    string CompanyName = string.Empty;
+    string _sysMsg = string.Empty;
+    string notvalidate = string.Empty;
+    string _EmpId = string.Empty;
+    string AuthFilePath = string.Empty;
+    string IdentityPath = string.Empty;
+    bool MsgStatus;
+    Int64 MId = 0;
+    #endregion
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        if (!IsPostBack)
+        {
+
+            binddpsu();
+            BindTypeOfBusiness();
+            Bindbusinesssector();
+            GetAllState();
+
+        }
+    }
+    #region  Savecode
+    protected void SaveCode()
+    {
+        HySaveVendor["VendorID"] = MId;
+        if (ddlpan.SelectedItem.Text == "GSTIN")
+        {
+            HySaveVendor["GSTNo"] = txtpanno.Text;
+        }
+        else
+        {
+            HySaveVendor["PanNo"] = txtpanno.Text;
+        }
+        // txtgstno.Text.Trim();
+        HySaveVendor["V_CompName"] = txtbusinessname.Text.Trim();
+        HySaveVendor["V_RegisterdDPSU"] = hfdpsuid.Value.ToString().TrimEnd(',');
+        HySaveVendor["RegistrationCategory"] = ddlregiscategory.SelectedItem.Text;
+        HySaveVendor["TypeOfBuisness"] = ddltypeofbusiness.SelectedValue;
+        HySaveVendor["BusinessSector"] = ddlbusinesssector.SelectedValue;
+        HySaveVendor["NodalOfficerName"] = txtnodalname.Text.Trim();
+        HySaveVendor["NodalOfficerEmail"] = txtnodelemail.Text.Trim();
+        HySaveVendor["ContactNo"] = txtMobileNodal.Text.Trim();
+        HySaveVendor["StreetAddress"] = txtstreetaddress.Text.Trim();
+        HySaveVendor["StreetAddressLine2"] = txtstreetaddressline2.Text.Trim();
+        HySaveVendor["ZipCode"] = ddlPincode.SelectedItem.Text.Trim(); //txtzipcode.Text.Trim();
+        HySaveVendor["City"] = ddlCity.SelectedItem.Text.Trim(); //txtcity.Text.Trim();//
+        HySaveVendor["State"] = ddlstate.SelectedItem.Text.Trim();
+        //HySaveVendor["Country"] = ddlcountry.SelectedItem.Value;
+        HySaveVendor["AuthPath"] = Session["AuthFilePath"].ToString();
+        HySaveVendor["Identity"] = Session["IdentiFilePath"].ToString();
+        HySaveVendor["VendorRefID"] = Session["VendorRefID"].ToString();
+        HySaveVendor["CheckStatus"] = ddlwoundedup.SelectedItem.Text + "," + ddljudicialofficer.SelectedItem.Text + "," + ddlbusinesssuspended.SelectedItem.Text + "," + ddlforgingreasone.SelectedItem.Text + "," + ddldebarredgovtcont.SelectedItem.Text;
+        string str = LO.SaveVendorRegis(HySaveVendor, out _sysMsg, out _msg);
+        if (str != "")
+        {
+            SendEmailCodeRegis(str);
+            clearregistrationtext();
+            string message = new System.Web.Script.Serialization.JavaScriptSerializer().Serialize("Record save successfully.Password releted mail send to your registerd email id.");
+            string script = string.Format("alert({0});window.location ='Registration';", message);
+            ScriptManager.RegisterStartupScript(this, GetType(), "alert", script, true);
+        }
+        else
+        {
+            string message = new System.Web.Script.Serialization.JavaScriptSerializer().Serialize("Record not save successfully.");
+            string script = string.Format("alert({0});window.location ='Registration';", message);
+            ScriptManager.RegisterStartupScript(this, GetType(), "", script, true);
+        }
+    }
+    #endregion
+    #region Send Mail
+    public void SendEmailCodeRegis(string empid)
+    {
+        try
+        {
+            string body;
+            using (StreamReader reader = new StreamReader(Server.MapPath("~/emailPage/VenRegisOrPassGenerateLink.html")))
+            {
+                body = reader.ReadToEnd();
+            }
+            body = body.Replace("{UserName}", txtnodelemail.Text);
+            body = body.Replace("{refno}", HttpUtility.UrlEncode(objEnc.EncryptData(empid)));
+            body = body.Replace("{mcurid}", Resturl(56));
+            SendMail s;
+            s = new SendMail();
+            s.CreateMail("noreply-srijandefence@gov.in", txtnodelemail.Text, "Create Password Email", body);
+            s.sendMail();
+        }
+        catch (Exception ex)
+        {
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('" + ex.Message + "')", true);
+        }
+
+    }
+    public bool SendEmailForOTP(string OTP)
+    {
+        try
+        {
+            string body = "Dear,\n\nThis is an  Your OTP : '" + OTP + "' For Registration. ";
+            SendMail s;
+            s = new SendMail();
+            s.CreateMail("noreply-srijandefence@gov.in", txtnodelemail.Text, "OTP Verification For Registration", body);
+            s.sendMail();
+            MsgStatus = true;
+        }
+        catch (Exception ex)
+        {
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('" + ex.Message + "')", true);
+        }
+        return MsgStatus;
+    }
+    #endregion  
+    #region Buttoncode   
+    protected void Btnclear_Click(object sender, EventArgs e)
+    {
+        clearregistrationtext();
+    }
+    protected void btnsubmit_Click(object sender, EventArgs e)
+    {
+        if (hfdpsuid.Value.ToString() != "")
+        {
+            if (txtOTP.Text == Session["OTP"].ToString())
+            {
+                SaveCode();
+            }
+            else
+            {
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Invalid Captcha')", true);
+            }
+        }
+    }
+    protected void lbnext_Click(object sender, EventArgs e)
+    {
+        try
+        {
+            if (txtnodalname.Text != "" && txtnodelemail.Text != "")
+            {
+                if (txtpanno.Text != "")
+                {
+                    if (IsValidEmailId(txtnodelemail.Text))
+                    {
+                        if (IsValidEmailRegister(txtnodelemail.Text))
+                        {
+                            if (FileUpload1.PostedFile != null)
+                            {
+
+                                string strAuthFname = DateTime.Now.ToString("hh_mm_ss") + "-" + FileUpload1.FileName;
+                                string ext = Path.GetExtension(strAuthFname);
+
+                                if (ext == ".pdf")
+                                {
+                                    FileUpload1.PostedFile.SaveAs(Server.MapPath("~/Upload/" + strAuthFname));
+                                    string AuthPath = "~/Upload/" + strAuthFname.ToString();
+                                    Session["AuthFilePath"] = AuthPath;
+                                    AuthFilePath = Session["AuthFilePath"].ToString();
+                                    if (FileIdentity.PostedFile != null)
+                                    {
+                                        string strIdentity = DateTime.Now.ToString("hh_mm_ss") + "_" + FileIdentity.FileName;
+                                        string ext2 = Path.GetExtension(strIdentity);
+                                        if (ext2 == ".pdf")
+                                        {
+                                            FileUpload1.PostedFile.SaveAs(Server.MapPath("~/Upload/" + strIdentity));
+                                            string IdentiPath = "~/Upload/" + strIdentity.ToString();
+                                            Session["IdentiFilePath"] = IdentiPath;
+                                            IdentityPath = Session["IdentiFilePath"].ToString();
+                                            foreach (ListItem lie in chkdpsu.Items)
+                                            {
+                                                if (lie.Selected == true)
+                                                {
+                                                    hfdpsuid.Value += lie.Value + ",";
+                                                }
+                                            }
+                                            FillCapctha();
+                                            divfinalsubmit.Visible = true;
+                                            divfirst.Visible = false;
+                                        }
+                                        else
+                                        {
+                                            string message = new System.Web.Script.Serialization.JavaScriptSerializer().Serialize("Please Upload ID Card pdf only.");
+                                            string script = string.Format("alert({0});window.location ='Registration';", message);
+                                            ScriptManager.RegisterStartupScript(this, GetType(), "", script, true);
+                                        }
+                                    }
+                                    else
+                                    {
+                                        string message = new System.Web.Script.Serialization.JavaScriptSerializer().Serialize("Please Upload Id Card.");
+                                        string script = string.Format("alert({0});window.location ='Registration';", message);
+                                        ScriptManager.RegisterStartupScript(this, GetType(), "", script, true);
+                                    }
+                                }
+                                else
+                                {
+                                    string message = new System.Web.Script.Serialization.JavaScriptSerializer().Serialize("Please Upload Authrization Letter pdf only.");
+                                    string script = string.Format("alert({0});window.location ='Registration';", message);
+                                    ScriptManager.RegisterStartupScript(this, GetType(), "", script, true);
+                                }
+                            }
+
+                            else
+                            {
+                                string message = new System.Web.Script.Serialization.JavaScriptSerializer().Serialize("Please Upload Authrization Letter.");
+                                string script = string.Format("alert({0});window.location ='Registration';", message);
+                                ScriptManager.RegisterStartupScript(this, GetType(), "", script, true);
+                            }
+                        }
+                        else
+                        {
+                            string message = new System.Web.Script.Serialization.JavaScriptSerializer().Serialize("Email already registerd.");
+                            string script = string.Format("alert({0});window.location ='Registration';", message);
+                            ScriptManager.RegisterStartupScript(this, GetType(), "", script, true);
+                        }
+                    }
+                    else
+                    {
+                        string message = new System.Web.Script.Serialization.JavaScriptSerializer().Serialize("Email format not valid");
+                        string script = string.Format("alert({0});window.location ='Registration';", message);
+                        ScriptManager.RegisterStartupScript(this, GetType(), "", script, true);
+                    }
+                }
+                else
+                {
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "ErrorMssgPopup('Please enter valid GSTIN No')", true);
+                }
+            }
+            else
+            {
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Please fill mandatory field')", true);
+            }
+        }
+        catch (Exception ex)
+        {
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('" + ex.Message.ToString() + "')", true);
+        }
+
+    }
+    protected void lbback_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("Registration");
+    }
+    protected void btnforotpget_Click(object sender, EventArgs e)
+    {
+        if (ddlregiscategory.SelectedValue != "0" && ddltypeofbusiness.SelectedValue != "0" && ddlbusinesssector.SelectedValue != "0" && ddlwoundedup.SelectedValue != "0"
+                               && ddljudicialofficer.SelectedValue != "0" && ddlbusinesssuspended.SelectedValue != "0" && ddlforgingreasone.SelectedValue != "0"
+                               && ddldebarredgovtcont.SelectedValue != "0")
+        {
+            if (Txtcatpcha2.Text != Session["captcha"].ToString())
+            {
+                string message = new System.Web.Script.Serialization.JavaScriptSerializer().Serialize("Invalid Captcha .");
+                string script = string.Format("alert({0});", message);
+                ScriptManager.RegisterStartupScript(this, GetType(), "", script, true);
+            }
+            else
+            {
+                if (hfdpsuid.Value.ToString() != "")
+                {
+                    string OTP = GenerateOTP();
+                    bool msg = SendEmailForOTP(OTP);
+                    if (msg == true)
+                    {
+                        divotp.Visible = true;
+                        divsecond.Visible = false;
+                        txtOTP.Focus();
+                        string message = new System.Web.Script.Serialization.JavaScriptSerializer().Serialize("OTP send to your EmailID.");
+                        string script = string.Format("alert({0});", message);
+                        ScriptManager.RegisterStartupScript(this, GetType(), "", script, true);
+                    }
+                    else
+                    {
+                        divotp.Visible = true;
+                        divsecond.Visible = false;
+                        string message = new System.Web.Script.Serialization.JavaScriptSerializer().Serialize("Some error occure on sending mail.Please try after some time.");
+                        string script = string.Format("alert({0});", message);
+                        ScriptManager.RegisterStartupScript(this, GetType(), "", script, true);
+                    }
+                }
+            }
+        }
+        else
+        {
+            string message = new System.Web.Script.Serialization.JavaScriptSerializer().Serialize("Please select term and condition");
+            string script = string.Format("alert({0});window.location ='Registration';", message);
+            ScriptManager.RegisterStartupScript(this, GetType(), "", script, true);
+        }
+    }
+    protected void lbback2_Click(object sender, EventArgs e)
+    {
+        divfinalsubmit.Visible = true;
+        divsecond.Visible = true;
+        divotp.Visible = false;
+    }
+    protected void lbresentotp_Click(object sender, EventArgs e)
+    {
+        string OTP = GenerateOTP();
+        bool msg = SendEmailForOTP(OTP);
+    }
+    #endregion
+    #region cpatchcode    
+    void FillCapctha()
+    {
+        try
+        {
+            Random random = new Random();
+            string combination = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+            StringBuilder captcha = new StringBuilder();
+            for (int i = 0; i < 6; i++)
+                captcha.Append(combination[random.Next(combination.Length)]);
+            Session["captcha"] = captcha.ToString();
+            Image1.ImageUrl = "~/GenerateCaptcha.aspx?" + DateTime.Now.Ticks.ToString();
+        }
+        catch
+        {
+
+            throw;
+        }
+    }
+    protected void CaptchaRefresh_Click(object sender, EventArgs e)
+    {
+        FillCapctha();
+    }
+    #endregion
+    #region Master Code
+    protected void binddpsu()
+    {
+        DataTable DtCompanyDDL = LO.RetriveMasterData(0, "", "Company", 0, "", "", "Select");
+        if (DtCompanyDDL.Rows.Count > 0)
+        {
+            Co.FillCheckBox(chkdpsu, DtCompanyDDL, "CompanyName", "CompanyID");
+        }
+    }
+    protected void BindTypeOfBusiness()
+    {
+        DataTable DtMasterCategroyBusiness = LO.RetriveMasterData(1, "", "", 0, "", "", "TypeofBusiness");
+        if (DtMasterCategroyBusiness.Rows.Count > 0)
+        {
+            Co.FillDropdownlist(ddltypeofbusiness, DtMasterCategroyBusiness, "VendorSubCatName", "VendorSubCatID");
+            ddltypeofbusiness.Items.Insert(0, "Select");
+        }
+    }
+    protected void Bindbusinesssector()
+    {
+        DataTable DtMasterCategroyBusiness = LO.RetriveMasterData(2, "", "", 0, "", "", "BuisnessSector");
+        if (DtMasterCategroyBusiness.Rows.Count > 0)
+        {
+            Co.FillDropdownlist(ddlbusinesssector, DtMasterCategroyBusiness, "VendorSubCatName", "VendorSubCatID");
+            ddlbusinesssector.Items.Insert(0, "Select");
+        }
+    }
+    public void GetAllState()
+    {
+        DataTable dtAllState = LO.GetState();
+        Co.FillDropdownlist(ddlstate, dtAllState, "StateName", "StateId");
+        ddlstate.Items.Insert(0, "Select");
+    }
+    public void GetAllPincode()
+    {
+        DataTable dtState = LO.GetStateByCity(ddlCity.SelectedValue);
+        Co.FillDropdownlist(ddlPincode, dtState, "PinCode", "PinCode");
+        ddlPincode.Items.Insert(0, "Select");
+    }
+    public void GetAllCitycode()
+    {
+        DataTable dtCity = LO.GetCitybyPin(ddlstate.SelectedValue);
+        Co.FillDropdownlist(ddlCity, dtCity, "CityName", "CityCode");
+        ddlCity.Items.Insert(0, "Select");
+    }
+    public string GenerateOTP()
+    {
+        string VOTP = "";
+        try
+        {
+            string numbers = "1234567890";
+            string characters = numbers;
+            int length = int.Parse("6");
+            string otp = string.Empty;
+            for (int i = 0; i < length; i++)
+            {
+                string character = string.Empty;
+                do
+                {
+                    int index = new Random().Next(0, characters.Length);
+                    character = characters.ToCharArray()[index].ToString();
+                } while (otp.IndexOf(character) != -1);
+                otp += character;
+            }
+            VOTP = otp;
+            Session["OTP"] = VOTP.ToString();
+            txtOTP.Text = VOTP.ToString();
+        }
+        catch (Exception ex)
+        {
+            ex.Message.ToString();
+        }
+        return VOTP;
+    }
+    protected void clearregistrationtext()
+    {
+        ddlpan.SelectedIndex = -1;
+        ddlregiscategory.SelectedIndex = -1;
+        txtpanno.Text = "";
+        txtbusinessname.Text = "";
+        ddltypeofbusiness.SelectedIndex = -1;
+        ddlbusinesssector.SelectedIndex = -1;
+        txtnodalname.Text = "";
+        txtnodelemail.Text = "";
+        txtMobileNodal.Text = "";
+        txtstreetaddress.Text = "";
+        txtstreetaddressline2.Text = "";
+        ddlwoundedup.SelectedIndex = -1;
+        ddljudicialofficer.SelectedIndex = -1;
+        ddlbusinesssuspended.SelectedIndex = -1;
+        ddlforgingreasone.SelectedIndex = -1;
+        ddldebarredgovtcont.SelectedIndex = -1;
+        chkbuisness.SelectedIndex = -1;
+        lblbusinessname.Text = "";
+        lblmsgpan.Text = "";
+        hfpanname.Value = "";
+        ddlPincode.SelectedIndex = -1;
+        ddlCity.SelectedIndex = -1;
+        ddlstate.SelectedIndex = -1;
+        chkdpsu.SelectedIndex = -1;
+    }
+    #endregion    
+    #region ReturnUrl Long"
+    public string Resturl(int length)
+    {
+        const string valid = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+        StringBuilder res = new StringBuilder();
+        Random rnd = new Random();
+        while (0 < length--)
+        {
+            res.Append(valid[rnd.Next(valid.Length)]);
+        }
+        return res.ToString();
+    }
+    #endregion
+    #region "Validation Code"
+    public static bool IsValidEmailId(string InputEmail)
+    {
+        string pattern = @"^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,6}$";
+        Match match = Regex.Match(InputEmail.Trim(), pattern, RegexOptions.IgnoreCase);
+        if (match.Success)
+            return true;
+        else
+            return false;
+    }
+    public bool IsValidEmailRegister(string InputEmail)
+    {
+        string DtEmailValidate = LO.VerifyEmailandCompany(InputEmail, "VEmail", out _msg);
+        if (_msg.ToString() == InputEmail.ToString())
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
+    public bool IsValidMobile(string InputMobile)
+    {
+        string DtEmailValidate = LO.VerifyEmailandCompany(InputMobile, "VPhone", out _msg);
+        if (_msg.ToString() == InputMobile.ToString())
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
+    #endregion
+    #region PanCard Verification Code
+    protected void ddlpan_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        if (ddlpan.SelectedItem.Text == "GSTIN")
+        {
+            lbname.Text = " GSTIN No ";
+            divpan.Visible = true;
+        }
+        else if (ddlpan.SelectedItem.Text == "PAN")
+        {
+            lbname.Text = " PAN No ";
+            divpan.Visible = true;
+        }
+        else
+        { divpan.Visible = false; }
+    }
+    public Boolean AcceptAllCertifications(Object sender, System.Security.Cryptography.X509Certificates.X509Certificate certification, System.Security.Cryptography.X509Certificates.X509Chain chain, System.Net.Security.SslPolicyErrors sslPolicyErrors)
+    {
+        return true;
+    }
+    protected void PanVerification()
+    {
+        try
+        {
+            string requestUristring = string.Format("http://maketheindia.in/Pan-Verification?pancardNO=V0224301^" + txtpanno.Text);
+            ServicePointManager.ServerCertificateValidationCallback = new RemoteCertificateValidationCallback(AcceptAllCertifications);
+            HttpWebRequest myReq = (HttpWebRequest)WebRequest.Create(requestUristring);
+            HttpWebResponse myResp = (HttpWebResponse)myReq.GetResponse();
+            System.IO.StreamReader respStreamReader = new System.IO.StreamReader(myResp.GetResponseStream());
+            string responseString = respStreamReader.ReadToEnd();
+            string str = responseString.ToString();
+            char[] deli = { '^' };
+            string[] split = str.Split(deli);
+            string A = split[0];
+            if (A.Substring(13) == "1")
+            {
+                string B = split[1];
+                if (B != null)
+                {
+                    Session["VendorRefID"] = B.ToString();
+                }
+                else
+                {
+                    Session["VendorRefID"] = "";
+                }
+
+                string C = split[3];
+                string D = split[4];
+                string E = split[6];
+                string F = split[7];
+                string G = split[8];
+                if (G != null)
+                {
+                    Session["PANCOMPNAME"] = G.ToString();
+                }
+
+                string H = split[10];
+
+
+
+                if (split[4].ToString() == "")
+                {
+                    hfpanname.Value = split[3].ToString();
+                }
+                else
+                {
+                    hfpanname.Value = split[4] + " " + split[3].ToString();
+                }
+                panverifi.Attributes.Add("Class", "fa fa-check");
+                lblmsgpan.ForeColor = System.Drawing.Color.Green;
+                lblmsgpan.Text = "Valid Pan";
+                lblmsgpan.Visible = true;
+            }
+            else
+            {
+                panverifi.Attributes.Add("Class", "fa fa-times");
+                lblmsgpan.ForeColor = System.Drawing.Color.Red;
+                lblmsgpan.Text = "Invalid Pan";
+                lblmsgpan.Visible = true;
+                txtpanno.Focus();
+            }
+        }
+        catch (Exception ex)
+        {
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('" + ex.Message.ToString() + "')", true);
+        }
+    }
+    protected void txtpanno_TextChanged(object sender, EventArgs e)
+    {
+        if (ddlpan.SelectedItem.Text == "PAN")
+        {
+            try
+            {
+                PanVerification();
+            }
+            catch (Exception ex)
+            {
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('" + ex.Message.ToString() + "')", true);
+            }
+        }
+        else
+        {
+            //Code for GST
+        }
+    }
+    #endregion
+    #region selectindexchange texto=and other code
+    protected void txtbusinessname_TextChanged(object sender, EventArgs e)
+    {
+        if (ddlpan.SelectedItem.Text == "PAN")
+        {
+            if (lblmsgpan.Text == "Valid Pan")
+            {
+                if (txtbusinessname.Text.ToUpper() == Session["PANCOMPNAME"].ToString())
+                {
+                    check.Attributes.Add("Class", "fa fa-check");
+                    lblbusinessname.Text = "Valid Company.";
+                    lblbusinessname.Visible = true;
+                    lblbusinessname.ForeColor = System.Drawing.Color.Green;
+                }
+                else
+                {
+                    lblbusinessname.Text = "Invalid Company.";
+                    check.Attributes.Add("Class", "fa fa-times");
+                    lblbusinessname.ForeColor = System.Drawing.Color.Red;
+                    txtbusinessname.Focus();
+                }
+            }
+            else
+            {
+                lblbusinessname.Text = "Invalid Company.";
+                check.Attributes.Add("Class", "fa fa-times");
+                lblbusinessname.ForeColor = System.Drawing.Color.Red;
+
+            }
+        }
+        else
+        {
+            // Writen Code For GST
+        }
+    }
+    protected void ddlCity_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        GetAllPincode();
+    }
+    protected void ddlstate_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        GetAllCitycode();
+    }
+    #endregion    
+}

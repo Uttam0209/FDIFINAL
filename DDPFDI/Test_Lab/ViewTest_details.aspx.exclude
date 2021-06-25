@@ -1,0 +1,324 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Test_Lab/DPSU_MasterPage.master" AutoEventWireup="true" CodeFile="ViewTest_details.aspx.cs" Inherits="Test_Lab_ViewTest_details" %>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
+    <style>
+        #ContentPlaceHolder1_gvtestdetails_info {
+            margin-top: 10px !important;
+            background: rgba(105,21,207,0.8) !important;
+            color: #fff;
+        }
+
+        #ContentPlaceHolder1_gvtestdetails_paginate {
+            margin-top: 10px !important;
+            padding: 0 !important;
+            border: 0 !important;
+        }
+
+            #ContentPlaceHolder1_gvtestdetails_paginate span .paginate_button {
+                background: rgba(105,21,207,0.8) !important;
+                color: #fff !important;
+            }
+
+            #ContentPlaceHolder1_gvtestdetails_paginate .paginate_button {
+                background: rgba(105,21,207,0.8) !important;
+                color: #fff !important;
+            }
+
+        #updatetable table tr th, td {
+            border: 1px solid #333 !important;
+        }
+
+        .box1 {
+            box-shadow: 0 0 5px;
+        }
+        .modal-header
+        {
+            background: rgba(105,21,207,0.8) !important;
+                color: #fff !important;
+        }
+    </style>
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
+    <asp:ScriptManager ID="scrtmanager" runat="server"></asp:ScriptManager>
+    <asp:HiddenField ID="hidCompanyRefNo" runat="server" />
+    <asp:HiddenField ID="hidType" runat="server" />
+    <asp:HiddenField runat="server" ID="hfcomprefno" />
+    <asp:UpdatePanel ID="update" runat="server">
+        <ContentTemplate>
+    <div class="container-fluid">
+        <div class="row my-2 box1 py-2">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <asp:Label runat="server" CssClass="form-label">Select Company/Organization</asp:Label>
+                    <asp:DropDownList runat="server" ID="ddlcomp" CssClass="form-cascade-control form-control" AutoPostBack="true" OnSelectedIndexChanged="ddlcomp_SelectedIndexChanged"></asp:DropDownList>
+                </div>
+            </div>
+            <div class="col-md-3" runat="server" id="divlblselectdivison">
+                <div class="form-group">
+                    <asp:Label runat="server" CssClass="form-label">Select Division/Plant</asp:Label>
+                    <asp:DropDownList runat="server" ID="ddldivision" CssClass="form-cascade-control form-control" AutoPostBack="true" OnSelectedIndexChanged="ddldivision_SelectedIndexChanged"></asp:DropDownList>
+                </div>
+            </div>
+            <div class="col-md-3" runat="server" id="divlblselectunit">
+                <div class="form-group">
+                    <asp:Label runat="server" CssClass="form-label">Select Unit</asp:Label>
+                    <asp:DropDownList runat="server" ID="ddlunit" CssClass="form-cascade-control form-control" AutoPostBack="true" OnSelectedIndexChanged="ddlunit_SelectedIndexChanged"></asp:DropDownList>
+                </div>
+            </div>
+            <div class="col-md-3" runat="server" id="divlblselectdiscipline">
+                <div class="form-group">
+                    <asp:Label runat="server" CssClass="form-label">Select Discipline</asp:Label>
+                    <asp:DropDownList runat="server" ID="ddldiscipline" CssClass="form-cascade-control form-control" AutoPostBack="true" OnSelectedIndexChanged="ddldiscipline_SelectedIndexChanged"></asp:DropDownList>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group" runat="server" visible="false" id="portalid">
+                    <b>Item Id (Portal):-
+                                    <asp:Label ID="lblrefnoforinfo" runat="server"></asp:Label></b>
+                </div>
+            </div>
+        </div>
+        <div class="row my-2 box1 py-2">
+            <div id="divTotalNumber" class="col-12 text-center" style="font-size: 16px; margin-top: 10px;" runat="server" visible="False">
+                <asp:Label ID="lbltotal" runat="server" Text=""></asp:Label>
+            </div>
+            <div class="col-md-12">
+                <div class="fdi-add-content">
+                    <div class="table-wraper table-responsive">
+                        <asp:GridView ID="gvtestdetails" runat="server" EmptyDataText="No Record Found" Class="table table-responsive" OnRowCreated="gvtestdetails_RowCreated" OnRowCommand="gvtestdetails_RowCommand"
+                            AutoGenerateColumns="false">
+                            <Columns>
+                                <asp:TemplateField HeaderText="S.No.">
+                                    <ItemTemplate>
+                                        <%#Container.DataItemIndex + 1 %>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Organisation">
+                                    <ItemTemplate>
+                                        <asp:Label ID="lblOrg" runat="server" Text='<%# Eval("organisation_id") %>'></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+
+                                <asp:TemplateField HeaderText="Lab">
+                                    <ItemTemplate>
+                                        <asp:Label ID="lblunit" runat="server" Text='<%# Eval("Lab_id") %>'></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Discipline">
+                                    <ItemTemplate>
+                                        <asp:Label ID="lbldiscipline" runat="server" Text='<%# Eval("discipline_id") %>'></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Test">
+                                    <ItemTemplate>
+                                        <asp:Label ID="lblnameoftest" runat="server" Text='<%# Eval("test_name") %>'></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Calibration Facility">
+                                    <ItemTemplate>
+                                        <asp:Label ID="lblcalibratnfac" runat="server" Text='<%# Eval("Calibration_facility") %>'></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Manufacturer">
+                                    <ItemTemplate>
+                                        <asp:Label ID="lblmanufacturer" runat="server" Text='<%# Eval("manufacturer") %>'></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Chamber Size">
+                                    <ItemTemplate>
+                                        <asp:Label ID="lblchambersize" runat="server" Text='<%# Eval("chamber_size") %>'></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Material">
+                                    <ItemTemplate>
+                                        <asp:Label ID="lblmaterial" runat="server" Text='<%# Eval("product_material") %>'></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Equimnt Range" Visible="false">
+                                    <ItemTemplate>
+                                        <asp:Label ID="lblequipmntrange" runat="server" Text='<%# Eval("eqpt_range") %>'></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Manufacturer year" Visible="false">
+                                    <ItemTemplate>
+                                        <asp:Label ID="lblmanufyear" runat="server" Text='<%# Eval("manufacturing_year") %>'></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Specifications" Visible="false">
+                                    <ItemTemplate>
+                                        <asp:Label ID="lblspecifications" runat="server" Text='<%# Eval("specifications") %>'></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Max Dimension" Visible="false">
+                                    <ItemTemplate>
+                                        <asp:Label ID="lblmaxdimension" runat="server" Text='<%# Eval("max_dimension") %>'></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Max weight" Visible="false">
+                                    <ItemTemplate>
+                                        <asp:Label ID="lblmaxweight" runat="server" Text='<%# Eval("max_weight") %>'></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Duration" Visible="false">
+                                    <ItemTemplate>
+                                        <asp:Label ID="lblduration" runat="server" Text='<%# Eval("duration") %>'></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Advance Notice" Visible="false">
+                                    <ItemTemplate>
+                                        <asp:Label ID="lbladvancenotice" runat="server" Text='<%# Eval("advance_notice") %>'></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Constraints" Visible="false">
+                                    <ItemTemplate>
+                                        <asp:Label ID="lblconstraints" runat="server" Text='<%# Eval("constraints") %>'></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Remarks" Visible="false">
+                                    <ItemTemplate>
+                                        <asp:Label ID="lblremrks" runat="server" Text='<%# Eval("product_material") %>'></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <%--   <asp:BoundField ItemStyle-Width="150px" DataField="remarks" HeaderText="Remarks" />--%>
+                                <asp:TemplateField HeaderText="Actions">
+                                    <ItemTemplate>
+                                        <asp:LinkButton ID="lnkview" runat="server" CssClass="fa fa-eye" CommandName="view" CommandArgument='<%# Eval("id") %>'></asp:LinkButton>
+                                        <asp:LinkButton ID="lnkbook" runat="server" CssClass="fa fa-building" CommandName="Book Order" CommandArgument='<%# Eval("id") %>'></asp:LinkButton>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                            </Columns>
+                        </asp:GridView>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-quick-view modal fade" id="viewdiv" tabindex="-1">
+        <div class="modal-dialog modal-xl" style="max-width: 800px!important; z-index: 9999999999;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">TEST DETAILS</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <table class="table" id="updatetable">
+
+                        <tr>
+                            <td>Organisation:</td>
+                            <td>
+                                <asp:Label ID="lblorganisation" runat="server"></asp:Label>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>Lab :</td>
+                            <td>
+                                <asp:Label ID="lblLab" runat="server"></asp:Label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Discipline :</td>
+                            <td>
+                                <asp:Label ID="lbldiscipline" runat="server"></asp:Label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Name of Test :</td>
+                            <td>
+                                <asp:Label ID="lbltestname" runat="server"></asp:Label></td>
+                        </tr>
+                        <tr>
+                            <td>Range of Equipment :</td>
+                            <td>
+                                <asp:Label ID="lblrange" runat="server"></asp:Label>
+                        </tr>
+                        <tr>
+                            <td>Calibration Facility : </td>
+                            <td>
+                                <asp:Label ID="lblcalbiratn" runat="server"></asp:Label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Equipment Manufacturer : </td>
+                            <td>
+                                <asp:Label ID="lblequpmntmanuf" runat="server"></asp:Label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Manufacturing year of Equipment : </td>
+                            <td>
+                                <asp:Label ID="lblmanufyear" runat="server"></asp:Label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Chamber Size : </td>
+                            <td>
+                                <asp:Label ID="lblchambersize" runat="server"></asp:Label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Material : </td>
+                            <td>
+                                <asp:Label ID="lblmaterial" runat="server"></asp:Label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Specifications : </td>
+                            <td>
+                                <asp:Label ID="lblspecifications" runat="server"></asp:Label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Max Dimension : </td>
+                            <td>
+                                <asp:Label ID="lblmaxdimension" runat="server"></asp:Label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Max Weight : </td>
+                            <td>
+                                <asp:Label ID="lblmaxweight" runat="server"></asp:Label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Duration : </td>
+                            <td>
+                                <asp:Label ID="lblduration" runat="server"></asp:Label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Advance Notice : </td>
+                            <td>
+                                <asp:Label ID="lbladvancenotice" runat="server"></asp:Label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Constraints : </td>
+                            <td>
+                                <asp:Label ID="lblconstraints" runat="server"></asp:Label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Remarks : </td>
+                            <td>
+                                <asp:Label ID="lblremarks" runat="server"></asp:Label>
+                            </td>
+                        </tr>
+
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn" data-dismiss="modal" style=" background: rgba(105,21,207,0.8) !important; color: #fff !important;">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+            </ContentTemplate>
+  </asp:UpdatePanel>
+    <script type="text/javascript">
+        function showPopup2() {
+            $('#viewdiv').modal('show');
+        }
+    </script>
+</asp:Content>
+

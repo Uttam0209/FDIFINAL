@@ -1,0 +1,552 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Test_Lab/DPSU_MasterPage.master" AutoEventWireup="true" CodeFile="LabDashboard.aspx.cs" Inherits="Test_Lab_LabDashboard" %>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
+     <style>
+          #ContentPlaceHolder1_gvtest_info {
+            margin-top: 10px !important;
+            background: rgba(105,21,207,0.8) !important;
+            color: #fff;
+        }
+
+        #ContentPlaceHolder1_gvtest_paginate {
+            margin-top: 10px !important;
+            padding: 0 !important;
+            border: 0 !important;
+        }
+
+            #ContentPlaceHolder1_gvtest_paginate span .paginate_button {
+                background: rgba(105,21,207,0.8) !important;
+                color: #fff !important;
+            }
+
+            #ContentPlaceHolder1_gvtest_paginate .paginate_button {
+                background: rgba(105,21,207,0.8) !important;
+                color: #fff !important;
+            }
+
+        #updatetable table tr th, td {
+            border: 1px solid #333 !important;
+        }
+
+        .box1 {
+            box-shadow: 0 0 5px;
+        }
+
+        #cardpannel h5 {
+            color: #fff !important;
+        }
+
+        #cardpannel a {
+            color: #fff !important;
+        }
+
+        .box1 {
+            box-shadow: 0 0 5px;
+        }
+    </style>
+
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
+          <asp:HiddenField ID="hidCompanyRefNo" runat="server" />
+    <asp:HiddenField ID="hidType" runat="server" />
+    <asp:HiddenField runat="server" ID="hfcomprefno" />
+        <div class="container-fluid">
+        <div class="row d-flex box1 py-2" id="cardpannel">
+                                            <div class="col-md-3 mt-2">
+                                                <div class="card" style="background-color:#6b5b95;">
+                                                    <div class="card-body text-center">
+                                               <h5 class="card-text">Total Test</h5>
+                                                    <asp:LinkButton ID="lnkbtnTotaltest" CssClass="comp_number" runat="server" OnClick="lnkbtnTotaltest_Click"></asp:LinkButton>
+                                            </div>
+                                </div>
+                            </div>
+               <div class="col-md-3 mt-2">
+                <div class="card  bg-info">
+                    <div class="card-body text-center">
+                        <h5 class="card-text">Booked Test Order</h5>
+                        <asp:LinkButton ID="lnkbtnbookedtest" runat="server" CssClass="comp_number" OnClick="lnkbtnbookedtest_Click"></asp:LinkButton>
+                    </div>
+                </div>
+            </div>
+              <div class="col-md-3 mt-2">
+                <div class="card" style="background-color:#ada397;">
+                    <div class="card-body text-center">
+                        <h5 class="card-text">Pending Test Order</h5>
+                        <asp:LinkButton ID="lnkbtnpndingtest" runat="server" CssClass="comp_number" OnClick="lnkbtnpndingtest_Click"></asp:LinkButton>
+                    </div>
+                </div>
+            </div>
+
+             <div class="col-md-3 mt-2">
+                <div class="card" style="background-color:#86af49">
+                    <div class="card-body text-center">
+                        <h5 class="card-text">Accepted Test Order</h5>
+                        <asp:LinkButton ID="lnkbtnacceptedorder" runat="server" CssClass="comp_number" OnClick="lnkbtnacceptedorder_Click"></asp:LinkButton>
+                    </div>
+                </div>
+            </div>
+                              <div class="col-md-3 mt-2">
+                <div class="card" style="background-color:#d64161;">
+                    <div class="card-body text-center">
+                        <h5 class="card-text">Rejected Test Order</h5>
+                        <asp:LinkButton ID="lnkbtnrejctdorder" runat="server" CssClass="comp_number" OnClick="lnkbtnrejctdorder_Click"></asp:LinkButton>
+                    </div>
+                </div>
+            </div>
+                            
+                        </div>
+                    <div class="row my-2 box1 py-2 d-flex">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <asp:Label runat="server" CssClass="form-label">Select Company/Organization</asp:Label>
+                                <asp:DropDownList runat="server" ID="ddlcomp" CssClass="form-cascade-control form-control" AutoPostBack="true" OnSelectedIndexChanged="ddlcomp_SelectedIndexChanged"></asp:DropDownList>
+                            </div>
+                        </div>
+                      <%--  <div class="col-md-3" runat="server" id="divlblselectdivison">
+                            <div class="form-group">
+                                <asp:Label runat="server" CssClass="form-label">Select Division/Plant</asp:Label>
+                                <asp:DropDownList runat="server" ID="ddldivision" CssClass="form-cascade-control form-control" AutoPostBack="true" OnSelectedIndexChanged="ddldivision_SelectedIndexChanged"></asp:DropDownList>
+                            </div>
+                        </div>
+                        <div class="col-md-3" runat="server" id="divlblselectunit">
+                            <div class="form-group">
+                                <asp:Label runat="server" CssClass="form-label">Select Unit</asp:Label>
+                                <asp:DropDownList runat="server" ID="ddlunit" CssClass="form-cascade-control form-control" AutoPostBack="true" OnSelectedIndexChanged="ddlunit_SelectedIndexChanged"></asp:DropDownList>
+                            </div>
+                        </div>--%>
+                          <div class="col-md-3" runat="server" id="divlblselectdiscipline">
+                            <div class="form-group">
+                                <asp:Label runat="server" CssClass="form-label">Select Discipline</asp:Label>
+                                <asp:DropDownList runat="server" ID="ddldiscipline" CssClass="form-cascade-control form-control" AutoPostBack="true" OnSelectedIndexChanged="ddldiscipline_SelectedIndexChanged"></asp:DropDownList>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group" runat="server" visible="false" id="portalid">
+                                <b>Item Id (Portal):-
+                                    <asp:Label ID="lblrefnoforinfo" runat="server"></asp:Label></b>
+                            </div>
+                        </div><br />
+                        
+                    </div>
+               
+               <div class="row my-2 box1 py-2">
+                     <div id="divTotalNumber" class="text-center col-12" style="font-size: 16px; margin-top: 10px;" runat="server" visible="False">
+                                <asp:Label ID="lbltotal" runat="server" Text=""></asp:Label>
+                            </div>
+                    <div class="col-12" id="divtest" runat="server">
+                         <div style="text-align:center" >
+                <asp:Label ID="head" Text="Booked Test" runat="server"></asp:Label>
+                </div>
+                        <asp:GridView ID="gvtest" runat="server" AutoGenerateColumns="false" EmptyDataText="No Record Found" Class="table table-responsive" OnRowCreated="gvtest_RowCreated">
+                            <Columns>
+                                <asp:TemplateField HeaderText="S.No.">
+                                    <ItemTemplate>
+                                        <%#Container.DataItemIndex + 1 %>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                 <asp:BoundField DataField="test_id" NullDisplayText="NA" HeaderText="Test" />
+                                  <%--<asp:TemplateField HeaderText="Test ID">
+                                    <ItemTemplate>
+                                        <asp:Label ID="lbltestid" runat="server" Text='<%# Eval("test_id") %>'></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>--%>
+                                <asp:TemplateField HeaderText="Organisation">
+                                    <ItemTemplate>
+                                        <asp:Label ID="lblOrg" runat="server" Text='<%# Eval("organisation_id") %>'></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                              <%--  <asp:TemplateField HeaderText="Lab" HeaderStyle-Width="200px">
+                                    <ItemTemplate>
+                                        <asp:Label ID="lblunit" runat="server" Text='<%# Eval("lab_id") %>'></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>--%>
+                                <asp:TemplateField HeaderText="Discipline" HeaderStyle-Width="200px">
+                                    <ItemTemplate>
+                                        <asp:Label ID="lbldiscipline" runat="server" Text='<%# Eval("discipline_id") %>'></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Test">
+                                    <ItemTemplate>
+                                        <asp:Label ID="lblnameoftest" runat="server" Text='<%# Eval("test_name") %>'></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Calibration Facility" HeaderStyle-Width="300px">
+                                    <ItemTemplate>
+                                        <asp:Label ID="lblcalibratnfac" runat="server" Text='<%# Eval("Calibration_facility") %>'></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Manufacturer">
+                                    <ItemTemplate>
+                                        <asp:Label ID="lblmanufacturer" runat="server" Text='<%# Eval("manufacturer") %>'></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Chamber Size">
+                                    <ItemTemplate>
+                                        <asp:Label ID="lblchambersize" runat="server" Text='<%# Eval("chamber_size") %>'></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Material">
+                                    <ItemTemplate>
+                                        <asp:Label ID="lblmaterial" runat="server" Text='<%# Eval("product_material") %>'></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Equimnt Range" Visible="false">
+                                    <ItemTemplate>
+                                        <asp:Label ID="lblequipmntrange" runat="server" Text='<%# Eval("eqpt_range") %>'></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Manufacturer year" Visible="false">
+                                    <ItemTemplate>
+                                        <asp:Label ID="lblmanufyear" runat="server" Text='<%# Eval("manufacturing_year") %>'></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Specifications" Visible="false">
+                                    <ItemTemplate>
+                                        <asp:Label ID="lblspecifications" runat="server" Text='<%# Eval("specifications") %>'></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Max Dimension" Visible="false">
+                                    <ItemTemplate>
+                                        <asp:Label ID="lblmaxdimension" runat="server" Text='<%# Eval("max_dimension") %>'></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Max weight" Visible="false">
+                                    <ItemTemplate>
+                                        <asp:Label ID="lblmaxweight" runat="server" Text='<%# Eval("max_weight") %>'></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Duration" Visible="false">
+                                    <ItemTemplate>
+                                        <asp:Label ID="lblduration" runat="server" Text='<%# Eval("duration") %>'></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Advance Notice" Visible="false">
+                                    <ItemTemplate>
+                                        <asp:Label ID="lbladvancenotice" runat="server" Text='<%# Eval("advance_notice") %>'></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Constraints" Visible="false">
+                                    <ItemTemplate>
+                                        <asp:Label ID="lblconstraints" runat="server" Text='<%# Eval("constraints") %>'></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Remarks" Visible="false">
+                                    <ItemTemplate>
+                                        <asp:Label ID="lblremrks" runat="server" Text='<%# Eval("product_material") %>'></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                            </Columns>
+                        </asp:GridView>
+                    </div>
+                    <div class="col-12" id="divbooked" runat="server">
+                          <asp:GridView ID="gvbookedorder" runat="server" Width="100%" EmptyDataText="No Record Found" Class="table table-responsive" OnRowCreated="gvbookedorder_RowCreated"
+                                                AutoGenerateColumns="false">
+                                                <Columns>
+                                                    <asp:TemplateField HeaderText="S.No.">
+                                                        <ItemTemplate>
+                                                            <%#Container.DataItemIndex + 1 %>
+                                                        </ItemTemplate>
+                                                    </asp:TemplateField>
+                                                      <asp:TemplateField HeaderText="Id" Visible="false">
+                                                        <ItemTemplate>
+                                                        <asp:Label ID="lblid" runat="server" Text='<%# Eval("id") %>'></asp:Label>
+                                                        </ItemTemplate>
+                                                    </asp:TemplateField>
+                                                  <%--   <asp:TemplateField HeaderText="Test" HeaderStyle-Width="10%">
+                                                        <ItemTemplate>
+                                                        <asp:Label ID="lbltest" runat="server" Text='<%# Eval("test_id") %>' ></asp:Label>
+                                                        </ItemTemplate>
+                                                    </asp:TemplateField>--%>
+                                                    <asp:BoundField DataField="test_id" NullDisplayText="NA" HeaderText="Test" />
+                                                     <asp:TemplateField HeaderText="Organisation" HeaderStyle-Width="10%">
+                                                        <ItemTemplate>
+                                                        <asp:Label ID="lblorganisation" runat="server" Text='<%# Eval("organisation_id") %>'></asp:Label>
+                                                        </ItemTemplate>
+                                                    </asp:TemplateField>
+                                                     <asp:TemplateField HeaderText="Lab" HeaderStyle-Width="10%">
+                                                        <ItemTemplate>
+                                                        <asp:Label ID="lbLab" runat="server" Text='<%# Eval("lab") %>'></asp:Label>
+                                                        </ItemTemplate>
+                                                    </asp:TemplateField>
+                                                     <asp:TemplateField HeaderText="Discipline" HeaderStyle-Width="10%">
+                                                        <ItemTemplate>
+                                                        <asp:Label ID="lbldiscipline" runat="server" Text='<%# Eval("discipline") %>'></asp:Label>
+                                                        </ItemTemplate>
+                                                    </asp:TemplateField>
+                                                        <asp:TemplateField HeaderText="No. Of Sample" HeaderStyle-Width="10%">
+                                                        <ItemTemplate>
+                                                        <asp:Label ID="lblnoofsample" runat="server" Text='<%# Eval("no_of_sample") %>'></asp:Label>
+                                                        </ItemTemplate>
+                                                    </asp:TemplateField>
+                                                      <asp:TemplateField HeaderText="Dimension" HeaderStyle-Width="8%">
+                                                        <ItemTemplate>
+                                                        <asp:Label ID="dimension" runat="server" Text='<%# Eval("dimension_eqpt") %>'></asp:Label>
+                                                        </ItemTemplate>
+                                                    </asp:TemplateField>
+                                                      <asp:TemplateField HeaderText="Weight" HeaderStyle-Width="8%">
+                                                        <ItemTemplate>
+                                                        <asp:Label ID="weight" runat="server" Text='<%# Eval("weight_eqpt") %>'></asp:Label>
+                                                        </ItemTemplate>
+                                                    </asp:TemplateField>
+                                                      <asp:TemplateField HeaderText="Start Date" HeaderStyle-Width="10%">
+                                                        <ItemTemplate>
+                                                        <asp:Label ID="startdate" runat="server" Text='<%# Eval("start_date","{0:dd-MMM-yyyy}") %>'></asp:Label>
+                                                        </ItemTemplate>
+                                                    </asp:TemplateField>
+                                                      <asp:TemplateField HeaderText="End Date" HeaderStyle-Width="10%">
+                                                        <ItemTemplate>
+                                                        <asp:Label ID="enddate" runat="server" Text='<%# Eval("end_date","{0:dd-MMM-yyyy}") %>'></asp:Label>
+                                                        </ItemTemplate>
+                                                    </asp:TemplateField>
+                                                      <asp:TemplateField HeaderText="Description" HeaderStyle-Width="10%">
+                                                        <ItemTemplate>
+                                                        <asp:Label ID="description" runat="server" Text='<%# Eval("description") %>'></asp:Label>
+                                                        </ItemTemplate>
+                                                    </asp:TemplateField>
+                                                        <asp:TemplateField HeaderText="Status" HeaderStyle-Width="10%">
+                                                        <ItemTemplate>
+                                                        <asp:Label ID="status" runat="server" Text='<%# Eval("bookingstatus") %>'></asp:Label>
+                                                        </ItemTemplate>
+                                                    </asp:TemplateField>
+                                                       <asp:TemplateField HeaderText="Remark" HeaderStyle-Width="12%">
+                                                        <ItemTemplate>
+                                                        <asp:Label ID="rejectremark" runat="server" Text='<%# Eval("Rejectremark") %>'></asp:Label>
+                                                        </ItemTemplate>
+                                                    </asp:TemplateField>
+                                                   
+                                                </Columns>
+                                            </asp:GridView>
+
+                    </div>
+                    <div class="col-12" id="divapprovedstatus" runat="server">
+                          <asp:GridView ID="gvapprovedstatus" runat="server" Width="100%" Class="table table-responsive"
+                                                AutoGenerateColumns="false" EmptyDataText="No Record Found" OnRowCreated="gvapprovedstatus_RowCreated">
+                                                <Columns>
+                                                    <asp:TemplateField HeaderText="S.No.">
+                                                        <ItemTemplate>
+                                                            <%#Container.DataItemIndex + 1 %>
+                                                        </ItemTemplate>
+                                                    </asp:TemplateField>
+                                                      <asp:TemplateField HeaderText="Id" Visible="false">
+                                                        <ItemTemplate>
+                                                        <asp:Label ID="lblid" runat="server" Text='<%# Eval("id") %>'></asp:Label>
+                                                        </ItemTemplate>
+                                                    </asp:TemplateField>
+                                                     <asp:TemplateField HeaderText="Test" HeaderStyle-Width="10%">
+                                                        <ItemTemplate>
+                                                        <asp:Label ID="lbltest" runat="server" Text='<%# Eval("test_id") %>'></asp:Label>
+                                                        </ItemTemplate>
+                                                    </asp:TemplateField>
+                                                     <asp:TemplateField HeaderText="Organisation" HeaderStyle-Width="10%">
+                                                        <ItemTemplate>
+                                                        <asp:Label ID="lblorganisation" runat="server" Text='<%# Eval("organisation_id") %>'></asp:Label>
+                                                        </ItemTemplate>
+                                                    </asp:TemplateField>
+                                                     <asp:TemplateField HeaderText="Lab" HeaderStyle-Width="10%">
+                                                        <ItemTemplate>
+                                                        <asp:Label ID="lbLab" runat="server" Text='<%# Eval("lab") %>'></asp:Label>
+                                                        </ItemTemplate>
+                                                    </asp:TemplateField>
+                                                     <asp:TemplateField HeaderText="Discipline" HeaderStyle-Width="10%">
+                                                        <ItemTemplate>
+                                                        <asp:Label ID="lbldiscipline" runat="server" Text='<%# Eval("discipline") %>'></asp:Label>
+                                                        </ItemTemplate>
+                                                    </asp:TemplateField>
+                                                        <asp:TemplateField HeaderText="No. Of Sample" HeaderStyle-Width="10%">
+                                                        <ItemTemplate>
+                                                        <asp:Label ID="lblnoofsample" runat="server" Text='<%# Eval("no_of_sample") %>'></asp:Label>
+                                                        </ItemTemplate>
+                                                    </asp:TemplateField>
+                                                     <%-- <asp:TemplateField HeaderText="Dimension" HeaderStyle-Width="8%">
+                                                        <ItemTemplate>
+                                                        <asp:Label ID="dimension" runat="server" Text='<%# Eval("dimension_eqpt") %>'></asp:Label>
+                                                        </ItemTemplate>
+                                                    </asp:TemplateField>
+                                                      <asp:TemplateField HeaderText="Weight" HeaderStyle-Width="8%">
+                                                        <ItemTemplate>
+                                                        <asp:Label ID="weight" runat="server" Text='<%# Eval("weight_eqpt") %>'></asp:Label>
+                                                        </ItemTemplate>
+                                                    </asp:TemplateField>--%>
+                                                      <asp:TemplateField HeaderText="Start Date" HeaderStyle-Width="10%">
+                                                        <ItemTemplate>
+                                                        <asp:Label ID="startdate" runat="server" Text='<%# Eval("start_date","{0:dd-MMM-yyyy}") %>'></asp:Label>
+                                                        </ItemTemplate>
+                                                    </asp:TemplateField>
+                                                      <asp:TemplateField HeaderText="End Date" HeaderStyle-Width="10%">
+                                                        <ItemTemplate>
+                                                        <asp:Label ID="enddate" runat="server" Text='<%# Eval("end_date","{0:dd-MMM-yyyy}") %>'></asp:Label>
+                                                        </ItemTemplate>
+                                                    </asp:TemplateField>
+                                                      <asp:TemplateField HeaderText="Description" HeaderStyle-Width="10%">
+                                                        <ItemTemplate>
+                                                        <asp:Label ID="description" runat="server" Text='<%# Eval("description") %>'></asp:Label>
+                                                        </ItemTemplate>
+                                                    </asp:TemplateField>
+                                                        <asp:TemplateField HeaderText="Status" HeaderStyle-Width="10%">
+                                                        <ItemTemplate>
+                                                        <asp:Label ID="status" runat="server" Text='<%# Eval("bookingstatus") %>'></asp:Label>
+                                                        </ItemTemplate>
+                                                    </asp:TemplateField>
+                                                   
+                                                </Columns>
+                                            </asp:GridView>
+
+                    </div>
+                    <div class="col-12" id="divrejectstatus" runat="server">
+                          <asp:GridView ID="gvreject" runat="server" Width="100%" Class="table table-responsive"
+                                                AutoGenerateColumns="false" EmptyDataText="No Record Found" OnRowCreated="gvreject_RowCreated">
+                                                <Columns>
+                                                    <asp:TemplateField HeaderText="S.No.">
+                                                        <ItemTemplate>
+                                                            <%#Container.DataItemIndex + 1 %>
+                                                        </ItemTemplate>
+                                                    </asp:TemplateField>
+                                                      <asp:TemplateField HeaderText="Id" Visible="false">
+                                                        <ItemTemplate>
+                                                        <asp:Label ID="lblid" runat="server" Text='<%# Eval("id") %>'></asp:Label>
+                                                        </ItemTemplate>
+                                                    </asp:TemplateField>
+                                                     <asp:TemplateField HeaderText="Test" HeaderStyle-Width="10%">
+                                                        <ItemTemplate>
+                                                        <asp:Label ID="lbltest" runat="server" Text='<%# Eval("test_id") %>'></asp:Label>
+                                                        </ItemTemplate>
+                                                    </asp:TemplateField>
+                                                     <asp:TemplateField HeaderText="Organisation" HeaderStyle-Width="10%">
+                                                        <ItemTemplate>
+                                                        <asp:Label ID="lblorganisation" runat="server" Text='<%# Eval("organisation_id") %>'></asp:Label>
+                                                        </ItemTemplate>
+                                                    </asp:TemplateField>
+                                                     <asp:TemplateField HeaderText="Lab" HeaderStyle-Width="10%">
+                                                        <ItemTemplate>
+                                                        <asp:Label ID="lbLab" runat="server" Text='<%# Eval("lab") %>'></asp:Label>
+                                                        </ItemTemplate>
+                                                    </asp:TemplateField>
+                                                     <asp:TemplateField HeaderText="Discipline" HeaderStyle-Width="10%">
+                                                        <ItemTemplate>
+                                                        <asp:Label ID="lbldiscipline" runat="server" Text='<%# Eval("discipline") %>'></asp:Label>
+                                                        </ItemTemplate>
+                                                    </asp:TemplateField>
+                                                        <asp:TemplateField HeaderText="No. Of Sample" HeaderStyle-Width="10%">
+                                                        <ItemTemplate>
+                                                        <asp:Label ID="lblnoofsample" runat="server" Text='<%# Eval("no_of_sample") %>'></asp:Label>
+                                                        </ItemTemplate>
+                                                    </asp:TemplateField>
+                                                      <asp:TemplateField HeaderText="Dimension" HeaderStyle-Width="8%">
+                                                        <ItemTemplate>
+                                                        <asp:Label ID="dimension" runat="server" Text='<%# Eval("dimension_eqpt") %>'></asp:Label>
+                                                        </ItemTemplate>
+                                                    </asp:TemplateField>
+                                                      <asp:TemplateField HeaderText="Weight" HeaderStyle-Width="8%">
+                                                        <ItemTemplate>
+                                                        <asp:Label ID="weight" runat="server" Text='<%# Eval("weight_eqpt") %>'></asp:Label>
+                                                        </ItemTemplate>
+                                                    </asp:TemplateField>
+                                                      <asp:TemplateField HeaderText="Start Date" HeaderStyle-Width="10%">
+                                                        <ItemTemplate>
+                                                        <asp:Label ID="startdate" runat="server" Text='<%# Eval("start_date","{0:dd-MMM-yyyy}") %>'></asp:Label>
+                                                        </ItemTemplate>
+                                                    </asp:TemplateField>
+                                                      <asp:TemplateField HeaderText="End Date" HeaderStyle-Width="10%">
+                                                        <ItemTemplate>
+                                                        <asp:Label ID="enddate" runat="server" Text='<%# Eval("end_date","{0:dd-MMM-yyyy}") %>'></asp:Label>
+                                                        </ItemTemplate>
+                                                    </asp:TemplateField>
+                                                      <asp:TemplateField HeaderText="Description" HeaderStyle-Width="10%">
+                                                        <ItemTemplate>
+                                                        <asp:Label ID="description" runat="server" Text='<%# Eval("description") %>'></asp:Label>
+                                                        </ItemTemplate>
+                                                    </asp:TemplateField>
+                                                        <asp:TemplateField HeaderText="Status" HeaderStyle-Width="10%">
+                                                        <ItemTemplate>
+                                                        <asp:Label ID="status" runat="server" Text='<%# Eval("bookingstatus") %>'></asp:Label>
+                                                        </ItemTemplate>
+
+                                                    </asp:TemplateField>
+                                                     <asp:TemplateField HeaderText="Reject Reason" HeaderStyle-Width="10%">
+                                                        <ItemTemplate>
+                                                        <asp:Label ID="rejectreason" runat="server" Text='<%# Eval("Rejectremark") %>'></asp:Label>
+                                                        </ItemTemplate>
+                                                   </asp:TemplateField>
+                                                </Columns>
+                                            </asp:GridView>
+
+                    </div>
+                   <div class="col-12" id="divpending" runat="server">
+                          <asp:GridView ID="gvpending" runat="server" Width="100%" Class="table table-responsive"
+                                                AutoGenerateColumns="false" EmptyDataText="No Record Found" OnRowCreated="gvpending_RowCreated">
+                                                <Columns>
+                                                    <asp:TemplateField HeaderText="S.No.">
+                                                        <ItemTemplate>
+                                                            <%#Container.DataItemIndex + 1 %>
+                                                        </ItemTemplate>
+                                                    </asp:TemplateField>
+                                                      <asp:TemplateField HeaderText="Id" Visible="false">
+                                                        <ItemTemplate>
+                                                        <asp:Label ID="lblid" runat="server" Text='<%# Eval("id") %>'></asp:Label>
+                                                        </ItemTemplate>
+                                                    </asp:TemplateField>
+                                                     <asp:TemplateField HeaderText="Test" HeaderStyle-Width="10%">
+                                                        <ItemTemplate>
+                                                        <asp:Label ID="lbltest" runat="server" Text='<%# Eval("test_id") %>'></asp:Label>
+                                                        </ItemTemplate>
+                                                    </asp:TemplateField>
+                                                     <asp:TemplateField HeaderText="Organisation" HeaderStyle-Width="10%">
+                                                        <ItemTemplate>
+                                                        <asp:Label ID="lblorganisation" runat="server" Text='<%# Eval("organisation_id") %>'></asp:Label>
+                                                        </ItemTemplate>
+                                                    </asp:TemplateField>
+                                                     <asp:TemplateField HeaderText="Lab" HeaderStyle-Width="10%">
+                                                        <ItemTemplate>
+                                                        <asp:Label ID="lbLab" runat="server" Text='<%# Eval("lab") %>'></asp:Label>
+                                                        </ItemTemplate>
+                                                    </asp:TemplateField>
+                                                     <asp:TemplateField HeaderText="Discipline" HeaderStyle-Width="10%">
+                                                        <ItemTemplate>
+                                                        <asp:Label ID="lbldiscipline" runat="server" Text='<%# Eval("discipline") %>'></asp:Label>
+                                                        </ItemTemplate>
+                                                    </asp:TemplateField>
+                                                        <asp:TemplateField HeaderText="No. Of Sample" HeaderStyle-Width="10%">
+                                                        <ItemTemplate>
+                                                        <asp:Label ID="lblnoofsample" runat="server" Text='<%# Eval("no_of_sample") %>'></asp:Label>
+                                                        </ItemTemplate>
+                                                    </asp:TemplateField>
+                                                     <%-- <asp:TemplateField HeaderText="Dimension" HeaderStyle-Width="8%">
+                                                        <ItemTemplate>
+                                                        <asp:Label ID="dimension" runat="server" Text='<%# Eval("dimension_eqpt") %>'></asp:Label>
+                                                        </ItemTemplate>
+                                                    </asp:TemplateField>
+                                                      <asp:TemplateField HeaderText="Weight" HeaderStyle-Width="8%">
+                                                        <ItemTemplate>
+                                                        <asp:Label ID="weight" runat="server" Text='<%# Eval("weight_eqpt") %>'></asp:Label>
+                                                        </ItemTemplate>
+                                                    </asp:TemplateField>--%>
+                                                      <asp:TemplateField HeaderText="Start Date" HeaderStyle-Width="10%">
+                                                        <ItemTemplate>
+                                                        <asp:Label ID="startdate" runat="server" Text='<%# Eval("start_date","{0:dd-MMM-yyyy}") %>'></asp:Label>
+                                                        </ItemTemplate>
+                                                    </asp:TemplateField>
+                                                      <asp:TemplateField HeaderText="End Date" HeaderStyle-Width="10%">
+                                                        <ItemTemplate>
+                                                        <asp:Label ID="enddate" runat="server" Text='<%# Eval("end_date","{0:dd-MMM-yyyy}") %>'></asp:Label>
+                                                        </ItemTemplate>
+                                                    </asp:TemplateField>
+                                                      <asp:TemplateField HeaderText="Description" HeaderStyle-Width="10%">
+                                                        <ItemTemplate>
+                                                        <asp:Label ID="description" runat="server" Text='<%# Eval("description") %>'></asp:Label>
+                                                        </ItemTemplate>
+                                                    </asp:TemplateField>
+                                                        <asp:TemplateField HeaderText="Status" HeaderStyle-Width="10%">
+                                                        <ItemTemplate>
+                                                        <asp:Label ID="status" runat="server" Text='<%# Eval("bookingstatus") %>'></asp:Label>
+                                                        </ItemTemplate>
+                                                    </asp:TemplateField>
+                                                   
+                                                </Columns>
+                                            </asp:GridView>
+
+                    </div>
+                </div>
+            </div>
+</asp:Content>
+
+

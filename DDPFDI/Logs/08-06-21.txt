@@ -1,0 +1,72 @@
+-----------Exception Details on  6/8/2021 3:35:21 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 6/8/2021 3:35:21 PM
+
+Error Line No : ine 373
+
+Error Message: EvaluateException
+
+Exception Type: System.Data.EvaluateException
+
+Error Location : Cannot find column [Total].
+
+ Error Page Url: http://localhost:19213/PReport2
+
+User Host IP: 
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  6/8/2021 3:35:27 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 6/8/2021 3:35:27 PM
+
+Error Line No : ine 373
+
+Error Message: EvaluateException
+
+Exception Type: System.Data.EvaluateException
+
+Error Location : Cannot find column [Total].
+
+ Error Page Url: http://localhost:19213/PReport2
+
+User Host IP: 
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  6/8/2021 3:35:30 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 6/8/2021 3:35:30 PM
+
+Error Line No : ine 373
+
+Error Message: EvaluateException
+
+Exception Type: System.Data.EvaluateException
+
+Error Location : Cannot find column [Total].
+
+ Error Page Url: http://localhost:19213/PReport2
+
+User Host IP: 
+
+
+--------------------------------*End*------------------------------------------
+
+
+

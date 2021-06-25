@@ -7,10 +7,12 @@ using System.Text;
 using System.Web.UI;
 using System.IO;
 using System.Web.UI.WebControls;
-using System.Web;
-using System.Web.Helpers;
 using System.Text.RegularExpressions;
-using System.Net;
+using context = System.Web.HttpContext;
+using System.Collections.Generic;
+using System.Data.SqlClient;
+using System.Linq;
+using System.Configuration;
 
 public partial class User_U_Cart : System.Web.UI.Page
 {
@@ -25,7 +27,6 @@ public partial class User_U_Cart : System.Web.UI.Page
     DataTable dtCart = new DataTable();
     DataRow dr;
     string mval = "";
-
     HybridDictionary hySave = new HybridDictionary();
     #endregion
     string temp = "";
@@ -64,7 +65,6 @@ public partial class User_U_Cart : System.Web.UI.Page
                 dlCartProd.DataSource = dtCart;
                 dlCartProd.DataBind();
                 lbltotalprodincart.Text = "You have " + dtCart.Rows.Count + " products in your cart";
-                totalno.InnerText = dtCart.Rows.Count.ToString();
             }
         }
         else
@@ -76,7 +76,12 @@ public partial class User_U_Cart : System.Web.UI.Page
     {
         if (!IsPostBack)
         {
-            PageLoad();
+            try
+            {
+                PageLoad();
+            }
+            catch (Exception ex)
+            { ExceptionLogging.SendErrorToText(ex); }
         }
     }
     protected void lbclaercart_Click(object sender, EventArgs e)
@@ -85,26 +90,86 @@ public partial class User_U_Cart : System.Web.UI.Page
         Session.Abandon();
         Response.Redirect("Productlist");
     }
+    string msgotp;
+    string mlblmProdRef;
     protected void btnsendmail_Click(object sender, EventArgs e)
     {
         try
         {
-            if (txtname.Text != "" && txtemail.Text != "" && txtcompname.Text != "" && txtofficeaddress.Text != "" && txtphone.Text != "")
+            if (Co.RSQandSQLInjection(txtname.Text, "soft") != "" && Co.RSQandSQLInjection(txtemail.Text, "soft") != "" && Co.RSQandSQLInjection(txtcompname.Text, "soft") != ""
+                && Co.RSQandSQLInjection(txtofficeaddress.Text, "soft") != "" && Co.RSQandSQLInjection(txtphone.Text, "soft") != "" && Co.RSQandSQLInjection(txtphone.Text, "soft") != "")
             {
                 if (VerifyEmailID(txtemail.Text) != false)
                 {
-                    GenerateOTP();
-                    //sendMailOTP();
-                    ScriptManager.RegisterStartupScript(this, GetType(), "modelotp", "showPopup1();", true);
+                    foreach (DataListItem item in dlCartProd.Items)
+                    {
+                        string prodgetcart = ((LinkButton)(item.FindControl("ddlremovecart"))).CommandArgument.ToString();
+                        mlblmProdRef = mlblmProdRef + ",'" + prodgetcart + "'";
+                    }
+                    DataTable dtChckProd = Lo.NewRetriveFilterCode12("RetReqProd", mlblmProdRef.Substring(1), txtemail.Text.Trim(), txtphone.Text.Trim(), "", 0, 0, 0);
+                    if (dtChckProd.Rows.Count > 0)
+                    {
+                        for (int k = 0; dtChckProd.Rows.Count > k; k++)
+                        {
+                            if (dtChckProd.Rows[k]["RequestMobileNo"].ToString() == txtphone.Text.Trim()
+                                && dtChckProd.Rows[k]["RequestEmail"].ToString() == txtemail.Text.Trim())
+                            {
+                                foreach (DataListItem item in dlCartProd.Items)
+                                {
+                                    string prodgetcart = ((LinkButton)(item.FindControl("ddlremovecart"))).CommandArgument.ToString();
+                                    if (dtChckProd.Rows[k]["ProductRefNo"].ToString() == prodgetcart.ToString())
+                                    {
+                                        msgotp = "fail";
+                                        ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert",
+                             "alert('You are already shown intrest in item = " + dtChckProd.Rows[k]["ProductRefNo"].ToString() + ".Please remove first from the cart and then click on get otp')", true);
+                                        break;
+                                    }
+                                }
+                                break;
+                            }
+                        }
+                        if (msgotp != "fail")
+                        {
+                            GenerateOTP();
+                            sendMailOTP();
+                            ScriptManager.RegisterStartupScript(this, GetType(), "modelotp", "showPopup1();", true);
+                        }
+                    }
+                    else
+                    {
+                        GenerateOTP();
+                        sendMailOTP();
+                        ScriptManager.RegisterStartupScript(this, GetType(), "modelotp", "showPopup1();", true);
+                    }
                 }
             }
             else
             {
-                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Please enter your name or email')", true);
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('All field fill mandatory.')", true);
             }
         }
         catch (Exception ex)
         { ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('" + ex.Message.ToString() + "')", true); }
+    }
+    protected void lbsubmit_Click(object sender, EventArgs e)
+    {
+        if (txtotp.Text != "" && txtotp.Text == hfotp.Value)
+        {
+            try
+            {
+                saveInfo();
+                cleartext();
+                Session.Clear();
+                Session.Abandon();
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alert", "alert('Your interest sent to item releted dpsu's We will contact you soon.'); window.location.href='Productlist';", true);
+            }
+            catch (Exception ex)
+            { ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Error occured in send mail please contact admin person.')", true); }
+        }
+        else
+        {
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "alert('Invalid otp.'); window.location.href='U_Cart';", true);
+        }
     }
     protected void cleartext()
     {
@@ -179,7 +244,6 @@ public partial class User_U_Cart : System.Web.UI.Page
         {
             ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "ErrorMssgPopup('" + ex.Message + "')", true);
         }
-
     }
     public void SendEmailCodeNodalOfficer(string id)
     {
@@ -307,7 +371,7 @@ public partial class User_U_Cart : System.Web.UI.Page
                     }
                     lblnsngroup.Text = DtView.Rows[0]["ProdLevel1Name"].ToString();
                     lblnsngroupclass.Text = DtView.Rows[0]["ProdLevel2Name"].ToString();
-                    lblclassitem.Text = DtView.Rows[0]["ProdLevel3Name"].ToString();                  
+                    lblclassitem.Text = DtView.Rows[0]["ProdLevel3Name"].ToString();
                     if (DtView.Rows[0]["ProductDescription"].ToString() != "")
                     {
                         itemname2.Text = DtView.Rows[0]["ProductDescription"].ToString();
@@ -431,7 +495,7 @@ public partial class User_U_Cart : System.Web.UI.Page
                     {
                         dlimage.Visible = false;
                         thirteen.Visible = false;
-                    }                  
+                    }
                     DataTable dtestimatequanorprice = Lo.RetriveSaveEstimateGrid("2Select", 0, e.CommandArgument.ToString(), 0, "", "", "", "", "F");
                     if (dtestimatequanorprice.Rows.Count > 0)
                     {
@@ -452,11 +516,12 @@ public partial class User_U_Cart : System.Web.UI.Page
                         if (DTporCat.Rows.Count > 0)
                         {
                             lblindicate.Text = "";
-                            for (int i = 0; DTporCat.Rows.Count > i; i++)
-                            {
-                                lblindicate.Text = lblindicate.Text + DTporCat.Rows[i]["SCategoryName"].ToString() + ", ";
-                            }
-                            lblindicate.Text = lblindicate.Text.Substring(0, lblindicate.Text.Length - 2);
+                            lblindicate.Text = DTporCat.Rows[0]["SCategoryName"].ToString();
+                            //for (int i = 0; DTporCat.Rows.Count > i; i++)
+                            //{
+                            //    lblindicate.Text = lblindicate.Text + DTporCat.Rows[i]["SCategoryName"].ToString() + ", ";
+                            //}
+                            //lblindicate.Text = lblindicate.Text.Substring(0, lblindicate.Text.Length - 2);
                             sixteen.Visible = true;
                         }
                         else
@@ -466,6 +531,19 @@ public partial class User_U_Cart : System.Web.UI.Page
                     {
                         sixteen.Visible = false;
                     }
+                    if (DtView.Rows[0]["IsIndeginized"].ToString() != "")
+                    {
+                        Tr1.Visible = true;
+                        lblindstart.Text = DtView.Rows[0]["IsIndeginized"].ToString();
+                        if (lblindstart.Text == "N")
+                            lblindstart.Text = "No";
+                        else
+                            lblindstart.Text = "Yes";
+                    }
+                    else
+                    { Tr1.Visible = false; }
+
+
                     if (DtView.Rows[0]["EOIStatus"].ToString() != "")
                     {
                         lbleoirep.Text = DtView.Rows[0]["EOIStatus"].ToString();
@@ -479,7 +557,7 @@ public partial class User_U_Cart : System.Web.UI.Page
                         eighteen.Visible = true;
                     }
                     else
-                    { eighteen.Visible = false; }                  
+                    { eighteen.Visible = false; }
                     string Nodel1Id = DtView.Rows[0]["NodelDetail"].ToString();
                     if (Nodel1Id.ToString() != "")
                     {
@@ -488,7 +566,7 @@ public partial class User_U_Cart : System.Web.UI.Page
                         {
                             lblempname.Text = dtNodal.Rows[0]["NodalOficerName"].ToString();
                             lbldesignation.Text = dtNodal.Rows[0]["Designation"].ToString();
-                            lblemailidpro.Text = dtNodal.Rows[0]["NodalOfficerEmail"].ToString();                          
+                            lblemailidpro.Text = dtNodal.Rows[0]["NodalOfficerEmail"].ToString();
                             lblphonenumber.Text = dtNodal.Rows[0]["NodalOfficerTelephone"].ToString();
                         }
                         else
@@ -569,7 +647,7 @@ public partial class User_U_Cart : System.Web.UI.Page
                     }
                     if (DtView.Rows[0]["IndTargetYear"].ToString() != "")
                     {
-                        lblindtrgyr.Text = DtView.Rows[0]["IndTargetYear"].ToString().Substring(0, DtView.Rows[0]["IndTargetYear"].ToString().Length - 1);
+                        lblindtrgyr.Text = DtView.Rows[0]["IndTargetYear"].ToString();
                         if (lblindtrgyr.Text == "NIL")
                         { Tr25.Visible = false; }
                         else
@@ -580,7 +658,7 @@ public partial class User_U_Cart : System.Web.UI.Page
                     else
                     {
                         Tr25.Visible = false;
-                    }                    
+                    }
                     ScriptManager.RegisterStartupScript(this, GetType(), "ProductCompany", "showPopup();", true);
                 }
             }
@@ -619,59 +697,69 @@ public partial class User_U_Cart : System.Web.UI.Page
     }
     private void sendMailOTP()
     {
-        string body;
-        using (StreamReader reader = new StreamReader(Server.MapPath("~/emailPage/OTP.html")))
+        try
         {
-            body = reader.ReadToEnd();
+            string body;
+            using (StreamReader reader = new StreamReader(Server.MapPath("~/emailPage/OTP.html")))
+            {
+                body = reader.ReadToEnd();
+            }
+            body = body.Replace("{OTP}", hfotp.Value);
+            SendMail s;
+            s = new SendMail();
+            s.CreateMail("noreply-srijandefence@gov.in", txtemail.Text, "OTP Verification Cart.", body);
+            s.sendMail();
         }
-        body = body.Replace("{OTP}", hfotp.Value);
-        SendMail s;
-        s = new SendMail();
-        s.CreateMail("noreply-srijandefence@gov.in", txtemail.Text, "OTP Verification Cart.", body);
-        s.sendMail();
+        catch (Exception ex)
+        {
+            ex.Message.ToString();
+        }
     }
     protected void lbresendotp_Click(object sender, EventArgs e)
     {
         GenerateOTP();
         sendMailOTP();
     }
-    protected void lbsubmit_Click(object sender, EventArgs e)
-    {
-        if (txtotp.Text != "" && txtotp.Text == hfotp.Value)
-        {
-            try
-            {
-                SendEmailCode(txtemail.Text, ViewState["RefN"].ToString());
-                SendEmailCodeNodalOfficer(ViewState["RefN"].ToString());
-                saveInfo();
-                cleartext();
-                Session.Clear();
-                Session.Abandon();
-                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alert", "alert('Mail send successfully.'); window.location.href='Productlist';", true);
-            }
-            catch (Exception ex)
-            { ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "ErrorMssgPopup('Error occured in send mail please contact admin person.')", true); }
-        }
-        else
-        {
-            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "ErrorMssgPopup('Invalid OTP.')", true);
-        }
-    }
+
     #endregion
     protected void lblhome_Click(object sender, EventArgs e)
     {
         Response.Redirect("ProductList");
     }
-    string lblm;
-    string FinalValue;
+    string lblmProdRef;
+    string lblmComp;
+    string lblmRemarks;
+    string lblprodname;
+    string hfNamenodel;
+    string hfNodalPhone;
     protected void saveInfo()
     {
         try
         {
+            DataTable dtreqprod = new DataTable();
+            dtreqprod.Columns.Add(new DataColumn("ProductRefNo", typeof(string)));
+            dtreqprod.Columns.Add(new DataColumn("CompanyName", typeof(string)));
+            dtreqprod.Columns.Add(new DataColumn("Remark", typeof(string)));
+            dtreqprod.Columns.Add(new DataColumn("ProdName", typeof(string)));
+            dtreqprod.Columns.Add(new DataColumn("NodalName", typeof(string)));
+            dtreqprod.Columns.Add(new DataColumn("NodalPhone", typeof(string)));
+            DataRow drreqprod;
             foreach (DataListItem item in dlCartProd.Items)
             {
-                lblm = ((Label)(item.FindControl("mComp"))).Text;
-                FinalValue = FinalValue + "," + lblm.ToString();
+                lblmProdRef = ((LinkButton)(item.FindControl("ddlremovecart"))).CommandArgument.ToString();
+                lblmComp = ((Label)(item.FindControl("mComp"))).Text;
+                lblmRemarks = ((TextBox)(item.FindControl("txtremark"))).Text;
+                lblprodname = ((Label)(item.FindControl("lblprodname"))).Text;
+                hfNamenodel = ((HiddenField)(item.FindControl("hfnodelname"))).Value;
+                hfNodalPhone = ((HiddenField)(item.FindControl("hfnodalphone"))).Value;
+                drreqprod = dtreqprod.NewRow();
+                drreqprod["ProductRefNo"] = lblmProdRef.ToString();
+                drreqprod["CompanyName"] = lblmComp.ToString();
+                drreqprod["Remark"] = lblmRemarks.ToString();
+                drreqprod["ProdName"] = lblprodname.ToString();
+                drreqprod["NodalName"] = hfNamenodel.ToString();
+                drreqprod["NodalPhone"] = hfNodalPhone.ToString();
+                dtreqprod.Rows.Add(drreqprod);
             }
             DataTable dtgetprod = Lo.RetriveGridViewCompany(DateTime.Now.ToString("yyyy-MM-dd"), txtemail.Text.Trim(), txtphone.Text, "ret");
             if (dtgetprod.Rows.Count > 0)
@@ -688,13 +776,124 @@ public partial class User_U_Cart : System.Web.UI.Page
             hySave["RequestMobileNo"] = Co.RSQandSQLInjection(txtphone.Text.Trim(), "soft");
             hySave["RequestAddress"] = Co.RSQandSQLInjection(txtofficeaddress.Text.Trim(), "soft");
             hySave["RequestEmail"] = Co.RSQandSQLInjection(txtemail.Text.Trim(), "soft");
-            hySave["RequestProduct"] = Co.RSQandSQLInjection(ViewState["RefN"].ToString(), "soft");
-            hySave["RequestMCompName"] = Co.RSQandSQLInjection(FinalValue.ToString().Substring(1), "soft");
+            hySave["RequestProduct"] = null;
+            hySave["RequestMCompName"] = null;
             hySave["IsMailSend"] = Co.RSQandSQLInjection("Y", "soft");
             hySave["RequestDate"] = Co.RSQandSQLInjection(DateTime.Now.ToString("dd/MMM/yyyy"), "soft");
-            string str = Lo.SaveRequestInfo(hySave, out _sysMsg, out _msg);
+            string str = Lo.SaveRequestInfo(hySave, dtreqprod, out _sysMsg, out _msg);
+            try
+            {
+                SendEmailCode(txtemail.Text, ViewState["RefN"].ToString());
+                SendEmailCodeNodalOfficer(ViewState["RefN"].ToString());
+                if (dtreqprod.Rows.Count > 0)
+                {
+                    for (int i = 0; dtreqprod.Rows.Count > i; i++)
+                    {
+                        Co.sendSMSMsg(dtreqprod.Rows[i]["NodalPhone"].ToString(), "", "Dear " + dtreqprod.Rows[i]["NodalName"].ToString() + ", Vendor " + txtname.Text + " showing interest in your item " + dtreqprod.Rows[i]["ProdName"].ToString() + " ,please do needfull process regards this item.\n Thanks and Regards\nTeam Srijandefence");
+                    }
+                }
+                Co.sendSMSMsg(txtphone.Text, "", "Dear " + txtname.Text + " thanks for showing interest in item , we will contact you soon.\n Thanks and Regards\nTeam Srijandefence");
+            }
+            catch (Exception ex)
+
+            { ExceptionLogging.SendErrorToText(ex); }
         }
         catch (Exception ex)
-        {  }
+        { ExceptionLogging.SendErrorToText(ex); }
+    }
+    #region Exceptionlog
+    public static class ExceptionLogging
+    {
+        private static String ErrorlineNo, Errormsg, extype, exurl, hostIp, ErrorLocation, HostAdd;
+        public static void SendErrorToText(Exception ex)
+        {
+            var line = Environment.NewLine + Environment.NewLine;
+            ErrorlineNo = ex.StackTrace.Substring(ex.StackTrace.Length - 7, 7);
+            Errormsg = ex.GetType().Name.ToString();
+            extype = ex.GetType().ToString();
+            exurl = context.Current.Request.Url.ToString();
+            ErrorLocation = ex.Message.ToString();
+            try
+            {
+                string filepath = context.Current.Server.MapPath("/Logs/");  //Text File Path
+                if (!Directory.Exists(filepath))
+                {
+                    Directory.CreateDirectory(filepath);
+                }
+                filepath = filepath + DateTime.Today.ToString("dd-MM-yy") + ".txt";   //Text File Name
+                if (!File.Exists(filepath))
+                {
+                    File.Create(filepath).Dispose();
+                }
+                using (StreamWriter sw = File.AppendText(filepath))
+                {
+                    string error = "Log Written Date:" + " " + DateTime.Now.ToString() + line + "Error Line No :" + " " + ErrorlineNo + line + "Error Message:" + " " + Errormsg + line + "Exception Type:" + " " + extype + line + "Error Location :" + " " + ErrorLocation + line + " Error Page Url:" + " " + exurl + line + "User Host IP:" + " " + hostIp + line;
+                    sw.WriteLine("-----------Exception Details on " + " " + DateTime.Now.ToString() + "-----------------");
+                    sw.WriteLine("-------------------------------------------------------------------------------------");
+                    sw.WriteLine(line);
+                    sw.WriteLine(error);
+                    sw.WriteLine("--------------------------------*End*------------------------------------------");
+                    sw.WriteLine(line);
+                    sw.Flush();
+                    sw.Close();
+                }
+            }
+            catch (Exception ex1)
+            {
+                ExceptionLogging.SendErrorToText(ex1);
+            }
+        }
+    }
+    #endregion
+    #region AutoComplete Serach Box
+    [System.Web.Services.WebMethod]
+    [System.Web.Script.Services.ScriptMethod()]
+    public static string[] GetSearchKeyword(string prefix)
+    {
+        Cryptography objCrypto1 = new Cryptography();
+        List<string> customers = new List<string>();
+        List<string> Finalcustomers = new List<string>();
+        using (SqlConnection conn = new SqlConnection())
+        {
+            conn.ConnectionString = objCrypto1.DecryptData(ConfigurationManager.ConnectionStrings["connectiondb"].ConnectionString);
+            using (SqlCommand cmd = new SqlCommand())
+            {
+                cmd.CommandText = "select distinct RequestCompName from tbl_mst_RequestInfo  where RequestCompName like @SearchText + '%'";
+                cmd.Parameters.AddWithValue("@SearchText", prefix);
+                cmd.Connection = conn;
+                conn.Open();
+                using (SqlDataReader sdr = cmd.ExecuteReader())
+                {
+                    while (sdr.Read())
+                    {
+                        customers.Add(string.Format("{0}", sdr["RequestCompName"]));
+                    }
+                }
+
+                conn.Close();
+            }
+        }
+        return customers.Distinct().ToArray();
+    }
+    #endregion
+    protected void txtemail_TextChanged(object sender, EventArgs e)
+    {
+        DataTable dtCheckEmasil = Lo.NewRetriveFilterCode("CheckEmailUCart", txtemail.Text.Trim(), "", "", "", 0, 0, 0);
+        if (dtCheckEmasil.Rows.Count > 0)
+        { btnsendmail.Enabled = false; ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "ErrorMssgPopup('Email id already registerd.')", true); }
+        else
+        { btnsendmail.Enabled = true; }
+
+    }
+    protected void txtphone_TextChanged(object sender, EventArgs e)
+    {
+        DataTable dtcheckMobile = Lo.NewRetriveFilterCode("CheckPhoneUCart", txtphone.Text.Trim(), "", "", "", 0, 0, 0);
+        if (dtcheckMobile.Rows.Count > 0)
+        {
+            btnsendmail.Enabled = false; ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "ErrorMssgPopup('Phone no already registerd.')", true);
+        }
+        else
+        { btnsendmail.Enabled = true; }
+
     }
 }

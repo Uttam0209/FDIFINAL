@@ -1,0 +1,50 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Net.Security;
+using System.Security.Cryptography;
+using System.Text;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+
+public partial class TestSms : System.Web.UI.Page
+{
+    public string rand;
+    
+protected void Page_Load(object sender, EventArgs e)
+    {
+       
+    }
+   
+    protected void txtnum_TextChanged(object sender, EventArgs e)
+    {
+        try
+        {
+            sendSMS(txtnum.Text, "123456");
+            a.Text = "sms send successfully.";
+        }
+        catch (Exception ex)
+        {
+            a.Text = ex.Message;
+        }
+    }
+    public Boolean AcceptAllCertifications(Object sender, System.Security.Cryptography.X509Certificates.X509Certificate certification, System.Security.Cryptography.X509Certificates.X509Chain chain, System.Net.Security.SslPolicyErrors sslPolicyErrors)
+    {
+        return true;
+    }
+    public void sendSMS(string mobileno, string otpMobile)
+    {
+        string StrMobile = "91" + mobileno;
+       // string requestUristring = string.Format("http://smsgw.sms.gov.in/failsafe/HttpLink?username=aeroindia.otp&pin=e086ta06&message=" + otpMobile + " is your AEROINDIA mobile verification OTP" + "&mnumber=" + StrMobile + "&signature=DDPMOD");
+        string requestUristring = string.Format("https://164.100.14.211/failsafe/HttpLink?username=aeroindia.otp&pin=e086ta06&message=" + otpMobile + "This is share link of website srijan https://Srijandefence.gov.in/ProductList" + "&mnumber=" + StrMobile + "&signature=DDPMOD");
+        ServicePointManager.ServerCertificateValidationCallback = new RemoteCertificateValidationCallback(AcceptAllCertifications);
+        HttpWebRequest myReq = (HttpWebRequest)WebRequest.Create(requestUristring);
+        HttpWebResponse myResp = (HttpWebResponse)myReq.GetResponse();
+        System.IO.StreamReader respStreamReader = new System.IO.StreamReader(myResp.GetResponseStream());
+        string responseString = respStreamReader.ReadToEnd();
+        respStreamReader.Close();
+        myResp.Close();
+    }
+}

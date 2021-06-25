@@ -16,40 +16,47 @@ public partial class Admin_Dashboard : System.Web.UI.Page
     DataTable DtGrid = new DataTable();
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (Session["User"] != null)
+        try
         {
-            if (!IsPostBack)
+            if (Session["User"] != null)
             {
-                DataTable dt = Lo.RetriveAggregateValue("Count", objCrypto.DecryptData(Session["Type"].ToString()), Session["CompanyRefNo"].ToString());
-                lnkbtnTotComp.Text = dt.Rows[0]["TotComp"].ToString();
-                lnkbtnTotDiv.Text = dt.Rows[0]["TotDiv"].ToString();
-                lnkbtnTotUnit.Text = dt.Rows[0]["TotUnit"].ToString();
-                lnkbtnTotEmp.Text = dt.Rows[0]["TotEmployee"].ToString();
-                lnkbtnProduct.Text = dt.Rows[0]["TotProduct"].ToString();
-                lnkbtnIndigenizedProduct.Text = dt.Rows[0]["IsIndiginised"].ToString();
-                lbitemmake2.Text = dt.Rows[0]["IsMake2"].ToString();
-                lbitemphoto.Text = dt.Rows[0]["TotWithPhoto"].ToString();
-                lbitemwithoutphoto.Text = dt.Rows[0]["TotWithoutPhoto"].ToString();
-                lbapproveditem.Text = dt.Rows[0]["TotApproved"].ToString();
-                lbitemdisapproved.Text = dt.Rows[0]["TotDisApproved"].ToString();
-
-                if (objCrypto.DecryptData(Session["Type"].ToString()) == "Admin" || objCrypto.DecryptData(Session["Type"].ToString()) == "SuperAdmin")
+                if (!IsPostBack)
                 {
-                    divven.Visible = true;
-                    lblvendor.Text = dt.Rows[0]["TotVendor"].ToString();
+                    DataTable dt = Lo.RetriveAggregateValue("Count", objCrypto.DecryptData(Session["Type"].ToString()), Session["CompanyRefNo"].ToString());
+                    lnkbtnTotComp.Text = dt.Rows[0]["TotComp"].ToString();
+                    lnkbtnTotDiv.Text = dt.Rows[0]["TotDiv"].ToString();
+                    lnkbtnTotUnit.Text = dt.Rows[0]["TotUnit"].ToString();
+                    lnkbtnTotEmp.Text = dt.Rows[0]["TotEmployee"].ToString();
+                    lnkbtnProduct.Text = dt.Rows[0]["TotProduct"].ToString();
+                    lnkbtnIndigenizedProduct.Text = dt.Rows[0]["IsIndiginised"].ToString();
+                    lbitemmake2.Text = dt.Rows[0]["IsMake2"].ToString();
+                    lbitemphoto.Text = dt.Rows[0]["TotWithPhoto"].ToString();
+                    lbitemwithoutphoto.Text = dt.Rows[0]["TotWithoutPhoto"].ToString();
+                    lbapproveditem.Text = dt.Rows[0]["TotApproved"].ToString();
+                    lbitemdisapproved.Text = dt.Rows[0]["TotDisApproved"].ToString();
+                    if (objCrypto.DecryptData(Session["Type"].ToString()) == "Admin" || objCrypto.DecryptData(Session["Type"].ToString()) == "SuperAdmin")
+                    {
+                        divven.Visible = true;
+                        lblvendor.Text = dt.Rows[0]["TotVendor"].ToString();
+                    }
+                    else
+                    {
+                        divven.Visible = false;
+                        lblvendor.Text = "";
+                    }
+                    FillProduct();
+                    //  GetChartData();
                 }
-                else
-                {
-                    divven.Visible = false;
-                    lblvendor.Text = "";
-                }
-                FillProduct();
-                GetChartData();
             }
+            else
+                ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert",
+                    "ErrorMssgPopup('Session Expired,Please login again');window.location='Login'", true);
         }
-        else
+        catch (Exception ex)
+        {
             ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert",
-                "ErrorMssgPopup('Session Expired,Please login again');window.location='Login'", true);
+                  "ErrorMssgPopup('" + ex.Message + "');window.location='Login'", true);
+        }
     }
     [WebMethod]
     [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
@@ -74,7 +81,6 @@ public partial class Admin_Dashboard : System.Web.UI.Page
     }
     public void FillProduct()
     {
-
         DataTable dtProductDetail = Lo.RetriveProductIndig();
         if (dtProductDetail.Rows.Count > 0)
         {
@@ -110,6 +116,45 @@ public partial class Admin_Dashboard : System.Web.UI.Page
     protected void lbitemmake2_Click(object sender, EventArgs e)
     {
         Response.Redirect("ViewProductFilterDetail?id=" + HttpUtility.UrlEncode(objCrypto.EncryptData("M2")));
+    }
+    protected void lbitemdisapproved_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("ViewProductFilterDetail?id=" + HttpUtility.UrlEncode(objCrypto.EncryptData("ID")));
+    }
+    protected void lbapproveditem_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("ViewProductFilterDetail?id=" + HttpUtility.UrlEncode(objCrypto.EncryptData("IA")));
+    }
+    protected void gvPrdoct_RowCommand(object sender, GridViewCommandEventArgs e)
+    {
+        if (e.CommandName == "ViewComp")
+        {
+            Response.Redirect("ViewProductFilterDetail?id=" + HttpUtility.UrlEncode(objCrypto.EncryptData("P")) + "&strangone=" + HttpUtility.UrlEncode(objCrypto.EncryptData(e.CommandArgument.ToString())));
+        }
+        else if (e.CommandName == "divprod")
+        {
+            DataTable DtDivProd = Lo.RetriveCount(e.CommandArgument.ToString(), "Division");
+            if (DtDivProd.Rows.Count > 0)
+            {
+                gvcount.DataSource = DtDivProd;
+                gvcount.DataBind();
+                ScriptManager.RegisterStartupScript(this, GetType(), "divCompany", "showPopup();", true);
+            }
+        }
+        else if (e.CommandName == "unitprod")
+        {
+            DataTable DtDivProd = Lo.RetriveCount(e.CommandArgument.ToString(), "Unit");
+            if (DtDivProd.Rows.Count > 0)
+            {
+                gvcount.DataSource = DtDivProd;
+                gvcount.DataBind();
+                ScriptManager.RegisterStartupScript(this, GetType(), "divCompany", "showPopup();", true);
+            }
+        }
+        else if (e.CommandName == "compgraph")
+        {
+            Response.Redirect("ProductGraphNSN?id=" + HttpUtility.UrlEncode(objCrypto.EncryptData("G")) + "&strangone=" + HttpUtility.UrlEncode(objCrypto.EncryptData(e.CommandArgument.ToString())));
+        }
     }
     protected void lblComp_Click(object sender, EventArgs e)
     {
@@ -164,7 +209,7 @@ public partial class Admin_Dashboard : System.Web.UI.Page
 
         try
         {
-            int[] iColumns = { 3, 6, 5, 8, 10 };
+            int[] iColumns = { 2, 5, 4, 7, 9 };
             RKLib.ExportData.Export objExport = new RKLib.ExportData.Export("Web");
             objExport.ExportDetails(dv.ToTable(), iColumns, RKLib.ExportData.Export.ExportFormat.Excel, "Division.xls");
         }
@@ -296,13 +341,15 @@ public partial class Admin_Dashboard : System.Web.UI.Page
                         DtFinalNew.Rows[i]["Price-20"] = dtEstimate1.Rows[es]["EstimatedPrice"].ToString();
                         DtFinalNew.Rows[i]["Quan-20"] = dtEstimate1.Rows[es]["EstimatedQty"].ToString();
                     }
+                    DtFinalNew.Rows[i]["Max Value"] = dtEstimate1.Rows[es]["MaxValue"].ToString();
                 }
             }
         }
         try
         {
             // int[] iColumns = { 10, 9, 4, 14, 18, 19, 20, 21, 22, 24, 25 };
-            int[] iColumns = { 13, 2, 4, 6, 7, 9, 11, 18, 19, 20, 21, 22, 24, 25, 57, 60, 58, 59, 62, 61, 68, 69, 70, 71, 72, 73, 74, 75 };
+            //int[] iColumns = { 3, 4, 6, 7, 11, 13, 17, 18, 20, 21, 22, 23, 24, 26, 29, 28, 31, 32, 33, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56 };
+            int[] iColumns = { 13, 2, 4, 7, 9, 11, 57, 17, 18, 48, 49, 50, 51, 52, 53, 24, 20, 21, 22, 29, 30, 31, 39, 43, 44, 32, 35, 33, 34, 38, 40, 41, 42, 55, 56, 37, 45, 54, 19, 48, 47, 46, 58, 59, 60, 61, 62 };
             RKLib.ExportData.Export objExport = new RKLib.ExportData.Export("Web");
             objExport.ExportDetails(DtFinalNew, iColumns, RKLib.ExportData.Export.ExportFormat.Excel, "Product.xls");
         }
@@ -343,38 +390,6 @@ public partial class Admin_Dashboard : System.Web.UI.Page
             e.Row.TableSection = TableRowSection.TableFooter;
         }
     }
-    protected void gvPrdoct_RowCommand(object sender, GridViewCommandEventArgs e)
-    {
-        if (e.CommandName == "ViewComp")
-        {
-            Response.Redirect("ViewProductFilterDetail?id=" + HttpUtility.UrlEncode(objCrypto.EncryptData("P")) + "&strangone=" + HttpUtility.UrlEncode(objCrypto.EncryptData(e.CommandArgument.ToString())));
-        }
-        else if (e.CommandName == "divprod")
-        {
-            DataTable DtDivProd = Lo.RetriveCount(e.CommandArgument.ToString(), "Division");
-            if (DtDivProd.Rows.Count > 0)
-            {
-                gvcount.DataSource = DtDivProd;
-                gvcount.DataBind();
-                ScriptManager.RegisterStartupScript(this, GetType(), "divCompany", "showPopup();", true);
-            }
-        }
-        else if (e.CommandName == "unitprod")
-        {
-            DataTable DtDivProd = Lo.RetriveCount(e.CommandArgument.ToString(), "Unit");
-            if (DtDivProd.Rows.Count > 0)
-            {
-                gvcount.DataSource = DtDivProd;
-                gvcount.DataBind();
-                ScriptManager.RegisterStartupScript(this, GetType(), "divCompany", "showPopup();", true);
-            }
-        }
-        else if (e.CommandName == "compgraph")
-        {
-            // Response.Redirect("ProductGraph?id=" + HttpUtility.UrlEncode(objCrypto.EncryptData("G")) + "&strangone=" + HttpUtility.UrlEncode(objCrypto.EncryptData(e.CommandArgument.ToString())));
-            Response.Redirect("ProductGraphNSN?id=" + HttpUtility.UrlEncode(objCrypto.EncryptData("G")) + "&strangone=" + HttpUtility.UrlEncode(objCrypto.EncryptData(e.CommandArgument.ToString())));
-        }
-    }
     protected void gvcount_RowCreated(object sender, GridViewRowEventArgs e)
     {
         if (e.Row.RowType == DataControlRowType.DataRow)
@@ -405,7 +420,7 @@ public partial class Admin_Dashboard : System.Web.UI.Page
                     // code to filter row role wise
                     if (objCrypto.DecryptData(Session["Type"].ToString()).ToUpper() == "COMPANY")
                         dv.RowFilter = "CompanyRefNo='" + Session["CompanyRefNo"].ToString() + "'";
-                    else if (objCrypto.DecryptData(Session["Type"].ToString()).ToUpper() == "DIVISION")
+                    else if (objCrypto.DecryptData(Session["Type"].ToString()).ToUpper() == "DIVISION" || objCrypto.DecryptData(Session["Type"].ToString()).ToUpper() == "FACTORY")
                         dv.RowFilter = "FactoryRefNo='" + Session["CompanyRefNo"].ToString() + "'";
                     else
                         dv.RowFilter = "UnitRefNo='" + Session["CompanyRefNo"].ToString() + "'";
@@ -450,13 +465,14 @@ public partial class Admin_Dashboard : System.Web.UI.Page
                             DtFinalNew.Rows[i]["Price-20"] = dtEstimate1.Rows[es]["EstimatedPrice"].ToString();
                             DtFinalNew.Rows[i]["Quan-20"] = dtEstimate1.Rows[es]["EstimatedQty"].ToString();
                         }
+                        DtFinalNew.Rows[i]["Max Value"] = dtEstimate1.Rows[es]["MaxValue"].ToString();
                     }
                 }
             }
             try
             {
                 // int[] iColumns = { 10, 9, 4, 14, 18, 19, 20, 21, 22, 24, 25 };
-                int[] iColumns = { 13, 2, 4, 6, 7, 9, 11, 18, 19, 20, 21, 22, 24, 25, 57, 60, 58, 59, 62, 61, 68, 69, 70, 71, 72, 73, 74, 75 };
+                int[] iColumns = { 12, 1, 3, 5, 6, 8, 10, 17, 18, 19, 20, 21, 23, 24, 56, 59, 57, 58, 61, 60 };
                 RKLib.ExportData.Export objExport = new RKLib.ExportData.Export("Web");
                 objExport.ExportDetails(DtFinalNew, iColumns, RKLib.ExportData.Export.ExportFormat.Excel, "Indigenized Product.xls");
             }
@@ -467,11 +483,11 @@ public partial class Admin_Dashboard : System.Web.UI.Page
     }
     protected void lbexportmake2_Click(object sender, EventArgs e)
     {
-        DtGrid = Lo.GetDashboardData("Product", "");
+        DtGrid = Lo.GetDashboardData("GetMake2", Session["CompanyRefNo"].ToString());
         if (DtGrid.Rows.Count > 0)
         {
             DataView dv = new DataView(DtGrid);
-            dv.RowFilter = "PurposeofProcurement like'%25%'";
+            // dv.RowFilter = "PurposeofProcurement like'%25%'";
             if (objCrypto.DecryptData(Session["Type"].ToString()) != "Admin" && objCrypto.DecryptData(Session["Type"].ToString()) != "SuperAdmin")
             {
                 if (dv.Count > 0)
@@ -525,13 +541,15 @@ public partial class Admin_Dashboard : System.Web.UI.Page
                             DtFinalNew.Rows[i]["Price-20"] = dtEstimate1.Rows[es]["EstimatedPrice"].ToString();
                             DtFinalNew.Rows[i]["Quan-20"] = dtEstimate1.Rows[es]["EstimatedQty"].ToString();
                         }
+                        DtFinalNew.Rows[i]["Max Value"] = dtEstimate1.Rows[es]["MaxValue"].ToString();
                     }
                 }
             }
             try
             {
                 // int[] iColumns = { 10, 9, 4, 14, 18, 19, 20, 21, 22, 24, 25 };
-                int[] iColumns = { 13, 2, 4, 6, 7, 9, 11, 18, 19, 20, 21, 22, 24, 25, 57, 60, 58, 59, 62, 61, 68, 69, 70, 71, 72, 73, 74, 75 };
+                //int[] iColumns = { 13, 2, 4, 6, 7, 9, 11, 18, 19, 20, 21, 22, 24, 25, 27, 29, 31, 33, 35, 37, 39, 41, 43, 45, 47, 49, 51, 53, 55, 57 };
+                int[] iColumns = { 13, 2, 4, 7, 9, 11, 57, 17, 18, 48, 49, 50, 51, 52, 53, 24, 20, 21, 22, 29, 30, 31, 39, 43, 44, 32, 35, 33, 34, 38, 40, 41, 42, 55, 56, 37, 45, 54, 19, 48, 47, 46, 58, 59, 60, 61, 62 };
                 RKLib.ExportData.Export objExport = new RKLib.ExportData.Export("Web");
                 objExport.ExportDetails(DtFinalNew, iColumns, RKLib.ExportData.Export.ExportFormat.Excel, "Make II Product.xls");
             }
@@ -546,9 +564,9 @@ public partial class Admin_Dashboard : System.Web.UI.Page
     }
     protected void lbdownloadapproved_Click(object sender, EventArgs e)
     {
-        DtGrid = Lo.GetDashboardData("Product", "");
+        DtGrid = Lo.GetDashboardData("IsApprovedYes", Session["CompanyRefNo"].ToString());
         DataView dv = new DataView(DtGrid);
-        dv.RowFilter = "IsApproved='Y'";
+        //   dv.RowFilter = "IsApproved='Y'";
         if (objCrypto.DecryptData(Session["Type"].ToString()) != "Admin" && objCrypto.DecryptData(Session["Type"].ToString()) != "SuperAdmin")
         {
             if (DtGrid.Rows.Count > 0)
@@ -602,13 +620,14 @@ public partial class Admin_Dashboard : System.Web.UI.Page
                         DtFinalNew.Rows[i]["Price-20"] = dtEstimate1.Rows[es]["EstimatedPrice"].ToString();
                         DtFinalNew.Rows[i]["Quan-20"] = dtEstimate1.Rows[es]["EstimatedQty"].ToString();
                     }
+                    DtFinalNew.Rows[i]["Max Value"] = dtEstimate1.Rows[es]["MaxValue"].ToString();
                 }
             }
         }
         try
         {
-            // int[] iColumns = { 10, 9, 4, 14, 18, 19, 20, 21, 22, 24, 25 };
-            int[] iColumns = { 13, 2, 4, 6, 7, 9, 11, 18, 19, 20, 21, 22, 24, 25, 57, 60, 58, 59, 62, 61, 68, 69, 70, 71, 72, 73, 74, 75 };
+            //int[] iColumns = { 13, 2, 4, 6, 7, 9, 11, 18, 19, 20, 21, 22, 24, 25, 27, 29, 31, 33, 35, 37, 39, 41, 43, 45, 47, 49, 51, 53, 55, 57, 60, 58, 59, 62, 61 };
+            int[] iColumns = { 13, 2, 4, 7, 9, 11, 57, 17, 18, 48, 49, 50, 51, 52, 53, 24, 20, 21, 22, 29, 30, 31, 39, 43, 44, 32, 35, 33, 34, 38, 40, 41, 42, 55, 56, 37, 45, 54, 19, 48, 47, 46, 58, 59, 60, 61, 62 };
             RKLib.ExportData.Export objExport = new RKLib.ExportData.Export("Web");
             objExport.ExportDetails(DtFinalNew, iColumns, RKLib.ExportData.Export.ExportFormat.Excel, "Approve Product.xls");
         }
@@ -618,9 +637,9 @@ public partial class Admin_Dashboard : System.Web.UI.Page
     }
     protected void lbitemdisapproveddown_Click(object sender, EventArgs e)
     {
-        DtGrid = Lo.GetDashboardData("Product", "");
+        DtGrid = Lo.GetDashboardData("IsApprovedNo", Session["CompanyRefNo"].ToString());
         DataView dv = new DataView(DtGrid);
-        dv.RowFilter = "IsApproved='N'";
+        // dv.RowFilter = "IsApproved='N'";
         if (objCrypto.DecryptData(Session["Type"].ToString()) != "Admin" && objCrypto.DecryptData(Session["Type"].ToString()) != "SuperAdmin")
         {
             if (DtGrid.Rows.Count > 0)
@@ -674,26 +693,19 @@ public partial class Admin_Dashboard : System.Web.UI.Page
                         DtFinalNew.Rows[i]["Price-20"] = dtEstimate1.Rows[es]["EstimatedPrice"].ToString();
                         DtFinalNew.Rows[i]["Quan-20"] = dtEstimate1.Rows[es]["EstimatedQty"].ToString();
                     }
+                    DtFinalNew.Rows[i]["Max Value"] = dtEstimate1.Rows[es]["MaxValue"].ToString();
                 }
             }
         }
         try
         {
             // int[] iColumns = { 10, 9, 4, 14, 18, 19, 20, 21, 22, 24, 25 };
-            int[] iColumns = { 13, 2, 4, 6, 7, 9, 11, 18, 19, 20, 21, 22, 24, 25, 57, 60, 58, 59, 62, 61, 68, 69, 70, 71, 72, 73, 74, 75 };
+            int[] iColumns = { 13, 2, 4, 6, 7, 9, 11, 18, 19, 20, 21, 22, 24, 25, 27, 29, 31, 33, 35, 37, 39, 41, 43, 45, 47, 49, 51, 53, 55, 57, 60, 58, 59, 62, 61 };
             RKLib.ExportData.Export objExport = new RKLib.ExportData.Export("Web");
             objExport.ExportDetails(DtFinalNew, iColumns, RKLib.ExportData.Export.ExportFormat.Excel, "Disapprove Product.xls");
         }
         catch (Exception ex)
         {
         }
-    }
-    protected void lbitemdisapproved_Click(object sender, EventArgs e)
-    {
-        Response.Redirect("ViewProductFilterDetail?id=" + HttpUtility.UrlEncode(objCrypto.EncryptData("ID")));
-    }
-    protected void lbapproveditem_Click(object sender, EventArgs e)
-    {
-        Response.Redirect("ViewProductFilterDetail?id=" + HttpUtility.UrlEncode(objCrypto.EncryptData("IA")));
     }
 }

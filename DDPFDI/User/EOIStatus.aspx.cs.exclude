@@ -1,0 +1,161 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Data;
+using System.Web.UI.WebControls;
+using System.Collections.Specialized;
+using Encryption;
+using BusinessLayer;
+
+public partial class User_EOIStatus : System.Web.UI.Page
+{
+    #region Pagevariable
+    private Logic Lo = new Logic();
+    private DataTable DtGrid = new DataTable();
+    private string _msg = string.Empty;
+    private string _sysMsg = string.Empty;
+    DataUtility Co = new DataUtility();
+    private Cryptography Encrypt = new Cryptography();
+    #endregion
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        if (!IsPostBack)
+        {
+            try
+            {
+                MenuLink();
+                BindData();
+
+            }
+            catch (Exception ex)
+            { ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alert", "(" + ex.Message + ")", true); }
+        }
+    }
+    protected void MenuLink()
+    {
+        if (Session["User"] != null)
+        {
+            linklogin.Visible = false;
+            linkusername.Text = Encrypt.DecryptData(Session["User"].ToString());
+            linkusername.Visible = true;
+            lblmis.Visible = true;
+            lbdpsuhome.Visible = true;
+            lbeoistatus.Visible = true;
+            lbProgressReport.Visible = true;
+           // lbSuccesstory.Visible = true;
+            lbllogout.Visible = true;
+            lbmarket.Visible = true;
+        }
+        else
+        {
+        //    linklogin.Visible = true;
+        //    linkusername.Visible = false;
+        //    lblmis.Visible = false;
+        //    lbdpsuhome.Visible = false;
+        //    lbeoistatus.Visible = false;
+        //    lbProgressReport.Visible = false;
+        //    lbSuccesstory.Visible = false;
+        //    lbllogout.Visible = false;
+            Response.RedirectToRoute("ProductList");
+        }
+    }
+    protected void BindData()
+    {
+        //  DtGrid = Lo.RetriveFilterCode(Session["CompanyRefNo"].ToString(), Encrypt.DecryptData(Session["Type"].ToString()), "EOIStatus");
+        DtGrid = Lo.RetriveFilterCode("", "", "EOIStatus");
+        if (DtGrid.Rows.Count > 0)
+        {
+            gveoi.DataSource = DtGrid;
+            gveoi.DataBind();
+        }
+        else
+        {
+            // Response.Redirect("ProductList");
+        }
+    }
+    protected void gveoi_RowCreated(object sender, GridViewRowEventArgs e)
+    {
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            e.Row.TableSection = TableRowSection.TableBody;
+        }
+        else if (e.Row.RowType == DataControlRowType.Header)
+        {
+            e.Row.TableSection = TableRowSection.TableHeader;
+        }
+        else if (e.Row.RowType == DataControlRowType.Footer)
+        {
+            e.Row.TableSection = TableRowSection.TableFooter;
+        }
+    }
+    protected void lbeoistatus_Click(object sender, EventArgs e)
+    {
+        Response.RedirectToRoute("DPSUHome");
+    }
+    protected void lbllogout_Click(object sender, EventArgs e)
+    {
+        Session.Abandon();
+        Session.Remove("Type");
+        Session.Remove("User");
+        Session.Remove("CompanyRefNo");
+        Session.Remove("SFToken");
+        Session.RemoveAll();
+        Session.Contents.RemoveAll();
+        Session.Clear();
+        Response.Cache.SetCacheability(HttpCacheability.NoCache);
+        Response.Cookies["DefaultDpsu"].Expires = DateTime.Now;
+        Response.Buffer = true;
+        Response.AppendHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
+        Response.AppendHeader("Pragma", "no-cache"); // HTTP 1.0.
+        Response.AppendHeader("Expires", "0"); // Proxies.
+        if (Request.Cookies["User"] != null)
+        {
+            Response.Cookies["User"].Value = string.Empty;
+            Response.Cookies["User"].Expires = DateTime.Now.AddMonths(-20);
+        }
+        if (Request.Cookies["SFToken"] != null)
+        {
+            Response.Cookies["SFToken"].Value = string.Empty;
+            Response.Cookies["SFToken"].Expires = DateTime.Now.AddMonths(-20);
+        }
+        Response.RedirectToRoute("Productlist");
+    }
+    protected void lbShownIntrested_Click(object sender, EventArgs e)
+    {
+        Response.RedirectToRoute("IntrestedProduct");
+    }
+    protected void linklogin_Click(object sender, EventArgs e)
+    {
+        Response.RedirectToRoute("Login");
+    }
+    protected void linkusername_Click(object sender, EventArgs e)
+    {
+        if (Session["User"] != null)
+        {
+            Response.RedirectToRoute("Dashboard");
+        }
+        else
+        {
+            ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "ErrorMssgPopup('Please login again');window.location='Login'", true);
+        }
+    }
+    protected void gveoi_RowDataBound(object sender, GridViewRowEventArgs e)
+    {
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            Label lbl = e.Row.FindControl("mThumsup") as Label;
+            DataTable DtBindIntrestUser = Lo.RetriveFilterCode("", e.Row.Cells[2].Text, "RequesterPop");
+            if (DtBindIntrestUser.Rows.Count > 0)
+            {
+                lbl.Visible = true;
+            }
+            else
+            {
+                lbl.Visible = false;
+            }
+        }
+    }
+
+}

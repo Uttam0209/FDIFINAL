@@ -175,7 +175,6 @@
                             </div>
                     </form>
                 </div>
-                <div class="footer">© 2019 <a href="#">Department of Defence Production</a> </div>
             </div>
         </ContentTemplate>
     </asp:UpdatePanel>

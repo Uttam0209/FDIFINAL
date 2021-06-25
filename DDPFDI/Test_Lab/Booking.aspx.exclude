@@ -1,0 +1,262 @@
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Booking.aspx.cs" Inherits="Test_Lab_Booking" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title>Test Lab Project</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+<%--    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css" />--%>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" />
+    <!-- Custom styles for this template -->
+    <link href="css/simple-sidebar.css" rel="stylesheet" />
+    <style type="text/css">
+        #mycol {
+            box-shadow: 0 0 5px black;
+        }
+
+        #example thead tr th {
+            background-color: #0a0063;
+            color: white;
+        }
+
+        hr {
+            background-color: black;
+            height: 1px;
+        }
+
+        .page-item.active .page-link {
+            background-color: #0a0063;
+        }
+
+        .btn {
+            background-color: rgba(105, 21, 207, 0.8);
+            color: #fff;
+        }
+
+            .btn:hover {
+                background-color: #0a0063;
+                color: #fff;
+            }
+
+        .mendatory {
+            color: red;
+        }
+
+        #sidebar-wrapper a {
+            font-weight: 500;
+            color: #333;
+            border-bottom: 1px solid #333;
+        }
+
+            #sidebar-wrapper a:hover {
+                font-weight: 500;
+                color: #fff;
+                background: #333 !important;
+            }
+
+        #top3 ul li a {
+            color: #fff;
+            text-transform: uppercase;
+        }
+        
+
+
+    </style>
+
+</head>
+<body>
+    <form id="form1" runat="server">
+        <asp:ScriptManager ID="sc" runat="server"></asp:ScriptManager>
+        <asp:UpdatePanel runat="server" ID="UpdatePanel1" UpdateMode="Conditional">
+            <ContentTemplate>
+                <div class="container-fluid" id="top">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <a href="ProductList" class="d-flex justify-content-center">
+                                <img src="../ddp_logo.png" class="img-fluid" style="height: 70px" /></a>
+                        </div>
+                        <div class="col-md-8 pt-3 text-center">
+                            <h4 style="text-transform: uppercase;">Booking of government test facilities by industry in defence sector</h4>
+                        </div>
+
+                    </div>
+                </div>
+                <div id="top3" class="container-fluid py-2" style="background: #373f50;">
+                    <div class="row">
+                        <div class="col-11 pt-2 text-white d-flex justify-content-center">
+                            <h3>ONLINE BOOKING OF TEST FACILITIES</h3>
+                        </div>
+                        <div class="col-1">
+                            <ul class="navbar-nav ml-auto pr-4">
+                                <li class="nav-item">
+                                    <%--<a id="logbtn" class="nav-link btn" href="TestLabLogin" style="border: 1px solid #fff; color: #fff; margin-top: 5px; font-size: 16px; font-weight: 400;  background:#373f50!important;">Login</a>--%>
+                                     <asp:Button ID="logbtn" runat="server" Text="Login" CssClass="btn" OnClick="logbtn_Click"/></button>
+                                    
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="container-fluid">
+                    <div class="row">
+                        <div id="mycol" class="col-12 p-4">
+                            <p>BOOKING DETAILS</p>
+                            <hr />
+                            <table id="example" class="table table-risponsive table-borderless" style="width: 50%">
+
+                                <tbody>
+                                    <tr>
+                                        <td></td>
+                                        <td>
+                                            <asp:Label ID="lblid" runat="server" Visible="false"></asp:Label></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Organisation Name:</td>
+                                        <td>
+                                            <asp:Label ID="lblorganisationname" runat="server"></asp:Label></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Test Facility:</td>
+                                        <td>
+                                            <asp:Label ID="lbltestfacility" runat="server"></asp:Label></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Lab Name:</td>
+                                        <td>
+                                            <asp:Label ID="lblLabname" runat="server"></asp:Label></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Discipline:</td>
+                                        <td>
+                                            <asp:Label ID="lblDiscipline" runat="server"></asp:Label></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Test:</td>
+                                        <td>
+                                            <asp:Label ID="lbltestname" runat="server"></asp:Label></td>
+                                    </tr>
+                                    <%--  <tr>
+                <td>Location:</td>
+                <td>BANGALORE</td>
+            </tr>--%>
+                                    <tr>
+                                        <td>Material:</td>
+                                        <td>
+                                            <asp:Label ID="lblmaterial" runat="server"></asp:Label></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Specifications:</td>
+                                        <td>
+                                            <asp:Label ID="lblspecifications" runat="server"></asp:Label></td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="mendatory">*</span>Number of Sample:</td>
+                                        <td>
+                                            <asp:TextBox ID="txtnoofsample" runat="server" CssClass="form-control" placeholder="Number of Sample (Numbers only)" onkeypress="return isNumberKeyOutDecimal(event)">
+                                            </asp:TextBox>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Dimension of Eqpt to be tested:</td>
+                                        <td>
+                                            <asp:TextBox ID="txteqptbetested" runat="server" CssClass="form-control" placeholder="Dimension of Eqpt to be tested"></asp:TextBox></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Weight of Eqpt to be tested:</td>
+                                        <td>
+                                            <asp:TextBox ID="txtwghtbetested" runat="server" CssClass="form-control" placeholder="Weight of Eqpt to be tested" AutoCompleteType="None"></asp:TextBox></td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="mendatory">*</span>Start Date:</td>
+                                        <td>
+                                            <asp:TextBox ID="txtstartdate" runat="server" CssClass="form-control" TextMode="Date"></asp:TextBox></td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="mendatory">*</span>End Date:</td>
+                                        <td>
+                                            <asp:TextBox ID="txtendDate" runat="server" input="date" CssClass="form-control" TextMode="Date"></asp:TextBox>
+                                            <asp:CompareValidator ID="cmpVal1" ControlToCompare="txtstartdate"
+                                                ControlToValidate="txtendDate" Type="Date" Operator="GreaterThanEqual" ForeColor="Red"
+                                                ErrorMessage="*End Date should be greater than equal to Start Date" runat="server"></asp:CompareValidator>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Upload Attachment:</td>
+                                        <td>
+                                            <asp:FileUpload ID="fufiles" runat="server" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="mendatory">*</span>Description:</td>
+                                        <td>
+                                            <asp:TextBox ID="txtremarks" runat="server" CssClass="form-control" TextMode="MultiLine" placeholder="Any Special Remarks for Test"></asp:TextBox></td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <asp:Button ID="btnhome" runat="server" Text=" Go to Home" CssClass="btn" OnClick="btnhome_Click" /></button>
+                                                    <asp:Button ID="btnsubmit" runat="server" class="btn" Text="Submit" OnClick="btnsubmit_Click"></asp:Button></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+                 <div id="myModal" class="modal fade">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header" style="background-color: rgba(105, 21, 207, 0.8); color:#fff;">
+                                <h5 class="modal-title" >Login</h5>
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            </div>
+                            <div class="modal-body">
+                                <form>
+                                    <div class="form-group">
+                                        <asp:Label Text="User Name" runat="server" style="font-weight:400;"/>
+                                        <input type="text" class="form-control" placeholder="Enter User Name">
+                                    </div>
+                                    <div class="form-group">
+                                         <asp:Label Text="Password" runat="server" style="font-weight:400;"/>
+                                        <input type="password" class="form-control" placeholder="Enter Your Name">
+                                    </div>
+                                    <div class="d-flex justify-content-end">
+                                    <button type="submit" class="btn">Login</button>
+                                       <%-- <asp:Button ID="submit" runat="server"Text="Login" OnClick="submit_Click"/>--%>
+                                        </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <nav class="navbar navbar-dark d-flex justify-content-center py-2" style="background-color: #373f50; color: white;">
+                    <p class="nav-link">Copyright © 2020 | All Rights Reserved By Department of Defence Production</p>
+                </nav>
+            </ContentTemplate>
+        </asp:UpdatePanel>
+    </form>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+   <%-- <script type="text/javascript">
+        $(document).ready(function () {
+            $('#example').DataTable();
+        });
+
+        //$(document).ready(function () {
+        //    $("#myModal").modal('show');
+        //});
+    </script>--%>
+    <script type="text/javascript">
+        function isNumberKeyOutDecimal(evt) {
+            var charCode = (evt.which) ? evt.which : event.keyCode;
+            if (charCode > 31
+                && (charCode < 48 || charCode > 57))
+                return false;
+            return true;
+        }
+    </script>
+</body>
+</html>

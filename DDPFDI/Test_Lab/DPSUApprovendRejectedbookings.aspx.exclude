@@ -1,0 +1,158 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Test_Lab/DPSU_MasterPage.master" AutoEventWireup="true" CodeFile="DPSUApprovendRejectedbookings.aspx.cs" Inherits="Test_Lab_DPSUApprovendRejectedbookings" %>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
+      <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.23/datatables.min.css" />
+
+    <style>
+        #ContentPlaceHolder1_gvapprovereject_info {
+            margin-top: 10px !important;
+            background: rgba(105,21,207,0.8) !important;
+            color: #fff;
+        }
+
+        #ContentPlaceHolder1_gvapprovereject_paginate {
+            margin-top: 10px !important;
+            padding: 0 !important;
+            border: 0 !important;
+        }
+
+            #ContentPlaceHolder1_gvapprovereject_paginate span .paginate_button {
+                background: rgba(105,21,207,0.8) !important;
+                color: #fff !important;
+            }
+
+            #ContentPlaceHolder1_gvapprovereject_paginate .paginate_button {
+                background: rgba(105,21,207,0.8) !important;
+                color: #fff !important;
+            }
+
+        #updatetable table tr th, td {
+            border: 1px solid #333 !important;
+        }
+
+        .box1 {
+            box-shadow: 0 0 5px;
+        }
+    </style>
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
+      <asp:HiddenField ID="hidCompanyRefNo" runat="server" />
+    <asp:HiddenField ID="hidType" runat="server" />
+    <asp:HiddenField runat="server" ID="hfcomprefno" />
+        <div class="container-fluid">
+            <div class="row my-2 box1 py-2">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <asp:Label runat="server" CssClass="form-label">Select Company/Organization</asp:Label>
+                        <asp:DropDownList runat="server" ID="ddlcomp" CssClass="form-cascade-control form-control" AutoPostBack="true" OnSelectedIndexChanged="ddlcomp_SelectedIndexChanged"></asp:DropDownList>
+                    </div>
+                </div>
+               <%-- <div class="col-md-3" runat="server" id="divlblselectdivison">
+                    <div class="form-group">
+                        <asp:Label runat="server" CssClass="form-label">Select Division/Plant</asp:Label>
+                        <asp:DropDownList runat="server" ID="ddldivision" CssClass="form-cascade-control form-control" AutoPostBack="true" OnSelectedIndexChanged="ddldivision_SelectedIndexChanged"></asp:DropDownList>
+                    </div>
+                </div>
+                <div class="col-md-3" runat="server" id="divlblselectunit">
+                    <div class="form-group">
+                        <asp:Label runat="server" CssClass="form-label">Select Unit</asp:Label>
+                        <asp:DropDownList runat="server" ID="ddlunit" CssClass="form-cascade-control form-control" AutoPostBack="true" OnSelectedIndexChanged="ddlunit_SelectedIndexChanged"></asp:DropDownList>
+                    </div>
+                </div>--%>
+                <div class="col-md-3" runat="server" id="divlblselectdiscipline">
+                    <div class="form-group">
+                        <asp:Label runat="server" CssClass="form-label">Select Discipline</asp:Label>
+                        <asp:DropDownList runat="server" ID="ddldiscipline" CssClass="form-cascade-control form-control" AutoPostBack="true" OnSelectedIndexChanged="ddldiscipline_SelectedIndexChanged"></asp:DropDownList>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group" runat="server" visible="false" id="portalid">
+                        <b>Item Id (Portal):-
+                                    <asp:Label ID="lblrefnoforinfo" runat="server"></asp:Label></b>
+                    </div>
+                </div>
+            </div>
+           
+            <div class="row my-2 box1 py-2">
+                 <div id="divTotalNumber" class="col-12 text-center" style="font-size: 16px; margin-top: 10px;" runat="server" visible="False">
+                    <asp:Label ID="lbltotal" runat="server" Text=""></asp:Label>
+                </div>
+                <div class="col-md-12">
+                    <div class="fdi-add-content">
+                        <div class="table-wraper table-responsive">
+                            <asp:GridView ID="gvapprovereject" runat="server" Class="table table-responsive" OnRowCreated="gvapprovereject_RowCreated"
+                                AutoGenerateColumns="false" EmptyDataText="No Data Found" ShowHeaderWhenEmpty="true">     
+                                <Columns>
+                                        <asp:TemplateField HeaderText="Test">
+                                                        <ItemTemplate>
+                                                            <asp:Label ID="lblnameoftest" runat="server" Text='<%# Eval("test_id") %>'></asp:Label>
+                                                        </ItemTemplate>
+                                                    </asp:TemplateField>
+                                                    <asp:TemplateField HeaderText="Organisation Name">
+                                                        <ItemTemplate>
+                                                            <asp:Label ID="lblOrg" runat="server" Text='<%# Eval("organisation_id") %>'></asp:Label>
+                                                        </ItemTemplate>
+                                                    </asp:TemplateField>
+                                                    <asp:TemplateField HeaderText="Lab Name" HeaderStyle-Width="200px">
+                                                        <ItemTemplate>
+                                                            <asp:Label ID="lbllab" runat="server" Text='<%# Eval("lab") %>'></asp:Label>
+                                                        </ItemTemplate>
+                                                    </asp:TemplateField>
+                                                    <asp:TemplateField HeaderText="Discipline" HeaderStyle-Width="200px">
+                                                        <ItemTemplate>
+                                                            <asp:Label ID="lbldiscipline" runat="server" Text='<%# Eval("discipline") %>'></asp:Label>
+                                                        </ItemTemplate>
+                                                    </asp:TemplateField>
+                                                    <asp:TemplateField HeaderText="Number of Sample">
+                                                        <ItemTemplate>
+                                                            <asp:Label ID="lblnoOfSample" runat="server" Text='<%# Eval("no_of_sample") %>'></asp:Label>
+                                                        </ItemTemplate>
+                                                    </asp:TemplateField>
+                                                    <asp:TemplateField HeaderText="Dimension of Equipment">
+                                                        <ItemTemplate>
+                                                            <asp:Label ID="lbldimension" runat="server" Text='<%# Eval("dimension_eqpt") %>'></asp:Label>
+                                                        </ItemTemplate>
+                                                    </asp:TemplateField>
+                                                    <asp:TemplateField HeaderText="Weight of Equipment">
+                                                        <ItemTemplate>
+                                                            <asp:Label ID="lblweight" runat="server" Text='<%# Eval("weight_eqpt") %>'></asp:Label>
+                                                        </ItemTemplate>
+                                                    </asp:TemplateField>
+                                                    
+                                                    <asp:TemplateField HeaderText="Start date" HeaderStyle-Width="300px">
+                                                        <ItemTemplate>
+                                                            <asp:Label ID="lblstartdate" runat="server" Text='<%# Eval("start_date") %>'></asp:Label>
+                                                        </ItemTemplate>
+                                                    </asp:TemplateField>
+
+                                                    <asp:TemplateField HeaderText="End Date">
+                                                        <ItemTemplate>
+                                                            <asp:Label ID="lblenddate" runat="server" Text='<%# Eval("end_date") %>'></asp:Label>
+                                                        </ItemTemplate>
+                                                    </asp:TemplateField>
+                                                    <asp:TemplateField HeaderText="Description">
+                                                        <ItemTemplate>
+                                                            <asp:Label ID="lbldescription" runat="server" Text='<%# Eval("description") %>'></asp:Label>
+                                                        </ItemTemplate>
+                                                    </asp:TemplateField>
+                                                    <asp:TemplateField HeaderText="Status">
+                                                        <ItemTemplate>
+                                                            <asp:Label ID="lblstatus" runat="server" Text='<%# Eval("bookingstatus") %>'></asp:Label>
+                                                        </ItemTemplate>
+                                                    </asp:TemplateField>
+                                                     <asp:TemplateField HeaderText="Reason of Rejection">
+                                                        <ItemTemplate>
+                                                            <asp:Label ID="Label1" runat="server" Text='<%# Eval("Rejectremark") %>'></asp:Label>
+                                                        </ItemTemplate>
+                                                    </asp:TemplateField>
+                                 
+                                                </Columns>
+                                            </asp:GridView>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+</asp:Content>
+

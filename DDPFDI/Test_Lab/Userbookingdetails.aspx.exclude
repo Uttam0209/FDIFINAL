@@ -1,0 +1,316 @@
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Userbookingdetails.aspx.cs" Inherits="Test_Lab_Userdetails" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <meta charset="utf-8" />
+
+    <title>Test Lab Project</title>
+    <!-- Bootstrap core CSS -->
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" />
+    <!-- Custom styles for this template -->
+    <link href="css/simple-sidebar.css" rel="stylesheet" />
+    
+    <style type="text/css">
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            color: #333;
+            font-weight: 400;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .list-group-flush > .list-group-item {
+            border-width: 0;
+        }
+
+        .list-group-item {
+            border: 0;
+            border-bottom: 0 solid 1px;
+        }
+
+        #demo a {
+            padding-left: 20px !important;
+        }
+
+        #sidebar-wrapper {
+            box-shadow: 0 0 5px;
+        }
+
+        #top2 {
+            box-shadow: 0 0 5px;
+        }
+
+        #gvdashboard tr th {
+            background-color: #0a0063;
+            color: #fff;
+        }
+
+        #menu-toggle {
+            background-color: #0a0063;
+            color: #fff;
+            font-weight: 500;
+        }
+
+        .submit1 {
+            background-color: #6915cf;
+            color: #fff;
+            font-weight: 500;
+        }
+
+        .submit2 {
+            font-weight: 500;
+        }
+
+        .btn:hover {
+            color: white;
+        }
+
+        hr {
+            border-top: 1px solid black;
+        }
+
+        #top3 a {
+            color: white;
+            text-transform: uppercase;
+        }
+
+        #gvtest th {
+            background: rgba(105,21,207,0.8) !important;
+            color: #fff;
+        }
+
+        #gvtest .page-item:active {
+            background: rgba(105,21,207,0.8) !important;
+            color: #fff;
+        }
+
+        .mendatory
+        {
+            color:red;
+            font-size:22px!important;
+        }
+          #lbltypelogin
+            {
+                display:none;
+            }
+
+           #sidebar-wrapper a {
+            font-weight: 500;
+            color: #333;
+            border-bottom: 1px solid #333;
+        }
+
+            #sidebar-wrapper a:hover {
+                font-weight: 500;
+                color: #fff;
+                background: #333 !important;
+            }
+
+    </style>
+</head>
+<body>
+    <form id="form1" runat="server">
+        <asp:ScriptManager ID="sc" runat="server"></asp:ScriptManager>
+        <div class="container-fluid" id="top">
+            <div class="row">
+                <div class="col-md-2">
+                    <a href="ProductList" class="d-flex justify-content-center">
+                        <img src="../ddp_logo.png" class="img-fluid" style="height: 70px" /></a>
+                </div>
+                <div class="col-md-8 pt-3 text-center">
+                    <h4 style="text-transform: uppercase;">Booking of government test facilities by industry in defence sector</h4>
+                </div>
+                <div class="col-md-2 text-center">
+                    <ul class="navbar-nav ml-auto" id="dropdown1">
+                        <li class="nav-item my-2">
+                            <div class="dropdown">
+                                <a class="dropdown-toggle nav-link" data-toggle="dropdown" style="border: 1px solid #333; color: #333;">
+                                    <asp:Label ID="lblusername" runat="server"></asp:Label></a>
+                                <div class="dropdown-menu">
+                                    <asp:LinkButton ID="lbllogout" runat="server" OnClick="lbllogout_Click" CssClass="dropdown-item">Logout</asp:LinkButton>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <nav id="top3" class="navbar navbar-expand-lg px-md-3 bg-dark">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav2" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="fa fa-bars" aria-hidden="true" style="color: white;"></i>
+            </button>
+            <div class="collapse navbar-collapse py-md-3 py-2" id="navbarNav2">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" runat="server" href="~/HomePage"><i class="fa fa-home" aria-hidden="true"></i></a>
+                    </li>
+                    <li class="nav-item active">
+                        <a href="~/About" runat="server" class="nav-link">About us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="~/FAQs" runat="server" class="nav-link">FAQ</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="~/FeedBack" runat="server" id="lnkfeedback" class="nav-link">FeedBack</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="~/FeedBack" runat="server" id="A1" class="nav-link">User Manual</a>
+                    </li>
+                </ul>
+
+                <div id="DivCompanyName" runat="server">
+                    <span style='display: inline-block; margin-right: 30px;'>
+                        <asp:Label ID="lblmastercompany" runat="server"></asp:Label>
+                    </span>
+                </div>
+            </div>
+        </nav>
+
+        <div class="d-flex" id="wrapper">
+         
+            <!-- Sidebar -->
+            <div class="bg-light border-right" id="sidebar-wrapper">
+                <div class="list-group list-group-flush">
+                  <a href="TestDashboard" class="list-group-item list-group-item-action bg-light"><i class="fa fa-tachometer" aria-hidden="true"></i>&nbsp;Dashboard</a>
+                            <a href="UserTestDetails" class="list-group-item list-group-item-action bg-light"><i class="fa fa-tachometer" aria-hidden="true"></i>&nbsp;Book Test Lab facilities</a>
+                             <a href="CurrentBookings" class="list-group-item list-group-item-action bg-light"><i class="fa fa-tachometer" aria-hidden="true"></i>&nbsp;My Current Bookings</a>
+                             <a href="AppndRejectedBookings" class="list-group-item list-group-item-action bg-light"><i class="fa fa-tachometer" aria-hidden="true"></i>&nbsp; Approved/Rejected Bookings</a>
+                </div>
+            </div>
+            <div id="page-content-wrapper" style="padding: 20px;">
+                <div class="container-fluid">
+                    <div class="row">
+                       <%-- <div class="mb-2">
+                            <a class="btn btn-primary" id="menu-toggle">Menu</a>
+                        </div>--%>
+                        <div class="col-12 py-3 px-2" id="top2">
+                            <div class="row">
+                                <div class="col-12" id="divtest" runat="server">
+                                   <table id="example" class="table table-risponsive table-borderless" style="width: 50%">
+                                    <tbody>
+                                        <tr>
+                                            <td></td>
+                                            <td>
+                                                <asp:Label ID="lblid" runat="server" Visible="false"></asp:Label></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Organisation Name:</td>
+                                            <td>
+                                                <asp:Label ID="lblorganisationname" runat="server"></asp:Label></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Test Facility:</td>
+                                            <td>
+                                                <asp:Label ID="lbltestfacility" runat="server"></asp:Label></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Lab Name:</td>
+                                            <td>
+                                                <asp:Label ID="lblLabname" runat="server"></asp:Label></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Discipline:</td>
+                                            <td>
+                                                <asp:Label ID="lblDiscipline" runat="server"></asp:Label></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Test:</td>
+                                            <td>
+                                                <asp:Label ID="lbltestname" runat="server"></asp:Label></td>
+                                        </tr>
+                                        
+                                        <tr>
+                                            <td>Material:</td>
+                                            <td>
+                                                <asp:Label ID="lblmaterial" runat="server"></asp:Label></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Specifications:</td>
+                                            <td>
+                                                <asp:Label ID="lblspecifications" runat="server"></asp:Label></td>
+                                        </tr>
+                                        <tr>
+                                            <td><span class="mendatory">*</span>Number of Sample:</td>
+                                            <td>
+                                                <asp:TextBox ID="txtnoofsample" runat="server" CssClass="form-control" placeholder="Number of Sample">
+                                                </asp:TextBox>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Dimension of Eqpt to be tested:</td>
+                                            <td>
+                                                <asp:TextBox ID="txteqptbetested" runat="server" CssClass="form-control" placeholder="Dimension of Eqpt to be tested"></asp:TextBox></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Weight of Eqpt to be tested:</td>
+                                            <td>
+                                                <asp:TextBox ID="txtwghtbetested" runat="server" CssClass="form-control" placeholder="Weight of Eqpt to be tested"></asp:TextBox></td>
+                                        </tr>
+                                        <tr>
+                                            <td><span class="mendatory">*</span>Start Date:</td>
+                                            <td>
+                                                <asp:TextBox ID="txtstartdate" runat="server" CssClass="form-control" TextMode="Date"></asp:TextBox></td><%--TextMode="Date"--%>
+                                        </tr>
+                                        <tr>
+                                            <td><span class="mendatory">*</span>End Date:</td>
+                                            <td>
+                                                <asp:TextBox ID="txtendDate" runat="server" input="date" CssClass="form-control" TextMode="Date"></asp:TextBox>
+                                                <asp:CompareValidator ID="cmpVal1" ControlToCompare="txtstartdate" 
+         ControlToValidate="txtendDate" Type="Date" Operator="GreaterThanEqual" ForeColor="Red" 
+         ErrorMessage="*End Date should be greater than equal to Start Date" runat="server"></asp:CompareValidator>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Upload Attachement:</td>
+                                            <td>
+                                                <asp:FileUpload ID="fufiles" runat="server" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td><span class="mendatory">*</span>Description:</td>
+                                            <td>
+                                                <asp:TextBox ID="txtremarks" runat="server" CssClass="form-control" TextMode="MultiLine" placeholder="Any Special Remarks for Test"></asp:TextBox></td>
+                                        </tr>
+                                        <tr>
+                                           <td />
+                                            <td class="d-flex justify-content-end">
+                                                <asp:Button ID="btnsubmit" runat="server" class="btn" style="background:rgba(105,21,207,0.8); color:white;" Text="Submit" OnClick="btnsubmit_Click"></asp:Button></td>
+                                        </tr>
+                                        
+                                    </tbody>
+                                </table>
+                                    <div >
+                                       
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <nav class="navbar navbar-dark d-flex justify-content-center py-2" style="background-color: #373f50; color: white;">
+            <p class="nav-link">Copyright @ 2020 | All Rights Reserved By Department of Defence Production</p>
+        </nav>
+    </form>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap4.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        $("#menu-toggle").click(function (e) {
+            e.preventDefault();
+            $("#wrapper").toggleClass("toggled");
+        });
+	</script></body>
+</html>

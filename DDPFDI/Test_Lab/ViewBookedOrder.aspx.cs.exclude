@@ -1,0 +1,164 @@
+﻿using BusinessLayer;
+using Encryption;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using System.Text;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+
+public partial class Test_Lab_ViewBookedOrder : System.Web.UI.Page
+{
+    Cryptography objCrypto = new Cryptography();
+    Logic Lo = new Logic();
+    private string _msg = string.Empty;
+    private string _sysMsg = string.Empty;
+    DataUtility Co = new DataUtility();
+
+    string mRefNo;
+    protected void Page_Load(object sender, EventArgs e)
+    {
+            if (!IsPostBack)
+            {
+            //if (Request.QueryString["id"] != null)
+            //{
+                try
+                {
+                    //string strid = Request.QueryString["id"].ToString().Replace(" ", "+");
+                    //string strPageName = objCrypto.DecryptData(strid);
+                    //StringBuilder strheadPage = new StringBuilder();
+                    //strheadPage.Append("<ul class='breadcrumb'>");
+                    //string[] MCateg = strPageName.Split(new string[] { ">>" }, StringSplitOptions.RemoveEmptyEntries);
+                    //string MmCval = "";
+                    //for (int x = 0; x < MCateg.Length; x++)
+                    //{
+                    //    MmCval = MCateg[x];
+                    //    strheadPage.Append("<li class=''><span>" + MmCval + "</span></li>");
+                    //}
+                    ////  divHeadPage.InnerHtml = strheadPage.ToString();
+                    //strheadPage.Append("</ul");
+                    ////  currentPage = System.IO.Path.GetFileName(Request.Url.AbsolutePath);
+                    ////hidType.Value = objCrypto.DecryptData(Session["Type"].ToString());
+                    mRefNo = Session["CompanyRefNo"].ToString();
+                    GetAllBookedOrders();
+                }
+                catch (Exception ex)
+                {
+                    string error = ex.ToString();
+                    string Page = Request.Url.AbsolutePath.ToString();
+                    Response.Redirect("Error?techerror=" + objCrypto.EncryptData(error) + "&page=" + objCrypto.EncryptData(Page));
+                }
+            //}
+            //else
+            //{
+            //    Response.RedirectToRoute("TestLabLogin");
+            //}
+          //  GetAllBookedOrders();
+            }
+    }
+
+    public void GetAllBookedOrders()
+    {
+        try
+        {
+            mRefNo = Session["CompanyRefNo"].ToString();
+            DataTable dtorganisation = Lo.RetriveMasterData(0, mRefNo, "Company", 0, "", "", "CompanyName"); //Lo.Getorganisations();
+            string compname = dtorganisation.Rows[0]["CompanyName"].ToString();
+            DataTable dtbookedorder = new DataTable();
+            dtbookedorder = Lo.GetBookedOrders(compname);
+            if (dtbookedorder.Rows.Count > 0)
+            {
+                gvbookedorder.DataSource = dtbookedorder;
+                gvbookedorder.DataBind();
+            }
+        }
+        catch ( Exception ex)
+
+        { }
+    }
+
+    protected void rdblaction_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        try
+            { 
+        foreach (GridViewRow gvrow in gvbookedorder.Rows)
+        {
+            GridViewRow row = (GridViewRow)((Control)sender).NamingContainer;
+            RadioButtonList rdbtn = (RadioButtonList)gvrow.FindControl("rdblaction");
+            Label lblid = (Label)gvrow.FindControl("lblid");
+            TextBox txtremark = (TextBox)gvrow.FindControl("txtremarks");
+            if (rdbtn.SelectedValue == "1")
+            {
+                gvbookedorder.Columns[11].Visible = false;
+                gvbookedorder.Columns[12].Visible = true;
+               
+            }
+            if (rdbtn.SelectedValue == "2")
+            {
+                GridViewRow row1 = (GridViewRow)((Control)sender).NamingContainer;
+                gvbookedorder.Columns[11].Visible = true;
+                gvbookedorder.Columns[12].Visible = true;
+              
+            }
+        }
+        }
+        catch(Exception ex)
+        { }
+    }
+
+    protected void btnsave_Click(object sender, EventArgs e)
+    {
+        foreach (GridViewRow gvrow in gvbookedorder.Rows)
+        {
+            GridViewRow row = (GridViewRow)((Control)sender).NamingContainer;
+            Label lblid = (Label)gvrow.FindControl("lblid");
+            TextBox txtremark = (TextBox)gvrow.FindControl("txtremarks");
+            RadioButtonList rdbtn = (RadioButtonList)gvrow.FindControl("rdblaction");
+            if (rdbtn.SelectedValue == "1")
+            {
+                Lo.approvebookedorder(Convert.ToInt32(lblid.Text));
+                GetAllBookedOrders();
+                //rdbtn.Enabled = false;
+                //gvbookedorder.Columns[11].Visible = false;
+                //gvbookedorder.Columns[12].Visible = false;
+
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "alert", "alert('Approved Successfully!!!');", true);
+            }
+            if (rdbtn.SelectedValue == "2")
+            {
+                if (txtremark.Text.Trim() != " ")
+                {
+                    Lo.rejectorderbyremark(Convert.ToInt32(lblid.Text), txtremark.Text.Trim());
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "alert", "alert('Rejected Successfully!!!');", true);
+                    GetAllBookedOrders();
+                    rdbtn.Enabled = false;
+                    gvbookedorder.Columns[11].Visible = false;
+                    gvbookedorder.Columns[12].Visible = false;
+                    //gvbookedorder.Columns[10].Visible = true;
+                }
+                else
+                {
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "alert", "alert('Please fill remark to Reject');", true);
+                }
+            }
+        }
+    }
+
+    protected void gvbookedorder_RowCreated(object sender, GridViewRowEventArgs e)
+    {
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            e.Row.TableSection = TableRowSection.TableBody;
+        }
+        else if (e.Row.RowType == DataControlRowType.Header)
+        {
+            e.Row.TableSection = TableRowSection.TableHeader;
+        }
+        else if (e.Row.RowType == DataControlRowType.Footer)
+        {
+            e.Row.TableSection = TableRowSection.TableFooter;
+        }
+    }
+}

@@ -23,7 +23,7 @@ public class SendMail
         Email.DeliveryNotificationOptions = System.Net.Mail.DeliveryNotificationOptions.OnSuccess;
         Email.Subject = subject;
         Email.Body = body;
-        Email.To.Add("ceo-dpit@gov.in");
+       // Email.To.Add("ceo-dpit@gov.in");
     }
     public bool sendMail()
     {
@@ -46,7 +46,7 @@ public class SendMail
         basicAuthenticationInfo = new System.Net.NetworkCredential(username, password);
         //'Put your own, or your ISPs, mail server name on this next line
         mailClient.EnableSsl = true;
-        mailClient.UseDefaultCredentials = true;
+        mailClient.UseDefaultCredentials = false;
         mailClient.Credentials = basicAuthenticationInfo;
         try
         {

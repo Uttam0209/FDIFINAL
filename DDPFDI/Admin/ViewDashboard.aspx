@@ -248,7 +248,7 @@
                                 <!-----------------------------------------end code for page indexing----------------------------------------------------->
                             </div>
                         </div>
-                        <div class="footer">© 2019 <a href="#">Department of Defence Production</a> </div>
+                       
                     </div>
                     <%--*/*************************************************************COde Of View**********************************//*--%>
                     <div class="modal fade" id="divCompany" role="dialog">

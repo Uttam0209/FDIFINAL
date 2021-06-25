@@ -2,6 +2,7 @@
 using System.Data;
 using System.Web.UI.WebControls;
 using System.Net;
+using System.Net.Security;
 
 /// <summary>
 /// Summary description for DataUtility
@@ -158,17 +159,34 @@ public class DataUtility
         else
             return false;
     }
+    public bool GetFileFilter1(string fileName)
+    {
+        if (fileName == "")
+        {
+            return false;
+        }
+        string fileType = fileName.Substring(fileName.LastIndexOf("."), fileName.Length - fileName.LastIndexOf("."));
+        if (fileType.ToUpper() == ".PDF" || fileType.ToString() == ".pdf" || fileType.ToString().ToLower() == ".docx" || fileType.ToString().ToLower() == ".doc")
+            return true;       
+        else
+            return false;
+    }
     public int GetFileSizeInKB(Byte[] size)
     {
         return 0;
     }
     #endregion
     #region "OTP SMS"
-    public void sendSMS(string _mobileNo, string _mOTP)
+    public void sendSMSMsg(string _mobileNo, string _mOTP, string _mMsg)
     {
+        string strMsg = "";
         string StrMobile = "91" + _mobileNo;
-        string strMsg = _mOTP + " is your AeroIndia mobile verification OTP";
-        string requestUristring = string.Format("http://smsgw.sms.gov.in/failsafe/HttpLink?username=aeroindia.otp&pin=e086ta06&message=" + strMsg + "&mnumber=" + StrMobile + "&signature=AEROIN");
+        if (_mMsg == "")
+            strMsg = _mOTP + " is your Srijan Defence mobile verification OTP";
+        else
+            strMsg = _mMsg;
+        string requestUristring = string.Format("https://164.100.14.211/failsafe/HttpLink?username=aeroindia.otp&pin=e086ta06&message=" + strMsg + "&mnumber=" + StrMobile + "&signature=DDPMOD");
+        ServicePointManager.ServerCertificateValidationCallback = new RemoteCertificateValidationCallback(AcceptAllCertifications);
         HttpWebRequest myReq = (HttpWebRequest)WebRequest.Create(requestUristring);
         HttpWebResponse myResp = (HttpWebResponse)myReq.GetResponse();
         System.IO.StreamReader respStreamReader = new System.IO.StreamReader(myResp.GetResponseStream());
@@ -176,21 +194,9 @@ public class DataUtility
         respStreamReader.Close();
         myResp.Close();
     }
-    public void sendSMSMsg(string _mobileNo, string _mOTP, string _mMsg)
+    public Boolean AcceptAllCertifications(Object sender, System.Security.Cryptography.X509Certificates.X509Certificate certification, System.Security.Cryptography.X509Certificates.X509Chain chain, System.Net.Security.SslPolicyErrors sslPolicyErrors)
     {
-        string strMsg = "";
-        string StrMobile = "91" + _mobileNo;
-        if (_mMsg == "")
-            strMsg = _mOTP + " is your AeroIndia mobile verification OTP";
-        else
-            strMsg = _mMsg;
-        string requestUristring = string.Format("http://smsgw.sms.gov.in/failsafe/HttpLink?username=aeroindia.otp&pin=e086ta06&message=" + strMsg + "&mnumber=" + StrMobile + "&signature=AEROIN");
-        HttpWebRequest myReq = (HttpWebRequest)WebRequest.Create(requestUristring);
-        HttpWebResponse myResp = (HttpWebResponse)myReq.GetResponse();
-        System.IO.StreamReader respStreamReader = new System.IO.StreamReader(myResp.GetResponseStream());
-        string responseString = respStreamReader.ReadToEnd();
-        respStreamReader.Close();
-        myResp.Close();
+        return true;
     }
     #endregion
 }

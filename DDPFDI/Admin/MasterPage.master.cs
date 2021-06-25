@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
+﻿using BusinessLayer;
 using Encryption;
-using BusinessLayer;
-using System.Web.UI.HtmlControls;
-using System.Text;
+using System;
 using System.Data;
-using System.Data.Sql;
+using System.Text;
+using System.Web;
 using System.Web.Security;
+using System.Web.UI;
 
 public partial class Admin_MasterPage : System.Web.UI.MasterPage
 {
@@ -27,7 +22,7 @@ public partial class Admin_MasterPage : System.Web.UI.MasterPage
             {
                 if (!Session["SFToken"].ToString().Equals(Request.Cookies["SFToken"].Value))
                 {
-                    Session.Abandon();
+                    FuncLogout();
                     Response.Redirect("Login");
 
                 }
@@ -38,7 +33,7 @@ public partial class Admin_MasterPage : System.Web.UI.MasterPage
             }
             else
             {
-                Session.Abandon();
+                FuncLogout();
                 Response.Redirect("Login");
             }
         }
@@ -46,10 +41,10 @@ public partial class Admin_MasterPage : System.Web.UI.MasterPage
         {
             Response.RedirectToRoute("Login");
         }
-        Response.Cache.SetExpires(DateTime.Now.AddMonths(1));
+        Response.Cache.SetExpires(DateTime.Now.AddMinutes(30));
     }
-    protected void lbllogout_Click(object sender, EventArgs e)
-    {      
+    protected void FuncLogout()
+    {
         Session.Abandon();
         Session.Remove("Type");
         Session.Remove("User");
@@ -74,6 +69,10 @@ public partial class Admin_MasterPage : System.Web.UI.MasterPage
             Response.Cookies["SFToken"].Value = string.Empty;
             Response.Cookies["SFToken"].Expires = DateTime.Now.AddMonths(-20);
         }
+    }
+    protected void lbllogout_Click(object sender, EventArgs e)
+    {
+        FuncLogout();
         Response.RedirectToRoute("Productlist");
     }
     private void bindMenu(string sType)

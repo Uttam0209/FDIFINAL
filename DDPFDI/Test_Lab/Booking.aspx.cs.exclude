@@ -1,0 +1,108 @@
+﻿using BusinessLayer;
+using Encryption;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.IO;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+
+public partial class Test_Lab_Booking : System.Web.UI.Page
+{
+    Cryptography objCrypto = new Cryptography();
+    Logic Lo = new Logic();
+    protected void Page_Load(object sender, EventArgs e)
+    {
+
+        if (!IsPostBack)
+        {
+            lblid.Text = Request.QueryString["id"].ToString();
+            DataTable dttestdetails = Lo.RetriveTestDetailsbyId(Convert.ToInt32(lblid.Text));
+            lblorganisationname.Text = dttestdetails.Rows[0]["organisation_id"].ToString();
+            //  lblDivision.Text = dttestdetails.Rows[0]["test_facility_id"].ToString();
+            //   lblUnit.Text = dttestdetails.Rows[0]["lab_id"].ToString();
+            lbltestfacility.Text = dttestdetails.Rows[0]["test_facility_id"].ToString();
+            lblLabname.Text = dttestdetails.Rows[0]["lab_id"].ToString();
+            lblDiscipline.Text = dttestdetails.Rows[0]["discipline_id"].ToString();
+            lbltestname.Text = dttestdetails.Rows[0]["test_name"].ToString();
+            lblmaterial.Text = dttestdetails.Rows[0]["product_material"].ToString();
+            lblspecifications.Text = dttestdetails.Rows[0]["specifications"].ToString();
+        }
+
+    }
+
+    protected void SaveBookingOrders()
+    {
+        try
+        {
+            if (txtnoofsample.Text.Trim() != "" || txtstartdate.Text.Trim() != "" || txtendDate.Text.Trim() != "")
+            {
+                //DateTime stdt = Convert.ToDateTime(txtstartdate.Text);
+                //string smdd = stdt.ToString("dd-MMM-yyyy");
+                //DateTime endtt = Convert.ToDateTime(txtendDate.Text);
+                //string mdd = endtt.ToString("dd-MMM-yyyy");
+                string book = Lo.savebookorders(Convert.ToInt32(lblid.Text), lbltestname.Text, lblorganisationname.Text, lblDiscipline.Text, lblLabname.Text, Convert.ToInt32(txtnoofsample.Text), txteqptbetested.Text.Trim(), txtwghtbetested.Text.Trim(), txtstartdate.Text, txtendDate.Text, Convert.ToString(fufiles.ToString()), txtremarks.Text.Trim());
+                if (book != "-1")
+                {
+                    ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "alert('Booking Id (Portal) = " + book + " saved successfully.')", true);
+                    Clear();
+                }
+                else
+                {
+                    ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "alert('Record not saved.')", true);
+                }
+            }
+            else
+            {
+                ScriptManager.RegisterClientScriptBlock(Page, Page.GetType(), "alert", "alert('Fields are mandatory.')", true);
+            }
+        }
+        catch (Exception ex)
+        {
+
+        }
+    }
+
+    protected void btnsubmit_Click(object sender, EventArgs e)
+    {
+        try
+        {
+            SaveBookingOrders();
+            Clear();
+        }
+        catch (Exception ex)
+        {
+
+        }
+    }
+
+    public void Clear()
+    {
+        txtendDate.Text = "";
+        txteqptbetested.Text = "";
+        txtnoofsample.Text = "";
+        txtremarks.Text = "";
+        txtstartdate.Text = "";
+        txtwghtbetested.Text = "";
+
+    }
+
+    string filename = string.Empty;
+    protected void fufiles_Unload(object sender, EventArgs e)
+    {
+        filename = Path.GetFileName(fufiles.PostedFile.FileName);
+        fufiles.SaveAs(Server.MapPath("Files/" + filename));
+
+    }
+
+    protected void btnhome_Click(object sender, EventArgs e)
+    {
+        Response.RedirectToRoute("TestLab", true);
+    }
+    protected void logbtn_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("~/TestLabLogin", true);
+    }
+}

@@ -1,0 +1,24 @@
+-----------Exception Details on  24-06-2021 10:22:13-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 24-06-2021 10:22:13
+
+Error Line No : ine 117
+
+Error Message: SqlException
+
+Exception Type: System.Data.SqlClient.SqlException
+
+Error Location : Execution Timeout Expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
+
+ Error Page Url: http://localhost:19213/ProductList
+
+User Host IP: 
+
+
+--------------------------------*End*------------------------------------------
+
+
+

@@ -1,0 +1,176 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="MasterPage.master.cs" Inherits="User_MasterPage" %>
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8" />
+    <meta name="google-site-verification" content="LPR-H1MjCk1oRRTFC79124pkSLiyG35I_YJ0kuICRuI" />
+    <link rel="icon" href="~/assets/images/icon.png" />
+    <link rel="stylesheet" type="text/css" href="~/User/Uassets/css/bootstrap.min.css" />
+    <%--<link rel="stylesheet" type="text/css" href="~/User/Uassets/css/theme.min.css" />--%>
+    <link rel="stylesheet" type="text/css" href="~/User/Uassets/css/font-awesome-4.5.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="~/User/Uassets/css/style1.css" />
+    <link rel="stylesheet" type="text/css" href="~/User/Uassets/css/jquery-ui.css" />
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-178148370-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'UA-178148370-1');
+    </script>
+    <!-- Google Analytics -->
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date(); a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+        ga('create', 'UA-XXXXX-Y', 'auto');
+        ga('send', 'pageview');
+    </script>
+    <!-- End Google Analytics -->
+    <style>
+        #navbarNav2 a {
+            padding-left: 10px !important;
+            padding-right: 10px !important;
+            font-size: 16px;
+        }
+
+        @media only screen and (max-width: 1036px) {
+            #navbarNav2 a {
+                padding-left: 8px !important;
+                padding-right: 8px !important;
+                font-size: 14px;
+            }
+        }
+
+        @media only screen and (max-width: 998px) {
+            #navbarNav2 a {
+                padding-left: 5px !important;
+                padding-right: 5px !important;
+                font-size: 12px;
+            }
+        }
+    </style>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form1" runat="server">
+        <div class="container-fluid" id="top">
+            <div class="row">
+                <div class="col-md-2">
+                    <a href="ProductList" class="d-flex justify-content-center">
+                        <img src="../ddp_logo.png" class="img-fluid" style="height: 70px" /></a>
+                </div>
+                <div class="col-md-8 pt-3 text-center">
+                    <h2>OPPORTUNITIES FOR MAKE IN INDIA DEFENCE</h2>
+                </div>
+
+                <div class="col-md-2 text-center">
+                    <a class="nav-link" style="color: blue;">
+                        <h6>
+                            <asp:Label ID="linkusername" runat="server" Visible="false" ToolTip="Login UserName"></asp:Label></h6>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <nav id="top3" class="navbar navbar-expand-lg px-md-3 bg-dark">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav2" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="fa fa-bars" aria-hidden="true" style="color: white;"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav2">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" runat="server" href="~/ProductList"><i class="fa fa-home" aria-hidden="true"></i></a>
+                    </li>
+                    <a href="About" class="nav-link">About us </a>
+                    <a href="~/Participate" runat="server" id="mhwparti" class="nav-link">How to Participate</a>
+                    <a href="~/Dashboard" id="lblmis" runat="server" class="nav-link" visible="false" data-toggle="tooltip"
+                        tooltip="DPSU's Dashboard Page Link (Click here to go back dashboard for add product)">CMS</a>
+                    <div runat="server" id="reportdiv" visible="false">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbardrop1" data-toggle="dropdown">Reports&nbsp;<i class="fa fa-chevron-down" aria-hidden="true"></i>
+                            </a>
+                            <div class="dropdown-menu bg-dark">
+                                <a href="~/PReport2" id="PR" runat="server" class="nav-link">Progress Report</a>
+                                <a href="~/SuccessStoryupdate" id="lbSuccesstory" runat="server" class="nav-link" visible="false">Success Story</a>
+                                <a href="~/Summery" id="A11" runat="server" class="nav-link">Summary Details</a>
+                                <a href="~/Make2Report" id="A2" runat="server" class="nav-link dropdown-item">Make-II Report</a>
+                                <a href="~/CategoryWiseRep" id="A10" runat="server" class="nav-link dropdown-item">Category Wise Report</a>
+                                <a href="~/SONOIndig" id="A1" runat="server" class="nav-link dropdown-item">Supply Order/No-Indiginized</a>
+                                <a href="~/EOINOSOINDIG" id="A12" runat="server" class="nav-link dropdown-item">EOI/No-SO/Indiginized</a>
+                            </div>
+                        </li>
+                    </div>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">Documentation&nbsp;<i class="fa fa-chevron-down" aria-hidden="true"></i>
+                        </a>
+                        <div class="dropdown-menu bg-dark">
+                            <a href="../Policy&framwork.pdf" runat="server" target="_blank" class="nav-link dropdown-item">Policy & Frame work</a>
+                            <a href="../UserManualPublicDomain.pdf" runat="server" target="_blank" class="nav-link dropdown-item">User Manual</a>
+                            <a href="~/FAQs" runat="server" class="nav-link dropdown-item">FAQ</a>
+                        </div>
+                    </li>
+                    <b><a href="https://www.makeinindiadefence.gov.in/" target="_blank" class="nav-link" onclick="return confirm('You are being redirected to https://www.makeinindiadefence.gov.in');">Make In India Defence Portal </a></b>
+
+
+                    <b><a href="~/Login" id="linklogin" runat="server" class="nav-link" visible="false">DPSU Login</a></b>
+                    <div runat="server" id="Div13">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbardrop3" data-toggle="dropdown">Contact Us&nbsp;<i class="fa fa-chevron-down" aria-hidden="true"></i>
+                            </a>
+                            <div class="dropdown-menu bg-dark">
+                                <b><a href="~/FeedBack" runat="server" id="lnkfeedback" class="nav-link">FeedBack</a></b>
+                                  <b><a href="~/GHelpDesk" runat="server" id="a8" class="nav-link">HelpDesk</a></b>
+                                <b><a href="~/GOfficialLogin" runat="server" id="ai" class="nav-link">HelpDesk Login</a></b>
+                            </div>
+                        </li>
+                    </div>
+
+                    <div runat="server" id="mhide" visible="false">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbardrop2" data-toggle="dropdown">All Test Links&nbsp;<i class="fa fa-chevron-down" aria-hidden="true"></i>
+                            </a>
+                            <div class="dropdown-menu bg-dark">
+                                <a href="~/PUpdate" id="A3" runat="server" class="nav-link" visible="false">Product Update</a>
+                                <a href="~/ItemStatus" id="A4" runat="server" class="nav-link dropdown-item" visible="false">Item Status</a>
+                                <a href="~/TestSimiler" id="A5" runat="server" class="nav-link dropdown-item" visible="false">Similar Product</a>
+                                <b><a href="~/SuccessStory2" id="A6" runat="server" class="nav-link" visible="false" style="display: none;">Success Story 2.0</a></b>
+                            </div>
+                        </li>
+                    </div>
+                    <a href="~/SiteMap" id="A7" runat="server" class="nav-link" data-toggle="tooltip"
+                        tooltip="Sitemap">SiteMap</a>
+
+                    <b>
+                        <asp:LinkButton runat="server" ID="lbllogout" Visible="false" class="nav-link" OnClick="lbllogout_Click">&nbsp;Log Out</asp:LinkButton></b>
+                </ul>
+            </div>
+        </nav>
+        <div id="wrapper1" class="container-fluid py-3">
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+            </asp:ContentPlaceHolder>
+            <div class="push"></div>
+        </div>
+
+        <div id="footer1" class="container-fluid">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col py-3">
+                        © 2020 <a href="https://srijandefence.gov.in/ProductList" style="color: white;">www.srijandefence.gov.in</a> | All Right Reserved. | Designed, Developed and Hosted by Department of Defence Production
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <script src="User/Uassets/js/all.min.js"></script>
+    <script src="User/Uassets/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

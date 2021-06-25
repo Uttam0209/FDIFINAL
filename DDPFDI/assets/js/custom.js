@@ -167,6 +167,9 @@ $(document).ready(function () {
         $("#ddlnameofdefplat").select2({});
         $("#ddlprodindustrydomain").select2({});
         $("#ddlprodindussubdomain").select2({});
+        $("#ContentPlaceHolder1_ddlPincode").select2({});
+        $("#ContentPlaceHolder1_ddlstate").select2({});
+        $("#ContentPlaceHolder1_ddlCity").select2({});
 
     }
     var req = Sys.WebForms.PageRequestManager.getInstance();
@@ -203,6 +206,9 @@ $(document).ready(function () {
         $('#ContentPlaceHolder1_gvnsngroup').DataTable();
         $('#ContentPlaceHolder1_gvnsngroupclass').DataTable();
         $('#ContentPlaceHolder1_GridView1').DataTable();
+        $('#ContentPlaceHolder1_gvcompanyfeedback').DataTable(); 
+        $('#ContentPlaceHolder1_gvProgress').DataTable();
+        $('#ContentPlaceHolder1_gvproductremark').DataTable();
     }
     //$('[data-fancybox="Prodgridviewgellry"]').fancybox({
     //    // Options will go here
@@ -263,6 +269,9 @@ $(document).ready(function () {
             $(this).show();
         }
     });
+
+
+   
 
 });
 
